@@ -10,7 +10,7 @@ fn criterion_benchmark(c: &mut Criterion) {
         b.iter(|| {
             let mut count = 0;
             for k in search_for() {
-                count += if set.contains(*k) { 1 } else { 0 };
+                count += i32::from(set.contains(*k));
             }
             count
         })
@@ -21,7 +21,7 @@ fn criterion_benchmark(c: &mut Criterion) {
         b.iter(|| {
             let mut count = 0;
             for k in search_for() {
-                count = if set.contains(*k) { 1 } else { 0 };
+                count = i32::from(set.contains(*k));
             }
             count
         })
@@ -32,7 +32,7 @@ fn criterion_benchmark(c: &mut Criterion) {
         b.iter(|| {
             let mut count = 0;
             for k in search_for() {
-                count += if set.contains(k.as_bytes()) { 1 } else { 0 };
+                count += i32::from(set.contains(k.as_bytes()))
             }
             count
         })
@@ -43,7 +43,7 @@ fn criterion_benchmark(c: &mut Criterion) {
         b.iter(|| {
             let mut count = 0;
             for k in search_for() {
-                count += if set.contains_key(k.as_bytes()) { 1 } else { 0 };
+                count += i32::from(set.contains_key(k.as_bytes()));
             }
             count
         })
@@ -65,7 +65,7 @@ fn criterion_benchmark(c: &mut Criterion) {
         b.iter(|| {
             let mut count = 0;
             for k in search_for() {
-                count += if set.contains(k) { 1 } else { 0 };
+                count += i32::from(set.contains(k));
             }
             count
         })
@@ -90,13 +90,8 @@ fn criterion_benchmark(c: &mut Criterion) {
                 let mut count = 0;
                 for k in search_for() {
                     for item in set.iter() {
-                        count += if memchr::memmem::find(k.as_bytes(), item.as_str().as_bytes())
-                            .is_some()
-                        {
-                            1
-                        } else {
-                            0
-                        };
+                        count += i32::from(memchr::memmem::find(k.as_bytes(), item.as_str().as_bytes())
+                            .is_some());
                     }
                 }
                 count

@@ -97,7 +97,7 @@ impl ToOwned for GreenNodeData {
 impl Borrow<GreenNodeData> for GreenNode {
     #[inline]
     fn borrow(&self) -> &GreenNodeData {
-        &**self
+        self
     }
 }
 
@@ -127,14 +127,14 @@ impl fmt::Debug for GreenNodeData {
 
 impl fmt::Debug for GreenNode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let data: &GreenNodeData = &**self;
+        let data: &GreenNodeData = self;
         fmt::Debug::fmt(data, f)
     }
 }
 
 impl fmt::Display for GreenNode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let data: &GreenNodeData = &**self;
+        let data: &GreenNodeData = self;
         fmt::Display::fmt(data, f)
     }
 }

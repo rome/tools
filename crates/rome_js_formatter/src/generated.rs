@@ -17,7 +17,7 @@ impl AsFormat for rome_js_syntax::JsScript {
         rome_js_syntax::JsScript,
         crate::js::auxiliary::script::FormatJsScript,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::script::FormatJsScript::default(),
@@ -47,7 +47,7 @@ impl AsFormat for rome_js_syntax::JsModule {
         rome_js_syntax::JsModule,
         crate::js::auxiliary::module::FormatJsModule,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::module::FormatJsModule::default(),
@@ -83,7 +83,7 @@ impl AsFormat for rome_js_syntax::JsExpressionSnipped {
         rome_js_syntax::JsExpressionSnipped,
         crate::js::auxiliary::expression_snipped::FormatJsExpressionSnipped,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::expression_snipped::FormatJsExpressionSnipped::default(),
@@ -117,7 +117,7 @@ impl AsFormat for rome_js_syntax::JsDirective {
         rome_js_syntax::JsDirective,
         crate::js::auxiliary::directive::FormatJsDirective,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::directive::FormatJsDirective::default(),
@@ -155,7 +155,7 @@ impl AsFormat for rome_js_syntax::JsBlockStatement {
         rome_js_syntax::JsBlockStatement,
         crate::js::statements::block_statement::FormatJsBlockStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::block_statement::FormatJsBlockStatement::default(),
@@ -193,7 +193,7 @@ impl AsFormat for rome_js_syntax::JsBreakStatement {
         rome_js_syntax::JsBreakStatement,
         crate::js::statements::break_statement::FormatJsBreakStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::break_statement::FormatJsBreakStatement::default(),
@@ -231,7 +231,7 @@ impl AsFormat for rome_js_syntax::JsClassDeclaration {
         rome_js_syntax::JsClassDeclaration,
         crate::js::declarations::class_declaration::FormatJsClassDeclaration,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::declarations::class_declaration::FormatJsClassDeclaration::default(),
@@ -269,7 +269,7 @@ impl AsFormat for rome_js_syntax::JsContinueStatement {
         rome_js_syntax::JsContinueStatement,
         crate::js::statements::continue_statement::FormatJsContinueStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::continue_statement::FormatJsContinueStatement::default(),
@@ -307,7 +307,7 @@ impl AsFormat for rome_js_syntax::JsDebuggerStatement {
         rome_js_syntax::JsDebuggerStatement,
         crate::js::statements::debugger_statement::FormatJsDebuggerStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::debugger_statement::FormatJsDebuggerStatement::default(),
@@ -345,7 +345,7 @@ impl AsFormat for rome_js_syntax::JsDoWhileStatement {
         rome_js_syntax::JsDoWhileStatement,
         crate::js::statements::do_while_statement::FormatJsDoWhileStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::do_while_statement::FormatJsDoWhileStatement::default(),
@@ -383,7 +383,7 @@ impl AsFormat for rome_js_syntax::JsEmptyStatement {
         rome_js_syntax::JsEmptyStatement,
         crate::js::statements::empty_statement::FormatJsEmptyStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::empty_statement::FormatJsEmptyStatement::default(),
@@ -421,7 +421,7 @@ impl AsFormat for rome_js_syntax::JsExpressionStatement {
         rome_js_syntax::JsExpressionStatement,
         crate::js::statements::expression_statement::FormatJsExpressionStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::expression_statement::FormatJsExpressionStatement::default(),
@@ -459,7 +459,7 @@ impl AsFormat for rome_js_syntax::JsForInStatement {
         rome_js_syntax::JsForInStatement,
         crate::js::statements::for_in_statement::FormatJsForInStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::for_in_statement::FormatJsForInStatement::default(),
@@ -497,7 +497,7 @@ impl AsFormat for rome_js_syntax::JsForOfStatement {
         rome_js_syntax::JsForOfStatement,
         crate::js::statements::for_of_statement::FormatJsForOfStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::for_of_statement::FormatJsForOfStatement::default(),
@@ -531,7 +531,7 @@ impl AsFormat for rome_js_syntax::JsForStatement {
         rome_js_syntax::JsForStatement,
         crate::js::statements::for_statement::FormatJsForStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::for_statement::FormatJsForStatement::default(),
@@ -565,7 +565,7 @@ impl AsFormat for rome_js_syntax::JsIfStatement {
         rome_js_syntax::JsIfStatement,
         crate::js::statements::if_statement::FormatJsIfStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::if_statement::FormatJsIfStatement::default(),
@@ -603,7 +603,7 @@ impl AsFormat for rome_js_syntax::JsLabeledStatement {
         rome_js_syntax::JsLabeledStatement,
         crate::js::statements::labeled_statement::FormatJsLabeledStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::labeled_statement::FormatJsLabeledStatement::default(),
@@ -641,7 +641,7 @@ impl AsFormat for rome_js_syntax::JsReturnStatement {
         rome_js_syntax::JsReturnStatement,
         crate::js::statements::return_statement::FormatJsReturnStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::return_statement::FormatJsReturnStatement::default(),
@@ -679,7 +679,7 @@ impl AsFormat for rome_js_syntax::JsSwitchStatement {
         rome_js_syntax::JsSwitchStatement,
         crate::js::statements::switch_statement::FormatJsSwitchStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::switch_statement::FormatJsSwitchStatement::default(),
@@ -717,7 +717,7 @@ impl AsFormat for rome_js_syntax::JsThrowStatement {
         rome_js_syntax::JsThrowStatement,
         crate::js::statements::throw_statement::FormatJsThrowStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::throw_statement::FormatJsThrowStatement::default(),
@@ -755,7 +755,7 @@ impl AsFormat for rome_js_syntax::JsTryFinallyStatement {
         rome_js_syntax::JsTryFinallyStatement,
         crate::js::statements::try_finally_statement::FormatJsTryFinallyStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::try_finally_statement::FormatJsTryFinallyStatement::default(),
@@ -789,7 +789,7 @@ impl AsFormat for rome_js_syntax::JsTryStatement {
         rome_js_syntax::JsTryStatement,
         crate::js::statements::try_statement::FormatJsTryStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::try_statement::FormatJsTryStatement::default(),
@@ -827,7 +827,7 @@ impl AsFormat for rome_js_syntax::JsVariableStatement {
         rome_js_syntax::JsVariableStatement,
         crate::js::statements::variable_statement::FormatJsVariableStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::variable_statement::FormatJsVariableStatement::default(),
@@ -865,7 +865,7 @@ impl AsFormat for rome_js_syntax::JsWhileStatement {
         rome_js_syntax::JsWhileStatement,
         crate::js::statements::while_statement::FormatJsWhileStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::while_statement::FormatJsWhileStatement::default(),
@@ -899,7 +899,7 @@ impl AsFormat for rome_js_syntax::JsWithStatement {
         rome_js_syntax::JsWithStatement,
         crate::js::statements::with_statement::FormatJsWithStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::statements::with_statement::FormatJsWithStatement::default(),
@@ -937,7 +937,7 @@ impl AsFormat for rome_js_syntax::JsFunctionDeclaration {
         rome_js_syntax::JsFunctionDeclaration,
         crate::js::declarations::function_declaration::FormatJsFunctionDeclaration,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::declarations::function_declaration::FormatJsFunctionDeclaration::default(),
@@ -975,7 +975,7 @@ impl AsFormat for rome_js_syntax::TsEnumDeclaration {
         rome_js_syntax::TsEnumDeclaration,
         crate::ts::declarations::enum_declaration::FormatTsEnumDeclaration,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::declarations::enum_declaration::FormatTsEnumDeclaration::default(),
@@ -1013,7 +1013,7 @@ impl AsFormat for rome_js_syntax::TsTypeAliasDeclaration {
         rome_js_syntax::TsTypeAliasDeclaration,
         crate::ts::declarations::type_alias_declaration::FormatTsTypeAliasDeclaration,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::declarations::type_alias_declaration::FormatTsTypeAliasDeclaration::default(
@@ -1053,7 +1053,7 @@ impl AsFormat for rome_js_syntax::TsInterfaceDeclaration {
         rome_js_syntax::TsInterfaceDeclaration,
         crate::ts::declarations::interface_declaration::FormatTsInterfaceDeclaration,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::declarations::interface_declaration::FormatTsInterfaceDeclaration::default(),
@@ -1091,7 +1091,7 @@ impl AsFormat for rome_js_syntax::TsDeclareFunctionDeclaration {
         rome_js_syntax::TsDeclareFunctionDeclaration,
         crate::ts::declarations::declare_function_declaration::FormatTsDeclareFunctionDeclaration,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: declarations :: declare_function_declaration :: FormatTsDeclareFunctionDeclaration :: default ())
     }
 }
@@ -1123,7 +1123,7 @@ impl AsFormat for rome_js_syntax::TsDeclareStatement {
         rome_js_syntax::TsDeclareStatement,
         crate::ts::statements::declare_statement::FormatTsDeclareStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::statements::declare_statement::FormatTsDeclareStatement::default(),
@@ -1161,7 +1161,7 @@ impl AsFormat for rome_js_syntax::TsModuleDeclaration {
         rome_js_syntax::TsModuleDeclaration,
         crate::ts::declarations::module_declaration::FormatTsModuleDeclaration,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::declarations::module_declaration::FormatTsModuleDeclaration::default(),
@@ -1199,7 +1199,7 @@ impl AsFormat for rome_js_syntax::TsExternalModuleDeclaration {
         rome_js_syntax::TsExternalModuleDeclaration,
         crate::ts::declarations::external_module_declaration::FormatTsExternalModuleDeclaration,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: declarations :: external_module_declaration :: FormatTsExternalModuleDeclaration :: default ())
     }
 }
@@ -1231,7 +1231,7 @@ impl AsFormat for rome_js_syntax::TsGlobalDeclaration {
         rome_js_syntax::TsGlobalDeclaration,
         crate::ts::declarations::global_declaration::FormatTsGlobalDeclaration,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::declarations::global_declaration::FormatTsGlobalDeclaration::default(),
@@ -1269,7 +1269,7 @@ impl AsFormat for rome_js_syntax::TsImportEqualsDeclaration {
         rome_js_syntax::TsImportEqualsDeclaration,
         crate::ts::declarations::import_equals_declaration::FormatTsImportEqualsDeclaration,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: declarations :: import_equals_declaration :: FormatTsImportEqualsDeclaration :: default ())
     }
 }
@@ -1297,7 +1297,7 @@ impl AsFormat for rome_js_syntax::JsElseClause {
         rome_js_syntax::JsElseClause,
         crate::js::auxiliary::else_clause::FormatJsElseClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::else_clause::FormatJsElseClause::default(),
@@ -1335,7 +1335,7 @@ impl AsFormat for rome_js_syntax::JsVariableDeclaration {
         rome_js_syntax::JsVariableDeclaration,
         crate::js::declarations::variable_declaration::FormatJsVariableDeclaration,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::declarations::variable_declaration::FormatJsVariableDeclaration::default(),
@@ -1373,7 +1373,7 @@ impl AsFormat for rome_js_syntax::JsForVariableDeclaration {
         rome_js_syntax::JsForVariableDeclaration,
         crate::js::declarations::for_variable_declaration::FormatJsForVariableDeclaration,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: declarations :: for_variable_declaration :: FormatJsForVariableDeclaration :: default ())
     }
 }
@@ -1405,7 +1405,7 @@ impl AsFormat for rome_js_syntax::JsVariableDeclarator {
         rome_js_syntax::JsVariableDeclarator,
         crate::js::auxiliary::variable_declarator::FormatJsVariableDeclarator,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::variable_declarator::FormatJsVariableDeclarator::default(),
@@ -1439,7 +1439,7 @@ impl AsFormat for rome_js_syntax::JsCaseClause {
         rome_js_syntax::JsCaseClause,
         crate::js::auxiliary::case_clause::FormatJsCaseClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::case_clause::FormatJsCaseClause::default(),
@@ -1473,7 +1473,7 @@ impl AsFormat for rome_js_syntax::JsDefaultClause {
         rome_js_syntax::JsDefaultClause,
         crate::js::auxiliary::default_clause::FormatJsDefaultClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::default_clause::FormatJsDefaultClause::default(),
@@ -1507,7 +1507,7 @@ impl AsFormat for rome_js_syntax::JsCatchClause {
         rome_js_syntax::JsCatchClause,
         crate::js::auxiliary::catch_clause::FormatJsCatchClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::catch_clause::FormatJsCatchClause::default(),
@@ -1541,7 +1541,7 @@ impl AsFormat for rome_js_syntax::JsFinallyClause {
         rome_js_syntax::JsFinallyClause,
         crate::js::auxiliary::finally_clause::FormatJsFinallyClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::finally_clause::FormatJsFinallyClause::default(),
@@ -1579,7 +1579,7 @@ impl AsFormat for rome_js_syntax::JsCatchDeclaration {
         rome_js_syntax::JsCatchDeclaration,
         crate::js::declarations::catch_declaration::FormatJsCatchDeclaration,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::declarations::catch_declaration::FormatJsCatchDeclaration::default(),
@@ -1617,7 +1617,7 @@ impl AsFormat for rome_js_syntax::TsTypeAnnotation {
         rome_js_syntax::TsTypeAnnotation,
         crate::ts::auxiliary::type_annotation::FormatTsTypeAnnotation,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::type_annotation::FormatTsTypeAnnotation::default(),
@@ -1649,7 +1649,7 @@ impl AsFormat for rome_js_syntax::ImportMeta {
         rome_js_syntax::ImportMeta,
         crate::js::module::import_meta::FormatImportMeta,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::import_meta::FormatImportMeta::default(),
@@ -1687,7 +1687,7 @@ impl AsFormat for rome_js_syntax::JsArrayExpression {
         rome_js_syntax::JsArrayExpression,
         crate::js::expressions::array_expression::FormatJsArrayExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::array_expression::FormatJsArrayExpression::default(),
@@ -1725,7 +1725,7 @@ impl AsFormat for rome_js_syntax::JsArrowFunctionExpression {
         rome_js_syntax::JsArrowFunctionExpression,
         crate::js::expressions::arrow_function_expression::FormatJsArrowFunctionExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: expressions :: arrow_function_expression :: FormatJsArrowFunctionExpression :: default ())
     }
 }
@@ -1757,7 +1757,7 @@ impl AsFormat for rome_js_syntax::JsAssignmentExpression {
         rome_js_syntax::JsAssignmentExpression,
         crate::js::expressions::assignment_expression::FormatJsAssignmentExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::assignment_expression::FormatJsAssignmentExpression::default(),
@@ -1795,7 +1795,7 @@ impl AsFormat for rome_js_syntax::JsAwaitExpression {
         rome_js_syntax::JsAwaitExpression,
         crate::js::expressions::await_expression::FormatJsAwaitExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::await_expression::FormatJsAwaitExpression::default(),
@@ -1833,7 +1833,7 @@ impl AsFormat for rome_js_syntax::JsBinaryExpression {
         rome_js_syntax::JsBinaryExpression,
         crate::js::expressions::binary_expression::FormatJsBinaryExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::binary_expression::FormatJsBinaryExpression::default(),
@@ -1871,7 +1871,7 @@ impl AsFormat for rome_js_syntax::JsCallExpression {
         rome_js_syntax::JsCallExpression,
         crate::js::expressions::call_expression::FormatJsCallExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::call_expression::FormatJsCallExpression::default(),
@@ -1909,7 +1909,7 @@ impl AsFormat for rome_js_syntax::JsClassExpression {
         rome_js_syntax::JsClassExpression,
         crate::js::expressions::class_expression::FormatJsClassExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::class_expression::FormatJsClassExpression::default(),
@@ -1947,7 +1947,7 @@ impl AsFormat for rome_js_syntax::JsComputedMemberExpression {
         rome_js_syntax::JsComputedMemberExpression,
         crate::js::expressions::computed_member_expression::FormatJsComputedMemberExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: expressions :: computed_member_expression :: FormatJsComputedMemberExpression :: default ())
     }
 }
@@ -1979,7 +1979,7 @@ impl AsFormat for rome_js_syntax::JsConditionalExpression {
         rome_js_syntax::JsConditionalExpression,
         crate::js::expressions::conditional_expression::FormatJsConditionalExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::conditional_expression::FormatJsConditionalExpression::default(
@@ -2019,7 +2019,7 @@ impl AsFormat for rome_js_syntax::JsFunctionExpression {
         rome_js_syntax::JsFunctionExpression,
         crate::js::expressions::function_expression::FormatJsFunctionExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::function_expression::FormatJsFunctionExpression::default(),
@@ -2057,7 +2057,7 @@ impl AsFormat for rome_js_syntax::JsIdentifierExpression {
         rome_js_syntax::JsIdentifierExpression,
         crate::js::expressions::identifier_expression::FormatJsIdentifierExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::identifier_expression::FormatJsIdentifierExpression::default(),
@@ -2095,7 +2095,7 @@ impl AsFormat for rome_js_syntax::JsImportCallExpression {
         rome_js_syntax::JsImportCallExpression,
         crate::js::expressions::import_call_expression::FormatJsImportCallExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::import_call_expression::FormatJsImportCallExpression::default(),
@@ -2129,7 +2129,7 @@ impl AsFormat for rome_js_syntax::JsInExpression {
         rome_js_syntax::JsInExpression,
         crate::js::expressions::in_expression::FormatJsInExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::in_expression::FormatJsInExpression::default(),
@@ -2167,7 +2167,7 @@ impl AsFormat for rome_js_syntax::JsInstanceofExpression {
         rome_js_syntax::JsInstanceofExpression,
         crate::js::expressions::instanceof_expression::FormatJsInstanceofExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::instanceof_expression::FormatJsInstanceofExpression::default(),
@@ -2205,7 +2205,7 @@ impl AsFormat for rome_js_syntax::JsLogicalExpression {
         rome_js_syntax::JsLogicalExpression,
         crate::js::expressions::logical_expression::FormatJsLogicalExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::logical_expression::FormatJsLogicalExpression::default(),
@@ -2239,7 +2239,7 @@ impl AsFormat for rome_js_syntax::JsNewExpression {
         rome_js_syntax::JsNewExpression,
         crate::js::expressions::new_expression::FormatJsNewExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::new_expression::FormatJsNewExpression::default(),
@@ -2277,7 +2277,7 @@ impl AsFormat for rome_js_syntax::JsObjectExpression {
         rome_js_syntax::JsObjectExpression,
         crate::js::expressions::object_expression::FormatJsObjectExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::object_expression::FormatJsObjectExpression::default(),
@@ -2315,7 +2315,7 @@ impl AsFormat for rome_js_syntax::JsParenthesizedExpression {
         rome_js_syntax::JsParenthesizedExpression,
         crate::js::expressions::parenthesized_expression::FormatJsParenthesizedExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: expressions :: parenthesized_expression :: FormatJsParenthesizedExpression :: default ())
     }
 }
@@ -2347,7 +2347,7 @@ impl AsFormat for rome_js_syntax::JsPostUpdateExpression {
         rome_js_syntax::JsPostUpdateExpression,
         crate::js::expressions::post_update_expression::FormatJsPostUpdateExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::post_update_expression::FormatJsPostUpdateExpression::default(),
@@ -2385,7 +2385,7 @@ impl AsFormat for rome_js_syntax::JsPreUpdateExpression {
         rome_js_syntax::JsPreUpdateExpression,
         crate::js::expressions::pre_update_expression::FormatJsPreUpdateExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::pre_update_expression::FormatJsPreUpdateExpression::default(),
@@ -2423,7 +2423,7 @@ impl AsFormat for rome_js_syntax::JsSequenceExpression {
         rome_js_syntax::JsSequenceExpression,
         crate::js::expressions::sequence_expression::FormatJsSequenceExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::sequence_expression::FormatJsSequenceExpression::default(),
@@ -2461,7 +2461,7 @@ impl AsFormat for rome_js_syntax::JsStaticMemberExpression {
         rome_js_syntax::JsStaticMemberExpression,
         crate::js::expressions::static_member_expression::FormatJsStaticMemberExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: expressions :: static_member_expression :: FormatJsStaticMemberExpression :: default ())
     }
 }
@@ -2493,7 +2493,7 @@ impl AsFormat for rome_js_syntax::JsSuperExpression {
         rome_js_syntax::JsSuperExpression,
         crate::js::expressions::super_expression::FormatJsSuperExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::super_expression::FormatJsSuperExpression::default(),
@@ -2531,7 +2531,7 @@ impl AsFormat for rome_js_syntax::JsThisExpression {
         rome_js_syntax::JsThisExpression,
         crate::js::expressions::this_expression::FormatJsThisExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::this_expression::FormatJsThisExpression::default(),
@@ -2569,7 +2569,7 @@ impl AsFormat for rome_js_syntax::JsUnaryExpression {
         rome_js_syntax::JsUnaryExpression,
         crate::js::expressions::unary_expression::FormatJsUnaryExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::unary_expression::FormatJsUnaryExpression::default(),
@@ -2607,7 +2607,7 @@ impl AsFormat for rome_js_syntax::JsYieldExpression {
         rome_js_syntax::JsYieldExpression,
         crate::js::expressions::yield_expression::FormatJsYieldExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::yield_expression::FormatJsYieldExpression::default(),
@@ -2639,7 +2639,7 @@ impl AsFormat for rome_js_syntax::NewTarget {
         rome_js_syntax::NewTarget,
         crate::js::auxiliary::new_target::FormatNewTarget,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::new_target::FormatNewTarget::default(),
@@ -2671,7 +2671,7 @@ impl AsFormat for rome_js_syntax::JsTemplate {
         rome_js_syntax::JsTemplate,
         crate::js::expressions::template::FormatJsTemplate,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::template::FormatJsTemplate::default(),
@@ -2709,7 +2709,7 @@ impl AsFormat for rome_js_syntax::TsTypeAssertionExpression {
         rome_js_syntax::TsTypeAssertionExpression,
         crate::ts::expressions::type_assertion_expression::FormatTsTypeAssertionExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: expressions :: type_assertion_expression :: FormatTsTypeAssertionExpression :: default ())
     }
 }
@@ -2737,7 +2737,7 @@ impl AsFormat for rome_js_syntax::TsAsExpression {
         rome_js_syntax::TsAsExpression,
         crate::ts::expressions::as_expression::FormatTsAsExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::expressions::as_expression::FormatTsAsExpression::default(),
@@ -2775,7 +2775,7 @@ impl AsFormat for rome_js_syntax::TsNonNullAssertionExpression {
         rome_js_syntax::TsNonNullAssertionExpression,
         crate::ts::expressions::non_null_assertion_expression::FormatTsNonNullAssertionExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: expressions :: non_null_assertion_expression :: FormatTsNonNullAssertionExpression :: default ())
     }
 }
@@ -2807,7 +2807,7 @@ impl AsFormat for rome_js_syntax::TsInstantiationExpression {
         rome_js_syntax::TsInstantiationExpression,
         crate::ts::expressions::instantiation_expression::FormatTsInstantiationExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: expressions :: instantiation_expression :: FormatTsInstantiationExpression :: default ())
     }
 }
@@ -2839,7 +2839,7 @@ impl AsFormat for rome_js_syntax::JsxTagExpression {
         rome_js_syntax::JsxTagExpression,
         crate::jsx::expressions::tag_expression::FormatJsxTagExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::expressions::tag_expression::FormatJsxTagExpression::default(),
@@ -2873,7 +2873,7 @@ impl AsFormat for rome_js_syntax::TsTypeArguments {
         rome_js_syntax::TsTypeArguments,
         crate::ts::expressions::type_arguments::FormatTsTypeArguments,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::expressions::type_arguments::FormatTsTypeArguments::default(),
@@ -2911,7 +2911,7 @@ impl AsFormat for rome_js_syntax::JsTemplateChunkElement {
         rome_js_syntax::JsTemplateChunkElement,
         crate::js::expressions::template_chunk_element::FormatJsTemplateChunkElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::template_chunk_element::FormatJsTemplateChunkElement::default(),
@@ -2949,7 +2949,7 @@ impl AsFormat for rome_js_syntax::JsTemplateElement {
         rome_js_syntax::JsTemplateElement,
         crate::js::expressions::template_element::FormatJsTemplateElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::template_element::FormatJsTemplateElement::default(),
@@ -2983,7 +2983,7 @@ impl AsFormat for rome_js_syntax::JsCallArguments {
         rome_js_syntax::JsCallArguments,
         crate::js::expressions::call_arguments::FormatJsCallArguments,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::call_arguments::FormatJsCallArguments::default(),
@@ -3017,7 +3017,7 @@ impl AsFormat for rome_js_syntax::JsYieldArgument {
         rome_js_syntax::JsYieldArgument,
         crate::js::expressions::yield_argument::FormatJsYieldArgument,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::yield_argument::FormatJsYieldArgument::default(),
@@ -3055,7 +3055,7 @@ impl AsFormat for rome_js_syntax::TsTypeParameters {
         rome_js_syntax::TsTypeParameters,
         crate::ts::bindings::type_parameters::FormatTsTypeParameters,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::bindings::type_parameters::FormatTsTypeParameters::default(),
@@ -3089,7 +3089,7 @@ impl AsFormat for rome_js_syntax::JsParameters {
         rome_js_syntax::JsParameters,
         crate::js::bindings::parameters::FormatJsParameters,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::bindings::parameters::FormatJsParameters::default(),
@@ -3127,7 +3127,7 @@ impl AsFormat for rome_js_syntax::TsReturnTypeAnnotation {
         rome_js_syntax::TsReturnTypeAnnotation,
         crate::ts::auxiliary::return_type_annotation::FormatTsReturnTypeAnnotation,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::return_type_annotation::FormatTsReturnTypeAnnotation::default(),
@@ -3161,7 +3161,7 @@ impl AsFormat for rome_js_syntax::JsFunctionBody {
         rome_js_syntax::JsFunctionBody,
         crate::js::auxiliary::function_body::FormatJsFunctionBody,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::function_body::FormatJsFunctionBody::default(),
@@ -3193,7 +3193,7 @@ impl AsFormat for rome_js_syntax::JsSpread {
         rome_js_syntax::JsSpread,
         crate::js::auxiliary::spread::FormatJsSpread,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::spread::FormatJsSpread::default(),
@@ -3225,7 +3225,7 @@ impl AsFormat for rome_js_syntax::JsArrayHole {
         rome_js_syntax::JsArrayHole,
         crate::js::auxiliary::array_hole::FormatJsArrayHole,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::array_hole::FormatJsArrayHole::default(),
@@ -3263,7 +3263,7 @@ impl AsFormat for rome_js_syntax::JsReferenceIdentifier {
         rome_js_syntax::JsReferenceIdentifier,
         crate::js::auxiliary::reference_identifier::FormatJsReferenceIdentifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::reference_identifier::FormatJsReferenceIdentifier::default(),
@@ -3297,7 +3297,7 @@ impl AsFormat for rome_js_syntax::JsPrivateName {
         rome_js_syntax::JsPrivateName,
         crate::js::auxiliary::private_name::FormatJsPrivateName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::private_name::FormatJsPrivateName::default(),
@@ -3335,7 +3335,7 @@ impl AsFormat for rome_js_syntax::JsLiteralMemberName {
         rome_js_syntax::JsLiteralMemberName,
         crate::js::objects::literal_member_name::FormatJsLiteralMemberName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::objects::literal_member_name::FormatJsLiteralMemberName::default(),
@@ -3373,7 +3373,7 @@ impl AsFormat for rome_js_syntax::JsComputedMemberName {
         rome_js_syntax::JsComputedMemberName,
         crate::js::objects::computed_member_name::FormatJsComputedMemberName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::objects::computed_member_name::FormatJsComputedMemberName::default(),
@@ -3411,7 +3411,7 @@ impl AsFormat for rome_js_syntax::JsPropertyObjectMember {
         rome_js_syntax::JsPropertyObjectMember,
         crate::js::objects::property_object_member::FormatJsPropertyObjectMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::objects::property_object_member::FormatJsPropertyObjectMember::default(),
@@ -3449,7 +3449,7 @@ impl AsFormat for rome_js_syntax::JsMethodObjectMember {
         rome_js_syntax::JsMethodObjectMember,
         crate::js::objects::method_object_member::FormatJsMethodObjectMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::objects::method_object_member::FormatJsMethodObjectMember::default(),
@@ -3487,7 +3487,7 @@ impl AsFormat for rome_js_syntax::JsGetterObjectMember {
         rome_js_syntax::JsGetterObjectMember,
         crate::js::objects::getter_object_member::FormatJsGetterObjectMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::objects::getter_object_member::FormatJsGetterObjectMember::default(),
@@ -3525,7 +3525,7 @@ impl AsFormat for rome_js_syntax::JsSetterObjectMember {
         rome_js_syntax::JsSetterObjectMember,
         crate::js::objects::setter_object_member::FormatJsSetterObjectMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::objects::setter_object_member::FormatJsSetterObjectMember::default(),
@@ -3563,7 +3563,7 @@ impl AsFormat for rome_js_syntax::JsShorthandPropertyObjectMember {
         rome_js_syntax::JsShorthandPropertyObjectMember,
         crate::js::objects::shorthand_property_object_member::FormatJsShorthandPropertyObjectMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: objects :: shorthand_property_object_member :: FormatJsShorthandPropertyObjectMember :: default ())
     }
 }
@@ -3591,7 +3591,7 @@ impl AsFormat for rome_js_syntax::JsExtendsClause {
         rome_js_syntax::JsExtendsClause,
         crate::js::classes::extends_clause::FormatJsExtendsClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::classes::extends_clause::FormatJsExtendsClause::default(),
@@ -3629,7 +3629,7 @@ impl AsFormat for rome_js_syntax::TsImplementsClause {
         rome_js_syntax::TsImplementsClause,
         crate::ts::auxiliary::implements_clause::FormatTsImplementsClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::implements_clause::FormatTsImplementsClause::default(),
@@ -3651,7 +3651,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsImplementsClause {
 impl FormatRule < rome_js_syntax :: JsClassExportDefaultDeclaration > for crate :: js :: declarations :: class_export_default_declaration :: FormatJsClassExportDefaultDeclaration { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: JsClassExportDefaultDeclaration , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: JsClassExportDefaultDeclaration > :: fmt (self , node , f) } }
 impl AsFormat for rome_js_syntax::JsClassExportDefaultDeclaration {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: JsClassExportDefaultDeclaration , crate :: js :: declarations :: class_export_default_declaration :: FormatJsClassExportDefaultDeclaration > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: declarations :: class_export_default_declaration :: FormatJsClassExportDefaultDeclaration :: default ())
     }
 }
@@ -3680,7 +3680,7 @@ impl AsFormat for rome_js_syntax::JsPrivateClassMemberName {
         rome_js_syntax::JsPrivateClassMemberName,
         crate::js::objects::private_class_member_name::FormatJsPrivateClassMemberName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::objects::private_class_member_name::FormatJsPrivateClassMemberName::default(
@@ -3720,7 +3720,7 @@ impl AsFormat for rome_js_syntax::JsConstructorClassMember {
         rome_js_syntax::JsConstructorClassMember,
         crate::js::classes::constructor_class_member::FormatJsConstructorClassMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::classes::constructor_class_member::FormatJsConstructorClassMember::default(),
@@ -3742,7 +3742,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsConstructorClassMe
 impl FormatRule < rome_js_syntax :: JsStaticInitializationBlockClassMember > for crate :: js :: classes :: static_initialization_block_class_member :: FormatJsStaticInitializationBlockClassMember { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: JsStaticInitializationBlockClassMember , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: JsStaticInitializationBlockClassMember > :: fmt (self , node , f) } }
 impl AsFormat for rome_js_syntax::JsStaticInitializationBlockClassMember {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: JsStaticInitializationBlockClassMember , crate :: js :: classes :: static_initialization_block_class_member :: FormatJsStaticInitializationBlockClassMember > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: classes :: static_initialization_block_class_member :: FormatJsStaticInitializationBlockClassMember :: default ())
     }
 }
@@ -3771,7 +3771,7 @@ impl AsFormat for rome_js_syntax::JsPropertyClassMember {
         rome_js_syntax::JsPropertyClassMember,
         crate::js::classes::property_class_member::FormatJsPropertyClassMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::classes::property_class_member::FormatJsPropertyClassMember::default(),
@@ -3809,7 +3809,7 @@ impl AsFormat for rome_js_syntax::JsMethodClassMember {
         rome_js_syntax::JsMethodClassMember,
         crate::js::classes::method_class_member::FormatJsMethodClassMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::classes::method_class_member::FormatJsMethodClassMember::default(),
@@ -3847,7 +3847,7 @@ impl AsFormat for rome_js_syntax::JsGetterClassMember {
         rome_js_syntax::JsGetterClassMember,
         crate::js::classes::getter_class_member::FormatJsGetterClassMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::classes::getter_class_member::FormatJsGetterClassMember::default(),
@@ -3885,7 +3885,7 @@ impl AsFormat for rome_js_syntax::JsSetterClassMember {
         rome_js_syntax::JsSetterClassMember,
         crate::js::classes::setter_class_member::FormatJsSetterClassMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::classes::setter_class_member::FormatJsSetterClassMember::default(),
@@ -3907,7 +3907,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsSetterClassMember 
 impl FormatRule < rome_js_syntax :: TsConstructorSignatureClassMember > for crate :: ts :: classes :: constructor_signature_class_member :: FormatTsConstructorSignatureClassMember { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: TsConstructorSignatureClassMember , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: TsConstructorSignatureClassMember > :: fmt (self , node , f) } }
 impl AsFormat for rome_js_syntax::TsConstructorSignatureClassMember {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: TsConstructorSignatureClassMember , crate :: ts :: classes :: constructor_signature_class_member :: FormatTsConstructorSignatureClassMember > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: classes :: constructor_signature_class_member :: FormatTsConstructorSignatureClassMember :: default ())
     }
 }
@@ -3936,7 +3936,7 @@ impl AsFormat for rome_js_syntax::TsPropertySignatureClassMember {
         rome_js_syntax::TsPropertySignatureClassMember,
         crate::ts::classes::property_signature_class_member::FormatTsPropertySignatureClassMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: classes :: property_signature_class_member :: FormatTsPropertySignatureClassMember :: default ())
     }
 }
@@ -3968,7 +3968,7 @@ impl AsFormat for rome_js_syntax::TsMethodSignatureClassMember {
         rome_js_syntax::TsMethodSignatureClassMember,
         crate::ts::classes::method_signature_class_member::FormatTsMethodSignatureClassMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: classes :: method_signature_class_member :: FormatTsMethodSignatureClassMember :: default ())
     }
 }
@@ -4000,7 +4000,7 @@ impl AsFormat for rome_js_syntax::TsGetterSignatureClassMember {
         rome_js_syntax::TsGetterSignatureClassMember,
         crate::ts::classes::getter_signature_class_member::FormatTsGetterSignatureClassMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: classes :: getter_signature_class_member :: FormatTsGetterSignatureClassMember :: default ())
     }
 }
@@ -4032,7 +4032,7 @@ impl AsFormat for rome_js_syntax::TsSetterSignatureClassMember {
         rome_js_syntax::TsSetterSignatureClassMember,
         crate::ts::classes::setter_signature_class_member::FormatTsSetterSignatureClassMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: classes :: setter_signature_class_member :: FormatTsSetterSignatureClassMember :: default ())
     }
 }
@@ -4064,7 +4064,7 @@ impl AsFormat for rome_js_syntax::TsIndexSignatureClassMember {
         rome_js_syntax::TsIndexSignatureClassMember,
         crate::ts::classes::index_signature_class_member::FormatTsIndexSignatureClassMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: classes :: index_signature_class_member :: FormatTsIndexSignatureClassMember :: default ())
     }
 }
@@ -4096,7 +4096,7 @@ impl AsFormat for rome_js_syntax::JsEmptyClassMember {
         rome_js_syntax::JsEmptyClassMember,
         crate::js::classes::empty_class_member::FormatJsEmptyClassMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::classes::empty_class_member::FormatJsEmptyClassMember::default(),
@@ -4134,7 +4134,7 @@ impl AsFormat for rome_js_syntax::JsStaticModifier {
         rome_js_syntax::JsStaticModifier,
         crate::js::auxiliary::static_modifier::FormatJsStaticModifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::static_modifier::FormatJsStaticModifier::default(),
@@ -4172,7 +4172,7 @@ impl AsFormat for rome_js_syntax::TsDeclareModifier {
         rome_js_syntax::TsDeclareModifier,
         crate::ts::auxiliary::declare_modifier::FormatTsDeclareModifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::declare_modifier::FormatTsDeclareModifier::default(),
@@ -4210,7 +4210,7 @@ impl AsFormat for rome_js_syntax::TsReadonlyModifier {
         rome_js_syntax::TsReadonlyModifier,
         crate::ts::auxiliary::readonly_modifier::FormatTsReadonlyModifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::readonly_modifier::FormatTsReadonlyModifier::default(),
@@ -4248,7 +4248,7 @@ impl AsFormat for rome_js_syntax::TsAbstractModifier {
         rome_js_syntax::TsAbstractModifier,
         crate::ts::auxiliary::abstract_modifier::FormatTsAbstractModifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::abstract_modifier::FormatTsAbstractModifier::default(),
@@ -4286,7 +4286,7 @@ impl AsFormat for rome_js_syntax::TsOverrideModifier {
         rome_js_syntax::TsOverrideModifier,
         crate::ts::auxiliary::override_modifier::FormatTsOverrideModifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::override_modifier::FormatTsOverrideModifier::default(),
@@ -4324,7 +4324,7 @@ impl AsFormat for rome_js_syntax::TsAccessibilityModifier {
         rome_js_syntax::TsAccessibilityModifier,
         crate::ts::auxiliary::accessibility_modifier::FormatTsAccessibilityModifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::accessibility_modifier::FormatTsAccessibilityModifier::default(),
@@ -4362,7 +4362,7 @@ impl AsFormat for rome_js_syntax::JsConstructorParameters {
         rome_js_syntax::JsConstructorParameters,
         crate::js::bindings::constructor_parameters::FormatJsConstructorParameters,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::bindings::constructor_parameters::FormatJsConstructorParameters::default(),
@@ -4396,7 +4396,7 @@ impl AsFormat for rome_js_syntax::JsRestParameter {
         rome_js_syntax::JsRestParameter,
         crate::js::bindings::rest_parameter::FormatJsRestParameter,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::bindings::rest_parameter::FormatJsRestParameter::default(),
@@ -4434,7 +4434,7 @@ impl AsFormat for rome_js_syntax::TsPropertyParameter {
         rome_js_syntax::TsPropertyParameter,
         crate::ts::bindings::property_parameter::FormatTsPropertyParameter,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::bindings::property_parameter::FormatTsPropertyParameter::default(),
@@ -4472,7 +4472,7 @@ impl AsFormat for rome_js_syntax::JsInitializerClause {
         rome_js_syntax::JsInitializerClause,
         crate::js::auxiliary::initializer_clause::FormatJsInitializerClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::auxiliary::initializer_clause::FormatJsInitializerClause::default(),
@@ -4510,7 +4510,7 @@ impl AsFormat for rome_js_syntax::TsOptionalPropertyAnnotation {
         rome_js_syntax::TsOptionalPropertyAnnotation,
         crate::ts::auxiliary::optional_property_annotation::FormatTsOptionalPropertyAnnotation,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: auxiliary :: optional_property_annotation :: FormatTsOptionalPropertyAnnotation :: default ())
     }
 }
@@ -4542,7 +4542,7 @@ impl AsFormat for rome_js_syntax::TsDefinitePropertyAnnotation {
         rome_js_syntax::TsDefinitePropertyAnnotation,
         crate::ts::auxiliary::definite_property_annotation::FormatTsDefinitePropertyAnnotation,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: auxiliary :: definite_property_annotation :: FormatTsDefinitePropertyAnnotation :: default ())
     }
 }
@@ -4574,7 +4574,7 @@ impl AsFormat for rome_js_syntax::TsIndexSignatureParameter {
         rome_js_syntax::TsIndexSignatureParameter,
         crate::ts::bindings::index_signature_parameter::FormatTsIndexSignatureParameter,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: bindings :: index_signature_parameter :: FormatTsIndexSignatureParameter :: default ())
     }
 }
@@ -4606,7 +4606,7 @@ impl AsFormat for rome_js_syntax::JsIdentifierAssignment {
         rome_js_syntax::JsIdentifierAssignment,
         crate::js::assignments::identifier_assignment::FormatJsIdentifierAssignment,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::assignments::identifier_assignment::FormatJsIdentifierAssignment::default(),
@@ -4644,7 +4644,7 @@ impl AsFormat for rome_js_syntax::JsStaticMemberAssignment {
         rome_js_syntax::JsStaticMemberAssignment,
         crate::js::assignments::static_member_assignment::FormatJsStaticMemberAssignment,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: assignments :: static_member_assignment :: FormatJsStaticMemberAssignment :: default ())
     }
 }
@@ -4676,7 +4676,7 @@ impl AsFormat for rome_js_syntax::JsComputedMemberAssignment {
         rome_js_syntax::JsComputedMemberAssignment,
         crate::js::assignments::computed_member_assignment::FormatJsComputedMemberAssignment,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: assignments :: computed_member_assignment :: FormatJsComputedMemberAssignment :: default ())
     }
 }
@@ -4708,7 +4708,7 @@ impl AsFormat for rome_js_syntax::JsParenthesizedAssignment {
         rome_js_syntax::JsParenthesizedAssignment,
         crate::js::assignments::parenthesized_assignment::FormatJsParenthesizedAssignment,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: assignments :: parenthesized_assignment :: FormatJsParenthesizedAssignment :: default ())
     }
 }
@@ -4740,7 +4740,7 @@ impl AsFormat for rome_js_syntax::TsNonNullAssertionAssignment {
         rome_js_syntax::TsNonNullAssertionAssignment,
         crate::ts::assignments::non_null_assertion_assignment::FormatTsNonNullAssertionAssignment,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: assignments :: non_null_assertion_assignment :: FormatTsNonNullAssertionAssignment :: default ())
     }
 }
@@ -4768,7 +4768,7 @@ impl AsFormat for rome_js_syntax::TsAsAssignment {
         rome_js_syntax::TsAsAssignment,
         crate::ts::assignments::as_assignment::FormatTsAsAssignment,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::assignments::as_assignment::FormatTsAsAssignment::default(),
@@ -4806,7 +4806,7 @@ impl AsFormat for rome_js_syntax::TsTypeAssertionAssignment {
         rome_js_syntax::TsTypeAssertionAssignment,
         crate::ts::assignments::type_assertion_assignment::FormatTsTypeAssertionAssignment,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: assignments :: type_assertion_assignment :: FormatTsTypeAssertionAssignment :: default ())
     }
 }
@@ -4838,7 +4838,7 @@ impl AsFormat for rome_js_syntax::JsAssignmentWithDefault {
         rome_js_syntax::JsAssignmentWithDefault,
         crate::js::assignments::assignment_with_default::FormatJsAssignmentWithDefault,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::assignments::assignment_with_default::FormatJsAssignmentWithDefault::default(
@@ -4878,7 +4878,7 @@ impl AsFormat for rome_js_syntax::JsArrayAssignmentPattern {
         rome_js_syntax::JsArrayAssignmentPattern,
         crate::js::assignments::array_assignment_pattern::FormatJsArrayAssignmentPattern,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: assignments :: array_assignment_pattern :: FormatJsArrayAssignmentPattern :: default ())
     }
 }
@@ -4910,7 +4910,7 @@ impl AsFormat for rome_js_syntax::JsObjectAssignmentPattern {
         rome_js_syntax::JsObjectAssignmentPattern,
         crate::js::assignments::object_assignment_pattern::FormatJsObjectAssignmentPattern,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: assignments :: object_assignment_pattern :: FormatJsObjectAssignmentPattern :: default ())
     }
 }
@@ -4926,7 +4926,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsObjectAssignmentPa
 impl FormatRule < rome_js_syntax :: JsArrayAssignmentPatternRestElement > for crate :: js :: assignments :: array_assignment_pattern_rest_element :: FormatJsArrayAssignmentPatternRestElement { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: JsArrayAssignmentPatternRestElement , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: JsArrayAssignmentPatternRestElement > :: fmt (self , node , f) } }
 impl AsFormat for rome_js_syntax::JsArrayAssignmentPatternRestElement {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: JsArrayAssignmentPatternRestElement , crate :: js :: assignments :: array_assignment_pattern_rest_element :: FormatJsArrayAssignmentPatternRestElement > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: assignments :: array_assignment_pattern_rest_element :: FormatJsArrayAssignmentPatternRestElement :: default ())
     }
 }
@@ -4939,7 +4939,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsArrayAssignmentPat
 impl FormatRule < rome_js_syntax :: JsObjectAssignmentPatternShorthandProperty > for crate :: js :: assignments :: object_assignment_pattern_shorthand_property :: FormatJsObjectAssignmentPatternShorthandProperty { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: JsObjectAssignmentPatternShorthandProperty , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: JsObjectAssignmentPatternShorthandProperty > :: fmt (self , node , f) } }
 impl AsFormat for rome_js_syntax::JsObjectAssignmentPatternShorthandProperty {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: JsObjectAssignmentPatternShorthandProperty , crate :: js :: assignments :: object_assignment_pattern_shorthand_property :: FormatJsObjectAssignmentPatternShorthandProperty > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: assignments :: object_assignment_pattern_shorthand_property :: FormatJsObjectAssignmentPatternShorthandProperty :: default ())
     }
 }
@@ -4954,7 +4954,7 @@ impl IntoFormat<crate::JsFormatContext>
 impl FormatRule < rome_js_syntax :: JsObjectAssignmentPatternProperty > for crate :: js :: assignments :: object_assignment_pattern_property :: FormatJsObjectAssignmentPatternProperty { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: JsObjectAssignmentPatternProperty , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: JsObjectAssignmentPatternProperty > :: fmt (self , node , f) } }
 impl AsFormat for rome_js_syntax::JsObjectAssignmentPatternProperty {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: JsObjectAssignmentPatternProperty , crate :: js :: assignments :: object_assignment_pattern_property :: FormatJsObjectAssignmentPatternProperty > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: assignments :: object_assignment_pattern_property :: FormatJsObjectAssignmentPatternProperty :: default ())
     }
 }
@@ -4983,7 +4983,7 @@ impl AsFormat for rome_js_syntax::JsObjectAssignmentPatternRest {
         rome_js_syntax::JsObjectAssignmentPatternRest,
         crate::js::assignments::object_assignment_pattern_rest::FormatJsObjectAssignmentPatternRest,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: assignments :: object_assignment_pattern_rest :: FormatJsObjectAssignmentPatternRest :: default ())
     }
 }
@@ -5015,7 +5015,7 @@ impl AsFormat for rome_js_syntax::JsIdentifierBinding {
         rome_js_syntax::JsIdentifierBinding,
         crate::js::bindings::identifier_binding::FormatJsIdentifierBinding,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::bindings::identifier_binding::FormatJsIdentifierBinding::default(),
@@ -5053,7 +5053,7 @@ impl AsFormat for rome_js_syntax::JsBindingPatternWithDefault {
         rome_js_syntax::JsBindingPatternWithDefault,
         crate::js::bindings::binding_pattern_with_default::FormatJsBindingPatternWithDefault,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: bindings :: binding_pattern_with_default :: FormatJsBindingPatternWithDefault :: default ())
     }
 }
@@ -5085,7 +5085,7 @@ impl AsFormat for rome_js_syntax::JsArrayBindingPattern {
         rome_js_syntax::JsArrayBindingPattern,
         crate::js::bindings::array_binding_pattern::FormatJsArrayBindingPattern,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::bindings::array_binding_pattern::FormatJsArrayBindingPattern::default(),
@@ -5123,7 +5123,7 @@ impl AsFormat for rome_js_syntax::JsObjectBindingPattern {
         rome_js_syntax::JsObjectBindingPattern,
         crate::js::bindings::object_binding_pattern::FormatJsObjectBindingPattern,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::bindings::object_binding_pattern::FormatJsObjectBindingPattern::default(),
@@ -5145,7 +5145,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsObjectBindingPatte
 impl FormatRule < rome_js_syntax :: JsArrayBindingPatternRestElement > for crate :: js :: bindings :: array_binding_pattern_rest_element :: FormatJsArrayBindingPatternRestElement { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: JsArrayBindingPatternRestElement , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: JsArrayBindingPatternRestElement > :: fmt (self , node , f) } }
 impl AsFormat for rome_js_syntax::JsArrayBindingPatternRestElement {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: JsArrayBindingPatternRestElement , crate :: js :: bindings :: array_binding_pattern_rest_element :: FormatJsArrayBindingPatternRestElement > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: bindings :: array_binding_pattern_rest_element :: FormatJsArrayBindingPatternRestElement :: default ())
     }
 }
@@ -5174,7 +5174,7 @@ impl AsFormat for rome_js_syntax::JsObjectBindingPatternProperty {
         rome_js_syntax::JsObjectBindingPatternProperty,
         crate::js::bindings::object_binding_pattern_property::FormatJsObjectBindingPatternProperty,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: bindings :: object_binding_pattern_property :: FormatJsObjectBindingPatternProperty :: default ())
     }
 }
@@ -5206,7 +5206,7 @@ impl AsFormat for rome_js_syntax::JsObjectBindingPatternRest {
         rome_js_syntax::JsObjectBindingPatternRest,
         crate::js::bindings::object_binding_pattern_rest::FormatJsObjectBindingPatternRest,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: bindings :: object_binding_pattern_rest :: FormatJsObjectBindingPatternRest :: default ())
     }
 }
@@ -5222,7 +5222,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsObjectBindingPatte
 impl FormatRule < rome_js_syntax :: JsObjectBindingPatternShorthandProperty > for crate :: js :: bindings :: object_binding_pattern_shorthand_property :: FormatJsObjectBindingPatternShorthandProperty { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: JsObjectBindingPatternShorthandProperty , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: JsObjectBindingPatternShorthandProperty > :: fmt (self , node , f) } }
 impl AsFormat for rome_js_syntax::JsObjectBindingPatternShorthandProperty {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: JsObjectBindingPatternShorthandProperty , crate :: js :: bindings :: object_binding_pattern_shorthand_property :: FormatJsObjectBindingPatternShorthandProperty > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: bindings :: object_binding_pattern_shorthand_property :: FormatJsObjectBindingPatternShorthandProperty :: default ())
     }
 }
@@ -5253,7 +5253,7 @@ impl AsFormat for rome_js_syntax::JsStringLiteralExpression {
         rome_js_syntax::JsStringLiteralExpression,
         crate::js::expressions::string_literal_expression::FormatJsStringLiteralExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: expressions :: string_literal_expression :: FormatJsStringLiteralExpression :: default ())
     }
 }
@@ -5285,7 +5285,7 @@ impl AsFormat for rome_js_syntax::JsNumberLiteralExpression {
         rome_js_syntax::JsNumberLiteralExpression,
         crate::js::expressions::number_literal_expression::FormatJsNumberLiteralExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: expressions :: number_literal_expression :: FormatJsNumberLiteralExpression :: default ())
     }
 }
@@ -5317,7 +5317,7 @@ impl AsFormat for rome_js_syntax::JsBigIntLiteralExpression {
         rome_js_syntax::JsBigIntLiteralExpression,
         crate::js::expressions::big_int_literal_expression::FormatJsBigIntLiteralExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: expressions :: big_int_literal_expression :: FormatJsBigIntLiteralExpression :: default ())
     }
 }
@@ -5349,7 +5349,7 @@ impl AsFormat for rome_js_syntax::JsBooleanLiteralExpression {
         rome_js_syntax::JsBooleanLiteralExpression,
         crate::js::expressions::boolean_literal_expression::FormatJsBooleanLiteralExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: expressions :: boolean_literal_expression :: FormatJsBooleanLiteralExpression :: default ())
     }
 }
@@ -5381,7 +5381,7 @@ impl AsFormat for rome_js_syntax::JsNullLiteralExpression {
         rome_js_syntax::JsNullLiteralExpression,
         crate::js::expressions::null_literal_expression::FormatJsNullLiteralExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::expressions::null_literal_expression::FormatJsNullLiteralExpression::default(
@@ -5421,7 +5421,7 @@ impl AsFormat for rome_js_syntax::JsRegexLiteralExpression {
         rome_js_syntax::JsRegexLiteralExpression,
         crate::js::expressions::regex_literal_expression::FormatJsRegexLiteralExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: expressions :: regex_literal_expression :: FormatJsRegexLiteralExpression :: default ())
     }
 }
@@ -5453,7 +5453,7 @@ impl AsFormat for rome_js_syntax::JsVariableDeclarationClause {
         rome_js_syntax::JsVariableDeclarationClause,
         crate::js::auxiliary::variable_declaration_clause::FormatJsVariableDeclarationClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: auxiliary :: variable_declaration_clause :: FormatJsVariableDeclarationClause :: default ())
     }
 }
@@ -5485,7 +5485,7 @@ impl AsFormat for rome_js_syntax::TsDefiniteVariableAnnotation {
         rome_js_syntax::TsDefiniteVariableAnnotation,
         crate::ts::auxiliary::definite_variable_annotation::FormatTsDefiniteVariableAnnotation,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: auxiliary :: definite_variable_annotation :: FormatTsDefiniteVariableAnnotation :: default ())
     }
 }
@@ -5508,7 +5508,7 @@ impl FormatRule<rome_js_syntax::JsExport> for crate::js::module::export::FormatJ
 impl AsFormat for rome_js_syntax::JsExport {
     type Format<'a> =
         FormatRefWithRule<'a, rome_js_syntax::JsExport, crate::js::module::export::FormatJsExport>;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, crate::js::module::export::FormatJsExport::default())
     }
 }
@@ -5529,7 +5529,7 @@ impl FormatRule<rome_js_syntax::JsImport> for crate::js::module::import::FormatJ
 impl AsFormat for rome_js_syntax::JsImport {
     type Format<'a> =
         FormatRefWithRule<'a, rome_js_syntax::JsImport, crate::js::module::import::FormatJsImport>;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, crate::js::module::import::FormatJsImport::default())
     }
 }
@@ -5559,7 +5559,7 @@ impl AsFormat for rome_js_syntax::JsImportBareClause {
         rome_js_syntax::JsImportBareClause,
         crate::js::module::import_bare_clause::FormatJsImportBareClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::import_bare_clause::FormatJsImportBareClause::default(),
@@ -5597,7 +5597,7 @@ impl AsFormat for rome_js_syntax::JsImportNamedClause {
         rome_js_syntax::JsImportNamedClause,
         crate::js::module::import_named_clause::FormatJsImportNamedClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::import_named_clause::FormatJsImportNamedClause::default(),
@@ -5635,7 +5635,7 @@ impl AsFormat for rome_js_syntax::JsImportDefaultClause {
         rome_js_syntax::JsImportDefaultClause,
         crate::js::module::import_default_clause::FormatJsImportDefaultClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::import_default_clause::FormatJsImportDefaultClause::default(),
@@ -5673,7 +5673,7 @@ impl AsFormat for rome_js_syntax::JsImportNamespaceClause {
         rome_js_syntax::JsImportNamespaceClause,
         crate::js::module::import_namespace_clause::FormatJsImportNamespaceClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::import_namespace_clause::FormatJsImportNamespaceClause::default(),
@@ -5707,7 +5707,7 @@ impl AsFormat for rome_js_syntax::JsModuleSource {
         rome_js_syntax::JsModuleSource,
         crate::js::module::module_source::FormatJsModuleSource,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::module_source::FormatJsModuleSource::default(),
@@ -5745,7 +5745,7 @@ impl AsFormat for rome_js_syntax::JsImportAssertion {
         rome_js_syntax::JsImportAssertion,
         crate::js::module::import_assertion::FormatJsImportAssertion,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::import_assertion::FormatJsImportAssertion::default(),
@@ -5783,7 +5783,7 @@ impl AsFormat for rome_js_syntax::JsDefaultImportSpecifier {
         rome_js_syntax::JsDefaultImportSpecifier,
         crate::js::module::default_import_specifier::FormatJsDefaultImportSpecifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::default_import_specifier::FormatJsDefaultImportSpecifier::default(),
@@ -5821,7 +5821,7 @@ impl AsFormat for rome_js_syntax::JsNamedImportSpecifiers {
         rome_js_syntax::JsNamedImportSpecifiers,
         crate::js::module::named_import_specifiers::FormatJsNamedImportSpecifiers,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::named_import_specifiers::FormatJsNamedImportSpecifiers::default(),
@@ -5859,7 +5859,7 @@ impl AsFormat for rome_js_syntax::JsNamespaceImportSpecifier {
         rome_js_syntax::JsNamespaceImportSpecifier,
         crate::js::module::namespace_import_specifier::FormatJsNamespaceImportSpecifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: module :: namespace_import_specifier :: FormatJsNamespaceImportSpecifier :: default ())
     }
 }
@@ -5891,7 +5891,7 @@ impl AsFormat for rome_js_syntax::JsShorthandNamedImportSpecifier {
         rome_js_syntax::JsShorthandNamedImportSpecifier,
         crate::js::module::shorthand_named_import_specifier::FormatJsShorthandNamedImportSpecifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: module :: shorthand_named_import_specifier :: FormatJsShorthandNamedImportSpecifier :: default ())
     }
 }
@@ -5923,7 +5923,7 @@ impl AsFormat for rome_js_syntax::JsNamedImportSpecifier {
         rome_js_syntax::JsNamedImportSpecifier,
         crate::js::module::named_import_specifier::FormatJsNamedImportSpecifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::named_import_specifier::FormatJsNamedImportSpecifier::default(),
@@ -5961,7 +5961,7 @@ impl AsFormat for rome_js_syntax::JsLiteralExportName {
         rome_js_syntax::JsLiteralExportName,
         crate::js::module::literal_export_name::FormatJsLiteralExportName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::literal_export_name::FormatJsLiteralExportName::default(),
@@ -5999,7 +5999,7 @@ impl AsFormat for rome_js_syntax::JsImportAssertionEntry {
         rome_js_syntax::JsImportAssertionEntry,
         crate::js::module::import_assertion_entry::FormatJsImportAssertionEntry,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::import_assertion_entry::FormatJsImportAssertionEntry::default(),
@@ -6033,7 +6033,7 @@ impl FormatRule<rome_js_syntax::JsExportDefaultDeclarationClause>
 }
 impl AsFormat for rome_js_syntax::JsExportDefaultDeclarationClause {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: JsExportDefaultDeclarationClause , crate :: js :: module :: export_default_declaration_clause :: FormatJsExportDefaultDeclarationClause > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: module :: export_default_declaration_clause :: FormatJsExportDefaultDeclarationClause :: default ())
     }
 }
@@ -6062,7 +6062,7 @@ impl AsFormat for rome_js_syntax::JsExportDefaultExpressionClause {
         rome_js_syntax::JsExportDefaultExpressionClause,
         crate::js::module::export_default_expression_clause::FormatJsExportDefaultExpressionClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: module :: export_default_expression_clause :: FormatJsExportDefaultExpressionClause :: default ())
     }
 }
@@ -6094,7 +6094,7 @@ impl AsFormat for rome_js_syntax::JsExportNamedClause {
         rome_js_syntax::JsExportNamedClause,
         crate::js::module::export_named_clause::FormatJsExportNamedClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::export_named_clause::FormatJsExportNamedClause::default(),
@@ -6132,7 +6132,7 @@ impl AsFormat for rome_js_syntax::JsExportFromClause {
         rome_js_syntax::JsExportFromClause,
         crate::js::module::export_from_clause::FormatJsExportFromClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::export_from_clause::FormatJsExportFromClause::default(),
@@ -6170,7 +6170,7 @@ impl AsFormat for rome_js_syntax::JsExportNamedFromClause {
         rome_js_syntax::JsExportNamedFromClause,
         crate::js::module::export_named_from_clause::FormatJsExportNamedFromClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::export_named_from_clause::FormatJsExportNamedFromClause::default(),
@@ -6208,7 +6208,7 @@ impl AsFormat for rome_js_syntax::TsExportAsNamespaceClause {
         rome_js_syntax::TsExportAsNamespaceClause,
         crate::ts::module::export_as_namespace_clause::FormatTsExportAsNamespaceClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::module::export_as_namespace_clause::FormatTsExportAsNamespaceClause::default(
@@ -6248,7 +6248,7 @@ impl AsFormat for rome_js_syntax::TsExportAssignmentClause {
         rome_js_syntax::TsExportAssignmentClause,
         crate::ts::module::export_assignment_clause::FormatTsExportAssignmentClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::module::export_assignment_clause::FormatTsExportAssignmentClause::default(),
@@ -6286,7 +6286,7 @@ impl AsFormat for rome_js_syntax::TsExportDeclareClause {
         rome_js_syntax::TsExportDeclareClause,
         crate::ts::module::export_declare_clause::FormatTsExportDeclareClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::module::export_declare_clause::FormatTsExportDeclareClause::default(),
@@ -6308,7 +6308,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsExportDeclareClaus
 impl FormatRule < rome_js_syntax :: JsFunctionExportDefaultDeclaration > for crate :: js :: declarations :: function_export_default_declaration :: FormatJsFunctionExportDefaultDeclaration { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: JsFunctionExportDefaultDeclaration , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: JsFunctionExportDefaultDeclaration > :: fmt (self , node , f) } }
 impl AsFormat for rome_js_syntax::JsFunctionExportDefaultDeclaration {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: JsFunctionExportDefaultDeclaration , crate :: js :: declarations :: function_export_default_declaration :: FormatJsFunctionExportDefaultDeclaration > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: declarations :: function_export_default_declaration :: FormatJsFunctionExportDefaultDeclaration :: default ())
     }
 }
@@ -6337,7 +6337,7 @@ impl AsFormat for rome_js_syntax::JsExportNamedShorthandSpecifier {
         rome_js_syntax::JsExportNamedShorthandSpecifier,
         crate::js::module::export_named_shorthand_specifier::FormatJsExportNamedShorthandSpecifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: module :: export_named_shorthand_specifier :: FormatJsExportNamedShorthandSpecifier :: default ())
     }
 }
@@ -6369,7 +6369,7 @@ impl AsFormat for rome_js_syntax::JsExportNamedSpecifier {
         rome_js_syntax::JsExportNamedSpecifier,
         crate::js::module::export_named_specifier::FormatJsExportNamedSpecifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::export_named_specifier::FormatJsExportNamedSpecifier::default(),
@@ -6407,7 +6407,7 @@ impl AsFormat for rome_js_syntax::JsExportAsClause {
         rome_js_syntax::JsExportAsClause,
         crate::js::module::export_as_clause::FormatJsExportAsClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::module::export_as_clause::FormatJsExportAsClause::default(),
@@ -6445,7 +6445,7 @@ impl AsFormat for rome_js_syntax::JsExportNamedFromSpecifier {
         rome_js_syntax::JsExportNamedFromSpecifier,
         crate::js::module::export_named_from_specifier::FormatJsExportNamedFromSpecifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: module :: export_named_from_specifier :: FormatJsExportNamedFromSpecifier :: default ())
     }
 }
@@ -6468,7 +6468,7 @@ impl FormatRule<rome_js_syntax::JsName> for crate::js::auxiliary::name::FormatJs
 impl AsFormat for rome_js_syntax::JsName {
     type Format<'a> =
         FormatRefWithRule<'a, rome_js_syntax::JsName, crate::js::auxiliary::name::FormatJsName>;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, crate::js::auxiliary::name::FormatJsName::default())
     }
 }
@@ -6498,7 +6498,7 @@ impl AsFormat for rome_js_syntax::JsFormalParameter {
         rome_js_syntax::JsFormalParameter,
         crate::js::bindings::formal_parameter::FormatJsFormalParameter,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::bindings::formal_parameter::FormatJsFormalParameter::default(),
@@ -6532,7 +6532,7 @@ impl AsFormat for rome_js_syntax::TsThisParameter {
         rome_js_syntax::TsThisParameter,
         crate::ts::bindings::this_parameter::FormatTsThisParameter,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::bindings::this_parameter::FormatTsThisParameter::default(),
@@ -6564,7 +6564,7 @@ impl AsFormat for rome_js_syntax::TsAnyType {
         rome_js_syntax::TsAnyType,
         crate::ts::types::any_type::FormatTsAnyType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, crate::ts::types::any_type::FormatTsAnyType::default())
     }
 }
@@ -6590,7 +6590,7 @@ impl AsFormat for rome_js_syntax::TsUnknownType {
         rome_js_syntax::TsUnknownType,
         crate::ts::types::unknown_type::FormatTsUnknownType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::unknown_type::FormatTsUnknownType::default(),
@@ -6624,7 +6624,7 @@ impl AsFormat for rome_js_syntax::TsNumberType {
         rome_js_syntax::TsNumberType,
         crate::ts::types::number_type::FormatTsNumberType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::number_type::FormatTsNumberType::default(),
@@ -6658,7 +6658,7 @@ impl AsFormat for rome_js_syntax::TsBooleanType {
         rome_js_syntax::TsBooleanType,
         crate::ts::types::boolean_type::FormatTsBooleanType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::boolean_type::FormatTsBooleanType::default(),
@@ -6692,7 +6692,7 @@ impl AsFormat for rome_js_syntax::TsBigintType {
         rome_js_syntax::TsBigintType,
         crate::ts::types::bigint_type::FormatTsBigintType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::bigint_type::FormatTsBigintType::default(),
@@ -6726,7 +6726,7 @@ impl AsFormat for rome_js_syntax::TsStringType {
         rome_js_syntax::TsStringType,
         crate::ts::types::string_type::FormatTsStringType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::string_type::FormatTsStringType::default(),
@@ -6760,7 +6760,7 @@ impl AsFormat for rome_js_syntax::TsSymbolType {
         rome_js_syntax::TsSymbolType,
         crate::ts::types::symbol_type::FormatTsSymbolType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::symbol_type::FormatTsSymbolType::default(),
@@ -6792,7 +6792,7 @@ impl AsFormat for rome_js_syntax::TsVoidType {
         rome_js_syntax::TsVoidType,
         crate::ts::types::void_type::FormatTsVoidType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::void_type::FormatTsVoidType::default(),
@@ -6826,7 +6826,7 @@ impl AsFormat for rome_js_syntax::TsUndefinedType {
         rome_js_syntax::TsUndefinedType,
         crate::ts::types::undefined_type::FormatTsUndefinedType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::undefined_type::FormatTsUndefinedType::default(),
@@ -6858,7 +6858,7 @@ impl AsFormat for rome_js_syntax::TsNeverType {
         rome_js_syntax::TsNeverType,
         crate::ts::types::never_type::FormatTsNeverType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::never_type::FormatTsNeverType::default(),
@@ -6896,7 +6896,7 @@ impl AsFormat for rome_js_syntax::TsParenthesizedType {
         rome_js_syntax::TsParenthesizedType,
         crate::ts::types::parenthesized_type::FormatTsParenthesizedType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::parenthesized_type::FormatTsParenthesizedType::default(),
@@ -6930,7 +6930,7 @@ impl AsFormat for rome_js_syntax::TsReferenceType {
         rome_js_syntax::TsReferenceType,
         crate::ts::types::reference_type::FormatTsReferenceType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::reference_type::FormatTsReferenceType::default(),
@@ -6962,7 +6962,7 @@ impl AsFormat for rome_js_syntax::TsArrayType {
         rome_js_syntax::TsArrayType,
         crate::ts::types::array_type::FormatTsArrayType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::array_type::FormatTsArrayType::default(),
@@ -6994,7 +6994,7 @@ impl AsFormat for rome_js_syntax::TsTupleType {
         rome_js_syntax::TsTupleType,
         crate::ts::types::tuple_type::FormatTsTupleType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::tuple_type::FormatTsTupleType::default(),
@@ -7028,7 +7028,7 @@ impl AsFormat for rome_js_syntax::TsTypeofType {
         rome_js_syntax::TsTypeofType,
         crate::ts::types::typeof_type::FormatTsTypeofType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::typeof_type::FormatTsTypeofType::default(),
@@ -7062,7 +7062,7 @@ impl AsFormat for rome_js_syntax::TsImportType {
         rome_js_syntax::TsImportType,
         crate::ts::module::import_type::FormatTsImportType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::module::import_type::FormatTsImportType::default(),
@@ -7100,7 +7100,7 @@ impl AsFormat for rome_js_syntax::TsTypeOperatorType {
         rome_js_syntax::TsTypeOperatorType,
         crate::ts::types::type_operator_type::FormatTsTypeOperatorType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::type_operator_type::FormatTsTypeOperatorType::default(),
@@ -7138,7 +7138,7 @@ impl AsFormat for rome_js_syntax::TsIndexedAccessType {
         rome_js_syntax::TsIndexedAccessType,
         crate::ts::types::indexed_access_type::FormatTsIndexedAccessType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::indexed_access_type::FormatTsIndexedAccessType::default(),
@@ -7172,7 +7172,7 @@ impl AsFormat for rome_js_syntax::TsMappedType {
         rome_js_syntax::TsMappedType,
         crate::ts::types::mapped_type::FormatTsMappedType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::mapped_type::FormatTsMappedType::default(),
@@ -7206,7 +7206,7 @@ impl AsFormat for rome_js_syntax::TsObjectType {
         rome_js_syntax::TsObjectType,
         crate::ts::types::object_type::FormatTsObjectType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::object_type::FormatTsObjectType::default(),
@@ -7244,7 +7244,7 @@ impl AsFormat for rome_js_syntax::TsNonPrimitiveType {
         rome_js_syntax::TsNonPrimitiveType,
         crate::ts::types::non_primitive_type::FormatTsNonPrimitiveType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::non_primitive_type::FormatTsNonPrimitiveType::default(),
@@ -7276,7 +7276,7 @@ impl AsFormat for rome_js_syntax::TsThisType {
         rome_js_syntax::TsThisType,
         crate::ts::types::this_type::FormatTsThisType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::this_type::FormatTsThisType::default(),
@@ -7314,7 +7314,7 @@ impl AsFormat for rome_js_syntax::TsNumberLiteralType {
         rome_js_syntax::TsNumberLiteralType,
         crate::ts::types::number_literal_type::FormatTsNumberLiteralType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::number_literal_type::FormatTsNumberLiteralType::default(),
@@ -7352,7 +7352,7 @@ impl AsFormat for rome_js_syntax::TsBigIntLiteralType {
         rome_js_syntax::TsBigIntLiteralType,
         crate::ts::types::big_int_literal_type::FormatTsBigIntLiteralType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::big_int_literal_type::FormatTsBigIntLiteralType::default(),
@@ -7390,7 +7390,7 @@ impl AsFormat for rome_js_syntax::TsStringLiteralType {
         rome_js_syntax::TsStringLiteralType,
         crate::ts::types::string_literal_type::FormatTsStringLiteralType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::string_literal_type::FormatTsStringLiteralType::default(),
@@ -7428,7 +7428,7 @@ impl AsFormat for rome_js_syntax::TsNullLiteralType {
         rome_js_syntax::TsNullLiteralType,
         crate::ts::types::null_literal_type::FormatTsNullLiteralType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::null_literal_type::FormatTsNullLiteralType::default(),
@@ -7466,7 +7466,7 @@ impl AsFormat for rome_js_syntax::TsBooleanLiteralType {
         rome_js_syntax::TsBooleanLiteralType,
         crate::ts::types::boolean_literal_type::FormatTsBooleanLiteralType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::boolean_literal_type::FormatTsBooleanLiteralType::default(),
@@ -7504,7 +7504,7 @@ impl AsFormat for rome_js_syntax::TsTemplateLiteralType {
         rome_js_syntax::TsTemplateLiteralType,
         crate::ts::expressions::template_literal_type::FormatTsTemplateLiteralType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::expressions::template_literal_type::FormatTsTemplateLiteralType::default(),
@@ -7536,7 +7536,7 @@ impl AsFormat for rome_js_syntax::TsInferType {
         rome_js_syntax::TsInferType,
         crate::ts::types::infer_type::FormatTsInferType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::infer_type::FormatTsInferType::default(),
@@ -7574,7 +7574,7 @@ impl AsFormat for rome_js_syntax::TsIntersectionType {
         rome_js_syntax::TsIntersectionType,
         crate::ts::types::intersection_type::FormatTsIntersectionType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::intersection_type::FormatTsIntersectionType::default(),
@@ -7606,7 +7606,7 @@ impl AsFormat for rome_js_syntax::TsUnionType {
         rome_js_syntax::TsUnionType,
         crate::ts::types::union_type::FormatTsUnionType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::union_type::FormatTsUnionType::default(),
@@ -7640,7 +7640,7 @@ impl AsFormat for rome_js_syntax::TsFunctionType {
         rome_js_syntax::TsFunctionType,
         crate::ts::types::function_type::FormatTsFunctionType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::function_type::FormatTsFunctionType::default(),
@@ -7678,7 +7678,7 @@ impl AsFormat for rome_js_syntax::TsConstructorType {
         rome_js_syntax::TsConstructorType,
         crate::ts::types::constructor_type::FormatTsConstructorType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::constructor_type::FormatTsConstructorType::default(),
@@ -7716,7 +7716,7 @@ impl AsFormat for rome_js_syntax::TsConditionalType {
         rome_js_syntax::TsConditionalType,
         crate::ts::types::conditional_type::FormatTsConditionalType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::conditional_type::FormatTsConditionalType::default(),
@@ -7754,7 +7754,7 @@ impl AsFormat for rome_js_syntax::TsIdentifierBinding {
         rome_js_syntax::TsIdentifierBinding,
         crate::ts::bindings::identifier_binding::FormatTsIdentifierBinding,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::bindings::identifier_binding::FormatTsIdentifierBinding::default(),
@@ -7788,7 +7788,7 @@ impl AsFormat for rome_js_syntax::TsEnumMember {
         rome_js_syntax::TsEnumMember,
         crate::ts::auxiliary::enum_member::FormatTsEnumMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::enum_member::FormatTsEnumMember::default(),
@@ -7826,7 +7826,7 @@ impl AsFormat for rome_js_syntax::TsExternalModuleReference {
         rome_js_syntax::TsExternalModuleReference,
         crate::ts::auxiliary::external_module_reference::FormatTsExternalModuleReference,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: auxiliary :: external_module_reference :: FormatTsExternalModuleReference :: default ())
     }
 }
@@ -7854,7 +7854,7 @@ impl AsFormat for rome_js_syntax::TsModuleBlock {
         rome_js_syntax::TsModuleBlock,
         crate::ts::auxiliary::module_block::FormatTsModuleBlock,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::module_block::FormatTsModuleBlock::default(),
@@ -7892,7 +7892,7 @@ impl AsFormat for rome_js_syntax::TsQualifiedModuleName {
         rome_js_syntax::TsQualifiedModuleName,
         crate::ts::auxiliary::qualified_module_name::FormatTsQualifiedModuleName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::qualified_module_name::FormatTsQualifiedModuleName::default(),
@@ -7914,7 +7914,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsQualifiedModuleNam
 impl FormatRule < rome_js_syntax :: TsEmptyExternalModuleDeclarationBody > for crate :: ts :: auxiliary :: empty_external_module_declaration_body :: FormatTsEmptyExternalModuleDeclarationBody { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: TsEmptyExternalModuleDeclarationBody , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: TsEmptyExternalModuleDeclarationBody > :: fmt (self , node , f) } }
 impl AsFormat for rome_js_syntax::TsEmptyExternalModuleDeclarationBody {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: TsEmptyExternalModuleDeclarationBody , crate :: ts :: auxiliary :: empty_external_module_declaration_body :: FormatTsEmptyExternalModuleDeclarationBody > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: auxiliary :: empty_external_module_declaration_body :: FormatTsEmptyExternalModuleDeclarationBody :: default ())
     }
 }
@@ -7943,7 +7943,7 @@ impl AsFormat for rome_js_syntax::TsTypeParameterName {
         rome_js_syntax::TsTypeParameterName,
         crate::ts::auxiliary::type_parameter_name::FormatTsTypeParameterName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::type_parameter_name::FormatTsTypeParameterName::default(),
@@ -7981,7 +7981,7 @@ impl AsFormat for rome_js_syntax::TsPredicateReturnType {
         rome_js_syntax::TsPredicateReturnType,
         crate::ts::types::predicate_return_type::FormatTsPredicateReturnType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::predicate_return_type::FormatTsPredicateReturnType::default(),
@@ -8019,7 +8019,7 @@ impl AsFormat for rome_js_syntax::TsAssertsReturnType {
         rome_js_syntax::TsAssertsReturnType,
         crate::ts::types::asserts_return_type::FormatTsAssertsReturnType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::types::asserts_return_type::FormatTsAssertsReturnType::default(),
@@ -8057,7 +8057,7 @@ impl AsFormat for rome_js_syntax::TsAssertsCondition {
         rome_js_syntax::TsAssertsCondition,
         crate::ts::auxiliary::asserts_condition::FormatTsAssertsCondition,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::asserts_condition::FormatTsAssertsCondition::default(),
@@ -8091,7 +8091,7 @@ impl AsFormat for rome_js_syntax::TsTypeParameter {
         rome_js_syntax::TsTypeParameter,
         crate::ts::bindings::type_parameter::FormatTsTypeParameter,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::bindings::type_parameter::FormatTsTypeParameter::default(),
@@ -8129,7 +8129,7 @@ impl AsFormat for rome_js_syntax::TsTypeConstraintClause {
         rome_js_syntax::TsTypeConstraintClause,
         crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause::default(),
@@ -8167,7 +8167,7 @@ impl AsFormat for rome_js_syntax::TsDefaultTypeClause {
         rome_js_syntax::TsDefaultTypeClause,
         crate::ts::auxiliary::default_type_clause::FormatTsDefaultTypeClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::default_type_clause::FormatTsDefaultTypeClause::default(),
@@ -8201,7 +8201,7 @@ impl AsFormat for rome_js_syntax::TsExtendsClause {
         rome_js_syntax::TsExtendsClause,
         crate::ts::classes::extends_clause::FormatTsExtendsClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::classes::extends_clause::FormatTsExtendsClause::default(),
@@ -8239,7 +8239,7 @@ impl AsFormat for rome_js_syntax::TsNameWithTypeArguments {
         rome_js_syntax::TsNameWithTypeArguments,
         crate::ts::expressions::name_with_type_arguments::FormatTsNameWithTypeArguments,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: expressions :: name_with_type_arguments :: FormatTsNameWithTypeArguments :: default ())
     }
 }
@@ -8271,7 +8271,7 @@ impl AsFormat for rome_js_syntax::TsCallSignatureTypeMember {
         rome_js_syntax::TsCallSignatureTypeMember,
         crate::ts::auxiliary::call_signature_type_member::FormatTsCallSignatureTypeMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: auxiliary :: call_signature_type_member :: FormatTsCallSignatureTypeMember :: default ())
     }
 }
@@ -8303,7 +8303,7 @@ impl AsFormat for rome_js_syntax::TsPropertySignatureTypeMember {
         rome_js_syntax::TsPropertySignatureTypeMember,
         crate::ts::auxiliary::property_signature_type_member::FormatTsPropertySignatureTypeMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: auxiliary :: property_signature_type_member :: FormatTsPropertySignatureTypeMember :: default ())
     }
 }
@@ -8335,7 +8335,7 @@ impl AsFormat for rome_js_syntax::TsConstructSignatureTypeMember {
         rome_js_syntax::TsConstructSignatureTypeMember,
         crate::ts::auxiliary::construct_signature_type_member::FormatTsConstructSignatureTypeMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: auxiliary :: construct_signature_type_member :: FormatTsConstructSignatureTypeMember :: default ())
     }
 }
@@ -8367,7 +8367,7 @@ impl AsFormat for rome_js_syntax::TsMethodSignatureTypeMember {
         rome_js_syntax::TsMethodSignatureTypeMember,
         crate::ts::auxiliary::method_signature_type_member::FormatTsMethodSignatureTypeMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: auxiliary :: method_signature_type_member :: FormatTsMethodSignatureTypeMember :: default ())
     }
 }
@@ -8399,7 +8399,7 @@ impl AsFormat for rome_js_syntax::TsGetterSignatureTypeMember {
         rome_js_syntax::TsGetterSignatureTypeMember,
         crate::ts::auxiliary::getter_signature_type_member::FormatTsGetterSignatureTypeMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: auxiliary :: getter_signature_type_member :: FormatTsGetterSignatureTypeMember :: default ())
     }
 }
@@ -8431,7 +8431,7 @@ impl AsFormat for rome_js_syntax::TsSetterSignatureTypeMember {
         rome_js_syntax::TsSetterSignatureTypeMember,
         crate::ts::auxiliary::setter_signature_type_member::FormatTsSetterSignatureTypeMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: auxiliary :: setter_signature_type_member :: FormatTsSetterSignatureTypeMember :: default ())
     }
 }
@@ -8463,7 +8463,7 @@ impl AsFormat for rome_js_syntax::TsIndexSignatureTypeMember {
         rome_js_syntax::TsIndexSignatureTypeMember,
         crate::ts::auxiliary::index_signature_type_member::FormatTsIndexSignatureTypeMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: auxiliary :: index_signature_type_member :: FormatTsIndexSignatureTypeMember :: default ())
     }
 }
@@ -8479,7 +8479,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsIndexSignatureType
 impl FormatRule < rome_js_syntax :: TsMappedTypeReadonlyModifierClause > for crate :: ts :: auxiliary :: mapped_type_readonly_modifier_clause :: FormatTsMappedTypeReadonlyModifierClause { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: TsMappedTypeReadonlyModifierClause , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: TsMappedTypeReadonlyModifierClause > :: fmt (self , node , f) } }
 impl AsFormat for rome_js_syntax::TsMappedTypeReadonlyModifierClause {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: TsMappedTypeReadonlyModifierClause , crate :: ts :: auxiliary :: mapped_type_readonly_modifier_clause :: FormatTsMappedTypeReadonlyModifierClause > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: auxiliary :: mapped_type_readonly_modifier_clause :: FormatTsMappedTypeReadonlyModifierClause :: default ())
     }
 }
@@ -8508,7 +8508,7 @@ impl AsFormat for rome_js_syntax::TsMappedTypeAsClause {
         rome_js_syntax::TsMappedTypeAsClause,
         crate::ts::auxiliary::mapped_type_as_clause::FormatTsMappedTypeAsClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::mapped_type_as_clause::FormatTsMappedTypeAsClause::default(),
@@ -8530,7 +8530,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsMappedTypeAsClause
 impl FormatRule < rome_js_syntax :: TsMappedTypeOptionalModifierClause > for crate :: ts :: auxiliary :: mapped_type_optional_modifier_clause :: FormatTsMappedTypeOptionalModifierClause { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: TsMappedTypeOptionalModifierClause , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: TsMappedTypeOptionalModifierClause > :: fmt (self , node , f) } }
 impl AsFormat for rome_js_syntax::TsMappedTypeOptionalModifierClause {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: TsMappedTypeOptionalModifierClause , crate :: ts :: auxiliary :: mapped_type_optional_modifier_clause :: FormatTsMappedTypeOptionalModifierClause > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: auxiliary :: mapped_type_optional_modifier_clause :: FormatTsMappedTypeOptionalModifierClause :: default ())
     }
 }
@@ -8559,7 +8559,7 @@ impl AsFormat for rome_js_syntax::TsImportTypeQualifier {
         rome_js_syntax::TsImportTypeQualifier,
         crate::ts::module::import_type_qualifier::FormatTsImportTypeQualifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::module::import_type_qualifier::FormatTsImportTypeQualifier::default(),
@@ -8597,7 +8597,7 @@ impl AsFormat for rome_js_syntax::TsNamedTupleTypeElement {
         rome_js_syntax::TsNamedTupleTypeElement,
         crate::ts::auxiliary::named_tuple_type_element::FormatTsNamedTupleTypeElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::named_tuple_type_element::FormatTsNamedTupleTypeElement::default(
@@ -8637,7 +8637,7 @@ impl AsFormat for rome_js_syntax::TsRestTupleTypeElement {
         rome_js_syntax::TsRestTupleTypeElement,
         crate::ts::auxiliary::rest_tuple_type_element::FormatTsRestTupleTypeElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::rest_tuple_type_element::FormatTsRestTupleTypeElement::default(),
@@ -8675,7 +8675,7 @@ impl AsFormat for rome_js_syntax::TsOptionalTupleTypeElement {
         rome_js_syntax::TsOptionalTupleTypeElement,
         crate::ts::auxiliary::optional_tuple_type_element::FormatTsOptionalTupleTypeElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: auxiliary :: optional_tuple_type_element :: FormatTsOptionalTupleTypeElement :: default ())
     }
 }
@@ -8707,7 +8707,7 @@ impl AsFormat for rome_js_syntax::TsTemplateChunkElement {
         rome_js_syntax::TsTemplateChunkElement,
         crate::ts::expressions::template_chunk_element::FormatTsTemplateChunkElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::expressions::template_chunk_element::FormatTsTemplateChunkElement::default(),
@@ -8745,7 +8745,7 @@ impl AsFormat for rome_js_syntax::TsTemplateElement {
         rome_js_syntax::TsTemplateElement,
         crate::ts::expressions::template_element::FormatTsTemplateElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::expressions::template_element::FormatTsTemplateElement::default(),
@@ -8779,7 +8779,7 @@ impl AsFormat for rome_js_syntax::TsQualifiedName {
         rome_js_syntax::TsQualifiedName,
         crate::ts::auxiliary::qualified_name::FormatTsQualifiedName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::auxiliary::qualified_name::FormatTsQualifiedName::default(),
@@ -8811,7 +8811,7 @@ impl AsFormat for rome_js_syntax::JsxElement {
         rome_js_syntax::JsxElement,
         crate::jsx::tag::element::FormatJsxElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, crate::jsx::tag::element::FormatJsxElement::default())
     }
 }
@@ -8841,7 +8841,7 @@ impl AsFormat for rome_js_syntax::JsxSelfClosingElement {
         rome_js_syntax::JsxSelfClosingElement,
         crate::jsx::tag::self_closing_element::FormatJsxSelfClosingElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::tag::self_closing_element::FormatJsxSelfClosingElement::default(),
@@ -8873,7 +8873,7 @@ impl AsFormat for rome_js_syntax::JsxFragment {
         rome_js_syntax::JsxFragment,
         crate::jsx::tag::fragment::FormatJsxFragment,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::tag::fragment::FormatJsxFragment::default(),
@@ -8911,7 +8911,7 @@ impl AsFormat for rome_js_syntax::JsxOpeningElement {
         rome_js_syntax::JsxOpeningElement,
         crate::jsx::tag::opening_element::FormatJsxOpeningElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::tag::opening_element::FormatJsxOpeningElement::default(),
@@ -8949,7 +8949,7 @@ impl AsFormat for rome_js_syntax::JsxClosingElement {
         rome_js_syntax::JsxClosingElement,
         crate::jsx::tag::closing_element::FormatJsxClosingElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::tag::closing_element::FormatJsxClosingElement::default(),
@@ -8987,7 +8987,7 @@ impl AsFormat for rome_js_syntax::JsxOpeningFragment {
         rome_js_syntax::JsxOpeningFragment,
         crate::jsx::tag::opening_fragment::FormatJsxOpeningFragment,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::tag::opening_fragment::FormatJsxOpeningFragment::default(),
@@ -9025,7 +9025,7 @@ impl AsFormat for rome_js_syntax::JsxClosingFragment {
         rome_js_syntax::JsxClosingFragment,
         crate::jsx::tag::closing_fragment::FormatJsxClosingFragment,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::tag::closing_fragment::FormatJsxClosingFragment::default(),
@@ -9054,7 +9054,7 @@ impl FormatRule<rome_js_syntax::JsxName> for crate::jsx::auxiliary::name::Format
 impl AsFormat for rome_js_syntax::JsxName {
     type Format<'a> =
         FormatRefWithRule<'a, rome_js_syntax::JsxName, crate::jsx::auxiliary::name::FormatJsxName>;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, crate::jsx::auxiliary::name::FormatJsxName::default())
     }
 }
@@ -9084,7 +9084,7 @@ impl AsFormat for rome_js_syntax::JsxReferenceIdentifier {
         rome_js_syntax::JsxReferenceIdentifier,
         crate::jsx::auxiliary::reference_identifier::FormatJsxReferenceIdentifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::auxiliary::reference_identifier::FormatJsxReferenceIdentifier::default(),
@@ -9122,7 +9122,7 @@ impl AsFormat for rome_js_syntax::JsxNamespaceName {
         rome_js_syntax::JsxNamespaceName,
         crate::jsx::auxiliary::namespace_name::FormatJsxNamespaceName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::auxiliary::namespace_name::FormatJsxNamespaceName::default(),
@@ -9156,7 +9156,7 @@ impl AsFormat for rome_js_syntax::JsxMemberName {
         rome_js_syntax::JsxMemberName,
         crate::jsx::objects::member_name::FormatJsxMemberName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::objects::member_name::FormatJsxMemberName::default(),
@@ -9190,7 +9190,7 @@ impl AsFormat for rome_js_syntax::JsxAttribute {
         rome_js_syntax::JsxAttribute,
         crate::jsx::attribute::attribute::FormatJsxAttribute,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::attribute::attribute::FormatJsxAttribute::default(),
@@ -9228,7 +9228,7 @@ impl AsFormat for rome_js_syntax::JsxSpreadAttribute {
         rome_js_syntax::JsxSpreadAttribute,
         crate::jsx::attribute::spread_attribute::FormatJsxSpreadAttribute,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::attribute::spread_attribute::FormatJsxSpreadAttribute::default(),
@@ -9266,7 +9266,7 @@ impl AsFormat for rome_js_syntax::JsxAttributeInitializerClause {
         rome_js_syntax::JsxAttributeInitializerClause,
         crate::jsx::attribute::attribute_initializer_clause::FormatJsxAttributeInitializerClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: jsx :: attribute :: attribute_initializer_clause :: FormatJsxAttributeInitializerClause :: default ())
     }
 }
@@ -9292,7 +9292,7 @@ impl AsFormat for rome_js_syntax::JsxString {
         rome_js_syntax::JsxString,
         crate::jsx::auxiliary::string::FormatJsxString,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::auxiliary::string::FormatJsxString::default(),
@@ -9330,7 +9330,7 @@ impl AsFormat for rome_js_syntax::JsxExpressionAttributeValue {
         rome_js_syntax::JsxExpressionAttributeValue,
         crate::jsx::attribute::expression_attribute_value::FormatJsxExpressionAttributeValue,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: jsx :: attribute :: expression_attribute_value :: FormatJsxExpressionAttributeValue :: default ())
     }
 }
@@ -9353,7 +9353,7 @@ impl FormatRule<rome_js_syntax::JsxText> for crate::jsx::auxiliary::text::Format
 impl AsFormat for rome_js_syntax::JsxText {
     type Format<'a> =
         FormatRefWithRule<'a, rome_js_syntax::JsxText, crate::jsx::auxiliary::text::FormatJsxText>;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, crate::jsx::auxiliary::text::FormatJsxText::default())
     }
 }
@@ -9383,7 +9383,7 @@ impl AsFormat for rome_js_syntax::JsxExpressionChild {
         rome_js_syntax::JsxExpressionChild,
         crate::jsx::auxiliary::expression_child::FormatJsxExpressionChild,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::auxiliary::expression_child::FormatJsxExpressionChild::default(),
@@ -9417,7 +9417,7 @@ impl AsFormat for rome_js_syntax::JsxSpreadChild {
         rome_js_syntax::JsxSpreadChild,
         crate::jsx::auxiliary::spread_child::FormatJsxSpreadChild,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::auxiliary::spread_child::FormatJsxSpreadChild::default(),
@@ -9438,7 +9438,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsxSpreadChild {
 }
 impl AsFormat for rome_js_syntax::JsArrayAssignmentPatternElementList {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: JsArrayAssignmentPatternElementList , crate :: js :: lists :: array_assignment_pattern_element_list :: FormatJsArrayAssignmentPatternElementList > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: lists :: array_assignment_pattern_element_list :: FormatJsArrayAssignmentPatternElementList :: default ())
     }
 }
@@ -9450,7 +9450,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsArrayAssignmentPat
 }
 impl AsFormat for rome_js_syntax::JsArrayBindingPatternElementList {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: JsArrayBindingPatternElementList , crate :: js :: lists :: array_binding_pattern_element_list :: FormatJsArrayBindingPatternElementList > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: lists :: array_binding_pattern_element_list :: FormatJsArrayBindingPatternElementList :: default ())
     }
 }
@@ -9466,7 +9466,7 @@ impl AsFormat for rome_js_syntax::JsArrayElementList {
         rome_js_syntax::JsArrayElementList,
         crate::js::lists::array_element_list::FormatJsArrayElementList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::lists::array_element_list::FormatJsArrayElementList::default(),
@@ -9491,7 +9491,7 @@ impl AsFormat for rome_js_syntax::JsCallArgumentList {
         rome_js_syntax::JsCallArgumentList,
         crate::js::lists::call_argument_list::FormatJsCallArgumentList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::lists::call_argument_list::FormatJsCallArgumentList::default(),
@@ -9516,7 +9516,7 @@ impl AsFormat for rome_js_syntax::JsClassMemberList {
         rome_js_syntax::JsClassMemberList,
         crate::js::lists::class_member_list::FormatJsClassMemberList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::lists::class_member_list::FormatJsClassMemberList::default(),
@@ -9541,7 +9541,7 @@ impl AsFormat for rome_js_syntax::JsConstructorModifierList {
         rome_js_syntax::JsConstructorModifierList,
         crate::js::lists::constructor_modifier_list::FormatJsConstructorModifierList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::lists::constructor_modifier_list::FormatJsConstructorModifierList::default(),
@@ -9566,7 +9566,7 @@ impl AsFormat for rome_js_syntax::JsConstructorParameterList {
         rome_js_syntax::JsConstructorParameterList,
         crate::js::lists::constructor_parameter_list::FormatJsConstructorParameterList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::lists::constructor_parameter_list::FormatJsConstructorParameterList::default(
@@ -9593,7 +9593,7 @@ impl AsFormat for rome_js_syntax::JsDirectiveList {
         rome_js_syntax::JsDirectiveList,
         crate::js::lists::directive_list::FormatJsDirectiveList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::lists::directive_list::FormatJsDirectiveList::default(),
@@ -9618,7 +9618,7 @@ impl AsFormat for rome_js_syntax::JsExportNamedFromSpecifierList {
         rome_js_syntax::JsExportNamedFromSpecifierList,
         crate::js::lists::export_named_from_specifier_list::FormatJsExportNamedFromSpecifierList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: lists :: export_named_from_specifier_list :: FormatJsExportNamedFromSpecifierList :: default ())
     }
 }
@@ -9637,7 +9637,7 @@ impl AsFormat for rome_js_syntax::JsExportNamedSpecifierList {
         rome_js_syntax::JsExportNamedSpecifierList,
         crate::js::lists::export_named_specifier_list::FormatJsExportNamedSpecifierList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: lists :: export_named_specifier_list :: FormatJsExportNamedSpecifierList :: default ())
     }
 }
@@ -9656,7 +9656,7 @@ impl AsFormat for rome_js_syntax::JsImportAssertionEntryList {
         rome_js_syntax::JsImportAssertionEntryList,
         crate::js::lists::import_assertion_entry_list::FormatJsImportAssertionEntryList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: lists :: import_assertion_entry_list :: FormatJsImportAssertionEntryList :: default ())
     }
 }
@@ -9675,7 +9675,7 @@ impl AsFormat for rome_js_syntax::JsMethodModifierList {
         rome_js_syntax::JsMethodModifierList,
         crate::js::lists::method_modifier_list::FormatJsMethodModifierList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::lists::method_modifier_list::FormatJsMethodModifierList::default(),
@@ -9700,7 +9700,7 @@ impl AsFormat for rome_js_syntax::JsModuleItemList {
         rome_js_syntax::JsModuleItemList,
         crate::js::lists::module_item_list::FormatJsModuleItemList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::lists::module_item_list::FormatJsModuleItemList::default(),
@@ -9725,7 +9725,7 @@ impl AsFormat for rome_js_syntax::JsNamedImportSpecifierList {
         rome_js_syntax::JsNamedImportSpecifierList,
         crate::js::lists::named_import_specifier_list::FormatJsNamedImportSpecifierList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: lists :: named_import_specifier_list :: FormatJsNamedImportSpecifierList :: default ())
     }
 }
@@ -9740,7 +9740,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsNamedImportSpecifi
 }
 impl AsFormat for rome_js_syntax::JsObjectAssignmentPatternPropertyList {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: JsObjectAssignmentPatternPropertyList , crate :: js :: lists :: object_assignment_pattern_property_list :: FormatJsObjectAssignmentPatternPropertyList > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: lists :: object_assignment_pattern_property_list :: FormatJsObjectAssignmentPatternPropertyList :: default ())
     }
 }
@@ -9752,7 +9752,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsObjectAssignmentPa
 }
 impl AsFormat for rome_js_syntax::JsObjectBindingPatternPropertyList {
     type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: JsObjectBindingPatternPropertyList , crate :: js :: lists :: object_binding_pattern_property_list :: FormatJsObjectBindingPatternPropertyList > ;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: lists :: object_binding_pattern_property_list :: FormatJsObjectBindingPatternPropertyList :: default ())
     }
 }
@@ -9768,7 +9768,7 @@ impl AsFormat for rome_js_syntax::JsObjectMemberList {
         rome_js_syntax::JsObjectMemberList,
         crate::js::lists::object_member_list::FormatJsObjectMemberList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::lists::object_member_list::FormatJsObjectMemberList::default(),
@@ -9793,7 +9793,7 @@ impl AsFormat for rome_js_syntax::JsParameterList {
         rome_js_syntax::JsParameterList,
         crate::js::lists::parameter_list::FormatJsParameterList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::lists::parameter_list::FormatJsParameterList::default(),
@@ -9818,7 +9818,7 @@ impl AsFormat for rome_js_syntax::JsPropertyModifierList {
         rome_js_syntax::JsPropertyModifierList,
         crate::js::lists::property_modifier_list::FormatJsPropertyModifierList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::lists::property_modifier_list::FormatJsPropertyModifierList::default(),
@@ -9843,7 +9843,7 @@ impl AsFormat for rome_js_syntax::JsStatementList {
         rome_js_syntax::JsStatementList,
         crate::js::lists::statement_list::FormatJsStatementList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::lists::statement_list::FormatJsStatementList::default(),
@@ -9868,7 +9868,7 @@ impl AsFormat for rome_js_syntax::JsSwitchCaseList {
         rome_js_syntax::JsSwitchCaseList,
         crate::js::lists::switch_case_list::FormatJsSwitchCaseList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::lists::switch_case_list::FormatJsSwitchCaseList::default(),
@@ -9893,7 +9893,7 @@ impl AsFormat for rome_js_syntax::JsTemplateElementList {
         rome_js_syntax::JsTemplateElementList,
         crate::js::lists::template_element_list::FormatJsTemplateElementList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::lists::template_element_list::FormatJsTemplateElementList::default(),
@@ -9918,7 +9918,7 @@ impl AsFormat for rome_js_syntax::JsVariableDeclaratorList {
         rome_js_syntax::JsVariableDeclaratorList,
         crate::js::lists::variable_declarator_list::FormatJsVariableDeclaratorList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::lists::variable_declarator_list::FormatJsVariableDeclaratorList::default(),
@@ -9943,7 +9943,7 @@ impl AsFormat for rome_js_syntax::JsxAttributeList {
         rome_js_syntax::JsxAttributeList,
         crate::jsx::lists::attribute_list::FormatJsxAttributeList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::lists::attribute_list::FormatJsxAttributeList::default(),
@@ -9968,7 +9968,7 @@ impl AsFormat for rome_js_syntax::JsxChildList {
         rome_js_syntax::JsxChildList,
         crate::jsx::lists::child_list::FormatJsxChildList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::lists::child_list::FormatJsxChildList::default(),
@@ -9993,7 +9993,7 @@ impl AsFormat for rome_js_syntax::TsEnumMemberList {
         rome_js_syntax::TsEnumMemberList,
         crate::ts::lists::enum_member_list::FormatTsEnumMemberList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::lists::enum_member_list::FormatTsEnumMemberList::default(),
@@ -10018,7 +10018,7 @@ impl AsFormat for rome_js_syntax::TsIndexSignatureModifierList {
         rome_js_syntax::TsIndexSignatureModifierList,
         crate::ts::lists::index_signature_modifier_list::FormatTsIndexSignatureModifierList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: lists :: index_signature_modifier_list :: FormatTsIndexSignatureModifierList :: default ())
     }
 }
@@ -10037,7 +10037,7 @@ impl AsFormat for rome_js_syntax::TsIntersectionTypeElementList {
         rome_js_syntax::TsIntersectionTypeElementList,
         crate::ts::lists::intersection_type_element_list::FormatTsIntersectionTypeElementList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: lists :: intersection_type_element_list :: FormatTsIntersectionTypeElementList :: default ())
     }
 }
@@ -10056,7 +10056,7 @@ impl AsFormat for rome_js_syntax::TsMethodSignatureModifierList {
         rome_js_syntax::TsMethodSignatureModifierList,
         crate::ts::lists::method_signature_modifier_list::FormatTsMethodSignatureModifierList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: lists :: method_signature_modifier_list :: FormatTsMethodSignatureModifierList :: default ())
     }
 }
@@ -10075,7 +10075,7 @@ impl AsFormat for rome_js_syntax::TsPropertyParameterModifierList {
         rome_js_syntax::TsPropertyParameterModifierList,
         crate::ts::lists::property_parameter_modifier_list::FormatTsPropertyParameterModifierList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: lists :: property_parameter_modifier_list :: FormatTsPropertyParameterModifierList :: default ())
     }
 }
@@ -10094,7 +10094,7 @@ impl AsFormat for rome_js_syntax::TsPropertySignatureModifierList {
         rome_js_syntax::TsPropertySignatureModifierList,
         crate::ts::lists::property_signature_modifier_list::FormatTsPropertySignatureModifierList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: lists :: property_signature_modifier_list :: FormatTsPropertySignatureModifierList :: default ())
     }
 }
@@ -10113,7 +10113,7 @@ impl AsFormat for rome_js_syntax::TsTemplateElementList {
         rome_js_syntax::TsTemplateElementList,
         crate::ts::lists::template_element_list::FormatTsTemplateElementList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::lists::template_element_list::FormatTsTemplateElementList::default(),
@@ -10138,7 +10138,7 @@ impl AsFormat for rome_js_syntax::TsTupleTypeElementList {
         rome_js_syntax::TsTupleTypeElementList,
         crate::ts::lists::tuple_type_element_list::FormatTsTupleTypeElementList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::lists::tuple_type_element_list::FormatTsTupleTypeElementList::default(),
@@ -10163,7 +10163,7 @@ impl AsFormat for rome_js_syntax::TsTypeArgumentList {
         rome_js_syntax::TsTypeArgumentList,
         crate::ts::lists::type_argument_list::FormatTsTypeArgumentList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::lists::type_argument_list::FormatTsTypeArgumentList::default(),
@@ -10188,7 +10188,7 @@ impl AsFormat for rome_js_syntax::TsTypeList {
         rome_js_syntax::TsTypeList,
         crate::ts::lists::type_list::FormatTsTypeList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::lists::type_list::FormatTsTypeList::default(),
@@ -10213,7 +10213,7 @@ impl AsFormat for rome_js_syntax::TsTypeMemberList {
         rome_js_syntax::TsTypeMemberList,
         crate::ts::lists::type_member_list::FormatTsTypeMemberList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::lists::type_member_list::FormatTsTypeMemberList::default(),
@@ -10238,7 +10238,7 @@ impl AsFormat for rome_js_syntax::TsTypeParameterList {
         rome_js_syntax::TsTypeParameterList,
         crate::ts::lists::type_parameter_list::FormatTsTypeParameterList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::lists::type_parameter_list::FormatTsTypeParameterList::default(),
@@ -10263,7 +10263,7 @@ impl AsFormat for rome_js_syntax::TsUnionTypeVariantList {
         rome_js_syntax::TsUnionTypeVariantList,
         crate::ts::lists::union_type_variant_list::FormatTsUnionTypeVariantList,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::lists::union_type_variant_list::FormatTsUnionTypeVariantList::default(),
@@ -10295,7 +10295,7 @@ impl AsFormat for rome_js_syntax::JsUnknown {
         rome_js_syntax::JsUnknown,
         crate::js::unknown::unknown::FormatJsUnknown,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::unknown::unknown::FormatJsUnknown::default(),
@@ -10333,7 +10333,7 @@ impl AsFormat for rome_js_syntax::JsUnknownStatement {
         rome_js_syntax::JsUnknownStatement,
         crate::js::unknown::unknown_statement::FormatJsUnknownStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::unknown::unknown_statement::FormatJsUnknownStatement::default(),
@@ -10371,7 +10371,7 @@ impl AsFormat for rome_js_syntax::JsUnknownExpression {
         rome_js_syntax::JsUnknownExpression,
         crate::js::unknown::unknown_expression::FormatJsUnknownExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::unknown::unknown_expression::FormatJsUnknownExpression::default(),
@@ -10405,7 +10405,7 @@ impl AsFormat for rome_js_syntax::JsUnknownMember {
         rome_js_syntax::JsUnknownMember,
         crate::js::unknown::unknown_member::FormatJsUnknownMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::unknown::unknown_member::FormatJsUnknownMember::default(),
@@ -10443,7 +10443,7 @@ impl AsFormat for rome_js_syntax::JsUnknownBinding {
         rome_js_syntax::JsUnknownBinding,
         crate::js::unknown::unknown_binding::FormatJsUnknownBinding,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::unknown::unknown_binding::FormatJsUnknownBinding::default(),
@@ -10481,7 +10481,7 @@ impl AsFormat for rome_js_syntax::JsUnknownAssignment {
         rome_js_syntax::JsUnknownAssignment,
         crate::js::unknown::unknown_assignment::FormatJsUnknownAssignment,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::unknown::unknown_assignment::FormatJsUnknownAssignment::default(),
@@ -10519,7 +10519,7 @@ impl AsFormat for rome_js_syntax::JsUnknownParameter {
         rome_js_syntax::JsUnknownParameter,
         crate::js::unknown::unknown_parameter::FormatJsUnknownParameter,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::unknown::unknown_parameter::FormatJsUnknownParameter::default(),
@@ -10557,7 +10557,7 @@ impl AsFormat for rome_js_syntax::JsUnknownImportAssertionEntry {
         rome_js_syntax::JsUnknownImportAssertionEntry,
         crate::js::unknown::unknown_import_assertion_entry::FormatJsUnknownImportAssertionEntry,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: unknown :: unknown_import_assertion_entry :: FormatJsUnknownImportAssertionEntry :: default ())
     }
 }
@@ -10589,7 +10589,7 @@ impl AsFormat for rome_js_syntax::JsUnknownNamedImportSpecifier {
         rome_js_syntax::JsUnknownNamedImportSpecifier,
         crate::js::unknown::unknown_named_import_specifier::FormatJsUnknownNamedImportSpecifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: unknown :: unknown_named_import_specifier :: FormatJsUnknownNamedImportSpecifier :: default ())
     }
 }
@@ -10605,7 +10605,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsUnknownNamedImport
 impl AsFormat for rome_js_syntax::JsAnyRoot {
     type Format<'a> =
         FormatRefWithRule<'a, rome_js_syntax::JsAnyRoot, crate::js::any::root::FormatJsAnyRoot>;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, crate::js::any::root::FormatJsAnyRoot::default())
     }
 }
@@ -10622,7 +10622,7 @@ impl AsFormat for rome_js_syntax::JsAnyExpression {
         rome_js_syntax::JsAnyExpression,
         crate::js::any::expression::FormatJsAnyExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::expression::FormatJsAnyExpression::default(),
@@ -10647,7 +10647,7 @@ impl AsFormat for rome_js_syntax::JsAnyStatement {
         rome_js_syntax::JsAnyStatement,
         crate::js::any::statement::FormatJsAnyStatement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::statement::FormatJsAnyStatement::default(),
@@ -10672,7 +10672,7 @@ impl AsFormat for rome_js_syntax::JsAnyForInitializer {
         rome_js_syntax::JsAnyForInitializer,
         crate::js::any::for_initializer::FormatJsAnyForInitializer,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::for_initializer::FormatJsAnyForInitializer::default(),
@@ -10697,7 +10697,7 @@ impl AsFormat for rome_js_syntax::JsAnyForInOrOfInitializer {
         rome_js_syntax::JsAnyForInOrOfInitializer,
         crate::js::any::for_in_or_of_initializer::FormatJsAnyForInOrOfInitializer,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::for_in_or_of_initializer::FormatJsAnyForInOrOfInitializer::default(),
@@ -10722,7 +10722,7 @@ impl AsFormat for rome_js_syntax::JsAnyAssignmentPattern {
         rome_js_syntax::JsAnyAssignmentPattern,
         crate::js::any::assignment_pattern::FormatJsAnyAssignmentPattern,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::assignment_pattern::FormatJsAnyAssignmentPattern::default(),
@@ -10747,7 +10747,7 @@ impl AsFormat for rome_js_syntax::JsAnySwitchClause {
         rome_js_syntax::JsAnySwitchClause,
         crate::js::any::switch_clause::FormatJsAnySwitchClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::switch_clause::FormatJsAnySwitchClause::default(),
@@ -10772,7 +10772,7 @@ impl AsFormat for rome_js_syntax::JsAnyBindingPattern {
         rome_js_syntax::JsAnyBindingPattern,
         crate::js::any::binding_pattern::FormatJsAnyBindingPattern,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::binding_pattern::FormatJsAnyBindingPattern::default(),
@@ -10797,7 +10797,7 @@ impl AsFormat for rome_js_syntax::JsAnyDeclarationClause {
         rome_js_syntax::JsAnyDeclarationClause,
         crate::js::any::declaration_clause::FormatJsAnyDeclarationClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::declaration_clause::FormatJsAnyDeclarationClause::default(),
@@ -10822,7 +10822,7 @@ impl AsFormat for rome_js_syntax::JsAnyLiteralExpression {
         rome_js_syntax::JsAnyLiteralExpression,
         crate::js::any::literal_expression::FormatJsAnyLiteralExpression,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::literal_expression::FormatJsAnyLiteralExpression::default(),
@@ -10847,7 +10847,7 @@ impl AsFormat for rome_js_syntax::JsAnyTemplateElement {
         rome_js_syntax::JsAnyTemplateElement,
         crate::js::any::template_element::FormatJsAnyTemplateElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::template_element::FormatJsAnyTemplateElement::default(),
@@ -10872,7 +10872,7 @@ impl AsFormat for rome_js_syntax::JsAnyBinding {
         rome_js_syntax::JsAnyBinding,
         crate::js::any::binding::FormatJsAnyBinding,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, crate::js::any::binding::FormatJsAnyBinding::default())
     }
 }
@@ -10891,7 +10891,7 @@ impl AsFormat for rome_js_syntax::JsAnyArrowFunctionParameters {
         rome_js_syntax::JsAnyArrowFunctionParameters,
         crate::js::any::arrow_function_parameters::FormatJsAnyArrowFunctionParameters,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::arrow_function_parameters::FormatJsAnyArrowFunctionParameters::default(
@@ -10918,7 +10918,7 @@ impl AsFormat for rome_js_syntax::JsAnyFunctionBody {
         rome_js_syntax::JsAnyFunctionBody,
         crate::js::any::function_body::FormatJsAnyFunctionBody,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::function_body::FormatJsAnyFunctionBody::default(),
@@ -10943,7 +10943,7 @@ impl AsFormat for rome_js_syntax::JsAnyArrayElement {
         rome_js_syntax::JsAnyArrayElement,
         crate::js::any::array_element::FormatJsAnyArrayElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::array_element::FormatJsAnyArrayElement::default(),
@@ -10965,7 +10965,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsAnyArrayElement {
 impl AsFormat for rome_js_syntax::JsAnyName {
     type Format<'a> =
         FormatRefWithRule<'a, rome_js_syntax::JsAnyName, crate::js::any::name::FormatJsAnyName>;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, crate::js::any::name::FormatJsAnyName::default())
     }
 }
@@ -10982,7 +10982,7 @@ impl AsFormat for rome_js_syntax::JsAnyInProperty {
         rome_js_syntax::JsAnyInProperty,
         crate::js::any::in_property::FormatJsAnyInProperty,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::in_property::FormatJsAnyInProperty::default(),
@@ -11007,7 +11007,7 @@ impl AsFormat for rome_js_syntax::JsAnyAssignment {
         rome_js_syntax::JsAnyAssignment,
         crate::js::any::assignment::FormatJsAnyAssignment,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::assignment::FormatJsAnyAssignment::default(),
@@ -11032,7 +11032,7 @@ impl AsFormat for rome_js_syntax::JsAnyObjectMemberName {
         rome_js_syntax::JsAnyObjectMemberName,
         crate::js::any::object_member_name::FormatJsAnyObjectMemberName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::object_member_name::FormatJsAnyObjectMemberName::default(),
@@ -11057,7 +11057,7 @@ impl AsFormat for rome_js_syntax::JsAnyObjectMember {
         rome_js_syntax::JsAnyObjectMember,
         crate::js::any::object_member::FormatJsAnyObjectMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::object_member::FormatJsAnyObjectMember::default(),
@@ -11082,7 +11082,7 @@ impl AsFormat for rome_js_syntax::JsAnyFormalParameter {
         rome_js_syntax::JsAnyFormalParameter,
         crate::js::any::formal_parameter::FormatJsAnyFormalParameter,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::formal_parameter::FormatJsAnyFormalParameter::default(),
@@ -11107,7 +11107,7 @@ impl AsFormat for rome_js_syntax::JsAnyClassMember {
         rome_js_syntax::JsAnyClassMember,
         crate::js::any::class_member::FormatJsAnyClassMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::class_member::FormatJsAnyClassMember::default(),
@@ -11129,7 +11129,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsAnyClassMember {
 impl AsFormat for rome_js_syntax::JsAnyClass {
     type Format<'a> =
         FormatRefWithRule<'a, rome_js_syntax::JsAnyClass, crate::js::any::class::FormatJsAnyClass>;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, crate::js::any::class::FormatJsAnyClass::default())
     }
 }
@@ -11146,7 +11146,7 @@ impl AsFormat for rome_js_syntax::JsAnyClassMemberName {
         rome_js_syntax::JsAnyClassMemberName,
         crate::js::any::class_member_name::FormatJsAnyClassMemberName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::class_member_name::FormatJsAnyClassMemberName::default(),
@@ -11171,7 +11171,7 @@ impl AsFormat for rome_js_syntax::JsAnyConstructorParameter {
         rome_js_syntax::JsAnyConstructorParameter,
         crate::js::any::constructor_parameter::FormatJsAnyConstructorParameter,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::constructor_parameter::FormatJsAnyConstructorParameter::default(),
@@ -11196,7 +11196,7 @@ impl AsFormat for rome_js_syntax::TsAnyPropertyParameterModifier {
         rome_js_syntax::TsAnyPropertyParameterModifier,
         crate::ts::any::property_parameter_modifier::FormatTsAnyPropertyParameterModifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: any :: property_parameter_modifier :: FormatTsAnyPropertyParameterModifier :: default ())
     }
 }
@@ -11215,7 +11215,7 @@ impl AsFormat for rome_js_syntax::TsAnyPropertyAnnotation {
         rome_js_syntax::TsAnyPropertyAnnotation,
         crate::ts::any::property_annotation::FormatTsAnyPropertyAnnotation,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::any::property_annotation::FormatTsAnyPropertyAnnotation::default(),
@@ -11240,7 +11240,7 @@ impl AsFormat for rome_js_syntax::JsAnyPropertyModifier {
         rome_js_syntax::JsAnyPropertyModifier,
         crate::js::any::property_modifier::FormatJsAnyPropertyModifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::property_modifier::FormatJsAnyPropertyModifier::default(),
@@ -11265,7 +11265,7 @@ impl AsFormat for rome_js_syntax::TsAnyPropertySignatureAnnotation {
         rome_js_syntax::TsAnyPropertySignatureAnnotation,
         crate::ts::any::property_signature_annotation::FormatTsAnyPropertySignatureAnnotation,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: any :: property_signature_annotation :: FormatTsAnyPropertySignatureAnnotation :: default ())
     }
 }
@@ -11284,7 +11284,7 @@ impl AsFormat for rome_js_syntax::TsAnyPropertySignatureModifier {
         rome_js_syntax::TsAnyPropertySignatureModifier,
         crate::ts::any::property_signature_modifier::FormatTsAnyPropertySignatureModifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: any :: property_signature_modifier :: FormatTsAnyPropertySignatureModifier :: default ())
     }
 }
@@ -11303,7 +11303,7 @@ impl AsFormat for rome_js_syntax::JsAnyMethodModifier {
         rome_js_syntax::JsAnyMethodModifier,
         crate::js::any::method_modifier::FormatJsAnyMethodModifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::method_modifier::FormatJsAnyMethodModifier::default(),
@@ -11328,7 +11328,7 @@ impl AsFormat for rome_js_syntax::TsAnyMethodSignatureModifier {
         rome_js_syntax::TsAnyMethodSignatureModifier,
         crate::ts::any::method_signature_modifier::FormatTsAnyMethodSignatureModifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::any::method_signature_modifier::FormatTsAnyMethodSignatureModifier::default(
@@ -11355,7 +11355,7 @@ impl AsFormat for rome_js_syntax::TsAnyIndexSignatureModifier {
         rome_js_syntax::TsAnyIndexSignatureModifier,
         crate::ts::any::index_signature_modifier::FormatTsAnyIndexSignatureModifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::any::index_signature_modifier::FormatTsAnyIndexSignatureModifier::default(),
@@ -11377,7 +11377,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsAnyIndexSignatureM
 impl AsFormat for rome_js_syntax::TsType {
     type Format<'a> =
         FormatRefWithRule<'a, rome_js_syntax::TsType, crate::ts::any::ts_type::FormatTsType>;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, crate::ts::any::ts_type::FormatTsType::default())
     }
 }
@@ -11394,7 +11394,7 @@ impl AsFormat for rome_js_syntax::JsAnyArrayAssignmentPatternElement {
         rome_js_syntax::JsAnyArrayAssignmentPatternElement,
         crate::js::any::array_assignment_pattern_element::FormatJsAnyArrayAssignmentPatternElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: any :: array_assignment_pattern_element :: FormatJsAnyArrayAssignmentPatternElement :: default ())
     }
 }
@@ -11413,7 +11413,7 @@ impl AsFormat for rome_js_syntax::JsAnyObjectAssignmentPatternMember {
         rome_js_syntax::JsAnyObjectAssignmentPatternMember,
         crate::js::any::object_assignment_pattern_member::FormatJsAnyObjectAssignmentPatternMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: any :: object_assignment_pattern_member :: FormatJsAnyObjectAssignmentPatternMember :: default ())
     }
 }
@@ -11432,7 +11432,7 @@ impl AsFormat for rome_js_syntax::JsAnyArrayBindingPatternElement {
         rome_js_syntax::JsAnyArrayBindingPatternElement,
         crate::js::any::array_binding_pattern_element::FormatJsAnyArrayBindingPatternElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: any :: array_binding_pattern_element :: FormatJsAnyArrayBindingPatternElement :: default ())
     }
 }
@@ -11451,7 +11451,7 @@ impl AsFormat for rome_js_syntax::JsAnyObjectBindingPatternMember {
         rome_js_syntax::JsAnyObjectBindingPatternMember,
         crate::js::any::object_binding_pattern_member::FormatJsAnyObjectBindingPatternMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: any :: object_binding_pattern_member :: FormatJsAnyObjectBindingPatternMember :: default ())
     }
 }
@@ -11470,7 +11470,7 @@ impl AsFormat for rome_js_syntax::JsAnyDeclaration {
         rome_js_syntax::JsAnyDeclaration,
         crate::js::any::declaration::FormatJsAnyDeclaration,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::declaration::FormatJsAnyDeclaration::default(),
@@ -11495,7 +11495,7 @@ impl AsFormat for rome_js_syntax::TsAnyReturnType {
         rome_js_syntax::TsAnyReturnType,
         crate::ts::any::return_type::FormatTsAnyReturnType,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::any::return_type::FormatTsAnyReturnType::default(),
@@ -11520,7 +11520,7 @@ impl AsFormat for rome_js_syntax::TsAnyVariableAnnotation {
         rome_js_syntax::TsAnyVariableAnnotation,
         crate::ts::any::variable_annotation::FormatTsAnyVariableAnnotation,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::any::variable_annotation::FormatTsAnyVariableAnnotation::default(),
@@ -11545,7 +11545,7 @@ impl AsFormat for rome_js_syntax::JsAnyModuleItem {
         rome_js_syntax::JsAnyModuleItem,
         crate::js::any::module_item::FormatJsAnyModuleItem,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::module_item::FormatJsAnyModuleItem::default(),
@@ -11570,7 +11570,7 @@ impl AsFormat for rome_js_syntax::JsAnyImportClause {
         rome_js_syntax::JsAnyImportClause,
         crate::js::any::import_clause::FormatJsAnyImportClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::import_clause::FormatJsAnyImportClause::default(),
@@ -11595,7 +11595,7 @@ impl AsFormat for rome_js_syntax::JsAnyNamedImport {
         rome_js_syntax::JsAnyNamedImport,
         crate::js::any::named_import::FormatJsAnyNamedImport,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::named_import::FormatJsAnyNamedImport::default(),
@@ -11620,7 +11620,7 @@ impl AsFormat for rome_js_syntax::JsAnyNamedImportSpecifier {
         rome_js_syntax::JsAnyNamedImportSpecifier,
         crate::js::any::named_import_specifier::FormatJsAnyNamedImportSpecifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::named_import_specifier::FormatJsAnyNamedImportSpecifier::default(),
@@ -11645,7 +11645,7 @@ impl AsFormat for rome_js_syntax::JsAnyImportAssertionEntry {
         rome_js_syntax::JsAnyImportAssertionEntry,
         crate::js::any::import_assertion_entry::FormatJsAnyImportAssertionEntry,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::import_assertion_entry::FormatJsAnyImportAssertionEntry::default(),
@@ -11670,7 +11670,7 @@ impl AsFormat for rome_js_syntax::JsAnyExportClause {
         rome_js_syntax::JsAnyExportClause,
         crate::js::any::export_clause::FormatJsAnyExportClause,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::export_clause::FormatJsAnyExportClause::default(),
@@ -11695,7 +11695,7 @@ impl AsFormat for rome_js_syntax::JsAnyExportDefaultDeclaration {
         rome_js_syntax::JsAnyExportDefaultDeclaration,
         crate::js::any::export_default_declaration::FormatJsAnyExportDefaultDeclaration,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: js :: any :: export_default_declaration :: FormatJsAnyExportDefaultDeclaration :: default ())
     }
 }
@@ -11714,7 +11714,7 @@ impl AsFormat for rome_js_syntax::JsAnyExportNamedSpecifier {
         rome_js_syntax::JsAnyExportNamedSpecifier,
         crate::js::any::export_named_specifier::FormatJsAnyExportNamedSpecifier,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::export_named_specifier::FormatJsAnyExportNamedSpecifier::default(),
@@ -11739,7 +11739,7 @@ impl AsFormat for rome_js_syntax::JsAnyFunction {
         rome_js_syntax::JsAnyFunction,
         crate::js::any::function::FormatJsAnyFunction,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::function::FormatJsAnyFunction::default(),
@@ -11764,7 +11764,7 @@ impl AsFormat for rome_js_syntax::JsAnyParameter {
         rome_js_syntax::JsAnyParameter,
         crate::js::any::parameter::FormatJsAnyParameter,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::parameter::FormatJsAnyParameter::default(),
@@ -11789,7 +11789,7 @@ impl AsFormat for rome_js_syntax::JsAnyCallArgument {
         rome_js_syntax::JsAnyCallArgument,
         crate::js::any::call_argument::FormatJsAnyCallArgument,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::js::any::call_argument::FormatJsAnyCallArgument::default(),
@@ -11811,7 +11811,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsAnyCallArgument {
 impl AsFormat for rome_js_syntax::TsAnyName {
     type Format<'a> =
         FormatRefWithRule<'a, rome_js_syntax::TsAnyName, crate::ts::any::name::FormatTsAnyName>;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, crate::ts::any::name::FormatTsAnyName::default())
     }
 }
@@ -11828,7 +11828,7 @@ impl AsFormat for rome_js_syntax::TsAnyModuleReference {
         rome_js_syntax::TsAnyModuleReference,
         crate::ts::any::module_reference::FormatTsAnyModuleReference,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::any::module_reference::FormatTsAnyModuleReference::default(),
@@ -11853,7 +11853,7 @@ impl AsFormat for rome_js_syntax::TsAnyModuleName {
         rome_js_syntax::TsAnyModuleName,
         crate::ts::any::module_name::FormatTsAnyModuleName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::any::module_name::FormatTsAnyModuleName::default(),
@@ -11878,7 +11878,7 @@ impl AsFormat for rome_js_syntax::TsAnyExternalModuleDeclarationBody {
         rome_js_syntax::TsAnyExternalModuleDeclarationBody,
         crate::ts::any::external_module_declaration_body::FormatTsAnyExternalModuleDeclarationBody,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: any :: external_module_declaration_body :: FormatTsAnyExternalModuleDeclarationBody :: default ())
     }
 }
@@ -11897,7 +11897,7 @@ impl AsFormat for rome_js_syntax::TsAnyTypePredicateParameterName {
         rome_js_syntax::TsAnyTypePredicateParameterName,
         crate::ts::any::type_predicate_parameter_name::FormatTsAnyTypePredicateParameterName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule :: new (self , crate :: ts :: any :: type_predicate_parameter_name :: FormatTsAnyTypePredicateParameterName :: default ())
     }
 }
@@ -11916,7 +11916,7 @@ impl AsFormat for rome_js_syntax::TsAnyTypeMember {
         rome_js_syntax::TsAnyTypeMember,
         crate::ts::any::type_member::FormatTsAnyTypeMember,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::any::type_member::FormatTsAnyTypeMember::default(),
@@ -11941,7 +11941,7 @@ impl AsFormat for rome_js_syntax::TsAnyTupleTypeElement {
         rome_js_syntax::TsAnyTupleTypeElement,
         crate::ts::any::tuple_type_element::FormatTsAnyTupleTypeElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::any::tuple_type_element::FormatTsAnyTupleTypeElement::default(),
@@ -11966,7 +11966,7 @@ impl AsFormat for rome_js_syntax::TsAnyTemplateElement {
         rome_js_syntax::TsAnyTemplateElement,
         crate::ts::any::template_element::FormatTsAnyTemplateElement,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::ts::any::template_element::FormatTsAnyTemplateElement::default(),
@@ -11988,7 +11988,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsAnyTemplateElement
 impl AsFormat for rome_js_syntax::JsxAnyTag {
     type Format<'a> =
         FormatRefWithRule<'a, rome_js_syntax::JsxAnyTag, crate::jsx::any::tag::FormatJsxAnyTag>;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, crate::jsx::any::tag::FormatJsxAnyTag::default())
     }
 }
@@ -12005,7 +12005,7 @@ impl AsFormat for rome_js_syntax::JsxAnyElementName {
         rome_js_syntax::JsxAnyElementName,
         crate::jsx::any::element_name::FormatJsxAnyElementName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::any::element_name::FormatJsxAnyElementName::default(),
@@ -12030,7 +12030,7 @@ impl AsFormat for rome_js_syntax::JsxAnyObjectName {
         rome_js_syntax::JsxAnyObjectName,
         crate::jsx::any::object_name::FormatJsxAnyObjectName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::any::object_name::FormatJsxAnyObjectName::default(),
@@ -12052,7 +12052,7 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsxAnyObjectName {
 impl AsFormat for rome_js_syntax::JsxAnyName {
     type Format<'a> =
         FormatRefWithRule<'a, rome_js_syntax::JsxAnyName, crate::jsx::any::name::FormatJsxAnyName>;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, crate::jsx::any::name::FormatJsxAnyName::default())
     }
 }
@@ -12069,7 +12069,7 @@ impl AsFormat for rome_js_syntax::JsxAnyAttribute {
         rome_js_syntax::JsxAnyAttribute,
         crate::jsx::any::attribute::FormatJsxAnyAttribute,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::any::attribute::FormatJsxAnyAttribute::default(),
@@ -12094,7 +12094,7 @@ impl AsFormat for rome_js_syntax::JsxAnyAttributeName {
         rome_js_syntax::JsxAnyAttributeName,
         crate::jsx::any::attribute_name::FormatJsxAnyAttributeName,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::any::attribute_name::FormatJsxAnyAttributeName::default(),
@@ -12119,7 +12119,7 @@ impl AsFormat for rome_js_syntax::JsxAnyAttributeValue {
         rome_js_syntax::JsxAnyAttributeValue,
         crate::jsx::any::attribute_value::FormatJsxAnyAttributeValue,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
             crate::jsx::any::attribute_value::FormatJsxAnyAttributeValue::default(),
@@ -12144,7 +12144,7 @@ impl AsFormat for rome_js_syntax::JsxAnyChild {
         rome_js_syntax::JsxAnyChild,
         crate::jsx::any::child::FormatJsxAnyChild,
     >;
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, crate::jsx::any::child::FormatJsxAnyChild::default())
     }
 }

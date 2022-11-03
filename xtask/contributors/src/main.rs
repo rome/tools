@@ -82,7 +82,7 @@ fn contributors_request(url: &str, token: &str, contributors: &mut Vec<Contribut
                     // SAFETY: checked before
                     let end_index = link.find("; rel=\"next\"").unwrap();
                     let url = &link[start_index..end_index];
-                    let url = url.replace('<', "").replace('>', "");
+                    let url = url.replace(['<', '>'], "");
 
                     contributors_request(&url, token, contributors);
                 }

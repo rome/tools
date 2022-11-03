@@ -21,7 +21,7 @@ declare_node_union! {
 impl AsFormat for JsAnyConditional {
     type Format<'a> = FormatRefWithRule<'a, JsAnyConditional, FormatJsAnyConditionalRule>;
 
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, FormatJsAnyConditionalRule::default())
     }
 }

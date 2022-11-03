@@ -211,7 +211,7 @@ pub trait AsFormat {
     type Format<'a>: Format<JsFormatContext> where Self: 'a;
 
     /// Returns an object that is able to format this object.
-    fn format<'a>(&'a self) -> Self::Format<'a>;
+    fn format(&self) -> Self::Format<'_>;
 }
 
 /// Implement [AsFormat] for references to types that implement [AsFormat].
@@ -221,7 +221,7 @@ where
 {
     type Format<'a> = T::Format<'a> where Self: 'a;
 
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         AsFormat::format(&**self)
     }
 }
@@ -235,7 +235,7 @@ where
 {
     type Format<'a> = SyntaxResult<T::Format<'a>> where Self: 'a;
 
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         match self {
             Ok(value) => Ok(value.format()),
             Err(err) => Err(*err),
@@ -252,7 +252,7 @@ where
 {
     type Format<'a> = Option<T::Format<'a>> where Self: 'a;
 
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         self.as_ref().map(|value| value.format())
     }
 }
@@ -450,7 +450,7 @@ impl FormatRule<JsSyntaxToken> for FormatJsSyntaxToken {
 impl AsFormat for JsSyntaxToken {
     type Format<'a> = FormatRefWithRule<'a, JsSyntaxToken, FormatJsSyntaxToken>;
 
-    fn format<'a>(&'a self) -> Self::Format<'a> {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, FormatJsSyntaxToken)
     }
 }

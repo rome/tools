@@ -14,7 +14,7 @@ pub fn generate_syntax_kinds(grammar: KindsSrc, language_kind: LanguageKind) -> 
             let c = token.chars().next().unwrap();
             quote! { #c }
         } else if *token == "$=" {
-            let token = Literal::string(*token);
+            let token = Literal::string(token);
             quote! { #token }
         } else {
             let cs = token.chars().map(|c| Punct::new(c, Spacing::Joint));
