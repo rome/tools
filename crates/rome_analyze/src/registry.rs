@@ -1,4 +1,4 @@
-use std::{borrow, collections::BTreeSet, sync::Arc};
+use std::{borrow, collections::BTreeSet};
 
 use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
 use rome_diagnostics::Error;
@@ -344,11 +344,7 @@ impl<L: Language + Default> RegistryRule<L> {
             // if the query doesn't match
             let query_result =
                 <R::Query as Queryable>::unwrap_match(params.services, &params.query);
-            let ctx = match RuleContext::new(
-                &query_result,
-                params.root,
-                params.services,
-            ) {
+            let ctx = match RuleContext::new(&query_result, params.root, params.services) {
                 Ok(ctx) => ctx,
                 Err(error) => return Err(error),
             };

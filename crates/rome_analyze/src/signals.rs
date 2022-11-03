@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 use crate::categories::SUPPRESSION_ACTION_CATEGORY;
 use std::sync::Arc;
 
+=======
+>>>>>>> d1090e64bd (clippy and fmt issues)
 use crate::{
     categories::ActionCategory,
     context::RuleContext,
@@ -280,16 +283,12 @@ where
     R: Rule + 'static,
 {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
-        let ctx = RuleContext::new(
-            &self.query_result,
-            self.root,
-            self.services,
-        )
-        .ok()?;
+        let ctx = RuleContext::new(&self.query_result, self.root, self.services).ok()?;
 
         R::diagnostic(&ctx, &self.state).map(AnalyzerDiagnostic::from)
     }
 
+<<<<<<< HEAD
     fn actions(&self) -> AnalyzerActionIter<RuleLanguage<R>> {
         let ctx =
             RuleContext::new(&self.query_result, self.root, self.services, self.options.clone()).ok();
@@ -320,6 +319,10 @@ where
                     actions.push(action);
                 }
             }
+=======
+    fn action(&self) -> Option<AnalyzerAction<RuleLanguage<R>>> {
+        let ctx = RuleContext::new(&self.query_result, self.root, self.services).ok()?;
+>>>>>>> d1090e64bd (clippy and fmt issues)
 
             AnalyzerActionIter::new(actions)
         } else {
