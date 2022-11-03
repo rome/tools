@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noEmptyPattern
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # noEmptyPattern (since v0.7.0)

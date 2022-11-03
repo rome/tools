@@ -1,5 +1,5 @@
 ---
-layout: layouts/homepage.liquid
+layout: layouts/page.liquid
 ---
 
 # Standalone CLI

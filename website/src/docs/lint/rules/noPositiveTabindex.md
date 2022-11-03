@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noPositiveTabindex
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # noPositiveTabindex (since v10.0.0)

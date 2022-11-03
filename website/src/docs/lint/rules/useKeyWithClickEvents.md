@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useKeyWithClickEvents
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # useKeyWithClickEvents (since v10.0.0)

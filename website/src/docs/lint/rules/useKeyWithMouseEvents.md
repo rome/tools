@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useKeyWithMouseEvents
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # useKeyWithMouseEvents (since v10.0.0)

@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useShorthandArrayType
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # useShorthandArrayType (since v0.7.0)

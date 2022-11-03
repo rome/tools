@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noUndeclaredVariables
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # noUndeclaredVariables (since v0.10.0)

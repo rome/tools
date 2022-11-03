@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useSingleCaseStatement
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # useSingleCaseStatement (since v0.7.0)

@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useSelfClosingElements
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # useSelfClosingElements (since v0.7.0)

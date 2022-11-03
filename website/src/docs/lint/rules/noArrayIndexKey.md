@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noArrayIndexKey
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # noArrayIndexKey (since v0.10.0)

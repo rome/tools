@@ -115,7 +115,8 @@ module.exports = function (eleventyConfig) {
 			return cached;
 		}
 
-		const file = fs.readFileSync(path.resolve(__dirname, loc), "utf8");
+		const resolved = path.resolve(__dirname, loc);
+		const file = fs.readFileSync(resolved, "utf8");
 		includerawCache.set(loc, file);
 		return file;
 	});
@@ -200,7 +201,7 @@ module.exports = function (eleventyConfig) {
 			if (title !== "") {
 				title += " \u2014 ";
 			}
-			title += "Rome Toolchain";
+			title += "Rome";
 		}
 		return title;
 	});

@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noDangerouslySetInnerHtmlWithChildren
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # noDangerouslySetInnerHtmlWithChildren (since v0.10.0)

@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noDebugger
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # noDebugger (since v0.7.0)

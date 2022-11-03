@@ -29,19 +29,6 @@
 	transition-timing-function: cubic-bezier(0.57, 0.33, 0.19, 0.97);
 }
 
-@mixin pattern {
-	background-color: var(--container-color);
-	background-image: var(--pattern-img-path), linear-gradient(180deg, var(--pattern-color) 20%, var(--pattern-color-2) 100%);
-	background-repeat: repeat;
-	background-position: 50%;
-}
-
-@mixin inset-border-top {
-	@include transition-timing;
-	transition-property: box-shadow;
-	box-shadow: inset 0 5px var(--top-border-color);
-}
-
 @mixin dark-mode {
 	@at-root html[data-theme='dark'] #{if(&, "&", "")} {
 		@content;

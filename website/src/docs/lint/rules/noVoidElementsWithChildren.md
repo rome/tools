@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noVoidElementsWithChildren
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # noVoidElementsWithChildren (since v0.10.0)

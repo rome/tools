@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useExhaustiveDependencies
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # useExhaustiveDependencies (since v10.0.0)

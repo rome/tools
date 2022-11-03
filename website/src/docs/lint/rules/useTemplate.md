@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useTemplate
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # useTemplate (since v0.7.0)

@@ -17,7 +17,7 @@
 		<meta property="twitter:image" content="{{ env.WEBSITE_URL }}/img/{{ social-image }}">
 		<meta property="twitter:site" content="@rometools">
 		<meta property="twitter:creator" content="@rometools">
-		<meta property="twitter:image:alt" content="Logo for the Rome Toolchain Project">
+		<meta property="twitter:image:alt" content="Logo for Rome Tools">
 		<meta property="twitter:card" content="summary_large_image">
 
 		{% capture styles %}
@@ -45,6 +45,28 @@
 	</head>
 
 	<body class="{{ body-class }}">
+		<div class="header">
+			<div class="container ">
+				<a class="logo" href="/">
+					{% include svg/rome-logo.svg %}
+
+					<span class="logo-text sr-only">Rome</span>
+				</a>
+
+				<ul class="middle">
+					<li><a href="/docs/">Docs</a></li>
+					<li><a href="/blog/">Blog</a></li>
+					<li><a href="https://play.rome.tools/">Playground</a></li>
+					<li><a href="/credits/">Credits</a></li>
+				</ul>
+
+				<ul class="right">
+					<li><a href="https://github.com/rome/tools">{% include svg/footer/github.svg %}</a></li>
+					<li><a href="https://twitter.com/rometools">{% include svg/footer/twitter.svg %}</a></li>
+				</ul>
+			</div>
+		</div>
+
 		<div class="container {% if no-sidebar %}no-sidebar{% endif %}">
 			<div class="skip-to-content" id="top">
 				<a href="#main-content">Skip to main content</a>
@@ -52,7 +74,6 @@
 
 			<div class="header-mobile">
 				<a class="logo" href="/">
-
 					{% include svg/rome-logo.svg %}
 
 					<span class="logo-text sr-only">Rome</span>
@@ -68,126 +89,35 @@
 				{% endif %}
 			</div>
 
+			<div class="main">
+				{{ content | safe }}
+			</div>
+
 			{% if no-sidebar %}
-				<div class="header-desktop-sidebarless">
-					<a class="logo" href="/">
-
-						{% include svg/rome-logo.svg %}
-
-						<span class="logo-text sr-only">Rome</span>
-					</a>
-				</div>
 			{% else %}
 				<div class="sidebar-container">
-					<div class="sidebar-stripe"></div>
-
 					<aside class="sidebar">
-						<div class="header-desktop">
-							<a class="logo" href="/">
-								{% include svg/rome-logo.svg %}
-								<h1 class="logo-text sr-only">Rome</h1>
-							</a>
-						</div>
-
-						<div class="docsearch-container">
-							{% include svg/search-icon.svg %}
-							<label class="docsearch-label" for="docsearch">Search</label>
-							<input type="text" id="docsearch" class="docsearch" placeholder="Search" />
-						</div>
-
 						<div class="sidebar-scroller">
-							<div class="site-navigation-container">
-								<nav aria-labelledby="site-navigation" class="menu site-navigation">
-									<h2 id="site-navigation" class="sr-only">Site Navigation</h2>
-									<ul>
-										<li>
-											<a href="/docs">Docs</a>
-										</li>
-										<li>
-											<a href="/blog">Blog</a>
-										</li>
-										<li>
-											<a href="https://play.rome.tools">Playground</a>
-										</li>
-										<li>
-											<a href="/credits">Credits</a>
-										</li>
-									</ul>
-								</nav>
-							</div>
-
 							<nav aria-labelledby="site-navigation-documentation" class="toc-menu menu">
 								<h2 id="site-navigation-documentation">Table of Contents</h2>
 
 								{{ content | toc | safe }}
 							</nav>
 						</div>
-
-    				{% include color-scheme-switcher %}
 					</aside>
 				</div>
 			{% endif %}
-
-			<div class="main">
-				{{ content | safe }}
-			</div>
 		</div>
 
-		<footer aria-labelledby="footer">
-			<h1 id="footer" class="sr-only">Footer</h1>
+		<div class="container">
+			<footer aria-labelledby="footer">
+				<h1 id="footer" class="sr-only">Footer</h1>
 
-			<div class="container">
-				<nav aria-labelledby="community-navigation">
-					<h2 id="community-navigation">Community</h2>
-					<ul>
-						<li>
-							<a href="https://github.com/rome/tools/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
-						</li>
-						<li>
-							<a href="https://discord.gg/rome">Discord</a>
-						</li>
-						<li>
-							<a href="https://twitter.com/rometools">Twitter</a>
-						</li>
-					</ul>
-				</nav>
-				<nav aria-labelledby="resources-navigation">
-					<h2 id="resources-navigation">Resources</h2>
-					<ul>
-						<li>
-							<a href="https://github.com/rome/tools">GitHub</a>
-						</li>
-						<li>
-							<a href="https://rome.github.io/tools/rome">Rust API Documentation</a>
-						</li>
-					</ul>
-				</nav>
-				<nav aria-labelledby="scroll-to-top" class="scroll-to-top">
-					<h2 id="scroll-to-top" class="sr-only">Scroll to Top</h2>
-					<a href="#top">Scroll to Top</a>
-				</nav>
-			</div>
-			<div class="footnote">
-				<div class="container">
-					<div class="logo">
-						{% include svg/rome-logo.svg %}
-						<span class="logo-text sr-only">Rome</span>
-					</div>
+				<p>&copy; 2022 Rome Tools. All rights reserved.</p>
 
-					<div class="note">
-						Currently <b>v{% romeVersion %}</b>. Under <a href="https://github.com/rome/tools/blob/main/LICENSE"><b>MIT</b></a> license.
-					</div>
-
-					<div class="netlify-badge">
-						<a href="https://www.netlify.com">
-							<span class="sr-only">Deploys by Netlify</span>
-							{% include svg/netlify.svg %}
-						</a>
-					</div>
-
-				</div>
-			</div>
-		</footer>
+    		{% include color-scheme-switcher %}
+			</footer>
+		</div>
 
 		{% if env.production %}
 			<script src="https://browser.sentry-cdn.com/5.29.0/bundle.tracing.min.js" crossorigin="anonymous"></script>

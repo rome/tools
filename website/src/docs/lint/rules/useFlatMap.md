@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useFlatMap
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # useFlatMap (since v10.0.0)

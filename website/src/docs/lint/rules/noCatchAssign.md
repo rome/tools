@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noCatchAssign
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # noCatchAssign (since v0.7.0)

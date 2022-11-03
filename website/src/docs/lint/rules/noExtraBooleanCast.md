@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noExtraBooleanCast
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # noExtraBooleanCast (since v0.9.0)

@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noUselessFragments
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # noUselessFragments (since v0.10.0)

@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useValidTypeof
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # useValidTypeof (since v0.7.0)

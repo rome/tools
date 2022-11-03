@@ -21,9 +21,6 @@ const originalTitle = document.title;
 const headerMobile = document.querySelector(".header-mobile");
 
 /** @type {HTMLElement}*/
-const siteNavigation = document.querySelector(".site-navigation-container");
-
-/** @type {HTMLElement}*/
 const sidebarScroller = document.querySelector(".sidebar-scroller");
 
 /** @type {Array<HTMLAnchorElement>}*/
@@ -249,7 +246,6 @@ class Manager {
 	refresh() {
 		if (this.lastActiveHeading !== undefined) {
 			if (this.isVisibleHeading(this.lastActiveHeading)) {
-				this.checkNavigationCollapse(true);
 				return;
 			} else {
 				this.toggleActiveHeading(this.lastActiveHeading, false);
@@ -258,15 +254,11 @@ class Manager {
 		}
 
 		this.ensureCalculatedHeadings();
-
-		let hasActive = false;
-
 		for (let i = 0; i < this.headingsCalculated.length; i++) {
 			if (this.isVisibleHeading(i)) {
 				// Set the heading as active
 				this.lastActiveHeading = i;
 				this.toggleActiveHeading(i, true);
-				hasActive = true;
 
 				// Make sure TOC link is visible
 				let linkTop =
@@ -284,39 +276,6 @@ class Manager {
 
 				break;
 			}
-		}
-
-		this.checkNavigationCollapse(hasActive);
-	}
-
-	/**
-	 * @param {boolean} hasActive
-	 */
-	checkNavigationCollapse(hasActive) {
-		// Only collapse navigation if we scroll over 300px
-		let isCollapsed = hasActive && this.getScrollY() >= 500;
-		if (isMobile) {
-			isCollapsed = false;
-		}
-		if (isCollapsed && this.isNavCollapsed === isCollapsed) {
-			return;
-		}
-
-		this.isNavCollapsed = isCollapsed;
-
-		if (!this.navHeight) {
-			this.navHeight = siteNavigation.clientHeight;
-		}
-
-		// If the sidebar isn't scrollable then there's no need to collapse it
-		if (sidebarScroller.scrollHeight <= sidebarScroller.clientHeight) {
-			isCollapsed = false;
-		}
-
-		if (isCollapsed) {
-			siteNavigation.style.height = "0px";
-		} else {
-			siteNavigation.style.height = `${this.navHeight}px`;
 		}
 	}
 
@@ -470,7 +429,7 @@ class Manager {
 	}
 }
 
-if (siteNavigation != null) {
+if (tocLinks.length > 0) {
 	const manager = new Manager();
 
 	window.addEventListener("DOMContentLoaded", () => {

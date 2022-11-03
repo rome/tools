@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useButtonType
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # useButtonType (since v0.10.0)

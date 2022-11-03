@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noUnreachable
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # noUnreachable (since v0.7.0)

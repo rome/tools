@@ -8,12 +8,8 @@ date: 2021-05-04
 tags:
 	- post
 permalink: /blog/announcing-rome-tools-inc/
-layout: layouts/inc.liquid
+layout: layouts/blog.liquid
 ---
-
-# Announcing Rome Tools, Inc.
-
-{% include blog-post-info.liquid %}
 
 The JavaScript ecosystem has undergone rapid evolution in the last decade. I started [Babel](https://babeljs.io/) in 2014 not knowing what I was getting myself into, and have been offered a unique perspective watching it grow. Since then we’ve had an explosion in developer tooling and seen the web take an even bigger role in application development.
 
@@ -31,7 +27,7 @@ First, I'd like to welcome [Jamie Kyle](https://twitter.com/buildsghost) as cofo
 
 <div id="inc-jamie-seb-container">
 	<div id="inc-jamie-seb">
-		<img src="/img/blog/jamie-and-seb.jpg">
+		<img src="/img/blog/jamie-and-seb.jpg" width="400">
 		<p>Sebastian and Jamie speaking at <a href="https://www.pubnub.com/blog/introduction-to-babel-javascript-compiler-for-es6/">SFJS</a> in July 2015
 	</div>
 </div>
@@ -41,21 +37,12 @@ Together, we're announcing that we've raised $4.5 million in seed funding, led b
 We are lucky to have found some amazing investors who believe in our mission and ethos. It was important to us that we worked with those that fundamentally believe in open source.
 
 <div class="inc-investors light">
-	<a href="https://acapital.com/"><img src="/img/blog/investors/acapital.svg" alt="A.Capital Ventures Logo"></a>
-	<a href="https://oss.capital/"><img class="invert-dark" src="/img/blog/investors/ossc.png" alt="OSS Capital Logo"></a>
+	<a href="https://acapital.com/"><img width="100" src="/img/blog/investors/acapital.svg" alt="A.Capital Ventures Logo"></a>
+	<a href="https://oss.capital/"><img width="100" class="invert-dark" src="/img/blog/investors/ossc.png" alt="OSS Capital Logo"></a>
 	<a href="https://www.bloombergbeta.com
-"><img src="/img/blog/investors/bloomberg.png" class="invert-dark" alt="Bloomberg Beta Logo"></a>
-	<a href="https://www.svangel.com/"><img src="/img/blog/investors/svangel.png" alt="SV Angel Logo"></a>
-	<a href="https://www.remotefirstcapital.com/"><img src="/img/blog/investors/remotefirst.png" alt="Remote First Capital"></a>
-</div>
-
-<div class="inc-investors dark" aria-hidden="true">
-	<a href="https://acapital.com/"><img src="/img/blog/investors/acapital.svg" alt="A.Capital Ventures Logo"></a>
-	<a href="https://oss.capital/"><img class="invert-dark" src="/img/blog/investors/ossc-dark.png" alt="OSS Capital Logo"></a>
-	<a href="https://www.bloombergbeta.com
-"><img src="/img/blog/investors/bloomberg-dark.png" class="invert-dark" alt="Bloomberg Beta Logo"></a>
-	<a href="https://www.svangel.com/"><img src="/img/blog/investors/svangel-dark.png" alt="SV Angel Logo"></a>
-	<a href="https://www.remotefirstcapital.com/"><img src="/img/blog/investors/remotefirst-dark.png" alt="Remote First Capital"></a>
+"><img src="/img/blog/investors/bloomberg.png" width="100" class="invert-dark" alt="Bloomberg Beta Logo"></a>
+	<a href="https://www.svangel.com/"><img width="100" src="/img/blog/investors/svangel.png" alt="SV Angel Logo"></a>
+	<a href="https://www.remotefirstcapital.com/"><img width="100" src="/img/blog/investors/remotefirst.png" alt="Remote First Capital"></a>
 </div>
 
 With this funding we’ll be able to commit significantly more resources to building and growing the open source project. We will be able to provide more meaningful support and larger development efforts with full-time staff. Improved documentation and consistent releases will be the most immediate change. Long-time contributors [Yasser Elassal](https://github.com/yassere) and [Emanuele Stoppa](https://github.com/ematipico) will be joining the company to support these efforts.

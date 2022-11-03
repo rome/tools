@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noNegationElse
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # noNegationElse (since v0.7.0)

@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noDoubleEquals
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # noDoubleEquals (since v0.7.0)

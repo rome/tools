@@ -1,8 +1,14 @@
 @import "_variables";
 
 section.blog {
+	max-width: 800px;
+	margin: 0 auto;
+
 	h1 {
 		margin-bottom: calc($unit / 2);
+		text-align: center;
+		border-bottom: none;
+		font-size: 42px;
 	}
 }
 

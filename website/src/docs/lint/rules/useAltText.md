@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useAltText
-layout: layouts/rule.liquid
+layout: layouts/page.liquid
 ---
 
 # useAltText (since v10.0.0)

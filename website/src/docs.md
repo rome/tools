@@ -1,8 +1,9 @@
 ---
-layout: layouts/homepage.liquid
+layout: layouts/page.liquid
+title: Docs
 ---
 
-# Rome Documentation
+# Docs
 
 {% include docs/getting-started.md %}
 {% include docs/formatter.md %}
