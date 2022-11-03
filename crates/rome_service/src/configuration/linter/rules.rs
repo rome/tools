@@ -869,6 +869,7 @@ struct StyleSchema {
     no_negation_else: Option<RuleConfiguration>,
     no_shouty_constants: Option<RuleConfiguration>,
     no_unused_template_literal: Option<RuleConfiguration>,
+    prefer_numeric_literals: Option<RuleConfiguration>,
     use_block_statements: Option<RuleConfiguration>,
     use_fragment_syntax: Option<RuleConfiguration>,
     use_optional_chain: Option<RuleConfiguration>,
@@ -879,11 +880,12 @@ struct StyleSchema {
 }
 impl Style {
     const CATEGORY_NAME: &'static str = "style";
-    pub(crate) const CATEGORY_RULES: [&'static str; 11] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 12] = [
         "noImplicitBoolean",
         "noNegationElse",
         "noShoutyConstants",
         "noUnusedTemplateLiteral",
+        "preferNumericLiterals",
         "useBlockStatements",
         "useFragmentSyntax",
         "useOptionalChain",
@@ -892,11 +894,12 @@ impl Style {
         "useSingleVarDeclarator",
         "useTemplate",
     ];
-    const RECOMMENDED_RULES: [&'static str; 10] = [
+    const RECOMMENDED_RULES: [&'static str; 11] = [
         "noImplicitBoolean",
         "noNegationElse",
         "noShoutyConstants",
         "noUnusedTemplateLiteral",
+        "preferNumericLiterals",
         "useBlockStatements",
         "useOptionalChain",
         "useSelfClosingElements",
@@ -904,17 +907,18 @@ impl Style {
         "useSingleVarDeclarator",
         "useTemplate",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 10] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 11] = [
         RuleFilter::Rule("style", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[2]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[3]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[4]),
-        RuleFilter::Rule("style", Self::CATEGORY_RULES[6]),
+        RuleFilter::Rule("style", Self::CATEGORY_RULES[5]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[7]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[8]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[9]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[10]),
+        RuleFilter::Rule("style", Self::CATEGORY_RULES[11]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -941,7 +945,7 @@ impl Style {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 10] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 11] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }

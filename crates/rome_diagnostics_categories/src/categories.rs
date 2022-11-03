@@ -54,6 +54,7 @@ define_dategories! {
     "lint/style/useBlockStatements": "https://rome.tools/docs/lint/rules/useBlockStatements",
     "lint/style/noImplicitBoolean": "https://rome.tools/docs/lint/rules/noImplicitBoolean",
     "lint/style/noUnusedTemplateLiteral": "https://rome.tools/docs/lint/rules/noUnusedTemplateLiteral",
+    "lint/style/preferNumericLiterals": "https://rome.tools/docs/lint/rules/preferNumericLiterals",
 
     // complexity
     "lint/complexity/useSimplifiedLogicExpression": "https://rome.tools/docs/lint/rules/useSimplifiedLogicExpression",
