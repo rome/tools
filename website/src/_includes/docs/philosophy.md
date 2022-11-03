@@ -9,11 +9,11 @@ This list includes general ethos the project should abide by. This list is not c
   using public channels like GitHub Discussions or Discord, frequent private check-in are the norm, due to the nature of the private company.
   When decisions occur via private channels, the team has to commit to communicate these decisions using the public channels.
 
-### Releases, versioning and breaking changes
+### Versioning
 
-- **Rome uses semantic versioning for mostly all packages**. More precisely, [semver v2](https://semver.org/spec/v2.0.0.html).
-- **The VSCode extension uses semantic versioning**. More precisely, [semver v1](https://semver.org/spec/v1.0.0.html). The market doesn't support pre-releases.
-Even numbers are meant for stable releases, odd numbers for pre-releases.
+- **Rome uses [semver v1](https://semver.org/spec/v1.0.0.html) for VSCode extension**. The VSCode marketplace doesn't support pre-releases.
+  Even numbers are meant for stable releases, odd numbers for pre-releases.
+- **Rome uses [semver v2](https://semver.org/spec/v2.0.0.html) for all the reaming packages**.
 - **Rome commits to a monthly release**, with _announced features_. 
 - **Rome commits to patch releases**, if the bugs are blockers and no workarounds can't be suggested.
 - **Features that might slip in patch releases won't be announced**. This can happen, patch releases
@@ -25,12 +25,12 @@ the team needs to break things easily without fear.
 - **Provide migration paths for breaking changes**. Provide *automated* migration paths when possible,
 or document them in the changelog.
 - **Things that change must be deprecated first**, where it's possible. 
-This allows a smoother path for migration to new versions.
+This allows a smoother path for migration to newer versions.
 
 Following, a list of breaking changes. This list is used by the team to assess the nature
 of their changes.
 
-**What's considered a _breaking change_**:
+##### What's considered a breaking change {data-toc-exclude}
 
 - changes to CLI arguments and commands;
 - changes to APIs change their name or signature. Exception for those APIs that only add new options;
@@ -38,10 +38,10 @@ of their changes.
 - changes to the recommended lint rules;
 - changes to the shape of diagnostics **if they are emitted as objects to clients**, e.g. Js APIs;
 
-**What's _not_ considered a breaking change**:
+##### What's not considered a breaking change {data-toc-exclude}
+
 - lint rules that are promoted form the `nursery` group to a stable group (but not recommended);
 - changes to how code is formatted;
-
 
 
 ### Technical
