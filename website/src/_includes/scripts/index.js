@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
 		isMobile = e.matches;
 
 		// Close the mobile sidebar when switching from mobile to desktop
-		if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
+		if (isMobileNavVisible && !isMobile && isMobileNavVisible) {
 			toggleMobileSidebar();
 		}
 	});
