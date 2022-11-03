@@ -499,13 +499,17 @@ if (colorSchemeSwitcher != null) {
 //# Mobile navigation
 
 const mobileSidebarHandle = document.querySelector(".mobile-handle");
-const sidebar = document.querySelector(".sidebar");
-let isMobileSidebarVisible = false;
+const header = document.querySelector(".header");
+let isMobileNavVisible = false;
 function toggleMobileSidebar() {
-	isMobileSidebarVisible = !isMobileSidebarVisible;
+	isMobileNavVisible = !isMobileNavVisible;
 	mobileSidebarHandle.classList.toggle("active");
-	sidebar.classList.toggle("visible");
 	document.body.classList.toggle("no-scroll");
+	if (isMobileNavVisible) {
+		header.classList.add("mobile-active");
+	} else {
+		header.classList.remove("mobile-active");
+	}
 }
 // rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 if (mobileSidebarHandle != null) {
@@ -522,37 +526,31 @@ if (mobileSidebarHandle != null) {
 //# Docsearch
 // Only initialize on focus
 
-const docsearchInput = document.querySelector("#docsearch");
+const docsearchContainer = document.querySelector("#docsearch");
 // rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
-if (docsearchInput != null) {
-	docsearchInput.addEventListener(
-		"focus",
-		() => {
-			// Stylesheet
-			const link = document.createElement("link");
-			link.href = "/docsearch.css";
-			link.rel = "stylesheet";
-			document.body.appendChild(link);
+if (docsearchContainer != null) {
+	// Stylesheet
+	const link = document.createElement("link");
+	link.href = "/docsearch.css";
+	link.rel = "stylesheet";
+	document.body.appendChild(link);
 
-			// Script
-			const script = document.createElement("script");
-			script.src = "/docsearch.js";
-			script.async = true;
-			script.defer = true;
-			script.addEventListener("load", () => {
-				// @ts-expect-error
-				return window.docsearch({
-					appId: "ZKNROT3Q65",
-					apiKey: "6c573608bd6c44671bfc263fb83992e2",
-					indexName: "rome",
-					inputSelector: "#docsearch",
-					debug: false, // Set debug to true if you want to inspect the dropdown
-				});
-			});
-			document.body.appendChild(script);
-		},
-		{ once: true },
-	);
+	// Script
+	const script = document.createElement("script");
+	script.src = "/docsearch.js";
+	script.async = true;
+	script.defer = true;
+	script.addEventListener("load", () => {
+		// @ts-expect-error
+		return window.docsearch({
+			appId: "ZKNROT3Q65",
+			apiKey: "6c573608bd6c44671bfc263fb83992e2",
+			indexName: "rome",
+			container: "#docsearch",
+			debug: false, // Set debug to true if you want to inspect the dropdown
+		});
+	});
+	document.body.appendChild(script);
 }
 
 //# Header scrolls to top
@@ -581,130 +579,32 @@ for (const elem of topAnchors) {
 	});
 }
 
-// Hero scrollers
-const heroCallbacks = [];
-const heroScrollers = document.querySelectorAll(".new-hero .scroller");
-for (const scroller of heroScrollers) {
-	const list = scroller.querySelector("ul");
+//# Homepage hero scroller
+const heroScrollers = document.querySelectorAll(".homepage .h1 li");
+if (heroScrollers.length > 0) {
+	let activeIndex = 0;
 
-	let items = [];
-	let activeIndex;
-	let activeStartIndex = 0;
+	function next() {
+		const activeElem = heroScrollers[activeIndex];
+		activeElem.classList.remove("fadein");
+		activeElem.classList.add("fadeout");
+		activeElem.addEventListener("animationend", () => {
+			activeElem.setAttribute("hidden", "hidden");
 
-	// Shuffle initial list
-	const initialItems = Array.from(scroller.querySelectorAll("li"));
-	const listOffsetTop = scroller.classList.contains("mobile-scroller") ? 0 : 50;
-	const lastInitialIndex = initialItems.length - 1;
-	for (const item of randomShuffle(initialItems)) {
-		list.removeChild(item);
-		appendItem(item);
-	}
-
-	// Duplicate list
-	const middleItems = [];
-	for (const item of initialItems) {
-		const cloned = item.cloneNode(true);
-		if (item.classList.contains("active")) {
-			cloned.classList.remove("active");
-		}
-		appendItem(cloned);
-		middleItems.push(cloned);
-	}
-
-	// Duplicate list again - we will never scroll to these, just to be visible in the overflow
-	for (const item of middleItems) {
-		appendItem(item.cloneNode(true));
-	}
-
-	setActiveIndex(3, false);
-
-	function appendItem(item) {
-		list.appendChild(item);
-		items.push(item);
-	}
-
-	function scrollToItem(item, smooth) {
-		const top = item.offsetTop - listOffsetTop;
-		if (smooth) {
-			list.style.removeProperty("transition");
-		} else {
-			list.style.transition = "none";
-		}
-		list.style.transform = `translateY(-${top}px)`;
-	}
-
-	function addActiveClasses(activeIndex) {
-		const beforeItem = items[activeIndex - 1];
-		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
-		if (beforeItem !== undefined) {
-			beforeItem.classList.add("active-sibling");
-		}
-
-		items[activeIndex].classList.add("active");
-
-		const afterItem = items[activeIndex + 1];
-		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
-		if (afterItem !== undefined) {
-			afterItem.classList.add("active-sibling");
-		}
-	}
-
-	function removeActiveClasses(activeIndex) {
-		const beforeItem = items[activeIndex - 1];
-		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
-		if (beforeItem !== undefined) {
-			beforeItem.classList.remove("active-sibling");
-		}
-
-		items[activeIndex].classList.remove("active");
-
-		const afterItem = items[activeIndex + 1];
-		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
-		if (afterItem !== undefined) {
-			afterItem.classList.remove("active-sibling");
-		}
-	}
-
-	function isOverflow(index) {
-		return index - activeStartIndex >= initialItems.length;
-	}
-
-	function setActiveIndex(newActiveIndex, smooth) {
-		if (activeIndex !== undefined) {
-			removeActiveClasses(activeIndex);
-		}
-
-		if (isOverflow(newActiveIndex)) {
-			if (activeStartIndex === 0) {
-				// Once we've
-				activeStartIndex = initialItems.length;
-			} else {
-				// Otherwise we are at the end of the middle list, so simulate coming from the bottom of initialItems
-				scrollToItem(initialItems[lastInitialIndex], false);
+			let nextActiveIndex = activeIndex + 1;
+			if (nextActiveIndex === heroScrollers.length) {
+				nextActiveIndex = 0;
 			}
 
-			setActiveIndex(activeStartIndex, smooth);
-			return;
-		}
+			const nextActiveElem = heroScrollers[nextActiveIndex];
+			nextActiveElem.classList.add("fadein");
+			nextActiveElem.removeAttribute("hidden");
 
-		// We're nearing the bottom of the list so set the fake initial as active to account for transition time
-		if (isOverflow(newActiveIndex + 1)) {
-			addActiveClasses(lastInitialIndex);
-		}
-
-		addActiveClasses(newActiveIndex);
-		activeIndex = newActiveIndex;
-		scrollToItem(items[newActiveIndex], smooth);
+			activeIndex = nextActiveIndex;
+		}, {once: true});
 	}
 
-	heroCallbacks.push(() => {
-		setActiveIndex(activeIndex + 1, true);
-	});
-}
-if (heroCallbacks.length > 0) {
 	setInterval(() => {
-		for (const callback of heroCallbacks) {
-			callback();
-		}
-	}, 2_000);
+		next();
+	}, 2500);
 }

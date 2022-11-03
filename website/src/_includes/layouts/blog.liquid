@@ -4,28 +4,26 @@ social-image: social-logo.png
 no-sidebar: true
 ---
 
-<section class="blog">
-	<div class="post">
-		{% if cover-image %}
-			<figure class="blog-cover">
-				<img alt="{{ cover-image-alt-text }}" src="/img/{{ cover-image }}">
-				{%  if cover-image-caption %}<figcaption class="blog-cover-caption">{{ cover-image-caption }}</figcaption> {% endif %}
-			</figure>
-		{% endif %}
+<div class="main blog post">
+	{% if cover-image %}
+		<figure class="blog-cover">
+			<img alt="{{ cover-image-alt-text }}" src="/img/{{ cover-image }}">
+			{%  if cover-image-caption %}<figcaption class="blog-cover-caption">{{ cover-image-caption }}</figcaption> {% endif %}
+		</figure>
+	{% endif %}
 
-		<h1 id="{{ title | kebabCase }} ">{{ title }}</a></h1>
-		{% include blog-post-info.liquid %}
+	<h1 id="{{ title | kebabCase }} ">{{ title }}</a></h1>
+	{% include blog-post-info.liquid %}
 
-		{{ content | safe }}
+	{{ content | safe }}
 
-		<div class="tags">
-		tags:
-			{% for tag in tags %}
-				{% if collections.tagList contains tag %}
-					{% capture tagUrl %}/blog/tags/{{ tag }}/{% endcapture %}
-					<a href="{{ tagUrl }}" class="tag">{{ tag }}</a>
-				{% endif %}
-			{% endfor %}
-		</div>
+	<div class="tags">
+	tags:
+		{% for tag in tags %}
+			{% if collections.tagList contains tag %}
+				{% capture tagUrl %}/blog/tags/{{ tag }}/{% endcapture %}
+				<a href="{{ tagUrl }}" class="tag">{{ tag }}</a>
+			{% endif %}
+		{% endfor %}
 	</div>
-</section>
+</div>

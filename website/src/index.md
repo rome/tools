@@ -6,21 +6,24 @@ no-sidebar: true
 ---
 
 <div class="homepage">
-  <aside hidden class="latest-post" aria-labelledby="latest-post">
-    <h2>Latest blog post</h2>
-    <div class="info">
+  <section>
+    <h1 class="sr-only">Rome is a unified formatter and linter</h1>
+    <div aria-hidden="true" class="h1">
+      Rome is a unified
+      <ul>
+        <li class="formatter">formatter</li>
+        <li class="linter" hidden>linter</li>
+      </ul>
+    </div>
+    <a target="_blank" href="/docs" class="button">Documentation</a>
+    <aside hidden class="latest-post" aria-labelledby="latest-post">
       <h3>
       <a href="{{ post.url }}">{{ post.data.title }}</a>
       </h3>
       <div class="author">
         {{ post.date | dateFormat }}
       </div>
-    </div>
-  </aside>
-
-  <section>
-    <h1>Rome is a unified <span>formatter</span></h1>
-    <a href="/docs" class="docs">Documentation</a>
+    </aside>
     <p>Rome unifies your development stack by combining the functionality of separate tools.</p>
     <p>Single configuration file, amazing performance, and works with any stack.</p>
     <ul class="supported-languages">
@@ -50,11 +53,11 @@ no-sidebar: true
     </ul>
   </section>
 
-  <hr>
+  <hr class="half">
 
   <section class="supercharge">
-    <h2>Supercharge your workflow.</h2>
-    <p class="heading-tagline">Packed full of useful features like theming, smart tokens, CSS prop, as prop, utils, and a fully-typed API.</p>
+    <h2>Supercharge your workflow</h2>
+    <p class="heading-tagline">Experience the seamless integration from a vertical developer tool. Full of useful features like formatting, linting, and more coming soon.</p>
     <ul class="component-list">
       <li class="active" data-class="component-window-formatter">Formatter</li>
       <li data-class="component-window-linter">Linter</li>
@@ -70,13 +73,84 @@ no-sidebar: true
         <div class="text">Testing</div>
         <div class="soon-indicator">June 2023</div>
       </li>
+      <!--<li data-class="component-window-testing" class="soon">
+        <div class="text">Documentation</div>
+        <div class="soon-indicator">Soon</div>
+      </li>
+      <li data-class="component-window-testing" class="soon">
+        <div class="text">Repo Management</div>
+        <div class="soon-indicator">Soon</div>
+      </li>
+      <li data-class="component-window-testing" class="soon">
+        <div class="text">Task Runner</div>
+        <div class="soon-indicator">Soon</div>
+      </li>-->
     </ul>
     <div class="component-window component-window-formatter">
       <div class="code">
         <h4>Code</h4>
+        {% highlight js %}
+function HelloWorld({greeting = "hello", greeted = '"World"', silent = false, onMouseOver,}) {
+
+  if(!greeting){return null};
+
+     // TODO: Don't use random in render
+  let num = Math.floor (Math.random() * 1E+7).toString().replace(/\.\d+/ig, "")
+
+  return <div className='HelloWorld' title={`You are visitor number ${ num }`} onMouseOver={onMouseOver}>
+
+    <strong>{ greeting.slice( 0, 1 ).toUpperCase() + greeting.slice(1).toLowerCase() }</strong>
+    {greeting.endsWith(",") ? " " : <span style={{color: '\grey'}}>", "</span> }
+    <em>
+	{ greeted }
+    </em>
+    { (silent)
+      ? "."
+      : "!"}
+
+    </div>;
+
+}
+{% endhighlight %}
       </div>
       <div class="output">
         <h4>Output</h4>
+        {% highlight js %}
+function HelloWorld({
+  greeting = "hello",
+  greeted = '"World"',
+  silent = false,
+  onMouseOver,
+}) {
+  if (!greeting) {
+    return null;
+  }
+
+  // TODO: Don't use random in render
+  let num = Math.floor(Math.random() * 1e7)
+    .toString()
+    .replace(/\.\d+/gi, "");
+
+  return (
+    <div
+      className="HelloWorld"
+      title={`You are visitor number ${num}`}
+      onMouseOver={onMouseOver}
+    >
+      <strong>
+        {greeting.slice(0, 1).toUpperCase() + greeting.slice(1).toLowerCase()}
+      </strong>
+      {greeting.endsWith(",") ? (
+        " "
+      ) : (
+        <span style={{ color: "grey" }}>", "</span>
+      )}
+      <em>{greeted}</em>
+      {silent ? "." : "!"}
+    </div>
+  );
+}
+{% endhighlight %}
       </div>
       <div class="performance">
         <h4>Performance</h4>
@@ -99,27 +173,32 @@ no-sidebar: true
       <li>
         <div class="icon">{% include svg/homepage/chevron.svg %}</div>
         <h3>Fast</h3>
-        <p>Built with Rust and an architecture that scales to meet the performance demands of any project.</p>
+        <p>Built with Rust and an innovative architecture inspired by <a href="https://rust-analyzer.github.io/">rust-analyzer</a>. We are able to do even more while being faster.</p>
       </li>
       <li>
         <div class="icon">{% include svg/homepage/layers.svg %}</div>
         <h3>Simple</h3>
-        <p>No configuration file required to get started. Drop it into a project of any size.</p>
+        <p>Zero configuration needed to get started. <a href="/docs/#configuration">Extensive options available</a> for when you need them.</p>
       </li>
       <li>
         <div class="icon">{% include svg/homepage/maximize.svg %}</div>
         <h3>Scalable</h3>
-        <p>Lorem ipsum to asdfasdfasdfasdf</p>
+        <p>Designed to handle codebases of any size. Focus on growing <strong>product</strong> instead of your tools.</p>
+      </li>
+      <li>
+        <div class="icon">{% include svg/homepage/lightning.svg %}</div>
+        <h3>Optimized</h3>
+        <p>With tight internal integration we are able to reuse previous work and any improvement to one tool improves them all.</p>
       </li>
       <li>
         <div class="icon">{% include svg/homepage/action.svg %}</div>
         <h3>Actionable &amp; Informative</h3>
-        <p>When you run into a problem we tell you exactly where it is and how to fix it.</p>
+        <p>Avoid obscure error messages, when we tell you something is wrong, we tell you exactly where the problem is and how to fix it.</p>
       </li>
       <li>
         <div class="icon">{% include svg/homepage/box.svg %}</div>
         <h3>Batteries Included</h3>
-        <p>Out of the box support for all the language features you use today, with first class support for TypeScript and JSX.</p>
+        <p>Out of the box support for all the language features you use today. First class support for TypeScript and JSX.</p>
       </li>
     </ul>
   </section>
@@ -127,9 +206,21 @@ no-sidebar: true
   <section class="try-rome">
     <h2>Try Rome today</h2>
     <p>Install Rome using your preferred package manager or get it as a VS Code extension.</p>
-    <div><a href="#" class="button vscode-button">{% include svg/homepage/vscode.svg %} Get VS Code Extension</a></div>
-    <div><a href="#" class="button install-button">Installation guide</a></div>
+    <div><a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=rome.rome" class="button vscode-button">{% include svg/homepage/vscode.svg %} Get VS Code Extension</a></div>
+    <div><a target="_blank" href="/docs/#getting-started" class="button install-button">Installation guide</a></div>
     <div class="window console-window">
+      <div class="command">
+        <div class="line"><span class="shell-symbol">$</span> npm install <span class="rome">rome</span></div>
+        <div class="line"><span>Added 1 package</span></div>
+      </div>
+      <div class="command">
+        <div class="line"><span class="shell-symbol">$</span> <span class="rome">rome</span> lint</div>
+        <div class="line"><span>Checked 780 files in 12ms.</span></div>
+      </div>
+      <div class="command">
+        <div class="line"><span class="shell-symbol">$</span> <span class="rome">rome</span> format</div>
+        <div class="line"><span>Checked 650 files in 42ms.</span></div>
+      </div>
     </div>
     <div class="window vscode-window">
     </div>

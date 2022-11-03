@@ -1,15 +1,10 @@
 ## Getting Started
 
-### What is Rome  {data-toc-exclude}
-
-Rome is a formatter, linter, and in the future, a bundler, compiler, test runner, and more.
-
 ### System Requirements {data-toc-exclude}
 
 * Windows (including WSL), macOS, or Linux
 * x86_64 or ARM64
 * Node.js v14.18 or newer (not applicable if you use the standalone executable)
-
 
 ### Installation
 

@@ -172,6 +172,10 @@
 
 	h1 {
 		margin: .67em 0;
+
+		&:first-child {
+			margin-top: 0;
+		}
 	}
 
 	h2 {

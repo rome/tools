@@ -1,8 +1,6 @@
 @import "_variables";
 @import "_mixins";
 
-// Using different element for desktop header and mobile header align the website in the middle of the page
-
 .header-mobile {
 	background: var(--container-color);
 	z-index: 3;
@@ -14,7 +12,6 @@
 	top: 0;
 	align-items: center;
 	padding-left: $unit;
-	border-top: 5px solid var(--top-border-color);
 	width: 100%;
 	border-bottom: 1px solid var(--soft-border-color);
 	display: flex;
@@ -28,15 +25,19 @@
 	}
 }
 
+.logo svg {
+	height: 30px;
+
+	.cls-1 {
+		fill: var(--logo-font-color);
+	}
+}
+
 .header {
 	width: 100%;
 	height: 80px;
 	line-height: 80px;
 	margin-bottom: 20px;
-
-	@include mobile-only() {
-		display: none;
-	}
 
 	.container {
 		align-items: center;
@@ -58,6 +59,10 @@
 		&.right li {
 			margin: 0 16px;
 
+			&:first-child {
+				margin: 0;
+			}
+
 			a, svg {
 				display: block;
 				width: 24px;
@@ -67,8 +72,7 @@
 
 		a {
 			font-size: 14px;
-			color: #0C0C0D;
-			opacity: 0.5;
+			opacity: 0.6;
 			text-decoration: none;
 
 			&.active {
@@ -90,12 +94,58 @@
 		@include desktop-only() {
 			margin-left: $unit;
 		}
+	}
 
-		svg {
-			height: 30px;
+	@include mobile-only() {
+		position: fixed;
+		top: $unit * 4;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: var(--background-color);
+		z-index: 9999;
+		height: 100%;
+		display: none;
 
-			.cls-1 {
-				fill: var(--logo-font-color);
+		&.mobile-active {
+			display: block;
+		}
+
+		.container {
+			flex-direction: column;
+		}
+
+		.logo {
+			display: none;
+		}
+
+		ul.middle {
+			display: block;
+			text-align: center;
+			margin-bottom: 40px;
+
+			li {
+				display: block;
+				margin: 0;
+				height: 60px;
+			}
+
+			a {
+				background: rgba(0, 0, 0, 0.05);
+				border-radius: 40px;
+				padding: 8px 21px;
+
+				&:hover {
+					background: #E9ECEF;
+				}
+		
+				@include dark-mode {
+					background: rgba(255, 255, 255, 0.1);
+		
+					&:hover {
+						background: rgba(255, 255, 255, 0.2);
+					}
+				}
 			}
 		}
 	}
@@ -130,7 +180,6 @@
 	svg rect, svg path {
 		fill: var(--top-border-color);
 	}
-
 
 	@include mobile-only() {
 		display: inline-flex;

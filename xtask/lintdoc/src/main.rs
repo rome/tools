@@ -212,7 +212,7 @@ fn generate_rule(
     // Write the header for this lint rule
     writeln!(content, "---")?;
     writeln!(content, "title: Lint Rule {rule}")?;
-    writeln!(content, "layout: layouts/rule.liquid")?;
+    writeln!(content, "layout: layouts/page.liquid")?;
     writeln!(content, "---")?;
     writeln!(content)?;
 

@@ -94,6 +94,7 @@ a, .link {
 .main {
 	width: 100%;
 	margin-top: 5px;
+	overflow: hidden;
 
 	@include mobile-only() {
 		margin-top: $unit * 4;

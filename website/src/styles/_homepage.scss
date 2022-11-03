@@ -1,27 +1,82 @@
 @import "_variables";
 @import "_mixins";
 
-.homepage {
-	text-align: center;
-
-	h1, h2 {
-		font-weight: 700;
-		margin-bottom: 40px;
+@keyframes homepage-hero-fade-out {
+  0% {
+		opacity: 1;
+		line-height: 86px;
 	}
 
-	h1 {
+  100% {
+		opacity: 0;
+		line-height: 100px;
+	}
+}
+
+@keyframes homepage-hero-fade-in {
+  0% {
+		opacity: 0;
+		line-height: 100px;
+	}
+
+  100% {
+		opacity: 1;
+		line-height: 86px;
+	}
+}
+
+.homepage {
+	text-align: center;
+	width: 100%;
+
+	.h1, h1, h2 {
+		font-weight: 700;
+		margin-bottom: 40px;
+		padding: 0 20px;
+	}
+
+	.h1, h1 {
 		font-size: 96px;
 		line-height: 90%;
 		margin-top: 40px;
 
-		span {
+		@include mobile-only {
+			font-size: 72px;
+		}
+
+		li {
+			line-height: 86px;
+			opacity: 1;
+		}
+
+		ul {
+			height: 86px;
+		}
+
+		.fadeout {
+    	animation: homepage-hero-fade-out 0.3s ease-out;
+		}
+
+		.fadein {
+    	animation: homepage-hero-fade-in 0.3s ease-in;
+		}
+
+		.formatter {
 			color: #f4c649;
+		}
+
+		.linter {
+			color: #51DBE4;
 		}
 	}
 
 	h2 {
 		font-size: 48px;
 		line-height: 140%;
+
+		@include mobile-only {
+			font-size: 42px;
+		}
 	}
 
 	.founder-clout {
@@ -43,16 +98,25 @@
 
 	hr {
 		opacity: 0.1;
+		border: none;
 		border-top: 1px solid #0C0C0D;
 		max-width: 800px;
 		margin: 40px auto;
+
+		@include dark-mode {
+			border-color: #fff;
+		}
+
+		&.half {
+			margin-top: 20px;
+		}
 
 		&.full {
 			max-width: 100%;
 		}
 	}
 
-	a.docs {
+	a.button {
 		display: inline-block;
 		background: rgba(0, 0, 0, 0.05);
 		border-radius: 40px;
@@ -60,11 +124,27 @@
 		text-decoration: none;
 		margin-bottom: 40px;
 		font-weight: 500;
+
+		&:hover {
+			background: #E9ECEF;
+		}
+
+		@include dark-mode {
+			background: rgba(255, 255, 255, 0.1);
+
+			&:hover {
+				background: rgba(255, 255, 255, 0.2);
+			}
+		}
 	}
 
 	p {
 		line-height: 150%;
 		font-size: 16px;
+	}
+
+	section > p {
+		padding: 0 20px;
 	}
 
 	ul.supported-languages {
@@ -73,10 +153,12 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
+		flex-wrap: wrap;
 		
 		li {
 			display: inline-block;
 			margin: 0 26px;
+			margin-bottom: 20px;
 
 			&.soon {
 				color: #ADB5BD;
@@ -105,6 +187,11 @@
 		padding: 1px 6px;
 		font-size: 12px;
 		line-height: 14px;
+		
+		@include dark-mode {
+			background: #0C0C0D;
+			color: #F1F3F5;
+		}
 	}
 
 	.component-list {
@@ -119,7 +206,7 @@
 			line-height: 140%;
 			
 			&.active {
-				border-bottom: 1px solid #0C0C0D;
+				border-bottom: 1px solid var(--font-color);
 			}
 
 			&:not(.soon) {
@@ -134,6 +221,10 @@
 
 		.soon {
 			color: #ADB5BD;
+
+			@include mobile-only {
+				display: none;
+			}
 		}
 	}
 
@@ -157,8 +248,10 @@
 			position: absolute;
 			left: 0;
 			top: 0;
+			width: 24px;
+			height: 24px;
 			
-			path {
+			path, polygon {
 				fill: var(--font-color);
 			}
 		}
@@ -167,6 +260,14 @@
 			font-weight: 500;
 			font-size: 20px;
 			margin-bottom: 12px;
+		}
+
+		@include mobile-only {
+			margin-left: 30px;
+
+			li {
+				width: 100%;
+			}
 		}
 	}
 
@@ -186,30 +287,25 @@
 		position: relative;
 		overflow: hidden;
 
+		@include dark-mode {
+			background-color: $gray-4;
+		}
+
 		h2 {
 			font-weight: 700;
 			font-size: 48px;
 			margin-bottom: 20px;
+			padding: 0;
 		}
 
 		p {
 			margin-bottom: 40px;
 			max-width: 400px;
+			padding: 0;
 		}
 
 		.button {
-			background: #E9ECEF;
-			border-radius: 40px;
-			padding: 8px 18px;
-			display: block;
 			width: auto;
-			font-weight: 500;
-			line-height: 150%;
-			display: inline-block;
-
-			&:hover {
-				background: #E9ECEF;
-			}
 
 			svg {
 				vertical-align: middle;
@@ -221,7 +317,7 @@
 			text-decoration: none;
 		}
 
-		.vscode-button {
+		.vscode-button.button {
 			margin-bottom: 20px;
 			background: rgba(36, 173, 243, 0.1);
 
@@ -236,22 +332,68 @@
 
 		.window {
 			position: absolute;
-			background: #FFFFFF;
+			background-color: #FFFFFF;
 			box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.04), 0px 10px 50px rgba(17, 17, 17, 0.1);
 			border-radius: 12px;
 			width: 485px;
 			height: 410px;
 			border: 1px solid #D4D4D4;
+
+			@include dark-mode {
+				background-color: #282c34;
+				border-color: #222;
+			}
 		}
 
 		.console-window {
 			right: 135px;
 			bottom: -69px;
+			padding: 30px;
+			font-family: $code-font;
+			font-size: 14px;
+
+			.shell-symbol {
+				color: #ADB5BD;
+			}
+
+			.rome {
+				color: #E67700;
+			}
+
+			.command {
+				margin-bottom: 20px;
+			}
 		}
 
 		.vscode-window {
-			right: -135px;
+			right: -145px;
 			bottom: -19px;
+			background-image: url("/img/homepage-vscode-screenshot-light.png");
+			background-size: 215%;
+
+			@include dark-mode {
+				background-image: url("/img/homepage-vscode-screenshot-dark.png");
+			}
+		}
+
+		@media only screen and (max-width: 1120px) {
+			padding-bottom: 200px;
+			border-radius: 0;
+		}
+
+		@media only screen and (max-width: 960px) {
+			padding-bottom: 400px;
+
+			.console-window {
+				border-radius: 0;
+				left: 0;
+				right: auto;
+			}
+
+			.vscode-window {
+				left: 300px;
+				right: auto;
+			}
 		}
 	}
 
@@ -268,16 +410,63 @@
 		box-shadow: 0px 0px 0px 0.5px rgba(0, 0, 0, 0.1), 0px 4px 20px rgba(0, 0, 0, 0.04), 0px 10px 50px rgba(17, 17, 17, 0.1);
 
 		border-radius: 16px;
-		border: 1px solid;
-		border-image-source: radial-gradient(36.83% 36.83% at 24.4% 26%, rgba(199, 199, 199, 0.2) 0%, rgba(222, 222, 222, 0) 100%);
+		border: 1px solid #D4D4D4;
+
+		@include mobile-only {
+			border-radius: 0;
+			flex-direction: column;
+			border-left: none;
+			border-right: none;
+			height: auto;
+			margin-bottom: 30px;
+
+			pre.language-js {
+				height: 200px;
+			}
+
+			.code, .output {
+				border-right: none;
+				border-bottom: 1px solid #E9ECEF;
+			}
+		}
+
+		@include dark-mode {
+			background: #282c34;
+			border-color: #222;
+		}
+
+		pre {
+			padding: 0;
+			background: none;
+			font-size: 12px;
+			overflow: auto;
+			height: 100%;
+		}
 
 		.code, .output, .performance {
 			width: 100%;
+			min-width: 100px;
 			padding: 22px 24px;
+			flex-basis: 0px;
+  		flex-grow: 1;
+			display: flex;
+			flex-direction: column;
 		}
 
 		.code, .output {
 			border-right: 1px solid #E9ECEF;
+
+			@include dark-mode {
+				border-color: #222;
+			}
+		}
+
+		code {
+			color: #666;
+
+			@include dark-mode {
+				color: rgb(171, 178, 191);
+			}
 		}
 
 		h4 {
@@ -300,6 +489,14 @@
 			background: #F8F9FA;
 			font-family: $code-font;
 
+			@include dark-mode {
+				background-color: $gray-4;
+			}
+
+			@include mobile-only {
+				padding-bottom: 40px;
+			}
+
 			h4 {
 				color: #868E96;
 				margin-bottom: 40px;
@@ -311,6 +508,10 @@
 				width: 100%;
 				background-color: #E9ECEF;
 
+				@include dark-mode {
+					background-color: rgba(255, 255, 255, 0.2);
+				}
+
 				.progress-bar {
 					height: 100%;
 				}
@@ -320,6 +521,10 @@
 				margin-top: 40px;
 				font-size: 36px;
 				margin-bottom: 10px;
+
+				@include mobile-only {
+					margin-top: 0;
+				}
 			}
 
 			.progress-header {
@@ -329,6 +534,10 @@
 
 			.tool-name {
 				color: #0C0C0D;
+
+				@include dark-mode {
+					color: #fff;
+				}
 			}
 
 			.progress-bar-good {

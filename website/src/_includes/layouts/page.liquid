@@ -3,6 +3,6 @@ layout: layouts/base.liquid
 social-image: social-logo.png
 ---
 
-<main id="main-content" class="content {% if layout-type == "split" %}split{% else %}single{% endif %} {{ main-class }}">
+<div id="main-content" class="main content {% if layout-type == "split" %}split{% else %}single{% endif %} {{ main-class }}">
 	{{ content | safe }}
-</main>
+</div>

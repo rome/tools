@@ -1,5 +1,5 @@
 <pre class="language-text homepage-example"><code class="language-text">
-main.tsx:9:3 <a href="https://rome.tools/docs/lint/rules/noUnreachable">lint/nursery/noUnreachable</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+main.tsx:9:3 <a href="https://rome.tools/docs/lint/rules/noUnreachable">lint/nursery/noUnreachable</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This code will never be reached ...</span>
   

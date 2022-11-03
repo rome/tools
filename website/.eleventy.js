@@ -2,7 +2,6 @@
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
 const markdownIt = require("markdown-it");
-const markdownItHeaderSections = require("markdown-it-header-sections");
 const markdownItAnchor = require("markdown-it-anchor");
 const markdownItImageSize = require("markdown-it-imsize");
 const markdownItFootnote = require("markdown-it-footnote");
@@ -49,8 +48,6 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addPlugin(eleventyNavigationPlugin);
 
 	const md = markdownIt({ html: true, linkify: true, typographer: true });
-
-	md.use(markdownItHeaderSections);
 
 	md.use(markdownItImageSize);
 

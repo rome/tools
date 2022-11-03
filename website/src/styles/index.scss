@@ -18,7 +18,7 @@
 :root {
 	--primary-color: #{$color-4};
 	--logo-font-color: #{$gray-4};
-	--background-color: rgba(0, 0, 0, 0);
+	--background-color: #fff;
 	--container-color: #fff;
 	--font-color: #{$gray-4};
 	--sub-text-color: #{$gray-5};
@@ -42,13 +42,13 @@
 }
 
 @include dark-mode {
-	--logo-font-color: #fff;
+	--logo-font-color: #{lighten(#27272A, 72%)};
 	--background-color: #{lighten(#27272A, 2%)};
 	--container-color: #{$gray-4};
-	--font-color: #fff;
+	--font-color: #{lighten(#27272A, 65%)};
 	--sub-text-color: #{lighten(#27272A, 55%)};
 	--top-border-color: #{$color-4};
-	--soft-border-color: rgba(0, 0, 0, 0.15);
+	--soft-border-color: rgba(255, 255, 255, 0.05);
 	--hard-border-color: rgba(255, 255, 255, 0.05);
 	--pattern-color: #{$gray-3};
 	--pattern-color-2: #{rgba(0, 0, 0, 0)};

@@ -9,6 +9,16 @@ footer {
   font-size: 14px;
   line-height: 150%;
   padding: 26px 0;
+	display: flex;
+	flex-direction: row;
+
+	p {
+		width: 100%;
+	}
+
+	@include dark-mode {
+		border-color: rgba(255, 255, 255, 0.1);
+	}
 }
 
 @include dark-mode {
@@ -24,14 +34,6 @@ footer {
 			left: 33px;
 		}
 	}
-}
-
-.color-scheme-switch-container {
-	flex-shrink: 0;
-	align-items: center;
-	position: relative;
-	display: flex;
-	flex-direction: column;
 }
 
 .color-scheme-switch {
