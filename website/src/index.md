@@ -57,28 +57,46 @@ no-sidebar: true
 
   <hr>
 
-  <section>
+  <section class="supercharge">
     <h2>Supercharge your workflow.</h2>
+    <p class="heading-tagline">Packed full of useful features like theming, smart tokens, CSS prop, as prop, utils, and a fully-typed API.</p>
     <ul class="component-list">
-      <li class="active">Formatter</li>
-      <li>Linter</li>
-      <li class="soon">
+      <li class="active" data-class="component-window-formatter">Formatter</li>
+      <li data-class="component-window-linter">Linter</li>
+      <li data-class="component-window-compiler" class="soon">
         <div class="text">Compiler</div>
         <div class="soon-indicator">Soon</div>
       </li>
-      <li class="soon">
+      <li data-class="component-window-bundler" class="soon">
         <div class="text">Bundler</div>
         <div class="soon-indicator">Soon</div>
       </li>
-      <li class="soon">
+      <li data-class="component-window-testing" class="soon">
         <div class="text">Testing</div>
         <div class="soon-indicator">Soon</div>
       </li>
-      <li class="soon">
+      <li data-class="component-window-documentation" class="soon">
         <div class="text">Documentation</div>
         <div class="soon-indicator">Soon</div>
       </li>
     </ul>
+    <div class="component-window component-window-formatter">
+      <div class="code">
+        <h4>Code</h4>
+      </div>
+      <div class="output">
+        <h4>Output</h4>
+      </div>
+      <div class="performance">
+        <h4>Performance</h4>
+        <p class="progress-header"><span class="tool-name">Rome</span> finished in <span class="time-good">0.1s</span></p>
+        <div class="progress"><div class="progress-bar progress-bar-good" style="width: 20px;"></div></div>
+        <p class="progress-header"><span class="tool-name">Prettier</span> finished in <span class="time-bad">5.2s</span></p>
+        <div class="progress"><div class="progress-bar progress-bar-bad" style="width: 270px;"></div></div>
+        <p class="multiplier">52×</p>
+        <p>Rome is 52× faster than Prettier when formatting 1,000 lines of code.</p>
+      </div>
+    </div>
     <p class="founder-clout">Created by the founder of <a class="babel" href="https://babeljs.io/">{% include svg/homepage/babel.svg %}</a> and <a href="https://yarnpkg.com/" class="yarn">{% include svg/homepage/yarn.svg %}</a></p>
   </section>
 

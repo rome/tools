@@ -42,10 +42,10 @@
 }
 
 @include dark-mode {
-	--logo-font-color: #{lighten(#27272A, 72%)};
+	--logo-font-color: #fff;
 	--background-color: #{lighten(#27272A, 2%)};
 	--container-color: #{$gray-4};
-	--font-color: #{lighten(#27272A, 65%)};
+	--font-color: #fff;
 	--sub-text-color: #{lighten(#27272A, 55%)};
 	--top-border-color: #{$color-4};
 	--soft-border-color: rgba(0, 0, 0, 0.15);

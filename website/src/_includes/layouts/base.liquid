@@ -54,15 +54,15 @@
 				</a>
 
 				<ul class="middle">
-					<li><a href="/docs/">Docs</a></li>
-					<li><a href="/blog/">Blog</a></li>
+					<li><a href="/docs/" class="{% if page.url == "/docs/" %}active{% endif %}">Docs</a></li>
+					<li><a href="/blog/" class="{% if page.url == "/blog/" %}active{% endif %}">Blog</a></li>
 					<li><a href="https://play.rome.tools/">Playground</a></li>
-					<li><a href="/credits/">Credits</a></li>
+					<li><a href="/credits/" class="{% if page.url == "/credits/" %}active{% endif %}">Credits</a></li>
 				</ul>
 
 				<ul class="right">
-					<li><a href="https://github.com/rome/tools">{% include svg/footer/github.svg %}</a></li>
-					<li><a href="https://twitter.com/rometools">{% include svg/footer/twitter.svg %}</a></li>
+					<li><a target="_blank" href="https://github.com/rome/tools">{% include svg/footer/github.svg %}</a></li>
+					<li><a target="_blank" href="https://twitter.com/rometools">{% include svg/footer/twitter.svg %}</a></li>
 				</ul>
 			</div>
 		</div>

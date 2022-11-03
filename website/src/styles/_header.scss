@@ -71,6 +71,10 @@
 			opacity: 0.5;
 			text-decoration: none;
 
+			&.active {
+				font-weight: bold;
+			}
+
 			&:hover {
 				opacity: 1;
 			}

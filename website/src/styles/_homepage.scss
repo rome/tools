@@ -157,6 +157,10 @@
 			position: absolute;
 			left: 0;
 			top: 0;
+			
+			path {
+				fill: var(--font-color);
+			}
 		}
 
 		h3 {
@@ -164,6 +168,12 @@
 			font-size: 20px;
 			margin-bottom: 12px;
 		}
+	}
+
+	.supercharge .heading-tagline {
+		margin: 0 auto;
+		margin-bottom: 50px;
+		max-width: 550px;
 	}
 
 	.try-rome {
@@ -174,6 +184,7 @@
 		text-align: left;
 		padding: 70px 90px;
 		position: relative;
+		overflow: hidden;
 
 		h2 {
 			font-weight: 700;
@@ -241,6 +252,100 @@
 		.vscode-window {
 			right: -135px;
 			bottom: -19px;
+		}
+	}
+
+	.component-window {
+		display: flex;
+		flex-direction: row;
+		text-align: left;
+		line-height: 150%;
+
+		background: #FFFFFF;
+		width: 100%;
+		height: 480px;
+		margin-bottom: 65px;
+		box-shadow: 0px 0px 0px 0.5px rgba(0, 0, 0, 0.1), 0px 4px 20px rgba(0, 0, 0, 0.04), 0px 10px 50px rgba(17, 17, 17, 0.1);
+
+		border-radius: 16px;
+		border: 1px solid;
+		border-image-source: radial-gradient(36.83% 36.83% at 24.4% 26%, rgba(199, 199, 199, 0.2) 0%, rgba(222, 222, 222, 0) 100%);
+
+		.code, .output, .performance {
+			width: 100%;
+			padding: 22px 24px;
+		}
+
+		.code, .output {
+			border-right: 1px solid #E9ECEF;
+		}
+
+		h4 {
+			text-transform: uppercase;
+			margin-bottom: 16px;
+			font-family: $code-font;
+			font-weight: 500;
+			font-size: 12px;
+		}
+
+		.code h4 {
+			color: #F03E3E;
+		}
+
+		.output h4 {
+			color: #4263EB;
+		}
+
+		.performance {
+			background: #F8F9FA;
+			font-family: $code-font;
+
+			h4 {
+				color: #868E96;
+				margin-bottom: 40px;
+			}
+
+			.progress {
+				margin-bottom: 50px;
+				height: 18px;
+				width: 100%;
+				background-color: #E9ECEF;
+
+				.progress-bar {
+					height: 100%;
+				}
+			}
+
+			.multiplier {
+				margin-top: 40px;
+				font-size: 36px;
+				margin-bottom: 10px;
+			}
+
+			.progress-header {
+				color: #868E96;
+				margin-bottom: 12px;
+			}
+
+			.tool-name {
+				color: #0C0C0D;
+			}
+
+			.progress-bar-good {
+				background-color: #40C057;
+			}
+
+			.progress-bar-bad {
+				background-color: #F03E3E;
+			}
+
+			.time-good {
+				color: #40C057;
+			}
+
+			.time-bad {
+				color: #F03E3E;
+			}
 		}
 	}
 }
