@@ -43,16 +43,12 @@ impl<'token> CleanedNumberLiteralText<'token> {
     }
 }
 
-struct FormatNumberLiteralState {
-    curr: Option<(usize, char)>,
-    location: FormatNumberLiteralLocation,
-}
-enum FormatNumberLiteralLocation {
+enum FormatNumberLiteralState {
     InIntegerPart,
     InDecimalPart(FormatNumberLiteralDecimalPart),
     InExponent(FormatNumberLiteralExponent),
 }
-use FormatNumberLiteralLocation::*;
+use FormatNumberLiteralState::*;
 struct FormatNumberLiteralDecimalPart {
     dot_index: usize,
     last_non_zero_index: Option<NonZeroUsize>,
@@ -68,18 +64,17 @@ fn format_trimmed_number(text: &str) -> Cow<str> {
     let text = text.to_ascii_lowercase_cow();
     let mut copied_or_ignored_chars = 0usize;
     let mut iter = text.chars().enumerate();
-    let mut state = FormatNumberLiteralState {
-        curr: iter.next(),
-        location: InIntegerPart,
-    };
+    let mut curr = iter.next();
+    let mut state = InIntegerPart;
+
     // Will be filled only if and when the first place that needs reformatting is detected.
     let mut cleaned_text = String::new();
 
     // Look at only the start of the text, ignore any sign, and make sure numbers always start with a digit. Add 0 if missing.
-    if let Some((_, '+' | '-')) = state.curr {
-        state.curr = iter.next();
+    if let Some((_, '+' | '-')) = curr {
+        curr = iter.next();
     }
-    if let Some((curr_index, '.')) = state.curr {
+    if let Some((curr_index, '.')) = curr {
         cleaned_text.push_str(&text[copied_or_ignored_chars..curr_index]);
         copied_or_ignored_chars = curr_index;
         cleaned_text.push('0');
@@ -87,12 +82,13 @@ fn format_trimmed_number(text: &str) -> Cow<str> {
 
     // Loop over the rest of the text, applying the remaining rules.
     loop {
-        let curr_or_none_terminator_char = match state.curr {
+        // We use a None pseudo-char at the end of the string to simplify the match cases that follow
+        let curr_or_none_terminator_char = match curr {
             Some((curr_index, curr_char)) => (curr_index, Some(curr_char)),
             None => (text.len(), None),
         };
         // Look for termination of the decimal part or exponent and see if we need to print it differently.
-        match (&state.location, curr_or_none_terminator_char) {
+        match (&state, curr_or_none_terminator_char) {
             (
                 InDecimalPart(FormatNumberLiteralDecimalPart {
                     dot_index,
@@ -155,62 +151,49 @@ fn format_trimmed_number(text: &str) -> Cow<str> {
             _ => {}
         }
 
-        // Update location info after the current char
-        match state {
+        // Update state after the current char
+        match (&state, curr) {
             // Cases entering or remaining in decimal part
-            FormatNumberLiteralState {
-                curr: Some((curr_index, '.')),
-                ..
-            } => {
-                state.location = InDecimalPart(FormatNumberLiteralDecimalPart {
+            (_, Some((curr_index, '.'))) => {
+                state = InDecimalPart(FormatNumberLiteralDecimalPart {
                     dot_index: curr_index,
                     last_non_zero_index: None,
                 });
             }
-            FormatNumberLiteralState {
-                location: InDecimalPart(decimal_part),
-                curr: Some((curr_index, '1'..='9')),
-            } => {
-                state.location = InDecimalPart(FormatNumberLiteralDecimalPart {
+            (InDecimalPart(decimal_part), Some((curr_index, '1'..='9'))) => {
+                state = InDecimalPart(FormatNumberLiteralDecimalPart {
                     last_non_zero_index: Some(unsafe {
                         // We've already entered InDecimalPart, so curr_index must be >0
                         NonZeroUsize::new_unchecked(curr_index)
                     }),
-                    ..decimal_part
+                    ..*decimal_part
                 });
             }
             // Cases entering or remaining in exponent
-            FormatNumberLiteralState {
-                curr: Some((curr_index, 'e')),
-                ..
-            } => {
-                state.location = InExponent(FormatNumberLiteralExponent {
+            (_, Some((curr_index, 'e'))) => {
+                state = InExponent(FormatNumberLiteralExponent {
                     e_index: curr_index,
                     is_negative: false,
                     first_digit_index: None,
                     first_non_zero_index: None,
                 });
             }
-            FormatNumberLiteralState {
-                location: InExponent(exponent),
-                curr: Some((_, '-')),
-            } => {
-                state.location = InExponent(FormatNumberLiteralExponent {
+            (InExponent(exponent), Some((_, '-'))) => {
+                state = InExponent(FormatNumberLiteralExponent {
                     is_negative: true,
-                    ..exponent
+                    ..*exponent
                 });
             }
-            FormatNumberLiteralState {
-                location:
-                    InExponent(
-                        exponent @ FormatNumberLiteralExponent {
-                            first_digit_index: None,
-                            ..
-                        },
-                    ),
-                curr: Some((curr_index, curr_char @ '0'..='9')),
-            } => {
-                state.location = InExponent(FormatNumberLiteralExponent {
+            (
+                InExponent(
+                    exponent @ FormatNumberLiteralExponent {
+                        first_digit_index: None,
+                        ..
+                    },
+                ),
+                Some((curr_index, curr_char @ '0'..='9')),
+            ) => {
+                state = InExponent(FormatNumberLiteralExponent {
                     first_digit_index: Some(unsafe {
                         // We've already entered InExponent, so curr_index must be >0
                         NonZeroUsize::new_unchecked(curr_index)
@@ -223,31 +206,30 @@ fn format_trimmed_number(text: &str) -> Cow<str> {
                     } else {
                         None
                     },
-                    ..exponent
+                    ..*exponent
                 });
             }
-            FormatNumberLiteralState {
-                location:
-                    InExponent(
-                        exponent @ FormatNumberLiteralExponent {
-                            first_non_zero_index: None,
-                            ..
-                        },
-                    ),
-                curr: Some((curr_index, '1'..='9')),
-            } => {
-                state.location = InExponent(FormatNumberLiteralExponent {
+            (
+                InExponent(
+                    exponent @ FormatNumberLiteralExponent {
+                        first_non_zero_index: None,
+                        ..
+                    },
+                ),
+                Some((curr_index, '1'..='9')),
+            ) => {
+                state = InExponent(FormatNumberLiteralExponent {
                     first_non_zero_index: Some(unsafe { NonZeroUsize::new_unchecked(curr_index) }),
-                    ..exponent
+                    ..*exponent
                 });
             }
             _ => {}
         }
 
         // Repeat or exit
-        match state.curr {
+        match curr {
             None | Some((_, 'x') /* hex bailout */) => break,
-            Some(_) => state.curr = iter.next(),
+            Some(_) => curr = iter.next(),
         }
     }
 
