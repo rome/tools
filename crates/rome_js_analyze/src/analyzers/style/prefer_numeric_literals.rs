@@ -57,42 +57,6 @@ pub struct TextAndRadix {
     radix: Radix,
 }
 
-enum Radix {
-    Binary = 2,
-    Octal = 8,
-    Hexadecimal = 16,
-}
-
-impl Radix {
-    fn from_f64(v: f64) -> Option<Self> {
-        Some(if v == 2.0 {
-            Self::Binary
-        } else if v == 8.0 {
-            Self::Octal
-        } else if v == 16.0 {
-            Self::Hexadecimal
-        } else {
-            return None;
-        })
-    }
-
-    fn prefix(&self) -> &'static str {
-        match self {
-            Radix::Binary => "0b",
-            Radix::Octal => "0o",
-            Radix::Hexadecimal => "0x",
-        }
-    }
-
-    fn description(&self) -> &'static str {
-        match self {
-            Radix::Binary => "binary",
-            Radix::Octal => "octal",
-            Radix::Hexadecimal => "hexadecimal",
-        }
-    }
-}
-
 impl Rule for PreferNumericLiterals {
     type Query = Ast<JsCallExpression>;
     type State = TextAndRadix;
@@ -208,5 +172,41 @@ fn is_callee_parse_int_fn(expr: &JsCallExpression) -> Option<bool> {
                 && expr.member().ok()?.syntax().text_trimmed() == "parseInt",
         ),
         _ => None,
+    }
+}
+
+enum Radix {
+    Binary = 2,
+    Octal = 8,
+    Hexadecimal = 16,
+}
+
+impl Radix {
+    fn from_f64(v: f64) -> Option<Self> {
+        Some(if v == 2.0 {
+            Self::Binary
+        } else if v == 8.0 {
+            Self::Octal
+        } else if v == 16.0 {
+            Self::Hexadecimal
+        } else {
+            return None;
+        })
+    }
+
+    fn prefix(&self) -> &'static str {
+        match self {
+            Radix::Binary => "0b",
+            Radix::Octal => "0o",
+            Radix::Hexadecimal => "0x",
+        }
+    }
+
+    fn description(&self) -> &'static str {
+        match self {
+            Radix::Binary => "binary",
+            Radix::Octal => "octal",
+            Radix::Hexadecimal => "hexadecimal",
+        }
     }
 }
