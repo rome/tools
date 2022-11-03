@@ -440,6 +440,13 @@ Disallow certain types.
 Prevents from having <code>const</code> variables being re-assigned.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noDupeKeys">
+	<a href="/docs/lint/rules/noDupeKeys">noDupeKeys</a>
+</h3>
+Prevents object literals having more than one property declaration for the same key.
+If the same key is specified multiple times, only the last property declaration will prevail and previous will be lost, which is likely a mistake.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noExplicitAny">
 	<a href="/docs/lint/rules/noExplicitAny">noExplicitAny</a>
 </h3>

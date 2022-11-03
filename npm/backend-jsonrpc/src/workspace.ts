@@ -210,6 +210,7 @@ export interface Correctness {
 export interface Nursery {
 	noBannedTypes?: RuleConfiguration;
 	noConstAssign?: RuleConfiguration;
+	noDupeKeys?: RuleConfiguration;
 	noExplicitAny?: RuleConfiguration;
 	noInvalidConstructorSuper?: RuleConfiguration;
 	/**
@@ -385,14 +386,15 @@ export type Category =
 	| "lint/a11y/useAltText"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
-	| "lint/nursery/useFlatMap"
-	| "lint/nursery/noConstAssign"
-	| "lint/nursery/noExplicitAny"
-	| "lint/nursery/useValidForDirection"
-	| "lint/nursery/noInvalidConstructorSuper"
-	| "lint/nursery/useExhaustiveDependencies"
-	| "lint/nursery/useCamelCase"
 	| "lint/nursery/noBannedTypes"
+	| "lint/nursery/noConstAssign"
+	| "lint/nursery/noDupeKeys"
+	| "lint/nursery/noExplicitAny"
+	| "lint/nursery/noInvalidConstructorSuper"
+	| "lint/nursery/useCamelCase"
+	| "lint/nursery/useExhaustiveDependencies"
+	| "lint/nursery/useFlatMap"
+	| "lint/nursery/useValidForDirection"
 	| "files/missingHandler"
 	| "format"
 	| "internalError/io"

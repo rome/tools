@@ -75,14 +75,15 @@ define_dategories! {
 
 
     // nursery
-    "lint/nursery/useFlatMap": "https://rome.tools/docs/lint/rules/useFlatMap",
-    "lint/nursery/noConstAssign": "https://rome.tools/docs/lint/rules/noConstAssign",
-    "lint/nursery/noExplicitAny": "https://rome.tools/docs/lint/rules/noExplicitAny",
-    "lint/nursery/useValidForDirection": "https://rome.tools/docs/lint/rules/useValidForDirection",
-    "lint/nursery/noInvalidConstructorSuper": "https://rome.tools/docs/lint/rules/noInvalidConstructorSuper",
-    "lint/nursery/useExhaustiveDependencies": "https://rome.tools/docs/lint/rules/useExhaustiveDependencies",
-    "lint/nursery/useCamelCase": "https://rome.tools/docs/lint/rules/useCamelCase",
     "lint/nursery/noBannedTypes":"https://rome.tools/docs/lint/rules/noBannedTypes",
+    "lint/nursery/noConstAssign": "https://rome.tools/docs/lint/rules/noConstAssign",
+    "lint/nursery/noDupeKeys": "https://rome.tools/docs/lint/rules/noDupeKeys",
+    "lint/nursery/noExplicitAny": "https://rome.tools/docs/lint/rules/noExplicitAny",
+    "lint/nursery/noInvalidConstructorSuper": "https://rome.tools/docs/lint/rules/noInvalidConstructorSuper",
+    "lint/nursery/useCamelCase": "https://rome.tools/docs/lint/rules/useCamelCase",
+    "lint/nursery/useExhaustiveDependencies": "https://rome.tools/docs/lint/rules/useExhaustiveDependencies",
+    "lint/nursery/useFlatMap": "https://rome.tools/docs/lint/rules/useFlatMap",
+    "lint/nursery/useValidForDirection": "https://rome.tools/docs/lint/rules/useValidForDirection",
 
     ;
 
