@@ -31,8 +31,7 @@ pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;
 use rome_formatter::{format_args, write, Buffer};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyStatement, JsCallExpression, JsInitializerClause, JsLanguage,
-    JsSyntaxKind, Modifiers,
+    JsAnyExpression, JsAnyStatement, JsCallExpression, JsInitializerClause, JsLanguage, Modifiers,
 };
 use rome_js_syntax::{JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
@@ -125,10 +124,15 @@ impl<'a> FormatInterpreterToken<'a> {
 impl Format<JsFormatContext> for FormatInterpreterToken<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(interpreter) = self.token {
-            if interpreter.kind() == JsSyntaxKind::JS_SHEBANG {
-                write!(f, [interpreter.format(), hard_line_break()])
+            if let Some(token) = interpreter.next_token() {
+                // the interpreter line + empty line = 2
+                if get_lines_before_token(&token) >= 2 {
+                    write!(f, [interpreter.format(), empty_line()])
+                } else {
+                    write!(f, [interpreter.format(), hard_line_break()])
+                }
             } else {
-                write!(f, [interpreter.format(), empty_line()])
+                Ok(())
             }
         } else {
             Ok(())
