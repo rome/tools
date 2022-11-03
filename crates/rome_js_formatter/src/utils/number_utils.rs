@@ -86,17 +86,19 @@ fn format_trimmed_number(text: &str) -> Cow<str> {
     }
 
     // Loop over the rest of the text, applying the remaining rules.
-    // Treating the end of string like another character instead of dealing with None will simplify matching a lot.
-    let null_terminator = (text.len(), '\0');
     loop {
+        let curr_or_none_terminator_char = match state.curr {
+            Some((curr_index, curr_char)) => (curr_index, Some(curr_char)),
+            None => (text.len(), None),
+        };
         // Look for termination of the decimal part or exponent and see if we need to print it differently.
-        match (&state.location, state.curr.unwrap_or(null_terminator)) {
+        match (&state.location, curr_or_none_terminator_char) {
             (
                 InDecimalPart(FormatNumberLiteralDecimalPart {
                     dot_index,
                     last_non_zero_index: None,
                 }),
-                (curr_index, 'e' | '\0'),
+                (curr_index, Some('e') | None),
             ) => {
                 // The decimal part equals zero, ignore it completely.
                 // Caveat: Prettier still prints a single `.0` unless there was *only* a trailing dot.
@@ -113,7 +115,7 @@ fn format_trimmed_number(text: &str) -> Cow<str> {
                     last_non_zero_index: Some(last_non_zero_index),
                     ..
                 }),
-                (curr_index, 'e' | '\0'),
+                (curr_index, Some('e') | None),
             ) if last_non_zero_index.get() < curr_index - 1 => {
                 // The decimal part ends with at least one zero, ignore them but copy the part from the dot until the last non-zero.
                 cleaned_text.push_str(&text[copied_or_ignored_chars..=last_non_zero_index.get()]);
@@ -125,7 +127,7 @@ fn format_trimmed_number(text: &str) -> Cow<str> {
                     first_non_zero_index: None,
                     ..
                 }),
-                (curr_index, '\0'),
+                (curr_index, None),
             ) => {
                 // The exponent equals zero, ignore it completely.
                 cleaned_text.push_str(&text[copied_or_ignored_chars..*e_index]);
@@ -138,7 +140,7 @@ fn format_trimmed_number(text: &str) -> Cow<str> {
                     first_digit_index: Some(first_digit_index),
                     first_non_zero_index: Some(first_non_zero_index),
                 }),
-                (curr_index, '\0'),
+                (curr_index, None),
             ) if (first_digit_index.get() > e_index + 1 && !is_negative)
                 || (first_non_zero_index.get() > first_digit_index.get()) =>
             {
