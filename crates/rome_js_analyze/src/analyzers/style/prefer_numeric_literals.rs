@@ -137,7 +137,7 @@ fn get_text(arg: JsAnyCallArgument) -> Option<JsSyntaxToken> {
 
             let elem = elements.into_iter().next()?;
             let chunk = elem.as_js_template_chunk_element()?;
-            return chunk.template_chunk_token().ok();
+            chunk.template_chunk_token().ok()
         }
         JsAnyExpression::JsAnyLiteralExpression(
             JsAnyLiteralExpression::JsStringLiteralExpression(s),
