@@ -1,16 +1,15 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-expression: script.js
+expression: interpreter_with_empty_line.js
 ---
 
 # Input
 
 ```js
 #!/usr/bin/env node
-"use strict";
-'use asm'
-var express = require("express")
 
+
+console.log(1)
 ```
 
 
@@ -30,9 +29,8 @@ Trailing comma: All
 
 ```js
 #!/usr/bin/env node
-"use strict";
-"use asm";
-var express = require("express");
+
+console.log(1);
 ```
 
 
