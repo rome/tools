@@ -1,7 +1,7 @@
 use crate::prelude::*;
+use crate::utils::number_utils::CleanedNumberLiteralText;
 
 use crate::parentheses::{is_member_object, NeedsParentheses};
-use rome_formatter::write;
 use rome_js_syntax::JsNumberLiteralExpression;
 use rome_js_syntax::{JsNumberLiteralExpressionFields, JsSyntaxNode};
 
@@ -15,9 +15,7 @@ impl FormatNodeRule<JsNumberLiteralExpression> for FormatJsNumberLiteralExpressi
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
         let JsNumberLiteralExpressionFields { value_token } = node.as_fields();
-        let value_token = value_token?;
-
-        write![f, [value_token.format()]]
+        CleanedNumberLiteralText::from_number_literal_token(&value_token?).fmt(f)
     }
 
     fn needs_parentheses(&self, item: &JsNumberLiteralExpression) -> bool {

@@ -2,6 +2,7 @@ pub(crate) mod array;
 mod assignment_like;
 mod binary_like_expression;
 mod conditional;
+pub mod number_utils;
 pub mod string_utils;
 
 pub(crate) mod format_class;
