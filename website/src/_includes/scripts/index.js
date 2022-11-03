@@ -601,10 +601,15 @@ if (heroScrollers.length > 0) {
 			nextActiveElem.removeAttribute("hidden");
 
 			activeIndex = nextActiveIndex;
+			queue();
 		}, {once: true});
 	}
+	
+	function queue() {
+		setTimeout(() => {
+			next();
+		}, 2500);
+	}
 
-	setInterval(() => {
-		next();
-	}, 2500);
+	queue();
 }
