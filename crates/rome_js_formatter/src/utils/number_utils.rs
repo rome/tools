@@ -75,7 +75,7 @@ fn format_trimmed_number(text: &str) -> Cow<str> {
     // Will be filled only if and when the first place that needs reformatting is detected.
     let mut cleaned_text = String::new();
 
-    // Look at only the start of the text and make sure numbers always start with a digit. Add 0 if missing.
+    // Look at only the start of the text, ignore any sign, and make sure numbers always start with a digit. Add 0 if missing.
     if let Some((_, '+' | '-')) = state.curr {
         state.curr = iter.next();
     }
@@ -170,7 +170,10 @@ fn format_trimmed_number(text: &str) -> Cow<str> {
                 curr: Some((curr_index, '1'..='9')),
             } => {
                 state.location = InDecimalPart(FormatNumberLiteralDecimalPart {
-                    last_non_zero_index: Some(unsafe { NonZeroUsize::new_unchecked(curr_index) }),
+                    last_non_zero_index: Some(unsafe {
+                        // We've already entered InDecimalPart, so curr_index must be >0
+                        NonZeroUsize::new_unchecked(curr_index)
+                    }),
                     ..decimal_part
                 });
             }
@@ -206,9 +209,15 @@ fn format_trimmed_number(text: &str) -> Cow<str> {
                 curr: Some((curr_index, curr_char @ '0'..='9')),
             } => {
                 state.location = InExponent(FormatNumberLiteralExponent {
-                    first_digit_index: Some(unsafe { NonZeroUsize::new_unchecked(curr_index) }),
+                    first_digit_index: Some(unsafe {
+                        // We've already entered InExponent, so curr_index must be >0
+                        NonZeroUsize::new_unchecked(curr_index)
+                    }),
                     first_non_zero_index: if curr_char != '0' {
-                        Some(unsafe { NonZeroUsize::new_unchecked(curr_index) })
+                        Some(unsafe {
+                            // We've already entered InExponent, so curr_index must be >0
+                            NonZeroUsize::new_unchecked(curr_index)
+                        })
                     } else {
                         None
                     },

@@ -14,8 +14,13 @@ impl FormatNodeRule<TsNumberLiteralType> for FormatTsNumberLiteralType {
             minus_token,
             literal_token,
         } = node.as_fields();
-        write![f, [minus_token.format()]]?;
-        CleanedNumberLiteralText::from_number_literal_token(&literal_token?).fmt(f)
+        write![
+            f,
+            [
+                minus_token.format(),
+                CleanedNumberLiteralText::from_number_literal_token(&literal_token?)
+            ]
+        ]
     }
 
     fn needs_parentheses(&self, item: &TsNumberLiteralType) -> bool {
