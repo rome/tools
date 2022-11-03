@@ -454,10 +454,10 @@ impl BoilerplateImpls {
         self.impls.push(quote! {
             #format_rule_impl
 
-            impl<'a> AsFormat<'a> for rome_js_syntax::#node_id {
-                type Format = FormatRefWithRule<'a, rome_js_syntax::#node_id, #format_id>;
+            impl AsFormat for rome_js_syntax::#node_id {
+                type Format<'a> = FormatRefWithRule<'a, rome_js_syntax::#node_id, #format_id>;
 
-                fn format(&'a self) -> Self::Format {
+                fn format<'a>(&'a self) -> Self::Format<'a> {
                     FormatRefWithRule::new(self, #format_id::default())
                 }
             }

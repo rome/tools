@@ -207,21 +207,21 @@ pub(crate) type JsFormatter<'buf> = Formatter<'buf, JsFormatContext>;
 // Per Crate
 
 /// Used to get an object that knows how to format this object.
-pub trait AsFormat<'a> {
-    type Format: Format<JsFormatContext>;
+pub trait AsFormat {
+    type Format<'a>: Format<JsFormatContext> where Self: 'a;
 
     /// Returns an object that is able to format this object.
-    fn format(&'a self) -> Self::Format;
+    fn format<'a>(&'a self) -> Self::Format<'a>;
 }
 
 /// Implement [AsFormat] for references to types that implement [AsFormat].
-impl<'a, T> AsFormat<'a> for &'a T
+impl<T> AsFormat for &T
 where
-    T: AsFormat<'a>,
+    T: AsFormat,
 {
-    type Format = T::Format;
+    type Format<'a> = T::Format<'a> where Self: 'a;
 
-    fn format(&'a self) -> Self::Format {
+    fn format<'a>(&'a self) -> Self::Format<'a> {
         AsFormat::format(&**self)
     }
 }
@@ -229,13 +229,13 @@ where
 /// Implement [AsFormat] for [SyntaxResult] where `T` implements [AsFormat].
 ///
 /// Useful to format mandatory AST fields without having to unwrap the value first.
-impl<'a, T> AsFormat<'a> for SyntaxResult<T>
+impl<T> AsFormat for SyntaxResult<T>
 where
-    T: AsFormat<'a>,
+    T: AsFormat,
 {
-    type Format = SyntaxResult<T::Format>;
+    type Format<'a> = SyntaxResult<T::Format<'a>> where Self: 'a;
 
-    fn format(&'a self) -> Self::Format {
+    fn format<'a>(&'a self) -> Self::Format<'a> {
         match self {
             Ok(value) => Ok(value.format()),
             Err(err) => Err(*err),
@@ -246,13 +246,13 @@ where
 /// Implement [AsFormat] for [Option] when `T` implements [AsFormat]
 ///
 /// Allows to call format on optional AST fields without having to unwrap the field first.
-impl<'a, T> AsFormat<'a> for Option<T>
+impl<T> AsFormat for Option<T>
 where
-    T: AsFormat<'a>,
+    T: AsFormat,
 {
-    type Format = Option<T::Format>;
+    type Format<'a> = Option<T::Format<'a>> where Self: 'a;
 
-    fn format(&'a self) -> Self::Format {
+    fn format<'a>(&'a self) -> Self::Format<'a> {
         self.as_ref().map(|value| value.format())
     }
 }
@@ -447,10 +447,10 @@ impl FormatRule<JsSyntaxToken> for FormatJsSyntaxToken {
     }
 }
 
-impl<'a> AsFormat<'a> for JsSyntaxToken {
-    type Format = FormatRefWithRule<'a, JsSyntaxToken, FormatJsSyntaxToken>;
+impl AsFormat for JsSyntaxToken {
+    type Format<'a> = FormatRefWithRule<'a, JsSyntaxToken, FormatJsSyntaxToken>;
 
-    fn format(&'a self) -> Self::Format {
+    fn format<'a>(&'a self) -> Self::Format<'a> {
         FormatRefWithRule::new(self, FormatJsSyntaxToken)
     }
 }
