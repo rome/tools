@@ -35,22 +35,17 @@ no-sidebar: true
       <li class="soon">
         <div class="icon">{% include svg/homepage/json.svg %}</div>
         <div class="language">JSON</div>
-        <div class="soon-indicator">Soon</div>
+        <div class="soon-indicator">Dec 2022</div>
       </li>
       <li class="soon">
         <div class="icon">{% include svg/homepage/html.svg %}</div>
         <div class="language">HTML</div>
-        <div class="soon-indicator">Soon</div>
-      </li>
-      <li class="soon">
-        <div class="icon">{% include svg/homepage/markdown.svg %}</div>
-        <div class="language">Markdown</div>
-        <div class="soon-indicator">Soon</div>
+        <div class="soon-indicator">June 2023</div>
       </li>
       <li class="soon">
         <div class="icon">{% include svg/homepage/css.svg %}</div>
         <div class="language">CSS</div>
-        <div class="soon-indicator">Soon</div>
+        <div class="soon-indicator">Nov 2023</div>
       </li>
     </ul>
   </section>
@@ -65,19 +60,15 @@ no-sidebar: true
       <li data-class="component-window-linter">Linter</li>
       <li data-class="component-window-compiler" class="soon">
         <div class="text">Compiler</div>
-        <div class="soon-indicator">Soon</div>
+        <div class="soon-indicator">March 2023</div>
       </li>
       <li data-class="component-window-bundler" class="soon">
         <div class="text">Bundler</div>
-        <div class="soon-indicator">Soon</div>
+        <div class="soon-indicator">March 2023</div>
       </li>
       <li data-class="component-window-testing" class="soon">
         <div class="text">Testing</div>
-        <div class="soon-indicator">Soon</div>
-      </li>
-      <li data-class="component-window-documentation" class="soon">
-        <div class="text">Documentation</div>
-        <div class="soon-indicator">Soon</div>
+        <div class="soon-indicator">June 2023</div>
       </li>
     </ul>
     <div class="component-window component-window-formatter">
@@ -97,7 +88,7 @@ no-sidebar: true
         <p>Rome is 52× faster than Prettier when formatting 1,000 lines of code.</p>
       </div>
     </div>
-    <p class="founder-clout">Created by the founder of <a class="babel" href="https://babeljs.io/">{% include svg/homepage/babel.svg %}</a> and <a href="https://yarnpkg.com/" class="yarn">{% include svg/homepage/yarn.svg %}</a></p>
+    <p class="founder-clout">Created by the founder of <a target="_blank" class="babel" href="https://babeljs.io/">{% include svg/homepage/babel.svg %}</a> and <a target="_blank" href="https://yarnpkg.com/" class="yarn">{% include svg/homepage/yarn.svg %}</a></p>
   </section>
 
   <hr class="full">
