@@ -23,7 +23,7 @@ Run the following commands in a directory with a `package.json` file to install 
 ##### npm {data-toc-exclude}
 
 ```bash
-npm install --save-dev rome@next
+npm install --save-dev rome
 ```
 
 You can now use `npx rome` to run Rome.
@@ -31,7 +31,7 @@ You can now use `npx rome` to run Rome.
 ##### pnpm {data-toc-exclude}
 
 ```bash
-pnpm install --save-dev rome@next
+pnpm install --save-dev rome
 ```
 
 You can now use `pnpm exec rome` to run Rome.
@@ -40,7 +40,7 @@ You can now use `pnpm exec rome` to run Rome.
 ##### yarn {data-toc-exclude}
 
 ```bash
-yarn add rome@next --save-dev
+yarn add rome --save-dev
 ```
 
 You can now use `yarn run rome` to run Rome.

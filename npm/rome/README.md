@@ -26,7 +26,7 @@
 
 </div>
 
-**Rome** is a formatter, linter, bundler, and [more](https://rome.tools/#development-status) for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
+**Rome** is designed to be a formatter, linter, bundler, and [more](https://rome.tools/#development-status) for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
 
 **Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
 
@@ -42,21 +42,13 @@ and top-notch error recovery.
 **Rome** is [MIT licensed](https://github.com/rome/tools/tree/main/LICENSE) and moderated under the [Contributor Covenant Code of Conduct](https://github.com/rome/tools/tree/main/CODE_OF_CONDUCT.md).
 
 
-## Installation
+## Getting started
 
 ```shell
-npm i rome@next
+npm install --save-dev rome
 ```
 
-## Usage
-
-Format files:
-
-```shell
-rome format --write ./path ./path/to/file.js
-```
-
-For complete documentation, please visit the [official website].
+And you're set! Check the [documentation] about how you can use Rome.
 
 
 ## Philosophy
@@ -73,6 +65,6 @@ Additional project coordination and real-time discussion happens on our [Discord
 
 If you're curious to know our internals, you can browse our [technical documentation].
 
-[official website]: https://rome.tools/
+[documentation]: https://rome.tools/#installation
 [technical documentation]: https://rome.github.io/tools/rome
 
