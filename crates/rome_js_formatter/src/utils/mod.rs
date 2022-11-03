@@ -124,15 +124,14 @@ impl<'a> FormatInterpreterToken<'a> {
 impl Format<JsFormatContext> for FormatInterpreterToken<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(interpreter) = self.token {
-            if let Some(token) = interpreter.next_token() {
-                // the interpreter line + empty line = 2
-                if get_lines_before_token(&token) >= 2 {
-                    write!(f, [interpreter.format(), empty_line()])
-                } else {
-                    write!(f, [interpreter.format(), hard_line_break()])
-                }
-            } else {
-                Ok(())
+            write!(f, [interpreter.format()])?;
+
+            match interpreter
+                .next_token()
+                .map_or(0, |next_token| get_lines_before_token(&next_token))
+            {
+                0 | 1 => write!(f, [hard_line_break()]),
+                _ => write!(f, [empty_line()]),
             }
         } else {
             Ok(())
