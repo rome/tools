@@ -240,6 +240,7 @@ export interface Style {
 	noNegationElse?: RuleConfiguration;
 	noShoutyConstants?: RuleConfiguration;
 	noUnusedTemplateLiteral?: RuleConfiguration;
+	preferNumericLiterals?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
@@ -372,6 +373,7 @@ export type Category =
 	| "lint/style/useBlockStatements"
 	| "lint/style/noImplicitBoolean"
 	| "lint/style/noUnusedTemplateLiteral"
+	| "lint/style/preferNumericLiterals"
 	| "lint/complexity/useSimplifiedLogicExpression"
 	| "lint/complexity/noExtraBooleanCast"
 	| "lint/a11y/noAutofocus"
