@@ -7,6 +7,7 @@ layout: layouts/homepage.liquid
 {% include docs/getting-started.md %}
 {% include docs/formatter.md %}
 {% include docs/linter.md %}
+{% include docs/ci.md %}
 {% include docs/configuration.md %}
 {% include docs/reference.md %}
 {% include docs/architecture.md %}
