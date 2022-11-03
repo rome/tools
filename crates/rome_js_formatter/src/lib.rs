@@ -208,7 +208,9 @@ pub(crate) type JsFormatter<'buf> = Formatter<'buf, JsFormatContext>;
 
 /// Used to get an object that knows how to format this object.
 pub trait AsFormat {
-    type Format<'a>: Format<JsFormatContext> where Self: 'a;
+    type Format<'a>: Format<JsFormatContext>
+    where
+        Self: 'a;
 
     /// Returns an object that is able to format this object.
     fn format(&self) -> Self::Format<'_>;

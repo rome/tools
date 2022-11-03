@@ -163,7 +163,8 @@ pub fn contains_memchr() -> i32 {
     let mut count = 0;
     for k in search_for() {
         for item in set.iter() {
-            count += i32::from(memchr::memmem::find(k.as_bytes(), item.as_str().as_bytes()).is_some());
+            count +=
+                i32::from(memchr::memmem::find(k.as_bytes(), item.as_str().as_bytes()).is_some());
         }
     }
     count
