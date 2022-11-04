@@ -615,3 +615,26 @@ if (heroScrollers.length > 0) {
 
 	queue();
 }
+
+//# Homepage component switcher
+const componentSwitcher = Array.from(document.querySelectorAll(".component-list li"));
+let activeComponentButton = document.querySelector(".component-list li.active");
+for (const button of componentSwitcher) {
+	button.addEventListener("click", () => {
+		if (activeComponentButton != null) {
+			activeComponentButton.classList.remove("active");
+			const elems = Array.from(document.getElementsByClassName(activeComponentButton.getAttribute("data-class")));
+			for (const elem of elems) {
+				elem.setAttribute("hidden", "hidden");
+			}
+		}
+
+		button.classList.add("active");
+		const elems = Array.from(document.getElementsByClassName(button.getAttribute("data-class")));
+		for (const elem of elems) {
+			elem.removeAttribute("hidden");
+		}
+		
+		activeComponentButton = button;
+	});
+}

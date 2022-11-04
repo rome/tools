@@ -59,9 +59,9 @@ body-class: homepage-body
     <h2>Supercharge your workflow</h2>
     <p class="heading-tagline">Experience the seamless integration from a vertical developer tool. Full of useful features like formatting, linting, and more coming soon.</p>
     <ul class="component-list">
-      <li class="active" data-class="component-window-formatter">Formatter</li>
+      <li data-class="component-window-formatter" class="active">Formatter</li>
       <li data-class="component-window-linter">Linter</li>
-      <li data-class="component-window-compiler" class="soon">
+      <li class="soon">
         <div class="text">Compiler</div>
         <div class="soon-indicator">March 2023</div>
       </li>
@@ -131,7 +131,7 @@ function HelloWorld({
   }
 
   // TODO: Don't use random in render
-  let num = Math.floor(Math.random() * 1e7)
+  let num = Math.floor(Math.random() * 1E+7)
     .toString()
     .replace(/\.\d+/gi, "");
 
@@ -164,6 +164,27 @@ function HelloWorld({
         <div class="progress"><div class="progress-bar progress-bar-bad" style="width: 270px;"></div></div>
         <p class="multiplier">52×</p>
         <p>Rome is 52× faster than Prettier when formatting 1,000 lines of code.</p>
+      </div>
+    </div>
+    <div class="component-window component-window-linter" hidden="true">
+      <div class="code">
+        <h4>Code</h4>
+        {% highlight js %}
+function test(callback) {
+  try {
+    return callback();
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+
+  return 20;
+}
+{% endhighlight %}
+      </div>
+      <div class="output">
+        <h4>Console output</h4>
+        {% render docs/cli-screenshots/noUnreachable-example.md %}
       </div>
     </div>
     <p class="founder-clout">Created by the founder of <a target="_blank" class="babel" href="https://babeljs.io/">{% include svg/homepage/babel.svg %}<span class="sr-only">Babel</span></a> and <a target="_blank" href="https://yarnpkg.com/" class="yarn">{% include svg/homepage/yarn.svg %}<span class="sr-only">Yarn</span></a></p>

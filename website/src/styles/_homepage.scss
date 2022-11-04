@@ -525,4 +525,16 @@
 			}
 		}
 	}
+
+	.component-window-linter {
+		.code {
+			min-width: 350px;
+			flex-grow: 0;
+		}
+
+		.output {
+			flex-grow: 1;
+			border-right: none;
+		}
+	}
 }
