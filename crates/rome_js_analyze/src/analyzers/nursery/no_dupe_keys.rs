@@ -156,7 +156,7 @@ impl Rule for NoDupeKeys {
                             defined_property @ (DefinedProperty::Value(_)
                             | DefinedProperty::GetterSetter(..)),
                         ),
-                        property_definition @ _,
+                        property_definition,
                     ) => {
                         // Register the conflict.
                         signals.push(PropertyConflict(
