@@ -5,7 +5,6 @@
 @import "_global";
 @import "_prism";
 @import "_grid";
-@import "_header";
 @import "_content";
 @import "_homepage";
 @import "_footer";
@@ -13,6 +12,7 @@
 @import "_blog";
 @import "_buttons";
 @import "_docs";
+@import "_page";
 
 :root {
 	--primary-color: #{$color-4};

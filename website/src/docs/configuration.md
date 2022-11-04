@@ -32,6 +32,15 @@ This configuration file enables the linter and formatter and sets the preferred 
 
 ## `rome.json`
 
+#### Files
+
+##### `files.maxSize`
+
+The maximum allowed size for source code files in bytes. Files above
+this limit will be ignored for performance reason. 
+
+> Default: 1024
+
 ### Linter
 
 #### `linter.enabled`
@@ -62,9 +71,7 @@ Enables the [recommended rules](/docs/lint/rules) for all categories.
 
 Options that influence the rules of a single category. Rome supports the following categories:
 
-- `correctness`: Code that is wrong or useless
-- `style`: Code that should be written in a more idiomatic way
-- `nursery`: new rules that are still under development.
+{% include docs/reference/groups.md %}
 
 #### `linter.rules.[category].recommended`
 
@@ -136,3 +143,12 @@ The type of quote used when representing string literals. It can be `single` or 
 When properties inside objects should be quoted. It can be `asNeeded` or `preserve`.
 
 > Default: `asNeeded`
+
+#### `javascript.formatter.trailingComma`
+
+Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Possible values:
+- `all`, the trailing comma is always added
+- `es5`, the trailing comma is added only in places where it's supported by older version of JavaScript
+- `none`, trailing commas are never added
+
+> Default: `all`

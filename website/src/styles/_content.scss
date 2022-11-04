@@ -30,63 +30,6 @@
 		margin-left: 5px;
 	}
 
-	&.rules {
-		h1, h2 {
-			margin: $unit $unit * 2 !important;
-			border: 0;
-			display: block;
-			@include mobile-only() {
-				margin: $unit $unit;
-			}
-		}
-
-		p {
-			padding: 0 $unit * 2;
-		}
-
-		.rule:first-child{
-			border-top: 1px solid var(--soft-border-color);
-		}
-
-		p + .rule {
-			border-top: none;
-			border-top-left-radius: 12px;
-			border-top-right-radius: 12px;
-		}
-
-		.rule {
-			padding: $unit $unit * 2;
-			
-			@include mobile-only() {
-				padding: $unit $unit;
-			}
-
-			border-top: 1px solid var(--soft-border-color);
-
-			h3 {
-				font-size: 1.25em;
-				margin-top: 0;
-				border: 0;
-
-				.recommended {
-					display: inline-block;
-					border-radius: 5px;
-					padding: .2em .5em .3em;
-					background: var(--primary-color);
-					color: var(--label-font-color);
-					font-weight: 600;
-					margin: .25em .1em;
-					font-size: 0.6em;
-				}
-			}
-
-		}
-
-		.rule {
-			background-color: var(--table-even-row-color);
-		}
-	}
-
 	figure {
 		img, video {
 			max-width: 100%;

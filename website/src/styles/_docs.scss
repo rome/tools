@@ -67,11 +67,17 @@
 
 	svg {
 		vertical-align: middle;
+		height: 30px;
 	}
 
 	.link {
-		margin-left: 16px;
+		margin-left: 24px;
 		display: inline-block;
+		opacity: 0.6;
+
+		&:hover {
+			opacity: 1;
+		}
 	}
 	
 	.logo {
@@ -123,6 +129,7 @@
 		border-right: none;
 		width: 100%;
 		background-color: var(--background-color);
+		z-index: 9999;
 
 		&.mobile-active {
 			display: block;
@@ -247,5 +254,53 @@
 	.heading {
 		font-weight: bold;
 		margin-bottom: 10px;
+	}
+}
+
+.content.rules {
+	.category-rules {
+		border: 1px solid var(--soft-border-color);
+		border-radius: 12px;
+		margin-bottom: 60px;
+
+		@include mobile-only {
+			margin-left: -20px;
+			margin-right: -20px;
+			border-radius: 0;
+			border-left: none;
+			border-right: none;
+		}
+	}
+
+	.rule {
+		padding: $unit $unit * 2;
+		border-top: 1px solid var(--soft-border-color);
+		background-color: var(--table-even-row-color);
+
+		&:first-child {
+			border-top: none;
+		}
+		
+		@include mobile-only() {
+			padding: $unit $unit;
+		}
+
+		h3 {
+			font-size: 1.25em;
+			margin-top: 0;
+			border: 0;
+
+			.recommended {
+				display: inline-block;
+				border-radius: 5px;
+				padding: .2em .5em .3em;
+				background: var(--primary-color);
+				color: var(--label-font-color);
+				font-weight: 600;
+				margin: .25em .1em;
+				font-size: 0.6em;
+			}
+		}
+
 	}
 }

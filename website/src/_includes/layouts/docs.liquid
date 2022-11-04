@@ -13,6 +13,7 @@ body-class: docs-body
 
   <div id="docsearch"></div>
 
+  <a class="foreground-svg link" target="_blank" href="https://discord.gg/rome">{% include svg/discord.svg %}<span class="sr-only">Discord</span></a>
   <a class="foreground-svg link" target="_blank" href="https://github.com/rome/tools">{% include svg/footer/github.svg %}<span class="sr-only">GitHub</span></a>
   <a class="foreground-svg link" target="_blank" href="https://twitter.com/rometools">{% include svg/footer/twitter.svg %}<span class="sr-only">Twitter</span></a>
 
@@ -21,42 +22,38 @@ body-class: docs-body
 
 <div class="docs-main">
   <aside class="docs-sidebar sidebar">
-    <h2>{{ "📚" | emoji }} Guides</h2>
+    <h2>Guides</h2>
 
     <ul>
-      <li><a {{ "/docs/guides/getting-started/" | linkattribs }}>{{ "🎉" | emoji }} Getting Started</a></li>
+      <li><a {{ "/docs/guides/getting-started/" | linkattribs }}>Getting Started</a></li>
     </ul>
 
-    <h2>{{ "📖" | emoji }}  Reference</h2>
+    <h2>Tools</h2>
 
     <ul>
-      <li><a {{ "/docs/cli/" | linkattribs }}>{{ "⌨️" | emoji }}  CLI</a></li>
-      <li><a {{ "/docs/configuration/" | linkattribs }}>{{ "⚙️" | emoji }}  Configuration</a></li>
+      <li><a {{ "/docs/formatter/" | linkattribs }}>Formatter</a></li>
+      <li><a {{ "/docs/linter/" | linkattribs }}>Linter</a></li>
     </ul>
 
-    <h2>{{ "🛠️" | emoji }}  Tools</h2>
+    <h2>Reference</h2>
 
     <ul>
-      <li><a {{ "/docs/formatter/" | linkattribs }}>{{ "🖌️" | emoji }}  Formatter</a></li>
-      <li>
-        <a {{ "/docs/linter/" | linkattribs }}>{{ "✅" | emoji }}  Linter</a>
-        <ul>
-          <li><a {{ "/docs/lint/rules/" | linkattribs }}>{{ "📏" | emoji }}  Lint Rules</a></li>
-        </ul>
-      </li>
+      <li><a {{ "/docs/cli/" | linkattribs }}>CLI</a></li>
+      <li><a {{ "/docs/configuration/" | linkattribs }}>Configuration</a></li>
+      <li><a {{ "/docs/lint/rules/" | linkattribs }}>Lint Rules</a></li>
     </ul>
 
-    <h2>{{ "🤖" | emoji }} Internals</h2>
+    <h2>Internals</h2>
 
     <ul>
-      <li><a {{ "/docs/internals/architecture/" | linkattribs }}>{{ "🏛️" | emoji }}  Architecture</a></li>
-      <li><a {{ "/docs/internals/philosophy/" | linkattribs }}>{{ "🧐" | emoji }}  Philosophy</a></li>
+      <li><a {{ "/docs/internals/architecture/" | linkattribs }}>Architecture</a></li>
+      <li><a {{ "/docs/internals/philosophy/" | linkattribs }}>Philosophy</a></li>
     </ul>
   </aside>
 
-  <div class="main content {{ main-class }}">
+  <main class="main content {{ main-class }}">
     {{ content | safe }}
-  </div>
+  </main>
 
   {% capture toccontent %}{{ content | toc | safe }}{% endcapture %}
   {% if toccontent != "" %}

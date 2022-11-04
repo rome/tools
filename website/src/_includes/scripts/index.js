@@ -617,7 +617,7 @@ if (heroScrollers.length > 0) {
 }
 
 //# Homepage component switcher
-const componentSwitcher = Array.from(document.querySelectorAll(".component-list li"));
+const componentSwitcher = Array.from(document.querySelectorAll(".component-list li:not(.soon)"));
 let activeComponentButton = document.querySelector(".component-list li.active");
 for (const button of componentSwitcher) {
 	button.addEventListener("click", () => {

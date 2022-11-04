@@ -43,13 +43,9 @@ fn main() -> Result<()> {
     let mut index = Vec::new();
     writeln!(index, "---")?;
     writeln!(index, "title: Lint Rules")?;
-    writeln!(index, "layout: layouts/page.liquid")?;
+    writeln!(index, "layout: layouts/docs.liquid")?;
     writeln!(index, "layout-type: split")?;
     writeln!(index, "main-class: rules")?;
-    writeln!(index, "eleventyNavigation:")?;
-    writeln!(index, "  key: lint-rules")?;
-    writeln!(index, "  parent: linting")?;
-    writeln!(index, "  title: Rules")?;
     writeln!(index, "---")?;
     writeln!(index)?;
 
@@ -173,6 +169,7 @@ Rules that belong to this group "<Emphasis>"are not subject to semantic version"
     markup_to_string(index, description)?;
     writeln!(index)?;
 
+    writeln!(index, "<div class=\"category-rules\">")?;
     for (rule, meta) in rules {
         match generate_rule(root, group, rule, meta.docs, meta.version, meta.recommended) {
             Ok(summary) => {
@@ -194,6 +191,7 @@ Rules that belong to this group "<Emphasis>"are not subject to semantic version"
             }
         }
     }
+    writeln!(index, "\n</div>")?;
 
     Ok(())
 }
@@ -212,7 +210,7 @@ fn generate_rule(
     // Write the header for this lint rule
     writeln!(content, "---")?;
     writeln!(content, "title: Lint Rule {rule}")?;
-    writeln!(content, "layout: layouts/page.liquid")?;
+    writeln!(content, "layout: layouts/docs.liquid")?;
     writeln!(content, "---")?;
     writeln!(content)?;
 

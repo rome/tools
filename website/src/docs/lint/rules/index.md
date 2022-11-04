@@ -11,6 +11,7 @@ main-class: rules
 ## Accessibility
 
 Rules focused on preventing accessibility problems.
+<div class="category-rules">
 <section class="rule">
 <h3 data-toc-exclude id="noAutofocus">
 	<a href="/docs/lint/rules/noAutofocus">noAutofocus</a>
@@ -77,9 +78,12 @@ who use assistive technology or screenreader.
 Enforce that all anchors are valid, and they are navigable elements.
 </section>
 
+</div>
+
 ## Complexity
 
 Rules that focus on inspecting complex code that could be simplified.
+<div class="category-rules">
 <section class="rule">
 <h3 data-toc-exclude id="noExtraBooleanCast">
 	<a href="/docs/lint/rules/noExtraBooleanCast">noExtraBooleanCast</a>
@@ -95,9 +99,12 @@ Disallow unnecessary boolean casts
 Discard redundant terms from logical expressions.
 </section>
 
+</div>
+
 ## Correctness
 
 Rules that detect incorrect or useless code.
+<div class="category-rules">
 <section class="rule">
 <h3 data-toc-exclude id="noArguments">
 	<a href="/docs/lint/rules/noArguments">noArguments</a>
@@ -316,9 +323,12 @@ Enforce the use of <code>while</code> loops instead of <code>for</code> loops wh
 initializer and update expressions are not needed
 </section>
 
+</div>
+
 ## Security
 
 Rules that detect potential security flaws.
+<div class="category-rules">
 <section class="rule">
 <h3 data-toc-exclude id="noDangerouslySetInnerHtml">
 	<a href="/docs/lint/rules/noDangerouslySetInnerHtml">noDangerouslySetInnerHtml</a>
@@ -334,9 +344,12 @@ Prevent the usage of dangerous JSX props
 Report when a DOM element or a component uses both <code>children</code> and <code>dangerouslySetInnerHTML</code> prop.
 </section>
 
+</div>
+
 ## Style
 
 Rules enforcing a consistent way of writing your code. 
+<div class="category-rules">
 <section class="rule">
 <h3 data-toc-exclude id="noImplicitBoolean">
 	<a href="/docs/lint/rules/noImplicitBoolean">noImplicitBoolean</a>
@@ -415,6 +428,8 @@ Disallow multiple variable declarations in the same variable statement
 Template literals are preferred over string concatenation.
 </section>
 
+</div>
+
 ## Nursery
 
 New rules that are still under development.
@@ -423,6 +438,7 @@ Nursery rules require explicit opt-in via configuration because they may still h
 Nursery rules get promoted to other groups once they become stable or may be removed.
 
 Rules that belong to this group <strong>are not subject to semantic version</strong>.
+<div class="category-rules">
 <section class="rule">
 <h3 data-toc-exclude id="noBannedTypes">
 	<a href="/docs/lint/rules/noBannedTypes">noBannedTypes</a>
@@ -472,3 +488,5 @@ Promotes the use of <code>.flatMap()</code> when <code>map().flat()</code> are u
 </h3>
 Enforce &quot;for&quot; loop update clause moving the counter in the right direction.
 </section>
+
+</div>

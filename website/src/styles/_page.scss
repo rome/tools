@@ -96,10 +96,6 @@
 		&.right li {
 			margin: 0 16px;
 
-			&:first-child {
-				margin: 0;
-			}
-
 			a, svg {
 				display: block;
 				width: 24px;
@@ -161,5 +157,11 @@
 
 	@include mobile-only() {
 		display: inline-flex;
+	}
+}
+
+.page-main, .homepage {
+	@include mobile-only {
+		margin-top: 64px;
 	}
 }

@@ -37,11 +37,15 @@
 
 	.h1, h1 {
 		font-size: 96px;
-		line-height: 90%;
+		line-height: 100%;
 		margin-top: 60px;
 
-		@include mobile-only {
+		@include small-screen-only {
 			font-size: 72px;
+		}
+
+		@include mobile-only {
+			font-size: 64px;
 		}
 
 		li {
@@ -338,6 +342,7 @@
 			bottom: -19px;
 			background-image: url("/img/homepage-vscode-screenshot-light.png");
 			background-size: 215%;
+			background-repeat: no-repeat;
 
 			@include dark-mode {
 				background-image: url("/img/homepage-vscode-screenshot-dark.png");
@@ -345,8 +350,10 @@
 		}
 
 		@media only screen and (max-width: 1120px) {
+			padding: 40px;
 			padding-bottom: 200px;
 			border-radius: 0;
+			margin: 0 -20px;
 		}
 
 		@media only screen and (max-width: 960px) {

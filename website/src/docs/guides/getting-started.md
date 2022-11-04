@@ -20,27 +20,27 @@ Run the following commands in a directory with a `package.json` file to install 
 > **Note**: It is also possible to install Rome globally rather than locally. However, this is not recommended.
 
 
-#### npm {data-toc-exclude}
+#### npm
 
 ```bash
-npm install --save-dev rome@next
+npm install --save-dev rome
 ```
 
 You can now use `npx rome` to run Rome.
 
-#### pnpm {data-toc-exclude}
+#### pnpm
 
 ```bash
-pnpm install --save-dev rome@next
+pnpm install --save-dev rome
 ```
 
 You can now use `pnpm exec rome` to run Rome.
 
 
-#### yarn {data-toc-exclude}
+#### yarn
 
 ```bash
-yarn add rome@next --save-dev
+yarn add rome --save-dev
 ```
 
 You can now use `yarn run rome` to run Rome.
@@ -77,7 +77,7 @@ After running the `init` command, you'll have a `rome.json` configuration file i
 
 The `linter.enabled: true` enables the linter and `rules.recommended: true` enables the [recommended rules](/docs/lint/rules/).
 
-Formatting is enabled because the configuration doesn't explicitly [disables](/docs/#formatterenabled) formatting with `formatter.enabled: false`.
+Formatting is enabled because the configuration doesn't explicitly [disables](/docs/configuration/#formatterenabled) formatting with `formatter.enabled: false`.
 
 ## Usage
 
@@ -114,7 +114,7 @@ We recommend installing our editor integration to get the most out of Rome. The 
 * Format files on save or when issuing the Format command.
 * Lint files and apply code fixes
 
-### VS Code {data-toc-exclude}
+### VS Code
 
 Install our official [Rome VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome) from the Visual Studio Marketplace.
 
@@ -125,7 +125,7 @@ To make Rome the default formatter open a supported file (JavaScript or TypeScri
 * select *Configure Default Formatter*
 * select *Rome*.
 
-### Other Editors {data-toc-exclude}
+### Other Editors
 
 We would love to support more editors, but we don't have the capacity to implement and maintain multiple editor integrations at the moment. You can help us prioritize by [voting](https://github.com/rome/tools/discussions/3544) for your favourite editor. If you're interested in building an integration for Rome, please [reach out](https://github.com/rome/tools/issues/2390), and we would be more than happy to support you.
 
@@ -134,18 +134,18 @@ If you are looking for editor support in a JetBrains IDE like WebStorm, then vis
 
 ## CI Setup
 
-If you're using Node.js, the recommended way to run Rome in CI is to use [your favourite package manager](/docs/#installation). This ensures that your CI pipeline uses the same version of Rome as you do inside of the editor or when running local CLI commands.
+If you're using Node.js, the recommended way to run Rome in CI is to use [your favourite package manager](/docs/getting-started#installation). This ensures that your CI pipeline uses the same version of Rome as you do inside of the editor or when running local CLI commands.
 
 
 If you are working on a project that isn't using Node.js, then the best way to integrate Rome into your CI is to use the [setup-rome](https://github.com/rome/setup-rome#usage) GitHub Action or install the [standalone executable](/standalone-executable).
 
 
-## Next Steps {data-toc-exclude}
+## Next Steps
 
 Success! You’re now ready to use Rome. 🥳
 
-* Learn more about how to use and configure the [formatter](/docs/#formatter)
-* Learn more about how to use and configure the [linter](/docs/#linter)
-* Get familiar with the [CLI options](/docs/#cli)
-* Get familiar with the [configuration options](/docs/#romejson)
+* Learn more about how to use and configure the [formatter](/docs/formatter)
+* Learn more about how to use and configure the [linter](/docs/linter)
+* Get familiar with the [CLI options](/docs/cli)
+* Get familiar with the [configuration options](/docs/configuration)
 * Join our [community on Discord](https://discord.gg/rome)
