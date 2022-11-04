@@ -17,6 +17,11 @@
 	}
 }
 
+.docs-main {
+	display: flex;
+	flex-direction: row;
+}
+
 .docs-header {
 	@include transition-timing;
 	transition-property: box-shadow;

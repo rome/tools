@@ -548,7 +548,7 @@ if (docsearchContainer != null) {
 			appId: "ZKNROT3Q65",
 			apiKey: "6c573608bd6c44671bfc263fb83992e2",
 			indexName: "rome",
-			container: "#docsearch",
+			container: docsearchContainer,
 			debug: false, // Set debug to true if you want to inspect the dropdown
 		});
 	});

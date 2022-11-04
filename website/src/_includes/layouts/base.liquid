@@ -47,16 +47,6 @@
 	<body class="{{ body-class }}">
 		{{ content | safe }}
 
-		<div class="container">
-			<footer aria-labelledby="footer">
-				<h1 id="footer" class="sr-only">Footer</h1>
-
-				<p>&copy; 2022 Rome Tools. All rights reserved.</p>
-
-    		{% include color-scheme-switcher %}
-			</footer>
-		</div>
-
 		{% if env.production %}
 			<script src="https://browser.sentry-cdn.com/5.29.0/bundle.tracing.min.js" crossorigin="anonymous"></script>
 

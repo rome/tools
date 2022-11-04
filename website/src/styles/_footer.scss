@@ -8,9 +8,6 @@ footer {
   color: #868E96;
   font-size: 14px;
   line-height: 150%;
-  padding: 26px;
-	display: flex;
-	flex-direction: row;
 
 	p {
 		width: 100%;
@@ -19,6 +16,12 @@ footer {
 	@include dark-mode {
 		border-color: rgba(255, 255, 255, 0.1);
 	}
+}
+
+.footer-inner {
+	display: flex;
+	flex-direction: row;
+	padding: 26px;
 }
 
 @include dark-mode {
@@ -48,7 +51,6 @@ footer {
 	cursor: pointer;
 	display: flex;
 	border: none;
-	z-index: -1;
 
 	svg {
 		pointer-events: none;

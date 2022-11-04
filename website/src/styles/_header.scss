@@ -39,13 +39,6 @@
 	line-height: 80px;
 	margin-bottom: 20px;
 
-	@include desktop-only {
-		#docsearch, .DocSearch {
-			margin: 0;
-			width: 175px;
-		}
-	}
-
 	@include mobile-only {
 		display: none;
 	}
@@ -68,14 +61,6 @@
 
 		.logo {
 			display: none;
-		}
-
-		#docsearch {
-			margin-right: 12px;
-		}
-
-		.DocSearch {
-			margin: 0;
 		}
 
 		.middle {

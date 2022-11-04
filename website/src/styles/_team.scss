@@ -30,18 +30,27 @@ ul.team-list {
 	li {
 		margin: 0 $unit;
 		margin-bottom: $unit;
-		width: 176px;
+		width: 220px;
 		list-style: none;
 		border: 1px solid var(--soft-border-color);
+		background-color: var(--container-color);
+		text-decoration: none;
+		border-radius: 12px;
+		overflow: hidden;
 	}
 
 	a {
 		display: block;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
 	}
 
 	img {
-		width: 174px;
-		height: 174px;
+		width: 220px;
+		height: 220px;
 		display: block;
 	}
 

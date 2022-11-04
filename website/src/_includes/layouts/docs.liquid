@@ -19,7 +19,7 @@ body-class: docs-body
 	{% include mobile-handle.liquid %}
 </div>
 
-<div class="container">
+<div class="docs-main">
   <aside class="docs-sidebar sidebar">
     <h2>{{ "📚" | emoji }} Guides</h2>
 
@@ -67,3 +67,9 @@ body-class: docs-body
     </nav>
   {% endif %}
 </div>
+
+<footer aria-labelledby="footer">
+  <div class="container footer-inner">
+    {% include inner-footer.liquid %}
+  </div>
+</footer>
