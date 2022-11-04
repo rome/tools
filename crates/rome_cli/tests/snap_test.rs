@@ -59,7 +59,7 @@ impl CliSnapshot {
                 let _ = write!(content, "## `{name}`\n\n");
                 let _ = write!(content, "```{extension}");
                 content.push('\n');
-                content.push_str(&**file_content);
+                content.push_str(file_content);
                 content.push('\n');
                 content.push_str("```");
                 content.push_str("\n\n")

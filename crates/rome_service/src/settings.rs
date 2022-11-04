@@ -232,7 +232,7 @@ impl<'a> SettingsHandle<'a> {
 
 impl<'a> AsRef<WorkspaceSettings> for SettingsHandle<'a> {
     fn as_ref(&self) -> &WorkspaceSettings {
-        &*self.inner
+        &self.inner
     }
 }
 

@@ -166,7 +166,7 @@ impl TestSuite for Test262TestSuite {
     }
 
     fn load_test(&self, path: &Path) -> Option<Box<dyn TestCase>> {
-        let code = std::fs::read_to_string(&path).ok()?;
+        let code = std::fs::read_to_string(path).ok()?;
 
         let meta = read_metadata(&code).ok()?;
 

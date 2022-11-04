@@ -609,11 +609,7 @@ fn is_parenthesized_arrow_function_expression_impl(
     p: &mut Parser,
     flags: SignatureFlags,
 ) -> IsParenthesizedArrowFunctionExpression {
-    let n = if flags.contains(SignatureFlags::ASYNC) {
-        1
-    } else {
-        0
-    };
+    let n = usize::from(flags.contains(SignatureFlags::ASYNC));
 
     match p.nth(n) {
         T!['('] => {

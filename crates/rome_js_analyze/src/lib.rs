@@ -38,7 +38,7 @@ pub fn metadata() -> &'static MetadataRegistry {
         };
     }
 
-    &*METADATA
+    &METADATA
 }
 
 /// Run the analyzer on the provided `root`: this process will use the given `filter`

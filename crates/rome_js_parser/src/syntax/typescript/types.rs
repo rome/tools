@@ -1007,7 +1007,7 @@ impl ParseSeparatedList for TsTupleTypeElementList {
 }
 
 fn is_at_named_tuple_type_element(p: &mut Parser) -> bool {
-    let offset = if p.at(T![...]) { 1 } else { 0 };
+    let offset = usize::from(p.at(T![...]));
 
     // a:
     let is_colon = p.nth_at(offset + 1, T![:]);

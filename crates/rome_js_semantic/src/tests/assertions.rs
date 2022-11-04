@@ -112,7 +112,7 @@ pub fn assert(code: &str, test_name: &str) {
         for diag in r.into_diagnostics() {
             let error = diag
                 .with_file_path(FileId::zero())
-                .with_file_source_code(&code);
+                .with_file_source_code(code);
             console.log(markup! {
                 {PrintDiagnostic(&error)}
             });
