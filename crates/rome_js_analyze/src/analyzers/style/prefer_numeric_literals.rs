@@ -49,23 +49,21 @@ declare_rule! {
     }
 }
 
-pub struct TextAndRadix {
+pub struct CallInfo {
+    callee: &'static str,
     text: String,
     radix: Radix,
 }
 
 impl Rule for PreferNumericLiterals {
     type Query = Ast<JsCallExpression>;
-    type State = TextAndRadix;
+    type State = CallInfo;
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();
-        if !is_callee_parse_int_fn(node).unwrap_or(false) {
-            return None;
-        }
-        get_text_and_radix_args(node)
+        get_call_info(node)
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
@@ -74,7 +72,7 @@ impl Rule for PreferNumericLiterals {
         Some(RuleDiagnostic::new(
             rule_category!(),
             node.range(),
-            markup! { "Use "{state.radix.description()}" literals instead of parseInt()" }
+            markup! { "Use "{state.radix.description()}" literals instead of "{state.callee} }
                 .to_owned(),
         ))
     }
@@ -104,7 +102,8 @@ impl Rule for PreferNumericLiterals {
     }
 }
 
-fn get_text_and_radix_args(expr: &JsCallExpression) -> Option<TextAndRadix> {
+fn get_call_info(expr: &JsCallExpression) -> Option<CallInfo> {
+    let callee = get_callee(expr)?;
     let args = expr.arguments().ok()?.args();
     if args.len() != 2 {
         return None;
@@ -114,7 +113,8 @@ fn get_text_and_radix_args(expr: &JsCallExpression) -> Option<TextAndRadix> {
     let radix = args.next()?.ok()?;
     let text_token = get_text(text.as_js_any_expression()?)?;
     let radix = get_number(radix)?;
-    Some(TextAndRadix {
+    Some(CallInfo {
+        callee,
         text: text_token,
         radix: Radix::from_f64(radix)?,
     })
@@ -164,26 +164,32 @@ fn is_ident(object: &JsAnyExpression, text: &str) -> Option<bool> {
     Some(token.text_trimmed() == text)
 }
 
-fn is_callee_parse_int_fn(expr: &JsCallExpression) -> Option<bool> {
+fn get_callee(expr: &JsCallExpression) -> Option<&'static str> {
     let callee = expr.callee().ok()?;
 
-    let value = match &callee {
-        JsAnyExpression::JsIdentifierExpression(..) => is_ident(&callee, "parseInt")?,
+    match &callee {
+        JsAnyExpression::JsIdentifierExpression(..) => {
+            if is_ident(&callee, "parseInt")? {
+                return Some("parseInt()");
+            }
+        }
         JsAnyExpression::JsStaticMemberExpression(expr) => {
             let object = expr.object().ok()?;
             let member = expr.member().ok()?;
-            is_ident(&object, "Number")? && member.syntax().text_trimmed() == "parseInt"
+            if is_ident(&object, "Number")? && member.syntax().text_trimmed() == "parseInt" {
+                return Some("Number.parseInt()");
+            }
         }
         JsAnyExpression::JsComputedMemberExpression(expr) => {
             let object = expr.object().ok()?;
-            is_ident(&object, "Number")? && {
-                let member = expr.member().ok()?;
-                get_text(&member)? == "parseInt"
+            let member = expr.member().ok()?;
+            if is_ident(&object, "Number")? && get_text(&member)? == "parseInt" {
+                return Some("Number.parseInt()");
             }
         }
-        _ => false,
-    };
-    Some(value)
+        _ => (),
+    }
+    None
 }
 
 #[derive(Copy, Clone)]
