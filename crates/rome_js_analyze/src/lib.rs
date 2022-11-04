@@ -15,7 +15,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, TokenAtOffset, TriviaPieceKind};
 use serde::{Deserialize, Serialize};
-use std::{borrow::Cow, error::Error, sync::Arc};
+use std::{borrow::Cow, error::Error};
 
 mod analyzers;
 mod aria_analyzers;
@@ -49,7 +49,6 @@ pub fn metadata() -> &'static MetadataRegistry {
 
     &METADATA
 }
-
 
 pub struct RulesConfigurator<'a> {
     options: &'a AnalyzerOptions,

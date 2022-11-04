@@ -86,8 +86,10 @@ where
     /// }
     /// ```
     pub fn options(&self) -> &R::Options {
-        let SericeBagRuleOptionsWrapper(_, options) = 
-            self.bag.get_service::<SericeBagRuleOptionsWrapper<R>>().unwrap();
+        let SericeBagRuleOptionsWrapper(_, options) = self
+            .bag
+            .get_service::<SericeBagRuleOptionsWrapper<R>>()
+            .unwrap();
         options
     }
 }
