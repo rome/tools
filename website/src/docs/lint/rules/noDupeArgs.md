@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noDupeArgs
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 ---
 
 # noDupeArgs (since v0.9.0)

@@ -1,0 +1,69 @@
+---
+layout: layouts/base.liquid
+social-image: social-logo.png
+body-class: docs-body
+---
+
+<div class="docs-header">
+  <a class="logo" href="/">
+    {% include svg/rome-logo.svg %}
+
+    <span class="logo-text sr-only">Rome</span>
+  </a>
+
+  <div id="docsearch"></div>
+
+  <a class="foreground-svg link" target="_blank" href="https://github.com/rome/tools">{% include svg/footer/github.svg %}<span class="sr-only">GitHub</span></a>
+  <a class="foreground-svg link" target="_blank" href="https://twitter.com/rometools">{% include svg/footer/twitter.svg %}<span class="sr-only">Twitter</span></a>
+
+	{% include mobile-handle.liquid %}
+</div>
+
+<div class="container">
+  <aside class="docs-sidebar sidebar">
+    <h2>{{ "📚" | emoji }} Guides</h2>
+
+    <ul>
+      <li><a {{ "/docs/guides/getting-started/" | linkattribs }}>{{ "🎉" | emoji }} Getting Started</a></li>
+    </ul>
+
+    <h2>{{ "📖" | emoji }}  Reference</h2>
+
+    <ul>
+      <li><a {{ "/docs/cli/" | linkattribs }}>{{ "🔎" | emoji }}  CLI</a></li>
+      <li><a {{ "/docs/configuration/" | linkattribs }}>{{ "⚙️" | emoji }}  Configuration</a></li>
+    </ul>
+
+    <h2>{{ "🛠️" | emoji }}  Tools</h2>
+
+    <ul>
+      <li><a {{ "/docs/formatter/" | linkattribs }}>{{ "🖌️" | emoji }}  Formatter</a></li>
+      <li>
+        <a {{ "/docs/linter/" | linkattribs }}>{{ "✅" | emoji }}  Linter</a>
+        <ul>
+          <li><a {{ "/docs/lint/rules/" | linkattribs }}>{{ "📏" | emoji }}  Lint Rules</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2>{{ "🔎" | emoji }} Internals</h2>
+
+    <ul>
+      <li><a {{ "/docs/internals/architecture/" | linkattribs }}>{{ "🏛️" | emoji }}  Architecture</a></li>
+      <li><a {{ "/docs/internals/philosophy/" | linkattribs }}>{{ "🧐" | emoji }}  Philosophy</a></li>
+    </ul>
+  </aside>
+
+  <div id="main-content" class="main content {{ main-class }}">
+    {{ content | safe }}
+  </div>
+
+  {% capture toccontent %}{{ content | toc | safe }}{% endcapture %}
+  {% if toccontent != "" %}
+    <nav class="toc-sidebar sidebar">
+      <h2>On this page</h2>
+
+      {{ toccontent }}
+    </nav>
+  {% endif %}
+</div>

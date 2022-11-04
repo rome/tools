@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useOptionalChain
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 ---
 
 # useOptionalChain (since v0.10.0)

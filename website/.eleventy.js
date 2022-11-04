@@ -122,6 +122,19 @@ module.exports = function (eleventyConfig) {
 		return base64Encode(new Buffer(content), ext);
 	});
 
+	eleventyConfig.addFilter("emoji", (emoji) => {
+		return `<span class="emoji" aria-hidden="true">${emoji}</span>`;
+	});
+
+	eleventyConfig.addFilter("linkattribs", function (url) {
+    const data = this.context.environments;
+		if (data.page.url.startsWith(url)) {
+			return `href="${url}" class="active"`;
+		} else {
+			return `href="${url}"`;
+		}
+	});
+
 	const minCache = new Map();
 
 	// Minify JS in production

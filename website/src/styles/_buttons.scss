@@ -1,26 +1,11 @@
 a.button {
   display: inline-block;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 40px;
-  padding: 8px 21px;
   text-decoration: none;
-  font-weight: 500;
+  @include button;
 
   svg {
     vertical-align: middle;
     margin-right: 6px;
-  }
-
-  &:hover {
-    background: #E9ECEF;
-  }
-
-  @include dark-mode {
-    background: rgba(255, 255, 255, 0.1);
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
   }
 
   &.vscode-button {

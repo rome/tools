@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useCamelCase
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 ---
 
 # useCamelCase (since v0.8.0)

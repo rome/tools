@@ -1,12 +1,17 @@
-## Getting Started
+---
+layout: layouts/docs.liquid
+title: Getting Started
+---
 
-### System Requirements {data-toc-exclude}
+# Getting Started
+
+## System Requirements
 
 * Windows (including WSL), macOS, or Linux
 * x86_64 or ARM64
 * Node.js v14.18 or newer (not applicable if you use the standalone executable)
 
-### Installation
+## Installation
 
 The fastest way to download Rome is to use `npm` or your preferred package manager. The CLI is also available as a [standalone executable](/standalone-executable) if you want to use Rome without installing Node.js.
 
@@ -15,7 +20,7 @@ Run the following commands in a directory with a `package.json` file to install 
 > **Note**: It is also possible to install Rome globally rather than locally. However, this is not recommended.
 
 
-##### npm {data-toc-exclude}
+#### npm {data-toc-exclude}
 
 ```bash
 npm install --save-dev rome@next
@@ -23,7 +28,7 @@ npm install --save-dev rome@next
 
 You can now use `npx rome` to run Rome.
 
-##### pnpm {data-toc-exclude}
+#### pnpm {data-toc-exclude}
 
 ```bash
 pnpm install --save-dev rome@next
@@ -32,7 +37,7 @@ pnpm install --save-dev rome@next
 You can now use `pnpm exec rome` to run Rome.
 
 
-##### yarn {data-toc-exclude}
+#### yarn {data-toc-exclude}
 
 ```bash
 yarn add rome@next --save-dev
@@ -40,7 +45,7 @@ yarn add rome@next --save-dev
 
 You can now use `yarn run rome` to run Rome.
 
-### Configuration
+## Configuration
 
 We recommend creating a `rome.json` configuration file for each project. It eliminates  the need to repeat the CLI options every time you run a command and ensures that Rome applies the same configuration in your editor. If you're happy with Rome's defaults, you don't have to create the configuration.
 
@@ -74,9 +79,7 @@ The `linter.enabled: true` enables the linter and `rules.recommended: true` enab
 
 Formatting is enabled because the configuration doesn't explicitly [disables](/docs/#formatterenabled) formatting with `formatter.enabled: false`.
 
-
-
-### Usage
+## Usage
 
 You can lint any file or directory running:
 
@@ -103,16 +106,15 @@ pnpm exec rome format <files> --write
 yarn run rome format <files> --write
 ```
 
-
 <!-- Make sure to update the redirect in `static/_redirects` when changing the editors title -->
-### Editor Setup
+## Editor Setup
 
 We recommend installing our editor integration to get the most out of Rome. The Rome editor integration allows you to:
 
 * Format files on save or when issuing the Format command.
 * Lint files and apply code fixes
 
-#### VS Code {data-toc-exclude}
+### VS Code {data-toc-exclude}
 
 Install our official [Rome VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome) from the Visual Studio Marketplace.
 
@@ -123,14 +125,14 @@ To make Rome the default formatter open a supported file (JavaScript or TypeScri
 * select *Configure Default Formatter*
 * select *Rome*.
 
-#### Other Editors {data-toc-exclude}
+### Other Editors {data-toc-exclude}
 
 We would love to support more editors, but we don't have the capacity to implement and maintain multiple editor integrations at the moment. You can help us prioritize by [voting](https://github.com/rome/tools/discussions/3544) for your favourite editor. If you're interested in building an integration for Rome, please [reach out](https://github.com/rome/tools/issues/2390), and we would be more than happy to support you.
 
 If you are looking for editor support in a JetBrains IDE like WebStorm, then visit the relevant [issue](https://youtrack.jetbrains.com/issue/WEB-46895/Support-for-Romejs) to upvote the ticket.
 
 
-### CI Setup
+## CI Setup
 
 If you're using Node.js, the recommended way to run Rome in CI is to use [your favourite package manager](/docs/#installation). This ensures that your CI pipeline uses the same version of Rome as you do inside of the editor or when running local CLI commands.
 
@@ -138,7 +140,7 @@ If you're using Node.js, the recommended way to run Rome in CI is to use [your f
 If you are working on a project that isn't using Node.js, then the best way to integrate Rome into your CI is to use the [setup-rome](https://github.com/rome/setup-rome#usage) GitHub Action or install the [standalone executable](/standalone-executable).
 
 
-### Next Steps {data-toc-exclude}
+## Next Steps {data-toc-exclude}
 
 Success! You’re now ready to use Rome. 🥳
 

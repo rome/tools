@@ -8,7 +8,7 @@ footer {
   color: #868E96;
   font-size: 14px;
   line-height: 150%;
-  padding: 26px 0;
+  padding: 26px;
 	display: flex;
 	flex-direction: row;
 
@@ -48,6 +48,7 @@ footer {
 	cursor: pointer;
 	display: flex;
 	border: none;
+	z-index: -1;
 
 	svg {
 		pointer-events: none;

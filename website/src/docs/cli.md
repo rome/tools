@@ -1,30 +1,58 @@
-## CLI
+---
+layout: layouts/docs.liquid
+title: CLI
+---
 
-Rome CLI offers some options that can be used with all commands:
+# CLI
 
-```shell
-OPTIONS:
-    --no-colors      Disable the formatting of markup (print everything as plain text)
-```
+## Commands
 
-### Commands 
+### `rome init`
 
+Helps you to set up Rome for a new project by guiding you through the creation of a new `rome.json` [configuration](#configuration) file.
 
-#### `rome ci`
+The command fails if the project already has a `rome.json` configuration file.
 
-This command will:
+### `rome format`
 
-- run the formatter in check mode
-- run the linter in check mode
+Runs the formatter on a set of files.
 
+### `rome check`
 
-#### `rome init`
+Runs the linter on a set of files and reports errors and warnings to the console.
 
-This command assists in the creation of a new Rome project. The command will
-ask few questions about coding style and configuration extension.
+### `rome ci`
 
-Actions that are performed:
+Runs the linter and verifies the formatting of a set of files. It reports errors to the console. If any errors are found the process exits with a code of `1`.
 
- - `rome.json` is created that serves as your [project configuration](#project-configuration).
+This command is intended to be used in CI workflows.
 
-The command only works on projects that don't have Rome configuration.
+### `rome start`
+
+Start the Rome [daemon](#daemon) server
+
+### `rome stop`
+
+Stop the Rome [daemon](#deamon) server
+
+## Common Options
+
+### `--no-colors`
+
+Disable the formatting of markup (print everything as plain text)
+
+### `--use-server`
+
+Connect to a running instance of the Rome daemon server
+
+## Global Options
+
+Use these flags to get information about the Rome CLI.
+
+### `--version`
+
+Prints the Rome version and exits.
+
+### `--help`
+
+Prints the help message and exits.

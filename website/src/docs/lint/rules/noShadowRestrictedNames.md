@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noShadowRestrictedNames
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 ---
 
 # noShadowRestrictedNames (since v0.9.0)

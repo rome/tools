@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noFunctionAssign
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 ---
 
 # noFunctionAssign (since v0.7.0)

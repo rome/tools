@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noUnsafeNegation
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 ---
 
 # noUnsafeNegation (since v0.7.0)

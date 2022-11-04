@@ -21,7 +21,7 @@ const originalTitle = document.title;
 const headerMobile = document.querySelector(".header-mobile");
 
 /** @type {HTMLElement}*/
-const sidebarScroller = document.querySelector(".sidebar-scroller");
+const tocSidebar = document.querySelector(".toc-sidebar");
 
 /** @type {Array<HTMLAnchorElement>}*/
 const tocLinks = Array.from(document.querySelectorAll(".toc a"));
@@ -101,10 +101,8 @@ class Manager {
 	getScrollOffset() {
 		let offset = 0;
 
-		// Account for mobile header
-		if (isMobile) {
-			offset += headerMobile.clientHeight;
-		}
+		// Account for header
+		offset += 80;
 
 		// Give everything a tiny bit of margin so it's not up against the edges
 		offset += 20;
@@ -262,16 +260,16 @@ class Manager {
 
 				// Make sure TOC link is visible
 				let linkTop =
-					this.headingsCalculated[i].link.offsetTop - sidebarScroller.offsetTop;
+					this.headingsCalculated[i].link.offsetTop - tocSidebar.offsetTop;
 				if (i === 0) {
 					linkTop = 0;
 				}
-				const visibleStart = sidebarScroller.scrollTop;
+				const visibleStart = tocSidebar.scrollTop;
 				const visibleEnd =
-					sidebarScroller.scrollTop + sidebarScroller.clientHeight;
+					tocSidebar.scrollTop + tocSidebar.clientHeight;
 				const isVisible = linkTop > visibleStart && linkTop < visibleEnd;
 				if (!isVisible) {
-					sidebarScroller.scrollTop = linkTop;
+					tocSidebar.scrollTop = linkTop;
 				}
 
 				break;
@@ -499,16 +497,20 @@ if (colorSchemeSwitcher != null) {
 //# Mobile navigation
 
 const mobileSidebarHandle = document.querySelector(".mobile-handle");
-const header = document.querySelector(".header");
+const mobileActiveTargets = document.querySelectorAll(".page-header, .page-header-mobile, .docs-sidebar");
 let isMobileNavVisible = false;
 function toggleMobileSidebar() {
 	isMobileNavVisible = !isMobileNavVisible;
 	mobileSidebarHandle.classList.toggle("active");
 	document.body.classList.toggle("no-scroll");
 	if (isMobileNavVisible) {
-		header.classList.add("mobile-active");
+		for (const elem of mobileActiveTargets) {
+			elem.classList.add("mobile-active");
+		}
 	} else {
-		header.classList.remove("mobile-active");
+		for (const elem of mobileActiveTargets) {
+			elem.classList.remove("mobile-active");
+		}
 	}
 }
 // rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
@@ -563,8 +565,8 @@ for (const elem of topAnchors) {
 		if (window.scrollY > 0) {
 			e.preventDefault();
 
-			if (sidebarScroller != null) {
-				sidebarScroller.scrollTop = 0;
+			if (tocSidebar != null) {
+				tocSidebar.scrollTop = 0;
 			}
 
 			window.scrollTo(0, 0);

@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useBlankTarget
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 ---
 
 # useBlankTarget (since v10.0.0)

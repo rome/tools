@@ -6,15 +6,13 @@
 @import "_prism";
 @import "_grid";
 @import "_header";
-@import "_sidebar";
-@import "_table-of-contents";
 @import "_content";
 @import "_homepage";
 @import "_footer";
 @import "_team";
 @import "_blog";
-@import "_anatomy";
 @import "_buttons";
+@import "_docs";
 
 :root {
 	--primary-color: #{$color-4};

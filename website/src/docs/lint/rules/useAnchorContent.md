@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useAnchorContent
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 ---
 
 # useAnchorContent (since v10.0.0)

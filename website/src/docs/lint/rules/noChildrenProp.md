@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noChildrenProp
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 ---
 
 # noChildrenProp (since v0.10.0)

@@ -1,6 +1,6 @@
 ---
 title: Lint Rules
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 layout-type: split
 main-class: rules
 eleventyNavigation:

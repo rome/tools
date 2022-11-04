@@ -50,6 +50,7 @@
 
 		.rule {
 			padding: $unit $unit * 2;
+			
 			@include mobile-only() {
 				padding: $unit $unit;
 			}
@@ -157,7 +158,6 @@
 	}
 
 	h1, h2, h3 {
-		border-bottom: 1px solid var(--soft-border-color);
 		padding: $unit 0;
 		margin-top: $unit;
 	}

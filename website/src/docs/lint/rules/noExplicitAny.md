@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noExplicitAny
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 ---
 
 # noExplicitAny (since v10.0.0)

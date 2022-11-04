@@ -8,7 +8,7 @@ tags:
 - formatter
 - typescript
 - release
-- post
+- blog
 permalink: /blog/2022/04/05/rome-formatter-release.html
 layout: layouts/blog.liquid
 cover-image: formatter-cover.webp

@@ -176,3 +176,9 @@ pre[class*=language-] {
 		transition: none !important;
 	}
 }
+
+.foreground-svg {
+	path, polygon {
+		fill: var(--font-color);
+	}
+}

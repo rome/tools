@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useValidAnchor
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 ---
 
 # useValidAnchor (since v10.0.0)

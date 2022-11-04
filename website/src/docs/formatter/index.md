@@ -1,9 +1,14 @@
-## Formatter
+---
+layout: layouts/docs.liquid
+title: Formatter
+---
+
+# Formatter
 
 Rome's an opinionated formatter that has the goal to stop all ongoing debates over styles. That's why Rome only supports
 few options to avoid that debates over styles turn into debates over Rome options.
 
-### Options
+## Options
 
 The language agnostic options supported by Rome are:
 
@@ -11,7 +16,7 @@ The language agnostic options supported by Rome are:
 - tab width (default: `2`): The number of spaces per indention level
 - line width (default: `80`): The column width at which Rome wraps code
 
-### Use the formatter with the CLI
+## Use the formatter with the CLI
 
 You can start by running the CLI with the `--help` flag:
 
@@ -40,7 +45,7 @@ OPTIONS:
     --stdin-file-path <string>                A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js
 ```
 
-### Ignoring Code
+## Ignoring Code
 
 There are times when a developer wants to keep a specific formatting.
 
@@ -150,7 +155,7 @@ const expr = [
 
 As you can see the first array, which has a suppression comment, is left untouched!
 
-### Migration from other formatters
+## Migration from other formatters
 
 Rome doesn't support a lot of options like other web formatters, which means that particular styles
 won't be available to all developers.

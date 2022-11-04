@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noBannedTypes
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 ---
 
 # noBannedTypes (since v10.0.0)

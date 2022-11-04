@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noShoutyConstants
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 ---
 
 # noShoutyConstants (since v0.7.0)

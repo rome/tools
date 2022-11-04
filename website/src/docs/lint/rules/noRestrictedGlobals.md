@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noRestrictedGlobals
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 ---
 
 # noRestrictedGlobals (since v0.10.0)

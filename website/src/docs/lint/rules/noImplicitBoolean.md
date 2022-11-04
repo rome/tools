@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noImplicitBoolean
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 ---
 
 # noImplicitBoolean (since v0.7.0)

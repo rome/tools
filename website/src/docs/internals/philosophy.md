@@ -1,15 +1,20 @@
-## Philosophy
+---
+layout: layouts/docs.liquid
+title: Philosophy
+---
+
+# Philosophy
 
 This list includes general ethos the project should abide by. This list is not comprehensive. Some of these are obvious but are stated for completeness.
 
-### Project Management
+## Project Management
 
 - **Set clear expectations.** Make project intent and decisions known well in advance. Nothing should be a surprise.
 - **Clear messaging of decisions.** The team might evaluate options and make decisions using private channels. While the team will try to keep discussions
   using public channels like GitHub Discussions or Discord, frequent private check-in are the norm, due to the nature of the private company.
   When decisions occur via private channels, the team has to commit to communicate these decisions using the public channels.
 
-### Technical
+## Technical
 
 - **Errors should suggest fixes and hints where possible.** These should be inferred and filtered from usage to reduce surfacing irrelevant and unhelpful messages.
 - **Unique and specific error messages.** No generic error messages. This not only helps users understand what went wrong, but should provide maintainers with a unique call site and the necessary information to debug.

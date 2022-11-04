@@ -1,8 +1,8 @@
 ---
-layout: layouts/base.liquid
+layout: layouts/base-page.liquid
 description: End-to-end developer tools
 social-image: social-logo.png
-no-sidebar: true
+body-class: homepage-body
 ---
 
 <div class="homepage">
@@ -75,6 +75,10 @@ no-sidebar: true
       </li>
       <!--<li data-class="component-window-testing" class="soon">
         <div class="text">Documentation</div>
+        <div class="soon-indicator">Soon</div>
+      </li>
+      <li data-class="component-window-testing" class="soon">
+        <div class="text">Minification</div>
         <div class="soon-indicator">Soon</div>
       </li>
       <li data-class="component-window-testing" class="soon">
@@ -171,32 +175,32 @@ function HelloWorld({
     <h2 class="sr-only">Features</h2>
     <ul class="features">
       <li>
-        <div class="icon">{% include svg/homepage/chevron.svg %}</div>
+        <div class="icon foreground-svg">{% include svg/homepage/chevron.svg %}</div>
         <h3>Fast</h3>
         <p>Built with Rust and an innovative architecture inspired by <a href="https://rust-analyzer.github.io/">rust-analyzer</a>. We are able to do even more while being faster.</p>
       </li>
       <li>
-        <div class="icon">{% include svg/homepage/layers.svg %}</div>
+        <div class="icon foreground-svg">{% include svg/homepage/layers.svg %}</div>
         <h3>Simple</h3>
         <p>Zero configuration needed to get started. <a href="/docs/#configuration">Extensive options available</a> for when you need them.</p>
       </li>
       <li>
-        <div class="icon">{% include svg/homepage/maximize.svg %}</div>
+        <div class="icon foreground-svg">{% include svg/homepage/maximize.svg %}</div>
         <h3>Scalable</h3>
         <p>Designed to handle codebases of any size. Focus on growing <strong>product</strong> instead of your tools.</p>
       </li>
       <li>
-        <div class="icon">{% include svg/homepage/lightning.svg %}</div>
+        <div class="icon foreground-svg">{% include svg/homepage/lightning.svg %}</div>
         <h3>Optimized</h3>
         <p>With tight internal integration we are able to reuse previous work and any improvement to one tool improves them all.</p>
       </li>
       <li>
-        <div class="icon">{% include svg/homepage/action.svg %}</div>
+        <div class="icon foreground-svg">{% include svg/homepage/action.svg %}</div>
         <h3>Actionable &amp; Informative</h3>
         <p>Avoid obscure error messages, when we tell you something is wrong, we tell you exactly where the problem is and how to fix it.</p>
       </li>
       <li>
-        <div class="icon">{% include svg/homepage/box.svg %}</div>
+        <div class="icon foreground-svg">{% include svg/homepage/box.svg %}</div>
         <h3>Batteries Included</h3>
         <p>Out of the box support for all the language features you use today. First class support for TypeScript and JSX.</p>
       </li>

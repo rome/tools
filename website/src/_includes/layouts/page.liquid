@@ -1,8 +1,8 @@
 ---
-layout: layouts/base.liquid
+layout: layouts/base-page.liquid
 social-image: social-logo.png
 ---
 
-<div id="main-content" class="main content {% if layout-type == "split" %}split{% else %}single{% endif %} {{ main-class }}">
+<div id="main-content" class="main content {{ main-class }}">
 	{{ content | safe }}
 </div>

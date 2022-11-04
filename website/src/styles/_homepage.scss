@@ -25,6 +25,10 @@
 	}
 }
 
+.homepage-body .container {
+	padding: 0 20px;
+}
+
 .homepage {
 	text-align: center;
 	width: 100%;
@@ -236,10 +240,6 @@
 			top: 0;
 			width: 24px;
 			height: 24px;
-			
-			path, polygon {
-				fill: var(--font-color);
-			}
 		}
 
 		h3 {

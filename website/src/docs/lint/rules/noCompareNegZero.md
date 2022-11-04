@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noCompareNegZero
-layout: layouts/page.liquid
+layout: layouts/docs.liquid
 ---
 
 # noCompareNegZero (since v0.7.0)
