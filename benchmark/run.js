@@ -43,11 +43,12 @@ function benchmarkFormatter(rome) {
 	for (const [name, configuration] of Object.entries(BENCHMARKS.formatter)) {
 		console.log(`[${name}]`);
 
-		if (fs.existsSync(path.join(TMP_DIRECTORY, name))) {
+		let projectDirectory = path.join(TMP_DIRECTORY, name);
+		if (projectDirectory) {
 			console.log("Updating");
-			runScript("git reset --hard @{u}");
-			runScript("git clean -df");
-			runScript("git pull --depth=1");
+			runScript("git reset --hard @{u}", { cwd: projectDirectory });
+			runScript("git clean -df", { cwd: projectDirectory });
+			runScript("git pull --depth=1", { cwd: projectDirectory });
 		} else {
 			console.log("Clone project...");
 
@@ -72,10 +73,11 @@ function benchmarkFormatter(rome) {
 			.map((path) => `\"${path}\"`)
 			.join(" ")} --write`;
 
-		const romeSingleCoreCommand = `${setEnvScript(
+		const romeSingleCoreCommand = withEnvVariable(
 			"RAYON_NUM_THREADS",
 			"1",
-		)}; ${romeCommand}`;
+			romeCommand,
+		);
 
 		// Run 2 warmups to make sure the files are formatted correctly
 		const hyperfineCommand = `hyperfine -w 2 -n Prettier "${prettierCommand}" -n Rome "${romeCommand}" --shell=${shellOption()} -n "Rome (1 thread)" "${romeSingleCoreCommand}"`;
@@ -108,13 +110,13 @@ function shellOption() {
 	}
 }
 
-function setEnvScript(name, value) {
+function withEnvVariable(name, value, command) {
 	switch (process.platform) {
 		case "win32": {
-			return `$Env:${name}=${value}`;
+			return `$Env:${name}=${value}; ${command}`;
 		}
 		default:
-			return `set ${name}=\"${value}\"`;
+			return `${name}=\"${value}\" ${command}`;
 	}
 }
 
