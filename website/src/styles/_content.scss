@@ -48,6 +48,12 @@
 			border-top: 1px solid var(--soft-border-color);
 		}
 
+		p + .rule {
+			border-top: none;
+			border-top-left-radius: 12px;
+			border-top-right-radius: 12px;
+		}
+
 		.rule {
 			padding: $unit $unit * 2;
 			

@@ -1,6 +1,5 @@
 // @ts-check
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
-const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const markdownItImageSize = require("markdown-it-imsize");
@@ -44,8 +43,6 @@ module.exports = function (eleventyConfig) {
 		wrapper: "div  ",
 		wrapperClass: "toc",
 	});
-
-	eleventyConfig.addPlugin(eleventyNavigationPlugin);
 
 	const md = markdownIt({ html: true, linkify: true, typographer: true });
 
@@ -126,12 +123,19 @@ module.exports = function (eleventyConfig) {
 		return `<span class="emoji" aria-hidden="true">${emoji}</span>`;
 	});
 
-	eleventyConfig.addFilter("linkattribs", function (url) {
+	eleventyConfig.addFilter("linkattribs", function (url, extraClass) {
     const data = this.context.environments;
+		const classes = [];
+		if (typeof extraClass !== "string") {
+			classes.push(extraClass);
+		}
 		if (data.page.url.startsWith(url)) {
-			return `href="${url}" class="active"`;
-		} else {
+			classes.push("active");
+		}
+		if (classes.length === 0) {
 			return `href="${url}"`;
+		} else {
+			return `href="${url}" class="${classes.join(" ")}"`;
 		}
 	});
 

@@ -218,3 +218,34 @@
 		}
 	}
 }
+
+.docs-index-button {
+	@include button;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	display: inline-block;
+	text-decoration: none;
+	padding: 20px;
+  border-radius: 12px;
+	position: relative;
+	width: 300px;
+	
+	.heading, .description {
+		display: block;
+	}
+
+	.emoji {
+		margin-right: 10px;
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		font-size: 32px;
+		opacity: 0.3;
+		z-index: -1;
+	}
+
+	.heading {
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+}

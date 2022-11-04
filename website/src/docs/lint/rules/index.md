@@ -3,10 +3,6 @@ title: Lint Rules
 layout: layouts/docs.liquid
 layout-type: split
 main-class: rules
-eleventyNavigation:
-  key: lint-rules
-  parent: linting
-  title: Rules
 ---
 
 # Rules
