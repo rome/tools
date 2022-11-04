@@ -473,13 +473,17 @@ for (const elem of collapsed) {
 
 //# Color scheme switcher
 
-function toggleColorSchemeSwitch(evt) {
+function getCurrentTheme() {
 	let currentScheme = window.localStorage.getItem("data-theme");
 	if (currentScheme == null) {
 		const prefersDarkMode = matchMedia("(prefers-color-scheme: dark)").matches;
 		currentScheme = prefersDarkMode ? "dark" : "light";
 	}
+	return currentScheme;
+}
 
+function toggleColorSchemeSwitch(evt) {
+	const currentScheme = getCurrentTheme();
 	const newScheme = currentScheme === "dark" ? "light" : "dark";
 	window.localStorage.setItem("data-theme", newScheme);
 	evt.currentTarget.setAttribute("aria-checked", newScheme === "dark");
@@ -650,4 +654,15 @@ for (const button of componentSwitcher) {
 
 		activeComponentButton = button;
 	});
+}
+
+//# Tweet dark mode
+const tweets = Array.from(document.querySelectorAll(".twitter-tweet"));
+function updateTweetThemes(scheme) {
+}
+if (tweets.length > 0) {
+	const scheme = getCurrentTheme();
+	for (const elem of tweets) {
+		elem.setAttribute("data-theme", scheme);
+	}
 }
