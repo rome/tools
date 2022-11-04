@@ -32,6 +32,16 @@ const BENCHMARKS = {
 			},
 		},
 	},
+	linter: {
+		eslint: {
+			repository: "https://github.com/eslint/eslint.git",
+			sourceDirectories: ["lib", "messages", "tests/lib", "tools"],
+		},
+		webpack: {
+			repository: "https://github.com/webpack/webpack.git",
+			sourceDirectories: ["lib"],
+		},
+	},
 };
 
 function benchmarkFormatter(rome) {
@@ -43,24 +53,12 @@ function benchmarkFormatter(rome) {
 	for (const [name, configuration] of Object.entries(BENCHMARKS.formatter)) {
 		console.log(`[${name}]`);
 
-		let projectDirectory = path.join(TMP_DIRECTORY, name);
-		if (projectDirectory) {
-			console.log("Updating");
-			runScript("git reset --hard @{u}", { cwd: projectDirectory });
-			runScript("git clean -df", { cwd: projectDirectory });
-			runScript("git pull --depth=1", { cwd: projectDirectory });
-		} else {
-			console.log("Clone project...");
-
-			runScript(`git clone --depth=1 ${configuration.repository}`, {
-				stdio: "inherit",
-			});
-		}
+		let projectDirectory = cloneProject(name, configuration.repository);
 
 		const prettierPaths = Object.entries(configuration.sourceDirectories)
 			.flatMap(([directory, extensions]) => {
 				return extensions.map(
-					(extension) => `\"${path.join(directory, `**/*.${extension}`)}\"`,
+					(extension) => `'${path.join(directory, `**/*.${extension}`)}'`,
 				);
 			})
 			.join(" ");
@@ -70,7 +68,7 @@ function benchmarkFormatter(rome) {
 		const romeCommand = `${rome} format ${Object.keys(
 			configuration.sourceDirectories,
 		)
-			.map((path) => `\"${path}\"`)
+			.map((path) => `'${path}'`)
 			.join(" ")} --write`;
 
 		const romeSingleCoreCommand = withEnvVariable(
@@ -84,7 +82,7 @@ function benchmarkFormatter(rome) {
 		console.log(hyperfineCommand);
 
 		child_process.execSync(hyperfineCommand, {
-			cwd: path.join(TMP_DIRECTORY, name),
+			cwd: projectDirectory,
 			stdio: "inherit",
 		});
 	}
@@ -98,6 +96,58 @@ function resolvePrettier() {
 		default:
 			return path.resolve("./node_modules/.bin/prettier");
 	}
+}
+
+function benchmarkLinter(rome) {
+	console.log("");
+	console.log("Benchmark linter...");
+	console.log("―".repeat(80));
+	console.log("");
+
+	for (const [name, configuration] of Object.entries(BENCHMARKS.linter)) {
+		console.log(`[${name}]`);
+
+		let projectDirectory = cloneProject(name, configuration.repository);
+
+		const eslintConfig = fs.readFileSync("./bench.eslint.js");
+		fs.writeFileSync(
+			path.join(projectDirectory, "bench.eslintrc.js"),
+			eslintConfig,
+		);
+		const romeConfig = fs.readFileSync("./bench.rome.json");
+		fs.writeFileSync(path.join(projectDirectory, "rome.json"), romeConfig);
+
+		const eslintPaths = configuration.sourceDirectories
+			.map((directory) => `'${directory}/**'`)
+			.join(" ");
+
+		const eslintCommand = `${resolveESlint()} --no-ignore -c bench.eslintrc.js ${eslintPaths}`;
+
+		const romePaths = configuration.sourceDirectories
+			.map((directory) => `'${directory}'`)
+			.join(" ");
+
+		const romeCommand = `${rome} check ${romePaths}`;
+
+		const romeSingleCoreCommand = withEnvVariable(
+			"RAYON_NUM_THREADS",
+			"1",
+			romeCommand,
+		);
+
+		// Run 2 warmups to make sure the files are formatted correctly
+		const hyperfineCommand = `hyperfine -i -w 2 -n ESLint "${eslintCommand}" -n Rome "${romeCommand}" --shell=${shellOption()} -n "Rome (1 thread)" "${romeSingleCoreCommand}"`;
+		console.log(hyperfineCommand);
+
+		child_process.execSync(hyperfineCommand, {
+			cwd: projectDirectory,
+			stdio: "inherit",
+		});
+	}
+}
+
+function resolveESlint() {
+	return path.resolve("./node_modules/.bin/eslint");
 }
 
 function shellOption() {
@@ -120,11 +170,36 @@ function withEnvVariable(name, value, command) {
 	}
 }
 
-function runScript(command, options) {
-	child_process.execSync(command, {
-		cwd: TMP_DIRECTORY,
-		...options,
-	});
+function withDirectory(cwd) {
+	return {
+		run(command, options) {
+			child_process.execSync(command, {
+				cwd,
+				...options,
+			});
+		},
+	};
+}
+
+function cloneProject(name, repository) {
+	let projectDirectory = path.join(TMP_DIRECTORY, name);
+
+	let inProjectDirectory = withDirectory(projectDirectory);
+
+	if (fs.existsSync(projectDirectory)) {
+		console.log("Updating");
+		inProjectDirectory.run("git reset --hard @{u}");
+		inProjectDirectory.run("git clean -df");
+		inProjectDirectory.run("git pull --depth=1");
+	} else {
+		console.log("Clone project...");
+
+		withDirectory(TMP_DIRECTORY).run(`git clone --depth=1 ${repository}`, {
+			stdio: "inherit",
+		});
+	}
+
+	return projectDirectory;
 }
 
 function run() {
@@ -133,6 +208,7 @@ function run() {
 	const rome = buildRome();
 
 	benchmarkFormatter(rome);
+	benchmarkLinter(rome);
 }
 
 run();
