@@ -30,15 +30,7 @@
 		margin-left: 5px;
 	}
 
-	section > section {
-		table:last-child, pre:last-child, p:last-child {
-			margin-bottom: 0;
-		}
-	}
-
-	&.rules > section > section {
-		padding: 0 !important;
-
+	&.rules {
 		h1, h2 {
 			margin: $unit $unit * 2 !important;
 			border: 0;
@@ -120,7 +112,7 @@
 		margin-left: 16px;
 
 		li {
-			margin: 4px 0;
+			margin: 8px 0;
 
 			p {
 				margin: 0;

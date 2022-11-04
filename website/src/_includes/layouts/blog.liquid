@@ -12,7 +12,12 @@ no-sidebar: true
 		</figure>
 	{% endif %}
 
-	<h1 id="{{ title | kebabCase }} ">{{ title }}</a></h1>
+	<h1 id="{{ title | kebabCase }} ">{{ title }}</h1>
+
+	{% if subtitle %}
+		<div class="subtitle">{{ subtitle }}</div>
+	{% endif %}
+
 	{% include blog-post-info.liquid %}
 
 	{{ content | safe }}

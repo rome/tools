@@ -12,6 +12,20 @@
 		font-size: 42px;
 	}
 
+	h3 {
+		border-bottom: none;
+		padding-bottom: 0;
+	}
+
+	.subtitle {
+		text-align: center;
+		font-size: 18px;
+		font-weight: 500;
+		margin-top: -10px;
+		margin-bottom: 10px;
+		opacity: 0.8;
+	}
+
 	.twitter-tweet {
 		margin: 0 auto;
 		margin-bottom: 20px;
@@ -141,4 +155,12 @@ a.tag {
 			color: inherit;
 		}
 	}
+}
+
+// 2022-11-08-rome-10.md
+.blog-rome-10-buttons {
+	text-align: center;
+}
+.blog-rome-10-quote {
+	font-size: 20px;
 }

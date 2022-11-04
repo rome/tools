@@ -121,25 +121,7 @@
 	}
 
 	a.button {
-		display: inline-block;
-		background: rgba(0, 0, 0, 0.05);
-		border-radius: 40px;
-		padding: 8px 21px;
-		text-decoration: none;
 		margin-bottom: 40px;
-		font-weight: 500;
-
-		&:hover {
-			background: #E9ECEF;
-		}
-
-		@include dark-mode {
-			background: rgba(255, 255, 255, 0.1);
-
-			&:hover {
-				background: rgba(255, 255, 255, 0.2);
-			}
-		}
 	}
 
 	p {
@@ -310,11 +292,6 @@
 
 		.button {
 			width: auto;
-
-			svg {
-				vertical-align: middle;
-				margin-right: 6px;
-			}
 		}
 
 		a {
@@ -323,11 +300,6 @@
 
 		.vscode-button.button {
 			margin-bottom: 20px;
-			background: rgba(36, 173, 243, 0.1);
-
-			&:hover {
-				background: rgba(36, 173, 243, 0.2);
-			}
 		}
 
 		.install-button {
