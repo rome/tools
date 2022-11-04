@@ -21,7 +21,7 @@
 		font-size: 18px;
 		font-weight: 500;
 		margin-top: -10px;
-		margin-bottom: 10px;
+		margin-bottom: 20px;
 		opacity: 0.8;
 	}
 
@@ -128,7 +128,7 @@ a.tag {
 }
 
 .blog-cover {
-	margin: 0 -24px;
+	margin: 0 -20px;
 	margin-top: 24px;
 	overflow: hidden;
 	position: relative;
@@ -137,6 +137,10 @@ a.tag {
 		display: block;
 		width: 100%;
 		border-radius: 12px;
+
+		@include mobile-only {
+			border-radius: 0;
+		}
 	}
 	
 	figcaption {

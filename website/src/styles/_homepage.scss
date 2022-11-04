@@ -29,10 +29,6 @@
 	text-align: center;
 	width: 100%;
 
-	@include mobile-only() {
-		margin-top: $unit * 4;
-	}
-
 	.h1, h1, h2 {
 		font-weight: 700;
 		margin-bottom: 40px;

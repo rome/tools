@@ -102,7 +102,7 @@ class Manager {
 		let offset = 0;
 
 		// Account for header
-		offset += 80;
+		offset += isMobile ? 64 : 80;
 
 		// Give everything a tiny bit of margin so it's not up against the edges
 		offset += 20;

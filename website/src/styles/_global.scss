@@ -93,13 +93,11 @@ a, .link {
 
 .main {
 	width: 100%;
-	margin-top: 5px;
-	overflow: hidden;
+}
 
+.page-main {
 	@include mobile-only() {
-		margin-top: $unit * 4;
-		margin-left: 0;
-		width: 100%;
+		margin-top: 64px;
 	}
 }
 

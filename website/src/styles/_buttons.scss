@@ -9,10 +9,10 @@ a.button {
   }
 
   &.vscode-button {
-    background: rgba(36, 173, 243, 0.1);
+    background: rgba(36, 173, 243, 0.1) !important;
 
     &:hover {
-      background: rgba(36, 173, 243, 0.2);
+      background: rgba(36, 173, 243, 0.2) !important;
     }
   }
 }
