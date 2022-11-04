@@ -31,7 +31,7 @@ export function SettingsMenu({
 }: Props) {
 	return (
 		<div>
-			<div className="flex flex-col sm:flex-row">
+			<div className="flex flex-col md:flex-row">
 				<LineWidthInput
 					lineWidth={lineWidth}
 					setLineWidth={createSetter(setPlaygroundState, "lineWidth")}
@@ -43,7 +43,7 @@ export function SettingsMenu({
 					setIndentStyle={createSetter(setPlaygroundState, "indentStyle")}
 				/>
 			</div>
-			<div className="flex flex-col sm:flex-row">
+			<div className="flex flex-col md:flex-row">
 				<QuoteStyleSelect
 					quoteStyle={quoteStyle}
 					setQuoteStyle={createSetter(setPlaygroundState, "quoteStyle")}
@@ -52,7 +52,7 @@ export function SettingsMenu({
 					quoteProperties={quoteProperties}
 					setQuoteProperties={createSetter(
 						setPlaygroundState,
-						"quoteProperties",
+						"quoteProperties"
 					)}
 				/>
 				<TrailingCommaSelect
@@ -68,11 +68,11 @@ export function SettingsMenu({
 					setSourceType={createSetter(setPlaygroundState, "sourceType")}
 				/>
 			</div>
-			<div className="flex flex-col sm:flex-row">
+			<div className="flex flex-col md:flex-row">
 				<NurseryRules
 					setEnabledNurseryRules={createSetter(
 						setPlaygroundState,
-						"enabledNurseryRules",
+						"enabledNurseryRules"
 					)}
 					enabledNurseryRules={enabledNurseryRules}
 				/>
