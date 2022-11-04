@@ -370,6 +370,13 @@ Disallow the use of constants which its value is the upper-case version of its n
 Disallow template literals if interpolation and special-character handling are not needed
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="preferNumericLiterals">
+	<a href="/docs/lint/rules/preferNumericLiterals">preferNumericLiterals</a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow <code>parseInt()</code> and <code>Number.parseInt()</code> in favor of binary, octal, and hexadecimal literals
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="useBlockStatements">
 	<a href="/docs/lint/rules/useBlockStatements">useBlockStatements</a>
 	<span class="recommended">recommended</span>
