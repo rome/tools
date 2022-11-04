@@ -80,7 +80,7 @@ preferNumericLiterals.js:3:1 lint/style/preferNumericLiterals  FIXABLE  ━━�
      1  1 │   // Invalid
      2  2 │   parseInt("111110111", 2);
      3    │ - parseInt(`111110111`,·2);
-        3 │ + 0b1111011;
+        3 │ + 0b111110111;
      4  4 │   parseInt("767", 8);
      5  5 │   parseInt("1F7", 16);
   
@@ -249,6 +249,30 @@ preferNumericLiterals.js:12:1 lint/style/preferNumericLiterals  FIXABLE  ━━�
        12 │ + 0x1F7;
     13 13 │   Number[`parseInt`]("1F7", 16);
     14 14 │   
+  
+
+```
+
+```
+preferNumericLiterals.js:13:1 lint/style/preferNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use hexadecimal literals instead of parseInt()
+  
+    11 │ Number["parseInt"]("1F7", 16);
+    12 │ Number['parseInt']("1F7", 16);
+  > 13 │ Number[`parseInt`]("1F7", 16);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    14 │ 
+    15 │ // Invalid, No fix
+  
+  i Safe fix: Replace with hexadecimal literals
+  
+    11 11 │   Number["parseInt"]("1F7", 16);
+    12 12 │   Number['parseInt']("1F7", 16);
+    13    │ - Number[`parseInt`]("1F7",·16);
+       13 │ + 0x1F7;
+    14 14 │   
+    15 15 │   // Invalid, No fix
   
 
 ```

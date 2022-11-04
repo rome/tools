@@ -5,7 +5,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyCallArgument, JsAnyExpression, JsAnyLiteralExpression, JsCallExpression, JsSyntaxToken,
+    JsAnyCallArgument, JsAnyExpression, JsAnyLiteralExpression, JsCallExpression,
 };
 use rome_rowan::{AstNode, AstNodeList, AstSeparatedList, BatchMutationExt};
 
@@ -50,7 +50,7 @@ declare_rule! {
 }
 
 pub struct TextAndRadix {
-    text_token: JsSyntaxToken,
+    text: String,
     radix: Radix,
 }
 
@@ -83,10 +83,8 @@ impl Rule for PreferNumericLiterals {
         let node = ctx.query();
         let mut mutation = ctx.root().begin();
 
-        let text = state.text_token.text_trimmed();
-        let text = &text[1..text.len() - 1];
-        i128::from_str_radix(text, state.radix as u32).ok()?;
-        let suggested = format!("{}{text}", state.radix.prefix());
+        i128::from_str_radix(&state.text, state.radix as u32).ok()?;
+        let suggested = format!("{}{}", state.radix.prefix(), state.text);
 
         mutation.replace_node(
             JsAnyExpression::JsCallExpression(node.clone()),
@@ -117,12 +115,12 @@ fn get_text_and_radix_args(expr: &JsCallExpression) -> Option<TextAndRadix> {
     let text_token = get_text(text.as_js_any_expression()?)?;
     let radix = get_number(radix)?;
     Some(TextAndRadix {
-        text_token,
+        text: text_token,
         radix: Radix::from_f64(radix)?,
     })
 }
 
-fn get_text(expression: &JsAnyExpression) -> Option<JsSyntaxToken> {
+fn get_text(expression: &JsAnyExpression) -> Option<String> {
     match expression {
         JsAnyExpression::JsTemplate(t) => {
             if t.tag().is_some() {
@@ -136,11 +134,17 @@ fn get_text(expression: &JsAnyExpression) -> Option<JsSyntaxToken> {
 
             let elem = elements.into_iter().next()?;
             let chunk = elem.as_js_template_chunk_element()?;
-            chunk.template_chunk_token().ok()
+            chunk
+                .template_chunk_token()
+                .ok()
+                .map(|t| t.text_trimmed().to_owned())
         }
         JsAnyExpression::JsAnyLiteralExpression(
             JsAnyLiteralExpression::JsStringLiteralExpression(s),
-        ) => s.value_token().ok(),
+        ) => s.value_token().ok().map(|it| {
+            let text = it.text_trimmed();
+            text[1..text.len() - 1].to_owned()
+        }),
         _ => None,
     }
 }
@@ -174,9 +178,7 @@ fn is_callee_parse_int_fn(expr: &JsCallExpression) -> Option<bool> {
             let object = expr.object().ok()?;
             is_ident(&object, "Number")? && {
                 let member = expr.member().ok()?;
-                let text = get_text(&member)?;
-                let text = text.text_trimmed();
-                &text[1..text.len() - 1] == "parseInt"
+                get_text(&member)? == "parseInt"
             }
         }
         _ => false,
