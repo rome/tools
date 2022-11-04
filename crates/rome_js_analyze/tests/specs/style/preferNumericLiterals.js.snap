@@ -138,7 +138,7 @@ preferNumericLiterals.js:5:1 lint/style/preferNumericLiterals  FIXABLE  ━━�
 ```
 preferNumericLiterals.js:7:1 lint/style/preferNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use binary literals instead of parseInt()
+  ! Use binary literals instead of Number.parseInt()
   
     5 │ parseInt("1F7", 16);
     6 │ 
@@ -162,7 +162,7 @@ preferNumericLiterals.js:7:1 lint/style/preferNumericLiterals  FIXABLE  ━━�
 ```
 preferNumericLiterals.js:8:1 lint/style/preferNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use octal literals instead of parseInt()
+  ! Use octal literals instead of Number.parseInt()
   
      7 │ Number.parseInt("111110111", 2);
    > 8 │ Number.parseInt("767", 8);
@@ -185,7 +185,7 @@ preferNumericLiterals.js:8:1 lint/style/preferNumericLiterals  FIXABLE  ━━�
 ```
 preferNumericLiterals.js:9:1 lint/style/preferNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use hexadecimal literals instead of parseInt()
+  ! Use hexadecimal literals instead of Number.parseInt()
   
      7 │ Number.parseInt("111110111", 2);
      8 │ Number.parseInt("767", 8);
@@ -209,7 +209,7 @@ preferNumericLiterals.js:9:1 lint/style/preferNumericLiterals  FIXABLE  ━━�
 ```
 preferNumericLiterals.js:11:1 lint/style/preferNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use hexadecimal literals instead of parseInt()
+  ! Use hexadecimal literals instead of Number.parseInt()
   
      9 │ Number.parseInt("1F7", 16);
     10 │ 
@@ -233,7 +233,7 @@ preferNumericLiterals.js:11:1 lint/style/preferNumericLiterals  FIXABLE  ━━�
 ```
 preferNumericLiterals.js:12:1 lint/style/preferNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use hexadecimal literals instead of parseInt()
+  ! Use hexadecimal literals instead of Number.parseInt()
   
     11 │ Number["parseInt"]("1F7", 16);
   > 12 │ Number['parseInt']("1F7", 16);
@@ -256,7 +256,7 @@ preferNumericLiterals.js:12:1 lint/style/preferNumericLiterals  FIXABLE  ━━�
 ```
 preferNumericLiterals.js:13:1 lint/style/preferNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use hexadecimal literals instead of parseInt()
+  ! Use hexadecimal literals instead of Number.parseInt()
   
     11 │ Number["parseInt"]("1F7", 16);
     12 │ Number['parseInt']("1F7", 16);
@@ -280,7 +280,7 @@ preferNumericLiterals.js:13:1 lint/style/preferNumericLiterals  FIXABLE  ━━�
 ```
 preferNumericLiterals.js:16:1 lint/style/preferNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use hexadecimal literals instead of parseInt()
+  ! Use hexadecimal literals instead of Number.parseInt()
   
     15 │ // Invalid, No fix
   > 16 │ Number.parseInt("ZZZ", 16);
