@@ -18,6 +18,7 @@ rustc-hash = { workspace = true }
 serde = { version = "1.0.136", features = ["derive"] }
 serde_json = { version = "1.0.85", features = ["raw_value"]}
 schemars = { version = "0.8.10", optional = true }
+tracing = { workspace = true }
 
 [dev-dependencies]
 rome_js_syntax = { path = "../rome_js_syntax" }

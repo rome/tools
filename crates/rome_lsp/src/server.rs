@@ -58,7 +58,7 @@ impl LSPServer {
         requests::syntax_tree::syntax_tree(&self.session, &url).map_err(into_lsp_error)
     }
 
-    #[tracing::instrument(skip(self), name = "rome/rage", level = "trace")]
+    #[tracing::instrument(skip(self), name = "rome/rage", level = "debug")]
     async fn rage(&self, params: RageParams) -> LspResult<RageResult> {
         let mut entries = vec![
             RageEntry::section("Server"),
@@ -185,7 +185,7 @@ impl LSPServer {
 
 #[tower_lsp::async_trait]
 impl LanguageServer for LSPServer {
-    #[tracing::instrument(level = "trace", skip(self))]
+    #[tracing::instrument(level = "debug", skip(self))]
     async fn initialize(&self, params: InitializeParams) -> LspResult<InitializeResult> {
         info!("Starting Rome Language Server...");
         self.is_initialized.store(true, Ordering::Relaxed);
@@ -219,7 +219,7 @@ impl LanguageServer for LSPServer {
         Ok(init)
     }
 
-    #[tracing::instrument(level = "trace", skip(self))]
+    #[tracing::instrument(level = "debug", skip(self))]
     async fn initialized(&self, params: InitializedParams) {
         let _ = params;
 
@@ -244,14 +244,14 @@ impl LanguageServer for LSPServer {
         Ok(())
     }
 
-    #[tracing::instrument(level = "trace", skip(self))]
+    #[tracing::instrument(level = "debug", skip(self))]
     async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
         let _ = params;
         self.session.fetch_client_configuration().await;
         self.setup_capabilities().await;
     }
 
-    #[tracing::instrument(level = "trace", skip(self))]
+    #[tracing::instrument(level = "debug", skip(self))]
     async fn did_change_watched_files(&self, params: DidChangeWatchedFilesParams) {
         let file_paths = params
             .changes

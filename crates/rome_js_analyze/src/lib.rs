@@ -2,7 +2,7 @@ use control_flow::make_visitor;
 use rome_analyze::{
     AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal, ControlFlow,
     InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry, Phases, RuleAction,
-    RuleRegistry, ServiceBag, SuppressionKind, SyntaxVisitor,
+    RuleRegistry, ServiceBag, SuppressAction, SyntaxVisitor,
 };
 use rome_diagnostics::category;
 use rome_diagnostics::location::FileId;
@@ -26,6 +26,7 @@ pub use crate::registry::visit_registry;
 use crate::semantic_services::{SemanticModelBuilderVisitor, SemanticModelVisitor};
 
 pub(crate) type JsRuleAction = RuleAction<JsLanguage>;
+pub(crate) type JsSuppressAction = SuppressAction<JsLanguage>;
 
 /// Return the static [MetadataRegistry] for the JS analyzer rules
 pub fn metadata() -> &'static MetadataRegistry {
@@ -161,9 +162,11 @@ mod tests {
                 if let Some(mut diag) = signal.diagnostic() {
                     diag.set_severity(Severity::Warning);
                     error_ranges.push(diag.location().unwrap().span.unwrap());
-                    if let Some(action) = signal.action() {
-                        let new_code = action.mutation.commit();
-                        eprintln!("{new_code}");
+                    if let Some(actions) = signal.actions() {
+                        for action in actions {
+                            let new_code = action.mutation.commit();
+                            eprintln!("{new_code}");
+                        }
                     }
                     let error = diag.with_file_path("ahahah").with_file_source_code(SOURCE);
                     let text = markup_to_string(markup! {

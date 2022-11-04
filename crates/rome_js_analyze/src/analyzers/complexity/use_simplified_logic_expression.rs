@@ -8,7 +8,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt, BatchMutationExt};
 
-use crate::JsRuleAction;
+use crate::{JsRuleAction, JsSuppressAction};
 
 declare_rule! {
     /// Discard redundant terms from logical expressions.
@@ -157,6 +157,10 @@ impl Rule for UseSimplifiedLogicExpression {
             message: markup! { ""{message}"" }.to_owned(),
             mutation,
         })
+    }
+
+    fn can_suppress(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsSuppressAction> {
+        Some(ctx.query().syntax().clone().into())
     }
 }
 

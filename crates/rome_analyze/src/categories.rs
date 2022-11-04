@@ -20,6 +20,9 @@ pub enum RuleCategory {
     Action,
 }
 
+/// Actions that suppress rules should start with this string
+pub const SUPPRESSION_ACTION_CATEGORY: &str = "quickfix.rome.suppressRule";
+
 /// The category of a code action, this type maps directly to the
 /// [CodeActionKind] type in the Language Server Protocol specification
 ///

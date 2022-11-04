@@ -252,8 +252,10 @@ fn lint(params: LintParams) -> LintResults {
             if diagnostic_count <= params.max_diagnostics {
                 diagnostic.set_severity(severity);
 
-                if let Some(action) = signal.action() {
-                    diagnostic = diagnostic.add_code_suggestion(action.into());
+                if let Some(action) = signal.actions() {
+                    for code_suggestion in action.into_code_suggestion_advices() {
+                        diagnostic = diagnostic.add_code_suggestion(code_suggestion);
+                    }
                 }
 
                 diagnostics.push(rome_diagnostics::serde::Diagnostic::new(diagnostic));
@@ -337,14 +339,13 @@ fn code_actions(
     let analyzer_options = compute_analyzer_options(&settings);
 
     analyze(file_id, &tree, filter, &analyzer_options, |signal| {
-        if let Some(action) = signal.action() {
-            actions.push(CodeAction {
-                category: action.category.clone(),
-                rule_name: action
-                    .rule_name
-                    .map(|(group, rule)| (Cow::Borrowed(group), Cow::Borrowed(rule))),
-                suggestion: CodeSuggestion::from(action),
-            });
+        if let Some(action) = signal.actions() {
+            actions.extend(action.into_code_action_iter().map(|item| CodeAction {
+                category: item.category.clone(),
+                group_name: Cow::Borrowed(item.group_name),
+                rule_name: Cow::Borrowed(item.rule_name),
+                suggestion: item.suggestion,
+            }));
         }
 
         ControlFlow::<Never>::Continue(())
@@ -386,22 +387,24 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
     let analyzer_options = compute_analyzer_options(&settings);
     loop {
         let action = analyze(file_id, &tree, filter, &analyzer_options, |signal| {
-            if let Some(action) = signal.action() {
-                match fix_file_mode {
-                    FixFileMode::SafeFixes => {
-                        if action.applicability == Applicability::MaybeIncorrect {
-                            skipped_suggested_fixes += 1;
+            if let Some(actions) = signal.actions() {
+                for action in actions {
+                    match fix_file_mode {
+                        FixFileMode::SafeFixes => {
+                            if action.applicability == Applicability::MaybeIncorrect {
+                                skipped_suggested_fixes += 1;
+                            }
+                            if action.applicability == Applicability::Always {
+                                return ControlFlow::Break(action);
+                            }
                         }
-                        if action.applicability == Applicability::Always {
-                            return ControlFlow::Break(action);
-                        }
-                    }
-                    FixFileMode::SafeAndSuggestedFixes => {
-                        if matches!(
-                            action.applicability,
-                            Applicability::Always | Applicability::MaybeIncorrect
-                        ) {
-                            return ControlFlow::Break(action);
+                        FixFileMode::SafeAndSuggestedFixes => {
+                            if matches!(
+                                action.applicability,
+                                Applicability::Always | Applicability::MaybeIncorrect
+                            ) {
+                                return ControlFlow::Break(action);
+                            }
                         }
                     }
                 }

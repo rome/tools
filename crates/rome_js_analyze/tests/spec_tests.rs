@@ -9,6 +9,7 @@ use rome_console::{
 };
 use rome_diagnostics::location::FileId;
 use rome_diagnostics::termcolor::NoColor;
+use rome_diagnostics::v2::advice::CodeSuggestionAdvice;
 use rome_diagnostics::{DiagnosticExt, PrintDiagnostic, Severity};
 use rome_js_parser::{
     parse,
@@ -91,18 +92,24 @@ fn write_analysis_to_snapshot(
     rome_js_analyze::analyze(FileId::zero(), &root, filter, &options, |event| {
         if let Some(mut diag) = event.diagnostic() {
             diag.set_severity(Severity::Warning);
-            if let Some(action) = event.action() {
-                check_code_action(input_file, input_code, source_type, &action);
-                diag = diag.add_code_suggestion(action.into());
+            if let Some(actions) = event.actions() {
+                for action in actions {
+                    if !action.is_suppression() {
+                        check_code_action(input_file, input_code, source_type, &action);
+                        diag = diag.add_code_suggestion(CodeSuggestionAdvice::from(action));
+                    }
+                }
             }
 
             diagnostics.push(diagnostic_to_string(file_name, input_code, diag));
             return ControlFlow::Continue(());
         }
 
-        if let Some(action) = event.action() {
-            check_code_action(input_file, input_code, source_type, &action);
-            code_fixes.push(code_fix_to_string(input_code, action));
+        if let Some(actions) = event.actions() {
+            for action in actions {
+                check_code_action(input_file, input_code, source_type, &action);
+                code_fixes.push(code_fix_to_string(input_code, action));
+            }
         }
 
         ControlFlow::<Never>::Continue(())
