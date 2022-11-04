@@ -112,16 +112,18 @@ fn get_text_and_radix_args(expr: &JsCallExpression) -> Option<TextAndRadix> {
         return None;
     }
     let mut args = args.into_iter();
-    let text = args.next()?.ok().and_then(get_text)?;
-    let radix = args.next()?.ok().and_then(get_number)?;
+    let text = args.next()?.ok()?;
+    let radix = args.next()?.ok()?;
+    let text_token = get_text(text.as_js_any_expression()?)?;
+    let radix = get_number(radix)?;
     Some(TextAndRadix {
-        text_token: text,
+        text_token,
         radix: Radix::from_f64(radix)?,
     })
 }
 
-fn get_text(arg: JsAnyCallArgument) -> Option<JsSyntaxToken> {
-    match arg.as_js_any_expression()? {
+fn get_text(expression: &JsAnyExpression) -> Option<JsSyntaxToken> {
+    match expression {
         JsAnyExpression::JsTemplate(t) => {
             if t.tag().is_some() {
                 return None;
@@ -152,24 +154,34 @@ fn get_number(arg: JsAnyCallArgument) -> Option<f64> {
     Some(arg)
 }
 
+fn is_ident(object: &JsAnyExpression, text: &str) -> Option<bool> {
+    let ident = object.as_js_identifier_expression()?;
+    let token = ident.name().ok()?.value_token().ok()?;
+    Some(token.text_trimmed() == text)
+}
+
 fn is_callee_parse_int_fn(expr: &JsCallExpression) -> Option<bool> {
     let callee = expr.callee().ok()?;
 
-    match callee {
-        JsAnyExpression::JsIdentifierExpression(ident) => {
-            Some(ident.name().ok()?.syntax().text_trimmed() == "parseInt")
+    let value = match &callee {
+        JsAnyExpression::JsIdentifierExpression(..) => is_ident(&callee, "parseInt")?,
+        JsAnyExpression::JsStaticMemberExpression(expr) => {
+            let object = expr.object().ok()?;
+            let member = expr.member().ok()?;
+            is_ident(&object, "Number")? && member.syntax().text_trimmed() == "parseInt"
         }
-        JsAnyExpression::JsStaticMemberExpression(expr) => Some(
-            expr.object()
-                .ok()?
-                .as_js_identifier_expression()?
-                .syntax()
-                .text_trimmed()
-                == "Number"
-                && expr.member().ok()?.syntax().text_trimmed() == "parseInt",
-        ),
-        _ => None,
-    }
+        JsAnyExpression::JsComputedMemberExpression(expr) => {
+            let object = expr.object().ok()?;
+            is_ident(&object, "Number")? && {
+                let member = expr.member().ok()?;
+                let text = get_text(&member)?;
+                let text = text.text_trimmed();
+                &text[1..text.len() - 1] == "parseInt"
+            }
+        }
+        _ => false,
+    };
+    Some(value)
 }
 
 enum Radix {
