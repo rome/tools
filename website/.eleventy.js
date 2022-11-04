@@ -124,7 +124,7 @@ module.exports = function (eleventyConfig) {
 	});
 
 	eleventyConfig.addFilter("linkattribs", function (url, extraClass) {
-    const data = this.context.environments;
+		const data = this.context.environments;
 		const classes = [];
 		if (typeof extraClass !== "string") {
 			classes.push(extraClass);

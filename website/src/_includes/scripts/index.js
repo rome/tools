@@ -265,8 +265,7 @@ class Manager {
 					linkTop = 0;
 				}
 				const visibleStart = tocSidebar.scrollTop;
-				const visibleEnd =
-					tocSidebar.scrollTop + tocSidebar.clientHeight;
+				const visibleEnd = tocSidebar.scrollTop + tocSidebar.clientHeight;
 				const isVisible = linkTop > visibleStart && linkTop < visibleEnd;
 				if (!isVisible) {
 					tocSidebar.scrollTop = linkTop;
@@ -497,7 +496,9 @@ if (colorSchemeSwitcher != null) {
 //# Mobile navigation
 
 const mobileSidebarHandle = document.querySelector(".mobile-handle");
-const mobileActiveTargets = document.querySelectorAll(".page-header, .page-header-mobile, .docs-sidebar");
+const mobileActiveTargets = document.querySelectorAll(
+	".page-header, .page-header-mobile, .docs-sidebar",
+);
 let isMobileNavVisible = false;
 function toggleMobileSidebar() {
 	isMobileNavVisible = !isMobileNavVisible;
@@ -590,23 +591,27 @@ if (heroScrollers.length > 0) {
 		const activeElem = heroScrollers[activeIndex];
 		activeElem.classList.remove("fadein");
 		activeElem.classList.add("fadeout");
-		activeElem.addEventListener("animationend", () => {
-			activeElem.setAttribute("hidden", "hidden");
+		activeElem.addEventListener(
+			"animationend",
+			() => {
+				activeElem.setAttribute("hidden", "hidden");
 
-			let nextActiveIndex = activeIndex + 1;
-			if (nextActiveIndex === heroScrollers.length) {
-				nextActiveIndex = 0;
-			}
+				let nextActiveIndex = activeIndex + 1;
+				if (nextActiveIndex === heroScrollers.length) {
+					nextActiveIndex = 0;
+				}
 
-			const nextActiveElem = heroScrollers[nextActiveIndex];
-			nextActiveElem.classList.add("fadein");
-			nextActiveElem.removeAttribute("hidden");
+				const nextActiveElem = heroScrollers[nextActiveIndex];
+				nextActiveElem.classList.add("fadein");
+				nextActiveElem.removeAttribute("hidden");
 
-			activeIndex = nextActiveIndex;
-			queue();
-		}, {once: true});
+				activeIndex = nextActiveIndex;
+				queue();
+			},
+			{ once: true },
+		);
 	}
-	
+
 	function queue() {
 		setTimeout(() => {
 			next();
@@ -617,24 +622,32 @@ if (heroScrollers.length > 0) {
 }
 
 //# Homepage component switcher
-const componentSwitcher = Array.from(document.querySelectorAll(".component-list li:not(.soon)"));
+const componentSwitcher = Array.from(
+	document.querySelectorAll(".component-list li:not(.soon)"),
+);
 let activeComponentButton = document.querySelector(".component-list li.active");
 for (const button of componentSwitcher) {
 	button.addEventListener("click", () => {
 		if (activeComponentButton != null) {
 			activeComponentButton.classList.remove("active");
-			const elems = Array.from(document.getElementsByClassName(activeComponentButton.getAttribute("data-class")));
+			const elems = Array.from(
+				document.getElementsByClassName(
+					activeComponentButton.getAttribute("data-class"),
+				),
+			);
 			for (const elem of elems) {
 				elem.setAttribute("hidden", "hidden");
 			}
 		}
 
 		button.classList.add("active");
-		const elems = Array.from(document.getElementsByClassName(button.getAttribute("data-class")));
+		const elems = Array.from(
+			document.getElementsByClassName(button.getAttribute("data-class")),
+		);
 		for (const elem of elems) {
 			elem.removeAttribute("hidden");
 		}
-		
+
 		activeComponentButton = button;
 	});
 }
