@@ -8,6 +8,9 @@ use std::sync::Arc;
 type RuleQueryResult<R> = <<R as Rule>::Query as Queryable>::Output;
 type RuleServiceBag<R> = <<R as Rule>::Query as Queryable>::Services;
 
+#[derive(Clone)]
+pub struct SericeBagRuleOptionsWrapper<R: Rule>(pub TypeId, pub R::Options);
+
 pub struct RuleContext<'a, R>
 where
     R: ?Sized + Rule,
@@ -82,9 +85,10 @@ where
     ///     }
     /// }
     /// ```
-    pub fn options(&self) -> Arc<R::Options> {
-        let rule_key = RuleKey::rule::<R>();
-        self.bag.get_service_by_id(&rule_key).unwrap()
+    pub fn options(&self) -> &R::Options {
+        let SericeBagRuleOptionsWrapper(_, options) = 
+            self.bag.get_service::<SericeBagRuleOptionsWrapper<R>>().unwrap();
+        options
     }
 }
 

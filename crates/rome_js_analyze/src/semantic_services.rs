@@ -21,10 +21,10 @@ impl FromServices for SemanticServices {
         rule_key: &RuleKey,
         services: &ServiceBag,
     ) -> Result<Self, MissingServicesDiagnostic> {
-        let model = services.get_service().ok_or_else(|| {
+        let model: &SemanticModel = services.get_service().ok_or_else(|| {
             MissingServicesDiagnostic::new(rule_key.rule_name(), &["SemanticModel"])
         })?;
-        Ok(Self { model })
+        Ok(Self { model: model.clone() })
     }
 }
 
@@ -47,7 +47,8 @@ impl Queryable for SemanticServices {
         match query {
             QueryMatch::SemanticModel(..) => services
                 .get_service::<SemanticModel>()
-                .expect("SemanticModel service is not registered"),
+                .expect("SemanticModel service is not registered")
+                .clone(),
             _ => panic!("tried to unwrap unsupported QueryMatch kind, expected SemanticModel"),
         }
     }

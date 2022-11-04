@@ -50,6 +50,7 @@ pub fn metadata() -> &'static MetadataRegistry {
     &METADATA
 }
 
+
 pub struct RulesConfigurator<'a> {
     options: &'a AnalyzerOptions,
     services: &'a mut ServiceBag,
@@ -84,8 +85,9 @@ impl<'a, L: rome_rowan::Language + Default> rome_analyze::RegistryVisitor<L>
             <R::Options as Default>::default()
         };
 
+        let id = std::any::TypeId::of::<R>();
         self.services
-            .insert_service_with_id(&rule_key, Arc::new(options));
+            .insert_service(SericeBagRuleOptionsWrapper::<R>(id, options));
     }
 }
 
