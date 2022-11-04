@@ -27,7 +27,7 @@ impl<L: Language, N: AstNode<Language = L>> FormatSeparatedElement<L, N> {
 
 impl<N> Format<JsFormatContext> for FormatSeparatedElement<JsLanguage, N>
 where
-    for<'a> N: AstNode<Language = JsLanguage> + AsFormat<'a>,
+    N: AstNode<Language = JsLanguage> + AsFormat,
 {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let node = self.element.node()?;

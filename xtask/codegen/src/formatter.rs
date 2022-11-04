@@ -454,10 +454,10 @@ impl BoilerplateImpls {
         self.impls.push(quote! {
             #format_rule_impl
 
-            impl<'a> AsFormat<'a> for rome_js_syntax::#node_id {
-                type Format = FormatRefWithRule<'a, rome_js_syntax::#node_id, #format_id>;
+            impl AsFormat for rome_js_syntax::#node_id {
+                type Format<'a> = FormatRefWithRule<'a, rome_js_syntax::#node_id, #format_id>;
 
-                fn format(&'a self) -> Self::Format {
+                fn format(&self) -> Self::Format<'_> {
                     FormatRefWithRule::new(self, #format_id::default())
                 }
             }
@@ -589,7 +589,7 @@ fn name_to_module(kind: &NodeKind, in_name: &str) -> NodeModuleInformation {
         .position({
             let mut uppercases = 0;
             move |c| {
-                uppercases += if c.is_uppercase() { 1 } else { 0 };
+                uppercases += i32::from(c.is_uppercase());
                 uppercases >= 2
             }
         })

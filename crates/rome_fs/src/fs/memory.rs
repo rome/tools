@@ -164,7 +164,7 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
                 let should_process_file = if base.starts_with(".") || base.starts_with("./") {
                     // we simulate absolute paths, so we can correctly strips out the base path from the path
                     let absolute_base = PathBuf::from("/").join(&base);
-                    let absolute_path = Path::new("/").join(&path);
+                    let absolute_path = Path::new("/").join(path);
                     absolute_path.strip_prefix(&absolute_base).is_ok()
                 } else {
                     path.strip_prefix(&base).is_ok()
@@ -172,7 +172,7 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
 
                 if should_process_file {
                     let file_id = ctx.interner().intern_path(path.into());
-                    let rome_path = RomePath::new(&path, file_id);
+                    let rome_path = RomePath::new(path, file_id);
                     if !ctx.can_handle(&rome_path) {
                         continue;
                     }

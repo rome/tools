@@ -143,11 +143,7 @@ impl Rule for NoFunctionAssign {
             let node = reference.node();
             diag = diag.detail(node.text_trimmed_range(), "Reassigned here.");
 
-            hoisted_quantity += if reference.is_using_hoisted_declaration() {
-                1
-            } else {
-                0
-            };
+            hoisted_quantity += i32::from(reference.is_using_hoisted_declaration());
         }
 
         let diag = if hoisted_quantity > 0 {

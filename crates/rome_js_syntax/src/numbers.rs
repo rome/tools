@@ -16,7 +16,7 @@ pub fn parse_js_number(num: &str) -> Option<f64> {
     let (mut radix, raw) = split_into_radix_and_number(num);
 
     // account for legacy octal literals
-    if raw.starts_with('0') && !raw.contains(&['8', '9']) {
+    if raw.starts_with('0') && !raw.contains(['8', '9']) {
         radix = 8
     }
 
