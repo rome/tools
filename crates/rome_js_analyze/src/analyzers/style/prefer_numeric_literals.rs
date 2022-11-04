@@ -186,6 +186,7 @@ fn is_callee_parse_int_fn(expr: &JsCallExpression) -> Option<bool> {
     Some(value)
 }
 
+#[derive(Copy, Clone)]
 enum Radix {
     Binary = 2,
     Octal = 8,
