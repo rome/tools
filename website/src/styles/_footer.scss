@@ -52,6 +52,10 @@ footer {
 	display: flex;
 	border: none;
 
+	@include dark-mode {
+		box-shadow: 0 0 0 1px white;
+	}
+
 	svg {
 		pointer-events: none;
 		user-select: none;

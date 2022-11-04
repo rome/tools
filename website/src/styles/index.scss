@@ -41,9 +41,9 @@
 }
 
 @include dark-mode {
-	--logo-font-color: #{lighten(#27272A, 72%)};
-	--background-color: #{lighten(#27272A, 2%)};
-	--container-color: #{$gray-4};
+	--logo-font-color: #{lighten(#27272A, 80%)};
+	--background-color: #{$gray-2};
+	--container-color: #{darken(#27272A, 5%)};
 	--font-color: #{lighten(#27272A, 65%)};
 	--sub-text-color: #{lighten(#27272A, 55%)};
 	--top-border-color: #{$color-4};

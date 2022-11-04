@@ -1,3 +1,6 @@
+@import "_variables";
+@import "_mixins";
+
 /**
 * prism.js default theme for JavaScript, CSS and HTML
 * Based on dabblet (http://dabblet.com)
@@ -45,6 +48,10 @@ pre[class*="language-"] {
 
 :not(pre) > code[class*="language-"], pre[class*="language-"] {
 	background: #282c34;
+
+	@include dark-mode {
+		background: darken(#282c34, 5%);
+	}
 }
 
 /* Inline code */

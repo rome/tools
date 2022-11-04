@@ -25,17 +25,13 @@
 .docs-header {
 	@include transition-timing;
 	transition-property: box-shadow;
-
 	background-color: var(--container-color);
-
 	position: sticky;
 	top: 0;
 	left: 0;
 	right: 0;
-	background-color: var(--background-color);
 	border-bottom: 1px solid var(--hard-border-color);
 	z-index: 2;
-
 	height: 80px;
 	line-height: 80px;
 	padding: 0 16px;
@@ -157,11 +153,11 @@
 
 		@include dark-mode {
 			&.active {
-				background-color: rgba(0, 0, 0, 0.2);
+				background-color: rgba(255, 255, 255, 0.1);
 			}
 
 			&:hover {
-				background-color: rgba(0, 0, 0, 0.1);
+				background-color: rgba(255, 255, 255, 0.05);
 			}
 		}
 	}
