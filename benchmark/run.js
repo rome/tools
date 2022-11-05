@@ -63,7 +63,7 @@ function benchmarkFormatter(rome) {
 			})
 			.join(" ");
 
-		const prettierCommand = `\"${resolvePrettier()}\" ${prettierPaths} --write`;
+		const prettierCommand = `node '${resolvePrettier()}' ${prettierPaths} --write`;
 
 		const romeCommand = `${rome} format ${Object.keys(
 			configuration.sourceDirectories,
@@ -89,13 +89,7 @@ function benchmarkFormatter(rome) {
 }
 
 function resolvePrettier() {
-	switch (process.platform) {
-		case "win32":
-			// Use the powershell binary or Prettier spawns a new cmd
-			return path.resolve("./node_modules/.bin/prettier.ps1");
-		default:
-			return path.resolve("./node_modules/.bin/prettier");
-	}
+	return path.resolve("node_modules/prettier//bin-prettier.js");
 }
 
 function benchmarkLinter(rome) {
@@ -108,12 +102,16 @@ function benchmarkLinter(rome) {
 		console.log(`[${name}]`);
 
 		let projectDirectory = cloneProject(name, configuration.repository);
+		let eslintIgnore = path.join(projectDirectory, ".eslintignore");
 
+		if (fs.existsSync(eslintIgnore)) {
+			fs.rmSync(eslintIgnore);
+		}
+
+		// Override eslint config
 		const eslintConfig = fs.readFileSync("./bench.eslint.js");
-		fs.writeFileSync(
-			path.join(projectDirectory, "bench.eslintrc.js"),
-			eslintConfig,
-		);
+		fs.writeFileSync(path.join(projectDirectory, ".eslintrc.js"), eslintConfig);
+
 		const romeConfig = fs.readFileSync("./bench.rome.json");
 		fs.writeFileSync(path.join(projectDirectory, "rome.json"), romeConfig);
 
@@ -121,7 +119,7 @@ function benchmarkLinter(rome) {
 			.map((directory) => `'${directory}/**'`)
 			.join(" ");
 
-		const eslintCommand = `${resolveESlint()} --no-ignore -c bench.eslintrc.js ${eslintPaths}`;
+		const eslintCommand = `node '${resolveESlint()}' --no-ignore ${eslintPaths}`;
 
 		const romePaths = configuration.sourceDirectories
 			.map((directory) => `'${directory}'`)
@@ -147,7 +145,7 @@ function benchmarkLinter(rome) {
 }
 
 function resolveESlint() {
-	return path.resolve("./node_modules/.bin/eslint");
+	return path.resolve("node_modules/eslint/bin/eslint.js");
 }
 
 function shellOption() {
