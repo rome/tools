@@ -8,7 +8,7 @@ const TMP_DIRECTORY = path.resolve("./target");
 function buildRome() {
 	console.log("Build Rome...");
 
-	child_process.execSync("cargo build --bin rome --release");
+	child_process.execSync("cargo build --bin rome --release", { stdio: "inherit" });
 
 	return path.resolve("../target/release/rome");
 }
@@ -79,7 +79,7 @@ function benchmarkFormatter(rome) {
 
 		const romeSingleCoreCommand = withEnvVariable(
 			"RAYON_NUM_THREADS",
-			"1",
+			"3",
 			romeCommand,
 		);
 
@@ -107,12 +107,10 @@ function benchmarkLinter(rome) {
 	for (const [name, configuration] of Object.entries(BENCHMARKS.linter)) {
 		console.log(`[${name}]`);
 
-		let projectDirectory = cloneProject(name, configuration.repository);
-		let eslintIgnore = path.join(projectDirectory, ".eslintignore");
+		const projectDirectory = cloneProject(name, configuration.repository);
 
-		if (fs.existsSync(eslintIgnore)) {
-			fs.rmSync(eslintIgnore);
-		}
+		deleteFile(path.join(projectDirectory, ".eslintignore"));
+		deleteFile(path.join(projectDirectory, "eslint.config.js"));
 
 		// Override eslint config
 		const eslintConfig = fs.readFileSync("./bench.eslint.js");
@@ -131,11 +129,12 @@ function benchmarkLinter(rome) {
 			.map((directory) => `'${directory}'`)
 			.join(" ");
 
-		const romeCommand = `${rome} check ${romePaths}`;
+		// Don't compute the code frames for pulled diagnostics. ESLint doesn't do so as well.
+		const romeCommand = `${rome} check --max-diagnostics=0 ${romePaths}`;
 
 		const romeSingleCoreCommand = withEnvVariable(
 			"RAYON_NUM_THREADS",
-			"1",
+			"3",
 			romeCommand,
 		);
 
@@ -183,6 +182,12 @@ function withDirectory(cwd) {
 			});
 		},
 	};
+}
+
+function deleteFile(path) {
+	if (fs.existsSync(path)) {
+		fs.rmSync(path);
+	}
 }
 
 function cloneProject(name, repository) {
