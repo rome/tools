@@ -21,7 +21,7 @@ fn main() -> Result<(), Termination> {
     setup_panic_handler();
     set_bottom_frame(main as usize);
 
-    let mut args = Arguments::from_env();
+    let mut args = Arguments::from_vec(vec!["check".into(), "/Users/gurwindersi/x/a.js".into()]);
 
     // If the `--use-server` CLI flag is set, try to open a connection to an
     // existing Rome server socket

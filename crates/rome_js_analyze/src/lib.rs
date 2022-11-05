@@ -14,6 +14,7 @@ use std::{borrow::Cow, error::Error};
 
 mod analyzers;
 mod assists;
+mod ast_utils;
 mod control_flow;
 pub mod globals;
 mod react;

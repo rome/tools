@@ -1,15 +1,13 @@
 use std::iter;
 
-use crate::JsRuleAction;
+use crate::{ast_utils, JsRuleAction};
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{
-    JsAnyCallArgument, JsAnyExpression, JsAnyLiteralExpression, JsCallExpression, TriviaPieceKind,
-};
-use rome_rowan::{AstNode, AstNodeList, AstSeparatedList, BatchMutationExt};
+use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsCallExpression, TriviaPieceKind};
+use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
 
 declare_rule! {
     /// Disallow `parseInt()` and `Number.parseInt()` in favor of binary, octal, and hexadecimal literals
@@ -88,8 +86,6 @@ impl Rule for UseNumericLiterals {
         let mut suggested = make::js_number_literal(&suggested);
         suggested = suggested.with_trailing_trivia(iter::once((TriviaPieceKind::Whitespace, " ")));
 
-        println!("'{suggested}'");
-
         mutation.replace_node(
             JsAnyExpression::JsCallExpression(node.clone()),
             JsAnyExpression::JsAnyLiteralExpression(
@@ -110,7 +106,6 @@ impl Rule for UseNumericLiterals {
 
 impl CallInfo {
     fn try_from_node(expr: &JsCallExpression) -> Option<CallInfo> {
-        let callee = get_callee(expr)?;
         let args = expr.arguments().ok()?.args();
         if args.len() != 2 {
             return None;
@@ -118,84 +113,24 @@ impl CallInfo {
         let mut args = args.into_iter();
         let text = args.next()?.ok()?;
         let radix = args.next()?.ok()?;
-        let text_token = get_text(text.as_js_any_expression()?)?;
-        let radix = get_number(radix)?;
+        let callee = get_callee(expr)?;
+        let text = ast_utils::as_static_text(&text)?;
+        let radix = ast_utils::as_number(&radix)?;
         Some(CallInfo {
             callee,
-            text: text_token,
+            text,
             radix: Radix::from_f64(radix)?,
         })
     }
 }
 
-fn get_text(expression: &JsAnyExpression) -> Option<String> {
-    match expression {
-        JsAnyExpression::JsTemplate(t) => {
-            if t.tag().is_some() {
-                return None;
-            }
-
-            let elements = t.elements();
-            if elements.len() != 1 {
-                return None;
-            }
-
-            let elem = elements.into_iter().next()?;
-            let chunk = elem.as_js_template_chunk_element()?;
-            chunk
-                .template_chunk_token()
-                .ok()
-                .map(|t| t.text_trimmed().to_owned())
-        }
-        JsAnyExpression::JsAnyLiteralExpression(
-            JsAnyLiteralExpression::JsStringLiteralExpression(s),
-        ) => s.value_token().ok().map(|it| {
-            let text = it.text_trimmed();
-            text[1..text.len() - 1].to_owned()
-        }),
-        _ => None,
-    }
-}
-
-fn get_number(arg: JsAnyCallArgument) -> Option<f64> {
-    let arg = arg
-        .as_js_any_expression()?
-        .as_js_any_literal_expression()?
-        .as_js_number_literal_expression()?
-        .as_number()?;
-    Some(arg)
-}
-
-fn is_ident(object: &JsAnyExpression, text: &str) -> Option<bool> {
-    let ident = object.as_js_identifier_expression()?;
-    let token = ident.name().ok()?.value_token().ok()?;
-    Some(token.text_trimmed() == text)
-}
-
 fn get_callee(expr: &JsCallExpression) -> Option<&'static str> {
     let callee = expr.callee().ok()?;
-
-    match &callee {
-        JsAnyExpression::JsIdentifierExpression(..) => {
-            if is_ident(&callee, "parseInt")? {
-                return Some("parseInt()");
-            }
-        }
-        JsAnyExpression::JsStaticMemberExpression(expr) => {
-            let object = expr.object().ok()?;
-            let member = expr.member().ok()?;
-            if is_ident(&object, "Number")? && member.syntax().text_trimmed() == "parseInt" {
-                return Some("Number.parseInt()");
-            }
-        }
-        JsAnyExpression::JsComputedMemberExpression(expr) => {
-            let object = expr.object().ok()?;
-            let member = expr.member().ok()?;
-            if is_ident(&object, "Number")? && get_text(&member)? == "parseInt" {
-                return Some("Number.parseInt()");
-            }
-        }
-        _ => (),
+    if ast_utils::is_specific_id(&callee, "parseInt") {
+        return Some("parseInt()");
+    }
+    if ast_utils::is_specific_member_access(&callee, "Number", "parseInt") {
+        return Some("Number.parseInt()");
     }
     None
 }
