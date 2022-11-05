@@ -135,9 +135,9 @@ fn attach_trivia(number: String, source: &JsCallExpression) -> JsSyntaxToken {
     let mut leading_trivia = vec![];
     let mut trailing_trivia = vec![];
 
-    get_leading_trivia(&mut leading_trivia, &mut text, &node);
+    get_leading_trivia(&mut leading_trivia, &mut text, node);
     text.push_str(&number);
-    get_trailing_trivia(&mut trailing_trivia, &mut text, &node);
+    get_trailing_trivia(&mut trailing_trivia, &mut text, node);
 
     JsSyntaxToken::new_detached(
         JsSyntaxKind::JS_NUMBER_LITERAL,
@@ -157,7 +157,7 @@ fn get_leading_trivia(trivia: &mut Vec<TriviaPiece>, text: &mut String, node: &J
         return;
     }
     let Some(token) = token.prev_token() else { return };
-    if !token.kind().is_punct() && token.trailing_trivia().text().len() == 0 {
+    if !token.kind().is_punct() && token.trailing_trivia().text().is_empty() {
         text.push(' ');
         trivia.push(TriviaPiece::new(TriviaPieceKind::Whitespace, 1));
     }
@@ -173,7 +173,7 @@ fn get_trailing_trivia(trivia: &mut Vec<TriviaPiece>, text: &mut String, node: &
         return;
     }
     let Some(token) = token.next_token() else { return };
-    if !token.kind().is_punct() && token.leading_trivia().text().len() == 0 {
+    if !token.kind().is_punct() && token.leading_trivia().text().is_empty() {
         text.push(' ');
         trivia.push(TriviaPiece::new(TriviaPieceKind::Whitespace, 1));
     }
