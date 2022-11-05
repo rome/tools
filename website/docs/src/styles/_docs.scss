@@ -15,6 +15,14 @@ footer {
 	margin-top: 0;
 }
 
+.logo svg {
+	height: 30px;
+
+	.cls-1 {
+		fill: var(--logo-font-color);
+	}
+}
+
 .docs-main {
 	display: flex;
 	flex-direction: row;
