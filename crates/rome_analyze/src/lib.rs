@@ -45,8 +45,8 @@ use rome_diagnostics::v2::{
     category, Advices, Category, Diagnostic, DiagnosticTags, Error, Location, Severity, Visit,
 };
 use rome_rowan::{
-    AstNode, Direction, Language, SyntaxElement, SyntaxToken, TextRange, TextSize, TriviaPieceKind,
-    WalkEvent,
+    AstNode, Direction, Language, SyntaxElement, SyntaxNode, SyntaxToken, TextRange, TextSize,
+    TriviaPieceKind, WalkEvent,
 };
 
 /// The analyzer is the main entry point into the `rome_analyze` infrastructure.
@@ -119,6 +119,7 @@ where
 
         let mut line_index = 0;
         let mut line_suppressions = Vec::new();
+        let mut events = Vec::new();
 
         for (index, (phase, mut visitors)) in phases.into_iter().enumerate() {
             let runner = PhaseRunner {
@@ -142,9 +143,9 @@ where
             // suppression comments, then subsequent phases only needs to read
             // this data again since it's already cached in `line_suppressions`
             let result = if index == 0 {
-                runner.run_first_phase()
+                runner.run_first_phase(&mut events)
             } else {
-                runner.run_remaining_phases()
+                runner.run_remaining_phases(&events)
             };
 
             if let ControlFlow::Break(br) = result {
@@ -220,7 +221,7 @@ where
 {
     /// Runs phase 0 over nodes and tokens to process line breaks and
     /// suppression comments
-    fn run_first_phase(mut self) -> ControlFlow<Break> {
+    fn run_first_phase(mut self, nodes: &mut Vec<WalkEvent<SyntaxNode<L>>>) -> ControlFlow<Break> {
         let iter = self.root.syntax().preorder_with_tokens(Direction::Next);
         for event in iter {
             let node_event = match event {
@@ -253,6 +254,8 @@ where
 
                 visitor.visit(&node_event, ctx);
             }
+
+            nodes.push(node_event);
         }
 
         // Flush all remaining pending events
@@ -261,8 +264,8 @@ where
 
     /// Runs phases 1..N over nodes, since suppression comments were already
     /// processed and cached in `run_initial_phase`
-    fn run_remaining_phases(mut self) -> ControlFlow<Break> {
-        for event in self.root.syntax().preorder() {
+    fn run_remaining_phases(mut self, nodes: &[WalkEvent<SyntaxNode<L>>]) -> ControlFlow<Break> {
+        for event in nodes {
             // Run all the active visitors for the phace on the event
             for visitor in self.visitors.iter_mut() {
                 let ctx = VisitorContext {
@@ -276,7 +279,7 @@ where
                     options: self.options,
                 };
 
-                visitor.visit(&event, ctx);
+                visitor.visit(event, ctx);
             }
 
             // Flush all pending query signals
