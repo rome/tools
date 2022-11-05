@@ -8,7 +8,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt, SyntaxNodeCast};
 
-use crate::JsRuleAction;
+use crate::{ast_utils, JsRuleAction};
 
 pub enum ExtraBooleanCastType {
     /// !!x
@@ -108,11 +108,7 @@ fn is_boolean_constructor_call(node: &JsSyntaxNode) -> Option<bool> {
         .parent::<JsNewExpression>()?
         .callee()
         .ok()?;
-    if let JsAnyExpression::JsIdentifierExpression(ident) = callee {
-        Some(ident.name().ok()?.syntax().text_trimmed() == "Boolean")
-    } else {
-        None
-    }
+    Some(ast_utils::is_specific_id(&callee, "Boolean"))
 }
 
 /// Check if the SyntaxNode is a `Boolean` Call Expression
@@ -122,11 +118,7 @@ fn is_boolean_constructor_call(node: &JsSyntaxNode) -> Option<bool> {
 /// ```
 fn is_boolean_call(node: &JsSyntaxNode) -> Option<bool> {
     let callee = JsCallExpression::cast(node.clone())?.callee().ok()?;
-    if let JsAnyExpression::JsIdentifierExpression(ident) = callee {
-        Some(ident.name().ok()?.syntax().text_trimmed() == "Boolean")
-    } else {
-        None
-    }
+    Some(ast_utils::is_specific_id(&callee, "Boolean"))
 }
 
 /// Check if the SyntaxNode is a Negate Unary Expression
@@ -170,20 +162,18 @@ impl Rule for NoExtraBooleanCast {
             // Only if `Boolean` Call Expression have one `JsAnyExpression` argument
             if let Some(expr) = JsCallExpression::cast(syntax.clone()) {
                 let callee = expr.callee().ok()?;
-                if let JsAnyExpression::JsIdentifierExpression(ident) = callee {
-                    if ident.name().ok()?.syntax().text_trimmed() == "Boolean" {
-                        let arguments = expr.arguments().ok()?;
-                        let len = arguments.args().len();
-                        if len == 1 {
-                            return arguments
-                                .args()
-                                .into_iter()
-                                .next()?
-                                .ok()
-                                .map(|item| item.into_syntax())
-                                .and_then(JsAnyExpression::cast)
-                                .map(|expr| (expr, ExtraBooleanCastType::BooleanCall));
-                        }
+                if ast_utils::is_specific_id(&callee, "Boolean") {
+                    let arguments = expr.arguments().ok()?;
+                    let len = arguments.args().len();
+                    if len == 1 {
+                        return arguments
+                            .args()
+                            .into_iter()
+                            .next()?
+                            .ok()
+                            .map(|item| item.into_syntax())
+                            .and_then(JsAnyExpression::cast)
+                            .map(|expr| (expr, ExtraBooleanCastType::BooleanCall));
                     }
                 }
                 return None;
@@ -193,20 +183,18 @@ impl Rule for NoExtraBooleanCast {
             // Only if `Boolean` Call Expression have one `JsAnyExpression` argument
             return JsNewExpression::cast(syntax).and_then(|expr| {
                 let callee = expr.callee().ok()?;
-                if let JsAnyExpression::JsIdentifierExpression(ident) = callee {
-                    if ident.name().ok()?.syntax().text_trimmed() == "Boolean" {
-                        let arguments = expr.arguments()?;
-                        let len = arguments.args().len();
-                        if len == 1 {
-                            return arguments
-                                .args()
-                                .into_iter()
-                                .next()?
-                                .ok()
-                                .map(|item| item.into_syntax())
-                                .and_then(JsAnyExpression::cast)
-                                .map(|expr| (expr, ExtraBooleanCastType::BooleanCall));
-                        }
+                if ast_utils::is_specific_id(&callee, "Boolean") {
+                    let arguments = expr.arguments()?;
+                    let len = arguments.args().len();
+                    if len == 1 {
+                        return arguments
+                            .args()
+                            .into_iter()
+                            .next()?
+                            .ok()
+                            .map(|item| item.into_syntax())
+                            .and_then(JsAnyExpression::cast)
+                            .map(|expr| (expr, ExtraBooleanCastType::BooleanCall));
                     }
                 }
                 None

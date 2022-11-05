@@ -1,3 +1,4 @@
+use crate::ast_utils;
 use crate::react::{is_react_call_api, ReactApiCall, ReactCloneElementCall};
 use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
@@ -6,9 +7,9 @@ use rome_console::markup;
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
     JsArrowFunctionExpression, JsCallExpression, JsExpressionStatement, JsFunctionDeclaration,
-    JsFunctionExpression, JsIdentifierBinding, JsIdentifierExpression, JsMethodClassMember,
-    JsMethodObjectMember, JsParameterList, JsPropertyObjectMember, JsReferenceIdentifier,
-    JsxAttribute, JsxOpeningElement, JsxSelfClosingElement,
+    JsFunctionExpression, JsIdentifierBinding, JsMethodClassMember, JsMethodObjectMember,
+    JsParameterList, JsPropertyObjectMember, JsReferenceIdentifier, JsxAttribute,
+    JsxOpeningElement, JsxSelfClosingElement,
 };
 use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
 
@@ -328,16 +329,13 @@ fn find_react_children_function_argument(
 
     let object = member_expression.object().ok()?;
 
-    let mut is_react_children = false;
-    // case we have `Children`
-    if let Some(identifier) = JsIdentifierExpression::cast_ref(object.syntax()) {
-        if identifier.name().ok()?.value_token().ok()?.text_trimmed() == "Children" {
-            is_react_children = array_call;
-        }
+    let is_react_children = if ast_utils::is_specific_id(&object, "Children") {
+        // case we have `Children`
+        array_call
     } else {
         // case we have `React.Children`
-        is_react_children = is_react_call_api(&object, model, "Children")? && array_call;
-    }
+        is_react_call_api(&object, model, "Children")? && array_call
+    };
 
     if is_react_children {
         let arguments = call_expression.arguments().ok()?;
