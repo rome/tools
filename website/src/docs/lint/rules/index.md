@@ -1,7 +1,6 @@
 ---
 title: Lint Rules
 layout: layouts/docs.liquid
-layout-type: split
 main-class: rules
 ---
 

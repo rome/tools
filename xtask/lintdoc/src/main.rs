@@ -44,7 +44,6 @@ fn main() -> Result<()> {
     writeln!(index, "---")?;
     writeln!(index, "title: Lint Rules")?;
     writeln!(index, "layout: layouts/docs.liquid")?;
-    writeln!(index, "layout-type: split")?;
     writeln!(index, "main-class: rules")?;
     writeln!(index, "---")?;
     writeln!(index)?;

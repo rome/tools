@@ -18,7 +18,7 @@ This is the beginning of an entire suite of tools. Rome is not only linter, but 
 
 <!-- DESCRIPTION_END -->
 
-Rome is a [monolithic](https://en.wikipedia.org/wiki/Monolithic_application) tool containing functionality that has traditionally been separate tools in the frontend ecosystem. We call this a toolchain. It is **not** a collection of existing tools, but completely custom, built [largely](/credits) from scratch, contained entirely in a single package and codebase.
+Rome is a [monolithic](https://en.wikipedia.org/wiki/Monolithic_application) tool containing functionality that has traditionally been separate tools in the frontend ecosystem. We call this a toolchain. It is **not** a collection of existing tools, but completely custom, built [largely](/docs/credits) from scratch, contained entirely in a single package and codebase.
 
 Rome is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
 
@@ -32,7 +32,7 @@ Even though this is a beta, we have support for over 100 lint rules, including t
 
 Most of our rules have been inspired by their ESLint equivalents. This required a complete rewrite to utilize Rome's API that differ extensively from existing tools. Without the amazing work of the ESLint team and community establishing these recommended patterns, we would not have been able to pull this off. Refer to the [lint rule docs](/docs/lint/rules) for direct references.
 
-Since open sourcing, at the beginning of the year, we have received contributions from over [70 contributors](https://github.com/rome/tools/graphs/contributors) and [600 pull requests](https://github.com/rome/tools/pulls?q=is%3Apr+is%3Amerged). We have an established [team](/credits#team), and a [code of conduct](https://github.com/rome/tools/blob/main/CODE_OF_CONDUCT.md) enforcement policy. This ensures transparency around project decisions, moderation, and direction.
+Since open sourcing, at the beginning of the year, we have received contributions from over [70 contributors](https://github.com/rome/tools/graphs/contributors) and [600 pull requests](https://github.com/rome/tools/pulls?q=is%3Apr+is%3Amerged). We have an established [team](/about#team), and a [code of conduct](https://github.com/rome/tools/blob/main/CODE_OF_CONDUCT.md) enforcement policy. This ensures transparency around project decisions, moderation, and direction.
 
 You can read more about Rome, including how to get started, in our [documentation](/). If you would like to get involved, check out our [contributing instructions](https://github.com/rome/tools/blob/main/CONTRIBUTING.md). If you are interested in reading more about the history and rationale for the project, you can continue reading below.
 

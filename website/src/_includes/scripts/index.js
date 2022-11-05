@@ -454,11 +454,11 @@ function randomShuffle(array) {
 	return array;
 }
 
-const teamLists = document.querySelectorAll(".team-list");
-for (const teamList of teamLists) {
-	const items = teamList.querySelectorAll("li");
+const creditsPeopleLists = document.querySelectorAll(".credits-people-list");
+for (const list of creditsPeopleLists) {
+	const items = list.querySelectorAll("li");
 	for (const li of randomShuffle(Array.from(items))) {
-		teamList.appendChild(li);
+		list.appendChild(li);
 	}
 }
 

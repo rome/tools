@@ -4,7 +4,7 @@ Use the command `cargo contributors` -->
 
 ### Code contributors
 
-<ul class="team-list credits">
+<ul class="credits-people-list contributors">
 <li><a href="https://github.com/rome/tools/commits?author=anonrig"><img src="https://avatars.githubusercontent.com/u/1935246?v=4
 " alt="anonrig" />
 <span>anonrig</span>

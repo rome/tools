@@ -8,17 +8,18 @@
 @import "_content";
 @import "_homepage";
 @import "_footer";
-@import "_team";
+@import "_credits";
 @import "_blog";
 @import "_buttons";
 @import "_docs";
 @import "_page";
+@import "_about";
 
 :root {
 	--primary-color: #{$color-4};
 	--logo-font-color: #{$gray-4};
 	--background-color: #fff;
-	--container-color: #fff;
+	--container-color: #f2f2f2;
 	--font-color: #{$gray-4};
 	--sub-text-color: #{$gray-5};
 	--top-border-color: #{$gray-4};

@@ -13,7 +13,7 @@ permalink: /blog/2022/04/05/rome-formatter-release.html
 layout: layouts/blog.liquid
 cover-image: formatter-cover.webp
 cover-image-alt-text: Scattered Lego bricks in front of a partially assembled cube of Legos. A light beige background frames the cube with the rest of the background in black. Illustration by Toma Vagner at https://tomavagner.com.
-cover-image-caption: Illustration by <a href="https://tomavagner.com">Toma Vagner</a>
+cover-image-caption: Illustration by <a href="https://tomavagner.com" target="_blank">Toma Vagner</a>
 social-image: social-logo-formatter.png
 ---
 

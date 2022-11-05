@@ -89,18 +89,24 @@
 
 	.founder-clout {
 		line-height: 30px;
+		margin-top: 20px;
+		margin-bottom: 40px;
 
 		svg {
 			vertical-align: middle;
-			margin: 0 4px;
 		}
 
 		.yarn svg {
 			height: 26px;
+			margin: 0 4px;
 		}
 	
 		.babel svg {
 			height: 30px;
+		}
+
+		.meet-our-team {
+			opacity: 0.6;
 		}
 	}
 
@@ -260,8 +266,8 @@
 
 	.supercharge .heading-tagline {
 		margin: 0 auto;
-		margin-bottom: 50px;
-		max-width: 550px;
+		margin-bottom: 30px;
+		max-width: 600px;
 	}
 
 	.try-rome {

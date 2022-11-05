@@ -4,6 +4,9 @@ social-image: social-logo.png
 body-class: docs-body
 ---
 
+{% capture toccontent %}{{ content | toc | safe }}{% endcapture %}
+{% assign sidebar-enabled = toccontent != "" %}
+
 <div class="docs-header">
   <a class="logo" href="/">
     {% include svg/rome-logo.svg %}
@@ -48,6 +51,7 @@ body-class: docs-body
     <ul>
       <li><a {{ "/docs/internals/architecture/" | linkattribs }}>Architecture</a></li>
       <li><a {{ "/docs/internals/philosophy/" | linkattribs }}>Philosophy</a></li>
+      <li><a {{ "/docs/credits/" | linkattribs }}>Credits</a></li>
     </ul>
   </aside>
 
@@ -55,8 +59,7 @@ body-class: docs-body
     {{ content | safe }}
   </main>
 
-  {% capture toccontent %}{{ content | toc | safe }}{% endcapture %}
-  {% if toccontent != "" %}
+  {% if sidebar-enabled %}
     <nav class="toc-sidebar sidebar">
       <h2>On this page</h2>
 

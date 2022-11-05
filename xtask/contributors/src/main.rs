@@ -21,7 +21,7 @@ fn main() -> Result<()> {
     content.push('\n');
     content.push_str("### Code contributors");
     content.push('\n');
-    content.push_str("<ul class=\"team-list credits\">");
+    content.push_str("<ul class=\"team-list contributors\">");
     for contributor in contributors {
         let mut contributor_html = String::new();
         let escaped_login = html_escape::encode_text(&contributor.login);

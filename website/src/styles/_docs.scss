@@ -38,6 +38,10 @@
 	display: flex;
 	align-items: center;
 
+	.DocSearch:not(:hover) {
+		box-shadow: inset 0 0 0 2px var(--hard-border-color);
+	}
+
 	@include desktop-only {
 		box-shadow: inset 0 5px var(--top-border-color);
 		padding-right: 40px;
@@ -222,11 +226,19 @@
 	}
 }
 
+.docs-index .content {
+	max-width: 980px;
+}
+
+.docs-index-section {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
 .docs-index-button {
 	@include button;
-	margin-right: 20px;
-	margin-bottom: 20px;
-	display: inline-block;
 	text-decoration: none;
 	padding: 20px;
   border-radius: 12px;
@@ -244,7 +256,7 @@
 		bottom: 0;
 		font-size: 32px;
 		opacity: 0.3;
-		z-index: -1;
+		z-index: 1;
 	}
 
 	.heading {

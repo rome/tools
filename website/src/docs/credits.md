@@ -1,56 +1,13 @@
 ---
 title: Credits
-layout-type: split
 layout: layouts/page.liquid
 ---
 
 # Credits
 
-## Staff
+## Team Alumni
 
-<ul class="team-list">
-	<li>
-		<a href="https://github.com/xunilrj">
-			<img src="https://github.com/xunilrj.png?s=176">
-			<span>Daniel Frederico Lins Leite</span>
-		</a>
-	</li>
-	<li>
-		<a href="https://github.com/ematipico">
-			<img src="https://github.com/ematipico.png?s=176">
-			<span>Emanuele Stoppa</span>
-		</a>
-	</li>
-	<li>
-		<a href="https://github.com/leops">
-			<img src="https://github.com/leops.png?s=176">
-			<span>Léo-Paul Couturier</span>
-		</a>
-	</li>
-	<li>
-		<a href="https://github.com/MichaReiser">
-			<img src="https://github.com/MichaReiser.png?s=176">
-			<span>Micha Reiser</span>
-		</a>
-	</li>
-	<li>
-		<a href="https://github.com/sebmck">
-			<img src="https://github.com/sebmck.png?s=176">
-			<span>Sebastian McKenzie</span>
-		</a>
-	</li>
-	<li>
-		<a href="https://github.com/yassere">
-			<img src="https://github.com/yassere.png?s=176">
-			<span>Yasser Elassal</span>
-		</a>
-	</li>
-</ul>
-
-
-## Alumni
-
-<ul class="team-list">
+<ul class="credits-people-list">
 	<li>
 		<a href="https://github.com/EduardoLopes">
 			<img src="https://github.com/EduardoLopes.png?s=176">
