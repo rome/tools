@@ -206,17 +206,28 @@ impl WorkspaceServer {
     /// If the file path matches, than `true` is returned and it should be considered ignored.
     fn is_file_ignored(&self, rome_path: &RomePath, feature: &FeatureName) -> bool {
         let settings = self.settings();
+        let is_ignored_by_file_config = settings
+            .as_ref()
+            .files
+            .ignored_files
+            .matches_path(rome_path.as_path());
         match feature {
-            FeatureName::Format => settings
-                .as_ref()
-                .formatter
-                .ignored_files
-                .matches_path(rome_path.as_path()),
-            FeatureName::Lint => settings
-                .as_ref()
-                .linter
-                .ignored_files
-                .matches_path(rome_path.as_path()),
+            FeatureName::Format => {
+                settings
+                    .as_ref()
+                    .formatter
+                    .ignored_files
+                    .matches_path(rome_path.as_path())
+                    || is_ignored_by_file_config
+            }
+            FeatureName::Lint => {
+                settings
+                    .as_ref()
+                    .linter
+                    .ignored_files
+                    .matches_path(rome_path.as_path())
+                    || is_ignored_by_file_config
+            }
         }
     }
 }

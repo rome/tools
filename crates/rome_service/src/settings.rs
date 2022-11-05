@@ -1,5 +1,6 @@
 use crate::{
-    configuration::FilesConfiguration, Configuration, MatchOptions, Matcher, RomeError, Rules,
+    configuration::FilesConfiguration, Configuration, ConfigurationError, MatchOptions, Matcher,
+    RomeError, Rules,
 };
 use indexmap::IndexSet;
 use rome_diagnostics::v2::Category;
@@ -190,6 +191,9 @@ pub struct LanguageSettings<L: Language> {
 pub struct FilesSettings {
     /// File size limit in bytes
     pub max_size: NonZeroU64,
+
+    /// List of paths/files to matcher
+    pub ignored_files: Matcher,
 }
 
 /// Limit the size of files to 1.0 MiB by default
@@ -201,6 +205,11 @@ impl Default for FilesSettings {
     fn default() -> Self {
         Self {
             max_size: DEFAULT_FILE_SIZE_LIMIT,
+            ignored_files: Matcher::new(MatchOptions {
+                case_sensitive: true,
+                require_literal_leading_dot: false,
+                require_literal_separator: false,
+            }),
         }
     }
 }
@@ -209,8 +218,24 @@ impl TryFrom<FilesConfiguration> for FilesSettings {
     type Error = RomeError;
 
     fn try_from(config: FilesConfiguration) -> Result<Self, Self::Error> {
+        let mut matcher = Matcher::new(MatchOptions {
+            case_sensitive: true,
+            require_literal_leading_dot: false,
+            require_literal_separator: false,
+        });
+        if let Some(ignore) = config.ignore {
+            for pattern in ignore {
+                matcher.add_pattern(&pattern).map_err(|err| {
+                    RomeError::Configuration(ConfigurationError::InvalidIgnorePattern(
+                        pattern.to_string(),
+                        err.msg.to_string(),
+                    ))
+                })?;
+            }
+        }
         Ok(Self {
             max_size: config.max_size.unwrap_or(DEFAULT_FILE_SIZE_LIMIT),
+            ignored_files: matcher,
         })
     }
 }
