@@ -4,66 +4,69 @@ use rome_js_syntax::{
 };
 use rome_rowan::{match_ast, AstNode, AstNodeList};
 
-pub fn is_specific_id<T>(node: &T, name: &str) -> bool
+/// Check if the given node is an identifier with given value
+pub fn is_ident_eq<T>(node: &T, name: &str) -> bool
 where
     T: AstNode<Language = JsLanguage>,
 {
-    is_id(node) && node.syntax().text_trimmed() == name
+    let syntax = node.syntax();
+    JsIdentifierExpression::can_cast(syntax.kind()) && syntax.text_trimmed() == name
 }
 
-pub fn is_id<T>(node: &T) -> bool
+/// Check if the given node is a name with given value
+pub fn is_name_eq<T>(node: &T, name: &str) -> bool
 where
     T: AstNode<Language = JsLanguage>,
 {
-    match_ast! {
-        match (node.syntax()) {
-            JsIdentifierExpression(..) => true,
-            JsName(..) => true,
-            _ => false
-        }
-    }
+    let syntax = node.syntax();
+    JsName::can_cast(syntax.kind()) && syntax.text_trimmed() == name
 }
 
-pub fn is_specific_member_access<T>(node: &T, object_name: &str, property_name: &str) -> bool
+/// Check if given node is a member access with given Object name and property name.
+/// Both static and computed access are checked.
+pub fn is_member_access_eq<T>(node: &T, object_name: &str, property_name: &str) -> bool
 where
     T: AstNode<Language = JsLanguage>,
 {
     match_ast! {
         match (node.syntax()) {
             JsStaticMemberExpression(x) => {
-                x.object().map(|it| is_specific_id(&it, object_name)).unwrap_or(false) &&
-                x.member().map(|it| is_specific_id(&it, property_name)).unwrap_or(false)
+                x.object().map(|it| is_ident_eq(&it, object_name)).unwrap_or(false) &&
+                x.member().map(|it| is_name_eq(&it, property_name)).unwrap_or(false)
             },
             JsComputedMemberExpression(x) => {
-                x.object().map(|it| is_specific_id(&it, object_name)).unwrap_or(false) &&
-                x.member().map(|it| is_static_text(&it, property_name)).unwrap_or(false)
+                x.object().map(|it| is_ident_eq(&it, object_name)).unwrap_or(false) &&
+                x.member().map(|it| is_static_text_eq(&it, property_name)).unwrap_or(false)
             },
             _ => false
         }
     }
 }
 
-pub fn is_static_text<T>(expr: &T, property_name: &str) -> bool
+/// Check if given string value equals node's static string.
+pub fn is_static_text_eq<T>(node: &T, property_name: &str) -> bool
 where
     T: AstNode<Language = JsLanguage>,
 {
-    with_static_text(expr, |t| t == property_name).unwrap_or(false)
+    with_static_text(node, |t| t == property_name).unwrap_or(false)
 }
 
-pub fn as_static_text<T>(expr: &T) -> Option<String>
+/// Returns string value if node is a static string.
+pub fn as_static_text<T>(node: &T) -> Option<String>
 where
     T: AstNode<Language = JsLanguage>,
 {
-    with_static_text(expr, |t| t.to_owned())
+    with_static_text(node, |t| t.to_owned())
 }
 
-pub fn with_static_text<T, F, R>(expr: &T, f: F) -> Option<R>
+/// Checks if the given node is a static string and calls the given function with the string value.
+pub fn with_static_text<T, F, R>(node: &T, f: F) -> Option<R>
 where
     T: AstNode<Language = JsLanguage>,
     F: FnOnce(&str) -> R,
 {
     match_ast! {
-        match (expr.syntax()) {
+        match (node.syntax()) {
             JsTemplate(t) => {
                 if t.tag().is_some() || t.elements().len() != 1 {
                     return None;
@@ -90,6 +93,7 @@ where
     }
 }
 
+/// Get number value for the given node.
 pub fn as_number<T>(node: &T) -> Option<f64>
 where
     T: AstNode<Language = JsLanguage>,
@@ -102,6 +106,7 @@ where
     }
 }
 
+/// Recursively remove parentheses from a given expression.
 pub fn remove_parentheses(mut expr: JsAnyExpression) -> Option<JsAnyExpression> {
     loop {
         match expr {

@@ -9,8 +9,6 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstSeparatedList};
 
-use crate::ast_utils;
-
 /// A trait to share common logic among data structures that "mimic" react APIs
 pub(crate) trait ReactApiCall {
     /// It scans the current props and returns the property that matches the passed name

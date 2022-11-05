@@ -182,10 +182,10 @@ fn get_trailing_trivia(trivia: &mut Vec<TriviaPiece>, text: &mut String, node: &
 fn get_callee(expr: &JsCallExpression) -> Option<&'static str> {
     let callee = expr.callee().ok()?;
     let callee = ast_utils::remove_parentheses(callee)?;
-    if ast_utils::is_specific_id(&callee, "parseInt") {
+    if ast_utils::is_ident_eq(&callee, "parseInt") {
         return Some("parseInt()");
     }
-    if ast_utils::is_specific_member_access(&callee, "Number", "parseInt") {
+    if ast_utils::is_member_access_eq(&callee, "Number", "parseInt") {
         return Some("Number.parseInt()");
     }
     None

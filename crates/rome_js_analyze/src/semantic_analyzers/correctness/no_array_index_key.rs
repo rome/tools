@@ -329,7 +329,7 @@ fn find_react_children_function_argument(
 
     let object = member_expression.object().ok()?;
 
-    let is_react_children = if ast_utils::is_specific_id(&object, "Children") {
+    let is_react_children = if ast_utils::is_ident_eq(&object, "Children") {
         // case we have `Children`
         array_call
     } else {
