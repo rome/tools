@@ -35,7 +35,13 @@ const BENCHMARKS = {
 	linter: {
 		eslint: {
 			repository: "https://github.com/eslint/eslint.git",
-			sourceDirectories: ["lib", "messages", "tests/lib", "tools"],
+			sourceDirectories: [
+				"lib",
+				"messages",
+				"tests/lib",
+				"tests/performance",
+				"tools",
+			],
 		},
 		webpack: {
 			repository: "https://github.com/webpack/webpack.git",
