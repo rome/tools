@@ -761,6 +761,16 @@
             }
           ]
         },
+        "useNumericLiterals": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useValidForDirection": {
           "anyOf": [
             {
@@ -967,16 +977,6 @@
           ]
         },
         "noUnusedTemplateLiteral": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "preferNumericLiterals": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

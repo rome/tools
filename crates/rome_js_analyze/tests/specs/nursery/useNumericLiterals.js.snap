@@ -1,0 +1,1188 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: useNumericLiterals.js
+---
+# Input
+```js
+// Valid
+parseInt(1);
+parseInt(1, 3);
+Number.parseInt(1);
+Number.parseInt(1, 3);
+0b111110111 === 503;
+0o767 === 503;
+0x1F7 === 503;
+a[parseInt](1,2);
+parseInt(foo);
+parseInt(foo, 2);
+Number.parseInt(foo);
+Number.parseInt(foo, 2);
+parseInt(11, 2);
+Number.parseInt(1, 8);
+parseInt(1e5, 16);
+parseInt('11', '2');
+Number.parseInt('11', '8');
+parseInt(/foo/, 2);
+parseInt(`11${foo}`, 2);
+parseInt('11', 2n);
+Number.parseInt('11', 8n);
+parseInt('11', 16n);
+parseInt(`11`, 16n);
+parseInt(1n, 2);
+class C { #parseInt; foo() { Number.#parseInt("111110111", 2); } }
+
+// Invalid
+parseInt("111110111", 2) === 503;
+parseInt("767", 8) === 503;
+parseInt("1F7", 16) === 255;
+Number.parseInt("111110111", 2) === 503;
+Number.parseInt("767", 8) === 503;
+Number.parseInt("1F7", 16) === 255;
+parseInt('7999', 8);
+parseInt('1234', 2);
+parseInt('1234.5', 8);
+parseInt('1️⃣3️⃣3️⃣7️⃣', 16);
+Number.parseInt('7999', 8);
+Number.parseInt('1234', 2);
+Number.parseInt('1234.5', 8);
+Number.parseInt('1️⃣3️⃣3️⃣7️⃣', 16);
+parseInt(`111110111`, 2) === 503;
+parseInt(`767`, 8) === 503;
+parseInt(`1F7`, 16) === 255;
+parseInt('', 8);
+parseInt(``, 8);
+parseInt(`7999`, 8);
+parseInt(`1234`, 2);
+parseInt(`1234.5`, 8);
+parseInt('11', 2)
+Number.parseInt('67', 8)
+5+parseInt('A', 16)
+function *f(){ yield(Number).parseInt('11', 2) }
+function *f(){ yield(Number.parseInt)('67', 8) }
+function *f(){ yield(parseInt)('A', 16) }
+function *f(){ yield Number.parseInt('11', 2) }
+function *f(){ yield/**/Number.parseInt('67', 8) }
+function *f(){ yield(parseInt('A', 16)) }
+parseInt('11', 2)+5
+Number.parseInt('17', 8)+5
+parseInt('A', 16)+5
+//parseInt('11', 2)in foo
+//Number.parseInt('17', 8)in foo
+//parseInt('A', 16)in foo
+parseInt('11', 2) in foo
+Number.parseInt('17', 8)/**/in foo
+//(parseInt('A', 16))in foo
+/* comment */Number.parseInt('11', 2);
+Number/**/.parseInt('11', 2);
+Number//
+.parseInt('11', 2);
+Number./**/parseInt('11', 2);
+Number.parseInt(/**/'11', 2);
+Number.parseInt('11', /**/2);
+Number.parseInt('11', 2)/* comment */;
+parseInt/**/('11', 2);
+parseInt(//
+'11', 2);
+parseInt('11'/**/, 2);
+parseInt(`11`/**/, 2);
+parseInt('11', 2 /**/);
+parseInt('11', 2)//comment
+;
+parseInt?.("1F7", 16) === 255;
+Number?.parseInt("1F7", 16) === 255;
+Number?.parseInt?.("1F7", 16) === 255;
+(Number?.parseInt)("1F7", 16) === 255;
+(Number?.parseInt)?.("1F7", 16) === 255;
+parseInt('1_0', 2);
+Number.parseInt('5_000', 8);
+parseInt('0_1', 16);
+Number.parseInt('0_0', 16);
+
+```
+
+# Diagnostics
+```
+useNumericLiterals.js:29:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    28 │ // Invalid
+  > 29 │ parseInt("111110111", 2) === 503;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    30 │ parseInt("767", 8) === 503;
+    31 │ parseInt("1F7", 16) === 255;
+  
+  i Safe fix: Replace with binary literals
+  
+    27 27 │   
+    28 28 │   // Invalid
+    29    │ - parseInt("111110111",·2)·===·503;
+       29 │ + 0b111110111·===·503;
+    30 30 │   parseInt("767", 8) === 503;
+    31 31 │   parseInt("1F7", 16) === 255;
+  
+
+```
+
+```
+useNumericLiterals.js:30:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use octal literals instead of parseInt()
+  
+    28 │ // Invalid
+    29 │ parseInt("111110111", 2) === 503;
+  > 30 │ parseInt("767", 8) === 503;
+       │ ^^^^^^^^^^^^^^^^^^
+    31 │ parseInt("1F7", 16) === 255;
+    32 │ Number.parseInt("111110111", 2) === 503;
+  
+  i Safe fix: Replace with octal literals
+  
+    28 28 │   // Invalid
+    29 29 │   parseInt("111110111", 2) === 503;
+    30    │ - parseInt("767",·8)·===·503;
+       30 │ + 0o767·===·503;
+    31 31 │   parseInt("1F7", 16) === 255;
+    32 32 │   Number.parseInt("111110111", 2) === 503;
+  
+
+```
+
+```
+useNumericLiterals.js:31:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use hexadecimal literals instead of parseInt()
+  
+    29 │ parseInt("111110111", 2) === 503;
+    30 │ parseInt("767", 8) === 503;
+  > 31 │ parseInt("1F7", 16) === 255;
+       │ ^^^^^^^^^^^^^^^^^^^
+    32 │ Number.parseInt("111110111", 2) === 503;
+    33 │ Number.parseInt("767", 8) === 503;
+  
+  i Safe fix: Replace with hexadecimal literals
+  
+    29 29 │   parseInt("111110111", 2) === 503;
+    30 30 │   parseInt("767", 8) === 503;
+    31    │ - parseInt("1F7",·16)·===·255;
+       31 │ + 0x1F7·===·255;
+    32 32 │   Number.parseInt("111110111", 2) === 503;
+    33 33 │   Number.parseInt("767", 8) === 503;
+  
+
+```
+
+```
+useNumericLiterals.js:32:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of Number.parseInt()
+  
+    30 │ parseInt("767", 8) === 503;
+    31 │ parseInt("1F7", 16) === 255;
+  > 32 │ Number.parseInt("111110111", 2) === 503;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    33 │ Number.parseInt("767", 8) === 503;
+    34 │ Number.parseInt("1F7", 16) === 255;
+  
+  i Safe fix: Replace with binary literals
+  
+    30 30 │   parseInt("767", 8) === 503;
+    31 31 │   parseInt("1F7", 16) === 255;
+    32    │ - Number.parseInt("111110111",·2)·===·503;
+       32 │ + 0b111110111·===·503;
+    33 33 │   Number.parseInt("767", 8) === 503;
+    34 34 │   Number.parseInt("1F7", 16) === 255;
+  
+
+```
+
+```
+useNumericLiterals.js:33:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use octal literals instead of Number.parseInt()
+  
+    31 │ parseInt("1F7", 16) === 255;
+    32 │ Number.parseInt("111110111", 2) === 503;
+  > 33 │ Number.parseInt("767", 8) === 503;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+    34 │ Number.parseInt("1F7", 16) === 255;
+    35 │ parseInt('7999', 8);
+  
+  i Safe fix: Replace with octal literals
+  
+    31 31 │   parseInt("1F7", 16) === 255;
+    32 32 │   Number.parseInt("111110111", 2) === 503;
+    33    │ - Number.parseInt("767",·8)·===·503;
+       33 │ + 0o767·===·503;
+    34 34 │   Number.parseInt("1F7", 16) === 255;
+    35 35 │   parseInt('7999', 8);
+  
+
+```
+
+```
+useNumericLiterals.js:34:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use hexadecimal literals instead of Number.parseInt()
+  
+    32 │ Number.parseInt("111110111", 2) === 503;
+    33 │ Number.parseInt("767", 8) === 503;
+  > 34 │ Number.parseInt("1F7", 16) === 255;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    35 │ parseInt('7999', 8);
+    36 │ parseInt('1234', 2);
+  
+  i Safe fix: Replace with hexadecimal literals
+  
+    32 32 │   Number.parseInt("111110111", 2) === 503;
+    33 33 │   Number.parseInt("767", 8) === 503;
+    34    │ - Number.parseInt("1F7",·16)·===·255;
+       34 │ + 0x1F7·===·255;
+    35 35 │   parseInt('7999', 8);
+    36 36 │   parseInt('1234', 2);
+  
+
+```
+
+```
+useNumericLiterals.js:35:1 lint/nursery/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use octal literals instead of parseInt()
+  
+    33 │ Number.parseInt("767", 8) === 503;
+    34 │ Number.parseInt("1F7", 16) === 255;
+  > 35 │ parseInt('7999', 8);
+       │ ^^^^^^^^^^^^^^^^^^^
+    36 │ parseInt('1234', 2);
+    37 │ parseInt('1234.5', 8);
+  
+
+```
+
+```
+useNumericLiterals.js:36:1 lint/nursery/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    34 │ Number.parseInt("1F7", 16) === 255;
+    35 │ parseInt('7999', 8);
+  > 36 │ parseInt('1234', 2);
+       │ ^^^^^^^^^^^^^^^^^^^
+    37 │ parseInt('1234.5', 8);
+    38 │ parseInt('1��3��3��7��', 16);
+  
+
+```
+
+```
+useNumericLiterals.js:37:1 lint/nursery/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use octal literals instead of parseInt()
+  
+    35 │ parseInt('7999', 8);
+    36 │ parseInt('1234', 2);
+  > 37 │ parseInt('1234.5', 8);
+       │ ^^^^^^^^^^^^^^^^^^^^^
+    38 │ parseInt('1��3��3��7��', 16);
+    39 │ Number.parseInt('7999', 8);
+  
+
+```
+
+```
+useNumericLiterals.js:38:1 lint/nursery/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use hexadecimal literals instead of parseInt()
+  
+    36 │ parseInt('1234', 2);
+    37 │ parseInt('1234.5', 8);
+  > 38 │ parseInt('1��3��3��7��', 16);
+       │ ^^^^^^^^^^^^^^^^^^^^
+    39 │ Number.parseInt('7999', 8);
+    40 │ Number.parseInt('1234', 2);
+  
+
+```
+
+```
+useNumericLiterals.js:39:1 lint/nursery/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use octal literals instead of Number.parseInt()
+  
+    37 │ parseInt('1234.5', 8);
+    38 │ parseInt('1��3��3��7��', 16);
+  > 39 │ Number.parseInt('7999', 8);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    40 │ Number.parseInt('1234', 2);
+    41 │ Number.parseInt('1234.5', 8);
+  
+
+```
+
+```
+useNumericLiterals.js:40:1 lint/nursery/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of Number.parseInt()
+  
+    38 │ parseInt('1��3��3��7��', 16);
+    39 │ Number.parseInt('7999', 8);
+  > 40 │ Number.parseInt('1234', 2);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    41 │ Number.parseInt('1234.5', 8);
+    42 │ Number.parseInt('1��3��3��7��', 16);
+  
+
+```
+
+```
+useNumericLiterals.js:41:1 lint/nursery/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use octal literals instead of Number.parseInt()
+  
+    39 │ Number.parseInt('7999', 8);
+    40 │ Number.parseInt('1234', 2);
+  > 41 │ Number.parseInt('1234.5', 8);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    42 │ Number.parseInt('1��3��3��7��', 16);
+    43 │ parseInt(`111110111`, 2) === 503;
+  
+
+```
+
+```
+useNumericLiterals.js:42:1 lint/nursery/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use hexadecimal literals instead of Number.parseInt()
+  
+    40 │ Number.parseInt('1234', 2);
+    41 │ Number.parseInt('1234.5', 8);
+  > 42 │ Number.parseInt('1��3��3��7��', 16);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    43 │ parseInt(`111110111`, 2) === 503;
+    44 │ parseInt(`767`, 8) === 503;
+  
+
+```
+
+```
+useNumericLiterals.js:43:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    41 │ Number.parseInt('1234.5', 8);
+    42 │ Number.parseInt('1��3��3��7��', 16);
+  > 43 │ parseInt(`111110111`, 2) === 503;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    44 │ parseInt(`767`, 8) === 503;
+    45 │ parseInt(`1F7`, 16) === 255;
+  
+  i Safe fix: Replace with binary literals
+  
+    41 41 │   Number.parseInt('1234.5', 8);
+    42 42 │   Number.parseInt('1��3��3��7��', 16);
+    43    │ - parseInt(`111110111`,·2)·===·503;
+       43 │ + 0b111110111·===·503;
+    44 44 │   parseInt(`767`, 8) === 503;
+    45 45 │   parseInt(`1F7`, 16) === 255;
+  
+
+```
+
+```
+useNumericLiterals.js:44:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use octal literals instead of parseInt()
+  
+    42 │ Number.parseInt('1��3��3��7��', 16);
+    43 │ parseInt(`111110111`, 2) === 503;
+  > 44 │ parseInt(`767`, 8) === 503;
+       │ ^^^^^^^^^^^^^^^^^^
+    45 │ parseInt(`1F7`, 16) === 255;
+    46 │ parseInt('', 8);
+  
+  i Safe fix: Replace with octal literals
+  
+    42 42 │   Number.parseInt('1��3��3��7��', 16);
+    43 43 │   parseInt(`111110111`, 2) === 503;
+    44    │ - parseInt(`767`,·8)·===·503;
+       44 │ + 0o767·===·503;
+    45 45 │   parseInt(`1F7`, 16) === 255;
+    46 46 │   parseInt('', 8);
+  
+
+```
+
+```
+useNumericLiterals.js:45:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use hexadecimal literals instead of parseInt()
+  
+    43 │ parseInt(`111110111`, 2) === 503;
+    44 │ parseInt(`767`, 8) === 503;
+  > 45 │ parseInt(`1F7`, 16) === 255;
+       │ ^^^^^^^^^^^^^^^^^^^
+    46 │ parseInt('', 8);
+    47 │ parseInt(``, 8);
+  
+  i Safe fix: Replace with hexadecimal literals
+  
+    43 43 │   parseInt(`111110111`, 2) === 503;
+    44 44 │   parseInt(`767`, 8) === 503;
+    45    │ - parseInt(`1F7`,·16)·===·255;
+       45 │ + 0x1F7·===·255;
+    46 46 │   parseInt('', 8);
+    47 47 │   parseInt(``, 8);
+  
+
+```
+
+```
+useNumericLiterals.js:46:1 lint/nursery/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use octal literals instead of parseInt()
+  
+    44 │ parseInt(`767`, 8) === 503;
+    45 │ parseInt(`1F7`, 16) === 255;
+  > 46 │ parseInt('', 8);
+       │ ^^^^^^^^^^^^^^^
+    47 │ parseInt(``, 8);
+    48 │ parseInt(`7999`, 8);
+  
+
+```
+
+```
+useNumericLiterals.js:48:1 lint/nursery/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use octal literals instead of parseInt()
+  
+    46 │ parseInt('', 8);
+    47 │ parseInt(``, 8);
+  > 48 │ parseInt(`7999`, 8);
+       │ ^^^^^^^^^^^^^^^^^^^
+    49 │ parseInt(`1234`, 2);
+    50 │ parseInt(`1234.5`, 8);
+  
+
+```
+
+```
+useNumericLiterals.js:49:1 lint/nursery/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    47 │ parseInt(``, 8);
+    48 │ parseInt(`7999`, 8);
+  > 49 │ parseInt(`1234`, 2);
+       │ ^^^^^^^^^^^^^^^^^^^
+    50 │ parseInt(`1234.5`, 8);
+    51 │ parseInt('11', 2)
+  
+
+```
+
+```
+useNumericLiterals.js:50:1 lint/nursery/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use octal literals instead of parseInt()
+  
+    48 │ parseInt(`7999`, 8);
+    49 │ parseInt(`1234`, 2);
+  > 50 │ parseInt(`1234.5`, 8);
+       │ ^^^^^^^^^^^^^^^^^^^^^
+    51 │ parseInt('11', 2)
+    52 │ Number.parseInt('67', 8)
+  
+
+```
+
+```
+useNumericLiterals.js:51:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    49 │ parseInt(`1234`, 2);
+    50 │ parseInt(`1234.5`, 8);
+  > 51 │ parseInt('11', 2)
+       │ ^^^^^^^^^^^^^^^^^
+    52 │ Number.parseInt('67', 8)
+    53 │ 5+parseInt('A', 16)
+  
+  i Safe fix: Replace with binary literals
+  
+    49 49 │   parseInt(`1234`, 2);
+    50 50 │   parseInt(`1234.5`, 8);
+    51    │ - parseInt('11',·2)
+       51 │ + 0b11
+    52 52 │   Number.parseInt('67', 8)
+    53 53 │   5+parseInt('A', 16)
+  
+
+```
+
+```
+useNumericLiterals.js:52:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use octal literals instead of Number.parseInt()
+  
+    50 │ parseInt(`1234.5`, 8);
+    51 │ parseInt('11', 2)
+  > 52 │ Number.parseInt('67', 8)
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    53 │ 5+parseInt('A', 16)
+    54 │ function *f(){ yield(Number).parseInt('11', 2) }
+  
+  i Safe fix: Replace with octal literals
+  
+    50 50 │   parseInt(`1234.5`, 8);
+    51 51 │   parseInt('11', 2)
+    52    │ - Number.parseInt('67',·8)
+       52 │ + 0o67
+    53 53 │   5+parseInt('A', 16)
+    54 54 │   function *f(){ yield(Number).parseInt('11', 2) }
+  
+
+```
+
+```
+useNumericLiterals.js:53:3 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use hexadecimal literals instead of parseInt()
+  
+    51 │ parseInt('11', 2)
+    52 │ Number.parseInt('67', 8)
+  > 53 │ 5+parseInt('A', 16)
+       │   ^^^^^^^^^^^^^^^^^
+    54 │ function *f(){ yield(Number).parseInt('11', 2) }
+    55 │ function *f(){ yield(Number.parseInt)('67', 8) }
+  
+  i Safe fix: Replace with hexadecimal literals
+  
+    51 51 │   parseInt('11', 2)
+    52 52 │   Number.parseInt('67', 8)
+    53    │ - 5+parseInt('A',·16)
+       53 │ + 5+0xA
+    54 54 │   function *f(){ yield(Number).parseInt('11', 2) }
+    55 55 │   function *f(){ yield(Number.parseInt)('67', 8) }
+  
+
+```
+
+```
+useNumericLiterals.js:57:22 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of Number.parseInt()
+  
+    55 │ function *f(){ yield(Number.parseInt)('67', 8) }
+    56 │ function *f(){ yield(parseInt)('A', 16) }
+  > 57 │ function *f(){ yield Number.parseInt('11', 2) }
+       │                      ^^^^^^^^^^^^^^^^^^^^^^^^
+    58 │ function *f(){ yield/**/Number.parseInt('67', 8) }
+    59 │ function *f(){ yield(parseInt('A', 16)) }
+  
+  i Safe fix: Replace with binary literals
+  
+    55 55 │   function *f(){ yield(Number.parseInt)('67', 8) }
+    56 56 │   function *f(){ yield(parseInt)('A', 16) }
+    57    │ - function·*f(){·yield·Number.parseInt('11',·2)·}
+       57 │ + function·*f(){·yield·0b11·}
+    58 58 │   function *f(){ yield/**/Number.parseInt('67', 8) }
+    59 59 │   function *f(){ yield(parseInt('A', 16)) }
+  
+
+```
+
+```
+useNumericLiterals.js:58:25 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use octal literals instead of Number.parseInt()
+  
+    56 │ function *f(){ yield(parseInt)('A', 16) }
+    57 │ function *f(){ yield Number.parseInt('11', 2) }
+  > 58 │ function *f(){ yield/**/Number.parseInt('67', 8) }
+       │                         ^^^^^^^^^^^^^^^^^^^^^^^^
+    59 │ function *f(){ yield(parseInt('A', 16)) }
+    60 │ parseInt('11', 2)+5
+  
+  i Safe fix: Replace with octal literals
+  
+    56 56 │   function *f(){ yield(parseInt)('A', 16) }
+    57 57 │   function *f(){ yield Number.parseInt('11', 2) }
+    58    │ - function·*f(){·yield/**/Number.parseInt('67',·8)·}
+       58 │ + function·*f(){·yield/**/0o67·}
+    59 59 │   function *f(){ yield(parseInt('A', 16)) }
+    60 60 │   parseInt('11', 2)+5
+  
+
+```
+
+```
+useNumericLiterals.js:59:22 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use hexadecimal literals instead of parseInt()
+  
+    57 │ function *f(){ yield Number.parseInt('11', 2) }
+    58 │ function *f(){ yield/**/Number.parseInt('67', 8) }
+  > 59 │ function *f(){ yield(parseInt('A', 16)) }
+       │                      ^^^^^^^^^^^^^^^^^
+    60 │ parseInt('11', 2)+5
+    61 │ Number.parseInt('17', 8)+5
+  
+  i Safe fix: Replace with hexadecimal literals
+  
+    57 57 │   function *f(){ yield Number.parseInt('11', 2) }
+    58 58 │   function *f(){ yield/**/Number.parseInt('67', 8) }
+    59    │ - function·*f(){·yield(parseInt('A',·16))·}
+       59 │ + function·*f(){·yield(0xA)·}
+    60 60 │   parseInt('11', 2)+5
+    61 61 │   Number.parseInt('17', 8)+5
+  
+
+```
+
+```
+useNumericLiterals.js:60:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    58 │ function *f(){ yield/**/Number.parseInt('67', 8) }
+    59 │ function *f(){ yield(parseInt('A', 16)) }
+  > 60 │ parseInt('11', 2)+5
+       │ ^^^^^^^^^^^^^^^^^
+    61 │ Number.parseInt('17', 8)+5
+    62 │ parseInt('A', 16)+5
+  
+  i Safe fix: Replace with binary literals
+  
+    58 58 │   function *f(){ yield/**/Number.parseInt('67', 8) }
+    59 59 │   function *f(){ yield(parseInt('A', 16)) }
+    60    │ - parseInt('11',·2)+5
+       60 │ + 0b11+5
+    61 61 │   Number.parseInt('17', 8)+5
+    62 62 │   parseInt('A', 16)+5
+  
+
+```
+
+```
+useNumericLiterals.js:61:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use octal literals instead of Number.parseInt()
+  
+    59 │ function *f(){ yield(parseInt('A', 16)) }
+    60 │ parseInt('11', 2)+5
+  > 61 │ Number.parseInt('17', 8)+5
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    62 │ parseInt('A', 16)+5
+    63 │ //parseInt('11', 2)in foo
+  
+  i Safe fix: Replace with octal literals
+  
+    59 59 │   function *f(){ yield(parseInt('A', 16)) }
+    60 60 │   parseInt('11', 2)+5
+    61    │ - Number.parseInt('17',·8)+5
+       61 │ + 0o17+5
+    62 62 │   parseInt('A', 16)+5
+    63 63 │   //parseInt('11', 2)in foo
+  
+
+```
+
+```
+useNumericLiterals.js:62:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use hexadecimal literals instead of parseInt()
+  
+    60 │ parseInt('11', 2)+5
+    61 │ Number.parseInt('17', 8)+5
+  > 62 │ parseInt('A', 16)+5
+       │ ^^^^^^^^^^^^^^^^^
+    63 │ //parseInt('11', 2)in foo
+    64 │ //Number.parseInt('17', 8)in foo
+  
+  i Safe fix: Replace with hexadecimal literals
+  
+    60 60 │   parseInt('11', 2)+5
+    61 61 │   Number.parseInt('17', 8)+5
+    62    │ - parseInt('A',·16)+5
+       62 │ + 0xA+5
+    63 63 │   //parseInt('11', 2)in foo
+    64 64 │   //Number.parseInt('17', 8)in foo
+  
+
+```
+
+```
+useNumericLiterals.js:66:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    64 │ //Number.parseInt('17', 8)in foo
+    65 │ //parseInt('A', 16)in foo
+  > 66 │ parseInt('11', 2) in foo
+       │ ^^^^^^^^^^^^^^^^^
+    67 │ Number.parseInt('17', 8)/**/in foo
+    68 │ //(parseInt('A', 16))in foo
+  
+  i Safe fix: Replace with binary literals
+  
+    64 64 │   //Number.parseInt('17', 8)in foo
+    65 65 │   //parseInt('A', 16)in foo
+    66    │ - parseInt('11',·2)·in·foo
+       66 │ + 0b11·in·foo
+    67 67 │   Number.parseInt('17', 8)/**/in foo
+    68 68 │   //(parseInt('A', 16))in foo
+  
+
+```
+
+```
+useNumericLiterals.js:67:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use octal literals instead of Number.parseInt()
+  
+    65 │ //parseInt('A', 16)in foo
+    66 │ parseInt('11', 2) in foo
+  > 67 │ Number.parseInt('17', 8)/**/in foo
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    68 │ //(parseInt('A', 16))in foo
+    69 │ /* comment */Number.parseInt('11', 2);
+  
+  i Safe fix: Replace with octal literals
+  
+    65 65 │   //parseInt('A', 16)in foo
+    66 66 │   parseInt('11', 2) in foo
+    67    │ - Number.parseInt('17',·8)/**/in·foo
+       67 │ + 0o17/**/in·foo
+    68 68 │   //(parseInt('A', 16))in foo
+    69 69 │   /* comment */Number.parseInt('11', 2);
+  
+
+```
+
+```
+useNumericLiterals.js:69:14 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of Number.parseInt()
+  
+    67 │ Number.parseInt('17', 8)/**/in foo
+    68 │ //(parseInt('A', 16))in foo
+  > 69 │ /* comment */Number.parseInt('11', 2);
+       │              ^^^^^^^^^^^^^^^^^^^^^^^^
+    70 │ Number/**/.parseInt('11', 2);
+    71 │ Number//
+  
+  i Safe fix: Replace with binary literals
+  
+    67 67 │   Number.parseInt('17', 8)/**/in foo
+    68 68 │   //(parseInt('A', 16))in foo
+    69    │ - /*·comment·*/Number.parseInt('11',·2);
+       69 │ + /*·comment·*/0b11;
+    70 70 │   Number/**/.parseInt('11', 2);
+    71 71 │   Number//
+  
+
+```
+
+```
+useNumericLiterals.js:70:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of Number.parseInt()
+  
+    68 │ //(parseInt('A', 16))in foo
+    69 │ /* comment */Number.parseInt('11', 2);
+  > 70 │ Number/**/.parseInt('11', 2);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    71 │ Number//
+    72 │ .parseInt('11', 2);
+  
+  i Safe fix: Replace with binary literals
+  
+    68 68 │   //(parseInt('A', 16))in foo
+    69 69 │   /* comment */Number.parseInt('11', 2);
+    70    │ - Number/**/.parseInt('11',·2);
+       70 │ + 0b11;
+    71 71 │   Number//
+    72 72 │   .parseInt('11', 2);
+  
+
+```
+
+```
+useNumericLiterals.js:71:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of Number.parseInt()
+  
+    69 │ /* comment */Number.parseInt('11', 2);
+    70 │ Number/**/.parseInt('11', 2);
+  > 71 │ Number//
+       │ ^^^^^^^^
+  > 72 │ .parseInt('11', 2);
+       │ ^^^^^^^^^^^^^^^^^^
+    73 │ Number./**/parseInt('11', 2);
+    74 │ Number.parseInt(/**/'11', 2);
+  
+  i Safe fix: Replace with binary literals
+  
+    69 69 │   /* comment */Number.parseInt('11', 2);
+    70 70 │   Number/**/.parseInt('11', 2);
+    71    │ - Number//
+    72    │ - .parseInt('11',·2);
+       71 │ + 0b11;
+    73 72 │   Number./**/parseInt('11', 2);
+    74 73 │   Number.parseInt(/**/'11', 2);
+  
+
+```
+
+```
+useNumericLiterals.js:73:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of Number.parseInt()
+  
+    71 │ Number//
+    72 │ .parseInt('11', 2);
+  > 73 │ Number./**/parseInt('11', 2);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    74 │ Number.parseInt(/**/'11', 2);
+    75 │ Number.parseInt('11', /**/2);
+  
+  i Safe fix: Replace with binary literals
+  
+    71 71 │   Number//
+    72 72 │   .parseInt('11', 2);
+    73    │ - Number./**/parseInt('11',·2);
+       73 │ + 0b11;
+    74 74 │   Number.parseInt(/**/'11', 2);
+    75 75 │   Number.parseInt('11', /**/2);
+  
+
+```
+
+```
+useNumericLiterals.js:74:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of Number.parseInt()
+  
+    72 │ .parseInt('11', 2);
+    73 │ Number./**/parseInt('11', 2);
+  > 74 │ Number.parseInt(/**/'11', 2);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    75 │ Number.parseInt('11', /**/2);
+    76 │ Number.parseInt('11', 2)/* comment */;
+  
+  i Safe fix: Replace with binary literals
+  
+    72 72 │   .parseInt('11', 2);
+    73 73 │   Number./**/parseInt('11', 2);
+    74    │ - Number.parseInt(/**/'11',·2);
+       74 │ + 0b11;
+    75 75 │   Number.parseInt('11', /**/2);
+    76 76 │   Number.parseInt('11', 2)/* comment */;
+  
+
+```
+
+```
+useNumericLiterals.js:75:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of Number.parseInt()
+  
+    73 │ Number./**/parseInt('11', 2);
+    74 │ Number.parseInt(/**/'11', 2);
+  > 75 │ Number.parseInt('11', /**/2);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    76 │ Number.parseInt('11', 2)/* comment */;
+    77 │ parseInt/**/('11', 2);
+  
+  i Safe fix: Replace with binary literals
+  
+    73 73 │   Number./**/parseInt('11', 2);
+    74 74 │   Number.parseInt(/**/'11', 2);
+    75    │ - Number.parseInt('11',·/**/2);
+       75 │ + 0b11;
+    76 76 │   Number.parseInt('11', 2)/* comment */;
+    77 77 │   parseInt/**/('11', 2);
+  
+
+```
+
+```
+useNumericLiterals.js:76:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of Number.parseInt()
+  
+    74 │ Number.parseInt(/**/'11', 2);
+    75 │ Number.parseInt('11', /**/2);
+  > 76 │ Number.parseInt('11', 2)/* comment */;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    77 │ parseInt/**/('11', 2);
+    78 │ parseInt(//
+  
+  i Safe fix: Replace with binary literals
+  
+    74 74 │   Number.parseInt(/**/'11', 2);
+    75 75 │   Number.parseInt('11', /**/2);
+    76    │ - Number.parseInt('11',·2)/*·comment·*/;
+       76 │ + 0b11/*·comment·*/;
+    77 77 │   parseInt/**/('11', 2);
+    78 78 │   parseInt(//
+  
+
+```
+
+```
+useNumericLiterals.js:77:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    75 │ Number.parseInt('11', /**/2);
+    76 │ Number.parseInt('11', 2)/* comment */;
+  > 77 │ parseInt/**/('11', 2);
+       │ ^^^^^^^^^^^^^^^^^^^^^
+    78 │ parseInt(//
+    79 │ '11', 2);
+  
+  i Safe fix: Replace with binary literals
+  
+    75 75 │   Number.parseInt('11', /**/2);
+    76 76 │   Number.parseInt('11', 2)/* comment */;
+    77    │ - parseInt/**/('11',·2);
+       77 │ + 0b11;
+    78 78 │   parseInt(//
+    79 79 │   '11', 2);
+  
+
+```
+
+```
+useNumericLiterals.js:78:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    76 │ Number.parseInt('11', 2)/* comment */;
+    77 │ parseInt/**/('11', 2);
+  > 78 │ parseInt(//
+       │ ^^^^^^^^^^^
+  > 79 │ '11', 2);
+       │ ^^^^^^^^
+    80 │ parseInt('11'/**/, 2);
+    81 │ parseInt(`11`/**/, 2);
+  
+  i Safe fix: Replace with binary literals
+  
+    76 76 │   Number.parseInt('11', 2)/* comment */;
+    77 77 │   parseInt/**/('11', 2);
+    78    │ - parseInt(//
+    79    │ - '11',·2);
+       78 │ + 0b11;
+    80 79 │   parseInt('11'/**/, 2);
+    81 80 │   parseInt(`11`/**/, 2);
+  
+
+```
+
+```
+useNumericLiterals.js:80:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    78 │ parseInt(//
+    79 │ '11', 2);
+  > 80 │ parseInt('11'/**/, 2);
+       │ ^^^^^^^^^^^^^^^^^^^^^
+    81 │ parseInt(`11`/**/, 2);
+    82 │ parseInt('11', 2 /**/);
+  
+  i Safe fix: Replace with binary literals
+  
+    78 78 │   parseInt(//
+    79 79 │   '11', 2);
+    80    │ - parseInt('11'/**/,·2);
+       80 │ + 0b11;
+    81 81 │   parseInt(`11`/**/, 2);
+    82 82 │   parseInt('11', 2 /**/);
+  
+
+```
+
+```
+useNumericLiterals.js:81:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    79 │ '11', 2);
+    80 │ parseInt('11'/**/, 2);
+  > 81 │ parseInt(`11`/**/, 2);
+       │ ^^^^^^^^^^^^^^^^^^^^^
+    82 │ parseInt('11', 2 /**/);
+    83 │ parseInt('11', 2)//comment
+  
+  i Safe fix: Replace with binary literals
+  
+    79 79 │   '11', 2);
+    80 80 │   parseInt('11'/**/, 2);
+    81    │ - parseInt(`11`/**/,·2);
+       81 │ + 0b11;
+    82 82 │   parseInt('11', 2 /**/);
+    83 83 │   parseInt('11', 2)//comment
+  
+
+```
+
+```
+useNumericLiterals.js:83:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    81 │ parseInt(`11`/**/, 2);
+    82 │ parseInt('11', 2 /**/);
+  > 83 │ parseInt('11', 2)//comment
+       │ ^^^^^^^^^^^^^^^^^
+    84 │ ;
+    85 │ parseInt?.("1F7", 16) === 255;
+  
+  i Safe fix: Replace with binary literals
+  
+    81 81 │   parseInt(`11`/**/, 2);
+    82 82 │   parseInt('11', 2 /**/);
+    83    │ - parseInt('11',·2)//comment
+       83 │ + 0b11//comment
+    84 84 │   ;
+    85 85 │   parseInt?.("1F7", 16) === 255;
+  
+
+```
+
+```
+useNumericLiterals.js:85:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use hexadecimal literals instead of parseInt()
+  
+    83 │ parseInt('11', 2)//comment
+    84 │ ;
+  > 85 │ parseInt?.("1F7", 16) === 255;
+       │ ^^^^^^^^^^^^^^^^^^^^^
+    86 │ Number?.parseInt("1F7", 16) === 255;
+    87 │ Number?.parseInt?.("1F7", 16) === 255;
+  
+  i Safe fix: Replace with hexadecimal literals
+  
+    83 83 │   parseInt('11', 2)//comment
+    84 84 │   ;
+    85    │ - parseInt?.("1F7",·16)·===·255;
+       85 │ + 0x1F7·===·255;
+    86 86 │   Number?.parseInt("1F7", 16) === 255;
+    87 87 │   Number?.parseInt?.("1F7", 16) === 255;
+  
+
+```
+
+```
+useNumericLiterals.js:86:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use hexadecimal literals instead of Number.parseInt()
+  
+    84 │ ;
+    85 │ parseInt?.("1F7", 16) === 255;
+  > 86 │ Number?.parseInt("1F7", 16) === 255;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    87 │ Number?.parseInt?.("1F7", 16) === 255;
+    88 │ (Number?.parseInt)("1F7", 16) === 255;
+  
+  i Safe fix: Replace with hexadecimal literals
+  
+    84 84 │   ;
+    85 85 │   parseInt?.("1F7", 16) === 255;
+    86    │ - Number?.parseInt("1F7",·16)·===·255;
+       86 │ + 0x1F7·===·255;
+    87 87 │   Number?.parseInt?.("1F7", 16) === 255;
+    88 88 │   (Number?.parseInt)("1F7", 16) === 255;
+  
+
+```
+
+```
+useNumericLiterals.js:87:1 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use hexadecimal literals instead of Number.parseInt()
+  
+    85 │ parseInt?.("1F7", 16) === 255;
+    86 │ Number?.parseInt("1F7", 16) === 255;
+  > 87 │ Number?.parseInt?.("1F7", 16) === 255;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    88 │ (Number?.parseInt)("1F7", 16) === 255;
+    89 │ (Number?.parseInt)?.("1F7", 16) === 255;
+  
+  i Safe fix: Replace with hexadecimal literals
+  
+    85 85 │   parseInt?.("1F7", 16) === 255;
+    86 86 │   Number?.parseInt("1F7", 16) === 255;
+    87    │ - Number?.parseInt?.("1F7",·16)·===·255;
+       87 │ + 0x1F7·===·255;
+    88 88 │   (Number?.parseInt)("1F7", 16) === 255;
+    89 89 │   (Number?.parseInt)?.("1F7", 16) === 255;
+  
+
+```
+
+```
+useNumericLiterals.js:90:1 lint/nursery/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of parseInt()
+  
+    88 │ (Number?.parseInt)("1F7", 16) === 255;
+    89 │ (Number?.parseInt)?.("1F7", 16) === 255;
+  > 90 │ parseInt('1_0', 2);
+       │ ^^^^^^^^^^^^^^^^^^
+    91 │ Number.parseInt('5_000', 8);
+    92 │ parseInt('0_1', 16);
+  
+
+```
+
+```
+useNumericLiterals.js:91:1 lint/nursery/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use octal literals instead of Number.parseInt()
+  
+    89 │ (Number?.parseInt)?.("1F7", 16) === 255;
+    90 │ parseInt('1_0', 2);
+  > 91 │ Number.parseInt('5_000', 8);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    92 │ parseInt('0_1', 16);
+    93 │ Number.parseInt('0_0', 16);
+  
+
+```
+
+```
+useNumericLiterals.js:92:1 lint/nursery/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use hexadecimal literals instead of parseInt()
+  
+    90 │ parseInt('1_0', 2);
+    91 │ Number.parseInt('5_000', 8);
+  > 92 │ parseInt('0_1', 16);
+       │ ^^^^^^^^^^^^^^^^^^^
+    93 │ Number.parseInt('0_0', 16);
+    94 │ 
+  
+
+```
+
+```
+useNumericLiterals.js:93:1 lint/nursery/useNumericLiterals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use hexadecimal literals instead of Number.parseInt()
+  
+    91 │ Number.parseInt('5_000', 8);
+    92 │ parseInt('0_1', 16);
+  > 93 │ Number.parseInt('0_0', 16);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    94 │ 
+  
+
+```
+
+

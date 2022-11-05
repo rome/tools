@@ -54,7 +54,6 @@ define_dategories! {
     "lint/style/useBlockStatements": "https://rome.tools/docs/lint/rules/useBlockStatements",
     "lint/style/noImplicitBoolean": "https://rome.tools/docs/lint/rules/noImplicitBoolean",
     "lint/style/noUnusedTemplateLiteral": "https://rome.tools/docs/lint/rules/noUnusedTemplateLiteral",
-    "lint/style/preferNumericLiterals": "https://rome.tools/docs/lint/rules/preferNumericLiterals",
 
     // complexity
     "lint/complexity/useSimplifiedLogicExpression": "https://rome.tools/docs/lint/rules/useSimplifiedLogicExpression",
@@ -83,7 +82,8 @@ define_dategories! {
     "lint/nursery/noInvalidConstructorSuper": "https://rome.tools/docs/lint/rules/noInvalidConstructorSuper",
     "lint/nursery/useExhaustiveDependencies": "https://rome.tools/docs/lint/rules/useExhaustiveDependencies",
     "lint/nursery/useCamelCase": "https://rome.tools/docs/lint/rules/useCamelCase",
-    "lint/nursery/noBannedTypes":"https://rome.tools/docs/lint/rules/noBannedTypes",
+    "lint/nursery/noBannedTypes": "https://rome.tools/docs/lint/rules/noBannedTypes",
+    "lint/nursery/useNumericLiterals": "https://rome.tools/docs/lint/rules/useNumericLiterals",
 
     ;
 

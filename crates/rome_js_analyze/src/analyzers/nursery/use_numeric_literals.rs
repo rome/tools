@@ -1,3 +1,5 @@
+use std::iter;
+
 use crate::JsRuleAction;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
@@ -5,7 +7,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyCallArgument, JsAnyExpression, JsAnyLiteralExpression, JsCallExpression,
+    JsAnyCallArgument, JsAnyExpression, JsAnyLiteralExpression, JsCallExpression, TriviaPieceKind,
 };
 use rome_rowan::{AstNode, AstNodeList, AstSeparatedList, BatchMutationExt};
 
@@ -42,10 +44,10 @@ declare_rule! {
     /// Number.parseInt(foo);
     /// Number.parseInt(foo, 2);
     /// ```
-    pub(crate) PreferNumericLiterals {
-        version: "0.7.0",
-        name: "preferNumericLiterals",
-        recommended: true,
+    pub(crate) UseNumericLiterals {
+        version: "11.0.0",
+        name: "useNumericLiterals",
+        recommended: false,
     }
 }
 
@@ -55,7 +57,7 @@ pub struct CallInfo {
     radix: Radix,
 }
 
-impl Rule for PreferNumericLiterals {
+impl Rule for UseNumericLiterals {
     type Query = Ast<JsCallExpression>;
     type State = CallInfo;
     type Signals = Option<Self::State>;
@@ -63,7 +65,7 @@ impl Rule for PreferNumericLiterals {
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();
-        get_call_info(node)
+        CallInfo::try_from_node(node)
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
@@ -83,12 +85,16 @@ impl Rule for PreferNumericLiterals {
 
         i128::from_str_radix(&state.text, state.radix as u32).ok()?;
         let suggested = format!("{}{}", state.radix.prefix(), state.text);
+        let mut suggested = make::js_number_literal(&suggested);
+        suggested = suggested.with_trailing_trivia(iter::once((TriviaPieceKind::Whitespace, " ")));
+
+        println!("'{suggested}'");
 
         mutation.replace_node(
             JsAnyExpression::JsCallExpression(node.clone()),
             JsAnyExpression::JsAnyLiteralExpression(
                 JsAnyLiteralExpression::JsNumberLiteralExpression(
-                    make::js_number_literal_expression(make::js_number_literal(&suggested)),
+                    make::js_number_literal_expression(suggested),
                 ),
             ),
         );
@@ -102,22 +108,24 @@ impl Rule for PreferNumericLiterals {
     }
 }
 
-fn get_call_info(expr: &JsCallExpression) -> Option<CallInfo> {
-    let callee = get_callee(expr)?;
-    let args = expr.arguments().ok()?.args();
-    if args.len() != 2 {
-        return None;
+impl CallInfo {
+    fn try_from_node(expr: &JsCallExpression) -> Option<CallInfo> {
+        let callee = get_callee(expr)?;
+        let args = expr.arguments().ok()?.args();
+        if args.len() != 2 {
+            return None;
+        }
+        let mut args = args.into_iter();
+        let text = args.next()?.ok()?;
+        let radix = args.next()?.ok()?;
+        let text_token = get_text(text.as_js_any_expression()?)?;
+        let radix = get_number(radix)?;
+        Some(CallInfo {
+            callee,
+            text: text_token,
+            radix: Radix::from_f64(radix)?,
+        })
     }
-    let mut args = args.into_iter();
-    let text = args.next()?.ok()?;
-    let radix = args.next()?.ok()?;
-    let text_token = get_text(text.as_js_any_expression()?)?;
-    let radix = get_number(radix)?;
-    Some(CallInfo {
-        callee,
-        text: text_token,
-        radix: Radix::from_f64(radix)?,
-    })
 }
 
 fn get_text(expression: &JsAnyExpression) -> Option<String> {
