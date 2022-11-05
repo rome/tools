@@ -585,7 +585,7 @@ useNumericLiterals.js:55:21 lint/nursery/useNumericLiterals  FIXABLE  ━━━�
     53 53 │   5+parseInt('A', 16)
     54 54 │   function *f(){ yield(Number).parseInt('11', 2) }
     55    │ - function·*f(){·yield(Number.parseInt)('67',·8)·}
-       55 │ + function·*f(){·yield0o67·}
+       55 │ + function·*f(){·yield·0o67·}
     56 56 │   function *f(){ yield(parseInt)('A', 16) }
     57 57 │   function *f(){ yield Number.parseInt('11', 2) }
   
@@ -609,7 +609,7 @@ useNumericLiterals.js:56:21 lint/nursery/useNumericLiterals  FIXABLE  ━━━�
     54 54 │   function *f(){ yield(Number).parseInt('11', 2) }
     55 55 │   function *f(){ yield(Number.parseInt)('67', 8) }
     56    │ - function·*f(){·yield(parseInt)('A',·16)·}
-       56 │ + function·*f(){·yield0xA·}
+       56 │ + function·*f(){·yield·0xA·}
     57 57 │   function *f(){ yield Number.parseInt('11', 2) }
     58 58 │   function *f(){ yield/**/Number.parseInt('67', 8) }
   

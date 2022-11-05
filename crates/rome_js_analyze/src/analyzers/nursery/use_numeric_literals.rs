@@ -5,8 +5,8 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsCallExpression, JsSyntaxElement, JsSyntaxKind,
-    JsSyntaxToken, TriviaPieceKind,
+    JsAnyExpression, JsAnyLiteralExpression, JsCallExpression, JsSyntaxKind, JsSyntaxToken,
+    TriviaPieceKind,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt, TriviaPiece};
 
@@ -135,25 +135,34 @@ fn attach_trivia(number: String, source: &JsCallExpression) -> JsSyntaxToken {
     let mut leading_trivia = vec![];
     let mut trailing_trivia = vec![];
 
+    macro_rules! add_ws {
+        ($collection:ident, $token:expr, $trivia:ident) => {
+            if $collection.is_empty() {
+                if let Some(token) = $token {
+                    if !token.kind().is_punct() && token.$trivia().text().len() == 0 {
+                        text.push(' ');
+                        $collection.push(TriviaPiece::new(TriviaPieceKind::Whitespace, 1));
+                    }
+                }
+            }
+        };
+    }
+
     if let Some(token) = node.first_token() {
         for t in token.leading_trivia().pieces() {
             text.push_str(t.text());
             leading_trivia.push(TriviaPiece::new(t.kind(), t.text_len()));
         }
+        add_ws!(leading_trivia, token.prev_token(), trailing_trivia);
     }
-    add_whitespace(&mut leading_trivia, &mut text, node.prev_sibling_or_token());
     text.push_str(&number);
     if let Some(token) = node.last_token() {
         for t in token.trailing_trivia().pieces() {
             text.push_str(t.text());
             trailing_trivia.push(TriviaPiece::new(t.kind(), t.text_len()));
         }
+        add_ws!(trailing_trivia, token.next_token(), leading_trivia);
     }
-    add_whitespace(
-        &mut trailing_trivia,
-        &mut text,
-        node.next_sibling_or_token(),
-    );
 
     JsSyntaxToken::new_detached(
         JsSyntaxKind::JS_NUMBER_LITERAL,
@@ -161,25 +170,6 @@ fn attach_trivia(number: String, source: &JsCallExpression) -> JsSyntaxToken {
         leading_trivia,
         trailing_trivia,
     )
-}
-
-fn add_whitespace(
-    trivia: &mut Vec<TriviaPiece>,
-    text: &mut String,
-    element: Option<JsSyntaxElement>,
-) {
-    if !trivia.is_empty() {
-        return;
-    }
-    match element {
-        Some(JsSyntaxElement::Token(token))
-            if !token.kind().is_trivia() && !token.kind().is_punct() =>
-        {
-            text.push(' ');
-            trivia.push(TriviaPiece::new(TriviaPieceKind::Whitespace, 1));
-        }
-        _ => (),
-    }
 }
 
 fn get_callee(expr: &JsCallExpression) -> Option<&'static str> {
