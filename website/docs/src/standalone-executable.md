@@ -7,7 +7,7 @@
 
 Using Rome's standalone CLI binary can be a great choice if you aren't already using Node or npm (or any other package manager). Or in other words, Rome shouldn't be the only reason for you to have a `package.json`.
 
-> Note: If you're already using npm or another package manager, then using the package manager is the [preferred way to install](/getting-started#installation) Rome. You're already familiar with the tooling, and installing and updating are simpler.
+> Note: If you're already using npm or another package manager, then using the package manager is the [preferred way to install](/guides/getting-started#installation) Rome. You're already familiar with the tooling, and installing and updating are simpler.
 
 
 ### System Requirements

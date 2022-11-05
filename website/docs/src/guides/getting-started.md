@@ -133,7 +133,7 @@ If you are looking for editor support in a JetBrains IDE like WebStorm, then vis
 
 ## CI Setup
 
-If you're using Node.js, the recommended way to run Rome in CI is to use [your favourite package manager](/getting-started#installation). This ensures that your CI pipeline uses the same version of Rome as you do inside of the editor or when running local CLI commands.
+If you're using Node.js, the recommended way to run Rome in CI is to use [your favourite package manager](/guides/getting-started#installation). This ensures that your CI pipeline uses the same version of Rome as you do inside of the editor or when running local CLI commands.
 
 
 If you are working on a project that isn't using Node.js, then the best way to integrate Rome into your CI is to use the [setup-rome](https://github.com/rome/setup-rome#usage) GitHub Action or install the [standalone executable](/standalone-executable).
