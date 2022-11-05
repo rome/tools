@@ -1,13 +1,14 @@
-use std::iter;
-
 use crate::{ast_utils, JsRuleAction};
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsCallExpression, TriviaPieceKind};
-use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
+use rome_js_syntax::{
+    JsAnyExpression, JsAnyLiteralExpression, JsCallExpression, JsSyntaxElement, JsSyntaxKind,
+    JsSyntaxToken, TriviaPieceKind,
+};
+use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt, TriviaPiece};
 
 declare_rule! {
     /// Disallow `parseInt()` and `Number.parseInt()` in favor of binary, octal, and hexadecimal literals
@@ -77,20 +78,18 @@ impl Rule for UseNumericLiterals {
         ))
     }
 
-    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, call: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
         let mut mutation = ctx.root().begin();
 
-        i128::from_str_radix(&state.text, state.radix as u32).ok()?;
-        let suggested = format!("{}{}", state.radix.prefix(), state.text);
-        let mut suggested = make::js_number_literal(&suggested);
-        suggested = suggested.with_trailing_trivia(iter::once((TriviaPieceKind::Whitespace, " ")));
+        let number = call.to_numeric_literal()?;
+        let number = attach_trivia(number, node);
 
-        mutation.replace_node(
+        mutation.replace_node_discard_trivia(
             JsAnyExpression::JsCallExpression(node.clone()),
             JsAnyExpression::JsAnyLiteralExpression(
                 JsAnyLiteralExpression::JsNumberLiteralExpression(
-                    make::js_number_literal_expression(suggested),
+                    make::js_number_literal_expression(number),
                 ),
             ),
         );
@@ -98,7 +97,7 @@ impl Rule for UseNumericLiterals {
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::Always,
-            message: markup! { "Replace with "{state.radix.description()}" literals" }.to_owned(),
+            message: markup! { "Replace with "{call.radix.description()}" literals" }.to_owned(),
             mutation,
         })
     }
@@ -121,6 +120,65 @@ impl CallInfo {
             text,
             radix: Radix::from_f64(radix)?,
         })
+    }
+
+    fn to_numeric_literal(&self) -> Option<String> {
+        i128::from_str_radix(&self.text, self.radix as u32).ok()?;
+        let number = format!("{}{}", self.radix.prefix(), self.text);
+        Some(number)
+    }
+}
+
+fn attach_trivia(number: String, source: &JsCallExpression) -> JsSyntaxToken {
+    let mut text = String::new();
+    let node = source.syntax();
+    let mut leading_trivia = vec![];
+    let mut trailing_trivia = vec![];
+
+    if let Some(token) = node.first_token() {
+        for t in token.leading_trivia().pieces() {
+            text.push_str(t.text());
+            leading_trivia.push(TriviaPiece::new(t.kind(), t.text_len()));
+        }
+    }
+    add_whitespace(&mut leading_trivia, &mut text, node.prev_sibling_or_token());
+    text.push_str(&number);
+    if let Some(token) = node.last_token() {
+        for t in token.trailing_trivia().pieces() {
+            text.push_str(t.text());
+            trailing_trivia.push(TriviaPiece::new(t.kind(), t.text_len()));
+        }
+    }
+    add_whitespace(
+        &mut trailing_trivia,
+        &mut text,
+        node.next_sibling_or_token(),
+    );
+
+    JsSyntaxToken::new_detached(
+        JsSyntaxKind::JS_NUMBER_LITERAL,
+        &text,
+        leading_trivia,
+        trailing_trivia,
+    )
+}
+
+fn add_whitespace(
+    trivia: &mut Vec<TriviaPiece>,
+    text: &mut String,
+    element: Option<JsSyntaxElement>,
+) {
+    if !trivia.is_empty() {
+        return;
+    }
+    match element {
+        Some(JsSyntaxElement::Token(token))
+            if !token.kind().is_trivia() && !token.kind().is_punct() =>
+        {
+            text.push(' ');
+            trivia.push(TriviaPiece::new(TriviaPieceKind::Whitespace, 1));
+        }
+        _ => (),
     }
 }
 

@@ -60,12 +60,12 @@ function *f(){ yield(parseInt('A', 16)) }
 parseInt('11', 2)+5
 Number.parseInt('17', 8)+5
 parseInt('A', 16)+5
-//parseInt('11', 2)in foo
-//Number.parseInt('17', 8)in foo
-//parseInt('A', 16)in foo
+parseInt('11', 2)in foo
+Number.parseInt('17', 8)in foo
+parseInt('A', 16)in foo
 parseInt('11', 2) in foo
 Number.parseInt('17', 8)/**/in foo
-//(parseInt('A', 16))in foo
+(parseInt('A', 16))in foo
 /* comment */Number.parseInt('11', 2);
 Number/**/.parseInt('11', 2);
 Number//
