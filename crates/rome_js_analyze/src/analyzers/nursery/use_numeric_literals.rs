@@ -5,8 +5,8 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsCallExpression, JsSyntaxKind, JsSyntaxToken,
-    TriviaPieceKind,
+    JsAnyExpression, JsAnyLiteralExpression, JsCallExpression, JsSyntaxKind, JsSyntaxNode,
+    JsSyntaxToken, TriviaPieceKind,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt, TriviaPiece};
 
@@ -135,34 +135,9 @@ fn attach_trivia(number: String, source: &JsCallExpression) -> JsSyntaxToken {
     let mut leading_trivia = vec![];
     let mut trailing_trivia = vec![];
 
-    macro_rules! add_ws {
-        ($collection:ident, $token:expr, $trivia:ident) => {
-            if $collection.is_empty() {
-                if let Some(token) = $token {
-                    if !token.kind().is_punct() && token.$trivia().text().len() == 0 {
-                        text.push(' ');
-                        $collection.push(TriviaPiece::new(TriviaPieceKind::Whitespace, 1));
-                    }
-                }
-            }
-        };
-    }
-
-    if let Some(token) = node.first_token() {
-        for t in token.leading_trivia().pieces() {
-            text.push_str(t.text());
-            leading_trivia.push(TriviaPiece::new(t.kind(), t.text_len()));
-        }
-        add_ws!(leading_trivia, token.prev_token(), trailing_trivia);
-    }
+    get_leading_trivia(&mut leading_trivia, &mut text, &node);
     text.push_str(&number);
-    if let Some(token) = node.last_token() {
-        for t in token.trailing_trivia().pieces() {
-            text.push_str(t.text());
-            trailing_trivia.push(TriviaPiece::new(t.kind(), t.text_len()));
-        }
-        add_ws!(trailing_trivia, token.next_token(), leading_trivia);
-    }
+    get_trailing_trivia(&mut trailing_trivia, &mut text, &node);
 
     JsSyntaxToken::new_detached(
         JsSyntaxKind::JS_NUMBER_LITERAL,
@@ -170,6 +145,38 @@ fn attach_trivia(number: String, source: &JsCallExpression) -> JsSyntaxToken {
         leading_trivia,
         trailing_trivia,
     )
+}
+
+fn get_leading_trivia(trivia: &mut Vec<TriviaPiece>, text: &mut String, node: &JsSyntaxNode) {
+    let Some(token) = node.first_token() else { return };
+    for t in token.leading_trivia().pieces() {
+        text.push_str(t.text());
+        trivia.push(TriviaPiece::new(t.kind(), t.text_len()));
+    }
+    if !trivia.is_empty() {
+        return;
+    }
+    let Some(token) = token.prev_token() else { return };
+    if !token.kind().is_punct() && token.trailing_trivia().text().len() == 0 {
+        text.push(' ');
+        trivia.push(TriviaPiece::new(TriviaPieceKind::Whitespace, 1));
+    }
+}
+
+fn get_trailing_trivia(trivia: &mut Vec<TriviaPiece>, text: &mut String, node: &JsSyntaxNode) {
+    let Some(token) = node.last_token() else { return };
+    for t in token.trailing_trivia().pieces() {
+        text.push_str(t.text());
+        trivia.push(TriviaPiece::new(t.kind(), t.text_len()));
+    }
+    if !trivia.is_empty() {
+        return;
+    }
+    let Some(token) = token.next_token() else { return };
+    if !token.kind().is_punct() && token.leading_trivia().text().len() == 0 {
+        text.push(' ');
+        trivia.push(TriviaPiece::new(TriviaPieceKind::Whitespace, 1));
+    }
 }
 
 fn get_callee(expr: &JsCallExpression) -> Option<&'static str> {
