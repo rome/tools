@@ -1,0 +1,148 @@
+---
+social-image: social-logo.png
+---
+
+<!doctype html>
+<html lang="en" data-theme="auto">
+	<head>
+		<meta charset="utf8" />
+		<title>{{ title | titlify }}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="mask-icon" href="/img/pinned-rome-logo.svg" color="#FFC905">
+		<link rel="alternate icon" type="image/png" href="/img/favicon.png">
+		<link rel="icon" type="image/svg+xml" href="{{ "static/img/favicon.svg" | includeraw | toBase64: "svg" | safe }}">
+
+		<meta name="description" content="{{ description | escape }}">
+		<meta name="theme-color" content="#FFC905">
+		<meta property="og:title" content="{{ title | titlify }}">
+		<meta property="og:description" content="{{ description | escape }}">
+		<meta property="og:image" content="{{ env.WEBSITE_URL }}/img/{{ social-image }}">
+		<meta property="twitter:image" content="{{ env.WEBSITE_URL }}/img/{{ social-image }}">
+		<meta property="twitter:site" content="@rometools">
+		<meta property="twitter:creator" content="@rometools">
+		<meta property="twitter:image:alt" content="Logo for Rome Tools">
+		<meta property="twitter:card" content="summary_large_image">
+
+		{% capture styles %}
+			{{ "node_modules/@docsearch/css/dist/style.css" | includeraw | mincss | safe }}
+			{% include styles/index.css %}
+		{% endcapture %}
+		<style>{{ styles | mincss | safe }}</style>
+		<noscript>
+			{% capture nojsstyles %}
+				{% include styles/nojs.css %}
+			{% endcapture %}
+			<style>{{ nojsstyles | mincss | safe }}</style>
+		</noscript>
+
+		<script>
+			{% capture preJS %}
+				(function () {
+					const currentTheme = localStorage.getItem('data-theme');
+					if (currentTheme != null) {
+						document.documentElement.setAttribute("data-theme", currentTheme);
+					}
+				})();
+			{% endcapture %}
+			{{ preJS | jsmin | safe }}
+		</script>
+	</head>
+
+	<body class="{{ body-class }}">
+		{% capture toccontent %}{{ content | toc | safe }}{% endcapture %}
+		{% assign sidebar-enabled = toccontent != "" %}
+
+		<div class="docs-header">
+			<a class="logo" href="/">
+				{% include svg/rome-logo.svg %}
+
+				<span class="logo-text sr-only">Rome</span>
+			</a>
+
+			<div id="docsearch"></div>
+
+			<a class="foreground-svg link" target="_blank" href="https://discord.gg/rome">{% include svg/discord.svg %}<span class="sr-only">Discord</span></a>
+			<a class="foreground-svg link" target="_blank" href="https://github.com/rome/tools">{% include svg/footer/github.svg %}<span class="sr-only">GitHub</span></a>
+			<a class="foreground-svg link" target="_blank" href="https://twitter.com/rometools">{% include svg/footer/twitter.svg %}<span class="sr-only">Twitter</span></a>
+
+			{% if sidebar-enabled %}
+				<a href="#" class="mobile-handle">
+					{% include svg/mobile-nav-handle.svg %}
+					{% include svg/close-icon.svg %}
+				</a>
+			{% endif %}
+		</div>
+
+		<div class="docs-main">
+			<aside class="docs-sidebar sidebar">
+				<h2>Guides</h2>
+
+				<ul>
+					<li><a {{ "/guides/getting-started/" | linkattribs }}>Getting Started</a></li>
+				</ul>
+
+				<h2>Tools</h2>
+
+				<ul>
+					<li><a {{ "/formatter/" | linkattribs }}>Formatter</a></li>
+					<li><a {{ "/linter/" | linkattribs }}>Linter</a></li>
+				</ul>
+
+				<h2>Reference</h2>
+
+				<ul>
+					<li><a {{ "/cli/" | linkattribs }}>CLI</a></li>
+					<li><a {{ "/configuration/" | linkattribs }}>Configuration</a></li>
+					<li><a {{ "/lint/rules/" | linkattribs }}>Lint Rules</a></li>
+				</ul>
+
+				<h2>Internals</h2>
+
+				<ul>
+					<li><a {{ "/internals/architecture/" | linkattribs }}>Architecture</a></li>
+					<li><a {{ "/internals/philosophy/" | linkattribs }}>Philosophy</a></li>
+					<li><a {{ "/credits/" | linkattribs }}>Credits</a></li>
+				</ul>
+			</aside>
+
+			<main class="main content {{ main-class }}">
+				{{ content | safe }}
+			</main>
+
+			{% if sidebar-enabled %}
+				<nav class="toc-sidebar sidebar">
+					<h2>On this page</h2>
+
+					{{ toccontent }}
+				</nav>
+			{% endif %}
+		</div>
+
+		<footer aria-labelledby="footer">
+			<div class="container footer-inner">
+				<h1 id="footer" class="sr-only">Footer</h1>
+
+				<p>&copy; 2022 Rome Tools. All rights reserved.</p>
+
+				{% include color-scheme-switcher %}
+			</div>
+		</footer>
+
+		{% if env.production %}
+			<script src="https://browser.sentry-cdn.com/5.29.0/bundle.tracing.min.js" crossorigin="anonymous"></script>
+
+			<script>
+				if (typeof Sentry !== "undefined") {
+					Sentry.init({
+						dsn: "https://d2e6dd662d05460db434756b97bf054e@o487646.ingest.sentry.io/5546624",
+						tracesSampleRate: 1.0,
+					});
+				}
+			</script>
+		{% endif %}
+
+		{% capture script %}{% include scripts/index.liquid %}{% endcapture %}
+		<script async defer>{{ script | jsmin | safe }}</script>
+	</body>
+</html>

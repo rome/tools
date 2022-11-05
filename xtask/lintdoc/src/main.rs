@@ -23,7 +23,7 @@ use std::{
 use xtask::{glue::fs2, *};
 
 fn main() -> Result<()> {
-    let root = project_root().join("website/src/docs/lint/rules");
+    let root = project_root().join("website/docs/src/lint/rules");
 
     // Clear the rules directory ignoring "not found" errors
     if let Err(err) = fs2::remove_dir_all(&root) {
