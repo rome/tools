@@ -28,6 +28,22 @@ declare_rule! {
     /// }
     /// ```
     ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// export default class A extends B {
+    ///     constructor() {
+    ///         super();
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// ```js
+    /// export class A {
+    ///     constructor() {}
+    /// }
+    /// ```
+    ///
     pub(crate) NoInvalidConstructorSuper {
         version: "10.0.0",
         name: "noInvalidConstructorSuper",

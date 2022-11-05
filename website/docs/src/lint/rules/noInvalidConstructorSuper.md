@@ -49,3 +49,19 @@ class A {
   
 </code></pre>{% endraw %}
 
+### Valid
+
+```jsx
+export default class A extends B {
+    constructor() {
+        super();
+    }
+}
+```
+
+```jsx
+export class A {
+    constructor() {}
+}
+```
+
