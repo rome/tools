@@ -184,6 +184,7 @@ fn add_whitespace(
 
 fn get_callee(expr: &JsCallExpression) -> Option<&'static str> {
     let callee = expr.callee().ok()?;
+    let callee = ast_utils::remove_parentheses(callee)?;
     if ast_utils::is_specific_id(&callee, "parseInt") {
         return Some("parseInt()");
     }

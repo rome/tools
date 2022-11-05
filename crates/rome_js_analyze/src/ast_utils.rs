@@ -1,5 +1,5 @@
 use rome_js_syntax::{
-    JsComputedMemberExpression, JsIdentifierExpression, JsLanguage, JsName,
+    JsAnyExpression, JsComputedMemberExpression, JsIdentifierExpression, JsLanguage, JsName,
     JsNumberLiteralExpression, JsStaticMemberExpression, JsStringLiteralExpression, JsTemplate,
 };
 use rome_rowan::{match_ast, AstNode, AstNodeList};
@@ -98,6 +98,17 @@ where
         match (node.syntax()) {
             JsNumberLiteralExpression(n) => n.as_number(),
             _ => None
+        }
+    }
+}
+
+pub fn remove_parentheses(mut expr: JsAnyExpression) -> Option<JsAnyExpression> {
+    loop {
+        match expr {
+            JsAnyExpression::JsParenthesizedExpression(e) => {
+                expr = e.expression().ok()?;
+            }
+            _ => break Some(expr),
         }
     }
 }
