@@ -490,6 +490,7 @@
 				height: 18px;
 				width: 100%;
 				background-color: #E9ECEF;
+				flex-shrink: 0;
 
 				@include dark-mode {
 					background-color: rgba(255, 255, 255, 0.2);
@@ -500,8 +501,11 @@
 				}
 			}
 
+			.spreader {
+				height: 100%;
+			}
+
 			.multiplier {
-				margin-top: 40px;
 				font-size: 36px;
 				margin-bottom: 10px;
 
@@ -529,6 +533,21 @@
 
 			.progress-bar-bad {
 				background-color: #F03E3E;
+
+				&.transition {
+					transition: homepage-prettier-progress 9.8s linear;
+					transition-property: width;
+				}
+			}
+
+			.timer-running {
+				opacity: 0.6;
+			}
+
+			.time-bad-timer::after {
+				color: inherit;
+				content: " / ";
+				color: #868e96;
 			}
 
 			.time-good {

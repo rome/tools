@@ -658,11 +658,68 @@ for (const button of componentSwitcher) {
 
 //# Tweet dark mode
 const tweets = Array.from(document.querySelectorAll(".twitter-tweet"));
-function updateTweetThemes(scheme) {
-}
+function updateTweetThemes(scheme) {}
 if (tweets.length > 0) {
 	const scheme = getCurrentTheme();
 	for (const elem of tweets) {
 		elem.setAttribute("data-theme", scheme);
 	}
+}
+
+//# Homepage Prettier progress trigger
+/** @type {HTMLDivElement | null}*/
+const maybePrettierProgressBar = document.querySelector(
+	".homepage .progress-bar-bad",
+);
+if (maybePrettierProgressBar != null) {
+	/** @type {HTMLDivElement}*/
+	const prettierProgressBar = maybePrettierProgressBar;
+
+	const width = prettierProgressBar.style.width;
+	prettierProgressBar.style.width = "0";
+	prettierProgressBar.classList.add("transition");
+
+	/** @type {any}*/
+	const totalTimeElem = document.querySelector(".homepage .time-bad");
+
+	function start() {
+		prettierProgressBar.style.width = width;
+
+		let start = Date.now();
+
+		const newTimeElem = document.createElement("span");
+		newTimeElem.classList.add("time-bad", "time-bad-timer");
+		totalTimeElem.parentElement.insertBefore(newTimeElem, totalTimeElem);
+		totalTimeElem.classList.add("timer-running");
+
+		let interval = setInterval(() => {
+			const took = Date.now() - start;
+			newTimeElem.textContent = `${(took / 1000).toFixed(1)}s`;
+		}, 100);
+
+		prettierProgressBar.addEventListener(
+			"transitionend",
+			() => {
+				clearInterval(interval);
+				totalTimeElem.classList.remove("timer-running");
+				newTimeElem.remove();
+			},
+			{ once: true },
+		);
+	}
+
+	const observer = new window.IntersectionObserver(
+		([entry]) => {
+			if (entry.isIntersecting) {
+				start();
+				observer.disconnect();
+			}
+		},
+		{
+			root: null,
+			threshold: 1,
+		},
+	);
+
+	observer.observe(prettierProgressBar);
 }
