@@ -154,24 +154,3 @@ const expr = [
 ```
 
 As you can see the first array, which has a suppression comment, is left untouched!
-
-## Migration from other formatters
-
-Rome doesn't support a lot of options like other web formatters, which means that particular styles
-won't be available to all developers.
-
-To migrate from suppression comments of the old formatter, it's recommended to run a global search and replace against the code
-base and replace the formatting comment with:
-
-```
-// rome-ignore format: migration from <name_of_former_formatter>
-```
-
-Then, you are free to change the reason of the suppression that you want.
-
-Run the formatter and make sure that **the code that was ignored is still the same**.
-
-[vs code extension]: https://marketplace.visualstudio.com/items?itemName=rome.rome
-[release page]: https://github.com/rome/tools/releases
-[playground]: https://play.rome.tools
-[command palette]: https://code.visualstudio.com/getstarted/userinterface#_command-palette

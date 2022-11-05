@@ -4,6 +4,7 @@
 .content {
 	max-width: 100%;
 	margin: 0 auto;
+	overflow: hidden;
 
 	.header-anchor {
 		@extend .sr-only;
@@ -48,6 +49,14 @@
 	p, ul, ol, pre, h4, h5 {
 		margin-top: 1em;
 		margin-bottom: 1.5em;
+	}
+
+	pre[class*=language-] {
+		@include mobile-only() {
+			border-radius: 0 !important;
+			margin-left: -20px;
+			margin-right: -20px;
+		}
 	}
 
 	strong {

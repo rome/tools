@@ -161,14 +161,6 @@ a, .link {
 	}
 }
 
-pre[class*=language-] {
-	@include mobile-only() {
-		border-radius: 0 !important;
-		margin-left: -32px;
-		margin-right: -32px;
-	}
-}
-
 @media (prefers-reduced-motion) {
 	* {
 		transition: none !important;
