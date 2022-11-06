@@ -1796,7 +1796,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
     const UNARY_SINGLE: TokenSet =
         token_set![T![delete], T![void], T![typeof], T![+], T![-], T![~], T![!]];
 
-    if (p.state.in_async()) && p.at(T![await]) {
+    if p.at(T![await]) {
         // test await_expression
         // async function test() {
         //   await inner();
@@ -1811,15 +1811,27 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         // // SCRIPT
         // async function test() {}
         // await test();
+        let checkpoint = p.checkpoint();
         let m = p.start();
+        let await_range = p.cur_range();
         p.expect(T![await]);
 
-        parse_unary_expr(p, context)
-            .or_add_diagnostic(p, js_parse_error::expected_unary_expression);
+        let unary = parse_unary_expr(p, context);
 
+        // test reparse_await_as_identifier
+        // // SCRIPT
+        // function test() { a = await; }
+        // function test2() { return await; }
+        if unary.is_absent() && !p.state.in_async() {
+            p.rewind(checkpoint);
+            m.abandon(p);
+            return parse_identifier_expression(p);
+        }
+
+        unary.or_add_diagnostic(p, js_parse_error::expected_unary_expression);
         let mut expr = m.complete(p, JS_AWAIT_EXPRESSION);
 
-        if !p.state.is_top_level() && !p.state.in_function() {
+        if !p.state.is_top_level() && !p.state.in_function() || !p.state.in_async() {
             // test_err await_in_parameter_initializer
             // async function test(a = await b()) {}
             // function test2(a = await b()) {}
@@ -1831,9 +1843,12 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
             //     await;
             //   }
             // }
+
+            // test_err await_in_non_async_function
+            // function test() { await 10; }
             p.error(p.err_builder(
                 "`await` is only allowed within async functions and at the top levels of modules.",
-                expr.range(p),
+                await_range,
             ));
             expr.change_to_unknown(p);
         }
