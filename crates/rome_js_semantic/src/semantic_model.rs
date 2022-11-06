@@ -12,7 +12,7 @@ use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
 use rustc_hash::{FxHashMap, FxHashSet};
 use std::{
-    collections::{BTreeSet, HashSet, VecDeque},
+    collections::{BTreeSet, VecDeque},
     iter::FusedIterator,
     sync::Arc,
 };
@@ -138,10 +138,6 @@ struct SemanticModelData {
     declared_at_by_range: FxHashMap<TextRange, TextRange>,
     // Maps a declaration range to the range of its references
     declaration_all_references: FxHashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
-    // Maps a declaration range to the range of its "reads"
-    declaration_all_reads: FxHashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
-    // Maps a declaration range to the range of its "writes"
-    declaration_all_writes: FxHashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     // All bindings that were exported
     exported: FxHashSet<TextRange>,
     /// All references that could not be resolved
@@ -182,25 +178,19 @@ impl SemanticModelData {
         }
     }
 
-    pub fn all_reads_iter(
-        &self,
-        range: &TextRange,
-    ) -> std::slice::Iter<'_, (ReferenceType, TextRange)> {
-        if let Some(v) = self.declaration_all_reads.get(range) {
-            v.iter()
+    pub fn all_reads_iter(&self, range: &TextRange) -> ReadsIter {
+        if let Some(v) = self.declaration_all_references.get(range) {
+            ReadsIter { iter: v.iter() }
         } else {
-            [].iter()
+            ReadsIter { iter: [].iter() }
         }
     }
 
-    pub fn all_writes_iter(
-        &self,
-        range: &TextRange,
-    ) -> std::slice::Iter<'_, (ReferenceType, TextRange)> {
-        if let Some(v) = self.declaration_all_writes.get(range) {
-            v.iter()
+    pub fn all_writes_iter(&self, range: &TextRange) -> WritesIter {
+        if let Some(v) = self.declaration_all_references.get(range) {
+            WritesIter { iter: v.iter() }
         } else {
-            [].iter()
+            WritesIter { iter: [].iter() }
         }
     }
 
@@ -376,18 +366,18 @@ impl Binding {
     }
 
     /// Returns an iterator to all reads references of this binding.
-    pub fn all_reads(&self) -> ReferencesIter {
+    pub fn all_reads(&self) -> ReadReferencesIter {
         let range = self.node.text_range();
-        ReferencesIter {
+        ReadReferencesIter {
             data: self.data.clone(),
             iter: self.data.all_reads_iter(&range),
         }
     }
 
     /// Returns an iterator to all write references of this binding.
-    pub fn all_writes(&self) -> ReferencesIter {
+    pub fn all_writes(&self) -> WriteReferencesIter {
         let range = self.node.text_range();
-        ReferencesIter {
+        WriteReferencesIter {
             data: self.data.clone(),
             iter: self.data.all_writes_iter(&range),
         }
@@ -445,6 +435,86 @@ impl Reference {
 
     pub fn is_write(&self) -> bool {
         matches!(self.ty, ReferenceType::Write { .. })
+    }
+}
+
+struct ReadsIter<'a> {
+    iter: std::slice::Iter<'a, (ReferenceType, TextRange)>,
+}
+
+impl<'a> Iterator for ReadsIter<'a> {
+    type Item = (ReferenceType, TextRange);
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let result = loop {
+            match self.iter.next()? {
+                (read @ ReferenceType::Read { .. }, range) => {
+                    break (*read, *range);
+                }
+                _ => {}
+            }
+        };
+        Some(result)
+    }
+}
+
+pub struct ReadReferencesIter<'a> {
+    data: Arc<SemanticModelData>,
+    iter: ReadsIter<'a>,
+}
+
+impl<'a> Iterator for ReadReferencesIter<'a> {
+    type Item = Reference;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let (ty, range) = self.iter.next()?;
+        let node = self.data.node_by_range.get(&range)?;
+        Some(Reference {
+            data: self.data.clone(),
+            node: node.clone(),
+            range,
+            ty,
+        })
+    }
+}
+
+struct WritesIter<'a> {
+    iter: std::slice::Iter<'a, (ReferenceType, TextRange)>,
+}
+
+impl<'a> Iterator for WritesIter<'a> {
+    type Item = (ReferenceType, TextRange);
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let result = loop {
+            match self.iter.next()? {
+                (read @ ReferenceType::Write { .. }, range) => {
+                    break (*read, *range);
+                }
+                _ => {}
+            }
+        };
+        Some(result)
+    }
+}
+
+pub struct WriteReferencesIter<'a> {
+    data: Arc<SemanticModelData>,
+    iter: WritesIter<'a>,
+}
+
+impl<'a> Iterator for WriteReferencesIter<'a> {
+    type Item = Reference;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let (ty, range) = self.iter.next()?;
+        let node = self.data.node_by_range.get(&range)?;
+        Some(Reference {
+            data: self.data.clone(),
+            node: node.clone(),
+            range,
+            ty,
+        })
     }
 }
 
@@ -723,10 +793,10 @@ impl SemanticModel {
 
     /// Returns a list with all read [Reference] of the specified declaration.
     /// Can also be called from "all_reads" extension method.
-    pub fn all_reads<'a>(&'a self, declaration: &impl IsDeclarationAstNode) -> ReferencesIter<'a> {
+    pub fn all_reads(&self, declaration: &impl IsDeclarationAstNode) -> ReadReferencesIter {
         let node = declaration.node();
         let range = node.syntax().text_range();
-        ReferencesIter {
+        ReadReferencesIter {
             data: self.data.clone(),
             iter: self.data.all_reads_iter(&range),
         }
@@ -734,10 +804,10 @@ impl SemanticModel {
 
     /// Returns a list with all write [Reference] of the specified declaration.
     /// Can also be called from "all_writes" extension method.
-    pub fn all_writes<'a>(&'a self, declaration: &impl IsDeclarationAstNode) -> ReferencesIter<'a> {
+    pub fn all_writes(&self, declaration: &impl IsDeclarationAstNode) -> WriteReferencesIter {
         let node = declaration.node();
         let range = node.syntax().text_range();
-        ReferencesIter {
+        WriteReferencesIter {
             data: self.data.clone(),
             iter: self.data.all_writes_iter(&range),
         }
@@ -847,14 +917,14 @@ pub trait AllReferencesExtensions {
         model.all_references(self)
     }
 
-    fn all_reads<'a>(&self, model: &'a SemanticModel) -> ReferencesIter<'a>
+    fn all_reads<'a>(&self, model: &'a SemanticModel) -> ReadReferencesIter<'a>
     where
         Self: IsDeclarationAstNode,
     {
         model.all_reads(self)
     }
 
-    fn all_writes<'a>(&self, model: &'a SemanticModel) -> ReferencesIter<'a>
+    fn all_writes<'a>(&self, model: &'a SemanticModel) -> WriteReferencesIter<'a>
     where
         Self: IsDeclarationAstNode,
     {
@@ -890,8 +960,6 @@ pub struct SemanticModelBuilder {
     scope_hoisted_to_by_range: FxHashMap<TextSize, usize>,
     declarations_by_range: FxHashMap<TextRange, TextRange>,
     declaration_all_references: FxHashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
-    declaration_all_reads: FxHashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
-    declaration_all_writes: FxHashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     exported: FxHashSet<TextRange>,
     unresolved_references: Vec<(ReferenceType, TextRange)>,
     global_references: Vec<(ReferenceType, TextRange)>,
@@ -908,8 +976,7 @@ impl SemanticModelBuilder {
             scope_hoisted_to_by_range: FxHashMap::default(),
             declarations_by_range: FxHashMap::default(),
             declaration_all_references: FxHashMap::default(),
-            declaration_all_reads: FxHashMap::default(),
-            declaration_all_writes: FxHashMap::default(),
+
             exported: FxHashSet::default(),
             unresolved_references: Vec::new(),
             global_references: Vec::new(),
@@ -997,10 +1064,6 @@ impl SemanticModelBuilder {
                     .entry(declaration_at)
                     .or_default()
                     .push((ReferenceType::Read { hoisted: false }, range));
-                self.declaration_all_reads
-                    .entry(declaration_at)
-                    .or_default()
-                    .push((ReferenceType::Read { hoisted: false }, range));
 
                 let scope = &mut self.scopes[scope_id];
                 scope.read_references.push(ScopeReference { range });
@@ -1012,10 +1075,6 @@ impl SemanticModelBuilder {
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
                 self.declaration_all_references
-                    .entry(declaration_at)
-                    .or_default()
-                    .push((ReferenceType::Read { hoisted: true }, range));
-                self.declaration_all_reads
                     .entry(declaration_at)
                     .or_default()
                     .push((ReferenceType::Read { hoisted: true }, range));
@@ -1033,10 +1092,6 @@ impl SemanticModelBuilder {
                     .entry(declaration_at)
                     .or_default()
                     .push((ReferenceType::Write { hoisted: false }, range));
-                self.declaration_all_writes
-                    .entry(declaration_at)
-                    .or_default()
-                    .push((ReferenceType::Write { hoisted: false }, range));
 
                 let scope = &mut self.scopes[scope_id];
                 scope.write_references.push(ScopeReference { range });
@@ -1051,11 +1106,6 @@ impl SemanticModelBuilder {
                     .entry(declaration_at)
                     .or_default()
                     .push((ReferenceType::Write { hoisted: true }, range));
-                self.declaration_all_writes
-                    .entry(declaration_at)
-                    .or_default()
-                    .push((ReferenceType::Write { hoisted: true }, range));
-
                 let scope = &mut self.scopes[scope_id];
                 scope.write_references.push(ScopeReference { range });
             }
@@ -1097,8 +1147,6 @@ impl SemanticModelBuilder {
             node_by_range: self.node_by_range,
             declared_at_by_range: self.declarations_by_range,
             declaration_all_references: self.declaration_all_references,
-            declaration_all_reads: self.declaration_all_reads,
-            declaration_all_writes: self.declaration_all_writes,
             exported: self.exported,
             unresolved_references: self.unresolved_references,
             global_references: self.global_references,
@@ -1111,7 +1159,7 @@ impl SemanticModelBuilder {
 /// Extra options for the [SemanticModel] creation.
 pub struct SemanticModelOptions {
     /// All the allowed globals names
-    pub globals: HashSet<String>,
+    pub globals: FxHashSet<String>,
 }
 
 /// Build the complete [SemanticModel] of a parsed file.

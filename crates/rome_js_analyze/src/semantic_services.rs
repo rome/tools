@@ -3,6 +3,17 @@ use rome_analyze::{
     RuleKey, ServiceBag, Visitor, VisitorContext, VisitorFinishContext,
 };
 use rome_js_semantic::{SemanticEventExtractor, SemanticModel, SemanticModelBuilder};
+use rome_js_syntax::JsSyntaxKind::{
+    JSX_REFERENCE_IDENTIFIER, JS_ARROW_FUNCTION_EXPRESSION, JS_BLOCK_STATEMENT, JS_CALL_EXPRESSION,
+    JS_CATCH_CLAUSE, JS_CLASS_DECLARATION, JS_CLASS_EXPORT_DEFAULT_DECLARATION,
+    JS_CLASS_EXPRESSION, JS_CONSTRUCTOR_CLASS_MEMBER, JS_FOR_IN_STATEMENT, JS_FOR_OF_STATEMENT,
+    JS_FOR_STATEMENT, JS_FUNCTION_BODY, JS_FUNCTION_DECLARATION,
+    JS_FUNCTION_EXPORT_DEFAULT_DECLARATION, JS_FUNCTION_EXPRESSION, JS_GETTER_CLASS_MEMBER,
+    JS_GETTER_OBJECT_MEMBER, JS_IDENTIFIER_ASSIGNMENT, JS_IDENTIFIER_BINDING,
+    JS_METHOD_CLASS_MEMBER, JS_METHOD_OBJECT_MEMBER, JS_MODULE, JS_REFERENCE_IDENTIFIER, JS_SCRIPT,
+    JS_SETTER_CLASS_MEMBER, JS_SETTER_OBJECT_MEMBER, JS_SWITCH_STATEMENT, TS_ENUM_DECLARATION,
+    TS_FUNCTION_TYPE, TS_IDENTIFIER_BINDING, TS_INTERFACE_DECLARATION, TS_TYPE_ALIAS_DECLARATION,
+};
 use rome_js_syntax::{JsAnyRoot, JsLanguage, WalkEvent};
 use rome_rowan::{AstNode, SyntaxNode};
 
@@ -101,7 +112,50 @@ impl Visitor for SemanticModelBuilderVisitor {
     ) {
         match event {
             WalkEvent::Enter(node) => {
-                self.builder.push_node(node);
+                match node.kind() {
+                    JS_IDENTIFIER_BINDING | TS_IDENTIFIER_BINDING => {
+                        self.builder.push_node(node);
+                    }
+                    JS_REFERENCE_IDENTIFIER | JSX_REFERENCE_IDENTIFIER => {
+                        self.builder.push_node(node);
+                    }
+                    JS_IDENTIFIER_ASSIGNMENT => {
+                        self.builder.push_node(node);
+                    }
+                    JS_CALL_EXPRESSION => {
+                        self.builder.push_node(node);
+                    }
+
+                    JS_MODULE | JS_SCRIPT => self.builder.push_node(node),
+                    JS_FUNCTION_DECLARATION
+                    | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
+                    | JS_FUNCTION_EXPRESSION
+                    | JS_ARROW_FUNCTION_EXPRESSION
+                    | JS_CLASS_DECLARATION
+                    | JS_CLASS_EXPORT_DEFAULT_DECLARATION
+                    | JS_CLASS_EXPRESSION
+                    | JS_CONSTRUCTOR_CLASS_MEMBER
+                    | JS_METHOD_CLASS_MEMBER
+                    | JS_GETTER_CLASS_MEMBER
+                    | JS_SETTER_CLASS_MEMBER
+                    | JS_METHOD_OBJECT_MEMBER
+                    | JS_GETTER_OBJECT_MEMBER
+                    | JS_SETTER_OBJECT_MEMBER
+                    | JS_FUNCTION_BODY
+                    | TS_INTERFACE_DECLARATION
+                    | TS_ENUM_DECLARATION
+                    | TS_TYPE_ALIAS_DECLARATION
+                    | TS_FUNCTION_TYPE => {
+                        self.builder.push_node(node);
+                    }
+
+                    JS_BLOCK_STATEMENT | JS_FOR_STATEMENT | JS_FOR_OF_STATEMENT
+                    | JS_FOR_IN_STATEMENT | JS_SWITCH_STATEMENT | JS_CATCH_CLAUSE => {
+                        self.builder.push_node(node);
+                    }
+                    _ => {}
+                }
+
                 self.extractor.enter(node);
             }
             WalkEvent::Leave(node) => {
