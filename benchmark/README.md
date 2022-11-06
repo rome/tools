@@ -14,6 +14,7 @@ Setup: MacBook Pro (13-inch, M1, 2020)
 ### Linting
 * Rome's 2-3 times faster than ESLint
 * Rome is ~20-40% slower than ESLint when restricting it to a single core.
+
 The speed-ups for the multithreaded benchmarks can vary significantly depending on the setup. For example, Rome is 100 times faster than Prettier on an M1 Max with 10 cores.
 
 ## Analysis
