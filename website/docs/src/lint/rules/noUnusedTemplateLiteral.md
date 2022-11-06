@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noUnusedTemplateLiteral
-layout: layouts/docs.liquid
 ---
 
 # noUnusedTemplateLiteral (since v0.7.0)

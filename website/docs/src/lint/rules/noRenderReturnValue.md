@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noRenderReturnValue
-layout: layouts/docs.liquid
 ---
 
 # noRenderReturnValue (since v0.10.0)

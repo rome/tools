@@ -1,6 +1,5 @@
 ---
 title: Lint Rule useSimplifiedLogicExpression
-layout: layouts/docs.liquid
 ---
 
 # useSimplifiedLogicExpression (since v0.7.0)

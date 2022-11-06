@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noAsyncPromiseExecutor
-layout: layouts/docs.liquid
 ---
 
 # noAsyncPromiseExecutor (since v0.7.0)

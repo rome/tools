@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noNewSymbol
-layout: layouts/docs.liquid
 ---
 
 # noNewSymbol (since v0.10.0)

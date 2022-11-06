@@ -1,6 +1,5 @@
 ---
 title: Lint Rule useSingleVarDeclarator
-layout: layouts/docs.liquid
 ---
 
 # useSingleVarDeclarator (since v0.7.0)

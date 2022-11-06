@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noUselessFragments
-layout: layouts/docs.liquid
 ---
 
 # noUselessFragments (since v0.10.0)

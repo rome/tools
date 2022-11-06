@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noUnnecessaryContinue
-layout: layouts/docs.liquid
 ---
 
 # noUnnecessaryContinue (since v0.7.0)

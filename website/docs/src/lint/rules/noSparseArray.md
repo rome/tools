@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noSparseArray
-layout: layouts/docs.liquid
 ---
 
 # noSparseArray (since v0.7.0)

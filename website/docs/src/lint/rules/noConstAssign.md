@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noConstAssign
-layout: layouts/docs.liquid
 ---
 
 # noConstAssign (since v10.0.0)

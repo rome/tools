@@ -1,6 +1,5 @@
 ---
 title: Lint Rule useExhaustiveDependencies
-layout: layouts/docs.liquid
 ---
 
 # useExhaustiveDependencies (since v10.0.0)

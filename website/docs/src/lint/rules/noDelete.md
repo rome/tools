@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noDelete
-layout: layouts/docs.liquid
 ---
 
 # noDelete (since v0.7.0)

@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noDebugger
-layout: layouts/docs.liquid
 ---
 
 # noDebugger (since v0.7.0)

@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noAutofocus
-layout: layouts/docs.liquid
 ---
 
 # noAutofocus (since v10.0.0)

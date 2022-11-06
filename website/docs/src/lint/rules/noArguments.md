@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noArguments
-layout: layouts/docs.liquid
 ---
 
 # noArguments (since v0.7.0)

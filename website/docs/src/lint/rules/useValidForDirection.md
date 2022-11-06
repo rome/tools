@@ -1,6 +1,5 @@
 ---
 title: Lint Rule useValidForDirection
-layout: layouts/docs.liquid
 ---
 
 # useValidForDirection (since v10.0.0)

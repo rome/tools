@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noImportAssign
-layout: layouts/docs.liquid
 ---
 
 # noImportAssign (since v0.9.0)

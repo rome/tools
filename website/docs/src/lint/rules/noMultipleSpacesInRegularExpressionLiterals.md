@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noMultipleSpacesInRegularExpressionLiterals
-layout: layouts/docs.liquid
 ---
 
 # noMultipleSpacesInRegularExpressionLiterals (since v0.7.0)

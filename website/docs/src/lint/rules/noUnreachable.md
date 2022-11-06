@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noUnreachable
-layout: layouts/docs.liquid
 ---
 
 # noUnreachable (since v0.7.0)

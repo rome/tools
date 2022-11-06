@@ -1,6 +1,5 @@
 ---
 title: Lint Rule useBlockStatements
-layout: layouts/docs.liquid
 ---
 
 # useBlockStatements (since v0.7.0)

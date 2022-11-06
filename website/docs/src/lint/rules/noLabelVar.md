@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noLabelVar
-layout: layouts/docs.liquid
 ---
 
 # noLabelVar (since v0.7.0)

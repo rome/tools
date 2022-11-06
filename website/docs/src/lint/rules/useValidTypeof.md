@@ -1,6 +1,5 @@
 ---
 title: Lint Rule useValidTypeof
-layout: layouts/docs.liquid
 ---
 
 # useValidTypeof (since v0.7.0)

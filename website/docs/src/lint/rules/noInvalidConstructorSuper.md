@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noInvalidConstructorSuper
-layout: layouts/docs.liquid
 ---
 
 # noInvalidConstructorSuper (since v10.0.0)

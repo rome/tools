@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noUnusedVariables
-layout: layouts/docs.liquid
 ---
 
 # noUnusedVariables (since v0.9.0)

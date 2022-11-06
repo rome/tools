@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noCommentText
-layout: layouts/docs.liquid
 ---
 
 # noCommentText (since v0.7.0)

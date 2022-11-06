@@ -1,6 +1,5 @@
 ---
 title: Lint Rule useFragmentSyntax
-layout: layouts/docs.liquid
 ---
 
 # useFragmentSyntax (since v0.10.0)

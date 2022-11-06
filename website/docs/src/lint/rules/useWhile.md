@@ -1,6 +1,5 @@
 ---
 title: Lint Rule useWhile
-layout: layouts/docs.liquid
 ---
 
 # useWhile (since v0.7.0)
