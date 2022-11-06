@@ -1831,7 +1831,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         unary.or_add_diagnostic(p, js_parse_error::expected_unary_expression);
         let mut expr = m.complete(p, JS_AWAIT_EXPRESSION);
 
-        if !p.state.is_top_level() && !p.state.in_function() || !p.state.in_async() {
+        if !(p.state.in_async() && (p.state.is_top_level() || p.state.in_function())) {
             // test_err await_in_parameter_initializer
             // async function test(a = await b()) {}
             // function test2(a = await b()) {}
