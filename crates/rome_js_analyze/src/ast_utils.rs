@@ -2,7 +2,7 @@ use rome_js_syntax::{
     JsAnyExpression, JsComputedMemberExpression, JsIdentifierExpression, JsLanguage, JsName,
     JsNumberLiteralExpression, JsStaticMemberExpression, JsStringLiteralExpression, JsTemplate,
 };
-use rome_rowan::{match_ast, AstNode, AstNodeList};
+use rome_rowan::{match_ast, AstNode, AstNodeList, SyntaxResult};
 
 /// Check if the given node is an identifier with given value
 pub fn is_ident_eq<T>(node: &T, name: &str) -> bool
@@ -28,14 +28,21 @@ pub fn is_member_access_eq<T>(node: &T, object_name: &str, property_name: &str) 
 where
     T: AstNode<Language = JsLanguage>,
 {
+    fn is_normalized_ident_eq(node: SyntaxResult<JsAnyExpression>, object_name: &str) -> bool {
+        node.ok()
+            .and_then(remove_parentheses)
+            .map(|it| is_ident_eq(&it, object_name))
+            .unwrap_or(false)
+    }
+
     match_ast! {
         match (node.syntax()) {
             JsStaticMemberExpression(x) => {
-                x.object().map(|it| is_ident_eq(&it, object_name)).unwrap_or(false) &&
+                is_normalized_ident_eq(x.object(), object_name) &&
                 x.member().map(|it| is_name_eq(&it, property_name)).unwrap_or(false)
             },
             JsComputedMemberExpression(x) => {
-                x.object().map(|it| is_ident_eq(&it, object_name)).unwrap_or(false) &&
+                is_normalized_ident_eq(x.object(), object_name) &&
                 x.member().map(|it| is_static_text_eq(&it, property_name)).unwrap_or(false)
             },
             _ => false

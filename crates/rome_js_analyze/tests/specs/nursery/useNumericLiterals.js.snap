@@ -569,6 +569,30 @@ useNumericLiterals.js:53:3 lint/nursery/useNumericLiterals  FIXABLE  ━━━�
 ```
 
 ```
+useNumericLiterals.js:54:21 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use binary literals instead of Number.parseInt()
+  
+    52 │ Number.parseInt('67', 8)
+    53 │ 5+parseInt('A', 16)
+  > 54 │ function *f(){ yield(Number).parseInt('11', 2) }
+       │                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    55 │ function *f(){ yield(Number.parseInt)('67', 8) }
+    56 │ function *f(){ yield(parseInt)('A', 16) }
+  
+  i Safe fix: Replace with binary literals
+  
+    52 52 │   Number.parseInt('67', 8)
+    53 53 │   5+parseInt('A', 16)
+    54    │ - function·*f(){·yield(Number).parseInt('11',·2)·}
+       54 │ + function·*f(){·yield·0b11·}
+    55 55 │   function *f(){ yield(Number.parseInt)('67', 8) }
+    56 56 │   function *f(){ yield(parseInt)('A', 16) }
+  
+
+```
+
+```
 useNumericLiterals.js:55:21 lint/nursery/useNumericLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use octal literals instead of Number.parseInt()
