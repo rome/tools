@@ -17,7 +17,7 @@ Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, o
 <div onClick={() => {}} />
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useKeyWithClickEvents.js:1:1 <a href="https://rome.tools/docs/lint/rules/useKeyWithClickEvents">lint/a11y/useKeyWithClickEvents</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useKeyWithClickEvents.js:1:1 <a href="https://docs.rome.tools/lint/rules/useKeyWithClickEvents">lint/a11y/useKeyWithClickEvents</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Enforce to have the </span><span style="color: Tomato;"><strong>onClick</strong></span><span style="color: Tomato;"> mouse event with the </span><span style="color: Tomato;"><strong>onKeyUp</strong></span><span style="color: Tomato;">, the </span><span style="color: Tomato;"><strong>onKeyDown</strong></span><span style="color: Tomato;">, or the </span><span style="color: Tomato;"><strong>onKeyPress</strong></span><span style="color: Tomato;"> keyboard event.</span>
   
@@ -33,7 +33,7 @@ Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, o
 <div onClick={() => {}} ></div>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useKeyWithClickEvents.js:1:1 <a href="https://rome.tools/docs/lint/rules/useKeyWithClickEvents">lint/a11y/useKeyWithClickEvents</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useKeyWithClickEvents.js:1:1 <a href="https://docs.rome.tools/lint/rules/useKeyWithClickEvents">lint/a11y/useKeyWithClickEvents</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Enforce to have the </span><span style="color: Tomato;"><strong>onClick</strong></span><span style="color: Tomato;"> mouse event with the </span><span style="color: Tomato;"><strong>onKeyUp</strong></span><span style="color: Tomato;">, the </span><span style="color: Tomato;"><strong>onKeyDown</strong></span><span style="color: Tomato;">, or the </span><span style="color: Tomato;"><strong>onKeyPress</strong></span><span style="color: Tomato;"> keyboard event.</span>
   

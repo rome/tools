@@ -17,7 +17,7 @@ Avoid the `autoFocus` attribute
 <input autoFocus />
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/noAutofocus.js:1:8 <a href="https://rome.tools/docs/lint/rules/noAutofocus">lint/a11y/noAutofocus</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/noAutofocus.js:1:8 <a href="https://docs.rome.tools/lint/rules/noAutofocus">lint/a11y/noAutofocus</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid the </span><span style="color: Tomato;"><strong>autoFocus</strong></span><span style="color: Tomato;"> attribute.</span>
   
@@ -35,7 +35,7 @@ Avoid the `autoFocus` attribute
 <input autoFocus="true" />
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/noAutofocus.js:1:8 <a href="https://rome.tools/docs/lint/rules/noAutofocus">lint/a11y/noAutofocus</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/noAutofocus.js:1:8 <a href="https://docs.rome.tools/lint/rules/noAutofocus">lint/a11y/noAutofocus</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid the </span><span style="color: Tomato;"><strong>autoFocus</strong></span><span style="color: Tomato;"> attribute.</span>
   
@@ -53,7 +53,7 @@ Avoid the `autoFocus` attribute
 <input autoFocus={"false"} />
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/noAutofocus.js:1:8 <a href="https://rome.tools/docs/lint/rules/noAutofocus">lint/a11y/noAutofocus</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/noAutofocus.js:1:8 <a href="https://docs.rome.tools/lint/rules/noAutofocus">lint/a11y/noAutofocus</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid the </span><span style="color: Tomato;"><strong>autoFocus</strong></span><span style="color: Tomato;"> attribute.</span>
   
@@ -71,7 +71,7 @@ Avoid the `autoFocus` attribute
 <input autoFocus={undefined} />
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/noAutofocus.js:1:8 <a href="https://rome.tools/docs/lint/rules/noAutofocus">lint/a11y/noAutofocus</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/noAutofocus.js:1:8 <a href="https://docs.rome.tools/lint/rules/noAutofocus">lint/a11y/noAutofocus</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid the </span><span style="color: Tomato;"><strong>autoFocus</strong></span><span style="color: Tomato;"> attribute.</span>
   

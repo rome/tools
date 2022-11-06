@@ -17,7 +17,7 @@ Disallow comparing against `-0`
 (1 >= -0)
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noCompareNegZero.js:1:2 <a href="https://rome.tools/docs/lint/rules/noCompareNegZero">lint/correctness/noCompareNegZero</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noCompareNegZero.js:1:2 <a href="https://docs.rome.tools/lint/rules/noCompareNegZero">lint/correctness/noCompareNegZero</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not use the &gt;= operator to compare against -0.</span>
   

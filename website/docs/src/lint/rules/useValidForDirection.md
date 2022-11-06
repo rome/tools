@@ -21,7 +21,7 @@ for (var i = 0; i < 10; i--) {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useValidForDirection.js:1:5 <a href="https://rome.tools/docs/lint/rules/useValidForDirection">lint/nursery/useValidForDirection</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/useValidForDirection.js:1:5 <a href="https://docs.rome.tools/lint/rules/useValidForDirection">lint/nursery/useValidForDirection</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The update clause in this loop moves the variable in the wrong direction.</span>
   
@@ -37,7 +37,7 @@ for (var i = 10; i >= 0; i++) {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useValidForDirection.js:1:5 <a href="https://rome.tools/docs/lint/rules/useValidForDirection">lint/nursery/useValidForDirection</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/useValidForDirection.js:1:5 <a href="https://docs.rome.tools/lint/rules/useValidForDirection">lint/nursery/useValidForDirection</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The update clause in this loop moves the variable in the wrong direction.</span>
   
@@ -53,7 +53,7 @@ for (var i = 0; i > 10; i++) {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useValidForDirection.js:1:5 <a href="https://rome.tools/docs/lint/rules/useValidForDirection">lint/nursery/useValidForDirection</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/useValidForDirection.js:1:5 <a href="https://docs.rome.tools/lint/rules/useValidForDirection">lint/nursery/useValidForDirection</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The update clause in this loop moves the variable in the wrong direction.</span>
   

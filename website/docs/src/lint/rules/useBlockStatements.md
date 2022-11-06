@@ -18,7 +18,7 @@ JavaScript allows the omission of curly braces when a block contains only one st
  if (x) x;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useBlockStatements.js:1:2 <a href="https://rome.tools/docs/lint/rules/useBlockStatements">lint/style/useBlockStatements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useBlockStatements.js:1:2 <a href="https://docs.rome.tools/lint/rules/useBlockStatements">lint/style/useBlockStatements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Block statements are preferred in this position.</span>
   
@@ -38,7 +38,7 @@ JavaScript allows the omission of curly braces when a block contains only one st
  } else y;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useBlockStatements.js:3:4 <a href="https://rome.tools/docs/lint/rules/useBlockStatements">lint/style/useBlockStatements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useBlockStatements.js:3:4 <a href="https://docs.rome.tools/lint/rules/useBlockStatements">lint/style/useBlockStatements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Block statements are preferred in this position.</span>
   
@@ -60,7 +60,7 @@ if (x) {
 } else if (y) y;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useBlockStatements.js:3:8 <a href="https://rome.tools/docs/lint/rules/useBlockStatements">lint/style/useBlockStatements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useBlockStatements.js:3:8 <a href="https://docs.rome.tools/lint/rules/useBlockStatements">lint/style/useBlockStatements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Block statements are preferred in this position.</span>
   
@@ -80,7 +80,7 @@ if (x) {
    for (;;);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useBlockStatements.js:1:4 <a href="https://rome.tools/docs/lint/rules/useBlockStatements">lint/style/useBlockStatements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useBlockStatements.js:1:4 <a href="https://docs.rome.tools/lint/rules/useBlockStatements">lint/style/useBlockStatements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Block statements are preferred in this position.</span>
   
@@ -100,7 +100,7 @@ if (x) {
    for (p in obj);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useBlockStatements.js:1:4 <a href="https://rome.tools/docs/lint/rules/useBlockStatements">lint/style/useBlockStatements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useBlockStatements.js:1:4 <a href="https://docs.rome.tools/lint/rules/useBlockStatements">lint/style/useBlockStatements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Block statements are preferred in this position.</span>
   
@@ -120,7 +120,7 @@ if (x) {
   for (x of xs);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useBlockStatements.js:1:3 <a href="https://rome.tools/docs/lint/rules/useBlockStatements">lint/style/useBlockStatements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useBlockStatements.js:1:3 <a href="https://docs.rome.tools/lint/rules/useBlockStatements">lint/style/useBlockStatements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Block statements are preferred in this position.</span>
   
@@ -141,7 +141,7 @@ if (x) {
   while (x);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useBlockStatements.js:1:3 <a href="https://rome.tools/docs/lint/rules/useBlockStatements">lint/style/useBlockStatements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useBlockStatements.js:1:3 <a href="https://docs.rome.tools/lint/rules/useBlockStatements">lint/style/useBlockStatements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Block statements are preferred in this position.</span>
   
@@ -164,7 +164,7 @@ if (x) {
    while (x);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useBlockStatements.js:1:4 <a href="https://rome.tools/docs/lint/rules/useBlockStatements">lint/style/useBlockStatements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useBlockStatements.js:1:4 <a href="https://docs.rome.tools/lint/rules/useBlockStatements">lint/style/useBlockStatements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Block statements are preferred in this position.</span>
   

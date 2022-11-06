@@ -18,7 +18,7 @@ const a = 1;
 a = 4;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noConstAssign.js:2:1 <a href="https://rome.tools/docs/lint/rules/noConstAssign">lint/nursery/noConstAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/noConstAssign.js:2:1 <a href="https://docs.rome.tools/lint/rules/noConstAssign">lint/nursery/noConstAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Can't assign </span><span style="color: Orange;"><strong>a</strong></span><span style="color: Orange;"> because it's a constant</span>
   
@@ -41,7 +41,7 @@ const a = 2;
 a += 1;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noConstAssign.js:2:1 <a href="https://rome.tools/docs/lint/rules/noConstAssign">lint/nursery/noConstAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/noConstAssign.js:2:1 <a href="https://docs.rome.tools/lint/rules/noConstAssign">lint/nursery/noConstAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Can't assign </span><span style="color: Orange;"><strong>a</strong></span><span style="color: Orange;"> because it's a constant</span>
   
@@ -64,7 +64,7 @@ const a = 1;
 ++a;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noConstAssign.js:2:3 <a href="https://rome.tools/docs/lint/rules/noConstAssign">lint/nursery/noConstAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/noConstAssign.js:2:3 <a href="https://docs.rome.tools/lint/rules/noConstAssign">lint/nursery/noConstAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Can't assign </span><span style="color: Orange;"><strong>a</strong></span><span style="color: Orange;"> because it's a constant</span>
   
@@ -88,7 +88,7 @@ const a = 1, b = 2;
 a = 2;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noConstAssign.js:3:1 <a href="https://rome.tools/docs/lint/rules/noConstAssign">lint/nursery/noConstAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/noConstAssign.js:3:1 <a href="https://docs.rome.tools/lint/rules/noConstAssign">lint/nursery/noConstAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Can't assign </span><span style="color: Orange;"><strong>a</strong></span><span style="color: Orange;"> because it's a constant</span>
   

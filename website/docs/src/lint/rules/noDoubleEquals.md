@@ -25,7 +25,7 @@ comparing to both `null` and `undefined`.
 foo == bar
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noDoubleEquals.js:1:5 <a href="https://rome.tools/docs/lint/rules/noDoubleEquals">lint/correctness/noDoubleEquals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noDoubleEquals.js:1:5 <a href="https://docs.rome.tools/lint/rules/noDoubleEquals">lint/correctness/noDoubleEquals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Use </span><span style="color: Tomato;"><strong>===</strong></span><span style="color: Tomato;"> instead of </span><span style="color: Tomato;"><strong>==</strong></span>
   

@@ -20,7 +20,7 @@ function createMarkup() {
 <div dangerouslySetInnerHTML={createMarkup()}></div>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">security/noDangerouslySetInnerHtml.js:4:6 <a href="https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtml">lint/security/noDangerouslySetInnerHtml</a> ━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">security/noDangerouslySetInnerHtml.js:4:6 <a href="https://docs.rome.tools/lint/rules/noDangerouslySetInnerHtml">lint/security/noDangerouslySetInnerHtml</a> ━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid passing content using the </span><span style="color: Tomato;"><strong>dangerouslySetInnerHTML</strong></span><span style="color: Tomato;"> prop.</span>
   
@@ -40,7 +40,7 @@ React.createElement('div', {
 });
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">security/noDangerouslySetInnerHtml.js:2:5 <a href="https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtml">lint/security/noDangerouslySetInnerHtml</a> ━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">security/noDangerouslySetInnerHtml.js:2:5 <a href="https://docs.rome.tools/lint/rules/noDangerouslySetInnerHtml">lint/security/noDangerouslySetInnerHtml</a> ━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid passing content using the </span><span style="color: Tomato;"><strong>dangerouslySetInnerHTML</strong></span><span style="color: Tomato;"> prop.</span>
   

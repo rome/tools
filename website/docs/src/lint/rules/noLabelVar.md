@@ -18,7 +18,7 @@ const x1 = "test";
 x1: expr;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noLabelVar.js:2:1 <a href="https://rome.tools/docs/lint/rules/noLabelVar">lint/correctness/noLabelVar</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noLabelVar.js:2:1 <a href="https://docs.rome.tools/lint/rules/noLabelVar">lint/correctness/noLabelVar</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not use the </span><span style="color: Tomato;"><strong>x1</strong></span><span style="color: Tomato;"> variable name as a label</span>
   
