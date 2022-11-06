@@ -16,7 +16,7 @@ foo
 </>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noUselessFragments.js:1:1 <a href="https://rome.tools/lint/rules/noUselessFragments">lint/correctness/noUselessFragments</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUselessFragments.js:1:1 <a href="https://docs.rome.tools/lint/rules/noUselessFragments">lint/correctness/noUselessFragments</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid using unnecessary </span><span style="color: Orange;"><strong>Fragment</strong></span><span style="color: Orange;">.</span>
   
@@ -44,7 +44,7 @@ foo
 </React.Fragment>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noUselessFragments.js:1:1 <a href="https://rome.tools/lint/rules/noUselessFragments">lint/correctness/noUselessFragments</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUselessFragments.js:1:1 <a href="https://docs.rome.tools/lint/rules/noUselessFragments">lint/correctness/noUselessFragments</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid using unnecessary </span><span style="color: Orange;"><strong>Fragment</strong></span><span style="color: Orange;">.</span>
   
@@ -73,7 +73,7 @@ foo
 </>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noUselessFragments.js:2:5 <a href="https://rome.tools/lint/rules/noUselessFragments">lint/correctness/noUselessFragments</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUselessFragments.js:2:5 <a href="https://docs.rome.tools/lint/rules/noUselessFragments">lint/correctness/noUselessFragments</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid using unnecessary </span><span style="color: Orange;"><strong>Fragment</strong></span><span style="color: Orange;">.</span>
   
@@ -93,7 +93,7 @@ foo
 <></>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noUselessFragments.js:1:1 <a href="https://rome.tools/lint/rules/noUselessFragments">lint/correctness/noUselessFragments</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUselessFragments.js:1:1 <a href="https://docs.rome.tools/lint/rules/noUselessFragments">lint/correctness/noUselessFragments</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid using unnecessary </span><span style="color: Orange;"><strong>Fragment</strong></span><span style="color: Orange;">.</span>
   

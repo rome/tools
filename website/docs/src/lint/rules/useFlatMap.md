@@ -15,7 +15,7 @@ const array = ["split", "the text", "into words"];
 array.map(sentence => sentence.split(' ')).flat();
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useFlatMap.js:2:1 <a href="https://rome.tools/lint/rules/useFlatMap">lint/nursery/useFlatMap</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/useFlatMap.js:2:1 <a href="https://docs.rome.tools/lint/rules/useFlatMap">lint/nursery/useFlatMap</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The call chain </span><span style="color: Orange;"><strong>.map().flat()</strong></span><span style="color: Orange;"> can be replaced with a single </span><span style="color: Orange;"><strong>.flatMap()</strong></span><span style="color: Orange;"> call.</span>
   
@@ -38,7 +38,7 @@ const array = ["split", "the text", "into words"];
 array.map(sentence => sentence.split(' ')).flat(1);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useFlatMap.js:2:1 <a href="https://rome.tools/lint/rules/useFlatMap">lint/nursery/useFlatMap</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/useFlatMap.js:2:1 <a href="https://docs.rome.tools/lint/rules/useFlatMap">lint/nursery/useFlatMap</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The call chain </span><span style="color: Orange;"><strong>.map().flat()</strong></span><span style="color: Orange;"> can be replaced with a single </span><span style="color: Orange;"><strong>.flatMap()</strong></span><span style="color: Orange;"> call.</span>
   

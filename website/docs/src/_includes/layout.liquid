@@ -54,6 +54,10 @@ social-image: social-logo.png
 		{% assign sidebar-enabled = toccontent != "" %}
 
 		<div class="docs-header">
+			<a href="https://rome.tools/" class="back foreground-svg">
+				{% include svg/chevron-left.svg %}
+			</a>
+
 			<a class="logo" href="/">
 				{% include svg/rome-logo.svg %}
 
@@ -62,9 +66,7 @@ social-image: social-logo.png
 
 			<div id="docsearch"></div>
 
-			<a class="foreground-svg link" target="_blank" href="https://discord.gg/rome">{% include svg/discord.svg %}<span class="sr-only">Discord</span></a>
-			<a class="foreground-svg link" target="_blank" href="https://github.com/rome/tools">{% include svg/footer/github.svg %}<span class="sr-only">GitHub</span></a>
-			<a class="foreground-svg link" target="_blank" href="https://twitter.com/rometools">{% include svg/footer/twitter.svg %}<span class="sr-only">Twitter</span></a>
+			{% include external-links.liquid %}
 
 			{% if sidebar-enabled %}
 				<a href="#" class="mobile-handle">
@@ -76,6 +78,10 @@ social-image: social-logo.png
 
 		<div class="docs-main">
 			<aside class="docs-sidebar sidebar">
+				<div class="external-links">
+					{% include external-links.liquid %}
+				</div>
+
 				<h2>Guides</h2>
 
 				<ul>

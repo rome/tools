@@ -15,7 +15,7 @@ Check out Robin Pokorny’s article for an
 If you choose not to assign an explicit key to list items then React will default to using indexes as keys.
 
 
-Source [React documentation](https://reactjs.org/lists-and-keys.html#keys)
+Source [React documentation](https://reactjs.org/docs/lists-and-keys.html#keys)
 
 ## Examples
 
@@ -27,7 +27,7 @@ something.forEach((Element, index) => {
 });
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noArrayIndexKey.js:2:21 <a href="https://rome.tools/lint/rules/noArrayIndexKey">lint/correctness/noArrayIndexKey</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noArrayIndexKey.js:2:21 <a href="https://docs.rome.tools/lint/rules/noArrayIndexKey">lint/correctness/noArrayIndexKey</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid using the index of an array as key property in an element.</span>
   
@@ -46,7 +46,7 @@ something.forEach((Element, index) => {
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The order of the items may change, and this also affects performances and component state.</span>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Check the </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/lists-and-keys.html#keys">React documentation</a></span><span style="color: rgb(38, 148, 255);">. </span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Check the </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">React documentation</a></span><span style="color: rgb(38, 148, 255);">. </span>
   
 </code></pre>{% endraw %}
 
@@ -56,7 +56,7 @@ React.Children.map(this.props.children, (child, index) => (
 ))
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noArrayIndexKey.js:2:38 <a href="https://rome.tools/lint/rules/noArrayIndexKey">lint/correctness/noArrayIndexKey</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noArrayIndexKey.js:2:38 <a href="https://docs.rome.tools/lint/rules/noArrayIndexKey">lint/correctness/noArrayIndexKey</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid using the index of an array as key property in an element.</span>
   
@@ -75,7 +75,7 @@ React.Children.map(this.props.children, (child, index) => (
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The order of the items may change, and this also affects performances and component state.</span>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Check the </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/lists-and-keys.html#keys">React documentation</a></span><span style="color: rgb(38, 148, 255);">. </span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Check the </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">React documentation</a></span><span style="color: rgb(38, 148, 255);">. </span>
   
 </code></pre>{% endraw %}
 
