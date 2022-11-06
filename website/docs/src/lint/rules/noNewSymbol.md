@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noNewSymbol
+layout: layouts/docs.liquid
 ---
 
 # noNewSymbol (since v0.10.0)
@@ -16,7 +17,7 @@ Disallow `new` operators with the `Symbol` object
 var foo = new Symbol('foo');
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noNewSymbol.js:1:11 <a href="https://rome.tools/lint/rules/noNewSymbol">lint/correctness/noNewSymbol</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noNewSymbol.js:1:11 <a href="https://rome.tools/docs/lint/rules/noNewSymbol">lint/correctness/noNewSymbol</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;"><strong>Symbol</strong></span><span style="color: Tomato;"> cannot be called as a constructor.</span>
   

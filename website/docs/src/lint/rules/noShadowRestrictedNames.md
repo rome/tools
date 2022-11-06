@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noShadowRestrictedNames
+layout: layouts/docs.liquid
 ---
 
 # noShadowRestrictedNames (since v0.9.0)
@@ -16,7 +17,7 @@ Disallow identifiers from shadowing restricted names.
 function NaN() {}
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noShadowRestrictedNames.js:1:10 <a href="https://rome.tools/lint/rules/noShadowRestrictedNames">lint/correctness/noShadowRestrictedNames</a> ━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noShadowRestrictedNames.js:1:10 <a href="https://rome.tools/docs/lint/rules/noShadowRestrictedNames">lint/correctness/noShadowRestrictedNames</a> ━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not shadow the global &quot;NaN&quot; property.</span>
   
@@ -32,7 +33,7 @@ function NaN() {}
 let Set;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noShadowRestrictedNames.js:1:5 <a href="https://rome.tools/lint/rules/noShadowRestrictedNames">lint/correctness/noShadowRestrictedNames</a> ━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noShadowRestrictedNames.js:1:5 <a href="https://rome.tools/docs/lint/rules/noShadowRestrictedNames">lint/correctness/noShadowRestrictedNames</a> ━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not shadow the global &quot;Set&quot; property.</span>
   
@@ -48,7 +49,7 @@ let Set;
 try {	} catch(Object) {}
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noShadowRestrictedNames.js:1:15 <a href="https://rome.tools/lint/rules/noShadowRestrictedNames">lint/correctness/noShadowRestrictedNames</a> ━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noShadowRestrictedNames.js:1:15 <a href="https://rome.tools/docs/lint/rules/noShadowRestrictedNames">lint/correctness/noShadowRestrictedNames</a> ━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not shadow the global &quot;Object&quot; property.</span>
   
@@ -64,7 +65,7 @@ try {	} catch(Object) {}
 function Array() {}
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noShadowRestrictedNames.js:1:10 <a href="https://rome.tools/lint/rules/noShadowRestrictedNames">lint/correctness/noShadowRestrictedNames</a> ━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noShadowRestrictedNames.js:1:10 <a href="https://rome.tools/docs/lint/rules/noShadowRestrictedNames">lint/correctness/noShadowRestrictedNames</a> ━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not shadow the global &quot;Array&quot; property.</span>
   
@@ -80,7 +81,7 @@ function Array() {}
 function test(JSON) {console.log(JSON)}
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noShadowRestrictedNames.js:1:15 <a href="https://rome.tools/lint/rules/noShadowRestrictedNames">lint/correctness/noShadowRestrictedNames</a> ━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noShadowRestrictedNames.js:1:15 <a href="https://rome.tools/docs/lint/rules/noShadowRestrictedNames">lint/correctness/noShadowRestrictedNames</a> ━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not shadow the global &quot;JSON&quot; property.</span>
   

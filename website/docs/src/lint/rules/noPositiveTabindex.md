@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noPositiveTabindex
+layout: layouts/docs.liquid
 ---
 
 # noPositiveTabindex (since v10.0.0)
@@ -22,7 +23,7 @@ Avoid positive `tabIndex` property values to synchronize the flow of the page wi
 <div tabIndex={1}>foo</div>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/noPositiveTabindex.js:1:15 <a href="https://rome.tools/lint/rules/noPositiveTabindex">lint/a11y/noPositiveTabindex</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/noPositiveTabindex.js:1:15 <a href="https://rome.tools/docs/lint/rules/noPositiveTabindex">lint/a11y/noPositiveTabindex</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid positive values for the </span><span style="color: Tomato;"><strong>tabIndex</strong></span><span style="color: Tomato;"> prop.</span>
   
@@ -38,7 +39,7 @@ Avoid positive `tabIndex` property values to synchronize the flow of the page wi
 <div tabIndex={"1"} />
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/noPositiveTabindex.js:1:15 <a href="https://rome.tools/lint/rules/noPositiveTabindex">lint/a11y/noPositiveTabindex</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/noPositiveTabindex.js:1:15 <a href="https://rome.tools/docs/lint/rules/noPositiveTabindex">lint/a11y/noPositiveTabindex</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid positive values for the </span><span style="color: Tomato;"><strong>tabIndex</strong></span><span style="color: Tomato;"> prop.</span>
   
@@ -54,7 +55,7 @@ Avoid positive `tabIndex` property values to synchronize the flow of the page wi
 React.createElement("div", { tabIndex: 1 })
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/noPositiveTabindex.js:1:40 <a href="https://rome.tools/lint/rules/noPositiveTabindex">lint/a11y/noPositiveTabindex</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/noPositiveTabindex.js:1:40 <a href="https://rome.tools/docs/lint/rules/noPositiveTabindex">lint/a11y/noPositiveTabindex</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid positive values for the </span><span style="color: Tomato;"><strong>tabIndex</strong></span><span style="color: Tomato;"> prop.</span>
   

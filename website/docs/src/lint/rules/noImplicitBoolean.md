@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noImplicitBoolean
+layout: layouts/docs.liquid
 ---
 
 # noImplicitBoolean (since v0.7.0)
@@ -16,7 +17,7 @@ Disallow implicit `true` values on JSX boolean attributes
 <input disabled />
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/noImplicitBoolean.js:1:8 <a href="https://rome.tools/lint/rules/noImplicitBoolean">lint/style/noImplicitBoolean</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/noImplicitBoolean.js:1:8 <a href="https://rome.tools/docs/lint/rules/noImplicitBoolean">lint/style/noImplicitBoolean</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Use explicit boolean values for boolean JSX props.</span>
   

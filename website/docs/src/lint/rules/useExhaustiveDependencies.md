@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useExhaustiveDependencies
+layout: layouts/docs.liquid
 ---
 
 # useExhaustiveDependencies (since v10.0.0)
@@ -17,7 +18,7 @@ useEffect(() => {
 })
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useExhaustiveDependencies.js:2:1 <a href="https://rome.tools/lint/rules/useExhaustiveDependencies">lint/nursery/useExhaustiveDependencies</a> ━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/useExhaustiveDependencies.js:2:1 <a href="https://rome.tools/docs/lint/rules/useExhaustiveDependencies">lint/nursery/useExhaustiveDependencies</a> ━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This hook do not specify all of its dependencies.</span>
   
@@ -44,7 +45,7 @@ useEffect(() => {
 }, [b])
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useExhaustiveDependencies.js:2:1 <a href="https://rome.tools/lint/rules/useExhaustiveDependencies">lint/nursery/useExhaustiveDependencies</a> ━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/useExhaustiveDependencies.js:2:1 <a href="https://rome.tools/docs/lint/rules/useExhaustiveDependencies">lint/nursery/useExhaustiveDependencies</a> ━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This hook specifies more dependencies than necessary.</span>
   
@@ -72,7 +73,7 @@ useEffect(() => {
 }, [name, setName])
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useExhaustiveDependencies.js:2:1 <a href="https://rome.tools/lint/rules/useExhaustiveDependencies">lint/nursery/useExhaustiveDependencies</a> ━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/useExhaustiveDependencies.js:2:1 <a href="https://rome.tools/docs/lint/rules/useExhaustiveDependencies">lint/nursery/useExhaustiveDependencies</a> ━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This hook specifies more dependencies than necessary.</span>
   
@@ -100,7 +101,7 @@ useEffect(() => {
 })
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useExhaustiveDependencies.js:3:1 <a href="https://rome.tools/lint/rules/useExhaustiveDependencies">lint/nursery/useExhaustiveDependencies</a> ━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/useExhaustiveDependencies.js:3:1 <a href="https://rome.tools/docs/lint/rules/useExhaustiveDependencies">lint/nursery/useExhaustiveDependencies</a> ━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This hook do not specify all of its dependencies.</span>
   

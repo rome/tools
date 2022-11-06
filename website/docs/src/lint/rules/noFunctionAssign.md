@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noFunctionAssign
+layout: layouts/docs.liquid
 ---
 
 # noFunctionAssign (since v0.7.0)
@@ -17,7 +18,7 @@ function foo() { };
 foo = bar;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noFunctionAssign.js:1:10 <a href="https://rome.tools/lint/rules/noFunctionAssign">lint/correctness/noFunctionAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noFunctionAssign.js:1:10 <a href="https://rome.tools/docs/lint/rules/noFunctionAssign">lint/correctness/noFunctionAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not reassign a function declaration.</span>
   
@@ -43,7 +44,7 @@ function foo() {
  }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noFunctionAssign.js:1:10 <a href="https://rome.tools/lint/rules/noFunctionAssign">lint/correctness/noFunctionAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noFunctionAssign.js:1:10 <a href="https://rome.tools/docs/lint/rules/noFunctionAssign">lint/correctness/noFunctionAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not reassign a function declaration.</span>
   
@@ -69,7 +70,7 @@ foo = bar;
 function foo() { };
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noFunctionAssign.js:2:10 <a href="https://rome.tools/lint/rules/noFunctionAssign">lint/correctness/noFunctionAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noFunctionAssign.js:2:10 <a href="https://rome.tools/docs/lint/rules/noFunctionAssign">lint/correctness/noFunctionAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not reassign a function declaration.</span>
   
@@ -96,7 +97,7 @@ function foo() { };
 function foo() { };
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noFunctionAssign.js:2:10 <a href="https://rome.tools/lint/rules/noFunctionAssign">lint/correctness/noFunctionAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noFunctionAssign.js:2:10 <a href="https://rome.tools/docs/lint/rules/noFunctionAssign">lint/correctness/noFunctionAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not reassign a function declaration.</span>
   
@@ -123,7 +124,7 @@ function foo() { };
 function foo() { };
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noFunctionAssign.js:2:10 <a href="https://rome.tools/lint/rules/noFunctionAssign">lint/correctness/noFunctionAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noFunctionAssign.js:2:10 <a href="https://rome.tools/docs/lint/rules/noFunctionAssign">lint/correctness/noFunctionAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not reassign a function declaration.</span>
   
@@ -151,7 +152,7 @@ function foo() {
  }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noFunctionAssign.js:1:10 <a href="https://rome.tools/lint/rules/noFunctionAssign">lint/correctness/noFunctionAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noFunctionAssign.js:1:10 <a href="https://rome.tools/docs/lint/rules/noFunctionAssign">lint/correctness/noFunctionAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not reassign a function declaration.</span>
   
@@ -179,7 +180,7 @@ function foo() {
  })();
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noFunctionAssign.js:3:14 <a href="https://rome.tools/lint/rules/noFunctionAssign">lint/correctness/noFunctionAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noFunctionAssign.js:3:14 <a href="https://rome.tools/docs/lint/rules/noFunctionAssign">lint/correctness/noFunctionAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not reassign a function declaration.</span>
   

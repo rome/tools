@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useAltText
+layout: layouts/docs.liquid
 ---
 
 # useAltText (since v10.0.0)
@@ -16,7 +17,7 @@ It asserts that alternative text to images or areas, help to rely on to screen r
 <img src="image.png" />
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useAltText.js:1:1 <a href="https://rome.tools/lint/rules/useAltText">lint/a11y/useAltText</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useAltText.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAltText">lint/a11y/useAltText</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide the attribute </span><span style="color: Tomato;"><strong>alt</strong></span><span style="color: Tomato;"> when using </span><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>area</strong></span><span style="color: Tomato;"> or </span><span style="color: Tomato;"><strong>input type='image'</strong></span>
   
@@ -33,7 +34,7 @@ It asserts that alternative text to images or areas, help to rely on to screen r
 <input type="image" src="image.png" />
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useAltText.js:1:1 <a href="https://rome.tools/lint/rules/useAltText">lint/a11y/useAltText</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useAltText.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAltText">lint/a11y/useAltText</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide the attribute </span><span style="color: Tomato;"><strong>alt</strong></span><span style="color: Tomato;"> when using </span><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>area</strong></span><span style="color: Tomato;"> or </span><span style="color: Tomato;"><strong>input type='image'</strong></span>
   

@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noUndeclaredVariables
+layout: layouts/docs.liquid
 ---
 
 # noUndeclaredVariables (since v0.10.0)
@@ -14,7 +15,7 @@ Prevents the usage of variables that haven't been declared inside the document
 foobar;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noUndeclaredVariables.js:1:1 <a href="https://rome.tools/lint/rules/noUndeclaredVariables">lint/correctness/noUndeclaredVariables</a> ━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUndeclaredVariables.js:1:1 <a href="https://rome.tools/docs/lint/rules/noUndeclaredVariables">lint/correctness/noUndeclaredVariables</a> ━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The </span><span style="color: Orange;"><strong>foobar</strong></span><span style="color: Orange;"> variable is undeclared</span>
   

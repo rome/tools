@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noExtraBooleanCast
+layout: layouts/docs.liquid
 ---
 
 # noExtraBooleanCast (since v0.9.0)
@@ -17,7 +18,7 @@ if (!Boolean(foo)) {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">complexity/noExtraBooleanCast.js:1:6 <a href="https://rome.tools/lint/rules/noExtraBooleanCast">lint/complexity/noExtraBooleanCast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">complexity/noExtraBooleanCast.js:1:6 <a href="https://rome.tools/docs/lint/rules/noExtraBooleanCast">lint/complexity/noExtraBooleanCast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid redundant `Boolean` call</span>
   
@@ -38,7 +39,7 @@ if (!Boolean(foo)) {
 while (!!foo) {}
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">complexity/noExtraBooleanCast.js:1:8 <a href="https://rome.tools/lint/rules/noExtraBooleanCast">lint/complexity/noExtraBooleanCast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">complexity/noExtraBooleanCast.js:1:8 <a href="https://rome.tools/docs/lint/rules/noExtraBooleanCast">lint/complexity/noExtraBooleanCast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid redundant double-negation.</span>
   
@@ -61,7 +62,7 @@ do {
 } while (Boolean(x));
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">complexity/noExtraBooleanCast.js:4:10 <a href="https://rome.tools/lint/rules/noExtraBooleanCast">lint/complexity/noExtraBooleanCast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">complexity/noExtraBooleanCast.js:4:10 <a href="https://rome.tools/docs/lint/rules/noExtraBooleanCast">lint/complexity/noExtraBooleanCast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid redundant `Boolean` call</span>
   
@@ -83,7 +84,7 @@ do {
 for (; !!foo; ) {}
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">complexity/noExtraBooleanCast.js:1:8 <a href="https://rome.tools/lint/rules/noExtraBooleanCast">lint/complexity/noExtraBooleanCast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">complexity/noExtraBooleanCast.js:1:8 <a href="https://rome.tools/docs/lint/rules/noExtraBooleanCast">lint/complexity/noExtraBooleanCast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid redundant double-negation.</span>
   
@@ -103,7 +104,7 @@ for (; !!foo; ) {}
 new Boolean(!!x);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">complexity/noExtraBooleanCast.js:1:13 <a href="https://rome.tools/lint/rules/noExtraBooleanCast">lint/complexity/noExtraBooleanCast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">complexity/noExtraBooleanCast.js:1:13 <a href="https://rome.tools/docs/lint/rules/noExtraBooleanCast">lint/complexity/noExtraBooleanCast</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid redundant double-negation.</span>
   

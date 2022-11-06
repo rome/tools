@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useKeyWithMouseEvents
+layout: layouts/docs.liquid
 ---
 
 # useKeyWithMouseEvents (since v10.0.0)
@@ -18,7 +19,7 @@ who use assistive technology or screenreader.
    <div onMouseOver={() => {}} />
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useKeyWithMouseEvents.js:1:4 <a href="https://rome.tools/lint/rules/useKeyWithMouseEvents">lint/a11y/useKeyWithMouseEvents</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useKeyWithMouseEvents.js:1:4 <a href="https://rome.tools/docs/lint/rules/useKeyWithMouseEvents">lint/a11y/useKeyWithMouseEvents</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">onMouseOver must be accompanied by onFocus for accessibility.</span>
   
@@ -34,7 +35,7 @@ who use assistive technology or screenreader.
    <div onMouseOut={() => {}} />
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useKeyWithMouseEvents.js:1:4 <a href="https://rome.tools/lint/rules/useKeyWithMouseEvents">lint/a11y/useKeyWithMouseEvents</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useKeyWithMouseEvents.js:1:4 <a href="https://rome.tools/docs/lint/rules/useKeyWithMouseEvents">lint/a11y/useKeyWithMouseEvents</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">onMouseOut must be accompanied by onBlur for accessibility.</span>
   

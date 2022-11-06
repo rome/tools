@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noDoubleEquals
+layout: layouts/docs.liquid
 ---
 
 # noDoubleEquals (since v0.7.0)
@@ -9,7 +10,7 @@ title: Lint Rule noDoubleEquals
 Require the use of `===` and `!==`
 
 It is generally bad practice to use `==` for comparison instead of
-`===`. Double operators will triger implicit [type coercion](https://developer.mozilla.org/en-US/Glossary/Type_coercion)
+`===`. Double operators will triger implicit [type coercion](https://developer.mozilla.org/en-US/docs/Glossary/Type_coercion)
 and are thus not prefered. Using strict equality operators is almost
 always best practice.
 
@@ -24,7 +25,7 @@ comparing to both `null` and `undefined`.
 foo == bar
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noDoubleEquals.js:1:5 <a href="https://rome.tools/lint/rules/noDoubleEquals">lint/correctness/noDoubleEquals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noDoubleEquals.js:1:5 <a href="https://rome.tools/docs/lint/rules/noDoubleEquals">lint/correctness/noDoubleEquals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Use </span><span style="color: Tomato;"><strong>===</strong></span><span style="color: Tomato;"> instead of </span><span style="color: Tomato;"><strong>==</strong></span>
   

@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noUnsafeNegation
+layout: layouts/docs.liquid
 ---
 
 # noUnsafeNegation (since v0.7.0)
@@ -16,7 +17,7 @@ Disallow using unsafe negation.
 !1 in [1,2];
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noUnsafeNegation.js:1:1 <a href="https://rome.tools/lint/rules/noUnsafeNegation">lint/correctness/noUnsafeNegation</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUnsafeNegation.js:1:1 <a href="https://rome.tools/docs/lint/rules/noUnsafeNegation">lint/correctness/noUnsafeNegation</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The negation operator is used unsafely on the left side of this binary expression.</span>
   
@@ -34,7 +35,7 @@ Disallow using unsafe negation.
 /**test*/!/** test*/1 instanceof [1,2];
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noUnsafeNegation.js:1:10 <a href="https://rome.tools/lint/rules/noUnsafeNegation">lint/correctness/noUnsafeNegation</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUnsafeNegation.js:1:10 <a href="https://rome.tools/docs/lint/rules/noUnsafeNegation">lint/correctness/noUnsafeNegation</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The negation operator is used unsafely on the left side of this binary expression.</span>
   

@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useAnchorContent
+layout: layouts/docs.liquid
 ---
 
 # useAnchorContent (since v10.0.0)
@@ -18,7 +19,7 @@ Accessible means that the content is not hidden using the `aria-hidden` attribut
 <a />
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useAnchorContent.js:1:1 <a href="https://rome.tools/lint/rules/useAnchorContent">lint/a11y/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useAnchorContent.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAnchorContent">lint/a11y/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide screen reader accessible content when using </span><span style="color: Tomato;"><strong>`a`</strong></span><span style="color: Tomato;"> elements.</span>
   
@@ -34,7 +35,7 @@ Accessible means that the content is not hidden using the `aria-hidden` attribut
 <a></a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useAnchorContent.js:1:1 <a href="https://rome.tools/lint/rules/useAnchorContent">lint/a11y/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useAnchorContent.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAnchorContent">lint/a11y/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide screen reader accessible content when using </span><span style="color: Tomato;"><strong>`a`</strong></span><span style="color: Tomato;"> elements.</span>
   
@@ -50,7 +51,7 @@ Accessible means that the content is not hidden using the `aria-hidden` attribut
 <a>    </a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useAnchorContent.js:1:1 <a href="https://rome.tools/lint/rules/useAnchorContent">lint/a11y/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useAnchorContent.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAnchorContent">lint/a11y/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide screen reader accessible content when using </span><span style="color: Tomato;"><strong>`a`</strong></span><span style="color: Tomato;"> elements.</span>
   
@@ -66,7 +67,7 @@ Accessible means that the content is not hidden using the `aria-hidden` attribut
 <a aria-hidden>content</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useAnchorContent.js:1:1 <a href="https://rome.tools/lint/rules/useAnchorContent">lint/a11y/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useAnchorContent.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAnchorContent">lint/a11y/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide screen reader accessible content when using </span><span style="color: Tomato;"><strong>`a`</strong></span><span style="color: Tomato;"> elements.</span>
   
@@ -82,7 +83,7 @@ Accessible means that the content is not hidden using the `aria-hidden` attribut
 <a><span aria-hidden="true">content</span></a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useAnchorContent.js:1:1 <a href="https://rome.tools/lint/rules/useAnchorContent">lint/a11y/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useAnchorContent.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAnchorContent">lint/a11y/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide screen reader accessible content when using </span><span style="color: Tomato;"><strong>`a`</strong></span><span style="color: Tomato;"> elements.</span>
   

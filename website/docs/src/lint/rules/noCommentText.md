@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noCommentText
+layout: layouts/docs.liquid
 ---
 
 # noCommentText (since v0.7.0)
@@ -16,7 +17,7 @@ Prevent comments from being inserted as text nodes
 const a3 = <div>// comment</div>;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noCommentText.js:1:17 <a href="https://rome.tools/lint/rules/noCommentText">lint/correctness/noCommentText</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noCommentText.js:1:17 <a href="https://rome.tools/docs/lint/rules/noCommentText">lint/correctness/noCommentText</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Wrap </span><span style="color: Tomato;"><strong>comments</strong></span><span style="color: Tomato;"> inside children within </span><span style="color: Tomato;"><strong>braces</strong></span><span style="color: Tomato;">.</span>
   
@@ -36,7 +37,7 @@ const a3 = <div>// comment</div>;
 const a4 = <div>/* comment */</div>;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noCommentText.js:1:17 <a href="https://rome.tools/lint/rules/noCommentText">lint/correctness/noCommentText</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noCommentText.js:1:17 <a href="https://rome.tools/docs/lint/rules/noCommentText">lint/correctness/noCommentText</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Wrap </span><span style="color: Tomato;"><strong>comments</strong></span><span style="color: Tomato;"> inside children within </span><span style="color: Tomato;"><strong>braces</strong></span><span style="color: Tomato;">.</span>
   
@@ -54,7 +55,7 @@ const a4 = <div>/* comment */</div>;
 const a5 = <div>/** comment */</div>;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noCommentText.js:1:17 <a href="https://rome.tools/lint/rules/noCommentText">lint/correctness/noCommentText</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noCommentText.js:1:17 <a href="https://rome.tools/docs/lint/rules/noCommentText">lint/correctness/noCommentText</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Wrap </span><span style="color: Tomato;"><strong>comments</strong></span><span style="color: Tomato;"> inside children within </span><span style="color: Tomato;"><strong>braces</strong></span><span style="color: Tomato;">.</span>
   

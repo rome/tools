@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noEmptyPattern
+layout: layouts/docs.liquid
 ---
 
 # noEmptyPattern (since v0.7.0)
@@ -16,7 +17,7 @@ Disallows empty destructuring patterns.
 var {} = foo;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noEmptyPattern.js:1:5 <a href="https://rome.tools/lint/rules/noEmptyPattern">lint/correctness/noEmptyPattern</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noEmptyPattern.js:1:5 <a href="https://rome.tools/docs/lint/rules/noEmptyPattern">lint/correctness/noEmptyPattern</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unexpected empty object pattern.</span>
   
@@ -30,7 +31,7 @@ var {} = foo;
 var {a: {}} = foo;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noEmptyPattern.js:1:9 <a href="https://rome.tools/lint/rules/noEmptyPattern">lint/correctness/noEmptyPattern</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noEmptyPattern.js:1:9 <a href="https://rome.tools/docs/lint/rules/noEmptyPattern">lint/correctness/noEmptyPattern</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unexpected empty object pattern.</span>
   
@@ -44,7 +45,7 @@ var {a: {}} = foo;
 function foo({}) {}
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noEmptyPattern.js:1:14 <a href="https://rome.tools/lint/rules/noEmptyPattern">lint/correctness/noEmptyPattern</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noEmptyPattern.js:1:14 <a href="https://rome.tools/docs/lint/rules/noEmptyPattern">lint/correctness/noEmptyPattern</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unexpected empty object pattern.</span>
   

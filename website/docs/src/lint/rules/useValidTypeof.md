@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useValidTypeof
+layout: layouts/docs.liquid
 ---
 
 # useValidTypeof (since v0.7.0)
@@ -18,7 +19,7 @@ names or other `typeof` expressions
 typeof foo === "strnig"
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:16 <a href="https://rome.tools/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:16 <a href="https://rome.tools/docs/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Invalid `typeof` comparison value</span>
   
@@ -34,7 +35,7 @@ typeof foo === "strnig"
 typeof foo == "undefimed"
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:15 <a href="https://rome.tools/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:15 <a href="https://rome.tools/docs/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Invalid `typeof` comparison value</span>
   
@@ -50,7 +51,7 @@ typeof foo == "undefimed"
 typeof bar != "nunber"
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:15 <a href="https://rome.tools/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:15 <a href="https://rome.tools/docs/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Invalid `typeof` comparison value</span>
   
@@ -66,7 +67,7 @@ typeof bar != "nunber"
 typeof bar !== "fucntion"
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:16 <a href="https://rome.tools/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:16 <a href="https://rome.tools/docs/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Invalid `typeof` comparison value</span>
   
@@ -82,7 +83,7 @@ typeof bar !== "fucntion"
 typeof foo === undefined
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:16 <a href="https://rome.tools/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:16 <a href="https://rome.tools/docs/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Invalid `typeof` comparison value</span>
   
@@ -102,7 +103,7 @@ typeof foo === undefined
 typeof bar == Object
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:15 <a href="https://rome.tools/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:15 <a href="https://rome.tools/docs/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Invalid `typeof` comparison value</span>
   
@@ -124,7 +125,7 @@ typeof bar == Object
 typeof foo === baz
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:16 <a href="https://rome.tools/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:16 <a href="https://rome.tools/docs/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Invalid `typeof` comparison value</span>
   
@@ -140,7 +141,7 @@ typeof foo === baz
 typeof foo == 5
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:15 <a href="https://rome.tools/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:15 <a href="https://rome.tools/docs/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Invalid `typeof` comparison value</span>
   
@@ -156,7 +157,7 @@ typeof foo == 5
 typeof foo == -5
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:15 <a href="https://rome.tools/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/useValidTypeof.js:1:15 <a href="https://rome.tools/docs/lint/rules/useValidTypeof">lint/correctness/useValidTypeof</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Invalid `typeof` comparison value</span>
   

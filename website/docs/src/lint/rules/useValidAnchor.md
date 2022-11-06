@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useValidAnchor
+layout: layouts/docs.liquid
 ---
 
 # useValidAnchor (since v10.0.0)
@@ -36,7 +37,7 @@ in another tab, but the default "click" behaviour is prevented;
 <a href={null}>navigate here</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useValidAnchor.js:1:10 <a href="https://rome.tools/lint/rules/useValidAnchor">lint/a11y/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useValidAnchor.js:1:10 <a href="https://rome.tools/docs/lint/rules/useValidAnchor">lint/a11y/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide a valid value for the attribute </span><span style="color: Tomato;"><strong>href</strong></span><span style="color: Tomato;">.</span>
   
@@ -54,7 +55,7 @@ in another tab, but the default "click" behaviour is prevented;
 <a href={undefined}>navigate here</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useValidAnchor.js:1:10 <a href="https://rome.tools/lint/rules/useValidAnchor">lint/a11y/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useValidAnchor.js:1:10 <a href="https://rome.tools/docs/lint/rules/useValidAnchor">lint/a11y/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide a valid value for the attribute </span><span style="color: Tomato;"><strong>href</strong></span><span style="color: Tomato;">.</span>
   
@@ -72,7 +73,7 @@ in another tab, but the default "click" behaviour is prevented;
 <a href>navigate here</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useValidAnchor.js:1:4 <a href="https://rome.tools/lint/rules/useValidAnchor">lint/a11y/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useValidAnchor.js:1:4 <a href="https://rome.tools/docs/lint/rules/useValidAnchor">lint/a11y/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The attribute </span><span style="color: Tomato;"><strong>href</strong></span><span style="color: Tomato;"> has to be assigned to a valid value.</span>
   
@@ -90,7 +91,7 @@ in another tab, but the default "click" behaviour is prevented;
 <a href="javascript:void(0)">navigate here</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useValidAnchor.js:1:9 <a href="https://rome.tools/lint/rules/useValidAnchor">lint/a11y/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useValidAnchor.js:1:9 <a href="https://rome.tools/docs/lint/rules/useValidAnchor">lint/a11y/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide a valid value for the attribute </span><span style="color: Tomato;"><strong>href</strong></span><span style="color: Tomato;">.</span>
   
@@ -108,7 +109,7 @@ in another tab, but the default "click" behaviour is prevented;
 <a href="https://example.com" onClick={something}>navigate here</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useValidAnchor.js:1:1 <a href="https://rome.tools/lint/rules/useValidAnchor">lint/a11y/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useValidAnchor.js:1:1 <a href="https://rome.tools/docs/lint/rules/useValidAnchor">lint/a11y/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Use a </span><span style="color: Tomato;"><strong>button</strong></span><span style="color: Tomato;"> element instead of an </span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"> element.</span>
   

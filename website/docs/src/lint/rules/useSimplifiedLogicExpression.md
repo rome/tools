@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useSimplifiedLogicExpression
+layout: layouts/docs.liquid
 ---
 
 # useSimplifiedLogicExpression (since v0.7.0)
@@ -17,7 +18,7 @@ const boolExp = true;
 const r = true && boolExp;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">complexity/useSimplifiedLogicExpression.js:2:11 <a href="https://rome.tools/lint/rules/useSimplifiedLogicExpression">lint/complexity/useSimplifiedLogicExpression</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">complexity/useSimplifiedLogicExpression.js:2:11 <a href="https://rome.tools/docs/lint/rules/useSimplifiedLogicExpression">lint/complexity/useSimplifiedLogicExpression</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Logical expression contains unnecessary complexity.</span>
   
@@ -37,7 +38,7 @@ const boolExp2 = true;
 const r2 = boolExp || true;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">complexity/useSimplifiedLogicExpression.js:2:12 <a href="https://rome.tools/lint/rules/useSimplifiedLogicExpression">lint/complexity/useSimplifiedLogicExpression</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">complexity/useSimplifiedLogicExpression.js:2:12 <a href="https://rome.tools/docs/lint/rules/useSimplifiedLogicExpression">lint/complexity/useSimplifiedLogicExpression</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Logical expression contains unnecessary complexity.</span>
   
@@ -57,7 +58,7 @@ const nonNullExp = 123;
 const r3 = null ?? nonNullExp;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">complexity/useSimplifiedLogicExpression.js:2:12 <a href="https://rome.tools/lint/rules/useSimplifiedLogicExpression">lint/complexity/useSimplifiedLogicExpression</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">complexity/useSimplifiedLogicExpression.js:2:12 <a href="https://rome.tools/docs/lint/rules/useSimplifiedLogicExpression">lint/complexity/useSimplifiedLogicExpression</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Logical expression contains unnecessary complexity.</span>
   
@@ -78,7 +79,7 @@ const boolExpr2 = false;
 const r4 = !boolExpr1 || !boolExpr2;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">complexity/useSimplifiedLogicExpression.js:3:12 <a href="https://rome.tools/lint/rules/useSimplifiedLogicExpression">lint/complexity/useSimplifiedLogicExpression</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">complexity/useSimplifiedLogicExpression.js:3:12 <a href="https://rome.tools/docs/lint/rules/useSimplifiedLogicExpression">lint/complexity/useSimplifiedLogicExpression</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Logical expression contains unnecessary complexity.</span>
   
