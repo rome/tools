@@ -4,11 +4,8 @@ use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsCallExpression, JsSyntaxKind, JsSyntaxNode,
-    JsSyntaxToken, TriviaPieceKind,
-};
-use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt, TriviaPiece};
+use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsCallExpression, JsSyntaxToken};
+use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
 
 declare_rule! {
     /// Disallow `parseInt()` and `Number.parseInt()` in favor of binary, octal, and hexadecimal literals
@@ -83,7 +80,7 @@ impl Rule for UseNumericLiterals {
         let mut mutation = ctx.root().begin();
 
         let number = call.to_numeric_literal()?;
-        let number = attach_trivia(number, node);
+        let number = ast_utils::token_with_source_trivia(number, node);
 
         mutation.replace_node_discard_trivia(
             JsAnyExpression::JsCallExpression(node.clone()),
@@ -122,60 +119,11 @@ impl CallInfo {
         })
     }
 
-    fn to_numeric_literal(&self) -> Option<String> {
+    fn to_numeric_literal(&self) -> Option<JsSyntaxToken> {
         i128::from_str_radix(&self.text, self.radix as u32).ok()?;
         let number = format!("{}{}", self.radix.prefix(), self.text);
+        let number = make::js_number_literal(&number);
         Some(number)
-    }
-}
-
-fn attach_trivia(number: String, source: &JsCallExpression) -> JsSyntaxToken {
-    let mut text = String::new();
-    let node = source.syntax();
-    let mut leading_trivia = vec![];
-    let mut trailing_trivia = vec![];
-
-    get_leading_trivia(&mut leading_trivia, &mut text, node);
-    text.push_str(&number);
-    get_trailing_trivia(&mut trailing_trivia, &mut text, node);
-
-    JsSyntaxToken::new_detached(
-        JsSyntaxKind::JS_NUMBER_LITERAL,
-        &text,
-        leading_trivia,
-        trailing_trivia,
-    )
-}
-
-fn get_leading_trivia(trivia: &mut Vec<TriviaPiece>, text: &mut String, node: &JsSyntaxNode) {
-    let Some(token) = node.first_token() else { return };
-    for t in token.leading_trivia().pieces() {
-        text.push_str(t.text());
-        trivia.push(TriviaPiece::new(t.kind(), t.text_len()));
-    }
-    if !trivia.is_empty() {
-        return;
-    }
-    let Some(token) = token.prev_token() else { return };
-    if !token.kind().is_punct() && token.trailing_trivia().text().is_empty() {
-        text.push(' ');
-        trivia.push(TriviaPiece::new(TriviaPieceKind::Whitespace, 1));
-    }
-}
-
-fn get_trailing_trivia(trivia: &mut Vec<TriviaPiece>, text: &mut String, node: &JsSyntaxNode) {
-    let Some(token) = node.last_token() else { return };
-    for t in token.trailing_trivia().pieces() {
-        text.push_str(t.text());
-        trivia.push(TriviaPiece::new(t.kind(), t.text_len()));
-    }
-    if !trivia.is_empty() {
-        return;
-    }
-    let Some(token) = token.next_token() else { return };
-    if !token.kind().is_punct() && token.leading_trivia().text().is_empty() {
-        text.push(' ');
-        trivia.push(TriviaPiece::new(TriviaPieceKind::Whitespace, 1));
     }
 }
 
