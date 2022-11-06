@@ -16,7 +16,7 @@ Disallow unclear usage of multiple space characters in regular expression litera
 /   /
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:2 <a href="https://rome.tools/lint/rules/noMultipleSpacesInRegularExpressionLiterals">lint/correctness/noMultipleSpacesInRegularExpressionLiterals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:2 <a href="https://docs.rome.tools/lint/rules/noMultipleSpacesInRegularExpressionLiterals">lint/correctness/noMultipleSpacesInRegularExpressionLiterals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This regular expression contains unclear uses of multiple spaces.</span>
   
@@ -36,7 +36,7 @@ Disallow unclear usage of multiple space characters in regular expression litera
 /  foo/
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:2 <a href="https://rome.tools/lint/rules/noMultipleSpacesInRegularExpressionLiterals">lint/correctness/noMultipleSpacesInRegularExpressionLiterals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:2 <a href="https://docs.rome.tools/lint/rules/noMultipleSpacesInRegularExpressionLiterals">lint/correctness/noMultipleSpacesInRegularExpressionLiterals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This regular expression contains unclear uses of multiple spaces.</span>
   
@@ -56,7 +56,7 @@ Disallow unclear usage of multiple space characters in regular expression litera
 /foo   /
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:5 <a href="https://rome.tools/lint/rules/noMultipleSpacesInRegularExpressionLiterals">lint/correctness/noMultipleSpacesInRegularExpressionLiterals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:5 <a href="https://docs.rome.tools/lint/rules/noMultipleSpacesInRegularExpressionLiterals">lint/correctness/noMultipleSpacesInRegularExpressionLiterals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This regular expression contains unclear uses of multiple spaces.</span>
   
@@ -76,7 +76,7 @@ Disallow unclear usage of multiple space characters in regular expression litera
 /foo  bar/
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:5 <a href="https://rome.tools/lint/rules/noMultipleSpacesInRegularExpressionLiterals">lint/correctness/noMultipleSpacesInRegularExpressionLiterals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:5 <a href="https://docs.rome.tools/lint/rules/noMultipleSpacesInRegularExpressionLiterals">lint/correctness/noMultipleSpacesInRegularExpressionLiterals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This regular expression contains unclear uses of multiple spaces.</span>
   
@@ -96,7 +96,7 @@ Disallow unclear usage of multiple space characters in regular expression litera
 /foo   bar    baz/
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:5 <a href="https://rome.tools/lint/rules/noMultipleSpacesInRegularExpressionLiterals">lint/correctness/noMultipleSpacesInRegularExpressionLiterals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:5 <a href="https://docs.rome.tools/lint/rules/noMultipleSpacesInRegularExpressionLiterals">lint/correctness/noMultipleSpacesInRegularExpressionLiterals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This regular expression contains unclear uses of multiple spaces.</span>
   
@@ -116,7 +116,7 @@ Disallow unclear usage of multiple space characters in regular expression litera
 /foo [ba]r  b(a|z)/
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:11 <a href="https://rome.tools/lint/rules/noMultipleSpacesInRegularExpressionLiterals">lint/correctness/noMultipleSpacesInRegularExpressionLiterals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:11 <a href="https://docs.rome.tools/lint/rules/noMultipleSpacesInRegularExpressionLiterals">lint/correctness/noMultipleSpacesInRegularExpressionLiterals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This regular expression contains unclear uses of multiple spaces.</span>
   

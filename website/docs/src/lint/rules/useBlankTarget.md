@@ -23,7 +23,7 @@ and the [the noopener documentation](https://html.spec.whatwg.org/multipage/link
 <a href='http://external.link' target='_blank'>child</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useBlankTarget.js:1:32 <a href="https://rome.tools/lint/rules/useBlankTarget">lint/a11y/useBlankTarget</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useBlankTarget.js:1:32 <a href="https://docs.rome.tools/lint/rules/useBlankTarget">lint/a11y/useBlankTarget</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Tomato;"> without </span><span style="color: Tomato;"><strong>rel=&quot;noreferrer&quot;</strong></span><span style="color: Tomato;">.</span>
   
@@ -43,7 +43,7 @@ and the [the noopener documentation](https://html.spec.whatwg.org/multipage/link
 <a href='http://external.link' target='_blank' rel="noopener">child</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useBlankTarget.js:1:32 <a href="https://rome.tools/lint/rules/useBlankTarget">lint/a11y/useBlankTarget</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useBlankTarget.js:1:32 <a href="https://docs.rome.tools/lint/rules/useBlankTarget">lint/a11y/useBlankTarget</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Tomato;"> without </span><span style="color: Tomato;"><strong>rel=&quot;noreferrer&quot;</strong></span><span style="color: Tomato;">.</span>
   
@@ -63,7 +63,7 @@ and the [the noopener documentation](https://html.spec.whatwg.org/multipage/link
 <a {...props} href='http://external.link' target='_blank' rel="noopener">child</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useBlankTarget.js:1:43 <a href="https://rome.tools/lint/rules/useBlankTarget">lint/a11y/useBlankTarget</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useBlankTarget.js:1:43 <a href="https://docs.rome.tools/lint/rules/useBlankTarget">lint/a11y/useBlankTarget</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Tomato;"> without </span><span style="color: Tomato;"><strong>rel=&quot;noreferrer&quot;</strong></span><span style="color: Tomato;">.</span>
   
@@ -84,7 +84,7 @@ and the [the noopener documentation](https://html.spec.whatwg.org/multipage/link
 <a href='http://external.link' target='_BlaNk'>child</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">a11y/useBlankTarget.js:2:32 <a href="https://rome.tools/lint/rules/useBlankTarget">lint/a11y/useBlankTarget</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useBlankTarget.js:2:32 <a href="https://docs.rome.tools/lint/rules/useBlankTarget">lint/a11y/useBlankTarget</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Tomato;"> without </span><span style="color: Tomato;"><strong>rel=&quot;noreferrer&quot;</strong></span><span style="color: Tomato;">.</span>
   

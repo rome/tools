@@ -16,7 +16,7 @@ Disallow sparse arrays
 [1,,2]
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noSparseArray.js:1:1 <a href="https://rome.tools/lint/rules/noSparseArray">lint/correctness/noSparseArray</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noSparseArray.js:1:1 <a href="https://docs.rome.tools/lint/rules/noSparseArray">lint/correctness/noSparseArray</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>array</strong></span><span style="color: Tomato;"> contains an </span><span style="color: Tomato;"><strong>empty slot</strong></span><span style="color: Tomato;">.</span>
   

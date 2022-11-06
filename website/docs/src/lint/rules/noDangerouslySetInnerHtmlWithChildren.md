@@ -19,7 +19,7 @@ function createMarkup() {
 <Component dangerouslySetInnerHTML={createMarkup()}>"child1"</Component>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">security/noDangerouslySetInnerHtmlWithChildren.js:4:12 <a href="https://rome.tools/lint/rules/noDangerouslySetInnerHtmlWithChildren">lint/security/noDangerouslySetInnerHtmlWithChildren</a> ━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">security/noDangerouslySetInnerHtmlWithChildren.js:4:12 <a href="https://docs.rome.tools/lint/rules/noDangerouslySetInnerHtmlWithChildren">lint/security/noDangerouslySetInnerHtmlWithChildren</a> ━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid passing both </span><span style="color: Tomato;"><strong>children</strong></span><span style="color: Tomato;"> and the </span><span style="color: Tomato;"><strong>dangerouslySetInnerHTML</strong></span><span style="color: Tomato;"> prop.</span>
   
@@ -48,7 +48,7 @@ function createMarkup() {
 <Component dangerouslySetInnerHTML={createMarkup()} children="child1" />
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">security/noDangerouslySetInnerHtmlWithChildren.js:4:12 <a href="https://rome.tools/lint/rules/noDangerouslySetInnerHtmlWithChildren">lint/security/noDangerouslySetInnerHtmlWithChildren</a> ━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">security/noDangerouslySetInnerHtmlWithChildren.js:4:12 <a href="https://docs.rome.tools/lint/rules/noDangerouslySetInnerHtmlWithChildren">lint/security/noDangerouslySetInnerHtmlWithChildren</a> ━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid passing both </span><span style="color: Tomato;"><strong>children</strong></span><span style="color: Tomato;"> and the </span><span style="color: Tomato;"><strong>dangerouslySetInnerHTML</strong></span><span style="color: Tomato;"> prop.</span>
   
@@ -74,7 +74,7 @@ function createMarkup() {
 React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' } }, 'children')
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">security/noDangerouslySetInnerHtmlWithChildren.js:1:30 <a href="https://rome.tools/lint/rules/noDangerouslySetInnerHtmlWithChildren">lint/security/noDangerouslySetInnerHtmlWithChildren</a> ━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">security/noDangerouslySetInnerHtmlWithChildren.js:1:30 <a href="https://docs.rome.tools/lint/rules/noDangerouslySetInnerHtmlWithChildren">lint/security/noDangerouslySetInnerHtmlWithChildren</a> ━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid passing both </span><span style="color: Tomato;"><strong>children</strong></span><span style="color: Tomato;"> and the </span><span style="color: Tomato;"><strong>dangerouslySetInnerHTML</strong></span><span style="color: Tomato;"> prop.</span>
   

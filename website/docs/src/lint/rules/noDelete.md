@@ -17,7 +17,7 @@ const arr = [['a','b','c'], [1, 2, 3]];
 delete arr[0][2];
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noDelete.js:2:1 <a href="https://rome.tools/lint/rules/noDelete">lint/correctness/noDelete</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noDelete.js:2:1 <a href="https://docs.rome.tools/lint/rules/noDelete">lint/correctness/noDelete</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This is an unexpected use of the </span><span style="color: Tomato;"><strong>delete</strong></span><span style="color: Tomato;"> operator.</span>
   
@@ -40,7 +40,7 @@ const obj = {a: {b: {c: 123}}};
 delete obj.a.b.c;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noDelete.js:2:1 <a href="https://rome.tools/lint/rules/noDelete">lint/correctness/noDelete</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noDelete.js:2:1 <a href="https://docs.rome.tools/lint/rules/noDelete">lint/correctness/noDelete</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This is an unexpected use of the </span><span style="color: Tomato;"><strong>delete</strong></span><span style="color: Tomato;"> operator.</span>
   
