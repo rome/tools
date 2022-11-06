@@ -18,10 +18,10 @@ declare_node_union! {
     pub JsAnyConditional = JsConditionalExpression | TsConditionalType
 }
 
-impl<'a> AsFormat<'a> for JsAnyConditional {
-    type Format = FormatRefWithRule<'a, JsAnyConditional, FormatJsAnyConditionalRule>;
+impl AsFormat for JsAnyConditional {
+    type Format<'a> = FormatRefWithRule<'a, JsAnyConditional, FormatJsAnyConditionalRule>;
 
-    fn format(&'a self) -> Self::Format {
+    fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(self, FormatJsAnyConditionalRule::default())
     }
 }

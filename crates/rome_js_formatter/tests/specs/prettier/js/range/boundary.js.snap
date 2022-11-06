@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/range/boundary.js
 ---
 
 # Input
@@ -21,7 +23,7 @@ foo = 1.0000;bar = 1.0000;baz=1.0000;
 -foo = 1.0;
 -bar = 1.0;
 -baz = 1.0;
-+foo = 1.0000;bar = 1.0000;baz=1.0000;
++foo = 1.0000;bar = 1.0;baz=1.0000;
  // The range will be 13~26
  // `foo` ends at 13, should not format
  // `bar` ends at 26, should format
@@ -30,7 +32,7 @@ foo = 1.0000;bar = 1.0000;baz=1.0000;
 # Output
 
 ```js
-foo = 1.0000;bar = 1.0000;baz=1.0000;
+foo = 1.0000;bar = 1.0;baz=1.0000;
 // The range will be 13~26
 // `foo` ends at 13, should not format
 // `bar` ends at 26, should format

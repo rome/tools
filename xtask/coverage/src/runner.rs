@@ -323,7 +323,7 @@ pub(crate) fn run_test_suite(
                             .downcast_ref::<String>()
                             .map(|x| x.to_string())
                             .or_else(|| panic.downcast_ref::<&str>().map(|x| x.to_string()))
-                            .unwrap_or_else(|| "".to_string());
+                            .unwrap_or_default();
                         tracing::error!(
                             panic = error.as_str(),
                             name = test.name(),

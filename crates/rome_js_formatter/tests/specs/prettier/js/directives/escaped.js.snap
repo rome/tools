@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/directives/escaped.js
 ---
 
 # Input
@@ -48,7 +50,7 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 ```diff
 --- Prettier
 +++ Rome
-@@ -6,19 +6,19 @@
+@@ -6,20 +6,20 @@
  "\'";
  "\"";
  "\\";
@@ -59,19 +61,22 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 +"hola";
  "hol\\a (the a is not escaped)";
  "hol\\a (the a is not escaped)";
- "multiple \a unnecessary \a escapes";
 -"multiple \a unnecessary \a escapes";
+ "multiple \a unnecessary \a escapes";
 +"multiple a unnecessary a escapes";
  "unnecessarily escaped character preceded by escaped backslash \\\a";
- "unnecessarily escaped character preceded by escaped backslash \\\a";
+-"unnecessarily escaped character preceded by escaped backslash \\\a";
++"unnecessarily escaped character preceded by escaped backslash \\a";
  "unescaped character preceded by two escaped backslashes       \\\\a";
  "unescaped character preceded by two escaped backslashes       \\\\a";
  "\a\a"; // consecutive unnecessarily escaped characters
 -"\a\a"; // consecutive unnecessarily escaped characters
+-"escaped \u2030 \‰ (should still stay escaped)";
 +"aa"; // consecutive unnecessarily escaped characters
- "escaped \u2030 \‰ (should still stay escaped)";
++"escaped \u2030 ‰ (should still stay escaped)";
  
  // Meaningful escapes
+ // Commented out to avoid `SyntaxError: Octal literals are not allowed in strict mode.`
 ```
 
 # Output
@@ -93,12 +98,12 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 "multiple \a unnecessary \a escapes";
 "multiple a unnecessary a escapes";
 "unnecessarily escaped character preceded by escaped backslash \\\a";
-"unnecessarily escaped character preceded by escaped backslash \\\a";
+"unnecessarily escaped character preceded by escaped backslash \\a";
 "unescaped character preceded by two escaped backslashes       \\\\a";
 "unescaped character preceded by two escaped backslashes       \\\\a";
 "\a\a"; // consecutive unnecessarily escaped characters
 "aa"; // consecutive unnecessarily escaped characters
-"escaped \u2030 \‰ (should still stay escaped)";
+"escaped \u2030 ‰ (should still stay escaped)";
 
 // Meaningful escapes
 // Commented out to avoid `SyntaxError: Octal literals are not allowed in strict mode.`

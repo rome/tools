@@ -453,23 +453,15 @@ impl<'token> LiteralStringNormaliser<'token> {
                             }
                         } else if signal == CharSignal::Keep {
                             reduced_string.push(current_char);
+                            signal = CharSignal::None;
                         }
                         // The next character is another backslash, or
                         // a character that should be kept in the next iteration
-                        else if matches!(
-                            next_character,
-                            '\\' | 'v' | 'b' | 'f' | 'n' | 't' | 'r' | 'u' | 'x'
-                        ) {
+                        else if "^\n\r\"'01234567\\bfnrtuvx\u{2028}\u{2029}"
+                            .contains(*next_character)
+                        {
                             signal = CharSignal::Keep;
                             // fallback, keep the backslash
-                            reduced_string.push(current_char);
-                        }
-                        // these are character that should stay, but
-                        // the next iteration should decide if to keep them or not
-                        else if !next_character.is_alphabetic()
-                            && *next_character != alternate_quote.as_char()
-                            && *next_character != preferred_quote.as_char()
-                        {
                             reduced_string.push(current_char);
                         } else {
                             // these, usually characters that can have their
@@ -512,23 +504,15 @@ impl<'token> LiteralStringNormaliser<'token> {
                         }
                     } else if current_char == alternate_quote.as_char() {
                         match signal {
-                            CharSignal::None => {
+                            CharSignal::None | CharSignal::Keep => {
                                 reduced_string.push(alternate_quote.as_char());
                             }
-                            CharSignal::Keep => {
-                                reduced_string.push(alternate_quote.as_char());
-                                signal = CharSignal::None;
-                            }
-                            AlreadyPrinted(the_char) => {
-                                if the_char == alternate_quote.as_char() {
-                                    signal = CharSignal::None;
-                                    continue;
-                                }
-                            }
+                            AlreadyPrinted(_) => (),
                         }
                     } else {
                         reduced_string.push(current_char);
                     }
+                    signal = CharSignal::None;
                 }
             }
         }
