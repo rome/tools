@@ -69,7 +69,7 @@ function benchmarkFormatter(rome) {
 			})
 			.join(" ");
 
-		const prettierCommand = `node '${resolvePrettier()}' ${prettierPaths} --write`;
+		const prettierCommand = `node '${resolvePrettier()}' ${prettierPaths} --write --loglevel=error`;
 
 		const romeCommand = `${rome} format ${Object.keys(
 			configuration.sourceDirectories,
