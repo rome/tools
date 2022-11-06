@@ -1,6 +1,5 @@
 ---
 title: Lint Rule useNumericLiterals
-layout: layouts/rule.liquid
 ---
 
 # useNumericLiterals (since v11.0.0)
@@ -15,7 +14,7 @@ Disallow `parseInt()` and `Number.parseInt()` in favor of binary, octal, and hex
 parseInt("111110111", 2) === 503;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useNumericLiterals.js:1:1 <a href="https://rome.tools/docs/lint/rules/useNumericLiterals">lint/nursery/useNumericLiterals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/useNumericLiterals.js:1:1 <a href="https://docs.rome.tools/lint/rules/useNumericLiterals">lint/nursery/useNumericLiterals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Use binary literals instead of parseInt()</span>
   
@@ -35,7 +34,7 @@ parseInt("111110111", 2) === 503;
 Number.parseInt("767", 8) === 503;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useNumericLiterals.js:1:1 <a href="https://rome.tools/docs/lint/rules/useNumericLiterals">lint/nursery/useNumericLiterals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/useNumericLiterals.js:1:1 <a href="https://docs.rome.tools/lint/rules/useNumericLiterals">lint/nursery/useNumericLiterals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Use octal literals instead of Number.parseInt()</span>
   

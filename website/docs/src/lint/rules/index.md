@@ -482,7 +482,7 @@ Promotes the use of <code>.flatMap()</code> when <code>map().flat()</code> are u
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useNumericLiterals">
-	<a href="/docs/lint/rules/useNumericLiterals">useNumericLiterals</a>
+	<a href="/lint/rules/useNumericLiterals">useNumericLiterals</a>
 </h3>
 Disallow <code>parseInt()</code> and <code>Number.parseInt()</code> in favor of binary, octal, and hexadecimal literals
 </section>
