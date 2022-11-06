@@ -24,7 +24,7 @@ Prints information for debugging purpose
 
 It starts a server for the LSP protocol, which communicates over `stdin` and `stdout`.
 
-This command is useful to interact with the Rome server when developing editors/IDEs. 
+This command is useful to interact with the Rome server when developing editors/IDEs.
 
 ### `rome format`
 
@@ -62,7 +62,7 @@ Connect to a running instance of the Rome daemon server
 
 The maximum allowed size for source code files in bytes.
 
-> Default: 1024
+> Default: 1024*1024 bytes (1 MB)
 
 ## Global Options
 
