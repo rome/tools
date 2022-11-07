@@ -144,8 +144,16 @@ social-image: social-logo.png
 		</footer>
 
 		{% if env.production %}
-			<script src="https://browser.sentry-cdn.com/5.29.0/bundle.tracing.min.js" crossorigin="anonymous"></script>
+			<script async src="https://www.googletagmanager.com/gtag/js?id=G-P9HDLV59XZ"></script>
+			<script>
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
 
+				gtag('config', 'G-P9HDLV59XZ');
+			</script>
+
+			<script src="https://browser.sentry-cdn.com/5.29.0/bundle.tracing.min.js" crossorigin="anonymous"></script>
 			<script>
 				if (typeof Sentry !== "undefined") {
 					Sentry.init({
