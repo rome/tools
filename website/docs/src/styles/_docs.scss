@@ -20,6 +20,7 @@ footer {
 	position: relative;
 	display: flex;
 	z-index: 99999;
+	margin-right: auto;
 
 	&:hover, &.active, ul {
 		background-color: #dfdfdf;
@@ -222,6 +223,7 @@ footer {
 	@include mobile-only {
 		display: none;
 		top: 64px;
+		height: auto;
 	}
 }
 
