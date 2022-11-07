@@ -26,7 +26,7 @@
 
 </div>
 
-**Rome** is designed to be a formatter, linter, bundler, and [more](https://rome.tools/#development-status) for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
+**Rome** is a formatter, linter, bundler, and [more](https://rome.tools/#development-status) for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
 
 **Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
 
@@ -50,6 +50,5 @@ Check out our [homepage](https://rome.tools) to learn more about Rome, or direct
 
 If you're curious to know our internals, you can browse our [technical documentation].
 
-[documentation]: https://docs.rome.tools/guides/getting-started/
 [technical documentation]: https://rome.github.io/tools/rome
 
