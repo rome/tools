@@ -21,7 +21,7 @@ const MAIN: Markup = markup! {
     "<Dim>"--no-colors"</Dim>"              Disable the formatting of markup (print everything as plain text)
     "<Dim>"--use-server"</Dim>"             Connect to a running instance of the Rome daemon server
     "<Dim>"--version"</Dim>"                Show the Rome version information and quit
-    "<Dim>"--files-max-size"</Dim>"          The maximum allowed size for source code files in bytes. (default: 1024)
+    "<Dim>"--files-max-size"</Dim>"         The maximum allowed size for source code files in bytes (default: 1MB)
 "
 };
 
@@ -36,7 +36,7 @@ const CHECK: Markup = markup! {
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--apply"</Dim>"                       Apply safe fixes
     "<Dim>"--apply-suggested"</Dim>"             Apply safe and suggested fixes
-    "<Dim>"--max-diagnostics"</Dim>"             Cap the amount of diagnostics displayed - default 20
+    "<Dim>"--max-diagnostics"</Dim>"             Cap the amount of diagnostics displayed (default: 20)
 "
 };
 
