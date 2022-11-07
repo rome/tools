@@ -1,5 +1,6 @@
 //! Events emitted by the [SemanticEventExtractor] which are then constructed into the Semantic Model
 
+use rustc_hash::FxHashMap;
 use std::collections::{HashMap, VecDeque};
 
 use rome_js_syntax::{
@@ -158,7 +159,7 @@ pub struct SemanticEventExtractor {
     stash: VecDeque<SemanticEvent>,
     scopes: Vec<Scope>,
     next_scope_id: usize,
-    bindings: HashMap<SyntaxTokenText, TextRange>,
+    bindings: FxHashMap<SyntaxTokenText, TextRange>,
 }
 
 #[derive(Debug)]
@@ -233,7 +234,7 @@ impl SemanticEventExtractor {
             stash: VecDeque::new(),
             scopes: vec![],
             next_scope_id: 0,
-            bindings: HashMap::new(),
+            bindings: FxHashMap::default(),
         }
     }
 
