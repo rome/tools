@@ -5,7 +5,7 @@ use rome_console::markup;
 use rome_js_semantic::Capture;
 use rome_js_syntax::{
     JsCallExpression, JsIdentifierBinding, JsSyntaxKind, JsVariableDeclaration,
-    JsVariableDeclarator, TextRange, TsIdentifierBinding,
+    JsVariableDeclarator, TextRange, TsIdentifierBinding, JsReferenceIdentifier, JsStaticMemberExpression, JsSyntaxNode,
 };
 use rome_rowan::{AstNode, SyntaxNodeCast};
 use serde::{Deserialize, Serialize};
@@ -119,9 +119,22 @@ impl ReactExtensiveDependenciesOptions {
 /// Flags the possible fixes that were found
 pub enum Fix {
     /// When a dependency needs to be added.
-    AddDependency(TextRange, Vec<Capture>),
+    AddDependency(TextRange, Vec<TextRange>),
     /// When a dependency needs to be removed.
     RemoveDependency(TextRange, Vec<TextRange>),
+    /// When a dependency is more deep than the capture
+    FixDependencyTooDeep(TextRange, TextRange, TextRange)
+}
+
+fn get_whole_static_member_expression(reference: &JsSyntaxNode) -> Option<JsStaticMemberExpression> {
+    let root = reference
+        .ancestors()
+        .skip(2) //IDENT and JS_REFERENCE_IDENTIFIER
+        .take_while(|x| {
+            x.kind() == JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
+        })
+        .last()?;
+    root.cast()
 }
 
 impl Rule for UseExhaustiveDependencies {
@@ -200,7 +213,23 @@ impl Rule for UseExhaustiveDependencies {
                         }
                     })
                 })
-                .map(|x| (x.node().text_trimmed().to_string(), x))
+                .map(|capture| {
+                    let path = get_whole_static_member_expression(capture.node());
+
+                    let (text, range) = if let Some(path) = path {
+                        (
+                            path.syntax().text_trimmed().to_string(),
+                            path.syntax().text_trimmed_range()
+                        )
+                    } else {
+                        (
+                            capture.node().text_trimmed().to_string(),
+                            capture.node().text_trimmed_range()
+                        )
+                    };
+
+                    (text, range, capture)
+            })
                 .collect();
 
             let deps: Vec<(String, TextRange)> = result
@@ -214,21 +243,78 @@ impl Rule for UseExhaustiveDependencies {
                 })
                 .collect();
 
-            let mut add_deps: BTreeMap<String, Vec<Capture>> = BTreeMap::new();
+            let mut add_deps: BTreeMap<String, Vec<TextRange>> = BTreeMap::new();
             let mut remove_deps: Vec<TextRange> = vec![];
 
-            // Search for captures not in the dependency
-            for (text, capture) in captures.iter() {
-                if !deps.iter().any(|x| &x.0 == text) {
-                    let captures = add_deps.entry(text.clone()).or_default();
-                    captures.push(capture.clone());
+            fn cmp_capture_dependency() {
+                
+            }
+
+            // Evaluate all the captures
+            for (capture_text, capture_range, _) in captures.iter() {
+                let mut suggested_fix = None;
+                let mut is_captured_covered = false;
+                for (dependency_text, dependency_range) in deps.iter() {
+                    let capture_deeper_dependency = capture_text.starts_with(dependency_text);
+                    let dependency_deeper_capture = dependency_text.starts_with(capture_text);
+                    match (capture_deeper_dependency, dependency_deeper_capture) {
+                        // capture == dependency
+                        (true, true) => {
+                            suggested_fix = None;
+                            is_captured_covered = true;
+                            break;
+                        }
+                        // example
+                        // capture: a.b.c
+                        // dependency: a
+                        // this is ok, but we may suggest performance improvements
+                        // in the future
+                        (true, false) => {
+                            // We need to continue, because it may still have a perfect match
+                            // in the dependency list
+                            is_captured_covered = true;
+                        }
+                        // example
+                        // capture: a.b
+                        // dependency: a.b.c
+                        // This can be valid in some cases. We will flag an error nonetheless.
+                        (false, true) => {
+                            // We need to continue, because it may still have a perfect match
+                            // in the dependency list
+                            suggested_fix = Some(Fix::FixDependencyTooDeep(
+                                result.function_name_range,
+                                *capture_range,
+                                *dependency_range,
+                            ));
+                        }
+                        _ => {}
+                    }
+                }
+
+                if let Some(fix) = suggested_fix {
+                    signals.push(fix);
+                } 
+                
+                if !is_captured_covered {
+                    let captures = add_deps.entry(capture_text.clone()).or_default();
+                    captures.push(capture_range.clone());
                 }
             }
 
             // Search for dependencies not captured
-            for dep in deps {
-                if !captures.iter().any(|x| x.0 == dep.0) {
-                    remove_deps.push(dep.1);
+            for (dependency_text, dep_range) in deps {
+                let mut covers_any_capture = false;
+                for (capture_text, capture_range, _) in captures.iter() {
+                    let capture_deeper_dependency = capture_text.starts_with(&dependency_text);
+                    let dependency_deeper_capture = dependency_text.starts_with(capture_text);
+                    if capture_deeper_dependency || dependency_deeper_capture {
+                        covers_any_capture = true;
+                        break;
+                    }
+                }
+                
+                if !covers_any_capture {
+                    remove_deps.push(dep_range);
                 }
             }
 
@@ -259,10 +345,9 @@ impl Rule for UseExhaustiveDependencies {
                     },
                 );
 
-                for capture in captures.iter() {
-                    let node = capture.node();
+                for range in captures.iter() {
                     diag = diag.detail(
-                        node.text_trimmed_range(),
+                        range,
                         "This dependency is not specified in the hook dependency list.",
                     );
                 }
@@ -284,6 +369,18 @@ impl Rule for UseExhaustiveDependencies {
 
                 Some(diag)
             }
+            Fix::FixDependencyTooDeep(use_effect_range, capture, dependency) => {
+                let mut diag = RuleDiagnostic::new(
+                    rule_category!(),
+                    use_effect_range,
+                    markup! {
+                        "This hook specifies a dependency more specific that its captures"
+                    },
+                )
+                    .detail(capture, "This capture is more generic than...")
+                    .detail(dependency, "...this dependency.");
+                Some(diag)
+            },
         }
     }
 }
