@@ -79,7 +79,7 @@ function benchmarkFormatter(rome) {
 
 		const romeSingleCoreCommand = withEnvVariable(
 			"RAYON_NUM_THREADS",
-			"3",
+			"1",
 			romeCommand,
 		);
 
@@ -134,7 +134,7 @@ function benchmarkLinter(rome) {
 
 		const romeSingleCoreCommand = withEnvVariable(
 			"RAYON_NUM_THREADS",
-			"3",
+			"1",
 			romeCommand,
 		);
 
@@ -157,7 +157,7 @@ function shellOption() {
 	switch (process.platform) {
 		case "win32":
 			// Use Powershell so that it is possible to set an environment variable for a single command (ugh!)
-			return "pwsh";
+			return "powershell";
 		default:
 			return "default";
 	}
