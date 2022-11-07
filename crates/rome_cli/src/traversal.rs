@@ -34,7 +34,7 @@ use std::{
     panic::catch_unwind,
     path::{Path, PathBuf},
     sync::{
-        atomic::{AtomicU64, AtomicUsize, Ordering},
+        atomic::{AtomicU16, AtomicUsize, Ordering},
         Once,
     },
     thread,
@@ -83,7 +83,14 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
     let workspace = &*session.app.workspace;
     let console = &mut *session.app.console;
 
-    let remaining_diagnostics = AtomicU64::new(u64::MAX);
+    // The command `rome check` gives a default value of 20.
+    // In case of other commands that pass here, we limit to 50 to avoid to delay the terminal.
+    // Once `--max-diagnostics` will be a global argument, `unwrap_of_default` should be enough.
+    let max_diagnostics = execution
+        .get_max_diagnostics()
+        .unwrap_or(MAXIMUM_DISPLAYABLE_DIAGNOSTICS);
+
+    let remaining_diagnostics = AtomicU16::new(max_diagnostics);
 
     let mut has_errors = false;
     let mut report = Report::default();
@@ -98,6 +105,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
                     recv_reports,
                     recv_files,
                     recv_msgs,
+                    max_diagnostics,
                     remaining_diagnostics: &remaining_diagnostics,
                     has_errors: &mut has_errors,
                     report: &mut report,
@@ -226,9 +234,11 @@ struct ProcessMessagesOptions<'ctx> {
     recv_files: Receiver<(FileId, PathBuf)>,
     /// Receiver channel that expects info when a message is sent
     recv_msgs: Receiver<Message>,
+    /// The maximum number of diagnostics the console thread is allowed to print
+    max_diagnostics: u16,
     /// The approximate number of diagnostics the console will print before
     /// folding the rest into the "skipped diagnostics" counter
-    remaining_diagnostics: &'ctx AtomicU64,
+    remaining_diagnostics: &'ctx AtomicU16,
     /// Mutable reference to a boolean flag tracking whether the console thread
     /// printed any error-level message
     has_errors: &'ctx mut bool,
@@ -297,17 +307,11 @@ fn process_messages(options: ProcessMessagesOptions) {
         recv_reports,
         recv_files,
         recv_msgs,
+        max_diagnostics,
         remaining_diagnostics,
         has_errors,
         report,
     } = options;
-
-    // The command `rome check` gives a default value of 20.
-    // In case of other commands that pass here, we limit to 50 to avoid to delay the terminal.
-    // Once `--max-diagnostics` will be a global argument, `unwrap_of_default` should be enough.
-    let max_diagnostics = mode
-        .get_max_diagnostics()
-        .unwrap_or(MAXIMUM_DISPLAYABLE_DIAGNOSTICS);
 
     let mut paths = HashMap::new();
     let mut printed_diagnostics: u16 = 0;
@@ -435,7 +439,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                         if should_print {
                             printed_diagnostics += 1;
                             remaining_diagnostics.store(
-                                u64::from(max_diagnostics.saturating_sub(printed_diagnostics)),
+                                max_diagnostics.saturating_sub(printed_diagnostics),
                                 Ordering::Relaxed,
                             );
                         } else {
@@ -549,7 +553,7 @@ struct TraversalOptions<'ctx, 'app> {
     sender_reports: Sender<ReportKind>,
     /// The approximate number of diagnostics the console will print before
     /// folding the rest into the "skipped diagnostics" counter
-    remaining_diagnostics: &'ctx AtomicU64,
+    remaining_diagnostics: &'ctx AtomicU16,
 }
 
 impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
@@ -761,7 +765,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 
         let max_diagnostics = ctx.remaining_diagnostics.load(Ordering::Relaxed);
         let result = file_guard
-            .pull_diagnostics(categories, max_diagnostics)
+            .pull_diagnostics(categories, max_diagnostics.into())
             .with_file_id_and_code(file_id, category!("lint"))?;
 
         // In formatting mode, abort immediately if the file has errors
