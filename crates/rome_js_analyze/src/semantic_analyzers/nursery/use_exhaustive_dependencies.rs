@@ -2,10 +2,9 @@ use crate::react::hooks::*;
 use crate::semantic_services::Semantic;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_semantic::Capture;
 use rome_js_syntax::{
-    JsCallExpression, JsIdentifierBinding, JsSyntaxKind, JsVariableDeclaration,
-    JsVariableDeclarator, TextRange, TsIdentifierBinding, JsReferenceIdentifier, JsStaticMemberExpression, JsSyntaxNode,
+    JsCallExpression, JsIdentifierBinding, JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode,
+    JsVariableDeclaration, JsVariableDeclarator, TextRange, TsIdentifierBinding,
 };
 use rome_rowan::{AstNode, SyntaxNodeCast};
 use serde::{Deserialize, Serialize};
@@ -123,16 +122,16 @@ pub enum Fix {
     /// When a dependency needs to be removed.
     RemoveDependency(TextRange, Vec<TextRange>),
     /// When a dependency is more deep than the capture
-    FixDependencyTooDeep(TextRange, TextRange, TextRange)
+    DependencyTooDeep(TextRange, TextRange, TextRange),
 }
 
-fn get_whole_static_member_expression(reference: &JsSyntaxNode) -> Option<JsStaticMemberExpression> {
+fn get_whole_static_member_expression(
+    reference: &JsSyntaxNode,
+) -> Option<JsStaticMemberExpression> {
     let root = reference
         .ancestors()
         .skip(2) //IDENT and JS_REFERENCE_IDENTIFIER
-        .take_while(|x| {
-            x.kind() == JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
-        })
+        .take_while(|x| x.kind() == JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION)
         .last()?;
     root.cast()
 }
@@ -219,17 +218,17 @@ impl Rule for UseExhaustiveDependencies {
                     let (text, range) = if let Some(path) = path {
                         (
                             path.syntax().text_trimmed().to_string(),
-                            path.syntax().text_trimmed_range()
+                            path.syntax().text_trimmed_range(),
                         )
                     } else {
                         (
                             capture.node().text_trimmed().to_string(),
-                            capture.node().text_trimmed_range()
+                            capture.node().text_trimmed_range(),
                         )
                     };
 
                     (text, range, capture)
-            })
+                })
                 .collect();
 
             let deps: Vec<(String, TextRange)> = result
@@ -245,10 +244,6 @@ impl Rule for UseExhaustiveDependencies {
 
             let mut add_deps: BTreeMap<String, Vec<TextRange>> = BTreeMap::new();
             let mut remove_deps: Vec<TextRange> = vec![];
-
-            fn cmp_capture_dependency() {
-                
-            }
 
             // Evaluate all the captures
             for (capture_text, capture_range, _) in captures.iter() {
@@ -281,7 +276,7 @@ impl Rule for UseExhaustiveDependencies {
                         (false, true) => {
                             // We need to continue, because it may still have a perfect match
                             // in the dependency list
-                            suggested_fix = Some(Fix::FixDependencyTooDeep(
+                            suggested_fix = Some(Fix::DependencyTooDeep(
                                 result.function_name_range,
                                 *capture_range,
                                 *dependency_range,
@@ -293,18 +288,18 @@ impl Rule for UseExhaustiveDependencies {
 
                 if let Some(fix) = suggested_fix {
                     signals.push(fix);
-                } 
-                
+                }
+
                 if !is_captured_covered {
                     let captures = add_deps.entry(capture_text.clone()).or_default();
-                    captures.push(capture_range.clone());
+                    captures.push(*capture_range);
                 }
             }
 
             // Search for dependencies not captured
             for (dependency_text, dep_range) in deps {
                 let mut covers_any_capture = false;
-                for (capture_text, capture_range, _) in captures.iter() {
+                for (capture_text, _, _) in captures.iter() {
                     let capture_deeper_dependency = capture_text.starts_with(&dependency_text);
                     let dependency_deeper_capture = dependency_text.starts_with(capture_text);
                     if capture_deeper_dependency || dependency_deeper_capture {
@@ -312,7 +307,7 @@ impl Rule for UseExhaustiveDependencies {
                         break;
                     }
                 }
-                
+
                 if !covers_any_capture {
                     remove_deps.push(dep_range);
                 }
@@ -369,18 +364,18 @@ impl Rule for UseExhaustiveDependencies {
 
                 Some(diag)
             }
-            Fix::FixDependencyTooDeep(use_effect_range, capture, dependency) => {
-                let mut diag = RuleDiagnostic::new(
+            Fix::DependencyTooDeep(use_effect_range, capture, dependency) => {
+                let diag = RuleDiagnostic::new(
                     rule_category!(),
                     use_effect_range,
                     markup! {
                         "This hook specifies a dependency more specific that its captures"
                     },
                 )
-                    .detail(capture, "This capture is more generic than...")
-                    .detail(dependency, "...this dependency.");
+                .detail(capture, "This capture is more generic than...")
+                .detail(dependency, "...this dependency.");
                 Some(diag)
-            },
+            }
         }
     }
 }
