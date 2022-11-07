@@ -8,7 +8,9 @@ const TMP_DIRECTORY = path.resolve("./target");
 function buildRome() {
 	console.log("Build Rome...");
 
-	child_process.execSync("cargo build --bin rome --release", { stdio: "inherit" });
+	child_process.execSync("cargo build --bin rome --release", {
+		stdio: "inherit",
+	});
 
 	return path.resolve("../target/release/rome");
 }
