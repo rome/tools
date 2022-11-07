@@ -54,15 +54,23 @@ social-image: social-logo.png
 		{% assign sidebar-enabled = toccontent != "" %}
 
 		<div class="docs-header">
-			<a href="https://rome.tools/" class="back foreground-svg">
-				{% include svg/chevron-left.svg %}
-			</a>
+			<div class="logo-container">
+				<a class="logo" href="/">
+					{% include svg/rome-logo.svg %}
 
-			<a class="logo" href="/">
-				{% include svg/rome-logo.svg %}
+					<span class="logo-text sr-only">Rome</span>
 
-				<span class="logo-text sr-only">Rome</span>
-			</a>
+					<span class="triangle"></span>
+				</a>
+
+				<ul>
+					<li><a href="https://rome.tools/">Home</a></li>
+					<li><a href="/">Docs</a></li>
+					<li><a href="https://rome.tools/blog/">Blog</a></li>
+					<li><a href="https://play.rome.tools/">Playground</a></li>
+				</ul>
+			</div>
+			<div class="logo-modal-background"></div>
 
 			<div id="docsearch"></div>
 
@@ -136,8 +144,16 @@ social-image: social-logo.png
 		</footer>
 
 		{% if env.production %}
-			<script src="https://browser.sentry-cdn.com/5.29.0/bundle.tracing.min.js" crossorigin="anonymous"></script>
+			<script async src="https://www.googletagmanager.com/gtag/js?id=G-P9HDLV59XZ"></script>
+			<script>
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
 
+				gtag('config', 'G-P9HDLV59XZ');
+			</script>
+
+			<script src="https://browser.sentry-cdn.com/5.29.0/bundle.tracing.min.js" crossorigin="anonymous"></script>
 			<script>
 				if (typeof Sentry !== "undefined") {
 					Sentry.init({

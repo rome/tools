@@ -580,3 +580,33 @@ for (const elem of topAnchors) {
 		}
 	});
 }
+
+//# Logo navigation
+const maybeLogoModalBackground = document.querySelector(
+	".logo-modal-background",
+);
+const maybeLogoContainer = document.querySelector(".logo-container");
+const maybeLogo = document.querySelector(".logo");
+if (
+	maybeLogoContainer != null &&
+	maybeLogo != null &&
+	maybeLogoModalBackground != null
+) {
+	const logoContainer = maybeLogoContainer;
+	const logo = maybeLogo;
+	const logoModalBackground = maybeLogoModalBackground;
+
+	function toggle() {
+		logoContainer.classList.toggle("active");
+		logoModalBackground.classList.toggle("active");
+	}
+
+	logoModalBackground.addEventListener("click", () => {
+		toggle();
+	});
+
+	logo.addEventListener("click", (e) => {
+		e.preventDefault();
+		toggle();
+	});
+}
