@@ -42,29 +42,14 @@ and top-notch error recovery.
 **Rome** is [MIT licensed](https://github.com/rome/tools/tree/main/LICENSE) and moderated under the [Contributor Covenant Code of Conduct](https://github.com/rome/tools/tree/main/CODE_OF_CONDUCT.md).
 
 
-## Getting started
+## Documentation
 
-```shell
-npm install --save-dev rome
-```
-
-And you're set! Check the [documentation] about how you can use Rome.
-
-
-## Philosophy
-
-The project philosophy can be found on our [website](https://rome.tools/#philosophy).
-
-## Community
-
-Contribution and development instructions can be found in [CONTRIBUTING](./CONTRIBUTING.md).
-
-Additional project coordination and real-time discussion happens on our [Discord server](https://discord.gg/rome). Remember that all activity on the Discord server is still moderated and will be strictly enforced under the project's [Code of Conduct](./CODE_OF_CONDUCT.md).
+Check out our [homepage](https://rome.tools) to learn more about Rome, or directly head to the [Getting Started guide](https://docs.rome.tools/guides/getting-started/) if you want to start using Rome.
 
 ## Technical documentation
 
 If you're curious to know our internals, you can browse our [technical documentation].
 
-[documentation]: https://rome.tools/#installation
+[documentation]: https://docs.rome.tools/guides/getting-started/
 [technical documentation]: https://rome.github.io/tools/rome
 
