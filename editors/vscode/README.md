@@ -1,6 +1,6 @@
 # Rome VS Code Extension
 
-[Rome](https://rome.tools/) unifies your development stack by combining the functionality of separate tools. It uses a Single configuration file, has fantastic performance, and works with any stack. This extension brings Rome to your editor so that you can:
+[Rome](https://rome.tools/) unifies your development stack by combining the functionality of separate tools. It uses a single configuration file, has fantastic performance, and works with any stack. This extension brings Rome to your editor so that you can:
 
 - Format files *on save* or when issuing the *Format Document* command
 - See lints while you type and apply code fixes
