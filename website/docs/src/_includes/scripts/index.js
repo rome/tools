@@ -582,10 +582,16 @@ for (const elem of topAnchors) {
 }
 
 //# Logo navigation
-const maybeLogoModalBackground = document.querySelector(".logo-modal-background");
+const maybeLogoModalBackground = document.querySelector(
+	".logo-modal-background",
+);
 const maybeLogoContainer = document.querySelector(".logo-container");
 const maybeLogo = document.querySelector(".logo");
-if (maybeLogoContainer != null && maybeLogo != null && maybeLogoModalBackground != null) {
+if (
+	maybeLogoContainer != null &&
+	maybeLogo != null &&
+	maybeLogoModalBackground != null
+) {
 	const logoContainer = maybeLogoContainer;
 	const logo = maybeLogo;
 	const logoModalBackground = maybeLogoModalBackground;
