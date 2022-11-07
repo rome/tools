@@ -1811,8 +1811,8 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         // // SCRIPT
         // async function test() {}
         // await test();
-        let checkpoint = p.checkpoint();
         let m = p.start();
+        let checkpoint = p.checkpoint();
         let await_range = p.cur_range();
         p.expect(T![await]);
 
@@ -1828,6 +1828,9 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
             return parse_identifier_expression(p);
         }
 
+        // test_err await_in_module
+        // let await = 10;
+        // console.log(await);
         unary.or_add_diagnostic(p, js_parse_error::expected_unary_expression);
         let mut expr = m.complete(p, JS_AWAIT_EXPRESSION);
 
