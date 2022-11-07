@@ -23,7 +23,7 @@ pub(crate) fn init(mut session: CliSession) -> Result<(), Termination> {
      "<Italic>"rome ci"</Italic>" checks for lint errors and verifies formatting. Run " <Italic>"rome --help"</Italic>" for a full list of commands and options.
 
   "<Dim>"3."</Dim>" "<Emphasis>"Read the documentation"</Emphasis>"
-     Our website serves as a comprehensive source of guides and documentation: "<Hyperlink href="https://rome.tools/docs">"https://rome.tools/docs"</Hyperlink>"
+     Our website serves as a comprehensive source of guides and documentation: "<Hyperlink href="https://docs.rome.tools">"https://docs.rome.tools"</Hyperlink>"
 
   "<Dim>"4."</Dim>" "<Emphasis>"Get involved in the community"</Emphasis>"
      Ask questions, get support, or contribute by participating on GitHub ("<Hyperlink href="https://github.com/rome/tools">"https://github.com/rome/tools"</Hyperlink>"),

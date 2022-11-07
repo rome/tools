@@ -48,7 +48,6 @@ fn main() -> Result<()> {
     let mut reference_buffer = Vec::new();
     writeln!(index, "---")?;
     writeln!(index, "title: Lint Rules")?;
-    writeln!(index, "layout: layouts/docs.liquid")?;
     writeln!(index, "main-class: rules")?;
     writeln!(index, "---")?;
     writeln!(index)?;
@@ -142,7 +141,7 @@ fn generate_group(
             Ok(summary) => {
                 writeln!(index, "<section class=\"rule\">")?;
                 writeln!(index, "<h3 data-toc-exclude id=\"{rule}\">")?;
-                writeln!(index, "	<a href=\"/docs/lint/rules/{rule}\">{rule}</a>")?;
+                writeln!(index, "	<a href=\"/lint/rules/{rule}\">{rule}</a>")?;
 
                 if meta.recommended {
                     writeln!(index, "	<span class=\"recommended\">recommended</span>")?;
@@ -177,7 +176,6 @@ fn generate_rule(
     // Write the header for this lint rule
     writeln!(content, "---")?;
     writeln!(content, "title: Lint Rule {rule}")?;
-    writeln!(content, "layout: layouts/docs.liquid")?;
     writeln!(content, "---")?;
     writeln!(content)?;
 

@@ -16,7 +16,7 @@ Disallow negation in the condition of an `if` statement if it has an `else` clau
 if (!true) {consequent;} else {alternate;}
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/noNegationElse.js:1:1 <a href="https://rome.tools/lint/rules/noNegationElse">lint/style/noNegationElse</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/noNegationElse.js:1:1 <a href="https://docs.rome.tools/lint/rules/noNegationElse">lint/style/noNegationElse</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Invert blocks when performing a negation test.</span>
   
@@ -36,7 +36,7 @@ if (!true) {consequent;} else {alternate;}
 !true ? consequent : alternate
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/noNegationElse.js:1:1 <a href="https://rome.tools/lint/rules/noNegationElse">lint/style/noNegationElse</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/noNegationElse.js:1:1 <a href="https://docs.rome.tools/lint/rules/noNegationElse">lint/style/noNegationElse</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Invert blocks when performing a negation test.</span>
   

@@ -2,8 +2,7 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::{markup, MarkupBuf};
 use rome_js_syntax::{
-    JsAnyExpression, JsAssignmentOperator, JsClassDeclaration, JsConstructorClassMember,
-    JsLogicalOperator,
+    JsAnyClass, JsAnyExpression, JsAssignmentOperator, JsConstructorClassMember, JsLogicalOperator,
 };
 use rome_rowan::{AstNode, AstNodeList, TextRange};
 
@@ -26,6 +25,22 @@ declare_rule! {
     ///     constructor() {
     ///         super();
     ///     }
+    /// }
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// export default class A extends B {
+    ///     constructor() {
+    ///         super();
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// ```js
+    /// export class A {
+    ///     constructor() {}
     /// }
     /// ```
     ///
@@ -103,7 +118,7 @@ impl Rule for NoInvalidConstructorSuper {
         let extends_clause = node
             .syntax()
             .ancestors()
-            .find_map(|node| JsClassDeclaration::cast(node)?.extends_clause());
+            .find_map(|node| JsAnyClass::cast(node)?.extends_clause());
 
         match (super_expression, extends_clause) {
             (Some(super_expression), Some(extends_clause)) => {

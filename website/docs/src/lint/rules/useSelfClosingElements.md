@@ -16,7 +16,7 @@ Prevent extra closing tags for components without children
 <div></div>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useSelfClosingElements.js:1:1 <a href="https://rome.tools/lint/rules/useSelfClosingElements">lint/style/useSelfClosingElements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useSelfClosingElements.js:1:1 <a href="https://docs.rome.tools/lint/rules/useSelfClosingElements">lint/style/useSelfClosingElements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing.</span>
   
@@ -36,7 +36,7 @@ Prevent extra closing tags for components without children
 <Component></Component>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useSelfClosingElements.js:1:1 <a href="https://rome.tools/lint/rules/useSelfClosingElements">lint/style/useSelfClosingElements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useSelfClosingElements.js:1:1 <a href="https://docs.rome.tools/lint/rules/useSelfClosingElements">lint/style/useSelfClosingElements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing.</span>
   
@@ -56,7 +56,7 @@ Prevent extra closing tags for components without children
 <Foo.bar></Foo.bar>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useSelfClosingElements.js:1:1 <a href="https://rome.tools/lint/rules/useSelfClosingElements">lint/style/useSelfClosingElements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useSelfClosingElements.js:1:1 <a href="https://docs.rome.tools/lint/rules/useSelfClosingElements">lint/style/useSelfClosingElements</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing.</span>
   

@@ -21,7 +21,7 @@ It is much safer than relying upon logical operator chaining; which chains on an
 foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useOptionalChain.js:1:1 <a href="https://rome.tools/lint/rules/useOptionalChain">lint/style/useOptionalChain</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useOptionalChain.js:1:1 <a href="https://docs.rome.tools/lint/rules/useOptionalChain">lint/style/useOptionalChain</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Change to an optional chain.</span>
   
@@ -41,7 +41,7 @@ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz
 foo.bar && foo.bar.baz.buzz
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useOptionalChain.js:1:1 <a href="https://rome.tools/lint/rules/useOptionalChain">lint/style/useOptionalChain</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useOptionalChain.js:1:1 <a href="https://docs.rome.tools/lint/rules/useOptionalChain">lint/style/useOptionalChain</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Change to an optional chain.</span>
   
@@ -61,7 +61,7 @@ foo.bar && foo.bar.baz.buzz
 foo !== undefined && foo.bar != undefined && foo.bar.baz !== null && foo.bar.baz.buzz
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useOptionalChain.js:1:1 <a href="https://rome.tools/lint/rules/useOptionalChain">lint/style/useOptionalChain</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useOptionalChain.js:1:1 <a href="https://docs.rome.tools/lint/rules/useOptionalChain">lint/style/useOptionalChain</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Change to an optional chain.</span>
   
@@ -81,7 +81,7 @@ foo !== undefined && foo.bar != undefined && foo.bar.baz !== null && foo.bar.baz
 ((foo || {}).bar || {}).baz;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useOptionalChain.js:1:1 <a href="https://rome.tools/lint/rules/useOptionalChain">lint/style/useOptionalChain</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useOptionalChain.js:1:1 <a href="https://docs.rome.tools/lint/rules/useOptionalChain">lint/style/useOptionalChain</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Change to an optional chain.</span>
   
@@ -101,7 +101,7 @@ foo !== undefined && foo.bar != undefined && foo.bar.baz !== null && foo.bar.baz
 (await (foo1 || {}).foo2 || {}).foo3;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useOptionalChain.js:1:1 <a href="https://rome.tools/lint/rules/useOptionalChain">lint/style/useOptionalChain</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useOptionalChain.js:1:1 <a href="https://docs.rome.tools/lint/rules/useOptionalChain">lint/style/useOptionalChain</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Change to an optional chain.</span>
   
@@ -121,7 +121,7 @@ foo !== undefined && foo.bar != undefined && foo.bar.baz !== null && foo.bar.baz
 (((typeof x) as string) || {}).bar;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useOptionalChain.js:1:1 <a href="https://rome.tools/lint/rules/useOptionalChain">lint/style/useOptionalChain</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useOptionalChain.js:1:1 <a href="https://docs.rome.tools/lint/rules/useOptionalChain">lint/style/useOptionalChain</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Change to an optional chain.</span>
   

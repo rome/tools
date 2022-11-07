@@ -261,7 +261,7 @@ sed do eiusmod tempor incididunt ut
 labore et dolore magna aliqua";
 
         let expected = markup! {
-            "file_name "<Hyperlink href="https://rome.tools/docs/lint/rules/noArguments">"lint/correctness/noArguments"</Hyperlink>" "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+            "file_name "<Hyperlink href="https://docs.rome.tools/lint/rules/noArguments">"lint/correctness/noArguments"</Hyperlink>" "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
             "\n"
             <Emphasis><Error>"  ✖"</Error></Emphasis>" "<Error>"message"</Error>"\n"
             "  \n"

@@ -22,7 +22,7 @@ switch (foo) {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/useSingleCaseStatement.js:4:9 <a href="https://rome.tools/lint/rules/useSingleCaseStatement">lint/correctness/useSingleCaseStatement</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/useSingleCaseStatement.js:4:9 <a href="https://docs.rome.tools/lint/rules/useSingleCaseStatement">lint/correctness/useSingleCaseStatement</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">A switch case should only have a single statement. If you want more, then wrap it in a block.</span>
   
