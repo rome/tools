@@ -2,7 +2,10 @@ use crate::{
     CliSession, Execution, FormatterReportFileDetail, FormatterReportSummary, Report,
     ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind, Termination, TraversalMode,
 };
-use crossbeam::channel::{unbounded, Receiver, Sender};
+use crossbeam::{
+    channel::{unbounded, Receiver, Sender},
+    select,
+};
 use rome_console::{markup, Console, ConsoleExt};
 use rome_diagnostics::{
     file::FileId,
@@ -32,12 +35,15 @@ use std::{
     path::{Path, PathBuf},
     sync::{
         atomic::{AtomicU64, AtomicUsize, Ordering},
-        Arc,
+        Once,
     },
+    thread,
     time::{Duration, Instant},
 };
 
 pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<(), Termination> {
+    init_thread_pool();
+
     // Check that at least one input file / directory was specified in the command line
     let mut inputs = vec![];
 
@@ -68,7 +74,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
 
     let (interner, recv_files) = AtomicInterner::new();
     let (send_msgs, recv_msgs) = unbounded();
-    let (sender_reports_from_traversal, receiver_reports) = unbounded();
+    let (sender_reports, recv_reports) = unbounded();
 
     let processed = AtomicUsize::new(0);
     let skipped = AtomicUsize::new(0);
@@ -77,102 +83,95 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
     let workspace = &*session.app.workspace;
     let console = &mut *session.app.console;
 
-    let mut has_errors = None;
-    let remaining_diagnostics = Arc::new(AtomicU64::new(u64::MAX));
+    let remaining_diagnostics = AtomicU64::new(u64::MAX);
 
-    let mut duration = None;
-    let mut report = None;
-    let sender_reports_from_messages = sender_reports_from_traversal.clone();
-    rayon::scope(|s| {
-        s.spawn(|_| {
-            report = Some(collect_reports(receiver_reports));
-        });
+    let mut has_errors = false;
+    let mut report = Report::default();
 
-        s.spawn(|_| {
-            has_errors = Some(process_messages(ProcessMessagesOptions {
-                execution: execution.clone(),
-                console,
-                recv_files,
-                recv_msgs,
-                sender_reports: sender_reports_from_messages,
-                remaining_diagnostics: Arc::clone(&remaining_diagnostics),
-            }));
-        });
-        s.spawn(|_| {
-            // The traversal context is scoped to ensure all the channels it
-            // contains are properly closed once the traversal finishes
-            duration = Some(traverse_inputs(
+    let duration = thread::scope(|s| {
+        thread::Builder::new()
+            .name(String::from("rome::console"))
+            .spawn_scoped(s, || {
+                process_messages(ProcessMessagesOptions {
+                    execution: &execution,
+                    console,
+                    recv_reports,
+                    recv_files,
+                    recv_msgs,
+                    remaining_diagnostics: &remaining_diagnostics,
+                    has_errors: &mut has_errors,
+                    report: &mut report,
+                });
+            })
+            .expect("failed to spawn console thread");
+
+        // The traversal context is scoped to ensure all the channels it
+        // contains are properly closed once the traversal finishes
+        traverse_inputs(
+            fs,
+            inputs,
+            &TraversalOptions {
                 fs,
-                inputs,
-                &TraversalOptions {
-                    fs,
-                    workspace,
-                    execution: execution.clone(),
-                    interner,
-                    processed: &processed,
-                    skipped: &skipped,
-                    messages: send_msgs,
-                    sender_reports: sender_reports_from_traversal,
-                    remaining_diagnostics: Arc::clone(&remaining_diagnostics),
-                },
-            ));
-        })
+                workspace,
+                execution: &execution,
+                interner,
+                processed: &processed,
+                skipped: &skipped,
+                messages: send_msgs,
+                sender_reports,
+                remaining_diagnostics: &remaining_diagnostics,
+            },
+        )
     });
 
     let count = processed.load(Ordering::Relaxed);
     let skipped = skipped.load(Ordering::Relaxed);
 
-    let to_terminal = execution.should_report_to_terminal();
-
-    if let Some(duration) = duration {
-        if to_terminal {
-            match execution.traversal_mode() {
-                TraversalMode::Check { .. } => {
-                    if execution.as_fix_file_mode().is_some() {
-                        console.log(markup! {
-                            <Info>"Fixed "{count}" files in "{duration}</Info>
-                        });
-                    } else {
-                        console.log(markup! {
-                            <Info>"Checked "{count}" files in "{duration}</Info>
-                        });
-                    }
-                }
-                TraversalMode::CI { .. } => {
+    if execution.should_report_to_terminal() {
+        match execution.traversal_mode() {
+            TraversalMode::Check { .. } => {
+                if execution.as_fix_file_mode().is_some() {
+                    console.log(markup! {
+                        <Info>"Fixed "{count}" files in "{duration}</Info>
+                    });
+                } else {
                     console.log(markup! {
                         <Info>"Checked "{count}" files in "{duration}</Info>
                     });
                 }
-                TraversalMode::Format { write: false, .. } => {
-                    if to_terminal {
-                        console.log(markup! {
-                            <Info>"Compared "{count}" files in "{duration}</Info>
-                        });
-                    }
-                }
-                TraversalMode::Format { write: true, .. } => {
-                    console.log(markup! {
-                        <Info>"Formatted "{count}" files in "{duration}</Info>
-                    });
-                }
             }
-        } else if let Some(mut report) = report {
-            if let TraversalMode::Format { write, .. } = execution.traversal_mode() {
-                let mut summary = FormatterReportSummary::default();
-                if *write {
-                    summary.set_files_written(count);
-                } else {
-                    summary.set_files_compared(count);
-                }
-                report.set_formatter_summary(summary);
+            TraversalMode::CI { .. } => {
+                console.log(markup! {
+                    <Info>"Checked "{count}" files in "{duration}</Info>
+                });
             }
-
-            let to_print = report.as_serialized_reports()?;
-            console.log(markup! {
-                {to_print}
-            });
-            return Ok(());
+            TraversalMode::Format { write: false, .. } => {
+                console.log(markup! {
+                    <Info>"Compared "{count}" files in "{duration}</Info>
+                });
+            }
+            TraversalMode::Format { write: true, .. } => {
+                console.log(markup! {
+                    <Info>"Formatted "{count}" files in "{duration}</Info>
+                });
+            }
         }
+    } else {
+        if let TraversalMode::Format { write, .. } = execution.traversal_mode() {
+            let mut summary = FormatterReportSummary::default();
+            if *write {
+                summary.set_files_written(count);
+            } else {
+                summary.set_files_compared(count);
+            }
+            report.set_formatter_summary(summary);
+        }
+
+        let to_print = report.as_serialized_reports()?;
+        console.log(markup! {
+            {to_print}
+        });
+        return Ok(());
     }
 
     if skipped > 0 {
@@ -182,11 +181,24 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
     }
 
     // Processing emitted error diagnostics, exit with a non-zero code
-    if matches!(has_errors, Some(true)) {
+    if has_errors {
         Err(Termination::CheckError)
     } else {
         Ok(())
     }
+}
+
+/// This function will setup the global Rayon thread pool the first time it's called
+///
+/// This is currently only used to assign friendly debug names to the threads of the pool
+fn init_thread_pool() {
+    static INIT_ONCE: Once = Once::new();
+    INIT_ONCE.call_once(|| {
+        rayon::ThreadPoolBuilder::new()
+            .thread_name(|index| format!("rome::worker_{index}"))
+            .build_global()
+            .expect("failed to initialize the global thread pool");
+    });
 }
 
 /// Initiate the filesystem traversal tasks with the provided input paths and
@@ -205,18 +217,24 @@ fn traverse_inputs(fs: &dyn FileSystem, inputs: Vec<OsString>, ctx: &TraversalOp
 
 struct ProcessMessagesOptions<'ctx> {
     ///  Execution of the traversal
-    execution: Execution,
+    execution: &'ctx Execution,
     /// Mutable reference to the [console](Console)
     console: &'ctx mut dyn Console,
+    /// Receiver channel for reporting statistics
+    recv_reports: Receiver<ReportKind>,
     /// Receiver channel that expects info when a file is processed
     recv_files: Receiver<(FileId, PathBuf)>,
     /// Receiver channel that expects info when a message is sent
     recv_msgs: Receiver<Message>,
-    /// Sender of reports
-    sender_reports: Sender<ReportKind>,
     /// The approximate number of diagnostics the console will print before
     /// folding the rest into the "skipped diagnostics" counter
-    remaining_diagnostics: Arc<AtomicU64>,
+    remaining_diagnostics: &'ctx AtomicU64,
+    /// Mutable reference to a boolean flag tracking whether the console thread
+    /// printed any error-level message
+    has_errors: &'ctx mut bool,
+    /// Mutable handle to a [Report] instance the console thread should write
+    /// stats into
+    report: &'ctx mut Report,
 }
 
 #[derive(Debug, v2::Diagnostic)]
@@ -272,14 +290,16 @@ struct TraversalDiagnostic<'a> {
 
 /// This thread receives [Message]s from the workers through the `recv_msgs`
 /// and `recv_files` channels and handles them based on [Execution]
-fn process_messages(options: ProcessMessagesOptions) -> bool {
+fn process_messages(options: ProcessMessagesOptions) {
     let ProcessMessagesOptions {
         execution: mode,
         console,
+        recv_reports,
         recv_files,
         recv_msgs,
-        sender_reports,
         remaining_diagnostics,
+        has_errors,
+        report,
     } = options;
 
     // The command `rome check` gives a default value of 20.
@@ -289,13 +309,36 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
         .get_max_diagnostics()
         .unwrap_or(MAXIMUM_DISPLAYABLE_DIAGNOSTICS);
 
-    let mut has_errors = false;
     let mut paths = HashMap::new();
     let mut printed_diagnostics: u16 = 0;
     let mut not_printed_diagnostics = 0;
     let mut total_skipped_suggested_fixes = 0;
 
-    while let Ok(msg) = recv_msgs.recv() {
+    let mut is_msg_open = true;
+    let mut is_report_open = true;
+
+    while is_msg_open || is_report_open {
+        let msg = select! {
+            recv(recv_msgs) -> msg => match msg {
+                Ok(msg) => msg,
+                Err(_) => {
+                    is_msg_open = false;
+                    continue;
+                },
+            },
+            recv(recv_reports) -> stat => {
+                match stat {
+                    Ok(stat) => {
+                        report.push_detail_report(stat);
+                    }
+                    Err(_) => {
+                        is_report_open = false;
+                    },
+                }
+                continue;
+            }
+        };
+
         match msg {
             Message::SkippedFixes {
                 skipped_suggested_fixes,
@@ -355,16 +398,14 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                     let title = PrintDescription(&err).to_string();
                     let code = err.category().and_then(|code| code.name().parse().ok());
 
-                    sender_reports
-                        .send(ReportKind::Error(
-                            file_name.to_string(),
-                            ReportErrorKind::Diagnostic(ReportDiagnostic {
-                                code,
-                                title,
-                                severity: err.severity(),
-                            }),
-                        ))
-                        .ok();
+                    report.push_detail_report(ReportKind::Error(
+                        file_name.to_string(),
+                        ReportErrorKind::Diagnostic(ReportDiagnostic {
+                            code,
+                            title,
+                            severity: err.severity(),
+                        }),
+                    ));
                 }
             }
 
@@ -379,7 +420,7 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                 // is CI mode we want to print all the diagnostics
                 if mode.is_ci() {
                     for diag in diagnostics {
-                        has_errors |= diag.severity() == Severity::Error;
+                        *has_errors |= diag.severity() == Severity::Error;
                         let diag = diag.with_file_path(&name).with_file_source_code(&content);
                         console.error(markup! {
                             {PrintDiagnostic(&diag)}
@@ -388,7 +429,7 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                 } else {
                     for diag in diagnostics {
                         let severity = diag.severity();
-                        has_errors |= severity == Severity::Error;
+                        *has_errors |= severity == Severity::Error;
 
                         let should_print = printed_diagnostics < max_diagnostics;
                         if should_print {
@@ -410,18 +451,14 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                                 });
                             }
                         } else {
-                            sender_reports
-                                .send(ReportKind::Error(
-                                    name.to_string(),
-                                    ReportErrorKind::Diagnostic(ReportDiagnostic {
-                                        code: diag
-                                            .category()
-                                            .and_then(|code| code.name().parse().ok()),
-                                        title: String::from("test here"),
-                                        severity,
-                                    }),
-                                ))
-                                .ok();
+                            report.push_detail_report(ReportKind::Error(
+                                name.to_string(),
+                                ReportErrorKind::Diagnostic(ReportDiagnostic {
+                                    code: diag.category().and_then(|code| code.name().parse().ok()),
+                                    title: String::from("test here"),
+                                    severity,
+                                }),
+                            ));
                         }
                     }
                 }
@@ -434,7 +471,7 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
             } => {
                 if mode.is_ci() {
                     // A diff is an error in CI mode
-                    has_errors = true;
+                    *has_errors = true;
                 }
 
                 if mode.should_report_to_terminal() {
@@ -464,16 +501,14 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                         });
                     }
                 } else {
-                    sender_reports
-                        .send(ReportKind::Error(
-                            file_name,
-                            ReportErrorKind::Diff(ReportDiff {
-                                before: old,
-                                after: new,
-                                severity: Severity::Error,
-                            }),
-                        ))
-                        .ok();
+                    report.push_detail_report(ReportKind::Error(
+                        file_name,
+                        ReportErrorKind::Diff(ReportDiff {
+                            before: old,
+                            after: new,
+                            severity: Severity::Error,
+                        }),
+                    ));
                 }
             }
         }
@@ -492,17 +527,6 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
             <Info>"Diagnostics not shown: "</Info><Emphasis>{not_printed_diagnostics}</Emphasis><Info>"."</Info>
         })
     }
-
-    has_errors
-}
-
-fn collect_reports(receiver: Receiver<ReportKind>) -> Report {
-    let mut report = Report::default();
-    while let Ok(stat) = receiver.recv() {
-        report.push_detail_report(stat);
-    }
-
-    report
 }
 
 /// Context object shared between directory traversal tasks
@@ -512,7 +536,7 @@ struct TraversalOptions<'ctx, 'app> {
     /// Instance of [Workspace] used by this instance of the CLI
     workspace: &'ctx dyn Workspace,
     /// Determines how the files should be processed
-    execution: Execution,
+    execution: &'ctx Execution,
     /// File paths interner used by the filesystem traversal
     interner: AtomicInterner,
     /// Shared atomic counter storing the number of processed files
@@ -525,7 +549,7 @@ struct TraversalOptions<'ctx, 'app> {
     sender_reports: Sender<ReportKind>,
     /// The approximate number of diagnostics the console will print before
     /// folding the rest into the "skipped diagnostics" counter
-    remaining_diagnostics: Arc<AtomicU64>,
+    remaining_diagnostics: &'ctx AtomicU64,
 }
 
 impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
