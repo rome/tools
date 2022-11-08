@@ -1815,37 +1815,33 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         let checkpoint = p.checkpoint();
         let await_range = p.cur_range();
         p.expect(T![await]);
-
         let unary = parse_unary_expr(p, context);
 
-        // test reparse_await_as_identifier
-        // // SCRIPT
-        // function test() { a = await; }
-        // function test2() { return await; }
-        if unary.is_absent() && !p.state.in_async() {
-            p.rewind(checkpoint);
-            m.abandon(p);
-            return parse_identifier_expression(p);
-        }
+        if !p.state.in_async() || !(p.state.is_top_level() || p.state.in_function()) {
+            // test reparse_await_as_identifier
+            // // SCRIPT
+            // function test() { a = await; }
+            // function test2() { return await; }
+            if !p.state.in_async() && unary.is_absent() {
+                p.rewind(checkpoint);
+                m.abandon(p);
+                return parse_identifier_expression(p);
+            }
 
-        // test_err await_in_module
-        // let await = 10;
-        // console.log(await);
-        unary.or_add_diagnostic(p, js_parse_error::expected_unary_expression);
-        let mut expr = m.complete(p, JS_AWAIT_EXPRESSION);
-
-        if !(p.state.in_async() && (p.state.is_top_level() || p.state.in_function())) {
             // test_err await_in_parameter_initializer
             // async function test(a = await b()) {}
             // function test2(a = await b()) {}
 
             // test_err await_in_static_initialization_block_member
             // // SCRIPT
-            // class A {
-            //   static {
-            //     await;
-            //   }
-            // }
+            // class A { static { await; } }
+            // class B { static { await 10; } }
+
+            // test_err await_in_module
+            // let await = 10;
+            // console.log(await);
+            unary.or_add_diagnostic(p, js_parse_error::expected_unary_expression);
+            let expr = m.complete(p, JS_UNKNOWN_EXPRESSION);
 
             // test_err await_in_non_async_function
             // function test() { await 10; }
@@ -1853,9 +1849,11 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
                 "`await` is only allowed within async functions and at the top levels of modules.",
                 await_range,
             ));
-            expr.change_to_unknown(p);
+            return Present(expr);
         }
 
+        unary.or_add_diagnostic(p, js_parse_error::expected_unary_expression);
+        let expr = m.complete(p, JS_AWAIT_EXPRESSION);
         return Present(expr);
     }
 
