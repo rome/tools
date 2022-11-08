@@ -1153,3 +1153,50 @@ fn files_max_size_parse_error() {
         result,
     ));
 }
+
+#[test]
+fn max_diagnostics_default() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    for i in 0..60 {
+        let file_path = PathBuf::from(format!("src/file_{i}.js"));
+        fs.insert(file_path, UNFORMATTED.as_bytes());
+    }
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![OsString::from("format"), OsString::from("src")]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_eq!(console.out_buffer.len(), 52);
+}
+
+#[test]
+fn max_diagnostics() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    for i in 0..60 {
+        let file_path = PathBuf::from(format!("src/file_{i}.js"));
+        fs.insert(file_path, UNFORMATTED.as_bytes());
+    }
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--max-diagnostics"),
+            OsString::from("10"),
+            OsString::from("src"),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_eq!(console.out_buffer.len(), 12);
+}
