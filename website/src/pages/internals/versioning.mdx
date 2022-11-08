@@ -1,0 +1,49 @@
+---
+title: Versioning
+emoji: 🔢
+category: internals
+description: How we version Rome.
+---
+
+# Versioning
+
+## Semantic Versioning
+
+Rome follows [semantic versioning](https://semver.org/). Due to the nature of Rome as a toolchain, it can be unclear what changes are considered major, minor, or patch. That's why Rome uses the following versioning guide:
+
+### Patch Release
+
+* Fixing a lint rule that raises lint errors for valid code (false positives)
+* Fixing incorrect code suggestions
+* Fixing the formatting of a syntax that results in invalid code or changes the semantics of the program.
+* Improvements to the documentation
+* Internal changes that don't change Rome's functionality:
+  * Refactors
+  * Performance improvements
+  * Increase or change in test coverage
+* Improving the wording of diagnostics or fixing the rendering of diagnostics.
+* Re-releases after a failed release
+
+### Minor Release
+
+* Adding a new rule or promoting an existing lint rule to a stable group that is not recommended by default.
+* Adding linting and formatting support for a recently introduced language feature, even if that results in more reported linting errors.
+* Removal of recommended rules
+* Deprecation of existing rules
+* Adding new configuration optional configuration options that do not change the formatting or report more lint errors.
+
+### Major Release
+* Adding a new recommended lint rule or promoting an existing lint rule from the nursery group to a recommended lint rule in a stable group.
+* Changing the formatting of established syntax.
+* Changes to the configuration that result in different formatting or more reported lint errors (adding/removing options, changing the default value)
+* Removal of a non-*nursery* rule or demoting a rule to the *nursery* group.
+* Changes to Rome's public API
+
+## Visual Studio Code Extension
+
+Visual Studio Code [doesn't support pre-release tags](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#prerelease-extensions) for extensions. That's why Rome uses the following version schema to distinguish stable and previews:
+* Stable releases use even version numbers: 10, 12, 14, 16, ...
+* Previews use odd version numbers: 11, 13, 15, 17, ...
+
+## Release Schedule
+Our goal is to release a new version of Rome every four weeks.
