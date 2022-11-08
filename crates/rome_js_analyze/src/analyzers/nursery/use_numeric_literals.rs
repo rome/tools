@@ -93,7 +93,7 @@ impl Rule for UseNumericLiterals {
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
-            applicability: Applicability::Always,
+            applicability: Applicability::MaybeIncorrect,
             message: markup! { "Replace with "{call.radix.description()}" literals" }.to_owned(),
             mutation,
         })
