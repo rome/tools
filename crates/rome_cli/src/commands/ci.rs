@@ -31,13 +31,17 @@ pub(crate) fn ci(mut session: CliSession) -> Result<(), Termination> {
         .formatter
         .get_or_insert_with(FormatterConfiguration::default);
 
-    formatter.enabled = formatter_enabled.unwrap_or(true);
+    if let Some(formatter_enabled) = formatter_enabled {
+        formatter.enabled = formatter_enabled;
+    }
 
     let linter = configuration
         .linter
         .get_or_insert_with(LinterConfiguration::default);
 
-    linter.enabled = linter_enabled.unwrap_or(true);
+    if let Some(linter_enabled) = linter_enabled {
+        linter.enabled = linter_enabled;
+    }
 
     // no point in doing the traversal if all the checks have been disabled
     if configuration.is_formatter_disabled() && configuration.is_linter_disabled() {
