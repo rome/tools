@@ -1,5 +1,83 @@
 # Rome changelog
 
+## 10.0.0
+
+### CLI
+
+- Added the new command `rome version`.
+- Added the new command `rome rage`.
+- Added the new command `rome lsp-proxy`.
+- Added the new option`--version` as an alias for `rome version`
+- Added a new argument `--files-max-size` to change the allowed size of files, in bytes.
+- Added a new argument `--formatter-enabled` to the command `rome ci`.
+- Added a new argument `--linter-enabled` to the command `rome ci`.
+- Added the new `format` option `--trailing-comma` to configure where to add trailing commas.
+- Correctly show the supported options for `rome ci`, closes [#3456](https://github.com/rome/tools/issues/3456).
+- Fixed the command `rome ci` command to run the linter even if the formatter is disabled, closes [#3495](https://github.com/rome/tools/issues/3495). 
+- Fixed the messaging of some diagnostics, [#3460](https://github.com/rome/tools/pull/3460).
+
+### Configuration
+
+- Added `files.maxSize`, to change the allowed size of files, in bytes.
+
+### Diagnostics
+
+- Fix false positive for unknown lint rule in suppression comments during formatting [#3406](https://github.com/rome/tools/issues/3406).
+- Correctly handle empty lines when printing code diffs [#3375](https://github.com/rome/tools/issues/3375).
+
+
+### Formatter
+
+- Added the new trailing comma option that configures where to add trailing commas. Supports the values: `all`, `es5` and `none`; refer to the [documentation](https://rome.tools/docs/#javascriptformattertrailingcomma) to learn more.
+- Improved JSX formatting [#3499](https://github.com/rome/tools/issues/3499), [#3211](https://github.com/rome/tools/issues/3211), [#3377](https://github.com/rome/tools/issues/3377)
+- Better formatting of object destructing
+- Improved formatting of test calls
+- Fixed formatting of trailing comments in arrow functions
+
+### Linter
+
+- **BREAKING CHANGE**: some rules have been moved to new groups to better reflect their purpose. This may result in Rome failing to load your configuration or suppression comments that now refer to unknown rules. Please check out [#3471](https://github.com/rome/tools/pull/3471) to learn more about the affected rules.
+- Fixed issues in the `noUnreachable` rule
+- Fixed false positive cases for `noNegationElse` [#3141](https://github.com/rome/tools/issues/3141)
+- Fixed false positive cases for `noUnusedVariables` [#3169](https://github.com/rome/tools/issues/3169)
+- Fixed an issue in our CFG [#3390](https://github.com/rome/tools/issues/3390)
+
+#### New rules
+
+- [`noAutoFocus`](https://rome.tools/docs/lint/rules/noAutoFocus/)
+- [`useAltText`](https://rome.tools/docs/lint/rules/useAltText/)
+- [`noBlankTarget`](https://rome.tools/docs/lint/rules/noBlankTarget/)
+- [`useAnchorContent`](https://rome.tools/docs/lint/rules/useAnchorContent/)
+- [`useKeyWithClickEvents`](https://rome.tools/docs/lint/rules/useKeyWithClickEvents/)
+- [`useKeyWithMouseEvents`](https://rome.tools/docs/lint/rules/useKeyWithMouseEvents/)
+- [`noPositiveTabIndex`](https://rome.tools/docs/lint/rules/noPositiveTabIndex/)
+- [`useValidAnchor`](https://rome.tools/docs/lint/rules/useValidAnchor/)
+- [`noRestrictedGlobals`](https://rome.tools/docs/lint/rules/noRestrictedGlobals/)
+- [`useSimplifiedBooleanExpression`](https://rome.tools/docs/lint/rules/useSimplifiedBooleanExpression/)
+- [`noInvalidConstructorSuper`](https://rome.tools/docs/lint/rules/noInvalidConstructorSuper/)
+- [`useValidForDirection`](https://rome.tools/docs/lint/rules/useValidForDirection/)
+- [`noConstAssign`](https://rome.tools/docs/lint/rules/noConstAssign/)
+- [`noExplicitAny`](https://rome.tools/docs/lint/rules/noExplicitAny/)
+- [`noBannedTypes`](https://rome.tools/docs/lint/rules/noBannedTypes/)
+- [`useMapFlat`](https://rome.tools/docs/lint/rules/useMapFlat/)
+- [`useExhaustiveDependencies`](https://rome.tools/docs/lint/rules/useExhaustiveDependencies/)
+
+### Parser
+
+- Improved messaging of diagnostics, using our new infrastructure
+- Fixed an issue where diagnostics couldn't be printed in WASM [#3349](https://github.com/rome/tools/pull/3349)
+- Allow arguments in d.ts files [#3388](https://github.com/rome/tools/issues/3388)
+- Fix parsing of less than in optional call chains [#3486](https://github.com/rome/tools/issues/3486)
+- Fixed a case where `export {"a"} from "b";` wasn't correctly parsed
+
+### VSCode
+
+- Make the "rename" command opt-in and use the VS Code provided "rename" feature that offers whole project renaming instead.
+- Added the new command `Restart LSP Server`
+- The LSP server is now able to listen to changes of `rome.json` and apply the new configuration 
+
+
+
 ## 0.10.1
 
 ### CLI

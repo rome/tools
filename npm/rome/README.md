@@ -20,22 +20,22 @@
 [discord-url]: https://discord.gg/rome
 [ci-badge]: https://github.com/rome/tools/actions/workflows/main.yml/badge.svg
 [ci-url]: https://github.com/rome/tools/actions/workflows/main.yml
-[npm-badge]: https://img.shields.io/npm/v/rome/next?color=brightgreen
-[npm-url]: https://www.npmjs.com/package/rome/v/next
+[npm-badge]: https://img.shields.io/npm/v/rome/latest?color=brightgreen
+[npm-url]: https://www.npmjs.com/package/rome/v/latest
 [vscode-badge]: https://img.shields.io/visual-studio-marketplace/v/rome.rome?color=brightgreen&label=vscode
 [vscode-url]: (https://marketplace.visualstudio.com/items?itemName=rome.rome
 
 </div>
 
-**Rome** is a formatter, linter, bundler, and [more](https://rome.tools/#development-status) for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
+**Rome** is a formatter, linter, bundler, and [more](https://rome.tools/) for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
 
 **Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
 
 **Rome** unifies functionality that has previously been separate tools. Building upon a shared base allows us to provide a cohesive experience for processing code, displaying errors, parallelizing work, caching, and configuration.
 
-**Rome** has strong conventions and aims to have minimal configuration. Read more about our [project philosophy](https://rome.tools/#philosophy).
+**Rome** has strong conventions and aims to have minimal configuration. Read more about our [project philosophy](https://docs.rome.tools/internals/philosophy/).
 
-**Rome** is [written in Rust](https://rome.tools/blog/2021/09/21/rome-will-be-rewritten-in-rust).
+**Rome** is [written in Rust](https://rome.tools/blog/2021/09/21/rome-will-be-rewritten-in-rust.html).
 
 **Rome** has first-class IDE support, with a sophisticated parser that represents the source text in full fidelity
 and top-notch error recovery.
@@ -43,37 +43,13 @@ and top-notch error recovery.
 **Rome** is [MIT licensed](https://github.com/rome/tools/tree/main/LICENSE) and moderated under the [Contributor Covenant Code of Conduct](https://github.com/rome/tools/tree/main/CODE_OF_CONDUCT.md).
 
 
-## Installation
+## Documentation
 
-```shell
-npm i rome@next
-```
-
-## Usage
-
-Format files:
-
-```shell
-rome format --write ./path ./path/to/file.js
-```
-
-For complete documentation, please visit the [official website].
-
-
-## Philosophy
-
-The project philosophy can be found on our [website](https://rome.tools/#philosophy).
-
-## Community
-
-Contribution and development instructions can be found in [CONTRIBUTING](./CONTRIBUTING.md).
-
-Additional project coordination and real-time discussion happens on our [Discord server](https://discord.gg/rome). Remember that all activity on the Discord server is still moderated and will be strictly enforced under the project's [Code of Conduct](./CODE_OF_CONDUCT.md).
+Check out our [homepage](https://rome.tools) to learn more about Rome, or directly head to the [Getting Started guide](https://docs.rome.tools/guides/getting-started/) if you want to start using Rome.
 
 ## Technical documentation
 
-If you're curious to know our internals, you can browse our [technical documentation].
+Browse Rome's internal [Rust API Documentation] if you're interested to learn more about how Rome works.
 
-[official website]: https://rome.tools/
-[technical documentation]: https://rome.github.io/tools/rome
+[Rust API Documentation]: https://rome.github.io/tools/rome
 
