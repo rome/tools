@@ -1,3 +1,4 @@
+use crate::utils::batch::JsBatchMutation;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
@@ -221,7 +222,7 @@ impl Rule for NoDupeKeys {
         PropertyConflict(_, PropertyDefinition(property_type, node)): &Self::State,
     ) -> Option<JsRuleAction> {
         let mut batch = ctx.root().begin();
-        batch.remove_node(node.clone());
+        batch.remove_js_object_member(node);
         Some(JsRuleAction {
             category: rome_analyze::ActionCategory::QuickFix,
             // The property initialization could contain side effects
