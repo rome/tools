@@ -49,6 +49,10 @@ export interface Configuration {
  */
 export interface FilesConfiguration {
 	/**
+	 * A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.
+	 */
+	ignore?: string[];
+	/**
 	 * The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB
 	 */
 	maxSize?: number;
