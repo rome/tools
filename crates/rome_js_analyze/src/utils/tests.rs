@@ -60,11 +60,7 @@ pub fn assert_remove_identifier_a_ok<Anc: AstNode<Language = JsLanguage> + Debug
     let identifiers_a: Vec<JsSyntaxNode> = r
         .syntax()
         .descendants()
-        .filter(|x| {
-            x.tokens()
-                .find(|token| token.text_trimmed() == "a")
-                .is_some()
-        })
+        .filter(|x| x.tokens().any(|token| token.text_trimmed() == "a"))
         .collect();
     let node_to_remove = match identifiers_a.as_slice() {
         [identifier_a] => identifier_a
