@@ -1,18 +1,18 @@
 //! Extensions for things which are not easily generated in ast expr nodes
 use crate::numbers::parse_js_number;
 use crate::{
-    JsAnyCallArgument, JsAnyExpression, JsAnyLiteralExpression, JsArrayExpression, JsArrayHole,
-    JsAssignmentExpression, JsBinaryExpression, JsCallExpression, JsComputedMemberExpression,
-    JsIdentifierExpression, JsLiteralMemberName, JsLogicalExpression, JsNewExpression,
-    JsNumberLiteralExpression, JsObjectExpression, JsPostUpdateExpression, JsReferenceIdentifier,
-    JsRegexLiteralExpression, JsStaticMemberExpression, JsStringLiteralExpression, JsSyntaxKind,
-    JsSyntaxToken, JsTemplate, JsUnaryExpression, OperatorPrecedence, T,
+    JsAnyCallArgument, JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement,
+    JsArrayExpression, JsArrayHole, JsAssignmentExpression, JsBinaryExpression, JsCallExpression,
+    JsComputedMemberExpression, JsIdentifierExpression, JsLiteralMemberName, JsLogicalExpression,
+    JsNewExpression, JsNumberLiteralExpression, JsObjectExpression, JsPostUpdateExpression,
+    JsReferenceIdentifier, JsRegexLiteralExpression, JsStaticMemberExpression,
+    JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken, JsTemplate, JsUnaryExpression,
+    OperatorPrecedence, T,
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use core::iter;
 use rome_rowan::{
-    AstNode, AstNodeList, AstSeparatedList, NodeOrToken, SyntaxResult, SyntaxTokenText, TextRange,
-    TextSize,
+    AstNode, AstSeparatedList, NodeOrToken, SyntaxResult, SyntaxTokenText, TextRange, TextSize,
 };
 use std::collections::HashSet;
 
@@ -869,31 +869,40 @@ impl JsComputedMemberExpression {
 
 impl JsAnyExpression {
     /// Return the expression is a string of given value if the given expression is
-    /// 1. A text literal
+    /// 1. A string literal
     /// 2. A template literal without any interpolation
     pub fn is_static_text(&self, text: &str) -> bool {
-        self.as_static_text().map(|it| it == text).unwrap_or(false)
+        self.with_static_text(|it| it == text).unwrap_or(false)
     }
 
     /// Return the string value if the given expression is
-    /// 1. A text literal
+    /// 1. A string literal
     /// 2. A template literal without any interpolation
     pub fn as_static_text(&self) -> Option<String> {
+        self.with_static_text(|it| it.to_string())
+    }
+
+    /// Call the given closure if the given expression is
+    /// 1. A string literal
+    /// 2. A template literal without any interpolation
+    fn with_static_text<R>(&self, f: impl FnOnce(&str) -> R) -> Option<R> {
         match self {
             Self::JsTemplate(t) => {
-                if t.tag().is_some() || t.elements().len() != 1 {
+                if t.tag().is_some() {
                     return None;
                 }
 
-                let e = t.elements().into_iter().next().unwrap();
-                let chunk = e.as_js_template_chunk_element().unwrap();
-                match chunk.template_chunk_token() {
-                    Ok(c) => Some(c.text_trimmed().to_string()),
+                let mut elements = t.elements().into_iter();
+                match (elements.next(), elements.next()) {
+                    (Some(JsAnyTemplateElement::JsTemplateChunkElement(chunk)), None) => chunk
+                        .template_chunk_token()
+                        .ok()
+                        .map(|it| f(it.text_trimmed())),
                     _ => None,
                 }
             }
             Self::JsAnyLiteralExpression(JsAnyLiteralExpression::JsStringLiteralExpression(s)) => {
-                s.inner_string_text().ok().map(|it| it.to_string())
+                s.inner_string_text().ok().map(|it| f(&it))
             }
             _ => None,
         }
