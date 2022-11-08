@@ -10,6 +10,7 @@
 ({ a: 1, set a(v) {} });
 ({ get a() {}, a: 1 });
 ({ set a(v) {}, a: 1 });
+({ a: 1, get a() {}, set a(v) {} });
 ({ get a() {}, a: 1, set a(v) {} });
 ({ get a() {}, set a(v) {}, a: 1 });
 

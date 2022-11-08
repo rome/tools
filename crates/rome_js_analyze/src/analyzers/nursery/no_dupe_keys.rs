@@ -4,6 +4,7 @@ use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{JsAnyObjectMember, JsObjectExpression};
 use rome_rowan::{AstNode, BatchMutationExt};
+use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::fmt::Display;
 
@@ -196,21 +197,27 @@ impl Rule for NoDupeKeys {
             DefinedProperty::Value(node) => {
                 diagnostic.detail(node.range(), "Overwritten with this value.")
             }
-            DefinedProperty::GetterSetter(getter_node, setter_node) => match property_type {
-                PropertyType::Getter => {
-                    diagnostic.detail(getter_node.range(), "Overwritten by this getter.")
+            DefinedProperty::GetterSetter(getter_node, setter_node) => {
+                match property_type {
+                    PropertyType::Getter => {
+                        diagnostic.detail(getter_node.range(), "Overwritten by this getter.")
+                    }
+                    PropertyType::Setter => {
+                        diagnostic.detail(setter_node.range(), "Overwritten by this setter.")
+                    }
+                    PropertyType::Value => {
+                        match getter_node.range().ordering(setter_node.range()) {
+                            Ordering::Less => diagnostic
+                                .detail(setter_node.range(), "Overwritten by this setter."),
+                            Ordering::Greater => diagnostic
+                                .detail(getter_node.range(), "Overwritten by this getter."),
+                            Ordering::Equal => {
+                                panic!("The ranges of the property getter and property setter cannot overlap.")
+                            }
+                        }
+                    }
                 }
-                PropertyType::Setter => {
-                    diagnostic.detail(setter_node.range(), "Overwritten by this setter.")
-                }
-                PropertyType::Value => {
-                    let diagnostic =
-                        diagnostic.detail(getter_node.range(), "Overwritten by this getter.");
-                    let diagnostic =
-                        diagnostic.detail(setter_node.range(), "Overwritten by this setter.");
-                    diagnostic
-                }
-            },
+            }
         };
         diagnostic = diagnostic.note("If an object property with the same key is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored.");
 

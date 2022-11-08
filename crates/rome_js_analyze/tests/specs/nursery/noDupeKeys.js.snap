@@ -16,6 +16,7 @@ expression: noDupeKeys.js
 ({ a: 1, set a(v) {} });
 ({ get a() {}, a: 1 });
 ({ set a(v) {}, a: 1 });
+({ a: 1, get a() {}, set a(v) {} });
 ({ get a() {}, a: 1, set a(v) {} });
 ({ get a() {}, set a(v) {}, a: 1 });
 
@@ -326,7 +327,7 @@ noDupeKeys.js:11:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━
   > 11 │ ({ get a() {}, a: 1 });
        │    ^^^^^^^^^^
     12 │ ({ set a(v) {}, a: 1 });
-    13 │ ({ get a() {}, a: 1, set a(v) {} });
+    13 │ ({ a: 1, get a() {}, set a(v) {} });
   
   i Overwritten with this value.
   
@@ -335,7 +336,7 @@ noDupeKeys.js:11:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━
   > 11 │ ({ get a() {}, a: 1 });
        │                ^^^^
     12 │ ({ set a(v) {}, a: 1 });
-    13 │ ({ get a() {}, a: 1, set a(v) {} });
+    13 │ ({ a: 1, get a() {}, set a(v) {} });
   
   i If an object property with the same key is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored.
   
@@ -355,8 +356,8 @@ noDupeKeys.js:12:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━
     11 │ ({ get a() {}, a: 1 });
   > 12 │ ({ set a(v) {}, a: 1 });
        │    ^^^^^^^^^^^
-    13 │ ({ get a() {}, a: 1, set a(v) {} });
-    14 │ ({ get a() {}, set a(v) {}, a: 1 });
+    13 │ ({ a: 1, get a() {}, set a(v) {} });
+    14 │ ({ get a() {}, a: 1, set a(v) {} });
   
   i Overwritten with this value.
   
@@ -364,8 +365,8 @@ noDupeKeys.js:12:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━
     11 │ ({ get a() {}, a: 1 });
   > 12 │ ({ set a(v) {}, a: 1 });
        │                 ^^^^
-    13 │ ({ get a() {}, a: 1, set a(v) {} });
-    14 │ ({ get a() {}, set a(v) {}, a: 1 });
+    13 │ ({ a: 1, get a() {}, set a(v) {} });
+    14 │ ({ get a() {}, a: 1, set a(v) {} });
   
   i If an object property with the same key is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored.
   
@@ -377,91 +378,121 @@ noDupeKeys.js:12:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━
 ```
 
 ```
-noDupeKeys.js:13:16 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDupeKeys.js:13:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This property value is later overwritten by a property with the same name.
   
     11 │ ({ get a() {}, a: 1 });
     12 │ ({ set a(v) {}, a: 1 });
-  > 13 │ ({ get a() {}, a: 1, set a(v) {} });
-       │                ^^^^
-    14 │ ({ get a() {}, set a(v) {}, a: 1 });
-    15 │ 
+  > 13 │ ({ a: 1, get a() {}, set a(v) {} });
+       │    ^^^^
+    14 │ ({ get a() {}, a: 1, set a(v) {} });
+    15 │ ({ get a() {}, set a(v) {}, a: 1 });
   
   i Overwritten by this setter.
   
     11 │ ({ get a() {}, a: 1 });
     12 │ ({ set a(v) {}, a: 1 });
-  > 13 │ ({ get a() {}, a: 1, set a(v) {} });
+  > 13 │ ({ a: 1, get a() {}, set a(v) {} });
        │                      ^^^^^^^^^^^
-    14 │ ({ get a() {}, set a(v) {}, a: 1 });
-    15 │ 
+    14 │ ({ get a() {}, a: 1, set a(v) {} });
+    15 │ ({ get a() {}, set a(v) {}, a: 1 });
   
   i If an object property with the same key is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored.
   
   i Suggested fix: Remove this property value
   
-    13 │ ({·get·a()·{},·a:·1,·set·a(v)·{}·});
-       │                ------               
-
-```
-
-```
-noDupeKeys.js:14:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This property getter is later overwritten by a property with the same name.
-  
-    12 │ ({ set a(v) {}, a: 1 });
-    13 │ ({ get a() {}, a: 1, set a(v) {} });
-  > 14 │ ({ get a() {}, set a(v) {}, a: 1 });
-       │    ^^^^^^^^^^
-    15 │ 
-    16 │ // valid for now
-  
-  i Overwritten with this value.
-  
-    12 │ ({ set a(v) {}, a: 1 });
-    13 │ ({ get a() {}, a: 1, set a(v) {} });
-  > 14 │ ({ get a() {}, set a(v) {}, a: 1 });
-       │                             ^^^^
-    15 │ 
-    16 │ // valid for now
-  
-  i If an object property with the same key is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored.
-  
-  i Suggested fix: Remove this property getter
-  
-    14 │ ({·get·a()·{},·set·a(v)·{},·a:·1·});
-       │    ------------                     
+    13 │ ({·a:·1,·get·a()·{},·set·a(v)·{}·});
+       │    ------                           
 
 ```
 
 ```
 noDupeKeys.js:14:16 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This property setter is later overwritten by a property with the same name.
+  ! This property value is later overwritten by a property with the same name.
   
     12 │ ({ set a(v) {}, a: 1 });
-    13 │ ({ get a() {}, a: 1, set a(v) {} });
-  > 14 │ ({ get a() {}, set a(v) {}, a: 1 });
-       │                ^^^^^^^^^^^
-    15 │ 
-    16 │ // valid for now
+    13 │ ({ a: 1, get a() {}, set a(v) {} });
+  > 14 │ ({ get a() {}, a: 1, set a(v) {} });
+       │                ^^^^
+    15 │ ({ get a() {}, set a(v) {}, a: 1 });
+    16 │ 
+  
+  i Overwritten by this setter.
+  
+    12 │ ({ set a(v) {}, a: 1 });
+    13 │ ({ a: 1, get a() {}, set a(v) {} });
+  > 14 │ ({ get a() {}, a: 1, set a(v) {} });
+       │                      ^^^^^^^^^^^
+    15 │ ({ get a() {}, set a(v) {}, a: 1 });
+    16 │ 
+  
+  i If an object property with the same key is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored.
+  
+  i Suggested fix: Remove this property value
+  
+    14 │ ({·get·a()·{},·a:·1,·set·a(v)·{}·});
+       │                ------               
+
+```
+
+```
+noDupeKeys.js:15:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This property getter is later overwritten by a property with the same name.
+  
+    13 │ ({ a: 1, get a() {}, set a(v) {} });
+    14 │ ({ get a() {}, a: 1, set a(v) {} });
+  > 15 │ ({ get a() {}, set a(v) {}, a: 1 });
+       │    ^^^^^^^^^^
+    16 │ 
+    17 │ // valid for now
   
   i Overwritten with this value.
   
-    12 │ ({ set a(v) {}, a: 1 });
-    13 │ ({ get a() {}, a: 1, set a(v) {} });
-  > 14 │ ({ get a() {}, set a(v) {}, a: 1 });
+    13 │ ({ a: 1, get a() {}, set a(v) {} });
+    14 │ ({ get a() {}, a: 1, set a(v) {} });
+  > 15 │ ({ get a() {}, set a(v) {}, a: 1 });
        │                             ^^^^
-    15 │ 
-    16 │ // valid for now
+    16 │ 
+    17 │ // valid for now
+  
+  i If an object property with the same key is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored.
+  
+  i Suggested fix: Remove this property getter
+  
+    15 │ ({·get·a()·{},·set·a(v)·{},·a:·1·});
+       │    ------------                     
+
+```
+
+```
+noDupeKeys.js:15:16 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This property setter is later overwritten by a property with the same name.
+  
+    13 │ ({ a: 1, get a() {}, set a(v) {} });
+    14 │ ({ get a() {}, a: 1, set a(v) {} });
+  > 15 │ ({ get a() {}, set a(v) {}, a: 1 });
+       │                ^^^^^^^^^^^
+    16 │ 
+    17 │ // valid for now
+  
+  i Overwritten with this value.
+  
+    13 │ ({ a: 1, get a() {}, set a(v) {} });
+    14 │ ({ get a() {}, a: 1, set a(v) {} });
+  > 15 │ ({ get a() {}, set a(v) {}, a: 1 });
+       │                             ^^^^
+    16 │ 
+    17 │ // valid for now
   
   i If an object property with the same key is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored.
   
   i Suggested fix: Remove this property setter
   
-    14 │ ({·get·a()·{},·set·a(v)·{},·a:·1·});
+    15 │ ({·get·a()·{},·set·a(v)·{},·a:·1·});
        │                -------------        
 
 ```
