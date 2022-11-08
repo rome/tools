@@ -3,7 +3,7 @@ use crate::numbers::parse_js_number;
 use crate::{
     JsAnyCallArgument, JsAnyExpression, JsAnyLiteralExpression, JsArrayExpression, JsArrayHole,
     JsAssignmentExpression, JsBinaryExpression, JsCallExpression, JsComputedMemberExpression,
-    JsIdentifierExpression, JsLiteralMemberName, JsLogicalExpression, JsName, JsNewExpression,
+    JsIdentifierExpression, JsLiteralMemberName, JsLogicalExpression, JsNewExpression,
     JsNumberLiteralExpression, JsObjectExpression, JsPostUpdateExpression, JsReferenceIdentifier,
     JsRegexLiteralExpression, JsStaticMemberExpression, JsStringLiteralExpression, JsSyntaxKind,
     JsSyntaxToken, JsTemplate, JsUnaryExpression, OperatorPrecedence, T,
@@ -780,6 +780,7 @@ impl JsCallExpression {
         results
     }
 
+    /// Check if the callee is an identifier with given name
     pub fn has_callee_name(&self, name: &str) -> bool {
         self.callee()
             .map(|it| it.is_ident_deep(name))
@@ -788,6 +789,7 @@ impl JsCallExpression {
 }
 
 impl JsNewExpression {
+    /// Check if the callee is an identifier with given name
     pub fn has_callee_name(&self, name: &str) -> bool {
         self.callee()
             .map(|it| it.is_ident_deep(name))
@@ -810,28 +812,58 @@ impl JsAnyExpression {
     }
 }
 
-impl PartialEq<str> for JsName {
-    fn eq(&self, other: &str) -> bool {
-        self.value_token()
-            .map(|it| it.text() == other)
+impl JsAnyExpression {
+    /// Check if the given expression is a static or computed member expression
+    /// with given object name and member name.
+    pub fn is_member_access(&self, object: &str, member: &str) -> bool {
+        let expr = self.clone().omit_parentheses();
+        match expr {
+            JsAnyExpression::JsStaticMemberExpression(e) => {
+                e.has_object_name(object) && e.has_member_name(member)
+            }
+            JsAnyExpression::JsComputedMemberExpression(e) => {
+                e.has_object_name(object) && e.has_member_name(member)
+            }
+            _ => false,
+        }
+    }
+}
+
+impl JsStaticMemberExpression {
+    /// Check if the object in the expression has the given name, optionally with parentheses
+    pub fn has_object_name(&self, name: &str) -> bool {
+        self.object()
+            .map(|it| it.is_ident_deep(name))
+            .unwrap_or(false)
+    }
+
+    /// Check if member in the expression has the given name
+    pub fn has_member_name(&self, name: &str) -> bool {
+        self.member()
+            .ok()
+            .and_then(|it| {
+                it.as_js_name()
+                    .and_then(|it| it.value_token().ok())
+                    .map(|it| it.text() == name)
+            })
             .unwrap_or(false)
     }
 }
 
-impl JsAnyExpression {
-    pub fn is_member_access(&self, object: &str, member: &str) -> bool {
-        self.is_member_access_opt(object, member).unwrap_or(false)
+impl JsComputedMemberExpression {
+    /// Check if the object in the expression has the given name, optionally with parentheses
+    pub fn has_object_name(&self, name: &str) -> bool {
+        self.object()
+            .map(|it| it.is_ident_deep(name))
+            .unwrap_or(false)
     }
 
-    fn is_member_access_opt(&self, object: &str, member: &str) -> Option<bool> {
-        let result = if let Some(e) = self.as_js_static_member_expression() {
-            e.object().ok()?.is_ident_deep(object) && e.member().ok()?.as_js_name()? == member
-        } else if let Some(e) = self.as_js_computed_member_expression() {
-            e.object().ok()?.is_ident_deep(object) && e.member().ok()?.is_static_text(member)
-        } else {
-            return None;
-        };
-        Some(result)
+    /// Check if member in the expression is given string as string literal or non-interpolated template.
+    pub fn has_member_name(&self, name: &str) -> bool {
+        self.member()
+            .ok()
+            .and_then(|it| it.as_static_text().map(|it| it == name))
+            .unwrap_or(false)
     }
 }
 
