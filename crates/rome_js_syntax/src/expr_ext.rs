@@ -3,15 +3,16 @@ use crate::numbers::parse_js_number;
 use crate::{
     JsAnyCallArgument, JsAnyExpression, JsAnyLiteralExpression, JsArrayExpression, JsArrayHole,
     JsAssignmentExpression, JsBinaryExpression, JsCallExpression, JsComputedMemberExpression,
-    JsIdentifierExpression, JsLiteralMemberName, JsLogicalExpression, JsNumberLiteralExpression,
-    JsObjectExpression, JsPostUpdateExpression, JsReferenceIdentifier, JsRegexLiteralExpression,
-    JsStaticMemberExpression, JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken, JsTemplate,
-    JsUnaryExpression, OperatorPrecedence, T,
+    JsIdentifierExpression, JsLiteralMemberName, JsLogicalExpression, JsName, JsNewExpression,
+    JsNumberLiteralExpression, JsObjectExpression, JsPostUpdateExpression, JsReferenceIdentifier,
+    JsRegexLiteralExpression, JsStaticMemberExpression, JsStringLiteralExpression, JsSyntaxKind,
+    JsSyntaxToken, JsTemplate, JsUnaryExpression, OperatorPrecedence, T,
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use core::iter;
 use rome_rowan::{
-    AstNode, AstSeparatedList, NodeOrToken, SyntaxResult, SyntaxTokenText, TextRange, TextSize,
+    AstNode, AstNodeList, AstSeparatedList, NodeOrToken, SyntaxResult, SyntaxTokenText, TextRange,
+    TextSize,
 };
 use std::collections::HashSet;
 
@@ -777,6 +778,93 @@ impl JsCallExpression {
         }
 
         results
+    }
+
+    pub fn has_callee_name(&self, name: &str) -> bool {
+        self.callee()
+            .map(|it| it.is_ident_deep(name))
+            .unwrap_or(false)
+    }
+}
+
+impl JsNewExpression {
+    pub fn has_callee_name(&self, name: &str) -> bool {
+        self.callee()
+            .map(|it| it.is_ident_deep(name))
+            .unwrap_or(false)
+    }
+}
+
+impl JsAnyExpression {
+    /// Check if expression is identifier with given name.
+    pub fn is_ident(&self, name: &str) -> bool {
+        self.as_js_identifier_expression()
+            .and_then(|it| it.name().ok())
+            .map(|it| it.has_name(name))
+            .unwrap_or(false)
+    }
+
+    /// Check if expression is identifier with given name, optionally wrapped in parentheses.
+    pub fn is_ident_deep(self, name: &str) -> bool {
+        self.omit_parentheses().is_ident(name)
+    }
+}
+
+impl PartialEq<str> for JsName {
+    fn eq(&self, other: &str) -> bool {
+        self.value_token()
+            .map(|it| it.text() == other)
+            .unwrap_or(false)
+    }
+}
+
+impl JsAnyExpression {
+    pub fn is_member_access(&self, object: &str, member: &str) -> bool {
+        self.is_member_access_opt(object, member).unwrap_or(false)
+    }
+
+    fn is_member_access_opt(&self, object: &str, member: &str) -> Option<bool> {
+        let result = if let Some(e) = self.as_js_static_member_expression() {
+            e.object().ok()?.is_ident_deep(object) && e.member().ok()?.as_js_name()? == member
+        } else if let Some(e) = self.as_js_computed_member_expression() {
+            e.object().ok()?.is_ident_deep(object) && e.member().ok()?.is_static_text(member)
+        } else {
+            return None;
+        };
+        Some(result)
+    }
+}
+
+impl JsAnyExpression {
+    /// Return the expression is a string of given value if the given expression is
+    /// 1. A text literal
+    /// 2. A template literal without any interpolation
+    pub fn is_static_text(&self, text: &str) -> bool {
+        self.as_static_text().map(|it| it == text).unwrap_or(false)
+    }
+
+    /// Return the string value if the given expression is
+    /// 1. A text literal
+    /// 2. A template literal without any interpolation
+    pub fn as_static_text(&self) -> Option<String> {
+        match self {
+            Self::JsTemplate(t) => {
+                if t.tag().is_some() || t.elements().len() != 1 {
+                    return None;
+                }
+
+                let e = t.elements().into_iter().next().unwrap();
+                let chunk = e.as_js_template_chunk_element().unwrap();
+                match chunk.template_chunk_token() {
+                    Ok(c) => Some(c.text_trimmed().to_string()),
+                    _ => None,
+                }
+            }
+            Self::JsAnyLiteralExpression(JsAnyLiteralExpression::JsStringLiteralExpression(s)) => {
+                s.inner_string_text().ok().map(|it| it.to_string())
+            }
+            _ => None,
+        }
     }
 }
 

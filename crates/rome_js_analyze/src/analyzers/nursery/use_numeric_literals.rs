@@ -110,8 +110,12 @@ impl CallInfo {
         let text = args.next()?.ok()?;
         let radix = args.next()?.ok()?;
         let callee = get_callee(expr)?;
-        let text = ast_utils::as_static_text(&text)?;
-        let radix = ast_utils::as_number(&radix)?;
+        let text = text.as_js_any_expression()?.as_static_text()?;
+        let radix = radix
+            .as_js_any_expression()?
+            .as_js_any_literal_expression()?
+            .as_js_number_literal_expression()?
+            .as_number()?;
         Some(CallInfo {
             callee,
             text,
@@ -128,12 +132,10 @@ impl CallInfo {
 }
 
 fn get_callee(expr: &JsCallExpression) -> Option<&'static str> {
-    let callee = expr.callee().ok()?;
-    let callee = ast_utils::remove_parentheses(callee)?;
-    if ast_utils::is_ident_eq(&callee, "parseInt") {
+    if expr.has_callee_name("parseInt") {
         return Some("parseInt()");
     }
-    if ast_utils::is_member_access_eq(&callee, "Number", "parseInt") {
+    if expr.callee().ok()?.is_member_access("Number", "parseInt") {
         return Some("Number.parseInt()");
     }
     None

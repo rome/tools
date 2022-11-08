@@ -8,7 +8,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt, SyntaxNodeCast};
 
-use crate::{ast_utils, JsRuleAction};
+use crate::JsRuleAction;
 
 pub enum ExtraBooleanCastType {
     /// !!x
@@ -103,12 +103,10 @@ fn is_in_boolean_context(node: &JsSyntaxNode) -> Option<bool> {
 /// The checking algorithm of [JsNewExpression] is a little different from [JsCallExpression] due to
 /// two nodes have different shapes
 fn is_boolean_constructor_call(node: &JsSyntaxNode) -> Option<bool> {
-    let callee = JsCallArgumentList::cast(node.clone())?
+    let expr = JsCallArgumentList::cast(node.clone())?
         .parent::<JsCallArguments>()?
-        .parent::<JsNewExpression>()?
-        .callee()
-        .ok()?;
-    Some(ast_utils::is_ident_eq(&callee, "Boolean"))
+        .parent::<JsNewExpression>()?;
+    Some(expr.has_callee_name("Boolean"))
 }
 
 /// Check if the SyntaxNode is a `Boolean` Call Expression
@@ -117,8 +115,8 @@ fn is_boolean_constructor_call(node: &JsSyntaxNode) -> Option<bool> {
 /// Boolean(x)
 /// ```
 fn is_boolean_call(node: &JsSyntaxNode) -> Option<bool> {
-    let callee = JsCallExpression::cast(node.clone())?.callee().ok()?;
-    Some(ast_utils::is_ident_eq(&callee, "Boolean"))
+    let expr = JsCallExpression::cast(node.clone())?;
+    Some(expr.has_callee_name("Boolean"))
 }
 
 /// Check if the SyntaxNode is a Negate Unary Expression
@@ -161,8 +159,7 @@ impl Rule for NoExtraBooleanCast {
             // Convert `Boolean(x)` -> `x` if parent `SyntaxNode` in any boolean `Type Coercion` context
             // Only if `Boolean` Call Expression have one `JsAnyExpression` argument
             if let Some(expr) = JsCallExpression::cast(syntax.clone()) {
-                let callee = expr.callee().ok()?;
-                if ast_utils::is_ident_eq(&callee, "Boolean") {
+                if expr.has_callee_name("Boolean") {
                     let arguments = expr.arguments().ok()?;
                     let len = arguments.args().len();
                     if len == 1 {
@@ -182,8 +179,7 @@ impl Rule for NoExtraBooleanCast {
             // Convert `new Boolean(x)` -> `x` if parent `SyntaxNode` in any boolean `Type Coercion` context
             // Only if `Boolean` Call Expression have one `JsAnyExpression` argument
             return JsNewExpression::cast(syntax).and_then(|expr| {
-                let callee = expr.callee().ok()?;
-                if ast_utils::is_ident_eq(&callee, "Boolean") {
+                if expr.has_callee_name("Boolean") {
                     let arguments = expr.arguments()?;
                     let len = arguments.args().len();
                     if len == 1 {

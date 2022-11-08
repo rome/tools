@@ -3,8 +3,6 @@ use rome_console::markup;
 use rome_js_syntax::{JsAnyExpression, JsAnyFunction, JsNewExpression, JsNewExpressionFields};
 use rome_rowan::{AstNode, AstSeparatedList};
 
-use crate::ast_utils;
-
 declare_rule! {
     /// Disallows using an async function as a Promise executor.
     ///
@@ -92,8 +90,7 @@ impl Rule for NoAsyncPromiseExecutor {
 /// ((((((async function () {}))))))
 /// ```
 fn get_async_function_expression_like(expr: &JsAnyExpression) -> Option<JsAnyFunction> {
-    let expr = ast_utils::remove_parentheses(expr.clone())?;
-    match expr {
+    match expr.clone().omit_parentheses() {
         JsAnyExpression::JsFunctionExpression(func) => func
             .async_token()
             .map(|_| JsAnyFunction::JsFunctionExpression(func.clone())),

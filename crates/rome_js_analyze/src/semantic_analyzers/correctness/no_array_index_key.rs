@@ -1,4 +1,3 @@
-use crate::ast_utils;
 use crate::react::{is_react_call_api, ReactApiCall, ReactCloneElementCall};
 use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
@@ -329,7 +328,7 @@ fn find_react_children_function_argument(
 
     let object = member_expression.object().ok()?;
 
-    let is_react_children = if ast_utils::is_ident_eq(&object, "Children") {
+    let is_react_children = if object.is_ident("Children") {
         // case we have `Children`
         array_call
     } else {
