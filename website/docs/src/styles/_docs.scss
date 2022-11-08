@@ -20,7 +20,10 @@ footer {
 	position: relative;
 	display: flex;
 	z-index: 99999;
-	margin-right: auto;
+
+	@include mobile-only {
+		margin-right: auto;
+	}
 
 	&:hover, &.active, ul {
 		background-color: #dfdfdf;
