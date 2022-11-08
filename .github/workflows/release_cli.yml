@@ -39,17 +39,12 @@ jobs:
         run: |
           echo "Version change found! New version: ${{ steps.version.outputs.version }} (${{ steps.version.outputs.version_type }})"
           echo "version=${{ steps.version.outputs.version }}" >> $GITHUB_ENV
-      - name: Set version name
-        if: steps.version.outputs.changed != 'true'
-        run: |
-          echo "version=$(node npm/rome/scripts/update-nightly-version.mjs)" >> $GITHUB_ENV
 
-      - name: Check prerelease status
-        id: prerelease
+      - name: Set prerelease status
         if: env.nightly == 'true'
-        env:
-            prerelease: true
-        run: echo "Create pre-release"
+        run: |
+          echo "prerelease=true" >> $GITHUB_ENV
+          echo "version=$(node npm/rome/scripts/update-nightly-version.mjs)" >> $GITHUB_ENV
 
   build:
     strategy:
@@ -201,8 +196,8 @@ jobs:
       - name: Generate npm packages
         run: node npm/rome/scripts/generate-packages.mjs
 
-      - name: Publish npm packages as next
-        run: for package in npm/*; do if [ $package != "npm/js-api" ]; then npm publish $package --tag next --access public; fi; done
+      - name: Publish npm packages as latest
+        run: for package in npm/*; do if [ $package != "npm/js-api" ]; then npm publish $package --tag latest --access public; fi; done
         if: needs.build.outputs.prerelease != 'true'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

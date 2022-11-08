@@ -1,32 +1,107 @@
 # Rome VS Code Extension
 
-Adds support for the Rome language server to provide formatting, diagnostics, and code actions.
+[Rome](https://rome.tools/) unifies your development stack by combining the functionality of separate tools. It uses a single configuration file, has fantastic performance, and works with any stack. This extension brings Rome to your editor so that you can:
 
-## How the extension works
+- Format files *on save* or when issuing the *Format Document* command
+- See lints while you type and apply code fixes
+- Perform refactors
 
-The extension acts as a language server, which means that you will get all the features
-provided by the extension (formatting, diagnostics, etc.) for any file supported by Rome.
+## Installation
 
-The extension automatically discovers the `rome.json` file in the workspace root directory.
+You can install the code extension by heading to the extension's [Visual Studio Code Market Place page](https://marketplace.visualstudio.com/items?itemName=rome.rome) or from within VS Code by either:
 
-## Known limitations
+- Open the *extensions* tab (_View_ → _Extensions)_ and search for Rome.
+- Open the _Quick Open Overlay_ (Ctrl/Cmd+P or _Go -> Go to File_), enter `ext install rome.rome`, and hit enter.
 
-There are a few limitations that the team plans to remove in the following releases.
+## Getting Started
 
-- the discovery of the `rome.json` is limited to the root of the workspace
-- changes to the configuration `rome.json` won't be picked automatically; use the VSCode command
-  `Restart LSP Server` or use `rome stop` command;
-- when updating `rome` inside you `package.json`, the rome server needs to be restarted;
-  you can use `rome stop` command or kill the process manually;
-- if you don't want to see Rome's diagnostics in projects that don't use Rome, you need to disable
-  the extension;
+### Default Formatter
 
-## Supported languages
+Configure Rome as the default formatter for supported files to ensure that VS Code uses Rome over other formatters that you may have installed. You can do so by opening a JavaScript or TypeScript and then:
 
-Check the [website](https://rome.tools/#language-support) for more information.
+- Open the Command Palette (Ctrl/Cmd+Shift+P or View → Command Palette)
+- Select _Format Document With…_
+- Select _Configure Default Formatter…_
+- Select Rome
+
+You can also enable Rome for specific languages only:
+
+- [Open the `settings.json`](https://code.visualstudio.com/docs/getstarted/settings#_settingsjson): open the _Command Palette_(Ctr+Shift+P) and select _Preferences: Open User Settings (JSON)_
+- And set the `editor.defaultFormatter` to `rome.rome` for the desired language
+
+```json
+{
+	"editor.defaultFormatter": "<other formatter>",
+	"[javascript]": {
+		"editor.defaultFormatter": "rome.rome"
+	}
+}
+```
+
+This configuration sets Rome as the default formatter for JavaScript files. All other files will be formatted using `<other formatter>`
+
+## Configuration Resolution
+
+The extension automatically loads the `rome.json` file from the workspace’s root directory.
+
+## Rome Resolution
+
+The extension tries to use Rome from your project's local dependencies (`node_modules/rome`). We recommend adding Rome as a project dependency to ensure that NPM scripts and the extension use the same Rome version.
+
+The extension uses the Rome version bundled with the extension if the project has no dependency on Rome.
 
 ## Usage
 
-This extension may be bundled with a prebuilt binary for `rome_lsp`, the Rome language server.
+### Format document
 
-You can set the path to a `rome_lsp` executable using the `"rome.lspBin"` setting in your VS Code Settings.
+To format an entire document, open the _Command Palette_ (Ctrl/Cmd+Shift+P) and select _Format Document_.
+
+To format a text range, select the text you want to format, open the _Command Palette_ (Ctrl/Cmd+Shift+P), and select _Format Selection_.
+
+### Format on save
+
+Rome respects VS Code's _Format on Save_ setting. To enable format on save, open the settings (_File_ -> _Preferences_ -> _Settings_), search for `editor.formatOnSave`, and enable the option.
+
+## Extension Settings
+
+### `rome.lspBin`
+
+The `rome.lspBin` option overrides the Rome binary used by the extension. The workspace folder is used as the base path if the path is relative.
+
+### `rome.rename`
+
+Enables Rome to handle renames in the workspace (experimental).
+
+## Known limitations
+
+### Configuration per sub-directory
+
+Rome doesn’t yet support loading the `rome.json` file from a directory other than the workspace root ([issue 3576](https://github.com/rome/tools/issues/3576), [issue 3289](https://github.com/rome/tools/issues/3289)). That means it is currently impossible to enable Rome only for a specific sub-folder or to use different configurations for different folders.
+
+### Configuration resolution for multi-root workspaces
+
+Rome isn't yet able to pick up the `rome.json` configuration in [multi-root workspaces](https://code.visualstudio.com/docs/editor/multi-root-workspaces) if the configuration isn't in the first root folder ([issue 3538](https://github.com/rome/tools/issues/3538)). You can work around this limitation by making the folder with the configuration the first root folder of the workspace (drag it to the top).
+
+### The extension uses an outdated version of Rome
+
+Make sure to restart VS Code or restart Rome’s LSP server after updating Rome in your `package.json`. To stop Rome’s LSP, send the `stop` command (VS will start a new LSP instance for you):
+
+```bash
+npx rome stop
+
+# or
+pnpx exec rome stop
+
+# or
+yarn run rome stop
+```
+
+### Disable Rome for workspaces without a `rome.json` configuration
+
+Rome's VS Code extension is active for every workspace regardless if the workspace contains a `rome.json` configuration ([issue 3506](https://github.com/rome/tools/issues/3506)). That may be surprising to you if you use other extensions like ESLint where the extension is disabled if the configuration is missing. This behavior is intentional because it's Rome's philosophy that the configuration should be optional.
+
+You can work around this limitation by [disabling Rome per workspace](https://code.visualstudio.com/docs/editor/extension-marketplace#_disable-an-extension):
+
+- Open the _Extensions_ panel
+- Search for Rome
+- Right-click on _Rome_ and select _Disable (Workspace)_

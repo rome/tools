@@ -11,6 +11,7 @@ repository = "https://github.com/rome/tools"
 rome_rowan = { path = "../rome_rowan" }
 rome_js_syntax = { path = "../rome_js_syntax" }
 rust-lapper = "1.0.1"
+rustc-hash = { workspace = true }
 
 [dev-dependencies]
 rome_markup = { path = "../rome_markup" }

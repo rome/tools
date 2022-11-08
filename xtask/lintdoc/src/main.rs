@@ -23,7 +23,7 @@ use std::{
 use xtask::{glue::fs2, *};
 
 fn main() -> Result<()> {
-    let root = project_root().join("website/src/docs/lint/rules");
+    let root = project_root().join("website/docs/src/lint/rules");
 
     // Clear the rules directory ignoring "not found" errors
     if let Err(err) = fs2::remove_dir_all(&root) {
@@ -43,13 +43,7 @@ fn main() -> Result<()> {
     let mut index = Vec::new();
     writeln!(index, "---")?;
     writeln!(index, "title: Lint Rules")?;
-    writeln!(index, "layout: layouts/page.liquid")?;
-    writeln!(index, "layout-type: split")?;
     writeln!(index, "main-class: rules")?;
-    writeln!(index, "eleventyNavigation:")?;
-    writeln!(index, "  key: lint-rules")?;
-    writeln!(index, "  parent: linting")?;
-    writeln!(index, "  title: Rules")?;
     writeln!(index, "---")?;
     writeln!(index)?;
 
@@ -173,12 +167,13 @@ Rules that belong to this group "<Emphasis>"are not subject to semantic version"
     markup_to_string(index, description)?;
     writeln!(index)?;
 
+    writeln!(index, "<div class=\"category-rules\">")?;
     for (rule, meta) in rules {
         match generate_rule(root, group, rule, meta.docs, meta.version, meta.recommended) {
             Ok(summary) => {
                 writeln!(index, "<section class=\"rule\">")?;
                 writeln!(index, "<h3 data-toc-exclude id=\"{rule}\">")?;
-                writeln!(index, "	<a href=\"/docs/lint/rules/{rule}\">{rule}</a>")?;
+                writeln!(index, "	<a href=\"/lint/rules/{rule}\">{rule}</a>")?;
 
                 if meta.recommended {
                     writeln!(index, "	<span class=\"recommended\">recommended</span>")?;
@@ -194,6 +189,7 @@ Rules that belong to this group "<Emphasis>"are not subject to semantic version"
             }
         }
     }
+    writeln!(index, "\n</div>")?;
 
     Ok(())
 }
@@ -212,7 +208,6 @@ fn generate_rule(
     // Write the header for this lint rule
     writeln!(content, "---")?;
     writeln!(content, "title: Lint Rule {rule}")?;
-    writeln!(content, "layout: layouts/rule.liquid")?;
     writeln!(content, "---")?;
     writeln!(content)?;
 

@@ -139,12 +139,12 @@ jobs:
         run: node npm/js-api/scripts/update-nightly-version.mjs
 
       - name: Publish npm package as latest
-        run: npm publish @rometools/js-api --tag latest --access public
+        run: npm publish npm/js-api --tag latest --access public
         if: needs.build.outputs.prerelease != 'true'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish npm package as nightly
-        run: npm publish @rometools/js-api --tag nightly --access public
+        run: npm publish npm/js-api --tag nightly --access public
         if: needs.build.outputs.prerelease == 'true'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
