@@ -862,7 +862,10 @@ impl JsComputedMemberExpression {
     pub fn has_member_name(&self, name: &str) -> bool {
         self.member()
             .ok()
-            .and_then(|it| it.as_static_text().map(|it| it == name))
+            .and_then(|it| {
+                it.as_string_or_no_substitution_template()
+                    .map(|it| it == name)
+            })
             .unwrap_or(false)
     }
 }
@@ -870,22 +873,23 @@ impl JsComputedMemberExpression {
 impl JsAnyExpression {
     /// Return the expression is a string of given value if the given expression is
     /// 1. A string literal
-    /// 2. A template literal without any interpolation
-    pub fn is_static_text(&self, text: &str) -> bool {
-        self.with_static_text(|it| it == text).unwrap_or(false)
+    /// 2. A template literal with no substitutions
+    pub fn is_string_or_no_substitution_template(&self, text: &str) -> bool {
+        self.with_string_or_no_substitution_template(|it| it == text)
+            .unwrap_or(false)
     }
 
     /// Return the string value if the given expression is
     /// 1. A string literal
-    /// 2. A template literal without any interpolation
-    pub fn as_static_text(&self) -> Option<String> {
-        self.with_static_text(|it| it.to_string())
+    /// 2. A template literal with no substitutions
+    pub fn as_string_or_no_substitution_template(&self) -> Option<String> {
+        self.with_string_or_no_substitution_template(|it| it.to_string())
     }
 
     /// Call the given closure if the given expression is
     /// 1. A string literal
-    /// 2. A template literal without any interpolation
-    fn with_static_text<R>(&self, f: impl FnOnce(&str) -> R) -> Option<R> {
+    /// 2. A template literal with no substitutions
+    fn with_string_or_no_substitution_template<R>(&self, f: impl FnOnce(&str) -> R) -> Option<R> {
         match self {
             Self::JsTemplate(t) => {
                 if t.tag().is_some() {

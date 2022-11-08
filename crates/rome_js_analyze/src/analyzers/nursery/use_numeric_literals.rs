@@ -60,8 +60,8 @@ impl Rule for UseNumericLiterals {
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let node = ctx.query();
-        CallInfo::try_from_node(node)
+        let expr = ctx.query();
+        CallInfo::try_from_expr(expr)
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
@@ -101,21 +101,26 @@ impl Rule for UseNumericLiterals {
 }
 
 impl CallInfo {
-    fn try_from_node(expr: &JsCallExpression) -> Option<CallInfo> {
+    fn try_from_expr(expr: &JsCallExpression) -> Option<CallInfo> {
         let args = expr.arguments().ok()?.args();
         if args.len() != 2 {
             return None;
         }
         let mut args = args.into_iter();
-        let text = args.next()?.ok()?;
-        let radix = args.next()?.ok()?;
-        let callee = get_callee(expr)?;
-        let text = text.as_js_any_expression()?.as_static_text()?;
-        let radix = radix
+        let text = args
+            .next()?
+            .ok()?
+            .as_js_any_expression()?
+            .as_string_or_no_substitution_template()?;
+        let radix = args
+            .next()?
+            .ok()?
             .as_js_any_expression()?
             .as_js_any_literal_expression()?
             .as_js_number_literal_expression()?
             .as_number()?;
+        let callee = get_callee(expr)?;
+
         Some(CallInfo {
             callee,
             text,
