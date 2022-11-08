@@ -15,11 +15,94 @@ footer {
 	margin-top: 0;
 }
 
-.logo svg {
-	height: 30px;
+.logo-container {
+	border-radius: 6px;
+	position: relative;
+	display: flex;
+	z-index: 99999;
 
-	.cls-1 {
-		fill: var(--logo-font-color);
+	@include mobile-only {
+		margin-right: auto;
+	}
+
+	&:hover, &.active, ul {
+		background-color: #dfdfdf;
+
+		@include dark-mode {
+			background-color: #272729;
+		}
+	}
+
+	&.active {
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	&.active ul {
+		display: block;
+	}
+
+	ul {
+		display: none;
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 50px;
+		border-bottom-left-radius: 6px;
+		border-bottom-right-radius: 6px;
+		padding: 10px 0;
+
+		li {
+			line-height: 30px;
+		}
+
+		a {
+			display: block;
+			text-decoration: none;
+			padding: 0 15px;
+
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.1);
+			}
+		}
+	}
+}
+
+.logo-modal-background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 9999;
+	display: none;
+
+	&.active {
+		display: block;
+	}
+}
+
+.logo {
+	padding: 15px;
+
+	.triangle {
+		width: 0;
+		height: 0;
+		border-left: 6px solid transparent;
+		border-right: 6px solid transparent;
+		border-top: 6px solid var(--font-color);
+		vertical-align: middle;
+		margin-left: 6px;
+		margin-bottom: 8px;
+	}
+
+	svg {
+		height: 30px;
+
+		.cls-1 {
+			fill: var(--logo-font-color);
+		}
 	}
 }
 
@@ -40,7 +123,8 @@ footer {
 	z-index: 2;
 	height: 80px;
 	line-height: 80px;
-	padding: 0 16px;
+	padding-right: 16px;
+	padding-left: 8px;
 	display: flex;
 	align-items: center;
 
@@ -142,6 +226,7 @@ footer {
 	@include mobile-only {
 		display: none;
 		top: 64px;
+		height: auto;
 	}
 }
 

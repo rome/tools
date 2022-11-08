@@ -30,6 +30,20 @@ class A extends (B -= C) { constructor() { super(); } }
 class A extends (B **= C) { constructor() { super(); } }
 class A extends (B |= C) { constructor() { super(); } }
 class A extends undefined { constructor() { super(); } }
+module.exports = class A extends B {
+    constructor() {
+    }
+}
+export class A extends B {
+    constructor() {
+        missing_super();
+    }
+}
+export default class A extends null {
+    constructor() {
+        super();
+    }
+}
 // valid
 class A  extends B {
     constructor() {
@@ -43,6 +57,21 @@ class A extends null { constructor() { return a; } }
 class A extends Object { constructor() { super() } }
 class A extends (5 && B) { constructor() { super(); } }
 class A extends (B || C) { constructor() { super(); } }
+module.exports = class A extends B {
+    constructor() {
+        super();
+    }
+}
+export class A extends B {
+    constructor() {
+        super();
+    }
+}
+export default class A extends B {
+    constructor() {
+        super();
+    }
+}
 
 ```
 
@@ -317,7 +346,7 @@ noInvalidConstructorSuper.js:25:44 lint/nursery/noInvalidConstructorSuper ━━
   > 25 │ class A extends (B |= C) { constructor() { super(); } }
        │                                            ^^^^^
     26 │ class A extends undefined { constructor() { super(); } }
-    27 │ // valid
+    27 │ module.exports = class A extends B {
   
   i This is where the non-constructor is used.
   
@@ -326,7 +355,7 @@ noInvalidConstructorSuper.js:25:44 lint/nursery/noInvalidConstructorSuper ━━
   > 25 │ class A extends (B |= C) { constructor() { super(); } }
        │                 ^^^^^^^^
     26 │ class A extends undefined { constructor() { super(); } }
-    27 │ // valid
+    27 │ module.exports = class A extends B {
   
 
 ```
@@ -340,8 +369,8 @@ noInvalidConstructorSuper.js:26:45 lint/nursery/noInvalidConstructorSuper ━━
     25 │ class A extends (B |= C) { constructor() { super(); } }
   > 26 │ class A extends undefined { constructor() { super(); } }
        │                                             ^^^^^
-    27 │ // valid
-    28 │ class A  extends B {
+    27 │ module.exports = class A extends B {
+    28 │     constructor() {
   
   i This is where the non-constructor is used.
   
@@ -349,8 +378,62 @@ noInvalidConstructorSuper.js:26:45 lint/nursery/noInvalidConstructorSuper ━━
     25 │ class A extends (B |= C) { constructor() { super(); } }
   > 26 │ class A extends undefined { constructor() { super(); } }
        │                 ^^^^^^^^^
-    27 │ // valid
-    28 │ class A  extends B {
+    27 │ module.exports = class A extends B {
+    28 │     constructor() {
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:27:26 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class extends another class and a super() call is expected.
+  
+    25 │ class A extends (B |= C) { constructor() { super(); } }
+    26 │ class A extends undefined { constructor() { super(); } }
+  > 27 │ module.exports = class A extends B {
+       │                          ^^^^^^^^^
+    28 │     constructor() {
+    29 │     }
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:31:16 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class extends another class and a super() call is expected.
+  
+    29 │     }
+    30 │ }
+  > 31 │ export class A extends B {
+       │                ^^^^^^^^^
+    32 │     constructor() {
+    33 │         missing_super();
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:38:9 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class calls super(), but the class extends from a non-constructor.
+  
+    36 │ export default class A extends null {
+    37 │     constructor() {
+  > 38 │         super();
+       │         ^^^^^
+    39 │     }
+    40 │ }
+  
+  i This is where the non-constructor is used.
+  
+    34 │     }
+    35 │ }
+  > 36 │ export default class A extends null {
+       │                                ^^^^
+    37 │     constructor() {
+    38 │         super();
   
 
 ```

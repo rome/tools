@@ -9,7 +9,6 @@ use rome_service::workspace::{
 use std::path::PathBuf;
 
 /// Useful information during the traversal of files and virtual content
-#[derive(Clone)]
 pub(crate) struct Execution {
     /// How the information should be collected and reported
     report_mode: ReportMode,
@@ -18,7 +17,6 @@ pub(crate) struct Execution {
     traversal_mode: TraversalMode,
 }
 
-#[derive(Clone)]
 pub(crate) enum TraversalMode {
     /// This mode is enabled when running the command `rome check`
     Check {
@@ -47,7 +45,7 @@ pub(crate) enum TraversalMode {
 }
 
 /// Tells to the execution of the traversal how the information should be reported
-#[derive(Clone, Default)]
+#[derive(Copy, Clone, Default)]
 pub(crate) enum ReportMode {
     /// Reports information straight to the console, it's the default mode
     #[default]
