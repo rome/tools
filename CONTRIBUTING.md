@@ -39,12 +39,12 @@ The VS Code extension can be installed from the [Marketplace](https://marketplac
 	"rome.lspBin": "/path/to/rome/target/debug/rome"
 ```
 
-Please note that Windows disallows modifying an executable while it's running, 
+Please note that Windows disallows modifying an executable while it's running,
 meaning you won't be able to recompile the Rome binary once the extension was activated in your editor.
 
-The server is spawned as a background daemon, and continues to run even after the editor is closed. 
+The server is spawned as a background daemon, and continues to run even after the editor is closed.
 
-To stop the running daemon instance use the `rome stop` command, with the editor closed as the extension 
+To stop the running daemon instance use the `rome stop` command, with the editor closed as the extension
 will try to restart it otherwise.
 
 To build the VS Code extension from source, navigate to the `editors/vscode` directory and run:
@@ -88,11 +88,11 @@ The npm module npm/rome contains Rome's Node JS API that supports different back
 For testing and developing, you need to build these packages, following the steps:
 1. install [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/) globally;
 2. run the `build` command inside the package `backend-jsonrpc`;
-3. run the `build:wasm-node-dev` command inside the package `rome` (folder `npm/rome`);
-4. run `pnpm i` inside the package `rome` (folder `npm/rome`), this will link the WebAssembly bindings and the
+3. run the `build:wasm-node-dev` command inside the package `js-api` (folder `npm/js-api`);
+4. run `pnpm i` inside the package `js-api` (folder `npm/js-api`), this will link the WebAssembly bindings and the
 JSON-RPC bindings;
 
-The tests are run against the compiled files, which means that you need to run the 
+The tests are run against the compiled files, which means that you need to run the
 `build` command after you implemented features/bug fixes.
 
 ## Website
@@ -214,6 +214,6 @@ Even minor versions are dedicated to official releases, e.g. `*.6.*`.
 
 ### Snapshot tests
 
-Internally, we use [`insta`](https://insta.rs/) for snapshot tests. This means that you 
-follow their [installation instructions](https://insta.rs/docs/cli/) to update/accept 
+Internally, we use [`insta`](https://insta.rs/) for snapshot tests. This means that you
+follow their [installation instructions](https://insta.rs/docs/cli/) to update/accept
 the new snapshot tests.

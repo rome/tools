@@ -15,8 +15,8 @@ body:
     id: environment
     attributes:
       label: Environment information
-      description: Please share any information about your environment that can help debug your issue (OS and OS version, CPU architecture, installation method, etc.).
-      render: bash
+      description: Run the command `rome rage` and paste its output here. Please review it, in case there are sensitive information you don't want to share.
+      render: block
     validations:
       required: true
   - type: textarea
@@ -25,7 +25,10 @@ body:
       label: What happened?
       description: |
         Provide a detailed list of steps that reproduce the issue
-        The more information and included steps, the quicker your report can be confirmed and addressed!
+        The more information and included steps, the quicker your report can be triaged and addressed!
+        
+        You can also use the [playground](https://play.rome.tools) to share code snippets.
+        This is useful to reproduce the issue.
       placeholder: |
         1.
         2.

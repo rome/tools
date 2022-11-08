@@ -3,11 +3,13 @@ use rome_analyze::{
     AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Queryable, RegistryVisitor, Rule,
     RuleCategory, RuleFilter, RuleGroup, RuleMetadata,
 };
+use rome_console::fmt::Termcolor;
 use rome_console::{
     fmt::{Formatter, HTML},
-    markup, Console, Markup,
+    markup, Console, Markup, MarkupBuf,
 };
 use rome_diagnostics::file::FileId;
+use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::v2::{Diagnostic, DiagnosticExt, PrintDiagnostic};
 use rome_js_analyze::{analyze, visit_registry};
 use rome_js_syntax::{JsLanguage, Language, LanguageVariant, ModuleKind, SourceType};
@@ -24,6 +26,8 @@ use xtask::{glue::fs2, *};
 
 fn main() -> Result<()> {
     let root = project_root().join("website/docs/src/lint/rules");
+    let reference_groups =
+        project_root().join("website/docs/src/_includes/docs/reference/groups.md");
 
     // Clear the rules directory ignoring "not found" errors
     if let Err(err) = fs2::remove_dir_all(&root) {
@@ -41,6 +45,7 @@ fn main() -> Result<()> {
 
     // Content of the index page
     let mut index = Vec::new();
+    let mut reference_buffer = Vec::new();
     writeln!(index, "---")?;
     writeln!(index, "title: Lint Rules")?;
     writeln!(index, "main-class: rules")?;
@@ -88,11 +93,17 @@ fn main() -> Result<()> {
         .remove("nursery")
         .expect("Expected nursery group to exist");
 
+    writeln!(
+        reference_buffer,
+        "<!-- this file is auto generated, use `cargo lintdoc` to update it -->"
+    )?;
     for (group, rules) in groups {
         generate_group(group, rules, &root, &mut index, &mut errors)?;
+        generate_reference(group, &mut reference_buffer)?;
     }
 
     generate_group("nursery", nursery_rules, &root, &mut index, &mut errors)?;
+    generate_reference("nursery", &mut reference_buffer)?;
 
     if !errors.is_empty() {
         bail!(
@@ -105,6 +116,7 @@ fn main() -> Result<()> {
     }
 
     fs2::write(root.join("index.md"), index)?;
+    fs2::write(reference_groups, reference_buffer)?;
 
     Ok(())
 }
@@ -116,55 +128,11 @@ fn generate_group(
     mut index: &mut dyn io::Write,
     errors: &mut Vec<(&'static str, Error)>,
 ) -> io::Result<()> {
-    let (group_name, description) = match group {
-        "a11y" => (
-            "Accessibility",
-            markup! {
-                "Rules focused on preventing accessibility problems."
-            },
-        ),
-        "correctness" => (
-            "Correctness",
-            markup! {
-                "Rules that detect incorrect or useless code."
-            },
-        ),
-
-        "nursery" => (
-            "Nursery",
-            markup! {
-                "New rules that are still under development.
-
-Nursery rules require explicit opt-in via configuration because they may still have bugs or performance problems.
-Nursery rules get promoted to other groups once they become stable or may be removed.
-
-Rules that belong to this group "<Emphasis>"are not subject to semantic version"</Emphasis>"."
-            },
-        ),
-        "style" => (
-            "Style",
-            markup! {
-                "Rules enforcing a consistent way of writing your code. "
-            },
-        ),
-        "complexity" => (
-            "Complexity",
-            markup! {
-                "Rules that focus on inspecting complex code that could be simplified."
-            },
-        ),
-        "security" => (
-            "Security",
-            markup! {
-                "Rules that detect potential security flaws."
-            },
-        ),
-        _ => panic!("Unknown group ID {group:?}"),
-    };
+    let (group_name, description) = extract_group_metadata(group);
 
     writeln!(index, "\n## {group_name}")?;
     writeln!(index)?;
-    markup_to_string(index, description)?;
+    write_markup_to_string(index, description)?;
     writeln!(index)?;
 
     writeln!(index, "<div class=\"category-rules\">")?;
@@ -605,8 +573,73 @@ fn assert_lint(
     Ok(())
 }
 
-pub fn markup_to_string(buffer: &mut dyn io::Write, markup: Markup) -> io::Result<()> {
+fn generate_reference(group: &'static str, buffer: &mut dyn io::Write) -> io::Result<()> {
+    let (group_name, description) = extract_group_metadata(group);
+    let description = markup_to_string(&description.to_owned());
+    let description = description.replace('\n', " ");
+    writeln!(buffer, "- `{}`: {}", group_name, description)
+}
+
+fn extract_group_metadata(group: &str) -> (&str, Markup) {
+    match group {
+        "a11y" => (
+            "Accessibility",
+            markup! {
+                "Rules focused on preventing accessibility problems."
+            },
+        ),
+        "correctness" => (
+            "Correctness",
+            markup! {
+                "Rules that detect incorrect or useless code."
+            },
+        ),
+
+        "nursery" => (
+            "Nursery",
+            markup! {
+                "New rules that are still under development.
+
+Nursery rules require explicit opt-in via configuration because they may still have bugs or performance problems.
+Nursery rules get promoted to other groups once they become stable or may be removed.
+
+Rules that belong to this group "<Emphasis>"are not subject to semantic version"</Emphasis>"."
+            },
+        ),
+        "style" => (
+            "Style",
+            markup! {
+                "Rules enforcing a consistent way of writing your code. "
+            },
+        ),
+        "complexity" => (
+            "Complexity",
+            markup! {
+                "Rules that focus on inspecting complex code that could be simplified."
+            },
+        ),
+        "security" => (
+            "Security",
+            markup! {
+                "Rules that detect potential security flaws."
+            },
+        ),
+        _ => panic!("Unknown group ID {group:?}"),
+    }
+}
+
+pub fn write_markup_to_string(buffer: &mut dyn io::Write, markup: Markup) -> io::Result<()> {
     let mut write = HTML(buffer);
     let mut fmt = Formatter::new(&mut write);
     fmt.write_markup(markup)
+}
+
+fn markup_to_string(markup: &MarkupBuf) -> String {
+    let mut buffer = Vec::new();
+    let mut write = Termcolor(NoColor::new(&mut buffer));
+    let mut fmt = Formatter::new(&mut write);
+    fmt.write_markup(markup! { {markup} })
+        .expect("to have written in the buffer");
+
+    String::from_utf8(buffer).expect("to have convert a buffer into a String")
 }
