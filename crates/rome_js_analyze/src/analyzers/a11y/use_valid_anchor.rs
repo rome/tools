@@ -268,47 +268,66 @@ fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorSt
     match attribute_value {
         JsxAnyAttributeValue::JsxExpressionAttributeValue(attribute_value) => {
             let expression = attribute_value.expression().ok()?;
-            // href={null}
-            if let JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsNullLiteralExpression(null),
-            ) = expression
-            {
-                return Some(UseValidAnchorState::IncorrectHref(
-                    null.syntax().text_trimmed_range(),
-                ));
-            } else if let JsAnyExpression::JsIdentifierExpression(identifier) = expression {
-                let text = identifier.name().ok()?.value_token().ok()?;
-                // href={undefined}
-                if text.text_trimmed() == "undefined" {
+
+           
+            match expression {
+                 // href={null}
+                JsAnyExpression::JsAnyLiteralExpression(
+                            JsAnyLiteralExpression::JsNullLiteralExpression(null),
+                ) => {
                     return Some(UseValidAnchorState::IncorrectHref(
-                        text.text_trimmed_range(),
+                        null.syntax().text_trimmed_range(),
                     ));
                 }
-            } else if let JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
-            ) = expression
-            {
-                let text = string_literal.inner_string_text().ok()?;
-                if text == "#" {
-                    return Some(UseValidAnchorState::IncorrectHref(
-                        string_literal.syntax().text_trimmed_range(),
-                    ));
-                }
-            } else if let JsAnyExpression::JsTemplate(template) = expression {
-                let mut iter = template.elements().iter();
-                if let Some(JsAnyTemplateElement::JsTemplateChunkElement(element)) = iter.next() {
-                    let template_token = element.template_chunk_token().ok()?;
-                    let text = template_token.text_trimmed();
-                    if text == "#" || text.contains("javascript:") {
+                JsAnyExpression::JsIdentifierExpression(identifier) => {
+                    let text = identifier.name().ok()?.value_token().ok()?;
+                    // href={undefined}
+                    if text.text_trimmed() == "undefined" {
                         return Some(UseValidAnchorState::IncorrectHref(
-                            template_token.text_trimmed_range(),
+                            text.text_trimmed_range(),
                         ));
                     }
                 }
-            } else {
-                return Some(UseValidAnchorState::IncorrectHref(
-                    expression.syntax().text_trimmed_range(),
-                ));
+                JsAnyExpression::JsAnyLiteralExpression(
+                            JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
+                        ) => {
+                    let text = string_literal.inner_string_text().ok()?;
+                    if text == "#" {
+                        return Some(UseValidAnchorState::IncorrectHref(
+                            string_literal.syntax().text_trimmed_range(),
+                        ));
+                    }
+                }
+                JsAnyExpression::JsTemplate(template) => {
+                    let mut iter = template.elements().iter();
+                    if let Some(JsAnyTemplateElement::JsTemplateChunkElement(element)) = iter.next() {
+                        let template_token = element.template_chunk_token().ok()?;
+                        let text = template_token.text_trimmed();
+                        if text == "#" || text.contains("javascript:") {
+                            return Some(UseValidAnchorState::IncorrectHref(
+                                template_token.text_trimmed_range(),
+                            ));
+                        }
+                    }
+                }
+                JsAnyExpression::ImportMeta(_) |
+                JsAnyExpression::JsClassExpression(_) |
+                JsAnyExpression::JsComputedMemberExpression(_) |
+                JsAnyExpression::JsImportCallExpression(_) |
+                JsAnyExpression::JsLogicalExpression(_) |
+                JsAnyExpression::JsObjectExpression(_) |
+                JsAnyExpression::JsSuperExpression(_) |
+                JsAnyExpression::JsUnaryExpression(_) |
+                JsAnyExpression::JsUnknownExpression(_) |
+                JsAnyExpression::JsYieldExpression(_) |
+                JsAnyExpression::JsxTagExpression(_) |
+                JsAnyExpression::NewTarget(_) |
+                JsAnyExpression::TsNonNullAssertionExpression(_) => {
+                    return Some(UseValidAnchorState::IncorrectHref(
+                        expression.syntax().text_trimmed_range(),
+                    ));
+                },
+                _ => { }
             }
         }
         JsxAnyAttributeValue::JsxAnyTag(_) => {}
