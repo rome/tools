@@ -2,5 +2,5 @@ function Fragment() {}
 let React = { Fragment };
 <>
     <Fragment>test</Fragment>
-    <React>test</React>
+    <React.Fragment>test</React.Fragment>
 </>

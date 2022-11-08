@@ -1,14 +1,18 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 99
 expression: fromImportRenameValid.jsx
 ---
 # Input
 ```js
-import AwesomeReact, { Fragment as AwesomeFragment } from "noReact";
+import AwesomeNoReact, { Fragment as AwesomeFragment } from "noReact";
+import AwesomeReact, { StrictMode as AwesomeStrictMode } from "react";
 
 <>
     <AwesomeFragment></AwesomeFragment>
-    <AwesomeReact.Fragment>foo</AwesomeReact.Fragment>
+    <AwesomeNoReact.Fragment>foo</AwesomeNoReact.Fragment>
+    <AwesomeStrictMode></AwesomeStrictMode>
+    <AwesomeReact.StrictMode>foo</AwesomeReact.StrictMode>
 </>
 
 ```

@@ -49,7 +49,7 @@ export interface Configuration {
  */
 export interface FilesConfiguration {
 	/**
-	 * The maximum allowed size for source code files in bytes. Files above this limit will be ignore for performance reason. Defaults to 1 MiB
+	 * The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB
 	 */
 	maxSize?: number;
 }
