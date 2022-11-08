@@ -1,0 +1,61 @@
+@import "_variables";
+
+ul.credits-people-list {
+	text-align: center;
+	margin: 0;
+	margin-top: 32px;
+	padding: 0;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	flex-wrap: wrap;
+
+	&.contributors {
+		li {
+			width: 130px;
+			margin: 0;
+			margin: calc($unit / 4);
+
+			img {
+				width: 128px;
+				height: 128px;
+			}
+
+			span {
+				margin: calc($unit / 2) 0;
+			}
+		}
+	}
+
+	li {
+		margin: 0 $unit;
+		margin-bottom: $unit;
+		width: 220px;
+		list-style: none;
+		border: 1px solid var(--soft-border-color);
+		background-color: var(--container-color);
+		text-decoration: none;
+		border-radius: 12px;
+		overflow: hidden;
+	}
+
+	a {
+		display: block;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	img {
+		width: 220px;
+		height: 220px;
+		display: block;
+	}
+
+	span {
+		display: block;
+		margin: $unit 0;
+	}
+}

@@ -22,11 +22,13 @@ pnpm install # if you haven't ran this yet
 pnpm start
 ```
 
-
 ## Tips
+
 1. You could add this option in `./cargo.toml` 
+
 ```toml
 [package.metadata.wasm-pack.profile.release]
 wasm-opt = false
 ```
+
 this could accelerate your wasm compiler time during development, but don't forget to remove it when you make a pull request.

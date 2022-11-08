@@ -34,7 +34,7 @@ Next Steps ━━━━━━━━━━━━━━━━━━━━━━━
      rome ci checks for lint errors and verifies formatting. Run rome --help for a full list of commands and options.
 
   3. Read the documentation
-     Our website serves as a comprehensive source of guides and documentation: https://rome.tools/docs
+     Our website serves as a comprehensive source of guides and documentation: https://docs.rome.tools
 
   4. Get involved in the community
      Ask questions, get support, or contribute by participating on GitHub (https://github.com/rome/tools),

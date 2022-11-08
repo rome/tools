@@ -1,8 +1,0 @@
-<div class="blog-info">
-	{%- if author_url -%}
-		<div><a href="{{ author_url }}"><img src="{{ author_avatar }}"> <span>{{ author_name }}</span></a></div>
-	{%- else -%}
-		<div><img src="{{ author_avatar }}"> {{ author_name }}</div>
-	{%- endif -%}
-	<time datetime="{{ date }}"> {{ date | dateFormat }} </time>
-</div>
