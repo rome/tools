@@ -10,7 +10,7 @@ use crate::JsRuleAction;
 
 declare_rule! {
     /// Prevents object literals having more than one property declaration for the same key.
-    /// If an object property or with the same key is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
+    /// If an object property with the same key is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
     ///
     /// ## Examples
     ///
@@ -211,7 +211,7 @@ impl Rule for NoDupeKeys {
                 }
             },
         };
-        diagnostic = diagnostic.note("If an object property or with the same key is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored.");
+        diagnostic = diagnostic.note("If an object property with the same key is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored.");
 
         Some(diagnostic)
     }
