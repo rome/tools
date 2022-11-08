@@ -42,15 +42,6 @@ declare_rule! {
     /// Number.parseInt(foo);
     /// Number.parseInt(foo, 2);
     /// ```
-    ///
-    /// ```js
-    /// function parseInt() {}
-    /// parseInt('11', 2);
-    /// ```
-    /// ```js
-    /// class Number { parseInt() {} }
-    /// Number.parseInt('11', 2);
-    /// ```
     pub(crate) UseNumericLiterals {
         version: "11.0.0",
         name: "useNumericLiterals",
