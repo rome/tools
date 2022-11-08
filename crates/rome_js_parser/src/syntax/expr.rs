@@ -1817,17 +1817,18 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         p.expect(T![await]);
         let unary = parse_unary_expr(p, context);
 
-        if !p.state.in_async() || !(p.state.is_top_level() || p.state.in_function()) {
-            // test reparse_await_as_identifier
-            // // SCRIPT
-            // function test() { a = await; }
-            // function test2() { return await; }
-            if !p.state.in_async() && unary.is_absent() {
-                p.rewind(checkpoint);
-                m.abandon(p);
-                return parse_identifier_expression(p);
-            }
+        // test reparse_await_as_identifier
+        // // SCRIPT
+        // function test() { a = await; }
+        // function test2() { return await; }
+        if !p.state.in_async() && unary.is_absent() {
+            p.rewind(checkpoint);
+            m.abandon(p);
+            return parse_identifier_expression(p);
+        }
 
+        let top_level_or_fn = p.state.is_top_level() || p.state.in_function();
+        if !p.state.in_async() || !top_level_or_fn {
             // test_err await_in_parameter_initializer
             // async function test(a = await b()) {}
             // function test2(a = await b()) {}
