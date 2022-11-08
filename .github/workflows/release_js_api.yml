@@ -158,7 +158,4 @@ jobs:
           tag_name: js-api/v${{ needs.build.outputs.version }}
           draft: false
           prerelease: ${{ needs.build.outputs.prerelease == 'true' }}
-          files: |
-            dist/*
-          fail_on_unmatched_files: true
           generate_release_notes: true
