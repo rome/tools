@@ -27,7 +27,7 @@ Here's an example:
 }
 ```
 
-This configuration file enables the linter and formatter and sets the preferred indent style and width of the formatter.
+This configuration file enables the formatter and sets the preferred indent style and width. The linter is disabled.
 
 ## `rome.json`
 
@@ -36,9 +36,9 @@ This configuration file enables the linter and formatter and sets the preferred 
 ##### `files.maxSize`
 
 The maximum allowed size for source code files in bytes. Files above
-this limit will be ignored for performance reason. 
+this limit will be ignored for performance reason.
 
-> Default: 1024
+> Default: 1024*1024 (1MB)
 
 ### Linter
 
