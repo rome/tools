@@ -1,9 +1,11 @@
+use crate::semantic_services::Semantic;
 use crate::{ast_utils, JsRuleAction};
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
+use rome_analyze::{declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
+use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsCallExpression, JsSyntaxToken};
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
 
@@ -40,6 +42,15 @@ declare_rule! {
     /// Number.parseInt(foo);
     /// Number.parseInt(foo, 2);
     /// ```
+    ///
+    /// ```js
+    /// function parseInt() {}
+    /// parseInt('11', 2);
+    /// ```
+    /// ```js
+    /// class Number { parseInt() {} }
+    /// Number.parseInt('11', 2);
+    /// ```
     pub(crate) UseNumericLiterals {
         version: "11.0.0",
         name: "useNumericLiterals",
@@ -54,14 +65,15 @@ pub struct CallInfo {
 }
 
 impl Rule for UseNumericLiterals {
-    type Query = Ast<JsCallExpression>;
+    type Query = Semantic<JsCallExpression>;
     type State = CallInfo;
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let expr = ctx.query();
-        CallInfo::try_from_expr(expr)
+        let model = ctx.model();
+        CallInfo::try_from_expr(expr, model)
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
@@ -101,7 +113,7 @@ impl Rule for UseNumericLiterals {
 }
 
 impl CallInfo {
-    fn try_from_expr(expr: &JsCallExpression) -> Option<CallInfo> {
+    fn try_from_expr(expr: &JsCallExpression, model: &SemanticModel) -> Option<CallInfo> {
         let args = expr.arguments().ok()?.args();
         if args.len() != 2 {
             return None;
@@ -119,7 +131,7 @@ impl CallInfo {
             .as_js_any_literal_expression()?
             .as_js_number_literal_expression()?
             .as_number()?;
-        let callee = get_callee(expr)?;
+        let callee = get_callee(expr, model)?;
 
         Some(CallInfo {
             callee,
@@ -136,11 +148,14 @@ impl CallInfo {
     }
 }
 
-fn get_callee(expr: &JsCallExpression) -> Option<&'static str> {
-    if expr.has_callee_name("parseInt") {
+fn get_callee(expr: &JsCallExpression, model: &SemanticModel) -> Option<&'static str> {
+    if expr.has_callee(|it| it.has_name("parseInt") && model.declaration(&it).is_none()) {
         return Some("parseInt()");
     }
-    if expr.callee().ok()?.is_member_access("Number", "parseInt") {
+    if expr.callee().ok()?.is_member_access(
+        |it| it.has_name("Number") && model.declaration(&it).is_none(),
+        "parseInt",
+    ) {
         return Some("Number.parseInt()");
     }
     None

@@ -328,12 +328,12 @@ fn find_react_children_function_argument(
 
     let object = member_expression.object().ok()?;
 
-    let is_react_children = if object.is_ident("Children") {
+    let is_react_children = if object.is_ident(|it| it.has_name("Children")) {
         // case we have `Children`
         array_call
     } else {
         // case we have `React.Children`
-        is_react_call_api(&object, model, "Children")? && array_call
+        is_react_call_api(&object, model, "Children") && array_call
     };
 
     if is_react_children {

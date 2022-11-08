@@ -5,7 +5,8 @@ pub mod hooks;
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
     JsAnyCallArgument, JsAnyExpression, JsCallExpression, JsIdentifierBinding, JsImport,
-    JsObjectExpression, JsPropertyObjectMember, JsxMemberName, JsxReferenceIdentifier,
+    JsObjectExpression, JsPropertyObjectMember, JsReferenceIdentifier, JsxMemberName,
+    JsxReferenceIdentifier,
 };
 use rome_rowan::{AstNode, AstSeparatedList};
 
@@ -53,7 +54,7 @@ impl ReactCreateElementCall {
         model: &SemanticModel,
     ) -> Option<Self> {
         let callee = call_expression.callee().ok()?;
-        let is_react_create_element = is_react_call_api(&callee, model, "createElement")?;
+        let is_react_create_element = is_react_call_api(&callee, model, "createElement");
 
         if is_react_create_element {
             let arguments = call_expression.arguments().ok()?.args();
@@ -154,7 +155,7 @@ impl ReactCloneElementCall {
         model: &SemanticModel,
     ) -> Option<Self> {
         let callee = call_expression.callee().ok()?;
-        let is_react_clone_element = is_react_call_api(&callee, model, "cloneElement")?;
+        let is_react_clone_element = is_react_call_api(&callee, model, "cloneElement");
 
         if is_react_clone_element {
             let arguments = call_expression.arguments().ok()?.args();
@@ -234,6 +235,17 @@ const VALID_REACT_API: [&str; 14] = [
     "Children",
 ];
 
+fn is_imported_from_react(ident: &JsReferenceIdentifier, model: &SemanticModel) -> Option<bool> {
+    let binding_identifier = model.declaration(ident)?;
+    let binding_identifier = JsIdentifierBinding::cast_ref(binding_identifier.syntax())?;
+    binding_identifier
+        .syntax()
+        .ancestors()
+        .find_map(|ancestor| JsImport::cast_ref(&ancestor))?
+        .source_is("react")
+        .ok()
+}
+
 /// Checks if the current [JsCallExpression] is a potential [`React` API].
 /// The function has accepts a `api_name` to check against
 ///
@@ -242,50 +254,19 @@ pub(crate) fn is_react_call_api(
     expression: &JsAnyExpression,
     model: &SemanticModel,
     api_name: &str,
-) -> Option<bool> {
+) -> bool {
     // we bail straight away if the API doesn't exists in React
     debug_assert!(VALID_REACT_API.contains(&api_name));
-    Some(match expression {
-        JsAnyExpression::JsStaticMemberExpression(node) => {
-            let object = node.object().ok()?;
-            let member = node.member().ok()?;
-            let member = member.as_js_name()?;
-            let identifier = object.as_js_identifier_expression()?.name().ok()?;
 
-            let mut maybe_from_react = identifier.syntax().text_trimmed() == "React"
-                && member.syntax().text_trimmed() == api_name;
+    if expression.is_member_access(
+        |it| is_imported_from_react(&it, model).unwrap_or_else(|| it.has_name("React")),
+        api_name,
+    ) {
+        return true;
+    }
 
-            if let Some(binding_identifier) = model.declaration(&identifier) {
-                let binding_identifier =
-                    JsIdentifierBinding::cast_ref(binding_identifier.syntax())?;
-                if let Some(js_import) = binding_identifier
-                    .syntax()
-                    .ancestors()
-                    .find_map(|ancestor| JsImport::cast_ref(&ancestor))
-                {
-                    maybe_from_react = js_import.source_is("react").ok()?;
-                }
-            }
-            maybe_from_react
-        }
-        JsAnyExpression::JsIdentifierExpression(identifier) => {
-            let name = identifier.name().ok()?;
-            let mut maybe_react = identifier.syntax().text_trimmed() == api_name;
-            if let Some(identifier_binding) = model.declaration(&name) {
-                let binding_identifier =
-                    JsIdentifierBinding::cast_ref(identifier_binding.syntax())?;
-                if let Some(js_import) = binding_identifier
-                    .syntax()
-                    .ancestors()
-                    .find_map(|ancestor| JsImport::cast_ref(&ancestor))
-                {
-                    maybe_react = js_import.source_is("react").ok()?;
-                }
-            }
-            maybe_react
-        }
-        _ => return None,
-    })
+    expression
+        .is_ident(|it| is_imported_from_react(&it, model).unwrap_or_else(|| it.has_name(api_name)))
 }
 
 /// Checks if the node `JsxMemberName` is a react fragment.

@@ -106,7 +106,7 @@ fn is_boolean_constructor_call(node: &JsSyntaxNode) -> Option<bool> {
     let expr = JsCallArgumentList::cast(node.clone())?
         .parent::<JsCallArguments>()?
         .parent::<JsNewExpression>()?;
-    Some(expr.has_callee_name("Boolean"))
+    Some(expr.has_callee(|it| it.has_name("Boolean")))
 }
 
 /// Check if the SyntaxNode is a `Boolean` Call Expression
@@ -116,7 +116,7 @@ fn is_boolean_constructor_call(node: &JsSyntaxNode) -> Option<bool> {
 /// ```
 fn is_boolean_call(node: &JsSyntaxNode) -> Option<bool> {
     let expr = JsCallExpression::cast(node.clone())?;
-    Some(expr.has_callee_name("Boolean"))
+    Some(expr.has_callee(|it| it.has_name("Boolean")))
 }
 
 /// Check if the SyntaxNode is a Negate Unary Expression
@@ -159,7 +159,7 @@ impl Rule for NoExtraBooleanCast {
             // Convert `Boolean(x)` -> `x` if parent `SyntaxNode` in any boolean `Type Coercion` context
             // Only if `Boolean` Call Expression have one `JsAnyExpression` argument
             if let Some(expr) = JsCallExpression::cast(syntax.clone()) {
-                if expr.has_callee_name("Boolean") {
+                if expr.has_callee(|it| it.has_name("Boolean")) {
                     let arguments = expr.arguments().ok()?;
                     let len = arguments.args().len();
                     if len == 1 {
@@ -179,7 +179,7 @@ impl Rule for NoExtraBooleanCast {
             // Convert `new Boolean(x)` -> `x` if parent `SyntaxNode` in any boolean `Type Coercion` context
             // Only if `Boolean` Call Expression have one `JsAnyExpression` argument
             return JsNewExpression::cast(syntax).and_then(|expr| {
-                if expr.has_callee_name("Boolean") {
+                if expr.has_callee(|it| it.has_name("Boolean")) {
                     let arguments = expr.arguments()?;
                     let len = arguments.args().len();
                     if len == 1 {

@@ -70,3 +70,13 @@ Number.parseInt(foo);
 Number.parseInt(foo, 2);
 ```
 
+```jsx
+function parseInt() {}
+parseInt('11', 2);
+```
+
+```jsx
+class Number { parseInt() {} }
+Number.parseInt('11', 2);
+```
+

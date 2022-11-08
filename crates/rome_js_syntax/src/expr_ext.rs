@@ -781,41 +781,45 @@ impl JsCallExpression {
     }
 
     /// Check if the callee is an identifier with given name
-    pub fn has_callee_name(&self, name: &str) -> bool {
+    pub fn has_callee(&self, matcher: impl FnOnce(JsReferenceIdentifier) -> bool) -> bool {
         self.callee()
-            .map(|it| it.is_ident_deep(name))
+            .map(|it| it.is_ident_deep(matcher))
             .unwrap_or(false)
     }
 }
 
 impl JsNewExpression {
     /// Check if the callee is an identifier with given name
-    pub fn has_callee_name(&self, name: &str) -> bool {
+    pub fn has_callee(&self, matcher: impl FnOnce(JsReferenceIdentifier) -> bool) -> bool {
         self.callee()
-            .map(|it| it.is_ident_deep(name))
+            .map(|it| it.is_ident_deep(matcher))
             .unwrap_or(false)
     }
 }
 
 impl JsAnyExpression {
     /// Check if expression is identifier with given name.
-    pub fn is_ident(&self, name: &str) -> bool {
+    pub fn is_ident(&self, matcher: impl FnOnce(JsReferenceIdentifier) -> bool) -> bool {
         self.as_js_identifier_expression()
             .and_then(|it| it.name().ok())
-            .map(|it| it.has_name(name))
+            .map(|it| matcher(it))
             .unwrap_or(false)
     }
 
     /// Check if expression is identifier with given name, optionally wrapped in parentheses.
-    pub fn is_ident_deep(self, name: &str) -> bool {
-        self.omit_parentheses().is_ident(name)
+    pub fn is_ident_deep(self, matcher: impl FnOnce(JsReferenceIdentifier) -> bool) -> bool {
+        self.omit_parentheses().is_ident(matcher)
     }
 }
 
 impl JsAnyExpression {
     /// Check if the given expression is a static or computed member expression
-    /// with given object name and member name.
-    pub fn is_member_access(&self, object: &str, member: &str) -> bool {
+    /// with given object name matcher and member name.
+    pub fn is_member_access(
+        &self,
+        object: impl FnOnce(JsReferenceIdentifier) -> bool,
+        member: &str,
+    ) -> bool {
         let expr = self.clone().omit_parentheses();
         match expr {
             JsAnyExpression::JsStaticMemberExpression(e) => {
@@ -831,7 +835,7 @@ impl JsAnyExpression {
 
 impl JsStaticMemberExpression {
     /// Check if the object in the expression has the given name, optionally with parentheses
-    pub fn has_object_name(&self, name: &str) -> bool {
+    pub fn has_object_name(&self, name: impl FnOnce(JsReferenceIdentifier) -> bool) -> bool {
         self.object()
             .map(|it| it.is_ident_deep(name))
             .unwrap_or(false)
@@ -852,7 +856,7 @@ impl JsStaticMemberExpression {
 
 impl JsComputedMemberExpression {
     /// Check if the object in the expression has the given name, optionally with parentheses
-    pub fn has_object_name(&self, name: &str) -> bool {
+    pub fn has_object_name(&self, name: impl FnOnce(JsReferenceIdentifier) -> bool) -> bool {
         self.object()
             .map(|it| it.is_ident_deep(name))
             .unwrap_or(false)
