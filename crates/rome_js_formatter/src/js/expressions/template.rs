@@ -2,7 +2,9 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use crate::js::expressions::static_member_expression::member_chain_callee_needs_parens;
+use crate::js::lists::template_element_list::FormatJsTemplateElementListOptions;
 use crate::parentheses::NeedsParentheses;
+use crate::utils::test_call::is_test_each_pattern;
 use rome_js_syntax::{JsAnyExpression, JsSyntaxNode, JsTemplate, TsTemplateLiteralType};
 use rome_js_syntax::{JsSyntaxToken, TsTypeArguments};
 use rome_rowan::{declare_node_union, SyntaxResult};
@@ -67,7 +69,12 @@ impl JsAnyTemplate {
     fn write_elements(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
             JsAnyTemplate::JsTemplate(template) => {
-                write!(f, [template.elements().format()])
+                let is_test_each_pattern = is_test_each_pattern(template);
+                let options = FormatJsTemplateElementListOptions {
+                    is_test_each_pattern,
+                };
+
+                write!(f, [template.elements().format().with_options(options)])
             }
             JsAnyTemplate::TsTemplateLiteralType(template) => {
                 write!(f, [template.elements().format()])

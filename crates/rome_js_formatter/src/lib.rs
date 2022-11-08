@@ -787,11 +787,11 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-    <OtherComponent
-      value={
-        new Set(veryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzz)
-      }
-    />
+describe.each`a    | b    | expected
+${11111111111} | ${a().b(x => x).c().d()} | ${2}
+${1} | ${2} | ${3}
+${2} | ${1} | ${3}`
+
 
 "#;
         let syntax = SourceType::tsx();

@@ -1,8 +1,8 @@
 use crate::prelude::*;
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody,
-    JsAnyLiteralExpression, JsAnyName, JsCallArgumentList, JsCallArguments, JsCallExpression,
-    JsSyntaxNode,
+    JsAnyLiteralExpression, JsAnyName, JsAnyTemplateElement, JsCallArgumentList, JsCallArguments,
+    JsCallExpression, JsSyntaxNode, JsTemplate,
 };
 use rome_rowan::{SyntaxResult, SyntaxTokenText};
 
@@ -167,6 +167,147 @@ fn is_unit_test_set_up_callee(callee: &JsAnyExpression) -> bool {
     }
 }
 
+pub(crate) fn is_test_each_pattern(template: &JsTemplate) -> bool {
+    is_test_each_pattern_callee(template) && is_test_each_pattern_elements(template)
+}
+
+fn is_test_each_pattern_elements(template: &JsTemplate) -> bool {
+    let mut iter = template.elements().into_iter();
+
+    // the table must have a header as JsTemplateChunkElement
+    // e.g. a | b | expected
+    if !matches!(
+        iter.next(),
+        Some(JsAnyTemplateElement::JsTemplateChunkElement(_))
+    ) {
+        return false;
+    }
+
+    // Guarding against skipped token trivia on elements that we remove.
+    // Because that would result in the skipped token trivia being emitted before the template.
+    for element in template.elements() {
+        if let JsAnyTemplateElement::JsTemplateChunkElement(element) = element {
+            if let Some(leading_trivia) = element.syntax().first_leading_trivia() {
+                if leading_trivia.has_skipped() {
+                    return false;
+                }
+            }
+        }
+    }
+
+    true
+}
+
+/// This function checks if a call expressions has one of the following members:
+/// - `describe.each`
+/// - `describe.only.each`
+/// - `describe.skip.each`
+/// - `test.concurrent.each`
+/// - `test.concurrent.only.each`
+/// - `test.concurrent.skip.each`
+/// - `test.each`
+/// - `test.only.each`
+/// - `test.skip.each`
+/// - `test.failing.each`
+/// - `it.concurrent.each`
+/// - `it.concurrent.only.each`
+/// - `it.concurrent.skip.each`
+/// - `it.each`
+/// - `it.only.each`
+/// - `it.skip.each`
+/// - `it.failing.each`
+///
+/// - `xdescribe.each`
+/// - `xdescribe.only.each`
+/// - `xdescribe.skip.each`
+/// - `xtest.concurrent.each`
+/// - `xtest.concurrent.only.each`
+/// - `xtest.concurrent.skip.each`
+/// - `xtest.each`
+/// - `xtest.only.each`
+/// - `xtest.skip.each`
+/// - `xtest.failing.each`
+/// - `xit.concurrent.each`
+/// - `xit.concurrent.only.each`
+/// - `xit.concurrent.skip.each`
+/// - `xit.each`
+/// - `xit.only.each`
+/// - `xit.skip.each`
+/// - `xit.failing.each`
+///
+/// - `fdescribe.each`
+/// - `fdescribe.only.each`
+/// - `fdescribe.skip.each`
+/// - `ftest.concurrent.each`
+/// - `ftest.concurrent.only.each`
+/// - `ftest.concurrent.skip.each`
+/// - `ftest.each`
+/// - `ftest.only.each`
+/// - `ftest.skip.each`
+/// - `ftest.failing.each`
+/// - `fit.concurrent.each`
+/// - `fit.concurrent.only.each`
+/// - `fit.concurrent.skip.each`
+/// - `fit.each`
+/// - `fit.only.each`
+/// - `fit.skip.each`
+/// - `xit.failing.each`
+///
+/// Based on this [article]
+///
+/// [article]: https://craftinginterpreters.com/scanning-on-demand.html#tries-and-state-machines
+fn is_test_each_pattern_callee(template: &JsTemplate) -> bool {
+    if let Some(tag) = template.tag() {
+        let mut members = CalleeNamesIterator::new(tag);
+
+        let texts: [Option<SyntaxTokenText>; 5] = [
+            members.next(),
+            members.next(),
+            members.next(),
+            members.next(),
+            members.next(),
+        ];
+
+        let mut rev = texts.iter().rev().flatten();
+
+        let first = rev.next().map(|t| t.text());
+        let second = rev.next().map(|t| t.text());
+        let third = rev.next().map(|t| t.text());
+        let fourth = rev.next().map(|t| t.text());
+        let fifth = rev.next().map(|t| t.text());
+
+        match first {
+            Some("describe" | "xdescribe" | "fdescribe") => match second {
+                Some("each") => third.is_none(),
+                Some("skip" | "only") => match third {
+                    Some("each") => fourth.is_none(),
+                    _ => false,
+                },
+                _ => false,
+            },
+            Some("test" | "xtest" | "ftest" | "it" | "xit" | "fit") => match second {
+                Some("each") => third.is_none(),
+                Some("skip" | "only" | "failing") => match third {
+                    Some("each") => fourth.is_none(),
+                    _ => false,
+                },
+                Some("concurrent") => match third {
+                    Some("each") => fourth.is_none(),
+                    Some("only" | "skip") => match fourth {
+                        Some("each") => fifth.is_none(),
+                        _ => false,
+                    },
+                    _ => false,
+                },
+                _ => false,
+            },
+            _ => false,
+        }
+    } else {
+        false
+    }
+}
+
 /// This function checks if a call expressions has one of the following members:
 /// - `it`
 /// - `it.only`
@@ -287,10 +428,10 @@ impl Iterator for CalleeNamesIterator {
 
 #[cfg(test)]
 mod test {
-    use super::contains_a_test_pattern;
+    use super::{contains_a_test_pattern, is_test_each_pattern_callee};
     use rome_diagnostics::file::FileId;
     use rome_js_parser::parse;
-    use rome_js_syntax::{JsCallExpression, SourceType};
+    use rome_js_syntax::{JsCallExpression, JsTemplate, SourceType};
     use rome_rowan::AstNodeList;
 
     fn extract_call_expression(src: &str) -> JsCallExpression {
@@ -312,6 +453,29 @@ mod test {
             .expression()
             .unwrap()
             .as_js_call_expression()
+            .unwrap()
+            .clone()
+    }
+
+    fn extract_template(src: &str) -> JsTemplate {
+        let source_type = SourceType::js_module();
+        let result = parse(src, FileId::zero(), source_type);
+        let module = result
+            .tree()
+            .as_js_module()
+            .unwrap()
+            .items()
+            .first()
+            .unwrap();
+
+        module
+            .as_js_any_statement()
+            .unwrap()
+            .as_js_expression_statement()
+            .unwrap()
+            .expression()
+            .unwrap()
+            .as_js_template()
             .unwrap()
             .clone()
     }
@@ -356,5 +520,179 @@ mod test {
             contains_a_test_pattern(&call_expression.callee().unwrap()),
             Ok(false)
         );
+    }
+
+    #[test]
+    fn matches_simple_each() {
+        let template = extract_template("describe.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("test.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("it.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xdescribe.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xtest.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xit.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fdescribe.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("ftest.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fit.each``");
+        assert!(is_test_each_pattern_callee(&template));
+    }
+
+    #[test]
+    fn matches_skip_each() {
+        let template = extract_template("describe.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("test.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("it.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xdescribe.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xtest.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xit.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fdescribe.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("ftest.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fit.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+    }
+
+    #[test]
+    fn matches_only_each() {
+        let template = extract_template("describe.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("test.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("it.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xdescribe.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xtest.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xit.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fdescribe.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("ftest.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fit.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+    }
+
+    #[test]
+    fn matches_failing_each() {
+        let template = extract_template("test.failing.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("it.failing.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xtest.failing.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xit.failing.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("ftest.failing.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fit.failing.each``");
+        assert!(is_test_each_pattern_callee(&template));
+    }
+
+    #[test]
+    fn matches_concurrent_each() {
+        let template = extract_template("test.concurrent.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("it.concurrent.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xtest.concurrent.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xit.concurrent.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("ftest.concurrent.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fit.concurrent.each``");
+        assert!(is_test_each_pattern_callee(&template));
+    }
+
+    #[test]
+    fn matches_concurrent_only_each() {
+        let template = extract_template("test.concurrent.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("it.concurrent.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xtest.concurrent.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xit.concurrent.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("ftest.concurrent.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fit.concurrent.only.each``");
+        assert!(is_test_each_pattern_callee(&template));
+    }
+
+    #[test]
+    fn matches_concurrent_skip_each() {
+        let template = extract_template("test.concurrent.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("it.concurrent.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xtest.concurrent.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("xit.concurrent.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("ftest.concurrent.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
+
+        let template = extract_template("fit.concurrent.skip.each``");
+        assert!(is_test_each_pattern_callee(&template));
     }
 }
