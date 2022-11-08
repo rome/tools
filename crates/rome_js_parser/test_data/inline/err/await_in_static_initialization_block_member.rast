@@ -20,7 +20,11 @@ JsScript {
                         JsExpressionStatement {
                             expression: JsUnknownExpression {
                                 items: [
-                                    AWAIT_KW@29..34 "await" [] [],
+                                    JsUnknown {
+                                        items: [
+                                            IDENT@29..34 "await" [] [],
+                                        ],
+                                    },
                                 ],
                             },
                             semicolon_token: SEMICOLON@34..36 ";" [] [Whitespace(" ")],
@@ -87,7 +91,8 @@ JsScript {
           2: JS_STATEMENT_LIST@29..36
             0: JS_EXPRESSION_STATEMENT@29..36
               0: JS_UNKNOWN_EXPRESSION@29..34
-                0: AWAIT_KW@29..34 "await" [] []
+                0: JS_UNKNOWN@29..34
+                  0: IDENT@29..34 "await" [] []
               1: SEMICOLON@34..36 ";" [] [Whitespace(" ")]
           3: R_CURLY@36..38 "}" [] [Whitespace(" ")]
       8: R_CURLY@38..39 "}" [] []
@@ -115,28 +120,9 @@ JsScript {
       8: R_CURLY@71..72 "}" [] []
   3: EOF@72..73 "" [Newline("\n")] []
 --
-await_in_static_initialization_block_member.js:2:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an unary expression but instead found ';'
-  
-    1 │ // SCRIPT
-  > 2 │ class A { static { await; } }
-      │                         ^
-    3 │ class B { static { await 10; } }
-    4 │ 
-  
-  i Expected an unary expression here
-  
-    1 │ // SCRIPT
-  > 2 │ class A { static { await; } }
-      │                         ^
-    3 │ class B { static { await 10; } }
-    4 │ 
-  
---
 await_in_static_initialization_block_member.js:2:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × `await` is only allowed within async functions and at the top levels of modules.
+  × Illegal use of `await` as an identifier in an async context
   
     1 │ // SCRIPT
   > 2 │ class A { static { await; } }

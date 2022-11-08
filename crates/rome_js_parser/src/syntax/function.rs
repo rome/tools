@@ -746,6 +746,7 @@ fn parse_arrow_function_with_single_parameter(p: &mut Parser) -> ParsedSyntax {
     // test_err async_arrow_expr_await_parameter
     // let a = async await => {}
     // async() => { (a = await) => {} };
+    // async() => { (a = await 10) => {} };
     p.with_state(EnterParameters(arrow_function_parameter_flags(p, flags)), parse_binding)
         .expect("Expected function parameter to be present as guaranteed by is_arrow_function_with_simple_parameter");
 
