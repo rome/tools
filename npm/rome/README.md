@@ -26,15 +26,15 @@
 
 </div>
 
-**Rome** is a formatter, linter, bundler, and [more](https://rome.tools/#development-status) for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
+**Rome** is a formatter, linter, bundler, and [more](https://rome.tools/) for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
 
 **Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
 
 **Rome** unifies functionality that has previously been separate tools. Building upon a shared base allows us to provide a cohesive experience for processing code, displaying errors, parallelizing work, caching, and configuration.
 
-**Rome** has strong conventions and aims to have minimal configuration. Read more about our [project philosophy](https://rome.tools/#philosophy).
+**Rome** has strong conventions and aims to have minimal configuration. Read more about our [project philosophy](https://docs.rome.tools/internals/philosophy/).
 
-**Rome** is [written in Rust](https://rome.tools/blog/2021/09/21/rome-will-be-rewritten-in-rust).
+**Rome** is [written in Rust](https://rome.tools/blog/2021/09/21/rome-will-be-rewritten-in-rust.html).
 
 **Rome** has first-class IDE support, with a sophisticated parser that represents the source text in full fidelity
 and top-notch error recovery.
@@ -48,7 +48,7 @@ Check out our [homepage](https://rome.tools) to learn more about Rome, or direct
 
 ## Technical documentation
 
-If you're curious to know our internals, you can browse our [technical documentation].
+Browse Rome's internal [Rust API Documentation] if you're interested to learn more about how Rome works.
 
-[technical documentation]: https://rome.github.io/tools/rome
+[Rust API Documentation]: https://rome.github.io/tools/rome
 
