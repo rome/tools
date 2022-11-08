@@ -14,7 +14,7 @@ Setup: MacBook Pro (13-inch, M1, 2020)
 * Rome's ~7 times faster when restricting it to a single core
 
 
-[1] Run `time find lib/ examples declarations benchmark -name '*.js' -print0 | xargs -P8 -0 -n 200 npx prettier --write --loglevel=error` in the `target/webpack` directory. I manually tinkered with the `-n` parameter to get the fastest run.
+[^1]: Run `time find lib/ examples declarations benchmark -name '*.js' -print0 | xargs -P8 -0 -n 200 npx prettier --write --loglevel=error` in the `target/webpack` directory. I manually tinkered with the `-n` parameter to get the fastest run.
 
 ### Linting
 * Rome's 2-3 times faster than ESLint
