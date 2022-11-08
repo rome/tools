@@ -52,7 +52,7 @@ export function SettingsMenu({
 					quoteProperties={quoteProperties}
 					setQuoteProperties={createSetter(
 						setPlaygroundState,
-						"quoteProperties"
+						"quoteProperties",
 					)}
 				/>
 				<TrailingCommaSelect
@@ -72,7 +72,7 @@ export function SettingsMenu({
 				<NurseryRules
 					setEnabledNurseryRules={createSetter(
 						setPlaygroundState,
-						"enabledNurseryRules"
+						"enabledNurseryRules",
 					)}
 					enabledNurseryRules={enabledNurseryRules}
 				/>

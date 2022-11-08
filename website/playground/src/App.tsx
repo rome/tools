@@ -26,11 +26,11 @@ function App() {
 	useEffect(() => {
 		romeWorkerRef.current = new Worker(
 			new URL("./romeWorker", import.meta.url),
-			{ type: "module" }
+			{ type: "module" },
 		);
 		prettierWorkerRef.current = new Worker(
 			new URL("./prettierWorker", import.meta.url),
-			{ type: "module" }
+			{ type: "module" },
 		);
 
 		romeWorkerRef.current.addEventListener("message", (event) => {

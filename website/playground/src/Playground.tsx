@@ -119,7 +119,9 @@ export default function Playground({
 			<div className="p-4 flex justify-between">
 				<h1 className="text-xl">Rome Playground</h1>
 				<button
+					aria-label="Open or Close Settings Menu"
 					onClick={() => setSettingVisible(!isSettingsVisible)}
+					onKeyDown={() => setSettingVisible(!isSettingsVisible)}
 					className={
 						"text-base text-slate-700 font-medium hover:text-slate-800"
 					}
