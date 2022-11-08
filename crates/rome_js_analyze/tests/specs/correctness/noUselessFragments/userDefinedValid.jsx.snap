@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 99
 expression: userDefinedValid.jsx
 ---
 # Input
@@ -8,7 +9,7 @@ function Fragment() {}
 let React = { Fragment };
 <>
     <Fragment>test</Fragment>
-    <React>test</React>
+    <React.Fragment>test</React.Fragment>
 </>
 
 ```

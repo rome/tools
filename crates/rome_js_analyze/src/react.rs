@@ -4,8 +4,10 @@ pub mod hooks;
 
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
-    JsAnyCallArgument, JsAnyExpression, JsCallExpression, JsIdentifierBinding, JsImport,
-    JsObjectExpression, JsPropertyObjectMember, JsxMemberName, JsxReferenceIdentifier,
+    JsAnyCallArgument, JsAnyExpression, JsAnyNamedImportSpecifier, JsCallExpression,
+    JsIdentifierBinding, JsImport, JsImportNamedClause, JsNamedImportSpecifierList,
+    JsNamedImportSpecifiers, JsObjectExpression, JsPropertyObjectMember, JsxMemberName,
+    JsxReferenceIdentifier,
 };
 use rome_rowan::{AstNode, AstSeparatedList};
 
@@ -331,21 +333,38 @@ pub(crate) fn jsx_reference_identifier_is_fragment(
     name: &JsxReferenceIdentifier,
     model: &SemanticModel,
 ) -> Option<bool> {
-    let value_token = name.value_token().ok()?;
-    let mut maybe_react_fragment = value_token.text_trimmed() == "Fragment";
-    if let Some(reference) = model.declaration(name) {
-        if let Some(js_import) = reference
-            .syntax()
-            .ancestors()
-            .find_map(|ancestor| JsImport::cast_ref(&ancestor))
-        {
-            let source_is_react = js_import.source_is("react").ok()?;
-            maybe_react_fragment = source_is_react;
-        } else {
-            // `Fragment` is a binding g but it doesn't come from the "react" package
-            maybe_react_fragment = false;
+    match model.declaration(name) {
+        Some(reference) => {
+            let ident = JsIdentifierBinding::cast_ref(reference.syntax())?;
+
+            let import_specifier = ident.parent::<JsAnyNamedImportSpecifier>()?;
+            let name_token = match &import_specifier {
+                JsAnyNamedImportSpecifier::JsNamedImportSpecifier(named_import) => {
+                    named_import.name().ok()?.value().ok()?
+                }
+                JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(_) => {
+                    ident.name_token().ok()?
+                }
+                JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(_) => {
+                    return None;
+                }
+            };
+
+            if name_token.text_trimmed() != "Fragment" {
+                return Some(false);
+            }
+
+            let import_specifier_list = import_specifier.parent::<JsNamedImportSpecifierList>()?;
+            let import_specifiers = import_specifier_list.parent::<JsNamedImportSpecifiers>()?;
+            let import_clause = import_specifiers.parent::<JsImportNamedClause>()?;
+            let import = import_clause.parent::<JsImport>()?;
+            import.source_is("react").ok()
+        }
+
+        None => {
+            let value_token = name.value_token().ok()?;
+            let is_fragment = value_token.text_trimmed() == "Fragment";
+            Some(is_fragment)
         }
     }
-
-    Some(maybe_react_fragment)
 }
