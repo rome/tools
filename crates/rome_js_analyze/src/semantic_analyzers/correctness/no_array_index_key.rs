@@ -5,10 +5,10 @@ use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
-    JsArrowFunctionExpression, JsCallExpression, JsExpressionStatement, JsFunctionDeclaration,
-    JsFunctionExpression, JsIdentifierBinding, JsMethodClassMember, JsMethodObjectMember,
-    JsParameterList, JsPropertyObjectMember, JsReferenceIdentifier, JsxAttribute,
-    JsxOpeningElement, JsxSelfClosingElement,
+    JsAnyCallArgument, JsArrowFunctionExpression, JsCallExpression, JsExpressionStatement,
+    JsFunctionDeclaration, JsFunctionExpression, JsIdentifierBinding, JsMethodClassMember,
+    JsMethodObjectMember, JsParameterList, JsPropertyObjectMember, JsReferenceIdentifier,
+    JsxAttribute, JsxOpeningElement, JsxSelfClosingElement,
 };
 use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
 
@@ -326,25 +326,24 @@ fn find_react_children_function_argument(
         "forEach" | "map"
     );
 
+    if !array_call {
+        return None;
+    }
+
     let object = member_expression.object().ok()?;
 
-    let is_react_children = if object.is_ident(|it| it.has_name("Children")) {
-        // case we have `Children`
-        array_call
-    } else {
-        // case we have `React.Children`
-        is_react_call_api(&object, model, "Children") && array_call
-    };
-
-    if is_react_children {
+    // React.Children.forEach/map or Children.forEach/map
+    if is_react_call_api(&object, model, "Children")? {
         let arguments = call_expression.arguments().ok()?;
         let arguments = arguments.args();
         let mut arguments = arguments.into_iter();
-        let _ = arguments.next()?.ok()?;
-        let second_argument = arguments.next()?.ok()?;
-        let second_argument = second_argument.as_js_any_expression()?;
 
-        FunctionLike::cast(second_argument.clone().into_syntax())
+        match (arguments.next(), arguments.next(), arguments.next()) {
+            (Some(_), Some(Ok(JsAnyCallArgument::JsAnyExpression(second_argument))), None) => {
+                FunctionLike::cast(second_argument.into_syntax())
+            }
+            _ => None,
+        }
     } else {
         None
     }

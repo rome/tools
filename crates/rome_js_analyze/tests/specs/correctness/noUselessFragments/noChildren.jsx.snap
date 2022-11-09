@@ -11,6 +11,7 @@ expression: noChildren.jsx
     <React.Fragment></React.Fragment>
     <Fragment></Fragment>
 </>
+
 ```
 
 # Diagnostics
@@ -61,6 +62,7 @@ noChildren.jsx:6:5 lint/correctness/noUselessFragments  FIXABLE  ━━━━━
   > 6 │     <Fragment></Fragment>
       │     ^^^^^^^^^^^^^^^^^^^^^
     7 │ </>
+    8 │ 
   
   i Suggested fix: Remove the Fragment
   

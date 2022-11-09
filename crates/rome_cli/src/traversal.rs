@@ -15,7 +15,6 @@ use rome_diagnostics::{
         category, Advices, Category, DiagnosticExt, Error, FilePath, PrintDescription,
         PrintDiagnostic, Severity, Visit,
     },
-    MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
 };
 use rome_fs::{AtomicInterner, FileSystem, OpenOptions, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
@@ -83,13 +82,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
     let workspace = &*session.app.workspace;
     let console = &mut *session.app.console;
 
-    // The command `rome check` gives a default value of 20.
-    // In case of other commands that pass here, we limit to 50 to avoid to delay the terminal.
-    // Once `--max-diagnostics` will be a global argument, `unwrap_of_default` should be enough.
-    let max_diagnostics = execution
-        .get_max_diagnostics()
-        .unwrap_or(MAXIMUM_DISPLAYABLE_DIAGNOSTICS);
-
+    let max_diagnostics = execution.get_max_diagnostics();
     let remaining_diagnostics = AtomicU16::new(max_diagnostics);
 
     let mut has_errors = false;
@@ -382,10 +375,23 @@ fn process_messages(options: ProcessMessagesOptions) {
                     }
                 }
 
+                let should_print = printed_diagnostics < max_diagnostics;
+                if should_print {
+                    printed_diagnostics += 1;
+                    remaining_diagnostics.store(
+                        max_diagnostics.saturating_sub(printed_diagnostics),
+                        Ordering::Relaxed,
+                    );
+                } else {
+                    not_printed_diagnostics += 1;
+                }
+
                 if mode.should_report_to_terminal() {
-                    console.error(markup! {
-                        {PrintDiagnostic(&err)}
-                    });
+                    if should_print {
+                        console.error(markup! {
+                            {PrintDiagnostic(&err)}
+                        });
+                    }
                 } else {
                     let file_name = err
                         .location()
@@ -478,31 +484,44 @@ fn process_messages(options: ProcessMessagesOptions) {
                     *has_errors = true;
                 }
 
+                let should_print = printed_diagnostics < max_diagnostics;
+                if should_print {
+                    printed_diagnostics += 1;
+                    remaining_diagnostics.store(
+                        max_diagnostics.saturating_sub(printed_diagnostics),
+                        Ordering::Relaxed,
+                    );
+                } else {
+                    not_printed_diagnostics += 1;
+                }
+
                 if mode.should_report_to_terminal() {
-                    if mode.is_ci() {
-                        let diag = CIDiffDiagnostic {
-                            file_name: &file_name,
-                            diff: FormatDiffAdvice {
-                                old: &old,
-                                new: &new,
-                            },
-                        };
+                    if should_print {
+                        if mode.is_ci() {
+                            let diag = CIDiffDiagnostic {
+                                file_name: &file_name,
+                                diff: FormatDiffAdvice {
+                                    old: &old,
+                                    new: &new,
+                                },
+                            };
 
-                        console.error(markup! {
-                            {PrintDiagnostic(&diag)}
-                        });
-                    } else {
-                        let diag = FormatDiffDiagnostic {
-                            file_name: &file_name,
-                            diff: FormatDiffAdvice {
-                                old: &old,
-                                new: &new,
-                            },
-                        };
+                            console.error(markup! {
+                                {PrintDiagnostic(&diag)}
+                            });
+                        } else {
+                            let diag = FormatDiffDiagnostic {
+                                file_name: &file_name,
+                                diff: FormatDiffAdvice {
+                                    old: &old,
+                                    new: &new,
+                                },
+                            };
 
-                        console.error(markup! {
-                            {PrintDiagnostic(&diag)}
-                        });
+                            console.error(markup! {
+                                {PrintDiagnostic(&diag)}
+                            });
+                        }
                     }
                 } else {
                     report.push_detail_report(ReportKind::Error(

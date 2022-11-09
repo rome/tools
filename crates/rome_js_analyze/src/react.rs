@@ -2,7 +2,7 @@
 
 pub mod hooks;
 
-use rome_js_semantic::{HasDeclarationAstNode, SemanticModel};
+use rome_js_semantic::{Binding, SemanticModel};
 use rome_js_syntax::{
     JsAnyCallArgument, JsAnyExpression, JsAnyNamedImportSpecifier, JsCallExpression,
     JsIdentifierBinding, JsImport, JsImportNamedClause, JsNamedImportSpecifierList,
@@ -268,15 +268,46 @@ pub(crate) fn is_react_call_api(
     // we bail straight away if the API doesn't exists in React
     debug_assert!(VALID_REACT_API.contains(&api_name));
 
-    if expression.is_member_access(
-        |it| is_imported_from_react(&it, model).unwrap_or_else(|| it.has_name("React")),
-        api_name,
-    ) {
-        return true;
-    }
+    Some(match expression {
+        JsAnyExpression::JsStaticMemberExpression(node) => {
+            let member = node.member().ok()?;
+            let member = member.as_js_name()?;
 
-    expression
-        .is_ident(|it| is_imported_from_react(&it, model).unwrap_or_else(|| it.has_name(api_name)))
+            if member.value_token().ok()?.text_trimmed() != api_name {
+                return Some(false);
+            }
+
+            let object = node.object().ok()?;
+            let identifier = object.as_js_identifier_expression()?.name().ok()?;
+
+            match model.declaration(&identifier) {
+                Some(binding) => {
+                    let binding_identifier = JsIdentifierBinding::cast_ref(binding.syntax())?;
+
+                    if let Some(js_import) = binding_identifier
+                        .syntax()
+                        .ancestors()
+                        .find_map(|ancestor| JsImport::cast_ref(&ancestor))
+                    {
+                        js_import.source_is("react").ok()?
+                    } else {
+                        false
+                    }
+                }
+                None => identifier.has_name("React"),
+            }
+        }
+
+        JsAnyExpression::JsIdentifierExpression(identifier) => {
+            let name = identifier.name().ok()?;
+
+            model
+                .declaration(&name)
+                .and_then(|binding| is_react_export(binding, api_name))
+                .unwrap_or(false)
+        }
+        _ => false,
+    })
 }
 
 /// Checks if the node `JsxMemberName` is a react fragment.
@@ -292,11 +323,25 @@ pub(crate) fn jsx_member_name_is_react_fragment(
     let object = member_name.object().ok()?;
     let member = member_name.member().ok()?;
     let object = object.as_jsx_reference_identifier()?;
-    let has_object = object.value_token().ok()?.text_trimmed() == "React";
-    let has_member = member.value_token().ok()?.text_trimmed() == "Fragment";
-    let is_react_fragment =
-        is_imported_from_react(object, model).unwrap_or(has_object) && has_member;
-    Some(is_react_fragment)
+
+    if member.value_token().ok()?.text_trimmed() != "Fragment" {
+        return Some(false);
+    }
+
+    match model.declaration(object) {
+        Some(declaration) => {
+            if let Some(js_import) = declaration
+                .syntax()
+                .ancestors()
+                .find_map(|ancestor| JsImport::cast_ref(&ancestor))
+            {
+                js_import.source_is("react").ok()
+            } else {
+                Some(false)
+            }
+        }
+        None => Some(object.value_token().ok()?.text_trimmed() == "React"),
+    }
 }
 
 /// Checks if the node `JsxReferenceIdentifier` is a react fragment.
@@ -310,37 +355,36 @@ pub(crate) fn jsx_reference_identifier_is_fragment(
     model: &SemanticModel,
 ) -> Option<bool> {
     match model.declaration(name) {
-        Some(reference) => {
-            let ident = JsIdentifierBinding::cast_ref(reference.syntax())?;
-
-            let import_specifier = ident.parent::<JsAnyNamedImportSpecifier>()?;
-            let name_token = match &import_specifier {
-                JsAnyNamedImportSpecifier::JsNamedImportSpecifier(named_import) => {
-                    named_import.name().ok()?.value().ok()?
-                }
-                JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(_) => {
-                    ident.name_token().ok()?
-                }
-                JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(_) => {
-                    return None;
-                }
-            };
-
-            if name_token.text_trimmed() != "Fragment" {
-                return Some(false);
-            }
-
-            let import_specifier_list = import_specifier.parent::<JsNamedImportSpecifierList>()?;
-            let import_specifiers = import_specifier_list.parent::<JsNamedImportSpecifiers>()?;
-            let import_clause = import_specifiers.parent::<JsImportNamedClause>()?;
-            let import = import_clause.parent::<JsImport>()?;
-            import.source_is("react").ok()
-        }
-
+        Some(reference) => is_react_export(reference, "Fragment"),
         None => {
             let value_token = name.value_token().ok()?;
             let is_fragment = value_token.text_trimmed() == "Fragment";
             Some(is_fragment)
         }
     }
+}
+
+fn is_react_export(binding: Binding, name: &str) -> Option<bool> {
+    let ident = JsIdentifierBinding::cast_ref(binding.syntax())?;
+    let import_specifier = ident.parent::<JsAnyNamedImportSpecifier>()?;
+    let name_token = match &import_specifier {
+        JsAnyNamedImportSpecifier::JsNamedImportSpecifier(named_import) => {
+            named_import.name().ok()?.value().ok()?
+        }
+        JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(_) => ident.name_token().ok()?,
+        JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(_) => {
+            return Some(false);
+        }
+    };
+
+    if name_token.text_trimmed() != name {
+        return Some(false);
+    }
+
+    let import_specifier_list = import_specifier.parent::<JsNamedImportSpecifierList>()?;
+    let import_specifiers = import_specifier_list.parent::<JsNamedImportSpecifiers>()?;
+    let import_clause = import_specifiers.parent::<JsImportNamedClause>()?;
+    let import = import_clause.parent::<JsImport>()?;
+
+    import.source_is("react").ok()
 }
