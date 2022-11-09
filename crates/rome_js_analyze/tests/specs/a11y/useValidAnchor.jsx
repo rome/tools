@@ -22,4 +22,5 @@
     <a href={1 + 2}>Download</a>
     <a href={await getLink()}>Download</a>
     <a href={a["a"]}>Download</a>
+    <a href={true ?? "url"}>Download</a>
 </>

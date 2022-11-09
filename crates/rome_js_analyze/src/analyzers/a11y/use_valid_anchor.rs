@@ -313,15 +313,11 @@ fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorSt
                 JsAnyExpression::ImportMeta(_)
                 | JsAnyExpression::JsClassExpression(_)
                 | JsAnyExpression::JsImportCallExpression(_)
-                | JsAnyExpression::JsLogicalExpression(_)
                 | JsAnyExpression::JsObjectExpression(_)
                 | JsAnyExpression::JsSuperExpression(_)
                 | JsAnyExpression::JsUnaryExpression(_)
-                | JsAnyExpression::JsUnknownExpression(_)
-                | JsAnyExpression::JsYieldExpression(_)
                 | JsAnyExpression::JsxTagExpression(_)
-                | JsAnyExpression::NewTarget(_)
-                | JsAnyExpression::TsNonNullAssertionExpression(_) => {
+                | JsAnyExpression::NewTarget(_) => {
                     return Some(UseValidAnchorState::IncorrectHref(
                         expression.syntax().text_trimmed_range(),
                     ));
