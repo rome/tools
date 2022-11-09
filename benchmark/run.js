@@ -127,11 +127,11 @@ function benchmarkLinter(rome) {
 		const projectDirectory = cloneProject(name, configuration.repository);
 
 		deleteFile(path.join(projectDirectory, ".eslintignore"));
-		deleteFile(path.join(projectDirectory, "eslint.config.js"));
+		deleteFile(path.join(projectDirectory, "/eslintrc.js"));
 
 		// Override eslint config
 		const eslintConfig = fs.readFileSync("./bench.eslint.js");
-		fs.writeFileSync(path.join(projectDirectory, ".eslintrc.js"), eslintConfig);
+		fs.writeFileSync(path.join(projectDirectory, "eslint.config.js"), eslintConfig);
 
 		const romeConfig = fs.readFileSync("./bench.rome.json");
 		fs.writeFileSync(path.join(projectDirectory, "rome.json"), romeConfig);
