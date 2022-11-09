@@ -172,3 +172,11 @@ a, .link {
 		fill: var(--font-color);
 	}
 }
+
+html {
+	scroll-padding-top: 80px;
+
+	@include mobile-only {
+		scroll-padding-top: 64px;
+	}
+}

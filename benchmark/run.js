@@ -1,6 +1,7 @@
 const fs = require("fs");
 const child_process = require("child_process");
 const path = require("path");
+const os = require("os");
 const { dir } = require("console");
 
 const TMP_DIRECTORY = path.resolve("./target");
@@ -58,6 +59,9 @@ function benchmarkFormatter(rome) {
 	console.log("―".repeat(80));
 	console.log("");
 
+	// Run Dprint once to run the installer
+	child_process.execSync("npx dprint --version");
+
 	for (const [name, configuration] of Object.entries(BENCHMARKS.formatter)) {
 		console.log(`[${name}]`);
 
@@ -72,6 +76,9 @@ function benchmarkFormatter(rome) {
 			.join(" ");
 
 		const prettierCommand = `node '${resolvePrettier()}' ${prettierPaths} --write --loglevel=error`;
+		const parallelPrettierCommand = `node '${resolveParallelPrettier()}' ${prettierPaths} --write --concurrency ${os.cpus().length}`;
+
+		const dprintCommand = `${resolveDprint()} fmt --incremental=false --config '${require.resolve("./dprint.json")}' ${Object.keys(configuration.sourceDirectories).map(path => `'${path}/**/*'`).join(" ")}`;
 
 		const romeCommand = `${rome} format ${Object.keys(
 			configuration.sourceDirectories,
@@ -86,7 +93,7 @@ function benchmarkFormatter(rome) {
 		);
 
 		// Run 2 warmups to make sure the files are formatted correctly
-		const hyperfineCommand = `hyperfine -w 2 -n Prettier "${prettierCommand}" -n Rome "${romeCommand}" --shell=${shellOption()} -n "Rome (1 thread)" "${romeSingleCoreCommand}"`;
+		const hyperfineCommand = `hyperfine -w 2 -n Prettier "${prettierCommand}" -n "Parallel-Prettier" "${parallelPrettierCommand}" -n dprint "${dprintCommand}" -n Rome "${romeCommand}" --shell=${shellOption()} -n "Rome (1 thread)" "${romeSingleCoreCommand}"`;
 		console.log(hyperfineCommand);
 
 		child_process.execSync(hyperfineCommand, {
@@ -97,7 +104,15 @@ function benchmarkFormatter(rome) {
 }
 
 function resolvePrettier() {
-	return path.resolve("node_modules/prettier//bin-prettier.js");
+	return path.resolve("node_modules/prettier/bin-prettier.js");
+}
+
+function resolveParallelPrettier() {
+	return path.resolve("node_modules/.bin/pprettier");
+}
+
+function resolveDprint() {
+	return path.resolve("node_modules/dprint/dprint");
 }
 
 function benchmarkLinter(rome) {
@@ -112,11 +127,11 @@ function benchmarkLinter(rome) {
 		const projectDirectory = cloneProject(name, configuration.repository);
 
 		deleteFile(path.join(projectDirectory, ".eslintignore"));
-		deleteFile(path.join(projectDirectory, "eslint.config.js"));
+		deleteFile(path.join(projectDirectory, "/eslintrc.js"));
 
 		// Override eslint config
 		const eslintConfig = fs.readFileSync("./bench.eslint.js");
-		fs.writeFileSync(path.join(projectDirectory, ".eslintrc.js"), eslintConfig);
+		fs.writeFileSync(path.join(projectDirectory, "eslint.config.js"), eslintConfig);
 
 		const romeConfig = fs.readFileSync("./bench.rome.json");
 		fs.writeFileSync(path.join(projectDirectory, "rome.json"), romeConfig);

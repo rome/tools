@@ -5,8 +5,8 @@ use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
-    JsArrowFunctionExpression, JsCallExpression, JsExpressionStatement, JsFunctionDeclaration,
-    JsFunctionExpression, JsIdentifierBinding, JsIdentifierExpression, JsMethodClassMember,
+    JsAnyCallArgument, JsArrowFunctionExpression, JsCallExpression, JsExpressionStatement,
+    JsFunctionDeclaration, JsFunctionExpression, JsIdentifierBinding, JsMethodClassMember,
     JsMethodObjectMember, JsParameterList, JsPropertyObjectMember, JsReferenceIdentifier,
     JsxAttribute, JsxOpeningElement, JsxSelfClosingElement,
 };
@@ -326,28 +326,24 @@ fn find_react_children_function_argument(
         "forEach" | "map"
     );
 
-    let object = member_expression.object().ok()?;
-
-    let mut is_react_children = false;
-    // case we have `Children`
-    if let Some(identifier) = JsIdentifierExpression::cast_ref(object.syntax()) {
-        if identifier.name().ok()?.value_token().ok()?.text_trimmed() == "Children" {
-            is_react_children = array_call;
-        }
-    } else {
-        // case we have `React.Children`
-        is_react_children = is_react_call_api(&object, model, "Children")? && array_call;
+    if !array_call {
+        return None;
     }
 
-    if is_react_children {
+    let object = member_expression.object().ok()?;
+
+    // React.Children.forEach/map or Children.forEach/map
+    if is_react_call_api(&object, model, "Children")? {
         let arguments = call_expression.arguments().ok()?;
         let arguments = arguments.args();
         let mut arguments = arguments.into_iter();
-        let _ = arguments.next()?.ok()?;
-        let second_argument = arguments.next()?.ok()?;
-        let second_argument = second_argument.as_js_any_expression()?;
 
-        FunctionLike::cast(second_argument.clone().into_syntax())
+        match (arguments.next(), arguments.next(), arguments.next()) {
+            (Some(_), Some(Ok(JsAnyCallArgument::JsAnyExpression(second_argument))), None) => {
+                FunctionLike::cast(second_argument.into_syntax())
+            }
+            _ => None,
+        }
     } else {
         None
     }
