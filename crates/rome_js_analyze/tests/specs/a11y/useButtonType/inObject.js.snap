@@ -4,8 +4,6 @@ expression: inObject.js
 ---
 # Input
 ```js
-import React from "react";
-
 // invalid
 React.createElement('button');
 React.createElement('button', {
@@ -25,15 +23,15 @@ React.createElement('button', {
 
 # Diagnostics
 ```
-inObject.js:4:21 lint/a11y/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+inObject.js:2:21 lint/a11y/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide an explicit type prop for the button element.
   
-    3 │ // invalid
-  > 4 │ React.createElement('button');
+    1 │ // invalid
+  > 2 │ React.createElement('button');
       │                     ^^^^^^^^
-    5 │ React.createElement('button', {
-    6 │     "type": "bar"
+    3 │ React.createElement('button', {
+    4 │     "type": "bar"
   
   i The default  type of a button is submit, which causes the submission of a form when placed inside a `form` element. This is likely not the behaviour that you want inside a React application.
   
@@ -43,16 +41,16 @@ inObject.js:4:21 lint/a11y/useButtonType ━━━━━━━━━━━━━
 ```
 
 ```
-inObject.js:6:13 lint/a11y/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+inObject.js:4:13 lint/a11y/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide a valid type prop for the button element.
   
-    4 │ React.createElement('button');
-    5 │ React.createElement('button', {
-  > 6 │     "type": "bar"
+    2 │ React.createElement('button');
+    3 │ React.createElement('button', {
+  > 4 │     "type": "bar"
       │             ^^^^^
-    7 │ });
-    8 │ React.createElement('button', {
+    5 │ });
+    6 │ React.createElement('button', {
   
   i The default  type of a button is submit, which causes the submission of a form when placed inside a `form` element. This is likely not the behaviour that you want inside a React application.
   
@@ -62,19 +60,19 @@ inObject.js:6:13 lint/a11y/useButtonType ━━━━━━━━━━━━━
 ```
 
 ```
-inObject.js:8:31 lint/a11y/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+inObject.js:6:31 lint/a11y/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide a valid type prop for the button element.
   
-     6 │     "type": "bar"
-     7 │ });
-   > 8 │ React.createElement('button', {
+     4 │     "type": "bar"
+     5 │ });
+   > 6 │ React.createElement('button', {
        │                               ^
-   > 9 │     "style": "background: red"
-  > 10 │ });
+   > 7 │     "style": "background: red"
+   > 8 │ });
        │ ^
-    11 │ React.createElement('button', {});
-    12 │ 
+     9 │ React.createElement('button', {});
+    10 │ 
   
   i The default  type of a button is submit, which causes the submission of a form when placed inside a `form` element. This is likely not the behaviour that you want inside a React application.
   
@@ -84,16 +82,16 @@ inObject.js:8:31 lint/a11y/useButtonType ━━━━━━━━━━━━━
 ```
 
 ```
-inObject.js:11:31 lint/a11y/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+inObject.js:9:31 lint/a11y/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide a valid type prop for the button element.
   
-     9 │     "style": "background: red"
-    10 │ });
-  > 11 │ React.createElement('button', {});
+     7 │     "style": "background: red"
+     8 │ });
+   > 9 │ React.createElement('button', {});
        │                               ^^
-    12 │ 
-    13 │ // valid
+    10 │ 
+    11 │ // valid
   
   i The default  type of a button is submit, which causes the submission of a form when placed inside a `form` element. This is likely not the behaviour that you want inside a React application.
   

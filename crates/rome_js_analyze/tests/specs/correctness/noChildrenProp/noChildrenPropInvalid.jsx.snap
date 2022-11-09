@@ -4,8 +4,7 @@ expression: noChildrenPropInvalid.jsx
 ---
 # Input
 ```js
-import {createElement} from "react";
-import React from "react";
+import { createElement as aliased } from "react";
 
 <>
     <Component children={'foo'}></Component>
@@ -19,19 +18,24 @@ React.createElement('div', {
     children: 'foo'
 })
 
+
+aliased('div', {
+	children: 'foo'
+})
+
 ```
 
 # Diagnostics
 ```
-noChildrenPropInvalid.jsx:5:16 lint/correctness/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noChildrenPropInvalid.jsx:4:16 lint/correctness/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid passing children using a prop
   
-    4 │ <>
-  > 5 │     <Component children={'foo'}></Component>
+    3 │ <>
+  > 4 │     <Component children={'foo'}></Component>
       │                ^^^^^^^^
-    6 │ </>
-    7 │ 
+    5 │ </>
+    6 │ 
   
   i The canonical way to pass children in React is to use JSX elements
   
@@ -39,15 +43,15 @@ noChildrenPropInvalid.jsx:5:16 lint/correctness/noChildrenProp ━━━━━�
 ```
 
 ```
-noChildrenPropInvalid.jsx:9:5 lint/correctness/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noChildrenPropInvalid.jsx:12:5 lint/correctness/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid passing children using a prop
   
-     8 │ createElement('div', {
-   > 9 │     children: 'foo'
+    11 │ React.createElement('div', {
+  > 12 │     children: 'foo'
        │     ^^^^^^^^
-    10 │ })
-    11 │ 
+    13 │ })
+    14 │ 
   
   i The canonical way to pass children in React is to use additional arguments to React.createElement
   
@@ -55,15 +59,15 @@ noChildrenPropInvalid.jsx:9:5 lint/correctness/noChildrenProp ━━━━━━
 ```
 
 ```
-noChildrenPropInvalid.jsx:13:5 lint/correctness/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noChildrenPropInvalid.jsx:17:2 lint/correctness/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid passing children using a prop
   
-    12 │ React.createElement('div', {
-  > 13 │     children: 'foo'
-       │     ^^^^^^^^
-    14 │ })
-    15 │ 
+    16 │ aliased('div', {
+  > 17 │ 	children: 'foo'
+       │ 	^^^^^^^^
+    18 │ })
+    19 │ 
   
   i The canonical way to pass children in React is to use additional arguments to React.createElement
   

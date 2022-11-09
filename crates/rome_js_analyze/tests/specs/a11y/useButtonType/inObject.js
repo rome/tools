@@ -1,5 +1,3 @@
-import React from "react";
-
 // invalid
 React.createElement('button');
 React.createElement('button', {

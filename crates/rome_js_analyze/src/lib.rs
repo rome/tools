@@ -141,8 +141,9 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"<img src="image.png" aria-label="alt text" />
-        "#;
+        const SOURCE: &str = r#"React.createElement("div", { tabIndex: '1' })
+React.createElement("div", { tabIndex: 1 })
+React.createElement("div", { tabIndex: +1 })"#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
 

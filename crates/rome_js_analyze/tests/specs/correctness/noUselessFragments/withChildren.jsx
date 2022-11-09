@@ -1,5 +1,3 @@
-import React, { Fragment, StrictMode } from "react";
-
 <>
     <>foo</>
     <React.Fragment>foo</React.Fragment>

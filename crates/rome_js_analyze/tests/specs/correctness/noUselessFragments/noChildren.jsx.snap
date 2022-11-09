@@ -4,7 +4,6 @@ expression: noChildren.jsx
 ---
 # Input
 ```js
-import React, { Fragment } from "react";
 // invalid
 
 <>
@@ -17,20 +16,39 @@ import React, { Fragment } from "react";
 
 # Diagnostics
 ```
+noChildren.jsx:4:5 lint/correctness/noUselessFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using unnecessary Fragment.
+  
+    3 │ <>
+  > 4 │     <></>
+      │     ^^^^^
+    5 │     <React.Fragment></React.Fragment>
+    6 │     <Fragment></Fragment>
+  
+  i Suggested fix: Remove the Fragment
+  
+    4 │ ····<></>
+      │     -----
+
+```
+
+```
 noChildren.jsx:5:5 lint/correctness/noUselessFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid using unnecessary Fragment.
   
-    4 │ <>
-  > 5 │     <></>
-      │     ^^^^^
-    6 │     <React.Fragment></React.Fragment>
-    7 │     <Fragment></Fragment>
+    3 │ <>
+    4 │     <></>
+  > 5 │     <React.Fragment></React.Fragment>
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │     <Fragment></Fragment>
+    7 │ </>
   
   i Suggested fix: Remove the Fragment
   
-    5 │ ····<></>
-      │     -----
+    5 │ ····<React.Fragment></React.Fragment>
+      │     ---------------------------------
 
 ```
 
@@ -39,35 +57,16 @@ noChildren.jsx:6:5 lint/correctness/noUselessFragments  FIXABLE  ━━━━━
 
   ! Avoid using unnecessary Fragment.
   
-    4 │ <>
-    5 │     <></>
-  > 6 │     <React.Fragment></React.Fragment>
-      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    7 │     <Fragment></Fragment>
-    8 │ </>
-  
-  i Suggested fix: Remove the Fragment
-  
-    6 │ ····<React.Fragment></React.Fragment>
-      │     ---------------------------------
-
-```
-
-```
-noChildren.jsx:7:5 lint/correctness/noUselessFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Avoid using unnecessary Fragment.
-  
-    5 │     <></>
-    6 │     <React.Fragment></React.Fragment>
-  > 7 │     <Fragment></Fragment>
+    4 │     <></>
+    5 │     <React.Fragment></React.Fragment>
+  > 6 │     <Fragment></Fragment>
       │     ^^^^^^^^^^^^^^^^^^^^^
-    8 │ </>
-    9 │ 
+    7 │ </>
+    8 │ 
   
   i Suggested fix: Remove the Fragment
   
-    7 │ ····<Fragment></Fragment>
+    6 │ ····<Fragment></Fragment>
       │     ---------------------
 
 ```

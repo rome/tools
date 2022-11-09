@@ -260,20 +260,24 @@ pub(crate) fn is_react_call_api(
             let object = node.object().ok()?;
             let identifier = object.as_js_identifier_expression()?.name().ok()?;
 
-            return model.declaration(&identifier).and_then(|binding| {
-                let binding_identifier = JsIdentifierBinding::cast_ref(binding.syntax())?;
+            match model.declaration(&identifier) {
+                Some(binding) => {
+                    let binding_identifier = JsIdentifierBinding::cast_ref(binding.syntax())?;
 
-                if let Some(js_import) = binding_identifier
-                    .syntax()
-                    .ancestors()
-                    .find_map(|ancestor| JsImport::cast_ref(&ancestor))
-                {
-                    js_import.source_is("react").ok()
-                } else {
-                    Some(false)
+                    if let Some(js_import) = binding_identifier
+                        .syntax()
+                        .ancestors()
+                        .find_map(|ancestor| JsImport::cast_ref(&ancestor))
+                    {
+                        js_import.source_is("react").ok()?
+                    } else {
+                        false
+                    }
                 }
-            });
+                None => identifier.has_name("React"),
+            }
         }
+
         JsAnyExpression::JsIdentifierExpression(identifier) => {
             let name = identifier.name().ok()?;
 
@@ -304,17 +308,20 @@ pub(crate) fn jsx_member_name_is_react_fragment(
         return Some(false);
     }
 
-    model.declaration(object).and_then(|declaration| {
-        if let Some(js_import) = declaration
-            .syntax()
-            .ancestors()
-            .find_map(|ancestor| JsImport::cast_ref(&ancestor))
-        {
-            js_import.source_is("react").ok()
-        } else {
-            Some(false)
+    match model.declaration(object) {
+        Some(declaration) => {
+            if let Some(js_import) = declaration
+                .syntax()
+                .ancestors()
+                .find_map(|ancestor| JsImport::cast_ref(&ancestor))
+            {
+                js_import.source_is("react").ok()
+            } else {
+                Some(false)
+            }
         }
-    })
+        None => Some(object.value_token().ok()?.text_trimmed() == "React"),
+    }
 }
 
 /// Checks if the node `JsxReferenceIdentifier` is a react fragment.

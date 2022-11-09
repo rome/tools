@@ -1,4 +1,4 @@
-import React from "react";
+
 
 React.createElement('img', {
     someProp: "bar"
