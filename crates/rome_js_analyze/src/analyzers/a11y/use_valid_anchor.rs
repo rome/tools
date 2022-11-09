@@ -312,7 +312,6 @@ fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorSt
                 }
                 JsAnyExpression::ImportMeta(_)
                 | JsAnyExpression::JsClassExpression(_)
-                | JsAnyExpression::JsComputedMemberExpression(_)
                 | JsAnyExpression::JsImportCallExpression(_)
                 | JsAnyExpression::JsLogicalExpression(_)
                 | JsAnyExpression::JsObjectExpression(_)
