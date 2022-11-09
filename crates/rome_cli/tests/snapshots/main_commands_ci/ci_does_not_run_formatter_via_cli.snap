@@ -5,31 +5,9 @@ expression: content
 ## `file.js`
 
 ```js
-statement(    ) ; let a = !b || !c;
-```
-
-# Termination Message
-
-```block
-errors where emitted while running checks
+  statement(  )  
 ```
 
 # Emitted Messages
-
-```block
-file.js:1:27 lint/complexity/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Logical expression contains unnecessary complexity.
-  
-  > 1 │ statement(    ) ; let a = !b || !c;
-      │                           ^^^^^^^^
-  
-  i Suggested fix: Reduce the complexity of the logical expression.
-  
-  - statement(····)·;·let·a·=·!b·||·!c;
-  + statement(····)·;·let·a·=·!(b·&&·c);
-  
-
-```
 
 
