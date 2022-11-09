@@ -1,3 +1,6 @@
+import {createElement} from "react";
+import React from "react";
+
 <>
     <Component children={'foo'}></Component>
 </>

@@ -4,6 +4,8 @@ expression: withChildren.jsx
 ---
 # Input
 ```js
+import React, { Fragment, StrictMode } from "react";
+
 <>
     <>foo</>
     <React.Fragment>foo</React.Fragment>
@@ -16,57 +18,57 @@ expression: withChildren.jsx
 
 # Diagnostics
 ```
-withChildren.jsx:2:5 lint/correctness/noUselessFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+withChildren.jsx:4:5 lint/correctness/noUselessFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid using unnecessary Fragment.
   
-    1 │ <>
-  > 2 │     <>foo</>
+    3 │ <>
+  > 4 │     <>foo</>
       │     ^^^^^^^^
-    3 │     <React.Fragment>foo</React.Fragment>
-    4 │     <Fragment>foo</Fragment>
+    5 │     <React.Fragment>foo</React.Fragment>
+    6 │     <Fragment>foo</Fragment>
   
   i Suggested fix: Remove the Fragment
   
-    2 │ ····<>foo</>
+    4 │ ····<>foo</>
       │     --   ---
 
 ```
 
 ```
-withChildren.jsx:3:5 lint/correctness/noUselessFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+withChildren.jsx:5:5 lint/correctness/noUselessFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid using unnecessary Fragment.
   
-    1 │ <>
-    2 │     <>foo</>
-  > 3 │     <React.Fragment>foo</React.Fragment>
+    3 │ <>
+    4 │     <>foo</>
+  > 5 │     <React.Fragment>foo</React.Fragment>
       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │     <Fragment>foo</Fragment>
-    5 │     {/*  valid   */}
+    6 │     <Fragment>foo</Fragment>
+    7 │     {/*  valid   */}
   
   i Suggested fix: Remove the Fragment
   
-    3 │ ····<React.Fragment>foo</React.Fragment>
+    5 │ ····<React.Fragment>foo</React.Fragment>
       │     ----------------   -----------------
 
 ```
 
 ```
-withChildren.jsx:4:5 lint/correctness/noUselessFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+withChildren.jsx:6:5 lint/correctness/noUselessFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid using unnecessary Fragment.
   
-    2 │     <>foo</>
-    3 │     <React.Fragment>foo</React.Fragment>
-  > 4 │     <Fragment>foo</Fragment>
+    4 │     <>foo</>
+    5 │     <React.Fragment>foo</React.Fragment>
+  > 6 │     <Fragment>foo</Fragment>
       │     ^^^^^^^^^^^^^^^^^^^^^^^^
-    5 │     {/*  valid   */}
-    6 │     <React.StrictMode><App /></React.StrictMode>
+    7 │     {/*  valid   */}
+    8 │     <React.StrictMode><App /></React.StrictMode>
   
   i Suggested fix: Remove the Fragment
   
-    4 │ ····<Fragment>foo</Fragment>
+    6 │ ····<Fragment>foo</Fragment>
       │     ----------   -----------
 
 ```

@@ -1,3 +1,5 @@
+import React, {Children, cloneElement} from "react";
+
 // invalid
 something.forEach((Element, index) => {
     <Component key={index} >foo</Component>

@@ -4,21 +4,25 @@ expression: reactCreateElement.js
 ---
 # Input
 ```js
+import React from "react";
+
 React.createElement('div', {
     dangerouslySetInnerHTML: { __html: 'child' }
 });
+
 ```
 
 # Diagnostics
 ```
-reactCreateElement.js:2:5 lint/security/noDangerouslySetInnerHtml ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+reactCreateElement.js:4:5 lint/security/noDangerouslySetInnerHtml ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid passing content using the dangerouslySetInnerHTML prop.
   
-    1 │ React.createElement('div', {
-  > 2 │     dangerouslySetInnerHTML: { __html: 'child' }
+    3 │ React.createElement('div', {
+  > 4 │     dangerouslySetInnerHTML: { __html: 'child' }
       │     ^^^^^^^^^^^^^^^^^^^^^^^
-    3 │ });
+    5 │ });
+    6 │ 
   
   ! Setting content using code can expose users to cross-site scripting (XSS) attacks
   
