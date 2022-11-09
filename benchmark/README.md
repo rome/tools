@@ -11,6 +11,7 @@ Setup: MacBook Pro (13-inch, M1, 2020)
 * Rome's ~25 times faster than Prettier
 * Rome's ~20 times faster than parallel-prettier
 * Rome's ~20 times faster than `xargs -P`[^1]
+* Rome's 1.5-2 times faster than `dprint`
 * Rome's ~7 times faster when restricting it to a single core
 
 
@@ -37,7 +38,8 @@ The speed-ups for the multithreaded benchmarks can vary significantly depending 
 We've been careful to create fair benchmarks. This section explains some of the decisions behind the benchmark setup and how these decisions affect the results. Please [let us know](https://github.com/rome/tools/issues) if you have ideas on how to make the benchmarks fairer or if there's a mistake with our setup.
 
 ### Formatting
-* Compares the wall time of Rome and Prettier to format all files in a project where all files are correctly formatted.
+* Compares the wall time of Rome, Prettier, and dprint to format all files in a project where all files are correctly formatted.
+* dprint and Prettier support incremental formatting to only format changed files, whereas Rome does not. This benchmark does not measure incremental formatting as it measures cold formatting time. You may see significant speedups on subsequent formatting runs when enabling incremental formatting.
 * The benchmark limits Prettier to only format JavaScript and TypeScript files because Rome doesn't support other file types.
 * Rome only prints a summary with the number of formatted files. The prettier benchmark uses `--loglevel=error` for a fairer benchmark so that Prettier doesn't print every filename.
 
