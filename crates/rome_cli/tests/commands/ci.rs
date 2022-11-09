@@ -516,3 +516,56 @@ fn ci_runs_linter_not_formatter_issue_3495() {
         result,
     ));
 }
+
+#[test]
+fn max_diagnostics_default() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    for i in 0..60 {
+        let file_path = PathBuf::from(format!("src/file_{i}.js"));
+        fs.insert(file_path, UNFORMATTED.as_bytes());
+    }
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![OsString::from("ci"), OsString::from("src")]),
+    );
+
+    match result {
+        Err(Termination::CheckError) => {}
+        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
+    }
+
+    assert_eq!(console.out_buffer.len(), 51);
+}
+
+#[test]
+fn max_diagnostics() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    for i in 0..60 {
+        let file_path = PathBuf::from(format!("src/file_{i}.js"));
+        fs.insert(file_path, UNFORMATTED.as_bytes());
+    }
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("ci"),
+            OsString::from("--max-diagnostics"),
+            OsString::from("10"),
+            OsString::from("src"),
+        ]),
+    );
+
+    match result {
+        Err(Termination::CheckError) => {}
+        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
+    }
+
+    assert_eq!(console.out_buffer.len(), 11);
+}
