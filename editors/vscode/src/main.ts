@@ -16,13 +16,12 @@ import {
 	StreamInfo,
 } from "vscode-languageclient/node";
 import { isAbsolute, join } from "path";
-import { existsSync, readFileSync } from "fs";
+import { existsSync } from "fs";
 import { setContextValue } from "./utils";
 import { Session } from "./session";
 import { syntaxTree } from "./commands/syntaxTree";
 import { Commands } from "./commands";
 import { StatusBar } from "./statusBar";
-import { updateSettingsRequest } from "./lsp_requests";
 
 let client: LanguageClient;
 
@@ -90,13 +89,14 @@ export async function activate(context: ExtensionContext) {
 
 	context.subscriptions.push(
 		client.onDidChangeState((evt) => {
-			statusBar.setServerState(evt.newState);
+			statusBar.setServerState(client, evt.newState);
 		}),
 	);
 
 	const handleActiveTextEditorChanged = (textEditor?: TextEditor) => {
 		if (!textEditor) {
 			statusBar.setActive(false);
+			return;
 		}
 
 		const { document } = textEditor;
