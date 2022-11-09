@@ -55,7 +55,7 @@ impl ReactCreateElementCall {
         model: &SemanticModel,
     ) -> Option<Self> {
         let callee = call_expression.callee().ok()?;
-        let is_react_create_element = is_react_call_api(&callee, model, "createElement");
+        let is_react_create_element = is_react_call_api(&callee, model, "createElement")?;
 
         if is_react_create_element {
             let arguments = call_expression.arguments().ok()?.args();
@@ -156,7 +156,7 @@ impl ReactCloneElementCall {
         model: &SemanticModel,
     ) -> Option<Self> {
         let callee = call_expression.callee().ok()?;
-        let is_react_clone_element = is_react_call_api(&callee, model, "cloneElement");
+        let is_react_clone_element = is_react_call_api(&callee, model, "cloneElement")?;
 
         if is_react_clone_element {
             let arguments = call_expression.arguments().ok()?.args();
@@ -236,26 +236,6 @@ const VALID_REACT_API: [&str; 14] = [
     "Children",
 ];
 
-/// Check if the given node is imported from react
-///
-/// Returns:
-///  * Some(true) if it is imported from react
-///  * Some(false) if it is not imported from react
-///  * None if import is not found.
-///
-fn is_imported_from_react(
-    ident: &impl HasDeclarationAstNode,
-    model: &SemanticModel,
-) -> Option<bool> {
-    let binding_identifier = model.declaration(ident)?;
-    binding_identifier
-        .syntax()
-        .ancestors()
-        .find_map(|ancestor| JsImport::cast_ref(&ancestor))
-        .and_then(|import| import.source_is("react").ok())
-        .or(Some(false))
-}
-
 /// Checks if the current [JsCallExpression] is a potential [`React` API].
 /// The function has accepts a `api_name` to check against
 ///
@@ -264,7 +244,7 @@ pub(crate) fn is_react_call_api(
     expression: &JsAnyExpression,
     model: &SemanticModel,
     api_name: &str,
-) -> bool {
+) -> Option<bool> {
     // we bail straight away if the API doesn't exists in React
     debug_assert!(VALID_REACT_API.contains(&api_name));
 
