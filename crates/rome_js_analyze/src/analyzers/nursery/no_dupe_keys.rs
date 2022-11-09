@@ -105,9 +105,9 @@ impl Rule for NoDupeKeys {
         for member in node
             .members()
             .into_iter()
+            .flatten()
             // Note that we iterate from last to first property, so that we highlight properties being overwritten as problems and not those that take effect.
             .rev()
-            .filter_map(|result| result.ok())
         {
             let property_name = get_property_name(&member);
             if let Some(property_name) = property_name {
