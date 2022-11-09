@@ -244,8 +244,10 @@ fn parse_assignment_expression_or_higher_base(
     p: &mut Parser,
     context: ExpressionContext,
 ) -> ParsedSyntax {
-    if p.state.in_generator() && p.at(T![yield]) {
-        return Present(parse_yield_expression(p, context));
+    if p.at(T![yield]) {
+        if let Some(m) = try_parse_yield_expression(p, context) {
+            return Present(m);
+        }
     }
 
     let checkpoint = p.checkpoint();
@@ -345,32 +347,67 @@ fn is_assign_token(kind: JsSyntaxKind) -> bool {
 //  yield
 //  yield
 // }
-fn parse_yield_expression(p: &mut Parser, context: ExpressionContext) -> CompletedMarker {
+fn try_parse_yield_expression(
+    p: &mut Parser,
+    context: ExpressionContext,
+) -> Option<CompletedMarker> {
     let m = p.start();
+    let yield_range = p.cur_range();
+    let checkpoint = p.checkpoint();
     p.expect(T![yield]);
 
+    // test reparse_yield_as_identifier
+    // // SCRIPT
+    // function foo() { yield *bar; }
+    // function bar() { yield; }
+    // function baz() { yield }
+    if !p.state.in_generator() && (p.at(T![*]) || !is_at_expression(p)) {
+        p.rewind(checkpoint);
+        m.abandon(p);
+        return None;
+    }
+
+    // test yield_in_generator_function
+    // function* foo() { yield 10; }
+    // function* foo() { yield *bar; }
+    // function* foo() { yield; }
     if !is_semi(p, 0) && (p.at(T![*]) || is_at_expression(p)) {
         let argument = p.start();
         p.eat(T![*]);
         parse_assignment_expression_or_higher(p, context.and_object_expression_allowed(true)).ok();
-
         argument.complete(p, JS_YIELD_ARGUMENT);
     }
 
     let mut yield_expr = m.complete(p, JS_YIELD_EXPRESSION);
 
-    if !p.state.is_top_level() && !p.state.in_function() {
+    // test_err yield_at_top_level_module
+    // yield 10;
+
+    // test_err yield_at_top_level_script
+    // // SCRIPT
+    // yield 10;
+
+    // test_err yield_in_non_generator_function_script
+    // // SCRIPT
+    // function foo() { yield bar; }
+    // function foo() { yield 10; }
+
+    // test_err yield_in_non_generator_function_module
+    // function foo() { yield; }
+    // function foo() { yield foo; }
+    // function foo() { yield *foo; }
+    if !(p.state.in_generator() && p.state.in_function()) {
         // test_err yield_expr_in_parameter_initializer
         // function* test(a = yield "test") {}
         // function test2(a = yield "test") {}
         p.error(p.err_builder(
             "`yield` is only allowed within generator functions.",
-            yield_expr.range(p),
+            yield_range,
         ));
         yield_expr.change_to_unknown(p);
     }
 
-    yield_expr
+    Some(yield_expr)
 }
 
 /// A conditional expression such as `foo ? bar : baz`
