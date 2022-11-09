@@ -15,7 +15,7 @@ impl FormatNodeRule<JsImportCallExpression> for FormatJsImportCallExpression {
             arguments,
         } = node.as_fields();
 
-        write![f, [import_token.format(), arguments.format(),]]
+        write![f, [import_token.format(), arguments.format()]]
     }
 
     fn needs_parentheses(&self, item: &JsImportCallExpression) -> bool {
