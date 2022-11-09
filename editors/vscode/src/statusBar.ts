@@ -1,5 +1,6 @@
 import { StatusBarAlignment, StatusBarItem, ThemeColor, window } from "vscode";
 import { State } from "vscode-languageclient";
+import { LanguageClient } from "vscode-languageclient/node";
 import { Commands } from "./commands";
 
 /**
@@ -24,6 +25,7 @@ export class StatusBar {
 
 	private serverState: State = State.Starting;
 	private isActive: boolean = false;
+	private serverVersion: string = "";
 
 	constructor() {
 		this.statusBarItem = window.createStatusBarItem(
@@ -37,8 +39,15 @@ export class StatusBar {
 		this.update();
 	}
 
-	public setServerState(state: State) {
+	public setServerState(client: LanguageClient, state: State) {
 		this.serverState = state;
+
+		if (state === State.Running) {
+			this.serverVersion = client.initializeResult?.serverInfo?.version ?? "";
+		} else {
+			this.serverVersion = "";
+		}
+
 		this.update();
 	}
 
@@ -61,7 +70,8 @@ export class StatusBar {
 			status = Status.Error;
 		}
 
-		this.statusBarItem.text = `$(${status}) Rome`;
+		this.statusBarItem.text =
+			`$(${status}) Rome ${this.serverVersion}`.trimEnd();
 
 		switch (status) {
 			case Status.Pending: {
