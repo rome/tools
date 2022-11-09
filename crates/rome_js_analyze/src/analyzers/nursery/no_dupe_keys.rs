@@ -49,7 +49,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoDupeKeys {
-        version: "10.1.0",
+        version: "11.0.0",
         name: "noDupeKeys",
         recommended: false, // should be once out of nursery
     }
