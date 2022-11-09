@@ -374,6 +374,8 @@ impl SemanticEventExtractor {
             JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
             | JS_OBJECT_BINDING_PATTERN_PROPERTY
             | JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST => {
+                self.push_binding_into_scope(None, &name_token);
+                
                 let possible_declarator = parent.ancestors().find(|x| {
                     !matches!(
                         x.kind(),
