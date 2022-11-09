@@ -802,7 +802,7 @@ impl JsAnyExpression {
     pub fn is_ident(&self, matcher: impl FnOnce(JsReferenceIdentifier) -> bool) -> bool {
         self.as_js_identifier_expression()
             .and_then(|it| it.name().ok())
-            .map(|it| matcher(it))
+            .map(matcher)
             .unwrap_or(false)
     }
 
