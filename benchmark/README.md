@@ -12,14 +12,14 @@ Setup: MacBook Pro (13-inch, M1, 2020)
 * Rome's ~20 times faster than parallel-prettier
 * Rome's ~20 times faster than `xargs -P`[^1]
 * Rome's 1.5-2 times faster than `dprint`
-* Rome's ~7 times faster when restricting it to a single core
+* Rome single-threaded is ~7 times faster than Prettier.
 
 
 [^1]: Run `time find lib/ examples declarations benchmark -name '*.js' -print0 | xargs -P8 -0 -n 200 npx prettier --write --loglevel=error` in the `target/webpack` directory. I manually tinkered with the `-n` parameter to get the fastest run.
 
 ### Linting
 * Rome's ~15x times faster than ESLint
-* Rome's ~4 times faster when restricting it to a single core.
+* Rome single-threaded is ~4 times faster than ESLint.
 
 The speed-ups for the multithreaded benchmarks can vary significantly depending on the setup. For example, Rome is 100 times faster than Prettier on an M1 Max with 10 cores.
 
