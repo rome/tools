@@ -1429,12 +1429,13 @@ mod test {
         assert_is_exported(true, "A", "enum A {}; exports = A");
         assert_is_exported(true, "A", "enum A {}; exports.A = A");
 
-        // Object binding
+        // Object and Array bindings
         assert_is_exported(true, "A", "export const { A } = a;");
         assert_is_exported(true, "b", "export const { A: b } = a;");
-
-        // Array binding
-        assert_is_exported(true, "A", "export const [A] = a;");
+        assert_is_exported(true, "A", "export const [ A ] = a;");
+        assert_is_exported(true, "A", "export const [{ A }] = a;");
+        assert_is_exported(true, "D", "export const [{ C: [ D ] }] = a;");
+        assert_is_exported(true, "E", "export const [{ C: [{ E }] }] = a;");
     }
 
     #[test]
