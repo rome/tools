@@ -1,0 +1,402 @@
+{
+	"$schema": "http://json-schema.org/schema",
+	"$id": "https://rome.tools/schema.json",
+	"title": "Rome",
+	"description": "Rome tools schema",
+	"type": "object",
+	"properties": {
+		"files": {
+			"type": "object",
+			"properties": {
+				"maxSize": {
+					"description": "The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason.",
+					"type": "string",
+					"default": "1048576"
+				}
+			}
+		},
+		"linter": {
+			"type": "object",
+			"properties": {
+				"enabled": {
+					"description": "Enables Rome's linter",
+					"type": "boolean",
+					"default": true
+				},
+				"ignore": {
+					"type": "array",
+					"description": "An array of Unix shell style patterns",
+					"items": {
+						"type": "string"
+					}
+				},
+				"rules": {
+					"type": "object",
+					"properties": {
+						"recommended": {
+							"type": "boolean",
+							"description": "enables the recommended rules for all categories",
+							"default": true
+						},
+						"accessibility": {
+							"type": "object",
+							"description": "Rules focused on preventing accessibility problems.",
+							"properties": {
+								"noAutofocus": {
+									"description": "Avoid the `autoFocus` attribute",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noPositiveTabindex": {
+									"description": "Prevent the usage of positive integers on `tabIndex` property",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useAltText": {
+									"description": "It asserts that alternative text to images or areas, help to rely on to screen readers to understand the purpose and the context of the image.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useAnchorContent": {
+									"description": "Enforce that anchor elements have content and that the content is accessible to screen readers.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useBlankTarget": {
+									"description": "Disallow `target=\"_blank\"` attribute without `rel=\"noreferrer\"`",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useButtonType": {
+									"description": "Enforces the usage of the attribute `type` for the element `button`",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useKeyWithClickEvents": {
+									"description": "Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, or the `noKeyPress` keyboard event.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useKeyWithMouseEvents": {
+									"description": "Enforce that `onMouseOver/onMouseOut` are accompanied by `onFocus/onBlur` for keyboard-only users. It is important to take into account users with physical disabilities who cannot use a mouse, who use assistive technology or screenreader.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useValidAnchor": {
+									"description": "Enforce that all anchors are valid, and they are navigable elements.",
+									"$ref": "#/definitions/linterRule"
+								}
+							}
+						},
+						"complexity": {
+							"type": "object",
+							"description": "Rules that focus on inspecting complex code that could be simplified",
+							"properties": {
+								"noExtraBooleanCast": {
+									"description": "Disallow unnecessary boolean casts",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useSimplifiedLogicExpression": {
+									"description": "Discard redundant terms from logical expressions.",
+									"$ref": "#/definitions/linterRule"
+								}
+							}
+						},
+						"correctness": {
+							"type": "object",
+							"description": "Rules that detect incorrect or useless code.",
+							"properties": {
+								"noArguments": {
+									"description": "Disallow the use of arguments",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noArrayIndexKey": {
+									"description": "Discourage the usage of Array index in keys.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noAsyncPromiseExecutor": {
+									"description": "Disallows using an async function as a Promise executor.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noCatchAssign": {
+									"description": "Disallow reassigning exceptions in catch clauses",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noChildrenProp": {
+									"description": "Prevent passing of children as props.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noCommentText": {
+									"description": "Prevent comments from being inserted as text nodes",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noCompareNegZero": {
+									"description": "Disallow comparing against -0",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noDebugger": {
+									"description": "Disallow the use of debugger",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noDelete": {
+									"description": "Disallow the use of the delete operator",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noDoubleEquals": {
+									"description": "Require the use of === and !==",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noDupeArgs": {
+									"description": "Disallow duplicate function arguments name.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noEmptyPattern": {
+									"description": "Disallows empty destructuring patterns.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noFunctionAssign": {
+									"description": "Disallow reassigning function declarations.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noImportAssign": {
+									"description": "Disallow assigning to imported bindings",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noLabelVar": {
+									"description": "Disallow labels that share a name with a variable",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noMultipleSpacesInRegularExpressionLiterals": {
+									"description": "Disallow unclear usage of multiple space characters in regular expression literals",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noNewSymbol": {
+									"description": "Disallow new operators with the Symbol object",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noRenderReturnValue": {
+									"description": "Prevent the usage of the return value of React.render.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noRestrictedGlobals": {
+									"description": "This rule allows you to specify global variable names that you don’t want to use in your application.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noShadowRestrictedNames": {
+									"description": "Disallow identifiers from shadowing restricted names.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noSparseArray": {
+									"description": "Disallow sparse arrays",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noUndeclaredVariables": {
+									"description": "Prevents the usage of variables that haven't been declared inside the document",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noUnnecessaryContinue": {
+									"description": "Avoid using unnecessary continue.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noUnreachable": {
+									"description": "Disallow unreachable code",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noUnsafeNegation": {
+									"description": "Disallow using unsafe negation.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noUnusedVariables": {
+									"description": "Disallow unused variables.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noUselessFragments": {
+									"description": "Disallow unnecessary fragments",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noVoidElementsWithChildren": {
+									"description": "This rules prevents void elements (AKA self-closing elements) from having children.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useSingleCaseStatement": {
+									"description": "Enforces case clauses have a single statement, emits a quick fix wrapping the statements in a block",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useValidTypeof": {
+									"description": "This rule verifies the result of typeof $expr unary expressions is being compared to valid values, either string literals containing valid type names or other typeof expressions",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useWhile": {
+									"description": "Enforce the use of while loops instead of for loops when the initializer and update expressions are not needed",
+									"$ref": "#/definitions/linterRule"
+								}
+							}
+						},
+						"security": {
+							"type": "object",
+							"description": "Rules that detect potential security flaws.",
+							"properties": {
+								"noDangerouslySetInnerHtml ": {
+									"description": "Prevent the usage of dangerous JSX props",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noDangerouslySetInnerHtmlWithChildren": {
+									"description": "Report when a DOM element or a component uses both `children` and `dangerouslySetInnerHTML` prop",
+									"$ref": "#/definitions/linterRule"
+								}
+							}
+						},
+						"style": {
+							"type": "object",
+							"description": "Rules enforcing a consistent way of writing your code.",
+							"properties": {
+								"noImplicitBoolean": {
+									"description": "Disallow implicit true values on JSX boolean attributes",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noNegationElse": {
+									"description": "Disallow negation in the condition of an if statement if it has an else clause",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noShoutyConstants": {
+									"description": "Disallow the use of constants which its value is the upper-case version of its name.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noUnusedTemplateLiteral": {
+									"description": "Disallow template literals if interpolation and special-character handling are not needed",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useBlockStatements": {
+									"description": "Requires following curly brace conventions. JavaScript allows the omission of curly braces when a block contains only one statement. However, it is considered by many to be best practice to never omit curly braces around blocks, even when they are optional, because it can lead to bugs and reduces code clarity.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useFragmentSyntax": {
+									"description": "This rule enforces the use of <>...</> over <Fragment>...</Fragment>.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useOptionalChain": {
+									"description": "Enforce using concise optional chain instead of chained logical expressions.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useSelfClosingElements": {
+									"description": "Prevent extra closing tags for components without children",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useShorthandArrayType": {
+									"description": "When expressing array types, this rule promotes the usage of T[] shorthand instead of Array<T>.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useSingleVarDeclarator": {
+									"description": "Disallow multiple variable declarations in the same variable statement",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useTemplate": {
+									"description": "Template literals are preferred over string concatenation.",
+									"$ref": "#/definitions/linterRule"
+								}
+							}
+						},
+						"nursery": {
+							"type": "object",
+							"description": "New rules that are still under development. Nursery rules require explicit opt-in via configuration because they may still have bugs or performance problems. Nursery rules get promoted to other groups once they become stable or may be removed. Rules that belong to this group are not subject to semantic version.",
+							"properties": {
+								"noBannedTypes": {
+									"description": "Disallow certain types.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noConstAssign": {
+									"description": "Prevents from having const variables being re-assigned.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noExplicitAny": {
+									"description": "Disallow the any type usage",
+									"$ref": "#/definitions/linterRule"
+								},
+								"noInvalidConstructorSuper": {
+									"description": "Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useCamelCase": {
+									"description": "Enforce camel case naming convention.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useExhaustiveDependencies": {
+									"description": "Enforce all dependencies are correctly specified.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useFlatMap": {
+									"description": "Promotes the use of .flatMap() when map().flat() are used together.",
+									"$ref": "#/definitions/linterRule"
+								},
+								"useValidForDirection": {
+									"description": "Enforce \"for\" loop update clause moving the counter in the right direction.",
+									"$ref": "#/definitions/linterRule"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"formatter": {
+			"type": "object",
+			"properties": {
+				"enabled": {
+					"type": "boolean",
+					"description": "Enables Rome's formatter",
+					"default": true
+				},
+				"indentStyle": {
+					"type": "string",
+					"default": "tab",
+					"description": "The style of the indentation",
+					"enum": ["tab", "space"]
+				},
+				"indentSize": {
+					"type": "number",
+					"description": "How big the indentation should be"
+				},
+				"lineWidth": {
+					"type": "number",
+					"description": "How many characters can be written on a single line",
+					"default": 80
+				}
+			}
+		},
+		"javascript": {
+			"formatter": {
+				"quoteStyle": {
+					"type": "string",
+					"description": "The type of quote used when representing string literals",
+					"enum": ["single", "double"],
+					"default": "double"
+				},
+				"quoteProperties": {
+					"type": "string",
+					"description": "When properties inside objects should be quoted",
+					"enum": ["asNeeded", "preserve"],
+					"default": "asNeeded"
+				},
+				"trailingComma": {
+					"type": "string",
+					"description": "Print trailing commas wherever possible in multi-line comma-separated syntactic structures",
+					"enum": ["all", "es5", "none"]
+				}
+			}
+		}
+	},
+	"definitions": {
+		"linterRule": {
+			"anyOf": [
+				{
+					"type": "string",
+					"enum": ["off", "error", "warn"]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"level": {
+							"type": "string",
+							"enum": ["off", "error", "warn"]
+						},
+						"options": {
+							"type": "object"
+						}
+					}
+				}
+			]
+		}
+	}
+}
