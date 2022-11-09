@@ -39,7 +39,7 @@ fn remove_js_formal_parameter_from_js_parameter_list(
                     node,
                 )) if node == parameter => {
                     batch.remove_node(node.clone());
-                    if let Some(comma) = element.trailing_separator().ok().flatten() {
+                    if let Ok(Some(comma)) = element.trailing_separator() {
                         batch.remove_token(comma.clone());
                     }
                     break;
@@ -54,7 +54,7 @@ fn remove_js_formal_parameter_from_js_parameter_list(
     // removes the comma before this element
     if elements.next().is_none() {
         if let Some(element) = previous_element {
-            if let Some(comma) = element.trailing_separator().ok().flatten() {
+            if let Ok(Some(comma)) = element.trailing_separator() {
                 batch.remove_token(comma.clone());
             }
         }
@@ -81,7 +81,7 @@ fn remove_js_formal_parameter_from_js_constructor_parameter_list(
                     JsAnyFormalParameter::JsFormalParameter(node),
                 ) if node == parameter => {
                     batch.remove_node(node.clone());
-                    if let Some(comma) = element.trailing_separator().ok().flatten() {
+                    if let Ok(Some(comma)) = element.trailing_separator() {
                         batch.remove_token(comma.clone());
                     }
                     break;
@@ -96,7 +96,7 @@ fn remove_js_formal_parameter_from_js_constructor_parameter_list(
     // removes the comma before this element
     if elements.next().is_none() {
         if let Some(element) = previous_element {
-            if let Some(comma) = element.trailing_separator().ok().flatten() {
+            if let Ok(Some(comma)) = element.trailing_separator() {
                 batch.remove_token(comma.clone());
             }
         }
@@ -125,7 +125,7 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
                         if let Ok(node) = element.node() {
                             if node == declarator {
                                 self.remove_node(node.clone());
-                                if let Some(comma) = element.trailing_separator().ok().flatten() {
+                                if let Ok(Some(comma)) = element.trailing_separator() {
                                     self.remove_token(comma.clone());
                                 }
                                 break;
@@ -144,7 +144,7 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
 
                     if remove_previous_element_comma {
                         if let Some(element) = previous_element {
-                            if let Some(comma) = element.trailing_separator().ok().flatten() {
+                            if let Ok(Some(comma)) = element.trailing_separator() {
                                 self.remove_token(comma.clone());
                             }
                         }
@@ -183,7 +183,7 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
                 for element in parent.elements() {
                     if element.node() == Ok(member) {
                         self.remove_node(member.clone());
-                        if let Some(comma) = element.trailing_separator().ok().flatten() {
+                        if let Ok(Some(comma)) = element.trailing_separator() {
                             self.remove_token(comma.clone());
                         }
                     }
