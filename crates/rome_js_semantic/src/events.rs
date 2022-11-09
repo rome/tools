@@ -371,6 +371,17 @@ impl SemanticEventExtractor {
                 self.push_binding_into_scope(hoisted_scope_id, &name_token);
                 self.export_class_expression(node, &parent);
             }
+            JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY | JS_OBJECT_BINDING_PATTERN_PROPERTY => {
+                let declarator = parent.parent()?
+                    .parent()?
+                    .parent()?;
+                self.export_variable_declarator(node, &declarator);
+            }
+            JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST => {
+                let declarator = parent.parent()?
+                    .parent()?;
+                self.export_variable_declarator(node, &declarator);
+            }
             TS_TYPE_ALIAS_DECLARATION => {
                 let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
                 self.push_binding_into_scope(hoisted_scope_id, &name_token);
@@ -542,7 +553,7 @@ impl SemanticEventExtractor {
     /// 1 - Match all references and declarations;
     /// 2 - Unmatched references are promoted to its parent scope or become [UnresolvedReference] events;
     /// 3 - All declarations of this scope are removed;
-    /// 4 - All shawed declarations are restored.
+    /// 4 - All shadowed declarations are restored.
     fn pop_scope(&mut self, range: TextRange) {
         debug_assert!(!self.scopes.is_empty());
 
@@ -820,7 +831,7 @@ impl SemanticEventExtractor {
         }
     }
 
-    // Check if a function is exported and raise the [Exported] event.
+    // Check if a variable is exported and raise the [Exported] event.
     fn export_variable_declarator(
         &mut self,
         binding: &JsSyntaxNode,

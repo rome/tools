@@ -1428,6 +1428,13 @@ mod test {
         assert_is_exported(true, "A", "enum A {}; module.exports = A");
         assert_is_exported(true, "A", "enum A {}; exports = A");
         assert_is_exported(true, "A", "enum A {}; exports.A = A");
+
+        // Object binding
+        assert_is_exported(true, "A", "export const { A } = a;");
+        assert_is_exported(true, "b", "export const { A: b } = a;");
+
+        // Array binding
+        assert_is_exported(true, "A", "export const [A] = a;");
     }
 
     #[test]
