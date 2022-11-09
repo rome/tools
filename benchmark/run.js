@@ -59,6 +59,9 @@ function benchmarkFormatter(rome) {
 	console.log("―".repeat(80));
 	console.log("");
 
+	// Run Dprint once to run the installer
+	child_process.execSync("npx dprint --version");
+
 	for (const [name, configuration] of Object.entries(BENCHMARKS.formatter)) {
 		console.log(`[${name}]`);
 
@@ -75,6 +78,8 @@ function benchmarkFormatter(rome) {
 		const prettierCommand = `node '${resolvePrettier()}' ${prettierPaths} --write --loglevel=error`;
 		const parallelPrettierCommand = `node '${resolveParallelPrettier()}' ${prettierPaths} --write --concurrency ${os.cpus().length}`;
 
+		const dprintCommand = `${resolveDprint()} fmt --incremental=false --config '${require.resolve("./dprint.json")}' ${Object.keys(configuration.sourceDirectories).map(path => `'${path}/**/*'`).join(" ")}`;
+
 		const romeCommand = `${rome} format ${Object.keys(
 			configuration.sourceDirectories,
 		)
@@ -88,7 +93,7 @@ function benchmarkFormatter(rome) {
 		);
 
 		// Run 2 warmups to make sure the files are formatted correctly
-		const hyperfineCommand = `hyperfine -w 2 -n Prettier "${prettierCommand}" -n "Parallel-Prettier" "${parallelPrettierCommand}" -n Rome "${romeCommand}" --shell=${shellOption()} -n "Rome (1 thread)" "${romeSingleCoreCommand}"`;
+		const hyperfineCommand = `hyperfine -w 2 -n Prettier "${prettierCommand}" -n "Parallel-Prettier" "${parallelPrettierCommand}" -n dprint "${dprintCommand}" -n Rome "${romeCommand}" --shell=${shellOption()} -n "Rome (1 thread)" "${romeSingleCoreCommand}"`;
 		console.log(hyperfineCommand);
 
 		child_process.execSync(hyperfineCommand, {
@@ -99,11 +104,15 @@ function benchmarkFormatter(rome) {
 }
 
 function resolvePrettier() {
-	return path.resolve("node_modules/prettier//bin-prettier.js");
+	return path.resolve("node_modules/prettier/bin-prettier.js");
 }
 
 function resolveParallelPrettier() {
 	return path.resolve("node_modules/.bin/pprettier");
+}
+
+function resolveDprint() {
+	return path.resolve("node_modules/dprint/dprint");
 }
 
 function benchmarkLinter(rome) {
