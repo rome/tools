@@ -205,6 +205,7 @@ pub struct PullActionsResult {
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct CodeAction {
     pub category: ActionCategory,
+    pub group_name: Cow<'static, str>,
     pub rule_name: Cow<'static, str>,
     pub suggestion: CodeSuggestion,
 }
@@ -261,6 +262,7 @@ pub struct FixFileResult {
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct FixAction {
+    pub group_name: Cow<'static, str>,
     /// Name of the rule that emitted this code action
     pub rule_name: Cow<'static, str>,
     /// Source range at which this action was applied

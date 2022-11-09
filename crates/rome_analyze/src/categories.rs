@@ -1,3 +1,5 @@
+use std::borrow::Cow;
+
 use bitflags::bitflags;
 
 #[derive(Copy, Clone, Debug)]
@@ -18,7 +20,7 @@ pub enum RuleCategory {
     Action,
 }
 
-#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(
     feature = "serde",
     derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
@@ -27,7 +29,67 @@ pub enum ActionCategory {
     /// This action provides a fix to the diagnostic emitted by the same signal
     QuickFix,
     /// This action provides an optional refactor opportunity
-    Refactor,
+    Refactor(RefactorKind),
+    Source(SourceActionKind),
+    Other(Cow<'static, str>),
+}
+
+impl ActionCategory {
+    pub fn matches(&self, filter: &str) -> bool {
+        self.to_str().starts_with(filter)
+    }
+
+    pub fn to_str(&self) -> Cow<'static, str> {
+        match self {
+            ActionCategory::QuickFix => Cow::Borrowed("quickfix.rome"),
+
+            ActionCategory::Refactor(RefactorKind::None) => Cow::Borrowed("refactor.rome"),
+            ActionCategory::Refactor(RefactorKind::Extract) => {
+                Cow::Borrowed("refactor.extract.rome")
+            }
+            ActionCategory::Refactor(RefactorKind::Inline) => Cow::Borrowed("refactor.inline.rome"),
+            ActionCategory::Refactor(RefactorKind::Rewrite) => {
+                Cow::Borrowed("refactor.rewrite.rome")
+            }
+            ActionCategory::Refactor(RefactorKind::Other(tag)) => {
+                Cow::Owned(format!("refactor.{tag}.rome"))
+            }
+
+            ActionCategory::Source(SourceActionKind::None) => Cow::Borrowed("source.rome"),
+            ActionCategory::Source(SourceActionKind::OrganizeImports) => {
+                Cow::Borrowed("source.organizeImports.rome")
+            }
+            ActionCategory::Source(SourceActionKind::Other(tag)) => {
+                Cow::Owned(format!("source.{tag}.rome"))
+            }
+
+            ActionCategory::Other(tag) => Cow::Owned(format!("{tag}.rome")),
+        }
+    }
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
+pub enum RefactorKind {
+    None,
+    Extract,
+    Inline,
+    Rewrite,
+    Other(Cow<'static, str>),
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
+pub enum SourceActionKind {
+    None,
+    OrganizeImports,
+    Other(Cow<'static, str>),
 }
 
 bitflags! {
