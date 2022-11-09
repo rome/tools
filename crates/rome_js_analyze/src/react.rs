@@ -2,12 +2,12 @@
 
 pub mod hooks;
 
-use rome_js_semantic::SemanticModel;
+use rome_js_semantic::{HasDeclarationAstNode, SemanticModel};
 use rome_js_syntax::{
     JsAnyCallArgument, JsAnyExpression, JsAnyNamedImportSpecifier, JsCallExpression,
     JsIdentifierBinding, JsImport, JsImportNamedClause, JsNamedImportSpecifierList,
-    JsNamedImportSpecifiers, JsObjectExpression, JsPropertyObjectMember, JsReferenceIdentifier,
-    JsxMemberName, JsxReferenceIdentifier,
+    JsNamedImportSpecifiers, JsObjectExpression, JsPropertyObjectMember, JsxMemberName,
+    JsxReferenceIdentifier,
 };
 use rome_rowan::{AstNode, AstSeparatedList};
 
@@ -236,15 +236,24 @@ const VALID_REACT_API: [&str; 14] = [
     "Children",
 ];
 
-fn is_imported_from_react(ident: &JsReferenceIdentifier, model: &SemanticModel) -> Option<bool> {
+/// Check if the given node is imported from react
+///
+/// Returns:
+///  * Some(true) if it is imported from react
+///  * Some(false) if it is not imported from react
+///  * None if import is not found.
+///
+fn is_imported_from_react(
+    ident: &impl HasDeclarationAstNode,
+    model: &SemanticModel,
+) -> Option<bool> {
     let binding_identifier = model.declaration(ident)?;
-    let binding_identifier = JsIdentifierBinding::cast_ref(binding_identifier.syntax())?;
     binding_identifier
         .syntax()
         .ancestors()
-        .find_map(|ancestor| JsImport::cast_ref(&ancestor))?
-        .source_is("react")
-        .ok()
+        .find_map(|ancestor| JsImport::cast_ref(&ancestor))
+        .and_then(|import| import.source_is("react").ok())
+        .or(Some(false))
 }
 
 /// Checks if the current [JsCallExpression] is a potential [`React` API].
@@ -283,24 +292,11 @@ pub(crate) fn jsx_member_name_is_react_fragment(
     let object = member_name.object().ok()?;
     let member = member_name.member().ok()?;
     let object = object.as_jsx_reference_identifier()?;
-    let mut maybe_react_fragment = object.value_token().ok()?.text_trimmed() == "React"
-        && member.value_token().ok()?.text_trimmed() == "Fragment";
-    if let Some(reference) = model.declaration(object) {
-        if let Some(js_import) = reference
-            .syntax()
-            .ancestors()
-            .find_map(|ancestor| JsImport::cast_ref(&ancestor))
-        {
-            let source_is_react = js_import.source_is("react").ok()?;
-            maybe_react_fragment =
-                source_is_react && member.value_token().ok()?.text_trimmed() == "Fragment";
-        } else {
-            // `React.Fragment` is a binding but it doesn't come from the "react" package
-            maybe_react_fragment = false;
-        }
-    }
-
-    Some(maybe_react_fragment)
+    let has_object = object.value_token().ok()?.text_trimmed() == "React";
+    let has_member = member.value_token().ok()?.text_trimmed() == "Fragment";
+    let is_react_fragment =
+        is_imported_from_react(object, model).unwrap_or(has_object) && has_member;
+    Some(is_react_fragment)
 }
 
 /// Checks if the node `JsxReferenceIdentifier` is a react fragment.
