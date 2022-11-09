@@ -244,10 +244,13 @@ fn parse_assignment_expression_or_higher_base(
     p: &mut Parser,
     context: ExpressionContext,
 ) -> ParsedSyntax {
-    if p.at(T![yield]) {
-        if let Some(m) = try_parse_yield_expression(p, context) {
-            return Present(m);
-        }
+    // test reparse_yield_as_identifier
+    // // SCRIPT
+    // function foo() { yield *bar; }
+    // function bar() { yield; }
+    // function baz() { yield }
+    if p.at(T![yield]) && (p.state.in_generator() || is_nth_at_expression(p, 1)) {
+        return Present(parse_yield_expression(p, context));
     }
 
     let checkpoint = p.checkpoint();
@@ -347,25 +350,10 @@ fn is_assign_token(kind: JsSyntaxKind) -> bool {
 //  yield
 //  yield
 // }
-fn try_parse_yield_expression(
-    p: &mut Parser,
-    context: ExpressionContext,
-) -> Option<CompletedMarker> {
+fn parse_yield_expression(p: &mut Parser, context: ExpressionContext) -> CompletedMarker {
     let m = p.start();
     let yield_range = p.cur_range();
-    let checkpoint = p.checkpoint();
     p.expect(T![yield]);
-
-    // test reparse_yield_as_identifier
-    // // SCRIPT
-    // function foo() { yield *bar; }
-    // function bar() { yield; }
-    // function baz() { yield }
-    if !p.state.in_generator() && (p.at(T![*]) || !is_at_expression(p)) {
-        p.rewind(checkpoint);
-        m.abandon(p);
-        return None;
-    }
 
     // test yield_in_generator_function
     // function* foo() { yield 10; }
@@ -407,7 +395,7 @@ fn try_parse_yield_expression(
         yield_expr.change_to_unknown(p);
     }
 
-    Some(yield_expr)
+    yield_expr
 }
 
 /// A conditional expression such as `foo ? bar : baz`
