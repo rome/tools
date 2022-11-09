@@ -333,7 +333,7 @@ fn find_react_children_function_argument(
     let object = member_expression.object().ok()?;
 
     // React.Children.forEach/map or Children.forEach/map
-    if is_react_call_api(&object, model, "Children")? {
+    if is_react_call_api(&object, model, "Children") {
         let arguments = call_expression.arguments().ok()?;
         let arguments = arguments.args();
         let mut arguments = arguments.into_iter();

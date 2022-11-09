@@ -55,7 +55,7 @@ impl ReactCreateElementCall {
         model: &SemanticModel,
     ) -> Option<Self> {
         let callee = call_expression.callee().ok()?;
-        let is_react_create_element = is_react_call_api(&callee, model, "createElement")?;
+        let is_react_create_element = is_react_call_api(&callee, model, "createElement");
 
         if is_react_create_element {
             let arguments = call_expression.arguments().ok()?.args();
@@ -156,7 +156,7 @@ impl ReactCloneElementCall {
         model: &SemanticModel,
     ) -> Option<Self> {
         let callee = call_expression.callee().ok()?;
-        let is_react_clone_element = is_react_call_api(&callee, model, "cloneElement")?;
+        let is_react_clone_element = is_react_call_api(&callee, model, "cloneElement");
 
         if is_react_clone_element {
             let arguments = call_expression.arguments().ok()?.args();
@@ -244,50 +244,28 @@ pub(crate) fn is_react_call_api(
     expression: &JsAnyExpression,
     model: &SemanticModel,
     api_name: &str,
-) -> Option<bool> {
+) -> bool {
     // we bail straight away if the API doesn't exists in React
     debug_assert!(VALID_REACT_API.contains(&api_name));
 
-    Some(match expression {
-        JsAnyExpression::JsStaticMemberExpression(node) => {
-            let member = node.member().ok()?;
-            let member = member.as_js_name()?;
-
-            if member.value_token().ok()?.text_trimmed() != api_name {
-                return Some(false);
-            }
-
-            let object = node.object().ok()?;
-            let identifier = object.as_js_identifier_expression()?.name().ok()?;
-
-            match model.declaration(&identifier) {
-                Some(binding) => {
-                    let binding_identifier = JsIdentifierBinding::cast_ref(binding.syntax())?;
-
-                    if let Some(js_import) = binding_identifier
-                        .syntax()
-                        .ancestors()
-                        .find_map(|ancestor| JsImport::cast_ref(&ancestor))
-                    {
-                        js_import.source_is("react").ok()?
-                    } else {
-                        false
-                    }
-                }
-                None => identifier.has_name("React"),
-            }
+    if let Some(object) = expression.get_object_reference_identifier() {
+        if !expression.has_member_name(api_name) {
+            return false;
         }
+        return match model.declaration(&object) {
+            Some(decl) => is_react_export(decl),
+            None => object.has_name("React"),
+        };
+    }
 
-        JsAnyExpression::JsIdentifierExpression(identifier) => {
-            let name = identifier.name().ok()?;
+    if let Some(ident) = expression.as_reference_identifier() {
+        return model
+            .declaration(&ident)
+            .and_then(|it| is_named_react_export(it, api_name))
+            .unwrap_or(false);
+    }
 
-            model
-                .declaration(&name)
-                .and_then(|binding| is_react_export(binding, api_name))
-                .unwrap_or(false)
-        }
-        _ => false,
-    })
+    false
 }
 
 /// Checks if the node `JsxMemberName` is a react fragment.
@@ -309,17 +287,7 @@ pub(crate) fn jsx_member_name_is_react_fragment(
     }
 
     match model.declaration(object) {
-        Some(declaration) => {
-            if let Some(js_import) = declaration
-                .syntax()
-                .ancestors()
-                .find_map(|ancestor| JsImport::cast_ref(&ancestor))
-            {
-                js_import.source_is("react").ok()
-            } else {
-                Some(false)
-            }
-        }
+        Some(declaration) => Some(is_react_export(declaration)),
         None => Some(object.value_token().ok()?.text_trimmed() == "React"),
     }
 }
@@ -335,7 +303,7 @@ pub(crate) fn jsx_reference_identifier_is_fragment(
     model: &SemanticModel,
 ) -> Option<bool> {
     match model.declaration(name) {
-        Some(reference) => is_react_export(reference, "Fragment"),
+        Some(reference) => is_named_react_export(reference, "Fragment"),
         None => {
             let value_token = name.value_token().ok()?;
             let is_fragment = value_token.text_trimmed() == "Fragment";
@@ -344,7 +312,16 @@ pub(crate) fn jsx_reference_identifier_is_fragment(
     }
 }
 
-fn is_react_export(binding: Binding, name: &str) -> Option<bool> {
+fn is_react_export(binding: Binding) -> bool {
+    binding
+        .syntax()
+        .ancestors()
+        .find_map(|ancestor| JsImport::cast_ref(&ancestor))
+        .and_then(|js_import| js_import.source_is("react").ok())
+        .unwrap_or(false)
+}
+
+fn is_named_react_export(binding: Binding, name: &str) -> Option<bool> {
     let ident = JsIdentifierBinding::cast_ref(binding.syntax())?;
     let import_specifier = ident.parent::<JsAnyNamedImportSpecifier>()?;
     let name_token = match &import_specifier {
