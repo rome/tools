@@ -372,14 +372,11 @@ impl SemanticEventExtractor {
                 self.export_class_expression(node, &parent);
             }
             JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY | JS_OBJECT_BINDING_PATTERN_PROPERTY => {
-                let declarator = parent.parent()?
-                    .parent()?
-                    .parent()?;
+                let declarator = parent.parent()?.parent()?.parent()?;
                 self.export_variable_declarator(node, &declarator);
             }
             JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST => {
-                let declarator = parent.parent()?
-                    .parent()?;
+                let declarator = parent.parent()?.parent()?;
                 self.export_variable_declarator(node, &declarator);
             }
             TS_TYPE_ALIAS_DECLARATION => {
