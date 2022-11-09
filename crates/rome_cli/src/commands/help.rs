@@ -19,6 +19,7 @@ const MAIN: Markup = markup! {
 
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--no-colors"</Dim>"              Disable the formatting of markup (print everything as plain text)
+    "<Dim>"--force-colors"</Dim>"           Force the formatting of markup using ANSI, even if the console output is determined to be incompatible
     "<Dim>"--use-server"</Dim>"             Connect to a running instance of the Rome daemon server
     "<Dim>"--version"</Dim>"                Show the Rome version information and quit
     "<Dim>"--files-max-size"</Dim>"         The maximum allowed size for source code files in bytes (default: 1MB)

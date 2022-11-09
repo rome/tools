@@ -7,7 +7,7 @@
 //! execute the traversal of directory and files, based on the command that were passed.
 
 pub use pico_args::Arguments;
-use rome_console::EnvConsole;
+use rome_console::{ColorMode, EnvConsole};
 use rome_flags::FeatureFlags;
 use rome_fs::OsFileSystem;
 use rome_service::{App, DynRef, Workspace, WorkspaceRef};
@@ -45,16 +45,29 @@ pub struct CliSession<'app> {
 }
 
 impl<'app> CliSession<'app> {
-    pub fn new(workspace: &'app dyn Workspace, mut args: Arguments) -> Self {
+    pub fn new(workspace: &'app dyn Workspace, mut args: Arguments) -> Result<Self, Termination> {
         let no_colors = args.contains("--no-colors");
-        Self {
+        let force_colors = args.contains("--force-colors");
+        let colors = match (no_colors, force_colors) {
+            (true, false) => ColorMode::Disabled,
+            (false, true) => ColorMode::Enabled,
+            (false, false) => ColorMode::Auto,
+            (true, true) => {
+                return Err(Termination::IncompatibleArguments(
+                    "--no-colors",
+                    "--force-colors",
+                ))
+            }
+        };
+
+        Ok(Self {
             app: App::new(
                 DynRef::Owned(Box::new(OsFileSystem)),
-                DynRef::Owned(Box::new(EnvConsole::new(no_colors))),
+                DynRef::Owned(Box::new(EnvConsole::new(colors))),
                 WorkspaceRef::Borrowed(workspace),
             ),
             args,
-        }
+        })
     }
 
     /// Main function to run Rome CLI

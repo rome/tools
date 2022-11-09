@@ -52,6 +52,7 @@ mod help {
 mod main {
     use super::*;
     use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
+    use rome_service::workspace;
 
     #[test]
     fn unknown_command() {
@@ -177,6 +178,43 @@ mod main {
             Err(Termination::OverflowNumberArgument(argument, limit)) => {
                 assert_eq!(argument, "--max-diagnostics");
                 assert_eq!(limit, MAXIMUM_DISPLAYABLE_DIAGNOSTICS);
+            }
+            _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
+        }
+    }
+
+    #[test]
+    fn no_colors() {
+        let workspace = workspace::server();
+        let args = Arguments::from_vec(vec![OsString::from("--no-colors")]);
+        let result = CliSession::new(&*workspace, args).and_then(|session| session.run());
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+    }
+
+    #[test]
+    fn force_colors() {
+        let workspace = workspace::server();
+        let args = Arguments::from_vec(vec![OsString::from("--force-colors")]);
+        let result = CliSession::new(&*workspace, args).and_then(|session| session.run());
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+    }
+
+    #[test]
+    fn incompatible_colors() {
+        let workspace = workspace::server();
+        let args = Arguments::from_vec(vec![
+            OsString::from("--no-colors"),
+            OsString::from("--force-colors"),
+        ]);
+
+        let result = CliSession::new(&*workspace, args).and_then(|session| session.run());
+
+        match result {
+            Err(Termination::IncompatibleArguments(lhs, rhs)) => {
+                assert_eq!(lhs, "--no-colors");
+                assert_eq!(rhs, "--force-colors");
             }
             _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
         }
