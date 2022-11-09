@@ -5,6 +5,9 @@
 	"description": "Rome tools schema",
 	"type": "object",
 	"properties": {
+		"$schema": {
+			"type": "string"
+		},
 		"files": {
 			"type": "object",
 			"properties": {
