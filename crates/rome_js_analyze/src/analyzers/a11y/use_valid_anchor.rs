@@ -269,11 +269,10 @@ fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorSt
         JsxAnyAttributeValue::JsxExpressionAttributeValue(attribute_value) => {
             let expression = attribute_value.expression().ok()?;
 
-           
             match expression {
-                 // href={null}
+                // href={null}
                 JsAnyExpression::JsAnyLiteralExpression(
-                            JsAnyLiteralExpression::JsNullLiteralExpression(null),
+                    JsAnyLiteralExpression::JsNullLiteralExpression(null),
                 ) => {
                     return Some(UseValidAnchorState::IncorrectHref(
                         null.syntax().text_trimmed_range(),
@@ -289,8 +288,8 @@ fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorSt
                     }
                 }
                 JsAnyExpression::JsAnyLiteralExpression(
-                            JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
-                        ) => {
+                    JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
+                ) => {
                     let text = string_literal.inner_string_text().ok()?;
                     if text == "#" {
                         return Some(UseValidAnchorState::IncorrectHref(
@@ -300,7 +299,8 @@ fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorSt
                 }
                 JsAnyExpression::JsTemplate(template) => {
                     let mut iter = template.elements().iter();
-                    if let Some(JsAnyTemplateElement::JsTemplateChunkElement(element)) = iter.next() {
+                    if let Some(JsAnyTemplateElement::JsTemplateChunkElement(element)) = iter.next()
+                    {
                         let template_token = element.template_chunk_token().ok()?;
                         let text = template_token.text_trimmed();
                         if text == "#" || text.contains("javascript:") {
@@ -310,24 +310,24 @@ fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorSt
                         }
                     }
                 }
-                JsAnyExpression::ImportMeta(_) |
-                JsAnyExpression::JsClassExpression(_) |
-                JsAnyExpression::JsComputedMemberExpression(_) |
-                JsAnyExpression::JsImportCallExpression(_) |
-                JsAnyExpression::JsLogicalExpression(_) |
-                JsAnyExpression::JsObjectExpression(_) |
-                JsAnyExpression::JsSuperExpression(_) |
-                JsAnyExpression::JsUnaryExpression(_) |
-                JsAnyExpression::JsUnknownExpression(_) |
-                JsAnyExpression::JsYieldExpression(_) |
-                JsAnyExpression::JsxTagExpression(_) |
-                JsAnyExpression::NewTarget(_) |
-                JsAnyExpression::TsNonNullAssertionExpression(_) => {
+                JsAnyExpression::ImportMeta(_)
+                | JsAnyExpression::JsClassExpression(_)
+                | JsAnyExpression::JsComputedMemberExpression(_)
+                | JsAnyExpression::JsImportCallExpression(_)
+                | JsAnyExpression::JsLogicalExpression(_)
+                | JsAnyExpression::JsObjectExpression(_)
+                | JsAnyExpression::JsSuperExpression(_)
+                | JsAnyExpression::JsUnaryExpression(_)
+                | JsAnyExpression::JsUnknownExpression(_)
+                | JsAnyExpression::JsYieldExpression(_)
+                | JsAnyExpression::JsxTagExpression(_)
+                | JsAnyExpression::NewTarget(_)
+                | JsAnyExpression::TsNonNullAssertionExpression(_) => {
                     return Some(UseValidAnchorState::IncorrectHref(
                         expression.syntax().text_trimmed_range(),
                     ));
-                },
-                _ => { }
+                }
+                _ => {}
             }
         }
         JsxAnyAttributeValue::JsxAnyTag(_) => {}
