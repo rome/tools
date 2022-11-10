@@ -126,7 +126,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: js-api
-          path: npm/js-api
+          path: npm/js-api/dist
 
       - name: Install Node.js
         uses: actions/setup-node@v3
