@@ -21,7 +21,7 @@ use crate::{
 
 pub(crate) fn start(mut session: CliSession) -> Result<(), Termination> {
     let rt = Runtime::new()?;
-    let did_spawn = rt.block_on(ensure_daemon(true))?;
+    let did_spawn = rt.block_on(ensure_daemon(false))?;
 
     if did_spawn {
         session.app.console.log(markup! {
@@ -63,10 +63,10 @@ pub(crate) fn stop(mut session: CliSession) -> Result<(), Termination> {
 pub(crate) fn run_server(mut session: CliSession) -> Result<(), Termination> {
     setup_tracing_subscriber();
 
-    let no_timeout = session.args.contains("--no-timeout");
+    let is_oneshot = session.args.contains("--oneshot");
 
     let rt = Runtime::new()?;
-    let factory = ServerFactory::new(!no_timeout);
+    let factory = ServerFactory::new(is_oneshot);
     let cancellation = factory.cancellation();
     let span = debug_span!("Running Server", pid = std::process::id());
 
@@ -103,7 +103,7 @@ pub(crate) fn lsp_proxy() -> Result<(), Termination> {
 /// Receives a process via `stdin` and then copy the content to the LSP socket.
 /// Copy to the process on `stdout` when the LSP responds to a message
 async fn start_lsp_proxy(rt: &Runtime) -> Result<(), Termination> {
-    ensure_daemon(false).await?;
+    ensure_daemon(true).await?;
 
     match open_socket().await? {
         Some((mut owned_read_half, mut owned_write_half)) => {

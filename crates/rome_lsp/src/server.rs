@@ -10,13 +10,11 @@ use rome_fs::CONFIG_NAME;
 use rome_service::workspace::{RageEntry, RageParams, RageResult};
 use rome_service::{workspace, Workspace};
 use std::collections::HashMap;
-use std::sync::atomic::{AtomicU64, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::sync::{Arc, Mutex};
-use std::time::Duration;
 use tokio::io::{AsyncRead, AsyncWrite};
 use tokio::sync::Notify;
 use tokio::task::spawn_blocking;
-use tokio::time::sleep;
 use tower_lsp::jsonrpc::Result as LspResult;
 use tower_lsp::{lsp_types::*, ClientSocket};
 use tower_lsp::{LanguageServer, LspService, Server};
@@ -27,16 +25,25 @@ pub struct LSPServer {
     /// Map of all sessions connected to the same [ServerFactory] as this [LSPServer].
     sessions: Sessions,
     /// If this is true the server will broadcast a shutdown signal once the
-    /// last client disconnected after a short timeout
-    has_timeout: bool,
+    /// last client disconnected
+    is_oneshot: bool,
+    /// This shared flag is set to true once at least one sessions has been
+    /// initialized on this server instance
+    is_initialized: Arc<AtomicBool>,
 }
 
 impl LSPServer {
-    fn new(session: SessionHandle, sessions: Sessions, has_timeout: bool) -> Self {
+    fn new(
+        session: SessionHandle,
+        sessions: Sessions,
+        is_oneshot: bool,
+        is_initialized: Arc<AtomicBool>,
+    ) -> Self {
         Self {
             session,
             sessions,
-            has_timeout,
+            is_oneshot,
+            is_initialized,
         }
     }
 
@@ -181,6 +188,7 @@ impl LanguageServer for LSPServer {
     #[tracing::instrument(level = "trace", skip(self))]
     async fn initialize(&self, params: InitializeParams) -> LspResult<InitializeResult> {
         info!("Starting Rome Language Server...");
+        self.is_initialized.store(true, Ordering::Relaxed);
 
         self.session
             .client_capabilities
@@ -340,25 +348,12 @@ impl Drop for LSPServer {
             let _removed = sessions.remove(&self.session.key);
             debug_assert!(_removed.is_some(), "Session did not exist.");
 
-            if self.has_timeout && sessions.is_empty() {
-                tokio::spawn(server_timeout(
-                    self.session.cancellation.clone(),
-                    self.sessions.clone(),
-                ));
+            if self.is_oneshot && sessions.is_empty() && self.is_initialized.load(Ordering::Relaxed)
+            {
+                self.session.cancellation.notify_one();
             }
         }
     }
-}
-
-/// Broadcast the shutdown signal after one minute if the server has no active session
-async fn server_timeout(cancellation: Arc<Notify>, sessions: Sessions) {
-    sleep(Duration::from_secs(60)).await;
-
-    if !sessions.lock().unwrap().is_empty() {
-        return;
-    }
-
-    cancellation.notify_one();
 }
 
 /// Map of active sessions connected to a [ServerFactory].
@@ -384,8 +379,11 @@ pub struct ServerFactory {
     next_session_key: AtomicU64,
 
     /// If this is true the server will broadcast a shutdown signal once the
-    /// last client disconnected after a short timeout
-    has_timeout: bool,
+    /// last client disconnected
+    is_oneshot: bool,
+    /// This shared flag is set to true once at least one sessions has been
+    /// initialized on this server instance
+    is_initialized: Arc<AtomicBool>,
 }
 
 /// Helper method for wrapping a [Workspace] method in a `custom_method` for
@@ -423,13 +421,14 @@ macro_rules! workspace_method {
 }
 
 impl ServerFactory {
-    pub fn new(has_timeout: bool) -> Self {
+    pub fn new(is_oneshot: bool) -> Self {
         Self {
             cancellation: Arc::default(),
             workspace: None,
             sessions: Sessions::default(),
             next_session_key: AtomicU64::new(0),
-            has_timeout,
+            is_oneshot,
+            is_initialized: Arc::default(),
         }
     }
 
@@ -448,7 +447,13 @@ impl ServerFactory {
 
             let mut sessions = self.sessions.lock().unwrap();
             sessions.insert(session_key, handle.clone());
-            LSPServer::new(handle, self.sessions.clone(), self.has_timeout)
+
+            LSPServer::new(
+                handle,
+                self.sessions.clone(),
+                self.is_oneshot,
+                self.is_initialized.clone(),
+            )
         });
 
         builder = builder.custom_method(SYNTAX_TREE_REQUEST, LSPServer::syntax_tree_request);

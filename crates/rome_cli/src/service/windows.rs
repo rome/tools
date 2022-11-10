@@ -67,14 +67,14 @@ async fn try_connect() -> io::Result<NamedPipeClient> {
 const CREATE_NEW_PROCESS_GROUP: u32 = 0x00000200;
 
 /// Spawn the daemon server process in the background
-fn spawn_daemon(no_timeout: bool) -> io::Result<()> {
+fn spawn_daemon(is_oneshot: bool) -> io::Result<()> {
     let binary = env::current_exe()?;
 
     let mut cmd = Command::new(binary);
     cmd.arg("__run_server");
 
-    if no_timeout {
-        cmd.arg("--no-timeout");
+    if is_oneshot {
+        cmd.arg("--oneshot");
     }
 
     cmd.creation_flags(CREATE_NEW_PROCESS_GROUP);
@@ -168,14 +168,14 @@ impl AsyncWrite for ClientWriteHalf {
 ///
 /// Returns false if the daemon process was already running or true if it had
 /// to be started
-pub(crate) async fn ensure_daemon(no_timeout: bool) -> io::Result<bool> {
+pub(crate) async fn ensure_daemon(is_oneshot: bool) -> io::Result<bool> {
     let mut did_spawn = false;
 
     loop {
         match open_socket().await {
             Ok(Some(_)) => break,
             Ok(None) => {
-                spawn_daemon(no_timeout)?;
+                spawn_daemon(is_oneshot)?;
                 did_spawn = true;
                 time::sleep(Duration::from_millis(50)).await;
             }
@@ -189,7 +189,7 @@ pub(crate) async fn ensure_daemon(no_timeout: bool) -> io::Result<bool> {
 /// Ensure the server daemon is running and ready to receive connections and
 /// print the global pipe name in the standard output
 pub(crate) async fn print_socket() -> io::Result<()> {
-    ensure_daemon(false).await?;
+    ensure_daemon(true).await?;
     println!("{}", get_pipe_name());
     Ok(())
 }
