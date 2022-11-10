@@ -40,9 +40,9 @@
     "rome": "../rome"
   },
   "peerDependencies": {
-    "rome": "^0.10.1-next",
-    "@rometools/wasm-nodejs": "^0.10.1-next",
-    "@rometools/backend-jsonrpc": "^0.10.1-next"
+    "rome": "^10.0.0",
+    "@rometools/wasm-nodejs": "^10.0.0",
+    "@rometools/backend-jsonrpc": "^10.0.0"
   },
   "peerDependenciesMeta": {
     "rome": {
