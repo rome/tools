@@ -3,8 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { LoadingState, RomeOutput } from "./types";
 import { defaultRomeConfig } from "./types";
 import { usePlaygroundState, useWindowSize } from "./utils";
-import DesktopPlayground from "./DesktopPlayground";
-import { MobilePlayground } from "./MobilePlayground";
+import Playground from "./Playground";
 
 function App() {
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
@@ -105,18 +104,8 @@ function App() {
 				</div>
 			);
 		default:
-			if (width && width < 480) {
-				return (
-					<MobilePlayground
-						setPlaygroundState={setPlaygroundState}
-						playgroundState={playgroundState}
-						prettierOutput={prettierOutput}
-						romeOutput={romeOutput}
-					/>
-				);
-			}
 			return (
-				<DesktopPlayground
+				<Playground
 					setPlaygroundState={setPlaygroundState}
 					playgroundState={playgroundState}
 					prettierOutput={prettierOutput}
