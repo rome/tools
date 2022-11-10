@@ -7,7 +7,13 @@ import { javascript } from "@codemirror/lang-javascript";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import MermaidGraph from "./MermaidGraph";
 import { EditorSelection } from "@codemirror/state";
 import { useWindowSize } from "./utils";
@@ -39,7 +45,7 @@ export default function Playground({
 				typescript: isTypeScript,
 			}),
 		],
-		[isJsx, isTypeScript]
+		[isJsx, isTypeScript],
 	);
 
 	const romeAstSyntacticDataRef = useRef<RomeAstSyntacticData | null>(null);
@@ -60,7 +66,7 @@ export default function Playground({
 						...state,
 						cursorPosition,
 				  }
-				: state
+				: state,
 		);
 	}, []);
 
@@ -114,19 +120,37 @@ export default function Playground({
 	const { width } = useWindowSize();
 	const isMd = width && width > 768;
 
+	const chevronSvg = (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="18"
+			height="18"
+			viewBox="0 0 24 24"
+			stroke-width="2"
+			stroke="currentColor"
+			fill="none"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			className="inline transition-all ml-1 group-aria-pressed:rotate-180"
+		>
+			<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+			<polyline points="6 9 12 15 18 9" />
+		</svg>
+	);
+
 	return (
 		<div className="divide-y divide-slate-300 h-screen flex flex-col">
 			<div className="p-4 flex justify-between">
 				<h1 className="text-xl">Rome Playground</h1>
+				{/* rome-ignore lint(a11y/useKeyWithClickEvents) lint: because of issue#3644 */}
 				<button
 					aria-label="Open or Close Settings Menu"
+					aria-pressed={isSettingsVisible}
 					onClick={() => setSettingVisible(!isSettingsVisible)}
-					onKeyDown={() => setSettingVisible(!isSettingsVisible)}
-					className={
-						"text-base text-slate-700 font-medium hover:text-slate-800"
-					}
+					className="text-base text-slate-700 font-medium hover:text-slate-800 group p-1"
 				>
 					Settings
+					{chevronSvg}
 				</button>
 			</div>
 			{isSettingsVisible && (
@@ -280,7 +304,7 @@ export default function Playground({
 						selection: EditorSelection.create([
 							EditorSelection.range(
 								displaySourceRange[0],
-								displaySourceRange[1]
+								displaySourceRange[1],
 							),
 							EditorSelection.cursor(displaySourceRange[0]),
 						]),
