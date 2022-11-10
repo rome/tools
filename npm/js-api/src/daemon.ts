@@ -17,7 +17,7 @@ export class Deamon {
 	 */
 	public static async connectToDaemon(pathToBinary?: string): Promise<Deamon> {
 		const { createWorkspace, createWorkspaceWithBinary } = await import(
-			"@rometools/backend-jsonrpc",
+			"@rometools/backend-jsonrpc"
 		);
 
 		if (pathToBinary) {
