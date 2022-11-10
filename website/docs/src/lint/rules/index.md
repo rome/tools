@@ -57,7 +57,7 @@ Enforces the usage of the attribute <code>type</code> for the element <code>butt
 	<a href="/lint/rules/useKeyWithClickEvents">useKeyWithClickEvents</a>
 	<span class="recommended">recommended</span>
 </h3>
-Enforce to have the <code>onClick</code> mouse event with the <code>onKeyUp</code>, the <code>onKeyDown</code>, or the <code>noKeyPress</code> keyboard event.
+Enforce to have the <code>onClick</code> mouse event with the <code>onKeyUp</code>, the <code>onKeyDown</code>, or the <code>onKeyPress</code> keyboard event.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useKeyWithMouseEvents">

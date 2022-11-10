@@ -6,7 +6,7 @@ title: Lint Rule useKeyWithClickEvents
 
 > This rule is recommended by Rome.
 
-Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, or the `noKeyPress` keyboard event.
+Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, or the `onKeyPress` keyboard event.
 
 ## Examples
 
@@ -69,5 +69,9 @@ Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, o
 
 ```jsx
 <div {...spread} onClick={() => {}} ></div>
+```
+
+```jsx
+<button onClick={() => console.log("test")}>Submit</button>
 ```
 
