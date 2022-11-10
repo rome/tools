@@ -545,6 +545,21 @@ impl JsTemplate {
             self.syntax().text_range().end(),
         ))
     }
+
+    /// Return token if the template is a string constant.
+    pub fn as_string_constant(&self) -> Option<JsSyntaxToken> {
+        if self.tag().is_some() {
+            return None;
+        }
+
+        let mut elements = self.elements().into_iter();
+        match (elements.next(), elements.next()) {
+            (Some(JsAnyTemplateElement::JsTemplateChunkElement(chunk)), None) => {
+                chunk.template_chunk_token().ok()
+            }
+            _ => None,
+        }
+    }
 }
 
 impl JsRegexLiteralExpression {
@@ -685,20 +700,7 @@ impl JsAnyExpression {
     /// 2. A template literal with no substitutions
     fn with_string_constant<R>(&self, f: impl FnOnce(&str) -> R) -> Option<R> {
         match self {
-            Self::JsTemplate(t) => {
-                if t.tag().is_some() {
-                    return None;
-                }
-
-                let mut elements = t.elements().into_iter();
-                match (elements.next(), elements.next()) {
-                    (Some(JsAnyTemplateElement::JsTemplateChunkElement(chunk)), None) => chunk
-                        .template_chunk_token()
-                        .ok()
-                        .map(|it| f(it.text_trimmed())),
-                    _ => None,
-                }
-            }
+            Self::JsTemplate(t) => t.as_string_constant().map(|it| f(it.text_trimmed())),
             Self::JsAnyLiteralExpression(JsAnyLiteralExpression::JsStringLiteralExpression(s)) => {
                 s.inner_string_text().ok().map(|it| f(&it))
             }
