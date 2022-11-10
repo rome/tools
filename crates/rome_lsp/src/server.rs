@@ -12,9 +12,11 @@ use rome_service::{workspace, Workspace};
 use std::collections::HashMap;
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::{Arc, Mutex};
+use std::time::Duration;
 use tokio::io::{AsyncRead, AsyncWrite};
 use tokio::sync::Notify;
 use tokio::task::spawn_blocking;
+use tokio::time::sleep;
 use tower_lsp::jsonrpc::Result as LspResult;
 use tower_lsp::{lsp_types::*, ClientSocket};
 use tower_lsp::{LanguageServer, LspService, Server};
@@ -24,11 +26,18 @@ pub struct LSPServer {
     session: SessionHandle,
     /// Map of all sessions connected to the same [ServerFactory] as this [LSPServer].
     sessions: Sessions,
+    /// If this is true the server will broadcast a shutdown signal once the
+    /// last client disconnected after a short timeout
+    has_timeout: bool,
 }
 
 impl LSPServer {
-    fn new(session: SessionHandle, sessions: Sessions) -> Self {
-        Self { session, sessions }
+    fn new(session: SessionHandle, sessions: Sessions, has_timeout: bool) -> Self {
+        Self {
+            session,
+            sessions,
+            has_timeout,
+        }
     }
 
     async fn syntax_tree_request(&self, params: SyntaxTreePayload) -> LspResult<String> {
@@ -329,10 +338,27 @@ impl Drop for LSPServer {
     fn drop(&mut self) {
         if let Ok(mut sessions) = self.sessions.lock() {
             let _removed = sessions.remove(&self.session.key);
-
             debug_assert!(_removed.is_some(), "Session did not exist.");
+
+            if self.has_timeout && sessions.is_empty() {
+                tokio::spawn(server_timeout(
+                    self.session.cancellation.clone(),
+                    self.sessions.clone(),
+                ));
+            }
         }
     }
+}
+
+/// Broadcast the shutdown signal after one minute if the server has no active session
+async fn server_timeout(cancellation: Arc<Notify>, sessions: Sessions) {
+    sleep(Duration::from_secs(60)).await;
+
+    if !sessions.lock().unwrap().is_empty() {
+        return;
+    }
+
+    cancellation.notify_one();
 }
 
 /// Map of active sessions connected to a [ServerFactory].
@@ -356,6 +382,10 @@ pub struct ServerFactory {
 
     /// Session key generator. Stores the key of the next session.
     next_session_key: AtomicU64,
+
+    /// If this is true the server will broadcast a shutdown signal once the
+    /// last client disconnected after a short timeout
+    has_timeout: bool,
 }
 
 /// Helper method for wrapping a [Workspace] method in a `custom_method` for
@@ -393,6 +423,16 @@ macro_rules! workspace_method {
 }
 
 impl ServerFactory {
+    pub fn new(has_timeout: bool) -> Self {
+        Self {
+            cancellation: Arc::default(),
+            workspace: None,
+            sessions: Sessions::default(),
+            next_session_key: AtomicU64::new(0),
+            has_timeout,
+        }
+    }
+
     /// Create a new [ServerConnection] from this factory
     pub fn create(&self) -> ServerConnection {
         let workspace = self
@@ -408,7 +448,7 @@ impl ServerFactory {
 
             let mut sessions = self.sessions.lock().unwrap();
             sessions.insert(session_key, handle.clone());
-            LSPServer::new(handle, self.sessions.clone())
+            LSPServer::new(handle, self.sessions.clone(), self.has_timeout)
         });
 
         builder = builder.custom_method(SYNTAX_TREE_REQUEST, LSPServer::syntax_tree_request);
