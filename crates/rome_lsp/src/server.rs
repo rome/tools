@@ -26,7 +26,7 @@ pub struct LSPServer {
     sessions: Sessions,
     /// If this is true the server will broadcast a shutdown signal once the
     /// last client disconnected
-    is_oneshot: bool,
+    stop_on_disconnect: bool,
     /// This shared flag is set to true once at least one sessions has been
     /// initialized on this server instance
     is_initialized: Arc<AtomicBool>,
@@ -36,13 +36,13 @@ impl LSPServer {
     fn new(
         session: SessionHandle,
         sessions: Sessions,
-        is_oneshot: bool,
+        stop_on_disconnect: bool,
         is_initialized: Arc<AtomicBool>,
     ) -> Self {
         Self {
             session,
             sessions,
-            is_oneshot,
+            stop_on_disconnect,
             is_initialized,
         }
     }
@@ -348,7 +348,9 @@ impl Drop for LSPServer {
             let _removed = sessions.remove(&self.session.key);
             debug_assert!(_removed.is_some(), "Session did not exist.");
 
-            if self.is_oneshot && sessions.is_empty() && self.is_initialized.load(Ordering::Relaxed)
+            if self.stop_on_disconnect
+                && sessions.is_empty()
+                && self.is_initialized.load(Ordering::Relaxed)
             {
                 self.session.cancellation.notify_one();
             }
@@ -380,7 +382,7 @@ pub struct ServerFactory {
 
     /// If this is true the server will broadcast a shutdown signal once the
     /// last client disconnected
-    is_oneshot: bool,
+    stop_on_disconnect: bool,
     /// This shared flag is set to true once at least one sessions has been
     /// initialized on this server instance
     is_initialized: Arc<AtomicBool>,
@@ -421,13 +423,13 @@ macro_rules! workspace_method {
 }
 
 impl ServerFactory {
-    pub fn new(is_oneshot: bool) -> Self {
+    pub fn new(stop_on_disconnect: bool) -> Self {
         Self {
             cancellation: Arc::default(),
             workspace: None,
             sessions: Sessions::default(),
             next_session_key: AtomicU64::new(0),
-            is_oneshot,
+            stop_on_disconnect,
             is_initialized: Arc::default(),
         }
     }
@@ -451,7 +453,7 @@ impl ServerFactory {
             LSPServer::new(
                 handle,
                 self.sessions.clone(),
-                self.is_oneshot,
+                self.stop_on_disconnect,
                 self.is_initialized.clone(),
             )
         });

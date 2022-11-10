@@ -51,14 +51,14 @@ async fn try_connect() -> io::Result<UnixStream> {
 }
 
 /// Spawn the daemon server process in the background
-fn spawn_daemon(is_oneshot: bool) -> io::Result<Child> {
+fn spawn_daemon(stop_on_disconnect: bool) -> io::Result<Child> {
     let binary = env::current_exe()?;
 
     let mut cmd = Command::new(binary);
     cmd.arg("__run_server");
 
-    if is_oneshot {
-        cmd.arg("--oneshot");
+    if stop_on_disconnect {
+        cmd.arg("--stop-on-disconnect");
     }
 
     // Create a new session for the process and make it the leader, this will
@@ -106,7 +106,7 @@ pub(crate) async fn open_socket() -> io::Result<Option<(OwnedReadHalf, OwnedWrit
 ///
 /// Returns false if the daemon process was already running or true if it had
 /// to be started
-pub(crate) async fn ensure_daemon(is_oneshot: bool) -> io::Result<bool> {
+pub(crate) async fn ensure_daemon(stop_on_disconnect: bool) -> io::Result<bool> {
     let mut current_child: Option<Child> = None;
     let mut last_error = None;
 
@@ -144,7 +144,7 @@ pub(crate) async fn ensure_daemon(is_oneshot: bool) -> io::Result<bool> {
                 } else {
                     // Spawn the daemon process and wait a few milliseconds for
                     // it to become ready then retry the connection
-                    current_child = Some(spawn_daemon(is_oneshot)?);
+                    current_child = Some(spawn_daemon(stop_on_disconnect)?);
                     time::sleep(Duration::from_millis(50)).await;
                 }
             }

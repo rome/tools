@@ -63,10 +63,10 @@ pub(crate) fn stop(mut session: CliSession) -> Result<(), Termination> {
 pub(crate) fn run_server(mut session: CliSession) -> Result<(), Termination> {
     setup_tracing_subscriber();
 
-    let is_oneshot = session.args.contains("--oneshot");
+    let stop_on_disconnect = session.args.contains("--stop-on-disconnect");
 
     let rt = Runtime::new()?;
-    let factory = ServerFactory::new(is_oneshot);
+    let factory = ServerFactory::new(stop_on_disconnect);
     let cancellation = factory.cancellation();
     let span = debug_span!("Running Server", pid = std::process::id());
 
