@@ -1,8 +1,4 @@
-import {
-	createWorkspace,
-	createWorkspaceWithBinary,
-	Workspace,
-} from "@rometools/backend-jsonrpc";
+import type { Workspace } from "@rometools/backend-jsonrpc";
 
 /**
  * Class responsible to communicate with the Rome daemon.
@@ -20,6 +16,10 @@ export class Deamon {
 	 * It creates a new instance of a workspace connected to the Daemon
 	 */
 	public static async connectToDaemon(pathToBinary?: string): Promise<Deamon> {
+		const { createWorkspace, createWorkspaceWithBinary } = await import(
+			"@rometools/backend-jsonrpc",
+		);
+
 		if (pathToBinary) {
 			let workspace = await createWorkspaceWithBinary(pathToBinary);
 			if (workspace) {

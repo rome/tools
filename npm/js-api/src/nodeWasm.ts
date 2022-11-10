@@ -1,4 +1,4 @@
-import { main, Workspace } from "@rometools/wasm-nodejs";
+import type { Workspace } from "@rometools/wasm-nodejs";
 
 /**
  * Class responsible to connect with the WebAssembly backend of Rome.
@@ -13,13 +13,12 @@ export class NodeWasm {
 	 * It creates a new instance of a workspace connected to the WebAssembly backend
 	 */
 	public static async loadWebAssembly(): Promise<NodeWasm> {
-		return new NodeWasm(await NodeWasm.loadWorkspace());
-	}
+		const { main, Workspace } = await import("@rometools/wasm-nodejs");
 
-	private static async loadWorkspace(): Promise<Workspace> {
 		// load the web assembly module
 		main();
-		return Promise.resolve(new Workspace());
+
+		return new NodeWasm(new Workspace());
 	}
 }
 
