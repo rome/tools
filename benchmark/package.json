@@ -1,0 +1,17 @@
+{
+  "name": "benchmark",
+  "version": "1.0.0",
+  "description": "",
+  "main": "run.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@mixer/parallel-prettier": "^2.0.3",
+    "dprint": "^0.32.2",
+    "eslint": "^8.26.0",
+    "prettier": "^2.7.1"
+  }
+}

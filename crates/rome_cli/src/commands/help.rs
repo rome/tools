@@ -18,9 +18,10 @@ const MAIN: Markup = markup! {
     - "<Emphasis>"help"</Emphasis>"         Prints this help message
 
 "<Emphasis>"OPTIONS:"</Emphasis>"
-    "<Dim>"--no-colors"</Dim>"      Disable the formatting of markup (print everything as plain text)
-    "<Dim>"--use-server"</Dim>"     Connect to a running instance of the Rome daemon server
-    "<Dim>"--version"</Dim>"        Show the Rome version information and quit
+    "<Dim>"--no-colors"</Dim>"              Disable the formatting of markup (print everything as plain text)
+    "<Dim>"--use-server"</Dim>"             Connect to a running instance of the Rome daemon server
+    "<Dim>"--version"</Dim>"                Show the Rome version information and quit
+    "<Dim>"--files-max-size"</Dim>"         The maximum allowed size for source code files in bytes (default: 1MB)
 "
 };
 
@@ -35,7 +36,7 @@ const CHECK: Markup = markup! {
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--apply"</Dim>"                       Apply safe fixes
     "<Dim>"--apply-suggested"</Dim>"             Apply safe and suggested fixes
-    "<Dim>"--max-diagnostics"</Dim>"             Cap the amount of diagnostics displayed - default 20
+    "<Dim>"--max-diagnostics"</Dim>"             Cap the amount of diagnostics displayed (default: 20)
 "
 };
 
@@ -58,7 +59,10 @@ const CI: Markup = markup! {
 
     INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
 
-"<Emphasis>"OPTIONS:"</Emphasis>""
+"<Emphasis>"OPTIONS:"</Emphasis>"
+    "<Dim>"--formatter-enabled"</Dim>"                      Allow to enable or disable the formatter check. (default: true)
+    "<Dim>"--linter-enabled"</Dim>"                         Allow to enable or disable the linter check. (default: true)
+    "<Dim>"--max-diagnostics"</Dim>"                        Cap the amount of diagnostics displayed (default: 50)"
     {FORMAT_OPTIONS}
 };
 
@@ -72,7 +76,8 @@ const FORMAT: Markup = markup! {
 
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--write"</Dim>"                                  Edit the files in place (beware!) instead of printing the diff to the console
-    "<Dim>"--skip-errors"</Dim>"                            Skip over files containing syntax errors instead of emitting an error diagnostic."
+    "<Dim>"--skip-errors"</Dim>"                            Skip over files containing syntax errors instead of emitting an error diagnostic.
+    "<Dim>"--max-diagnostics"</Dim>"                        Cap the amount of diagnostics displayed (default: 50)"
     {FORMAT_OPTIONS}
    ""<Dim>"--stdin-file-path <string>"</Dim>"               A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js
 "

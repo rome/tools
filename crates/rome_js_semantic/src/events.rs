@@ -1,5 +1,6 @@
 //! Events emitted by the [SemanticEventExtractor] which are then constructed into the Semantic Model
 
+use rustc_hash::FxHashMap;
 use std::collections::{HashMap, VecDeque};
 
 use rome_js_syntax::{
@@ -158,7 +159,7 @@ pub struct SemanticEventExtractor {
     stash: VecDeque<SemanticEvent>,
     scopes: Vec<Scope>,
     next_scope_id: usize,
-    bindings: HashMap<SyntaxTokenText, TextRange>,
+    bindings: FxHashMap<SyntaxTokenText, TextRange>,
 }
 
 #[derive(Debug)]
@@ -233,7 +234,7 @@ impl SemanticEventExtractor {
             stash: VecDeque::new(),
             scopes: vec![],
             next_scope_id: 0,
-            bindings: HashMap::new(),
+            bindings: FxHashMap::default(),
         }
     }
 
@@ -369,6 +370,27 @@ impl SemanticEventExtractor {
                 let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
                 self.push_binding_into_scope(hoisted_scope_id, &name_token);
                 self.export_class_expression(node, &parent);
+            }
+            JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
+            | JS_OBJECT_BINDING_PATTERN_PROPERTY
+            | JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST => {
+                self.push_binding_into_scope(None, &name_token);
+
+                let possible_declarator = parent.ancestors().find(|x| {
+                    !matches!(
+                        x.kind(),
+                        JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
+                            | JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST
+                            | JS_OBJECT_BINDING_PATTERN_PROPERTY
+                            | JS_OBJECT_BINDING_PATTERN
+                            | JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST
+                            | JS_ARRAY_BINDING_PATTERN
+                    )
+                })?;
+
+                if let JS_VARIABLE_DECLARATOR = possible_declarator.kind() {
+                    self.export_variable_declarator(node, &possible_declarator);
+                }
             }
             TS_TYPE_ALIAS_DECLARATION => {
                 let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
@@ -541,7 +563,7 @@ impl SemanticEventExtractor {
     /// 1 - Match all references and declarations;
     /// 2 - Unmatched references are promoted to its parent scope or become [UnresolvedReference] events;
     /// 3 - All declarations of this scope are removed;
-    /// 4 - All shawed declarations are restored.
+    /// 4 - All shadowed declarations are restored.
     fn pop_scope(&mut self, range: TextRange) {
         debug_assert!(!self.scopes.is_empty());
 
@@ -819,7 +841,7 @@ impl SemanticEventExtractor {
         }
     }
 
-    // Check if a function is exported and raise the [Exported] event.
+    // Check if a variable is exported and raise the [Exported] event.
     fn export_variable_declarator(
         &mut self,
         binding: &JsSyntaxNode,

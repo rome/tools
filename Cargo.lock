@@ -1735,6 +1735,7 @@ dependencies = [
  "rome_markup",
  "rome_rowan",
  "rust-lapper",
+ "rustc-hash",
 ]
 
 [[package]]

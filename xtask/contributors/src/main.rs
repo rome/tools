@@ -9,7 +9,7 @@ use xtask::*;
 ///
 /// Only users that have read rights can run this script
 fn main() -> Result<()> {
-    let root = project_root().join("website/src/_includes");
+    let root = project_root().join("website/docs/src/_includes");
     let mut args = Arguments::from_env();
     let token: String = args.value_from_str("--token").unwrap();
     let contributors = get_contributors(&token);
@@ -21,7 +21,7 @@ fn main() -> Result<()> {
     content.push('\n');
     content.push_str("### Code contributors");
     content.push('\n');
-    content.push_str("<ul class=\"team-list credits\">");
+    content.push_str("<ul class=\"team-list contributors\">");
     for contributor in contributors {
         let mut contributor_html = String::new();
         let escaped_login = html_escape::encode_text(&contributor.login);
@@ -82,7 +82,7 @@ fn contributors_request(url: &str, token: &str, contributors: &mut Vec<Contribut
                     // SAFETY: checked before
                     let end_index = link.find("; rel=\"next\"").unwrap();
                     let url = &link[start_index..end_index];
-                    let url = url.replace('<', "").replace('>', "");
+                    let url = url.replace(['<', '>'], "");
 
                     contributors_request(&url, token, contributors);
                 }

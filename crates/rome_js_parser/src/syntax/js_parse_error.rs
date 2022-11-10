@@ -147,8 +147,8 @@ pub(crate) fn duplicate_assertion_keys_error(
     first_use: TextRange,
     duplicate_range: TextRange,
 ) -> ParseDiagnostic {
-    p.err_builder("Duplicate assertion keys are not allowed", &first_use)
-        .detail(&first_use, format!("First use of the key `{}`", key))
+    p.err_builder("Duplicate assertion keys are not allowed", first_use)
+        .detail(first_use, format!("First use of the key `{}`", key))
         .detail(duplicate_range, "second use here")
 }
 

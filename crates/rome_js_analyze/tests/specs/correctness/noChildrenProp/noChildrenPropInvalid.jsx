@@ -1,3 +1,5 @@
+import { createElement as aliased } from "react";
+
 <>
     <Component children={'foo'}></Component>
 </>
@@ -8,4 +10,9 @@ createElement('div', {
 
 React.createElement('div', {
     children: 'foo'
+})
+
+
+aliased('div', {
+	children: 'foo'
 })

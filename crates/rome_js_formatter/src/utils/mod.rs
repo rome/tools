@@ -2,6 +2,7 @@ pub(crate) mod array;
 mod assignment_like;
 mod binary_like_expression;
 mod conditional;
+pub mod number_utils;
 pub mod string_utils;
 
 pub(crate) mod format_class;
@@ -124,7 +125,15 @@ impl<'a> FormatInterpreterToken<'a> {
 impl Format<JsFormatContext> for FormatInterpreterToken<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         if let Some(interpreter) = self.token {
-            write!(f, [interpreter.format(), empty_line()])
+            write!(f, [interpreter.format()])?;
+
+            match interpreter
+                .next_token()
+                .map_or(0, |next_token| get_lines_before_token(&next_token))
+            {
+                0 | 1 => write!(f, [hard_line_break()]),
+                _ => write!(f, [empty_line()]),
+            }
         } else {
             Ok(())
         }

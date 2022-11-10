@@ -15,7 +15,7 @@ import {
 	ServerOptions,
 	StreamInfo,
 } from "vscode-languageclient/node";
-import { join, isAbsolute } from "path";
+import { isAbsolute, join } from "path";
 import { existsSync } from "fs";
 import { setContextValue } from "./utils";
 import { Session } from "./session";
@@ -89,13 +89,14 @@ export async function activate(context: ExtensionContext) {
 
 	context.subscriptions.push(
 		client.onDidChangeState((evt) => {
-			statusBar.setServerState(evt.newState);
+			statusBar.setServerState(client, evt.newState);
 		}),
 	);
 
 	const handleActiveTextEditorChanged = (textEditor?: TextEditor) => {
 		if (!textEditor) {
 			statusBar.setActive(false);
+			return;
 		}
 
 		const { document } = textEditor;
@@ -107,7 +108,6 @@ export async function activate(context: ExtensionContext) {
 	);
 
 	handleActiveTextEditorChanged(window.activeTextEditor);
-
 	client.start();
 }
 

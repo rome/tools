@@ -184,7 +184,7 @@ impl Env {
                 pushenv_stack: vec![],
             });
         }
-        ENV.with(|it| f(&mut *it.borrow_mut()))
+        ENV.with(|it| f(&mut it.borrow_mut()))
     }
 
     fn pushd(&mut self, dir: PathBuf) {

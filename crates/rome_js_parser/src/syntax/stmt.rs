@@ -1658,7 +1658,7 @@ fn parse_switch_clause(p: &mut Parser, first_default: &mut Option<TextRange>) ->
                     )
                     .detail(default.range(p), "a second clause here is not allowed")
                     .detail(
-                        &*first_default_range,
+                        *first_default_range,
                         "the first default clause is defined here",
                     );
 
@@ -1692,7 +1692,7 @@ impl ParseNodeList for SwitchCasesList {
         let clause = parse_switch_clause(p, &mut self.first_default);
 
         if let Present(marker) = &clause {
-            if marker.kind() == JS_DEFAULT_CLAUSE && self.first_default == None {
+            if marker.kind() == JS_DEFAULT_CLAUSE && self.first_default.is_none() {
                 self.first_default = Some(marker.range(p));
             }
         }

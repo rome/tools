@@ -12,7 +12,8 @@ use rome_formatter::{format_args, format_element, write, VecBuffer};
 use rome_js_syntax::{
     JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody, JsAnyLiteralExpression, JsAnyStatement,
     JsCallArgumentList, JsCallArguments, JsCallArgumentsFields, JsCallExpression,
-    JsExpressionStatement, JsFunctionExpression, JsLanguage, TsAnyReturnType, TsType,
+    JsExpressionStatement, JsFunctionExpression, JsImportCallExpression, JsLanguage,
+    TsAnyReturnType, TsType,
 };
 use rome_rowan::{AstSeparatedElement, AstSeparatedList, SyntaxResult};
 
@@ -99,6 +100,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                     l_paren: &l_paren_token.format(),
                     args: &arguments,
                     r_paren: &r_paren_token.format(),
+                    node,
                     expand: true,
                 }]
             );
@@ -124,7 +126,8 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                     l_paren: &l_paren_token.format(),
                     args: &arguments,
                     r_paren: &r_paren_token.format(),
-                    expand: false
+                    node,
+                    expand: false,
                 }]
             )
         }
@@ -344,7 +347,8 @@ fn write_grouped_arguments(
                     l_paren: &l_paren_token.format(),
                     args: &arguments,
                     r_paren: &r_paren_token.format(),
-                    expand: true
+                    node: call_arguments,
+                    expand: true,
                 }]
             );
         }
@@ -385,7 +389,8 @@ fn write_grouped_arguments(
                 l_paren: &l_paren,
                 args: &arguments,
                 r_paren: &r_paren,
-                expand: true
+                node: call_arguments,
+                expand: true,
             }]
         )?;
         buffer.write_element(FormatElement::Tag(Tag::EndEntry))?;
@@ -703,10 +708,13 @@ struct FormatAllArgsBrokenOut<'a> {
     args: &'a [FormatCallArgument],
     r_paren: &'a dyn Format<JsFormatContext>,
     expand: bool,
+    node: &'a JsCallArguments,
 }
 
 impl<'a> Format<JsFormatContext> for FormatAllArgsBrokenOut<'a> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        let is_inside_import = self.node.parent::<JsImportCallExpression>().is_some();
+
         write!(
             f,
             [group(&format_args![
@@ -723,7 +731,10 @@ impl<'a> Format<JsFormatContext> for FormatAllArgsBrokenOut<'a> {
                         write!(f, [entry])?;
                     }
 
-                    write!(f, [FormatTrailingComma::All])
+                    if !is_inside_import {
+                        write!(f, [FormatTrailingComma::All])?;
+                    }
+                    Ok(())
                 })),
                 self.r_paren,
             ])

@@ -1,15 +1,18 @@
 mod closure;
+mod is_constant;
 
 use crate::{SemanticEvent, SemanticEventExtractor};
 pub use closure::*;
 use rome_js_syntax::{
-    JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier,
-    JsSyntaxKind, JsSyntaxNode, JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
+    JsAnyExpression, JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage,
+    JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode, JsxReferenceIdentifier, TextRange, TextSize,
+    TsIdentifierBinding,
 };
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
+use rustc_hash::{FxHashMap, FxHashSet};
 use std::{
-    collections::{BTreeSet, HashMap, HashSet, VecDeque},
+    collections::{BTreeSet, HashSet, VecDeque},
     iter::FusedIterator,
     sync::Arc,
 };
@@ -110,7 +113,7 @@ struct SemanticModelScopeData {
     // All bindings of this scope
     bindings: Vec<TextRange>,
     // Map pointing to the [bindings] vec  of each bindings by its name
-    bindings_by_name: HashMap<SyntaxTokenText, usize>,
+    bindings_by_name: FxHashMap<SyntaxTokenText, usize>,
     // All read references of a scope
     read_references: Vec<ScopeReference>,
     // All write references of a scope
@@ -128,19 +131,19 @@ struct SemanticModelData {
     scopes: Vec<SemanticModelScopeData>,
     scope_by_range: rust_lapper::Lapper<usize, usize>,
     // Maps the start of a node range to a scope id
-    scope_hoisted_to_by_range: HashMap<TextSize, usize>,
+    scope_hoisted_to_by_range: FxHashMap<TextSize, usize>,
     // Map to each by its range
-    node_by_range: HashMap<TextRange, JsSyntaxNode>,
+    node_by_range: FxHashMap<TextRange, JsSyntaxNode>,
     // Maps any range in the code to its declaration
-    declared_at_by_range: HashMap<TextRange, TextRange>,
+    declared_at_by_range: FxHashMap<TextRange, TextRange>,
     // Maps a declaration range to the range of its references
-    declaration_all_references: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    declaration_all_references: FxHashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     // Maps a declaration range to the range of its "reads"
-    declaration_all_reads: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    declaration_all_reads: FxHashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     // Maps a declaration range to the range of its "writes"
-    declaration_all_writes: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    declaration_all_writes: FxHashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     // All bindings that were exported
-    exported: HashSet<TextRange>,
+    exported: FxHashSet<TextRange>,
     /// All references that could not be resolved
     unresolved_references: Vec<(ReferenceType, TextRange)>,
     /// All references that are resolved to globals
@@ -333,7 +336,7 @@ impl Scope {
     }
 
     /// Return the [Closure] associated with this scope if
-    /// it has one, otherwise returns None.  
+    /// it has one, otherwise returns None.
     /// See [HasClosureAstNode] for nodes that have closure.
     pub fn closure(&self) -> Option<Closure> {
         Closure::from_scope(self.data.clone(), self.id, self.range())
@@ -788,6 +791,12 @@ impl SemanticModel {
     pub fn closure(&self, node: &impl HasClosureAstNode) -> Closure {
         Closure::from_node(self.data.clone(), node)
     }
+
+    /// Returns true or false if the expression is constant, which
+    /// means it does not depend on any other variables.
+    pub fn is_constant(&self, expr: &JsAnyExpression) -> bool {
+        is_constant::is_constant(expr)
+    }
 }
 
 // Extensions
@@ -874,16 +883,16 @@ impl<T: HasClosureAstNode> ClosureExtensions for T {}
 /// and stored inside the [SemanticModel].
 pub struct SemanticModelBuilder {
     root: JsAnyRoot,
-    node_by_range: HashMap<TextRange, JsSyntaxNode>,
-    globals: HashSet<String>,
+    node_by_range: FxHashMap<TextRange, JsSyntaxNode>,
+    globals: FxHashSet<String>,
     scopes: Vec<SemanticModelScopeData>,
-    scope_range_by_start: HashMap<TextSize, BTreeSet<Interval<usize, usize>>>,
-    scope_hoisted_to_by_range: HashMap<TextSize, usize>,
-    declarations_by_range: HashMap<TextRange, TextRange>,
-    declaration_all_references: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
-    declaration_all_reads: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
-    declaration_all_writes: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
-    exported: HashSet<TextRange>,
+    scope_range_by_start: FxHashMap<TextSize, BTreeSet<Interval<usize, usize>>>,
+    scope_hoisted_to_by_range: FxHashMap<TextSize, usize>,
+    declarations_by_range: FxHashMap<TextRange, TextRange>,
+    declaration_all_references: FxHashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    declaration_all_reads: FxHashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    declaration_all_writes: FxHashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    exported: FxHashSet<TextRange>,
     unresolved_references: Vec<(ReferenceType, TextRange)>,
     global_references: Vec<(ReferenceType, TextRange)>,
 }
@@ -892,16 +901,16 @@ impl SemanticModelBuilder {
     pub fn new(root: JsAnyRoot) -> Self {
         Self {
             root,
-            node_by_range: HashMap::new(),
-            globals: HashSet::new(),
+            node_by_range: FxHashMap::default(),
+            globals: FxHashSet::default(),
             scopes: vec![],
-            scope_range_by_start: HashMap::new(),
-            scope_hoisted_to_by_range: HashMap::new(),
-            declarations_by_range: HashMap::new(),
-            declaration_all_references: HashMap::new(),
-            declaration_all_reads: HashMap::new(),
-            declaration_all_writes: HashMap::new(),
-            exported: HashSet::new(),
+            scope_range_by_start: FxHashMap::default(),
+            scope_hoisted_to_by_range: FxHashMap::default(),
+            declarations_by_range: FxHashMap::default(),
+            declaration_all_references: FxHashMap::default(),
+            declaration_all_reads: FxHashMap::default(),
+            declaration_all_writes: FxHashMap::default(),
+            exported: FxHashSet::default(),
             unresolved_references: Vec::new(),
             global_references: Vec::new(),
         }
@@ -934,7 +943,7 @@ impl SemanticModelBuilder {
                     parent: parent_scope_id,
                     children: vec![],
                     bindings: vec![],
-                    bindings_by_name: HashMap::new(),
+                    bindings_by_name: FxHashMap::default(),
                     read_references: vec![],
                     write_references: vec![],
                 });
@@ -1419,6 +1428,14 @@ mod test {
         assert_is_exported(true, "A", "enum A {}; module.exports = A");
         assert_is_exported(true, "A", "enum A {}; exports = A");
         assert_is_exported(true, "A", "enum A {}; exports.A = A");
+
+        // Object and Array bindings
+        assert_is_exported(true, "A", "export const { A } = a;");
+        assert_is_exported(true, "b", "export const { A: b } = a;");
+        assert_is_exported(true, "A", "export const [ A ] = a;");
+        assert_is_exported(true, "A", "export const [{ A }] = a;");
+        assert_is_exported(true, "D", "export const [{ C: [ D ] }] = a;");
+        assert_is_exported(true, "E", "export const [{ C: [{ E }] }] = a;");
     }
 
     #[test]

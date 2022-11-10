@@ -47,7 +47,7 @@ where
     for diagnostic in program.diagnostics() {
         let error = diagnostic
             .clone()
-            .with_file_path(&path.to_str().unwrap())
+            .with_file_path(path.to_str().unwrap())
             .with_file_source_code(syntax.to_string());
         Formatter::new(&mut Termcolor(&mut buffer))
             .write_markup(markup! {

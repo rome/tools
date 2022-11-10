@@ -29,7 +29,6 @@ Trailing comma: All
 
 ```js
 #!/usr/bin/env node
-
 console.log(1);
 
 console.log(1);

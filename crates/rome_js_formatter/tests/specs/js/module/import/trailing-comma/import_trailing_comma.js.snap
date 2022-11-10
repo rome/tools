@@ -17,6 +17,26 @@ import {
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd, } from "W";
 
+const StandaloneBackendWASMModule = await import(/* webpackChunkName: "standalone" */'./StandaloneBackendWASM');
+
+const StandaloneBackendWASMModule = await import(/* webpackChunkName: "standalone" */'./StandaloneBackendWASM',
+	/* webpackChunkName: "standalone" */'./StandaloneBackendWASM');
+
+import(
+	'myreallylongdynamicallyloadedmodulenamemyreallylongdynamicallyloadedmodulename'
+	);
+
+import(/* Hello */ "something");
+import("something" /* Hello */);
+import(/* Hello */ "something" /* Hello */);
+import("something" /* Hello */ + "else");
+import(
+	/* Hello */
+	"something",
+	/* Hello */
+	);
+wrap(import(/* Hello */ "something"));
+
 ```
 
 
@@ -46,6 +66,35 @@ import {
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd,
 } from "W";
+
+const StandaloneBackendWASMModule = await import(
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM"
+);
+
+const StandaloneBackendWASMModule = await import(
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM",
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM"
+);
+
+import(
+	"myreallylongdynamicallyloadedmodulenamemyreallylongdynamicallyloadedmodulename"
+);
+
+import(/* Hello */ "something");
+import("something" /* Hello */);
+import(/* Hello */ "something" /* Hello */);
+import("something" /* Hello */ + "else");
+import(
+	/* Hello */
+	"something"
+	/* Hello */
+);
+wrap(import(/* Hello */ "something"));
+
+
+## Lines exceeding width of 80 characters
+
+   23: 	"myreallylongdynamicallyloadedmodulenamemyreallylongdynamicallyloadedmodulename"
 ```
 
 ## Output 2
@@ -70,6 +119,35 @@ import {
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd,
 } from "W";
+
+const StandaloneBackendWASMModule = await import(
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM"
+);
+
+const StandaloneBackendWASMModule = await import(
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM",
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM"
+);
+
+import(
+	"myreallylongdynamicallyloadedmodulenamemyreallylongdynamicallyloadedmodulename"
+);
+
+import(/* Hello */ "something");
+import("something" /* Hello */);
+import(/* Hello */ "something" /* Hello */);
+import("something" /* Hello */ + "else");
+import(
+	/* Hello */
+	"something"
+	/* Hello */
+);
+wrap(import(/* Hello */ "something"));
+
+
+## Lines exceeding width of 80 characters
+
+   23: 	"myreallylongdynamicallyloadedmodulenamemyreallylongdynamicallyloadedmodulename"
 ```
 
 ## Output 3
@@ -94,6 +172,35 @@ import {
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd
 } from "W";
+
+const StandaloneBackendWASMModule = await import(
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM"
+);
+
+const StandaloneBackendWASMModule = await import(
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM",
+	/* webpackChunkName: "standalone" */ "./StandaloneBackendWASM"
+);
+
+import(
+	"myreallylongdynamicallyloadedmodulenamemyreallylongdynamicallyloadedmodulename"
+);
+
+import(/* Hello */ "something");
+import("something" /* Hello */);
+import(/* Hello */ "something" /* Hello */);
+import("something" /* Hello */ + "else");
+import(
+	/* Hello */
+	"something"
+	/* Hello */
+);
+wrap(import(/* Hello */ "something"));
+
+
+## Lines exceeding width of 80 characters
+
+   23: 	"myreallylongdynamicallyloadedmodulenamemyreallylongdynamicallyloadedmodulename"
 ```
 
 

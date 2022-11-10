@@ -78,7 +78,7 @@ impl Configuration {
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct FilesConfiguration {
     /// The maximum allowed size for source code files in bytes. Files above
-    /// this limit will be ignore for performance reason. Defaults to 1 MiB
+    /// this limit will be ignored for performance reason. Defaults to 1 MiB
     pub max_size: Option<NonZeroU64>,
 }
 

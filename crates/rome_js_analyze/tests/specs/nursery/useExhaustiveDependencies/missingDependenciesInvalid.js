@@ -1,7 +1,8 @@
 function MyComponent() {
-    let local = 1;
+    let a = 1;
+    const b = a + 1;
     useEffect(() => {
-      console.log(local);
+      console.log(a, b);
     });
   }
 
