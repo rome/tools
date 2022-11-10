@@ -91,6 +91,7 @@ jobs:
 
   documentation:
     name: Documentation
+    environment: netlify-rustdocs
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
