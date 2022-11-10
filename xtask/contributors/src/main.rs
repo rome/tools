@@ -9,7 +9,7 @@ use xtask::*;
 ///
 /// Only users that have read rights can run this script
 fn main() -> Result<()> {
-    let root = project_root().join("website/docs/src/components");
+    let root = project_root().join("website/docs/src/_includes");
     let mut args = Arguments::from_env();
     let token: String = args.value_from_str("--token").unwrap();
     let contributors = get_contributors(&token);
@@ -17,13 +17,9 @@ fn main() -> Result<()> {
     let mut content = String::new();
 
     let command = "Use the command `cargo contributors`".to_string();
-    write!(
-        content,
-        "{{/** {} */}}",
-        prepend_generated_preamble(command)
-    )?;
+    write!(content, "<!-- {} -->", prepend_generated_preamble(command))?;
     content.push('\n');
-    content.push_str("<h3>Code contributors</h3>");
+    content.push_str("### Code contributors");
     content.push('\n');
     content.push_str("<ul class=\"team-list contributors\">");
     for contributor in contributors {
@@ -49,7 +45,7 @@ fn main() -> Result<()> {
     }
 
     content.push_str("</ul>");
-    fs2::write(root.join("Contributors.astro"), content)?;
+    fs2::write(root.join("contributors.md"), content)?;
 
     Ok(())
 }
