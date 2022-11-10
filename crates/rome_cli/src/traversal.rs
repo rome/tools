@@ -85,7 +85,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
     let max_diagnostics = execution.get_max_diagnostics();
     let remaining_diagnostics = AtomicU16::new(max_diagnostics);
 
-    let mut has_errors = false;
+    let mut errors: usize = 0;
     let mut report = Report::default();
 
     let duration = thread::scope(|s| {
@@ -100,7 +100,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
                     recv_msgs,
                     max_diagnostics,
                     remaining_diagnostics: &remaining_diagnostics,
-                    has_errors: &mut has_errors,
+                    errors: &mut errors,
                     report: &mut report,
                 });
             })
@@ -182,8 +182,8 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
     }
 
     // Processing emitted error diagnostics, exit with a non-zero code
-    if has_errors {
-        Err(Termination::CheckError)
+    if errors > 0 {
+        Err(Termination::CheckError(errors))
     } else {
         Ok(())
     }
@@ -234,7 +234,7 @@ struct ProcessMessagesOptions<'ctx> {
     remaining_diagnostics: &'ctx AtomicU16,
     /// Mutable reference to a boolean flag tracking whether the console thread
     /// printed any error-level message
-    has_errors: &'ctx mut bool,
+    errors: &'ctx mut usize,
     /// Mutable handle to a [Report] instance the console thread should write
     /// stats into
     report: &'ctx mut Report,
@@ -302,7 +302,7 @@ fn process_messages(options: ProcessMessagesOptions) {
         recv_msgs,
         max_diagnostics,
         remaining_diagnostics,
-        has_errors,
+        errors,
         report,
     } = options;
 
@@ -430,7 +430,10 @@ fn process_messages(options: ProcessMessagesOptions) {
                 // is CI mode we want to print all the diagnostics
                 if mode.is_ci() {
                     for diag in diagnostics {
-                        *has_errors |= diag.severity() == Severity::Error;
+                        if diag.severity() == Severity::Error {
+                            *errors += 1;
+                        }
+
                         let diag = diag.with_file_path(&name).with_file_source_code(&content);
                         console.error(markup! {
                             {PrintDiagnostic(&diag)}
@@ -439,7 +442,9 @@ fn process_messages(options: ProcessMessagesOptions) {
                 } else {
                     for diag in diagnostics {
                         let severity = diag.severity();
-                        *has_errors |= severity == Severity::Error;
+                        if severity == Severity::Error {
+                            *errors += 1;
+                        }
 
                         let should_print = printed_diagnostics < max_diagnostics;
                         if should_print {
@@ -481,7 +486,7 @@ fn process_messages(options: ProcessMessagesOptions) {
             } => {
                 if mode.is_ci() {
                     // A diff is an error in CI mode
-                    *has_errors = true;
+                    *errors += 1;
                 }
 
                 let should_print = printed_diagnostics < max_diagnostics;
@@ -788,9 +793,9 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             .with_file_id_and_code(file_id, category!("lint"))?;
 
         // In formatting mode, abort immediately if the file has errors
-        let has_errors = result.has_errors;
+        let errors = result.errors;
         match ctx.execution.traversal_mode() {
-            TraversalMode::Format { ignore_errors, .. } if has_errors => {
+            TraversalMode::Format { ignore_errors, .. } if errors > 0 => {
                 return Err(if *ignore_errors {
                     Message::from(SkippedDiagnostic.with_file_path(file_id))
                 } else {
@@ -820,7 +825,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             })
         };
 
-        if has_errors {
+        if errors > 0 {
             // Having errors is considered a "success" at this point because
             // this is only reachable on the check / CI path (the parser result
             // is checked for errors earlier on the format path, and that mode

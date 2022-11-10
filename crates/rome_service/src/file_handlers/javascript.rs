@@ -217,9 +217,9 @@ fn lint(params: LintParams) -> LintResults {
     let analyzer_options = compute_analyzer_options(&params.settings);
 
     let mut diagnostic_count = diagnostics.len() as u64;
-    let mut has_errors = diagnostics
+    let mut errors = diagnostics
         .iter()
-        .any(|diag| diag.severity() <= v2::Severity::Error);
+        .filter(|diag| diag.severity() <= v2::Severity::Error).count();
 
     analyze(file_id, &tree, params.filter, &analyzer_options, |signal| {
         if let Some(mut diagnostic) = signal.diagnostic() {
@@ -234,7 +234,7 @@ fn lint(params: LintParams) -> LintResults {
                 .unwrap_or(v2::Severity::Error);
 
             if severity <= v2::Severity::Error {
-                has_errors = true;
+                errors += 1;
             }
 
             if diagnostic_count <= params.max_diagnostics {
@@ -255,7 +255,7 @@ fn lint(params: LintParams) -> LintResults {
 
     LintResults {
         diagnostics,
-        has_errors,
+        errors,
         skipped_diagnostics,
     }
 }

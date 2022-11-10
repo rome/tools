@@ -54,8 +54,8 @@ pub enum Termination {
     IncompatibleArguments(&'static str, &'static str),
 
     /// Returned by a traversal command when error diagnostics were emitted
-    #[error("errors where emitted while running checks")]
-    CheckError,
+    #[error("{0} errors were emitted while running checks")]
+    CheckError(usize),
 
     #[error("the value of the argument {0} is too high, maximum accepted {1}")]
     OverflowNumberArgument(&'static str, u16),
