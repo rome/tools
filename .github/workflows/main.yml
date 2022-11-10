@@ -95,6 +95,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      - name: Install netlify-cli
+        run: npm i -g netlify-cli
       - name: Install toolchain
         run: rustup show
       - name: Cache
@@ -106,10 +108,8 @@ jobs:
         with:
           command: documentation
       - name: Deploy documentation
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./target/doc
+        run: |
+          netlify deploy --dir=./target/doc --prod --site rustdocs-rometools --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
 
   coverage:
     name: Test262 Coverage
