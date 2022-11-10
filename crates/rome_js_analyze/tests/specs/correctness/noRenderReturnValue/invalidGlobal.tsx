@@ -1,4 +1,3 @@
-// invalid
 const a = ReactDOM.render(<div />, document.body);
 const foo = bar && ReactDOM.render(<div />, document.body);
 const foo = bar ? ReactDOM.render(<div />, document.body) : null
@@ -8,16 +7,6 @@ const foo = {
 };
 let lorem;
 lorem = ReactDOM.render(<div />, document.body);
-function render () {
+function render() {
     return ReactDOM.render(<div />, document.body)
 }
-
-// valid
-ReactDOM.render(<div />, document.body);
-function render () {
-    ReactDOM.render(<div />, document.body);
-}
-const render = () => {
-    ReactDOM.render(<div />, document.body);
-}
-

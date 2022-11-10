@@ -144,7 +144,7 @@ pub fn ok_find_attributes_by_name() {
         .descendants()
         .find_map(rome_js_syntax::JsxAttributeList::cast)
         .unwrap();
-    let [a, c, d] = list.find_attributes_by_name(["a", "c", "d"]);
+    let [a, c, d] = list.find_by_names(["a", "c", "d"]);
     assert_eq!(
         a.unwrap()
             .initializer()

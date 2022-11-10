@@ -9,6 +9,7 @@ use std::{env, io, ops::Deref};
 use tokio::runtime::Runtime;
 
 use crate::commands::daemon::read_most_recent_log_file;
+use crate::service::enumerate_pipes;
 use crate::{service, CliSession, Termination, VERSION};
 
 /// Handler for the `rage` command
@@ -85,38 +86,71 @@ struct RunningRomeServer;
 
 impl Display for RunningRomeServer {
     fn fmt(&self, f: &mut Formatter) -> io::Result<()> {
-        let runtime = Runtime::new()?;
-
-        match service::open_transport(runtime) {
-            Ok(None) => {
-                return markup!(
-                    {Section("Server")}
-                    {KeyValuePair("Status", markup!(<Dim>"stopped"</Dim>))}
-                )
-                .fmt(f);
+        let versions = match enumerate_pipes() {
+            Ok(iter) => iter,
+            Err(err) => {
+                (markup! {<Error>"\u{2716} Enumerating Rome instances failed:"</Error>}).fmt(f)?;
+                return writeln!(f, " {err}");
             }
-            Ok(Some(transport)) => {
-                markup!("\n"<Emphasis>"Running Rome Server:"</Emphasis>" "{HorizontalLine::new(78)}"
+        };
+
+        for version in versions {
+            if version == rome_service::VERSION {
+                let runtime = Runtime::new()?;
+                match service::open_transport(runtime) {
+                    Ok(None) => {
+                        markup!(
+                            {Section("Server")}
+                            {KeyValuePair("Status", markup!(<Dim>"stopped"</Dim>))}
+                        )
+                        .fmt(f)?;
+                        continue;
+                    }
+                    Ok(Some(transport)) => {
+                        markup!("\n"<Emphasis>"Running Rome Server:"</Emphasis>" "{HorizontalLine::new(78)}"
 
 "<Info>"\u{2139} The client isn't connected to any server but rage discovered this running Rome server."</Info>"
 ")
                 .fmt(f)?;
 
-                match client(transport) {
-                    Ok(client) => WorkspaceRage(client.deref()).fmt(f)?,
+                        match client(transport) {
+                            Ok(client) => WorkspaceRage(client.deref()).fmt(f)?,
+                            Err(err) => {
+                                markup!(<Error>"\u{2716} Failed to connect: "</Error>).fmt(f)?;
+                                writeln!(f, "{err}")?;
+                            }
+                        }
+                    }
                     Err(err) => {
-                        markup!(<Error>"\u{2716} Failed to connect: "</Error>).fmt(f)?;
+                        markup!("\n"<Error>"\u{2716} Failed to connect: "</Error>).fmt(f)?;
                         writeln!(f, "{err}")?;
                     }
                 }
-            }
-            Err(err) => {
-                markup!("\n"<Error>"\u{2716} Failed to connect: "</Error>).fmt(f)?;
-                writeln!(f, "{err}")?;
-            }
-        };
 
-        RomeServerLog.fmt(f)
+                RomeServerLog.fmt(f)?;
+            } else {
+                markup!("\n"<Emphasis>"Incompatible Rome Server:"</Emphasis>" "{HorizontalLine::new(78)}"
+
+"<Info>"\u{2139} Rage discovered this running server using an incompatible version of Rome."</Info>"
+")
+        .fmt(f)?;
+
+                // Version 10.0.0 and below did not include a service version in the pipe name
+                let version = if version.is_empty() {
+                    "<=10.0.0"
+                } else {
+                    version.as_str()
+                };
+
+                markup!(
+                    {Section("Server")}
+                    {KeyValuePair("Version", markup!({version}))}
+                )
+                .fmt(f)?;
+            }
+        }
+
+        Ok(())
     }
 }
 
