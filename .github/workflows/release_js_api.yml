@@ -104,7 +104,7 @@ jobs:
         working-directory: npm/js-api
         run: |
           pnpm i
-          pnpm build          
+          pnpm build
 
       - name: Upload JS API artifact
         uses: actions/upload-artifact@v3
@@ -133,6 +133,11 @@ jobs:
         with:
           node-version: 14.x
           registry-url: 'https://registry.npmjs.org'
+      - name: List dir
+        run: ls npm/js-api
+
+      - name: Exit
+        run: exit 1
 
       - name: Set release infos
         if: needs.build.outputs.prerelease == 'true'
