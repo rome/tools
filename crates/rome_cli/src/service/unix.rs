@@ -25,7 +25,7 @@ fn get_socket_name() -> PathBuf {
 }
 
 pub(crate) fn enumerate_pipes() -> io::Result<impl Iterator<Item = String>> {
-    read_dir(env::temp_dir()).map(|iter| {
+    fs::read_dir(env::temp_dir()).map(|iter| {
         iter.filter_map(|entry| {
             let entry = entry.ok()?.path();
             let file_name = entry.file_name()?;
