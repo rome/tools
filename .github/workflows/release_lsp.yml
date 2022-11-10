@@ -113,8 +113,10 @@ jobs:
 
       - name: Install Rustup
         if: matrix.code-target == 'linux-x64'
-        run: which rustup || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-
+        run: |
+          which rustup || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source "$HOME/.cargo/env"
+      
       - name: Install Rust toolchain
         run: rustup target add ${{ matrix.target }}
 
