@@ -1,6 +1,6 @@
 import { NodeWasm } from "./nodeWasm";
 import { Deamon } from "./daemon";
-import { Diagnostic, Configuration } from "@rometools/backend-jsonrpc";
+import type { Diagnostic, Configuration } from "@rometools/backend-jsonrpc";
 import { createError } from "./utils";
 
 // Re-export of some useful types for users
