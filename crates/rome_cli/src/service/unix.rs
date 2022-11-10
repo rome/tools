@@ -21,7 +21,24 @@ use tracing::Instrument;
 /// Returns the filesystem path of the global socket used to communicate with
 /// the server daemon
 fn get_socket_name() -> PathBuf {
-    env::temp_dir().join("rome-socket")
+    env::temp_dir().join(format!("rome-socket-{}", rome_service::VERSION))
+}
+
+pub(crate) fn enumerate_pipes() -> io::Result<impl Iterator<Item = String>> {
+    fs::read_dir(env::temp_dir()).map(|iter| {
+        iter.filter_map(|entry| {
+            let entry = entry.ok()?.path();
+            let file_name = entry.file_name()?;
+            let file_name = file_name.to_str()?;
+
+            let rome_version = file_name.strip_prefix("rome-socket")?;
+            if rome_version.is_empty() {
+                Some(String::new())
+            } else {
+                Some(rome_version.strip_prefix('-')?.to_string())
+            }
+        })
+    })
 }
 
 /// Try to connect to the global socket and wait for the connection to become ready
