@@ -21,7 +21,7 @@ use tracing::Instrument;
 /// Returns the filesystem path of the global socket used to communicate with
 /// the server daemon
 fn get_socket_name() -> PathBuf {
-    env::temp_dir().join("rome-socket")
+    env::temp_dir().join(format!("rome-socket-{}", rome_service::VERSION))
 }
 
 /// Try to connect to the global socket and wait for the connection to become ready

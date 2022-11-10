@@ -19,8 +19,11 @@ use tokio::{
 };
 use tracing::Instrument;
 
-/// Name of the global named pipe used to communicate with the server daemon
-const PIPE_NAME: &str = r"\\.\pipe\rome-service";
+/// Returns the name of the global named pipe used to communicate with the
+/// server daemon
+fn get_pipe_name() -> String {
+    format!(r"\\.\pipe\rome-service-{}", rome_service::VERSION)
+}
 
 /// Error code from the Win32 API
 const ERROR_PIPE_BUSY: i32 = 231;
@@ -28,7 +31,7 @@ const ERROR_PIPE_BUSY: i32 = 231;
 /// Try to connect to the global pipe and wait for the connection to become ready
 async fn try_connect() -> io::Result<NamedPipeClient> {
     loop {
-        match ClientOptions::new().open(PIPE_NAME) {
+        match ClientOptions::new().open(get_pipe_name()) {
             Ok(client) => return Ok(client),
             // If the connection failed with ERROR_PIPE_BUSY, wait a few
             // milliseconds then retry the connection (we should be using
@@ -165,7 +168,7 @@ pub(crate) async fn ensure_daemon() -> io::Result<bool> {
 /// print the global pipe name in the standard output
 pub(crate) async fn print_socket() -> io::Result<()> {
     ensure_daemon().await?;
-    println!("{PIPE_NAME}");
+    println!("{}", get_pipe_name());
     Ok(())
 }
 
@@ -174,11 +177,11 @@ pub(crate) async fn print_socket() -> io::Result<()> {
 pub(crate) async fn run_daemon(factory: ServerFactory) -> io::Result<Infallible> {
     let mut prev_server = ServerOptions::new()
         .first_pipe_instance(true)
-        .create(PIPE_NAME)?;
+        .create(get_pipe_name())?;
 
     loop {
         prev_server.connect().await?;
-        let mut next_server = ServerOptions::new().create(PIPE_NAME)?;
+        let mut next_server = ServerOptions::new().create(get_pipe_name())?;
         swap(&mut prev_server, &mut next_server);
 
         let connection = factory.create();
