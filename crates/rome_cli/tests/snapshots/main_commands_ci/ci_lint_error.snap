@@ -12,7 +12,7 @@ for(;true;);
 # Termination Message
 
 ```block
-errors where emitted while running checks
+2 errors were emitted while running checks
 ```
 
 # Emitted Messages

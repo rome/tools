@@ -25,7 +25,7 @@ return { something }
 # Termination Message
 
 ```block
-errors where emitted while running checks
+1 errors were emitted while running checks
 ```
 
 # Emitted Messages

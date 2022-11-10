@@ -219,7 +219,8 @@ fn lint(params: LintParams) -> LintResults {
     let mut diagnostic_count = diagnostics.len() as u64;
     let mut errors = diagnostics
         .iter()
-        .filter(|diag| diag.severity() <= v2::Severity::Error).count();
+        .filter(|diag| diag.severity() <= v2::Severity::Error)
+        .count();
 
     analyze(file_id, &tree, params.filter, &analyzer_options, |signal| {
         if let Some(mut diagnostic) = signal.diagnostic() {

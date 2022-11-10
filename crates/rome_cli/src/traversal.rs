@@ -709,7 +709,7 @@ type FileResult = Result<FileStatus, Message>;
 
 /// This function performs the actual processing: it reads the file from disk
 /// and parse it; analyze and / or format it; then it either fails if error
-/// diagnostics where emitted, or compare the formatted code with the original
+/// diagnostics were emitted, or compare the formatted code with the original
 /// content of the file and emit a diff or write the new content to the disk if
 /// write mode is enabled
 fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileResult {
