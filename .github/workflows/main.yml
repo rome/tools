@@ -108,6 +108,10 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: documentation
+      - name: Write index.html
+        run: echo '<meta http-equiv="refresh" content="0; url=/rome/index.html">' >target/doc/index.html
+      - name: Write _redirects
+        run: echo '/ /rome/index.html' >target/doc/_redirects
       - name: Deploy documentation
         run: |
           netlify deploy --dir=./target/doc --prod --site rustdocs-rometools --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
