@@ -55,7 +55,8 @@ impl ReactCreateElementCall {
         model: &SemanticModel,
     ) -> Option<Self> {
         let callee = call_expression.callee().ok()?;
-        let is_react_create_element = is_react_call_api(&callee, model, "createElement");
+        let is_react_create_element =
+            is_react_call_api(&callee, model, ReactLibrary::React, "createElement");
 
         if is_react_create_element {
             let arguments = call_expression.arguments().ok()?.args();
@@ -156,7 +157,8 @@ impl ReactCloneElementCall {
         model: &SemanticModel,
     ) -> Option<Self> {
         let callee = call_expression.callee().ok()?;
-        let is_react_clone_element = is_react_call_api(&callee, model, "cloneElement");
+        let is_react_clone_element =
+            is_react_call_api(&callee, model, ReactLibrary::React, "cloneElement");
 
         if is_react_clone_element {
             let arguments = call_expression.arguments().ok()?.args();
@@ -216,6 +218,28 @@ impl ReactApiCall for ReactCloneElementCall {
     }
 }
 
+#[derive(Debug, Clone, Copy)]
+pub(crate) enum ReactLibrary {
+    React,
+    ReactDOM,
+}
+
+impl ReactLibrary {
+    const fn import_name(self) -> &'static str {
+        match self {
+            ReactLibrary::React => "react",
+            ReactLibrary::ReactDOM => "react-dom",
+        }
+    }
+
+    const fn global_name(self) -> &'static str {
+        match self {
+            ReactLibrary::React => "React",
+            ReactLibrary::ReactDOM => "ReactDOM",
+        }
+    }
+}
+
 /// List of valid [`React` API]
 ///
 /// [`React` API]: https://reactjs.org/docs/react-api.html
@@ -243,25 +267,28 @@ const VALID_REACT_API: [&str; 14] = [
 pub(crate) fn is_react_call_api(
     expression: &JsAnyExpression,
     model: &SemanticModel,
+    lib: ReactLibrary,
     api_name: &str,
 ) -> bool {
-    // we bail straight away if the API doesn't exists in React
-    debug_assert!(VALID_REACT_API.contains(&api_name));
+    if matches!(lib, ReactLibrary::React) {
+        // we bail straight away if the API doesn't exists in React
+        debug_assert!(VALID_REACT_API.contains(&api_name));
+    }
 
     if let Some(object) = expression.get_object_reference_identifier() {
         if !expression.has_member_name(api_name) {
             return false;
         }
         return match model.declaration(&object) {
-            Some(decl) => is_react_export(decl),
-            None => object.has_name("React"),
+            Some(decl) => is_react_export(decl, lib),
+            None => object.has_name(lib.global_name()),
         };
     }
 
     if let Some(ident) = expression.as_reference_identifier() {
         return model
             .declaration(&ident)
-            .and_then(|it| is_named_react_export(it, api_name))
+            .and_then(|it| is_named_react_export(it, lib, api_name))
             .unwrap_or(false);
     }
 
@@ -286,9 +313,10 @@ pub(crate) fn jsx_member_name_is_react_fragment(
         return Some(false);
     }
 
+    let lib = ReactLibrary::React;
     match model.declaration(object) {
-        Some(declaration) => Some(is_react_export(declaration)),
-        None => Some(object.value_token().ok()?.text_trimmed() == "React"),
+        Some(declaration) => Some(is_react_export(declaration, lib)),
+        None => Some(object.value_token().ok()?.text_trimmed() == lib.global_name()),
     }
 }
 
@@ -303,7 +331,7 @@ pub(crate) fn jsx_reference_identifier_is_fragment(
     model: &SemanticModel,
 ) -> Option<bool> {
     match model.declaration(name) {
-        Some(reference) => is_named_react_export(reference, "Fragment"),
+        Some(reference) => is_named_react_export(reference, ReactLibrary::React, "Fragment"),
         None => {
             let value_token = name.value_token().ok()?;
             let is_fragment = value_token.text_trimmed() == "Fragment";
@@ -312,16 +340,16 @@ pub(crate) fn jsx_reference_identifier_is_fragment(
     }
 }
 
-fn is_react_export(binding: Binding) -> bool {
+fn is_react_export(binding: Binding, lib: ReactLibrary) -> bool {
     binding
         .syntax()
         .ancestors()
         .find_map(|ancestor| JsImport::cast_ref(&ancestor))
-        .and_then(|js_import| js_import.source_is("react").ok())
+        .and_then(|js_import| js_import.source_is(lib.import_name()).ok())
         .unwrap_or(false)
 }
 
-fn is_named_react_export(binding: Binding, name: &str) -> Option<bool> {
+fn is_named_react_export(binding: Binding, lib: ReactLibrary, name: &str) -> Option<bool> {
     let ident = JsIdentifierBinding::cast_ref(binding.syntax())?;
     let import_specifier = ident.parent::<JsAnyNamedImportSpecifier>()?;
     let name_token = match &import_specifier {
@@ -343,5 +371,5 @@ fn is_named_react_export(binding: Binding, name: &str) -> Option<bool> {
     let import_clause = import_specifiers.parent::<JsImportNamedClause>()?;
     let import = import_clause.parent::<JsImport>()?;
 
-    import.source_is("react").ok()
+    import.source_is(lib.import_name()).ok()
 }

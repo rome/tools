@@ -7,6 +7,7 @@
     },
     "homepage": "https://rome.tools",
     "author": "Sebastian McKenzie",
+    "license": "MIT",
     "bugs": "https://github.com/rome/tools/issues",
     "description": "Rome is a toolchain for the web: formatter, linter and more",
     "files": [
