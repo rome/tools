@@ -6,17 +6,18 @@
 	margin: 0 auto;
 	overflow: hidden;
 
-	.header-anchor {
-		@extend .sr-only;
+	a[href^="#"] {
+		display: none;
 		text-decoration: none;
 		color: $color-4;
+		margin-left: 5px;
 
 		&:hover {
 			text-decoration: underline;
 		}
 
 		&:focus {
-			@extend .not-sr-only;
+			display: inline;
 		}
 
 		&::before {
@@ -95,9 +96,9 @@
 	h1, h2, h3, h4, h5 {
 		outline: none;
 
-		&:hover .header-anchor,
-		&:focus .header-anchor{
-			@extend .not-sr-only;
+		&:hover a[href^="#"],
+		&:focus a[href^="#"] {
+			display: inline;
 		}
 
 		@include mobile-only() {
