@@ -17,7 +17,11 @@ fn main() -> Result<()> {
     let mut content = String::new();
 
     let command = "Use the command `cargo contributors`".to_string();
-    write!(content, "{{/** {} */}}", prepend_generated_preamble(command))?;
+    write!(
+        content,
+        "{{/** {} */}}",
+        prepend_generated_preamble(command)
+    )?;
     content.push('\n');
     content.push_str("<h3>Code contributors</h3>");
     content.push('\n');

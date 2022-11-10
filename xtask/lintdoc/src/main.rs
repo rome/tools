@@ -26,8 +26,7 @@ use xtask::{glue::fs2, *};
 
 fn main() -> Result<()> {
     let root = project_root().join("website/docs/src/pages/lint/rules");
-    let reference_groups =
-        project_root().join("website/docs/src/components/reference/Groups.md");
+    let reference_groups = project_root().join("website/docs/src/components/reference/Groups.md");
 
     // Clear the rules directory ignoring "not found" errors
     if let Err(err) = fs2::remove_dir_all(&root) {
