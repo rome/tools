@@ -67,3 +67,5 @@ const a = {
 a;
 
 
+export const { A } = z;
+export const [ B ] = z;
