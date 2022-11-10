@@ -84,7 +84,7 @@ jobs:
           - os: ubuntu-20.04
             target: aarch64-unknown-linux-gnu
             code-target: linux-arm64
-            container: quay.io/opencv-ci/opencv-python-manylinux2014-aarch64
+            container: quay.io/opencv-ci/opencv-python-manylinux2014-aarch64:20220824
           - os: macos-11
             target: x86_64-apple-darwin
             code-target: darwin-x64
