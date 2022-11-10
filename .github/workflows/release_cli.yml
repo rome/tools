@@ -94,6 +94,10 @@ jobs:
         with:
           node-version: 14.x
 
+      - name: Install Rustup
+        if: matrix.code-target == 'linux-x64' || matrix.code-target == 'linux-arm64'
+        run: which rustup || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
       - name: Install Rust toolchain
         run: rustup target add ${{ matrix.target }}
 
