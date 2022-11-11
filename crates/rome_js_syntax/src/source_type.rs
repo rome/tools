@@ -245,6 +245,7 @@ fn compute_source_type_from_path_or_extension(
             "ts" | "mts" => SourceType::ts(),
             "cts" => SourceType::ts().with_module_kind(ModuleKind::Script),
             "tsx" => SourceType::tsx(),
+            "json" | "jsonc" => SourceType::js_module(),
             _ => return Err(SourceTypeError::UnknownExtension(extension.into())),
         }
     };

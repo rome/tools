@@ -2,9 +2,12 @@ use crate::{semantic_services::Semantic, JsRuleAction};
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 
-use rome_js_semantic::Binding;
-use rome_js_syntax::{JsForStatement, JsReferenceIdentifier, JsVariableDeclaration};
-use rome_rowan::AstNode;
+use rome_js_semantic::{AllReferencesExtensions, SemanticModel};
+use rome_js_syntax::{
+    JsForStatement, JsForVariableDeclaration, JsIdentifierBinding, JsSyntaxKind,
+    JsVariableDeclaration, JsVariableDeclarator,
+};
+use rome_rowan::{declare_node_union, AstNode};
 
 declare_rule! {
     /// Require `const` declarations for variables that are never reassigned after declared.
@@ -46,36 +49,35 @@ declare_rule! {
     }
 }
 
+declare_node_union! {
+    pub(crate) VarDecl = JsVariableDeclaration | JsForVariableDeclaration
+}
+
 impl Rule for UseConst {
-    type Query = Semantic<JsReferenceIdentifier>;
-    type State = Binding;
+    type Query = Semantic<JsIdentifierBinding>;
+    type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let name = ctx.query();
+        let binding = ctx.query();
         let model = ctx.model();
 
-        let binding = model.declaration(name)?;
-        let decl = binding
-            .syntax()
-            .ancestors()
-            .find_map(JsVariableDeclaration::cast)?;
-        let is_for_init = decl.parent::<JsForStatement>().is_some();
-        if !is_for_init & !decl.is_const() && binding.all_writes().len() == 0 {
-            Some(binding)
+        let should_be_const = should_change_to_const(binding, model).unwrap_or(false);
+        if should_be_const {
+            Some(())
         } else {
             None
         }
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let binding = ctx.query();
-        let token = binding.value_token().ok()?;
+        let token = binding.name_token().ok()?;
 
         let diag = RuleDiagnostic::new(
             rule_category!(),
-            state.syntax().text_trimmed_range(),
+            token.text_trimmed_range(),
             markup! {
                 "'"{ token.text_trimmed() }"' is never reassigned. Use 'const' instead."
             },
@@ -87,4 +89,33 @@ impl Rule for UseConst {
     fn action(_ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         None
     }
+}
+
+fn should_change_to_const(binding: &JsIdentifierBinding, model: &SemanticModel) -> Option<bool> {
+    let declarator = binding
+        .syntax()
+        .ancestors()
+        .find_map(JsVariableDeclarator::cast)?;
+
+    let decl = declarator.syntax().ancestors().find_map(VarDecl::cast)?;
+
+    match decl {
+        VarDecl::JsVariableDeclaration(decl) => {
+            if decl.parent::<JsForStatement>().is_some() || !decl.is_let() {
+                return Some(false);
+            }
+        }
+        VarDecl::JsForVariableDeclaration(decl) => {
+            if !decl
+                .kind_token()
+                .map_or(false, |it| it.kind() == JsSyntaxKind::LET_KW)
+            {
+                return None;
+            }
+        }
+    }
+
+    let no_writes = binding.all_writes(model).len() == 0;
+    let is_initialized = declarator.initializer().is_some();
+    Some(is_initialized && no_writes)
 }
