@@ -108,7 +108,9 @@ jobs:
 
       - name: Audit crates.io dependencies
         if: matrix.code-target == 'linux-x64'
-        run: cargo audit
+        run: |
+          cargo install cargo-audit
+          cargo audit
 
       # Build the CLI binary
       - name: Build binaries
