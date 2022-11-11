@@ -1,0 +1,145 @@
+@import "_variables";
+@import "_mixins";
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+.code-pane, .preview-pane {
+  max-width: 50%;
+}
+
+.preview-pane {
+  border-left: 1px solid var(--hard-border-color);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--container-color);
+}
+
+h2 {
+  padding: 10px;
+  border-top: 1px solid var(--hard-border-color);
+  border-bottom: 1px solid var(--hard-border-color);
+  display: flex;
+  line-height: 18px;
+  font-size: inherit;
+  font-weight: normal;
+
+  img {
+    vertical-align: middle;
+    height: 18px;
+    width: 18px;
+    margin-right: 10px;
+  }
+
+  &.collapsible {
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  &.collapsed {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-bottom: none;
+  }
+}
+
+.cm-theme-light, .cm-theme-dark {
+  flex: 1;
+}
+
+.cm-editor {
+  height: 100%;
+}
+
+.react-tabs__tab-panel  {
+  display: none;
+  overflow-y: auto;
+  flex-direction: column;
+  height: 100%;
+
+  > pre[class*=language-] {
+    margin: 0;
+    height: 100%;
+    background-color: #282c34 !important;
+  }
+
+  > iframe {
+    height: 100%;
+  }
+}
+
+.collapsible-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  &.collapsed {
+    height: auto;
+  }
+}
+
+.diff-hint {
+  margin-left: auto;
+
+  .insertions {
+    color: green;
+  }
+
+  .deletions {
+    color: red;
+  }
+}
+
+.collapsible-content {
+  overflow: hidden;
+  flex: 1;
+}
+
+.react-tabs__tab-list {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 0;
+  height: auto;
+  line-height: 40px;
+  white-space: nowrap;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--hard-border-color);
+
+  li {
+    padding: 0 10px;
+    border-right: 1px solid var(--hard-border-color);
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+.react-tabs__tab--selected {
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.react-tabs__tab-panel--selected {
+  display: flex;
+
+  > :first-child, > :first-child > :first-child {
+    border-top: none;
+  }
+}

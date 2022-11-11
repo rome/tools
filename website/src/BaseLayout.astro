@@ -1,0 +1,126 @@
+---
+import "@docsearch/css/dist/style.css";
+import "./styles/index.scss";
+
+import ColorSchemeSwitcher from "./components/ColorSchemeSwitcher.astro";
+import ExternalLinks from "./components/ExternalLinks.astro";
+import InlineSVG from "./components/InlineSVG.astro";
+
+const {props} = Astro;
+const {frontmatter = {}} = props;
+
+const sidebarEnabled = props.sidebarEnabled ?? false;
+const bodyClass = frontmatter.bodyClass ?? props.bodyClass ?? "";
+const socialImage = frontmatter.socialImage ?? props.socialImage ?? "social-logo.png";
+
+const description = frontmatter.description ?? props.description ?? "";
+
+let title = props.title ?? frontmatter.title ?? "";
+title = title.trim();
+if (!title.includes("Rome")) {
+	if (title !== "") {
+		title += " \u2014 ";
+	}
+	title += "Rome";
+}
+
+function base64Encode(buffer: Buffer, ext: string) {
+	if (ext === "svg") {
+		return `data:image/svg+xml;utf8,${encodeURIComponent(buffer.toString())}`;
+	}
+
+	let mime = `image/${ext}`;
+	if (ext === "woff2") {
+		mime = "application/x-font-woff";
+	}
+
+	return `data:${mime};base64,${buffer.toString("base64")}`;
+}
+
+const { default: script } = await import("/public/script.js?raw");
+const { default: favicon } = await import("/public/img/favicon.svg?raw");
+---
+
+<!doctype html>
+<html lang="en" data-theme="auto">
+	<head>
+		<meta charset="utf8" />
+		<title>{title}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="mask-icon" href="/img/pinned-rome-logo.svg" color="#FFC905">
+		<link rel="alternate icon" type="image/png" href="/img/favicon.png">
+		<link rel="icon" type="image/svg+xml" href={base64Encode(favicon, "svg")}>
+		
+		<link rel="preload" href="/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="/fonts/Inter-Medium.woff2" as="font" type="font/woff2" crossorigin>
+
+		<meta name="description" content={description}>
+		<meta name="theme-color" content="#FFC905">
+		<meta property="og:title" content={title}>
+		<meta property="og:description" content={description}>
+		<meta property="og:image" content={`${import.meta.env.SITE}/img/${socialImage}`}>
+		<meta property="twitter:image" content={`${import.meta.env.SITE}/img/${socialImage}`}>
+		<meta property="twitter:site" content="@rometools">
+		<meta property="twitter:creator" content="@rometools">
+		<meta property="twitter:image:alt" content="Logo for Rome Tools">
+		<meta property="twitter:card" content="summary_large_image">
+
+		<script>
+			(function () {
+				const currentTheme = localStorage.getItem('data-theme');
+				if (currentTheme != null) {
+					document.documentElement.setAttribute("data-theme", currentTheme);
+				}
+			})();
+		</script>
+	</head>
+
+	<body class={bodyClass}>
+		<div class="docs-header">
+			<div class="logo-container">
+				<a class="logo" href="/">
+					<InlineSVG src="rome-logo" />
+
+					<span class="logo-text sr-only">Rome</span>
+
+					<span class="triangle"></span>
+				</a>
+
+				<ul>
+					<li><a href="https://rome.tools/">Home</a></li>
+					<li><a href="/">Docs</a></li>
+					<li><a href="https://rome.tools/blog/">Blog</a></li>
+					<li><a href="https://play.rome.tools/">Playground</a></li>
+				</ul>
+			</div>
+			<div class="logo-modal-background"></div>
+
+			<div id="docsearch"></div>
+
+			<ExternalLinks />
+			
+			<ColorSchemeSwitcher />
+
+			{sidebarEnabled && <a href="#" class="mobile-handle">
+				<InlineSVG src="mobile-nav-handle" />
+				<InlineSVG src="close-icon" />
+			</a>}
+		</div>
+
+		<slot />
+
+		{import.meta.env.PROD && <script src="https://browser.sentry-cdn.com/5.29.0/bundle.tracing.min.js" crossorigin="anonymous"></script>}
+		{import.meta.env.PROD && <script>
+			if (typeof Sentry !== "undefined") {
+				Sentry.init({
+					dsn: "https://d2e6dd662d05460db434756b97bf054e@o487646.ingest.sentry.io/5546624",
+					tracesSampleRate: 1.0,
+				});
+			}
+		</script>}
+
+		{script && <script async defer set:html={script}></script>}
+	</body>
+</html>

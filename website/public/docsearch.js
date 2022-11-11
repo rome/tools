@@ -1,0 +1,1 @@
+../../node_modules/@docsearch/js/dist/umd/index.js

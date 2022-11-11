@@ -1,0 +1,54 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import ExternalLinks from "./components/ExternalLinks.astro";
+import ActiveLink from "./components/ActiveLink.astro";
+import navigation from "./navigation.json";
+import {buildGetPages} from "./navigation-utils";
+import ColorSchemeSwitcher from "./components/ColorSchemeSwitcher.astro";
+
+const {props} = Astro;
+const {frontmatter = {}} = props;
+
+const getPages = buildGetPages(await Astro.glob("./**/*.mdx"));
+const sidebarEnabled = false;
+const toc = "";
+---
+
+<BaseLayout {...Astro.props}>
+  <div class="docs-main">
+    <aside class="docs-sidebar sidebar">
+      <div class="external-links">
+        <ExternalLinks />
+      </div>
+
+      {navigation.order.map(id => {
+        return <Fragment>
+          <h2>{navigation.titles[id]}</h2>
+    
+          <ul>
+            {getPages(id).map((page) => {
+              return <li><ActiveLink href={page.url}>{page.frontmatter.title}</ActiveLink></li>;
+            })}
+          </ul>
+        </Fragment>;
+      })}
+    </aside>
+
+    <main class={`main content ${frontmatter.mainClass ?? ""}`}>
+      <slot />
+    </main>
+
+    {sidebarEnabled && <nav class="toc-sidebar sidebar">
+      <h2>On this page</h2>
+      <Fragment set:html={toc} />
+    </nav>}
+  </div>
+
+  <footer aria-labelledby="footer">
+    <div class="container footer-inner">
+      <h1 id="footer" class="sr-only">Footer</h1>
+
+      <p>&copy; 2022 Rome Tools. All rights reserved.</p>
+    </div>
+  </footer>
+</BaseLayout>
