@@ -80,10 +80,10 @@ jobs:
           - os: ubuntu-20.04
             target: x86_64-unknown-linux-gnu
             code-target: linux-x64
+            container: ghcr.io/rome/rome-ci-x86-64-centos7:latest
           - os: ubuntu-20.04
             target: aarch64-unknown-linux-gnu
             code-target: linux-arm64
-            container: quay.io/opencv-ci/opencv-python-manylinux2014-aarch64:20220824
           - os: macos-11
             target: x86_64-apple-darwin
             code-target: darwin-x64
@@ -93,7 +93,9 @@ jobs:
 
     name: Package ${{ matrix.code-target }}
     runs-on: ${{ matrix.os }}
-    container: ${{ matrix.container }}
+    container: 
+      image: ${{ matrix.container }}
+      options: --user root
 
     needs: check
     env:
@@ -106,17 +108,14 @@ jobs:
       prerelease: ${{ env.prerelease }}
 
     steps:
+      - name: Who Am I
+        run: whoami
+
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
-      - name: Install Rustup
-        if: matrix.code-target == 'linux-x64'
-        run: |
-          which rustup || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-          source "$HOME/.cargo/env"
-      
       - name: Install Rust toolchain
         run: rustup target add ${{ matrix.target }}
 

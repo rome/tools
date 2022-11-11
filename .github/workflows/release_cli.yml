@@ -59,7 +59,7 @@ jobs:
           - os: ubuntu-20.04
             target: x86_64-unknown-linux-gnu
             code-target: linux-x64
-            container: quay.io/opencv-ci/opencv-python-manylinux2014_x86_64
+            container: ghcr.io/rome/rome-ci-x86-64-centos7:latest
           - os: ubuntu-20.04
             target: aarch64-unknown-linux-gnu
             code-target: linux-arm64
@@ -72,7 +72,10 @@ jobs:
 
     name: Package ${{ matrix.code-target }}
     runs-on: ${{ matrix.os }}
-    container: ${{ matrix.container }}
+    container: 
+      image: ${{ matrix.container }}
+      env:
+        PATH: /root/.cargo/bin:/root/.nvm/versions/node/v14.21.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/bin
 
     needs: check
     if: needs.check.outputs.version_changed == 'true' || needs.check.outputs.nightly == 'true'
@@ -83,22 +86,16 @@ jobs:
       prerelease: ${{ needs.check.outputs.prerelease }}
 
     steps:
+      - name: Who Am I
+        run: whoami && printenv
+        
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14.x
-
-      - name: Install Rustup
-        uses: actions-rs/toolchain@v1
-        with:
-            toolchain: stable
-            target: ${{ matrix.target }}
-            default: true
+      - name: Install Rust toolchain
+        run: rustup target add ${{ matrix.target }}
           
       - name: Install arm64 toolchain
         if: matrix.code-target == 'linux-arm64'
@@ -109,7 +106,6 @@ jobs:
       - name: Audit crates.io dependencies
         if: matrix.code-target == 'linux-x64'
         run: |
-          cargo install cargo-audit
           cargo audit
 
       # Build the CLI binary
