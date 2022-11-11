@@ -76,7 +76,7 @@ After running the `init` command, you'll have a `rome.json` configuration file i
 
 The `linter.enabled: true` enables the linter and `rules.recommended: true` enables the [recommended rules](/lint/rules/).
 
-Formatting is enabled because the configuration doesn't explicitly [disables](/configuration/#formatterenabled) formatting with `formatter.enabled: false`.
+Formatting is enabled because the configuration doesn't explicitly [disable](/configuration/#formatterenabled) formatting with `formatter.enabled: false`.
 
 ## Usage
 
