@@ -33,7 +33,7 @@ You can now use `npx rome` to run Rome.
 pnpm install --save-dev rome
 ```
 
-You can now use `pnpm exec rome` to run Rome.
+You can now use `pnpm rome` to run Rome.
 
 
 #### yarn
@@ -42,7 +42,7 @@ You can now use `pnpm exec rome` to run Rome.
 yarn add rome --save-dev
 ```
 
-You can now use `yarn run rome` to run Rome.
+You can now use `yarn rome` to run Rome.
 
 ## Configuration
 
@@ -54,10 +54,10 @@ To create the configuration, run the `init` command in the root folder of your p
 npx rome init
 
 # or
-pnpm exec rome init
+pnpm rome init
 
 # or
-yarn run rome init
+yarn rome init
 ```
 
 After running the `init` command, you'll have a `rome.json` configuration file in your directory.
@@ -86,10 +86,10 @@ You can lint any file or directory running:
 npx rome check <files>
 
 # or
-pnpm exec rome check <files>
+pnpm rome check <files>
 
 # or
-yarn run rome check <files>
+yarn rome check <files>
 ```
 
 or format your files and directories with:
@@ -99,10 +99,10 @@ or format your files and directories with:
 npx rome format <files> --write
 
 # or
-pnpm exec rome format <files> --write
+pnpm rome format <files> --write
 
 # or
-yarn run rome format <files> --write
+yarn rome format <files> --write
 ```
 
 <!-- Make sure to update the redirect in `static/_redirects` when changing the editors title -->
