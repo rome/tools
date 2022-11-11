@@ -453,8 +453,8 @@ Prevents from having <code>const</code> variables being re-assigned.
 <h3 data-toc-exclude id="noDupeKeys">
 	<a href="/lint/rules/noDupeKeys">noDupeKeys</a>
 </h3>
-Prevents object literals having more than one property declaration for the same key.
-If an object property with the same key is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
+Prevents object literals having more than one property declaration for the same name.
+If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noExplicitAny">
