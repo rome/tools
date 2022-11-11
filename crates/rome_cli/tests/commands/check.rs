@@ -93,7 +93,7 @@ fn parse_error() {
     );
 
     match result {
-        Err(Termination::CheckError(_)) => {}
+        Err(Termination::CheckError) => {}
         _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
     }
 
@@ -121,7 +121,7 @@ fn lint_error() {
     );
 
     match result {
-        Err(Termination::CheckError(_)) => {}
+        Err(Termination::CheckError) => {}
         _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
     }
 
@@ -795,7 +795,7 @@ fn max_diagnostics_default() {
     );
 
     match result {
-        Err(Termination::CheckError(_)) => {}
+        Err(Termination::CheckError) => {}
         _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
     }
 
@@ -824,7 +824,7 @@ fn max_diagnostics() {
     );
 
     match result {
-        Err(Termination::CheckError(_)) => {}
+        Err(Termination::CheckError) => {}
         _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
     }
 

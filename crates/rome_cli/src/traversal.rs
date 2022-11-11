@@ -133,27 +133,37 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
             TraversalMode::Check { .. } => {
                 if execution.as_fix_file_mode().is_some() {
                     console.log(markup! {
-                        <Info>"Fixed "{count}" files in "{duration}</Info>
+                        <Info>"Fixed "{count}" file(s) in "{duration}</Info>
                     });
                 } else {
                     console.log(markup! {
-                        <Info>"Checked "{count}" files in "{duration}</Info>
+                        <Info>"Checked "{count}" file(s) in "{duration}</Info>
+                    });
+                }
+                if errors > 0 {
+                    console.log(markup! {
+                        <Error>"Found "{errors}" error(s)"</Error>
                     });
                 }
             }
             TraversalMode::CI { .. } => {
                 console.log(markup! {
-                    <Info>"Checked "{count}" files in "{duration}</Info>
+                    <Info>"Checked "{count}" file(s) in "{duration}</Info>
                 });
+                if errors > 0 {
+                    console.log(markup! {
+                        <Error>"Found "{errors}" error(s)"</Error>
+                    });
+                }
             }
             TraversalMode::Format { write: false, .. } => {
                 console.log(markup! {
-                    <Info>"Compared "{count}" files in "{duration}</Info>
+                    <Info>"Compared "{count}" file(s) in "{duration}</Info>
                 });
             }
             TraversalMode::Format { write: true, .. } => {
                 console.log(markup! {
-                    <Info>"Formatted "{count}" files in "{duration}</Info>
+                    <Info>"Formatted "{count}" file(s) in "{duration}</Info>
                 });
             }
         }
@@ -177,13 +187,13 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
 
     if skipped > 0 {
         console.log(markup! {
-            <Warn>"Skipped "{skipped}" files"</Warn>
+            <Warn>"Skipped "{skipped}" file(s)"</Warn>
         });
     }
 
     // Processing emitted error diagnostics, exit with a non-zero code
     if errors > 0 {
-        Err(Termination::CheckError(errors))
+        Err(Termination::CheckError)
     } else {
         Ok(())
     }
