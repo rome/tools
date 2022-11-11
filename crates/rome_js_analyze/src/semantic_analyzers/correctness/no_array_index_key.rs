@@ -5,10 +5,11 @@ use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
-    JsAnyCallArgument, JsArrowFunctionExpression, JsCallExpression, JsExpressionStatement,
-    JsFunctionDeclaration, JsFunctionExpression, JsIdentifierBinding, JsMethodClassMember,
-    JsMethodObjectMember, JsParameterList, JsPropertyObjectMember, JsReferenceIdentifier,
-    JsxAttribute, JsxOpeningElement, JsxSelfClosingElement,
+    JsAnyCallArgument, JsAnyExpression, JsArrowFunctionExpression, JsAssignmentExpression,
+    JsCallExpression, JsExpressionStatement, JsFunctionDeclaration, JsFunctionExpression,
+    JsIdentifierBinding, JsInitializerClause, JsMethodClassMember, JsMethodObjectMember,
+    JsParameterList, JsParenthesizedExpression, JsPropertyObjectMember, JsReferenceIdentifier,
+    JsReturnStatement, JsxAttribute, JsxOpeningElement, JsxSelfClosingElement,
 };
 use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
 
@@ -201,14 +202,9 @@ impl Rule for NoArrayIndexKey {
 /// Given this example, the input node is the arrow function and we navigate to
 /// retrieve the name `map` call and we check if it belongs to an `Array.prototype` method.
 fn is_inside_array_method(function_like_node: &FunctionLike) -> Option<bool> {
-    let function_parent = function_like_node
-        .syntax()
-        .ancestors()
-        .find_map(|ancestor| JsExpressionStatement::cast_ref(&ancestor))?;
+    let function_parent = function_like_node.find_caller_parent()?;
 
     let name = function_parent
-        .expression()
-        .ok()?
         .as_js_call_expression()?
         .callee()
         .ok()?
@@ -253,6 +249,61 @@ impl FunctionLike {
             FunctionLike::JsMethodObjectMember(node) => node.parameters().ok()?.items(),
         };
         Some(list)
+    }
+
+    /// Find the parent expression that contains the caller of the given function like node
+    ///
+    /// ```js
+    /// // Assignment expression
+    /// let element = null
+    /// if (condition) {
+    ///     elements = array.map((_, index) => <Component key={index} />);
+    /// }
+    ///
+    /// // Parenthesized expression
+    /// function App({things}) {
+    ///     const elements = useMemo(() => (
+    ///         things.map((_, index) => <Component key={index} />)
+    ///     ), [things]);
+    ///     return elements;
+    /// }
+    ///
+    /// // Call expression
+    /// const Component = () => array.map((_, index) => <Component key={index} />);
+    ///
+    /// // Variable declaration
+    /// let elements = array.map((_, index) => <Component key={index} />);
+    ///
+    /// // Return statement
+    /// return array.map((_, index) => <Component key={index} />);
+    /// ```
+    fn find_caller_parent(&self) -> Option<JsAnyExpression> {
+        let syntax = self.syntax();
+
+        if let Some(assignment_expression) =
+            syntax.ancestors().find_map(JsAssignmentExpression::cast)
+        {
+            return assignment_expression.right().ok();
+        }
+
+        if let Some(expression) = syntax.ancestors().find_map(JsParenthesizedExpression::cast) {
+            return expression.expression().ok();
+        }
+
+        if let Some(expression) = syntax.ancestors().find_map(JsCallExpression::cast) {
+            let syntax = expression.syntax();
+            return JsAnyExpression::cast_ref(syntax);
+        }
+
+        if let Some(initializer) = syntax.ancestors().find_map(JsInitializerClause::cast) {
+            return initializer.expression().ok();
+        }
+
+        if let Some(return_statement) = syntax.ancestors().find_map(JsReturnStatement::cast) {
+            return return_statement.argument();
+        }
+
+        None
     }
 }
 /// It checks if the index binding comes from an array function and has the same name

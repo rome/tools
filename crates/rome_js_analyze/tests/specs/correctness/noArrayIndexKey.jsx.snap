@@ -57,6 +57,57 @@ things.map((thing, index) => (
     React.cloneElement(thing, { key: index })
 ));
 
+const mapping = {
+    foo: () => (
+        things.map((_, index) => <Component key={index} />)
+    ),
+}
+
+class A extends React.Component {
+    renderThings = () => (
+        things.map((_, index) => <Component key={index} />)
+    )
+}
+
+const Component1 = () => things.map((_, index) => <Component key={index} />);
+
+const Component2 = () => (
+    things.map((_, index) => <Component key={index} />)
+);
+
+function Component3() {
+    return things.map((_, index) => <Component key={index} />);
+}
+
+function Component4() {
+    let elements = things.map((_, index) => <Component key={index} />);
+    if (condition) {
+        elements = others.map((_, index) => <Component key={index} />);
+    }
+    return elements;
+}
+
+function Component5({things}) {
+    const elements = useMemo(() => things.map((_, index) => <Component key={index} />), [things]);
+    return elements;
+}
+
+function Component6({things}) {
+    const elements = useMemo(() => (
+        things.map((_, index) => <Component key={index} />)
+    ), [things]);
+    return elements;
+}
+
+function Component7() {
+    return (
+        <HoC>
+            {({things}) => (
+                things.map((_, index) => <Component key={index} />)
+            )}
+        </HoC>
+    )
+}
 
 // valid
 something.forEach((element, index) => {
@@ -66,6 +117,59 @@ something.forEach((element, index) => {
     <Component key={index + "something"} />
 
 });
+
+
+const mapping = {
+    foo: () => (
+        things.map((_, index) => <Component key={`${index}-something`} />)
+    ),
+}
+
+class A extends React.Component {
+    renderThings = () => (
+        things.map((_, index) => <Component key={`${index}-something`} />)
+    )
+}
+
+const Component8 = () => things.map((_, index) => <Component key={`${index}-something`} />);
+
+const Component9 = () => (
+    things.map((_, index) => <Component key={`${index}-something`} />)
+);
+
+function Component10() {
+    return things.map((_, index) => <Component key={`${index}-something`} />);
+}
+
+function Component11() {
+    let elements = things.map((_, index) => <Component key={`${index}-something`} />);
+    if (condition) {
+        elements = others.map((_, index) => <Component key={`${index}-something`} />);
+    }
+    return elements;
+}
+
+function Component12({things}) {
+    const elements = useMemo(() => things.map((_, index) => <Component key={`${index}-something`x} />), [things]);
+    return elements;
+}
+
+function Component13({things}) {
+    const elements = useMemo(() => (
+        things.map((_, index) => <Component key={`${index}-something`} />)
+    ), [things]);
+    return elements;
+}
+
+function Component14() {
+    return (
+        <HoC>
+            {({things}) => (
+                return things.map((_, index) => <Component key={`${index}-something`} />)
+            )}
+        </HoC>
+    )
+}
 
 ```
 
@@ -414,6 +518,278 @@ noArrayIndexKey.jsx:51:38 lint/correctness/noArrayIndexKey ━━━━━━━
        │                    ^^^^^
     51 │     React.cloneElement(thing, { key: index })
     52 │ ));
+  
+  i The order of the items may change, and this also affects performances and component state.
+  
+  i Check the React documentation. 
+  
+
+```
+
+```
+noArrayIndexKey.jsx:56:50 lint/correctness/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using the index of an array as key property in an element.
+  
+    54 │ const mapping = {
+    55 │     foo: () => (
+  > 56 │         things.map((_, index) => <Component key={index} />)
+       │                                                  ^^^^^
+    57 │     ),
+    58 │ }
+  
+  i This is the source of the key value.
+  
+    54 │ const mapping = {
+    55 │     foo: () => (
+  > 56 │         things.map((_, index) => <Component key={index} />)
+       │                        ^^^^^
+    57 │     ),
+    58 │ }
+  
+  i The order of the items may change, and this also affects performances and component state.
+  
+  i Check the React documentation. 
+  
+
+```
+
+```
+noArrayIndexKey.jsx:62:50 lint/correctness/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using the index of an array as key property in an element.
+  
+    60 │ class A extends React.Component {
+    61 │     renderThings = () => (
+  > 62 │         things.map((_, index) => <Component key={index} />)
+       │                                                  ^^^^^
+    63 │     )
+    64 │ }
+  
+  i This is the source of the key value.
+  
+    60 │ class A extends React.Component {
+    61 │     renderThings = () => (
+  > 62 │         things.map((_, index) => <Component key={index} />)
+       │                        ^^^^^
+    63 │     )
+    64 │ }
+  
+  i The order of the items may change, and this also affects performances and component state.
+  
+  i Check the React documentation. 
+  
+
+```
+
+```
+noArrayIndexKey.jsx:66:67 lint/correctness/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using the index of an array as key property in an element.
+  
+    64 │ }
+    65 │ 
+  > 66 │ const Component1 = () => things.map((_, index) => <Component key={index} />);
+       │                                                                   ^^^^^
+    67 │ 
+    68 │ const Component2 = () => (
+  
+  i This is the source of the key value.
+  
+    64 │ }
+    65 │ 
+  > 66 │ const Component1 = () => things.map((_, index) => <Component key={index} />);
+       │                                         ^^^^^
+    67 │ 
+    68 │ const Component2 = () => (
+  
+  i The order of the items may change, and this also affects performances and component state.
+  
+  i Check the React documentation. 
+  
+
+```
+
+```
+noArrayIndexKey.jsx:69:46 lint/correctness/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using the index of an array as key property in an element.
+  
+    68 │ const Component2 = () => (
+  > 69 │     things.map((_, index) => <Component key={index} />)
+       │                                              ^^^^^
+    70 │ );
+    71 │ 
+  
+  i This is the source of the key value.
+  
+    68 │ const Component2 = () => (
+  > 69 │     things.map((_, index) => <Component key={index} />)
+       │                    ^^^^^
+    70 │ );
+    71 │ 
+  
+  i The order of the items may change, and this also affects performances and component state.
+  
+  i Check the React documentation. 
+  
+
+```
+
+```
+noArrayIndexKey.jsx:73:53 lint/correctness/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using the index of an array as key property in an element.
+  
+    72 │ function Component3() {
+  > 73 │     return things.map((_, index) => <Component key={index} />);
+       │                                                     ^^^^^
+    74 │ }
+    75 │ 
+  
+  i This is the source of the key value.
+  
+    72 │ function Component3() {
+  > 73 │     return things.map((_, index) => <Component key={index} />);
+       │                           ^^^^^
+    74 │ }
+    75 │ 
+  
+  i The order of the items may change, and this also affects performances and component state.
+  
+  i Check the React documentation. 
+  
+
+```
+
+```
+noArrayIndexKey.jsx:77:61 lint/correctness/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using the index of an array as key property in an element.
+  
+    76 │ function Component4() {
+  > 77 │     let elements = things.map((_, index) => <Component key={index} />);
+       │                                                             ^^^^^
+    78 │     if (condition) {
+    79 │         elements = others.map((_, index) => <Component key={index} />);
+  
+  i This is the source of the key value.
+  
+    76 │ function Component4() {
+  > 77 │     let elements = things.map((_, index) => <Component key={index} />);
+       │                                   ^^^^^
+    78 │     if (condition) {
+    79 │         elements = others.map((_, index) => <Component key={index} />);
+  
+  i The order of the items may change, and this also affects performances and component state.
+  
+  i Check the React documentation. 
+  
+
+```
+
+```
+noArrayIndexKey.jsx:79:61 lint/correctness/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using the index of an array as key property in an element.
+  
+    77 │     let elements = things.map((_, index) => <Component key={index} />);
+    78 │     if (condition) {
+  > 79 │         elements = others.map((_, index) => <Component key={index} />);
+       │                                                             ^^^^^
+    80 │     }
+    81 │     return elements;
+  
+  i This is the source of the key value.
+  
+    77 │     let elements = things.map((_, index) => <Component key={index} />);
+    78 │     if (condition) {
+  > 79 │         elements = others.map((_, index) => <Component key={index} />);
+       │                                   ^^^^^
+    80 │     }
+    81 │     return elements;
+  
+  i The order of the items may change, and this also affects performances and component state.
+  
+  i Check the React documentation. 
+  
+
+```
+
+```
+noArrayIndexKey.jsx:85:77 lint/correctness/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using the index of an array as key property in an element.
+  
+    84 │ function Component5({things}) {
+  > 85 │     const elements = useMemo(() => things.map((_, index) => <Component key={index} />), [things]);
+       │                                                                             ^^^^^
+    86 │     return elements;
+    87 │ }
+  
+  i This is the source of the key value.
+  
+    84 │ function Component5({things}) {
+  > 85 │     const elements = useMemo(() => things.map((_, index) => <Component key={index} />), [things]);
+       │                                                   ^^^^^
+    86 │     return elements;
+    87 │ }
+  
+  i The order of the items may change, and this also affects performances and component state.
+  
+  i Check the React documentation. 
+  
+
+```
+
+```
+noArrayIndexKey.jsx:91:50 lint/correctness/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using the index of an array as key property in an element.
+  
+    89 │ function Component6({things}) {
+    90 │     const elements = useMemo(() => (
+  > 91 │         things.map((_, index) => <Component key={index} />)
+       │                                                  ^^^^^
+    92 │     ), [things]);
+    93 │     return elements;
+  
+  i This is the source of the key value.
+  
+    89 │ function Component6({things}) {
+    90 │     const elements = useMemo(() => (
+  > 91 │         things.map((_, index) => <Component key={index} />)
+       │                        ^^^^^
+    92 │     ), [things]);
+    93 │     return elements;
+  
+  i The order of the items may change, and this also affects performances and component state.
+  
+  i Check the React documentation. 
+  
+
+```
+
+```
+noArrayIndexKey.jsx:100:58 lint/correctness/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using the index of an array as key property in an element.
+  
+     98 │         <HoC>
+     99 │             {({things}) => (
+  > 100 │                 things.map((_, index) => <Component key={index} />)
+        │                                                          ^^^^^
+    101 │             )}
+    102 │         </HoC>
+  
+  i This is the source of the key value.
+  
+     98 │         <HoC>
+     99 │             {({things}) => (
+  > 100 │                 things.map((_, index) => <Component key={index} />)
+        │                                ^^^^^
+    101 │             )}
+    102 │         </HoC>
   
   i The order of the items may change, and this also affects performances and component state.
   
