@@ -11,7 +11,7 @@ few options to avoid that debates over styles turn into debates over Rome option
 
 The language agnostic options supported by Rome are:
 
-- indent style (default: `tabs`): Use spaces or tabs for indention
+- indent style (default: `tab`): Use spaces or tabs for indention
 - tab width (default: `2`): The number of spaces per indention level
 - line width (default: `80`): The column width at which Rome wraps code
 
@@ -36,7 +36,7 @@ USAGE:
 OPTIONS:
     --write                                  Edit the files in place (beware!) instead of printing the diff to the console
     --skip-errors                            Skip over files containing syntax errors instead of emitting an error diagnostic.
-    --indent-style <tabs|space>              Change the indention character (default: tabs)
+    --indent-style <tab|space>              Change the indention character (default: tab)
     --indent-size <number>                   If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
     --line-width <number>                    Change how many characters the formatter is allowed to print in a single line (default: 80)
     --quote-style <single|double>            Changes the quotation character for strings (default: ")
