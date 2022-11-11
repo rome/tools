@@ -94,14 +94,12 @@ jobs:
           node-version: 14.x
 
       - name: Install Rustup
+        uses: actions-rs/toolchain@v1
         if: matrix.code-target == 'linux-x64'
-        run: |
-          which rustup || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-          source "$HOME/.cargo/env"
+        with:
+            target: ${{ matrix.target }}
+            default: true
           
-      - name: Install Rust toolchain
-        run: rustup target add ${{ matrix.target }}
-
       - name: Install arm64 toolchain
         if: matrix.code-target == 'linux-arm64'
         run: |
