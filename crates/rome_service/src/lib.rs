@@ -26,7 +26,7 @@ pub use crate::configuration::{
 };
 pub use crate::matcher::{MatchOptions, Matcher, Pattern};
 
-pub use crate::file_handlers::JsFormatSettings;
+pub use crate::file_handlers::JsFormatterSettings;
 use crate::file_handlers::Language;
 pub use crate::workspace::Workspace;
 

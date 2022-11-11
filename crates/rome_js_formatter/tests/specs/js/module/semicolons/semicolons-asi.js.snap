@@ -1,16 +1,12 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-expression: export_trailing_comma.js
+expression: semicolons-asi.js
 ---
 
 # Input
 
 ```js
-export {
-	adsadasdasdasdasdasdasdasdasdasdas,
-	dsadsadasdasdasdasdasdasdasd,
-	dsadsadasdasdasdasdasdasdasd,
-};
+[1, 2]
 
 ```
 
@@ -31,11 +27,7 @@ Semicolons: Always
 -----
 
 ```js
-export {
-	adsadasdasdasdasdasdasdasdasdasdas,
-	dsadsadasdasdasdasdasdasdasd,
-	dsadsadasdasdasdasdasdasdasd,
-};
+[1, 2];
 ```
 
 ## Output 2
@@ -45,16 +37,12 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
-Trailing comma: ES5
+Trailing comma: All
 Semicolons: Always
 -----
 
 ```js
-export {
-	adsadasdasdasdasdasdasdasdasdasdas,
-	dsadsadasdasdasdasdasdasdasd,
-	dsadsadasdasdasdasdasdasdasd,
-};
+[1, 2];
 ```
 
 ## Output 3
@@ -64,16 +52,12 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
-Trailing comma: None
+Trailing comma: All
 Semicolons: Always
 -----
 
 ```js
-export {
-	adsadasdasdasdasdasdasdasdasdasdas,
-	dsadsadasdasdasdasdasdasdasd,
-	dsadsadasdasdasdasdasdasdasd
-};
+[1, 2];
 ```
 
 

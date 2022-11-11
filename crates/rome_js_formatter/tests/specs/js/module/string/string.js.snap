@@ -79,6 +79,7 @@ Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
+Semicolons: Always
 -----
 
 ```js
@@ -160,6 +161,7 @@ Line width: 80
 Quote style: Single Quotes
 Quote properties: As needed
 Trailing comma: All
+Semicolons: Always
 -----
 
 ```js
@@ -241,6 +243,7 @@ Line width: 80
 Quote style: Double Quotes
 Quote properties: Preserve
 Trailing comma: All
+Semicolons: Always
 -----
 
 ```js

@@ -145,6 +145,9 @@ pub struct JsFormatOptions {
     /// Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
     trailing_comma: TrailingComma,
 
+    /// Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.
+    semicolons: Semicolons,
+
     /// Information related to the current file
     source_type: SourceType,
 }
@@ -158,6 +161,7 @@ impl JsFormatOptions {
             quote_style: QuoteStyle::default(),
             quote_properties: QuoteProperties::default(),
             trailing_comma: TrailingComma::default(),
+            semicolons: Semicolons::default(),
         }
     }
 
@@ -186,6 +190,11 @@ impl JsFormatOptions {
         self
     }
 
+    pub fn with_semicolons(mut self, semicolons: Semicolons) -> Self {
+        self.semicolons = semicolons;
+        self
+    }
+
     pub fn quote_style(&self) -> QuoteStyle {
         self.quote_style
     }
@@ -200,6 +209,10 @@ impl JsFormatOptions {
 
     pub fn trailing_comma(&self) -> TrailingComma {
         self.trailing_comma
+    }
+
+    pub fn semicolons(&self) -> Semicolons {
+        self.semicolons
     }
 
     pub fn tab_width(&self) -> TabWidth {
@@ -232,7 +245,8 @@ impl fmt::Display for JsFormatOptions {
         writeln!(f, "Line width: {}", self.line_width.value())?;
         writeln!(f, "Quote style: {}", self.quote_style)?;
         writeln!(f, "Quote properties: {}", self.quote_properties)?;
-        writeln!(f, "Trailing comma: {}", self.trailing_comma)
+        writeln!(f, "Trailing comma: {}", self.trailing_comma)?;
+        writeln!(f, "Semicolons: {}", self.semicolons)
     }
 }
 
@@ -314,20 +328,15 @@ impl QuoteStyle {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Clone, Copy, Default)]
 #[cfg_attr(
     feature = "serde",
     derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub enum QuoteProperties {
+    #[default]
     AsNeeded,
     Preserve,
-}
-
-impl Default for QuoteProperties {
-    fn default() -> Self {
-        Self::AsNeeded
-    }
 }
 
 impl FromStr for QuoteProperties {
@@ -348,6 +357,48 @@ impl fmt::Display for QuoteProperties {
         match self {
             QuoteProperties::AsNeeded => write!(f, "As needed"),
             QuoteProperties::Preserve => write!(f, "Preserve"),
+        }
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Clone, Copy, Default)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
+pub enum Semicolons {
+    #[default]
+    Always,
+    AsNeeded,
+}
+
+impl Semicolons {
+    pub const fn is_as_needed(&self) -> bool {
+        matches!(self, Self::AsNeeded)
+    }
+
+    pub const fn is_always(&self) -> bool {
+        matches!(self, Self::Always)
+    }
+}
+
+impl FromStr for Semicolons {
+    type Err = &'static str;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "as-needed" | "AsNeeded" => Ok(Self::AsNeeded),
+            "always" | "Always" => Ok(Self::Always),
+            _ => Err("Value not supported for QuoteProperties. Supported values are 'as-needed' and 'always'."),
+        }
+    }
+}
+
+impl fmt::Display for Semicolons {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Semicolons::AsNeeded => write!(f, "As needed"),
+            Semicolons::Always => write!(f, "Always"),
         }
     }
 }

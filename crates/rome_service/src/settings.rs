@@ -51,9 +51,10 @@ impl WorkspaceSettings {
             .as_ref()
             .and_then(|j| j.formatter.as_ref());
         if let Some(formatter) = formatter {
-            self.languages.javascript.format.quote_style = Some(formatter.quote_style);
-            self.languages.javascript.format.quote_properties = Some(formatter.quote_properties);
-            self.languages.javascript.format.trailing_comma = Some(formatter.trailing_comma);
+            self.languages.javascript.formatter.quote_style = Some(formatter.quote_style);
+            self.languages.javascript.formatter.quote_properties = Some(formatter.quote_properties);
+            self.languages.javascript.formatter.trailing_comma = Some(formatter.trailing_comma);
+            self.languages.javascript.formatter.semicolons = Some(formatter.semicolons);
         }
 
         // linter part
@@ -155,7 +156,7 @@ pub struct LanguagesSettings {
 
 pub trait Language: rome_rowan::Language {
     /// Formatter settings type for this language
-    type FormatSettings: Default;
+    type FormatterSettings: Default;
 
     type LinterSettings: Default;
 
@@ -169,7 +170,7 @@ pub trait Language: rome_rowan::Language {
     /// per-language and editor provided formatter settings
     fn resolve_format_options(
         global: &FormatSettings,
-        language: &Self::FormatSettings,
+        language: &Self::FormatterSettings,
         path: &RomePath,
     ) -> Self::FormatOptions;
 }
@@ -177,7 +178,7 @@ pub trait Language: rome_rowan::Language {
 #[derive(Debug, Default)]
 pub struct LanguageSettings<L: Language> {
     /// Formatter settings for this language
-    pub format: L::FormatSettings,
+    pub formatter: L::FormatterSettings,
 
     /// Linter settings for this language
     pub linter: L::LinterSettings,
@@ -269,7 +270,7 @@ impl<'a> SettingsHandle<'a> {
     {
         L::resolve_format_options(
             &self.inner.formatter,
-            &L::lookup_settings(&self.inner.languages).format,
+            &L::lookup_settings(&self.inner.languages).formatter,
             path,
         )
     }
