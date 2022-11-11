@@ -40,4 +40,8 @@ file.js:1:1 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━━━
 
 ```
 
+```block
+Checked 1 file(s) in 11ms
+```
+
 

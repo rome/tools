@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 147
 expression: content
 ---
 ## `fix.js`
@@ -12,5 +11,9 @@ console.log(a);
 ```
 
 # Emitted Messages
+
+```block
+Fixed 1 file(s) in 413ms
+```
 
 

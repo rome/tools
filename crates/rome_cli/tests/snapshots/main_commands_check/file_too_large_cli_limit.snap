@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 223
 expression: content
 ---
 ## `check.js`
@@ -21,7 +20,11 @@ check.js lint ━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ```block
-Skipped 1 files
+Checked 0 file(s) in 12ms
+```
+
+```block
+Skipped 1 file(s)
 ```
 
 

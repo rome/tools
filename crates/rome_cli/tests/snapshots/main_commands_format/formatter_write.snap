@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 147
 expression: content
 ---
 ## `format.js`
@@ -11,5 +10,9 @@ statement();
 ```
 
 # Emitted Messages
+
+```block
+Formatted 1 file(s) in 6ms
+```
 
 
