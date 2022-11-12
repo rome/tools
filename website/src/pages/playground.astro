@@ -1,0 +1,12 @@
+---
+import BaseLayout from "../BaseLayout.astro";
+import "../styles/playground.scss";
+---
+
+<BaseLayout title="Rome Playground" bodyClass="playground">
+  <div id="root"></div>
+  
+  <script>
+    import "/src/playground/main.tsx";
+  </script>
+</BaseLayout>

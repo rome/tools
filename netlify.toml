@@ -1,0 +1,4 @@
+[build]
+base = "website/"
+publish = "build/"
+command = "./build-netlify.sh"
