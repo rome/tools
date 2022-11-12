@@ -19,7 +19,6 @@ function inlineCSS(): AstroIntegration {
 
 				await Promise.all(
 					files.map(async (htmlPath) => {
-						const pageStyles: string[] = [];
 						const stylesPaths: string[] = [];
 
 						let file = await fs.readFile(htmlPath, "utf8");
@@ -32,8 +31,8 @@ function inlineCSS(): AstroIntegration {
 							},
 						);
 
-						await Promise.all(
-							stylesPaths.map(async (stylesPath) => {
+						const pageStyles: string[] = await Promise.all(
+							stylesPaths.map(async (stylesPath, i) => {
 								if (stylesPath[0] === "/") {
 									stylesPath = `${dir.pathname}${stylesPath}`;
 								} else {
@@ -42,7 +41,7 @@ function inlineCSS(): AstroIntegration {
 									);
 								}
 								const styles = await fs.readFile(stylesPath, "utf8");
-								pageStyles.push(styles);
+								return styles;
 							}),
 						);
 

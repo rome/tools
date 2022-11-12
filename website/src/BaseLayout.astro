@@ -10,7 +10,6 @@ import InlineSVG from "./components/InlineSVG.astro";
 const {props} = Astro;
 const {frontmatter = {}} = props;
 
-const sidebarEnabled = props.sidebarEnabled ?? false;
 const bodyClass = frontmatter.bodyClass ?? props.bodyClass ?? "";
 const socialImage = frontmatter.socialImage ?? props.socialImage ?? "social-logo.png";
 
