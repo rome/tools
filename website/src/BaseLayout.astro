@@ -115,7 +115,9 @@ const { default: favicon } = await import("/public/img/favicon.svg?raw");
 			}
 		</script>}
 		
-		<script async defer src="/src/docsearch.js" id="docsearch-script" type="module"></script>
+		<script async defer id="docsearch-script">
+			import "/src/docsearch.js";
+		</script>
 
 		{script && <script async defer set:html={script}></script>}
 	</body>
