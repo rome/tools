@@ -30,7 +30,7 @@ declare var getCurrentTheme: () => string;
 
 // Uses a global function we have defined in public/script.js
 function safeGetCurrentTheme(): ThemeName {
-	return getCurrentTheme() === "dark" ? "dark" : "light"
+	return getCurrentTheme() === "dark" ? "dark" : "light";
 }
 
 export function useTheme(): ThemeName {
@@ -135,7 +135,9 @@ export function usePlaygroundState(
 		// Eliminate default values
 		const queryStringObj: Record<string, string> = {};
 		for (const key in rawQueryParams) {
-			const defaultValue = String(defaultRomeConfig[key as keyof typeof defaultRomeConfig]);
+			const defaultValue = String(
+				defaultRomeConfig[key as keyof typeof defaultRomeConfig],
+			);
 			const rawValue = rawQueryParams[key];
 			const value = String(rawValue);
 

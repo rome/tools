@@ -8,7 +8,7 @@
 				"check": "cd ../ && cargo rome-cli-dev check ./website/docs/src",
 				"start:playground": "pnpm build:wasm-dev && pnpm start",
 				"build": "pnpm build:wasm && pnpm build:js",
-				"build:js": "tsc && astro build",
+				"build:js": "tsc --skipLibCheck && astro build",
 				"build:wasm": "wasm-pack build --out-dir ../npm/wasm-web --target web --release --scope rometools ../crates/rome_wasm",
 				"build:wasm-dev": "wasm-pack build --out-dir ../npm/wasm-web --target web --dev --scope rometools ../crates/rome_wasm"
 		},
