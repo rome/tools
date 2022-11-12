@@ -16,6 +16,7 @@ use std::num::NonZeroU64;
 use std::path::PathBuf;
 use tracing::{error, info};
 
+mod deserializer;
 mod formatter;
 mod javascript;
 pub mod linter;

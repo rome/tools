@@ -1,4 +1,4 @@
-use rome_console::fmt::{Formatter, Termcolor};
+use rome_console::fmt::{Display, Formatter, Termcolor};
 use rome_console::{markup, MarkupBuf};
 use termcolor::NoColor;
 
@@ -34,6 +34,34 @@ impl MessageAndDescription {
     /// It sets a custom description. It updates only the description
     pub fn set_description(&mut self, new_description: String) {
         self.description = new_description;
+    }
+}
+
+impl MessageAndDescription {
+    pub fn from_display<D>(msg: D) -> Self
+    where
+        D: std::fmt::Display,
+    {
+        let description = format!("{}", msg);
+        Self {
+            message: markup! { {description} }.to_owned(),
+            description,
+        }
+    }
+
+    pub fn from_console_display<D>(msg: D) -> Self
+    where
+        D: rome_console::fmt::Display,
+    {
+        let message = markup! {
+            {msg}
+        }
+        .to_owned();
+        let description = markup_to_string(&message);
+        Self {
+            message,
+            description,
+        }
     }
 }
 

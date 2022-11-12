@@ -1,3 +1,5 @@
+extern crate core;
+
 use rome_console::fmt::Bytes;
 use rome_console::{Console, EnvConsole};
 use rome_formatter::FormatError;

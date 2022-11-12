@@ -70,6 +70,7 @@ pub fn to_camel_case(input: &str) -> Cow<str> {
 
     let mut force_next = None;
     let mut chars = input.char_indices();
+    dbg!(&input);
     let mut last_i = input.len() - 1;
 
     while let Some((i, chr)) = chars.next() {
