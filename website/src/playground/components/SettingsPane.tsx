@@ -190,18 +190,13 @@ function FormatterSettings({
 					</select>
 				</div>
 
-				<div
-					className={`field-row ${
-						indentStyle === IndentStyle.Space ? "" : "disabled"
-					}`}
-				>
+				<div className="field-row">
 					<label htmlFor="indentWidth">Indent Width</label>
 					<input
 						type="number"
 						name="indentWidth"
 						id="indentWidth"
 						value={indentWidth}
-						disabled={indentStyle !== IndentStyle.Space}
 						onChange={(e) => {
 							setIndentWidth(parseInt(e.target.value));
 						}}

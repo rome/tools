@@ -280,6 +280,7 @@ h2 {
   line-height: 40px;
   white-space: nowrap;
   overflow-x: auto;
+  overflow-y: hidden;
   background-color: var(--container-color);
 
   @include dark-mode {
