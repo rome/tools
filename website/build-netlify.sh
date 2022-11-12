@@ -1,6 +1,17 @@
 #!/bin/sh
 
-curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh 
-pnpm build:wasm
+if ! command -v wasm-pack &> /dev/null; then
+  curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+fi
+
+if [ "$1" == "preview" ]; then
+  pnpm build:wasm-dev
+else
+  pnpm build:wasm
+fi
+
+# Run pnpm install again to ensure wasm gets linked
 pnpm install
+
+# Finally build website
 pnpm build:js
