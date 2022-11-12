@@ -4,6 +4,7 @@ import "./styles/index.scss";
 
 import ColorSchemeSwitcher from "./components/ColorSchemeSwitcher.astro";
 import ExternalLinks from "./components/ExternalLinks.astro";
+import ActiveLink from "./components/ActiveLink.astro";
 import InlineSVG from "./components/InlineSVG.astro";
 
 const {props} = Astro;
@@ -79,34 +80,28 @@ const { default: favicon } = await import("/public/img/favicon.svg?raw");
 
 	<body class={bodyClass}>
 		<div class="docs-header">
-			<div class="logo-container">
-				<a class="logo" href="/">
-					<InlineSVG src="rome-logo" />
+			<a class="logo" href="https://rome.tools/">
+				<InlineSVG src="rome-logo" />
 
-					<span class="logo-text sr-only">Rome</span>
+				<span class="logo-text sr-only">Rome</span>
+			</a>
 
-					<span class="triangle"></span>
-				</a>
+			<ul class="desktop-navigation">
+				<li><a href="/" class={Astro.url.pathname.startsWith("/playground") ? "" : "active"}>Docs</a></li>
+				<li class="blog"><a href="https://rome.tools/blog/">Blog</a></li>
+				<li><ActiveLink href={import.meta.env.PROD ? "https://play.rome.tools/" : "/playground"}>Playground</ActiveLink></li>
+			</ul>
 
-				<ul>
-					<li><a href="https://rome.tools/">Home</a></li>
-					<li><a href="/">Docs</a></li>
-					<li><a href="https://rome.tools/blog/">Blog</a></li>
-					<li><a href="https://play.rome.tools/">Playground</a></li>
-				</ul>
-			</div>
-			<div class="logo-modal-background"></div>
-
-			<div id="docsearch"></div>
+			<div id="docsearch-target"></div>
 
 			<ExternalLinks />
 			
 			<ColorSchemeSwitcher />
 
-			{sidebarEnabled && <a href="#" class="mobile-handle">
+			<a href="#" class="mobile-handle">
 				<InlineSVG src="mobile-nav-handle" />
 				<InlineSVG src="close-icon" />
-			</a>}
+			</a>
 		</div>
 
 		<slot />
@@ -120,6 +115,8 @@ const { default: favicon } = await import("/public/img/favicon.svg?raw");
 				});
 			}
 		</script>}
+		
+		<script async defer src="/src/docsearch.js" id="docsearch-script" type="module"></script>
 
 		{script && <script async defer set:html={script}></script>}
 	</body>

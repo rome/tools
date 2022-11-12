@@ -24,6 +24,24 @@ interface Size {
 	height: number | undefined;
 }
 
+export function useTheme(): "dark" | "light" {
+  const [theme, setTheme] = useState(getCurrentTheme());
+
+  useEffect(() => {
+    function onColorSchemeChange() {
+      setTheme(getCurrentTheme());
+    }
+
+    window.addEventListener("colorschemechange", onColorSchemeChange);
+
+    return function cleanup() {
+      window.removeEventListener("colorschemechange", onColorSchemeChange);
+    };
+  });
+
+	return theme;
+}
+
 // Hook
 export function useWindowSize(): Size {
 	// Initialize state with undefined width/height so server and client renders match
@@ -131,10 +149,10 @@ export function usePlaygroundState(
 	return [playgroundState, setPlaygroundState];
 }
 
-export function createSetter(
+export function createSetter<Key extends keyof PlaygroundState>(
 	setPlaygroundState: Dispatch<SetStateAction<PlaygroundState>>,
-	field: keyof PlaygroundState,
-) {
+	field: Key,
+): (value: PlaygroundState[Key]) => void {
 	return function (param: PlaygroundState[typeof field]) {
 		setPlaygroundState((state) => {
 			let nextState = { ...state, [field]: param };

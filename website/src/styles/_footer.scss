@@ -58,7 +58,7 @@ footer {
 	}
 
 	@include dark-mode {
-		box-shadow: 0 0 0 1px white;
+		box-shadow: 0 0 0 1px rgba(#fff, 0.3);
 	}
 
 	svg {

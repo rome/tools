@@ -39,6 +39,7 @@
 				"hast-util-to-html": "^8.0.3",
 				"lang-rome-formatter-ir": "0.0.2",
 				"mdast-util-to-hast": "^12.2.4",
+				"mermaid": "^9.2.2",
 				"prettier": "^2.7.1",
 				"react": "^17.0.2",
 				"react-dom": "^17.0.2",

@@ -2,9 +2,9 @@ interface Props {
   errors: string;
 }
 
-export default function DiagnosticsTab({errors}: Props) {
+export default function LinterTab({errors}: Props) {
   if (errors === "") {
-    return <span>No diagnostics present</span>;
+    return <div className="empty-panel">No diagnostics present</div>;
   }
 
   return <pre className="language-shellsession">

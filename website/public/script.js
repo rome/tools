@@ -317,6 +317,7 @@ class Manager {
 		const hash = target.getAttribute("href");
 		window.location.hash = hash;
 		this.scrollToHeading(hash);
+		
 		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 		if (navigator.clipboard !== undefined) {
 			navigator.clipboard.writeText(window.location.href);
@@ -389,12 +390,10 @@ class Manager {
 			return;
 		}
 
-		if (target.matches('a[href^="#"]')) {
-			this.handleHeadingAnchorClick(event, target);
-		}
-
 		if (target.closest(".toc") != null) {
 			this.handleTOCClick(event);
+		} else if (target.matches('.content a[href^="#"]')) {
+			this.handleHeadingAnchorClick(event, target);
 		} else if (target.matches("a")) {
 			this.handleAnchorClick(event, target);
 		}
@@ -544,30 +543,6 @@ if (mobileSidebarHandle != null) {
 	);
 }
 
-//# Docsearch
-// Only initialize on focus
-
-const docsearchContainer = document.querySelector("#docsearch");
-// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
-if (docsearchContainer != null) {
-	// Script
-	const script = document.createElement("script");
-	script.src = "/docsearch.js";
-	script.async = true;
-	script.defer = true;
-	script.addEventListener("load", () => {
-		// @ts-expect-error
-		return window.docsearch({
-			appId: "ZKNROT3Q65",
-			apiKey: "6c573608bd6c44671bfc263fb83992e2",
-			indexName: "rome",
-			container: docsearchContainer,
-			debug: false, // Set debug to true if you want to inspect the dropdown
-		});
-	});
-	document.body.appendChild(script);
-}
-
 //# Header scrolls to top
 let topAnchors = Array.from(document.querySelectorAll("[href='#top']"));
 if (location.pathname === "/") {
@@ -591,35 +566,5 @@ for (const elem of topAnchors) {
 				window.location.pathname + window.location.search,
 			);
 		}
-	});
-}
-
-//# Logo navigation
-const maybeLogoModalBackground = document.querySelector(
-	".logo-modal-background",
-);
-const maybeLogoContainer = document.querySelector(".logo-container");
-const maybeLogo = document.querySelector(".logo");
-if (
-	maybeLogoContainer != null &&
-	maybeLogo != null &&
-	maybeLogoModalBackground != null
-) {
-	const logoContainer = maybeLogoContainer;
-	const logo = maybeLogo;
-	const logoModalBackground = maybeLogoModalBackground;
-
-	function toggle() {
-		logoContainer.classList.toggle("active");
-		logoModalBackground.classList.toggle("active");
-	}
-
-	logoModalBackground.addEventListener("click", () => {
-		toggle();
-	});
-
-	logo.addEventListener("click", (e) => {
-		e.preventDefault();
-		toggle();
 	});
 }

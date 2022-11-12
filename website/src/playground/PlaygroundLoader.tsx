@@ -3,6 +3,7 @@ import { LoadingState, RomeOutput } from "./types";
 import { defaultRomeConfig } from "./types";
 import { usePlaygroundState, useWindowSize } from "./utils";
 import Playground from "./Playground";
+import LoadingScreen from "./components/LoadingScreen";
 
 function App() {
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
@@ -89,7 +90,9 @@ function App() {
 			});
 		}, 100);
 
-		return () => clearTimeout(timeout);
+		return () => {
+			clearTimeout(timeout);
+		};
 	}, [loadingState, playgroundState]);
 
 	switch (loadingState) {
@@ -97,11 +100,7 @@ function App() {
 			return <div>Error loading. Please refresh</div>;
 			
 		case LoadingState.Loading:
-			return (
-				<div className="loading">
-					Loading...
-				</div>
-			);
+			return <LoadingScreen />;
 
 		default:
 			return (

@@ -1,3 +1,7 @@
 {
+  "compilerOptions": {
+    "noEmit": true,
+    "target": "es2022"
+  },
   "extends": "astro/tsconfigs/strictest"
 }

@@ -3,29 +3,41 @@ import BaseLayout from "./BaseLayout.astro";
 import ExternalLinks from "./components/ExternalLinks.astro";
 import ActiveLink from "./components/ActiveLink.astro";
 import navigation from "./navigation.json";
-import {buildGetPages} from "./navigation-utils";
-import ColorSchemeSwitcher from "./components/ColorSchemeSwitcher.astro";
+import {buildGetPages, buildTOC} from "./navigation-utils";
 
 const {props} = Astro;
 const {frontmatter = {}} = props;
 
 const getPages = buildGetPages(await Astro.glob("./**/*.mdx"));
-const sidebarEnabled = false;
-const toc = "";
+let sidebarEnabled = false;
+let toc = "";
+
+const allPages = getPages();
+for (const page of allPages) {
+  if (page.file === frontmatter.file) {
+    toc = buildTOC(page);
+    sidebarEnabled = toc !== "";
+    break;
+  }
+}
 ---
 
-<BaseLayout {...Astro.props}>
+<BaseLayout sidebarEnabled={sidebarEnabled} {...Astro.props}>
   <div class="docs-main">
     <aside class="docs-sidebar sidebar">
-      <div class="external-links">
-        <ExternalLinks />
-      </div>
+			<ul class="mobile-navigation">
+				<li><a href="/">Docs</a></li>
+				<li><a href={import.meta.env.PROD ? "https://play.rome.tools/" : "/playground"}>Playground</a></li>
+				<li><ActiveLink href="/blog/">Blog</ActiveLink></li>
+			</ul>
+
+      <ExternalLinks />
 
       {navigation.order.map(id => {
         return <Fragment>
           <h2>{navigation.titles[id]}</h2>
     
-          <ul>
+          <ul class="navigation">
             {getPages(id).map((page) => {
               return <li><ActiveLink href={page.url}>{page.frontmatter.title}</ActiveLink></li>;
             })}

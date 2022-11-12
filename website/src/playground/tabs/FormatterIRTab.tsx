@@ -13,14 +13,14 @@ const romeFormatterIrCodeMirrorExtension = [RomeFormatterIr()];
 
 export default function FormatterIRTab({rome, prettier}: Props) {
   return <>
-    <Collapsible heading={<RomeHeader />}>
+    <Collapsible className="rome" heading={<RomeHeader />}>
       <CodeMirror
         value={rome}
         extensions={romeFormatterIrCodeMirrorExtension}
         readOnly={true}
       />
     </Collapsible>
-    <Collapsible heading={<PrettierHeader />}>
+    <Collapsible className="prettier" heading={<PrettierHeader />}>
       <CodeMirror
         value={prettier}
         extensions={romeFormatterIrCodeMirrorExtension}

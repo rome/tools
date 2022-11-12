@@ -1,20 +1,10 @@
+import type {ReactCodeMirrorProps, ReactCodeMirrorRef} from "@uiw/react-codemirror";
 import RealCodeMirror from "@uiw/react-codemirror";
-import {useEffect, useState} from "react";
+import {forwardRef} from "react";
+import { useTheme } from "./utils";
 
-export default function CodeMirror(props) {
-  const [theme, setTheme] = useState(getCurrentTheme());
+export default forwardRef<ReactCodeMirrorRef, ReactCodeMirrorProps>(function CodeMirror(props, ref) {
+  const theme = useTheme();
 
-  useEffect(() => {
-    function onColorSchemeChange() {
-      setTheme(getCurrentTheme());
-    }
-
-    window.addEventListener("colorschemechange", onColorSchemeChange);
-
-    return function cleanup() {
-      window.removeEventListener("colorschemechange", onColorSchemeChange);
-    };
-  });
-
-  return <RealCodeMirror {...props} theme={theme} />;
-}
+  return <RealCodeMirror {...props} ref={ref} theme={theme} />;
+});

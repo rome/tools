@@ -1,12 +1,11 @@
-import { PlaygroundProps, RomeAstSyntacticData } from "./types";
-import { ReactCodeMirrorRef } from "@uiw/react-codemirror";
+import type { PlaygroundProps, RomeAstSyntacticData } from "./types";
+import type { ReactCodeMirrorRef } from "@uiw/react-codemirror";
 import CodeMirror from "./CodeMirror";
 import type { ViewUpdate } from "@codemirror/view";
-import { romeAst, parser } from "codemirror-lang-rome-ast";
-import { romeAst as RomeFormatterIr } from "lang-rome-formatter-ir";
+import * as codeMirrorLangRomeAST from "codemirror-lang-rome-ast";
 import { javascript } from "@codemirror/lang-javascript";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import { SettingsMenu } from "./settings/SettingsMenu";
+import SettingsPane from "./settings/SettingsPane";
 import React, {
 	useCallback,
 	useEffect,
@@ -15,18 +14,14 @@ import React, {
 	useState,
 } from "react";
 import { EditorSelection } from "@codemirror/state";
-
-import ASTTab from "./tabs/ASTTab";
+import SyntaxTab from "./tabs/SyntaxTab";
 import ControlFlowTab from "./tabs/ControlFlowTab";
-import CSTTab from "./tabs/CSTTab";
-import DiagnosticsTab from "./tabs/DiagnosticsTab";
+import LinterTab from "./tabs/LinterTab";
 import FormatterCodeTab from "./tabs/FormatterCodeTab";
 import FormatterIRTab from "./tabs/FormatterIRTab";
 import { useWindowSize } from "./utils";
 
-const romeFormatterIrCodeMirrorExtension = [RomeFormatterIr()];
-
-export default function Playground({
+export default function PlaygroundLoader({
 	setPlaygroundState,
 	playgroundState: { code, ...settings },
 	prettierOutput,
@@ -81,7 +76,7 @@ export default function Playground({
 
 	// We update the syntactic data of `RomeJsAst` only AstSource(`Display` string of our original AstRepresentation) changed.
 	useEffect(() => {
-		let tree = parser.parse(ast);
+		let tree = codeMirrorLangRomeAST.parser.parse(ast);
 		let rangeMap = new Map();
 		romeAstSyntacticDataRef.current = {
 			ast: tree,
@@ -120,10 +115,8 @@ export default function Playground({
 		setPlaygroundState((state) => ({ ...state, code: value }));
 	}, []);
 
-	const [isSettingsVisible, setSettingVisible] = useState(false);
-
 	const {width} = useWindowSize();
-	const hasNarrowViewport = width <= 1000;
+	const hasNarrowViewport = width !== undefined && width <= 1000;
 
 	const editor = <CodeMirror
 		value={code}
@@ -133,25 +126,14 @@ export default function Playground({
 		onChange={onChange}
 	/>;
 
+	const settingsPane = <SettingsPane
+		settings={settings}
+		setPlaygroundState={setPlaygroundState}
+	/>;
+
 	return (
 		<>
-			<div hidden={true}>
-				{/* rome-ignore lint(a11y/useKeyWithClickEvents) lint: because of issue#3644 */}
-				<button
-					aria-label="Open or Close Settings Menu"
-					aria-pressed={isSettingsVisible}
-					onClick={() => setSettingVisible(!isSettingsVisible)}
-				>
-					Settings
-				</button>
-			</div>
-
-			{isSettingsVisible && (
-				<SettingsMenu
-					settings={settings}
-					setPlaygroundState={setPlaygroundState}
-				/>
-			)}
+			{!hasNarrowViewport && settingsPane}
 
 			{!hasNarrowViewport && <div className="code-pane">
 				{editor}
@@ -161,32 +143,32 @@ export default function Playground({
 				className="preview-pane"
 				selectedTabPanelClassName="react-tabs__tab-panel--selected"
 			>
-				<TabList>
+				<TabList >
 					{hasNarrowViewport && <Tab>Code</Tab>}
+					{hasNarrowViewport && <Tab>Settings</Tab>}
 					<Tab>Formatter</Tab>
-					<Tab>CST</Tab>
-					<Tab>AST</Tab>
+					<Tab>Linter</Tab>
+					<Tab>Syntax</Tab>
 					<Tab>IR</Tab>
-					<Tab>Diagnostics</Tab>
 					<Tab>Control Flow Graph</Tab>
 				</TabList>
 				{hasNarrowViewport && <TabPanel>
 					{editor}
 				</TabPanel>}
+				{hasNarrowViewport && <TabPanel>
+					{settingsPane}
+				</TabPanel>}
 				<TabPanel>
 					<FormatterCodeTab rome={formatted_code} prettier={prettierOutput.code} extensions={extensions} />
 				</TabPanel>
 				<TabPanel>
-					<ASTTab ast={ast} innerRef={astPanelCodeMirrorRef} />
+					<LinterTab errors={errors} />
 				</TabPanel>
 				<TabPanel>
-					<CSTTab cst={cst} />
+					<SyntaxTab ast={ast} cst={cst} ref={astPanelCodeMirrorRef} />
 				</TabPanel>
 				<TabPanel>
 					<FormatterIRTab rome={formatter_ir} prettier={prettierOutput.ir} />
-				</TabPanel>
-				<TabPanel>
-					<DiagnosticsTab errors={errors} />
 				</TabPanel>
 				<TabPanel>
 					<ControlFlowTab graph={control_flow_graph} />

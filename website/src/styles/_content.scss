@@ -6,25 +6,6 @@
 	margin: 0 auto;
 	overflow: hidden;
 
-	a[href^="#"] {
-		display: none;
-		text-decoration: none;
-		color: $color-4;
-		margin-left: 5px;
-
-		&:hover {
-			text-decoration: underline;
-		}
-
-		&:focus {
-			display: inline;
-		}
-
-		&::before {
-			content: "#";
-		}
-	}
-
 	.header-copied {
 		font-size: 16px;
 		opacity: 1;
@@ -99,6 +80,25 @@
 		&:hover a[href^="#"],
 		&:focus a[href^="#"] {
 			display: inline;
+		}
+
+		a[href^="#"] {
+			display: none;
+			text-decoration: none;
+			color: $color-4;
+			margin-left: 5px;
+
+			&:hover {
+				text-decoration: underline;
+			}
+
+			&:focus {
+				display: inline;
+			}
+
+			&::before {
+				content: "#";
+			}
 		}
 
 		@include mobile-only() {

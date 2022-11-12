@@ -4,12 +4,13 @@
 body {
   display: flex;
   flex-direction: column;
+  overscroll-behavior-y: none;
 }
 
 #root {
   display: flex;
-  flex: 1;
-  overflow: hidden;
+  width: 100%;
+  height: calc(100vh - 80px);
 }
 
 html, body {
@@ -17,25 +18,161 @@ html, body {
   height: 100%;
 }
 
+.code-pane, .preview-pane, .settings-pane {
+  height: 100%;
+}
+
 .code-pane, .preview-pane {
-  max-width: 50%;
+  width: 100%;
+  min-width: 0;
+}
+
+.settings-pane {
+  width: 250px;
+  flex-shrink: 0;
+  background-color: var(--container-color);
+  box-shadow: inset -1px 0 0 var(--hard-border-color);
+  overflow: auto;
+  font-size: 14px;
+
+  @include dark-mode {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  section {
+    padding: 10px;
+  }
+
+  input[type=checkbox] {
+    margin-right: 10px;
+  }
+
+  select, input[type=number] {
+    width: 100px;
+  }
+
+  select, input[type=number], .input-container {
+    margin-left: auto;
+  }
+
+  .input-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input[type=text], input[type=number] {
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 2px 6px;
+
+    @include dark-mode {
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  select {
+    @include button;
+    border-radius: 6px;
+    padding: 2px 6px;
+    color: inherit;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+
+    @include dark-mode {
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .button-group {
+    button {
+      @include button;
+      border-radius: 0;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      padding: 2px 6px;
+      color: inherit;
+
+      @include dark-mode {
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        font-weight: bold;
+
+        &:not(:last-child) {
+          border-right: none;
+        }
+      }
+
+      &:not(:first-child):not(&:disabled + button) {
+        border-left: none;
+      }
+
+      &:first-child {
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+      }
+
+      &:last-child {
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+      }
+    }
+  }
+
+  .field-row {
+    display: flex;
+    line-height: 25px;
+    margin-bottom: 10px;
+
+    &.disabled {
+      opacity: 0.4;
+      
+      &, * {
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.react-tabs__tab-panel .settings-pane {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-top: 1px solid var(--hard-border-color);
 }
 
 .preview-pane {
   border-left: 1px solid var(--hard-border-color);
   display: flex;
   flex-direction: column;
-  background-color: var(--container-color);
+}
+
+.mermaid {
+  border-top: 1px solid var(--hard-border-color);
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 h2 {
   padding: 10px;
-  border-top: 1px solid var(--hard-border-color);
-  border-bottom: 1px solid var(--hard-border-color);
   display: flex;
   line-height: 18px;
   font-size: inherit;
   font-weight: normal;
+  box-shadow: inset 0 1px 0 var(--hard-border-color), inset 0 -1px 0 var(--hard-border-color);
+  background-color: rgba(255, 255, 255, 0.15);
+
+  &.rome {
+    background-color: rgba($color-4, 30%);
+  }
+
+  &.prettier {
+    background-color: rgba(#355F75, 40%);
+  }
 
   img {
     vertical-align: middle;
@@ -58,12 +195,12 @@ h2 {
   }
 }
 
-.cm-theme-light, .cm-theme-dark {
-  flex: 1;
-}
-
-.cm-editor {
-  height: 100%;
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
 }
 
 .react-tabs__tab-panel  {
@@ -87,6 +224,7 @@ h2 {
   display: flex;
   flex-direction: column;
   flex: 1;
+  height: 50%;
 
   &.collapsed {
     height: auto;
@@ -106,8 +244,32 @@ h2 {
 }
 
 .collapsible-content {
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   flex: 1;
+  overflow: auto;
+}
+
+.cm-theme-light, .cm-theme-dark {
+  height: 100%;
+  overflow: auto;
+}
+
+.cm-editor {
+  height: 100%;
+}
+
+.cm-focused {
+  outline: none !important;
+}
+
+.empty-panel {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: var(--background-color);
+  justify-content: center;
+  align-items: center;
 }
 
 .react-tabs__tab-list {
@@ -118,7 +280,11 @@ h2 {
   line-height: 40px;
   white-space: nowrap;
   overflow-x: auto;
-  border-bottom: 1px solid var(--hard-border-color);
+  background-color: var(--container-color);
+
+  @include dark-mode {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
 
   li {
     padding: 0 10px;
@@ -138,8 +304,4 @@ h2 {
 
 .react-tabs__tab-panel--selected {
   display: flex;
-
-  > :first-child, > :first-child > :first-child {
-    border-top: none;
-  }
 }

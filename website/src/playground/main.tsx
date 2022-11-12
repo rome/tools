@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import PlaygroundLoader from "./PlaygroundLoader";
 
 ReactDOM.render(
 	<React.StrictMode>
-		<App />
+		<PlaygroundLoader />
 	</React.StrictMode>,
 	document.getElementById("root"),
 );

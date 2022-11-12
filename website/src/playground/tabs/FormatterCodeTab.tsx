@@ -17,9 +17,9 @@ function removeWhitespace(str: string): string {
 
 function calculateHint(a: string, b: string): string | JSX.Element {
   if (a === b) {
-    return "Exact match";
+    return <strong>Exact match</strong>;
   } else if (removeWhitespace(a) === removeWhitespace(b)) {
-    return "Only whitespace differences";
+    return <strong>Only whitespace differences</strong>;
   }
 
   const diff = fastDiff(a, b);
@@ -43,16 +43,15 @@ export default function FormatterCodeTab({rome, prettier, extensions}: Props) {
   const hint = calculateHint(prettier, rome);
 
   return <>
-    <Collapsible heading={<RomeHeader />}>
+    <Collapsible className="rome" heading={<RomeHeader />}>
       <CodeMirror
         value={rome}
         extensions={extensions}
         placeholder="Rome Output"
-        height="100%"
         readOnly={true}
       />
     </Collapsible>
-    <Collapsible heading={<>
+    <Collapsible className="prettier" heading={<>
       <PrettierHeader />
       <span className="diff-hint">{hint}</span>
     </>} >
@@ -60,7 +59,6 @@ export default function FormatterCodeTab({rome, prettier, extensions}: Props) {
         value={prettier}
         extensions={extensions}
         placeholder="Prettier Output"
-        height="100%"
         readOnly={true}
       />
     </Collapsible>
