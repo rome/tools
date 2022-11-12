@@ -32,12 +32,13 @@ function inlineCSS(): AstroIntegration {
 						);
 
 						const pageStyles: string[] = await Promise.all(
-							stylesPaths.map(async (stylesPath, i) => {
-								if (stylesPath[0] === "/") {
-									stylesPath = `${dir.pathname}${stylesPath}`;
+							stylesPaths.map(async (_stylesPath, i) => {
+								let stylesPath;
+								if (_stylesPath[0] === "/") {
+									stylesPath = `${dir.pathname}${_stylesPath}`;
 								} else {
 									stylesPath = path.resolve(
-										path.join(path.dirname(htmlPath), stylesPath),
+										path.join(path.dirname(htmlPath), _stylesPath),
 									);
 								}
 								const styles = await fs.readFile(stylesPath, "utf8");
