@@ -77,6 +77,12 @@ const a = <Popconfirm
 	</Popconfirm>
 ;
 
+<OtherComponent
+	value={
+		new Set(veryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzz)
+	}
+/>
+
 ```
 
 
@@ -176,6 +182,14 @@ const a = (
 	</Popconfirm>
 );
 
+<OtherComponent
+	value={
+		new Set(
+			veryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzz,
+		)
+	}
+/>;
+
 
 ## Unimplemented nodes/tokens
 
@@ -187,6 +201,7 @@ const a = (
 
    10: 			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
    30: 			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+   85: 			veryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzz,
 ```
 
 
