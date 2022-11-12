@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import prettier, { Options } from "prettier";
+import type { ThemeName } from "../frontend-scripts/util";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel";
 import {
@@ -11,6 +12,7 @@ import {
 	SourceType,
 	TrailingComma,
 } from "./types";
+import { getCurrentTheme } from "../frontend-scripts/util";
 
 export function classNames(
 	...classes: (string | undefined | boolean)[]
@@ -24,21 +26,12 @@ interface Size {
 	height: number | undefined;
 }
 
-export type ThemeName = "dark" | "light";
-
-declare var getCurrentTheme: () => string;
-
-// Uses a global function we have defined in public/script.js
-function safeGetCurrentTheme(): ThemeName {
-	return getCurrentTheme() === "dark" ? "dark" : "light";
-}
-
 export function useTheme(): ThemeName {
-	const [theme, setTheme] = useState(safeGetCurrentTheme());
+	const [theme, setTheme] = useState(getCurrentTheme());
 
 	useEffect(() => {
 		function onColorSchemeChange() {
-			setTheme(safeGetCurrentTheme());
+			setTheme(getCurrentTheme());
 		}
 
 		window.addEventListener("colorschemechange", onColorSchemeChange);
@@ -78,9 +71,14 @@ export function useWindowSize(): Size {
 
 export function usePlaygroundState(
 	defaultRomeConfig: RomeConfiguration,
-): [PlaygroundState, Dispatch<SetStateAction<PlaygroundState>>] {
-	const searchParams = new URLSearchParams(window.location.search);
-	const initState = () => ({
+): [PlaygroundState, Dispatch<SetStateAction<PlaygroundState>>, () => void] {
+	const searchQuery =
+		window.location.search === ""
+			? localStorage.getItem("last-playground-search") ?? ""
+			: window.location.search;
+	const initialSearchParams = new URLSearchParams(searchQuery);
+
+	const initState = (searchParams: URLSearchParams) => ({
 		code:
 			window.location.hash !== "#"
 				? decodeCode(window.location.hash.substring(1))
@@ -114,10 +112,16 @@ export function usePlaygroundState(
 			searchParams.get("enabledNurseryRules") === "true" ||
 			defaultRomeConfig.enabledNurseryRules,
 	});
-	const [playgroundState, setPlaygroundState] = useState(initState());
+	const [playgroundState, setPlaygroundState] = useState(
+		initState(initialSearchParams),
+	);
+
+	function resetPlaygroundState() {
+		setPlaygroundState(initState(new URLSearchParams("")));
+	}
 
 	useEffect(() => {
-		setPlaygroundState(initState());
+		setPlaygroundState(initState(initialSearchParams));
 	}, [defaultRomeConfig]);
 
 	useEffect(() => {
@@ -147,6 +151,7 @@ export function usePlaygroundState(
 		}
 
 		const queryString = new URLSearchParams(queryStringObj).toString();
+		localStorage.setItem("last-playground-search", queryString);
 
 		let url = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
 		if (queryString !== "") {
@@ -156,7 +161,7 @@ export function usePlaygroundState(
 		window.history.replaceState({ path: url }, "", url);
 	}, [playgroundState]);
 
-	return [playgroundState, setPlaygroundState];
+	return [playgroundState, setPlaygroundState, resetPlaygroundState];
 }
 
 export function createSetter<Key extends keyof PlaygroundState>(

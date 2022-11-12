@@ -63,10 +63,12 @@ html, body {
   input[type=text], input[type=number] {
     border-radius: 6px;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    padding: 2px 6px;
+    padding: 2px 10px;
 
     @include dark-mode {
-      border-color: rgba(255, 255, 255, 0.1);
+      color: inherit;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-color: rgba(0, 0, 0, 0.5);
     }
   }
 
@@ -82,40 +84,44 @@ html, body {
     }
   }
 
-  .button-group {
-    button {
-      @include button;
-      border-radius: 0;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-      padding: 2px 6px;
-      color: inherit;
 
-      @include dark-mode {
-        border-color: rgba(255, 255, 255, 0.1);
-      }
+  button {
+    @include button;
+    border-radius: 0;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 2px 6px;
+    color: inherit;
+    border-radius: 6px;
 
-      &:disabled {
-        opacity: 0.5;
-        font-weight: bold;
+    @include dark-mode {
+      border-color: rgba(255, 255, 255, 0.1);
+    }
 
-        &:not(:last-child) {
-          border-right: none;
-        }
-      }
+    &:disabled {
+      opacity: 0.5;
+      font-weight: bold;
+    }
+  }
 
-      &:not(:first-child):not(&:disabled + button) {
-        border-left: none;
-      }
+  .button-group button {
+    border-radius: 0;
 
-      &:first-child {
-        border-top-left-radius: 6px;
-        border-bottom-left-radius: 6px;
-      }
+    &:disabled:not(:last-child) {
+      border-right: none;
+    }
 
-      &:last-child {
-        border-top-right-radius: 6px;
-        border-bottom-right-radius: 6px;
-      }
+    &:not(:first-child):not(&:disabled + button) {
+      border-left: none;
+    }
+
+    &:first-child {
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px;
+    }
+
+    &:last-child {
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
     }
   }
 
@@ -157,7 +163,17 @@ html, body {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-h2 {
+.playground-body {
+  .docs-sidebar {
+    display: none;
+
+    &.mobile-active {
+			display: block;
+		}
+  }
+}
+
+#root h2 {
   padding: 10px;
   display: flex;
   line-height: 18px;
@@ -280,6 +296,7 @@ h2 {
   line-height: 40px;
   white-space: nowrap;
   overflow-x: auto;
+  overflow-y: hidden;
   background-color: var(--container-color);
 
   @include dark-mode {
@@ -289,6 +306,7 @@ h2 {
   li {
     padding: 0 10px;
     border-right: 1px solid var(--hard-border-color);
+    flex-shrink: 0;
 
     &:hover {
       cursor: pointer;

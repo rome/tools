@@ -5,6 +5,10 @@
 			"nursery": {
 				"noConstAssign": "error"
 			}
-		}
+		},
+		"ignore": ["website/build"]
+	},
+	"formatter": {
+		"ignore": ["website/build"]
 	}
 }

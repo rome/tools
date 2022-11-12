@@ -1,77 +1,54 @@
-// @ts-check
-"use strict";
+import { isMobile, toggleMobileSidebar } from "./mobile";
 
-//# Responsive width
-let isMobile = false;
-window.addEventListener("DOMContentLoaded", () => {
-	const mobileMatchMedia = matchMedia("(max-width: 768px)");
-	isMobile = mobileMatchMedia.matches;
-
-	mobileMatchMedia.addListener((e) => {
-		isMobile = e.matches;
-
-		// Close the mobile sidebar when switching from mobile to desktop
-		if (isMobileNavVisible && !isMobile && isMobileNavVisible) {
-			toggleMobileSidebar();
-		}
-	});
-});
-
-//# Table of Contents
 const originalTitle = document.title;
-const headerMobile = document.querySelector(".header-mobile");
 
-/** @type {HTMLElement}*/
-const tocSidebar = document.querySelector(".toc-sidebar");
+const tocSidebar: HTMLElement = document.querySelector(".toc-sidebar")!;
 
-/** @type {Array<HTMLAnchorElement>}*/
-const tocLinks = Array.from(document.querySelectorAll(".toc a"));
+const tocLinks: HTMLAnchorElement[] = Array.from(
+	document.querySelectorAll(".toc a"),
+);
 
-/** @type {Array<{
- * heading: HTMLElement,
- * link: HTMLAnchorElement,
- * }>} */
-const headingElements = tocLinks.map((link) => {
+const headingElements: {
+	heading: HTMLElement;
+	link: HTMLAnchorElement;
+}[] = tocLinks.map((link) => {
 	return {
 		heading: document.querySelector(
-			`[id="${link.getAttribute("href").slice(1)}"]`,
-		),
+			`[id="${String(link.getAttribute("href")).slice(1)}"]`,
+		)!,
 		link,
 	};
 });
 
+type CalculatedHeading = {
+	id: string;
+	link: HTMLAnchorElement;
+	titles: string[];
+	level: number;
+	start: number;
+	end: number;
+};
+
 /**
- * @typedef {Object} CalculatedHeading
- * @property {string} id
- * @property {HTMLAnchorElement} link
- * @property {Array<string>} titles
- * @property {number} level
- * @property {number} start
- * @property {number} end
+ * @typedef {Object}
  */
 
 class Manager {
 	constructor() {
-		/** @type {Array<CalculatedHeading>}*/
 		this.headingsCalculated = [];
-
-		/** @type {boolean}*/
 		this.hasInitializedHeadings = false;
-
-		/** @type {undefined | number}*/
 		this.lastActiveHeading = undefined;
-
-		/** @type {boolean}*/
 		this.isNavCollapsed = false;
-
-		/** @type {undefined | number}*/
 		this.navHeight = undefined;
 	}
 
-	/**
-	 * @param {MouseEvent} event
-	 */
-	handleTOCClick(event) {
+	headingsCalculated: CalculatedHeading[];
+	hasInitializedHeadings: boolean;
+	navHeight: number | undefined;
+	isNavCollapsed: boolean;
+	lastActiveHeading: undefined | number;
+
+	handleTOCClick(event: MouseEvent) {
 		const target = event.target;
 		event.preventDefault();
 		if (!(target instanceof HTMLElement)) {
@@ -79,7 +56,7 @@ class Manager {
 		}
 
 		if (target.hasAttribute("href")) {
-			const hash = target.getAttribute("href");
+			const hash = target.getAttribute("href") ?? "";
 			window.location.hash = hash;
 			this.scrollToHeading(hash);
 
@@ -111,31 +88,21 @@ class Manager {
 		return offset;
 	}
 
-	/**
-	 * @param {HTMLElement} heading
-	 * @returns {number}
-	 */
-	getHeadingTop(heading) {
+	getHeadingTop(heading: HTMLElement): number {
 		return heading.offsetTop - this.getScrollOffset();
 	}
 
-	/**
-	 * @param {number} i
-	 * @param {Array<CalculatedHeading>} stack
-	 * @returns {CalculatedHeading}
-	 */
-	calculateHeading(i, stack) {
-		const { heading, link } = headingElements[i];
-		const id = heading.getAttribute("id");
+	calculateHeading(i: number, stack: CalculatedHeading[]): CalculatedHeading {
+		const { heading, link } = headingElements[i]!;
+		const id = heading.getAttribute("id")!;
 
 		// Extract the level from the H tag
 		const level = Number(heading.tagName[1]);
 
 		// Get the headings above this one for us in document.title
-		/** @type {Array<string>}*/
-		let titles = [heading.textContent.trim()];
+		let titles: string[] = [(heading.textContent ?? "").trim()];
 		for (let i = stack.length - 1; i >= 0; i--) {
-			const heading = stack[i];
+			const heading = stack[i]!;
 			if (heading.level < level) {
 				titles = heading.titles.concat(titles);
 				break;
@@ -189,22 +156,15 @@ class Manager {
 
 	/**
 	 * Check if a heading is currently in view
-	 *
-	 * @param {number} i
-	 * @returns {boolean}
 	 */
-	isVisibleHeading(i) {
-		const { start, end } = this.headingsCalculated[i];
+	isVisibleHeading(i: number): boolean {
+		const { start, end } = this.headingsCalculated[i]!;
 		const scrollY = this.getScrollY();
 		return scrollY >= start && scrollY <= end;
 	}
 
-	/**
-	 * @param {number} i
-	 * @param {boolean} activating
-	 */
-	toggleActiveHeading(i, activating) {
-		const { link, titles } = this.headingsCalculated[i];
+	toggleActiveHeading(i: number, activating: boolean) {
+		const { link, titles } = this.headingsCalculated[i]!;
 
 		// Only automatically rewrite the heading on the homepage
 		if (location.pathname === "/") {
@@ -216,8 +176,7 @@ class Manager {
 			}
 		}
 
-		/** @type {null | Element}*/
-		let target = link;
+		let target: Element | null = link;
 		while (target != null && target.tagName !== "DIV") {
 			if (target.tagName === "LI") {
 				target.classList.toggle("active");
@@ -261,7 +220,7 @@ class Manager {
 
 				// Make sure TOC link is visible
 				let linkTop =
-					this.headingsCalculated[i].link.offsetTop - tocSidebar.offsetTop;
+					this.headingsCalculated[i]!.link.offsetTop - tocSidebar.offsetTop;
 				if (i === 0) {
 					linkTop = 0;
 				}
@@ -277,12 +236,7 @@ class Manager {
 		}
 	}
 
-	/**
-	 * @param {string} hash
-	 * @param {undefined | (() => void)} callback
-	 * @returns {boolean}
-	 */
-	scrollToHeading(hash, callback) {
+	scrollToHeading(hash: string, callback?: undefined | (() => void)): boolean {
 		// Allow passing in raw link href
 		const id = hash.replace(/^(#)/, "");
 
@@ -307,14 +261,11 @@ class Manager {
 
 	/**
 	 * Fully scroll and copy hash to tech when clicking an anchor next to a heading
-	 *
-	 * @param {MouseEvent} event
-	 * @param {HTMLElement} target
 	 */
-	handleHeadingAnchorClick(event, target) {
+	handleHeadingAnchorClick(event: MouseEvent, target: HTMLElement) {
 		event.preventDefault();
 
-		const hash = target.getAttribute("href");
+		const hash = target.getAttribute("href") ?? "";
 		window.location.hash = hash;
 		this.scrollToHeading(hash);
 
@@ -332,7 +283,7 @@ class Manager {
 		const copied = document.createElement("span");
 		copied.classList.add("header-copied");
 		copied.textContent = "Copied to clipboard";
-		target.parentElement.appendChild(copied);
+		target.parentElement?.appendChild(copied);
 		requestAnimationFrame(() => {
 			requestAnimationFrame(() => {
 				copied.style.opacity = "0";
@@ -345,16 +296,15 @@ class Manager {
 
 	/**
 	 * Intercept link clicks, if they are just hashes on the current page then
-	 * just scroll
-	 *
-	 * @param {MouseEvent} event
-	 * @param {HTMLElement} target
+	 * just scroll.
 	 */
-	handleAnchorClick(event, target) {
-		let href = target.getAttribute("href");
-		if (href === undefined) {
+	handleAnchorClick(event: MouseEvent, target: HTMLElement) {
+		let maybeHref = target.getAttribute("href");
+		if (maybeHref == null) {
 			return;
 		}
+
+		let href: string = maybeHref;
 
 		// Remove current origin
 		if (href.startsWith(location.origin)) {
@@ -377,10 +327,7 @@ class Manager {
 		});
 	}
 
-	/**
-	 * @param {MouseEvent} event
-	 */
-	handleGlobalClick(event) {
+	handleGlobalClick(event: MouseEvent) {
 		const { target } = event;
 		if (!(target instanceof HTMLElement)) {
 			return;
@@ -431,140 +378,5 @@ if (tocLinks.length > 0) {
 
 	window.addEventListener("DOMContentLoaded", () => {
 		manager.attach();
-	});
-}
-
-//# Team list shuffle
-
-/**
- * @template T
- * @param {Array<T>} array
- * @returns {Array<T>}
- */
-function randomShuffle(array) {
-	let count = array.length;
-	let temp;
-	let index;
-	while (count) {
-		index = Math.floor(Math.random() * count--);
-		temp = array[count];
-		array[count] = array[index];
-		array[index] = temp;
-	}
-	return array;
-}
-
-const creditsPeopleLists = document.querySelectorAll(".credits-people-list");
-for (const list of creditsPeopleLists) {
-	const items = list.querySelectorAll("li");
-	for (const li of randomShuffle(Array.from(items))) {
-		list.appendChild(li);
-	}
-}
-
-//# Code expanders
-
-const collapsed = document.querySelectorAll("pre.collapsed");
-for (const elem of collapsed) {
-	elem.addEventListener("click", () => {
-		elem.classList.remove("collapsed");
-	});
-}
-
-//# Color scheme switcher
-
-function matchesDark() {
-	return window.matchMedia("(prefers-color-scheme: dark)");
-}
-
-function getCurrentTheme() {
-	let currentScheme = window.localStorage.getItem("data-theme");
-	if (currentScheme == null) {
-		const prefersDarkMode = matchesDark().matches;
-		currentScheme = prefersDarkMode ? "dark" : "light";
-	}
-	return currentScheme;
-}
-
-function toggleColorSchemeSwitch(evt) {
-	const currentScheme = getCurrentTheme();
-	const newScheme = currentScheme === "dark" ? "light" : "dark";
-	window.localStorage.setItem("data-theme", newScheme);
-	evt.currentTarget.setAttribute("aria-checked", newScheme === "dark");
-	document.documentElement.classList.add("transition");
-	document.documentElement.setAttribute("data-theme", newScheme);
-	onColorSchemeChange();
-}
-
-function onColorSchemeChange() {
-	window.dispatchEvent(new Event("colorschemechange"));
-}
-
-const colorSchemeSwitcher = document.querySelector(".color-scheme-switch");
-// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
-if (colorSchemeSwitcher != null) {
-	colorSchemeSwitcher.addEventListener("click", toggleColorSchemeSwitch, false);
-}
-
-matchesDark().addEventListener("change", () => {
-	onColorSchemeChange();
-});
-
-//# Mobile navigation
-
-const mobileSidebarHandle = document.querySelector(".mobile-handle");
-const mobileActiveTargets = document.querySelectorAll(
-	".page-header, .page-header-mobile, .docs-sidebar",
-);
-let isMobileNavVisible = false;
-function toggleMobileSidebar() {
-	isMobileNavVisible = !isMobileNavVisible;
-	mobileSidebarHandle.classList.toggle("active");
-	document.body.classList.toggle("no-scroll");
-	if (isMobileNavVisible) {
-		for (const elem of mobileActiveTargets) {
-			elem.classList.add("mobile-active");
-		}
-	} else {
-		for (const elem of mobileActiveTargets) {
-			elem.classList.remove("mobile-active");
-		}
-	}
-}
-// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
-if (mobileSidebarHandle != null) {
-	mobileSidebarHandle.addEventListener(
-		"click",
-		(event) => {
-			event.preventDefault();
-			toggleMobileSidebar();
-		},
-		false,
-	);
-}
-
-//# Header scrolls to top
-let topAnchors = Array.from(document.querySelectorAll("[href='#top']"));
-if (location.pathname === "/") {
-	topAnchors = [...topAnchors, ...document.querySelectorAll(".logo")];
-}
-for (const elem of topAnchors) {
-	elem.addEventListener("click", (e) => {
-		if (window.scrollY > 0) {
-			e.preventDefault();
-
-			if (tocSidebar != null) {
-				tocSidebar.scrollTop = 0;
-			}
-
-			window.scrollTo(0, 0);
-
-			// Remove the hash
-			history.pushState(
-				"",
-				document.title,
-				window.location.pathname + window.location.search,
-			);
-		}
 	});
 }

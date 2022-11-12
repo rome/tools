@@ -5,18 +5,19 @@ import type { ViewUpdate } from "@codemirror/view";
 import * as codeMirrorLangRomeAST from "codemirror-lang-rome-ast";
 import { javascript } from "@codemirror/lang-javascript";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import SettingsPane from "./settings/SettingsPane";
+import SettingsPane from "./components/SettingsPane";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { EditorSelection } from "@codemirror/state";
 import SyntaxTab from "./tabs/SyntaxTab";
 import ControlFlowTab from "./tabs/ControlFlowTab";
-import LinterTab from "./tabs/LinterTab";
+import DiagnosticsTab from "./tabs/DiagnosticsTab";
 import FormatterCodeTab from "./tabs/FormatterCodeTab";
 import FormatterIRTab from "./tabs/FormatterIRTab";
 import { useWindowSize } from "./utils";
 
 export default function PlaygroundLoader({
 	setPlaygroundState,
+	resetPlaygroundState,
 	playgroundState: { code, ...settings },
 	prettierOutput,
 	romeOutput: {
@@ -123,7 +124,11 @@ export default function PlaygroundLoader({
 	);
 
 	const settingsPane = (
-		<SettingsPane settings={settings} setPlaygroundState={setPlaygroundState} />
+		<SettingsPane
+			onReset={resetPlaygroundState}
+			settings={settings}
+			setPlaygroundState={setPlaygroundState}
+		/>
 	);
 
 	return (
@@ -140,7 +145,7 @@ export default function PlaygroundLoader({
 					{hasNarrowViewport && <Tab>Code</Tab>}
 					{hasNarrowViewport && <Tab>Settings</Tab>}
 					<Tab>Formatter</Tab>
-					<Tab>Linter</Tab>
+					<Tab>Diagnostics</Tab>
 					<Tab>Syntax</Tab>
 					<Tab>IR</Tab>
 					<Tab>Control Flow Graph</Tab>
@@ -155,7 +160,7 @@ export default function PlaygroundLoader({
 					/>
 				</TabPanel>
 				<TabPanel>
-					<LinterTab errors={errors} />
+					<DiagnosticsTab errors={errors} />
 				</TabPanel>
 				<TabPanel>
 					<SyntaxTab ast={ast} cst={cst} ref={astPanelCodeMirrorRef} />
