@@ -1,5 +1,5 @@
 import { formatWithPrettier } from "../utils";
-import { PlaygroundState } from "../types";
+import type { PlaygroundState } from "../types";
 
 self.addEventListener("message", (e) => {
 	switch (e.data.type) {

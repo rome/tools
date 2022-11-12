@@ -37,7 +37,7 @@ function getPathForType(
 		return PATH_SCRIPT;
 	}
 
-	return PATHS_MODULE[Number(isTypeScript) * 2 + Number(isJsx)];
+	return PATHS_MODULE[Number(isTypeScript) * 2 + Number(isJsx)]!;
 }
 
 type CurrentFile = {

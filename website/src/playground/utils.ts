@@ -24,12 +24,21 @@ interface Size {
 	height: number | undefined;
 }
 
-export function useTheme(): "dark" | "light" {
-	const [theme, setTheme] = useState(getCurrentTheme());
+export type ThemeName = "dark" | "light";
+
+declare var getCurrentTheme: () => string;
+
+// Uses a global function we have defined in public/script.js
+function safeGetCurrentTheme(): ThemeName {
+	return getCurrentTheme() === "dark" ? "dark" : "light"
+}
+
+export function useTheme(): ThemeName {
+	const [theme, setTheme] = useState(safeGetCurrentTheme());
 
 	useEffect(() => {
 		function onColorSchemeChange() {
-			setTheme(getCurrentTheme());
+			setTheme(safeGetCurrentTheme());
 		}
 
 		window.addEventListener("colorschemechange", onColorSchemeChange);
@@ -126,7 +135,7 @@ export function usePlaygroundState(
 		// Eliminate default values
 		const queryStringObj: Record<string, string> = {};
 		for (const key in rawQueryParams) {
-			const defaultValue = String(defaultRomeConfig[key]);
+			const defaultValue = String(defaultRomeConfig[key as keyof typeof defaultRomeConfig]);
 			const rawValue = rawQueryParams[key];
 			const value = String(rawValue);
 
@@ -234,7 +243,7 @@ function toBinary(input: string) {
 	const charCodes = new Uint8Array(codeUnits.buffer);
 	let result = "";
 	for (let i = 0; i < charCodes.byteLength; i++) {
-		result += String.fromCharCode(charCodes[i]);
+		result += String.fromCharCode(charCodes[i]!);
 	}
 	return result;
 }
@@ -247,7 +256,7 @@ function fromBinary(binary: string) {
 	const charCodes = new Uint16Array(bytes.buffer);
 	let result = "";
 	for (let i = 0; i < charCodes.length; i++) {
-		result += String.fromCharCode(charCodes[i]);
+		result += String.fromCharCode(charCodes[i]!);
 	}
 	return result;
 }

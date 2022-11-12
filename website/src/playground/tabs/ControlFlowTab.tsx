@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 import mermaid from "mermaid";
 import { useTheme } from "../utils";
 
@@ -7,12 +7,6 @@ interface Props {
 }
 
 let initialized = false;
-
-const MermaidGraph = memo(function MermaidGraph({ graph }: Props) {
-	const encodedGraph = encodeURIComponent(btoa(graph));
-
-	return <iframe src={`/playground/mermaid?graph=${encodedGraph}`} />;
-});
 
 export default function ControlFlowTab({ graph }: Props) {
 	if (graph === "") {

@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { LoadingState, RomeOutput } from "./types";
 import { defaultRomeConfig } from "./types";
-import { usePlaygroundState, useWindowSize } from "./utils";
+import { usePlaygroundState } from "./utils";
 import Playground from "./Playground";
 import LoadingScreen from "./components/LoadingScreen";
 

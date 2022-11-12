@@ -4,6 +4,7 @@
 		"scripts": {
 				"start": "astro dev",
 				"format": "cargo rome-cli-dev format --write .",
+				"tsc": "tsc --skipLibCheck",
 				"check": "cd ../ && cargo rome-cli-dev check ./website/docs/src",
 				"start:playground": "pnpm build:wasm-dev && pnpm start",
 				"build": "pnpm build:wasm && pnpm build:js",
@@ -23,6 +24,7 @@
 				"@docsearch/js": "^3.3.0",
 				"@fontsource/inter": "^4.5.14",
 				"@rometools/wasm-web": "../npm/wasm-web",
+				"@types/mermaid": "^9.1.0",
 				"@types/node": "^18.11.3",
 				"@types/prettier": "^2.7.1",
 				"@types/react": "^17.0.33",

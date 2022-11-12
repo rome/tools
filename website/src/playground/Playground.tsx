@@ -6,7 +6,7 @@ import * as codeMirrorLangRomeAST from "codemirror-lang-rome-ast";
 import { javascript } from "@codemirror/lang-javascript";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import SettingsPane from "./settings/SettingsPane";
-import React, {
+import {
 	useCallback,
 	useEffect,
 	useMemo,

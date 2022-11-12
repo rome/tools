@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction } from "react";
-import { parser } from "codemirror-lang-rome-ast";
+import type { Dispatch, SetStateAction } from "react";
+import type { parser } from "codemirror-lang-rome-ast";
 
 export enum IndentStyle {
 	Tab = "tab",

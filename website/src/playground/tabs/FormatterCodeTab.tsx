@@ -1,4 +1,3 @@
-import { memo } from "react";
 import CodeMirror from "../CodeMirror";
 import Collapsible from "../Collapsible";
 import PrettierHeader from "../components/PrettierHeader";

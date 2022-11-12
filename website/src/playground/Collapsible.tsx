@@ -10,6 +10,7 @@ export default function Collapsible(props: Props) {
 	const [visible, setVisible] = useState(true);
 
 	function onClick() {
+		setVisible;
 		//setVisible(!visible);
 	}
 
