@@ -101,21 +101,19 @@ fn should_change_to_const(binding: &JsIdentifierBinding, model: &SemanticModel) 
 
     match decl {
         VarDecl::JsVariableDeclaration(decl) => {
-            if decl.parent::<JsForStatement>().is_some() || !decl.is_let() {
-                return Some(false);
+            if !decl.is_let()
+                || decl.parent::<JsForStatement>().is_some()
+                || declarator.initializer().is_none()
+            {
+                return None;
             }
         }
         VarDecl::JsForVariableDeclaration(decl) => {
-            if !decl
-                .kind_token()
-                .map_or(false, |it| it.kind() == JsSyntaxKind::LET_KW)
-            {
+            if decl.kind_token().ok()?.kind() != JsSyntaxKind::LET_KW {
                 return None;
             }
         }
     }
 
-    let no_writes = binding.all_writes(model).len() == 0;
-    let is_initialized = declarator.initializer().is_some();
-    Some(is_initialized && no_writes)
+    Some(binding.all_writes(model).len() == 0)
 }
