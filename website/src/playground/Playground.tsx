@@ -5,7 +5,7 @@ import type { ViewUpdate } from "@codemirror/view";
 import * as codeMirrorLangRomeAST from "codemirror-lang-rome-ast";
 import { javascript } from "@codemirror/lang-javascript";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import SettingsPane from "./settings/SettingsPane";
+import SettingsPane from "./components/SettingsPane";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { EditorSelection } from "@codemirror/state";
 import SyntaxTab from "./tabs/SyntaxTab";
