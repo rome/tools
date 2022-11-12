@@ -34,12 +34,20 @@
     background: #E9ECEF;
   }
 
+  &:active {
+    background: darken(#E9ECEF, 5%);
+  }
+
   @include dark-mode {
     background: rgba(255, 255, 255, 0.1);
 
     &:hover {
       background: rgba(255, 255, 255, 0.2);
     }
+
+		&:active {
+      background: rgba(255, 255, 255, 0.3);
+		}
   }
 }
 

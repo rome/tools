@@ -37,7 +37,6 @@ function base64Encode(buffer: Buffer, ext: string) {
 	return `data:${mime};base64,${buffer.toString("base64")}`;
 }
 
-const { default: script } = await import("/public/script.js?raw");
 const { default: favicon } = await import("/public/img/favicon.svg?raw");
 ---
 
@@ -115,10 +114,8 @@ const { default: favicon } = await import("/public/img/favicon.svg?raw");
 			}
 		</script>}
 		
-		<script is:inline>
-			import "/src/docsearch.js";
+		<script>
+			import "./frontend-scripts/index.js";
 		</script>
-
-		{script && <script async defer is:inline set:html={script}></script>}
 	</body>
 </html>

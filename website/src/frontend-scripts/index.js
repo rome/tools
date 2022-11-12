@@ -1,5 +1,5 @@
-// @ts-check
-"use strict";
+import "./docsearch";
+import {matchesDark, getCurrentTheme} from "./util";
 
 //# Responsive width
 let isMobile = false;
@@ -472,19 +472,6 @@ for (const elem of collapsed) {
 }
 
 //# Color scheme switcher
-
-function matchesDark() {
-	return window.matchMedia("(prefers-color-scheme: dark)");
-}
-
-function getCurrentTheme() {
-	let currentScheme = window.localStorage.getItem("data-theme");
-	if (currentScheme == null) {
-		const prefersDarkMode = matchesDark().matches;
-		currentScheme = prefersDarkMode ? "dark" : "light";
-	}
-	return currentScheme;
-}
 
 function toggleColorSchemeSwitch(evt) {
 	const currentScheme = getCurrentTheme();
