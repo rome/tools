@@ -1,4 +1,9 @@
 [build]
-base = ""
-publish = "website/build/"
-command = "./website/build-netlify.sh"
+base = "website/"
+publish = "build/"
+
+[context.production]
+command = "./build-netlify.sh"
+
+[context.deploy-preview]
+command = "./build-netlify.sh preview"
