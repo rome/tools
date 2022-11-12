@@ -12,8 +12,6 @@ specifiers:
   '@docsearch/js': ^3.3.0
   '@fontsource/inter': ^4.5.14
   '@rometools/wasm-web': ../npm/wasm-web
-  '@types/dompurify': ^2.4.0
-  '@types/lodash': ^4.14.188
   '@types/mermaid': ^9.1.0
   '@types/node': ^18.11.3
   '@types/prettier': ^2.7.1
@@ -57,8 +55,6 @@ dependencies:
   '@docsearch/js': 3.3.0_gzv7pa6nrbev3fs6gyzn7sadkq
   '@fontsource/inter': 4.5.14
   '@rometools/wasm-web': link:../npm/wasm-web
-  '@types/dompurify': 2.4.0
-  '@types/lodash': 4.14.188
   '@types/mermaid': 9.1.0
   '@types/node': 18.11.9
   '@types/prettier': 2.7.1
@@ -1156,12 +1152,6 @@ packages:
       '@types/ms': 0.7.31
     dev: false
 
-  /@types/dompurify/2.4.0:
-    resolution: {integrity: sha512-IDBwO5IZhrKvHFUl+clZxgf3hn2b/lU6H1KaBShPkQyGJUQ0xwebezIPSuiyGwfz1UzJWQl4M7BDxtHtCCPlTg==}
-    dependencies:
-      '@types/trusted-types': 2.0.2
-    dev: false
-
   /@types/estree-jsx/0.0.1:
     resolution: {integrity: sha512-gcLAYiMfQklDCPjQegGn0TBAn9it05ISEsEhlKQUddIk7o2XDokOcTN7HBO8tznM0D9dGezvHEfRZBfZf6me0A==}
     dependencies:
@@ -1198,10 +1188,6 @@ packages:
 
   /@types/json5/0.0.30:
     resolution: {integrity: sha512-sqm9g7mHlPY/43fcSNrCYfOeX9zkTTK+euO5E6+CVijSMm5tTjkVdwdqRkY3ljjIAf8679vps5jKUoJBCLsMDA==}
-    dev: false
-
-  /@types/lodash/4.14.188:
-    resolution: {integrity: sha512-zmEmF5OIM3rb7SbLCFYoQhO4dGt2FRM9AMkxvA3LaADOF1n8in/zGJlWji9fmafLoNyz+FoL6FE0SLtGIArD7w==}
     dev: false
 
   /@types/mdast/3.0.10:
@@ -1274,10 +1260,6 @@ packages:
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
-    dev: false
-
-  /@types/trusted-types/2.0.2:
-    resolution: {integrity: sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==}
     dev: false
 
   /@types/unist/2.0.6:
