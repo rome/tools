@@ -1,4 +1,4 @@
 [build]
 base = "website/"
 publish = "build/"
-command = "pnpm install && pnpm build"
+command = "./build-netlify.sh"

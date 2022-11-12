@@ -5,7 +5,7 @@
 				"start": "astro dev",
 				"format": "cargo rome-cli-dev format --write .",
 				"check": "cd ../ && cargo rome-cli-dev check ./website/docs/src",
-				"dev": "pnpm build:wasm-dev && pnpm start",
+				"start:playground": "pnpm build:wasm-dev && pnpm start",
 				"build": "pnpm build:wasm && pnpm build:js",
 				"build:js": "tsc && astro build",
 				"build:wasm": "wasm-pack build --out-dir ../npm/wasm-web --target web --release --scope rometools ../crates/rome_wasm",

@@ -14,6 +14,12 @@ $ pnpm start
 
 This command starts a local development server. Most changes are reflected live without having to restart the server.
 
+If you want to work on the playground, additional artifacts are required and the following command must be used instead:
+
+```
+$ pnpm start:playground
+```
+
 ## Build
 
 ```
