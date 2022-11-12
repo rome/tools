@@ -1,0 +1,40 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/trailing-comma/arrow-functions.tsx
+---
+
+# Input
+
+```js
+const f1 = <T,>() => 1;
+const f2 = <
+  Tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+>() => 1;
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+-const f1 = <T>() => 1;
++const f1 = <T,>() => 1;
+ const f2 = <
+   Tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+ >() => 1;
+```
+
+# Output
+
+```js
+const f1 = <T,>() => 1;
+const f2 = <
+  Tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+>() => 1;
+```
+
+
+

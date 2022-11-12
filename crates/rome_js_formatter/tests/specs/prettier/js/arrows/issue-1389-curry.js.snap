@@ -1,0 +1,90 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/arrows/issue-1389-curry.js
+---
+
+# Input
+
+```js
+const foobar = (argumentOne, argumentTwo, argumentThree) =>
+  (...restOfTheArguments) => {
+    return "baz";
+  };
+
+const foobaz = (argumentOne, argumentTwo, argumentThree) =>
+  (restOfTheArguments123, j) => {
+    return "baz";
+  };
+
+
+const makeSomeFunction =
+  (services = {logger:null}) =>
+    (a, b, c) =>
+      services.logger(a,b,c)
+
+const makeSomeFunction2 =
+  (services = {
+    logger: null
+  }) =>
+    (a, b, c) =>
+      services.logger(a, b, c)
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,6 +1,5 @@
+ const foobar =
+-  (argumentOne, argumentTwo, argumentThree) =>
+-  (...restOfTheArguments) => {
++  (argumentOne, argumentTwo, argumentThree) => (...restOfTheArguments) => {
+     return "baz";
+   };
+ 
+@@ -9,10 +8,8 @@
+     return "baz";
+   };
+ 
+-const makeSomeFunction =
+-  (services = { logger: null }) =>
+-  (a, b, c) =>
+-    services.logger(a, b, c);
++const makeSomeFunction = (services = { logger: null }) => (a, b, c) =>
++  services.logger(a, b, c);
+ 
+ const makeSomeFunction2 =
+   (
+```
+
+# Output
+
+```js
+const foobar =
+  (argumentOne, argumentTwo, argumentThree) => (...restOfTheArguments) => {
+    return "baz";
+  };
+
+const foobaz =
+  (argumentOne, argumentTwo, argumentThree) => (restOfTheArguments123, j) => {
+    return "baz";
+  };
+
+const makeSomeFunction = (services = { logger: null }) => (a, b, c) =>
+  services.logger(a, b, c);
+
+const makeSomeFunction2 =
+  (
+    services = {
+      logger: null,
+    },
+  ) =>
+  (a, b, c) =>
+    services.logger(a, b, c);
+```
+
+
+

@@ -1,0 +1,92 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/satisfies-operators/export-default-as.ts
+---
+
+# Input
+
+```js
+export default (function log() {} satisfies typeof console.log)
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1,4 @@
+-export default (function log() {} satisfies typeof console.log);
++export default (function log() {}
++satisfies;
++typeof console.log;
++)
+```
+
+# Output
+
+```js
+export default (function log() {}
+satisfies;
+typeof console.log;
+)
+```
+
+
+# Errors
+```
+export-default-as.ts:1:35 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `)` but instead found `satisfies`
+  
+  > 1 │ export default (function log() {} satisfies typeof console.log)
+      │                                   ^^^^^^^^^
+    2 │ 
+  
+  i Remove satisfies
+  
+export-default-as.ts:1:45 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  > 1 │ export default (function log() {} satisfies typeof console.log)
+      │                                             ^^^^^^
+    2 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+  > 1 │ export default (function log() {} satisfies typeof console.log)
+      │                                             ^^^^^^
+    2 │ 
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ export default (function log() {} satisfies typeof console.log)
+      │                                   ^^^^^^^^^^^^^^^^
+    2 │ 
+  
+export-default-as.ts:1:63 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  > 1 │ export default (function log() {} satisfies typeof console.log)
+      │                                                               ^
+    2 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+  > 1 │ export default (function log() {} satisfies typeof console.log)
+      │                                                               ^
+    2 │ 
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ export default (function log() {} satisfies typeof console.log)
+      │                                             ^^^^^^^^^^^^^^^^^^^
+    2 │ 
+  
+
+```
+
+
