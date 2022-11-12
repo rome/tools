@@ -22,7 +22,7 @@ export default function Collapsible(props: Props) {
 
 	return (
 		<div className={`collapsible-container ${className}`}>
-			<h2 onClick={onClick} className={`${className}`}>
+			<h2 onClick={onClick} onKeyUp={onClick} className={`${className}`}>
 				{props.heading}
 			</h2>
 			{visible && <div className="collapsible-content">{props.children}</div>}

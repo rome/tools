@@ -7,7 +7,7 @@ export default function RomeHeader() {
 
 	return (
 		<>
-			<img src={theme === "dark" ? romeDarkIcon : romeIcon} />
+			<img alt="Rome logo" src={theme === "dark" ? romeDarkIcon : romeIcon} />
 			<span>Rome</span>
 		</>
 	);
