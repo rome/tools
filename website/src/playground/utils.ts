@@ -69,12 +69,42 @@ export function useWindowSize(): Size {
 	return windowSize;
 }
 
+export function createLocalStorage(name: string): {
+	set: (value: string | boolean | number) => void;
+	get: () => undefined | string;
+	getNumber: () => undefined | number;
+	getBoolean: () => boolean;
+} {
+	const key = `playground:${name}`;
+	return {
+		set: (value) => {
+			localStorage.setItem(key, String(value));
+		},
+		getNumber: () => {
+			const elem = localStorage.getItem(key);
+			if (elem == null) {
+				return undefined;
+			} else {
+				return Number(elem);
+			}
+		},
+		getBoolean: () => {
+			return localStorage.getItem(key) === "true";
+		},
+		get: () => {
+			return localStorage.getItem(key) || undefined;
+		},
+	};
+}
+
+const lastSearchStore = createLocalStorage("last-search");
+
 export function usePlaygroundState(
 	defaultRomeConfig: RomeConfiguration,
 ): [PlaygroundState, Dispatch<SetStateAction<PlaygroundState>>, () => void] {
 	const searchQuery =
 		window.location.search === ""
-			? localStorage.getItem("last-playground-search") ?? ""
+			? lastSearchStore.get() ?? ""
 			: window.location.search;
 	const initialSearchParams = new URLSearchParams(searchQuery);
 
@@ -151,7 +181,7 @@ export function usePlaygroundState(
 		}
 
 		const queryString = new URLSearchParams(queryStringObj).toString();
-		localStorage.setItem("last-playground-search", queryString);
+		lastSearchStore.set(queryString);
 
 		let url = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
 		if (queryString !== "") {

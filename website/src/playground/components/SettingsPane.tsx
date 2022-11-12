@@ -8,14 +8,16 @@ import {
 	TrailingComma,
 } from "../types";
 import type { Dispatch, SetStateAction } from "react";
-import { useState } from "react";
-import { createSetter } from "../utils";
+import { useState, useEffect } from "react";
+import { createLocalStorage, createSetter } from "../utils";
 
 interface Props {
 	settings: PlaygroundSettings;
 	setPlaygroundState: Dispatch<SetStateAction<PlaygroundState>>;
 	onReset: () => void;
 }
+
+const isCollapsedStore = createLocalStorage("settings-collapsed");
 
 export default function SettingsPane({
 	setPlaygroundState,
@@ -50,35 +52,62 @@ export default function SettingsPane({
 		"enabledNurseryRules",
 	);
 
+	const [isCollapsed, setIsCollapsed] = useState(isCollapsedStore.getBoolean());
+
+	function collapseToggle() {
+		setIsCollapsed(!isCollapsed);
+	}
+
+	useEffect(() => {
+		isCollapsedStore.set(isCollapsed);
+	}, [isCollapsed]);
+
 	return (
 		<div className="settings-pane">
-			<FormatterSettings
-				lineWidth={lineWidth}
-				setLineWidth={setLineWidth}
-				indentStyle={indentStyle}
-				setIndentStyle={setIndentStyle}
-				indentWidth={indentWidth}
-				setIndentWidth={setIndentWidth}
-				quoteStyle={quoteStyle}
-				setQuoteStyle={setQuoteStyle}
-				quoteProperties={quoteProperties}
-				setQuoteProperties={setQuoteProperties}
-				trailingComma={trailingComma}
-				setTrailingComma={setTrailingComma}
-				onReset={onReset}
-			/>
-			<LinterSettings
-				enabledNurseryRules={enabledNurseryRules}
-				setEnabledNurseryRules={setEnabledNurseryRules}
-			/>
-			<SyntaxSettings
-				sourceType={sourceType}
-				setSourceType={setSourceType}
-				isTypeScript={isTypeScript}
-				setIsTypeScript={setIsTypeScript}
-				isJsx={isJsx}
-				setIsJsx={setIsJsx}
-			/>
+			{!isCollapsed && (
+				<div className="fields">
+					<section>
+						<button onClick={onReset} onKeyDown={onReset}>
+							Reset
+						</button>
+					</section>
+					<FormatterSettings
+						lineWidth={lineWidth}
+						setLineWidth={setLineWidth}
+						indentStyle={indentStyle}
+						setIndentStyle={setIndentStyle}
+						indentWidth={indentWidth}
+						setIndentWidth={setIndentWidth}
+						quoteStyle={quoteStyle}
+						setQuoteStyle={setQuoteStyle}
+						quoteProperties={quoteProperties}
+						setQuoteProperties={setQuoteProperties}
+						trailingComma={trailingComma}
+						setTrailingComma={setTrailingComma}
+					/>
+					<LinterSettings
+						enabledNurseryRules={enabledNurseryRules}
+						setEnabledNurseryRules={setEnabledNurseryRules}
+					/>
+					<SyntaxSettings
+						sourceType={sourceType}
+						setSourceType={setSourceType}
+						isTypeScript={isTypeScript}
+						setIsTypeScript={setIsTypeScript}
+						isJsx={isJsx}
+						setIsJsx={setIsJsx}
+					/>
+				</div>
+			)}
+			<div
+				className={`collapser ${isCollapsed ? "collapsed" : ""}`}
+				onMouseDown={collapseToggle}
+				onKeyDown={collapseToggle}
+			>
+				<div className="dot" />
+				<div className="dot" />
+				<div className="dot" />
+			</div>
 		</div>
 	);
 }
@@ -158,7 +187,6 @@ function FormatterSettings({
 	setQuoteProperties,
 	trailingComma,
 	setTrailingComma,
-	onReset,
 }: {
 	lineWidth: number;
 	setLineWidth: (value: number) => void;
@@ -172,16 +200,9 @@ function FormatterSettings({
 	setQuoteProperties: (value: QuoteProperties) => void;
 	trailingComma: TrailingComma;
 	setTrailingComma: (value: TrailingComma) => void;
-	onReset: () => void;
 }) {
 	return (
 		<>
-			<section>
-				<button onClick={onReset} onKeyDown={onReset}>
-					Reset
-				</button>
-			</section>
-
 			<h2>Formatter</h2>
 			<section>
 				<LineWidthInput lineWidth={lineWidth} setLineWidth={setLineWidth} />

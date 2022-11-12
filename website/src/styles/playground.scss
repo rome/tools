@@ -28,15 +28,53 @@ html, body {
 }
 
 .settings-pane {
-  width: 250px;
   flex-shrink: 0;
   background-color: var(--container-color);
-  box-shadow: inset -1px 0 0 var(--hard-border-color);
   overflow: auto;
   font-size: 14px;
+  display: flex;
 
   @include dark-mode {
     background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .fields {
+    width: 250px;
+  }
+
+  .collapser {
+    width: 5px;
+    height: 100%;
+    background-color: var(--hard-border-color);
+    flex-shrink: 0;
+    opacity: 0.5;
+    cursor: w-resize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+
+    .dot {
+      width: 3px;
+      height: 3px;
+      background-color: rgba(#000, 50%);
+      border-radius: 50%;
+    }
+
+    &.collapsed {
+      width: 10px;
+      cursor: e-resize;
+
+      .dot {
+        width: 5px;
+        height: 5px;
+      }
+    }
+
+    &:hover {
+      opacity: 1;
+    }
   }
 
   section {

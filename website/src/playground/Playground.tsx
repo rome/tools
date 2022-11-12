@@ -14,6 +14,7 @@ import DiagnosticsTab from "./tabs/DiagnosticsTab";
 import FormatterCodeTab from "./tabs/FormatterCodeTab";
 import FormatterIRTab from "./tabs/FormatterIRTab";
 import { useWindowSize } from "./utils";
+import CodePane from "./components/CodePane";
 
 export default function PlaygroundLoader({
 	setPlaygroundState,
@@ -135,7 +136,7 @@ export default function PlaygroundLoader({
 		<>
 			{!hasNarrowViewport && settingsPane}
 
-			{!hasNarrowViewport && <div className="code-pane">{editor}</div>}
+			{!hasNarrowViewport && <CodePane>{editor}</CodePane>}
 
 			<Tabs
 				className="preview-pane"
