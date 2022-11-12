@@ -6,7 +6,9 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_semantic::SemanticModel;
-use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsCallExpression, JsSyntaxToken};
+use rome_js_syntax::{
+    JsAnyExpression, JsAnyLiteralExpression, JsAnyMemberExpression, JsCallExpression, JsSyntaxToken,
+};
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
 
 declare_rule! {
@@ -140,13 +142,14 @@ impl CallInfo {
 }
 
 fn get_callee(expr: &JsCallExpression, model: &SemanticModel) -> Option<&'static str> {
-    let callee = expr.callee().ok()?;
-    if let Some(id) = callee.as_resolved_reference_identifier() {
+    let callee = expr.callee().ok()?.omit_parentheses();
+    if let Some(id) = callee.as_reference_identifier() {
         if id.has_name("parseInt") && model.declaration(&id).is_none() {
             return Some("parseInt()");
         }
     }
 
+    let callee = JsAnyMemberExpression::cast_ref(callee.syntax())?;
     let object = callee.get_object_reference_identifier()?;
     if object.has_name("Number")
         && model.declaration(&object).is_none()

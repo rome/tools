@@ -4,10 +4,10 @@ pub mod hooks;
 
 use rome_js_semantic::{Binding, SemanticModel};
 use rome_js_syntax::{
-    JsAnyCallArgument, JsAnyExpression, JsAnyNamedImportSpecifier, JsCallExpression,
-    JsIdentifierBinding, JsImport, JsImportNamedClause, JsNamedImportSpecifierList,
-    JsNamedImportSpecifiers, JsObjectExpression, JsPropertyObjectMember, JsxMemberName,
-    JsxReferenceIdentifier,
+    JsAnyCallArgument, JsAnyExpression, JsAnyMemberExpression, JsAnyNamedImportSpecifier,
+    JsCallExpression, JsIdentifierBinding, JsImport, JsImportNamedClause,
+    JsNamedImportSpecifierList, JsNamedImportSpecifiers, JsObjectExpression,
+    JsPropertyObjectMember, JsxMemberName, JsxReferenceIdentifier,
 };
 use rome_rowan::{AstNode, AstSeparatedList};
 
@@ -56,7 +56,7 @@ impl ReactCreateElementCall {
     ) -> Option<Self> {
         let callee = call_expression.callee().ok()?;
         let is_react_create_element =
-            is_react_call_api(&callee, model, ReactLibrary::React, "createElement");
+            is_react_call_api(callee, model, ReactLibrary::React, "createElement");
 
         if is_react_create_element {
             let arguments = call_expression.arguments().ok()?.args();
@@ -158,7 +158,7 @@ impl ReactCloneElementCall {
     ) -> Option<Self> {
         let callee = call_expression.callee().ok()?;
         let is_react_clone_element =
-            is_react_call_api(&callee, model, ReactLibrary::React, "cloneElement");
+            is_react_call_api(callee, model, ReactLibrary::React, "cloneElement");
 
         if is_react_clone_element {
             let arguments = call_expression.arguments().ok()?.args();
@@ -265,7 +265,7 @@ const VALID_REACT_API: [&str; 14] = [
 ///
 /// [`React` API]: https://reactjs.org/docs/react-api.html
 pub(crate) fn is_react_call_api(
-    expression: &JsAnyExpression,
+    expression: JsAnyExpression,
     model: &SemanticModel,
     lib: ReactLibrary,
     api_name: &str,
@@ -275,8 +275,10 @@ pub(crate) fn is_react_call_api(
         debug_assert!(VALID_REACT_API.contains(&api_name));
     }
 
-    if let Some(object) = expression.get_object_reference_identifier() {
-        if !expression.has_member_name(api_name) {
+    let expr = expression.omit_parentheses();
+    if let Some(callee) = JsAnyMemberExpression::cast_ref(expr.syntax()) {
+        let Some(object) = callee.get_object_reference_identifier() else { return false };
+        if !callee.has_member_name(api_name) {
             return false;
         }
         return match model.declaration(&object) {
@@ -285,7 +287,7 @@ pub(crate) fn is_react_call_api(
         };
     }
 
-    if let Some(ident) = expression.as_reference_identifier() {
+    if let Some(ident) = expr.as_reference_identifier() {
         return model
             .declaration(&ident)
             .and_then(|it| is_named_react_export(it, lib, api_name))
