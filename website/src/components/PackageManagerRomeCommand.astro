@@ -1,0 +1,7 @@
+---
+import PackageManagerCommand from "./PackageManagerCommand.astro"
+let {command} = Astro.props;
+command = `rome ${command}`;
+---
+
+<PackageManagerCommand yarn={command} pnpm={command} npx={command} />

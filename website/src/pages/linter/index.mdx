@@ -6,6 +6,8 @@ category: tools
 description: How to use the Rome linter.
 ---
 
+import PackageManagerRomeCommand from "../../components/PackageManagerRomeCommand.astro";
+
 # Linter
 
 Rome's linter statically analyzes your code to catch common errors and help you write more idiomatic code.
@@ -14,9 +16,7 @@ Rome's linter statically analyzes your code to catch common errors and help you 
 
 You can start by running the CLI with the `--help` flag:
 
-```bash
-rome check --help
-```
+<PackageManagerRomeCommand command="check --help" />
 
 Which will show you the options available at the moment:
 

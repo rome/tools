@@ -101,9 +101,9 @@ export default defineConfig({
 		inlineCSS(),
 		inlineJS(),
 		mdx(),
-		/*compress({
+		compress({
 			path: "./build",
-		}),*/
+		}),
 	],
 
 	build: {
