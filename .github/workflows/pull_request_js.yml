@@ -17,7 +17,7 @@ env:
 
 jobs:
   format-js:
-    name: Check JS Files
+    name: Rome Check JS Files
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -44,14 +44,9 @@ jobs:
       - uses: pnpm/action-setup@v2.1.0
         with:
           version: 7
-      - name: Build WASM module for the web
-        run: wasm-pack build --out-dir ../../npm/wasm-web --target web --release --scope rometools crates/rome_wasm
       - name: Install libraries
         working-directory: website
         run: pnpm i
-      - name: Build JS
-        working-directory: website
-        run: pnpm build:js
       - name: Type check
         working-directory: website
         run: pnpm tsc

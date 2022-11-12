@@ -6,9 +6,9 @@
 				"noConstAssign": "error"
 			}
 		},
-		"ignore": ["build"]
+		"ignore": ["website/build"]
 	},
 	"formatter": {
-		"ignore": ["build"]
+		"ignore": ["website/build"]
 	}
 }
