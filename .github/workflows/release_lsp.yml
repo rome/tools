@@ -208,12 +208,12 @@ jobs:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
 
       - name: Publish extension to Open VSX (pre-release)
-        run: npx vsce publish --pre-release --packagePath rome_lsp-*.vsix
+        run: npx ovsx publish --pre-release --packagePath rome_lsp-*.vsix
         if: needs.build.outputs.prerelease == 'true'
         env:
           OVSX_PAT: ${{ secrets.OVSX_PAT }}
       - name: Publish extension to Open VSX
-        run: npx vsce publish --packagePath rome_lsp-*.vsix
+        run: npx ovsx publish --packagePath rome_lsp-*.vsix
         if: needs.build.outputs.prerelease != 'true'
         env:
           OVSX_PAT: ${{ secrets.OVSX_PAT }}
