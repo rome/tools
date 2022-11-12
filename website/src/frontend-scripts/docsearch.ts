@@ -1,6 +1,8 @@
 import docsearch from "@docsearch/js";
 
-const docsearchContainer = document.querySelector("#docsearch-target") as HTMLElement;
+const docsearchContainer = document.querySelector(
+	"#docsearch-target"
+) as HTMLElement;
 
 docsearch({
 	appId: "ZKNROT3Q65",
