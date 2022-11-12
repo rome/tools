@@ -1,4 +1,4 @@
-import { matchesDark, getCurrentTheme } from "./util";
+import { matchesDark, getCurrentTheme, setCurrentTheme } from "./util";
 import "./mobile";
 import "./toc";
 import "./package-manager-commands";
@@ -44,7 +44,6 @@ for (const elem of collapsed) {
 function toggleColorSchemeSwitch(evt: Event) {
 	const currentScheme = getCurrentTheme();
 	const newScheme = currentScheme === "dark" ? "light" : "dark";
-	window.localStorage.setItem("data-theme", newScheme);
 
 	if (evt.currentTarget instanceof Element) {
 		evt.currentTarget.setAttribute(
@@ -54,7 +53,8 @@ function toggleColorSchemeSwitch(evt: Event) {
 	}
 
 	document.documentElement.classList.add("transition");
-	document.documentElement.setAttribute("data-theme", newScheme);
+	window.localStorage.setItem("data-theme", newScheme);
+	setCurrentTheme(newScheme);
 	onColorSchemeChange();
 }
 
@@ -68,7 +68,7 @@ if (colorSchemeSwitcher != null) {
 	colorSchemeSwitcher.addEventListener("click", toggleColorSchemeSwitch, false);
 }
 
-matchesDark().addEventListener("change", () => {
+matchesDark.addEventListener("change", () => {
 	onColorSchemeChange();
 });
 

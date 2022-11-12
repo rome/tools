@@ -210,6 +210,7 @@ footer {
 	background-color: var(--container-color);
 	border-right: 1px solid var(--hard-border-color);
 	padding: 20px;
+	flex-shrink: 0;
 
 	@include mobile-only {
 		position: fixed;
@@ -318,6 +319,7 @@ footer {
 
 .toc-sidebar {
 	right: 0;
+	white-space: nowrap;
 
 	h2 {
 		padding-left: 32px;
