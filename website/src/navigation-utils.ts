@@ -3,7 +3,10 @@ import type Astro from "astro";
 export function buildGetPages(pages: Astro.MDXInstance<any>[]) {
 	return (category?: string): Astro.MDXInstance<any>[] => {
 		return pages
-			.filter((page) => category === undefined || page.frontmatter.category === category)
+			.filter(
+				(page) =>
+					category === undefined || page.frontmatter.category === category,
+			)
 			.sort((a, b) => {
 				return a.frontmatter.title.localeCompare(b.frontmatter.title);
 			});
@@ -11,7 +14,9 @@ export function buildGetPages(pages: Astro.MDXInstance<any>[]) {
 }
 
 export function buildTOC(page: Astro.MDXInstance<any>): string {
-	const headings = page.getHeadings().filter(heading => heading.depth <= 4 && heading.depth > 1);
+	const headings = page
+		.getHeadings()
+		.filter((heading) => heading.depth <= 4 && heading.depth > 1);
 	if (headings.length === 0) {
 		return "";
 	}
@@ -30,7 +35,7 @@ export function buildTOC(page: Astro.MDXInstance<any>): string {
 
 			buf += "<li>";
 			buf += `<a href="#${encodeURI(heading.slug)}">${heading.text}</a>`;
-			
+
 			const subTOC = buildDepth(i + 1, depth + 1);
 			if (subTOC !== "") {
 				buf += `<ol>${subTOC}</ol>`;

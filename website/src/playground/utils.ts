@@ -25,19 +25,19 @@ interface Size {
 }
 
 export function useTheme(): "dark" | "light" {
-  const [theme, setTheme] = useState(getCurrentTheme());
+	const [theme, setTheme] = useState(getCurrentTheme());
 
-  useEffect(() => {
-    function onColorSchemeChange() {
-      setTheme(getCurrentTheme());
-    }
+	useEffect(() => {
+		function onColorSchemeChange() {
+			setTheme(getCurrentTheme());
+		}
 
-    window.addEventListener("colorschemechange", onColorSchemeChange);
+		window.addEventListener("colorschemechange", onColorSchemeChange);
 
-    return function cleanup() {
-      window.removeEventListener("colorschemechange", onColorSchemeChange);
-    };
-  });
+		return function cleanup() {
+			window.removeEventListener("colorschemechange", onColorSchemeChange);
+		};
+	});
 
 	return theme;
 }
@@ -95,8 +95,7 @@ export function usePlaygroundState(
 			searchParams.get("indentWidth") ?? defaultRomeConfig.indentWidth,
 		),
 		typescript:
-			searchParams.get("typescript") === "true" ||
-			defaultRomeConfig.typescript,
+			searchParams.get("typescript") === "true" || defaultRomeConfig.typescript,
 		jsx: searchParams.get("jsx") === "true" || defaultRomeConfig.jsx,
 		sourceType:
 			(searchParams.get("sourceType") as SourceType) ??
@@ -130,7 +129,7 @@ export function usePlaygroundState(
 			const defaultValue = String(defaultRomeConfig[key]);
 			const rawValue = rawQueryParams[key];
 			const value = String(rawValue);
-			
+
 			if (rawValue !== undefined && value !== defaultValue) {
 				queryStringObj[key] = value;
 			}

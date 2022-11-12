@@ -14,23 +14,27 @@ const MermaidGraph = memo(function MermaidGraph({ graph }: Props) {
 	return <iframe src={`/playground/mermaid?graph=${encodedGraph}`} />;
 });
 
-export default function ControlFlowTab({graph}: Props) {
-  if (graph === "") {
-    return <div className="empty-panel">No control flow graph present</div>;
-  }
+export default function ControlFlowTab({ graph }: Props) {
+	if (graph === "") {
+		return <div className="empty-panel">No control flow graph present</div>;
+	}
 
-  const theme = useTheme();
+	const theme = useTheme();
 
-  if (!initialized) {
-    initialized = true;
-    mermaid.initialize({ startOnLoad: true });
-  }
+	if (!initialized) {
+		initialized = true;
+		mermaid.initialize({ startOnLoad: true });
+	}
 
-  graph = `%%{init: {'theme':'${theme === "dark" ? "dark" : "default"}'}}%%\n${graph}`;
+	graph = `%%{init: {'theme':'${
+		theme === "dark" ? "dark" : "default"
+	}'}}%%\n${graph}`;
 
-  const graphSVG = useMemo(() => {
-    return mermaid.render('graph-div', graph);
-  }, [graph]);
-  
-  return <div className="mermaid" dangerouslySetInnerHTML={{__html: graphSVG}} />;
+	const graphSVG = useMemo(() => {
+		return mermaid.render("graph-div", graph);
+	}, [graph]);
+
+	return (
+		<div className="mermaid" dangerouslySetInnerHTML={{ __html: graphSVG }} />
+	);
 }

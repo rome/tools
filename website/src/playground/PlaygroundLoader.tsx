@@ -98,7 +98,7 @@ function App() {
 	switch (loadingState) {
 		case LoadingState.Error:
 			return <div>Error loading. Please refresh</div>;
-			
+
 		case LoadingState.Loading:
 			return <LoadingScreen />;
 

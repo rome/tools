@@ -317,7 +317,7 @@ class Manager {
 		const hash = target.getAttribute("href");
 		window.location.hash = hash;
 		this.scrollToHeading(hash);
-		
+
 		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 		if (navigator.clipboard !== undefined) {
 			navigator.clipboard.writeText(window.location.href);

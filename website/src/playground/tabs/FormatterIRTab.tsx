@@ -5,27 +5,29 @@ import RomeHeader from "../components/RomeHeader";
 import { romeAst as RomeFormatterIr } from "lang-rome-formatter-ir";
 
 interface Props {
-  prettier: string;
-  rome: string;
+	prettier: string;
+	rome: string;
 }
 
 const romeFormatterIrCodeMirrorExtension = [RomeFormatterIr()];
 
-export default function FormatterIRTab({rome, prettier}: Props) {
-  return <>
-    <Collapsible className="rome" heading={<RomeHeader />}>
-      <CodeMirror
-        value={rome}
-        extensions={romeFormatterIrCodeMirrorExtension}
-        readOnly={true}
-      />
-    </Collapsible>
-    <Collapsible className="prettier" heading={<PrettierHeader />}>
-      <CodeMirror
-        value={prettier}
-        extensions={romeFormatterIrCodeMirrorExtension}
-        readOnly={true}
-      />
-    </Collapsible>
-  </>;
+export default function FormatterIRTab({ rome, prettier }: Props) {
+	return (
+		<>
+			<Collapsible className="rome" heading={<RomeHeader />}>
+				<CodeMirror
+					value={rome}
+					extensions={romeFormatterIrCodeMirrorExtension}
+					readOnly={true}
+				/>
+			</Collapsible>
+			<Collapsible className="prettier" heading={<PrettierHeader />}>
+				<CodeMirror
+					value={prettier}
+					extensions={romeFormatterIrCodeMirrorExtension}
+					readOnly={true}
+				/>
+			</Collapsible>
+		</>
+	);
 }

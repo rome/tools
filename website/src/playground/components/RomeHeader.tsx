@@ -5,8 +5,10 @@ import { useTheme } from "../utils";
 export default function RomeHeader() {
 	const theme = useTheme();
 
-	return <>
-		<img src={theme === "dark" ? romeDarkIcon : romeIcon} />
-		<span>Rome</span>
-	</>;
+	return (
+		<>
+			<img src={theme === "dark" ? romeDarkIcon : romeIcon} />
+			<span>Rome</span>
+		</>
+	);
 }

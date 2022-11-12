@@ -115,35 +115,34 @@ export default function PlaygroundLoader({
 		setPlaygroundState((state) => ({ ...state, code: value }));
 	}, []);
 
-	const {width} = useWindowSize();
+	const { width } = useWindowSize();
 	const hasNarrowViewport = width !== undefined && width <= 1000;
 
-	const editor = <CodeMirror
-		value={code}
-		extensions={extensions}
-		placeholder="Enter your code here"
-		onUpdate={onUpdate}
-		onChange={onChange}
-	/>;
+	const editor = (
+		<CodeMirror
+			value={code}
+			extensions={extensions}
+			placeholder="Enter your code here"
+			onUpdate={onUpdate}
+			onChange={onChange}
+		/>
+	);
 
-	const settingsPane = <SettingsPane
-		settings={settings}
-		setPlaygroundState={setPlaygroundState}
-	/>;
+	const settingsPane = (
+		<SettingsPane settings={settings} setPlaygroundState={setPlaygroundState} />
+	);
 
 	return (
 		<>
 			{!hasNarrowViewport && settingsPane}
 
-			{!hasNarrowViewport && <div className="code-pane">
-				{editor}
-			</div>}
+			{!hasNarrowViewport && <div className="code-pane">{editor}</div>}
 
 			<Tabs
 				className="preview-pane"
 				selectedTabPanelClassName="react-tabs__tab-panel--selected"
 			>
-				<TabList >
+				<TabList>
 					{hasNarrowViewport && <Tab>Code</Tab>}
 					{hasNarrowViewport && <Tab>Settings</Tab>}
 					<Tab>Formatter</Tab>
@@ -152,14 +151,14 @@ export default function PlaygroundLoader({
 					<Tab>IR</Tab>
 					<Tab>Control Flow Graph</Tab>
 				</TabList>
-				{hasNarrowViewport && <TabPanel>
-					{editor}
-				</TabPanel>}
-				{hasNarrowViewport && <TabPanel>
-					{settingsPane}
-				</TabPanel>}
+				{hasNarrowViewport && <TabPanel>{editor}</TabPanel>}
+				{hasNarrowViewport && <TabPanel>{settingsPane}</TabPanel>}
 				<TabPanel>
-					<FormatterCodeTab rome={formatted_code} prettier={prettierOutput.code} extensions={extensions} />
+					<FormatterCodeTab
+						rome={formatted_code}
+						prettier={prettierOutput.code}
+						extensions={extensions}
+					/>
 				</TabPanel>
 				<TabPanel>
 					<LinterTab errors={errors} />
