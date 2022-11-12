@@ -1,7 +1,7 @@
 import docsearch from "@docsearch/js";
 
 const docsearchContainer = document.querySelector(
-	"#docsearch-target"
+	"#docsearch-target",
 ) as HTMLElement;
 
 docsearch({
