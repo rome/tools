@@ -177,7 +177,9 @@ function FormatterSettings({
 	return (
 		<>
 			<section>
-				<button onClick={onReset} onKeyDown={onReset}>Reset</button>
+				<button onClick={onReset} onKeyDown={onReset}>
+					Reset
+				</button>
 			</section>
 
 			<h2>Formatter</h2>

@@ -124,7 +124,11 @@ export default function PlaygroundLoader({
 	);
 
 	const settingsPane = (
-		<SettingsPane onReset={resetPlaygroundState} settings={settings} setPlaygroundState={setPlaygroundState} />
+		<SettingsPane
+			onReset={resetPlaygroundState}
+			settings={settings}
+			setPlaygroundState={setPlaygroundState}
+		/>
 	);
 
 	return (

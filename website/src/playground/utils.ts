@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import prettier, { Options } from "prettier";
-import type {ThemeName} from "../frontend-scripts/util"
+import type { ThemeName } from "../frontend-scripts/util";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel";
 import {
@@ -12,7 +12,7 @@ import {
 	SourceType,
 	TrailingComma,
 } from "./types";
-import {getCurrentTheme} from "../frontend-scripts/util";
+import { getCurrentTheme } from "../frontend-scripts/util";
 
 export function classNames(
 	...classes: (string | undefined | boolean)[]
@@ -72,7 +72,10 @@ export function useWindowSize(): Size {
 export function usePlaygroundState(
 	defaultRomeConfig: RomeConfiguration,
 ): [PlaygroundState, Dispatch<SetStateAction<PlaygroundState>>, () => void] {
-	const searchQuery = window.location.search === "" ? localStorage.getItem("last-playground-search") ?? "" : window.location.search;
+	const searchQuery =
+		window.location.search === ""
+			? localStorage.getItem("last-playground-search") ?? ""
+			: window.location.search;
 	const initialSearchParams = new URLSearchParams(searchQuery);
 
 	const initState = (searchParams: URLSearchParams) => ({
@@ -109,8 +112,9 @@ export function usePlaygroundState(
 			searchParams.get("enabledNurseryRules") === "true" ||
 			defaultRomeConfig.enabledNurseryRules,
 	});
-	const [playgroundState, setPlaygroundState] = useState(initState(initialSearchParams));
-	
+	const [playgroundState, setPlaygroundState] = useState(
+		initState(initialSearchParams),
+	);
 
 	function resetPlaygroundState() {
 		setPlaygroundState(initState(new URLSearchParams("")));

@@ -8,7 +8,8 @@ import LoadingScreen from "./components/LoadingScreen";
 function App() {
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
 	const [romeConfig, setRomeConfig] = useState(defaultRomeConfig);
-	const [playgroundState, setPlaygroundState, resetPlaygroundState] = usePlaygroundState(romeConfig);
+	const [playgroundState, setPlaygroundState, resetPlaygroundState] =
+		usePlaygroundState(romeConfig);
 	const romeWorkerRef = useRef<Worker | null>(null);
 	const prettierWorkerRef = useRef<Worker | null>(null);
 

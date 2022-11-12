@@ -1,14 +1,16 @@
-import {isMobile, toggleMobileSidebar} from "./mobile";
+import { isMobile, toggleMobileSidebar } from "./mobile";
 
 const originalTitle = document.title;
 
 const tocSidebar: HTMLElement = document.querySelector(".toc-sidebar")!;
 
-const tocLinks: HTMLAnchorElement[] = Array.from(document.querySelectorAll(".toc a"));
+const tocLinks: HTMLAnchorElement[] = Array.from(
+	document.querySelectorAll(".toc a"),
+);
 
 const headingElements: {
-  heading: HTMLElement,
-  link: HTMLAnchorElement,
+	heading: HTMLElement;
+	link: HTMLAnchorElement;
 }[] = tocLinks.map((link) => {
 	return {
 		heading: document.querySelector(
@@ -19,16 +21,16 @@ const headingElements: {
 });
 
 type CalculatedHeading = {
-  id: string;
-  link: HTMLAnchorElement;
-  titles: string[];
-  level: number;
-  start: number;
-  end: number;
+	id: string;
+	link: HTMLAnchorElement;
+	titles: string[];
+	level: number;
+	start: number;
+	end: number;
 };
 
 /**
- * @typedef {Object} 
+ * @typedef {Object}
  */
 
 class Manager {
@@ -40,11 +42,11 @@ class Manager {
 		this.navHeight = undefined;
 	}
 
-  headingsCalculated: CalculatedHeading[];
-  hasInitializedHeadings: boolean;
-  navHeight: number | undefined;
-  isNavCollapsed: boolean;
-  lastActiveHeading: undefined | number;
+	headingsCalculated: CalculatedHeading[];
+	hasInitializedHeadings: boolean;
+	navHeight: number | undefined;
+	isNavCollapsed: boolean;
+	lastActiveHeading: undefined | number;
 
 	handleTOCClick(event: MouseEvent) {
 		const target = event.target;
@@ -302,7 +304,7 @@ class Manager {
 			return;
 		}
 
-    let href: string = maybeHref;
+		let href: string = maybeHref;
 
 		// Remove current origin
 		if (href.startsWith(location.origin)) {

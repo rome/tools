@@ -10,7 +10,12 @@ import rehypeSlug from "rehype-slug";
 import remarkToc from "remark-toc";
 import react from "@astrojs/react";
 
-async function inline(dir: string, regex: RegExp, tagBefore: string, tagAfter: string): Promise<void> {
+async function inline(
+	dir: string,
+	regex: RegExp,
+	tagBefore: string,
+	tagAfter: string,
+): Promise<void> {
 	const files = await globby(`${dir}/**/*.html`);
 
 	await Promise.all(
@@ -22,13 +27,10 @@ async function inline(dir: string, regex: RegExp, tagBefore: string, tagAfter: s
 			const paths: string[] = [];
 			let file = await fs.readFile(htmlPath, "utf8");
 
-			file = file.replace(
-				regex,
-				(match, p1) => {
-					paths.push(p1);
-					return `{{INLINE:${p1}}}`;
-				},
-			);
+			file = file.replace(regex, (match, p1) => {
+				paths.push(p1);
+				return `{{INLINE:${p1}}}`;
+			});
 
 			const sources: string[] = await Promise.all(
 				paths.map(async (rawPath) => {
@@ -61,7 +63,12 @@ function inlineCSS(): AstroIntegration {
 		name: "inlineCSS",
 		hooks: {
 			"astro:build:done": async ({ dir }) => {
-				await inline(dir.pathname, /<link rel="stylesheet" href="(.*?)"\s*\/?>/g, "<style>", "</style>");
+				await inline(
+					dir.pathname,
+					/<link rel="stylesheet" href="(.*?)"\s*\/?>/g,
+					"<style>",
+					"</style>",
+				);
 			},
 		},
 	};
@@ -72,7 +79,12 @@ function inlineJS(): AstroIntegration {
 		name: "inlineJS",
 		hooks: {
 			"astro:build:done": async ({ dir }) => {
-				await inline(dir.pathname, /<script type="module" src="(.*?)"><\/script>/g, "<script async defer type=\"module\">", "</script>");
+				await inline(
+					dir.pathname,
+					/<script type="module" src="(.*?)"><\/script>/g,
+					'<script async defer type="module">',
+					"</script>",
+				);
 			},
 		},
 	};

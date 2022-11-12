@@ -1,4 +1,4 @@
-import {matchesDark, getCurrentTheme} from "./util";
+import { matchesDark, getCurrentTheme } from "./util";
 import "./mobile";
 import "./toc";
 
@@ -44,9 +44,12 @@ function toggleColorSchemeSwitch(evt: Event) {
 	const currentScheme = getCurrentTheme();
 	const newScheme = currentScheme === "dark" ? "light" : "dark";
 	window.localStorage.setItem("data-theme", newScheme);
-	
+
 	if (evt.currentTarget instanceof Element) {
-		evt.currentTarget.setAttribute("aria-checked", String(newScheme === "dark"));
+		evt.currentTarget.setAttribute(
+			"aria-checked",
+			String(newScheme === "dark"),
+		);
 	}
 
 	document.documentElement.classList.add("transition");
@@ -67,7 +70,6 @@ if (colorSchemeSwitcher != null) {
 matchesDark().addEventListener("change", () => {
 	onColorSchemeChange();
 });
-
 
 //# Header scrolls to top
 const tocSidebar: HTMLElement = document.querySelector(".toc-sidebar")!;
