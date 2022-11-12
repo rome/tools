@@ -45,7 +45,7 @@ jobs:
         with:
           version: 7
       - name: Build WASM module for the web
-        run: wasm-pack build --out-dir ../../npm/wasm-web --target web --release --scope rometools crates/rome_wasm
+        run: wasm-pack build --out-dir ../../npm/wasm-web --target web --scope rometools crates/rome_wasm
       - name: Install libraries
         working-directory: website
         run: pnpm i
