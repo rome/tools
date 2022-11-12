@@ -6,7 +6,7 @@ const docsearchContainer = document.querySelector(
 ) as HTMLElement;
 
 // We need to explicitly set data-theme as docsearch explicitly matches for it
-if (matchesDark.matches) {
+if (matchesDark?.matches) {
 	setCurrentTheme("dark");
 }
 

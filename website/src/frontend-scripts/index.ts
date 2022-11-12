@@ -68,9 +68,11 @@ if (colorSchemeSwitcher != null) {
 	colorSchemeSwitcher.addEventListener("click", toggleColorSchemeSwitch, false);
 }
 
-matchesDark.addEventListener("change", () => {
-	onColorSchemeChange();
-});
+if (matchesDark !== undefined) {
+	matchesDark.addEventListener("change", () => {
+		onColorSchemeChange();
+	});
+}
 
 //# Header scrolls to top
 const tocSidebar: HTMLElement = document.querySelector(".toc-sidebar")!;

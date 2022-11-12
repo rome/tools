@@ -10,6 +10,28 @@ import rehypeSlug from "rehype-slug";
 import remarkToc from "remark-toc";
 import react from "@astrojs/react";
 
+function resolveFile(relative: string, parent: string, root: string): string {
+	if (relative[0] === "/") {
+		return `${root}${relative}`;
+	} else {
+		return path.resolve(path.join(parent, relative));
+	}
+}
+
+const IMPORT_REGEX = /^import"(.*?)"$/;
+
+async function readFile(loc: string, root: string): Promise<string> {
+	let content = await fs.readFile(loc, "utf8");
+	content = content.trim();
+
+	const importMatch = content.match(IMPORT_REGEX);
+	if (importMatch != null) {
+		return readFile(resolveFile(importMatch[1], path.dirname(loc), root), root);
+	}
+
+	return content;
+}
+
 async function inline(
 	dir: string,
 	regex: RegExp,
@@ -34,15 +56,12 @@ async function inline(
 
 			const sources: string[] = await Promise.all(
 				paths.map(async (rawPath) => {
-					let resolvedPath;
-					if (rawPath[0] === "/") {
-						resolvedPath = `${dir}${rawPath}`;
-					} else {
-						resolvedPath = path.resolve(
-							path.join(path.dirname(htmlPath), rawPath),
-						);
-					}
-					return await fs.readFile(resolvedPath, "utf8");
+					const resolvedPath = resolveFile(
+						rawPath,
+						path.dirname(htmlPath),
+						dir,
+					);
+					return await readFile(resolvedPath, dir);
 				}),
 			);
 
