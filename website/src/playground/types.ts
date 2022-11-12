@@ -74,6 +74,7 @@ export const defaultRomeConfig: RomeConfiguration = {
 
 export interface PlaygroundProps {
 	setPlaygroundState: Dispatch<SetStateAction<PlaygroundState>>;
+	resetPlaygroundState: () => void;
 	playgroundState: PlaygroundState;
 	prettierOutput: { code: string; ir: string };
 	romeOutput: RomeOutput;

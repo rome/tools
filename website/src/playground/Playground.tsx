@@ -17,6 +17,7 @@ import { useWindowSize } from "./utils";
 
 export default function PlaygroundLoader({
 	setPlaygroundState,
+	resetPlaygroundState,
 	playgroundState: { code, ...settings },
 	prettierOutput,
 	romeOutput: {
@@ -123,7 +124,7 @@ export default function PlaygroundLoader({
 	);
 
 	const settingsPane = (
-		<SettingsPane settings={settings} setPlaygroundState={setPlaygroundState} />
+		<SettingsPane onReset={resetPlaygroundState} settings={settings} setPlaygroundState={setPlaygroundState} />
 	);
 
 	return (

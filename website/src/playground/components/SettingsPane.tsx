@@ -14,10 +14,12 @@ import { createSetter } from "../utils";
 interface Props {
 	settings: PlaygroundSettings;
 	setPlaygroundState: Dispatch<SetStateAction<PlaygroundState>>;
+	onReset: () => void;
 }
 
 export default function SettingsPane({
 	setPlaygroundState,
+	onReset,
 	settings: {
 		lineWidth,
 		indentWidth,
@@ -63,6 +65,7 @@ export default function SettingsPane({
 				setQuoteProperties={setQuoteProperties}
 				trailingComma={trailingComma}
 				setTrailingComma={setTrailingComma}
+				onReset={onReset}
 			/>
 			<LinterSettings
 				enabledNurseryRules={enabledNurseryRules}
@@ -155,6 +158,7 @@ function FormatterSettings({
 	setQuoteProperties,
 	trailingComma,
 	setTrailingComma,
+	onReset,
 }: {
 	lineWidth: number;
 	setLineWidth: (value: number) => void;
@@ -168,9 +172,14 @@ function FormatterSettings({
 	setQuoteProperties: (value: QuoteProperties) => void;
 	trailingComma: TrailingComma;
 	setTrailingComma: (value: TrailingComma) => void;
+	onReset: () => void;
 }) {
 	return (
 		<>
+			<section>
+				<button onClick={onReset} onKeyDown={onReset}>Reset</button>
+			</section>
+
 			<h2>Formatter</h2>
 			<section>
 				<LineWidthInput lineWidth={lineWidth} setLineWidth={setLineWidth} />
