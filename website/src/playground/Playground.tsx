@@ -10,7 +10,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { EditorSelection } from "@codemirror/state";
 import SyntaxTab from "./tabs/SyntaxTab";
 import ControlFlowTab from "./tabs/ControlFlowTab";
-import LinterTab from "./tabs/LinterTab";
+import DiagnosticsTab from "./tabs/DiagnosticsTab";
 import FormatterCodeTab from "./tabs/FormatterCodeTab";
 import FormatterIRTab from "./tabs/FormatterIRTab";
 import { useWindowSize } from "./utils";
@@ -140,7 +140,7 @@ export default function PlaygroundLoader({
 					{hasNarrowViewport && <Tab>Code</Tab>}
 					{hasNarrowViewport && <Tab>Settings</Tab>}
 					<Tab>Formatter</Tab>
-					<Tab>Linter</Tab>
+					<Tab>Diagnostics</Tab>
 					<Tab>Syntax</Tab>
 					<Tab>IR</Tab>
 					<Tab>Control Flow Graph</Tab>
@@ -155,7 +155,7 @@ export default function PlaygroundLoader({
 					/>
 				</TabPanel>
 				<TabPanel>
-					<LinterTab errors={errors} />
+					<DiagnosticsTab errors={errors} />
 				</TabPanel>
 				<TabPanel>
 					<SyntaxTab ast={ast} cst={cst} ref={astPanelCodeMirrorRef} />
