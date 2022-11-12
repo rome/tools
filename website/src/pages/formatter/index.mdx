@@ -6,6 +6,8 @@ description: How to use the Rome formatter.
 layout: ../../Layout.astro
 ---
 
+import PackageManagerRomeCommand from "../../components/PackageManagerRomeCommand.astro";
+
 # Formatter
 
 Rome's an opinionated formatter that has the goal to stop all ongoing debates over styles. That's why Rome only supports
@@ -23,9 +25,7 @@ The language agnostic options supported by Rome are:
 
 You can start by running the CLI with the `--help` flag:
 
-```shell
-rome format --help
-```
+<PackageManagerRomeCommand command="format --help" />
 
 Which will show you the options available at the moment:
 
