@@ -3,9 +3,9 @@
 		"private": true,
 		"scripts": {
 				"start": "astro dev",
-				"format": "rome format --write .",
+				"format": "cargo rome-cli-dev format --write .",
 				"tsc": "tsc --skipLibCheck",
-				"check": "cd ../ && rome check ./website/src",
+				"check": "cd ../ && cargo rome-cli-dev check ./website/src",
 				"start:playground": "pnpm build:wasm-dev && pnpm start",
 				"build": "pnpm build:wasm && pnpm build:js",
 				"build:js": "astro build",
