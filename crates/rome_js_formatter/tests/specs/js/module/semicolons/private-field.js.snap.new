@@ -1,12 +1,16 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-expression: semicolons-asi.js
+assertion_line: 345
+expression: private-field.js
 ---
 
 # Input
 
 ```js
-[1, 2];
+class C {
+  #field = 'value';
+  ["method"]() {}
+}
 
 ```
 
@@ -27,7 +31,10 @@ Semicolons: Always
 -----
 
 ```js
-[1, 2];
+class C {
+	#field = "value";
+	["method"]() {}
+}
 ```
 
 ## Output 2
@@ -42,7 +49,10 @@ Semicolons: As needed
 -----
 
 ```js
-;[1, 2]
+class C {
+	#field = "value";
+	["method"]() {}
+}
 ```
 
 

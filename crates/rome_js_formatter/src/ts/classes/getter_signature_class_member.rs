@@ -1,7 +1,7 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use rome_formatter::write;
 
-use crate::utils::FormatWithSemicolon;
+use crate::utils::FormatSemicolon;
 
 use rome_js_syntax::{TsGetterSignatureClassMember, TsGetterSignatureClassMemberFields};
 
@@ -26,19 +26,17 @@ impl FormatNodeRule<TsGetterSignatureClassMember> for FormatTsGetterSignatureCla
 
         write!(
             f,
-            [FormatWithSemicolon::new(
-                &format_args!(
-                    modifiers.format(),
-                    space(),
-                    get_token.format(),
-                    space(),
-                    name.format(),
-                    l_paren_token.format(),
-                    r_paren_token.format(),
-                    return_type.format(),
-                ),
-                semicolon_token.as_ref()
-            )]
+            [
+                modifiers.format(),
+                space(),
+                get_token.format(),
+                space(),
+                name.format(),
+                l_paren_token.format(),
+                r_paren_token.format(),
+                return_type.format(),
+                FormatSemicolon::new(semicolon_token.as_ref())
+            ]
         )
     }
 }

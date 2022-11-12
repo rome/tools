@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::{FormatWithSemicolon, JsAnyAssignmentLike};
+use crate::utils::{FormatSemicolon, JsAnyAssignmentLike};
 use rome_formatter::write;
 use rome_js_syntax::JsPropertyClassMember;
 
@@ -11,10 +11,10 @@ impl FormatNodeRule<JsPropertyClassMember> for FormatJsPropertyClassMember {
         let semicolon_token = node.semicolon_token();
         write!(
             f,
-            [FormatWithSemicolon::new(
+            [
                 &JsAnyAssignmentLike::from(node.clone()),
-                semicolon_token.as_ref()
-            )]
+                FormatSemicolon::new(semicolon_token.as_ref())
+            ]
         )
     }
 }

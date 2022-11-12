@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::{node_has_leading_newline, FormatWithSemicolon};
+use crate::utils::{node_has_leading_newline, FormatStatementSemicolon};
 use rome_formatter::write;
 
 use rome_js_syntax::JsExportNamedFromClause;
@@ -22,59 +22,52 @@ impl FormatNodeRule<JsExportNamedFromClause> for FormatJsExportNamedFromClause {
             semicolon_token,
         } = node.as_fields();
 
-        let content = format_with(|f| {
-            if let Some(type_token) = &type_token {
-                write!(f, [type_token.format(), space()])?;
-            }
+        if let Some(type_token) = &type_token {
+            write!(f, [type_token.format(), space()])?;
+        }
 
-            write!(f, [l_curly_token.format(),])?;
+        write!(f, [l_curly_token.format(),])?;
 
-            match specifiers.elements().next() {
-                Some(AstSeparatedElement {
-                    node: Ok(node),
-                    trailing_separator: Ok(separator),
-                }) if specifiers.len() == 1 && !f.comments().has_comments(node.syntax()) => {
-                    write!(f, [space(), node.format()])?;
+        match specifiers.elements().next() {
+            Some(AstSeparatedElement {
+                node: Ok(node),
+                trailing_separator: Ok(separator),
+            }) if specifiers.len() == 1 && !f.comments().has_comments(node.syntax()) => {
+                write!(f, [space(), node.format()])?;
 
-                    if let Some(separator) = separator {
-                        write!(f, [format_removed(&separator)])?;
-                    }
-
-                    write!(f, [space()])?;
+                if let Some(separator) = separator {
+                    write!(f, [format_removed(&separator)])?;
                 }
-                _ => {
-                    if node_has_leading_newline(specifiers.syntax()) {
-                        write!(f, [block_indent(&specifiers.format()),])?;
-                    } else {
-                        write!(
-                            f,
-                            [group(&soft_space_or_block_indent(&specifiers.format())),]
-                        )?;
-                    };
-                }
+
+                write!(f, [space()])?;
             }
-
-            write![
-                f,
-                [
-                    r_curly_token.format(),
-                    space(),
-                    from_token.format(),
-                    space(),
-                    source.format(),
-                ]
-            ]?;
-
-            if let Some(assertion) = &assertion {
-                write!(f, [space(), assertion.format()])?;
+            _ => {
+                if node_has_leading_newline(specifiers.syntax()) {
+                    write!(f, [block_indent(&specifiers.format()),])?;
+                } else {
+                    write!(
+                        f,
+                        [group(&soft_space_or_block_indent(&specifiers.format())),]
+                    )?;
+                };
             }
+        }
 
-            Ok(())
-        });
-
-        write!(
+        write![
             f,
-            [FormatWithSemicolon::new(&content, semicolon_token.as_ref())]
-        )
+            [
+                r_curly_token.format(),
+                space(),
+                from_token.format(),
+                space(),
+                source.format(),
+            ]
+        ]?;
+
+        if let Some(assertion) = &assertion {
+            write!(f, [space(), assertion.format()])?;
+        }
+
+        write!(f, [FormatStatementSemicolon::new(semicolon_token.as_ref())])
     }
 }

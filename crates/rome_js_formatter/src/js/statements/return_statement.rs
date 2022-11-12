@@ -1,9 +1,9 @@
 use crate::prelude::*;
-use crate::utils::{FormatWithSemicolon, JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
+use crate::utils::{FormatStatementSemicolon, JsAnyBinaryLikeExpression};
 
 use rome_formatter::{format_args, write, CstFormatContext};
 
-use crate::parentheses::get_expression_left_side;
+use crate::parentheses::{get_expression_left_side, JsAnyExpressionLeftSide};
 use rome_js_syntax::{
     JsAnyExpression, JsReturnStatement, JsSequenceExpression, JsSyntaxToken, JsThrowStatement,
 };
@@ -37,6 +37,7 @@ impl Format<JsFormatContext> for JsAnyStatementWithArgument {
 
         let argument = self.argument()?;
 
+        // TODO implement semicolon removal
         if let Some(semicolon) = self.semicolon_token() {
             if let Some(argument) = argument {
                 write!(f, [space(), FormatReturnOrThrowArgument(&argument)])?;
@@ -65,19 +66,11 @@ impl Format<JsFormatContext> for JsAnyStatementWithArgument {
 
             Ok(())
         } else {
-            write!(
-                f,
-                [FormatWithSemicolon::new(
-                    &format_with(|f| {
-                        if let Some(argument) = &argument {
-                            write!(f, [space(), FormatReturnOrThrowArgument(argument)])?;
-                        }
+            if let Some(argument) = &argument {
+                write!(f, [space(), FormatReturnOrThrowArgument(argument)])?;
+            }
 
-                        Ok(())
-                    }),
-                    None
-                )]
-            )
+            write!(f, [FormatStatementSemicolon::new(None)])
         }
     }
 }
@@ -139,21 +132,14 @@ impl Format<JsFormatContext> for FormatReturnOrThrowArgument<'_> {
 /// Traversing the left nodes is necessary in case the first node is parenthesized because
 /// parentheses will be removed (and be re-added by the return statement, but only if the argument breaks)
 fn has_argument_leading_comments(argument: &JsAnyExpression, comments: &JsComments) -> bool {
-    let mut current: Option<JsAnyBinaryLikeLeftExpression> = Some(argument.clone().into());
+    let mut current: Option<JsAnyExpressionLeftSide> = Some(argument.clone().into());
 
     while let Some(expression) = current {
         if comments.has_leading_own_line_comment(expression.syntax()) {
             return true;
         }
 
-        match expression {
-            JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => {
-                current = get_expression_left_side(&expression);
-            }
-            JsAnyBinaryLikeLeftExpression::JsPrivateName(_) => {
-                break;
-            }
-        }
+        current = get_expression_left_side(&expression);
     }
 
     false

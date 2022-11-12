@@ -1,10 +1,7 @@
 {
 	"cases": [
 		{
-			"semicolons": "always"
-		},
-		{
-			"semicolons": "as-needed"
+			"semicolons": "AsNeeded"
 		}
 	]
 }

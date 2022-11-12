@@ -1,12 +1,19 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-expression: semicolons-asi.js
+expression: issue2006.js
 ---
 
 # Input
 
 ```js
-[1, 2];
+switch (n) {
+  case 11:
+    var c = a.e;
+    (i.a += Ga(c.e)), F(i, c.i, 0);
+}
+
+var c = a.e;
+(i.a += Ga(c.e)), F(i, c.i, 0);
 
 ```
 
@@ -27,7 +34,14 @@ Semicolons: Always
 -----
 
 ```js
-[1, 2];
+switch (n) {
+	case 11:
+		var c = a.e;
+		(i.a += Ga(c.e)), F(i, c.i, 0);
+}
+
+var c = a.e;
+(i.a += Ga(c.e)), F(i, c.i, 0);
 ```
 
 ## Output 2
@@ -42,7 +56,14 @@ Semicolons: As needed
 -----
 
 ```js
-;[1, 2]
+switch (n) {
+	case 11:
+		var c = a.e
+		;(i.a += Ga(c.e)), F(i, c.i, 0)
+}
+
+var c = a.e
+;(i.a += Ga(c.e)), F(i, c.i, 0)
 ```
 
 

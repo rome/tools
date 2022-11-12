@@ -12,6 +12,7 @@ import {
 	QuoteProperties,
 	QuoteStyle,
 	RomeOutput,
+	Semicolons
 } from "../types";
 
 let workspace: Workspace | null = null;
@@ -67,6 +68,7 @@ self.addEventListener("message", async (e) => {
 				enabledNurseryRules,
 				enabledLinting,
 				trailingComma,
+				semicolons,
 			} = e.data.settings as PlaygroundSettings;
 
 			configuration = {
@@ -90,6 +92,8 @@ self.addEventListener("message", async (e) => {
 								? "preserve"
 								: "asNeeded",
 						trailingComma,
+						semicolons:
+							semicolons === Semicolons.Always ? "always" : "asneeded",
 					},
 				},
 			};
