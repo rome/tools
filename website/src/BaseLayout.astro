@@ -67,7 +67,7 @@ const { default: favicon } = await import("/public/img/favicon.svg?raw");
 		<meta property="twitter:image:alt" content="Logo for Rome Tools">
 		<meta property="twitter:card" content="summary_large_image">
 
-		<script>
+		<script is:inline>
 			(function () {
 				const currentTheme = localStorage.getItem('data-theme');
 				if (currentTheme != null) {
@@ -106,7 +106,7 @@ const { default: favicon } = await import("/public/img/favicon.svg?raw");
 		<slot />
 
 		{import.meta.env.PROD && <script src="https://browser.sentry-cdn.com/5.29.0/bundle.tracing.min.js" crossorigin="anonymous"></script>}
-		{import.meta.env.PROD && <script>
+		{import.meta.env.PROD && <script is:inline>
 			if (typeof Sentry !== "undefined") {
 				Sentry.init({
 					dsn: "https://d2e6dd662d05460db434756b97bf054e@o487646.ingest.sentry.io/5546624",
@@ -115,10 +115,10 @@ const { default: favicon } = await import("/public/img/favicon.svg?raw");
 			}
 		</script>}
 		
-		<script async defer id="docsearch-script">
+		<script async defer id="docsearch-script" type="module">
 			import "/src/docsearch.js";
 		</script>
 
-		{script && <script async defer set:html={script}></script>}
+		{script && <script async defer is:inline set:html={script}></script>}
 	</body>
 </html>
