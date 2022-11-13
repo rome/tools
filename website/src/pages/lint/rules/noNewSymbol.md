@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noNewSymbol
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # noNewSymbol (since v0.10.0)

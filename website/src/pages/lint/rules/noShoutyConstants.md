@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noShoutyConstants
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # noShoutyConstants (since v0.7.0)

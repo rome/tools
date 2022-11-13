@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noDoubleEquals
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # noDoubleEquals (since v0.7.0)

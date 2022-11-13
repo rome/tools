@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useFlatMap
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # useFlatMap (since v10.0.0)

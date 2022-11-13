@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noImportAssign
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # noImportAssign (since v0.9.0)

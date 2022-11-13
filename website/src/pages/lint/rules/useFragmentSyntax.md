@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useFragmentSyntax
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # useFragmentSyntax (since v0.10.0)

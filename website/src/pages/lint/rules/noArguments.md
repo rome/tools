@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noArguments
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # noArguments (since v0.7.0)

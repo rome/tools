@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useSingleVarDeclarator
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # useSingleVarDeclarator (since v0.7.0)

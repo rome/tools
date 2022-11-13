@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useSimplifiedLogicExpression
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # useSimplifiedLogicExpression (since v0.7.0)

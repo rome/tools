@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useAltText
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # useAltText (since v10.0.0)

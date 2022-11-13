@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noUnusedTemplateLiteral
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # noUnusedTemplateLiteral (since v0.7.0)

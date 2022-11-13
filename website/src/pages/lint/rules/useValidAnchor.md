@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useValidAnchor
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # useValidAnchor (since v10.0.0)

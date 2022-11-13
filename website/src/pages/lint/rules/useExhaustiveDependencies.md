@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useExhaustiveDependencies
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # useExhaustiveDependencies (since v10.0.0)

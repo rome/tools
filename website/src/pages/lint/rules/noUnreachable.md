@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noUnreachable
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # noUnreachable (since v0.7.0)

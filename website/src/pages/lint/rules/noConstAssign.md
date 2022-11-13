@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noConstAssign
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # noConstAssign (since v10.0.0)

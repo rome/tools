@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noRestrictedGlobals
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # noRestrictedGlobals (since v0.10.0)

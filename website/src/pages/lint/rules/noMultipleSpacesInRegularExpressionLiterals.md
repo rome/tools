@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noMultipleSpacesInRegularExpressionLiterals
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # noMultipleSpacesInRegularExpressionLiterals (since v0.7.0)

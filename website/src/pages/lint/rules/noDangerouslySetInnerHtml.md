@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noDangerouslySetInnerHtml
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # noDangerouslySetInnerHtml (since v0.10.0)

@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useOptionalChain
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # useOptionalChain (since v0.10.0)

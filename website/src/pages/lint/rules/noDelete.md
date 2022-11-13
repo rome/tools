@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noDelete
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # noDelete (since v0.7.0)

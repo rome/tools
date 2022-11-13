@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useCamelCase
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # useCamelCase (since v0.8.0)

@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noUnnecessaryContinue
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # noUnnecessaryContinue (since v0.7.0)

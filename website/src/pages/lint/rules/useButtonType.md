@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useButtonType
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # useButtonType (since v0.10.0)

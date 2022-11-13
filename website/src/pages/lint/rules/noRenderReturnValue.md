@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noRenderReturnValue
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # noRenderReturnValue (since v0.10.0)

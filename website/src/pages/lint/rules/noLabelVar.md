@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noLabelVar
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # noLabelVar (since v0.7.0)

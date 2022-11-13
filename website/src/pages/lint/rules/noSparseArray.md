@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noSparseArray
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # noSparseArray (since v0.7.0)

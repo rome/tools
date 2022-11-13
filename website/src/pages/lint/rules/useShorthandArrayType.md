@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useShorthandArrayType
-layout: ../../../Layout.astro
+layout: /Layout.astro
 ---
 
 # useShorthandArrayType (since v0.7.0)
