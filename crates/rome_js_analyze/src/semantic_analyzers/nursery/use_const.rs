@@ -107,7 +107,6 @@ impl Rule for UseConst {
         if state
             .iter()
             .all(|it| matches!(it, Some(ConstantBinding { fix: true, .. })))
-            && decl.can_be_const()
         {
             let mut batch = ctx.root().begin();
             batch.replace_token(decl.kind_token()?, make::token(JsSyntaxKind::CONST_KW));
@@ -171,17 +170,6 @@ impl ConstantBinding {
 }
 
 impl VarDecl {
-    fn can_be_const(&self) -> bool {
-        match self {
-            VarDecl::JsVariableDeclaration(it) => it
-                .declarators()
-                .into_iter()
-                .filter_map(Result::ok)
-                .all(|it| it.initializer().is_some()),
-            VarDecl::JsForVariableDeclaration(_) => true,
-        }
-    }
-
     fn declarators(&self) -> Vec<JsVariableDeclarator> {
         match self {
             VarDecl::JsVariableDeclaration(declaration) => declaration
