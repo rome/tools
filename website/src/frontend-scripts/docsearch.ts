@@ -1,5 +1,5 @@
 import docsearch from "@docsearch/js";
-import { getCurrentTheme, matchesDark, setCurrentTheme } from "./util";
+import { matchesDark, setCurrentTheme } from "./util";
 
 const docsearchContainer = document.querySelector(
 	"#docsearch-target",
