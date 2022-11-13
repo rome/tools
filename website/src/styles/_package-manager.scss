@@ -1,0 +1,44 @@
+ul.package-manager-selector {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  box-shadow: inset 0 0 0 1px var(--soft-border-color);
+  background-color: var(--container-color);
+  border-bottom: none;
+
+  li {
+    padding: 10px;
+    list-style: none;
+    cursor: pointer;
+    margin: 0;
+
+    svg {
+      vertical-align: middle;
+      height: 16px;
+      width: 16px;
+      margin-right: 4px;
+    }
+
+    &.active {
+      font-weight: bold;
+      border-bottom: 1px solid black;
+
+      @include dark-mode {
+        border-color: white;
+      }
+    }
+  }
+}
+
+pre.package-manager-command {
+  display: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-top: 0;
+
+  &.active {
+    display: block;
+  }
+}

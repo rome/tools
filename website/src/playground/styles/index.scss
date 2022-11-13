@@ -1,0 +1,19 @@
+body.playground {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+  }
+  
+  #root {
+    height: 100%;
+    display: flex;
+  }
+}

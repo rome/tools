@@ -1,5 +1,25 @@
 # Rome changelog
 
+## 10.0.1
+
+### CLI
+
+- Respect the formatter / linter `enabled` flag from configuration ([#3591](https://github.com/rome/tools/issues/3591))
+- Correctly account for diff diagnostics in the printed diagnostics count ([#3595](https://github.com/rome/tools/issues/3595))
+
+### Formatter
+
+- Do not insert a trailing comma in import expressions ([#3600](https://github.com/rome/tools/issues/3600))
+
+### Linter
+
+- Fixed false positives in `noUselessFragments`, `noArrayIndexKey`, `noChildrenProp`, `noUselessFragments`, `noVoidElementsWithChildren`, `noDangerouslySetInnerHtml`, `noDangerouslySetInnerHtmlWithChildren`, `useValidAnchor`, `noRenderReturnValue`, `noUnusedVariables` and `useKeyWithClickEvents`
+([#3592](https://github.com/rome/tools/pull/3592), [#3619](https://github.com/rome/tools/pull/3619), [#3599](https://github.com/rome/tools/pull/3599), [#3626](https://github.com/rome/tools/pull/3626), [#3620](https://github.com/rome/tools/pull/3620) & [#3644](https://github.com/rome/tools/pull/3644))
+
+### Editors
+
+- Display the version of the language server in the status bar ([#3616](https://github.com/rome/tools/issues/3616))
+
 ## 10.0.0
 
 ### CLI

@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "target": "es2022",
+    "jsx": "react-jsx"
+  },
+  "extends": "astro/tsconfigs/strictest",
+  "include": ["./src"]
+}

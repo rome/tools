@@ -1,0 +1,44 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import NavigationSidebar from "./components/NavigationSidebar.astro";
+import {buildGetPages, buildTOC} from "./navigation-utils";
+
+const {props} = Astro;
+const {frontmatter = {}} = props;
+
+const getPages = buildGetPages(await Astro.glob("./**/*.mdx"));
+let sidebarEnabled = false;
+let toc = "";
+
+const allPages = getPages();
+for (const page of allPages) {
+  if (page.file === frontmatter.file) {
+    toc = buildTOC(page);
+    sidebarEnabled = toc !== "";
+    break;
+  }
+}
+---
+
+<BaseLayout sidebarEnabled={sidebarEnabled} {...Astro.props}>
+  <div class="docs-main">
+    <NavigationSidebar />
+
+    <main class={`main content ${frontmatter.mainClass ?? ""}`}>
+      <slot />
+    </main>
+
+    {sidebarEnabled && <nav class="toc-sidebar sidebar">
+      <h2>On this page</h2>
+      <Fragment set:html={toc} />
+    </nav>}
+  </div>
+
+  <footer aria-labelledby="footer">
+    <div class="container footer-inner">
+      <h1 id="footer" class="sr-only">Footer</h1>
+
+      <p>&copy; 2022 Rome Tools. All rights reserved.</p>
+    </div>
+  </footer>
+</BaseLayout>

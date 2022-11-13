@@ -25,9 +25,8 @@ use std::{
 use xtask::{glue::fs2, *};
 
 fn main() -> Result<()> {
-    let root = project_root().join("website/docs/src/lint/rules");
-    let reference_groups =
-        project_root().join("website/docs/src/_includes/docs/reference/groups.md");
+    let root = project_root().join("website/docs/src/pages/lint/rules");
+    let reference_groups = project_root().join("website/docs/src/components/reference/Groups.md");
 
     // Clear the rules directory ignoring "not found" errors
     if let Err(err) = fs2::remove_dir_all(&root) {
@@ -48,7 +47,11 @@ fn main() -> Result<()> {
     let mut reference_buffer = Vec::new();
     writeln!(index, "---")?;
     writeln!(index, "title: Lint Rules")?;
-    writeln!(index, "main-class: rules")?;
+    writeln!(index, "layout: ../../../Layout.astro")?;
+    writeln!(index, "emoji: 📏")?;
+    writeln!(index, "description: List of available lint rules.")?;
+    writeln!(index, "category: reference")?;
+    writeln!(index, "mainClass: rules")?;
     writeln!(index, "---")?;
     writeln!(index)?;
 
@@ -95,7 +98,7 @@ fn main() -> Result<()> {
 
     writeln!(
         reference_buffer,
-        "<!-- this file is auto generated, use `cargo lintdoc` to update it -->"
+        "{{/** this file is auto generated, use `cargo lintdoc` to update it */}}"
     )?;
     for (group, rules) in groups {
         generate_group(group, rules, &root, &mut index, &mut errors)?;
@@ -115,7 +118,7 @@ fn main() -> Result<()> {
         );
     }
 
-    fs2::write(root.join("index.md"), index)?;
+    fs2::write(root.join("index.mdx"), index)?;
     fs2::write(reference_groups, reference_buffer)?;
 
     Ok(())
@@ -176,6 +179,7 @@ fn generate_rule(
     // Write the header for this lint rule
     writeln!(content, "---")?;
     writeln!(content, "title: Lint Rule {rule}")?;
+    writeln!(content, "layout: ../../../Layout.astro")?;
     writeln!(content, "---")?;
     writeln!(content)?;
 
@@ -254,7 +258,7 @@ fn parse_documentation(
                     if test.expect_diagnostic {
                         write!(
                             content,
-                            "{{% raw %}}<pre class=\"language-text\"><code class=\"language-text\">"
+                            "<pre class=\"language-text\"><code class=\"language-text\">"
                         )?;
                     }
 
@@ -262,7 +266,7 @@ fn parse_documentation(
                         .context("snapshot test failed")?;
 
                     if test.expect_diagnostic {
-                        writeln!(content, "</code></pre>{{% endraw %}}")?;
+                        writeln!(content, "</code></pre>")?;
                         writeln!(content)?;
                     }
                 }
