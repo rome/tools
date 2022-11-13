@@ -1,6 +1,5 @@
 ---
 title: Lint Rule useKeyWithMouseEvents
-layout: ../../../Layout.astro
 ---
 
 # useKeyWithMouseEvents (since v10.0.0)

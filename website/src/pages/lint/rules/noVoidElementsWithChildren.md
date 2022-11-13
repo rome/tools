@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noVoidElementsWithChildren
-layout: ../../../Layout.astro
 ---
 
 # noVoidElementsWithChildren (since v0.10.0)

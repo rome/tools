@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noUnsafeNegation
-layout: ../../../Layout.astro
 ---
 
 # noUnsafeNegation (since v0.7.0)

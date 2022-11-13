@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noExplicitAny
-layout: ../../../Layout.astro
 ---
 
 # noExplicitAny (since v10.0.0)

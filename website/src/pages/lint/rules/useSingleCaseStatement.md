@@ -1,6 +1,5 @@
 ---
 title: Lint Rule useSingleCaseStatement
-layout: ../../../Layout.astro
 ---
 
 # useSingleCaseStatement (since v0.7.0)

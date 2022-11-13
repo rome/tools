@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noUselessFragments
-layout: ../../../Layout.astro
 ---
 
 # noUselessFragments (since v0.10.0)
