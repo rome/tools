@@ -9,7 +9,7 @@ use xtask::*;
 ///
 /// Only users that have read rights can run this script
 fn main() -> Result<()> {
-    let root = project_root().join("website/docs/src/components");
+    let root = project_root().join("website/src/components");
     let mut args = Arguments::from_env();
     let token: String = args.value_from_str("--token").unwrap();
     let contributors = get_contributors(&token);
