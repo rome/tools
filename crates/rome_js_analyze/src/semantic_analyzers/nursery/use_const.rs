@@ -1,10 +1,12 @@
-use crate::semantic_services::Semantic;
-use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
+use crate::{semantic_services::Semantic, JsRuleAction};
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_console::markup;
 
+use rome_diagnostics::Applicability;
+use rome_js_factory::make;
 use rome_js_semantic::{AllReferencesExtensions, Scope, SemanticModel, SemanticScopeExtensions};
 use rome_js_syntax::*;
-use rome_rowan::{declare_node_union, AstNode};
+use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 
 declare_rule! {
     /// Require `const` declarations for variables that are never reassigned after declared.
@@ -54,22 +56,21 @@ declare_node_union! {
     pub(crate) DestructuringHost = JsVariableDeclarator | JsAssignmentExpression
 }
 
+pub(crate) enum AutoFix {
+    Yes(VarDecl),
+    No,
+}
+
 impl Rule for UseConst {
     type Query = Semantic<JsIdentifierBinding>;
-    type State = ();
+    type State = AutoFix;
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let binding = ctx.query();
         let model = ctx.model();
-
-        let should_be_const = should_binding_be_const(binding, model).unwrap_or(false);
-        if should_be_const {
-            Some(())
-        } else {
-            None
-        }
+        should_binding_be_const(binding, model)
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
@@ -86,9 +87,28 @@ impl Rule for UseConst {
 
         Some(diag)
     }
+
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        match state {
+            AutoFix::Yes(decl) if decl.can_make_const() => {
+                let mut batch = ctx.root().begin();
+                batch.replace_token(decl.kind_token()?, make::token(JsSyntaxKind::CONST_KW));
+                Some(JsRuleAction {
+                    category: ActionCategory::QuickFix,
+                    applicability: Applicability::MaybeIncorrect,
+                    message: markup! { "Change this binding to const" }.to_owned(),
+                    mutation: batch,
+                })
+            }
+            _ => None,
+        }
+    }
 }
 
-fn should_binding_be_const(binding: &JsIdentifierBinding, model: &SemanticModel) -> Option<bool> {
+fn should_binding_be_const(
+    binding: &JsIdentifierBinding,
+    model: &SemanticModel,
+) -> Option<AutoFix> {
     let declarator = binding
         .syntax()
         .ancestors()
@@ -103,31 +123,51 @@ fn should_binding_be_const(binding: &JsIdentifierBinding, model: &SemanticModel)
 
     let mut writes = binding.all_writes(model);
 
-    // In a for-in or for-of loop
-    if matches!(decl, VarDecl::JsForVariableDeclaration(..)) {
-        return Some(writes.len() == 0);
-    }
-
-    // If it has initializer.
-    if declarator.initializer().is_some() {
-        return Some(writes.len() == 0);
+    // In a for-in or for-of loop or if it has an initializer
+    if matches!(decl, VarDecl::JsForVariableDeclaration(..)) || declarator.initializer().is_some() {
+        return if writes.len() == 0 {
+            Some(AutoFix::Yes(decl))
+        } else {
+            None
+        };
     }
 
     // If no initializer and one assignment in same scope
     let write = match (writes.next(), writes.next()) {
-        (Some(v), None) => v,
+        (Some(v), None) if v.scope() == binding.scope(model) => v,
         _ => return None,
     };
 
     let host = write.node().ancestors().find_map(DestructuringHost::cast)?;
     if host.has_member_expr_assignment() || host.has_outer_variables(write.scope()) {
-        return Some(false);
+        return None;
     }
 
-    Some(
-        write.scope() == binding.scope(model)
-            && host.can_become_variable_declaration().unwrap_or(false),
-    )
+    if host.can_become_variable_declaration().unwrap_or(false) {
+        Some(AutoFix::No)
+    } else {
+        None
+    }
+}
+
+impl VarDecl {
+    fn can_make_const(&self) -> bool {
+        match self {
+            VarDecl::JsVariableDeclaration(d) => d
+                .declarators()
+                .into_iter()
+                .filter_map(Result::ok)
+                .all(|it| it.initializer().is_some()),
+            VarDecl::JsForVariableDeclaration(_) => true,
+        }
+    }
+
+    fn kind_token(&self) -> Option<JsSyntaxToken> {
+        match self {
+            VarDecl::JsVariableDeclaration(x) => x.kind().ok(),
+            VarDecl::JsForVariableDeclaration(x) => x.kind_token().ok(),
+        }
+    }
 }
 
 impl DestructuringHost {
