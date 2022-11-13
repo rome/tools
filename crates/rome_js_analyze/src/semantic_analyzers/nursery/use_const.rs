@@ -448,12 +448,12 @@ fn has_member_expr_assignment(pat: JsAnyAssignmentPattern) -> bool {
             .properties()
             .into_iter()
             .flat_map(Result::ok)
-            .any(|it| has_member_expr_in_obj_assign_pat(it)),
+            .any(has_member_expr_in_obj_assign_pat),
         JsAnyAssignmentPattern::JsArrayAssignmentPattern(arr) => arr
             .elements()
             .into_iter()
             .flat_map(Result::ok)
-            .any(|it| has_member_expr_in_array_assign_pat(it)),
+            .any(has_member_expr_in_array_assign_pat),
         JsAnyAssignmentPattern::JsAnyAssignment(p) => is_member_expr_assignment(p),
     }
 }
