@@ -143,10 +143,10 @@ function inlineIntegration(): AstroIntegration {
 }
 
 function remarkDefaultLayoutPlugin() {
-  return function (tree, file) {
-		const {frontmatter} = file.data.astro;
-    frontmatter.layout = frontmatter.layout ?? "/Layout.astro";
-  };
+	return function (tree, file) {
+		const { frontmatter } = file.data.astro;
+		frontmatter.layout = frontmatter.layout ?? "/Layout.astro";
+	};
 }
 
 // https://astro.build/config
