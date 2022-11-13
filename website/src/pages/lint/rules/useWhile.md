@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useWhile
+parent: lint/rules/index
 ---
 
 # useWhile (since v0.7.0)

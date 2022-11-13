@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noChildrenProp
+parent: lint/rules/index
 ---
 
 # noChildrenProp (since v0.10.0)

@@ -47,6 +47,7 @@ fn main() -> Result<()> {
     let mut reference_buffer = Vec::new();
     writeln!(index, "---")?;
     writeln!(index, "title: Lint Rules")?;
+    writeln!(index, "parent: linter/index")?;
     writeln!(index, "emoji: 📏")?;
     writeln!(index, "description: List of available lint rules.")?;
     writeln!(index, "category: reference")?;
@@ -178,6 +179,7 @@ fn generate_rule(
     // Write the header for this lint rule
     writeln!(content, "---")?;
     writeln!(content, "title: Lint Rule {rule}")?;
+    writeln!(content, "parent: lint/rules/index")?;
     writeln!(content, "---")?;
     writeln!(content)?;
 

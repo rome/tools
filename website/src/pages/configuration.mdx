@@ -6,6 +6,7 @@ description: How to customize and configure Rome with rome.json.
 ---
 
 import LintGroups from "/components/reference/Groups.astro";
+import CodeBlockHeader from "/components/CodeBlockHeader.astro";
 
 {/** Make sure to update the redirect in `static/_redirects` when changing the configuration title --> **/}
 
@@ -18,6 +19,8 @@ The Rome configuration file is named `rome.json` and should be placed in the roo
 directory is usually the directory containing your project's `package.json`.
 
 Here's an example:
+
+<CodeBlockHeader filename="rome.json" />
 
 ```json
 {
@@ -34,28 +37,28 @@ Here's an example:
 
 This configuration file enables the formatter and sets the preferred indent style and width. The linter is disabled.
 
-## `rome.json`
+## `files`
 
-#### Files
-
-##### `files.maxSize`
+### `files.maxSize`
 
 The maximum allowed size for source code files in bytes. Files above
 this limit will be ignored for performance reason.
 
 > Default: 1024*1024 (1MB)
 
-### Linter
+## `linter`
 
-#### `linter.enabled`
+### `linter.enabled`
 
 Enables Rome's linter
 
 > Default: `true`
 
-#### `linter.ignore`
+### `linter.ignore`
 
 An array of Unix shell style patterns.
+
+<CodeBlockHeader filename="rome.json" />
 
 ```json
 {
@@ -65,23 +68,25 @@ An array of Unix shell style patterns.
 }
 ```
 
-#### `linter.rules.recommended`
+### `linter.rules.recommended`
 
 Enables the [recommended rules](/lint/rules) for all categories.
 
 > Default: `true`
 
-#### `linter.rules.[category]`
+### `linter.rules.[category]`
 
 Options that influence the rules of a single category. Rome supports the following categories:
 
 <LintGroups />
 
-#### `linter.rules.[category].recommended`
+### `linter.rules.[category].recommended`
 
 Enables the recommended rules for a single category.
 
 Example:
+
+<CodeBlockHeader filename="rome.json" />
 
 ```json
 {
@@ -96,17 +101,19 @@ Example:
 }
 ```
 
-### Formatter
+## `formatter`
 
-#### `formatter.enabled`
+### `formatter.enabled`
 
 Enables Rome's formatter
 
 > Default: `true`
 
-#### `formatter.ignore`
+### `formatter.ignore`
 
 An array of Unix shell style patterns.
+
+<CodeBlockHeader filename="rome.json" />
 
 ```json
 {
@@ -116,7 +123,7 @@ An array of Unix shell style patterns.
 }
 ```
 
-#### `formatter.indentStyle`
+### `formatter.indentStyle`
 
 The style of the indentation. It can be `"tab"` or `"space"`.
 
@@ -124,31 +131,31 @@ The style of the indentation. It can be `"tab"` or `"space"`.
 
 Rome's default is `"tab"`.
 
-#### `formatter.indentSize`
+### `formatter.indentSize`
 
 How big the indentation should be.
 
-#### `formatter.lineWidth`
+### `formatter.lineWidth`
 
 How many characters can be written on a single line.
 
 > Default: `80`
 
-### JavaScript
+## `javascript`
 
-#### `javascript.formatter.quoteStyle`
+### `javascript.formatter.quoteStyle`
 
 The type of quote used when representing string literals. It can be `single` or `double`.
 
 > Default: `double`
 
-#### `javascript.formatter.quoteProperties`
+### `javascript.formatter.quoteProperties`
 
 When properties inside objects should be quoted. It can be `asNeeded` or `preserve`.
 
 > Default: `asNeeded`
 
-#### `javascript.formatter.trailingComma`
+### `javascript.formatter.trailingComma`
 
 Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Possible values:
 - `all`, the trailing comma is always added

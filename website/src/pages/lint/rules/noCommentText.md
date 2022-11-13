@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noCommentText
+parent: lint/rules/index
 ---
 
 # noCommentText (since v0.7.0)

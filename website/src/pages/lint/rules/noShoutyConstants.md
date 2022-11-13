@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noShoutyConstants
+parent: lint/rules/index
 ---
 
 # noShoutyConstants (since v0.7.0)

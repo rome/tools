@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noPositiveTabindex
+parent: lint/rules/index
 ---
 
 # noPositiveTabindex (since v10.0.0)

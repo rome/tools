@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noUnusedTemplateLiteral
+parent: lint/rules/index
 ---
 
 # noUnusedTemplateLiteral (since v0.7.0)

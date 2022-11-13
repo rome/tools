@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noLabelVar
+parent: lint/rules/index
 ---
 
 # noLabelVar (since v0.7.0)

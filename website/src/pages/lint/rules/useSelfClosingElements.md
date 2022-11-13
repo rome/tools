@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useSelfClosingElements
+parent: lint/rules/index
 ---
 
 # useSelfClosingElements (since v0.7.0)

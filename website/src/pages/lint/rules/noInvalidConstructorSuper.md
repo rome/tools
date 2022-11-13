@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noInvalidConstructorSuper
+parent: lint/rules/index
 ---
 
 # noInvalidConstructorSuper (since v10.0.0)

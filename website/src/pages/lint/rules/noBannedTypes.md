@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noBannedTypes
+parent: lint/rules/index
 ---
 
 # noBannedTypes (since v10.0.0)

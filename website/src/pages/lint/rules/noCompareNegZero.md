@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noCompareNegZero
+parent: lint/rules/index
 ---
 
 # noCompareNegZero (since v0.7.0)

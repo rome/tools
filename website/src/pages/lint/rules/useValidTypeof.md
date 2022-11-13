@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useValidTypeof
+parent: lint/rules/index
 ---
 
 # useValidTypeof (since v0.7.0)

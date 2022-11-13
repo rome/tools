@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useCamelCase
+parent: lint/rules/index
 ---
 
 # useCamelCase (since v0.8.0)

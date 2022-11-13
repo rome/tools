@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noAutofocus
+parent: lint/rules/index
 ---
 
 # noAutofocus (since v10.0.0)

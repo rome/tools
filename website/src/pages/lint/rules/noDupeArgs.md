@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noDupeArgs
+parent: lint/rules/index
 ---
 
 # noDupeArgs (since v0.9.0)

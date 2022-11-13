@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noUnreachable
+parent: lint/rules/index
 ---
 
 # noUnreachable (since v0.7.0)

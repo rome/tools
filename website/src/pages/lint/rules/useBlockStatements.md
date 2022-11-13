@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useBlockStatements
+parent: lint/rules/index
 ---
 
 # useBlockStatements (since v0.7.0)

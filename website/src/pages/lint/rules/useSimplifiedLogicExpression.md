@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useSimplifiedLogicExpression
+parent: lint/rules/index
 ---
 
 # useSimplifiedLogicExpression (since v0.7.0)

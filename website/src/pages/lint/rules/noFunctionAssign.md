@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noFunctionAssign
+parent: lint/rules/index
 ---
 
 # noFunctionAssign (since v0.7.0)

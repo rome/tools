@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useSingleVarDeclarator
+parent: lint/rules/index
 ---
 
 # useSingleVarDeclarator (since v0.7.0)

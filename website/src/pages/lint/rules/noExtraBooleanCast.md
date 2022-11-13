@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noExtraBooleanCast
+parent: lint/rules/index
 ---
 
 # noExtraBooleanCast (since v0.9.0)

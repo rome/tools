@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useFlatMap
+parent: lint/rules/index
 ---
 
 # useFlatMap (since v10.0.0)

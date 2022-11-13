@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noDelete
+parent: lint/rules/index
 ---
 
 # noDelete (since v0.7.0)

@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useTemplate
+parent: lint/rules/index
 ---
 
 # useTemplate (since v0.7.0)

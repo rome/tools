@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useKeyWithClickEvents
+parent: lint/rules/index
 ---
 
 # useKeyWithClickEvents (since v10.0.0)
