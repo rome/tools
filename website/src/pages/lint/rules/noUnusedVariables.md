@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noUnusedVariables
+parent: lint/rules/index
 ---
 
 # noUnusedVariables (since v0.9.0)

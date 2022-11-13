@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noArrayIndexKey
+parent: lint/rules/index
 ---
 
 # noArrayIndexKey (since v0.10.0)

@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noRenderReturnValue
+parent: lint/rules/index
 ---
 
 # noRenderReturnValue (since v0.10.0)

@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noArguments
+parent: lint/rules/index
 ---
 
 # noArguments (since v0.7.0)

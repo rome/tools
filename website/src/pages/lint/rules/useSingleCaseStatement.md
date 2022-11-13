@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useSingleCaseStatement
+parent: lint/rules/index
 ---
 
 # useSingleCaseStatement (since v0.7.0)

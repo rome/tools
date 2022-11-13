@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useValidAnchor
+parent: lint/rules/index
 ---
 
 # useValidAnchor (since v10.0.0)

@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noUselessFragments
+parent: lint/rules/index
 ---
 
 # noUselessFragments (since v0.10.0)

@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useKeyWithMouseEvents
+parent: lint/rules/index
 ---
 
 # useKeyWithMouseEvents (since v10.0.0)

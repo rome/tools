@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noImplicitBoolean
+parent: lint/rules/index
 ---
 
 # noImplicitBoolean (since v0.7.0)

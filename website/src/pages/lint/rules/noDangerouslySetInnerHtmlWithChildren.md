@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noDangerouslySetInnerHtmlWithChildren
+parent: lint/rules/index
 ---
 
 # noDangerouslySetInnerHtmlWithChildren (since v0.10.0)

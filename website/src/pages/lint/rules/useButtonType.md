@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useButtonType
+parent: lint/rules/index
 ---
 
 # useButtonType (since v0.10.0)

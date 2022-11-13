@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useBlankTarget
+parent: lint/rules/index
 ---
 
 # useBlankTarget (since v10.0.0)

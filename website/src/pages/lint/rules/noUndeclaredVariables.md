@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noUndeclaredVariables
+parent: lint/rules/index
 ---
 
 # noUndeclaredVariables (since v0.10.0)

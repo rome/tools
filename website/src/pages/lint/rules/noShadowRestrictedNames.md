@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noShadowRestrictedNames
+parent: lint/rules/index
 ---
 
 # noShadowRestrictedNames (since v0.9.0)

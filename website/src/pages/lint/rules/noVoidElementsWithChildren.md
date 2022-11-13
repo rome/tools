@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noVoidElementsWithChildren
+parent: lint/rules/index
 ---
 
 # noVoidElementsWithChildren (since v0.10.0)

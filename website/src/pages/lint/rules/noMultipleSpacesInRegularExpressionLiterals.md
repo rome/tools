@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noMultipleSpacesInRegularExpressionLiterals
+parent: lint/rules/index
 ---
 
 # noMultipleSpacesInRegularExpressionLiterals (since v0.7.0)

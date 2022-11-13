@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useOptionalChain
+parent: lint/rules/index
 ---
 
 # useOptionalChain (since v0.10.0)

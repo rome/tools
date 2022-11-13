@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noSparseArray
+parent: lint/rules/index
 ---
 
 # noSparseArray (since v0.7.0)

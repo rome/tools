@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noDebugger
+parent: lint/rules/index
 ---
 
 # noDebugger (since v0.7.0)

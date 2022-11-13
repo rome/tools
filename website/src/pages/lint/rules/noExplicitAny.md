@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noExplicitAny
+parent: lint/rules/index
 ---
 
 # noExplicitAny (since v10.0.0)

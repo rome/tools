@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noAsyncPromiseExecutor
+parent: lint/rules/index
 ---
 
 # noAsyncPromiseExecutor (since v0.7.0)

@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noEmptyPattern
+parent: lint/rules/index
 ---
 
 # noEmptyPattern (since v0.7.0)

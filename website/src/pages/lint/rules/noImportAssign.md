@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noImportAssign
+parent: lint/rules/index
 ---
 
 # noImportAssign (since v0.9.0)

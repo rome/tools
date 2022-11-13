@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useAltText
+parent: lint/rules/index
 ---
 
 # useAltText (since v10.0.0)

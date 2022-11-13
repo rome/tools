@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noNewSymbol
+parent: lint/rules/index
 ---
 
 # noNewSymbol (since v0.10.0)

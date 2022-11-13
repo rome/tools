@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noRestrictedGlobals
+parent: lint/rules/index
 ---
 
 # noRestrictedGlobals (since v0.10.0)

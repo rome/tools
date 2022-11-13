@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useExhaustiveDependencies
+parent: lint/rules/index
 ---
 
 # useExhaustiveDependencies (since v10.0.0)

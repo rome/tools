@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noUnnecessaryContinue
+parent: lint/rules/index
 ---
 
 # noUnnecessaryContinue (since v0.7.0)

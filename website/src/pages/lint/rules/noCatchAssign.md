@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noCatchAssign
+parent: lint/rules/index
 ---
 
 # noCatchAssign (since v0.7.0)

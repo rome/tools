@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noUnsafeNegation
+parent: lint/rules/index
 ---
 
 # noUnsafeNegation (since v0.7.0)

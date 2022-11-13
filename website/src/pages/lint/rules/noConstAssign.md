@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noConstAssign
+parent: lint/rules/index
 ---
 
 # noConstAssign (since v10.0.0)

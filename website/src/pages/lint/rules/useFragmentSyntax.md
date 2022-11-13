@@ -1,5 +1,6 @@
 ---
 title: Lint Rule useFragmentSyntax
+parent: lint/rules/index
 ---
 
 # useFragmentSyntax (since v0.10.0)

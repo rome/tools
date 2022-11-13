@@ -1,5 +1,6 @@
 ---
 title: Lint Rule noDoubleEquals
+parent: lint/rules/index
 ---
 
 # noDoubleEquals (since v0.7.0)
