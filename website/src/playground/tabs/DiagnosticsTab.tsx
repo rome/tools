@@ -1,8 +1,12 @@
 interface Props {
 	errors: string;
+    lintingEnabled: boolean;
 }
 
-export default function DiagnosticsTab({ errors }: Props) {
+export default function DiagnosticsTab({ errors, lintingEnabled }: Props) {
+	if (!lintingEnabled) {
+	return <div className="empty-panel">Linter is currently disabled</div>;
+	}
 	if (errors === "") {
 		return <div className="empty-panel">No diagnostics present</div>;
 	}

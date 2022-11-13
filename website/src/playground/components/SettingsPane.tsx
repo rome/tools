@@ -33,6 +33,7 @@ export default function SettingsPane({
 		typescript: isTypeScript,
 		jsx: isJsx,
 		enabledNurseryRules,
+        enabledLinting,
 	},
 }: Props) {
 	const setIsTypeScript = createSetter(setPlaygroundState, "typescript");
@@ -51,6 +52,7 @@ export default function SettingsPane({
 		setPlaygroundState,
 		"enabledNurseryRules",
 	);
+	const setEnabledLinting = createSetter(setPlaygroundState, "enabledLinting");
 
 	const [isCollapsed, setIsCollapsed] = useState(isCollapsedStore.getBoolean());
 
@@ -88,6 +90,8 @@ export default function SettingsPane({
 					<LinterSettings
 						enabledNurseryRules={enabledNurseryRules}
 						setEnabledNurseryRules={setEnabledNurseryRules}
+						enabledLinting={enabledLinting}
+						setEnabledLinting={setEnabledLinting}
 					/>
 					<SyntaxSettings
 						sourceType={sourceType}
@@ -284,20 +288,35 @@ function FormatterSettings({
 function LinterSettings({
 	enabledNurseryRules,
 	setEnabledNurseryRules,
+    enabledLinting,
+    setEnabledLinting,
 }: {
 	enabledNurseryRules: boolean;
 	setEnabledNurseryRules: (value: boolean) => void;
+	enabledLinting: boolean;
+	setEnabledLinting: (value: boolean) => void;
 }) {
 	return (
 		<>
 			<h2>Linter</h2>
 			<section>
 				<div className="field-row">
+						<input
+								id="linting-enabled"
+								name="linting-enabled"
+								type="checkbox"
+								checked={enabledLinting}
+								onChange={(e) => setEnabledLinting(e.target.checked)}
+						/>
+					<label htmlFor="linting-enabled">Linter enabled</label>
+				</div>
+				<div className="field-row">
 					<input
 						id="nursery-rules"
 						aria-describedby="nursery-rules-description"
 						name="nursery-rules"
 						type="checkbox"
+						disabled={!enabledLinting}
 						checked={enabledNurseryRules}
 						onChange={(e) => setEnabledNurseryRules(e.target.checked)}
 					/>
