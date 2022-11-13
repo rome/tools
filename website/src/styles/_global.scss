@@ -145,3 +145,11 @@ html {
 		scroll-padding-top: 64px;
 	}
 }
+
+input {
+	color-scheme: light;
+
+	@include dark-mode {
+		color-scheme: dark;
+	}
+}
