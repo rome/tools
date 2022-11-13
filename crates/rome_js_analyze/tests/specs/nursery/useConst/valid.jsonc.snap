@@ -256,6 +256,18 @@ valid.jsonc:1:6 lint/nursery/useConst ━━━━━━━━━━━━━━
 let a, b; ({a, b} = obj); b++;
 ```
 
+# Diagnostics
+```
+valid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'a' is never reassigned. Use 'const' instead.
+  
+  > 1 │ let a, b; ({a, b} = obj); b++;
+      │     ^
+  
+
+```
+
 # Input
 ```js
 let { name, ...otherStuff } = obj; otherStuff = {};
@@ -348,6 +360,18 @@ let a; const b = {}; ({ a, c: b.c } = func());
 # Input
 ```js
 let x; function foo() { bar(x); } x = 0;
+```
+
+# Diagnostics
+```
+valid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'x' is never reassigned. Use 'const' instead.
+  
+  > 1 │ let x; function foo() { bar(x); } x = 0;
+      │     ^
+  
+
 ```
 
 # Input

@@ -256,9 +256,33 @@ invalid.jsonc:1:30 lint/nursery/useConst ━━━━━━━━━━━━━
 var foo = function() { for (const b of c) { let a; a = 1; } };
 ```
 
+# Diagnostics
+```
+invalid.jsonc:1:49 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'a' is never reassigned. Use 'const' instead.
+  
+  > 1 │ var foo = function() { for (const b of c) { let a; a = 1; } };
+      │                                                 ^
+  
+
+```
+
 # Input
 ```js
 var foo = function() { for (const b of c) { let a; ({a} = 1); } };
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:49 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'a' is never reassigned. Use 'const' instead.
+  
+  > 1 │ var foo = function() { for (const b of c) { let a; ({a} = 1); } };
+      │                                                 ^
+  
+
 ```
 
 # Input
@@ -266,14 +290,50 @@ var foo = function() { for (const b of c) { let a; ({a} = 1); } };
 let x; x = 0;
 ```
 
+# Diagnostics
+```
+invalid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'x' is never reassigned. Use 'const' instead.
+  
+  > 1 │ let x; x = 0;
+      │     ^
+  
+
+```
+
 # Input
 ```js
 switch (a) { case 0: let x; x = 0; }
 ```
 
+# Diagnostics
+```
+invalid.jsonc:1:26 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'x' is never reassigned. Use 'const' instead.
+  
+  > 1 │ switch (a) { case 0: let x; x = 0; }
+      │                          ^
+  
+
+```
+
 # Input
 ```js
 (function() { let x; x = 1; })();
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:19 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'x' is never reassigned. Use 'const' instead.
+  
+  > 1 │ (function() { let x; x = 1; })();
+      │                   ^
+  
+
 ```
 
 # Input
@@ -343,6 +403,18 @@ invalid.jsonc:1:13 lint/nursery/useConst ━━━━━━━━━━━━━
 let a, b; ({a = 0, b} = obj); b = 0; foo(a, b);
 ```
 
+# Diagnostics
+```
+invalid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'a' is never reassigned. Use 'const' instead.
+  
+  > 1 │ let a, b; ({a = 0, b} = obj); b = 0; foo(a, b);
+      │     ^
+  
+
+```
+
 # Input
 ```js
 let {a = 0, b} = obj; foo(a, b);
@@ -408,6 +480,29 @@ invalid.jsonc:1:6 lint/nursery/useConst ━━━━━━━━━━━━━�
 # Input
 ```js
 let a, b; ({a = 0, b} = obj); foo(a, b);
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'a' is never reassigned. Use 'const' instead.
+  
+  > 1 │ let a, b; ({a = 0, b} = obj); foo(a, b);
+      │     ^
+  
+
+```
+
+```
+invalid.jsonc:1:8 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'b' is never reassigned. Use 'const' instead.
+  
+  > 1 │ let a, b; ({a = 0, b} = obj); foo(a, b);
+      │        ^
+  
+
 ```
 
 # Input
@@ -503,6 +598,18 @@ invalid.jsonc:1:7 lint/nursery/useConst ━━━━━━━━━━━━━�
 # Input
 ```js
 let x; function foo() { bar(x); } x = 0;
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'x' is never reassigned. Use 'const' instead.
+  
+  > 1 │ let x; function foo() { bar(x); } x = 0;
+      │     ^
+  
+
 ```
 
 # Input
@@ -617,14 +724,50 @@ invalid.jsonc:1:28 lint/nursery/useConst ━━━━━━━━━━━━━
 let predicate; [, {foo:returnType, predicate}] = foo();
 ```
 
+# Diagnostics
+```
+invalid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'predicate' is never reassigned. Use 'const' instead.
+  
+  > 1 │ let predicate; [, {foo:returnType, predicate}] = foo();
+      │     ^^^^^^^^^
+  
+
+```
+
 # Input
 ```js
 let predicate; [, {foo:returnType, predicate}, ...bar ] = foo();
 ```
 
+# Diagnostics
+```
+invalid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'predicate' is never reassigned. Use 'const' instead.
+  
+  > 1 │ let predicate; [, {foo:returnType, predicate}, ...bar ] = foo();
+      │     ^^^^^^^^^
+  
+
+```
+
 # Input
 ```js
 let predicate; [, {foo:returnType, ...predicate} ] = foo();
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'predicate' is never reassigned. Use 'const' instead.
+  
+  > 1 │ let predicate; [, {foo:returnType, ...predicate} ] = foo();
+      │     ^^^^^^^^^
+  
+
 ```
 
 # Input
@@ -1063,9 +1206,33 @@ invalid.jsonc:1:24 lint/nursery/useConst ━━━━━━━━━━━━━
 class C { static { if (foo) { let a; a = 1; } } }
 ```
 
+# Diagnostics
+```
+invalid.jsonc:1:35 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'a' is never reassigned. Use 'const' instead.
+  
+  > 1 │ class C { static { if (foo) { let a; a = 1; } } }
+      │                                   ^
+  
+
+```
+
 # Input
 ```js
 class C { static { let a; a = 1; } }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:24 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'a' is never reassigned. Use 'const' instead.
+  
+  > 1 │ class C { static { let a; a = 1; } }
+      │                        ^
+  
+
 ```
 
 # Input
@@ -1101,14 +1268,72 @@ invalid.jsonc:1:29 lint/nursery/useConst ━━━━━━━━━━━━━
 class C { static { let a, b; ({ a, b } = foo); } }
 ```
 
+# Diagnostics
+```
+invalid.jsonc:1:24 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'a' is never reassigned. Use 'const' instead.
+  
+  > 1 │ class C { static { let a, b; ({ a, b } = foo); } }
+      │                        ^
+  
+
+```
+
+```
+invalid.jsonc:1:27 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'b' is never reassigned. Use 'const' instead.
+  
+  > 1 │ class C { static { let a, b; ({ a, b } = foo); } }
+      │                           ^
+  
+
+```
+
 # Input
 ```js
 class C { static { let a; let b; ({ a, b } = foo); } }
 ```
 
+# Diagnostics
+```
+invalid.jsonc:1:24 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'a' is never reassigned. Use 'const' instead.
+  
+  > 1 │ class C { static { let a; let b; ({ a, b } = foo); } }
+      │                        ^
+  
+
+```
+
+```
+invalid.jsonc:1:31 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'b' is never reassigned. Use 'const' instead.
+  
+  > 1 │ class C { static { let a; let b; ({ a, b } = foo); } }
+      │                               ^
+  
+
+```
+
 # Input
 ```js
 class C { static { let a; a = 0; console.log(a); } }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:24 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'a' is never reassigned. Use 'const' instead.
+  
+  > 1 │ class C { static { let a; a = 0; console.log(a); } }
+      │                        ^
+  
+
 ```
 
 # Input
