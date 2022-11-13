@@ -741,6 +741,16 @@
             }
           ]
         },
+        "useConst": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useExhaustiveDependencies": {
           "anyOf": [
             {
