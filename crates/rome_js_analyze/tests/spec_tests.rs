@@ -83,7 +83,7 @@ fn write_analysis_to_snapshot(
     file_name: &str,
     input_file: &Path,
 ) {
-    let parsed = parse(&input_code, FileId::zero(), source_type);
+    let parsed = parse(input_code, FileId::zero(), source_type);
     let root = parsed.tree();
 
     let mut diagnostics = Vec::new();
@@ -93,17 +93,17 @@ fn write_analysis_to_snapshot(
         if let Some(mut diag) = event.diagnostic() {
             diag.set_severity(Severity::Warning);
             if let Some(action) = event.action() {
-                check_code_action(input_file, &input_code, source_type, &action);
+                check_code_action(input_file, input_code, source_type, &action);
                 diag.add_code_suggestion(action.into());
             }
 
-            diagnostics.push(diagnostic_to_string(file_name, &input_code, diag));
+            diagnostics.push(diagnostic_to_string(file_name, input_code, diag));
             return ControlFlow::Continue(());
         }
 
         if let Some(action) = event.action() {
-            check_code_action(input_file, &input_code, source_type, &action);
-            code_fixes.push(code_fix_to_string(&input_code, action));
+            check_code_action(input_file, input_code, source_type, &action);
+            code_fixes.push(code_fix_to_string(input_code, action));
         }
 
         ControlFlow::<Never>::Continue(())
