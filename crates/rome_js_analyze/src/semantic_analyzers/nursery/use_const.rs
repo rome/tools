@@ -85,21 +85,34 @@ impl Rule for UseConst {
         Some(signals)
     }
 
-    fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let mut diag: Option<RuleDiagnostic> = None;
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+        let decl = ctx.query();
+        let kind = decl.kind_token()?;
+        let mut diag = RuleDiagnostic::new(
+            rule_category!(),
+            kind.text_trimmed_range(),
+            markup! {
+                "Use 'const' when variables are not reassigned."
+            },
+        );
 
+        let mut found = false;
         for info in state.iter().flat_map(Option::as_ref) {
-            let title = format! {
-                "'{}' is never reassigned. Use 'const' instead.", info.binding.syntax().text_trimmed()
-            };
-            let range = info.binding.range();
-            match diag.take() {
-                Some(d) => diag = Some(d.detail(range, title)),
-                None => diag = Some(RuleDiagnostic::new(rule_category!(), range, title)),
-            }
+            found = true;
+            let binding = info.binding.name_token().ok()?;
+            diag = diag.detail(
+                binding.text_trimmed_range(),
+                markup! {
+                    "'"{ binding.text_trimmed() }"' is never reassigned."
+                },
+            );
         }
 
-        diag
+        if found {
+            Some(diag)
+        } else {
+            None
+        }
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
@@ -113,7 +126,7 @@ impl Rule for UseConst {
             Some(JsRuleAction {
                 category: ActionCategory::QuickFix,
                 applicability: Applicability::MaybeIncorrect,
-                message: markup! { "Use const instead" }.to_owned(),
+                message: markup! { "Use 'const' instead." }.to_owned(),
                 mutation: batch,
             })
         } else {
@@ -170,15 +183,10 @@ impl ConstantBinding {
 }
 
 impl VarDecl {
-    fn declarators(&self) -> Vec<JsVariableDeclarator> {
-        match self {
-            VarDecl::JsVariableDeclaration(declaration) => declaration
-                .declarators()
-                .into_iter()
-                .filter_map(Result::ok)
-                .collect(),
-            VarDecl::JsForVariableDeclaration(f) => f.declarator().into_iter().collect(),
-        }
+    fn declarators(&self) -> impl Iterator<Item = JsVariableDeclarator> {
+        self.syntax()
+            .descendants()
+            .filter_map(JsVariableDeclarator::cast)
     }
 
     fn kind_token(&self) -> Option<JsSyntaxToken> {
@@ -189,79 +197,11 @@ impl VarDecl {
     }
 }
 
-fn declarator_bindings(decl: &JsVariableDeclarator) -> Vec<JsIdentifierBinding> {
-    let mut bindings = Vec::new();
-    if let Ok(pat) = decl.id() {
-        get_bindings_in_pat(pat, &mut bindings)
-    }
-    bindings
-}
-
-fn get_bindings_in_pat(pat: JsAnyBindingPattern, out: &mut Vec<JsIdentifierBinding>) {
-    use JsAnyBindingPattern as B;
-    match pat {
-        B::JsAnyBinding(x) => {
-            if let JsAnyBinding::JsIdentifierBinding(x) = x {
-                out.push(x)
-            }
-        }
-        B::JsArrayBindingPattern(x) => {
-            for e in x.elements().into_iter().filter_map(Result::ok) {
-                get_bindings_in_array_pat(e, out);
-            }
-        }
-        B::JsObjectBindingPattern(x) => {
-            for e in x.properties().into_iter().filter_map(Result::ok) {
-                get_bindings_in_object_pat(e, out);
-            }
-        }
-    }
-}
-
-fn get_bindings_in_object_pat(
-    pat: JsAnyObjectBindingPatternMember,
-    out: &mut Vec<JsIdentifierBinding>,
-) {
-    use JsAnyObjectBindingPatternMember as B;
-    match pat {
-        B::JsObjectBindingPatternProperty(x) => {
-            if let Ok(x) = x.pattern() {
-                get_bindings_in_pat(x, out);
-            }
-        }
-        B::JsObjectBindingPatternRest(x) => {
-            if let Ok(JsAnyBinding::JsIdentifierBinding(x)) = x.binding() {
-                out.push(x)
-            }
-        }
-        B::JsObjectBindingPatternShorthandProperty(x) => {
-            if let Ok(JsAnyBinding::JsIdentifierBinding(x)) = x.identifier() {
-                out.push(x)
-            }
-        }
-        B::JsUnknownBinding(_) => (),
-    }
-}
-
-fn get_bindings_in_array_pat(
-    pat: JsAnyArrayBindingPatternElement,
-    out: &mut Vec<JsIdentifierBinding>,
-) {
-    use JsAnyArrayBindingPatternElement as B;
-    match pat {
-        B::JsAnyBindingPattern(x) => get_bindings_in_pat(x, out),
-        B::JsArrayBindingPatternRestElement(x) => {
-            if let Ok(x) = x.pattern() {
-                get_bindings_in_pat(x, out);
-            }
-        }
-        B::JsArrayHole(_) => (),
-        B::JsBindingPatternWithDefault(x) => {
-            if let Ok(x) = x.pattern() {
-                get_bindings_in_pat(x, out);
-            }
-        }
-    }
+fn declarator_bindings(decl: &JsVariableDeclarator) -> impl Iterator<Item = JsIdentifierBinding> {
+    decl.id()
+        .into_iter()
+        .flat_map(|it| it.syntax().descendants())
+        .filter_map(JsIdentifierBinding::cast)
 }
 
 impl DestructuringHost {
@@ -288,12 +228,10 @@ impl DestructuringHost {
     }
 
     fn has_member_expr_assignment(&self) -> bool {
-        let Self::JsAssignmentExpression(it) = self else { return false };
-        match it.left() {
-            Ok(
-                pat @ JsAnyAssignmentPattern::JsArrayAssignmentPattern(_)
-                | pat @ JsAnyAssignmentPattern::JsObjectAssignmentPattern(_),
-            ) => has_member_expr_assignment(pat),
+        match self {
+            Self::JsAssignmentExpression(it) => it.left().map_or(false, |pat| {
+                is_object_or_array_pat(&pat) && has_member_expr_assignment(pat)
+            }),
             _ => false,
         }
     }
@@ -307,61 +245,13 @@ impl DestructuringHost {
 }
 
 fn has_outer_variables_in_var_declarator(declarator: &JsVariableDeclarator, scope: Scope) -> bool {
-    declarator
-        .id()
-        .map_or(false, |it| has_outer_variables_in_binding_pat(it, &scope))
-}
-
-fn has_outer_variables_in_binding_pat(pat: JsAnyBindingPattern, scope: &Scope) -> bool {
-    use JsAnyBindingPattern::*;
-    match pat {
-        JsArrayBindingPattern(it) => it
-            .elements()
-            .into_iter()
-            .filter_map(Result::ok)
-            .any(|element| has_outer_variable_in_array_binding_pat(element, scope)),
-        JsObjectBindingPattern(it) => it
-            .properties()
-            .into_iter()
-            .filter_map(Result::ok)
-            .any(|property| has_outer_variables_in_object_binding_pat(property, scope)),
-        JsAnyBinding(it) => is_outer_binding_in_destructuring(it, scope),
-    }
-}
-
-fn has_outer_variables_in_object_binding_pat(
-    property: JsAnyObjectBindingPatternMember,
-    scope: &Scope,
-) -> bool {
-    use JsAnyObjectBindingPatternMember::*;
-    match property {
-        JsObjectBindingPatternProperty(it) => it
-            .pattern()
-            .map_or(false, |it| has_outer_variables_in_binding_pat(it, scope)),
-        JsObjectBindingPatternRest(it) => it
-            .binding()
-            .map_or(false, |it| is_outer_binding_in_destructuring(it, scope)),
-        JsObjectBindingPatternShorthandProperty(it) => it
-            .identifier()
-            .map_or(false, |it| is_outer_binding_in_destructuring(it, scope)),
-        JsUnknownBinding(_) => false,
-    }
-}
-
-fn has_outer_variable_in_array_binding_pat(
-    element: JsAnyArrayBindingPatternElement,
-    scope: &Scope,
-) -> bool {
-    use JsAnyArrayBindingPatternElement::*;
-    match element {
-        JsAnyBindingPattern(it) => has_outer_variables_in_binding_pat(it, scope),
-        JsArrayBindingPatternRestElement(it) => it
-            .pattern()
-            .map_or(false, |it| has_outer_variables_in_binding_pat(it, scope)),
-        JsBindingPatternWithDefault(it) => it
-            .pattern()
-            .map_or(false, |it| has_outer_variables_in_binding_pat(it, scope)),
-        JsArrayHole(_) => false,
+    if let Ok(id) = declarator.id() {
+        id.syntax()
+            .descendants()
+            .filter_map(JsIdentifierBinding::cast)
+            .any(|it| is_outer_variable_in_binding(it, &scope))
+    } else {
+        false
     }
 }
 
@@ -369,66 +259,24 @@ fn has_outer_variables_in_assignment_expr(
     assignment: &JsAssignmentExpression,
     scope: Scope,
 ) -> bool {
-    assignment.left().map_or(false, |it| {
-        matches!(
-            it,
-            JsAnyAssignmentPattern::JsObjectAssignmentPattern(..)
-                | JsAnyAssignmentPattern::JsArrayAssignmentPattern(..)
-        ) && has_outer_variables_in_assignment_pat(it, &scope)
-    })
-}
-
-fn has_outer_variables_in_assignment_pat(pat: JsAnyAssignmentPattern, scope: &Scope) -> bool {
-    match pat {
-        JsAnyAssignmentPattern::JsObjectAssignmentPattern(obj) => obj
-            .properties()
-            .into_iter()
-            .flat_map(Result::ok)
-            .any(|it| has_outer_variables_in_obj_assign_pat(it, scope)),
-        JsAnyAssignmentPattern::JsArrayAssignmentPattern(arr) => arr
-            .elements()
-            .into_iter()
-            .flat_map(Result::ok)
-            .any(|it| has_outer_variables_in_array_assign_pat(it, scope)),
-        JsAnyAssignmentPattern::JsAnyAssignment(p) => is_outer_variable_in_assignment(p, scope),
+    if let Ok(pat) = assignment.left() {
+        is_object_or_array_pat(&pat)
+            && pat
+                .syntax()
+                .descendants()
+                .filter_map(JsIdentifierAssignment::cast)
+                .any(|it| is_outer_variable_in_assignment(it, &scope))
+    } else {
+        false
     }
 }
 
-fn has_outer_variables_in_array_assign_pat(
-    it: JsAnyArrayAssignmentPatternElement,
-    scope: &Scope,
-) -> bool {
-    use JsAnyArrayAssignmentPatternElement::*;
-    match it {
-        JsAnyAssignmentPattern(it) => has_outer_variables_in_assignment_pat(it, scope),
-        JsArrayAssignmentPatternRestElement(it) => it
-            .pattern()
-            .map_or(false, |it| has_outer_variables_in_assignment_pat(it, scope)),
-        JsAssignmentWithDefault(it) => it
-            .pattern()
-            .map_or(false, |it| has_outer_variables_in_assignment_pat(it, scope)),
-        _ => false,
-    }
-}
-
-fn has_outer_variables_in_obj_assign_pat(
-    it: JsAnyObjectAssignmentPatternMember,
-    scope: &Scope,
-) -> bool {
-    use JsAnyObjectAssignmentPatternMember::*;
-    match it {
-        JsObjectAssignmentPatternProperty(it) => it
-            .pattern()
-            .map_or(false, |it| has_outer_variables_in_assignment_pat(it, scope)),
-        JsObjectAssignmentPatternRest(it) => it
-            .target()
-            .map_or(false, |it| is_outer_variable_in_assignment(it, scope)),
-        JsObjectAssignmentPatternShorthandProperty(it) => it
-            .identifier()
-            .and_then(|it| it.name_token())
-            .map_or(false, |name| is_binding_in_outer_scopes(scope, name)),
-        _ => false,
-    }
+fn is_object_or_array_pat(pat: &JsAnyAssignmentPattern) -> bool {
+    use JsAnyAssignmentPattern::*;
+    matches!(
+        pat,
+        JsObjectAssignmentPattern(..) | JsArrayAssignmentPattern(..)
+    )
 }
 
 impl VarDecl {
@@ -443,42 +291,10 @@ impl VarDecl {
 }
 
 fn has_member_expr_assignment(pat: JsAnyAssignmentPattern) -> bool {
-    match pat {
-        JsAnyAssignmentPattern::JsObjectAssignmentPattern(obj) => obj
-            .properties()
-            .into_iter()
-            .flat_map(Result::ok)
-            .any(has_member_expr_in_obj_assign_pat),
-        JsAnyAssignmentPattern::JsArrayAssignmentPattern(arr) => arr
-            .elements()
-            .into_iter()
-            .flat_map(Result::ok)
-            .any(has_member_expr_in_array_assign_pat),
-        JsAnyAssignmentPattern::JsAnyAssignment(p) => is_member_expr_assignment(p),
-    }
-}
-
-fn has_member_expr_in_array_assign_pat(it: JsAnyArrayAssignmentPatternElement) -> bool {
-    use JsAnyArrayAssignmentPatternElement::*;
-    match it {
-        JsAnyAssignmentPattern(it) => has_member_expr_assignment(it),
-        JsArrayAssignmentPatternRestElement(it) => {
-            it.pattern().map_or(false, has_member_expr_assignment)
-        }
-        JsAssignmentWithDefault(it) => it.pattern().map_or(false, has_member_expr_assignment),
-        _ => false,
-    }
-}
-
-fn has_member_expr_in_obj_assign_pat(it: JsAnyObjectAssignmentPatternMember) -> bool {
-    use JsAnyObjectAssignmentPatternMember::*;
-    match it {
-        JsObjectAssignmentPatternProperty(it) => {
-            it.pattern().map_or(false, has_member_expr_assignment)
-        }
-        JsObjectAssignmentPatternRest(it) => it.target().map_or(false, is_member_expr_assignment),
-        _ => false,
-    }
+    pat.syntax()
+        .descendants()
+        .filter_map(JsAnyAssignment::cast)
+        .any(is_member_expr_assignment)
 }
 
 fn is_member_expr_assignment(e: JsAnyAssignment) -> bool {
@@ -490,20 +306,16 @@ fn is_member_expr_assignment(e: JsAnyAssignment) -> bool {
     }
 }
 
-fn is_outer_binding_in_destructuring(binding: JsAnyBinding, scope: &Scope) -> bool {
+fn is_outer_variable_in_binding(binding: JsIdentifierBinding, scope: &Scope) -> bool {
     binding
-        .as_js_identifier_binding()
-        .and_then(|it| it.name_token().ok())
+        .name_token()
         .map_or(false, |name| is_binding_in_outer_scopes(scope, name))
 }
 
-fn is_outer_variable_in_assignment(e: JsAnyAssignment, scope: &Scope) -> bool {
-    match e {
-        JsAnyAssignment::JsIdentifierAssignment(it) => it
-            .name_token()
-            .map_or(false, |name| is_binding_in_outer_scopes(scope, name)),
-        _ => false,
-    }
+fn is_outer_variable_in_assignment(assignment: JsIdentifierAssignment, scope: &Scope) -> bool {
+    assignment
+        .name_token()
+        .map_or(false, |name| is_binding_in_outer_scopes(scope, name))
 }
 
 fn is_binding_in_outer_scopes(scope: &Scope, name: JsSyntaxToken) -> bool {

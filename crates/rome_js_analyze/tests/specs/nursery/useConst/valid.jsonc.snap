@@ -164,14 +164,19 @@ let a; function foo() { bar(++a); }
 
 # Diagnostics
 ```
-valid.jsonc:1:20 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.jsonc:1:16 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! 'a' is never reassigned. Use 'const' instead.
+  ! Use 'const' when variables are not reassigned.
+  
+  > 1 │ /*exported a*/ let a = 1
+      │                ^^^
+  
+  i 'a' is never reassigned.
   
   > 1 │ /*exported a*/ let a = 1
       │                    ^
   
-  i Suggested fix: Use const instead
+  i Suggested fix: Use 'const' instead.
   
   - /*exported·a*/·let·a·=·1
   + /*exported·a*/·const·a·=·1
@@ -246,9 +251,14 @@ let {a, b} = obj; b = 0;
 
 # Diagnostics
 ```
-valid.jsonc:1:6 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! 'a' is never reassigned. Use 'const' instead.
+  ! Use 'const' when variables are not reassigned.
+  
+  > 1 │ let {a, b} = obj; b = 0;
+      │ ^^^
+  
+  i 'a' is never reassigned.
   
   > 1 │ let {a, b} = obj; b = 0;
       │      ^
@@ -263,9 +273,14 @@ let a, b; ({a, b} = obj); b++;
 
 # Diagnostics
 ```
-valid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! 'a' is never reassigned. Use 'const' instead.
+  ! Use 'const' when variables are not reassigned.
+  
+  > 1 │ let a, b; ({a, b} = obj); b++;
+      │ ^^^
+  
+  i 'a' is never reassigned.
   
   > 1 │ let a, b; ({a, b} = obj); b++;
       │     ^
@@ -280,9 +295,14 @@ let { name, ...otherStuff } = obj; otherStuff = {};
 
 # Diagnostics
 ```
-valid.jsonc:1:7 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! 'name' is never reassigned. Use 'const' instead.
+  ! Use 'const' when variables are not reassigned.
+  
+  > 1 │ let { name, ...otherStuff } = obj; otherStuff = {};
+      │ ^^^
+  
+  i 'name' is never reassigned.
   
   > 1 │ let { name, ...otherStuff } = obj; otherStuff = {};
       │       ^^^^
@@ -297,9 +317,14 @@ let { name, ...otherStuff } = obj; otherStuff = {};
 
 # Diagnostics
 ```
-valid.jsonc:1:7 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! 'name' is never reassigned. Use 'const' instead.
+  ! Use 'const' when variables are not reassigned.
+  
+  > 1 │ let { name, ...otherStuff } = obj; otherStuff = {};
+      │ ^^^
+  
+  i 'name' is never reassigned.
   
   > 1 │ let { name, ...otherStuff } = obj; otherStuff = {};
       │       ^^^^
@@ -369,9 +394,14 @@ let x; function foo() { bar(x); } x = 0;
 
 # Diagnostics
 ```
-valid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! 'x' is never reassigned. Use 'const' instead.
+  ! Use 'const' when variables are not reassigned.
+  
+  > 1 │ let x; function foo() { bar(x); } x = 0;
+      │ ^^^
+  
+  i 'x' is never reassigned.
   
   > 1 │ let x; function foo() { bar(x); } x = 0;
       │     ^
@@ -436,14 +466,19 @@ class C { static { () => a; let a = 1; } };
 
 # Diagnostics
 ```
-valid.jsonc:1:33 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.jsonc:1:29 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! 'a' is never reassigned. Use 'const' instead.
+  ! Use 'const' when variables are not reassigned.
+  
+  > 1 │ class C { static { () => a; let a = 1; } };
+      │                             ^^^
+  
+  i 'a' is never reassigned.
   
   > 1 │ class C { static { () => a; let a = 1; } };
       │                                 ^
   
-  i Suggested fix: Use const instead
+  i Suggested fix: Use 'const' instead.
   
   - class·C·{·static·{·()·=>·a;·let·a·=·1;·}·};
   + class·C·{·static·{·()·=>·a;·const·a·=·1;·}·};
