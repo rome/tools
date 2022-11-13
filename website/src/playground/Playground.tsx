@@ -161,7 +161,7 @@ export default function PlaygroundLoader({
 					/>
 				</TabPanel>
 				<TabPanel>
-					<DiagnosticsTab errors={errors} lintingEnabled={settings.enabledLinting} />
+					<DiagnosticsTab errors={errors} />
 				</TabPanel>
 				<TabPanel>
 					<SyntaxTab ast={ast} cst={cst} ref={astPanelCodeMirrorRef} />
