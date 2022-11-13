@@ -23,7 +23,7 @@
 [npm-badge]: https://img.shields.io/npm/v/rome/latest?color=brightgreen
 [npm-url]: https://www.npmjs.com/package/rome/v/latest
 [vscode-badge]: https://img.shields.io/visual-studio-marketplace/v/rome.rome?color=brightgreen&label=vscode
-[vscode-url]: (https://marketplace.visualstudio.com/items?itemName=rome.rome
+[vscode-url]: https://marketplace.visualstudio.com/items?itemName=rome.rome
 
 </div>
 

@@ -144,7 +144,7 @@ Here's a list possible proposals of how Rome could be used.
 There might be various cases, but first we need to understand how Rome is designed, and make proposal
 based its design **AND** end-goal.
 
-![Runtime design](https://raw.githubusercontent.com/rome/tools/rfc/apis-rfc/rfcs/Runtime%20design.png)
+![Runtime design](./Runtime%20design.png)
 
 
 1. Rome is configuration aware, meaning that when communicating with Rust Workspace,
@@ -423,4 +423,4 @@ test("test something", t => {
 })
 ```
 
-> 
+>
