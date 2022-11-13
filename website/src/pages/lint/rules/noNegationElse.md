@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noNegationElse
-layout: /Layout.astro
 ---
 
 # noNegationElse (since v0.7.0)

@@ -1,6 +1,5 @@
 ---
 title: Lint Rule useAnchorContent
-layout: /Layout.astro
 ---
 
 # useAnchorContent (since v10.0.0)

@@ -1,6 +1,5 @@
 ---
 title: Lint Rule useValidForDirection
-layout: /Layout.astro
 ---
 
 # useValidForDirection (since v10.0.0)

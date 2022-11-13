@@ -1,6 +1,5 @@
 ---
 title: Lint Rule useWhile
-layout: /Layout.astro
 ---
 
 # useWhile (since v0.7.0)

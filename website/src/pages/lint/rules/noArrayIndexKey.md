@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noArrayIndexKey
-layout: /Layout.astro
 ---
 
 # noArrayIndexKey (since v0.10.0)

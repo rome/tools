@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noDupeArgs
-layout: /Layout.astro
 ---
 
 # noDupeArgs (since v0.9.0)

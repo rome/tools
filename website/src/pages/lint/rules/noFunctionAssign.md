@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noFunctionAssign
-layout: /Layout.astro
 ---
 
 # noFunctionAssign (since v0.7.0)

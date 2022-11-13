@@ -1,6 +1,5 @@
 ---
 title: Lint Rule noAutofocus
-layout: /Layout.astro
 ---
 
 # noAutofocus (since v10.0.0)
