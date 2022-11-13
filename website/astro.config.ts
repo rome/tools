@@ -184,6 +184,10 @@ export default defineConfig({
 			format: "es",
 		},
 
+		build: {
+			target: "es2018",
+		},
+
 		server: {
 			fs: {
 				// https://vitejs.dev/config/server-options.html#server-fs-allow
