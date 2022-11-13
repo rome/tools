@@ -74,6 +74,7 @@ export function createLocalStorage(name: string): {
 	get: () => undefined | string;
 	getNumber: () => undefined | number;
 	getBoolean: () => boolean;
+	clear: () => void;
 } {
 	const key = `playground:${name}`;
 	return {
@@ -93,6 +94,9 @@ export function createLocalStorage(name: string): {
 		},
 		get: () => {
 			return localStorage.getItem(key) || undefined;
+		},
+		clear: () => {
+			localStorage.removeItem(key);
 		},
 	};
 }

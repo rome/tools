@@ -38,16 +38,26 @@ export default function CodePane({ children }: Props) {
 			const distance = Math.abs(containerX - mouseX);
 
 			if (isResizing) {
+				event.preventDefault();
 				const width = mouseX - container.offsetLeft;
 				setWidth(width);
 				codePaneSizeStore.set(width);
-				event.preventDefault();
 			}
 
 			if (distance <= RESIZE_TOLERANCE) {
 				setCanResize(true);
 			} else if (canResize) {
 				setCanResize(false);
+			}
+		}
+
+		function onContextMenu(e: MouseEvent) {
+			if (isResizing || canResize) {
+				e.preventDefault();
+				codePaneSizeStore.clear();
+				setWidth(undefined);
+				setCanResize(false);
+				setIsResizing(false);
 			}
 		}
 
@@ -61,11 +71,13 @@ export default function CodePane({ children }: Props) {
 			setIsResizing(false);
 		}
 
+		window.addEventListener("contextmenu", onContextMenu);
 		window.addEventListener("mousedown", onMouseDown);
 		window.addEventListener("mouseup", onMouseUp);
 		window.addEventListener("mousemove", onMouseMove);
 
 		return () => {
+			window.removeEventListener("contextmenu", onContextMenu);
 			window.removeEventListener("mousedown", onMouseDown);
 			window.removeEventListener("mouseup", onMouseUp);
 			window.removeEventListener("mousemove", onMouseMove);
