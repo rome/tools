@@ -9,12 +9,17 @@ let x = 1; foo(x);
 
 # Diagnostics
 ```
-invalid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:5 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'x' is never reassigned. Use 'const' instead.
   
   > 1 │ let x = 1; foo(x);
       │     ^
+  
+  i Suggested fix: Use const instead
+  
+  - let·x·=·1;·foo(x);
+  + const·x·=·1;·foo(x);
   
 
 ```
@@ -26,12 +31,17 @@ for (let i in [1,2,3]) { foo(i); }
 
 # Diagnostics
 ```
-invalid.jsonc:1:10 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:10 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'i' is never reassigned. Use 'const' instead.
   
   > 1 │ for (let i in [1,2,3]) { foo(i); }
       │          ^
+  
+  i Suggested fix: Use const instead
+  
+  - for·(let·i·in·[1,2,3])·{·foo(i);·}
+  + for·(const·i·in·[1,2,3])·{·foo(i);·}
   
 
 ```
@@ -43,12 +53,17 @@ for (let x of [1,2,3]) { foo(x); }
 
 # Diagnostics
 ```
-invalid.jsonc:1:10 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:10 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'x' is never reassigned. Use 'const' instead.
   
   > 1 │ for (let x of [1,2,3]) { foo(x); }
       │          ^
+  
+  i Suggested fix: Use const instead
+  
+  - for·(let·x·of·[1,2,3])·{·foo(x);·}
+  + for·(const·x·of·[1,2,3])·{·foo(x);·}
   
 
 ```
@@ -94,12 +109,17 @@ invalid.jsonc:1:9 lint/nursery/useConst ━━━━━━━━━━━━━�
 
 # Diagnostics
 ```
-invalid.jsonc:1:19 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:19 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'x' is never reassigned. Use 'const' instead.
   
   > 1 │ (function() { let x = 1; foo(x); })();
       │                   ^
+  
+  i Suggested fix: Use const instead
+  
+  - (function()·{·let·x·=·1;·foo(x);·})();
+  + (function()·{·const·x·=·1;·foo(x);·})();
   
 
 ```
@@ -111,12 +131,17 @@ invalid.jsonc:1:19 lint/nursery/useConst ━━━━━━━━━━━━━
 
 # Diagnostics
 ```
-invalid.jsonc:1:24 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:24 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'i' is never reassigned. Use 'const' instead.
   
   > 1 │ (function() { for (let i in [1,2,3]) { foo(i); } })();
       │                        ^
+  
+  i Suggested fix: Use const instead
+  
+  - (function()·{·for·(let·i·in·[1,2,3])·{·foo(i);·}·})();
+  + (function()·{·for·(const·i·in·[1,2,3])·{·foo(i);·}·})();
   
 
 ```
@@ -128,12 +153,17 @@ invalid.jsonc:1:24 lint/nursery/useConst ━━━━━━━━━━━━━
 
 # Diagnostics
 ```
-invalid.jsonc:1:24 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:24 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'x' is never reassigned. Use 'const' instead.
   
   > 1 │ (function() { for (let x of [1,2,3]) { foo(x); } })();
       │                        ^
+  
+  i Suggested fix: Use const instead
+  
+  - (function()·{·for·(let·x·of·[1,2,3])·{·foo(x);·}·})();
+  + (function()·{·for·(const·x·of·[1,2,3])·{·foo(x);·}·})();
   
 
 ```
@@ -162,12 +192,17 @@ let f = (function() { let g = x; })(); f = 1;
 
 # Diagnostics
 ```
-invalid.jsonc:1:27 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:27 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'g' is never reassigned. Use 'const' instead.
   
   > 1 │ let f = (function() { let g = x; })(); f = 1;
       │                           ^
+  
+  i Suggested fix: Use const instead
+  
+  - let·f·=·(function()·{·let·g·=·x;·})();·f·=·1;
+  + let·f·=·(function()·{·const·g·=·x;·})();·f·=·1;
   
 
 ```
@@ -196,12 +231,17 @@ let x = 0; { let x = 1; foo(x); } x = 0;
 
 # Diagnostics
 ```
-invalid.jsonc:1:18 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:18 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'x' is never reassigned. Use 'const' instead.
   
   > 1 │ let x = 0; { let x = 1; foo(x); } x = 0;
       │                  ^
+  
+  i Suggested fix: Use const instead
+  
+  - let·x·=·0;·{·let·x·=·1;·foo(x);·}·x·=·0;
+  + let·x·=·0;·{·const·x·=·1;·foo(x);·}·x·=·0;
   
 
 ```
@@ -213,12 +253,17 @@ for (let i = 0; i < 10; ++i) { let x = 1; foo(x); }
 
 # Diagnostics
 ```
-invalid.jsonc:1:36 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:36 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'x' is never reassigned. Use 'const' instead.
   
   > 1 │ for (let i = 0; i < 10; ++i) { let x = 1; foo(x); }
       │                                    ^
+  
+  i Suggested fix: Use const instead
+  
+  - for·(let·i·=·0;·i·<·10;·++i)·{·let·x·=·1;·foo(x);·}
+  + for·(let·i·=·0;·i·<·10;·++i)·{·const·x·=·1;·foo(x);·}
   
 
 ```
@@ -230,23 +275,33 @@ for (let i in [1,2,3]) { let x = 1; foo(x); }
 
 # Diagnostics
 ```
-invalid.jsonc:1:10 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:10 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'i' is never reassigned. Use 'const' instead.
   
   > 1 │ for (let i in [1,2,3]) { let x = 1; foo(x); }
       │          ^
   
+  i Suggested fix: Use const instead
+  
+  - for·(let·i·in·[1,2,3])·{·let·x·=·1;·foo(x);·}
+  + for·(const·i·in·[1,2,3])·{·let·x·=·1;·foo(x);·}
+  
 
 ```
 
 ```
-invalid.jsonc:1:30 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:30 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'x' is never reassigned. Use 'const' instead.
   
   > 1 │ for (let i in [1,2,3]) { let x = 1; foo(x); }
       │                              ^
+  
+  i Suggested fix: Use const instead
+  
+  - for·(let·i·in·[1,2,3])·{·let·x·=·1;·foo(x);·}
+  + for·(let·i·in·[1,2,3])·{·const·x·=·1;·foo(x);·}
   
 
 ```
@@ -377,23 +432,22 @@ let {a: {b, c}} = {a: {b: 1, c: 2}}
 
 # Diagnostics
 ```
-invalid.jsonc:1:10 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:10 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'b' is never reassigned. Use 'const' instead.
   
   > 1 │ let {a: {b, c}} = {a: {b: 1, c: 2}}
       │          ^
   
-
-```
-
-```
-invalid.jsonc:1:13 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'c' is never reassigned. Use 'const' instead.
+  i 'c' is never reassigned. Use 'const' instead.
   
   > 1 │ let {a: {b, c}} = {a: {b: 1, c: 2}}
       │             ^
+  
+  i Suggested fix: Use const instead
+  
+  - let·{a:·{b,·c}}·=·{a:·{b:·1,·c:·2}}
+  + const·{a:·{b,·c}}·=·{a:·{b:·1,·c:·2}}
   
 
 ```
@@ -422,23 +476,22 @@ let {a = 0, b} = obj; foo(a, b);
 
 # Diagnostics
 ```
-invalid.jsonc:1:6 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:6 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'a' is never reassigned. Use 'const' instead.
   
   > 1 │ let {a = 0, b} = obj; foo(a, b);
       │      ^
   
-
-```
-
-```
-invalid.jsonc:1:13 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'b' is never reassigned. Use 'const' instead.
+  i 'b' is never reassigned. Use 'const' instead.
   
   > 1 │ let {a = 0, b} = obj; foo(a, b);
       │             ^
+  
+  i Suggested fix: Use const instead
+  
+  - let·{a·=·0,·b}·=·obj;·foo(a,·b);
+  + const·{a·=·0,·b}·=·obj;·foo(a,·b);
   
 
 ```
@@ -450,12 +503,17 @@ let [a] = [1]
 
 # Diagnostics
 ```
-invalid.jsonc:1:6 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:6 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'a' is never reassigned. Use 'const' instead.
   
   > 1 │ let [a] = [1]
       │      ^
+  
+  i Suggested fix: Use const instead
+  
+  - let·[a]·=·[1]
+  + const·[a]·=·[1]
   
 
 ```
@@ -467,12 +525,17 @@ let {a} = obj
 
 # Diagnostics
 ```
-invalid.jsonc:1:6 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:6 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'a' is never reassigned. Use 'const' instead.
   
   > 1 │ let {a} = obj
       │      ^
+  
+  i Suggested fix: Use const instead
+  
+  - let·{a}·=·obj
+  + const·{a}·=·obj
   
 
 ```
@@ -491,13 +554,7 @@ invalid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━�
   > 1 │ let a, b; ({a = 0, b} = obj); foo(a, b);
       │     ^
   
-
-```
-
-```
-invalid.jsonc:1:8 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'b' is never reassigned. Use 'const' instead.
+  i 'b' is never reassigned. Use 'const' instead.
   
   > 1 │ let a, b; ({a = 0, b} = obj); foo(a, b);
       │        ^
@@ -519,13 +576,7 @@ invalid.jsonc:1:6 lint/nursery/useConst ━━━━━━━━━━━━━�
   > 1 │ let {a = 0, b} = obj, c = a; b = a;
       │      ^
   
-
-```
-
-```
-invalid.jsonc:1:23 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'c' is never reassigned. Use 'const' instead.
+  i 'c' is never reassigned. Use 'const' instead.
   
   > 1 │ let {a = 0, b} = obj, c = a; b = a;
       │                       ^
@@ -547,13 +598,7 @@ invalid.jsonc:1:6 lint/nursery/useConst ━━━━━━━━━━━━━�
   > 1 │ let {a = 0, b} = obj, c = a; b = a;
       │      ^
   
-
-```
-
-```
-invalid.jsonc:1:23 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'c' is never reassigned. Use 'const' instead.
+  i 'c' is never reassigned. Use 'const' instead.
   
   > 1 │ let {a = 0, b} = obj, c = a; b = a;
       │                       ^
@@ -619,12 +664,17 @@ invalid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━�
 
 # Diagnostics
 ```
-invalid.jsonc:1:28 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:28 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'x' is never reassigned. Use 'const' instead.
   
   > 1 │ /*eslint use-x:error*/ let x = 1
       │                            ^
+  
+  i Suggested fix: Use const instead
+  
+  - /*eslint·use-x:error*/·let·x·=·1
+  + /*eslint·use-x:error*/·const·x·=·1
   
 
 ```
@@ -636,12 +686,17 @@ invalid.jsonc:1:28 lint/nursery/useConst ━━━━━━━━━━━━━
 
 # Diagnostics
 ```
-invalid.jsonc:1:30 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:30 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'x' is never reassigned. Use 'const' instead.
   
   > 1 │ /*eslint use-x:error*/ { let x = 1 }
       │                              ^
+  
+  i Suggested fix: Use const instead
+  
+  - /*eslint·use-x:error*/·{·let·x·=·1·}
+  + /*eslint·use-x:error*/·{·const·x·=·1·}
   
 
 ```
@@ -653,23 +708,22 @@ let { foo, bar } = baz;
 
 # Diagnostics
 ```
-invalid.jsonc:1:7 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:7 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'foo' is never reassigned. Use 'const' instead.
   
   > 1 │ let { foo, bar } = baz;
       │       ^^^
   
-
-```
-
-```
-invalid.jsonc:1:12 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'bar' is never reassigned. Use 'const' instead.
+  i 'bar' is never reassigned. Use 'const' instead.
   
   > 1 │ let { foo, bar } = baz;
       │            ^^^
+  
+  i Suggested fix: Use const instead
+  
+  - let·{·foo,·bar·}·=·baz;
+  + const·{·foo,·bar·}·=·baz;
   
 
 ```
@@ -681,12 +735,17 @@ const x = [1,2]; let [,y] = x;
 
 # Diagnostics
 ```
-invalid.jsonc:1:24 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:24 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'y' is never reassigned. Use 'const' instead.
   
   > 1 │ const x = [1,2]; let [,y] = x;
       │                        ^
+  
+  i Suggested fix: Use const instead
+  
+  - const·x·=·[1,2];·let·[,y]·=·x;
+  + const·x·=·[1,2];·const·[,y]·=·x;
   
 
 ```
@@ -698,23 +757,22 @@ const x = [1,2,3]; let [y,,z] = x;
 
 # Diagnostics
 ```
-invalid.jsonc:1:25 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:25 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'y' is never reassigned. Use 'const' instead.
   
   > 1 │ const x = [1,2,3]; let [y,,z] = x;
       │                         ^
   
-
-```
-
-```
-invalid.jsonc:1:28 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'z' is never reassigned. Use 'const' instead.
+  i 'z' is never reassigned. Use 'const' instead.
   
   > 1 │ const x = [1,2,3]; let [y,,z] = x;
       │                            ^
+  
+  i Suggested fix: Use const instead
+  
+  - const·x·=·[1,2,3];·let·[y,,z]·=·x;
+  + const·x·=·[1,2,3];·const·[y,,z]·=·x;
   
 
 ```
@@ -777,23 +835,22 @@ let x = 'x', y = 'y';
 
 # Diagnostics
 ```
-invalid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:5 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'x' is never reassigned. Use 'const' instead.
   
   > 1 │ let x = 'x', y = 'y';
       │     ^
   
-
-```
-
-```
-invalid.jsonc:1:14 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'y' is never reassigned. Use 'const' instead.
+  i 'y' is never reassigned. Use 'const' instead.
   
   > 1 │ let x = 'x', y = 'y';
       │              ^
+  
+  i Suggested fix: Use const instead
+  
+  - let·x·=·'x',·y·=·'y';
+  + const·x·=·'x',·y·=·'y';
   
 
 ```
@@ -822,34 +879,38 @@ let x = 1, y = 'y'; let z = 1;
 
 # Diagnostics
 ```
-invalid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:5 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'x' is never reassigned. Use 'const' instead.
   
   > 1 │ let x = 1, y = 'y'; let z = 1;
       │     ^
   
-
-```
-
-```
-invalid.jsonc:1:12 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'y' is never reassigned. Use 'const' instead.
+  i 'y' is never reassigned. Use 'const' instead.
   
   > 1 │ let x = 1, y = 'y'; let z = 1;
       │            ^
   
+  i Suggested fix: Use const instead
+  
+  - let·x·=·1,·y·=·'y';·let·z·=·1;
+  + const·x·=·1,·y·=·'y';·let·z·=·1;
+  
 
 ```
 
 ```
-invalid.jsonc:1:25 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:25 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'z' is never reassigned. Use 'const' instead.
   
   > 1 │ let x = 1, y = 'y'; let z = 1;
       │                         ^
+  
+  i Suggested fix: Use const instead
+  
+  - let·x·=·1,·y·=·'y';·let·z·=·1;
+  + let·x·=·1,·y·=·'y';·const·z·=·1;
   
 
 ```
@@ -861,34 +922,27 @@ let { a, b, c} = obj; let { x, y, z} = anotherObj; x = 2;
 
 # Diagnostics
 ```
-invalid.jsonc:1:7 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:7 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'a' is never reassigned. Use 'const' instead.
   
   > 1 │ let { a, b, c} = obj; let { x, y, z} = anotherObj; x = 2;
       │       ^
   
-
-```
-
-```
-invalid.jsonc:1:10 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'b' is never reassigned. Use 'const' instead.
+  i 'b' is never reassigned. Use 'const' instead.
   
   > 1 │ let { a, b, c} = obj; let { x, y, z} = anotherObj; x = 2;
       │          ^
   
-
-```
-
-```
-invalid.jsonc:1:13 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'c' is never reassigned. Use 'const' instead.
+  i 'c' is never reassigned. Use 'const' instead.
   
   > 1 │ let { a, b, c} = obj; let { x, y, z} = anotherObj; x = 2;
       │             ^
+  
+  i Suggested fix: Use const instead
+  
+  - let·{·a,·b,·c}·=·obj;·let·{·x,·y,·z}·=·anotherObj;·x·=·2;
+  + const·{·a,·b,·c}·=·obj;·let·{·x,·y,·z}·=·anotherObj;·x·=·2;
   
 
 ```
@@ -901,13 +955,7 @@ invalid.jsonc:1:32 lint/nursery/useConst ━━━━━━━━━━━━━
   > 1 │ let { a, b, c} = obj; let { x, y, z} = anotherObj; x = 2;
       │                                ^
   
-
-```
-
-```
-invalid.jsonc:1:35 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'z' is never reassigned. Use 'const' instead.
+  i 'z' is never reassigned. Use 'const' instead.
   
   > 1 │ let { a, b, c} = obj; let { x, y, z} = anotherObj; x = 2;
       │                                   ^
@@ -922,45 +970,43 @@ let x = 'x', y = 'y'; function someFunc() { let a = 1, b = 2; foo(a, b) }
 
 # Diagnostics
 ```
-invalid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:5 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'x' is never reassigned. Use 'const' instead.
   
   > 1 │ let x = 'x', y = 'y'; function someFunc() { let a = 1, b = 2; foo(a, b) }
       │     ^
   
-
-```
-
-```
-invalid.jsonc:1:14 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'y' is never reassigned. Use 'const' instead.
+  i 'y' is never reassigned. Use 'const' instead.
   
   > 1 │ let x = 'x', y = 'y'; function someFunc() { let a = 1, b = 2; foo(a, b) }
       │              ^
   
+  i Suggested fix: Use const instead
+  
+  - let·x·=·'x',·y·=·'y';·function·someFunc()·{·let·a·=·1,·b·=·2;·foo(a,·b)·}
+  + const·x·=·'x',·y·=·'y';·function·someFunc()·{·let·a·=·1,·b·=·2;·foo(a,·b)·}
+  
 
 ```
 
 ```
-invalid.jsonc:1:49 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:49 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'a' is never reassigned. Use 'const' instead.
   
   > 1 │ let x = 'x', y = 'y'; function someFunc() { let a = 1, b = 2; foo(a, b) }
       │                                                 ^
   
-
-```
-
-```
-invalid.jsonc:1:56 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'b' is never reassigned. Use 'const' instead.
+  i 'b' is never reassigned. Use 'const' instead.
   
   > 1 │ let x = 'x', y = 'y'; function someFunc() { let a = 1, b = 2; foo(a, b) }
       │                                                        ^
+  
+  i Suggested fix: Use const instead
+  
+  - let·x·=·'x',·y·=·'y';·function·someFunc()·{·let·a·=·1,·b·=·2;·foo(a,·b)·}
+  + let·x·=·'x',·y·=·'y';·function·someFunc()·{·const·a·=·1,·b·=·2;·foo(a,·b)·}
   
 
 ```
@@ -972,34 +1018,38 @@ let someFunc = () => { let a = 1, b = 2; foo(a, b) }
 
 # Diagnostics
 ```
-invalid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:5 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'someFunc' is never reassigned. Use 'const' instead.
   
   > 1 │ let someFunc = () => { let a = 1, b = 2; foo(a, b) }
       │     ^^^^^^^^
   
+  i Suggested fix: Use const instead
+  
+  - let·someFunc·=·()·=>·{·let·a·=·1,·b·=·2;·foo(a,·b)·}
+  + const·someFunc·=·()·=>·{·let·a·=·1,·b·=·2;·foo(a,·b)·}
+  
 
 ```
 
 ```
-invalid.jsonc:1:28 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:28 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'a' is never reassigned. Use 'const' instead.
   
   > 1 │ let someFunc = () => { let a = 1, b = 2; foo(a, b) }
       │                            ^
   
-
-```
-
-```
-invalid.jsonc:1:35 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'b' is never reassigned. Use 'const' instead.
+  i 'b' is never reassigned. Use 'const' instead.
   
   > 1 │ let someFunc = () => { let a = 1, b = 2; foo(a, b) }
       │                                   ^
+  
+  i Suggested fix: Use const instead
+  
+  - let·someFunc·=·()·=>·{·let·a·=·1,·b·=·2;·foo(a,·b)·}
+  + let·someFunc·=·()·=>·{·const·a·=·1,·b·=·2;·foo(a,·b)·}
   
 
 ```
@@ -1018,13 +1068,7 @@ invalid.jsonc:1:6 lint/nursery/useConst ━━━━━━━━━━━━━�
   > 1 │ let {a, b} = c, d;
       │      ^
   
-
-```
-
-```
-invalid.jsonc:1:9 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'b' is never reassigned. Use 'const' instead.
+  i 'b' is never reassigned. Use 'const' instead.
   
   > 1 │ let {a, b} = c, d;
       │         ^
@@ -1046,24 +1090,12 @@ invalid.jsonc:1:6 lint/nursery/useConst ━━━━━━━━━━━━━�
   > 1 │ let {a, b, c} = {}, e, f;
       │      ^
   
-
-```
-
-```
-invalid.jsonc:1:9 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'b' is never reassigned. Use 'const' instead.
+  i 'b' is never reassigned. Use 'const' instead.
   
   > 1 │ let {a, b, c} = {}, e, f;
       │         ^
   
-
-```
-
-```
-invalid.jsonc:1:12 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'c' is never reassigned. Use 'const' instead.
+  i 'c' is never reassigned. Use 'const' instead.
   
   > 1 │ let {a, b, c} = {}, e, f;
       │            ^
@@ -1106,12 +1138,17 @@ invalid.jsonc:1:77 lint/nursery/useConst ━━━━━━━━━━━━━
 
 # Diagnostics
 ```
-invalid.jsonc:1:36 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:36 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'foo' is never reassigned. Use 'const' instead.
   
   > 1 │ /*eslint no-undef-init:error*/ let foo = undefined;
       │                                    ^^^
+  
+  i Suggested fix: Use const instead
+  
+  - /*eslint·no-undef-init:error*/·let·foo·=·undefined;
+  + /*eslint·no-undef-init:error*/·const·foo·=·undefined;
   
 
 ```
@@ -1123,12 +1160,17 @@ let a = 1; class C { static { a; } }
 
 # Diagnostics
 ```
-invalid.jsonc:1:5 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:5 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'a' is never reassigned. Use 'const' instead.
   
   > 1 │ let a = 1; class C { static { a; } }
       │     ^
+  
+  i Suggested fix: Use const instead
+  
+  - let·a·=·1;·class·C·{·static·{·a;·}·}
+  + const·a·=·1;·class·C·{·static·{·a;·}·}
   
 
 ```
@@ -1140,12 +1182,17 @@ class C { static { a; } } let a = 1;
 
 # Diagnostics
 ```
-invalid.jsonc:1:31 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:31 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'a' is never reassigned. Use 'const' instead.
   
   > 1 │ class C { static { a; } } let a = 1;
       │                               ^
+  
+  i Suggested fix: Use const instead
+  
+  - class·C·{·static·{·a;·}·}·let·a·=·1;
+  + class·C·{·static·{·a;·}·}·const·a·=·1;
   
 
 ```
@@ -1157,12 +1204,17 @@ class C { static { let a = 1; } }
 
 # Diagnostics
 ```
-invalid.jsonc:1:24 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:24 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'a' is never reassigned. Use 'const' instead.
   
   > 1 │ class C { static { let a = 1; } }
       │                        ^
+  
+  i Suggested fix: Use const instead
+  
+  - class·C·{·static·{·let·a·=·1;·}·}
+  + class·C·{·static·{·const·a·=·1;·}·}
   
 
 ```
@@ -1174,12 +1226,17 @@ class C { static { if (foo) { let a = 1; } } }
 
 # Diagnostics
 ```
-invalid.jsonc:1:35 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:35 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'a' is never reassigned. Use 'const' instead.
   
   > 1 │ class C { static { if (foo) { let a = 1; } } }
       │                                   ^
+  
+  i Suggested fix: Use const instead
+  
+  - class·C·{·static·{·if·(foo)·{·let·a·=·1;·}·}·}
+  + class·C·{·static·{·if·(foo)·{·const·a·=·1;·}·}·}
   
 
 ```
@@ -1191,12 +1248,17 @@ class C { static { let a = 1; if (foo) { a; } } }
 
 # Diagnostics
 ```
-invalid.jsonc:1:24 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:24 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'a' is never reassigned. Use 'const' instead.
   
   > 1 │ class C { static { let a = 1; if (foo) { a; } } }
       │                        ^
+  
+  i Suggested fix: Use const instead
+  
+  - class·C·{·static·{·let·a·=·1;·if·(foo)·{·a;·}·}·}
+  + class·C·{·static·{·const·a·=·1;·if·(foo)·{·a;·}·}·}
   
 
 ```
@@ -1242,23 +1304,22 @@ class C { static { let { a, b } = foo; } }
 
 # Diagnostics
 ```
-invalid.jsonc:1:26 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:26 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'a' is never reassigned. Use 'const' instead.
   
   > 1 │ class C { static { let { a, b } = foo; } }
       │                          ^
   
-
-```
-
-```
-invalid.jsonc:1:29 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'b' is never reassigned. Use 'const' instead.
+  i 'b' is never reassigned. Use 'const' instead.
   
   > 1 │ class C { static { let { a, b } = foo; } }
       │                             ^
+  
+  i Suggested fix: Use const instead
+  
+  - class·C·{·static·{·let·{·a,·b·}·=·foo;·}·}
+  + class·C·{·static·{·const·{·a,·b·}·=·foo;·}·}
   
 
 ```
@@ -1277,13 +1338,7 @@ invalid.jsonc:1:24 lint/nursery/useConst ━━━━━━━━━━━━━
   > 1 │ class C { static { let a, b; ({ a, b } = foo); } }
       │                        ^
   
-
-```
-
-```
-invalid.jsonc:1:27 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'b' is never reassigned. Use 'const' instead.
+  i 'b' is never reassigned. Use 'const' instead.
   
   > 1 │ class C { static { let a, b; ({ a, b } = foo); } }
       │                           ^
@@ -1350,24 +1405,12 @@ invalid.jsonc:1:7 lint/nursery/useConst ━━━━━━━━━━━━━�
   > 1 │ let { itemId, list } = {}, obj = [], total = 0; total = 9; console.log(itemId, list, obj, total);
       │       ^^^^^^
   
-
-```
-
-```
-invalid.jsonc:1:15 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'list' is never reassigned. Use 'const' instead.
+  i 'list' is never reassigned. Use 'const' instead.
   
   > 1 │ let { itemId, list } = {}, obj = [], total = 0; total = 9; console.log(itemId, list, obj, total);
       │               ^^^^
   
-
-```
-
-```
-invalid.jsonc:1:28 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'obj' is never reassigned. Use 'const' instead.
+  i 'obj' is never reassigned. Use 'const' instead.
   
   > 1 │ let { itemId, list } = {}, obj = [], total = 0; total = 9; console.log(itemId, list, obj, total);
       │                            ^^^
@@ -1382,34 +1425,27 @@ let { itemId, list } = {}, obj = []; console.log(itemId, list, obj);
 
 # Diagnostics
 ```
-invalid.jsonc:1:7 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:7 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'itemId' is never reassigned. Use 'const' instead.
   
   > 1 │ let { itemId, list } = {}, obj = []; console.log(itemId, list, obj);
       │       ^^^^^^
   
-
-```
-
-```
-invalid.jsonc:1:15 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'list' is never reassigned. Use 'const' instead.
+  i 'list' is never reassigned. Use 'const' instead.
   
   > 1 │ let { itemId, list } = {}, obj = []; console.log(itemId, list, obj);
       │               ^^^^
   
-
-```
-
-```
-invalid.jsonc:1:28 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'obj' is never reassigned. Use 'const' instead.
+  i 'obj' is never reassigned. Use 'const' instead.
   
   > 1 │ let { itemId, list } = {}, obj = []; console.log(itemId, list, obj);
       │                            ^^^
+  
+  i Suggested fix: Use const instead
+  
+  - let·{·itemId,·list·}·=·{},·obj·=·[];·console.log(itemId,·list,·obj);
+  + const·{·itemId,·list·}·=·{},·obj·=·[];·console.log(itemId,·list,·obj);
   
 
 ```
@@ -1428,13 +1464,7 @@ invalid.jsonc:1:7 lint/nursery/useConst ━━━━━━━━━━━━━�
   > 1 │ let [ itemId, list ] = [], total = 0; total = 9; console.log(itemId, list, total);
       │       ^^^^^^
   
-
-```
-
-```
-invalid.jsonc:1:15 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'list' is never reassigned. Use 'const' instead.
+  i 'list' is never reassigned. Use 'const' instead.
   
   > 1 │ let [ itemId, list ] = [], total = 0; total = 9; console.log(itemId, list, total);
       │               ^^^^
@@ -1449,34 +1479,27 @@ let [ itemId, list ] = [], obj = []; console.log(itemId, list, obj);
 
 # Diagnostics
 ```
-invalid.jsonc:1:7 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsonc:1:7 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'itemId' is never reassigned. Use 'const' instead.
   
   > 1 │ let [ itemId, list ] = [], obj = []; console.log(itemId, list, obj);
       │       ^^^^^^
   
-
-```
-
-```
-invalid.jsonc:1:15 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'list' is never reassigned. Use 'const' instead.
+  i 'list' is never reassigned. Use 'const' instead.
   
   > 1 │ let [ itemId, list ] = [], obj = []; console.log(itemId, list, obj);
       │               ^^^^
   
-
-```
-
-```
-invalid.jsonc:1:28 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! 'obj' is never reassigned. Use 'const' instead.
+  i 'obj' is never reassigned. Use 'const' instead.
   
   > 1 │ let [ itemId, list ] = [], obj = []; console.log(itemId, list, obj);
       │                            ^^^
+  
+  i Suggested fix: Use const instead
+  
+  - let·[·itemId,·list·]·=·[],·obj·=·[];·console.log(itemId,·list,·obj);
+  + const·[·itemId,·list·]·=·[],·obj·=·[];·console.log(itemId,·list,·obj);
   
 
 ```

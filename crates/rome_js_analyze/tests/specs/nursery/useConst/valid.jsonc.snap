@@ -164,12 +164,17 @@ let a; function foo() { bar(++a); }
 
 # Diagnostics
 ```
-valid.jsonc:1:20 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.jsonc:1:20 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'a' is never reassigned. Use 'const' instead.
   
   > 1 │ /*exported a*/ let a = 1
       │                    ^
+  
+  i Suggested fix: Use const instead
+  
+  - /*exported·a*/·let·a·=·1
+  + /*exported·a*/·const·a·=·1
   
 
 ```
@@ -431,12 +436,17 @@ class C { static { () => a; let a = 1; } };
 
 # Diagnostics
 ```
-valid.jsonc:1:33 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.jsonc:1:33 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! 'a' is never reassigned. Use 'const' instead.
   
   > 1 │ class C { static { () => a; let a = 1; } };
       │                                 ^
+  
+  i Suggested fix: Use const instead
+  
+  - class·C·{·static·{·()·=>·a;·let·a·=·1;·}·};
+  + class·C·{·static·{·()·=>·a;·const·a·=·1;·}·};
   
 
 ```

@@ -56,104 +56,124 @@ declare_node_union! {
     pub(crate) DestructuringHost = JsVariableDeclarator | JsAssignmentExpression
 }
 
-pub(crate) enum AutoFix {
-    Yes(VarDecl),
-    No,
+pub(crate) struct ConstantBinding {
+    binding: JsIdentifierBinding,
+    fix: bool,
 }
 
 impl Rule for UseConst {
-    type Query = Semantic<JsIdentifierBinding>;
-    type State = AutoFix;
+    type Query = Semantic<VarDecl>;
+    type State = Vec<Option<ConstantBinding>>;
     type Signals = Option<Self::State>;
     type Options = ();
 
-    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let binding = ctx.query();
+    fn run(ctx: &RuleContext<Self>) -> Self::Signals {
+        let declaration = ctx.query();
         let model = ctx.model();
-        should_binding_be_const(binding, model)
+
+        if !declaration.is_let() {
+            return None;
+        }
+
+        let mut signals = Vec::new();
+        for declarator in declaration.declarators() {
+            for binding in declarator_bindings(&declarator) {
+                let info = ConstantBinding::from_binding(binding, declaration, &declarator, model);
+                signals.push(info);
+            }
+        }
+        Some(signals)
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let binding = ctx.query();
-        let token = binding.name_token().ok()?;
+    fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+        let mut diag: Option<RuleDiagnostic> = None;
 
-        let diag = RuleDiagnostic::new(
-            rule_category!(),
-            token.text_trimmed_range(),
-            markup! {
-                "'"{ token.text_trimmed() }"' is never reassigned. Use 'const' instead."
-            },
-        );
+        for info in state.iter().flat_map(Option::as_ref) {
+            let title = format! {
+                "'{}' is never reassigned. Use 'const' instead.", info.binding.syntax().text_trimmed()
+            };
+            let range = info.binding.range();
+            match diag.take() {
+                Some(d) => diag = Some(d.detail(range, title)),
+                None => diag = Some(RuleDiagnostic::new(rule_category!(), range, title)),
+            }
+        }
 
-        Some(diag)
+        diag
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        match state {
-            AutoFix::Yes(decl) if decl.can_make_const() => {
-                let mut batch = ctx.root().begin();
-                batch.replace_token(decl.kind_token()?, make::token(JsSyntaxKind::CONST_KW));
-                Some(JsRuleAction {
-                    category: ActionCategory::QuickFix,
-                    applicability: Applicability::MaybeIncorrect,
-                    message: markup! { "Change this binding to const" }.to_owned(),
-                    mutation: batch,
-                })
-            }
-            _ => None,
+        let decl = ctx.query();
+        if state
+            .iter()
+            .all(|it| matches!(it, Some(ConstantBinding { fix: true, .. })))
+            && decl.can_be_const()
+        {
+            let mut batch = ctx.root().begin();
+            batch.replace_token(decl.kind_token()?, make::token(JsSyntaxKind::CONST_KW));
+            Some(JsRuleAction {
+                category: ActionCategory::QuickFix,
+                applicability: Applicability::MaybeIncorrect,
+                message: markup! { "Use const instead" }.to_owned(),
+                mutation: batch,
+            })
+        } else {
+            None
         }
     }
 }
 
-fn should_binding_be_const(
-    binding: &JsIdentifierBinding,
-    model: &SemanticModel,
-) -> Option<AutoFix> {
-    let declarator = binding
-        .syntax()
-        .ancestors()
-        .find_map(JsVariableDeclarator::cast)?;
+impl ConstantBinding {
+    fn from_binding(
+        binding: JsIdentifierBinding,
+        decl: &VarDecl,
+        declarator: &JsVariableDeclarator,
+        model: &SemanticModel,
+    ) -> Option<Self> {
+        // Inside a for-loop init
+        if decl.parent::<JsForStatement>().is_some() {
+            return None;
+        }
 
-    let decl = declarator.syntax().ancestors().find_map(VarDecl::cast)?;
+        let mut writes = binding.all_writes(model);
 
-    // Not a let or inside a for-loop init
-    if !decl.is_let() || decl.parent::<JsForStatement>().is_some() {
-        return None;
-    }
+        // In a for-in or for-of loop or if it has an initializer
+        if matches!(decl, VarDecl::JsForVariableDeclaration(..))
+            || declarator.initializer().is_some()
+        {
+            return if writes.len() == 0 {
+                Some(ConstantBinding { binding, fix: true })
+            } else {
+                None
+            };
+        }
 
-    let mut writes = binding.all_writes(model);
+        // If no initializer and one assignment in same scope
+        let write = match (writes.next(), writes.next()) {
+            (Some(v), None) if v.scope() == binding.scope(model) => v,
+            _ => return None,
+        };
 
-    // In a for-in or for-of loop or if it has an initializer
-    if matches!(decl, VarDecl::JsForVariableDeclaration(..)) || declarator.initializer().is_some() {
-        return if writes.len() == 0 {
-            Some(AutoFix::Yes(decl))
+        let host = write.node().ancestors().find_map(DestructuringHost::cast)?;
+        if host.has_member_expr_assignment() || host.has_outer_variables(write.scope()) {
+            return None;
+        }
+
+        if host.can_become_variable_declaration().unwrap_or(false) {
+            Some(ConstantBinding {
+                binding,
+                fix: false,
+            })
         } else {
             None
-        };
-    }
-
-    // If no initializer and one assignment in same scope
-    let write = match (writes.next(), writes.next()) {
-        (Some(v), None) if v.scope() == binding.scope(model) => v,
-        _ => return None,
-    };
-
-    let host = write.node().ancestors().find_map(DestructuringHost::cast)?;
-    if host.has_member_expr_assignment() || host.has_outer_variables(write.scope()) {
-        return None;
-    }
-
-    if host.can_become_variable_declaration().unwrap_or(false) {
-        Some(AutoFix::No)
-    } else {
-        None
+        }
     }
 }
 
 impl VarDecl {
-    fn can_make_const(&self) -> bool {
+    fn can_be_const(&self) -> bool {
         match self {
-            VarDecl::JsVariableDeclaration(d) => d
+            VarDecl::JsVariableDeclaration(it) => it
                 .declarators()
                 .into_iter()
                 .filter_map(Result::ok)
@@ -162,10 +182,96 @@ impl VarDecl {
         }
     }
 
+    fn declarators(&self) -> Vec<JsVariableDeclarator> {
+        match self {
+            VarDecl::JsVariableDeclaration(declaration) => declaration
+                .declarators()
+                .into_iter()
+                .filter_map(Result::ok)
+                .collect(),
+            VarDecl::JsForVariableDeclaration(f) => f.declarator().into_iter().collect(),
+        }
+    }
+
     fn kind_token(&self) -> Option<JsSyntaxToken> {
         match self {
             VarDecl::JsVariableDeclaration(x) => x.kind().ok(),
             VarDecl::JsForVariableDeclaration(x) => x.kind_token().ok(),
+        }
+    }
+}
+
+fn declarator_bindings(decl: &JsVariableDeclarator) -> Vec<JsIdentifierBinding> {
+    let mut bindings = Vec::new();
+    if let Ok(pat) = decl.id() {
+        get_bindings_in_pat(pat, &mut bindings)
+    }
+    bindings
+}
+
+fn get_bindings_in_pat(pat: JsAnyBindingPattern, out: &mut Vec<JsIdentifierBinding>) {
+    use JsAnyBindingPattern as B;
+    match pat {
+        B::JsAnyBinding(x) => {
+            if let JsAnyBinding::JsIdentifierBinding(x) = x {
+                out.push(x)
+            }
+        }
+        B::JsArrayBindingPattern(x) => {
+            for e in x.elements().into_iter().filter_map(Result::ok) {
+                get_bindings_in_array_pat(e, out);
+            }
+        }
+        B::JsObjectBindingPattern(x) => {
+            for e in x.properties().into_iter().filter_map(Result::ok) {
+                get_bindings_in_object_pat(e, out);
+            }
+        }
+    }
+}
+
+fn get_bindings_in_object_pat(
+    pat: JsAnyObjectBindingPatternMember,
+    out: &mut Vec<JsIdentifierBinding>,
+) {
+    use JsAnyObjectBindingPatternMember as B;
+    match pat {
+        B::JsObjectBindingPatternProperty(x) => {
+            if let Ok(x) = x.pattern() {
+                get_bindings_in_pat(x, out);
+            }
+        }
+        B::JsObjectBindingPatternRest(x) => {
+            if let Ok(JsAnyBinding::JsIdentifierBinding(x)) = x.binding() {
+                out.push(x)
+            }
+        }
+        B::JsObjectBindingPatternShorthandProperty(x) => {
+            if let Ok(JsAnyBinding::JsIdentifierBinding(x)) = x.identifier() {
+                out.push(x)
+            }
+        }
+        B::JsUnknownBinding(_) => (),
+    }
+}
+
+fn get_bindings_in_array_pat(
+    pat: JsAnyArrayBindingPatternElement,
+    out: &mut Vec<JsIdentifierBinding>,
+) {
+    use JsAnyArrayBindingPatternElement as B;
+    match pat {
+        B::JsAnyBindingPattern(x) => get_bindings_in_pat(x, out),
+        B::JsArrayBindingPatternRestElement(x) => {
+            if let Ok(x) = x.pattern() {
+                get_bindings_in_pat(x, out);
+            }
+        }
+        B::JsArrayHole(_) => (),
+        B::JsBindingPatternWithDefault(x) => {
+            if let Ok(x) = x.pattern() {
+                get_bindings_in_pat(x, out);
+            }
         }
     }
 }
