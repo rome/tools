@@ -1,3 +1,6 @@
+@import "_variables";
+@import "_mixins";
+
 ul.package-manager-selector {
   display: flex;
   padding: 0;
@@ -7,6 +10,12 @@ ul.package-manager-selector {
   box-shadow: inset 0 0 0 1px var(--soft-border-color);
   background-color: var(--container-color);
   border-bottom: none;
+
+  @include mobile-only {
+    border-radius: 0;
+    margin: 0 -20px;
+    padding: 0 10px;
+  }
 
   li {
     padding: 10px;
