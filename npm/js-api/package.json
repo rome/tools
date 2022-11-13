@@ -29,6 +29,11 @@
   ],
   "license": "MIT",
   "homepage": "https://rome.tools",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rome/tools.git",
+    "directory": "npm/js-api"
+  },
   "author": "Rome Tools Developers and Contributors",
   "bugs": "https://github.com/rome/tools/issues",
   "devDependencies": {
