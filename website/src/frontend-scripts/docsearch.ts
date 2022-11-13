@@ -1,12 +1,15 @@
 import docsearch from "@docsearch/js";
-import { matchesDark, setCurrentTheme } from "./util";
+import { getCurrentTheme, matchesDark, setCurrentTheme } from "./util";
 
 const docsearchContainer = document.querySelector(
 	"#docsearch-target",
 ) as HTMLElement;
 
 // We need to explicitly set data-theme as docsearch explicitly matches for it
-if (matchesDark?.matches) {
+if (
+	matchesDark?.matches &&
+	document.documentElement.getAttribute("data-theme") === "auto"
+) {
 	setCurrentTheme("dark");
 }
 

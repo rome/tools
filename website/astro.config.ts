@@ -18,92 +18,125 @@ function resolveFile(relative: string, parent: string, root: string): string {
 	}
 }
 
-const IMPORT_REGEX = /^import"(.*?)"$/;
+const IMPORT_REGEX = /^import"(.*?)";?$/;
 
-async function readFile(loc: string, root: string): Promise<string> {
-	let content = await fs.readFile(loc, "utf8");
-	content = content.trim();
+async function readFile(
+	loc: string,
+	root: string,
+	cache: Files,
+): Promise<string> {
+	let content = cache.get(loc);
+	if (content === undefined) {
+		content = await fs.readFile(loc, "utf8");
+		content = content.trim();
+		cache.set(loc, content);
+	}
 
 	const importMatch = content.match(IMPORT_REGEX);
 	if (importMatch != null) {
-		return readFile(resolveFile(importMatch[1], path.dirname(loc), root), root);
+		return readFile(
+			resolveFile(importMatch[1], path.dirname(loc), root),
+			root,
+			cache,
+		);
 	}
 
 	return content;
 }
 
-async function inline(
-	dir: string,
-	regex: RegExp,
-	tagBefore: string,
-	tagAfter: string,
-): Promise<void> {
-	const files = await globby(`${dir}/**/*.html`);
+type Files = Map<string, string>;
+
+async function inline({
+	files,
+	root,
+	replacements,
+}: {
+	files: Files;
+	root: string;
+	replacements: {
+		regex: RegExp;
+		tagBefore: string;
+		tagAfter: string;
+	}[];
+}): Promise<void> {
+	const cache: Files = new Map();
 
 	await Promise.all(
-		files.map(async (htmlPath) => {
+		Array.from(files.entries(), async ([htmlPath, file]) => {
 			if (htmlPath.includes("playground")) {
 				return;
 			}
 
-			const paths: string[] = [];
-			let file = await fs.readFile(htmlPath, "utf8");
+			const matches: {
+				key: string;
+				match: string;
+				tagBefore: string;
+				tagAfter: string;
+			}[] = [];
 
-			file = file.replace(regex, (match, p1) => {
-				paths.push(p1);
-				return `{{INLINE:${p1}}}`;
-			});
+			for (const { regex, tagBefore, tagAfter } of replacements) {
+				file = file.replace(regex, (match, p1) => {
+					const key = `{{INLINE:${matches.length - 1}}}`;
+					matches.push({ key, match: p1, tagBefore, tagAfter });
+					return key;
+				});
+			}
 
 			const sources: string[] = await Promise.all(
-				paths.map(async (rawPath) => {
-					const resolvedPath = resolveFile(
-						rawPath,
-						path.dirname(htmlPath),
-						dir,
-					);
-					return await readFile(resolvedPath, dir);
+				matches.map(async ({ match }) => {
+					const resolvedPath = resolveFile(match, path.dirname(htmlPath), root);
+					return await readFile(resolvedPath, root, cache);
 				}),
 			);
 
-			paths.forEach((p, i) => {
-				file = file.replace(
-					`{{INLINE:${p}}}`,
-					`${tagBefore}${sources[i]}${tagAfter}`,
-				);
-			});
+			for (let i = 0; i < matches.length; i++) {
+				const { key, tagBefore, tagAfter } = matches[i];
+				const source = sources[i];
+				const index = file.indexOf(key);
+				const start = file.slice(0, index);
+				const end = file.slice(index + key.length);
+				file = `${start}${tagBefore}${source}${tagAfter}${end}`;
+			}
 
-			await fs.writeFile(htmlPath, file);
+			files.set(htmlPath, file);
 		}),
 	);
 }
 
-function inlineCSS(): AstroIntegration {
+function inlineIntegration(): AstroIntegration {
 	return {
-		name: "inlineCSS",
+		name: "inline",
 		hooks: {
 			"astro:build:done": async ({ dir }) => {
-				await inline(
-					dir.pathname,
-					/<link rel="stylesheet" href="(.*?)"\s*\/?>/g,
-					"<style>",
-					"</style>",
-				);
-			},
-		},
-	};
-}
+				const paths = await globby(`${dir}/**/*.html`);
+				const files: Files = new Map();
 
-function inlineJS(): AstroIntegration {
-	return {
-		name: "inlineJS",
-		hooks: {
-			"astro:build:done": async ({ dir }) => {
-				await inline(
-					dir.pathname,
-					/<script type="module" src="(.*?)"><\/script>/g,
-					'<script async defer type="module">',
-					"</script>",
+				await Promise.all(
+					paths.map(async (path) => {
+						files.set(path, await fs.readFile(path, "utf8"));
+					}),
 				);
+
+				await inline({
+					files,
+					root: dir.pathname,
+					replacements: [
+						{
+							regex: /<script type="module" src="(.*?)"><\/script>/g,
+							tagBefore: '<script async defer type="module">',
+							tagAfter: "</script>",
+						},
+						{
+							regex: /<link rel="stylesheet" href="(.*?)"\s*\/?>/g,
+							tagBefore: "<style>",
+							tagAfter: "</style>",
+						},
+					],
+				});
+
+				for (const [path, content] of files) {
+					await fs.writeFile(path, content);
+				}
 			},
 		},
 	};
@@ -117,12 +150,11 @@ export default defineConfig({
 
 	integrations: [
 		react(),
-		inlineCSS(),
-		inlineJS(),
+		inlineIntegration(),
 		mdx(),
-		compress({
-			path: "./build",
-		}),
+		//compress({
+		//	path: "./build",
+		//}),
 	],
 
 	build: {
