@@ -50,6 +50,7 @@ export interface PlaygroundState {
 	jsx: boolean;
 	cursorPosition: number;
 	enabledNurseryRules: boolean;
+    enabledLinting: boolean;
 }
 
 // change `lineWidth` and `indentWidth` to string type, just to fits our `usePlaygroundState` fallback usage
@@ -70,6 +71,7 @@ export const defaultRomeConfig: RomeConfiguration = {
 	jsx: true,
 	cursorPosition: 0,
 	enabledNurseryRules: true,
+	enabledLinting: true,
 };
 
 export interface PlaygroundProps {
@@ -92,6 +94,7 @@ export type PlaygroundSettings = Pick<
 	| "typescript"
 	| "jsx"
 	| "enabledNurseryRules"
+	| "enabledLinting"
 >;
 
 export type Tree = ReturnType<typeof parser.parse>;
