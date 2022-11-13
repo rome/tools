@@ -441,4 +441,9 @@ valid.jsonc:1:33 lint/nursery/useConst ━━━━━━━━━━━━━�
 
 ```
 
+# Input
+```js
+let b; { let e; ({ a: { b, e } } = foo()); }
+```
+
 

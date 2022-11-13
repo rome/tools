@@ -84,5 +84,6 @@
 	"class C { static { let a, b; if (foo) { ({ a, b } = foo); } } }",
 	"class C { static { let a, b; if (foo) ({ a, b } = foo); } }",
 	"class C { static { a++; } foo() { a++ } } let a = 1; ",
-	"class C { static { () => a; let a = 1; } };"
+	"class C { static { () => a; let a = 1; } };",
+	"let b; { let e; ({ a: { b, e } } = foo()); }"
 ]
