@@ -1,6 +1,5 @@
 interface Props {
 	errors: string;
-    lintingEnabled: boolean;
 }
 
 export default function DiagnosticsTab({ errors }: Props) {
