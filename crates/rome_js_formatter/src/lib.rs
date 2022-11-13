@@ -787,11 +787,11 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-const a = [
-	longlonglonglongItem1longlonglonglongItem1,
-	longlonglonglongItem1longlonglonglongItem2,
-	longlonglonglongItem1longlonglonglongItem3,
-];
+    <OtherComponent
+      value={
+        new Set(veryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzz)
+      }
+    />
 
 "#;
         let syntax = SourceType::tsx();
