@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noCommentText
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noCommentText (since v0.7.0)

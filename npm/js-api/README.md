@@ -32,10 +32,10 @@ console.log(result.content);
 
 ## Philosophy
 
-The project philosophy can be found on our [website](https://rome.tools/#philosophy).
+The project philosophy can be found on our [website](https://docs.rome.tools/internals/philosophy/).
 
 ## Community
 
-Contribution and development instructions can be found in [CONTRIBUTING](./CONTRIBUTING.md).
+Contribution and development instructions can be found in [CONTRIBUTING](../../CONTRIBUTING.md).
 
-Additional project coordination and real-time discussion happens on our [Discord server](https://discord.gg/rome). Remember that all activity on the Discord server is still moderated and will be strictly enforced under the project's [Code of Conduct](./CODE_OF_CONDUCT.md).
+Additional project coordination and real-time discussion happens on our [Discord server](https://discord.gg/rome). Remember that all activity on the Discord server is still moderated and will be strictly enforced under the project's [Code of Conduct](../../CODE_OF_CONDUCT.md).

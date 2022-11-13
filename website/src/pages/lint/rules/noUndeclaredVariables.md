@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noUndeclaredVariables
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noUndeclaredVariables (since v0.10.0)

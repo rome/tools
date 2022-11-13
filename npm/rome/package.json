@@ -6,6 +6,11 @@
         "postinstall": "node scripts/postinstall.js"
     },
     "homepage": "https://rome.tools",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/rome/tools.git",
+      "directory": "npm/rome"
+    },
     "author": "Sebastian McKenzie",
     "license": "MIT",
     "bugs": "https://github.com/rome/tools/issues",

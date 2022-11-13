@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noShadowRestrictedNames
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noShadowRestrictedNames (since v0.9.0)

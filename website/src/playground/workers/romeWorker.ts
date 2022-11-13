@@ -2,6 +2,7 @@ import init, {
 	Configuration,
 	DiagnosticPrinter,
 	RomePath,
+	RuleCategories,
 	Workspace,
 } from "@rometools/wasm-web";
 import {
@@ -83,6 +84,7 @@ self.addEventListener("message", async (e) => {
 				sourceType,
 				cursorPosition,
 				enabledNurseryRules,
+        enabledLinting,
 				trailingComma,
 			} = playgroundState;
 
@@ -95,7 +97,7 @@ self.addEventListener("message", async (e) => {
 					indentSize: indentWidth,
 				},
 				linter: {
-					enabled: true,
+					enabled: enabledLinting,
 				},
 				javascript: {
 					formatter: {
@@ -110,7 +112,7 @@ self.addEventListener("message", async (e) => {
 			};
 			if (enabledNurseryRules) {
 				configuration.linter = {
-					enabled: true,
+					enabled: enabledLinting,
 					rules: {
 						nursery: {
 							noConstAssign: "error",
@@ -160,9 +162,16 @@ self.addEventListener("message", async (e) => {
 				path,
 			});
 
+			const categories: RuleCategories = [];
+			if (configuration.formatter?.enabled) {
+					categories.push("Syntax");
+			}
+			if (configuration.linter?.enabled) {
+					categories.push("Lint");
+			}
 			const diagnostics = workspace.pullDiagnostics({
 				path,
-				categories: ["Syntax", "Lint"],
+				categories: categories,
 				max_diagnostics: Number.MAX_SAFE_INTEGER,
 			});
 

@@ -1,13 +1,13 @@
 ---
-layout: ../../Layout.astro
 title: Getting Started
 category: guides
 emoji: 🎉
 description: Learn how to set up a new project with Rome.
 ---
 
-import PackageManagerRomeCommand from "../../components/PackageManagerRomeCommand.astro";
-import PackageManagerCommand from "../../components/PackageManagerCommand.astro";
+import PackageManagerRomeCommand from "/components/PackageManagerRomeCommand.astro";
+import PackageManagerCommand from "/components/PackageManagerCommand.astro";
+import CodeBlockHeader from "/components/CodeBlockHeader.astro";
 
 # Getting Started
 
@@ -43,7 +43,9 @@ To create the configuration, run the `init` command in the root folder of your p
 
 <PackageManagerRomeCommand command="init" />
 
-After running the `init` command, you'll have a `rome.json` configuration file in your directory.
+After running the `init` command, you'll now have a new `rome.json` file in your directory:
+
+<CodeBlockHeader filename="rome.json" />
 
 ```json
 {
@@ -55,7 +57,6 @@ After running the `init` command, you'll have a `rome.json` configuration file i
   }
 }
 ```
-
 
 The `linter.enabled: true` enables the linter and `rules.recommended: true` enables the [recommended rules](/lint/rules/).
 

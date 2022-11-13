@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useWhile
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # useWhile (since v0.7.0)

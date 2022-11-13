@@ -145,6 +145,9 @@ export function usePlaygroundState(
 		enabledNurseryRules:
 			searchParams.get("enabledNurseryRules") === "true" ||
 			defaultRomeConfig.enabledNurseryRules,
+        enabledLinting:
+            searchParams.get("enabledLinting") === "true" ||
+            defaultRomeConfig.enabledLinting,
 	});
 	const [playgroundState, setPlaygroundState] = useState(
 		initState(initialSearchParams),

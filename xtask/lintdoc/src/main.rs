@@ -25,8 +25,8 @@ use std::{
 use xtask::{glue::fs2, *};
 
 fn main() -> Result<()> {
-    let root = project_root().join("website/docs/src/pages/lint/rules");
-    let reference_groups = project_root().join("website/docs/src/components/reference/Groups.md");
+    let root = project_root().join("website/src/pages/lint/rules");
+    let reference_groups = project_root().join("website/src/components/reference/Groups.md");
 
     // Clear the rules directory ignoring "not found" errors
     if let Err(err) = fs2::remove_dir_all(&root) {
@@ -47,7 +47,7 @@ fn main() -> Result<()> {
     let mut reference_buffer = Vec::new();
     writeln!(index, "---")?;
     writeln!(index, "title: Lint Rules")?;
-    writeln!(index, "layout: ../../../Layout.astro")?;
+    writeln!(index, "parent: linter/index")?;
     writeln!(index, "emoji: 📏")?;
     writeln!(index, "description: List of available lint rules.")?;
     writeln!(index, "category: reference")?;
@@ -179,7 +179,7 @@ fn generate_rule(
     // Write the header for this lint rule
     writeln!(content, "---")?;
     writeln!(content, "title: Lint Rule {rule}")?;
-    writeln!(content, "layout: ../../../Layout.astro")?;
+    writeln!(content, "parent: lint/rules/index")?;
     writeln!(content, "---")?;
     writeln!(content)?;
 

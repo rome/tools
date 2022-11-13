@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noRenderReturnValue
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noRenderReturnValue (since v0.10.0)

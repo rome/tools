@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noBannedTypes
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noBannedTypes (since v10.0.0)

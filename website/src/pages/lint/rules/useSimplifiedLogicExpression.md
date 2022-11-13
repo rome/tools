@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useSimplifiedLogicExpression
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # useSimplifiedLogicExpression (since v0.7.0)

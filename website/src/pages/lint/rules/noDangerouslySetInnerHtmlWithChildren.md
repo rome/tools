@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noDangerouslySetInnerHtmlWithChildren
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noDangerouslySetInnerHtmlWithChildren (since v0.10.0)

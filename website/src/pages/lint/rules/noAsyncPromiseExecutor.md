@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noAsyncPromiseExecutor
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noAsyncPromiseExecutor (since v0.7.0)

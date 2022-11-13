@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useAnchorContent
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # useAnchorContent (since v10.0.0)

@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noCompareNegZero
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noCompareNegZero (since v0.7.0)

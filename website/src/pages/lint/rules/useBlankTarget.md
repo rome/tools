@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useBlankTarget
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # useBlankTarget (since v10.0.0)

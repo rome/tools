@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noUnreachable
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noUnreachable (since v0.7.0)

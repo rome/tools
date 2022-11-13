@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useValidTypeof
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # useValidTypeof (since v0.7.0)

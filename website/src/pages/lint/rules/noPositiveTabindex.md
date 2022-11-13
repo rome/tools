@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noPositiveTabindex
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noPositiveTabindex (since v10.0.0)

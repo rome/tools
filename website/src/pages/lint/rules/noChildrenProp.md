@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noChildrenProp
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noChildrenProp (since v0.10.0)
