@@ -14,7 +14,7 @@ use rome_diagnostics::v2::Error;
 use crate::fs::{FileSystemExt, OpenOptions};
 use crate::{FileSystem, RomePath, TraversalContext, TraversalScope};
 
-use super::{BoxedTraversal, File, UnhandledDiagnostic, UnhandledKind};
+use super::{BoxedTraversal, ErrorKind, File, FileSystemDiagnostic};
 
 /// Fully in-memory file system, stores the content of all known files in a hashmap
 #[derive(Default)]
@@ -42,10 +42,11 @@ type FileEntry = Arc<Mutex<Vec<u8>>>;
 /// emitted when they are reached through a filesystem traversal. This is
 /// mainly useful as a mechanism to test the handling of filesystem error in
 /// client code.
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Debug)]
 pub enum ErrorEntry {
-    SymbolicLink,
-    Unknown,
+    UnknownFileType,
+    DereferencedSymlink(PathBuf),
+    InfiniteSymlinkExpansion(PathBuf),
 }
 
 impl MemoryFileSystem {
@@ -171,7 +172,7 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
                 };
 
                 if should_process_file {
-                    let file_id = ctx.interner().intern_path(path.into());
+                    let (file_id, _) = ctx.interner().intern_path(path.into());
                     let rome_path = RomePath::new(path, file_id);
                     if !ctx.can_handle(&rome_path) {
                         continue;
@@ -183,13 +184,18 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
 
         for (path, entry) in &self.fs.errors {
             if path.strip_prefix(&base).is_ok() {
-                let file_id = ctx.interner().intern_path(path.into());
+                let (file_id, _) = ctx.interner().intern_path(path.into());
 
-                ctx.push_diagnostic(Error::from(UnhandledDiagnostic {
+                ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
                     file_id,
-                    file_kind: match entry {
-                        ErrorEntry::SymbolicLink => UnhandledKind::Symlink,
-                        ErrorEntry::Unknown => UnhandledKind::Other,
+                    error_kind: match entry {
+                        ErrorEntry::UnknownFileType => ErrorKind::UnknownFileType,
+                        ErrorEntry::DereferencedSymlink(path) => {
+                            ErrorKind::DereferencedSymlink(path.to_owned())
+                        }
+                        ErrorEntry::InfiniteSymlinkExpansion(path) => {
+                            ErrorKind::InfiniteSymlinkExpansion(path.to_owned())
+                        }
                     },
                 }));
             }

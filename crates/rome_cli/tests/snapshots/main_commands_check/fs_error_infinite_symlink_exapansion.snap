@@ -1,0 +1,28 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 223
+expression: content
+---
+# Emitted Messages
+
+```block
+/tmp/rome_test_infinite_symlink_exapansion/prefix internalError/fs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Infinite symlink expansion
+  
+  × Rome encountered a file system entry that leads to an infinite symbolic link expansion, causing an infinite cycle: /tmp/rome_test_infinite_symlink_exapansion/prefix
+  
+
+```
+
+```block
+/tmp/rome_test_infinite_symlink_exapansion/prefix internalError/fs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Infinite symlink expansion
+  
+  × Rome encountered a file system entry that leads to an infinite symbolic link expansion, causing an infinite cycle: /tmp/rome_test_infinite_symlink_exapansion/prefix
+  
+
+```
+
+

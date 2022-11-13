@@ -16,7 +16,7 @@ use rome_diagnostics::{
         PrintDiagnostic, Severity, Visit,
     },
 };
-use rome_fs::{AtomicInterner, FileSystem, OpenOptions, PathInterner, RomePath};
+use rome_fs::{FileSystem, IndexSetInterner, OpenOptions, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
 use rome_service::workspace::{SupportsFeatureResult, UnsupportedReason};
 use rome_service::{
@@ -87,7 +87,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
         });
     }
 
-    let (interner, recv_files) = AtomicInterner::new();
+    let (interner, recv_files) = IndexSetInterner::new();
     let (send_msgs, recv_msgs) = unbounded();
     let (sender_reports, recv_reports) = unbounded();
 
@@ -590,7 +590,7 @@ struct TraversalOptions<'ctx, 'app> {
     /// Determines how the files should be processed
     execution: &'ctx Execution,
     /// File paths interner used by the filesystem traversal
-    interner: AtomicInterner,
+    interner: IndexSetInterner,
     /// Shared atomic counter storing the number of processed files
     processed: &'ctx AtomicUsize,
     /// Shared atomic counter storing the number of skipped files
