@@ -30,8 +30,6 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     let input_code = read_to_string(input_file)
         .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
 
-    let source_type = input_file.try_into().unwrap();
-
     let (group, rule) = parse_test_path(input_file);
 
     let rule_filter = RuleFilter::Rule(group, rule);
@@ -50,13 +48,14 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
             write_analysis_to_snapshot(
                 &mut snapshot,
                 &script,
-                source_type,
+                SourceType::js_script(),
                 filter,
                 file_name,
                 input_file,
             )
         }
     } else {
+        let source_type = input_file.try_into().unwrap();
         write_analysis_to_snapshot(
             &mut snapshot,
             &input_code,

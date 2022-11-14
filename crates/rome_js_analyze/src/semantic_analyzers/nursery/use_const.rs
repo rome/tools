@@ -21,7 +21,7 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// // `i` is redefined (not reassigned) on each loop step.
+    /// // `a` is redefined (not reassigned) on each loop step.
     /// for (let a of [1, 2, 3]) {
     ///     console.log(a);
     /// }
@@ -32,6 +32,19 @@ declare_rule! {
     /// for (let a in [1, 2, 3]) {
     ///     console.log(a);
     /// }
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// let a = 3;
+    /// {
+    ///     let a = 4;
+    ///     a = 2;
+    /// }
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// let a = 1, b = 2;
+    /// b = 3;
     /// ```
     ///
     /// ## Valid
@@ -49,14 +62,14 @@ declare_rule! {
 }
 
 declare_node_union! {
-    pub(crate) VarDecl = JsVariableDeclaration | JsForVariableDeclaration
+    pub(crate) VariableDeclaration = JsVariableDeclaration | JsForVariableDeclaration
 }
 
 declare_node_union! {
     pub(crate) DestructuringHost = JsVariableDeclarator | JsAssignmentExpression
 }
 
-pub(crate) struct ConstState {
+pub(crate) struct ConstBindings {
     can_be_const: Vec<JsIdentifierBinding>,
     can_fix: bool,
 }
@@ -67,8 +80,8 @@ enum ConstCheckResult {
 }
 
 impl Rule for UseConst {
-    type Query = Semantic<VarDecl>;
-    type State = ConstState;
+    type Query = Semantic<VariableDeclaration>;
+    type State = ConstBindings;
     type Signals = Option<Self::State>;
     type Options = ();
 
@@ -76,16 +89,17 @@ impl Rule for UseConst {
         let declaration = ctx.query();
         let model = ctx.model();
 
-        if !declaration.is_let() {
+        // Not a let declaration or inside a for-loop init
+        if !declaration.is_let() || declaration.parent::<JsForStatement>().is_some() {
             return None;
         }
 
-        ConstState::new(declaration, model)
+        ConstBindings::new(declaration, model)
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let decl = ctx.query();
-        let kind = decl.kind_token()?;
+        let declaration = ctx.query();
+        let kind = declaration.kind_token()?;
         let mut diag = RuleDiagnostic::new(
             rule_category!(),
             kind.text_trimmed_range(),
@@ -108,10 +122,13 @@ impl Rule for UseConst {
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
-        let decl = ctx.query();
+        let declaration = ctx.query();
         if state.can_fix {
             let mut batch = ctx.root().begin();
-            batch.replace_token(decl.kind_token()?, make::token(JsSyntaxKind::CONST_KW));
+            batch.replace_token(
+                declaration.kind_token()?,
+                make::token(JsSyntaxKind::CONST_KW),
+            );
             Some(JsRuleAction {
                 category: ActionCategory::QuickFix,
                 applicability: Applicability::MaybeIncorrect,
@@ -124,15 +141,25 @@ impl Rule for UseConst {
     }
 }
 
-impl ConstState {
-    fn new(declaration: &VarDecl, model: &SemanticModel) -> Option<Self> {
+impl ConstBindings {
+    fn new(declaration: &VariableDeclaration, model: &SemanticModel) -> Option<Self> {
         let mut state = Self {
             can_be_const: Vec::new(),
             can_fix: true,
         };
+        let in_for_in_or_of_loop = matches!(
+            declaration,
+            VariableDeclaration::JsForVariableDeclaration(..)
+        );
         for declarator in declaration.declarators() {
+            let has_initializer = declarator.initializer().is_some();
             for binding in declarator_bindings(&declarator) {
-                let fix = check_binding_can_be_const(&binding, declaration, &declarator, model);
+                let fix = check_binding_can_be_const(
+                    &binding,
+                    in_for_in_or_of_loop,
+                    has_initializer,
+                    model,
+                );
                 match fix {
                     Some(ConstCheckResult::Fix) => state.can_be_const.push(binding),
                     Some(ConstCheckResult::Report) => {
@@ -154,19 +181,14 @@ impl ConstState {
 /// Check if a binding can be const
 fn check_binding_can_be_const(
     binding: &JsIdentifierBinding,
-    decl: &VarDecl,
-    declarator: &JsVariableDeclarator,
+    in_for_in_or_of_loop: bool,
+    has_initializer: bool,
     model: &SemanticModel,
 ) -> Option<ConstCheckResult> {
-    // Inside a for-loop init
-    if decl.parent::<JsForStatement>().is_some() {
-        return None;
-    }
-
     let mut writes = binding.all_writes(model);
 
     // In a for-in or for-of loop or if it has an initializer
-    if matches!(decl, VarDecl::JsForVariableDeclaration(..)) || declarator.initializer().is_some() {
+    if in_for_in_or_of_loop || has_initializer {
         return if writes.len() == 0 {
             Some(ConstCheckResult::Fix)
         } else {
@@ -192,7 +214,7 @@ fn check_binding_can_be_const(
     }
 }
 
-impl VarDecl {
+impl VariableDeclaration {
     fn declarators(&self) -> impl Iterator<Item = JsVariableDeclarator> {
         self.syntax()
             .descendants()
@@ -201,23 +223,26 @@ impl VarDecl {
 
     fn kind_token(&self) -> Option<JsSyntaxToken> {
         match self {
-            VarDecl::JsVariableDeclaration(x) => x.kind().ok(),
-            VarDecl::JsForVariableDeclaration(x) => x.kind_token().ok(),
+            Self::JsVariableDeclaration(x) => x.kind().ok(),
+            Self::JsForVariableDeclaration(x) => x.kind_token().ok(),
         }
     }
 
     fn is_let(&self) -> bool {
         match self {
-            VarDecl::JsVariableDeclaration(it) => it.is_let(),
-            VarDecl::JsForVariableDeclaration(it) => it
+            Self::JsVariableDeclaration(it) => it.is_let(),
+            Self::JsForVariableDeclaration(it) => it
                 .kind_token()
                 .map_or(false, |it| it.kind() == JsSyntaxKind::LET_KW),
         }
     }
 }
 
-fn declarator_bindings(decl: &JsVariableDeclarator) -> impl Iterator<Item = JsIdentifierBinding> {
-    decl.id()
+fn declarator_bindings(
+    declarator: &JsVariableDeclarator,
+) -> impl Iterator<Item = JsIdentifierBinding> {
+    declarator
+        .id()
         .into_iter()
         .flat_map(|it| it.syntax().descendants())
         .filter_map(JsIdentifierBinding::cast)
