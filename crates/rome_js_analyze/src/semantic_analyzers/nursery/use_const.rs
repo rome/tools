@@ -195,6 +195,15 @@ impl VarDecl {
             VarDecl::JsForVariableDeclaration(x) => x.kind_token().ok(),
         }
     }
+
+    fn is_let(&self) -> bool {
+        match self {
+            VarDecl::JsVariableDeclaration(it) => it.is_let(),
+            VarDecl::JsForVariableDeclaration(it) => it
+                .kind_token()
+                .map_or(false, |it| it.kind() == JsSyntaxKind::LET_KW),
+        }
+    }
 }
 
 fn declarator_bindings(decl: &JsVariableDeclarator) -> impl Iterator<Item = JsIdentifierBinding> {
@@ -229,49 +238,53 @@ impl DestructuringHost {
 
     fn has_member_expr_assignment(&self) -> bool {
         match self {
-            Self::JsAssignmentExpression(it) => it.left().map_or(false, |pat| {
-                is_object_or_array_pat(&pat) && has_member_expr_assignment(pat)
-            }),
+            Self::JsAssignmentExpression(it) => it
+                .left()
+                .map_or(false, |pat| has_member_expr_in_assign_pat(pat)),
             _ => false,
         }
     }
 
     fn has_outer_variables(&self, scope: Scope) -> bool {
         match self {
-            Self::JsVariableDeclarator(it) => has_outer_variables_in_var_declarator(it, scope),
-            Self::JsAssignmentExpression(it) => has_outer_variables_in_assignment_expr(it, scope),
+            Self::JsVariableDeclarator(it) => it
+                .id()
+                .map_or(false, |pat| has_outer_variables_in_binding_pat(pat, scope)),
+            Self::JsAssignmentExpression(it) => it
+                .left()
+                .map_or(false, |pat| has_outer_variables_in_assign_pat(pat, scope)),
         }
     }
 }
 
-fn has_outer_variables_in_var_declarator(declarator: &JsVariableDeclarator, scope: Scope) -> bool {
-    if let Ok(id) = declarator.id() {
-        id.syntax()
+fn has_outer_variables_in_binding_pat(pat: JsAnyBindingPattern, scope: Scope) -> bool {
+    is_object_or_array_binding_pat(&pat)
+        && pat
+            .syntax()
             .descendants()
             .filter_map(JsIdentifierBinding::cast)
             .any(|it| is_outer_variable_in_binding(it, &scope))
-    } else {
-        false
-    }
 }
 
-fn has_outer_variables_in_assignment_expr(
-    assignment: &JsAssignmentExpression,
-    scope: Scope,
-) -> bool {
-    if let Ok(pat) = assignment.left() {
-        is_object_or_array_pat(&pat)
-            && pat
-                .syntax()
-                .descendants()
-                .filter_map(JsIdentifierAssignment::cast)
-                .any(|it| is_outer_variable_in_assignment(it, &scope))
-    } else {
-        false
-    }
+fn has_outer_variables_in_assign_pat(pat: JsAnyAssignmentPattern, scope: Scope) -> bool {
+    is_object_or_array_assign_pat(&pat)
+        && pat
+            .syntax()
+            .descendants()
+            .filter_map(JsIdentifierAssignment::cast)
+            .any(|it| is_outer_variable_in_assignment(it, &scope))
 }
 
-fn is_object_or_array_pat(pat: &JsAnyAssignmentPattern) -> bool {
+fn has_member_expr_in_assign_pat(pat: JsAnyAssignmentPattern) -> bool {
+    is_object_or_array_assign_pat(&pat)
+        && pat
+            .syntax()
+            .descendants()
+            .filter_map(JsAnyAssignment::cast)
+            .any(is_member_expr_assignment)
+}
+
+fn is_object_or_array_assign_pat(pat: &JsAnyAssignmentPattern) -> bool {
     use JsAnyAssignmentPattern::*;
     matches!(
         pat,
@@ -279,31 +292,24 @@ fn is_object_or_array_pat(pat: &JsAnyAssignmentPattern) -> bool {
     )
 }
 
-impl VarDecl {
-    fn is_let(&self) -> bool {
-        match self {
-            VarDecl::JsVariableDeclaration(it) => it.is_let(),
-            VarDecl::JsForVariableDeclaration(it) => it
-                .kind_token()
-                .map_or(false, |it| it.kind() == JsSyntaxKind::LET_KW),
+fn is_object_or_array_binding_pat(pat: &JsAnyBindingPattern) -> bool {
+    use JsAnyBindingPattern::*;
+    matches!(pat, JsObjectBindingPattern(..) | JsArrayBindingPattern(..))
+}
+
+fn is_member_expr_assignment(mut assignment: JsAnyAssignment) -> bool {
+    use JsAnyAssignment::*;
+    while let JsParenthesizedAssignment(p) = assignment {
+        if let Ok(p) = p.assignment() {
+            assignment = p
+        } else {
+            return false;
         }
     }
-}
-
-fn has_member_expr_assignment(pat: JsAnyAssignmentPattern) -> bool {
-    pat.syntax()
-        .descendants()
-        .filter_map(JsAnyAssignment::cast)
-        .any(is_member_expr_assignment)
-}
-
-fn is_member_expr_assignment(e: JsAnyAssignment) -> bool {
-    use JsAnyAssignment::*;
-    match e {
-        JsComputedMemberAssignment(_) | JsStaticMemberAssignment(_) => true,
-        JsParenthesizedAssignment(it) => it.assignment().map_or(false, is_member_expr_assignment),
-        _ => false,
-    }
+    matches!(
+        assignment,
+        JsComputedMemberAssignment(_) | JsStaticMemberAssignment(_)
+    )
 }
 
 fn is_outer_variable_in_binding(binding: JsIdentifierBinding, scope: &Scope) -> bool {
