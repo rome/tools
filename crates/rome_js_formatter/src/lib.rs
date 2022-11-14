@@ -573,7 +573,6 @@ mod tests {
     use rome_rowan::{TextRange, TextSize};
 
     use crate::check_reformat::{check_reformat, CheckReformatParams};
-    use crate::context::trailing_comma::TrailingComma;
 
     #[test]
     fn test_range_formatting() {
@@ -803,7 +802,6 @@ function Component4() {
         let syntax = SourceType::tsx();
         let tree = parse(src, FileId::zero(), syntax);
         let options = JsFormatOptions::new(syntax).with_semicolons(Semicolons::AsNeeded);
-        let options = options.with_trailing_comma(TrailingComma::None);
         let result = format_node(options.clone(), &tree.syntax())
             .unwrap()
             .print()

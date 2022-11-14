@@ -211,27 +211,29 @@ where
     nodes_and_modifiers
 }
 
-/// Formats some code followed by the semicolon of the statement.
+pub(crate) type FormatStatementSemicolon<'a> = FormatOptionalSemicolon<'a>;
+
+/// Formats a semicolon in a position where it is optional (not needed to maintain syntactical correctness).
 ///
-/// Performs semicolon insertion if it is missing in the input source and [JsFormatOptions::semicolons] is [Semicolons::Always].
-/// Removes the semicolon if the [JsFormatOptions::semicolons] is [Semicolons::AsNeeded]
-pub struct FormatStatementSemicolon<'a> {
+/// * Inserts a new semicolon if it is absent and [JsFormatOptions::semicolons] is [Semicolons::Always].
+/// * Removes the semicolon if it is present and [JsFormatOptions::semicolons] is [Semicolons::AsNeeded].
+pub(crate) struct FormatOptionalSemicolon<'a> {
     semicolon: Option<&'a JsSyntaxToken>,
 }
 
-impl<'a> FormatStatementSemicolon<'a> {
-    pub fn new(semicolon: Option<&'a JsSyntaxToken>) -> Self {
+impl<'a> FormatOptionalSemicolon<'a> {
+    pub(crate) fn new(semicolon: Option<&'a JsSyntaxToken>) -> Self {
         Self { semicolon }
     }
 }
 
-impl Format<JsFormatContext> for FormatStatementSemicolon<'_> {
+impl Format<JsFormatContext> for FormatOptionalSemicolon<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         match f.options().semicolons() {
             Semicolons::Always => FormatSemicolon::new(self.semicolon).fmt(f),
             Semicolons::AsNeeded => match self.semicolon {
-                Some(semicolon) => format_removed(semicolon).fmt(f),
                 None => Ok(()),
+                Some(semicolon) => format_removed(semicolon).fmt(f),
             },
         }
     }

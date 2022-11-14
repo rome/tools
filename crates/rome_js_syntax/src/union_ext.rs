@@ -1,8 +1,8 @@
 use crate::{
-    JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyClass, JsAnyFunction, JsAnyFunctionBody,
-    JsClassMemberList, JsExtendsClause, JsSyntaxToken, TsAnyPropertyAnnotation,
-    TsAnyVariableAnnotation, TsImplementsClause, TsReturnTypeAnnotation, TsTypeAnnotation,
-    TsTypeParameters,
+    JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyClass, JsAnyClassMember, JsAnyClassMemberName,
+    JsAnyFunction, JsAnyFunctionBody, JsClassMemberList, JsExtendsClause, JsSyntaxToken,
+    TsAnyPropertyAnnotation, TsAnyVariableAnnotation, TsImplementsClause, TsReturnTypeAnnotation,
+    TsTypeAnnotation, TsTypeParameters,
 };
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 
@@ -81,6 +81,46 @@ impl JsAnyClass {
             JsAnyClass::JsClassExpression(expression) => expression.r_curly_token(),
             JsAnyClass::JsClassExportDefaultDeclaration(declaration) => declaration.r_curly_token(),
         }
+    }
+}
+
+impl JsAnyClassMember {
+    pub fn name(&self) -> SyntaxResult<Option<JsAnyClassMemberName>> {
+        match self {
+            JsAnyClassMember::JsConstructorClassMember(constructor) => constructor
+                .name()
+                .map(|name| Some(JsAnyClassMemberName::from(name))),
+            JsAnyClassMember::JsEmptyClassMember(_) => Ok(None),
+            JsAnyClassMember::JsGetterClassMember(getter) => getter.name().map(Some),
+            JsAnyClassMember::JsMethodClassMember(method) => method.name().map(Some),
+            JsAnyClassMember::JsPropertyClassMember(property) => property.name().map(Some),
+            JsAnyClassMember::JsSetterClassMember(setter) => setter.name().map(Some),
+            JsAnyClassMember::JsStaticInitializationBlockClassMember(_) => Ok(None),
+            JsAnyClassMember::JsUnknownMember(_) => Ok(None),
+            JsAnyClassMember::TsConstructorSignatureClassMember(constructor) => constructor
+                .name()
+                .map(|name| Some(JsAnyClassMemberName::from(name))),
+            JsAnyClassMember::TsGetterSignatureClassMember(getter) => getter.name().map(Some),
+            JsAnyClassMember::TsIndexSignatureClassMember(_) => Ok(None),
+            JsAnyClassMember::TsMethodSignatureClassMember(method) => method.name().map(Some),
+            JsAnyClassMember::TsPropertySignatureClassMember(property) => property.name().map(Some),
+            JsAnyClassMember::TsSetterSignatureClassMember(setter) => setter.name().map(Some),
+        }
+    }
+
+    pub fn has_name(&self, name: &str) -> SyntaxResult<bool> {
+        match self.name()? {
+            Some(JsAnyClassMemberName::JsLiteralMemberName(literal)) => {
+                Ok(literal.value()?.text_trimmed() == name)
+            }
+            _ => Ok(false),
+        }
+    }
+}
+
+impl JsAnyClassMemberName {
+    pub const fn is_computed(&self) -> bool {
+        matches!(self, JsAnyClassMemberName::JsComputedMemberName(_))
     }
 }
 

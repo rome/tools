@@ -1,6 +1,7 @@
 use crate::prelude::*;
 
 use crate::parentheses::NeedsParentheses;
+use crate::utils::{FormatOptionalSemicolon};
 use rome_formatter::trivia::FormatLeadingComments;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{JsSyntaxNode, TsMappedType, TsMappedTypeFields};
@@ -38,14 +39,6 @@ impl FormatNodeRule<TsMappedType> for FormatTsMappedType {
             })
             .any(|piece| piece.is_newline());
 
-        let format_semi = format_with(|f| {
-            if let Some(semi) = &semicolon_token {
-                write!(f, [semi.format()])
-            } else {
-                write!(f, [text(";")])
-            }
-        });
-
         let comments = f.comments().clone();
         let dangling_comments = comments.dangling_comments(node.syntax());
         let type_annotation_has_leading_comment =
@@ -79,7 +72,7 @@ impl FormatNodeRule<TsMappedType> for FormatTsMappedType {
                     optional_modifier.format(),
                     type_annotation_has_leading_comment.then_some(space()),
                     mapped_type.format(),
-                    if_group_breaks(&format_semi)
+                    if_group_breaks(&FormatOptionalSemicolon::new(semicolon_token.as_ref()))
                 ]
             )
         });

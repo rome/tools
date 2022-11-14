@@ -3,10 +3,10 @@
 //   async; // The semicolon is *not* necessary
 //   x(){}
 // }
-// class B {
-//   static; // The semicolon *is* necessary
-//   x(){}
-// }
+class B {
+  static; // The semicolon *is* necessary
+  x(){}
+}
 
 class C1 {
   get; // The semicolon *is* necessary

@@ -113,16 +113,16 @@ impl FormatJsExpressionStatement {
                     _ => false,
                 },
                 JsAnyExpressionLeftSide::JsPrivateName(_) => false,
-                JsAnyExpressionLeftSide::JsAnyAssignmentPattern(assignment) => match assignment {
-                    JsAnyAssignmentPattern::JsArrayAssignmentPattern(_) => true,
-                    JsAnyAssignmentPattern::JsAnyAssignment(
-                        JsAnyAssignment::JsParenthesizedAssignment(_),
-                    ) => true,
-                    JsAnyAssignmentPattern::JsAnyAssignment(
-                        JsAnyAssignment::TsTypeAssertionAssignment(_),
-                    ) => true,
-                    _ => false,
-                },
+                JsAnyExpressionLeftSide::JsAnyAssignmentPattern(assignment) => matches!(
+                    assignment,
+                    JsAnyAssignmentPattern::JsArrayAssignmentPattern(_)
+                        | JsAnyAssignmentPattern::JsAnyAssignment(
+                            JsAnyAssignment::JsParenthesizedAssignment(_),
+                        )
+                        | JsAnyAssignmentPattern::JsAnyAssignment(
+                            JsAnyAssignment::TsTypeAssertionAssignment(_),
+                        )
+                ),
             };
 
             if needs_semi || current.needs_parentheses() {

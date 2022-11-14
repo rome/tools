@@ -1,16 +1,14 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 345
-expression: private-field.js
+expression: non-null.ts
 ---
 
 # Input
 
 ```js
-class C {
-  #field = 'value';
-  ["method"]() {}
-}
+// the 2nd line needs ASI protection
+const el = ReactDOM.findDOMNode(ref)
+;(el as HTMLElement)!.style.cursor = 'pointer'
 
 ```
 
@@ -31,10 +29,9 @@ Semicolons: Always
 -----
 
 ```js
-class C {
-	#field = "value";
-	["method"]() {}
-}
+// the 2nd line needs ASI protection
+const el = ReactDOM.findDOMNode(ref);
+(el as HTMLElement)!.style.cursor = "pointer";
 ```
 
 ## Output 2
@@ -49,10 +46,9 @@ Semicolons: As needed
 -----
 
 ```js
-class C {
-	#field = "value";
-	["method"]() {}
-}
+// the 2nd line needs ASI protection
+const el = ReactDOM.findDOMNode(ref)
+;(el as HTMLElement)!.style.cursor = "pointer"
 ```
 
 

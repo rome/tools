@@ -230,8 +230,8 @@ export function usePlaygroundState(): [
 			// Single file mode
 			if (searchParams.get("code")) {
 				const ext = getExtension({
-					typescript: searchParams.get("typescript") === "true",
-					jsx: searchParams.get("jsx") === "true",
+					typescript: searchParams.get("typescript") !== "false",
+					jsx: searchParams.get("jsx") !== "false",
 					script: searchParams.get("script") === "true",
 				});
 				files[`main.${ext}`] = {
