@@ -159,9 +159,9 @@ export default defineConfig({
 		react(),
 		inlineIntegration(),
 		mdx(),
-		//compress({
-		//	path: "./build",
-		//}),
+		compress({
+			path: "./build",
+		}),
 	],
 
 	build: {

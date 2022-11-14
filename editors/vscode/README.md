@@ -46,11 +46,11 @@ The extension automatically loads the `rome.json` file from the workspace’s ro
 
 ## Rome Resolution
 
-The extension uses the Rome version shipped with the extension. We plan to automatically detect the Rome version from the project in an upcoming release.
+The extension tries to use Rome from your project's local dependencies (`node_modules/rome`). We recommend adding Rome as a project dependency to ensure that NPM scripts and the extension use the same Rome version.
 
-<!-- The extension tries to use Rome from your project's local dependencies (`node_modules/rome`). We recommend adding Rome as a project dependency to ensure that NPM scripts and the extension use the same Rome version.
+You can also explicitly specify the `rome` binary the extension should use by configuring the `rome.lspBin` setting in your editor options.
 
-The extension uses the Rome version bundled with the extension if the project has no dependency on Rome. -->
+If the project has no dependency on Rome and no explicit path is configured, the extension uses the Rome version included in its bundle.
 
 ## Usage
 

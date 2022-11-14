@@ -454,6 +454,13 @@ Disallow certain types.
 Prevents from having <code>const</code> variables being re-assigned.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noDupeKeys">
+	<a href="/lint/rules/noDupeKeys">noDupeKeys</a>
+</h3>
+Prevents object literals having more than one property declaration for the same name.
+If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noExplicitAny">
 	<a href="/lint/rules/noExplicitAny">noExplicitAny</a>
 </h3>
@@ -489,6 +496,12 @@ Enforce all dependencies are correctly specified.
 	<a href="/lint/rules/useFlatMap">useFlatMap</a>
 </h3>
 Promotes the use of <code>.flatMap()</code> when <code>map().flat()</code> are used together.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="useNumericLiterals">
+	<a href="/lint/rules/useNumericLiterals">useNumericLiterals</a>
+</h3>
+Disallow <code>parseInt()</code> and <code>Number.parseInt()</code> in favor of binary, octal, and hexadecimal literals
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useValidForDirection">

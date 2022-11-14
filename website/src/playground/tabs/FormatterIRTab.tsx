@@ -3,9 +3,10 @@ import Collapsible from "../Collapsible";
 import PrettierHeader from "../components/PrettierHeader";
 import RomeHeader from "../components/RomeHeader";
 import { romeAst as RomeFormatterIr } from "lang-rome-formatter-ir";
+import type { PrettierOutput } from "../types";
 
 interface Props {
-	prettier: string;
+	prettier: PrettierOutput;
 	rome: string;
 }
 
@@ -22,11 +23,15 @@ export default function FormatterIRTab({ rome, prettier }: Props) {
 				/>
 			</Collapsible>
 			<Collapsible className="prettier" heading={<PrettierHeader />}>
-				<CodeMirror
-					value={prettier}
-					extensions={romeFormatterIrCodeMirrorExtension}
-					readOnly={true}
-				/>
+				{prettier.type === "ERROR" ? (
+					<CodeMirror value={prettier.stack} readOnly={true} />
+				) : (
+					<CodeMirror
+						value={prettier.ir}
+						extensions={romeFormatterIrCodeMirrorExtension}
+						readOnly={true}
+					/>
+				)}
 			</Collapsible>
 		</>
 	);

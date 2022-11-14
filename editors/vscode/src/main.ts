@@ -1,5 +1,6 @@
 import { spawn } from "child_process";
 import { connect } from "net";
+import { promisify } from "util";
 import {
 	ExtensionContext,
 	languages,
@@ -15,27 +16,26 @@ import {
 	ServerOptions,
 	StreamInfo,
 } from "vscode-languageclient/node";
-import { isAbsolute, join } from "path";
-import { existsSync } from "fs";
+import { isAbsolute } from "path";
 import { setContextValue } from "./utils";
 import { Session } from "./session";
 import { syntaxTree } from "./commands/syntaxTree";
 import { Commands } from "./commands";
 import { StatusBar } from "./statusBar";
 
+import resolveImpl = require("resolve/async");
+import type * as Resolve from "resolve";
+
+const resolveAsync = promisify<string, Resolve.AsyncOpts, string | undefined>(
+	resolveImpl,
+);
+
 let client: LanguageClient;
 
 const IN_ROME_PROJECT = "inRomeProject";
 
 export async function activate(context: ExtensionContext) {
-	const command =
-		process.env.DEBUG_SERVER_PATH || (await getServerPath(context));
-
-	if (process.env.DEBUG_SERVER_PATH) {
-		window.showInformationMessage(
-			`Rome DEBUG_SERVER_PATH detected: ${command}`,
-		);
-	}
+	const command = await getServerPath(context);
 
 	if (!command) {
 		await window.showErrorMessage(
@@ -115,40 +115,108 @@ type Architecture = "x64" | "arm64";
 
 type PlatformTriplets = {
 	[P in NodeJS.Platform]?: {
-		[A in Architecture]: string;
+		[A in Architecture]: {
+			triplet: string;
+			package: string;
+		};
 	};
 };
 
-const PLATFORM_TRIPLETS: PlatformTriplets = {
-	win32: { x64: "x86_64-pc-windows-msvc", arm64: "aarch64-pc-windows-msvc" },
-	darwin: { x64: "x86_64-apple-darwin", arm64: "aarch64-apple-darwin" },
+const PLATFORMS: PlatformTriplets = {
+	win32: {
+		x64: {
+			triplet: "x86_64-pc-windows-msvc",
+			package: "@rometools/cli-win32-x64/rome.exe",
+		},
+		arm64: {
+			triplet: "aarch64-pc-windows-msvc",
+			package: "@rometools/cli-win32-arm64/rome.exe",
+		},
+	},
+	darwin: {
+		x64: {
+			triplet: "x86_64-apple-darwin",
+			package: "@rometools/cli-darwin-x64/rome",
+		},
+		arm64: {
+			triplet: "aarch64-apple-darwin",
+			package: "@rometools/cli-darwin-arm64/rome",
+		},
+	},
 	linux: {
-		x64: "x86_64-unknown-linux-gnu",
-		arm64: "aarch64-unknown-linux-gnu",
+		x64: {
+			triplet: "x86_64-unknown-linux-gnu",
+			package: "@rometools/cli-linux-x64/rome",
+		},
+		arm64: {
+			triplet: "aarch64-unknown-linux-gnu",
+			package: "@rometools/cli-linux-arm64/rome",
+		},
 	},
 };
 
 async function getServerPath(
 	context: ExtensionContext,
 ): Promise<string | undefined> {
+	// Only allow the bundled Rome binary in untrusted workspaces
+	if (!workspace.isTrusted) {
+		return getBundledBinary(context);
+	}
+
+	if (process.env.DEBUG_SERVER_PATH) {
+		window.showInformationMessage(
+			`Rome DEBUG_SERVER_PATH detected: ${process.env.DEBUG_SERVER_PATH}`,
+		);
+		return process.env.DEBUG_SERVER_PATH;
+	}
+
 	const config = workspace.getConfiguration();
 	const explicitPath = config.get("rome.lspBin");
 	if (typeof explicitPath === "string" && explicitPath !== "") {
-		if (isAbsolute(explicitPath)) {
-			return explicitPath;
-		} else {
-			for (let i = 0; i < workspace.workspaceFolders.length; i++) {
-				const workspaceFolder = workspace.workspaceFolders[i];
-				const possiblePath = join(workspaceFolder.uri.path, explicitPath);
-				if (existsSync(possiblePath)) {
-					return possiblePath;
-				}
-			}
-			return undefined;
-		}
+		return getWorkspaceRelativePath(explicitPath);
 	}
 
-	const triplet = PLATFORM_TRIPLETS[process.platform]?.[process.arch];
+	return (await getWorkspaceDependency()) ?? getBundledBinary(context);
+}
+
+// Resolve `path` as relative to the workspace root
+async function getWorkspaceRelativePath(path: string) {
+	if (isAbsolute(path)) {
+		return path;
+	} else {
+		for (let i = 0; i < workspace.workspaceFolders.length; i++) {
+			const workspaceFolder = workspace.workspaceFolders[i];
+			const possiblePath = Uri.joinPath(workspaceFolder.uri, path);
+			if (await fileExists(possiblePath)) {
+				return possiblePath.fsPath;
+			}
+		}
+		return undefined;
+	}
+}
+
+// Tries to resolve a path to `@rometools/cli-*` binary package from the root of the workspace
+async function getWorkspaceDependency(): Promise<string | undefined> {
+	const packageName = PLATFORMS[process.platform]?.[process.arch]?.package;
+
+	for (const workspaceFolder of workspace.workspaceFolders) {
+		try {
+			const result = await resolveAsync(packageName, {
+				basedir: workspaceFolder.uri.fsPath,
+			});
+
+			if (result) {
+				return result;
+			}
+		} catch {}
+	}
+
+	return undefined;
+}
+
+// Returns the path of the binary distribution of Rome included in the bundle of the extension
+async function getBundledBinary(context: ExtensionContext) {
+	const triplet = PLATFORMS[process.platform]?.[process.arch]?.triplet;
 	if (!triplet) {
 		return undefined;
 	}

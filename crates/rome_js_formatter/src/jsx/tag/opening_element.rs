@@ -45,7 +45,6 @@ impl Format<JsFormatContext> for JsxAnyOpeningElement {
                         l_angle_token.format(),
                         name.format(),
                         type_arguments.format(),
-                        line_suffix_boundary(),
                         space(),
                         format_close
                     ]
@@ -63,10 +62,8 @@ impl Format<JsFormatContext> for JsxAnyOpeningElement {
                         l_angle_token.format(),
                         name.format(),
                         type_arguments.format(),
-                        line_suffix_boundary(),
                         space(),
                         attributes.format(),
-                        (!attributes.is_empty()).then_some(line_suffix_boundary()),
                         attribute_spacing,
                         format_close
                     ]
@@ -80,9 +77,7 @@ impl Format<JsFormatContext> for JsxAnyOpeningElement {
                             l_angle_token.format(),
                             name.format(),
                             type_arguments.format(),
-                            line_suffix_boundary(),
                             soft_line_indent_or_space(&attributes.format()),
-                            (!attributes.is_empty()).then_some(line_suffix_boundary()),
                         ]
                     )?;
 

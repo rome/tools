@@ -4,44 +4,58 @@ import CodeMirror from "./CodeMirror";
 import type { ViewUpdate } from "@codemirror/view";
 import * as codeMirrorLangRomeAST from "codemirror-lang-rome-ast";
 import { javascript } from "@codemirror/lang-javascript";
-import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import SettingsPane from "./components/SettingsPane";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+	createRef,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import { EditorSelection } from "@codemirror/state";
 import SyntaxTab from "./tabs/SyntaxTab";
 import ControlFlowTab from "./tabs/ControlFlowTab";
-import DiagnosticsTab from "./tabs/DiagnosticsTab";
 import FormatterCodeTab from "./tabs/FormatterCodeTab";
 import FormatterIRTab from "./tabs/FormatterIRTab";
-import { useWindowSize } from "./utils";
-import CodePane from "./components/CodePane";
+import {
+	getCurrentCode,
+	getFileState,
+	isJSXFilename,
+	isTypeScriptFilename,
+	useWindowSize,
+} from "./utils";
+import Resizable from "./components/Resizable";
+import DiagnosticsPane from "./components/DiagnosticsPane";
+import Tabs from "./components/Tabs";
+import DiagnosticsConsoleTab from "./tabs/DiagnosticsConsoleTab";
+import DiagnosticsListTab from "./tabs/DiagnosticsListTab";
+import SettingsTab from "./tabs/SettingsTab";
 
 export default function PlaygroundLoader({
 	setPlaygroundState,
 	resetPlaygroundState,
-	playgroundState: { code, ...settings },
-	prettierOutput,
-	romeOutput: {
-		cst,
-		ast,
-		formatted_code,
-		formatter_ir,
-		errors,
-		control_flow_graph,
-	},
+	playgroundState,
 }: PlaygroundProps) {
-	const { jsx: isJsx, typescript: isTypeScript } = settings;
 	const [clipboardStatus, setClipboardStatus] = useState<
 		"success" | "failed" | "normal"
 	>("normal");
-	const extensions = useMemo(
+
+	const file = getFileState(playgroundState, playgroundState.currentFile);
+	const romeOutput = file.rome;
+	const prettierOutput = file.prettier;
+
+	const codeMirrorExtensions = useMemo(
 		() => [
 			javascript({
-				jsx: isJsx,
-				typescript: isTypeScript,
+				jsx: isJSXFilename(playgroundState.currentFile),
+				typescript: isTypeScriptFilename(playgroundState.currentFile),
 			}),
 		],
-		[isJsx, isTypeScript],
+		[
+			isJSXFilename(playgroundState.currentFile),
+			isTypeScriptFilename(playgroundState.currentFile),
+		],
 	);
 
 	const romeAstSyntacticDataRef = useRef<RomeAstSyntacticData | null>(null);
@@ -52,7 +66,7 @@ export default function PlaygroundLoader({
 		if (clipboardStatus !== "normal") {
 			setClipboardStatus("normal");
 		}
-	}, [formatter_ir]);
+	}, [romeOutput.formatter.ir]);
 
 	const onUpdate = useCallback((viewUpdate: ViewUpdate) => {
 		const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
@@ -67,11 +81,12 @@ export default function PlaygroundLoader({
 	}, []);
 
 	useEffect(() => {
-		scrollAstNodeIntoView(settings.cursorPosition);
-	}, [settings.cursorPosition]);
+		scrollAstNodeIntoView(playgroundState.cursorPosition);
+	}, [playgroundState.cursorPosition]);
 
 	// We update the syntactic data of `RomeJsAst` only AstSource(`Display` string of our original AstRepresentation) changed.
 	useEffect(() => {
+		const ast = romeOutput.syntax.ast;
 		let tree = codeMirrorLangRomeAST.parser.parse(ast);
 		let rangeMap = new Map();
 		romeAstSyntacticDataRef.current = {
@@ -105,99 +120,183 @@ export default function PlaygroundLoader({
 				}
 			},
 		});
-	}, [ast]);
+	}, [romeOutput.syntax.ast]);
 
-	const onChange = useCallback((value) => {
-		setPlaygroundState((state) => ({ ...state, code: value }));
+	const onChange = useCallback((value: string) => {
+		setPlaygroundState((state) => ({
+			...state,
+			files: {
+				...state.files,
+				[state.currentFile]: {
+					...getFileState(state, state.currentFile),
+					content: value,
+				},
+			},
+		}));
 	}, []);
 
 	const { width } = useWindowSize();
 	const hasNarrowViewport = width !== undefined && width <= 1000;
 
+	const editorRef = createRef<ReactCodeMirrorRef>();
+
+	const code = getCurrentCode(playgroundState) ?? "";
+
 	const editor = (
 		<CodeMirror
+			ref={editorRef}
+			diagnostics={romeOutput.diagnostics.list}
 			value={code}
-			extensions={extensions}
+			extensions={codeMirrorExtensions}
 			placeholder="Enter your code here"
 			onUpdate={onUpdate}
 			onChange={onChange}
+			autoFocus={true}
 		/>
 	);
 
-	const settingsPane = (
-		<SettingsPane
-			onReset={resetPlaygroundState}
-			settings={settings}
-			setPlaygroundState={setPlaygroundState}
+	const results = (
+		<Tabs
+			className="results-tabs"
+			selectedTab={playgroundState.tab}
+			onSelect={(tab) => setPlaygroundState((state) => ({ ...state, tab }))}
+			tabs={[
+				{
+					key: "code",
+					title: "Code",
+					visible: hasNarrowViewport,
+					children: editor,
+				},
+				{
+					key: "diagnostics",
+					title: "Diagnostics",
+					visible: hasNarrowViewport,
+					children: (
+						<DiagnosticsListTab
+							editorRef={editorRef}
+							diagnostics={romeOutput.diagnostics.list}
+						/>
+					),
+				},
+				{
+					key: "formatter",
+					title: "Formatter",
+					children: (
+						<FormatterCodeTab
+							rome={romeOutput.formatter.code}
+							prettier={prettierOutput}
+							extensions={codeMirrorExtensions}
+						/>
+					),
+				},
+				{
+					key: "formatter-ir",
+					title: "Formatter IR",
+					children: (
+						<FormatterIRTab
+							rome={romeOutput.formatter.ir}
+							prettier={prettierOutput}
+						/>
+					),
+				},
+				{
+					key: "syntax",
+					title: "Syntax",
+					children: (
+						<SyntaxTab
+							ast={romeOutput.syntax.ast}
+							cst={romeOutput.syntax.cst}
+							ref={astPanelCodeMirrorRef}
+						/>
+					),
+				},
+				{
+					key: "cfg",
+					title: "Control Flow Graph",
+					children: (
+						<ControlFlowTab graph={romeOutput.analysis.controlFlowGraph} />
+					),
+				},
+				{
+					key: "Console",
+					title: "Console",
+					visible: hasNarrowViewport,
+					children: (
+						<DiagnosticsConsoleTab console={romeOutput.diagnostics.console} />
+					),
+				},
+				{
+					key: "settings",
+					title: "Settings",
+					visible: hasNarrowViewport,
+					children: (
+						<SettingsTab
+							onReset={resetPlaygroundState}
+							state={playgroundState}
+							setPlaygroundState={setPlaygroundState}
+						/>
+					),
+				},
+			]}
 		/>
 	);
+
+	if (hasNarrowViewport) {
+		return results;
+	}
 
 	return (
 		<>
-			{!hasNarrowViewport && settingsPane}
+			<SettingsPane
+				onReset={resetPlaygroundState}
+				state={playgroundState}
+				setPlaygroundState={setPlaygroundState}
+			/>
 
-			{!hasNarrowViewport && <CodePane>{editor}</CodePane>}
-
-			<Tabs
-				className="preview-pane"
-				selectedTabPanelClassName="react-tabs__tab-panel--selected"
-			>
-				<TabList>
-					{hasNarrowViewport && <Tab>Code</Tab>}
-					{hasNarrowViewport && <Tab>Settings</Tab>}
-					<Tab>Formatter</Tab>
-					<Tab>Diagnostics</Tab>
-					<Tab>Syntax</Tab>
-					<Tab>IR</Tab>
-					<Tab>Control Flow Graph</Tab>
-				</TabList>
-				{hasNarrowViewport && <TabPanel>{editor}</TabPanel>}
-				{hasNarrowViewport && <TabPanel>{settingsPane}</TabPanel>}
-				<TabPanel>
-					<FormatterCodeTab
-						rome={formatted_code}
-						prettier={prettierOutput.code}
-						extensions={extensions}
+			<div className="code-pane">
+				{editor}
+				<Resizable
+					className="diagnostics-pane"
+					name="diagnostics"
+					direction="top"
+				>
+					<DiagnosticsPane
+						editorRef={editorRef}
+						console={romeOutput.diagnostics.console}
+						diagnostics={romeOutput.diagnostics.list}
 					/>
-				</TabPanel>
-				<TabPanel>
-					<DiagnosticsTab errors={errors} />
-				</TabPanel>
-				<TabPanel>
-					<SyntaxTab ast={ast} cst={cst} ref={astPanelCodeMirrorRef} />
-				</TabPanel>
-				<TabPanel>
-					<FormatterIRTab rome={formatter_ir} prettier={prettierOutput.ir} />
-				</TabPanel>
-				<TabPanel>
-					<ControlFlowTab graph={control_flow_graph} />
-				</TabPanel>
-			</Tabs>
+				</Resizable>
+			</div>
+
+			<Resizable className="results-pane" name="results-pane" direction="left">
+				{results}
+			</Resizable>
 		</>
 	);
 
 	function scrollAstNodeIntoView(cursorPosition: number) {
-		if (astPanelCodeMirrorRef.current && romeAstSyntacticDataRef.current) {
-			let codemirror = astPanelCodeMirrorRef.current;
-			let syntacticData = romeAstSyntacticDataRef.current;
-			let { view } = codemirror;
-			let { rangeMap } = syntacticData;
-			for (let [sourceRange, displaySourceRange] of rangeMap.entries()) {
-				if (
-					cursorPosition >= sourceRange[0] &&
-					cursorPosition <= sourceRange[1]
-				) {
-					view?.dispatch({
-						scrollIntoView: true,
-						selection: EditorSelection.create([
-							EditorSelection.range(
-								displaySourceRange[0],
-								displaySourceRange[1],
-							),
-							EditorSelection.cursor(displaySourceRange[0]),
-						]),
-					});
-				}
+		if (
+			astPanelCodeMirrorRef.current == null ||
+			romeAstSyntacticDataRef.current == null
+		) {
+			return;
+		}
+
+		const view = astPanelCodeMirrorRef.current.view;
+		const rangeMap = romeAstSyntacticDataRef.current.rangeMap;
+
+		for (let [sourceRange, displaySourceRange] of rangeMap.entries()) {
+			if (
+				cursorPosition >= sourceRange[0] &&
+				cursorPosition <= sourceRange[1]
+			) {
+				view?.dispatch({
+					scrollIntoView: true,
+					selection: EditorSelection.create([
+						EditorSelection.range(displaySourceRange[0], displaySourceRange[1]),
+						EditorSelection.cursor(displaySourceRange[0]),
+					]),
+				});
 			}
 		}
 	}

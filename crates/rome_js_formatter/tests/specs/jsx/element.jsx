@@ -266,3 +266,36 @@ const breadcrumbItems = [
 		</Breadcrumb.Item>
 	),
 ].concat(extraBreadcrumbItems);
+
+function Component() {
+	return (
+		<Test
+			prop={value}
+			// comment
+		/>
+	);
+}
+
+let b = (
+	<section>
+		<div>
+			aVeryLongCOntentThat
+		</div // comment
+	>
+	</section>
+);
+
+
+let a = (
+	</*comment3*/Test
+		// comment before attribute
+		/*comment1*/prop/*comment2*/=/*comment3*/{/*comment4*/value /*comment5*/}/*comment6*/
+		// comment after attribute
+	>
+		<Test
+			// comment before attribute
+			/*comment1*/prop/*comment2*/=/*comment3*/{/*comment4*/value /*comment5*/}/*comment6*/
+			// comment after attribute
+		/>
+	</Test>
+);

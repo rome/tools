@@ -8,8 +8,7 @@ export const matchesDark: undefined | MediaQueryList =
 export function getCurrentTheme(): ThemeName {
 	let currentScheme = window.localStorage.getItem("data-theme");
 	if (currentScheme == null) {
-		currentScheme =
-			matchesDark !== undefined && matchesDark.matches ? "dark" : "light";
+		currentScheme = matchesDark?.matches ? "dark" : "light";
 	}
 	return currentScheme === "dark" ? "dark" : "light";
 }

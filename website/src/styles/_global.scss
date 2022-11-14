@@ -138,18 +138,15 @@ a, .link {
 	}
 }
 
-html {
+:root {
 	scroll-padding-top: 80px;
+	color-scheme: light only;
 
 	@include mobile-only {
 		scroll-padding-top: 64px;
 	}
 }
 
-input {
-	color-scheme: light;
-
-	@include dark-mode {
-		color-scheme: dark;
-	}
+@include dark-mode {
+	color-scheme: dark only;
 }

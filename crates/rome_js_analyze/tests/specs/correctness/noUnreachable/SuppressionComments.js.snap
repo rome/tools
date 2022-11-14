@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 99
 expression: SuppressionComments.js
 ---
 # Input
@@ -41,6 +42,19 @@ SuppressionComments.js:5:5 lint/correctness/noUnreachable ━━━━━━━�
       │     ^^^^^^^
     5 │     afterReturn();
     6 │ }
+  
+
+```
+
+```
+SuppressionComments.js:1:1 suppressions/unused ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Suppression comment is not being used
+  
+  > 1 │ // rome-ignore lint(correctness/noUnreachable): this comment does nothing
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ function SuppressionComments1() {
+    3 │     beforeReturn();
   
 
 ```

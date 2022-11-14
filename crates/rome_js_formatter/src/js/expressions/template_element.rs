@@ -5,6 +5,7 @@ use rome_formatter::{
 };
 
 use crate::context::TabWidth;
+use crate::js::expressions::array_expression::FormatJsArrayExpressionOptions;
 use crate::js::lists::template_element_list::{TemplateElementIndention, TemplateElementLayout};
 use rome_js_syntax::{
     JsAnyExpression, JsSyntaxNode, JsSyntaxToken, JsTemplateElement, TsTemplateElement,
@@ -66,9 +67,16 @@ impl FormatTemplateElement {
 impl Format<JsFormatContext> for FormatTemplateElement {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let format_expression = format_with(|f| match &self.element {
-            AnyTemplateElement::JsTemplateElement(template) => {
-                write!(f, [template.expression().format()])
-            }
+            AnyTemplateElement::JsTemplateElement(template) => match template.expression()? {
+                JsAnyExpression::JsArrayExpression(expression) => {
+                    let option = FormatJsArrayExpressionOptions {
+                        is_force_flat_mode: true,
+                    };
+
+                    write!(f, [expression.format().with_options(option)])
+                }
+                expression => write!(f, [expression.format()]),
+            },
             AnyTemplateElement::TsTemplateElement(template) => {
                 write!(f, [template.ty().format()])
             }

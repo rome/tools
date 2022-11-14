@@ -66,20 +66,16 @@ JsModule {
                             eq_token: EQ@53..55 "=" [] [Whitespace(" ")],
                             expression: JsUnknownExpression {
                                 items: [
-                                    JsUnknown {
-                                        items: [
-                                            IDENT@55..61 "yield" [] [Whitespace(" ")],
-                                        ],
+                                    YIELD_KW@55..61 "yield" [] [Whitespace(" ")],
+                                    JsYieldArgument {
+                                        star_token: missing (optional),
+                                        expression: JsStringLiteralExpression {
+                                            value_token: JS_STRING_LITERAL@61..67 "\"test\"" [] [],
+                                        },
                                     },
                                 ],
                             },
                         },
-                    },
-                    missing separator,
-                    JsUnknownParameter {
-                        items: [
-                            JS_STRING_LITERAL@61..67 "\"test\"" [] [],
-                        ],
                     },
                 ],
                 r_paren_token: R_PAREN@67..69 ")" [] [Whitespace(" ")],
@@ -140,19 +136,19 @@ JsModule {
       5: JS_PARAMETERS@50..69
         0: L_PAREN@50..51 "(" [] []
         1: JS_PARAMETER_LIST@51..67
-          0: JS_FORMAL_PARAMETER@51..61
+          0: JS_FORMAL_PARAMETER@51..67
             0: JS_IDENTIFIER_BINDING@51..53
               0: IDENT@51..53 "a" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
-            3: JS_INITIALIZER_CLAUSE@53..61
+            3: JS_INITIALIZER_CLAUSE@53..67
               0: EQ@53..55 "=" [] [Whitespace(" ")]
-              1: JS_UNKNOWN_EXPRESSION@55..61
-                0: JS_UNKNOWN@55..61
-                  0: IDENT@55..61 "yield" [] [Whitespace(" ")]
-          1: (empty)
-          2: JS_UNKNOWN_PARAMETER@61..67
-            0: JS_STRING_LITERAL@61..67 "\"test\"" [] []
+              1: JS_UNKNOWN_EXPRESSION@55..67
+                0: YIELD_KW@55..61 "yield" [] [Whitespace(" ")]
+                1: JS_YIELD_ARGUMENT@61..67
+                  0: (empty)
+                  1: JS_STRING_LITERAL_EXPRESSION@61..67
+                    0: JS_STRING_LITERAL@61..67 "\"test\"" [] []
         2: R_PAREN@67..69 ")" [] [Whitespace(" ")]
       6: (empty)
       7: JS_FUNCTION_BODY@69..71
@@ -167,31 +163,19 @@ yield_expr_in_parameter_initializer.js:1:20 parse ━━━━━━━━━━
   × `yield` is only allowed within generator functions.
   
   > 1 │ function* test(a = yield "test") {}
-      │                    ^^^^^^^^^^^^
+      │                    ^^^^^
     2 │ function test2(a = yield "test") {}
     3 │ 
   
 --
 yield_expr_in_parameter_initializer.js:2:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Illegal use of reserved keyword `yield` as an identifier in strict mode
+  × `yield` is only allowed within generator functions.
   
     1 │ function* test(a = yield "test") {}
   > 2 │ function test2(a = yield "test") {}
       │                    ^^^^^
     3 │ 
-  
---
-yield_expr_in_parameter_initializer.js:2:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `,` but instead found `"test"`
-  
-    1 │ function* test(a = yield "test") {}
-  > 2 │ function test2(a = yield "test") {}
-      │                          ^^^^^^
-    3 │ 
-  
-  i Remove "test"
   
 --
 function* test(a = yield "test") {}
