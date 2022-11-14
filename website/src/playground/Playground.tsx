@@ -1,6 +1,4 @@
-import {
-	emptyPrettierOutput,
-	emptyRomeOutput,
+import type {
 	PlaygroundProps,
 	RomeAstSyntacticData,
 } from "./types";

@@ -1,4 +1,4 @@
-import { formatWithPrettier } from "../utils";
+import { formatWithPrettier, isTypeScriptFilename } from "../utils";
 import { defaultPlaygroundState, PlaygroundSettings } from "../types";
 
 let settings = defaultPlaygroundState.settings;
@@ -17,7 +17,6 @@ self.addEventListener("message", (e) => {
 				indentWidth,
 				quoteStyle,
 				quoteProperties,
-				typescript: isTypeScript,
 				trailingComma,
 			} = settings;
 			const code = e.data.code as string;
@@ -27,7 +26,7 @@ self.addEventListener("message", (e) => {
 				lineWidth,
 				indentStyle,
 				indentWidth,
-				language: isTypeScript ? "ts" : "js",
+				language: isTypeScriptFilename(filename) ? "ts" : "js",
 				quoteStyle,
 				quoteProperties,
 				trailingComma,

@@ -1,6 +1,5 @@
 import {
 	IndentStyle,
-	PlaygroundSettings,
 	PlaygroundState,
 	QuoteProperties,
 	QuoteStyle,

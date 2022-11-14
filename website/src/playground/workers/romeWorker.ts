@@ -9,11 +9,9 @@ import {
 	IndentStyle,
 	LoadingState,
 	PlaygroundSettings,
-	PlaygroundState,
 	QuoteProperties,
 	QuoteStyle,
 	RomeOutput,
-	SourceType,
 } from "../types";
 
 let workspace: Workspace | null = null;
@@ -30,7 +28,7 @@ const files: Map<string, File> = new Map();
 
 let configuration: undefined | Configuration;
 
-function getPathForFile(file: File) {
+function getPathForFile(file: File): RomePath {
 	return {
 		path: file.filename,
 		id: file.id,
