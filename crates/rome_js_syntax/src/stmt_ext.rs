@@ -1,6 +1,9 @@
 //! Extended AST node definitions for statements which are unique and special enough to generate code for manually
 
-use crate::{JsForVariableDeclaration, JsVariableDeclaration, T};
+use crate::{
+    JsAnyArrayAssignmentPatternElement, JsAnyAssignmentPattern, JsForVariableDeclaration,
+    JsVariableDeclaration, T,
+};
 use rome_rowan::SyntaxResult;
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
@@ -63,6 +66,17 @@ impl JsForVariableDeclaration {
             T![var] => JsVariableKind::Var,
             _ => unreachable!(),
         })
+    }
+}
+
+impl JsAnyArrayAssignmentPatternElement {
+    pub fn pattern(self) -> Option<JsAnyAssignmentPattern> {
+        match self {
+            Self::JsAnyAssignmentPattern(p) => Some(p),
+            Self::JsArrayAssignmentPatternRestElement(p) => p.pattern().ok(),
+            Self::JsAssignmentWithDefault(p) => p.pattern().ok(),
+            Self::JsArrayHole(_) => None,
+        }
     }
 }
 
