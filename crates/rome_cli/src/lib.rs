@@ -6,6 +6,8 @@
 //! to parse commands and arguments, redirect the execution of the commands and
 //! execute the traversal of directory and files, based on the command that were passed.
 
+use std::str::FromStr;
+
 pub use pico_args::Arguments;
 use rome_console::{ColorMode, EnvConsole};
 use rome_flags::FeatureFlags;
@@ -46,18 +48,36 @@ pub struct CliSession<'app> {
 
 impl<'app> CliSession<'app> {
     pub fn new(workspace: &'app dyn Workspace, mut args: Arguments) -> Result<Self, Termination> {
-        let no_colors = args.contains("--no-colors");
-        let force_colors = args.contains("--force-colors");
-        let colors = match (no_colors, force_colors) {
-            (true, false) => ColorMode::Disabled,
-            (false, true) => ColorMode::Enabled,
-            (false, false) => ColorMode::Auto,
-            (true, true) => {
-                return Err(Termination::IncompatibleArguments(
-                    "--no-colors",
-                    "--force-colors",
-                ))
+        enum ColorsArg {
+            Off,
+            Force,
+        }
+
+        impl FromStr for ColorsArg {
+            type Err = String;
+
+            fn from_str(s: &str) -> Result<Self, Self::Err> {
+                match s {
+                    "off" => Ok(Self::Off),
+                    "force" => Ok(Self::Force),
+                    _ => Err(format!(
+                        "value {s:?} is not valid for the --colors argument"
+                    )),
+                }
             }
+        }
+
+        let colors =
+            args.opt_value_from_str("--colors")
+                .map_err(|source| Termination::ParseError {
+                    argument: "--colors",
+                    source,
+                })?;
+
+        let colors = match colors {
+            Some(ColorsArg::Off) => ColorMode::Disabled,
+            Some(ColorsArg::Force) => ColorMode::Enabled,
+            None => ColorMode::Auto,
         };
 
         Ok(Self {

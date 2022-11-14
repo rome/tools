@@ -186,7 +186,7 @@ mod main {
     #[test]
     fn no_colors() {
         let workspace = workspace::server();
-        let args = Arguments::from_vec(vec![OsString::from("--no-colors")]);
+        let args = Arguments::from_vec(vec![OsString::from("--colors=off")]);
         let result = CliSession::new(&*workspace, args).and_then(|session| session.run());
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -195,26 +195,22 @@ mod main {
     #[test]
     fn force_colors() {
         let workspace = workspace::server();
-        let args = Arguments::from_vec(vec![OsString::from("--force-colors")]);
+        let args = Arguments::from_vec(vec![OsString::from("--colors=force")]);
         let result = CliSession::new(&*workspace, args).and_then(|session| session.run());
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
     }
 
     #[test]
-    fn incompatible_colors() {
+    fn invalid_colors() {
         let workspace = workspace::server();
-        let args = Arguments::from_vec(vec![
-            OsString::from("--no-colors"),
-            OsString::from("--force-colors"),
-        ]);
+        let args = Arguments::from_vec(vec![OsString::from("--colors=other")]);
 
         let result = CliSession::new(&*workspace, args).and_then(|session| session.run());
 
         match result {
-            Err(Termination::IncompatibleArguments(lhs, rhs)) => {
-                assert_eq!(lhs, "--no-colors");
-                assert_eq!(rhs, "--force-colors");
+            Err(Termination::ParseError { argument, .. }) => {
+                assert_eq!(argument, "--colors");
             }
             _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
         }
