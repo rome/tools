@@ -267,6 +267,7 @@ impl LanguageServer for LSPServer {
                             if possible_rome_json.display().to_string() == CONFIG_NAME {
                                 self.session.update_configuration().await;
                                 self.session.fetch_client_configuration().await;
+                                self.session.update_all_diagnostics().await;
                                 // for now we are only interested to the configuration file,
                                 // so it's OK to exist the loop
                                 break;
