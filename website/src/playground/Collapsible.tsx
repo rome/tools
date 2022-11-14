@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { classnames } from "./utils";
 
 interface Props {
 	className?: string;
@@ -10,19 +11,18 @@ export default function Collapsible(props: Props) {
 	const [visible, setVisible] = useState(true);
 
 	function onClick() {
-		setVisible;
-		//setVisible(!visible);
+		setVisible(!visible);
 	}
 
-	let className = visible ? "" : "collapsed";
-
-	if (props.className != null) {
-		className += ` ${props.className}`;
-	}
+	const className = classnames(!visible && "collapsed", props.className);
 
 	return (
-		<div className={`collapsible-container ${className}`}>
-			<h2 onClick={onClick} onKeyUp={onClick} className={`${className}`}>
+		<div className={classnames("collapsible-container", className)}>
+			<h2
+				onClick={onClick}
+				onKeyUp={onClick}
+				className={classnames("collapsible", className)}
+			>
 				{props.heading}
 			</h2>
 			{visible && <div className="collapsible-content">{props.children}</div>}

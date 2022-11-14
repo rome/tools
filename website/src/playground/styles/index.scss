@@ -1,7 +1,21 @@
-body.playground {
-  height: 100vh;
+@import "../../styles/_variables";
+@import "../../styles/_mixins";
+@import "_code";
+@import "_diagnostics";
+@import "_results";
+@import "_tabs";
+@import "_settings";
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
   display: flex;
   flex-direction: column;
+  overscroll-behavior-y: none;
+  height: 100vh;
   width: 100%;
 
   .loading {
@@ -16,4 +30,72 @@ body.playground {
     height: 100%;
     display: flex;
   }
+}
+
+.docs-sidebar {
+  display: none;
+
+  &.mobile-active {
+    display: block;
+  }
+}
+
+#root {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 80px);
+}
+
+h2 {
+  padding: 10px;
+  display: flex;
+  line-height: 18px;
+  font-size: 14px;
+  font-weight: normal;
+  box-shadow: inset 0 1px 0 var(--hard-border-color), inset 0 -1px 0 var(--hard-border-color);
+  background-color: rgba(255, 255, 255, 0.15);
+
+  &.rome {
+    background-color: rgba($color-4, 30%);
+  }
+
+  &.prettier {
+    background-color: rgba(#355F75, 40%);
+  }
+
+  img {
+    vertical-align: middle;
+    height: 18px;
+    width: 18px;
+    margin-right: 10px;
+  }
+
+  &.collapsible {
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &.collapsed {
+      opacity: 0.8;
+    }
+  }
+}
+
+.code-pane, .results-pane, .settings-pane {
+  height: 100%;
+}
+
+.code-pane, .results-pane {
+  width: 100%;
+  min-width: 0;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
 }
