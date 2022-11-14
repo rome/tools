@@ -263,6 +263,7 @@ impl DestructuringHost {
                             || parent.kind() == JsSyntaxKind::JS_MODULE_ITEM_LIST,
                     )
                 } else {
+                    // example: while(a = b) {}
                     None
                 }
             }
