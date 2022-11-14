@@ -68,3 +68,9 @@ const a = <Popconfirm
 		<span>Delete</span>
 	</Popconfirm>
 ;
+
+<OtherComponent
+	value={
+		new Set(veryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzz)
+	}
+/>

@@ -1,0 +1,22 @@
+---
+import InlineSVG from "./InlineSVG.astro";
+---
+
+<ul class="package-manager-selector">
+  <li data-name="npm" class="active">
+    <InlineSVG src="npm" />
+    <span>npm</span>
+  </li>
+  <li data-name="yarn">
+    <InlineSVG src="yarn" />
+    <span>yarn</span>
+  </li>
+  <li data-name="pnpm">
+    <InlineSVG src="pnpm" />
+    <span>pnpm</span>
+  </li>
+</ul>
+
+<pre data-name="npm" class="package-manager-command language-shellsession active"><code>{Astro.props.npx ? "npx" : "npm"} {Astro.props.npx ?? Astro.props.npm ?? Astro.props.command}</code></pre>
+<pre data-name="yarn" class="package-manager-command language-shellsession"><code>yarn {Astro.props.yarn ?? Astro.props.command}</code></pre>
+<pre data-name="pnpm" class="package-manager-command language-shellsession"><code>pnpm {Astro.props.pnpm ?? Astro.props.command}</code></pre>

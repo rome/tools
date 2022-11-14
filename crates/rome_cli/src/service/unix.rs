@@ -21,7 +21,24 @@ use tracing::Instrument;
 /// Returns the filesystem path of the global socket used to communicate with
 /// the server daemon
 fn get_socket_name() -> PathBuf {
-    env::temp_dir().join("rome-socket")
+    env::temp_dir().join(format!("rome-socket-{}", rome_service::VERSION))
+}
+
+pub(crate) fn enumerate_pipes() -> io::Result<impl Iterator<Item = String>> {
+    fs::read_dir(env::temp_dir()).map(|iter| {
+        iter.filter_map(|entry| {
+            let entry = entry.ok()?.path();
+            let file_name = entry.file_name()?;
+            let file_name = file_name.to_str()?;
+
+            let rome_version = file_name.strip_prefix("rome-socket")?;
+            if rome_version.is_empty() {
+                Some(String::new())
+            } else {
+                Some(rome_version.strip_prefix('-')?.to_string())
+            }
+        })
+    })
 }
 
 /// Try to connect to the global socket and wait for the connection to become ready
@@ -34,11 +51,15 @@ async fn try_connect() -> io::Result<UnixStream> {
 }
 
 /// Spawn the daemon server process in the background
-fn spawn_daemon() -> io::Result<Child> {
+fn spawn_daemon(stop_on_disconnect: bool) -> io::Result<Child> {
     let binary = env::current_exe()?;
 
     let mut cmd = Command::new(binary);
     cmd.arg("__run_server");
+
+    if stop_on_disconnect {
+        cmd.arg("--stop-on-disconnect");
+    }
 
     // Create a new session for the process and make it the leader, this will
     // ensures that the child process is fully detached from its parent and will
@@ -85,7 +106,7 @@ pub(crate) async fn open_socket() -> io::Result<Option<(OwnedReadHalf, OwnedWrit
 ///
 /// Returns false if the daemon process was already running or true if it had
 /// to be started
-pub(crate) async fn ensure_daemon() -> io::Result<bool> {
+pub(crate) async fn ensure_daemon(stop_on_disconnect: bool) -> io::Result<bool> {
     let mut current_child: Option<Child> = None;
     let mut last_error = None;
 
@@ -123,7 +144,7 @@ pub(crate) async fn ensure_daemon() -> io::Result<bool> {
                 } else {
                     // Spawn the daemon process and wait a few milliseconds for
                     // it to become ready then retry the connection
-                    current_child = Some(spawn_daemon()?);
+                    current_child = Some(spawn_daemon(stop_on_disconnect)?);
                     time::sleep(Duration::from_millis(50)).await;
                 }
             }
@@ -145,7 +166,7 @@ pub(crate) async fn ensure_daemon() -> io::Result<bool> {
 /// Ensure the server daemon is running and ready to receive connections and
 /// print the global socket name in the standard output
 pub(crate) async fn print_socket() -> io::Result<()> {
-    ensure_daemon().await?;
+    ensure_daemon(true).await?;
     println!("{}", get_socket_name().display());
     Ok(())
 }

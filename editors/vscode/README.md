@@ -84,20 +84,6 @@ Rome doesn’t yet support loading the `rome.json` file from a directory other t
 
 Rome isn't yet able to pick up the `rome.json` configuration in [multi-root workspaces](https://code.visualstudio.com/docs/editor/multi-root-workspaces) if the configuration isn't in the first root folder ([issue 3538](https://github.com/rome/tools/issues/3538)). You can work around this limitation by making the folder with the configuration the first root folder of the workspace (drag it to the top).
 
-### The extension uses an outdated version of Rome
-
-Make sure to restart Rome’s LSP server after updating the extension. To stop Rome’s LSP, send the `stop` command (VS will start a new LSP instance for you):
-
-```bash
-npx rome stop
-
-# or
-pnpx exec rome stop
-
-# or
-yarn run rome stop
-```
-
 ### Disable Rome for workspaces without a `rome.json` configuration
 
 Rome's VS Code extension is active for every workspace regardless if the workspace contains a `rome.json` configuration ([issue 3506](https://github.com/rome/tools/issues/3506)). That may be surprising to you if you use other extensions like ESLint where the extension is disabled if the configuration is missing. This behavior is intentional because it's Rome's philosophy that the configuration should be optional.

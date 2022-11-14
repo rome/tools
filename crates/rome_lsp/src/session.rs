@@ -63,7 +63,7 @@ pub(crate) struct Session {
     documents: RwLock<HashMap<lsp_types::Url, Document>>,
     url_interner: RwLock<UrlInterner>,
 
-    cancellation: Arc<Notify>,
+    pub(crate) cancellation: Arc<Notify>,
 }
 
 pub(crate) type SessionHandle = Arc<Session>;

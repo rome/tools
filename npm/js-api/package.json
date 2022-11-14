@@ -1,6 +1,6 @@
 {
   "name": "@rometools/js-api",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "description": "JavaScript APIs for the Rome package",
   "scripts": {
     "tsc": "tsc --noEmit",
@@ -29,6 +29,11 @@
   ],
   "license": "MIT",
   "homepage": "https://rome.tools",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rome/tools.git",
+    "directory": "npm/js-api"
+  },
   "author": "Rome Tools Developers and Contributors",
   "bugs": "https://github.com/rome/tools/issues",
   "devDependencies": {
@@ -40,9 +45,9 @@
     "rome": "../rome"
   },
   "peerDependencies": {
-    "rome": "^0.10.1-next",
-    "@rometools/wasm-nodejs": "^0.10.1-next",
-    "@rometools/backend-jsonrpc": "^0.10.1-next"
+    "rome": "^10.0.0",
+    "@rometools/wasm-nodejs": "^10.0.0",
+    "@rometools/backend-jsonrpc": "^10.0.0"
   },
   "peerDependenciesMeta": {
     "rome": {

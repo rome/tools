@@ -1,7 +1,7 @@
 use crate::prelude::*;
 
 use crate::parentheses::NeedsParentheses;
-use rome_formatter::write;
+use rome_formatter::{write, FormatRuleWithOptions};
 use rome_js_syntax::{
     JsAnyArrayElement, JsAnyExpression, JsArrayElementList, JsArrayExpressionFields,
 };
@@ -9,7 +9,18 @@ use rome_js_syntax::{JsArrayExpression, JsSyntaxNode};
 use rome_rowan::SyntaxResult;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsArrayExpression;
+pub struct FormatJsArrayExpression {
+    options: FormatJsArrayExpressionOptions,
+}
+
+impl FormatRuleWithOptions<JsArrayExpression> for FormatJsArrayExpression {
+    type Options = FormatJsArrayExpressionOptions;
+
+    fn with_options(mut self, options: Self::Options) -> Self {
+        self.options = options;
+        self
+    }
+}
 
 impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
     fn fmt_fields(&self, node: &JsArrayExpression, f: &mut JsFormatter) -> FormatResult<()> {
@@ -33,7 +44,7 @@ impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
         } else {
             let group_id = f.group_id("array");
 
-            let should_expand = should_break(&elements)?;
+            let should_expand = !self.options.is_force_flat_mode && should_break(&elements)?;
             let elements = elements.format().with_options(Some(group_id));
 
             write!(
@@ -61,6 +72,11 @@ impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
         // Formatted inside of `fmt_fields`
         Ok(())
     }
+}
+
+#[derive(Debug, Copy, Clone, Default)]
+pub struct FormatJsArrayExpressionOptions {
+    pub(crate) is_force_flat_mode: bool,
 }
 
 /// Returns `true` for arrays containing at least two elements if:

@@ -93,7 +93,7 @@ impl<'app> CliSession<'app> {
             Some("lsp-proxy") => commands::daemon::lsp_proxy(),
 
             // Internal commands
-            Some("__run_server") => commands::daemon::run_server(),
+            Some("__run_server") => commands::daemon::run_server(self),
             Some("__print_socket") => commands::daemon::print_socket(),
 
             // Print the help for known commands called without any arguments, and exit with an error

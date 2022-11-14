@@ -1,0 +1,1164 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/satisfies-operators/satisfies.ts
+---
+
+# Input
+
+```js
+({}) satisfies {};
+({}) satisfies X;
+() => ({}) satisfies X;
+this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+
+'current' in (props.pagination satisfies Object);
+('current' in props.pagination) satisfies Object;
+start + (yearSelectTotal satisfies number);
+(start + yearSelectTotal) satisfies number;
+scrollTop > (visibilityHeight satisfies number);
+(scrollTop > visibilityHeight) satisfies number;
+(bValue satisfies boolean) ? 0 : -1;
+
+async function g1() {
+  const test = (await 'foo') satisfies number;
+}
+
+var x = (v => v) satisfies (x: number) => string;
+
+foo satisfies unknown satisfies Bar;
+foo satisfies unknown as Bar;
+foo as unknown satisfies Bar;
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,22 +1,59 @@
+-({} satisfies {});
+-({} satisfies X);
+-() => ({} satisfies X);
++({});
++satisfies;
++{
++}
++({});
++satisfies;
++X;
++() => ({});
++satisfies;
++X;
+ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+ 
+-"current" in (props.pagination satisfies Object);
+-("current" in props.pagination) satisfies Object;
+-start + (yearSelectTotal satisfies number);
+-(start + yearSelectTotal) satisfies number;
+-scrollTop > (visibilityHeight satisfies number);
+-(scrollTop > visibilityHeight) satisfies number;
+-(bValue satisfies boolean) ? 0 : -1;
++'current' in (props.pagination
++satisfies;
++Object;
++)
++"current" in props.pagination;
++satisfies;
++Object;
++start + (yearSelectTotal
++satisfies;
++number;
++)
++start + yearSelectTotal;
++satisfies;
++number;
++scrollTop > (visibilityHeight
++satisfies;
++number;
++)
++scrollTop > visibilityHeight;
++satisfies;
++number;
++(bValue
++satisfies;
++boolean;
++) ? 0 : -1
+ 
+ async function g1() {
+-  const test = (await "foo") satisfies number;
++  const test = await "foo";
++  satisfies;
++  number;
+ }
+ 
+-var x = ((v) => v) satisfies (x: number) => string;
++var x = (v) => v;
++satisfies (x: number)
++=> string
+ 
+-foo satisfies unknown satisfies Bar;
+-foo satisfies unknown as Bar;
+-foo as unknown satisfies Bar;
++foo;
++satisfies;
++unknown;
++satisfies;
++Bar;
++foo;
++satisfies;
++unknown as Bar;
++foo as unknown;
++satisfies;
++Bar;
+```
+
+# Output
+
+```js
+({});
+satisfies;
+{
+}
+({});
+satisfies;
+X;
+() => ({});
+satisfies;
+X;
+this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+
+'current' in (props.pagination
+satisfies;
+Object;
+)
+"current" in props.pagination;
+satisfies;
+Object;
+start + (yearSelectTotal
+satisfies;
+number;
+)
+start + yearSelectTotal;
+satisfies;
+number;
+scrollTop > (visibilityHeight
+satisfies;
+number;
+)
+scrollTop > visibilityHeight;
+satisfies;
+number;
+(bValue
+satisfies;
+boolean;
+) ? 0 : -1
+
+async function g1() {
+  const test = await "foo";
+  satisfies;
+  number;
+}
+
+var x = (v) => v;
+satisfies (x: number)
+=> string
+
+foo;
+satisfies;
+unknown;
+satisfies;
+Bar;
+foo;
+satisfies;
+unknown as Bar;
+foo as unknown;
+satisfies;
+Bar;
+```
+
+
+# Errors
+```
+satisfies.ts:1:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  > 1 │ ({}) satisfies {};
+      │      ^^^^^^^^^
+    2 │ ({}) satisfies X;
+    3 │ () => ({}) satisfies X;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+  > 1 │ ({}) satisfies {};
+      │      ^^^^^^^^^
+    2 │ ({}) satisfies X;
+    3 │ () => ({}) satisfies X;
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ ({}) satisfies {};
+      │ ^^^^^^^^^^^^^^
+    2 │ ({}) satisfies X;
+    3 │ () => ({}) satisfies X;
+  
+satisfies.ts:1:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  > 1 │ ({}) satisfies {};
+      │                ^
+    2 │ ({}) satisfies X;
+    3 │ () => ({}) satisfies X;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+  > 1 │ ({}) satisfies {};
+      │                ^
+    2 │ ({}) satisfies X;
+    3 │ () => ({}) satisfies X;
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ ({}) satisfies {};
+      │      ^^^^^^^^^^^
+    2 │ ({}) satisfies X;
+    3 │ () => ({}) satisfies X;
+  
+satisfies.ts:2:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    1 │ ({}) satisfies {};
+  > 2 │ ({}) satisfies X;
+      │      ^^^^^^^^^
+    3 │ () => ({}) satisfies X;
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    1 │ ({}) satisfies {};
+  > 2 │ ({}) satisfies X;
+      │      ^^^^^^^^^
+    3 │ () => ({}) satisfies X;
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+  
+  i ...Which is required to end this statement
+  
+    1 │ ({}) satisfies {};
+  > 2 │ ({}) satisfies X;
+      │ ^^^^^^^^^^^^^^
+    3 │ () => ({}) satisfies X;
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+  
+satisfies.ts:2:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    1 │ ({}) satisfies {};
+  > 2 │ ({}) satisfies X;
+      │                ^
+    3 │ () => ({}) satisfies X;
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    1 │ ({}) satisfies {};
+  > 2 │ ({}) satisfies X;
+      │                ^
+    3 │ () => ({}) satisfies X;
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+  
+  i ...Which is required to end this statement
+  
+    1 │ ({}) satisfies {};
+  > 2 │ ({}) satisfies X;
+      │      ^^^^^^^^^^^
+    3 │ () => ({}) satisfies X;
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+  
+satisfies.ts:3:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    1 │ ({}) satisfies {};
+    2 │ ({}) satisfies X;
+  > 3 │ () => ({}) satisfies X;
+      │            ^^^^^^^^^
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+    5 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    1 │ ({}) satisfies {};
+    2 │ ({}) satisfies X;
+  > 3 │ () => ({}) satisfies X;
+      │            ^^^^^^^^^
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+    5 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ ({}) satisfies {};
+    2 │ ({}) satisfies X;
+  > 3 │ () => ({}) satisfies X;
+      │ ^^^^^^^^^^^^^^^^^^^^
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+    5 │ 
+  
+satisfies.ts:3:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    1 │ ({}) satisfies {};
+    2 │ ({}) satisfies X;
+  > 3 │ () => ({}) satisfies X;
+      │                      ^
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+    5 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    1 │ ({}) satisfies {};
+    2 │ ({}) satisfies X;
+  > 3 │ () => ({}) satisfies X;
+      │                      ^
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+    5 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ ({}) satisfies {};
+    2 │ ({}) satisfies X;
+  > 3 │ () => ({}) satisfies X;
+      │            ^^^^^^^^^^^
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+    5 │ 
+  
+satisfies.ts:4:48 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `satisfies`
+  
+    2 │ ({}) satisfies X;
+    3 │ () => ({}) satisfies X;
+  > 4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+      │                                                ^^^^^^^^^
+    5 │ 
+    6 │ 'current' in (props.pagination satisfies Object);
+  
+  i Remove satisfies
+  
+satisfies.ts:4:58 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `HTMLElement`
+  
+    2 │ ({}) satisfies X;
+    3 │ () => ({}) satisfies X;
+  > 4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+      │                                                          ^^^^^^^^^^^
+    5 │ 
+    6 │ 'current' in (props.pagination satisfies Object);
+  
+  i Remove HTMLElement
+  
+satisfies.ts:6:32 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `)` but instead found `satisfies`
+  
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+    5 │ 
+  > 6 │ 'current' in (props.pagination satisfies Object);
+      │                                ^^^^^^^^^
+    7 │ ('current' in props.pagination) satisfies Object;
+    8 │ start + (yearSelectTotal satisfies number);
+  
+  i Remove satisfies
+  
+satisfies.ts:6:42 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+    5 │ 
+  > 6 │ 'current' in (props.pagination satisfies Object);
+      │                                          ^^^^^^
+    7 │ ('current' in props.pagination) satisfies Object;
+    8 │ start + (yearSelectTotal satisfies number);
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+    5 │ 
+  > 6 │ 'current' in (props.pagination satisfies Object);
+      │                                          ^^^^^^
+    7 │ ('current' in props.pagination) satisfies Object;
+    8 │ start + (yearSelectTotal satisfies number);
+  
+  i ...Which is required to end this statement
+  
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+    5 │ 
+  > 6 │ 'current' in (props.pagination satisfies Object);
+      │                                ^^^^^^^^^^^^^^^^
+    7 │ ('current' in props.pagination) satisfies Object;
+    8 │ start + (yearSelectTotal satisfies number);
+  
+satisfies.ts:6:48 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+    5 │ 
+  > 6 │ 'current' in (props.pagination satisfies Object);
+      │                                                ^
+    7 │ ('current' in props.pagination) satisfies Object;
+    8 │ start + (yearSelectTotal satisfies number);
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+    5 │ 
+  > 6 │ 'current' in (props.pagination satisfies Object);
+      │                                                ^
+    7 │ ('current' in props.pagination) satisfies Object;
+    8 │ start + (yearSelectTotal satisfies number);
+  
+  i ...Which is required to end this statement
+  
+    4 │ this.isTabActionBar((e.target || e.srcElement) satisfies HTMLElement);
+    5 │ 
+  > 6 │ 'current' in (props.pagination satisfies Object);
+      │                                          ^^^^^^^
+    7 │ ('current' in props.pagination) satisfies Object;
+    8 │ start + (yearSelectTotal satisfies number);
+  
+satisfies.ts:7:33 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    6 │ 'current' in (props.pagination satisfies Object);
+  > 7 │ ('current' in props.pagination) satisfies Object;
+      │                                 ^^^^^^^^^
+    8 │ start + (yearSelectTotal satisfies number);
+    9 │ (start + yearSelectTotal) satisfies number;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    6 │ 'current' in (props.pagination satisfies Object);
+  > 7 │ ('current' in props.pagination) satisfies Object;
+      │                                 ^^^^^^^^^
+    8 │ start + (yearSelectTotal satisfies number);
+    9 │ (start + yearSelectTotal) satisfies number;
+  
+  i ...Which is required to end this statement
+  
+    6 │ 'current' in (props.pagination satisfies Object);
+  > 7 │ ('current' in props.pagination) satisfies Object;
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ start + (yearSelectTotal satisfies number);
+    9 │ (start + yearSelectTotal) satisfies number;
+  
+satisfies.ts:7:43 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    6 │ 'current' in (props.pagination satisfies Object);
+  > 7 │ ('current' in props.pagination) satisfies Object;
+      │                                           ^^^^^^
+    8 │ start + (yearSelectTotal satisfies number);
+    9 │ (start + yearSelectTotal) satisfies number;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    6 │ 'current' in (props.pagination satisfies Object);
+  > 7 │ ('current' in props.pagination) satisfies Object;
+      │                                           ^^^^^^
+    8 │ start + (yearSelectTotal satisfies number);
+    9 │ (start + yearSelectTotal) satisfies number;
+  
+  i ...Which is required to end this statement
+  
+    6 │ 'current' in (props.pagination satisfies Object);
+  > 7 │ ('current' in props.pagination) satisfies Object;
+      │                                 ^^^^^^^^^^^^^^^^
+    8 │ start + (yearSelectTotal satisfies number);
+    9 │ (start + yearSelectTotal) satisfies number;
+  
+satisfies.ts:8:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `)` but instead found `satisfies`
+  
+     6 │ 'current' in (props.pagination satisfies Object);
+     7 │ ('current' in props.pagination) satisfies Object;
+   > 8 │ start + (yearSelectTotal satisfies number);
+       │                          ^^^^^^^^^
+     9 │ (start + yearSelectTotal) satisfies number;
+    10 │ scrollTop > (visibilityHeight satisfies number);
+  
+  i Remove satisfies
+  
+satisfies.ts:8:36 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+     6 │ 'current' in (props.pagination satisfies Object);
+     7 │ ('current' in props.pagination) satisfies Object;
+   > 8 │ start + (yearSelectTotal satisfies number);
+       │                                    ^^^^^^
+     9 │ (start + yearSelectTotal) satisfies number;
+    10 │ scrollTop > (visibilityHeight satisfies number);
+  
+  i An explicit or implicit semicolon is expected here...
+  
+     6 │ 'current' in (props.pagination satisfies Object);
+     7 │ ('current' in props.pagination) satisfies Object;
+   > 8 │ start + (yearSelectTotal satisfies number);
+       │                                    ^^^^^^
+     9 │ (start + yearSelectTotal) satisfies number;
+    10 │ scrollTop > (visibilityHeight satisfies number);
+  
+  i ...Which is required to end this statement
+  
+     6 │ 'current' in (props.pagination satisfies Object);
+     7 │ ('current' in props.pagination) satisfies Object;
+   > 8 │ start + (yearSelectTotal satisfies number);
+       │                          ^^^^^^^^^^^^^^^^
+     9 │ (start + yearSelectTotal) satisfies number;
+    10 │ scrollTop > (visibilityHeight satisfies number);
+  
+satisfies.ts:8:42 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+     6 │ 'current' in (props.pagination satisfies Object);
+     7 │ ('current' in props.pagination) satisfies Object;
+   > 8 │ start + (yearSelectTotal satisfies number);
+       │                                          ^
+     9 │ (start + yearSelectTotal) satisfies number;
+    10 │ scrollTop > (visibilityHeight satisfies number);
+  
+  i An explicit or implicit semicolon is expected here...
+  
+     6 │ 'current' in (props.pagination satisfies Object);
+     7 │ ('current' in props.pagination) satisfies Object;
+   > 8 │ start + (yearSelectTotal satisfies number);
+       │                                          ^
+     9 │ (start + yearSelectTotal) satisfies number;
+    10 │ scrollTop > (visibilityHeight satisfies number);
+  
+  i ...Which is required to end this statement
+  
+     6 │ 'current' in (props.pagination satisfies Object);
+     7 │ ('current' in props.pagination) satisfies Object;
+   > 8 │ start + (yearSelectTotal satisfies number);
+       │                                    ^^^^^^^
+     9 │ (start + yearSelectTotal) satisfies number;
+    10 │ scrollTop > (visibilityHeight satisfies number);
+  
+satisfies.ts:9:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+     7 │ ('current' in props.pagination) satisfies Object;
+     8 │ start + (yearSelectTotal satisfies number);
+   > 9 │ (start + yearSelectTotal) satisfies number;
+       │                           ^^^^^^^^^
+    10 │ scrollTop > (visibilityHeight satisfies number);
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+     7 │ ('current' in props.pagination) satisfies Object;
+     8 │ start + (yearSelectTotal satisfies number);
+   > 9 │ (start + yearSelectTotal) satisfies number;
+       │                           ^^^^^^^^^
+    10 │ scrollTop > (visibilityHeight satisfies number);
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+  
+  i ...Which is required to end this statement
+  
+     7 │ ('current' in props.pagination) satisfies Object;
+     8 │ start + (yearSelectTotal satisfies number);
+   > 9 │ (start + yearSelectTotal) satisfies number;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │ scrollTop > (visibilityHeight satisfies number);
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+  
+satisfies.ts:9:37 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+     7 │ ('current' in props.pagination) satisfies Object;
+     8 │ start + (yearSelectTotal satisfies number);
+   > 9 │ (start + yearSelectTotal) satisfies number;
+       │                                     ^^^^^^
+    10 │ scrollTop > (visibilityHeight satisfies number);
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+     7 │ ('current' in props.pagination) satisfies Object;
+     8 │ start + (yearSelectTotal satisfies number);
+   > 9 │ (start + yearSelectTotal) satisfies number;
+       │                                     ^^^^^^
+    10 │ scrollTop > (visibilityHeight satisfies number);
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+  
+  i ...Which is required to end this statement
+  
+     7 │ ('current' in props.pagination) satisfies Object;
+     8 │ start + (yearSelectTotal satisfies number);
+   > 9 │ (start + yearSelectTotal) satisfies number;
+       │                           ^^^^^^^^^^^^^^^^
+    10 │ scrollTop > (visibilityHeight satisfies number);
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+  
+satisfies.ts:10:31 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `)` but instead found `satisfies`
+  
+     8 │ start + (yearSelectTotal satisfies number);
+     9 │ (start + yearSelectTotal) satisfies number;
+  > 10 │ scrollTop > (visibilityHeight satisfies number);
+       │                               ^^^^^^^^^
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+    12 │ (bValue satisfies boolean) ? 0 : -1;
+  
+  i Remove satisfies
+  
+satisfies.ts:10:41 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+     8 │ start + (yearSelectTotal satisfies number);
+     9 │ (start + yearSelectTotal) satisfies number;
+  > 10 │ scrollTop > (visibilityHeight satisfies number);
+       │                                         ^^^^^^
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+    12 │ (bValue satisfies boolean) ? 0 : -1;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+     8 │ start + (yearSelectTotal satisfies number);
+     9 │ (start + yearSelectTotal) satisfies number;
+  > 10 │ scrollTop > (visibilityHeight satisfies number);
+       │                                         ^^^^^^
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+    12 │ (bValue satisfies boolean) ? 0 : -1;
+  
+  i ...Which is required to end this statement
+  
+     8 │ start + (yearSelectTotal satisfies number);
+     9 │ (start + yearSelectTotal) satisfies number;
+  > 10 │ scrollTop > (visibilityHeight satisfies number);
+       │                               ^^^^^^^^^^^^^^^^
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+    12 │ (bValue satisfies boolean) ? 0 : -1;
+  
+satisfies.ts:10:47 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+     8 │ start + (yearSelectTotal satisfies number);
+     9 │ (start + yearSelectTotal) satisfies number;
+  > 10 │ scrollTop > (visibilityHeight satisfies number);
+       │                                               ^
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+    12 │ (bValue satisfies boolean) ? 0 : -1;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+     8 │ start + (yearSelectTotal satisfies number);
+     9 │ (start + yearSelectTotal) satisfies number;
+  > 10 │ scrollTop > (visibilityHeight satisfies number);
+       │                                               ^
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+    12 │ (bValue satisfies boolean) ? 0 : -1;
+  
+  i ...Which is required to end this statement
+  
+     8 │ start + (yearSelectTotal satisfies number);
+     9 │ (start + yearSelectTotal) satisfies number;
+  > 10 │ scrollTop > (visibilityHeight satisfies number);
+       │                                         ^^^^^^^
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+    12 │ (bValue satisfies boolean) ? 0 : -1;
+  
+satisfies.ts:11:32 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+     9 │ (start + yearSelectTotal) satisfies number;
+    10 │ scrollTop > (visibilityHeight satisfies number);
+  > 11 │ (scrollTop > visibilityHeight) satisfies number;
+       │                                ^^^^^^^^^
+    12 │ (bValue satisfies boolean) ? 0 : -1;
+    13 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+     9 │ (start + yearSelectTotal) satisfies number;
+    10 │ scrollTop > (visibilityHeight satisfies number);
+  > 11 │ (scrollTop > visibilityHeight) satisfies number;
+       │                                ^^^^^^^^^
+    12 │ (bValue satisfies boolean) ? 0 : -1;
+    13 │ 
+  
+  i ...Which is required to end this statement
+  
+     9 │ (start + yearSelectTotal) satisfies number;
+    10 │ scrollTop > (visibilityHeight satisfies number);
+  > 11 │ (scrollTop > visibilityHeight) satisfies number;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    12 │ (bValue satisfies boolean) ? 0 : -1;
+    13 │ 
+  
+satisfies.ts:11:42 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+     9 │ (start + yearSelectTotal) satisfies number;
+    10 │ scrollTop > (visibilityHeight satisfies number);
+  > 11 │ (scrollTop > visibilityHeight) satisfies number;
+       │                                          ^^^^^^
+    12 │ (bValue satisfies boolean) ? 0 : -1;
+    13 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+     9 │ (start + yearSelectTotal) satisfies number;
+    10 │ scrollTop > (visibilityHeight satisfies number);
+  > 11 │ (scrollTop > visibilityHeight) satisfies number;
+       │                                          ^^^^^^
+    12 │ (bValue satisfies boolean) ? 0 : -1;
+    13 │ 
+  
+  i ...Which is required to end this statement
+  
+     9 │ (start + yearSelectTotal) satisfies number;
+    10 │ scrollTop > (visibilityHeight satisfies number);
+  > 11 │ (scrollTop > visibilityHeight) satisfies number;
+       │                                ^^^^^^^^^^^^^^^^
+    12 │ (bValue satisfies boolean) ? 0 : -1;
+    13 │ 
+  
+satisfies.ts:12:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `)` but instead found `satisfies`
+  
+    10 │ scrollTop > (visibilityHeight satisfies number);
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+  > 12 │ (bValue satisfies boolean) ? 0 : -1;
+       │         ^^^^^^^^^
+    13 │ 
+    14 │ async function g1() {
+  
+  i Remove satisfies
+  
+satisfies.ts:12:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    10 │ scrollTop > (visibilityHeight satisfies number);
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+  > 12 │ (bValue satisfies boolean) ? 0 : -1;
+       │                   ^^^^^^^
+    13 │ 
+    14 │ async function g1() {
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    10 │ scrollTop > (visibilityHeight satisfies number);
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+  > 12 │ (bValue satisfies boolean) ? 0 : -1;
+       │                   ^^^^^^^
+    13 │ 
+    14 │ async function g1() {
+  
+  i ...Which is required to end this statement
+  
+    10 │ scrollTop > (visibilityHeight satisfies number);
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+  > 12 │ (bValue satisfies boolean) ? 0 : -1;
+       │         ^^^^^^^^^^^^^^^^^
+    13 │ 
+    14 │ async function g1() {
+  
+satisfies.ts:12:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    10 │ scrollTop > (visibilityHeight satisfies number);
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+  > 12 │ (bValue satisfies boolean) ? 0 : -1;
+       │                          ^
+    13 │ 
+    14 │ async function g1() {
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    10 │ scrollTop > (visibilityHeight satisfies number);
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+  > 12 │ (bValue satisfies boolean) ? 0 : -1;
+       │                          ^
+    13 │ 
+    14 │ async function g1() {
+  
+  i ...Which is required to end this statement
+  
+    10 │ scrollTop > (visibilityHeight satisfies number);
+    11 │ (scrollTop > visibilityHeight) satisfies number;
+  > 12 │ (bValue satisfies boolean) ? 0 : -1;
+       │                   ^^^^^^^^
+    13 │ 
+    14 │ async function g1() {
+  
+satisfies.ts:15:30 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    14 │ async function g1() {
+  > 15 │   const test = (await 'foo') satisfies number;
+       │                              ^^^^^^^^^
+    16 │ }
+    17 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    14 │ async function g1() {
+  > 15 │   const test = (await 'foo') satisfies number;
+       │                              ^^^^^^^^^
+    16 │ }
+    17 │ 
+  
+  i ...Which is required to end this statement
+  
+    14 │ async function g1() {
+  > 15 │   const test = (await 'foo') satisfies number;
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    16 │ }
+    17 │ 
+  
+satisfies.ts:15:40 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    14 │ async function g1() {
+  > 15 │   const test = (await 'foo') satisfies number;
+       │                                        ^^^^^^
+    16 │ }
+    17 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    14 │ async function g1() {
+  > 15 │   const test = (await 'foo') satisfies number;
+       │                                        ^^^^^^
+    16 │ }
+    17 │ 
+  
+  i ...Which is required to end this statement
+  
+    14 │ async function g1() {
+  > 15 │   const test = (await 'foo') satisfies number;
+       │                              ^^^^^^^^^^^^^^^^
+    16 │ }
+    17 │ 
+  
+satisfies.ts:18:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    16 │ }
+    17 │ 
+  > 18 │ var x = (v => v) satisfies (x: number) => string;
+       │                  ^^^^^^^^^
+    19 │ 
+    20 │ foo satisfies unknown satisfies Bar;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    16 │ }
+    17 │ 
+  > 18 │ var x = (v => v) satisfies (x: number) => string;
+       │                  ^^^^^^^^^
+    19 │ 
+    20 │ foo satisfies unknown satisfies Bar;
+  
+  i ...Which is required to end this statement
+  
+    16 │ }
+    17 │ 
+  > 18 │ var x = (v => v) satisfies (x: number) => string;
+       │ ^^^^^^^^^^^^^^^^^
+    19 │ 
+    20 │ foo satisfies unknown satisfies Bar;
+  
+satisfies.ts:18:30 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `:`
+  
+    16 │ }
+    17 │ 
+  > 18 │ var x = (v => v) satisfies (x: number) => string;
+       │                              ^
+    19 │ 
+    20 │ foo satisfies unknown satisfies Bar;
+  
+  i Remove :
+  
+satisfies.ts:18:40 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    16 │ }
+    17 │ 
+  > 18 │ var x = (v => v) satisfies (x: number) => string;
+       │                                        ^^
+    19 │ 
+    20 │ foo satisfies unknown satisfies Bar;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    16 │ }
+    17 │ 
+  > 18 │ var x = (v => v) satisfies (x: number) => string;
+       │                                        ^^
+    19 │ 
+    20 │ foo satisfies unknown satisfies Bar;
+  
+  i ...Which is required to end this statement
+  
+    16 │ }
+    17 │ 
+  > 18 │ var x = (v => v) satisfies (x: number) => string;
+       │                  ^^^^^^^^^^^^^^^^^^^^^^^^
+    19 │ 
+    20 │ foo satisfies unknown satisfies Bar;
+  
+satisfies.ts:20:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    18 │ var x = (v => v) satisfies (x: number) => string;
+    19 │ 
+  > 20 │ foo satisfies unknown satisfies Bar;
+       │     ^^^^^^^^^
+    21 │ foo satisfies unknown as Bar;
+    22 │ foo as unknown satisfies Bar;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    18 │ var x = (v => v) satisfies (x: number) => string;
+    19 │ 
+  > 20 │ foo satisfies unknown satisfies Bar;
+       │     ^^^^^^^^^
+    21 │ foo satisfies unknown as Bar;
+    22 │ foo as unknown satisfies Bar;
+  
+  i ...Which is required to end this statement
+  
+    18 │ var x = (v => v) satisfies (x: number) => string;
+    19 │ 
+  > 20 │ foo satisfies unknown satisfies Bar;
+       │ ^^^^^^^^^^^^^
+    21 │ foo satisfies unknown as Bar;
+    22 │ foo as unknown satisfies Bar;
+  
+satisfies.ts:20:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    18 │ var x = (v => v) satisfies (x: number) => string;
+    19 │ 
+  > 20 │ foo satisfies unknown satisfies Bar;
+       │               ^^^^^^^
+    21 │ foo satisfies unknown as Bar;
+    22 │ foo as unknown satisfies Bar;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    18 │ var x = (v => v) satisfies (x: number) => string;
+    19 │ 
+  > 20 │ foo satisfies unknown satisfies Bar;
+       │               ^^^^^^^
+    21 │ foo satisfies unknown as Bar;
+    22 │ foo as unknown satisfies Bar;
+  
+  i ...Which is required to end this statement
+  
+    18 │ var x = (v => v) satisfies (x: number) => string;
+    19 │ 
+  > 20 │ foo satisfies unknown satisfies Bar;
+       │     ^^^^^^^^^^^^^^^^^
+    21 │ foo satisfies unknown as Bar;
+    22 │ foo as unknown satisfies Bar;
+  
+satisfies.ts:20:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    18 │ var x = (v => v) satisfies (x: number) => string;
+    19 │ 
+  > 20 │ foo satisfies unknown satisfies Bar;
+       │                       ^^^^^^^^^
+    21 │ foo satisfies unknown as Bar;
+    22 │ foo as unknown satisfies Bar;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    18 │ var x = (v => v) satisfies (x: number) => string;
+    19 │ 
+  > 20 │ foo satisfies unknown satisfies Bar;
+       │                       ^^^^^^^^^
+    21 │ foo satisfies unknown as Bar;
+    22 │ foo as unknown satisfies Bar;
+  
+  i ...Which is required to end this statement
+  
+    18 │ var x = (v => v) satisfies (x: number) => string;
+    19 │ 
+  > 20 │ foo satisfies unknown satisfies Bar;
+       │               ^^^^^^^^^^^^^^^^^
+    21 │ foo satisfies unknown as Bar;
+    22 │ foo as unknown satisfies Bar;
+  
+satisfies.ts:20:33 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    18 │ var x = (v => v) satisfies (x: number) => string;
+    19 │ 
+  > 20 │ foo satisfies unknown satisfies Bar;
+       │                                 ^^^
+    21 │ foo satisfies unknown as Bar;
+    22 │ foo as unknown satisfies Bar;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    18 │ var x = (v => v) satisfies (x: number) => string;
+    19 │ 
+  > 20 │ foo satisfies unknown satisfies Bar;
+       │                                 ^^^
+    21 │ foo satisfies unknown as Bar;
+    22 │ foo as unknown satisfies Bar;
+  
+  i ...Which is required to end this statement
+  
+    18 │ var x = (v => v) satisfies (x: number) => string;
+    19 │ 
+  > 20 │ foo satisfies unknown satisfies Bar;
+       │                       ^^^^^^^^^^^^^
+    21 │ foo satisfies unknown as Bar;
+    22 │ foo as unknown satisfies Bar;
+  
+satisfies.ts:21:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    20 │ foo satisfies unknown satisfies Bar;
+  > 21 │ foo satisfies unknown as Bar;
+       │     ^^^^^^^^^
+    22 │ foo as unknown satisfies Bar;
+    23 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    20 │ foo satisfies unknown satisfies Bar;
+  > 21 │ foo satisfies unknown as Bar;
+       │     ^^^^^^^^^
+    22 │ foo as unknown satisfies Bar;
+    23 │ 
+  
+  i ...Which is required to end this statement
+  
+    20 │ foo satisfies unknown satisfies Bar;
+  > 21 │ foo satisfies unknown as Bar;
+       │ ^^^^^^^^^^^^^
+    22 │ foo as unknown satisfies Bar;
+    23 │ 
+  
+satisfies.ts:21:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    20 │ foo satisfies unknown satisfies Bar;
+  > 21 │ foo satisfies unknown as Bar;
+       │               ^^^^^^^
+    22 │ foo as unknown satisfies Bar;
+    23 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    20 │ foo satisfies unknown satisfies Bar;
+  > 21 │ foo satisfies unknown as Bar;
+       │               ^^^^^^^
+    22 │ foo as unknown satisfies Bar;
+    23 │ 
+  
+  i ...Which is required to end this statement
+  
+    20 │ foo satisfies unknown satisfies Bar;
+  > 21 │ foo satisfies unknown as Bar;
+       │     ^^^^^^^^^^^^^^^^^
+    22 │ foo as unknown satisfies Bar;
+    23 │ 
+  
+satisfies.ts:22:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    20 │ foo satisfies unknown satisfies Bar;
+    21 │ foo satisfies unknown as Bar;
+  > 22 │ foo as unknown satisfies Bar;
+       │                ^^^^^^^^^
+    23 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    20 │ foo satisfies unknown satisfies Bar;
+    21 │ foo satisfies unknown as Bar;
+  > 22 │ foo as unknown satisfies Bar;
+       │                ^^^^^^^^^
+    23 │ 
+  
+  i ...Which is required to end this statement
+  
+    20 │ foo satisfies unknown satisfies Bar;
+    21 │ foo satisfies unknown as Bar;
+  > 22 │ foo as unknown satisfies Bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    23 │ 
+  
+satisfies.ts:22:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    20 │ foo satisfies unknown satisfies Bar;
+    21 │ foo satisfies unknown as Bar;
+  > 22 │ foo as unknown satisfies Bar;
+       │                          ^^^
+    23 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    20 │ foo satisfies unknown satisfies Bar;
+    21 │ foo satisfies unknown as Bar;
+  > 22 │ foo as unknown satisfies Bar;
+       │                          ^^^
+    23 │ 
+  
+  i ...Which is required to end this statement
+  
+    20 │ foo satisfies unknown satisfies Bar;
+    21 │ foo satisfies unknown as Bar;
+  > 22 │ foo as unknown satisfies Bar;
+       │                ^^^^^^^^^^^^^
+    23 │ 
+  
+
+```
+
+
