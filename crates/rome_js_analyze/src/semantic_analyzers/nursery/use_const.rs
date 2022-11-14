@@ -56,14 +56,19 @@ declare_node_union! {
     pub(crate) DestructuringHost = JsVariableDeclarator | JsAssignmentExpression
 }
 
-pub(crate) struct ConstantBinding {
-    binding: JsIdentifierBinding,
-    fix: bool,
+pub(crate) struct ConstState {
+    can_be_const: Vec<JsIdentifierBinding>,
+    can_fix: bool,
+}
+
+enum ConstCheckResult {
+    Fix,
+    Report,
 }
 
 impl Rule for UseConst {
     type Query = Semantic<VarDecl>;
-    type State = Vec<Option<ConstantBinding>>;
+    type State = ConstState;
     type Signals = Option<Self::State>;
     type Options = ();
 
@@ -75,14 +80,7 @@ impl Rule for UseConst {
             return None;
         }
 
-        let mut signals = Vec::new();
-        for declarator in declaration.declarators() {
-            for binding in declarator_bindings(&declarator) {
-                let info = ConstantBinding::from_binding(binding, declaration, &declarator, model);
-                signals.push(info);
-            }
-        }
-        Some(signals)
+        ConstState::new(declaration, model)
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
@@ -96,10 +94,8 @@ impl Rule for UseConst {
             },
         );
 
-        let mut found = false;
-        for info in state.iter().flat_map(Option::as_ref) {
-            found = true;
-            let binding = info.binding.name_token().ok()?;
+        for binding in state.can_be_const.iter() {
+            let binding = binding.name_token().ok()?;
             diag = diag.detail(
                 binding.text_trimmed_range(),
                 markup! {
@@ -108,19 +104,12 @@ impl Rule for UseConst {
             );
         }
 
-        if found {
-            Some(diag)
-        } else {
-            None
-        }
+        Some(diag)
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let decl = ctx.query();
-        if state
-            .iter()
-            .all(|it| matches!(it, Some(ConstantBinding { fix: true, .. })))
-        {
+        if state.can_fix {
             let mut batch = ctx.root().begin();
             batch.replace_token(decl.kind_token()?, make::token(JsSyntaxKind::CONST_KW));
             Some(JsRuleAction {
@@ -135,50 +124,71 @@ impl Rule for UseConst {
     }
 }
 
-impl ConstantBinding {
-    fn from_binding(
-        binding: JsIdentifierBinding,
-        decl: &VarDecl,
-        declarator: &JsVariableDeclarator,
-        model: &SemanticModel,
-    ) -> Option<Self> {
-        // Inside a for-loop init
-        if decl.parent::<JsForStatement>().is_some() {
-            return None;
-        }
-
-        let mut writes = binding.all_writes(model);
-
-        // In a for-in or for-of loop or if it has an initializer
-        if matches!(decl, VarDecl::JsForVariableDeclaration(..))
-            || declarator.initializer().is_some()
-        {
-            return if writes.len() == 0 {
-                Some(ConstantBinding { binding, fix: true })
-            } else {
-                None
-            };
-        }
-
-        // If no initializer and one assignment in same scope
-        let write = match (writes.next(), writes.next()) {
-            (Some(v), None) if v.scope() == binding.scope(model) => v,
-            _ => return None,
+impl ConstState {
+    fn new(declaration: &VarDecl, model: &SemanticModel) -> Option<Self> {
+        let mut state = Self {
+            can_be_const: Vec::new(),
+            can_fix: true,
         };
-
-        let host = write.node().ancestors().find_map(DestructuringHost::cast)?;
-        if host.has_member_expr_assignment() || host.has_outer_variables(write.scope()) {
-            return None;
+        for declarator in declaration.declarators() {
+            for binding in declarator_bindings(&declarator) {
+                let fix = check_binding_can_be_const(&binding, declaration, &declarator, model);
+                match fix {
+                    Some(ConstCheckResult::Fix) => state.can_be_const.push(binding),
+                    Some(ConstCheckResult::Report) => {
+                        state.can_be_const.push(binding);
+                        state.can_fix = false;
+                    }
+                    None => state.can_fix = false,
+                }
+            }
         }
+        if state.can_be_const.is_empty() {
+            None
+        } else {
+            Some(state)
+        }
+    }
+}
 
-        if host.can_become_variable_declaration().unwrap_or(false) {
-            Some(ConstantBinding {
-                binding,
-                fix: false,
-            })
+/// Check if a binding can be const
+fn check_binding_can_be_const(
+    binding: &JsIdentifierBinding,
+    decl: &VarDecl,
+    declarator: &JsVariableDeclarator,
+    model: &SemanticModel,
+) -> Option<ConstCheckResult> {
+    // Inside a for-loop init
+    if decl.parent::<JsForStatement>().is_some() {
+        return None;
+    }
+
+    let mut writes = binding.all_writes(model);
+
+    // In a for-in or for-of loop or if it has an initializer
+    if matches!(decl, VarDecl::JsForVariableDeclaration(..)) || declarator.initializer().is_some() {
+        return if writes.len() == 0 {
+            Some(ConstCheckResult::Fix)
         } else {
             None
-        }
+        };
+    }
+
+    // If no initializer and one assignment in same scope
+    let write = match (writes.next(), writes.next()) {
+        (Some(v), None) if v.scope() == binding.scope(model) => v,
+        _ => return None,
+    };
+
+    let host = write.node().ancestors().find_map(DestructuringHost::cast)?;
+    if host.has_member_expr_assignment() || host.has_outer_variables(write.scope()) {
+        return None;
+    }
+
+    if host.can_become_variable_declaration()? {
+        Some(ConstCheckResult::Report)
+    } else {
+        None
     }
 }
 
