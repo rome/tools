@@ -231,9 +231,7 @@ impl VariableDeclaration {
     fn is_let(&self) -> bool {
         match self {
             Self::JsVariableDeclaration(it) => it.is_let(),
-            Self::JsForVariableDeclaration(it) => it
-                .kind_token()
-                .map_or(false, |it| it.kind() == JsSyntaxKind::LET_KW),
+            Self::JsForVariableDeclaration(it) => it.is_let(),
         }
     }
 }
