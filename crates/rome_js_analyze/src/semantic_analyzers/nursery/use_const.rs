@@ -258,43 +258,24 @@ impl DestructuringHost {
 }
 
 fn has_outer_variables_in_binding_pat(pat: JsAnyBindingPattern, scope: Scope) -> bool {
-    is_object_or_array_binding_pat(&pat)
-        && pat
-            .syntax()
-            .descendants()
-            .filter_map(JsIdentifierBinding::cast)
-            .any(|it| is_outer_variable_in_binding(it, &scope))
+    pat.syntax()
+        .descendants()
+        .filter_map(JsIdentifierBinding::cast)
+        .any(|it| is_outer_variable_in_binding(it, &scope))
 }
 
 fn has_outer_variables_in_assign_pat(pat: JsAnyAssignmentPattern, scope: Scope) -> bool {
-    is_object_or_array_assign_pat(&pat)
-        && pat
-            .syntax()
-            .descendants()
-            .filter_map(JsIdentifierAssignment::cast)
-            .any(|it| is_outer_variable_in_assignment(it, &scope))
+    pat.syntax()
+        .descendants()
+        .filter_map(JsIdentifierAssignment::cast)
+        .any(|it| is_outer_variable_in_assignment(it, &scope))
 }
 
 fn has_member_expr_in_assign_pat(pat: JsAnyAssignmentPattern) -> bool {
-    is_object_or_array_assign_pat(&pat)
-        && pat
-            .syntax()
-            .descendants()
-            .filter_map(JsAnyAssignment::cast)
-            .any(is_member_expr_assignment)
-}
-
-fn is_object_or_array_assign_pat(pat: &JsAnyAssignmentPattern) -> bool {
-    use JsAnyAssignmentPattern::*;
-    matches!(
-        pat,
-        JsObjectAssignmentPattern(..) | JsArrayAssignmentPattern(..)
-    )
-}
-
-fn is_object_or_array_binding_pat(pat: &JsAnyBindingPattern) -> bool {
-    use JsAnyBindingPattern::*;
-    matches!(pat, JsObjectBindingPattern(..) | JsArrayBindingPattern(..))
+    pat.syntax()
+        .descendants()
+        .filter_map(JsAnyAssignment::cast)
+        .any(is_member_expr_assignment)
 }
 
 fn is_member_expr_assignment(mut assignment: JsAnyAssignment) -> bool {
