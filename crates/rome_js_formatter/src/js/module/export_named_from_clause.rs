@@ -29,20 +29,28 @@ impl FormatNodeRule<JsExportNamedFromClause> for FormatJsExportNamedFromClause {
 
             write!(f, [l_curly_token.format(),])?;
 
-            if specifiers.len() == 1 {
-                write!(f, [space(), &specifiers.format()])?;
-                if let Some(sep) = specifiers.trailing_separator() {
-                    write!(f, [format_removed(&sep)])?;
+            match specifiers.len() {
+                1 => {
+                    if let Some(sep) = specifiers.trailing_separator() {
+                        write!(
+                            f,
+                            [space(), &specifiers.format(), format_removed(&sep), space()]
+                        )?;
+                    } else {
+                        write!(f, [space(), &specifiers.format(), space()])?;
+                    }
                 }
-                write!(f, [space()])?;
-            } else if node_has_leading_newline(specifiers.syntax()) {
-                write!(f, [block_indent(&specifiers.format()),])?;
-            } else {
-                write!(
-                    f,
-                    [group(&soft_space_or_block_indent(&specifiers.format())),]
-                )?;
-            };
+                _ => {
+                    if node_has_leading_newline(specifiers.syntax()) {
+                        write!(f, [block_indent(&specifiers.format()),])?;
+                    } else {
+                        write!(
+                            f,
+                            [group(&soft_space_or_block_indent(&specifiers.format())),]
+                        )?;
+                    };
+                }
+            }
 
             write![
                 f,
