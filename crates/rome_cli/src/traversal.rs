@@ -16,7 +16,7 @@ use rome_diagnostics::{
         PrintDiagnostic, Severity, Visit,
     },
 };
-use rome_fs::{FileSystem, IndexSetInterner, OpenOptions, PathInterner, RomePath};
+use rome_fs::{FileSystem, OpenOptions, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
 use rome_service::workspace::{SupportsFeatureResult, UnsupportedReason};
 use rome_service::{
@@ -87,7 +87,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
         });
     }
 
-    let (interner, recv_files) = IndexSetInterner::new();
+    let (interner, recv_files) = PathInterner::new();
     let (send_msgs, recv_msgs) = unbounded();
     let (sender_reports, recv_reports) = unbounded();
 
@@ -589,8 +589,8 @@ struct TraversalOptions<'ctx, 'app> {
     workspace: &'ctx dyn Workspace,
     /// Determines how the files should be processed
     execution: &'ctx Execution,
-    /// File paths interner used by the filesystem traversal
-    interner: IndexSetInterner,
+    /// File paths interner cache used by the filesystem traversal
+    interner: PathInterner,
     /// Shared atomic counter storing the number of processed files
     processed: &'ctx AtomicUsize,
     /// Shared atomic counter storing the number of skipped files
@@ -640,7 +640,7 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
 }
 
 impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
-    fn interner(&self) -> &dyn PathInterner {
+    fn interner(&self) -> &PathInterner {
         &self.interner
     }
 

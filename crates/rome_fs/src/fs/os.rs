@@ -114,7 +114,7 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
         };
 
         if file_type.is_symlink() {
-            tracing::info!("Reading symlink: {:?}", path);
+            tracing::info!("Translating symlink: {:?}", path);
             let path = match fs::read_link(&path) {
                 Ok(path) => path,
                 Err(err) => {
@@ -123,6 +123,20 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
                     );
                     return;
                 }
+            };
+
+            if let Err(err) = fs::symlink_metadata(&path) {
+                if err.kind() == IoErrorKind::NotFound {
+                    ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
+                        path: path.to_string_lossy().to_string(),
+                        error_kind: ErrorKind::DereferencedSymlink(path),
+                    }));
+                } else {
+                    ctx.push_diagnostic(
+                        IoError::from(err).with_file_path(path.to_string_lossy().to_string()),
+                    );
+                }
+                return;
             };
 
             return self.spawn(ctx, path);
@@ -145,7 +159,7 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
         }
 
         ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
-            file_id,
+            path: path.to_string_lossy().to_string(),
             error_kind: ErrorKind::from(file_type),
         }));
     }
@@ -186,7 +200,7 @@ fn handle_dir<'scope>(
             }
         };
 
-        handle_dir_entry(scope, ctx, file_id.clone(), entry);
+        handle_dir_entry(scope, ctx, entry);
     }
 }
 
@@ -195,7 +209,6 @@ fn handle_dir<'scope>(
 fn handle_dir_entry<'scope>(
     scope: &Scope<'scope>,
     ctx: &'scope dyn TraversalContext,
-    file_id: FileId,
     entry: DirEntry,
 ) {
     let mut path = entry.path();
@@ -203,14 +216,16 @@ fn handle_dir_entry<'scope>(
     let mut file_type = match entry.file_type() {
         Ok(file_type) => file_type,
         Err(err) => {
-            ctx.push_diagnostic(IoError::from(err).with_file_path(file_id));
+            ctx.push_diagnostic(
+                IoError::from(err).with_file_path(path.to_string_lossy().to_string()),
+            );
             return;
         }
     };
 
     if file_type.is_symlink() {
-        tracing::info!("Reading symlink: {:?}", path);
-        path = match fs::read_link(&path) {
+        tracing::info!("Translating symlink: {:?}", path);
+        let target_path = match fs::read_link(&path) {
             Ok(path) => path,
             Err(err) => {
                 ctx.push_diagnostic(
@@ -225,7 +240,7 @@ fn handle_dir_entry<'scope>(
             Err(err) => {
                 if err.kind() == IoErrorKind::NotFound {
                     ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
-                        file_id: FileId::zero(),
+                        path: path.to_string_lossy().to_string(),
                         error_kind: ErrorKind::DereferencedSymlink(path),
                     }));
                 } else {
@@ -236,6 +251,8 @@ fn handle_dir_entry<'scope>(
                 return;
             }
         };
+
+        path = target_path;
     };
 
     let (file_id, inserted) = ctx.interner().intern_path(path.clone());
@@ -243,7 +260,7 @@ fn handle_dir_entry<'scope>(
     // Determine whether an equivalent path already exists
     if !inserted {
         ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
-            file_id,
+            path: path.to_string_lossy().to_string(),
             error_kind: ErrorKind::InfiniteSymlinkExpansion(path),
         }));
         return;
@@ -273,7 +290,7 @@ fn handle_dir_entry<'scope>(
     }
 
     ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
-        file_id,
+        path: path.to_string_lossy().to_string(),
         error_kind: ErrorKind::from(file_type),
     }));
 }

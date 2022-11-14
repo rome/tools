@@ -1,9 +1,7 @@
-use std::{
-    io,
-    panic::RefUnwindSafe,
-    path::{Path, PathBuf},
-    sync::Arc,
-};
+use std::io;
+use std::panic::RefUnwindSafe;
+use std::path::{Path, PathBuf};
+use std::sync::Arc;
 
 use crate::{PathInterner, RomePath};
 use rome_diagnostics::{
@@ -127,7 +125,7 @@ pub trait TraversalScope<'scope> {
 pub trait TraversalContext: Sync {
     /// Provides the traversal scope with an instance of [PathInterner], used
     /// to emit diagnostics for IO errors that may happen in the traversal process
-    fn interner(&self) -> &dyn PathInterner;
+    fn interner(&self) -> &PathInterner;
 
     /// Called by the traversal process to emit an error diagnostic associated
     /// with a particular file ID when an IO error happens
@@ -160,7 +158,7 @@ where
 #[diagnostic(severity = Warning, category = "internalError/fs")]
 struct FileSystemDiagnostic {
     #[location(resource)]
-    file_id: FileId,
+    path: String,
     #[message]
     #[description]
     #[advice]

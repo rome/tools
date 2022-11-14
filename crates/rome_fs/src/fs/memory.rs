@@ -1,12 +1,9 @@
-use std::collections::hash_map::IntoIter;
-use std::{
-    collections::HashMap,
-    io,
-    panic::AssertUnwindSafe,
-    path::{Path, PathBuf},
-    str,
-    sync::Arc,
-};
+use std::collections::{hash_map::IntoIter, HashMap};
+use std::io;
+use std::panic::AssertUnwindSafe;
+use std::path::{Path, PathBuf};
+use std::str;
+use std::sync::Arc;
 
 use parking_lot::{lock_api::ArcMutexGuard, Mutex, RawMutex, RwLock};
 use rome_diagnostics::v2::Error;
@@ -184,10 +181,8 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
 
         for (path, entry) in &self.fs.errors {
             if path.strip_prefix(&base).is_ok() {
-                let (file_id, _) = ctx.interner().intern_path(path.into());
-
                 ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
-                    file_id,
+                    path: path.to_string_lossy().to_string(),
                     error_kind: match entry {
                         ErrorEntry::UnknownFileType => ErrorKind::UnknownFileType,
                         ErrorEntry::DereferencedSymlink(path) => {
@@ -215,9 +210,7 @@ mod tests {
     use rome_diagnostics::v2::Error;
 
     use crate::fs::FileSystemExt;
-    use crate::{
-        AtomicInterner, FileSystem, MemoryFileSystem, PathInterner, RomePath, TraversalContext,
-    };
+    use crate::{FileSystem, MemoryFileSystem, PathInterner, RomePath, TraversalContext};
     use rome_diagnostics::file::FileId;
 
     #[test]
@@ -274,12 +267,12 @@ mod tests {
         fs.insert(PathBuf::from("dir2/file2"), "dir2/file1".as_bytes());
 
         struct TestContext {
-            interner: AtomicInterner,
+            interner: PathInterner,
             visited: Mutex<Vec<PathBuf>>,
         }
 
         impl TraversalContext for TestContext {
-            fn interner(&self) -> &dyn PathInterner {
+            fn interner(&self) -> &PathInterner {
                 &self.interner
             }
 
@@ -296,7 +289,7 @@ mod tests {
             }
         }
 
-        let (interner, _) = AtomicInterner::new();
+        let (interner, _) = PathInterner::new();
         let mut ctx = TestContext {
             interner,
             visited: Mutex::default(),

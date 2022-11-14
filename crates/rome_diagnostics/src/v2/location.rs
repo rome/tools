@@ -2,6 +2,7 @@ use rome_text_size::{TextRange, TextSize};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
 use std::ops::Range;
+use std::path::PathBuf;
 use std::{borrow::Borrow, ops::Deref};
 
 /// Represents the location of a diagnostic in a resource.
@@ -119,7 +120,7 @@ impl<P> FilePath<P> {
     }
 
     /// Converts a `FilePath<P>` to `FilePath<&P::Target>`.
-    pub(crate) fn as_deref(&self) -> FilePath<&<P as Deref>::Target>
+    pub fn as_deref(&self) -> FilePath<&<P as Deref>::Target>
     where
         P: Deref,
     {
