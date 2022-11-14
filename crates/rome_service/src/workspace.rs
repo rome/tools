@@ -184,7 +184,7 @@ pub struct PullDiagnosticsParams {
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct PullDiagnosticsResult {
     pub diagnostics: Vec<v2::serde::Diagnostic>,
-    pub has_errors: bool,
+    pub errors: usize,
     pub skipped_diagnostics: u64,
 }
 

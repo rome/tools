@@ -308,7 +308,7 @@ export type RuleCategories = RuleCategory[];
 export type RuleCategory = "Syntax" | "Lint" | "Action";
 export interface PullDiagnosticsResult {
 	diagnostics: Diagnostic[];
-	has_errors: boolean;
+	errors: number;
 	skipped_diagnostics: number;
 }
 /**
