@@ -85,7 +85,7 @@ export default forwardRef<ReactCodeMirrorRef, Props>(function CodeMirror(
 	}
 
 	const extensions = useMemo(() => {
-		if (diagnostics === undefined) {
+		if (diagnostics === undefined || diagnostics.length === 0) {
 			return getDefaultExtensions(props.extensions);
 		}
 

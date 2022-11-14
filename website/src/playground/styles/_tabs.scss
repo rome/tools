@@ -39,6 +39,7 @@
   overflow-y: hidden;
   background-color: var(--container-color);
   font-size: 14px;
+  border-bottom: 1px solid var(--playground-border);
 
   @include dark-mode {
     background-color: rgba(255, 255, 255, 0.2);

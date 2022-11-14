@@ -102,7 +102,7 @@ export interface PlaygroundState {
 	singleFileMode: boolean;
 	tab: string;
 	cursorPosition: number;
-	files: Record<string, PlaygroundFileState>;
+	files: Record<string, undefined | PlaygroundFileState>;
 	settings: PlaygroundSettings;
 }
 

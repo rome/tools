@@ -16,6 +16,7 @@ import {
 	isTypeScriptFilename,
 	classnames,
 	getFileState,
+	normalizeFilename,
 } from "../utils";
 
 export interface SettingsTabProps {
@@ -97,15 +98,31 @@ export default function SettingsTab({
 		});
 	}
 
+	function deleteFile(filename: string) {
+		setPlaygroundState((state) => {
+			const { [filename]: _, ...files } = state.files;
+			let currentFile = state.currentFile;
+
+			if (currentFile === filename) {
+				const files = Object.keys(state.files);
+				const index = files.indexOf(filename);
+				currentFile = files[index + 1] ?? files[index - 1] ?? currentFile;
+			}
+
+			return {
+				...state,
+				currentFile,
+				files: {
+					...files,
+					// Make sure currentFile is still accessible
+					[currentFile]: getFileState(state, currentFile),
+				},
+			};
+		});
+	}
+
 	function createFile(filename: string) {
-		if (
-			// rome-ignore lint(complexity/useSimplifiedLogicExpression): Not sure how else to do this
-			!isScriptFilename(filename) &&
-			!isJSXFilename(filename) &&
-			!isTypeScriptFilename(filename)
-		) {
-			filename = `${filename}.js`;
-		}
+		filename = normalizeFilename(filename);
 
 		setPlaygroundState((state) => ({
 			...state,
@@ -115,6 +132,24 @@ export default function SettingsTab({
 				[filename]: getFileState({ files: {} }, filename),
 			},
 		}));
+	}
+
+	function renameFile(oldFilename: string, newFilename: string) {
+		newFilename = normalizeFilename(newFilename);
+
+		setPlaygroundState((state) => {
+			const { [oldFilename]: oldFile, ...files } = state.files;
+
+			return {
+				...state,
+				currentFile:
+					state.currentFile === oldFilename ? newFilename : state.currentFile,
+				files: {
+					...files,
+					[newFilename]: oldFile,
+				},
+			};
+		});
 	}
 
 	function setCurrentFile(currentFile: string) {
@@ -147,7 +182,9 @@ export default function SettingsTab({
 					currentFile={currentFile}
 					files={Object.keys(files)}
 					createFile={createFile}
+					deleteFile={deleteFile}
 					setCurrentFile={setCurrentFile}
+					renameFile={renameFile}
 				/>
 			)}
 			<FormatterSettings
@@ -178,11 +215,15 @@ export default function SettingsTab({
 function FileView({
 	currentFile,
 	createFile,
+	deleteFile,
+	renameFile,
 	setCurrentFile,
 	files,
 }: {
 	createFile: (filename: string) => void;
+	deleteFile: (filename: string) => void;
 	setCurrentFile: (filename: string) => void;
+	renameFile: (oldFilename: string, newFilename: string) => void;
 	currentFile: string;
 	files: string[];
 }) {
@@ -205,8 +246,15 @@ function FileView({
 							key={i}
 							isActive={filename === currentFile}
 							filename={filename}
+							canDelete={files.length > 1}
 							onClick={() => {
 								setCurrentFile(filename);
+							}}
+							renameFile={(newFilename) => {
+								renameFile(filename, newFilename);
+							}}
+							deleteFile={() => {
+								deleteFile(filename);
 							}}
 						/>
 					);
@@ -214,8 +262,8 @@ function FileView({
 			</ul>
 
 			{isCreatingFile && (
-				<NewFileInput
-					createFile={(filename) => {
+				<FilenameInput
+					onSubmit={(filename) => {
 						createFile(filename);
 						setCreatingFile(false);
 					}}
@@ -230,30 +278,78 @@ function FileViewItem({
 	filename,
 	isActive,
 	onClick,
+	deleteFile,
+	renameFile,
+	canDelete,
 }: {
 	filename: string;
+	canDelete: boolean;
 	isActive: boolean;
+	renameFile: (newFilename: string) => void;
 	onClick: () => void;
+	deleteFile: () => void;
 }) {
+	const [isRenaming, setIsRenaming] = useState(false);
+
+	const className = classnames(isActive && "active");
+
+	if (isRenaming) {
+		return (
+			<li>
+				<FilenameInput
+					onSubmit={(newFilename) => {
+						renameFile(newFilename);
+						setIsRenaming(false);
+					}}
+					onCancel={() => {
+						setIsRenaming(false);
+					}}
+					initialValue={filename}
+				/>
+			</li>
+		);
+	}
+
+	function onDeleteClick(e: React.MouseEvent | React.KeyboardEvent) {
+		e.preventDefault();
+		e.stopPropagation();
+		deleteFile();
+	}
+
+	function onRenameClick(e: React.MouseEvent | React.KeyboardEvent) {
+		e.preventDefault();
+		e.stopPropagation();
+		setIsRenaming(true);
+	}
+
 	return (
-		<li
-			className={classnames(isActive && "active")}
-			onClick={onClick}
-			onKeyDown={onClick}
-		>
+		<li className={className} onClick={onClick} onKeyDown={onClick}>
 			{filename}
+
+			<button onClick={onRenameClick} onKeyDown={onRenameClick}>
+				Rename
+			</button>
+
+			{canDelete && (
+				<button onClick={onDeleteClick} onKeyDown={onDeleteClick}>
+					<span className="sr-only">Delete</span>
+					<span aria-hidden={true}>X</span>
+				</button>
+			)}
 		</li>
 	);
 }
 
-function NewFileInput({
-	createFile,
+function FilenameInput({
+	onSubmit,
 	onCancel,
+	initialValue,
 }: {
-	createFile: (filename: string) => void;
+	onSubmit: (filename: string) => void;
 	onCancel: () => void;
+	initialValue?: string;
 }) {
-	const [filename, setFilename] = useState("");
+	const [filename, setFilename] = useState(initialValue ?? "");
 
 	function onKeyDown(e: React.KeyboardEvent) {
 		if (e.key === "Escape") {
@@ -261,7 +357,7 @@ function NewFileInput({
 		}
 
 		if (e.key === "Enter") {
-			createFile(filename);
+			onSubmit(filename);
 		}
 	}
 
@@ -269,7 +365,7 @@ function NewFileInput({
 		if (filename === "") {
 			onCancel();
 		} else {
-			createFile(filename);
+			onSubmit(filename);
 		}
 	}
 

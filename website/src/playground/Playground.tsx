@@ -45,8 +45,6 @@ export default function PlaygroundLoader({
 	const romeOutput = file.rome;
 	const prettierOutput = file.prettier;
 
-	console.log(file);
-
 	const codeMirrorExtensions = useMemo(
 		() => [
 			javascript({
