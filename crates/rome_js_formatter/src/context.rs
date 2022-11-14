@@ -389,7 +389,7 @@ impl FromStr for Semicolons {
         match s {
             "as-needed" | "AsNeeded" => Ok(Self::AsNeeded),
             "always" | "Always" => Ok(Self::Always),
-            _ => Err("Value not supported for QuoteProperties. Supported values are 'as-needed' and 'always'."),
+            _ => Err("Value not supported for Semicolons. Supported values are 'as-needed' and 'always'."),
         }
     }
 }

@@ -85,6 +85,7 @@ impl JsAnyClass {
 }
 
 impl JsAnyClassMember {
+    /// Returns the `name` of the member if it has any.
     pub fn name(&self) -> SyntaxResult<Option<JsAnyClassMemberName>> {
         match self {
             JsAnyClassMember::JsConstructorClassMember(constructor) => constructor
@@ -108,6 +109,7 @@ impl JsAnyClassMember {
         }
     }
 
+    /// Tests if the member has a [JsLiteralMemberName] of `name`.
     pub fn has_name(&self, name: &str) -> SyntaxResult<bool> {
         match self.name()? {
             Some(JsAnyClassMemberName::JsLiteralMemberName(literal)) => {
