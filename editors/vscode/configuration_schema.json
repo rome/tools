@@ -704,6 +704,16 @@
             }
           ]
         },
+        "noDupeKeys": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noExplicitAny": {
           "anyOf": [
             {

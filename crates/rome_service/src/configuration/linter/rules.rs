@@ -689,6 +689,7 @@ pub struct Nursery {
 struct NurserySchema {
     no_banned_types: Option<RuleConfiguration>,
     no_const_assign: Option<RuleConfiguration>,
+    no_dupe_keys: Option<RuleConfiguration>,
     no_explicit_any: Option<RuleConfiguration>,
     no_invalid_constructor_super: Option<RuleConfiguration>,
     use_camel_case: Option<RuleConfiguration>,
@@ -699,9 +700,10 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 9] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 10] = [
         "noBannedTypes",
         "noConstAssign",
+        "noDupeKeys",
         "noExplicitAny",
         "noInvalidConstructorSuper",
         "useCamelCase",
