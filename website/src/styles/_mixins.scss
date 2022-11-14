@@ -57,12 +57,12 @@
 }
 
 @mixin dark-mode {
-	@at-root html[data-theme='dark'] #{if(&, "&", "")} {
+	@at-root :root[data-theme='dark'] #{if(&, "&", "")} {
 		@content;
 	}
 
 	@media (prefers-color-scheme: dark) {
-		@at-root html[data-theme='auto'] #{if(&, "&", "")} {
+		@at-root :root[data-theme='auto'] #{if(&, "&", "")} {
 			@content;
 		}
 	}
