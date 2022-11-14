@@ -1,5 +1,6 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 147
 expression: content
 ---
 ## `ci.js`
@@ -10,9 +11,5 @@ statement();
 ```
 
 # Emitted Messages
-
-```block
-Checked 1 file(s) in 10ms
-```
 
 

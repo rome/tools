@@ -6,7 +6,7 @@ use crossbeam::{
     channel::{unbounded, Receiver, Sender},
     select,
 };
-use rome_console::{markup, Console, ConsoleExt};
+use rome_console::{fmt, markup, Console, ConsoleExt};
 use rome_diagnostics::{
     file::FileId,
     v2::{
@@ -39,6 +39,22 @@ use std::{
     thread,
     time::{Duration, Instant},
 };
+
+struct CheckResult {
+    count: usize,
+    duration: Duration,
+    errors: usize,
+}
+impl fmt::Display for CheckResult {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> io::Result<()> {
+        markup!(<Info>"Checked "{self.count}" file(s) in "{self.duration}</Info>).fmt(fmt)?;
+
+        if self.errors > 0 {
+            markup!("\n"<Error>"Found "{self.errors}" error(s)"</Error>).fmt(fmt)?
+        }
+        Ok(())
+    }
+}
 
 pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<(), Termination> {
     init_thread_pool();
@@ -136,25 +152,23 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
                         <Info>"Fixed "{count}" file(s) in "{duration}</Info>
                     });
                 } else {
-                    console.log(markup! {
-                        <Info>"Checked "{count}" file(s) in "{duration}</Info>
-                    });
-                }
-                if errors > 0 {
-                    console.log(markup! {
-                        <Error>"Found "{errors}" error(s)"</Error>
-                    });
+                    console.log(markup!({
+                        CheckResult {
+                            count,
+                            duration,
+                            errors,
+                        }
+                    }));
                 }
             }
             TraversalMode::CI { .. } => {
-                console.log(markup! {
-                    <Info>"Checked "{count}" file(s) in "{duration}</Info>
-                });
-                if errors > 0 {
-                    console.log(markup! {
-                        <Error>"Found "{errors}" error(s)"</Error>
-                    });
-                }
+                console.log(markup!({
+                    CheckResult {
+                        count,
+                        duration,
+                        errors,
+                    }
+                }));
             }
             TraversalMode::Format { write: false, .. } => {
                 console.log(markup! {
