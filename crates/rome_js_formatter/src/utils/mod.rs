@@ -15,6 +15,7 @@ mod object_pattern_like;
 #[cfg(test)]
 mod quickcheck_utils;
 pub(crate) mod test_call;
+pub(crate) mod test_each_template;
 mod typescript;
 
 use crate::context::trailing_comma::FormatTrailingComma;

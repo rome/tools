@@ -1,9 +1,9 @@
+use crate::context::TabWidth;
 use crate::js::expressions::template_chunk_element::AnyTemplateChunkElement;
 use crate::js::expressions::template_element::{AnyTemplateElement, TemplateElementOptions};
-
-use crate::context::TabWidth;
 use crate::prelude::*;
-
+use crate::utils::test_each_template::EachTemplateTable;
+use rome_formatter::FormatRuleWithOptions;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsLanguage,
     JsTemplateElementList, TsAnyTemplateElement, TsTemplateElementList,
@@ -12,14 +12,34 @@ use rome_rowan::{declare_node_union, AstNodeListIterator, SyntaxResult};
 use std::iter::FusedIterator;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsTemplateElementList;
+pub struct FormatJsTemplateElementList {
+    options: FormatJsTemplateElementListOptions,
+}
+
+impl FormatRuleWithOptions<JsTemplateElementList> for FormatJsTemplateElementList {
+    type Options = FormatJsTemplateElementListOptions;
+
+    fn with_options(mut self, options: Self::Options) -> Self {
+        self.options = options;
+        self
+    }
+}
 
 impl FormatRule<JsTemplateElementList> for FormatJsTemplateElementList {
     type Context = JsFormatContext;
 
     fn fmt(&self, node: &JsTemplateElementList, f: &mut JsFormatter) -> FormatResult<()> {
-        AnyTemplateElementList::JsTemplateElementList(node.clone()).fmt(f)
+        if self.options.is_test_each_pattern {
+            EachTemplateTable::from(node, f)?.fmt(f)
+        } else {
+            AnyTemplateElementList::JsTemplateElementList(node.clone()).fmt(f)
+        }
     }
+}
+
+#[derive(Debug, Copy, Clone, Default)]
+pub struct FormatJsTemplateElementListOptions {
+    pub(crate) is_test_each_pattern: bool,
 }
 
 pub(crate) enum AnyTemplateElementList {
