@@ -100,6 +100,7 @@ define_dategories! {
 
     "suppressions/unknownGroup",
     "suppressions/unknownRule",
+    "suppressions/unused",
     // Used in tests and examples
     "args/fileNotFound",
     "flags/invalid",

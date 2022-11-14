@@ -405,6 +405,7 @@ export type Category =
 	| "parse/noSuperWithoutExtends"
 	| "suppressions/unknownGroup"
 	| "suppressions/unknownRule"
+	| "suppressions/unused"
 	| "args/fileNotFound"
 	| "flags/invalid"
 	| "semanticTests";
