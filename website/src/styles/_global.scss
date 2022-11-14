@@ -145,8 +145,8 @@ a, .link {
 	@include mobile-only {
 		scroll-padding-top: 64px;
 	}
+}
 
-	@include dark-mode {
-		color-scheme: dark only;
-	}
+@include dark-mode {
+	color-scheme: dark only;
 }
