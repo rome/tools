@@ -6,6 +6,7 @@ specifiers:
   '@astrojs/react': ^1.2.2
   '@astrojs/rss': ^1.0.3
   '@codemirror/lang-javascript': ^6.1.0
+  '@codemirror/lint': ^6.0.0
   '@codemirror/state': 6.1.2
   '@codemirror/view': 6.4.0
   '@docsearch/css': ^3.3.0
@@ -50,6 +51,7 @@ dependencies:
   '@astrojs/react': 1.2.2_74b3ggvk3akyhuq4eydyx3fqim
   '@astrojs/rss': 1.0.3
   '@codemirror/lang-javascript': 6.1.1
+  '@codemirror/lint': 6.0.0
   '@codemirror/state': 6.1.2
   '@codemirror/view': 6.4.0
   '@docsearch/css': 3.3.0
@@ -62,7 +64,7 @@ dependencies:
   '@types/react': 17.0.52
   '@types/react-dom': 17.0.18
   '@types/react-tabs': 2.3.4
-  '@uiw/react-codemirror': 4.13.2_3umfte35vda6ohottwifs3cpsq
+  '@uiw/react-codemirror': 4.13.2_ai5dpkfsh6bew42tf7jao77pla
   '@vitejs/plugin-react': 2.2.0_vite@3.1.8
   astro: 1.6.7_ajklay5k626t46b6fyghkbup3i
   astro-compress: 1.1.3
@@ -1320,9 +1322,10 @@ packages:
     resolution: {integrity: sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==}
     dev: false
 
-  /@uiw/codemirror-extensions-basic-setup/4.13.2_ebfztrivxsawr3nzgdquexqq6q:
+  /@uiw/codemirror-extensions-basic-setup/4.13.2_taect3vlcl4b4hfcnqjzfij36u:
     resolution: {integrity: sha512-ATJA7WaZ5g7/0teNBQRIalK3RxfU9X7hviwh6BOelaeJrJjkY6x+jVaACYywP1GStsIKcjNCumakpmRPO9w4sQ==}
     peerDependencies:
+      '@codemirror/lint': '>=6.0.0'
       '@codemirror/state': '>=6.0.0'
       '@codemirror/view': '>=6.0.0'
     dependencies:
@@ -1335,7 +1338,7 @@ packages:
       '@codemirror/view': 6.4.0
     dev: false
 
-  /@uiw/react-codemirror/4.13.2_3umfte35vda6ohottwifs3cpsq:
+  /@uiw/react-codemirror/4.13.2_ai5dpkfsh6bew42tf7jao77pla:
     resolution: {integrity: sha512-sMfb8F82yLSqyq1gEUlr14E4KGXDfvsCnkGLLwJZqsq/TvJTRVcy0GX87wn3GXBtGhNp5TvGFUDaCnFzbU4bIQ==}
     peerDependencies:
       '@codemirror/state': '>=6.0.0'
@@ -1348,10 +1351,12 @@ packages:
       '@codemirror/state': 6.1.2
       '@codemirror/theme-one-dark': 6.1.0
       '@codemirror/view': 6.4.0
-      '@uiw/codemirror-extensions-basic-setup': 4.13.2_ebfztrivxsawr3nzgdquexqq6q
+      '@uiw/codemirror-extensions-basic-setup': 4.13.2_taect3vlcl4b4hfcnqjzfij36u
       codemirror: 6.0.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+    transitivePeerDependencies:
+      - '@codemirror/lint'
     dev: false
 
   /@vitejs/plugin-react/2.2.0_vite@3.1.8:

@@ -1,11 +1,17 @@
 import { formatWithPrettier } from "../utils";
-import type { PlaygroundState } from "../types";
+import { defaultPlaygroundState, PlaygroundSettings } from "../types";
+
+let settings = defaultPlaygroundState.settings;
 
 self.addEventListener("message", (e) => {
 	switch (e.data.type) {
+		case "updateSettings": {
+			settings = e.data.settings as PlaygroundSettings;
+			break;
+		}
+
 		case "format": {
 			const {
-				code,
 				lineWidth,
 				indentStyle,
 				indentWidth,
@@ -13,7 +19,10 @@ self.addEventListener("message", (e) => {
 				quoteProperties,
 				typescript: isTypeScript,
 				trailingComma,
-			} = e.data.playgroundState as PlaygroundState;
+			} = settings;
+			const code = e.data.code as string;
+			const filename = e.data.filename as string;
+
 			const prettierOutput = formatWithPrettier(code, {
 				lineWidth,
 				indentStyle,
@@ -26,6 +35,7 @@ self.addEventListener("message", (e) => {
 
 			self.postMessage({
 				type: "formatted",
+				filename,
 				prettierOutput,
 			});
 

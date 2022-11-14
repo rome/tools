@@ -1,27 +1,23 @@
 import { useEffect, useState, useRef } from "react";
-import { LoadingState, RomeOutput } from "./types";
-import { defaultRomeConfig } from "./types";
-import { usePlaygroundState } from "./utils";
+import { LoadingState } from "./types";
+import { getCurrentCode, getFileState, usePlaygroundState } from "./utils";
 import Playground from "./Playground";
 import LoadingScreen from "./components/LoadingScreen";
 
+function throttle(callback: () => void): () => void {
+	const timeout = setTimeout(callback, 100);
+
+	return () => {
+		clearTimeout(timeout);
+	};
+}
+
 function App() {
 	const [loadingState, setLoadingState] = useState(LoadingState.Loading);
-	const [romeConfig, setRomeConfig] = useState(defaultRomeConfig);
-	const [playgroundState, setPlaygroundState, resetPlaygroundState] =
-		usePlaygroundState(romeConfig);
+	const [state, setPlaygroundState, resetPlaygroundState] =
+		usePlaygroundState();
 	const romeWorkerRef = useRef<Worker | null>(null);
 	const prettierWorkerRef = useRef<Worker | null>(null);
-
-	const [romeOutput, setRomeOutput] = useState<RomeOutput>({
-		ast: "",
-		cst: "",
-		errors: "",
-		formatted_code: "",
-		formatter_ir: "",
-		control_flow_graph: "",
-	});
-	const [prettierOutput, setPrettierOutput] = useState({ code: "", ir: "" });
 
 	useEffect(() => {
 		romeWorkerRef.current = new Worker(
@@ -38,14 +34,21 @@ function App() {
 				case "init": {
 					const loadingState = event.data.loadingState as LoadingState;
 					setLoadingState(loadingState);
-					if (loadingState === LoadingState.Success) {
-						setRomeConfig({ ...romeConfig });
-					}
 					break;
 				}
 
-				case "formatted": {
-					setRomeOutput(event.data.romeOutput);
+				case "updated": {
+					const { filename, romeOutput } = event.data;
+					setPlaygroundState((state) => ({
+						...state,
+						files: {
+							...state.files,
+							[filename]: {
+								...getFileState(state, filename),
+								rome: romeOutput,
+							},
+						},
+					}));
 					break;
 				}
 
@@ -57,7 +60,17 @@ function App() {
 		prettierWorkerRef.current.addEventListener("message", (event) => {
 			switch (event.data.type) {
 				case "formatted": {
-					setPrettierOutput(event.data.prettierOutput);
+					const { filename, prettierOutput } = event.data;
+					setPlaygroundState((state) => ({
+						...state,
+						files: {
+							...state.files,
+							[filename]: {
+								...getFileState(state, filename),
+								prettier: prettierOutput,
+							},
+						},
+					}));
 					break;
 				}
 
@@ -76,25 +89,51 @@ function App() {
 		};
 	}, []);
 
+	// Dispatch updated settings
 	useEffect(() => {
 		if (loadingState !== LoadingState.Success) {
 			return;
 		}
 
-		// Throttle the formatting so that it doesn't run on every keystroke to prevent that the
-		// workers are busy formatting outdated code.
-		let timeout = setTimeout(() => {
-			romeWorkerRef.current?.postMessage({ type: "format", playgroundState });
+		return throttle(() => {
+			romeWorkerRef.current?.postMessage({
+				type: "updateSettings",
+				settings: state.settings,
+			});
+
+			prettierWorkerRef.current?.postMessage({
+				type: "updateSettings",
+				settings: state.settings,
+			});
+		});
+	}, [loadingState, state.settings]);
+
+	// Dispatch updated code to Prettier
+	useEffect(() => {
+		if (loadingState !== LoadingState.Success) {
+			return;
+		}
+
+		return throttle(() => {
 			prettierWorkerRef.current?.postMessage({
 				type: "format",
-				playgroundState,
+				filename: state.currentFile,
+				code: getCurrentCode(state),
 			});
-		}, 100);
 
-		return () => {
-			clearTimeout(timeout);
-		};
-	}, [loadingState, playgroundState]);
+			romeWorkerRef.current?.postMessage({
+				type: "update",
+				cursorPosition: state.cursorPosition,
+				filename: state.currentFile,
+				code: getCurrentCode(state),
+			});
+		});
+	}, [
+		loadingState,
+		state.currentFile,
+		state.cursorPosition,
+		getCurrentCode(state),
+	]);
 
 	switch (loadingState) {
 		case LoadingState.Error:
@@ -108,9 +147,7 @@ function App() {
 				<Playground
 					resetPlaygroundState={resetPlaygroundState}
 					setPlaygroundState={setPlaygroundState}
-					playgroundState={playgroundState}
-					prettierOutput={prettierOutput}
-					romeOutput={romeOutput}
+					playgroundState={state}
 				/>
 			);
 	}
