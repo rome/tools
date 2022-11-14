@@ -53,9 +53,11 @@ Stop the Rome [daemon](/internals/architecture#deamon) server
 
 ## Common Options
 
-### `--no-colors`
+### `--colors=<off|force>`
 
-Disable the formatting of markup (print everything as plain text)
+Set the formatting mode for markup: `off` prints everything as plain text,
+`force` forces the formatting of markup using ANSI even if the console output
+is determined to be incompatible
 
 ### `--use-server`
 
