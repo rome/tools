@@ -514,10 +514,15 @@ export interface PullActionsResult {
 }
 export interface CodeAction {
 	category: ActionCategory;
+	group_name: string;
 	rule_name: string;
 	suggestion: CodeSuggestion;
 }
-export type ActionCategory = "QuickFix" | "Refactor";
+export type ActionCategory =
+	| "QuickFix"
+	| { Refactor: RefactorKind }
+	| { Source: SourceActionKind }
+	| { Other: string };
 /**
  * A Suggestion that is provided by rslint, and can be reported to the user, and can be automatically applied if it has the right [`Applicability`].
  */
@@ -531,6 +536,13 @@ export interface CodeSuggestion {
 	span: FileSpan;
 	suggestion: TextEdit;
 }
+export type RefactorKind =
+	| "None"
+	| "Extract"
+	| "Inline"
+	| "Rewrite"
+	| { Other: string };
+export type SourceActionKind = "None" | "OrganizeImports" | { Other: string };
 /**
  * Indicates how a tool should manage this suggestion.
  */
@@ -595,6 +607,7 @@ export interface FixFileResult {
 	skipped_suggested_fixes: number;
 }
 export interface FixAction {
+	group_name: string;
 	/**
 	 * Source range at which this action was applied
 	 */
