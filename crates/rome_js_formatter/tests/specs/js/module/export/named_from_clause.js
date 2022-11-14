@@ -7,3 +7,5 @@ export {
     lorem_lorem_lorem_lorem_lorem_lorem_lorem_lorem_lorem,
     lorem_lorem_lorem_lorem_lorem_ as ipsum_ipsum_ipsum_ipsum_ipsum_ipsum_
 } from "fancy" assert { type: "json", "type2": "json", type23: "json", "type24": "json"}
+
+export { loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong";
