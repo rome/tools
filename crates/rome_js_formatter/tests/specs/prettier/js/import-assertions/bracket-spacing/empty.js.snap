@@ -1,0 +1,30 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/import-assertions/bracket-spacing/empty.js
+---
+
+# Input
+
+```js
+export * as bar from "bar.json" assert { }```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1 @@
+-export * as bar from "bar.json";
++export * as bar from "bar.json" assert {};
+```
+
+# Output
+
+```js
+export * as bar from "bar.json" assert {};
+```
+
+
+

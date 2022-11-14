@@ -1,0 +1,342 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/satisfies-operators/lhs.ts
+---
+
+# Input
+
+```js
+(a satisfies number) = 42;
+({ a: (b satisfies any) = 2000 } = x);
+(this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+(this.configuration satisfies any) = (this.editor satisfies any) = (this
+  .editorBody satisfies any) = undefined;
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,10 +1,15 @@
+-(a satisfies number) = 42;
+-({ a: (b satisfies any) = 2000 } = x);
+-(this.selectorElem satisfies any) =
+-  this.multiselectWidget =
+-  this.initialValues =
+-    undefined;
+-(this.configuration satisfies any) =
+-  (this.editor satisfies any) =
+-  (this.editorBody satisfies any) =
+-    undefined;
++(a
++satisfies;
++number;
++) = 42
++({ a: (b satisfies any) = 2000;
++} = x)
++(this.selectorElem
++satisfies;
++any;
++) = this.multiselectWidget = this.initialValues = undefined
++(this.configuration
++satisfies;
++any;
++) = (this.editor satisfies any) = (this
++  .editorBody satisfies any) = undefined
+```
+
+# Output
+
+```js
+(a
+satisfies;
+number;
+) = 42
+({ a: (b satisfies any) = 2000;
+} = x)
+(this.selectorElem
+satisfies;
+any;
+) = this.multiselectWidget = this.initialValues = undefined
+(this.configuration
+satisfies;
+any;
+) = (this.editor satisfies any) = (this
+  .editorBody satisfies any) = undefined
+```
+
+
+# Errors
+```
+lhs.ts:1:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `)` but instead found `satisfies`
+  
+  > 1 │ (a satisfies number) = 42;
+      │    ^^^^^^^^^
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+  
+  i Remove satisfies
+  
+lhs.ts:1:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  > 1 │ (a satisfies number) = 42;
+      │              ^^^^^^
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+  > 1 │ (a satisfies number) = 42;
+      │              ^^^^^^
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ (a satisfies number) = 42;
+      │    ^^^^^^^^^^^^^^^^
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+  
+lhs.ts:1:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  > 1 │ (a satisfies number) = 42;
+      │                    ^
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+  > 1 │ (a satisfies number) = 42;
+      │                    ^
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ (a satisfies number) = 42;
+      │              ^^^^^^^
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+  
+lhs.ts:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `)` but instead found `satisfies`
+  
+    1 │ (a satisfies number) = 42;
+  > 2 │ ({ a: (b satisfies any) = 2000 } = x);
+      │          ^^^^^^^^^
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+    4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+  
+  i Remove satisfies
+  
+lhs.ts:2:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `any`
+  
+    1 │ (a satisfies number) = 42;
+  > 2 │ ({ a: (b satisfies any) = 2000 } = x);
+      │                    ^^^
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+    4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+  
+  i Remove any
+  
+lhs.ts:2:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `)`
+  
+    1 │ (a satisfies number) = 42;
+  > 2 │ ({ a: (b satisfies any) = 2000 } = x);
+      │                       ^
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+    4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+  
+  i Remove )
+  
+lhs.ts:2:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Invalid assignment to `{ a: (b satisfies any`
+  
+    1 │ (a satisfies number) = 42;
+  > 2 │ ({ a: (b satisfies any) = 2000 } = x);
+      │  ^^^^^^^^^^^^^^^^^^^^^
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+    4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+  
+  i This expression cannot be assigned to
+  
+lhs.ts:2:32 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a statement but instead found '} = x)'
+  
+    1 │ (a satisfies number) = 42;
+  > 2 │ ({ a: (b satisfies any) = 2000 } = x);
+      │                                ^^^^^^
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+    4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+  
+  i Expected a statement here
+  
+    1 │ (a satisfies number) = 42;
+  > 2 │ ({ a: (b satisfies any) = 2000 } = x);
+      │                                ^^^^^^
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+    4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+  
+lhs.ts:3:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `)` but instead found `satisfies`
+  
+    1 │ (a satisfies number) = 42;
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+  > 3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+      │                    ^^^^^^^^^
+    4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+    5 │   .editorBody satisfies any) = undefined;
+  
+  i Remove satisfies
+  
+lhs.ts:3:30 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    1 │ (a satisfies number) = 42;
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+  > 3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+      │                              ^^^
+    4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+    5 │   .editorBody satisfies any) = undefined;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    1 │ (a satisfies number) = 42;
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+  > 3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+      │                              ^^^
+    4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+    5 │   .editorBody satisfies any) = undefined;
+  
+  i ...Which is required to end this statement
+  
+    1 │ (a satisfies number) = 42;
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+  > 3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+      │                    ^^^^^^^^^^^^^
+    4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+    5 │   .editorBody satisfies any) = undefined;
+  
+lhs.ts:3:33 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    1 │ (a satisfies number) = 42;
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+  > 3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+      │                                 ^
+    4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+    5 │   .editorBody satisfies any) = undefined;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    1 │ (a satisfies number) = 42;
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+  > 3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+      │                                 ^
+    4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+    5 │   .editorBody satisfies any) = undefined;
+  
+  i ...Which is required to end this statement
+  
+    1 │ (a satisfies number) = 42;
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+  > 3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+      │                              ^^^^
+    4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+    5 │   .editorBody satisfies any) = undefined;
+  
+lhs.ts:4:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `)` but instead found `satisfies`
+  
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+  > 4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+      │                     ^^^^^^^^^
+    5 │   .editorBody satisfies any) = undefined;
+    6 │ 
+  
+  i Remove satisfies
+  
+lhs.ts:4:31 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+  > 4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+      │                               ^^^
+    5 │   .editorBody satisfies any) = undefined;
+    6 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+  > 4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+      │                               ^^^
+    5 │   .editorBody satisfies any) = undefined;
+    6 │ 
+  
+  i ...Which is required to end this statement
+  
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+  > 4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+      │                     ^^^^^^^^^^^^^
+    5 │   .editorBody satisfies any) = undefined;
+    6 │ 
+  
+lhs.ts:4:34 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+  > 4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+      │                                  ^
+    5 │   .editorBody satisfies any) = undefined;
+    6 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+  > 4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+      │                                  ^
+    5 │   .editorBody satisfies any) = undefined;
+    6 │ 
+  
+  i ...Which is required to end this statement
+  
+    2 │ ({ a: (b satisfies any) = 2000 } = x);
+    3 │ (this.selectorElem satisfies any) = this.multiselectWidget = this.initialValues = undefined;
+  > 4 │ (this.configuration satisfies any) = (this.editor satisfies any) = (this
+      │                               ^^^^
+    5 │   .editorBody satisfies any) = undefined;
+    6 │ 
+  
+
+```
+
+

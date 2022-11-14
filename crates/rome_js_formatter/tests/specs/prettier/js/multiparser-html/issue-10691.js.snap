@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/multiparser-html/issue-10691.js
 ---
 
 # Input
@@ -27,7 +29,7 @@ export default function include_photoswipe(
  export default function include_photoswipe(gallery_selector = ".my-gallery") {
 -  return /* HTML */ ` <script>
 -    window.addEventListener("load", () =>
--      initPhotoSwipeFromDOM("${gallery_selector}"),
+-      initPhotoSwipeFromDOM("${gallery_selector}")
 -    );
 -  </script>`;
 +  return /* HTML */ `
