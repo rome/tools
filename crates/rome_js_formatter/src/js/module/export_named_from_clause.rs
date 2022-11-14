@@ -31,13 +31,13 @@ impl FormatNodeRule<JsExportNamedFromClause> for FormatJsExportNamedFromClause {
 
             match specifiers.len() {
                 1 => {
-                    if let Some(sep) = specifiers.trailing_separator() {
-                        write!(
-                            f,
-                            [space(), &specifiers.format(), format_removed(&sep), space()]
-                        )?;
-                    } else {
-                        write!(f, [space(), &specifiers.format(), space()])?;
+                    // SAFETY: we know that `specifiers().len() == 1`, so unwrap `iter().next()` is safe.
+                    let first_specifier = specifiers.elements().next().unwrap();
+                    match (first_specifier.node(), first_specifier.trailing_separator()) {
+                        (Ok(specifier), Ok(_separator)) => {
+                            write!(f, [space(), specifier.format(), space()])?;
+                        }
+                        _ => write!(f, [&specifiers.format()])?,
                     }
                 }
                 _ => {
