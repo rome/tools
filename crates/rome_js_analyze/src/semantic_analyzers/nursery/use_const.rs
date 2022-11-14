@@ -248,11 +248,17 @@ fn with_declarator_bindings(
     mut f: impl FnMut(JsIdentifierBinding),
 ) {
     if let Ok(id) = declarator.id() {
-        with_binding_pat_identifiers(id, &mut f);
+        with_binding_pat_identifiers(id, &mut |ident| {
+            f(ident);
+            false
+        });
     }
 }
 
-fn with_binding_pat_identifiers(pat: JsAnyBindingPattern, f: &mut impl FnMut(JsIdentifierBinding)) {
+fn with_binding_pat_identifiers(
+    pat: JsAnyBindingPattern,
+    f: &mut impl FnMut(JsIdentifierBinding) -> bool,
+) -> bool {
     match pat {
         JsAnyBindingPattern::JsAnyBinding(id) => with_binding_identifier(id, f),
         JsAnyBindingPattern::JsArrayBindingPattern(p) => with_array_binding_pat_identifiers(p, f),
@@ -262,54 +268,54 @@ fn with_binding_pat_identifiers(pat: JsAnyBindingPattern, f: &mut impl FnMut(JsI
 
 fn with_object_binding_pat_identifiers(
     pat: JsObjectBindingPattern,
-    f: &mut impl FnMut(JsIdentifierBinding),
-) {
+    f: &mut impl FnMut(JsIdentifierBinding) -> bool,
+) -> bool {
     pat.properties()
         .into_iter()
         .filter_map(Result::ok)
-        .for_each(|it| {
+        .any(|it| {
             use JsAnyObjectBindingPatternMember as P;
             match it {
                 P::JsObjectBindingPatternProperty(p) => p
                     .pattern()
-                    .map_or((), |it| with_binding_pat_identifiers(it, f)),
-                P::JsObjectBindingPatternRest(p) => {
-                    p.binding().map_or((), |it| with_binding_identifier(it, f))
-                }
+                    .map_or(false, |it| with_binding_pat_identifiers(it, f)),
+                P::JsObjectBindingPatternRest(p) => p
+                    .binding()
+                    .map_or(false, |it| with_binding_identifier(it, f)),
                 P::JsObjectBindingPatternShorthandProperty(p) => p
                     .identifier()
-                    .map_or((), |it| with_binding_identifier(it, f)),
-                P::JsUnknownBinding(_) => (),
+                    .map_or(false, |it| with_binding_identifier(it, f)),
+                P::JsUnknownBinding(_) => false,
             }
         })
 }
 
 fn with_array_binding_pat_identifiers(
     pat: JsArrayBindingPattern,
-    f: &mut impl FnMut(JsIdentifierBinding),
-) {
-    pat.elements()
-        .into_iter()
-        .filter_map(Result::ok)
-        .for_each(|it| {
-            use JsAnyArrayBindingPatternElement as P;
-            match it {
-                P::JsAnyBindingPattern(p) => with_binding_pat_identifiers(p, f),
-                P::JsArrayBindingPatternRestElement(p) => p
-                    .pattern()
-                    .map_or((), |it| with_binding_pat_identifiers(it, f)),
-                P::JsArrayHole(_) => (),
-                P::JsBindingPatternWithDefault(p) => p
-                    .pattern()
-                    .map_or((), |it| with_binding_pat_identifiers(it, f)),
-            }
-        })
+    f: &mut impl FnMut(JsIdentifierBinding) -> bool,
+) -> bool {
+    pat.elements().into_iter().filter_map(Result::ok).any(|it| {
+        use JsAnyArrayBindingPatternElement as P;
+        match it {
+            P::JsAnyBindingPattern(p) => with_binding_pat_identifiers(p, f),
+            P::JsArrayBindingPatternRestElement(p) => p
+                .pattern()
+                .map_or(false, |it| with_binding_pat_identifiers(it, f)),
+            P::JsArrayHole(_) => false,
+            P::JsBindingPatternWithDefault(p) => p
+                .pattern()
+                .map_or(false, |it| with_binding_pat_identifiers(it, f)),
+        }
+    })
 }
 
-fn with_binding_identifier(binding: JsAnyBinding, f: &mut impl FnMut(JsIdentifierBinding)) {
+fn with_binding_identifier(
+    binding: JsAnyBinding,
+    f: &mut impl FnMut(JsIdentifierBinding) -> bool,
+) -> bool {
     match binding {
         JsAnyBinding::JsIdentifierBinding(id) => f(id),
-        JsAnyBinding::JsUnknownBinding(_) => (),
+        JsAnyBinding::JsUnknownBinding(_) => false,
     }
 }
 
@@ -359,10 +365,7 @@ impl DestructuringHost {
 }
 
 fn has_outer_variables_in_binding_pat(pat: JsAnyBindingPattern, scope: Scope) -> bool {
-    pat.syntax()
-        .descendants()
-        .filter_map(JsIdentifierBinding::cast)
-        .any(|it| is_outer_variable_in_binding(it, &scope))
+    with_binding_pat_identifiers(pat, &mut |it| is_outer_variable_in_binding(it, &scope))
 }
 
 fn is_outer_variable_in_binding(binding: JsIdentifierBinding, scope: &Scope) -> bool {

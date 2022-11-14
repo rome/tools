@@ -237,22 +237,6 @@ let f = (function() { let g = x; })(); f = 1;
 
 # Diagnostics
 ```
-invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Use 'const' when variables are not reassigned.
-  
-  > 1 │ let f = (function() { let g = x; })(); f = 1;
-      │ ^^^
-  
-  i 'g' is never reassigned.
-  
-  > 1 │ let f = (function() { let g = x; })(); f = 1;
-      │                           ^
-  
-
-```
-
-```
 invalid.jsonc:1:23 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use 'const' when variables are not reassigned.
@@ -1290,16 +1274,6 @@ invalid.jsonc:1:1 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━
   
   > 1 │ let someFunc = () => { let a = 1, b = 2; foo(a, b) }
       │     ^^^^^^^^
-  
-  i 'a' is never reassigned.
-  
-  > 1 │ let someFunc = () => { let a = 1, b = 2; foo(a, b) }
-      │                            ^
-  
-  i 'b' is never reassigned.
-  
-  > 1 │ let someFunc = () => { let a = 1, b = 2; foo(a, b) }
-      │                                   ^
   
   i Suggested fix: Use 'const' instead.
   
