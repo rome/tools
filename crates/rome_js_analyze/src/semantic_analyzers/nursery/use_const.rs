@@ -151,9 +151,9 @@ impl ConstBindings {
             declaration,
             VariableDeclaration::JsForVariableDeclaration(..)
         );
-        for declarator in declaration.declarators() {
+        declaration.for_each_declarator(|declarator| {
             let has_initializer = declarator.initializer().is_some();
-            for binding in declarator_bindings(&declarator) {
+            with_declarator_bindings(&declarator, |binding| {
                 let fix = check_binding_can_be_const(
                     &binding,
                     in_for_in_or_of_loop,
@@ -168,8 +168,8 @@ impl ConstBindings {
                     }
                     None => state.can_fix = false,
                 }
-            }
-        }
+            });
+        });
         if state.can_be_const.is_empty() {
             None
         } else {
@@ -215,10 +215,17 @@ fn check_binding_can_be_const(
 }
 
 impl VariableDeclaration {
-    fn declarators(&self) -> impl Iterator<Item = JsVariableDeclarator> {
-        self.syntax()
-            .descendants()
-            .filter_map(JsVariableDeclarator::cast)
+    fn for_each_declarator(&self, f: impl FnMut(JsVariableDeclarator)) {
+        match self {
+            VariableDeclaration::JsVariableDeclaration(x) => x
+                .declarators()
+                .into_iter()
+                .filter_map(Result::ok)
+                .for_each(f),
+            VariableDeclaration::JsForVariableDeclaration(x) => {
+                x.declarator().into_iter().for_each(f)
+            }
+        }
     }
 
     fn kind_token(&self) -> Option<JsSyntaxToken> {
@@ -236,14 +243,74 @@ impl VariableDeclaration {
     }
 }
 
-fn declarator_bindings(
+fn with_declarator_bindings(
     declarator: &JsVariableDeclarator,
-) -> impl Iterator<Item = JsIdentifierBinding> {
-    declarator
-        .id()
+    mut f: impl FnMut(JsIdentifierBinding),
+) {
+    if let Ok(id) = declarator.id() {
+        with_binding_pat_identifiers(id, &mut f);
+    }
+}
+
+fn with_binding_pat_identifiers(pat: JsAnyBindingPattern, f: &mut impl FnMut(JsIdentifierBinding)) {
+    match pat {
+        JsAnyBindingPattern::JsAnyBinding(id) => with_binding_identifier(id, f),
+        JsAnyBindingPattern::JsArrayBindingPattern(p) => with_array_binding_pat_identifiers(p, f),
+        JsAnyBindingPattern::JsObjectBindingPattern(p) => with_object_binding_pat_identifiers(p, f),
+    }
+}
+
+fn with_object_binding_pat_identifiers(
+    pat: JsObjectBindingPattern,
+    f: &mut impl FnMut(JsIdentifierBinding),
+) {
+    pat.properties()
         .into_iter()
-        .flat_map(|it| it.syntax().descendants())
-        .filter_map(JsIdentifierBinding::cast)
+        .filter_map(Result::ok)
+        .for_each(|it| {
+            use JsAnyObjectBindingPatternMember as P;
+            match it {
+                P::JsObjectBindingPatternProperty(p) => p
+                    .pattern()
+                    .map_or((), |it| with_binding_pat_identifiers(it, f)),
+                P::JsObjectBindingPatternRest(p) => {
+                    p.binding().map_or((), |it| with_binding_identifier(it, f))
+                }
+                P::JsObjectBindingPatternShorthandProperty(p) => p
+                    .identifier()
+                    .map_or((), |it| with_binding_identifier(it, f)),
+                P::JsUnknownBinding(_) => (),
+            }
+        })
+}
+
+fn with_array_binding_pat_identifiers(
+    pat: JsArrayBindingPattern,
+    f: &mut impl FnMut(JsIdentifierBinding),
+) {
+    pat.elements()
+        .into_iter()
+        .filter_map(Result::ok)
+        .for_each(|it| {
+            use JsAnyArrayBindingPatternElement as P;
+            match it {
+                P::JsAnyBindingPattern(p) => with_binding_pat_identifiers(p, f),
+                P::JsArrayBindingPatternRestElement(p) => p
+                    .pattern()
+                    .map_or((), |it| with_binding_pat_identifiers(it, f)),
+                P::JsArrayHole(_) => (),
+                P::JsBindingPatternWithDefault(p) => p
+                    .pattern()
+                    .map_or((), |it| with_binding_pat_identifiers(it, f)),
+            }
+        })
+}
+
+fn with_binding_identifier(binding: JsAnyBinding, f: &mut impl FnMut(JsIdentifierBinding)) {
+    match binding {
+        JsAnyBinding::JsIdentifierBinding(id) => f(id),
+        JsAnyBinding::JsUnknownBinding(_) => (),
+    }
 }
 
 impl DestructuringHost {
@@ -286,7 +353,7 @@ impl DestructuringHost {
                 .map_or(false, |pat| has_outer_variables_in_binding_pat(pat, scope)),
             Self::JsAssignmentExpression(it) => it
                 .left()
-                .map_or(false, |pat| has_outer_variables_in_assign_pat(pat, scope)),
+                .map_or(false, |pat| has_outer_variables_in_assign_pat(pat, &scope)),
         }
     }
 }
@@ -298,18 +365,55 @@ fn has_outer_variables_in_binding_pat(pat: JsAnyBindingPattern, scope: Scope) ->
         .any(|it| is_outer_variable_in_binding(it, &scope))
 }
 
-fn has_outer_variables_in_assign_pat(pat: JsAnyAssignmentPattern, scope: Scope) -> bool {
-    pat.syntax()
-        .descendants()
-        .filter_map(JsIdentifierAssignment::cast)
-        .any(|it| is_outer_variable_in_assignment(it, &scope))
+fn is_outer_variable_in_binding(binding: JsIdentifierBinding, scope: &Scope) -> bool {
+    binding
+        .name_token()
+        .map_or(false, |name| is_binding_in_outer_scopes(scope, name))
 }
 
 fn has_member_expr_in_assign_pat(pat: JsAnyAssignmentPattern) -> bool {
-    pat.syntax()
-        .descendants()
-        .filter_map(JsAnyAssignment::cast)
-        .any(is_member_expr_assignment)
+    use JsAnyAssignmentPattern as P;
+    match pat {
+        P::JsAnyAssignment(it) => is_member_expr_assignment(it),
+        P::JsArrayAssignmentPattern(p) => has_member_expr_in_array_pat(p),
+        P::JsObjectAssignmentPattern(p) => has_member_expr_in_object_assign_pat(p),
+    }
+}
+
+fn has_member_expr_in_object_assign_pat(pat: JsObjectAssignmentPattern) -> bool {
+    pat.properties()
+        .into_iter()
+        .filter_map(Result::ok)
+        .any(|it| {
+            use JsAnyObjectAssignmentPatternMember as P;
+            match it {
+                P::JsObjectAssignmentPatternProperty(p) => {
+                    p.pattern().map_or(false, has_member_expr_in_assign_pat)
+                }
+                P::JsObjectAssignmentPatternRest(p) => {
+                    p.target().map_or(false, is_member_expr_assignment)
+                }
+                P::JsObjectAssignmentPatternShorthandProperty(_) | P::JsUnknownAssignment(_) => {
+                    false
+                }
+            }
+        })
+}
+
+fn has_member_expr_in_array_pat(pat: JsArrayAssignmentPattern) -> bool {
+    pat.elements().into_iter().filter_map(Result::ok).any(|it| {
+        use JsAnyArrayAssignmentPatternElement as P;
+        match it {
+            P::JsAnyAssignmentPattern(p) => has_member_expr_in_assign_pat(p),
+            P::JsArrayAssignmentPatternRestElement(p) => {
+                p.pattern().map_or(false, has_member_expr_in_assign_pat)
+            }
+            P::JsAssignmentWithDefault(p) => {
+                p.pattern().map_or(false, has_member_expr_in_assign_pat)
+            }
+            P::JsArrayHole(_) => false,
+        }
+    })
 }
 
 fn is_member_expr_assignment(mut assignment: JsAnyAssignment) -> bool {
@@ -327,13 +431,60 @@ fn is_member_expr_assignment(mut assignment: JsAnyAssignment) -> bool {
     )
 }
 
-fn is_outer_variable_in_binding(binding: JsIdentifierBinding, scope: &Scope) -> bool {
-    binding
-        .name_token()
-        .map_or(false, |name| is_binding_in_outer_scopes(scope, name))
+fn has_outer_variables_in_assign_pat(pat: JsAnyAssignmentPattern, scope: &Scope) -> bool {
+    use JsAnyAssignmentPattern as P;
+    match pat {
+        P::JsAnyAssignment(a) => is_outer_variable_in_assignment(a, scope),
+        P::JsArrayAssignmentPattern(p) => has_outer_variables_in_object_assign_pat(p, scope),
+        P::JsObjectAssignmentPattern(p) => has_outer_variables_in_array_assign_pat(p, scope),
+    }
 }
 
-fn is_outer_variable_in_assignment(assignment: JsIdentifierAssignment, scope: &Scope) -> bool {
+fn has_outer_variables_in_array_assign_pat(pat: JsObjectAssignmentPattern, scope: &Scope) -> bool {
+    pat.properties()
+        .into_iter()
+        .filter_map(Result::ok)
+        .any(|it| {
+            use JsAnyObjectAssignmentPatternMember as P;
+            match it {
+                P::JsObjectAssignmentPatternProperty(p) => p
+                    .pattern()
+                    .map_or(false, |it| has_outer_variables_in_assign_pat(it, scope)),
+                P::JsObjectAssignmentPatternRest(p) => p
+                    .target()
+                    .map_or(false, |it| is_outer_variable_in_assignment(it, scope)),
+                P::JsObjectAssignmentPatternShorthandProperty(p) => p
+                    .identifier()
+                    .map_or(false, |it| is_outer_ident_in_assignment(it, scope)),
+                P::JsUnknownAssignment(_) => false,
+            }
+        })
+}
+
+fn has_outer_variables_in_object_assign_pat(pat: JsArrayAssignmentPattern, scope: &Scope) -> bool {
+    pat.elements().into_iter().filter_map(Result::ok).any(|it| {
+        use JsAnyArrayAssignmentPatternElement as P;
+        match it {
+            P::JsAnyAssignmentPattern(p) => has_outer_variables_in_assign_pat(p, scope),
+            P::JsArrayAssignmentPatternRestElement(p) => p
+                .pattern()
+                .map_or(false, |it| has_outer_variables_in_assign_pat(it, scope)),
+            P::JsAssignmentWithDefault(p) => p
+                .pattern()
+                .map_or(false, |it| has_outer_variables_in_assign_pat(it, scope)),
+            P::JsArrayHole(_) => false,
+        }
+    })
+}
+
+fn is_outer_variable_in_assignment(e: JsAnyAssignment, scope: &Scope) -> bool {
+    match e {
+        JsAnyAssignment::JsIdentifierAssignment(it) => is_outer_ident_in_assignment(it, scope),
+        _ => false,
+    }
+}
+
+fn is_outer_ident_in_assignment(assignment: JsIdentifierAssignment, scope: &Scope) -> bool {
     assignment
         .name_token()
         .map_or(false, |name| is_binding_in_outer_scopes(scope, name))
