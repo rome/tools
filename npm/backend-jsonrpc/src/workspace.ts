@@ -518,6 +518,11 @@ export interface CodeAction {
 	rule_name: string;
 	suggestion: CodeSuggestion;
 }
+/**
+	* The category of a code action, this type maps directly to the [CodeActionKind] type in the Language Server Protocol specification
+
+[CodeActionKind]: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#codeActionKind 
+	 */
 export type ActionCategory =
 	| "QuickFix"
 	| { Refactor: RefactorKind }
@@ -536,13 +541,23 @@ export interface CodeSuggestion {
 	span: FileSpan;
 	suggestion: TextEdit;
 }
+/**
+ * The sub-category of a refactor code action
+ */
 export type RefactorKind =
 	| "None"
 	| "Extract"
 	| "Inline"
 	| "Rewrite"
 	| { Other: string };
-export type SourceActionKind = "None" | "OrganizeImports" | { Other: string };
+/**
+ * The sub-category of a source code action
+ */
+export type SourceActionKind =
+	| "None"
+	| "FixAll"
+	| "OrganizeImports"
+	| { Other: string };
 /**
  * Indicates how a tool should manage this suggestion.
  */

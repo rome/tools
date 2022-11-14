@@ -1,21 +1,29 @@
+use std::borrow::Cow;
 use std::collections::HashMap;
 
 use anyhow::{Context, Result};
+use rome_analyze::{ActionCategory, SourceActionKind};
 use rome_fs::RomePath;
 use rome_service::workspace::{
     FeatureName, FixFileMode, FixFileParams, PullActionsParams, SupportsFeatureParams,
 };
 use rome_service::RomeError;
 use tower_lsp::lsp_types::{
-    self as lsp, CodeActionOrCommand, CodeActionParams, CodeActionResponse,
+    self as lsp, CodeActionKind, CodeActionOrCommand, CodeActionParams, CodeActionResponse,
 };
 
 use crate::line_index::LineIndex;
 use crate::session::Session;
 use crate::utils;
 
-const FIX_ALL_PREFIX: &str = "source.fixAll";
-const FIX_ALL_ROME: lsp::CodeActionKind = lsp::CodeActionKind::new("source.fixAll.rome");
+const FIX_ALL_CATEGORY: ActionCategory = ActionCategory::Source(SourceActionKind::FixAll);
+
+fn fix_all_kind() -> CodeActionKind {
+    match FIX_ALL_CATEGORY.to_str() {
+        Cow::Borrowed(kind) => CodeActionKind::from(kind),
+        Cow::Owned(kind) => CodeActionKind::from(kind),
+    }
+}
 
 /// Queries the [`AnalysisServer`] for code actions of the file matching [FileId]
 ///
@@ -42,7 +50,7 @@ pub(crate) fn code_actions(
     if let Some(filter) = &params.context.only {
         for kind in filter {
             let kind = kind.as_str();
-            if kind.starts_with(FIX_ALL_PREFIX) {
+            if FIX_ALL_CATEGORY.matches(kind) {
                 has_fix_all = true;
             }
 
@@ -101,7 +109,7 @@ pub(crate) fn code_actions(
     if has_fixes {
         actions.retain(|action| {
             if let CodeActionOrCommand::CodeAction(action) = action {
-                action.kind == Some(FIX_ALL_ROME) || action.diagnostics.is_some()
+                action.kind.as_ref() == Some(&fix_all_kind()) || action.diagnostics.is_some()
             } else {
                 true
             }
@@ -178,7 +186,7 @@ fn fix_all(
 
     Ok(Some(CodeActionOrCommand::CodeAction(lsp::CodeAction {
         title: String::from("Fix all auto-fixable issues"),
-        kind: Some(FIX_ALL_ROME),
+        kind: Some(fix_all_kind()),
         diagnostics: Some(diagnostics),
         edit: Some(edit),
         command: None,
