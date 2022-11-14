@@ -206,7 +206,9 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
     }
 
     // Processing emitted error diagnostics, exit with a non-zero code
-    if errors > 0 {
+    if count == 0 {
+        Err(Termination::ZeroSupportedFilesFound)
+    } else if errors > 0 {
         Err(Termination::CheckError)
     } else {
         Ok(())

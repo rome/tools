@@ -76,6 +76,9 @@ pub enum Termination {
 
     #[error("The combination of configuration and arguments is invalid: \n {0}")]
     IncompatibleEndConfiguration(&'static str),
+
+    #[error("no supported files were found in the specified folders.")]
+    ZeroSupportedFilesFound,
 }
 
 fn command_name() -> String {
