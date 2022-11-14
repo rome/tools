@@ -82,11 +82,13 @@ export default function SettingsTab({
 				return state;
 			}
 
+			const { [state.currentFile]: _, ...otherFiles } = state.files;
+
 			const files: PlaygroundState["files"] = {
-				...state.files,
+				...otherFiles,
 				[newFilename]: state.files[state.currentFile]!,
 			};
-			delete files[state.currentFile];
+
 			return {
 				...state,
 				currentFile: newFilename,
@@ -97,6 +99,7 @@ export default function SettingsTab({
 
 	function createFile(filename: string) {
 		if (
+			// rome-ignore lint(complexity/useSimplifiedLogicExpression): Not sure how else to do this
 			!isScriptFilename(filename) &&
 			!isJSXFilename(filename) &&
 			!isTypeScriptFilename(filename)
@@ -233,7 +236,11 @@ function FileViewItem({
 	onClick: () => void;
 }) {
 	return (
-		<li className={classnames(isActive && "active")} onClick={onClick}>
+		<li
+			className={classnames(isActive && "active")}
+			onClick={onClick}
+			onKeyDown={onClick}
+		>
 			{filename}
 		</li>
 	);
@@ -273,6 +280,7 @@ function NewFileInput({
 	return (
 		<input
 			type="text"
+			// rome-ignore lint(a11y/noAutofocus): Not sure how else to do this
 			autoFocus={true}
 			onKeyDown={onKeyDown}
 			onChange={onChange}

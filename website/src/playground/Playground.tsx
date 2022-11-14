@@ -1,7 +1,4 @@
-import type {
-	PlaygroundProps,
-	RomeAstSyntacticData,
-} from "./types";
+import type { PlaygroundProps, RomeAstSyntacticData } from "./types";
 import type { ReactCodeMirrorRef } from "@uiw/react-codemirror";
 import CodeMirror from "./CodeMirror";
 import type { ViewUpdate } from "@codemirror/view";

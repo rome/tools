@@ -190,7 +190,7 @@ self.addEventListener("message", async (e) => {
 				syntax: {
 					// Replace 4 spaced indentation with 2
 					// TODO replace this in Rome itself
-					ast: syntaxTree.ast.replace(/    /g, "  "),
+					ast: syntaxTree.ast.replace(/ {4}/g, "  "),
 					cst: syntaxTree.cst,
 				},
 				diagnostics: {
