@@ -1,10 +1,9 @@
 use crate::prelude::*;
-use crate::utils::{FormatOptionalSemicolon};
-
+use crate::utils::FormatOptionalSemicolon;
 
 use rome_formatter::write;
+use rome_js_syntax::TsIndexSignatureClassMember;
 use rome_js_syntax::TsIndexSignatureClassMemberFields;
-use rome_js_syntax::{TsIndexSignatureClassMember};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsIndexSignatureClassMember;

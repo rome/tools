@@ -1,12 +1,9 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::utils::{FormatOptionalSemicolon};
+use crate::utils::FormatOptionalSemicolon;
 
-
-use rome_js_syntax::{
-    TsGetterSignatureClassMember, TsGetterSignatureClassMemberFields,
-};
+use rome_js_syntax::{TsGetterSignatureClassMember, TsGetterSignatureClassMemberFields};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsGetterSignatureClassMember;

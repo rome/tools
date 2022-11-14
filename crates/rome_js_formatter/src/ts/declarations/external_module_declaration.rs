@@ -1,7 +1,6 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-
 use rome_js_syntax::TsExternalModuleDeclarationFields;
 use rome_js_syntax::{TsAnyExternalModuleDeclarationBody, TsExternalModuleDeclaration};
 

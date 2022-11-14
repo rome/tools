@@ -2,7 +2,8 @@ import {
 	IndentStyle,
 	PlaygroundState,
 	QuoteProperties,
-	QuoteStyle, Semicolons,
+	QuoteStyle,
+	Semicolons,
 	SourceType,
 	TrailingComma,
 } from "../types";
@@ -499,7 +500,7 @@ function FormatterSettings({
 	setQuoteProperties: (value: QuoteProperties) => void;
 	trailingComma: TrailingComma;
 	setTrailingComma: (value: TrailingComma) => void;
-	semicolons: Semicolons,
+	semicolons: Semicolons;
 	setSemicolons: (value: Semicolons) => void;
 }) {
 	return (

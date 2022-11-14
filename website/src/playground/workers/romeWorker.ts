@@ -12,7 +12,7 @@ import {
 	QuoteProperties,
 	QuoteStyle,
 	RomeOutput,
-	Semicolons
+	Semicolons,
 } from "../types";
 
 let workspace: Workspace | null = null;

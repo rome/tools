@@ -1,7 +1,7 @@
 use crate::prelude::*;
 
 use crate::parentheses::NeedsParentheses;
-use crate::utils::{FormatOptionalSemicolon};
+use crate::utils::FormatOptionalSemicolon;
 use rome_formatter::trivia::FormatLeadingComments;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{JsSyntaxNode, TsMappedType, TsMappedTypeFields};

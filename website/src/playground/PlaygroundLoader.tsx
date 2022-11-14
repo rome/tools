@@ -274,7 +274,9 @@ export function usePlaygroundState(): [
 					searchParams.get("indentWidth") ??
 						String(defaultPlaygroundState.settings.indentWidth),
 				),
-				semicolons: (searchParams.get("semicolons") as Semicolons) ?? defaultPlaygroundState.settings.semicolons,
+				semicolons:
+					(searchParams.get("semicolons") as Semicolons) ??
+					defaultPlaygroundState.settings.semicolons,
 				enabledNurseryRules:
 					searchParams.get("enabledNurseryRules") === "true" ||
 					defaultPlaygroundState.settings.enabledNurseryRules,

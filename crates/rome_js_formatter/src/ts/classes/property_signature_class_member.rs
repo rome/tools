@@ -2,9 +2,9 @@ use crate::js::classes::property_class_member::{
     FormatClassPropertySemicolon, JsAnyPropertyClassMember,
 };
 use crate::prelude::*;
-use crate::utils::{JsAnyAssignmentLike};
+use crate::utils::JsAnyAssignmentLike;
 use rome_formatter::write;
-use rome_js_syntax::{TsPropertySignatureClassMember};
+use rome_js_syntax::TsPropertySignatureClassMember;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsPropertySignatureClassMember;
