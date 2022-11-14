@@ -694,11 +694,12 @@ struct NurserySchema {
     use_camel_case: Option<RuleConfiguration>,
     use_exhaustive_dependencies: Option<RuleConfiguration>,
     use_flat_map: Option<RuleConfiguration>,
+    use_numeric_literals: Option<RuleConfiguration>,
     use_valid_for_direction: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 8] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 9] = [
         "noBannedTypes",
         "noConstAssign",
         "noExplicitAny",
@@ -706,6 +707,7 @@ impl Nursery {
         "useCamelCase",
         "useExhaustiveDependencies",
         "useFlatMap",
+        "useNumericLiterals",
         "useValidForDirection",
     ];
     const RECOMMENDED_RULES: [&'static str; 0] = [];

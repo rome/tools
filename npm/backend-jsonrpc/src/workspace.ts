@@ -219,6 +219,7 @@ export interface Nursery {
 	useCamelCase?: RuleConfiguration;
 	useExhaustiveDependencies?: RuleConfiguration;
 	useFlatMap?: RuleConfiguration;
+	useNumericLiterals?: RuleConfiguration;
 	useValidForDirection?: RuleConfiguration;
 }
 /**
@@ -393,6 +394,7 @@ export type Category =
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/noBannedTypes"
+	| "lint/nursery/useNumericLiterals"
 	| "files/missingHandler"
 	| "format"
 	| "internalError/io"

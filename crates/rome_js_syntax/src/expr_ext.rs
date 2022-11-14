@@ -1,17 +1,19 @@
 //! Extensions for things which are not easily generated in ast expr nodes
 use crate::numbers::parse_js_number;
 use crate::{
-    JsAnyCallArgument, JsAnyExpression, JsAnyLiteralExpression, JsArrayExpression, JsArrayHole,
-    JsAssignmentExpression, JsBinaryExpression, JsCallExpression, JsComputedMemberExpression,
-    JsIdentifierExpression, JsLiteralMemberName, JsLogicalExpression, JsNumberLiteralExpression,
-    JsObjectExpression, JsPostUpdateExpression, JsReferenceIdentifier, JsRegexLiteralExpression,
-    JsStaticMemberExpression, JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken, JsTemplate,
-    JsUnaryExpression, OperatorPrecedence, T,
+    JsAnyCallArgument, JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement,
+    JsArrayExpression, JsArrayHole, JsAssignmentExpression, JsBinaryExpression, JsCallExpression,
+    JsComputedMemberExpression, JsIdentifierExpression, JsLiteralMemberName, JsLogicalExpression,
+    JsNewExpression, JsNumberLiteralExpression, JsObjectExpression, JsPostUpdateExpression,
+    JsReferenceIdentifier, JsRegexLiteralExpression, JsStaticMemberExpression,
+    JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken, JsTemplate, JsUnaryExpression,
+    OperatorPrecedence, T,
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use core::iter;
 use rome_rowan::{
-    AstNode, AstSeparatedList, NodeOrToken, SyntaxResult, SyntaxTokenText, TextRange, TextSize,
+    declare_node_union, AstNode, AstSeparatedList, NodeOrToken, SyntaxResult, SyntaxTokenText,
+    TextRange, TextSize,
 };
 use std::collections::HashSet;
 
@@ -544,6 +546,21 @@ impl JsTemplate {
             self.syntax().text_range().end(),
         ))
     }
+
+    /// Return token if the template is a string constant.
+    pub fn as_string_constant(&self) -> Option<JsSyntaxToken> {
+        if self.tag().is_some() {
+            return None;
+        }
+
+        let mut elements = self.elements().into_iter();
+        match (elements.next(), elements.next()) {
+            (Some(JsAnyTemplateElement::JsTemplateChunkElement(chunk)), None) => {
+                chunk.template_chunk_token().ok()
+            }
+            _ => None,
+        }
+    }
 }
 
 impl JsRegexLiteralExpression {
@@ -631,6 +648,39 @@ impl JsAnyExpression {
 
         Ok(precedence)
     }
+
+    /// Return identifier if the expression is an identifier expression.
+    pub fn as_reference_identifier(&self) -> Option<JsReferenceIdentifier> {
+        self.as_js_identifier_expression()
+            .and_then(|it| it.name().ok())
+    }
+
+    /// Return the expression is a string of given value if the given expression is
+    /// 1. A string literal
+    /// 2. A template literal with no substitutions
+    pub fn is_string_constant(&self, text: &str) -> bool {
+        self.with_string_constant(|it| it == text).unwrap_or(false)
+    }
+
+    /// Return the string value if the given expression is
+    /// 1. A string literal
+    /// 2. A template literal with no substitutions
+    pub fn as_string_constant(&self) -> Option<String> {
+        self.with_string_constant(|it| it.to_string())
+    }
+
+    /// Call the given closure if the given expression is
+    /// 1. A string literal
+    /// 2. A template literal with no substitutions
+    fn with_string_constant<R>(&self, f: impl FnOnce(&str) -> R) -> Option<R> {
+        match self {
+            Self::JsTemplate(t) => t.as_string_constant().map(|it| f(it.text_trimmed())),
+            Self::JsAnyLiteralExpression(JsAnyLiteralExpression::JsStringLiteralExpression(s)) => {
+                s.inner_string_text().ok().map(|it| f(&it))
+            }
+            _ => None,
+        }
+    }
 }
 
 impl JsIdentifierExpression {
@@ -711,6 +761,42 @@ impl JsComputedMemberExpression {
     }
 }
 
+declare_node_union! {
+    pub JsAnyMemberExpression = JsStaticMemberExpression | JsComputedMemberExpression
+}
+
+impl JsAnyMemberExpression {
+    /// Check if the given expression is a static or computed member expression
+    /// and returns the object reference identifier.
+    pub fn get_object_reference_identifier(&self) -> Option<JsReferenceIdentifier> {
+        match self {
+            Self::JsStaticMemberExpression(e) => e
+                .object()
+                .ok()
+                .and_then(|it| it.omit_parentheses().as_reference_identifier()),
+            Self::JsComputedMemberExpression(e) => e
+                .object()
+                .ok()
+                .and_then(|it| it.omit_parentheses().as_reference_identifier()),
+        }
+    }
+
+    /// Check if the given expression is a static or computed member expression
+    /// and has the given member name.
+    pub fn has_member_name(&self, name: &str) -> bool {
+        match self {
+            Self::JsStaticMemberExpression(e) => e
+                .member()
+                .ok()
+                .and_then(|it| it.as_js_name().and_then(|it| it.value_token().ok()))
+                .map_or(false, |it| it.text_trimmed() == name),
+            Self::JsComputedMemberExpression(e) => {
+                e.member().map_or(false, |it| it.is_string_constant(name))
+            }
+        }
+    }
+}
+
 impl JsCallExpression {
     /// Returns `true` if this is an optional member access
     ///
@@ -777,6 +863,22 @@ impl JsCallExpression {
         }
 
         results
+    }
+
+    pub fn has_callee(&self, name: &str) -> bool {
+        self.callee().map_or(false, |it| {
+            it.as_reference_identifier()
+                .map_or(false, |it| it.has_name(name))
+        })
+    }
+}
+
+impl JsNewExpression {
+    pub fn has_callee(&self, name: &str) -> bool {
+        self.callee().map_or(false, |it| {
+            it.as_reference_identifier()
+                .map_or(false, |it| it.has_name(name))
+        })
     }
 }
 

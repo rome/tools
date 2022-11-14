@@ -83,6 +83,7 @@ define_dategories! {
     "lint/nursery/useExhaustiveDependencies": "https://docs.rome.tools/lint/rules/useExhaustiveDependencies",
     "lint/nursery/useCamelCase": "https://docs.rome.tools/lint/rules/useCamelCase",
     "lint/nursery/noBannedTypes":"https://docs.rome.tools/lint/rules/noBannedTypes",
+    "lint/nursery/useNumericLiterals": "https://docs.rome.tools/lint/rules/useNumericLiterals",
 
     ;
 
