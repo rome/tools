@@ -238,9 +238,9 @@ impl DestructuringHost {
 
     fn has_member_expr_assignment(&self) -> bool {
         match self {
-            Self::JsAssignmentExpression(it) => it
-                .left()
-                .map_or(false, |pat| has_member_expr_in_assign_pat(pat)),
+            Self::JsAssignmentExpression(it) => {
+                it.left().map_or(false, has_member_expr_in_assign_pat)
+            }
             _ => false,
         }
     }
