@@ -89,7 +89,6 @@ pub(crate) fn should_inline_jsx_expression(
         | JsObjectExpression(_)
         | JsArrowFunctionExpression(_)
         | JsCallExpression(_)
-        | JsNewExpression(_)
         | JsImportCallExpression(_)
         | ImportMeta(_)
         | JsFunctionExpression(_)

@@ -84,7 +84,7 @@ impl JsxOpeningElement {
         &self,
         name_to_lookup: &str,
     ) -> SyntaxResult<Option<JsxAttribute>> {
-        find_attribute_by_name(self.attributes(), name_to_lookup)
+        self.attributes().find_by_name(name_to_lookup)
     }
 
     /// It checks if current attribute has a trailing spread props
@@ -131,7 +131,8 @@ impl JsxOpeningElement {
     /// assert!(opening_element.has_trailing_spread_prop(div.clone()));
     /// ```
     pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<JsxAnyAttribute>) -> bool {
-        has_trailing_spread_prop(self.attributes(), current_attribute)
+        self.attributes()
+            .has_trailing_spread_prop(current_attribute)
     }
 }
 
@@ -182,7 +183,7 @@ impl JsxSelfClosingElement {
         &self,
         name_to_lookup: &str,
     ) -> SyntaxResult<Option<JsxAttribute>> {
-        find_attribute_by_name(self.attributes(), name_to_lookup)
+        self.attributes().find_by_name(name_to_lookup)
     }
 
     /// It checks if current attribute has a trailing spread props
@@ -230,21 +231,22 @@ impl JsxSelfClosingElement {
     /// assert!(opening_element.has_trailing_spread_prop(div.clone()));
     /// ```
     pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<JsxAnyAttribute>) -> bool {
-        has_trailing_spread_prop(self.attributes(), current_attribute)
+        self.attributes()
+            .has_trailing_spread_prop(current_attribute)
     }
 }
 
 impl JsxAttributeList {
-    /// Find and return the `JsxAttribute` that matches the given name like [find_attribute_by_name].  
-    /// Only attributes with name as [JsxName] can be returned.   
+    /// Finds and returns attributes `JsxAttribute` that matches the given names like [Self::find_by_name].
+    /// Only attributes with name as [JsxName] can be returned.
     ///
-    /// Each name of "names_to_lookup" should be unique.  
+    /// Each name of "names_to_lookup" should be unique.
     ///
-    /// Supports maximum of 16 names to avoid stack overflow. Eeach attribute will consume:
+    /// Supports maximum of 16 names to avoid stack overflow. Each attribute will consume:
     ///
     /// - 8 bytes for the [Option<JsxAttribute>] result;
     /// - plus 16 bytes for the [&str] argument.
-    pub fn find_attributes_by_name<const N: usize>(
+    pub fn find_by_names<const N: usize>(
         &self,
         names_to_lookup: [&str; N],
     ) -> [Option<JsxAttribute>; N] {
@@ -257,7 +259,7 @@ impl JsxAttributeList {
 
         let mut missing = N;
 
-        'attributes: for att in self.iter() {
+        'attributes: for att in self {
             if let Some(attribute) = att.as_jsx_attribute() {
                 if let Some(name) = attribute
                     .name()
@@ -282,40 +284,34 @@ impl JsxAttributeList {
 
         results
     }
-}
 
-pub fn find_attribute_by_name(
-    attributes: JsxAttributeList,
-    name_to_lookup: &str,
-) -> SyntaxResult<Option<JsxAttribute>> {
-    let attribute = attributes.iter().find_map(|attribute| {
-        let attribute = JsxAttribute::cast_ref(attribute.syntax())?;
-        let name = attribute.name().ok()?;
-        let name = JsxName::cast_ref(name.syntax())?;
-        if name.value_token().ok()?.text_trimmed() == name_to_lookup {
-            Some(attribute)
-        } else {
-            None
-        }
-    });
+    pub fn find_by_name(&self, name_to_lookup: &str) -> SyntaxResult<Option<JsxAttribute>> {
+        let attribute = self.iter().find_map(|attribute| {
+            let attribute = JsxAttribute::cast_ref(attribute.syntax())?;
+            let name = attribute.name().ok()?;
+            let name = JsxName::cast_ref(name.syntax())?;
+            if name.value_token().ok()?.text_trimmed() == name_to_lookup {
+                Some(attribute)
+            } else {
+                None
+            }
+        });
 
-    Ok(attribute)
-}
-
-pub fn has_trailing_spread_prop(
-    attributes: JsxAttributeList,
-    current_attribute: impl Into<JsxAnyAttribute>,
-) -> bool {
-    let mut current_attribute_found = false;
-    let current_attribute = current_attribute.into();
-    for attribute in attributes {
-        if attribute == current_attribute {
-            current_attribute_found = true;
-            continue;
-        }
-        if current_attribute_found && attribute.as_jsx_spread_attribute().is_some() {
-            return true;
-        }
+        Ok(attribute)
     }
-    false
+
+    pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<JsxAnyAttribute>) -> bool {
+        let mut current_attribute_found = false;
+        let current_attribute = current_attribute.into();
+        for attribute in self {
+            if attribute == current_attribute {
+                current_attribute_found = true;
+                continue;
+            }
+            if current_attribute_found && attribute.as_jsx_spread_attribute().is_some() {
+                return true;
+            }
+        }
+        false
+    }
 }

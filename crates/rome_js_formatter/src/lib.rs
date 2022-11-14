@@ -787,9 +787,12 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-    <Test
-      // comment
+    <OtherComponent
+      value={
+        new Set(veryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzz)
+      }
     />
+
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, FileId::zero(), syntax);
