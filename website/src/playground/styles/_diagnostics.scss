@@ -5,8 +5,10 @@
   height: 200px;
   border-top: 1px solid var(--playground-border);
 
-  .empty-panel {
-    background-color: #282c34;
+  @include dark-mode {
+    .empty-panel {
+      background-color: #282c34;
+    }
   }
 }
 
@@ -25,7 +27,10 @@ ul.diagnostics-list {
   font-size: 14px;
   height: 100%;
   overflow: auto;
-  background-color: #282c34;
+
+  @include dark-mode {
+    background-color: #282c34;
+  }
 
   li {
     padding-right: 10px;
