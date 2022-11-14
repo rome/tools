@@ -4,10 +4,10 @@ pub mod hooks;
 
 use rome_js_semantic::{Binding, SemanticModel};
 use rome_js_syntax::{
-    JsAnyCallArgument, JsAnyExpression, JsAnyNamedImportSpecifier, JsCallExpression,
-    JsIdentifierBinding, JsImport, JsImportNamedClause, JsNamedImportSpecifierList,
-    JsNamedImportSpecifiers, JsObjectExpression, JsPropertyObjectMember, JsxMemberName,
-    JsxReferenceIdentifier,
+    JsAnyCallArgument, JsAnyExpression, JsAnyMemberExpression, JsAnyNamedImportSpecifier,
+    JsCallExpression, JsIdentifierBinding, JsImport, JsImportNamedClause,
+    JsNamedImportSpecifierList, JsNamedImportSpecifiers, JsObjectExpression,
+    JsPropertyObjectMember, JsxMemberName, JsxReferenceIdentifier,
 };
 use rome_rowan::{AstNode, AstSeparatedList};
 
@@ -56,7 +56,7 @@ impl ReactCreateElementCall {
     ) -> Option<Self> {
         let callee = call_expression.callee().ok()?;
         let is_react_create_element =
-            is_react_call_api(&callee, model, ReactLibrary::React, "createElement")?;
+            is_react_call_api(callee, model, ReactLibrary::React, "createElement");
 
         if is_react_create_element {
             let arguments = call_expression.arguments().ok()?.args();
@@ -158,7 +158,7 @@ impl ReactCloneElementCall {
     ) -> Option<Self> {
         let callee = call_expression.callee().ok()?;
         let is_react_clone_element =
-            is_react_call_api(&callee, model, ReactLibrary::React, "cloneElement")?;
+            is_react_call_api(callee, model, ReactLibrary::React, "cloneElement");
 
         if is_react_clone_element {
             let arguments = call_expression.arguments().ok()?.args();
@@ -265,56 +265,36 @@ const VALID_REACT_API: [&str; 14] = [
 ///
 /// [`React` API]: https://reactjs.org/docs/react-api.html
 pub(crate) fn is_react_call_api(
-    expression: &JsAnyExpression,
+    expression: JsAnyExpression,
     model: &SemanticModel,
     lib: ReactLibrary,
     api_name: &str,
-) -> Option<bool> {
+) -> bool {
     if matches!(lib, ReactLibrary::React) {
         // we bail straight away if the API doesn't exists in React
         debug_assert!(VALID_REACT_API.contains(&api_name));
     }
 
-    Some(match expression {
-        JsAnyExpression::JsStaticMemberExpression(node) => {
-            let member = node.member().ok()?;
-            let member = member.as_js_name()?;
-
-            if member.value_token().ok()?.text_trimmed() != api_name {
-                return Some(false);
-            }
-
-            let object = node.object().ok()?;
-            let identifier = object.as_js_identifier_expression()?.name().ok()?;
-
-            match model.declaration(&identifier) {
-                Some(binding) => {
-                    let binding_identifier = JsIdentifierBinding::cast_ref(binding.syntax())?;
-
-                    if let Some(js_import) = binding_identifier
-                        .syntax()
-                        .ancestors()
-                        .find_map(|ancestor| JsImport::cast_ref(&ancestor))
-                    {
-                        js_import.source_is(lib.import_name()).ok()?
-                    } else {
-                        false
-                    }
-                }
-                None => identifier.has_name(lib.global_name()),
-            }
+    let expr = expression.omit_parentheses();
+    if let Some(callee) = JsAnyMemberExpression::cast_ref(expr.syntax()) {
+        let Some(object) = callee.get_object_reference_identifier() else { return false };
+        if !callee.has_member_name(api_name) {
+            return false;
         }
+        return match model.declaration(&object) {
+            Some(decl) => is_react_export(decl, lib),
+            None => object.has_name(lib.global_name()),
+        };
+    }
 
-        JsAnyExpression::JsIdentifierExpression(identifier) => {
-            let name = identifier.name().ok()?;
+    if let Some(ident) = expr.as_reference_identifier() {
+        return model
+            .declaration(&ident)
+            .and_then(|it| is_named_react_export(it, lib, api_name))
+            .unwrap_or(false);
+    }
 
-            model
-                .declaration(&name)
-                .and_then(|binding| is_react_export(binding, lib, api_name))
-                .unwrap_or(false)
-        }
-        _ => false,
-    })
+    false
 }
 
 /// Checks if the node `JsxMemberName` is a react fragment.
@@ -335,19 +315,10 @@ pub(crate) fn jsx_member_name_is_react_fragment(
         return Some(false);
     }
 
+    let lib = ReactLibrary::React;
     match model.declaration(object) {
-        Some(declaration) => {
-            if let Some(js_import) = declaration
-                .syntax()
-                .ancestors()
-                .find_map(|ancestor| JsImport::cast_ref(&ancestor))
-            {
-                js_import.source_is("react").ok()
-            } else {
-                Some(false)
-            }
-        }
-        None => Some(object.value_token().ok()?.text_trimmed() == "React"),
+        Some(declaration) => Some(is_react_export(declaration, lib)),
+        None => Some(object.value_token().ok()?.text_trimmed() == lib.global_name()),
     }
 }
 
@@ -362,7 +333,7 @@ pub(crate) fn jsx_reference_identifier_is_fragment(
     model: &SemanticModel,
 ) -> Option<bool> {
     match model.declaration(name) {
-        Some(reference) => is_react_export(reference, ReactLibrary::React, "Fragment"),
+        Some(reference) => is_named_react_export(reference, ReactLibrary::React, "Fragment"),
         None => {
             let value_token = name.value_token().ok()?;
             let is_fragment = value_token.text_trimmed() == "Fragment";
@@ -371,7 +342,16 @@ pub(crate) fn jsx_reference_identifier_is_fragment(
     }
 }
 
-fn is_react_export(binding: Binding, lib: ReactLibrary, name: &str) -> Option<bool> {
+fn is_react_export(binding: Binding, lib: ReactLibrary) -> bool {
+    binding
+        .syntax()
+        .ancestors()
+        .find_map(|ancestor| JsImport::cast_ref(&ancestor))
+        .and_then(|js_import| js_import.source_is(lib.import_name()).ok())
+        .unwrap_or(false)
+}
+
+fn is_named_react_export(binding: Binding, lib: ReactLibrary, name: &str) -> Option<bool> {
     let ident = JsIdentifierBinding::cast_ref(binding.syntax())?;
     let import_specifier = ident.parent::<JsAnyNamedImportSpecifier>()?;
     let name_token = match &import_specifier {

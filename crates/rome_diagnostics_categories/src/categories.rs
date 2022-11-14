@@ -83,6 +83,7 @@ define_dategories! {
     "lint/nursery/useCamelCase": "https://docs.rome.tools/lint/rules/useCamelCase",
     "lint/nursery/useExhaustiveDependencies": "https://docs.rome.tools/lint/rules/useExhaustiveDependencies",
     "lint/nursery/useFlatMap": "https://docs.rome.tools/lint/rules/useFlatMap",
+    "lint/nursery/useNumericLiterals": "https://docs.rome.tools/lint/rules/useNumericLiterals",
     "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
 
     ;
@@ -100,6 +101,7 @@ define_dategories! {
 
     "suppressions/unknownGroup",
     "suppressions/unknownRule",
+    "suppressions/unused",
     // Used in tests and examples
     "args/fileNotFound",
     "flags/invalid",

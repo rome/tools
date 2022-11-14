@@ -1,0 +1,98 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/trailing-comma/trailing.ts
+---
+
+# Input
+
+```js
+export class BaseSingleLevelProfileTargeting<
+	T extends ValidSingleLevelProfileNode,
+> {
+}
+
+enum Enum {
+	x = 1,
+	y = 2,
+}
+
+const {
+  longKeySoThisWillGoOnMultipleLines,
+  longKeySoThisWillGoOnMultipleLines2,
+  longKeySoThisWillGoOnMultipleLines3,
+  ...rest,
+} = something;
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -11,5 +11,5 @@
+   longKeySoThisWillGoOnMultipleLines,
+   longKeySoThisWillGoOnMultipleLines2,
+   longKeySoThisWillGoOnMultipleLines3,
+-  ...rest
++  ...rest,
+ } = something;
+```
+
+# Output
+
+```js
+export class BaseSingleLevelProfileTargeting<
+  T extends ValidSingleLevelProfileNode,
+> {}
+
+enum Enum {
+  x = 1,
+  y = 2,
+}
+
+const {
+  longKeySoThisWillGoOnMultipleLines,
+  longKeySoThisWillGoOnMultipleLines2,
+  longKeySoThisWillGoOnMultipleLines3,
+  ...rest,
+} = something;
+```
+
+
+# Errors
+```
+trailing.ts:15:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × rest element may not have a trailing comma
+  
+    13 │   longKeySoThisWillGoOnMultipleLines2,
+    14 │   longKeySoThisWillGoOnMultipleLines3,
+  > 15 │   ...rest,
+       │          ^
+    16 │ } = something;
+    17 │ 
+  
+  i Remove the trailing comma here
+  
+    13 │   longKeySoThisWillGoOnMultipleLines2,
+    14 │   longKeySoThisWillGoOnMultipleLines3,
+  > 15 │   ...rest,
+       │          ^
+    16 │ } = something;
+    17 │ 
+  
+  i Rest element
+  
+    13 │   longKeySoThisWillGoOnMultipleLines2,
+    14 │   longKeySoThisWillGoOnMultipleLines3,
+  > 15 │   ...rest,
+       │   ^^^^^^^
+    16 │ } = something;
+    17 │ 
+  
+
+```
+
+

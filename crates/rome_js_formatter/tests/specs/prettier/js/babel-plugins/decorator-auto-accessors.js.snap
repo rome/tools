@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\babel-plugins\\decorator-auto-accessors.js"
+  test_file: js/babel-plugins/decorator-auto-accessors.js
 ---
 
 # Input

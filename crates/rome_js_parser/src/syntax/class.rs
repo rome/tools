@@ -1445,9 +1445,17 @@ fn parse_constructor_class_member_body(
 
 fn parse_constructor_parameter_list(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
+
+    // test super_expression_in_constructor_parameter_list
+    // class A extends B { constructor(c = super()) {} }
+    //
+    // test_err super_expression_in_constructor_parameter_list
+    // class A extends B { constructor(super()) {} }
+    let flags = SignatureFlags::CONSTRUCTOR;
+
     parse_parameters_list(
         p,
-        SignatureFlags::empty(),
+        flags,
         parse_constructor_parameter,
         JS_CONSTRUCTOR_PARAMETER_LIST,
     );

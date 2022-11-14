@@ -10,7 +10,7 @@ use rome_analyze::{
     AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Never, QueryMatch,
     RegistryVisitor, RuleCategories, RuleCategory, RuleFilter, RuleGroup,
 };
-use rome_diagnostics::{Applicability, CodeSuggestion};
+use rome_diagnostics::{v2::category, Applicability, CodeSuggestion};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::{analyze, analyze_with_inspect_matcher, visit_registry, RuleError};
@@ -221,8 +221,15 @@ fn lint(params: LintParams) -> LintResults {
         .iter()
         .any(|diag| diag.severity() <= v2::Severity::Error);
 
+    let has_lint = params.filter.categories.contains(RuleCategories::LINT);
+
     analyze(file_id, &tree, params.filter, &analyzer_options, |signal| {
         if let Some(mut diagnostic) = signal.diagnostic() {
+            // Do not report unused suppression comment diagnostics if this is a syntax-only analyzer pass
+            if !has_lint && diagnostic.category() == Some(category!("suppressions/unused")) {
+                return ControlFlow::<Never>::Continue(());
+            }
+
             diagnostic_count += 1;
 
             // We do now check if the severity of the diagnostics should be changed.

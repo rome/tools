@@ -1693,6 +1693,7 @@ dependencies = [
  "rome_js_syntax",
  "rome_rowan",
  "rome_service",
+ "rome_text_size",
  "schemars",
  "serde",
  "serde_json",

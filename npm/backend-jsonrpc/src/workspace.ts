@@ -220,6 +220,7 @@ export interface Nursery {
 	useCamelCase?: RuleConfiguration;
 	useExhaustiveDependencies?: RuleConfiguration;
 	useFlatMap?: RuleConfiguration;
+	useNumericLiterals?: RuleConfiguration;
 	useValidForDirection?: RuleConfiguration;
 }
 /**
@@ -394,6 +395,7 @@ export type Category =
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useFlatMap"
+	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/useValidForDirection"
 	| "files/missingHandler"
 	| "format"
@@ -405,6 +407,7 @@ export type Category =
 	| "parse/noSuperWithoutExtends"
 	| "suppressions/unknownGroup"
 	| "suppressions/unknownRule"
+	| "suppressions/unused"
 	| "args/fileNotFound"
 	| "flags/invalid"
 	| "semanticTests";

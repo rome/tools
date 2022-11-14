@@ -771,6 +771,16 @@
             }
           ]
         },
+        "useNumericLiterals": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useValidForDirection": {
           "anyOf": [
             {

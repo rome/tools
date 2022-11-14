@@ -90,17 +90,13 @@ impl Rule for NoAsyncPromiseExecutor {
 /// ((((((async function () {}))))))
 /// ```
 fn get_async_function_expression_like(expr: &JsAnyExpression) -> Option<JsAnyFunction> {
-    match expr {
+    match expr.clone().omit_parentheses() {
         JsAnyExpression::JsFunctionExpression(func) => func
             .async_token()
             .map(|_| JsAnyFunction::JsFunctionExpression(func.clone())),
         JsAnyExpression::JsArrowFunctionExpression(func) => func
             .async_token()
             .map(|_| JsAnyFunction::JsArrowFunctionExpression(func.clone())),
-        JsAnyExpression::JsParenthesizedExpression(expr) => {
-            let inner_expression = expr.expression().ok()?;
-            get_async_function_expression_like(&inner_expression)
-        }
         _ => None,
     }
 }
