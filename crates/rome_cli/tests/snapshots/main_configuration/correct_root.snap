@@ -19,7 +19,7 @@ expression: content
         "complexity": {
             "useSimplifiedLogicExpression": "warn"
         },
-        "style": {        
+        "style": {
             "useTemplate": {
                 "level": "error"
             }

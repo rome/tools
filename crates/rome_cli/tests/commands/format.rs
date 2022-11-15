@@ -1,7 +1,7 @@
 use crate::configs::{
     CONFIG_DISABLED_FORMATTER, CONFIG_FILE_SIZE_LIMIT, CONFIG_FORMAT,
-    CONFIG_FORMATTER_IGNORED_DIRECTORIES, CONFIG_FORMATTER_IGNORED_FILES, CONFIG_ISSUE_3175_1,
-    CONFIG_ISSUE_3175_2,
+    CONFIG_FORMATTER_AND_FILES_IGNORE, CONFIG_FORMATTER_IGNORED_DIRECTORIES,
+    CONFIG_FORMATTER_IGNORED_FILES, CONFIG_ISSUE_3175_1, CONFIG_ISSUE_3175_2,
 };
 use crate::snap_test::{markup_to_string, SnapshotPayload};
 use crate::{
@@ -968,6 +968,61 @@ fn does_not_format_ignored_files() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "does_not_format_ignored_files",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn does_not_format_if_files_are_listed_in_ignore_option() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("rome.json");
+    fs.insert(
+        file_path.into(),
+        CONFIG_FORMATTER_AND_FILES_IGNORE.as_bytes(),
+    );
+
+    let file_path_test1 = Path::new("test1.js");
+    fs.insert(file_path_test1.into(), UNFORMATTED.as_bytes());
+
+    let file_path_test2 = Path::new("test2.js");
+    fs.insert(file_path_test2.into(), UNFORMATTED.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            file_path_test1.as_os_str().into(),
+            file_path_test2.as_os_str().into(),
+            OsString::from("--write"),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut buffer = String::new();
+    fs.open(file_path_test1)
+        .unwrap()
+        .read_to_string(&mut buffer)
+        .unwrap();
+
+    assert_eq!(buffer, UNFORMATTED);
+
+    let mut buffer = String::new();
+    fs.open(file_path_test2)
+        .unwrap()
+        .read_to_string(&mut buffer)
+        .unwrap();
+
+    assert_eq!(buffer, UNFORMATTED);
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "does_not_format_if_files_are_listed_in_ignore_option",
         fs,
         console,
         result,
