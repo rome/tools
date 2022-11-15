@@ -33,7 +33,9 @@ impl FormatNodeRule<JsUnaryExpression> for FormatJsUnaryExpression {
             write!(f, [space()])?;
         }
 
-        if f.context().comments().has_comments(argument.syntax()) {
+        if f.comments().has_comments(argument.syntax())
+            && !f.comments().is_suppressed(argument.syntax())
+        {
             write!(
                 f,
                 [group(&format_args![

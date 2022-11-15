@@ -110,12 +110,14 @@ pub(super) struct FormatReturnOrThrowArgument<'a>(&'a JsAnyExpression);
 impl Format<JsFormatContext> for FormatReturnOrThrowArgument<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let argument = self.0;
+        let is_suppressed = f.comments().is_suppressed(argument.syntax());
 
         if has_argument_leading_comments(argument, f.context().comments())
             && !matches!(argument, JsAnyExpression::JsxTagExpression(_))
+            && !is_suppressed
         {
             write!(f, [text("("), &block_indent(&argument.format()), text(")")])
-        } else if is_binary_or_sequence_argument(argument) {
+        } else if is_binary_or_sequence_argument(argument) && !is_suppressed {
             write!(
                 f,
                 [group(&format_args![
