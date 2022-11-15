@@ -76,6 +76,7 @@ define_dategories! {
 
     // nursery
     "lint/nursery/noBannedTypes":"https://docs.rome.tools/lint/rules/noBannedTypes",
+    "lint/nursery/noCondAssign": "https://docs.rome.tools/lint/rules/noCondAssign",
     "lint/nursery/noConstAssign": "https://docs.rome.tools/lint/rules/noConstAssign",
     "lint/nursery/noDupeKeys":"https://docs.rome.tools/lint/rules/noDupeKeys",
     "lint/nursery/noExplicitAny": "https://docs.rome.tools/lint/rules/noExplicitAny",

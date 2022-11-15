@@ -694,6 +694,16 @@
             }
           ]
         },
+        "noCondAssign": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noConstAssign": {
           "anyOf": [
             {
