@@ -159,7 +159,7 @@ function Component14() {
     return (
         <HoC>
             {({things}) => (
-                return things.map((_, index) => <Component key={`${index}-something`} />)
+                things.map((_, index) => <Component key={`${index}-something`} />)
             )}
         </HoC>
     )
