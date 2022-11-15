@@ -4,7 +4,7 @@ use rome_formatter::write;
 
 use rome_js_syntax::JsExportNamedFromClause;
 use rome_js_syntax::JsExportNamedFromClauseFields;
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, AstSeparatedElement};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsExportNamedFromClause;
@@ -29,16 +29,18 @@ impl FormatNodeRule<JsExportNamedFromClause> for FormatJsExportNamedFromClause {
 
             write!(f, [l_curly_token.format(),])?;
 
-            match specifiers.len() {
-                1 => {
-                    // SAFETY: we know that `specifiers().len() == 1`, so unwrap `iter().next()` is safe.
-                    let first_specifier = specifiers.elements().next().unwrap();
-                    match (first_specifier.node(), first_specifier.trailing_separator()) {
-                        (Ok(specifier), Ok(_separator)) => {
-                            write!(f, [space(), specifier.format(), space()])?;
-                        }
-                        _ => write!(f, [&specifiers.format()])?,
+            match specifiers.elements().next() {
+                Some(AstSeparatedElement {
+                    node: Ok(node),
+                    trailing_separator: Ok(separator),
+                }) if specifiers.len() == 1 && !f.comments().has_comments(node.syntax()) => {
+                    write!(f, [space(), node.format()])?;
+
+                    if let Some(separator) = separator {
+                        write!(f, [format_removed(&separator)])?;
                     }
+
+                    write!(f, [space()])?;
                 }
                 _ => {
                     if node_has_leading_newline(specifiers.syntax()) {
