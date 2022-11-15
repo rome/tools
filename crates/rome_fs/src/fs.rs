@@ -167,11 +167,11 @@ struct FileSystemDiagnostic {
 
 #[derive(Clone, Debug)]
 enum ErrorKind {
-    // Unknown file type.
+    /// Unknown file type
     UnknownFileType,
-    // Dereferenced (broken) symbolic link.
+    /// Dereferenced (broken) symbolic link
     DereferencedSymlink(PathBuf),
-    // Symbolic link cycle or symbolic link infinite expansion.
+    /// Symbolic link cycle or symbolic link infinite expansion
     InfiniteSymlinkExpansion(PathBuf),
 }
 

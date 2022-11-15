@@ -274,10 +274,10 @@ fn handle_dir_entry<'scope>(
     }
 
     if file_type.is_file() {
-        // Performing this check here lets us skip scheduling unsupported
-        // files entirely as well as silently ignore unsupported files when
-        // doing a directory traversal but printing an error message if the
-        // user explicitly requests an unsupported file to be formatted
+        // Performing this check here let's us skip skip unsupported
+        // files entirely, as well as silently ignore unsupported files when
+        // doing a directory traversal, but printing an error message if the
+        // user explicitly requests an unsupported file to be handled
         let rome_path = RomePath::new(&path, file_id);
         if !ctx.can_handle(&rome_path) {
             return;
