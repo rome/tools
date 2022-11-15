@@ -1,0 +1,13 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+# Termination Message
+
+```block
+no supported files were found in the specified folders.
+```
+
+# Emitted Messages
+
+

@@ -970,3 +970,27 @@ fn max_diagnostics() {
 
     assert_eq!(console.out_buffer.len(), 11);
 }
+
+fn no_supported_file_found() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            std::ffi::OsString::from("check"),
+            ".".into(),
+        ]),
+    );
+
+    eprintln!("{:?}", console.out_buffer);
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "no_supported_file_found",
+        fs,
+        console,
+        result,
+    ));
+}

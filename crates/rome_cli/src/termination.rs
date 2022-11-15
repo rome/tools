@@ -78,7 +78,7 @@ pub enum Termination {
     IncompatibleEndConfiguration(&'static str),
 
     #[error("no supported files were found in the specified folders.")]
-    ZeroSupportedFilesFound,
+    NoSupportedFilesFound,
 }
 
 fn command_name() -> String {
