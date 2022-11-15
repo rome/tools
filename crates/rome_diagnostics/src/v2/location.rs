@@ -2,7 +2,6 @@ use rome_text_size::{TextRange, TextSize};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
 use std::ops::Range;
-use std::path::PathBuf;
 use std::{borrow::Borrow, ops::Deref};
 
 /// Represents the location of a diagnostic in a resource.

@@ -170,9 +170,9 @@ enum ErrorKind {
     /// Unknown file type
     UnknownFileType,
     /// Dereferenced (broken) symbolic link
-    DereferencedSymlink(PathBuf),
+    DereferencedSymlink(String),
     /// Symbolic link cycle or symbolic link infinite expansion
-    InfiniteSymlinkExpansion(PathBuf),
+    InfiniteSymlinkExpansion(String),
 }
 
 impl console::fmt::Display for ErrorKind {
@@ -204,11 +204,11 @@ impl Advices for ErrorKind {
             ),
             ErrorKind::DereferencedSymlink(path) => visitor.record_log(
                 LogCategory::Info,
-                &format!("Rome encountered a file system entry that is a broken symbolic link: {}", path.to_string_lossy().to_string()),
+                &format!("Rome encountered a file system entry that is a broken symbolic link: {}", path),
             ),
             ErrorKind::InfiniteSymlinkExpansion(path) => visitor.record_log(
                 LogCategory::Error,
-                &format!("Rome encountered a file system entry that leads to an infinite symbolic link expansion, causing an infinite cycle: {}", path.to_string_lossy().to_string()),
+                &format!("Rome encountered a file system entry that leads to an infinite symbolic link expansion, causing an infinite cycle: {}", path),
             ),
         }
     }

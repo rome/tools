@@ -127,8 +127,9 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
 
             if let Err(err) = fs::symlink_metadata(&path) {
                 if err.kind() == IoErrorKind::NotFound {
+                    let path = path.to_string_lossy().to_string();
                     ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
-                        path: path.to_string_lossy().to_string(),
+                        path: path.clone(),
                         error_kind: ErrorKind::DereferencedSymlink(path),
                     }));
                 } else {
@@ -239,8 +240,9 @@ fn handle_dir_entry<'scope>(
             Ok(meta) => meta.file_type(),
             Err(err) => {
                 if err.kind() == IoErrorKind::NotFound {
+                    let path = path.to_string_lossy().to_string();
                     ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
-                        path: path.to_string_lossy().to_string(),
+                        path: path.clone(),
                         error_kind: ErrorKind::DereferencedSymlink(path),
                     }));
                 } else {
@@ -259,8 +261,9 @@ fn handle_dir_entry<'scope>(
 
     // Determine whether an equivalent path already exists
     if !inserted {
+        let path = path.to_string_lossy().to_string();
         ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
-            path: path.to_string_lossy().to_string(),
+            path: path.clone(),
             error_kind: ErrorKind::InfiniteSymlinkExpansion(path),
         }));
         return;

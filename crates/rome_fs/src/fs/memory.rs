@@ -186,10 +186,10 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
                     error_kind: match entry {
                         ErrorEntry::UnknownFileType => ErrorKind::UnknownFileType,
                         ErrorEntry::DereferencedSymlink(path) => {
-                            ErrorKind::DereferencedSymlink(path.to_owned())
+                            ErrorKind::DereferencedSymlink(path.to_string_lossy().to_string())
                         }
                         ErrorEntry::InfiniteSymlinkExpansion(path) => {
-                            ErrorKind::InfiniteSymlinkExpansion(path.to_owned())
+                            ErrorKind::InfiniteSymlinkExpansion(path.to_string_lossy().to_string())
                         }
                     },
                 }));
