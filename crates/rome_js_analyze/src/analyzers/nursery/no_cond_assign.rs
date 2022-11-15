@@ -73,7 +73,7 @@ impl Rule for NoCondAssign {
     fn diagnostic(_ctx: &RuleContext<Self>, expr: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::new(
             rule_category!(),
-            expr.syntax().text_range(),
+            expr.syntax().text_trimmed_range(),
             markup! {
                 "Expected a conditional expression and instead saw an assignment."
             },
