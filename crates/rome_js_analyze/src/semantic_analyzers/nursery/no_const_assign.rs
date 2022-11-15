@@ -62,7 +62,7 @@ impl Rule for NoConstAssign {
 
         let declared_binding = model.declaration(node)?;
         for node in declared_binding.syntax().ancestors() {
-            if let Some(_) = JsFormalParameter::cast_ref(&node) {
+            if JsFormalParameter::can_cast(node.kind()) {
                 return None;
             }
             if let Some(variable_declaration) = JsVariableDeclaration::cast_ref(&node) {
