@@ -21,7 +21,9 @@ mod visitor;
 // Re-exported for use in the `declare_group` macro
 pub use rome_diagnostics::v2::category_concat;
 
-pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
+pub use crate::categories::{
+    ActionCategory, RefactorKind, RuleCategories, RuleCategory, SourceActionKind,
+};
 pub use crate::matcher::{InspectMatcher, MatchQueryParams, QueryMatcher, RuleKey, SignalEntry};
 pub use crate::options::{AnalyzerConfiguration, AnalyzerOptions, AnalyzerRules};
 pub use crate::query::{Ast, QueryKey, QueryMatch, Queryable};

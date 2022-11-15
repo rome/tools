@@ -335,7 +335,8 @@ fn code_actions(
     analyze(file_id, &tree, filter, &analyzer_options, |signal| {
         if let Some(action) = signal.action() {
             actions.push(CodeAction {
-                category: action.category,
+                category: action.category.clone(),
+                group_name: Cow::Borrowed(action.group_name),
                 rule_name: Cow::Borrowed(action.rule_name),
                 suggestion: CodeSuggestion::from(action),
             });
@@ -418,6 +419,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
                         }
                     };
                     actions.push(FixAction {
+                        group_name: Cow::Borrowed(action.group_name),
                         rule_name: Cow::Borrowed(action.rule_name),
                         range,
                     });
