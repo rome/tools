@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::{FormatStatementSemicolon, JsAnyBinaryLikeExpression};
+use crate::utils::{FormatOptionalSemicolon, FormatStatementSemicolon, JsAnyBinaryLikeExpression};
 
 use rome_formatter::{format_args, write, CstFormatContext};
 
@@ -37,7 +37,6 @@ impl Format<JsFormatContext> for JsAnyStatementWithArgument {
 
         let argument = self.argument()?;
 
-        // TODO implement semicolon removal
         if let Some(semicolon) = self.semicolon_token() {
             if let Some(argument) = argument {
                 write!(f, [space(), FormatReturnOrThrowArgument(&argument)])?;
@@ -53,7 +52,7 @@ impl Format<JsFormatContext> for JsAnyStatementWithArgument {
                 .map_or(false, |comment| comment.kind().is_line());
 
             if is_last_comment_line {
-                write!(f, [semicolon.format()])?;
+                write!(f, [FormatOptionalSemicolon::new(Some(&semicolon))])?;
             }
 
             if has_dangling_comments {
@@ -61,7 +60,7 @@ impl Format<JsFormatContext> for JsAnyStatementWithArgument {
             }
 
             if !is_last_comment_line {
-                write!(f, [semicolon.format()])?;
+                write!(f, [FormatOptionalSemicolon::new(Some(&semicolon))])?;
             }
 
             Ok(())
