@@ -166,12 +166,12 @@ let a; function foo() { bar(++a); }
 ```
 valid.jsonc:1:16 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use 'const' when variables are not reassigned.
+  ! This 'let' declares some variables which are never re-assigned.
   
   > 1 │ /*exported a*/ let a = 1
       │                ^^^
   
-  i 'a' is never reassigned.
+  i 'a' is never re-assigned.
   
   > 1 │ /*exported a*/ let a = 1
       │                    ^
@@ -253,12 +253,12 @@ let {a, b} = obj; b = 0;
 ```
 valid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use 'const' when variables are not reassigned.
+  ! This 'let' declares some variables which are never re-assigned.
   
   > 1 │ let {a, b} = obj; b = 0;
       │ ^^^
   
-  i 'a' is never reassigned.
+  i 'a' is never re-assigned.
   
   > 1 │ let {a, b} = obj; b = 0;
       │      ^
@@ -275,12 +275,12 @@ let a, b; ({a, b} = obj); b++;
 ```
 valid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use 'const' when variables are not reassigned.
+  ! This 'let' declares some variables which are never re-assigned.
   
   > 1 │ let a, b; ({a, b} = obj); b++;
       │ ^^^
   
-  i 'a' is never reassigned.
+  i 'a' is never re-assigned.
   
   > 1 │ let a, b; ({a, b} = obj); b++;
       │     ^
@@ -297,12 +297,12 @@ let { name, ...otherStuff } = obj; otherStuff = {};
 ```
 valid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use 'const' when variables are not reassigned.
+  ! This 'let' declares some variables which are never re-assigned.
   
   > 1 │ let { name, ...otherStuff } = obj; otherStuff = {};
       │ ^^^
   
-  i 'name' is never reassigned.
+  i 'name' is never re-assigned.
   
   > 1 │ let { name, ...otherStuff } = obj; otherStuff = {};
       │       ^^^^
@@ -319,12 +319,12 @@ let { name, ...otherStuff } = obj; otherStuff = {};
 ```
 valid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use 'const' when variables are not reassigned.
+  ! This 'let' declares some variables which are never re-assigned.
   
   > 1 │ let { name, ...otherStuff } = obj; otherStuff = {};
       │ ^^^
   
-  i 'name' is never reassigned.
+  i 'name' is never re-assigned.
   
   > 1 │ let { name, ...otherStuff } = obj; otherStuff = {};
       │       ^^^^
@@ -396,12 +396,12 @@ let x; function foo() { bar(x); } x = 0;
 ```
 valid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use 'const' when variables are not reassigned.
+  ! This 'let' declares some variables which are never re-assigned.
   
   > 1 │ let x; function foo() { bar(x); } x = 0;
       │ ^^^
   
-  i 'x' is never reassigned.
+  i 'x' is never re-assigned.
   
   > 1 │ let x; function foo() { bar(x); } x = 0;
       │     ^
@@ -468,12 +468,12 @@ class C { static { () => a; let a = 1; } };
 ```
 valid.jsonc:1:29 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use 'const' when variables are not reassigned.
+  ! This 'let' declares some variables which are never re-assigned.
   
   > 1 │ class C { static { () => a; let a = 1; } };
       │                             ^^^
   
-  i 'a' is never reassigned.
+  i 'a' is never re-assigned.
   
   > 1 │ class C { static { () => a; let a = 1; } };
       │                                 ^

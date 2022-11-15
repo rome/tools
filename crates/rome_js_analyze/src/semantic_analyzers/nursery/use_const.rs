@@ -104,7 +104,7 @@ impl Rule for UseConst {
             rule_category!(),
             kind.text_trimmed_range(),
             markup! {
-                "Use 'const' when variables are not reassigned."
+                "This 'let' declares some variables which are never re-assigned."
             },
         );
 
@@ -113,7 +113,7 @@ impl Rule for UseConst {
             diag = diag.detail(
                 binding.text_trimmed_range(),
                 markup! {
-                    "'"{ binding.text_trimmed() }"' is never reassigned."
+                    "'"{ binding.text_trimmed() }"' is never re-assigned."
                 },
             );
         }
