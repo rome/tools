@@ -5,11 +5,11 @@ on:
     branches:
       - main
     paths:
-      - 'crates/rome_js_syntax/**/*'
-      - 'crates/rome_js_factory/**/*'
-      - 'crates/rome_js_parser/**/*'
-      - 'crates/rome_rowan/**/*'
-      - 'xtask/**/*'
+      - 'crates/rome_js_syntax/**'
+      - 'crates/rome_js_factory/**'
+      - 'crates/rome_js_parser/**'
+      - 'crates/rome_rowan/**'
+      - 'xtask/**'
 
 env:
   RUST_LOG: info
