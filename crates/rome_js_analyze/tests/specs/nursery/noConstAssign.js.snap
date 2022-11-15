@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 99
 expression: noConstAssign.js
 ---
 # Input
@@ -7,14 +8,22 @@ expression: noConstAssign.js
 const a = 1;
 a = 2;
 
-const b = 2, c = 43;
+const b = 2,
+	c = 43;
 b = 4;
 ++b;
 b += 45;
 b--;
 function f() {
-    b++;
+	b++;
 }
+function f(d) {
+	b++;
+}
+const fn = (val) => {
+	val = 0;
+};
+
 ```
 
 # Diagnostics
@@ -27,7 +36,7 @@ noConstAssign.js:2:1 lint/nursery/noConstAssign ━━━━━━━━━━�
   > 2 │ a = 2;
       │ ^
     3 │ 
-    4 │ const b = 2, c = 43;
+    4 │ const b = 2,
   
   i This is where the variable is defined as constant
   
@@ -40,72 +49,49 @@ noConstAssign.js:2:1 lint/nursery/noConstAssign ━━━━━━━━━━�
 ```
 
 ```
-noConstAssign.js:5:1 lint/nursery/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noConstAssign.js:6:1 lint/nursery/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Can't assign b because it's a constant
   
-    4 │ const b = 2, c = 43;
-  > 5 │ b = 4;
+    4 │ const b = 2,
+    5 │ 	c = 43;
+  > 6 │ b = 4;
       │ ^
-    6 │ ++b;
-    7 │ b += 45;
+    7 │ ++b;
+    8 │ b += 45;
   
   i This is where the variable is defined as constant
   
     2 │ a = 2;
     3 │ 
-  > 4 │ const b = 2, c = 43;
+  > 4 │ const b = 2,
       │       ^
-    5 │ b = 4;
-    6 │ ++b;
+    5 │ 	c = 43;
+    6 │ b = 4;
   
 
 ```
 
 ```
-noConstAssign.js:6:3 lint/nursery/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noConstAssign.js:7:3 lint/nursery/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Can't assign b because it's a constant
   
-    4 │ const b = 2, c = 43;
-    5 │ b = 4;
-  > 6 │ ++b;
+    5 │ 	c = 43;
+    6 │ b = 4;
+  > 7 │ ++b;
       │   ^
-    7 │ b += 45;
-    8 │ b--;
+    8 │ b += 45;
+    9 │ b--;
   
   i This is where the variable is defined as constant
   
     2 │ a = 2;
     3 │ 
-  > 4 │ const b = 2, c = 43;
+  > 4 │ const b = 2,
       │       ^
-    5 │ b = 4;
-    6 │ ++b;
-  
-
-```
-
-```
-noConstAssign.js:7:1 lint/nursery/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Can't assign b because it's a constant
-  
-    5 │ b = 4;
-    6 │ ++b;
-  > 7 │ b += 45;
-      │ ^
-    8 │ b--;
-    9 │ function f() {
-  
-  i This is where the variable is defined as constant
-  
-    2 │ a = 2;
-    3 │ 
-  > 4 │ const b = 2, c = 43;
-      │       ^
-    5 │ b = 4;
-    6 │ ++b;
+    5 │ 	c = 43;
+    6 │ b = 4;
   
 
 ```
@@ -115,44 +101,93 @@ noConstAssign.js:8:1 lint/nursery/noConstAssign ━━━━━━━━━━�
 
   ! Can't assign b because it's a constant
   
-     6 │ ++b;
-     7 │ b += 45;
-   > 8 │ b--;
+     6 │ b = 4;
+     7 │ ++b;
+   > 8 │ b += 45;
        │ ^
-     9 │ function f() {
-    10 │     b++;
+     9 │ b--;
+    10 │ function f() {
   
   i This is where the variable is defined as constant
   
     2 │ a = 2;
     3 │ 
-  > 4 │ const b = 2, c = 43;
+  > 4 │ const b = 2,
       │       ^
-    5 │ b = 4;
-    6 │ ++b;
+    5 │ 	c = 43;
+    6 │ b = 4;
   
 
 ```
 
 ```
-noConstAssign.js:10:5 lint/nursery/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noConstAssign.js:9:1 lint/nursery/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Can't assign b because it's a constant
   
-     8 │ b--;
-     9 │ function f() {
-  > 10 │     b++;
-       │     ^
-    11 │ }
+     7 │ ++b;
+     8 │ b += 45;
+   > 9 │ b--;
+       │ ^
+    10 │ function f() {
+    11 │ 	b++;
   
   i This is where the variable is defined as constant
   
     2 │ a = 2;
     3 │ 
-  > 4 │ const b = 2, c = 43;
+  > 4 │ const b = 2,
       │       ^
-    5 │ b = 4;
-    6 │ ++b;
+    5 │ 	c = 43;
+    6 │ b = 4;
+  
+
+```
+
+```
+noConstAssign.js:11:2 lint/nursery/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign b because it's a constant
+  
+     9 │ b--;
+    10 │ function f() {
+  > 11 │ 	b++;
+       │ 	^
+    12 │ }
+    13 │ function f(d) {
+  
+  i This is where the variable is defined as constant
+  
+    2 │ a = 2;
+    3 │ 
+  > 4 │ const b = 2,
+      │       ^
+    5 │ 	c = 43;
+    6 │ b = 4;
+  
+
+```
+
+```
+noConstAssign.js:14:2 lint/nursery/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign b because it's a constant
+  
+    12 │ }
+    13 │ function f(d) {
+  > 14 │ 	b++;
+       │ 	^
+    15 │ }
+    16 │ const fn = (val) => {
+  
+  i This is where the variable is defined as constant
+  
+    2 │ a = 2;
+    3 │ 
+  > 4 │ const b = 2,
+      │       ^
+    5 │ 	c = 43;
+    6 │ b = 4;
   
 
 ```

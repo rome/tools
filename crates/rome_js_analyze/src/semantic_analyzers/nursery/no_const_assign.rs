@@ -2,7 +2,7 @@ use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{JsIdentifierAssignment, JsVariableDeclaration};
+use rome_js_syntax::{JsFormalParameter, JsIdentifierAssignment, JsVariableDeclaration};
 use rome_rowan::{AstNode, TextRange};
 
 declare_rule! {
@@ -61,13 +61,14 @@ impl Rule for NoConstAssign {
         let model = ctx.model();
 
         let declared_binding = model.declaration(node)?;
-        if let Some(variable_declaration) = declared_binding
-            .syntax()
-            .ancestors()
-            .find_map(|ancestor| JsVariableDeclaration::cast_ref(&ancestor))
-        {
-            if variable_declaration.is_const() {
-                return Some(declared_binding.syntax().text_trimmed_range());
+        for node in declared_binding.syntax().ancestors() {
+            if let Some(_) = JsFormalParameter::cast_ref(&node) {
+                return None;
+            }
+            if let Some(variable_declaration) = JsVariableDeclaration::cast_ref(&node) {
+                if variable_declaration.is_const() {
+                    return Some(declared_binding.syntax().text_trimmed_range());
+                }
             }
         }
 
