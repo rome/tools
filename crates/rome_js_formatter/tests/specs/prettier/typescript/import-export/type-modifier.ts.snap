@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\import-export\\type-modifier.ts"
+  test_file: typescript/import-export/type-modifier.ts
 ---
 
 # Input

@@ -2,6 +2,7 @@ use crate::traversal::traverse;
 use crate::{CliSession, Termination};
 use rome_console::{markup, ConsoleExt};
 use rome_diagnostics::file::FileId;
+use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
 use rome_fs::RomePath;
 use rome_service::workspace::{
     FeatureName, FixFileMode, FormatFileParams, Language, OpenFileParams, SupportsFeatureParams,
@@ -15,14 +16,14 @@ pub(crate) struct Execution {
 
     /// The modality of execution of the traversal
     traversal_mode: TraversalMode,
+
+    /// The maximum number of diagnostics that can be printed in console
+    max_diagnostics: u16,
 }
 
 pub(crate) enum TraversalMode {
     /// This mode is enabled when running the command `rome check`
     Check {
-        /// The maximum number of diagnostics that can be printed in console
-        max_diagnostics: u16,
-
         /// The type of fixes that should be applied when analyzing a file.
         ///
         /// It's [None] if the `check` command is called without `--apply` or `--apply-suggested`
@@ -59,6 +60,7 @@ impl Execution {
         Self {
             report_mode: ReportMode::default(),
             traversal_mode: mode,
+            max_diagnostics: MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
         }
     }
 
@@ -67,6 +69,7 @@ impl Execution {
         Self {
             traversal_mode,
             report_mode,
+            max_diagnostics: MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
         }
     }
 
@@ -79,13 +82,8 @@ impl Execution {
         &self.traversal_mode
     }
 
-    pub(crate) fn get_max_diagnostics(&self) -> Option<u16> {
-        match self.traversal_mode {
-            TraversalMode::Check {
-                max_diagnostics, ..
-            } => Some(max_diagnostics),
-            _ => None,
-        }
+    pub(crate) fn get_max_diagnostics(&self) -> u16 {
+        self.max_diagnostics
     }
 
     /// `true` only when running the traversal in [TraversalMode::Check] and `should_fix` is `true`
@@ -128,7 +126,36 @@ impl Execution {
 
 /// Based on the [mode](ExecutionMode), the function might launch a traversal of the file system
 /// or handles the stdin file.
-pub(crate) fn execute_mode(mode: Execution, mut session: CliSession) -> Result<(), Termination> {
+pub(crate) fn execute_mode(
+    mut mode: Execution,
+    mut session: CliSession,
+) -> Result<(), Termination> {
+    let max_diagnostics: Option<u16> = session
+        .args
+        .opt_value_from_str("--max-diagnostics")
+        .map_err(|source| Termination::ParseError {
+            argument: "--max-diagnostics",
+            source,
+        })?;
+
+    mode.max_diagnostics = if let Some(max_diagnostics) = max_diagnostics {
+        if max_diagnostics > MAXIMUM_DISPLAYABLE_DIAGNOSTICS {
+            return Err(Termination::OverflowNumberArgument(
+                "--max-diagnostics",
+                MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
+            ));
+        }
+
+        max_diagnostics
+    } else {
+        // The command `rome check` gives a default value of 20.
+        // In case of other commands that pass here, we limit to 50 to avoid to delay the terminal.
+        match &mode.traversal_mode {
+            TraversalMode::Check { .. } => 20,
+            TraversalMode::CI | TraversalMode::Format { .. } => 50,
+        }
+    };
+
     // don't do any traversal if there's some content coming from stdin
     if let Some((path, content)) = mode.as_stdin_file() {
         let workspace = &*session.app.workspace;

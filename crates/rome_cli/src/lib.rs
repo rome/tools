@@ -6,8 +6,10 @@
 //! to parse commands and arguments, redirect the execution of the commands and
 //! execute the traversal of directory and files, based on the command that were passed.
 
+use std::str::FromStr;
+
 pub use pico_args::Arguments;
-use rome_console::EnvConsole;
+use rome_console::{ColorMode, EnvConsole};
 use rome_flags::FeatureFlags;
 use rome_fs::OsFileSystem;
 use rome_service::{App, DynRef, Workspace, WorkspaceRef};
@@ -45,16 +47,47 @@ pub struct CliSession<'app> {
 }
 
 impl<'app> CliSession<'app> {
-    pub fn new(workspace: &'app dyn Workspace, mut args: Arguments) -> Self {
-        let no_colors = args.contains("--no-colors");
-        Self {
+    pub fn new(workspace: &'app dyn Workspace, mut args: Arguments) -> Result<Self, Termination> {
+        enum ColorsArg {
+            Off,
+            Force,
+        }
+
+        impl FromStr for ColorsArg {
+            type Err = String;
+
+            fn from_str(s: &str) -> Result<Self, Self::Err> {
+                match s {
+                    "off" => Ok(Self::Off),
+                    "force" => Ok(Self::Force),
+                    _ => Err(format!(
+                        "value {s:?} is not valid for the --colors argument"
+                    )),
+                }
+            }
+        }
+
+        let colors =
+            args.opt_value_from_str("--colors")
+                .map_err(|source| Termination::ParseError {
+                    argument: "--colors",
+                    source,
+                })?;
+
+        let colors = match colors {
+            Some(ColorsArg::Off) => ColorMode::Disabled,
+            Some(ColorsArg::Force) => ColorMode::Enabled,
+            None => ColorMode::Auto,
+        };
+
+        Ok(Self {
             app: App::new(
                 DynRef::Owned(Box::new(OsFileSystem)),
-                DynRef::Owned(Box::new(EnvConsole::new(no_colors))),
+                DynRef::Owned(Box::new(EnvConsole::new(colors))),
                 WorkspaceRef::Borrowed(workspace),
             ),
             args,
-        }
+        })
     }
 
     /// Main function to run Rome CLI
@@ -93,7 +126,7 @@ impl<'app> CliSession<'app> {
             Some("lsp-proxy") => commands::daemon::lsp_proxy(),
 
             // Internal commands
-            Some("__run_server") => commands::daemon::run_server(),
+            Some("__run_server") => commands::daemon::run_server(self),
             Some("__print_socket") => commands::daemon::print_socket(),
 
             // Print the help for known commands called without any arguments, and exit with an error

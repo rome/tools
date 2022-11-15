@@ -189,17 +189,17 @@ from the main repository (not a fork), use these comments to run specific workfl
 ### Analyzers and lint rules
 
 To know the technical details of how our analyzer works, how to create a rule and how to write tests, please check our [internal
-documentation page](https://rome.github.io/tools/rome_analyze/index.html)
+documentation page](https://rustdocs.rome.tools/rome_js_analyze/index.html)
 
 ### JavaScript Parser
 
 To know the technical details of how our JavaScript works and how to write test, please check our [internal
-documentation page](https://rome.github.io/tools/rome_js_parser/index.html)
+documentation page](https://rustdocs.rome.tools/rome_js_parser/index.html)
 
 ### Formatter
 
 To know the technical details of how our formatter works and how to write test, please check our [internal
-documentation page](https://rome.github.io/tools/rome_js_formatter/index.html)
+documentation page](https://rustdocs.rome.tools/rome_js_formatter/index.html)
 
 ### Versioning
 

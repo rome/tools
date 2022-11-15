@@ -10,7 +10,7 @@ use rome_fs::CONFIG_NAME;
 use rome_service::workspace::{RageEntry, RageParams, RageResult};
 use rome_service::{workspace, Workspace};
 use std::collections::HashMap;
-use std::sync::atomic::{AtomicU64, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::sync::{Arc, Mutex};
 use tokio::io::{AsyncRead, AsyncWrite};
 use tokio::sync::Notify;
@@ -24,11 +24,27 @@ pub struct LSPServer {
     session: SessionHandle,
     /// Map of all sessions connected to the same [ServerFactory] as this [LSPServer].
     sessions: Sessions,
+    /// If this is true the server will broadcast a shutdown signal once the
+    /// last client disconnected
+    stop_on_disconnect: bool,
+    /// This shared flag is set to true once at least one sessions has been
+    /// initialized on this server instance
+    is_initialized: Arc<AtomicBool>,
 }
 
 impl LSPServer {
-    fn new(session: SessionHandle, sessions: Sessions) -> Self {
-        Self { session, sessions }
+    fn new(
+        session: SessionHandle,
+        sessions: Sessions,
+        stop_on_disconnect: bool,
+        is_initialized: Arc<AtomicBool>,
+    ) -> Self {
+        Self {
+            session,
+            sessions,
+            stop_on_disconnect,
+            is_initialized,
+        }
     }
 
     async fn syntax_tree_request(&self, params: SyntaxTreePayload) -> LspResult<String> {
@@ -172,6 +188,7 @@ impl LanguageServer for LSPServer {
     #[tracing::instrument(level = "trace", skip(self))]
     async fn initialize(&self, params: InitializeParams) -> LspResult<InitializeResult> {
         info!("Starting Rome Language Server...");
+        self.is_initialized.store(true, Ordering::Relaxed);
 
         self.session
             .client_capabilities
@@ -250,6 +267,7 @@ impl LanguageServer for LSPServer {
                             if possible_rome_json.display().to_string() == CONFIG_NAME {
                                 self.session.update_configuration().await;
                                 self.session.fetch_client_configuration().await;
+                                self.session.update_all_diagnostics().await;
                                 // for now we are only interested to the configuration file,
                                 // so it's OK to exist the loop
                                 break;
@@ -329,8 +347,14 @@ impl Drop for LSPServer {
     fn drop(&mut self) {
         if let Ok(mut sessions) = self.sessions.lock() {
             let _removed = sessions.remove(&self.session.key);
-
             debug_assert!(_removed.is_some(), "Session did not exist.");
+
+            if self.stop_on_disconnect
+                && sessions.is_empty()
+                && self.is_initialized.load(Ordering::Relaxed)
+            {
+                self.session.cancellation.notify_one();
+            }
         }
     }
 }
@@ -356,6 +380,13 @@ pub struct ServerFactory {
 
     /// Session key generator. Stores the key of the next session.
     next_session_key: AtomicU64,
+
+    /// If this is true the server will broadcast a shutdown signal once the
+    /// last client disconnected
+    stop_on_disconnect: bool,
+    /// This shared flag is set to true once at least one sessions has been
+    /// initialized on this server instance
+    is_initialized: Arc<AtomicBool>,
 }
 
 /// Helper method for wrapping a [Workspace] method in a `custom_method` for
@@ -393,6 +424,17 @@ macro_rules! workspace_method {
 }
 
 impl ServerFactory {
+    pub fn new(stop_on_disconnect: bool) -> Self {
+        Self {
+            cancellation: Arc::default(),
+            workspace: None,
+            sessions: Sessions::default(),
+            next_session_key: AtomicU64::new(0),
+            stop_on_disconnect,
+            is_initialized: Arc::default(),
+        }
+    }
+
     /// Create a new [ServerConnection] from this factory
     pub fn create(&self) -> ServerConnection {
         let workspace = self
@@ -408,7 +450,13 @@ impl ServerFactory {
 
             let mut sessions = self.sessions.lock().unwrap();
             sessions.insert(session_key, handle.clone());
-            LSPServer::new(handle, self.sessions.clone())
+
+            LSPServer::new(
+                handle,
+                self.sessions.clone(),
+                self.stop_on_disconnect,
+                self.is_initialized.clone(),
+            )
         });
 
         builder = builder.custom_method(SYNTAX_TREE_REQUEST, LSPServer::syntax_tree_request);

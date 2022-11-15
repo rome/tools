@@ -91,10 +91,13 @@ jobs:
 
   documentation:
     name: Documentation
+    environment: netlify-rustdocs
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      - name: Install netlify-cli
+        run: npm i -g netlify-cli
       - name: Install toolchain
         run: rustup show
       - name: Cache
@@ -105,11 +108,13 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: documentation
+      - name: Write index.html
+        run: echo '<meta http-equiv="refresh" content="0; url=/rome/index.html">' >target/doc/index.html
+      - name: Write _redirects
+        run: echo '/ /rome/index.html' >target/doc/_redirects
       - name: Deploy documentation
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./target/doc
+        run: |
+          netlify deploy --dir=./target/doc --prod --site rustdocs-rometools --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
 
   coverage:
     name: Test262 Coverage

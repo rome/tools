@@ -689,23 +689,27 @@ pub struct Nursery {
 struct NurserySchema {
     no_banned_types: Option<RuleConfiguration>,
     no_const_assign: Option<RuleConfiguration>,
+    no_dupe_keys: Option<RuleConfiguration>,
     no_explicit_any: Option<RuleConfiguration>,
     no_invalid_constructor_super: Option<RuleConfiguration>,
     use_camel_case: Option<RuleConfiguration>,
     use_exhaustive_dependencies: Option<RuleConfiguration>,
     use_flat_map: Option<RuleConfiguration>,
+    use_numeric_literals: Option<RuleConfiguration>,
     use_valid_for_direction: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 8] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 10] = [
         "noBannedTypes",
         "noConstAssign",
+        "noDupeKeys",
         "noExplicitAny",
         "noInvalidConstructorSuper",
         "useCamelCase",
         "useExhaustiveDependencies",
         "useFlatMap",
+        "useNumericLiterals",
         "useValidForDirection",
     ];
     const RECOMMENDED_RULES: [&'static str; 0] = [];

@@ -214,6 +214,7 @@ export interface Correctness {
 export interface Nursery {
 	noBannedTypes?: RuleConfiguration;
 	noConstAssign?: RuleConfiguration;
+	noDupeKeys?: RuleConfiguration;
 	noExplicitAny?: RuleConfiguration;
 	noInvalidConstructorSuper?: RuleConfiguration;
 	/**
@@ -223,6 +224,7 @@ export interface Nursery {
 	useCamelCase?: RuleConfiguration;
 	useExhaustiveDependencies?: RuleConfiguration;
 	useFlatMap?: RuleConfiguration;
+	useNumericLiterals?: RuleConfiguration;
 	useValidForDirection?: RuleConfiguration;
 }
 /**
@@ -310,7 +312,7 @@ export type RuleCategories = RuleCategory[];
 export type RuleCategory = "Syntax" | "Lint" | "Action";
 export interface PullDiagnosticsResult {
 	diagnostics: Diagnostic[];
-	has_errors: boolean;
+	errors: number;
 	skipped_diagnostics: number;
 }
 /**
@@ -389,14 +391,16 @@ export type Category =
 	| "lint/a11y/useAltText"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
-	| "lint/nursery/useFlatMap"
-	| "lint/nursery/noConstAssign"
-	| "lint/nursery/noExplicitAny"
-	| "lint/nursery/useValidForDirection"
-	| "lint/nursery/noInvalidConstructorSuper"
-	| "lint/nursery/useExhaustiveDependencies"
-	| "lint/nursery/useCamelCase"
 	| "lint/nursery/noBannedTypes"
+	| "lint/nursery/noConstAssign"
+	| "lint/nursery/noDupeKeys"
+	| "lint/nursery/noExplicitAny"
+	| "lint/nursery/noInvalidConstructorSuper"
+	| "lint/nursery/useCamelCase"
+	| "lint/nursery/useExhaustiveDependencies"
+	| "lint/nursery/useFlatMap"
+	| "lint/nursery/useNumericLiterals"
+	| "lint/nursery/useValidForDirection"
 	| "files/missingHandler"
 	| "format"
 	| "internalError/io"
@@ -407,6 +411,7 @@ export type Category =
 	| "parse/noSuperWithoutExtends"
 	| "suppressions/unknownGroup"
 	| "suppressions/unknownRule"
+	| "suppressions/unused"
 	| "args/fileNotFound"
 	| "flags/invalid"
 	| "semanticTests";
@@ -516,10 +521,20 @@ export interface PullActionsResult {
 }
 export interface CodeAction {
 	category: ActionCategory;
+	group_name: string;
 	rule_name: string;
 	suggestion: CodeSuggestion;
 }
-export type ActionCategory = "QuickFix" | "Refactor";
+/**
+	* The category of a code action, this type maps directly to the [CodeActionKind] type in the Language Server Protocol specification
+
+[CodeActionKind]: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#codeActionKind 
+	 */
+export type ActionCategory =
+	| "QuickFix"
+	| { Refactor: RefactorKind }
+	| { Source: SourceActionKind }
+	| { Other: string };
 /**
  * A Suggestion that is provided by rslint, and can be reported to the user, and can be automatically applied if it has the right [`Applicability`].
  */
@@ -533,6 +548,23 @@ export interface CodeSuggestion {
 	span: FileSpan;
 	suggestion: TextEdit;
 }
+/**
+ * The sub-category of a refactor code action
+ */
+export type RefactorKind =
+	| "None"
+	| "Extract"
+	| "Inline"
+	| "Rewrite"
+	| { Other: string };
+/**
+ * The sub-category of a source code action
+ */
+export type SourceActionKind =
+	| "None"
+	| "FixAll"
+	| "OrganizeImports"
+	| { Other: string };
 /**
  * Indicates how a tool should manage this suggestion.
  */
@@ -597,6 +629,7 @@ export interface FixFileResult {
 	skipped_suggested_fixes: number;
 }
 export interface FixAction {
+	group_name: string;
 	/**
 	 * Source range at which this action was applied
 	 */

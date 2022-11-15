@@ -11,7 +11,7 @@ expression: content
 # Termination Message
 
 ```block
-errors where emitted while running checks
+some errors were emitted while running checks
 ```
 
 # Emitted Messages

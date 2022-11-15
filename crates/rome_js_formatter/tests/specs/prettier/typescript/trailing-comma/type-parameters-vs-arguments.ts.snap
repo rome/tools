@@ -1,0 +1,64 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/trailing-comma/type-parameters-vs-arguments.ts
+---
+
+# Input
+
+```js
+class FooClass<
+	A,
+	B,
+	C,
+> {
+	a: A;
+	b: B;
+	c: C;
+}
+
+const instance = new FooClass<
+	boolean,
+	number,
+	string, // [ts] Trailing comma not allowed.
+	>();
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -5,7 +5,7 @@
+ }
+ 
+ const instance = new FooClass<
+-  boolean,
+-  number,
+-  string // [ts] Trailing comma not allowed.
+->();
++	boolean,
++	number,
++	string, // [ts] Trailing comma not allowed.
++	>();
+```
+
+# Output
+
+```js
+class FooClass<A, B, C> {
+  a: A;
+  b: B;
+  c: C;
+}
+
+const instance = new FooClass<
+	boolean,
+	number,
+	string, // [ts] Trailing comma not allowed.
+	>();
+```
+
+
+

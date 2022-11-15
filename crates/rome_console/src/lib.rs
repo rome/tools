@@ -63,17 +63,37 @@ pub struct EnvConsole {
     r#in: Stdin,
 }
 
+pub enum ColorMode {
+    /// Always print color using either ANSI or the Windows Console API
+    Enabled,
+    /// Never print colors
+    Disabled,
+    /// Print colors if stdout / stderr are determined to be TTY / Console
+    /// streams, and the `TERM=dumb` and `NO_COLOR` environment variables are
+    /// not set
+    Auto,
+}
+
 impl EnvConsole {
-    pub fn new(no_colors: bool) -> Self {
-        let out_mode = if no_colors || !atty::is(atty::Stream::Stdout) {
-            ColorChoice::Never
-        } else {
-            ColorChoice::Auto
-        };
-        let err_mode = if no_colors || !atty::is(atty::Stream::Stderr) {
-            ColorChoice::Never
-        } else {
-            ColorChoice::Auto
+    pub fn new(colors: ColorMode) -> Self {
+        let (out_mode, err_mode) = match colors {
+            ColorMode::Enabled => (ColorChoice::Always, ColorChoice::Always),
+            ColorMode::Disabled => (ColorChoice::Never, ColorChoice::Never),
+            ColorMode::Auto => {
+                let stdout = if atty::is(atty::Stream::Stdout) {
+                    ColorChoice::Auto
+                } else {
+                    ColorChoice::Never
+                };
+
+                let stderr = if atty::is(atty::Stream::Stderr) {
+                    ColorChoice::Auto
+                } else {
+                    ColorChoice::Never
+                };
+
+                (stdout, stderr)
+            }
         };
 
         Self {
@@ -86,7 +106,7 @@ impl EnvConsole {
 
 impl Default for EnvConsole {
     fn default() -> Self {
-        Self::new(false)
+        Self::new(ColorMode::Auto)
     }
 }
 

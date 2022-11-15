@@ -48,7 +48,9 @@ The extension automatically loads the `rome.json` file from the workspace’s ro
 
 The extension tries to use Rome from your project's local dependencies (`node_modules/rome`). We recommend adding Rome as a project dependency to ensure that NPM scripts and the extension use the same Rome version.
 
-The extension uses the Rome version bundled with the extension if the project has no dependency on Rome.
+You can also explicitly specify the `rome` binary the extension should use by configuring the `rome.lspBin` setting in your editor options.
+
+If the project has no dependency on Rome and no explicit path is configured, the extension uses the Rome version included in its bundle.
 
 ## Usage
 
@@ -81,20 +83,6 @@ Rome doesn’t yet support loading the `rome.json` file from a directory other t
 ### Configuration resolution for multi-root workspaces
 
 Rome isn't yet able to pick up the `rome.json` configuration in [multi-root workspaces](https://code.visualstudio.com/docs/editor/multi-root-workspaces) if the configuration isn't in the first root folder ([issue 3538](https://github.com/rome/tools/issues/3538)). You can work around this limitation by making the folder with the configuration the first root folder of the workspace (drag it to the top).
-
-### The extension uses an outdated version of Rome
-
-Make sure to restart VS Code or restart Rome’s LSP server after updating Rome in your `package.json`. To stop Rome’s LSP, send the `stop` command (VS will start a new LSP instance for you):
-
-```bash
-npx rome stop
-
-# or
-pnpx exec rome stop
-
-# or
-yarn run rome stop
-```
 
 ### Disable Rome for workspaces without a `rome.json` configuration
 

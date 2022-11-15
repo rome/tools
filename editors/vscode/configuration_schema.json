@@ -715,6 +715,16 @@
             }
           ]
         },
+        "noDupeKeys": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noExplicitAny": {
           "anyOf": [
             {
@@ -763,6 +773,16 @@
           ]
         },
         "useFlatMap": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useNumericLiterals": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

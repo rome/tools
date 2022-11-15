@@ -157,7 +157,7 @@ impl Rule for NoShoutyConstants {
         }
 
         Some(JsRuleAction {
-            category: ActionCategory::Refactor,
+            category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Use the constant value directly" }.to_owned(),
             mutation: batch,

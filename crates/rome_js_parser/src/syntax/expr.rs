@@ -244,7 +244,12 @@ fn parse_assignment_expression_or_higher_base(
     p: &mut Parser,
     context: ExpressionContext,
 ) -> ParsedSyntax {
-    if p.state.in_generator() && p.at(T![yield]) {
+    // test reparse_yield_as_identifier
+    // // SCRIPT
+    // function foo() { yield *bar; }
+    // function bar() { yield; }
+    // function baz() { yield }
+    if p.at(T![yield]) && (p.state.in_generator() || is_nth_at_expression(p, 1)) {
         return Present(parse_yield_expression(p, context));
     }
 
@@ -347,25 +352,45 @@ fn is_assign_token(kind: JsSyntaxKind) -> bool {
 // }
 fn parse_yield_expression(p: &mut Parser, context: ExpressionContext) -> CompletedMarker {
     let m = p.start();
+    let yield_range = p.cur_range();
     p.expect(T![yield]);
 
+    // test yield_in_generator_function
+    // function* foo() { yield 10; }
+    // function* foo() { yield *bar; }
+    // function* foo() { yield; }
     if !is_semi(p, 0) && (p.at(T![*]) || is_at_expression(p)) {
         let argument = p.start();
         p.eat(T![*]);
         parse_assignment_expression_or_higher(p, context.and_object_expression_allowed(true)).ok();
-
         argument.complete(p, JS_YIELD_ARGUMENT);
     }
 
     let mut yield_expr = m.complete(p, JS_YIELD_EXPRESSION);
 
-    if !p.state.is_top_level() && !p.state.in_function() {
+    // test_err yield_at_top_level_module
+    // yield 10;
+
+    // test_err yield_at_top_level_script
+    // // SCRIPT
+    // yield 10;
+
+    // test_err yield_in_non_generator_function_script
+    // // SCRIPT
+    // function foo() { yield bar; }
+    // function foo() { yield 10; }
+
+    // test_err yield_in_non_generator_function_module
+    // function foo() { yield; }
+    // function foo() { yield foo; }
+    // function foo() { yield *foo; }
+    if !(p.state.in_generator() && p.state.in_function()) {
         // test_err yield_expr_in_parameter_initializer
         // function* test(a = yield "test") {}
         // function test2(a = yield "test") {}
         p.error(p.err_builder(
             "`yield` is only allowed within generator functions.",
-            yield_expr.range(p),
+            yield_range,
         ));
         yield_expr.change_to_unknown(p);
     }
@@ -1796,7 +1821,7 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
     const UNARY_SINGLE: TokenSet =
         token_set![T![delete], T![void], T![typeof], T![+], T![-], T![~], T![!]];
 
-    if (p.state.in_async()) && p.at(T![await]) {
+    if p.at(T![await]) {
         // test await_expression
         // async function test() {
         //   await inner();
@@ -1812,32 +1837,51 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
         // async function test() {}
         // await test();
         let m = p.start();
+        let checkpoint = p.checkpoint();
+        let await_range = p.cur_range();
         p.expect(T![await]);
+        let unary = parse_unary_expr(p, context);
 
-        parse_unary_expr(p, context)
-            .or_add_diagnostic(p, js_parse_error::expected_unary_expression);
+        let is_top_level_module_or_async_fn =
+            p.state.in_async() && (p.state.is_top_level() || p.state.in_function());
 
-        let mut expr = m.complete(p, JS_AWAIT_EXPRESSION);
+        if !is_top_level_module_or_async_fn {
+            // test reparse_await_as_identifier
+            // // SCRIPT
+            // function test() { a = await; }
+            // function test2() { return await; }
+            if unary.is_absent() {
+                p.rewind(checkpoint);
+                m.abandon(p);
+                return parse_identifier_expression(p);
+            }
 
-        if !p.state.is_top_level() && !p.state.in_function() {
             // test_err await_in_parameter_initializer
             // async function test(a = await b()) {}
             // function test2(a = await b()) {}
 
             // test_err await_in_static_initialization_block_member
             // // SCRIPT
-            // class A {
-            //   static {
-            //     await;
-            //   }
-            // }
+            // class A { static { await; } }
+            // class B { static { await 10; } }
+
+            // test_err await_in_non_async_function
+            // function test() { await 10; }
+
+            // test_err await_in_module
+            // let await = 10;
+            // console.log(await);
             p.error(p.err_builder(
                 "`await` is only allowed within async functions and at the top levels of modules.",
-                expr.range(p),
+                await_range,
             ));
-            expr.change_to_unknown(p);
+
+            let expr = m.complete(p, JS_UNKNOWN_EXPRESSION);
+            return Present(expr);
         }
 
+        unary.or_add_diagnostic(p, js_parse_error::expected_unary_expression);
+        let expr = m.complete(p, JS_AWAIT_EXPRESSION);
         return Present(expr);
     }
 

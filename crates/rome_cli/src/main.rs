@@ -35,5 +35,6 @@ fn main() -> Result<(), Termination> {
         workspace::server()
     };
 
-    CliSession::new(&*workspace, args).run()
+    let session = CliSession::new(&*workspace, args)?;
+    session.run()
 }

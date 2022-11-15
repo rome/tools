@@ -408,7 +408,7 @@ impl Workspace for WorkspaceServer {
                     Diagnostic::new(diag)
                 })
                 .collect(),
-            has_errors: results.has_errors,
+            errors: results.errors,
             skipped_diagnostics: results.skipped_diagnostics,
         })
     }
