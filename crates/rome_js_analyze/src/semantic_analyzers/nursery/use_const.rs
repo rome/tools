@@ -100,13 +100,12 @@ impl Rule for UseConst {
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let declaration = ctx.query();
         let kind = declaration.kind_token()?;
-        let mut diag = RuleDiagnostic::new(
-            rule_category!(),
-            kind.text_trimmed_range(),
-            markup! {
-                "This 'let' declares some variables which are never re-assigned."
-            },
-        );
+        let title = if state.can_be_const.len() == 1 {
+            "This 'let' declares a variable which is never re-assigned."
+        } else {
+            "This 'let' declares some variables which are never re-assigned."
+        };
+        let mut diag = RuleDiagnostic::new(rule_category!(), kind.text_trimmed_range(), title);
 
         for binding in state.can_be_const.iter() {
             let binding = binding.name_token().ok()?;
