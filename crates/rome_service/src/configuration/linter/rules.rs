@@ -692,6 +692,7 @@ struct NurserySchema {
     no_dupe_keys: Option<RuleConfiguration>,
     no_explicit_any: Option<RuleConfiguration>,
     no_invalid_constructor_super: Option<RuleConfiguration>,
+    no_unsafe_finally: Option<RuleConfiguration>,
     use_camel_case: Option<RuleConfiguration>,
     use_exhaustive_dependencies: Option<RuleConfiguration>,
     use_flat_map: Option<RuleConfiguration>,
@@ -700,12 +701,13 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 10] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 11] = [
         "noBannedTypes",
         "noConstAssign",
         "noDupeKeys",
         "noExplicitAny",
         "noInvalidConstructorSuper",
+        "noUnsafeFinally",
         "useCamelCase",
         "useExhaustiveDependencies",
         "useFlatMap",
