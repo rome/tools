@@ -18,14 +18,14 @@ console.log(a);
 
 <pre class="language-text"><code class="language-text">nursery/useConst.js:1:1 <a href="https://docs.rome.tools/lint/rules/useConst">lint/nursery/useConst</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Use 'const' when variables are not reassigned.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This 'let' declares some variables which are never re-assigned.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>let a = 3;
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>console.log(a);
     <strong>3 │ </strong>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'a' is never reassigned.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'a' is never re-assigned.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>let a = 3;
    <strong>   │ </strong>    <strong><span style="color: Tomato;">^</span></strong>
@@ -50,7 +50,7 @@ for (let a of [1, 2, 3]) {
 
 <pre class="language-text"><code class="language-text">nursery/useConst.js:2:6 <a href="https://docs.rome.tools/lint/rules/useConst">lint/nursery/useConst</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Use 'const' when variables are not reassigned.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This 'let' declares some variables which are never re-assigned.</span>
   
     <strong>1 │ </strong>// `a` is redefined (not reassigned) on each loop step.
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>for (let a of [1, 2, 3]) {
@@ -58,7 +58,7 @@ for (let a of [1, 2, 3]) {
     <strong>3 │ </strong>    console.log(a);
     <strong>4 │ </strong>}
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'a' is never reassigned.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'a' is never re-assigned.</span>
   
     <strong>1 │ </strong>// `a` is redefined (not reassigned) on each loop step.
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>for (let a of [1, 2, 3]) {
@@ -85,7 +85,7 @@ for (let a in [1, 2, 3]) {
 
 <pre class="language-text"><code class="language-text">nursery/useConst.js:2:6 <a href="https://docs.rome.tools/lint/rules/useConst">lint/nursery/useConst</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Use 'const' when variables are not reassigned.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This 'let' declares some variables which are never re-assigned.</span>
   
     <strong>1 │ </strong>// `a` is redefined (not reassigned) on each loop step.
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>for (let a in [1, 2, 3]) {
@@ -93,7 +93,7 @@ for (let a in [1, 2, 3]) {
     <strong>3 │ </strong>    console.log(a);
     <strong>4 │ </strong>}
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'a' is never reassigned.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'a' is never re-assigned.</span>
   
     <strong>1 │ </strong>// `a` is redefined (not reassigned) on each loop step.
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>for (let a in [1, 2, 3]) {
@@ -121,14 +121,14 @@ let a = 3;
 
 <pre class="language-text"><code class="language-text">nursery/useConst.js:1:1 <a href="https://docs.rome.tools/lint/rules/useConst">lint/nursery/useConst</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Use 'const' when variables are not reassigned.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This 'let' declares some variables which are never re-assigned.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>let a = 3;
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>{
     <strong>3 │ </strong>    let a = 4;
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'a' is never reassigned.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'a' is never re-assigned.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>let a = 3;
    <strong>   │ </strong>    <strong><span style="color: Tomato;">^</span></strong>
@@ -151,14 +151,14 @@ b = 3;
 
 <pre class="language-text"><code class="language-text">nursery/useConst.js:1:1 <a href="https://docs.rome.tools/lint/rules/useConst">lint/nursery/useConst</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Use 'const' when variables are not reassigned.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This 'let' declares some variables which are never re-assigned.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>let a = 1, b = 2;
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>b = 3;
     <strong>3 │ </strong>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'a' is never reassigned.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'a' is never re-assigned.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>let a = 1, b = 2;
    <strong>   │ </strong>    <strong><span style="color: Tomato;">^</span></strong>
