@@ -1,3 +1,9 @@
+use super::{
+    AnalyzerCapabilities, DebugCapabilities, ExtensionHandler, FormatterCapabilities, LintParams,
+    LintResults, Mime, ParserCapabilities,
+};
+use crate::configuration::to_analyzer_configuration;
+use crate::file_handlers::{FixAllParams, Language as LanguageId};
 use crate::{
     settings::{FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle},
     workspace::{
@@ -6,13 +12,16 @@ use crate::{
     },
     RomeError, Rules,
 };
+use indexmap::IndexSet;
 use rome_analyze::{
     AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Never, QueryMatch,
     RegistryVisitor, RuleCategories, RuleCategory, RuleFilter, RuleGroup,
 };
 use rome_diagnostics::{category, Applicability, CodeSuggestion, Severity};
+use rome_diagnostics::{v2, v2::Diagnostic};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
+use rome_js_analyze::utils::rename::{RenameError, RenameSymbolExtensions};
 use rome_js_analyze::{analyze, analyze_with_inspect_matcher, visit_registry, RuleError};
 use rome_js_formatter::context::{
     trailing_comma::TrailingComma, QuoteProperties, QuoteStyle, Semicolons,
@@ -24,16 +33,6 @@ use rome_js_syntax::{
     JsAnyRoot, JsLanguage, JsSyntaxNode, SourceType, TextRange, TextSize, TokenAtOffset,
 };
 use rome_rowan::{AstNode, BatchMutationExt, Direction};
-
-use super::{
-    AnalyzerCapabilities, DebugCapabilities, ExtensionHandler, FormatterCapabilities, LintParams,
-    LintResults, Mime, ParserCapabilities,
-};
-use crate::configuration::to_analyzer_configuration;
-use crate::file_handlers::{FixAllParams, Language as LanguageId};
-use indexmap::IndexSet;
-use rome_diagnostics::Diagnostic;
-use rome_js_analyze::utils::rename::{RenameError, RenameSymbolExtensions};
 use std::borrow::Cow;
 use std::fmt::Debug;
 use tracing::debug;
@@ -252,9 +251,11 @@ fn lint(params: LintParams) -> LintResults {
             if diagnostic_count <= params.max_diagnostics {
                 diagnostic.set_severity(severity);
 
-                if let Some(action) = signal.actions() {
-                    for code_suggestion in action.into_code_suggestion_advices() {
-                        diagnostic = diagnostic.add_code_suggestion(code_suggestion);
+                if let Some(actions) = signal.actions() {
+                    for action in actions {
+                        if !action.is_suppression() {
+                            diagnostic = diagnostic.add_code_suggestion(action.into());
+                        }
                     }
                 }
 
@@ -389,6 +390,10 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
         let action = analyze(file_id, &tree, filter, &analyzer_options, |signal| {
             if let Some(actions) = signal.actions() {
                 for action in actions {
+                    // suppression actions should not be part of the fixes (safe or suggested)
+                    if action.is_suppression() {
+                        continue;
+                    }
                     match fix_file_mode {
                         FixFileMode::SafeFixes => {
                             if action.applicability == Applicability::MaybeIncorrect {
