@@ -76,11 +76,29 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
                             docs.push(' ');
                         }
 
+                        Event::Start(Tag::Paragraph) => {}
                         Event::End(Tag::Paragraph) => {
                             break;
                         }
 
-                        _ => {}
+                        Event::Start(tag) => match tag {
+                            Tag::Strong | Tag::Paragraph => {
+                                continue;
+                            }
+
+                            _ => panic!("Unimplemented tag {:?}", { tag }),
+                        },
+
+                        Event::End(tag) => match tag {
+                            Tag::Strong | Tag::Paragraph => {
+                                continue;
+                            }
+                            _ => panic!("Unimplemented tag {:?}", { tag }),
+                        },
+
+                        _ => {
+                            panic!("Unimplemented event {:?}", { event })
+                        }
                     }
                 }
                 docs

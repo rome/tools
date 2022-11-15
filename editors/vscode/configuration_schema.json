@@ -4,6 +4,13 @@
   "description": "The configuration that is contained inside the file `rome.json`",
   "type": "object",
   "properties": {
+    "$schema": {
+      "description": "A field for the [JSON schema](https://json-schema.org/) specification",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "files": {
       "description": "The configuration of the filesystem",
       "anyOf": [
@@ -46,13 +53,6 @@
         {
           "type": "null"
         }
-      ]
-    },
-    "schema": {
-      "description": "A field for the [JSON schema](https://json-schema.org/) specification",
-      "type": [
-        "string",
-        "null"
       ]
     }
   },
