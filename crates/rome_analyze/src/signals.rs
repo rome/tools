@@ -160,14 +160,6 @@ impl<L: Language> ExactSizeIterator for AnalyzerActionIter<L> {
     }
 }
 
-#[derive(Debug)]
-pub struct AnalyzerMutation<L: Language> {
-    pub message: MarkupBuf,
-    pub mutation: BatchMutation<L>,
-    pub category: ActionCategory,
-    pub rule_name: String,
-}
-
 pub struct CodeSuggestionAdviceIter<L: Language> {
     iter: IntoIter<AnalyzerAction<L>>,
 }
@@ -292,7 +284,14 @@ where
             });
         };
         let node_to_suppress = R::can_suppress(&ctx, &self.state);
-        let suppression_node = node_to_suppress.and_then(|suppression_node| {
+        // We now try to "guess" the node where to apply the suppression comment.
+        // Considering that the detection of suppression comments in the linter is "line based", we start
+        // querying all the ancestors of the current node, until we find the first ancestor that has a newline
+        // among its leading trivia.
+        //
+        // If we're not able to find an ancestor that meets these criteria, it means that the node is
+        // placed at row 1, so we take the node itself.
+        let result = node_to_suppress.map(|suppression_node| {
             let ancestor = suppression_node.node().ancestors().find_map(|node| {
                 if node
                     .first_token()
@@ -309,14 +308,13 @@ where
                     None
                 }
             });
-            if ancestor.is_some() {
-                ancestor
+            if let Some(ancestor_node) = ancestor {
+                (false, ancestor_node.first_token())
             } else {
-                Some(ctx.root().syntax().clone())
+                (true, ctx.root().syntax().clone().first_token())
             }
         });
-        let suppression_action = suppression_node.and_then(|suppression_node| {
-            let first_token = suppression_node.first_token();
+        let suppression_action = result.and_then(|(is_root, first_token)| {
             let rule = format!(
                 "lint({}/{})",
                 <R::Group as RuleGroup>::NAME,
@@ -324,12 +322,17 @@ where
             );
             let mes = format!("// rome-ignore {}: suppressed", rule);
 
+            // We decorate
             first_token.map(|first_token| {
-                let trivia = vec![
-                    (TriviaPieceKind::Newline, "\n"),
+                let mut trivia = Vec::new();
+                if !is_root {
+                    trivia.push((TriviaPieceKind::Newline, "\n"));
+                }
+
+                trivia.extend([
                     (TriviaPieceKind::SingleLineComment, mes.as_str()),
                     (TriviaPieceKind::Newline, "\n"),
-                ];
+                ]);
                 let mut mutation = ctx.root().begin();
                 let new_token = first_token.with_leading_trivia(trivia.clone());
 

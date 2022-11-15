@@ -493,6 +493,7 @@ pub struct RuleAction<L: Language> {
     pub mutation: BatchMutation<L>,
 }
 
+/// An action meant to suppress a lint rule
 pub struct SuppressAction<L: Language>(SyntaxNode<L>);
 
 impl<L: Language> SuppressAction<L> {
