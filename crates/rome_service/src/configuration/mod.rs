@@ -81,7 +81,7 @@ pub struct FilesConfiguration {
     /// this limit will be ignored for performance reason. Defaults to 1 MiB
     pub max_size: Option<NonZeroU64>,
 
-    /// A list of Unix shell style patterns. The formatter will ignore files/folders that will
+    /// A list of Unix shell style patterns. Rome tools will ignore files/folders that will
     /// match these patterns.
     #[serde(
         skip_serializing_if = "Option::is_none",

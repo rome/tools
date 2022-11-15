@@ -515,7 +515,7 @@
       "type": "object",
       "properties": {
         "ignore": {
-          "description": "A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.",
+          "description": "A list of Unix shell style patterns. Rome tools will ignore files/folders that will match these patterns.",
           "type": [
             "array",
             "null"

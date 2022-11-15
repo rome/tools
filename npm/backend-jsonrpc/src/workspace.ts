@@ -49,7 +49,7 @@ export interface Configuration {
  */
 export interface FilesConfiguration {
 	/**
-	 * A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.
+	 * A list of Unix shell style patterns. Rome tools will ignore files/folders that will match these patterns.
 	 */
 	ignore?: string[];
 	/**
