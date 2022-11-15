@@ -1,0 +1,304 @@
+---
+title: Integrating into your repository
+category: guides
+emoji: 🔗
+description: Learn how to integrate Rome into your existing repository setup.
+---
+
+import PackageManagerRomeCommand from "/components/PackageManagerRomeCommand.astro";
+import PackageManagerCommand from "/components/PackageManagerCommand.astro";
+
+# Integrating into your repository
+
+Rome is meant to eventually become capable of performing the same tasks that most of your current tools do, faster and easier than your current tools do. But in the meantime, you do not need to worry about Rome not playing well with your current tools. This guide provides examples to introduce Rome into an existing repository, even if your repository is a [monorepo](https://en.wikipedia.org/wiki/Monorepo) composed of different packages.
+
+Initial installation of Rome will generally not vary with most common repository setups. Check our [Getting Started guide](/guides/getting-started) to find out how to install Rome. If you have a monorepo, you will usually want to install Rome in its root, not in an individual one of your packages.
+
+We have compiled a list of common repository setups for you, and explanations on how to integrate Rome into each one of them follow. Make sure you have installed Rome first.
+
+## Single package without existing formatting or linting
+
+After following the [Getting Started guide](/guides/getting-started), you can already use the formatter and linter while developing:
+
+<PackageManagerRomeCommand command="format --write ." />
+<PackageManagerRomeCommand command="check ." />
+
+If you would like shorter commands for these, you can add `scripts` to your `package.json`:
+
+```json
+{
+	"scripts": {
+		"format": "rome format --write .",
+		"lint": "rome check ."
+	}
+}
+```
+
+### CI
+
+If you have a CI pipeline, such as GitHub actions, we recommend that you check formatting and linting as part of it by adding the following command:
+
+<PackageManagerRomeCommand command="ci ." />
+
+Alternatively, they can be part of a script that your CI pipeline runs:
+
+```json
+{
+	"scripts": {
+		"ci": "rome ci ."
+	}
+}
+```
+
+### Ignoring files
+
+If you have files that do not require formatting or linting, such as compilation outputs in a `build` directory or scattered `generated` files, you can ignore them by extending your `rome.json` with the following:
+
+```json
+{
+	"formatter": {
+		"ignore": ["build", "**/*.generated.js"]
+	},
+	"linter": {
+		"ignore": ["build", "**/*.generated.js"]
+	}
+}
+```
+
+Instead of ignoring files, it is also possible to run Rome only on specific explicitly included files. However, we recommend that you try using `ignore` if possible. If you explicitly specify which files to format or lint and later a new Rome version comes out with the capability to check even more types of files, you may lose out without noticing! To explicitly run Rome for example only on TypeScript files, run:
+
+<PackageManagerRomeCommand command="format --write **/*.ts" />
+<PackageManagerRomeCommand command="check **/*.ts" />
+
+Instead of ignoring files, it is also possible to run Rome only on specific explicitly included files. However, we recommend that you try using `ignore` if possible. If you explicitly specify which files to format or lint and later a new Rome version comes out with the capability to check even more types of files, you may lose out without noticing!
+
+## Replacing Prettier and ESLint
+
+After following the [Getting Started guide](/guides/getting-started), let's look into replacing the each tool with Rome. Note that while we try to make the transition from these tools as easy as possible, there will always be some deviation from the behavior of these tools. You may see some reformatted code, missing lint rules, or lint errors from new rules when adopting Rome.
+
+### Prettier
+
+First, we replace any script(s) you were using to check and to reformat your files using Prettier.
+For example, in your `package.json`, change:
+
+```diff
+{
+  "scripts": {
+-    "format": "prettier --write ."
++    "format": "rome format --write .",
+-    "ci:format": "prettier --check ."
++    "ci:format": "rome format .",
+  }
+}
+```
+
+Instead of `prettier --write .`, you may be giving Prettier a pattern of files to format, such as `prettier --write **/*.ts`. If this is the case, we recommend that you instead explicitly specify which files you do _not_ want formatted as ignored files, which is explained in the next section.
+
+Instead of ignoring files, it is also possible to run Rome only on specific explicitly included files. However, we recommend that you try using `ignore` if possible. If you explicitly specify which files to format or lint and later a new Rome version comes out with the capability to check even more types of files, you may lose out without noticing! To explicitly run Rome only on specific files, use:
+
+```diff
+{
+  "scripts": {
+-    "format": "prettier --write **/*.ts"
++    "format": "rome format --write **/*.ts",
+-    "ci:format": "prettier --check **/*.ts"
++    "ci:format": "rome format **/*.ts",
+  }
+}
+```
+
+Do not quote a pattern like `**/*.ts`. Most modern package managers are able to handle it correctly on all platforms.
+
+#### Ignoring files
+
+If you use a `.prettierignore` file or otherwise wish to leave some files (such as compilation outputs) unformatted, add `ignore` patterns to your `rome.json`:
+
+```json
+{
+	"formatter": {
+		"ignore": ["build", "**/*.generated.js"]
+	}
+}
+```
+
+This is equivalent to the `.prettierignore` file
+
+```
+build
+**/*.generated.js
+```
+
+#### Configuration options
+
+Prettier tries to avoid formatting Configuration options to reduce complexity and end debates over formatting styles, however they had to strike a balance and introduce some in order to enable widespread adoption. Rome follows the same philosophy. Our [configuration reference](/configuration/#formatter) shows the options available, which more or less directly map to Prettier options, sometimes named slightly differently. For example, your `.prettierrc` might specify the following:
+
+```json
+{
+	"singleQuote": true
+}
+```
+
+To preserve this behavior as you introduce Rome, you can add the following to your `rome.json`:
+
+```json
+{
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single"
+		}
+	}
+}
+```
+
+### ESLint
+
+Similar to formatting, we replace the scripts used for linting in the `package.json` file, for example:
+
+```diff
+"scripts": {
+-  "lint": "eslint --fix ."
++  "lint": "rome check --apply .",
+-  "ci:lint": "eslint ."
++  "ci:lint": "rome check .",
+}
+```
+
+#### Ignoring files
+
+Ignoring files in the Rome linter works in the same way as ignoring them in the Rome formatter.
+
+```json
+{
+	"linter": {
+		"ignore": ["build", "**/*.generated.js"]
+	}
+}
+```
+
+This is equivalent to the `.eslintignore` file
+
+```
+build
+**/*.generated.js
+```
+
+#### Rules
+
+Rome tries to provide a comprehensive set of rules out of the box, but it is still under development. Just like you may see new lint errors with Rome that ESLint missed on purpose or by accident, Rome may also not detect some issues that you'd like it to. If that happens, do not hesitate to make a suggestion on our GitHub if no one else has made the same report yet!
+
+We try to provide reasonable default rules in our `recommended` rule set that was automatically enabled when you ran `rome init`, and explain what a rule is meant to achieve in its diagnostics. If you relied on ESLint presets curated by others and were happy with it, you can just leave the rule configuration to us!
+
+If you would like to fine tune your rules, you can look at out corresponding [reference documentation](/lint/rules). A rule can be disabled by setting it to `off`, or enabled by setting it to `error`. Example:
+
+```json
+{
+	"linter": {
+		"rules": {
+			"style": {
+				"noUnusedTemplateLiteral": "off"
+			}
+		}
+	}
+}
+```
+
+### All in one
+
+Now that you have a tool that can do both formatting and linting at once, you also have the option to run overall checks on your code all-in-one, for example on a CI pipeline:
+
+<PackageManagerRomeCommand command="ci ." />
+
+You can also uninstall Prettier and ESLint from your repository now if you would like, unless you still use them somewhere else in the repo.
+
+## Turborepo
+
+After following the [Getting Started guide](/guides/getting-started) to install Rome in the root of the repository, you have two options:
+
+1. Use Rome directly in the root of your repository. We recommend this approach if it works for your repository. Rome is meant to handle monorepo setups as it evolves to cover more and more areas of developer tooling.
+2. Use Rome in individual packages. This may make sense if your packages are very different each other. You may even decide to lint with Rome in one of them, but with a different tool like ESLint in another!
+
+We explain each option below. For more in-depth information on Rome's equivalents to Prettier and ESLint configuration, you can additionally refer to the general Prettier and ESLint guide above.
+
+If none of these options work well for you, let us know by opening a discussion on our GitHub!
+
+### Using Rome directly
+
+This is the fastest way to set up Rome and will deliver the best experience. However, it is not yet adaptable to more complex repository setups.
+
+Replace the `lint` and `format` scripts with Rome's alternatives in your `package.json`:
+
+```diff
+{
+  "scripts": {
+-    "lint": "turbo run lint",
++    "lint": "rome check .",
+-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
++    "format": "rome format --write ."
+	}
+}
+```
+
+We recommend running `rome format` on the whole directory (`.`). For more details and what to do if you need to ignore files, refer to the general guide for migration from Prettier above.
+
+You can now use the same scripts you are used to, but they are backed by Rome's formatting and linting. You can remove your dependencies on Prettier and ESLint, as well as any `.eslintrc` files, `eslint-config-*` packages, and similar code. Refer to the general guide for migration from ESLint above if you have customized your linting after the turborepo setup and would like to apply similar customizations to Rome.
+
+### Using Rome in individual packages
+
+If you would like to use Rome in some of your packages but not in others, that is also possible.
+
+#### Formatting
+
+Make a list of packages that you would like to keep formatting with Prettier, and configure Rome to ignore them in `rome.json`:
+
+```json
+{
+	"formatter": {
+		"ignore": ["packages/ui", "apps/web"]
+	}
+}
+```
+
+Then, adapt your `format` script in `package.json` to run Prettier on those packages, and Rome on the rest:
+
+```diff
+{
+  "scripts": {
+-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
++    "format": "prettier --write packages/ui apps/web && rome format --write ."
+  }
+}
+```
+
+#### Linting
+
+You can leave the root `package.json` untouched. In packages that you would like to lint using Rome, replace the `lint` script in the `package.json` file. For example, in a standard turborepo Next.js app, change:
+
+```diff
+{
+  "scripts": {
+-    "lint": "next lint"
++    "lint": "rome check ."
+  }
+}
+```
+
+Or in a standard turborepo library, change:
+
+```diff
+{
+  "scripts": {
+-    "lint": "TIMING=1 eslint \"**/*.ts*\""
++    "lint": "rome check ."
+  }
+}
+```
+
+You can run the `lint` script in your repository root or in individual packages like you are used to.
+
+## Nx
+
+We're still [looking into](https://github.com/rome/tools/issues/3709) integrating Rome seamlessly with [Nx](https://nx.dev). In the meantime, you can use Rome directly from the CLI or in `package.json` scripts if you would like, as described in previous sections!
+
+## npm workspaces, Yarn berry workspaces, pnpm workspaces, lerna, ...
+
+TODO
