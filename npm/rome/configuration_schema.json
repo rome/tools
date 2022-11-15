@@ -563,17 +563,6 @@
       "description": "The configuration of the filesystem",
       "type": "object",
       "properties": {
-        "ignore": {
-          "description": "A list of Unix shell style patterns. Rome tools will ignore files/folders that will match these patterns.",
-          "type": [
-            "array",
-            "null"
-          ],
-          "items": {
-            "type": "string"
-          },
-          "uniqueItems": true
-        },
         "maxSize": {
           "description": "The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reason. Defaults to 1 MiB",
           "default": null,
@@ -686,15 +675,6 @@
             }
           ]
         },
-        "semicolons": {
-          "description": "Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.",
-          "default": "always",
-          "allOf": [
-            {
-              "$ref": "#/definitions/Semicolons"
-            }
-          ]
-        },
         "trailingComma": {
           "description": "Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to \"all\".",
           "default": "all",
@@ -764,16 +744,6 @@
             }
           ]
         },
-        "noConditionalAssignment": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "noConstAssign": {
           "description": "Prevents from having const variables being re-assigned.",
           "anyOf": [
@@ -818,26 +788,6 @@
             }
           ]
         },
-        "noPrecisionLoss": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noUnsafeFinally": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "recommended": {
           "description": "It enables the recommended rules for this group",
           "type": [
@@ -847,16 +797,6 @@
         },
         "useCamelCase": {
           "description": "Enforce camel case naming convention.",
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useConst": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -1072,13 +1012,6 @@
           ]
         }
       }
-    },
-    "Semicolons": {
-      "type": "string",
-      "enum": [
-        "always",
-        "asNeeded"
-      ]
     },
     "Style": {
       "description": "A list of rules that belong to this group",

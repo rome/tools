@@ -31,6 +31,10 @@ use rome_js_analyze::metadata;
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(deny_unknown_fields)]
 pub struct Configuration {
+    /// A field for the [JSON schema](https://json-schema.org/) specification
+    #[serde(rename(serialize = "$schema", deserialize = "$schema"))]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub schema: Option<String>,
     /// The configuration of the filesystem
     #[serde(skip_serializing_if = "Option::is_none")]
     pub files: Option<FilesConfiguration>,
@@ -58,6 +62,9 @@ impl Default for Configuration {
             }),
             formatter: None,
             javascript: None,
+            schema: Some(String::from(
+                "./node_modules/rome/configuration_schema.json",
+            )),
         }
     }
 }

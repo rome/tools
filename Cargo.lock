@@ -2918,6 +2918,7 @@ dependencies = [
  "git2",
  "pico-args",
  "proc-macro2",
+ "pulldown-cmark",
  "quote",
  "rome_analyze",
  "rome_js_analyze",

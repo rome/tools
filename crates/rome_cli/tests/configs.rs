@@ -9,6 +9,7 @@ pub const CONFIG_FORMAT: &str = r#"{
 "#;
 
 pub const CONFIG_INIT_DEFAULT: &str = r#"{
+  "$schema": "./node_modules/rome/configuration_schema.json",
   "linter": {
     "enabled": true,
     "rules": {
