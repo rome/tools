@@ -1329,6 +1329,7 @@ fn max_diagnostics() {
     assert_eq!(console.out_buffer.len(), 12);
 }
 
+#[test]
 fn no_supported_file_found() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
@@ -1336,10 +1337,7 @@ fn no_supported_file_found() {
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
         DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![
-            std::ffi::OsString::from("check"),
-            ".".into(),
-        ]),
+        Arguments::from_vec(vec![std::ffi::OsString::from("check"), ".".into()]),
     );
 
     eprintln!("{:?}", console.out_buffer);
