@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 223
 expression: content
 ---
 # Emitted Messages
@@ -14,7 +13,7 @@ ci.js lint ━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ```block
-Skipped 1 files
+Skipped 1 file(s)
 ```
 
 

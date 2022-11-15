@@ -104,7 +104,7 @@ impl CliSnapshot {
                 // otherwise at each run we invalid the previous snapshot.
                 //
                 // This is a workaround, and it might not work for all cases.
-                if !message_content.contains("files in") {
+                if !message_content.contains("file(s) in") {
                     content.push_str("```block");
                     content.push('\n');
                     content.push_str(message_content);

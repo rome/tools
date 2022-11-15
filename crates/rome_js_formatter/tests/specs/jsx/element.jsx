@@ -299,3 +299,32 @@ let a = (
 		/>
 	</Test>
 );
+
+function Component() {
+	return (
+		<div>
+			{fn(data)}{' '}
+			<Component />
+		</div>
+	);
+}
+
+// jsx whitespace {' '} adds meaningful jsx text
+function Component() {
+	return (
+		<div>
+			{fn(datadatadatadatadatadatadatadatadatadatadatadatadatadatadatadata)}{' '}
+			<Component />
+		</div>
+	);
+}
+
+// not jsx whitespace doesn't add meaningful jsx text
+function Component() {
+	return (
+		<div>
+			{fn(datadatadatadatadatadatadatadatadatadatadatadatadatadatadatadata)}{'  '}
+			<Component />
+		</div>
+	);
+}

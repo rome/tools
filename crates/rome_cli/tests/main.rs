@@ -52,6 +52,7 @@ mod help {
 mod main {
     use super::*;
     use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
+    use rome_service::workspace;
 
     #[test]
     fn unknown_command() {
@@ -177,6 +178,39 @@ mod main {
             Err(Termination::OverflowNumberArgument(argument, limit)) => {
                 assert_eq!(argument, "--max-diagnostics");
                 assert_eq!(limit, MAXIMUM_DISPLAYABLE_DIAGNOSTICS);
+            }
+            _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
+        }
+    }
+
+    #[test]
+    fn no_colors() {
+        let workspace = workspace::server();
+        let args = Arguments::from_vec(vec![OsString::from("--colors=off")]);
+        let result = CliSession::new(&*workspace, args).and_then(|session| session.run());
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+    }
+
+    #[test]
+    fn force_colors() {
+        let workspace = workspace::server();
+        let args = Arguments::from_vec(vec![OsString::from("--colors=force")]);
+        let result = CliSession::new(&*workspace, args).and_then(|session| session.run());
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+    }
+
+    #[test]
+    fn invalid_colors() {
+        let workspace = workspace::server();
+        let args = Arguments::from_vec(vec![OsString::from("--colors=other")]);
+
+        let result = CliSession::new(&*workspace, args).and_then(|session| session.run());
+
+        match result {
+            Err(Termination::ParseError { argument, .. }) => {
+                assert_eq!(argument, "--colors");
             }
             _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
         }

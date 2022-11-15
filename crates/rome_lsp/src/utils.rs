@@ -116,10 +116,15 @@ pub(crate) fn code_fix_to_lsp(
         diagnostics
             .iter()
             .filter_map(|d| {
-                let code = d.code.as_ref().and_then(|code| match code {
-                    lsp::NumberOrString::String(code) => Some(code.as_str()),
-                    lsp::NumberOrString::Number(_) => None,
-                })?;
+                let code = d.code.as_ref()?;
+                let code = match code {
+                    lsp::NumberOrString::String(code) => code.as_str(),
+                    lsp::NumberOrString::Number(_) => return None,
+                };
+
+                let code = code.strip_prefix("lint/")?;
+                let code = code.strip_prefix(action.group_name.as_ref())?;
+                let code = code.strip_prefix('/')?;
 
                 if code == action.rule_name {
                     Some(d.clone())
@@ -132,10 +137,13 @@ pub(crate) fn code_fix_to_lsp(
         Vec::new()
     };
 
-    let kind = match action.category {
-        ActionCategory::QuickFix => Some(lsp::CodeActionKind::QUICKFIX),
-        ActionCategory::Refactor => Some(lsp::CodeActionKind::REFACTOR),
-    };
+    let kind = action.category.to_str();
+    let mut kind = kind.into_owned();
+
+    kind.push('.');
+    kind.push_str(action.group_name.as_ref());
+    kind.push('.');
+    kind.push_str(action.rule_name.as_ref());
 
     let suggestion = action.suggestion;
 
@@ -152,7 +160,7 @@ pub(crate) fn code_fix_to_lsp(
 
     lsp::CodeAction {
         title: print_markup(&suggestion.msg),
-        kind,
+        kind: Some(lsp::CodeActionKind::from(kind)),
         diagnostics: if !diagnostics.is_empty() {
             Some(diagnostics)
         } else {

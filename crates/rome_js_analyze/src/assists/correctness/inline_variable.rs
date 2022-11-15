@@ -1,4 +1,4 @@
-use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule};
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, RefactorKind, Rule};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_semantic::{AllReferencesExtensions, Reference};
@@ -94,7 +94,7 @@ impl Rule for InlineVariable {
         }
 
         Some(JsRuleAction {
-            category: ActionCategory::Refactor,
+            category: ActionCategory::Refactor(RefactorKind::Inline),
             applicability: Applicability::Always,
             message: markup! { "Inline variable" }.to_owned(),
             mutation,

@@ -168,7 +168,7 @@ pub(crate) struct LintParams<'a> {
 
 pub(crate) struct LintResults {
     pub(crate) diagnostics: Vec<rome_diagnostics::v2::serde::Diagnostic>,
-    pub(crate) has_errors: bool,
+    pub(crate) errors: usize,
     pub(crate) skipped_diagnostics: u64,
 }
 

@@ -217,9 +217,10 @@ fn lint(params: LintParams) -> LintResults {
     let analyzer_options = compute_analyzer_options(&params.settings);
 
     let mut diagnostic_count = diagnostics.len() as u64;
-    let mut has_errors = diagnostics
+    let mut errors = diagnostics
         .iter()
-        .any(|diag| diag.severity() <= v2::Severity::Error);
+        .filter(|diag| diag.severity() <= v2::Severity::Error)
+        .count();
 
     let has_lint = params.filter.categories.contains(RuleCategories::LINT);
 
@@ -241,7 +242,7 @@ fn lint(params: LintParams) -> LintResults {
                 .unwrap_or(v2::Severity::Error);
 
             if severity <= v2::Severity::Error {
-                has_errors = true;
+                errors += 1;
             }
 
             if diagnostic_count <= params.max_diagnostics {
@@ -262,7 +263,7 @@ fn lint(params: LintParams) -> LintResults {
 
     LintResults {
         diagnostics,
-        has_errors,
+        errors,
         skipped_diagnostics,
     }
 }
@@ -334,7 +335,8 @@ fn code_actions(
     analyze(file_id, &tree, filter, &analyzer_options, |signal| {
         if let Some(action) = signal.action() {
             actions.push(CodeAction {
-                category: action.category,
+                category: action.category.clone(),
+                group_name: Cow::Borrowed(action.group_name),
                 rule_name: Cow::Borrowed(action.rule_name),
                 suggestion: CodeSuggestion::from(action),
             });
@@ -417,6 +419,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
                         }
                     };
                     actions.push(FixAction {
+                        group_name: Cow::Borrowed(action.group_name),
                         rule_name: Cow::Borrowed(action.rule_name),
                         range,
                     });
