@@ -1,0 +1,105 @@
+# CLI benchmark, compares main and PR branch with Hyperfine.
+# Comment with text containing `!bench_cli`, a new result will be commented at the bottom of this PR.
+
+name: CLI Benchmark
+
+on:
+  workflow_dispatch:
+  issue_comment:
+    types: [ created ]
+
+env:
+  RUST_LOG: info
+
+jobs:
+  bench:
+    name: Bench
+    if: github.event_name == 'workflow_dispatch' || github.event.issue.pull_request && contains(github.event.comment.body, '!bench_cli')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get PR SHA
+        id: sha
+        uses: actions/github-script@v6
+        with:
+          result-encoding: string
+          script: |
+            if(context.eventName === "workflow_dispatch") {
+              return { result: context.sha, issue_number: 3764 };
+            } else {
+              const response = await github.request(context.payload.issue.pull_request.url);
+              return { result: response.data.head.sha, issue_number: context.payload.issue.number };
+            }
+
+      - name: Checkout PR Branch
+        uses: actions/checkout@v3
+        with:
+          submodules: false
+          ref: ${{ steps.sha.outputs.result }}
+
+      - name: Install toolchain
+        run: rustup show
+
+      - name: Cache
+        uses: Swatinem/rust-cache@v1
+
+      - name: Install hyperfine
+        run: cargo install hyperfine
+
+      - name: Compile on PR Branch
+        run: |
+          cargo build --release --bin rome
+          mkdir -p benchmark/target
+          cp target/release/rome benchmark/target/rome_pr
+
+      - name: Checkout Main Branch
+        uses: actions/checkout@v3
+        with:
+          clean: false
+          ref: main
+
+      - name: Compile on Main Branch
+        run: |
+          cargo build --release --bin rome
+          cp target/release/rome benchmark/target/rome_main
+
+      - name: Checkout webpack
+        uses: actions/checkout@v3
+        with:
+          repository: https://github.com/webpack/webpack.git
+          path: benchmark/target/webpack
+      - name: Checkout prettier
+        uses: actions/checkout@v3
+        with:
+          repository: https://github.com/prettier/prettier.git
+          path: benchmark/target/prettier
+      - name: Checkout eslint
+        uses: actions/checkout@v3
+        with:
+          repository: https://github.com/eslint/eslint.git
+          path: benchmark/target/eslint
+
+      - name: Run Benchmarks
+        id: benchmarks
+        working-directory: benchmark/target
+        env:
+          FORMAT_BENCH_COMMAND: "format webpack/lib webpack/examples webpack/declarations webpack/benchmark prettier/src prettier/scripts --write"
+          CHECK_BENCH_COMMAND: "--max-diagnostics=0 eslint/lib eslint/messages eslint/tests/lib eslint/tests/performance eslint/tools webpack/lib"
+        run: |
+          hyperfine -w 2 --export-markdown benchmark_format.md \
+            -n "Rome (main)" "./rome_main $FORMAT_BENCH_COMMAND" \
+            -n "Rome (PR)" "./rome_pr $FORMAT_BENCH_COMMAND"
+          hyperfine -w 2 --export-markdown benchmark_check.md \
+            -n "Rome (main)" "./rome_main check $CHECK_BENCH_COMMAND" \
+            -n "Rome (PR)" "./rome_pr check $CHECK_BENCH_COMMAND"
+          echo "format=$(cat benchmark_format.md)" >> $GITHUB_OUTPUT
+          echo "check=$(cat benchmark_check.md)" >> $GITHUB_OUTPUT
+
+      - name: Write a new comment
+        uses: peter-evans/create-or-update-comment@v1.4.5
+        continue-on-error: true
+        with:
+          issue-number: ${{ steps.sha.outputs.issue_number }}
+          body: |
+            ${{ steps.benchmarks.outputs.format }}
+            ${{ steps.benchmarks.outputs.check }}
