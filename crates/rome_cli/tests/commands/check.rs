@@ -1,6 +1,12 @@
 use pico_args::Arguments;
 use rome_cli::Termination;
+use std::env::temp_dir;
 use std::ffi::OsString;
+use std::fs::{create_dir, create_dir_all, remove_dir_all};
+#[cfg(target_family = "unix")]
+use std::os::unix::fs::symlink;
+#[cfg(target_os = "windows")]
+use std::os::windows::fs::{symlink_dir, symlink_file};
 use std::path::{Path, PathBuf};
 
 use crate::configs::{
@@ -12,7 +18,7 @@ use crate::configs::{
 use crate::snap_test::SnapshotPayload;
 use crate::{assert_cli_snapshot, run_cli, FORMATTED, LINT_ERROR, PARSE_ERROR};
 use rome_console::{BufferConsole, LogLevel};
-use rome_fs::{ErrorEntry, FileSystemExt, MemoryFileSystem};
+use rome_fs::{ErrorEntry, FileSystemExt, MemoryFileSystem, OsFileSystem};
 use rome_service::DynRef;
 
 const ERRORS: &str = r#"
@@ -666,23 +672,104 @@ fn no_lint_if_files_are_listed_in_ignore_option() {
 }
 
 #[test]
-fn fs_error_symlink() {
-    let mut fs = MemoryFileSystem::default();
+fn fs_error_dereferenced_symlink() {
+    let fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    fs.insert_error(PathBuf::from("prefix/ci.js"), ErrorEntry::SymbolicLink);
+    let root_path = temp_dir().join("rome_test_broken_symlink");
+    let subdir_path = root_path.join("prefix");
+
+    #[allow(unused_must_use)]
+    {
+        remove_dir_all(root_path.clone());
+    }
+    create_dir(PathBuf::from(root_path.clone())).unwrap();
+    create_dir(subdir_path.clone()).unwrap();
+
+    #[cfg(target_family = "unix")]
+    {
+        symlink(root_path.join("null"), root_path.join("broken_symlink")).unwrap();
+    }
+
+    #[cfg(target_os = "windows")]
+    {
+        symlink_file(root_path.join("null"), root_path.join("broken_symlink")).unwrap();
+    }
 
     let result = run_cli(
-        DynRef::Borrowed(&mut fs),
+        DynRef::Owned(Box::new(OsFileSystem)),
         DynRef::Borrowed(&mut console),
-        Arguments::from_vec(vec![OsString::from("check"), OsString::from("prefix")]),
+        Arguments::from_vec(vec![
+            OsString::from("check"),
+            OsString::from(root_path.clone()),
+        ]),
     );
+
+    remove_dir_all(root_path).unwrap();
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
-        "fs_error_symlink",
+        #[cfg(target_family = "unix")]
+        "fs_error_dereferenced_symlink_unix",
+        #[cfg(target_os = "windows")]
+        "fs_error_dereferenced_symlink_windows",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn fs_error_infinite_symlink_exapansion() {
+    let fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let root_path = temp_dir().join("rome_test_infinite_symlink_exapansion");
+    let subdir1_path = root_path.join("prefix");
+    let subdir2_path = root_path.join("foo").join("bar");
+
+    #[allow(unused_must_use)]
+    {
+        remove_dir_all(root_path.clone());
+    }
+    create_dir(PathBuf::from(root_path.clone())).unwrap();
+    create_dir(subdir1_path.clone()).unwrap();
+
+    create_dir_all(subdir2_path.clone()).unwrap();
+
+    #[cfg(target_family = "unix")]
+    {
+        symlink(subdir1_path.clone(), root_path.join("self_symlink1")).unwrap();
+        symlink(subdir1_path, subdir2_path.join("self_symlink2")).unwrap();
+    }
+
+    #[cfg(target_os = "windows")]
+    {
+        symlink_dir(subdir1_path.clone(), root_path.join("self_symlink1")).unwrap();
+        symlink_dir(subdir1_path, subdir2_path.join("self_symlink2")).unwrap();
+    }
+
+    let result = run_cli(
+        DynRef::Owned(Box::new(OsFileSystem)),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("check"),
+            OsString::from(root_path.clone()),
+        ]),
+    );
+
+    remove_dir_all(root_path).unwrap();
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        #[cfg(target_family = "unix")]
+        "fs_error_infinite_symlink_exapansion_unix",
+        #[cfg(target_os = "windows")]
+        "fs_error_infinite_symlink_exapansion_windows",
         fs,
         console,
         result,
@@ -694,7 +781,7 @@ fn fs_error_unknown() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    fs.insert_error(PathBuf::from("prefix/ci.js"), ErrorEntry::Unknown);
+    fs.insert_error(PathBuf::from("prefix/ci.js"), ErrorEntry::UnknownFileType);
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
