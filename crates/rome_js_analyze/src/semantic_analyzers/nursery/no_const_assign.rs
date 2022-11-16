@@ -2,10 +2,7 @@ use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{
-    JsCatchDeclaration, JsClassExpression, JsFunctionExpression, JsIdentifierAssignment,
-    JsParameterList, JsVariableDeclaration,
-};
+use rome_js_syntax::{JsIdentifierAssignment, JsSyntaxKind, JsVariableDeclaration};
 use rome_rowan::{AstNode, TextRange};
 
 declare_rule! {
@@ -65,19 +62,20 @@ impl Rule for NoConstAssign {
 
         let declared_binding = model.declaration(node)?;
 
-        for node in declared_binding.syntax().ancestors() {
-            if JsParameterList::can_cast(node.kind())
-                || JsCatchDeclaration::can_cast(node.kind())
-                || JsClassExpression::can_cast(node.kind())
-                || JsFunctionExpression::can_cast(node.kind())
-            {
-                return None;
-            }
-            if let Some(variable_declaration) = JsVariableDeclaration::cast_ref(&node) {
-                if variable_declaration.is_const() {
-                    return Some(declared_binding.syntax().text_trimmed_range());
+        let parent = declared_binding.syntax().parent()?;
+
+        match parent.kind() {
+            JsSyntaxKind::JS_VARIABLE_DECLARATOR => {
+                if let Some(variable_declaration) = parent
+                    .ancestors()
+                    .find_map(|ancestor| JsVariableDeclaration::cast_ref(&ancestor))
+                {
+                    if variable_declaration.is_const() {
+                        return Some(declared_binding.syntax().text_trimmed_range());
+                    }
                 }
             }
+            _ => return None,
         }
 
         None
