@@ -637,6 +637,15 @@
             }
           ]
         },
+        "semicolons": {
+          "description": "Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.",
+          "default": "always",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Semicolons"
+            }
+          ]
+        },
         "trailingComma": {
           "description": "Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to \"all\".",
           "default": "all",
@@ -972,6 +981,13 @@
           ]
         }
       }
+    },
+    "Semicolons": {
+      "type": "string",
+      "enum": [
+        "always",
+        "asNeeded"
+      ]
     },
     "Style": {
       "description": "A list of rules that belong to this group",

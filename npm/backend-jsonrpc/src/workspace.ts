@@ -120,6 +120,10 @@ export interface JavascriptFormatter {
 	 */
 	quoteStyle?: QuoteStyle;
 	/**
+	 * Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.
+	 */
+	semicolons?: Semicolons;
+	/**
 	 * Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
 	 */
 	trailingComma?: TrailingComma;
@@ -138,6 +142,7 @@ export interface Rules {
 }
 export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
+export type Semicolons = "always" | "asNeeded";
 export type TrailingComma = "all" | "es5" | "none";
 /**
  * A list of rules that belong to this group

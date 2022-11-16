@@ -1,7 +1,7 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use rome_formatter::write;
 
-use crate::utils::FormatWithSemicolon;
+use crate::utils::FormatStatementSemicolon;
 
 use rome_js_syntax::JsExportDefaultExpressionClause;
 use rome_js_syntax::JsExportDefaultExpressionClauseFields;
@@ -23,10 +23,12 @@ impl FormatNodeRule<JsExportDefaultExpressionClause> for FormatJsExportDefaultEx
 
         write!(
             f,
-            [FormatWithSemicolon::new(
-                &format_args!(default_token.format(), space(), expression.format()),
-                semicolon_token.as_ref()
-            )]
+            [
+                default_token.format(),
+                space(),
+                expression.format(),
+                FormatStatementSemicolon::new(semicolon_token.as_ref())
+            ]
         )
     }
 }

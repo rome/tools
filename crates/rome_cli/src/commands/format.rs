@@ -139,6 +139,14 @@ pub(crate) fn apply_format_settings_from_cli(
             source,
         })?;
 
+    let semicolons = session
+        .args
+        .opt_value_from_str("--semicolons")
+        .map_err(|source| Termination::ParseError {
+            argument: "--semicolons",
+            source,
+        })?;
+
     let javascript = configuration
         .javascript
         .get_or_insert_with(JavascriptConfiguration::default);
@@ -156,6 +164,10 @@ pub(crate) fn apply_format_settings_from_cli(
 
     if let Some(trailing_comma) = trailing_comma {
         javascript_formatter.trailing_comma = trailing_comma;
+    }
+
+    if let Some(semicolons) = semicolons {
+        javascript_formatter.semicolons = semicolons;
     }
 
     Ok(())

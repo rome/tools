@@ -14,7 +14,9 @@ use rome_diagnostics::{v2::category, Applicability, CodeSuggestion};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::{analyze, analyze_with_inspect_matcher, visit_registry, RuleError};
-use rome_js_formatter::context::{trailing_comma::TrailingComma, QuoteProperties, QuoteStyle};
+use rome_js_formatter::context::{
+    trailing_comma::TrailingComma, QuoteProperties, QuoteStyle, Semicolons,
+};
 use rome_js_formatter::{context::JsFormatOptions, format_node};
 use rome_js_parser::Parse;
 use rome_js_semantic::{semantic_model, SemanticModelOptions};
@@ -38,10 +40,11 @@ use tracing::debug;
 
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
-pub struct JsFormatSettings {
+pub struct JsFormatterSettings {
     pub quote_style: Option<QuoteStyle>,
     pub quote_properties: Option<QuoteProperties>,
     pub trailing_comma: Option<TrailingComma>,
+    pub semicolons: Option<Semicolons>,
 }
 
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
@@ -51,7 +54,7 @@ pub struct JsLinterSettings {
 }
 
 impl Language for JsLanguage {
-    type FormatSettings = JsFormatSettings;
+    type FormatterSettings = JsFormatterSettings;
     type FormatOptions = JsFormatOptions;
     type LinterSettings = JsLinterSettings;
 
@@ -61,7 +64,7 @@ impl Language for JsLanguage {
 
     fn resolve_format_options(
         global: &FormatSettings,
-        language: &JsFormatSettings,
+        language: &JsFormatterSettings,
         path: &RomePath,
     ) -> JsFormatOptions {
         JsFormatOptions::new(path.as_path().try_into().unwrap_or_default())
@@ -70,6 +73,7 @@ impl Language for JsLanguage {
             .with_quote_style(language.quote_style.unwrap_or_default())
             .with_quote_properties(language.quote_properties.unwrap_or_default())
             .with_trailing_comma(language.trailing_comma.unwrap_or_default())
+            .with_semicolons(language.semicolons.unwrap_or_default())
     }
 }
 

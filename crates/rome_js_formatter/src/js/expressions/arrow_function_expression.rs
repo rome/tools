@@ -8,13 +8,11 @@ use crate::context::trailing_comma::FormatTrailingComma;
 use crate::js::expressions::call_arguments::GroupedCallArgumentLayout;
 use crate::parentheses::{
     is_binary_like_left_or_right, is_callee, is_conditional_test,
-    update_or_lower_expression_needs_parentheses, NeedsParentheses,
+    update_or_lower_expression_needs_parentheses, JsAnyExpressionLeftSide, NeedsParentheses,
 };
 use crate::utils::function_body::{FormatMaybeCachedFunctionBody, FunctionBodyCacheMode};
 use crate::utils::test_call::is_test_call_argument;
-use crate::utils::{
-    resolve_left_most_expression, AssignmentLikeLayout, JsAnyBinaryLikeLeftExpression,
-};
+use crate::utils::{resolve_left_most_expression, AssignmentLikeLayout};
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyBindingPattern, JsAnyExpression, JsAnyFormalParameter,
     JsAnyFunctionBody, JsAnyParameter, JsAnyTemplateElement, JsArrowFunctionExpression,
@@ -131,7 +129,7 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                         JsAnyExpression(expression @ JsConditionalExpression(_)) => {
                             let are_parentheses_mandatory = matches!(
                                 resolve_left_most_expression(expression),
-                                JsAnyBinaryLikeLeftExpression::JsAnyExpression(
+                                JsAnyExpressionLeftSide::JsAnyExpression(
                                     JsObjectExpression(_)
                                         | JsFunctionExpression(_)
                                         | JsClassExpression(_)
