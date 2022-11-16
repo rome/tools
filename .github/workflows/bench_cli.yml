@@ -4,6 +4,7 @@
 name: CLI Benchmark
 
 on:
+  workflow_dispatch:
   issue_comment:
     types: [ created ]
 
@@ -13,7 +14,7 @@ env:
 jobs:
   bench:
     name: Bench
-    if: github.event.issue.pull_request && contains(github.event.comment.body, '!bench_cli')
+    if: github.event_name == 'workflow_dispatch' || github.event.issue.pull_request && contains(github.event.comment.body, '!bench_cli')
     runs-on: ubuntu-latest
 
     steps:
@@ -23,8 +24,12 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const response = await github.request(context.payload.issue.pull_request.url);
-            return response.data.head.sha;
+            if(context.eventName === "workflow_dispatch") {
+              return { result: context.sha, issue_number: 3764 };
+            } else {
+              const response = await github.request(context.payload.issue.pull_request.url);
+              return { result: response.data.head.sha, issue_number: context.payload.issue.number };
+            }
 
       - name: Checkout PR Branch
         uses: actions/checkout@v3
@@ -94,7 +99,7 @@ jobs:
         uses: peter-evans/create-or-update-comment@v1.4.5
         continue-on-error: true
         with:
-          issue-number: ${{ github.event.issue.number }}
+          issue-number: ${{ steps.sha.outputs.issue_number }}
           body: |
             ${{ steps.benchmarks.outputs.format }}
             ${{ steps.benchmarks.outputs.check }}
