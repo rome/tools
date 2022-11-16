@@ -2,7 +2,9 @@ use std::{cmp::Ordering, collections::VecDeque, num::NonZeroU32, vec::IntoIter};
 
 use roaring::bitmap::RoaringBitmap;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
-use rome_control_flow::{builder::BlockId, ExceptionHandler, Instruction, InstructionKind};
+use rome_control_flow::{
+    builder::BlockId, ExceptionHandler, ExceptionHandlerKind, Instruction, InstructionKind,
+};
 use rome_js_syntax::{
     JsBlockStatement, JsCaseClause, JsDefaultClause, JsDoWhileStatement, JsForInStatement,
     JsForOfStatement, JsForStatement, JsFunctionBody, JsIfStatement, JsLabeledStatement,
@@ -294,7 +296,7 @@ fn analyze_simple(cfg: &ControlFlowGraph, signals: &mut UnreachableRanges) {
                 // catch or finally block
                 if let Some((handler, handlers)) = exception_handlers.take() {
                     if reachable_blocks.insert(handler.target) {
-                        queue.push_back((handler.target, Some(handlers)));
+                        queue.push_back((handler.target, find_catch_handlers(handlers)));
                     }
                 }
             }
@@ -473,7 +475,7 @@ fn traverse_cfg(
                             next_block: handler.target,
                             visited: path.visited.clone(),
                             terminator: path.terminator,
-                            exception_handlers: Some(handlers),
+                            exception_handlers: find_catch_handlers(handlers),
                         });
                     }
                 }
@@ -539,6 +541,22 @@ fn has_side_effects(inst: &Instruction<JsLanguage>) -> bool {
 
         JsSyntaxKind::JS_BREAK_STATEMENT | JsSyntaxKind::JS_CONTINUE_STATEMENT => false,
         kind => element.as_node().is_some() && !kind.is_literal(),
+    }
+}
+
+/// Returns the list of all `finally` exception handlers up to and including
+/// the first `catch` handler to be executed when an exception is thrown
+fn find_catch_handlers(handlers: &[ExceptionHandler]) -> Option<&[ExceptionHandler]> {
+    let handlers = handlers
+        .iter()
+        .position(|handler| matches!(handler.kind, ExceptionHandlerKind::Catch))
+        .map(|index| &handlers[index..])
+        .unwrap_or(handlers);
+
+    if handlers.is_empty() {
+        None
+    } else {
+        Some(handlers)
     }
 }
 
