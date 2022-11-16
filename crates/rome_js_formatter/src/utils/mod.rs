@@ -240,7 +240,7 @@ impl Format<JsFormatContext> for FormatOptionalSemicolon<'_> {
 }
 
 /// Format some code followed by an optional semicolon.
-/// Performs semicolon insertion if it is missing in the input source, the [JsFormatOptions::semicolons] is [Semicolons::Always], and the
+/// Performs semicolon insertion if it is missing in the input source, the [semicolons option](crate::JsFormatOptions::semicolons) is [Semicolons::Always], and the
 /// preceding element isn't an unknown node
 pub struct FormatSemicolon<'a> {
     semicolon: Option<&'a JsSyntaxToken>,
