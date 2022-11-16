@@ -543,6 +543,79 @@ fn trailing_comma_parse_errors() {
 }
 
 #[test]
+fn with_semicolons_options() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("file.js");
+    fs.insert(file_path.into(), UNFORMATTED.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--semicolons"),
+            OsString::from("as-needed"),
+            OsString::from("--write"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    dbg!(&content);
+    assert_eq!(content, "statement()\n");
+
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "with_semicolons_options",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn with_invalid_semicolons_option() {
+    let mut console = BufferConsole::default();
+    let mut fs = MemoryFileSystem::default();
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--semicolons"),
+            OsString::from("asneed"),
+            OsString::from("file.js"),
+        ]),
+    );
+
+    match result {
+        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--semicolons"),
+        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "with_invalid_semicolons_option",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
 fn indent_style_parse_errors() {
     let mut console = BufferConsole::default();
     let mut fs = MemoryFileSystem::default();

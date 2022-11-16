@@ -21,15 +21,21 @@ use tower_lsp::jsonrpc::Error as LspError;
 use tower_lsp::lsp_types::{self as lsp};
 use tracing::error;
 
-pub(crate) fn position(line_index: &LineIndex, offset: TextSize) -> lsp::Position {
-    let line_col = line_index.line_col(offset);
-    lsp::Position::new(line_col.line, line_col.col)
+pub(crate) fn position(line_index: &LineIndex, offset: TextSize) -> Result<lsp::Position> {
+    let line_col = line_index.line_col(offset).with_context(|| {
+        format!(
+            "could not convert offset {offset:?} into a line-column index into string {:?}",
+            line_index.text()
+        )
+    })?;
+
+    Ok(lsp::Position::new(line_col.line, line_col.col))
 }
 
-pub(crate) fn range(line_index: &LineIndex, range: TextRange) -> lsp::Range {
-    let start = position(line_index, range.start());
-    let end = position(line_index, range.end());
-    lsp::Range::new(start, end)
+pub(crate) fn range(line_index: &LineIndex, range: TextRange) -> Result<lsp::Range> {
+    let start = position(line_index, range.start())?;
+    let end = position(line_index, range.end())?;
+    Ok(lsp::Range::new(start, end))
 }
 
 pub(crate) fn offset(line_index: &LineIndex, position: lsp::Position) -> Result<TextSize> {
@@ -49,7 +55,7 @@ pub(crate) fn text_range(line_index: &LineIndex, range: lsp::Range) -> Result<Te
     Ok(TextRange::new(start, end))
 }
 
-pub(crate) fn text_edit(line_index: &LineIndex, diff: TextEdit) -> Vec<lsp::TextEdit> {
+pub(crate) fn text_edit(line_index: &LineIndex, diff: TextEdit) -> Result<Vec<lsp::TextEdit>> {
     let mut result: Vec<lsp::TextEdit> = Vec::new();
     let mut offset = TextSize::from(0);
 
@@ -59,7 +65,7 @@ pub(crate) fn text_edit(line_index: &LineIndex, diff: TextEdit) -> Vec<lsp::Text
                 offset += range.len();
             }
             CompressedOp::DiffOp(DiffOp::Insert { range }) => {
-                let start = position(line_index, offset);
+                let start = position(line_index, offset)?;
 
                 // Merge with a previous delete operation if possible
                 let last_edit = result.last_mut().filter(|text_edit| {
@@ -76,9 +82,9 @@ pub(crate) fn text_edit(line_index: &LineIndex, diff: TextEdit) -> Vec<lsp::Text
                 }
             }
             CompressedOp::DiffOp(DiffOp::Delete { range }) => {
-                let start = position(line_index, offset);
+                let start = position(line_index, offset)?;
                 offset += range.len();
-                let end = position(line_index, offset);
+                let end = position(line_index, offset)?;
 
                 result.push(lsp::TextEdit {
                     range: lsp::Range::new(start, end),
@@ -87,7 +93,10 @@ pub(crate) fn text_edit(line_index: &LineIndex, diff: TextEdit) -> Vec<lsp::Text
             }
 
             CompressedOp::EqualLines { line_count } => {
-                let mut line_col = line_index.line_col(offset);
+                let mut line_col = line_index
+                    .line_col(offset)
+                    .expect("diff length is overflowing the line count in the original file");
+
                 line_col.line += line_count.get() + 1;
                 line_col.col = 0;
 
@@ -102,7 +111,7 @@ pub(crate) fn text_edit(line_index: &LineIndex, diff: TextEdit) -> Vec<lsp::Text
         }
     }
 
-    result
+    Ok(result)
 }
 
 pub(crate) fn code_fix_to_lsp(
@@ -110,7 +119,7 @@ pub(crate) fn code_fix_to_lsp(
     line_index: &LineIndex,
     diagnostics: &[lsp::Diagnostic],
     action: CodeAction,
-) -> lsp::CodeAction {
+) -> Result<lsp::CodeAction> {
     // Mark diagnostics emitted by the same rule as resolved by this action
     let diagnostics: Vec<_> = if matches!(action.category, ActionCategory::QuickFix) {
         diagnostics
@@ -148,7 +157,7 @@ pub(crate) fn code_fix_to_lsp(
     let suggestion = action.suggestion;
 
     let mut changes = HashMap::new();
-    let edits = text_edit(line_index, suggestion.suggestion);
+    let edits = text_edit(line_index, suggestion.suggestion)?;
 
     changes.insert(url.clone(), edits);
 
@@ -158,7 +167,7 @@ pub(crate) fn code_fix_to_lsp(
         change_annotations: None,
     };
 
-    lsp::CodeAction {
+    Ok(lsp::CodeAction {
         title: print_markup(&suggestion.msg),
         kind: Some(lsp::CodeActionKind::from(kind)),
         diagnostics: if !diagnostics.is_empty() {
@@ -175,7 +184,7 @@ pub(crate) fn code_fix_to_lsp(
         },
         disabled: None,
         data: None,
-    }
+    })
 }
 
 /// Convert an [rome_diagnostics::Diagnostic] to a [lsp::Diagnostic], using the span
@@ -188,7 +197,7 @@ pub(crate) fn diagnostic_to_lsp<D: Diagnostic>(
     line_index: &LineIndex,
 ) -> Option<lsp::Diagnostic> {
     let location = diagnostic.location()?;
-    let span = range(line_index, location.span?);
+    let span = range(line_index, location.span?).ok()?;
 
     let severity = match diagnostic.severity() {
         Severity::Fatal | Severity::Error => lsp::DiagnosticSeverity::ERROR,
@@ -255,12 +264,17 @@ impl Visit for RelatedInformationVisitor<'_> {
             None => return Ok(()),
         };
 
+        let range = match range(self.line_index, span) {
+            Ok(range) => range,
+            Err(_) => return Ok(()),
+        };
+
         let related_information = self.related_information.get_or_insert_with(Vec::new);
 
         related_information.push(lsp::DiagnosticRelatedInformation {
             location: lsp::Location {
                 uri: self.url.clone(),
-                range: range(self.line_index, span),
+                range,
             },
             message: String::new(),
         });
@@ -337,7 +351,7 @@ line 7 new";
         let line_index = LineIndex::new(OLD);
         let diff = TextEdit::from_unicode_words(OLD, NEW);
 
-        let text_edit = super::text_edit(&line_index, diff);
+        let text_edit = super::text_edit(&line_index, diff).unwrap();
 
         assert_eq!(
             text_edit.as_slice(),
@@ -380,7 +394,7 @@ line 7 new";
         let line_index = LineIndex::new(OLD);
         let diff = TextEdit::from_unicode_words(OLD, NEW);
 
-        let text_edit = super::text_edit(&line_index, diff);
+        let text_edit = super::text_edit(&line_index, diff).unwrap();
 
         assert_eq!(
             text_edit.as_slice(),

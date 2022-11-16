@@ -9,6 +9,7 @@ import {
 	QuoteStyle,
 	QuoteProperties,
 	TrailingComma,
+	Semicolons,
 	PrettierOutput,
 	PlaygroundSettings,
 	emptyPrettierOutput,
@@ -150,6 +151,7 @@ export function formatWithPrettier(
 		quoteStyle: QuoteStyle;
 		quoteProperties: QuoteProperties;
 		trailingComma: TrailingComma;
+		semicolons: Semicolons;
 	},
 ): PrettierOutput {
 	try {
@@ -162,6 +164,7 @@ export function formatWithPrettier(
 			singleQuote: options.quoteStyle === QuoteStyle.Single,
 			quoteProps: options.quoteProperties,
 			trailingComma: options.trailingComma,
+			semi: options.semicolons === Semicolons.Always,
 		};
 
 		// @ts-ignore

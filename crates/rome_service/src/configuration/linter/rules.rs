@@ -688,12 +688,14 @@ pub struct Nursery {
 #[doc = r" A list of rules that belong to this group"]
 struct NurserySchema {
     no_banned_types: Option<RuleConfiguration>,
+    no_conditional_assignment: Option<RuleConfiguration>,
     no_const_assign: Option<RuleConfiguration>,
     no_dupe_keys: Option<RuleConfiguration>,
     no_explicit_any: Option<RuleConfiguration>,
     no_invalid_constructor_super: Option<RuleConfiguration>,
     no_precision_loss: Option<RuleConfiguration>,
     use_camel_case: Option<RuleConfiguration>,
+    use_const: Option<RuleConfiguration>,
     use_exhaustive_dependencies: Option<RuleConfiguration>,
     use_flat_map: Option<RuleConfiguration>,
     use_numeric_literals: Option<RuleConfiguration>,
@@ -701,14 +703,16 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 11] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 13] = [
         "noBannedTypes",
+        "noConditionalAssignment",
         "noConstAssign",
         "noDupeKeys",
         "noExplicitAny",
         "noInvalidConstructorSuper",
         "noPrecisionLoss",
         "useCamelCase",
+        "useConst",
         "useExhaustiveDependencies",
         "useFlatMap",
         "useNumericLiterals",

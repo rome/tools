@@ -3,7 +3,7 @@ use std::ops::Range;
 use anyhow::Result;
 use rome_service::workspace::{ChangeFileParams, CloseFileParams, Language, OpenFileParams};
 use tower_lsp::lsp_types;
-use tracing::error;
+use tracing::{error, field};
 
 use crate::{documents::Document, session::Session, utils};
 
@@ -38,7 +38,7 @@ pub(crate) async fn did_open(
 }
 
 /// Handler for `textDocument/didChange` LSP notification
-#[tracing::instrument(level = "trace", skip(session), err)]
+#[tracing::instrument(level = "trace", skip_all, fields(url = field::display(&params.text_document.uri), version = params.text_document.version), err)]
 pub(crate) async fn did_change(
     session: &Session,
     params: lsp_types::DidChangeTextDocumentParams,
@@ -50,17 +50,24 @@ pub(crate) async fn did_change(
     let doc = session.document(&url)?;
 
     let mut content = doc.content;
+    tracing::trace!("old document: {content:?}");
+
     for change in params.content_changes {
         match change.range {
             Some(range) => {
-                let range = utils::text_range(&doc.line_index, range)?;
-                content.replace_range(Range::<usize>::from(range), &change.text);
+                let text_range = utils::text_range(&doc.line_index, range)?;
+                let range = Range::<usize>::from(text_range);
+                tracing::trace!("replace range {range:?} with {:?}", change.text);
+                content.replace_range(range, &change.text);
             }
             None => {
+                tracing::trace!("replace content {:?}", change.text);
                 content = change.text;
             }
         }
     }
+
+    tracing::trace!("new document: {content:?}");
 
     let doc = Document::new(version, &content);
 

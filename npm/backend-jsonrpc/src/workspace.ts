@@ -120,6 +120,10 @@ export interface JavascriptFormatter {
 	 */
 	quoteStyle?: QuoteStyle;
 	/**
+	 * Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.
+	 */
+	semicolons?: Semicolons;
+	/**
 	 * Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
 	 */
 	trailingComma?: TrailingComma;
@@ -138,6 +142,7 @@ export interface Rules {
 }
 export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
+export type Semicolons = "always" | "asNeeded";
 export type TrailingComma = "all" | "es5" | "none";
 /**
  * A list of rules that belong to this group
@@ -213,6 +218,7 @@ export interface Correctness {
  */
 export interface Nursery {
 	noBannedTypes?: RuleConfiguration;
+	noConditionalAssignment?: RuleConfiguration;
 	noConstAssign?: RuleConfiguration;
 	noDupeKeys?: RuleConfiguration;
 	noExplicitAny?: RuleConfiguration;
@@ -223,6 +229,7 @@ export interface Nursery {
 	 */
 	recommended?: boolean;
 	useCamelCase?: RuleConfiguration;
+	useConst?: RuleConfiguration;
 	useExhaustiveDependencies?: RuleConfiguration;
 	useFlatMap?: RuleConfiguration;
 	useNumericLiterals?: RuleConfiguration;
@@ -393,12 +400,14 @@ export type Category =
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
 	| "lint/nursery/noBannedTypes"
+	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstAssign"
 	| "lint/nursery/noDupeKeys"
 	| "lint/nursery/noExplicitAny"
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noPrecisionLoss"
 	| "lint/nursery/useCamelCase"
+	| "lint/nursery/useConst"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useFlatMap"
 	| "lint/nursery/useNumericLiterals"

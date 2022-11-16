@@ -1,6 +1,7 @@
 use crate::prelude::*;
 
 use crate::parentheses::NeedsParentheses;
+use crate::utils::FormatOptionalSemicolon;
 use rome_formatter::trivia::FormatLeadingComments;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{JsSyntaxNode, TsMappedType, TsMappedTypeFields};
@@ -38,14 +39,6 @@ impl FormatNodeRule<TsMappedType> for FormatTsMappedType {
             })
             .any(|piece| piece.is_newline());
 
-        let format_semi = format_with(|f| {
-            if let Some(semi) = &semicolon_token {
-                write!(f, [semi.format()])
-            } else {
-                write!(f, [text(";")])
-            }
-        });
-
         let comments = f.comments().clone();
         let dangling_comments = comments.dangling_comments(node.syntax());
         let type_annotation_has_leading_comment =
@@ -53,15 +46,16 @@ impl FormatNodeRule<TsMappedType> for FormatTsMappedType {
                 comments.has_leading_comments(annotation.syntax())
             });
 
-        write!(
-            f,
-            [
-                &l_curly_token.format(),
-                group(&indent(&format_args!(
-                    soft_line_break_or_space(),
-                    readonly_modifier
-                        .format()
-                        .with_or_empty(|readonly, f| write![f, [readonly, space()]]),
+        let format_inner = format_with(|f| {
+            write!(f, [soft_line_break_or_space()])?;
+
+            if let Some(readonly_modifier) = &readonly_modifier {
+                write!(f, [readonly_modifier.format(), space()])?;
+            }
+
+            write!(
+                f,
+                [
                     FormatLeadingComments::Comments(dangling_comments),
                     group(&format_args![
                         l_brack_token.format(),
@@ -78,9 +72,16 @@ impl FormatNodeRule<TsMappedType> for FormatTsMappedType {
                     optional_modifier.format(),
                     type_annotation_has_leading_comment.then_some(space()),
                     mapped_type.format(),
-                    if_group_breaks(&format_semi)
-                )))
-                .should_expand(should_expand),
+                    if_group_breaks(&FormatOptionalSemicolon::new(semicolon_token.as_ref()))
+                ]
+            )
+        });
+
+        write!(
+            f,
+            [
+                &l_curly_token.format(),
+                group(&indent(&format_inner)).should_expand(should_expand),
                 soft_line_break_or_space(),
                 r_curly_token.format(),
             ]

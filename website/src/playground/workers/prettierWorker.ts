@@ -18,6 +18,7 @@ self.addEventListener("message", (e) => {
 				quoteStyle,
 				quoteProperties,
 				trailingComma,
+				semicolons,
 			} = settings;
 			const code = e.data.code as string;
 			const filename = e.data.filename as string;
@@ -30,6 +31,7 @@ self.addEventListener("message", (e) => {
 				quoteStyle,
 				quoteProperties,
 				trailingComma,
+				semicolons,
 			});
 
 			self.postMessage({

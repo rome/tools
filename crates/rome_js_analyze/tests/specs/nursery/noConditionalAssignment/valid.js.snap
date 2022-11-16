@@ -1,0 +1,96 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: valid.js
+---
+# Input
+```js
+var x = 0; if (x == 0) { var b = 1; }
+var x = 0; if (x == 0) { var b = 1; }
+var x = 5; while (x < 5) { x = x + 1; }
+if ((someNode = someNode.parentNode) !== null) { }
+if ((someNode = someNode.parentNode) !== null) { }
+if ((a = b));
+while ((a = b));
+do {} while ((a = b));
+for (;(a = b););
+for (;;) {}
+if (someNode || (someNode = parentNode)) { }
+while (someNode || (someNode = parentNode)) { }
+do { } while (someNode || (someNode = parentNode));
+for (;someNode || (someNode = parentNode););
+if ((function(node) { return node = parentNode; })(someNode)) { }
+if ((function(node) { return node = parentNode; })(someNode)) { }
+if ((node => node = parentNode)(someNode)) { }
+if ((node => node = parentNode)(someNode)) { }
+if (function(node) { return node = parentNode; }) { }
+if (function(node) { return node = parentNode; }) { }
+x = 0;
+var x; var b = (x === 0) ? 1 : 0;
+switch (foo) { case a = b: bar(); }
+switch (foo) { case a = b: bar(); }
+switch (foo) { case baz + (a = b): bar(); }
+
+```
+
+# Diagnostics
+```
+valid.js:6:6 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Expected a conditional expression and instead saw an assignment.
+  
+    4 │ if ((someNode = someNode.parentNode) !== null) { }
+    5 │ if ((someNode = someNode.parentNode) !== null) { }
+  > 6 │ if ((a = b));
+      │      ^^^^^
+    7 │ while ((a = b));
+    8 │ do {} while ((a = b));
+  
+
+```
+
+```
+valid.js:7:9 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Expected a conditional expression and instead saw an assignment.
+  
+    5 │ if ((someNode = someNode.parentNode) !== null) { }
+    6 │ if ((a = b));
+  > 7 │ while ((a = b));
+      │         ^^^^^
+    8 │ do {} while ((a = b));
+    9 │ for (;(a = b););
+  
+
+```
+
+```
+valid.js:8:15 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Expected a conditional expression and instead saw an assignment.
+  
+     6 │ if ((a = b));
+     7 │ while ((a = b));
+   > 8 │ do {} while ((a = b));
+       │               ^^^^^
+     9 │ for (;(a = b););
+    10 │ for (;;) {}
+  
+
+```
+
+```
+valid.js:9:8 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Expected a conditional expression and instead saw an assignment.
+  
+     7 │ while ((a = b));
+     8 │ do {} while ((a = b));
+   > 9 │ for (;(a = b););
+       │        ^^^^^
+    10 │ for (;;) {}
+    11 │ if (someNode || (someNode = parentNode)) { }
+  
+
+```
+
+

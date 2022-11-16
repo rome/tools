@@ -96,9 +96,10 @@ pub(crate) fn code_actions(
                 return None;
             }
 
-            let action = utils::code_fix_to_lsp(&url, &doc.line_index, &diagnostics, action);
-            has_fixes |= action.diagnostics.is_some();
+            let action =
+                utils::code_fix_to_lsp(&url, &doc.line_index, &diagnostics, action).ok()?;
 
+            has_fixes |= action.diagnostics.is_some();
             Some(CodeActionOrCommand::CodeAction(action))
         })
         .chain(fix_all)
@@ -169,10 +170,7 @@ fn fix_all(
         vec![lsp::TextEdit {
             range: lsp::Range {
                 start: lsp::Position::new(0, 0),
-                end: lsp::Position::new(
-                    line_index.newlines.len().try_into().unwrap_or(u32::MAX),
-                    0,
-                ),
+                end: lsp::Position::new(line_index.len(), 0),
             },
             new_text: fixed.code,
         }],
