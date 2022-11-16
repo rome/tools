@@ -396,6 +396,10 @@ export interface Nursery {
 	 */
 	noUnsafeFinally?: RuleConfiguration;
 	/**
+	 * Disallow the use of var
+	 */
+	noVar?: RuleConfiguration;
+	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
@@ -639,6 +643,7 @@ export type Category =
 	| "lint/nursery/noPrecisionLoss"
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnsafeFinally"
+	| "lint/nursery/noVar"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useConst"
 	| "lint/nursery/useExhaustiveDependencies"
