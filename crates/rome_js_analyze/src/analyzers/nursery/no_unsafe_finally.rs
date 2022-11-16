@@ -158,7 +158,9 @@ impl Rule for NoUnsafeFinally {
             markup! {
                 "Unsafe usage of '"{ query.description() }"'."
             },
-        ))
+        ).note(markup! {
+            "'"{ query.description() }"' in 'finally' overwrites the control flow statements inside 'try' and 'catch'."
+        }))
     }
 }
 

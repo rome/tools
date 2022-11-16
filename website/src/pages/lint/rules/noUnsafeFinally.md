@@ -38,6 +38,8 @@ which is considered as unexpected behavior.
     <strong>8 │ </strong>    }
     <strong>9 │ </strong>})();
   
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'return' in 'finally' overwrites the control flow statements inside 'try' and 'catch'.</span>
+  
 </code></pre>
 
 ```jsx
@@ -60,6 +62,8 @@ which is considered as unexpected behavior.
    <strong>   │ </strong>        <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>6 │ </strong>    }
     <strong>7 │ </strong>})();
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'return' in 'finally' overwrites the control flow statements inside 'try' and 'catch'.</span>
   
 </code></pre>
 
@@ -86,6 +90,8 @@ which is considered as unexpected behavior.
     <strong>8 │ </strong>    }
     <strong>9 │ </strong>})();
   
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'throw' in 'finally' overwrites the control flow statements inside 'try' and 'catch'.</span>
+  
 </code></pre>
 
 ```jsx
@@ -109,6 +115,8 @@ which is considered as unexpected behavior.
    <strong>   │ </strong>      <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>6 │ </strong>    }
     <strong>7 │ </strong>    return 1;
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'break' in 'finally' overwrites the control flow statements inside 'try' and 'catch'.</span>
   
 </code></pre>
 
@@ -140,6 +148,8 @@ function a() {
     <strong>   │ </strong>        <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
      <strong>9 │ </strong>      }
     <strong>10 │ </strong>    }
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">'break' in 'finally' overwrites the control flow statements inside 'try' and 'catch'.</span>
   
 </code></pre>
 
