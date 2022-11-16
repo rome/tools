@@ -196,16 +196,27 @@ jobs:
           node-version: 14.x
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Publish extension (pre-release)
+      - name: Publish extension to Microsoft Marketplace (pre-release)
         run: npx vsce publish --pre-release --packagePath rome_lsp-*.vsix
         if: needs.build.outputs.prerelease == 'true'
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
-      - name: Publish extension
+      - name: Publish extension to Microsoft Marketplace
         run: npx vsce publish --packagePath rome_lsp-*.vsix
         if: needs.build.outputs.prerelease != 'true'
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: Publish extension to Open VSX (pre-release)
+        run: npx ovsx publish --pre-release --packagePath rome_lsp-*.vsix
+        if: needs.build.outputs.prerelease == 'true'
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+      - name: Publish extension to Open VSX
+        run: npx ovsx publish --packagePath rome_lsp-*.vsix
+        if: needs.build.outputs.prerelease != 'true'
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
 
       - name: Create GitHub release and tag
         uses: softprops/action-gh-release@v1
