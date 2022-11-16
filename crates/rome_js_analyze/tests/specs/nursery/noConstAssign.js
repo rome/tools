@@ -16,3 +16,22 @@ function f(d) {
 const fn = (val) => {
 	val = 0;
 };
+
+const e = () => {
+	try {
+		foo();
+	} catch (err) {
+		err = 4;
+	}
+};
+
+const f = (...rest) => {
+	rest = 4;
+};
+
+const g = class bar {};
+bar = 1;
+
+const h = function foo() {
+	foo = 1;
+};
