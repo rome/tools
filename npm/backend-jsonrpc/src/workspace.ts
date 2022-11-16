@@ -222,6 +222,7 @@ export interface Nursery {
 	 */
 	recommended?: boolean;
 	useCamelCase?: RuleConfiguration;
+	useConst?: RuleConfiguration;
 	useExhaustiveDependencies?: RuleConfiguration;
 	useFlatMap?: RuleConfiguration;
 	useNumericLiterals?: RuleConfiguration;
@@ -397,6 +398,7 @@ export type Category =
 	| "lint/nursery/noExplicitAny"
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/useCamelCase"
+	| "lint/nursery/useConst"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useFlatMap"
 	| "lint/nursery/useNumericLiterals"
