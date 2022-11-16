@@ -163,10 +163,13 @@ impl NormalizedNumber<'_> {
     fn new(num: &str) -> NormalizedNumber<'_> {
         let num = remove_leading_zeros(num);
         let mut split = num.splitn(2, ['e', 'E']);
+
+        // SAFETY: unwrap is ok because even an empty string will produce one part.
         let mantissa = split.next().unwrap();
         let exponent = split.next();
         let mut mantissa_parts = mantissa.splitn(2, '.');
 
+        // SAFETY: unwrap is ok because even an empty string will produce one part.
         let mut normalized = match (mantissa_parts.next().unwrap(), mantissa_parts.next()) {
             ("", Some(fraction)) => {
                 let digits = remove_leading_zeros(fraction);
