@@ -4,7 +4,6 @@
 name: CLI Benchmark
 
 on:
-  workflow_dispatch:
   issue_comment:
     types: [ created ]
 
@@ -14,7 +13,7 @@ env:
 jobs:
   bench:
     name: Bench
-    if: github.event_name == 'workflow_dispatch' || github.event.issue.pull_request && contains(github.event.comment.body, '!bench_cli')
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '!bench_cli')
     runs-on: ubuntu-latest
 
     steps:
@@ -24,12 +23,8 @@ jobs:
         with:
           result-encoding: string
           script: |
-            if(context.eventName === "workflow_dispatch") {
-              return { result: context.sha, issue_number: 3764 };
-            } else {
-              const response = await github.request(context.payload.issue.pull_request.url);
-              return { result: response.data.head.sha, issue_number: context.payload.issue.number };
-            }
+            const response = await github.request(context.payload.issue.pull_request.url);
+            return response.data.head.sha;
 
       - name: Checkout PR Branch
         uses: actions/checkout@v3
@@ -66,17 +61,17 @@ jobs:
       - name: Checkout webpack
         uses: actions/checkout@v3
         with:
-          repository: https://github.com/webpack/webpack.git
+          repository: webpack/webpack
           path: benchmark/target/webpack
       - name: Checkout prettier
         uses: actions/checkout@v3
         with:
-          repository: https://github.com/prettier/prettier.git
+          repository: prettier/prettier
           path: benchmark/target/prettier
       - name: Checkout eslint
         uses: actions/checkout@v3
         with:
-          repository: https://github.com/eslint/eslint.git
+          repository: eslint/eslint
           path: benchmark/target/eslint
 
       - name: Run Benchmarks
@@ -87,19 +82,18 @@ jobs:
           CHECK_BENCH_COMMAND: "--max-diagnostics=0 eslint/lib eslint/messages eslint/tests/lib eslint/tests/performance eslint/tools webpack/lib"
         run: |
           hyperfine -w 2 --export-markdown benchmark_format.md \
-            -n "Rome (main)" "./rome_main $FORMAT_BENCH_COMMAND" \
-            -n "Rome (PR)" "./rome_pr $FORMAT_BENCH_COMMAND"
+            -n "rome format (main)" "./rome_main $FORMAT_BENCH_COMMAND" \
+            -n "rome format (pr)" "./rome_pr $FORMAT_BENCH_COMMAND"
           hyperfine -w 2 --export-markdown benchmark_check.md \
-            -n "Rome (main)" "./rome_main check $CHECK_BENCH_COMMAND" \
-            -n "Rome (PR)" "./rome_pr check $CHECK_BENCH_COMMAND"
-          echo "format=$(cat benchmark_format.md)" >> $GITHUB_OUTPUT
-          echo "check=$(cat benchmark_check.md)" >> $GITHUB_OUTPUT
+            -n "rome check (main)" "./rome_main check $CHECK_BENCH_COMMAND" \
+            -n "rome check (pr)" "./rome_pr check $CHECK_BENCH_COMMAND"
+          cat benchmark_format.md >> benchmark.md
+          echo $'\n' >> benchmark.md
+          cat benchmark_check.md >> benchmark.md
 
       - name: Write a new comment
-        uses: peter-evans/create-or-update-comment@v1.4.5
+        uses: peter-evans/create-or-update-comment@v2
         continue-on-error: true
         with:
-          issue-number: ${{ steps.sha.outputs.issue_number }}
-          body: |
-            ${{ steps.benchmarks.outputs.format }}
-            ${{ steps.benchmarks.outputs.check }}
+          issue-number: ${{ github.event.issue.number }}
+          body-file: benchmark/target/benchmark.md
