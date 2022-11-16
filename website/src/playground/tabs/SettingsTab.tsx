@@ -3,6 +3,7 @@ import {
 	PlaygroundState,
 	QuoteProperties,
 	QuoteStyle,
+	Semicolons,
 	SourceType,
 	TrailingComma,
 } from "../types";
@@ -39,6 +40,7 @@ export default function SettingsTab({
 			quoteStyle,
 			quoteProperties,
 			trailingComma,
+			semicolons,
 			enabledNurseryRules,
 			enabledLinting,
 		},
@@ -67,6 +69,10 @@ export default function SettingsTab({
 	const setTrailingComma = createPlaygroundSettingsSetter(
 		setPlaygroundState,
 		"trailingComma",
+	);
+	const setSemicolons = createPlaygroundSettingsSetter(
+		setPlaygroundState,
+		"semicolons",
 	);
 	const setEnabledNurseryRules = createPlaygroundSettingsSetter(
 		setPlaygroundState,
@@ -200,6 +206,8 @@ export default function SettingsTab({
 				setQuoteProperties={setQuoteProperties}
 				trailingComma={trailingComma}
 				setTrailingComma={setTrailingComma}
+				semicolons={semicolons}
+				setSemicolons={setSemicolons}
 			/>
 			<LinterSettings
 				enabledNurseryRules={enabledNurseryRules}
@@ -477,6 +485,8 @@ function FormatterSettings({
 	setQuoteProperties,
 	trailingComma,
 	setTrailingComma,
+	semicolons,
+	setSemicolons,
 }: {
 	lineWidth: number;
 	setLineWidth: (value: number) => void;
@@ -490,6 +500,8 @@ function FormatterSettings({
 	setQuoteProperties: (value: QuoteProperties) => void;
 	trailingComma: TrailingComma;
 	setTrailingComma: (value: TrailingComma) => void;
+	semicolons: Semicolons;
+	setSemicolons: (value: Semicolons) => void;
 }) {
 	return (
 		<>
@@ -564,6 +576,19 @@ function FormatterSettings({
 						<option value={TrailingComma.All}>All</option>
 						<option value={TrailingComma.ES5}>ES5</option>
 						<option value={TrailingComma.None}>None</option>
+					</select>
+				</div>
+
+				<div className="field-row">
+					<label htmlFor="trailingComma">Semicolons</label>
+					<select
+						id="semicolons"
+						name="semicolons"
+						value={semicolons ?? "always"}
+						onChange={(e) => setSemicolons(e.target.value as Semicolons)}
+					>
+						<option value={Semicolons.Always}>Always</option>
+						<option value={Semicolons.AsNeeded}>As needed</option>
 					</select>
 				</div>
 			</section>

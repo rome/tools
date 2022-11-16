@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use crate::utils::{FormatStatementBody, FormatWithSemicolon};
+use crate::utils::{FormatStatementBody, FormatStatementSemicolon};
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsDoWhileStatementFields;
 use rome_js_syntax::{JsAnyStatement, JsDoWhileStatement};
@@ -24,39 +24,30 @@ impl FormatNodeRule<JsDoWhileStatement> for FormatJsDoWhileStatement {
         let l_paren_token = l_paren_token?;
         let r_paren_token = r_paren_token?;
 
-        let format_statement = format_with(|f| {
-            write!(
-                f,
-                [group(&format_args![
-                    do_token.format(),
-                    FormatStatementBody::new(&body)
-                ])]
-            )?;
+        write!(
+            f,
+            [group(&format_args![
+                do_token.format(),
+                FormatStatementBody::new(&body)
+            ])]
+        )?;
 
-            if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
-                write!(f, [space()])?;
-            } else {
-                write!(f, [hard_line_break()])?;
-            }
-
-            write!(
-                f,
-                [
-                    while_token.format(),
-                    space(),
-                    l_paren_token.format(),
-                    group(&soft_block_indent(&test.format())),
-                    r_paren_token.format()
-                ]
-            )
-        });
+        if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
+            write!(f, [space()])?;
+        } else {
+            write!(f, [hard_line_break()])?;
+        }
 
         write!(
             f,
-            [FormatWithSemicolon::new(
-                &format_statement,
-                semicolon_token.as_ref()
-            )]
+            [
+                while_token.format(),
+                space(),
+                l_paren_token.format(),
+                group(&soft_block_indent(&test.format())),
+                r_paren_token.format(),
+                FormatStatementSemicolon::new(semicolon_token.as_ref())
+            ]
         )
     }
 }

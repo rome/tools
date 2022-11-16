@@ -80,6 +80,15 @@ pub struct FilesConfiguration {
     /// The maximum allowed size for source code files in bytes. Files above
     /// this limit will be ignored for performance reason. Defaults to 1 MiB
     pub max_size: Option<NonZeroU64>,
+
+    /// A list of Unix shell style patterns. Rome tools will ignore files/folders that will
+    /// match these patterns.
+    #[serde(
+        skip_serializing_if = "Option::is_none",
+        deserialize_with = "crate::deserialize_set_of_strings",
+        serialize_with = "crate::serialize_set_of_strings"
+    )]
+    pub ignore: Option<IndexSet<String>>,
 }
 
 /// Series of errors that can be thrown while computing the configuration

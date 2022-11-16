@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
 
-use crate::utils::FormatWithSemicolon;
+use crate::utils::FormatStatementSemicolon;
 
 use rome_js_syntax::JsExportNamedClause;
 use rome_js_syntax::JsExportNamedClauseFields;
@@ -19,34 +19,33 @@ impl FormatNodeRule<JsExportNamedClause> for FormatJsExportNamedClause {
             semicolon_token,
         } = node.as_fields();
 
-        let content = format_with(move |f| {
-            if let Some(type_token) = &type_token {
-                write!(f, [type_token.format(), space()])?;
-            }
+        if let Some(type_token) = &type_token {
+            write!(f, [type_token.format(), space()])?;
+        }
 
-            write!(f, [l_curly_token.format()])?;
+        write!(f, [l_curly_token.format()])?;
 
-            if specifiers.is_empty() {
-                write!(
-                    f,
-                    [format_dangling_comments(node.syntax()).with_block_indent()]
-                )?;
-            } else {
-                write!(
-                    f,
-                    [group(&format_args![
-                        soft_line_indent_or_space(&specifiers.format()),
-                        soft_line_break_or_space(),
-                    ])]
-                )?;
-            }
-
-            write!(f, [r_curly_token.format()])
-        });
+        if specifiers.is_empty() {
+            write!(
+                f,
+                [format_dangling_comments(node.syntax()).with_block_indent()]
+            )?;
+        } else {
+            write!(
+                f,
+                [group(&format_args![
+                    soft_line_indent_or_space(&specifiers.format()),
+                    soft_line_break_or_space(),
+                ])]
+            )?;
+        }
 
         write!(
             f,
-            [FormatWithSemicolon::new(&content, semicolon_token.as_ref())]
+            [
+                r_curly_token.format(),
+                FormatStatementSemicolon::new(semicolon_token.as_ref())
+            ]
         )
     }
 

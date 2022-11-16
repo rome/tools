@@ -1,0 +1,54 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+expression: non-null.ts
+---
+
+# Input
+
+```js
+// the 2nd line needs ASI protection
+const el = ReactDOM.findDOMNode(ref)
+;(el as HTMLElement)!.style.cursor = 'pointer'
+
+```
+
+
+=============================
+
+# Outputs
+
+## Output 1
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: Always
+-----
+
+```js
+// the 2nd line needs ASI protection
+const el = ReactDOM.findDOMNode(ref);
+(el as HTMLElement)!.style.cursor = "pointer";
+```
+
+## Output 2
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: As needed
+-----
+
+```js
+// the 2nd line needs ASI protection
+const el = ReactDOM.findDOMNode(ref)
+;(el as HTMLElement)!.style.cursor = "pointer"
+```
+
+

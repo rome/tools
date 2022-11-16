@@ -23,16 +23,12 @@ export { foooooooooooooooooooooooooooooooooooooooooooooo, fooooooooooooooooooooo
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,12 +1,31 @@
+@@ -1,12 +1,29 @@
  export * as ns from "mod";
 -export v from "mod";
 -export a, * as b from "mod";
 -export c, { foo } from "mod";
 -export * as d, { bar } from "mod";
--export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
--export Bar, {
--  barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr,
--} from "barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
 +export
 +v;
 +from;
@@ -53,9 +49,10 @@ export { foooooooooooooooooooooooooooooooooooooooooooooo, fooooooooooooooooooooo
 +}
 +from;
 +("mod");
-+export {
-+  fooooooooooooooooooooooooooooooooooooooooooooooooo,
-+} from "fooooooooooooooooooooooooooooo";
+ export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+-export Bar, {
+-  barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr,
+-} from "barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
 +export
 +Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr };
 +from;
@@ -89,9 +86,7 @@ export * as d
 }
 from;
 ("mod");
-export {
-  fooooooooooooooooooooooooooooooooooooooooooooooooo,
-} from "fooooooooooooooooooooooooooooo";
+export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
 export
 Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr };
 from;
@@ -490,4 +485,8 @@ export.js:7:68 parse ━━━━━━━━━━━━━━━━━━━�
 
 ```
 
+# Lines exceeding max width of 80 characters
+```
+   22: export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+```
 

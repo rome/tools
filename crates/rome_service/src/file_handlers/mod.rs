@@ -7,7 +7,7 @@ use crate::{
     },
     RomeError, Rules,
 };
-pub use javascript::JsFormatSettings;
+pub use javascript::JsFormatterSettings;
 use rome_analyze::AnalysisFilter;
 use rome_formatter::Printed;
 use rome_fs::RomePath;

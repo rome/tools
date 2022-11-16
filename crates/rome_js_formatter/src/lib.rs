@@ -362,18 +362,19 @@ where
 
     /// Formats the node without comments. Ignores any suppression comments.
     fn fmt_node(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
-        if self.needs_parentheses(node) {
-            write!(
-                f,
-                [
-                    text("("),
-                    format_once(|f| self.fmt_fields(node, f)),
-                    text(")"),
-                ]
-            )
-        } else {
-            self.fmt_fields(node, f)
+        let needs_parentheses = self.needs_parentheses(node);
+
+        if needs_parentheses {
+            write!(f, [text("(")])?;
         }
+
+        self.fmt_fields(node, f)?;
+
+        if needs_parentheses {
+            write!(f, [text(")")])?;
+        }
+
+        Ok(())
     }
 
     /// Formats the node's fields.
@@ -564,7 +565,7 @@ mod tests {
 
     use super::{format_node, format_range};
 
-    use crate::context::JsFormatOptions;
+    use crate::context::{JsFormatOptions, Semicolons};
     use rome_diagnostics::file::FileId;
     use rome_formatter::IndentStyle;
     use rome_js_parser::{parse, parse_script};
@@ -572,7 +573,6 @@ mod tests {
     use rome_rowan::{TextRange, TextSize};
 
     use crate::check_reformat::{check_reformat, CheckReformatParams};
-    use crate::context::trailing_comma::TrailingComma;
 
     #[test]
     fn test_range_formatting() {
@@ -801,8 +801,7 @@ function Component4() {
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, FileId::zero(), syntax);
-        let options = JsFormatOptions::new(syntax);
-        let options = options.with_trailing_comma(TrailingComma::None);
+        let options = JsFormatOptions::new(syntax).with_semicolons(Semicolons::AsNeeded);
         let result = format_node(options.clone(), &tree.syntax())
             .unwrap()
             .print()
