@@ -75,6 +75,8 @@ impl FileSystem for MemoryFileSystem {
             self.open(path)
         } else if options.create_new || options.write {
             self.create(path)
+        } else if options.read {
+            self.read(path)
         } else {
             unimplemented!("the set of open options provided don't match any case")
         }

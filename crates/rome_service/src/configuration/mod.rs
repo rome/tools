@@ -62,9 +62,7 @@ impl Default for Configuration {
             }),
             formatter: None,
             javascript: None,
-            schema: Some(String::from(
-                "./node_modules/rome/configuration_schema.json",
-            )),
+            schema: None,
         }
     }
 }
@@ -219,7 +217,7 @@ pub fn load_config(
 /// - the program doesn't have the write rights
 pub fn create_config(
     fs: &mut DynRef<dyn FileSystem>,
-    configuration: Configuration,
+    mut configuration: Configuration,
 ) -> Result<(), RomeError> {
     let path = PathBuf::from(fs.config_name());
 
@@ -232,6 +230,16 @@ pub fn create_config(
             RomeError::CantReadFile(path.clone())
         }
     })?;
+
+    // we now check if rome is installed inside `node_modules` and if so, we
+    let schema_path = PathBuf::from("./")
+        .join("node_modules")
+        .join("rome")
+        .join("configuration_schema.json");
+    let options = OpenOptions::default().read(true);
+    if let Ok(_) = fs.open_with_options(&schema_path, options) {
+        configuration.schema = schema_path.to_str().map(String::from);
+    }
 
     let contents = serde_json::to_string_pretty(&configuration)
         .map_err(|_| RomeError::Configuration(ConfigurationError::SerializationError))?;
