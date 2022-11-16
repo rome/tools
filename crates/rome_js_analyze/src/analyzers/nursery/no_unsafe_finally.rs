@@ -60,7 +60,7 @@ declare_rule! {
     ///     return 1;
     /// })();
     /// ```
-    /// 
+    ///
     /// ```js,expect_diagnostic
     /// function a() {
     ///   switch (condition) {
@@ -166,10 +166,22 @@ impl ControlFlowStatement {
     fn in_finally_block(&self) -> Option<bool> {
         let mut node = self.syntax().clone();
         let mut is_label_inside_finally = false;
-        let check_sentinel = self.sentinel_check();
         let label = self.label_token();
 
-        while !check_sentinel(node.kind()) {
+        loop {
+            let kind = node.kind();
+            let should_stop = match self {
+                Self::JsBreakStatement(it) if it.label_token().is_none() => {
+                    sentinel_for_break(kind)
+                }
+                Self::JsContinueStatement(_) => sentinel_for_continue(kind),
+                _ => sentinel_for_throw_or_return(kind),
+            };
+
+            if should_stop {
+                break;
+            }
+
             if let Some(label) = &label {
                 if let Some(parent) = node.parent().and_then(JsLabeledStatement::cast) {
                     if parent
@@ -198,14 +210,6 @@ impl ControlFlowStatement {
         }
     }
 
-    fn sentinel_check(&self) -> fn(JsSyntaxKind) -> bool {
-        match self {
-            Self::JsBreakStatement(it) if it.label_token().is_none() => sentinel_for_break,
-            Self::JsContinueStatement(_) => sentinel_for_continue,
-            _ => sentinel_for_throw_or_return,
-        }
-    }
-
     fn description(&self) -> &str {
         match self {
             Self::JsReturnStatement(_) => "return",
@@ -217,54 +221,25 @@ impl ControlFlowStatement {
 }
 
 fn sentinel_for_break(kind: JsSyntaxKind) -> bool {
-    use JsSyntaxKind::*;
-    matches!(
-        kind,
-        JS_SCRIPT
-            | JS_MODULE
-            | JS_FUNCTION_DECLARATION
-            | JS_CLASS_DECLARATION
-            | JS_FUNCTION_EXPRESSION
-            | JS_CLASS_EXPRESSION
-            | JS_ARROW_FUNCTION_EXPRESSION
-            | JS_DO_WHILE_STATEMENT
-            | JS_WHILE_STATEMENT
-            | JS_FOR_OF_STATEMENT
-            | JS_FOR_IN_STATEMENT
-            | JS_FOR_STATEMENT
-            | JS_SWITCH_STATEMENT
-    )
+    sentinel_for_continue(kind) || JsSwitchStatement::can_cast(kind)
 }
 
 fn sentinel_for_continue(kind: JsSyntaxKind) -> bool {
     use JsSyntaxKind::*;
-    matches!(
-        kind,
-        JS_SCRIPT
-            | JS_MODULE
-            | JS_FUNCTION_DECLARATION
-            | JS_CLASS_DECLARATION
-            | JS_FUNCTION_EXPRESSION
-            | JS_CLASS_EXPRESSION
-            | JS_ARROW_FUNCTION_EXPRESSION
-            | JS_DO_WHILE_STATEMENT
-            | JS_WHILE_STATEMENT
-            | JS_FOR_OF_STATEMENT
-            | JS_FOR_IN_STATEMENT
-            | JS_FOR_STATEMENT
-    )
+    sentinel_for_throw_or_return(kind)
+        || matches!(
+            kind,
+            JS_DO_WHILE_STATEMENT
+                | JS_WHILE_STATEMENT
+                | JS_FOR_OF_STATEMENT
+                | JS_FOR_IN_STATEMENT
+                | JS_FOR_STATEMENT
+        )
 }
 
 fn sentinel_for_throw_or_return(kind: JsSyntaxKind) -> bool {
-    use JsSyntaxKind::*;
-    matches!(
-        kind,
-        JS_SCRIPT
-            | JS_MODULE
-            | JS_FUNCTION_DECLARATION
-            | JS_CLASS_DECLARATION
-            | JS_FUNCTION_EXPRESSION
-            | JS_CLASS_EXPRESSION
-            | JS_ARROW_FUNCTION_EXPRESSION
-    )
+    JsAnyRoot::can_cast(kind)
+        || JsAnyFunction::can_cast(kind)
+        || JsAnyClassMember::can_cast(kind)
+        || JsAnyObjectMember::can_cast(kind)
 }
