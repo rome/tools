@@ -145,7 +145,7 @@ pub struct JsFormatOptions {
     /// Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
     trailing_comma: TrailingComma,
 
-    /// Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.
+    /// Whether the formatter prints semicolons for all statements, class members, and type members or only when necessary because of [ASI](https://tc39.es/ecma262/multipage/ecmascript-language-lexical-grammar.html#sec-automatic-semicolon-insertion).
     semicolons: Semicolons,
 
     /// Information related to the current file
