@@ -4,8 +4,9 @@ use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 
 use crate::configs::{
-    CONFIG_FILE_SIZE_LIMIT, CONFIG_LINTER_DISABLED, CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC,
-    CONFIG_LINTER_IGNORED_FILES, CONFIG_LINTER_SUPPRESSED_GROUP, CONFIG_LINTER_SUPPRESSED_RULE,
+    CONFIG_FILE_SIZE_LIMIT, CONFIG_LINTER_AND_FILES_IGNORE, CONFIG_LINTER_DISABLED,
+    CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC, CONFIG_LINTER_IGNORED_FILES,
+    CONFIG_LINTER_SUPPRESSED_GROUP, CONFIG_LINTER_SUPPRESSED_RULE,
     CONFIG_LINTER_UPGRADE_DIAGNOSTIC,
 };
 use crate::snap_test::SnapshotPayload;
@@ -606,6 +607,58 @@ fn no_lint_when_file_is_ignored() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "no_lint_when_file_is_ignored",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn no_lint_if_files_are_listed_in_ignore_option() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("rome.json");
+    fs.insert(file_path.into(), CONFIG_LINTER_AND_FILES_IGNORE.as_bytes());
+
+    let file_path_test1 = Path::new("test1.js");
+    fs.insert(file_path_test1.into(), FIX_BEFORE.as_bytes());
+
+    let file_path_test2 = Path::new("test2.js");
+    fs.insert(file_path_test2.into(), FIX_BEFORE.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("check"),
+            OsString::from("--apply"),
+            file_path_test1.as_os_str().into(),
+            file_path_test2.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut buffer = String::new();
+    fs.open(file_path_test1)
+        .unwrap()
+        .read_to_string(&mut buffer)
+        .unwrap();
+
+    assert_eq!(buffer, FIX_BEFORE);
+
+    let mut buffer = String::new();
+    fs.open(file_path_test2)
+        .unwrap()
+        .read_to_string(&mut buffer)
+        .unwrap();
+
+    assert_eq!(buffer, FIX_BEFORE);
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "no_lint_if_files_are_listed_in_ignore_option",
         fs,
         console,
         result,

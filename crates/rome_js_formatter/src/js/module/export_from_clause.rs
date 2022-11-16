@@ -1,7 +1,7 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use rome_formatter::write;
 
-use crate::utils::FormatWithSemicolon;
+use crate::utils::FormatStatementSemicolon;
 
 use rome_js_syntax::JsExportFromClause;
 use rome_js_syntax::JsExportFromClauseFields;
@@ -20,24 +20,18 @@ impl FormatNodeRule<JsExportFromClause> for FormatJsExportFromClause {
             semicolon_token,
         } = node.as_fields();
 
-        write!(
-            f,
-            [FormatWithSemicolon::new(
-                &format_args!(
-                    star_token.format(),
-                    space(),
-                    export_as
-                        .format()
-                        .with_or_empty(|as_token, f| write![f, [as_token, space()]]),
-                    from_token.format(),
-                    space(),
-                    source.format(),
-                    assertion
-                        .format()
-                        .with_or_empty(|assertion, f| write![f, [space(), assertion]]),
-                ),
-                semicolon_token.as_ref()
-            )]
-        )
+        write!(f, [star_token.format(), space(),])?;
+
+        if let Some(export_as) = export_as {
+            write!(f, [export_as.format(), space()])?;
+        }
+
+        write!(f, [from_token.format(), space(), source.format()])?;
+
+        if let Some(assertion) = assertion {
+            write!(f, [space(), assertion.format()])?;
+        }
+
+        FormatStatementSemicolon::new(semicolon_token.as_ref()).fmt(f)
     }
 }

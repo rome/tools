@@ -30,9 +30,10 @@ impl FormatNodeRule<TsExternalModuleDeclaration> for FormatTsExternalModuleDecla
             Some(TsAnyExternalModuleDeclarationBody::TsModuleBlock(body)) => {
                 write!(f, [space(), body.format()])?;
             }
-            None => {
-                text(";").fmt(f)?;
+            None if f.options().semicolons().is_always() => {
+                write!(f, [text(";")])?;
             }
+            None => {}
         }
 
         Ok(())

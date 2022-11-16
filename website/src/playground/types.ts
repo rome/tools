@@ -34,6 +34,11 @@ export enum LoadingState {
 	Error,
 }
 
+export enum Semicolons {
+	Always = "always",
+	AsNeeded = "as-needed",
+}
+
 export type PrettierOutput =
 	| { type: "SUCCESS"; code: string; ir: string }
 	| { type: "ERROR"; stack: string };
@@ -87,6 +92,7 @@ export interface PlaygroundSettings {
 	quoteStyle: QuoteStyle;
 	quoteProperties: QuoteProperties;
 	trailingComma: TrailingComma;
+	semicolons: Semicolons;
 	enabledNurseryRules: boolean;
 	enabledLinting: boolean;
 }
@@ -125,6 +131,7 @@ export const defaultPlaygroundState: PlaygroundState = {
 		quoteStyle: QuoteStyle.Double,
 		quoteProperties: QuoteProperties.AsNeeded,
 		trailingComma: TrailingComma.All,
+		semicolons: Semicolons.Always,
 		enabledNurseryRules: true,
 		enabledLinting: true,
 	},

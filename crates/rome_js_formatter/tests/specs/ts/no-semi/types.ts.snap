@@ -1,0 +1,92 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+expression: types.ts
+---
+
+# Input
+
+```js
+type A = {   a: string ; b: number ; c: string }
+
+type B = {
+	a: string
+	b: number
+	c: string
+}
+
+interface C {   a: string ; b: number ; c: string }
+
+type OptionsFlags<Type> = {
+	[Property in keyof Type]: boolean;
+};
+
+```
+
+
+=============================
+
+# Outputs
+
+## Output 1
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: Always
+-----
+
+```js
+type A = { a: string; b: number; c: string };
+
+type B = {
+	a: string;
+	b: number;
+	c: string;
+};
+
+interface C {
+	a: string;
+	b: number;
+	c: string;
+}
+
+type OptionsFlags<Type> = {
+	[Property in keyof Type]: boolean;
+};
+```
+
+## Output 2
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: As needed
+-----
+
+```js
+type A = { a: string; b: number; c: string }
+
+type B = {
+	a: string
+	b: number
+	c: string
+}
+
+interface C {
+	a: string
+	b: number
+	c: string
+}
+
+type OptionsFlags<Type> = {
+	[Property in keyof Type]: boolean
+}
+```
+
+
