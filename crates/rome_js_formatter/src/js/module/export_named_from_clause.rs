@@ -4,7 +4,7 @@ use rome_formatter::write;
 
 use rome_js_syntax::JsExportNamedFromClause;
 use rome_js_syntax::JsExportNamedFromClauseFields;
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, AstSeparatedElement};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsExportNamedFromClause;
@@ -29,14 +29,30 @@ impl FormatNodeRule<JsExportNamedFromClause> for FormatJsExportNamedFromClause {
 
             write!(f, [l_curly_token.format(),])?;
 
-            if node_has_leading_newline(specifiers.syntax()) {
-                write!(f, [block_indent(&specifiers.format()),])?;
-            } else {
-                write!(
-                    f,
-                    [group(&soft_space_or_block_indent(&specifiers.format())),]
-                )?;
-            };
+            match specifiers.elements().next() {
+                Some(AstSeparatedElement {
+                    node: Ok(node),
+                    trailing_separator: Ok(separator),
+                }) if specifiers.len() == 1 && !f.comments().has_comments(node.syntax()) => {
+                    write!(f, [space(), node.format()])?;
+
+                    if let Some(separator) = separator {
+                        write!(f, [format_removed(&separator)])?;
+                    }
+
+                    write!(f, [space()])?;
+                }
+                _ => {
+                    if node_has_leading_newline(specifiers.syntax()) {
+                        write!(f, [block_indent(&specifiers.format()),])?;
+                    } else {
+                        write!(
+                            f,
+                            [group(&soft_space_or_block_indent(&specifiers.format())),]
+                        )?;
+                    };
+                }
+            }
 
             write![
                 f,
