@@ -1,4 +1,5 @@
 use std::num::IntErrorKind;
+use std::ops::RangeInclusive;
 
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
@@ -99,7 +100,7 @@ fn is_precision_lost(node: &JsNumberLiteralExpression) -> Option<bool> {
 }
 
 fn is_precision_lost_in_base_10(num: &str) -> Option<bool> {
-    let normalized = NormalizedNumber::new(&num);
+    let normalized = NormalizedNumber::new(num);
     if normalized.is_zero() {
         return Some(false);
     }
@@ -125,8 +126,9 @@ fn is_precision_lost_in_base_other(num: &str, radix: u32) -> bool {
 
     const MAX_SAFE_INTEGER: i64 = 2_i64.pow(53) - 1;
     const MIN_SAFE_INTEGER: i64 = -MAX_SAFE_INTEGER;
+    const SAFE_RANGE: RangeInclusive<i64> = MIN_SAFE_INTEGER..=MAX_SAFE_INTEGER;
 
-    parsed < MIN_SAFE_INTEGER || parsed > MAX_SAFE_INTEGER
+    !SAFE_RANGE.contains(&parsed)
 }
 
 fn get_radix_and_num(num: &str) -> (u32, &str) {
