@@ -1,0 +1,86 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+expression: return_verbatim_argument.js
+---
+
+# Input
+
+```js
+// https://github.com/rome/tools/issues/3735
+
+function supported1(){
+	return (
+		// rome-ignore format: Work around https://github.com/rome/tools/issues/3734
+		// rome-ignore lint(style/useOptionalChain): Optional chaining creates more complicated ES2019 code
+		a && b
+	);
+}
+
+function supported2(){
+	return !(
+		// rome-ignore format: Work around https://github.com/rome/tools/issues/3734
+		// rome-ignore lint(style/useOptionalChain): Optional chaining creates more complicated ES2019 code
+		a && b
+	);
+}
+
+function supported3(){
+	return (
+		// rome-ignore format:
+		aVeryLongLogicalExpression &&
+		thatBreaksOverMultipleLines
+	);
+}
+
+```
+
+
+=============================
+
+# Outputs
+
+## Output 1
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+-----
+
+```js
+// https://github.com/rome/tools/issues/3735
+
+function supported1() {
+	return (
+		// rome-ignore format: Work around https://github.com/rome/tools/issues/3734
+		// rome-ignore lint(style/useOptionalChain): Optional chaining creates more complicated ES2019 code
+		a && b
+	);
+}
+
+function supported2() {
+	return !(
+		// rome-ignore format: Work around https://github.com/rome/tools/issues/3734
+		// rome-ignore lint(style/useOptionalChain): Optional chaining creates more complicated ES2019 code
+		a && b
+	);
+}
+
+function supported3() {
+	return (
+		// rome-ignore format:
+		aVeryLongLogicalExpression &&
+		thatBreaksOverMultipleLines
+	);
+}
+
+
+## Lines exceeding width of 80 characters
+
+    6: 		// rome-ignore lint(style/useOptionalChain): Optional chaining creates more complicated ES2019 code
+   14: 		// rome-ignore lint(style/useOptionalChain): Optional chaining creates more complicated ES2019 code
+```
+
+
