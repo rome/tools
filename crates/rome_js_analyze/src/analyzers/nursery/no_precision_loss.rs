@@ -4,7 +4,6 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 
-use rome_js_syntax::numbers::parse_js_number;
 use rome_js_syntax::JsNumberLiteralExpression;
 use rome_rowan::AstNode;
 
@@ -19,28 +18,27 @@ declare_rule! {
     /// ```js,expect_diagnostic
     /// const x = 9007199254740993
     /// ```
-    /// 
+    ///
     /// ```js,expect_diagnostic
     /// const x = 5123000000000000000000000000001
     /// ```
-    /// 
+    ///
     /// ```js,expect_diagnostic
     /// const x = 1230000000000000000000000.0
     /// ```
-    /// 
+    ///
     /// ```js,expect_diagnostic
     /// const x = .1230000000000000000000000
     /// ```
-    /// 
+    ///
     /// ```js,expect_diagnostic
     /// const x = 0X20000000000001
     /// ```
-    /// 
-    /// 
+    ///
     /// ```js,expect_diagnostic
     /// const x = 0X2_000000000_0001;
     /// ```
-    /// 
+    ///
     /// ### Valid
     ///
     /// ```js
@@ -120,7 +118,7 @@ fn is_precision_lost_base_10(num: &str) -> Option<bool> {
     if precision > 100 {
         return Some(true);
     }
-    let parsed = parse_js_number(num)?;
+    let parsed = num.parse::<f64>().ok()?;
     let stored_num = format!("{:.*e}", precision - 1, parsed);
     Some(stored_num != normalized.to_scientific())
 }
