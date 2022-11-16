@@ -46,9 +46,9 @@ declare_rule! {
     /// ```
     ///
     /// ```
-    pub(crate) NoCondAssign {
+    pub(crate) NoConditionalAssignment {
         version: "11.0.0",
-        name: "noCondAssign",
+        name: "noConditionalAssignment",
         recommended: false,
     }
 }
@@ -57,7 +57,7 @@ declare_node_union! {
     pub(crate) ConditionalStatement = JsConditionalExpression | JsWhileStatement | JsDoWhileStatement | JsIfStatement | JsForStatement
 }
 
-impl Rule for NoCondAssign {
+impl Rule for NoConditionalAssignment {
     type Query = Ast<ConditionalStatement>;
     type State = JsAssignmentExpression;
     type Signals = Option<Self::State>;

@@ -694,7 +694,7 @@
             }
           ]
         },
-        "noCondAssign": {
+        "noConditionalAssignment": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

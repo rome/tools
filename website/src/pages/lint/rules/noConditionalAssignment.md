@@ -1,9 +1,9 @@
 ---
-title: Lint Rule noCondAssign
+title: Lint Rule noConditionalAssignment
 parent: lint/rules/index
 ---
 
-# noCondAssign (since v11.0.0)
+# noConditionalAssignment (since v11.0.0)
 
 Disallow assignment operators in conditional expressions.
 
@@ -18,7 +18,7 @@ if (x = 0) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noCondAssign.js:2:5 <a href="https://docs.rome.tools/lint/rules/noCondAssign">lint/nursery/noCondAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noConditionalAssignment.js:2:5 <a href="https://docs.rome.tools/lint/rules/noConditionalAssignment">lint/nursery/noConditionalAssignment</a> ━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Expected a conditional expression and instead saw an assignment.</span>
   
@@ -39,7 +39,7 @@ function setHeight(someNode) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noCondAssign.js:5:14 <a href="https://docs.rome.tools/lint/rules/noCondAssign">lint/nursery/noCondAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noConditionalAssignment.js:5:14 <a href="https://docs.rome.tools/lint/rules/noConditionalAssignment">lint/nursery/noConditionalAssignment</a> ━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Expected a conditional expression and instead saw an assignment.</span>
   

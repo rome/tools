@@ -34,7 +34,7 @@ switch (foo) { case baz + (a = b): bar(); }
 
 # Diagnostics
 ```
-valid.js:6:6 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.js:6:6 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -49,7 +49,7 @@ valid.js:6:6 lint/nursery/noCondAssign ━━━━━━━━━━━━━�
 ```
 
 ```
-valid.js:7:9 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.js:7:9 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -64,7 +64,7 @@ valid.js:7:9 lint/nursery/noCondAssign ━━━━━━━━━━━━━�
 ```
 
 ```
-valid.js:8:15 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.js:8:15 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -79,7 +79,7 @@ valid.js:8:15 lint/nursery/noCondAssign ━━━━━━━━━━━━━�
 ```
 
 ```
-valid.js:9:8 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.js:9:8 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   

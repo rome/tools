@@ -29,7 +29,7 @@ var x; var b = x && (y = 0) ? 1 : 0;
 
 # Diagnostics
 ```
-invalid.js:1:12 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:1:12 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -42,7 +42,7 @@ invalid.js:1:12 lint/nursery/noCondAssign ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.js:2:15 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:2:15 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -56,7 +56,7 @@ invalid.js:2:15 lint/nursery/noCondAssign ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.js:3:36 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:3:36 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -71,7 +71,7 @@ invalid.js:3:36 lint/nursery/noCondAssign ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.js:4:14 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:4:14 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -86,7 +86,7 @@ invalid.js:4:14 lint/nursery/noCondAssign ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.js:5:12 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:5:12 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -101,7 +101,7 @@ invalid.js:5:12 lint/nursery/noCondAssign ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.js:10:5 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:10:5 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -116,7 +116,7 @@ invalid.js:10:5 lint/nursery/noCondAssign ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.js:11:8 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:11:8 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -131,7 +131,7 @@ invalid.js:11:8 lint/nursery/noCondAssign ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.js:12:15 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:12:15 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -146,7 +146,7 @@ invalid.js:12:15 lint/nursery/noCondAssign ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.js:13:7 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:13:7 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -161,7 +161,7 @@ invalid.js:13:7 lint/nursery/noCondAssign ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.js:14:6 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:14:6 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -176,7 +176,7 @@ invalid.js:14:6 lint/nursery/noCondAssign ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.js:15:9 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:15:9 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -191,7 +191,7 @@ invalid.js:15:9 lint/nursery/noCondAssign ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.js:16:16 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:16:16 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -206,7 +206,7 @@ invalid.js:16:16 lint/nursery/noCondAssign ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.js:17:8 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:17:8 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -221,7 +221,7 @@ invalid.js:17:8 lint/nursery/noCondAssign ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.js:18:17 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:18:17 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -236,7 +236,7 @@ invalid.js:18:17 lint/nursery/noCondAssign ━━━━━━━━━━━━�
 ```
 
 ```
-invalid.js:20:2 lint/nursery/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:20:2 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   

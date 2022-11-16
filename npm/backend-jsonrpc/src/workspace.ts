@@ -209,7 +209,7 @@ export interface Correctness {
  */
 export interface Nursery {
 	noBannedTypes?: RuleConfiguration;
-	noCondAssign?: RuleConfiguration;
+	noConditionalAssignment?: RuleConfiguration;
 	noConstAssign?: RuleConfiguration;
 	noDupeKeys?: RuleConfiguration;
 	noExplicitAny?: RuleConfiguration;
@@ -389,7 +389,7 @@ export type Category =
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
 	| "lint/nursery/noBannedTypes"
-	| "lint/nursery/noCondAssign"
+	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstAssign"
 	| "lint/nursery/noDupeKeys"
 	| "lint/nursery/noExplicitAny"

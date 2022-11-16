@@ -688,7 +688,7 @@ pub struct Nursery {
 #[doc = r" A list of rules that belong to this group"]
 struct NurserySchema {
     no_banned_types: Option<RuleConfiguration>,
-    no_cond_assign: Option<RuleConfiguration>,
+    no_conditional_assignment: Option<RuleConfiguration>,
     no_const_assign: Option<RuleConfiguration>,
     no_dupe_keys: Option<RuleConfiguration>,
     no_explicit_any: Option<RuleConfiguration>,
@@ -703,7 +703,7 @@ impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
     pub(crate) const CATEGORY_RULES: [&'static str; 11] = [
         "noBannedTypes",
-        "noCondAssign",
+        "noConditionalAssignment",
         "noConstAssign",
         "noDupeKeys",
         "noExplicitAny",
