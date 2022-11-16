@@ -101,10 +101,10 @@ fn is_precision_lost(node: &JsNumberLiteralExpression) -> Option<bool> {
 
 fn is_precision_lost_in_base_10(num: &str) -> Option<bool> {
     let normalized = NormalizedNumber::new(num);
-    if normalized.is_zero() {
+    let precision = normalized.precision();
+    if precision == 0 {
         return Some(false);
     }
-    let precision = normalized.precision();
     if precision > 100 {
         return Some(true);
     }
@@ -206,10 +206,6 @@ impl NormalizedNumber<'_> {
             self.digits_rest,
             self.exponent - 1
         )
-    }
-
-    fn is_zero(&self) -> bool {
-        self.digits.is_empty()
     }
 
     fn precision(&self) -> usize {
