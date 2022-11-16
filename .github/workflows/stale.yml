@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/stale@v6
         with:
-          stale-issue-message: 'This issue is stale because it has been open 14 days with no activity.'
+          stale-issue-message: '👋 @rome/staff please triage this issue by adding one of the following labels: `S-Bug: confirmed`, `S-Planned` , `S-Wishlist` or `umbrella`'
           stale-pr-message: 'This PR is stale because it has been open 14 days with no activity.'
           days-before-issue-stale: 14
           days-before-pr-stale: 14
