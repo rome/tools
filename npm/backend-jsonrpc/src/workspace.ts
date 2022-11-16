@@ -217,6 +217,7 @@ export interface Nursery {
 	noDupeKeys?: RuleConfiguration;
 	noExplicitAny?: RuleConfiguration;
 	noInvalidConstructorSuper?: RuleConfiguration;
+	noPrecisionLoss?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
@@ -396,6 +397,7 @@ export type Category =
 	| "lint/nursery/noDupeKeys"
 	| "lint/nursery/noExplicitAny"
 	| "lint/nursery/noInvalidConstructorSuper"
+	| "lint/nursery/noPrecisionLoss"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useFlatMap"
