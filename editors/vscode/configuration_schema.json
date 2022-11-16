@@ -986,7 +986,7 @@
       "type": "string",
       "enum": [
         "always",
-        "asneeded"
+        "asNeeded"
       ]
     },
     "Style": {

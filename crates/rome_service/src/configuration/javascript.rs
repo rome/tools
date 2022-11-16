@@ -79,7 +79,7 @@ pub enum PlainTrailingComma {
 
 #[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
-#[serde(rename_all = "lowercase", remote = "Semicolons")]
+#[serde(rename_all = "camelCase", remote = "Semicolons")]
 pub enum PlainSemicolons {
     #[default]
     Always,

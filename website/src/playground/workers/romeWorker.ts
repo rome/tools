@@ -93,7 +93,7 @@ self.addEventListener("message", async (e) => {
 								: "asNeeded",
 						trailingComma,
 						semicolons:
-							semicolons === Semicolons.Always ? "always" : "asneeded",
+							semicolons === Semicolons.Always ? "always" : "asNeeded",
 					},
 				},
 			};
