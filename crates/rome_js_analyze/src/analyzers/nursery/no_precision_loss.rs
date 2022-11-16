@@ -9,7 +9,7 @@ use rome_js_syntax::JsNumberLiteralExpression;
 use rome_rowan::AstNode;
 
 declare_rule! {
-    /// Promotes the use of `.flatMap()` when `map().flat()` are used together.
+    /// Disallow literal numbers that lose precision
     ///
     ///
     /// ## Examples
@@ -17,20 +17,40 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// const array = ["split", "the text", "into words"];
-    /// array.map(sentence => sentence.split(' ')).flat();
+    /// const x = 9007199254740993
     /// ```
-    ///
+    /// 
     /// ```js,expect_diagnostic
-    /// const array = ["split", "the text", "into words"];
-    /// array.map(sentence => sentence.split(' ')).flat(1);
+    /// const x = 5123000000000000000000000000001
     /// ```
-    ///
+    /// 
+    /// ```js,expect_diagnostic
+    /// const x = 1230000000000000000000000.0
+    /// ```
+    /// 
+    /// ```js,expect_diagnostic
+    /// const x = .1230000000000000000000000
+    /// ```
+    /// 
+    /// ```js,expect_diagnostic
+    /// const x = 0X20000000000001
+    /// ```
+    /// 
+    /// 
+    /// ```js,expect_diagnostic
+    /// const x = 0X2_000000000_0001;
+    /// ```
+    /// 
     /// ### Valid
     ///
     /// ```js
-    /// const array = ["split", "the text", "into words"];
-    /// array.map(sentence => sentence.split(' ')).flat(2);
+    /// const x = 12345
+    /// const x = 123.456
+    /// const x = 123e34
+    /// const x = 12300000000000000000000000
+    /// const x = 0x1FFFFFFFFFFFFF
+    /// const x = 9007199254740991
+    /// const x = 9007_1992547409_91
     /// ```
     ///
     pub(crate) NoPrecisionLoss {
@@ -115,9 +135,11 @@ fn is_precision_lost_base_other(num: &str, radix: u32) -> bool {
             )
         }
     };
+
     const MAX_SAFE_INTEGER: i64 = 2_i64.pow(53) - 1;
-    const MIN_SAFE_INTEGER: i64 = -2_i64.pow(53) + 1;
-    parsed < MIN_SAFE_INTEGER || parsed > MAX_SAFE_INTEGER
+    const MIN_SAFE_INTEGER: i64 = -MAX_SAFE_INTEGER;
+
+    !(MIN_SAFE_INTEGER..=MAX_SAFE_INTEGER).contains(&parsed)
 }
 
 fn remove_leading_zeros(num: &str) -> &str {
@@ -168,7 +190,7 @@ impl NormalizedNum<'_> {
             }
         };
 
-        if let Some(exponent) = exponent.and_then(|it| isize::from_str_radix(it, 10).ok()) {
+        if let Some(exponent) = exponent.and_then(|it| it.parse::<isize>().ok()) {
             normalized.exponent += exponent;
         }
 
