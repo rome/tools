@@ -1,7 +1,7 @@
 use crate::categories::{ActionCategory, RuleCategory};
 use crate::context::RuleContext;
 use crate::registry::{RegistryVisitor, RuleLanguage, RuleSuppressions};
-use crate::{AnalyzerDiagnostic, Phase, Phases, Queryable};
+use crate::{AnalyzerDiagnostic, Phase, Phases, Queryable, SuppressionCommentEmitter};
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
 use rome_diagnostics::advice::CodeSuggestionAdvice;
@@ -12,7 +12,7 @@ use rome_diagnostics::{
     Advices, Category, Diagnostic, DiagnosticTags, Location, LogCategory, MessageAndDescription,
     Visit,
 };
-use rome_rowan::{BatchMutation, Language, SyntaxNode, TextRange};
+use rome_rowan::{AstNode, BatchMutation, BatchMutationExt, Language, TextRange};
 use serde::de::DeserializeOwned;
 
 /// Static metadata containing information about a rule
@@ -234,7 +234,7 @@ impl_group_language!(
 /// Trait implemented by all analysis rules: declares interest to a certain AstNode type,
 /// and a callback function to be executed on all nodes matching the query to possibly
 /// raise an analysis event
-pub trait Rule: RuleMeta {
+pub trait Rule: RuleMeta + Sized {
     /// The type of AstNode this rule is interested in
     type Query: Queryable;
     /// A generic type that will be kept in memory between a call to `run` and
@@ -331,12 +331,29 @@ pub trait Rule: RuleMeta {
 
     /// Create a code action that allows to suppress the rule. The function
     /// has to return the node to which the suppression comment needs to be applied.
-    fn can_suppress(
+    fn suppress(
         ctx: &RuleContext<Self>,
-        state: &Self::State,
+        text_range: &TextRange,
+        apply_suppression_comment: SuppressionCommentEmitter<RuleLanguage<Self>>,
     ) -> Option<SuppressAction<RuleLanguage<Self>>> {
-        let _ = (ctx, state);
-        None
+        // if the rule belongs to `Lint`, we auto generate an action to suppress the rule
+        if <Self::Group as RuleGroup>::Category::CATEGORY == RuleCategory::Lint {
+            let suppression_text = format!(
+                "rome-ignore: lint/{}/{}",
+                <Self::Group as RuleGroup>::NAME,
+                Self::METADATA.name
+            );
+            let mut mutation = ctx.root().begin();
+            let token = ctx.root().syntax().token_at_offset(text_range.end());
+            apply_suppression_comment(token, &mut mutation, suppression_text.as_str());
+
+            Some(SuppressAction {
+                mutation,
+                message: markup! { "Suppress rule " {suppression_text} }.to_owned(),
+            })
+        } else {
+            None
+        }
     }
 }
 
@@ -494,16 +511,8 @@ pub struct RuleAction<L: Language> {
 }
 
 /// An action meant to suppress a lint rule
-pub struct SuppressAction<L: Language>(SyntaxNode<L>);
-
-impl<L: Language> SuppressAction<L> {
-    pub fn node(&self) -> &SyntaxNode<L> {
-        &self.0
-    }
-}
-
-impl<L: Language> From<SyntaxNode<L>> for SuppressAction<L> {
-    fn from(node: SyntaxNode<L>) -> Self {
-        Self(node)
-    }
+#[derive(Clone)]
+pub struct SuppressAction<L: Language> {
+    pub message: MarkupBuf,
+    pub mutation: BatchMutation<L>,
 }

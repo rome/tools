@@ -47,7 +47,7 @@ use rome_console::markup;
 use rome_diagnostics::{category, Applicability, DiagnosticTags, FileId};
 use rome_rowan::{
     AstNode, BatchMutation, Direction, Language, SyntaxElement, SyntaxToken, TextRange, TextSize,
-    TriviaPieceKind, WalkEvent,
+    TokenAtOffset, TriviaPieceKind, WalkEvent,
 };
 
 /// The analyzer is the main entry point into the `rome_analyze` infrastructure.
@@ -65,6 +65,8 @@ pub struct Analyzer<'analyzer, L: Language, Matcher, Break> {
     query_matcher: Matcher,
     /// Language-specific suppression comment parsing function
     parse_suppression_comment: SuppressionParser,
+    /// Language-specific suppression comment emitter
+    apply_suppression_comment: SuppressionCommentEmitter<L>,
     /// Handles analyzer signals emitted by individual rules
     emit_signal: SignalHandler<'analyzer, L, Break>,
 }
@@ -88,6 +90,7 @@ where
         metadata: &'analyzer MetadataRegistry,
         query_matcher: Matcher,
         parse_suppression_comment: SuppressionParser,
+        apply_suppression_comment: SuppressionCommentEmitter<L>,
         emit_signal: SignalHandler<'analyzer, L, Break>,
     ) -> Self {
         Self {
@@ -95,6 +98,7 @@ where
             metadata,
             query_matcher,
             parse_suppression_comment,
+            apply_suppression_comment,
             emit_signal,
         }
     }
@@ -116,6 +120,7 @@ where
             mut query_matcher,
             parse_suppression_comment,
             mut emit_signal,
+            apply_suppression_comment,
         } = self;
 
         let mut line_index = 0;
@@ -137,6 +142,7 @@ where
                 services: &ctx.services,
                 range: ctx.range,
                 options: ctx.options,
+                apply_suppression_comment,
             };
 
             // The first phase being run will inspect the tokens and parse the
@@ -200,11 +206,13 @@ struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break> {
     signal_queue: BinaryHeap<SignalEntry<'phase, L>>,
     /// Language-specific suppression comment parsing function
     parse_suppression_comment: SuppressionParser,
+    /// Language-specific suppression comment emitter
+    apply_suppression_comment: SuppressionCommentEmitter<L>,
     /// Line index at the current position of the traversal
     line_index: &'phase mut usize,
     /// Track active suppression comments per-line, ordered by line index
     line_suppressions: &'phase mut Vec<LineSuppression>,
-    /// Handles analyzer signals emitted by invidual rules
+    /// Handles analyzer signals emitted by individual rules
     emit_signal: &'phase mut SignalHandler<'analyzer, L, Break>,
     /// ID if the file being analyzed
     file_id: FileId,
@@ -274,6 +282,7 @@ where
                     query_matcher: self.query_matcher,
                     signal_queue: &mut self.signal_queue,
                     options: self.options,
+                    apply_suppression_comment: self.apply_suppression_comment,
                 };
 
                 visitor.visit(&node_event, ctx);
@@ -288,7 +297,7 @@ where
     /// processed and cached in `run_initial_phase`
     fn run_remaining_phases(mut self) -> ControlFlow<Break> {
         for event in self.root.syntax().preorder() {
-            // Run all the active visitors for the phace on the event
+            // Run all the active visitors for the phase on the event
             for visitor in self.visitors.iter_mut() {
                 let ctx = VisitorContext {
                     phase: self.phase,
@@ -299,6 +308,7 @@ where
                     query_matcher: self.query_matcher,
                     signal_queue: &mut self.signal_queue,
                     options: self.options,
+                    apply_suppression_comment: self.apply_suppression_comment,
                 };
 
                 visitor.visit(&event, ctx);
@@ -380,7 +390,7 @@ where
 
             // Search for an active suppression comment covering the range of
             // this signal: first try to load the last line suppression and see
-            // if it matchs the current line index, otherwise perform a binary
+            // if it matches the current line index, otherwise perform a binary
             // search over all the previously seen suppressions to find one
             // with a matching range
             let suppression = self.line_suppressions.last_mut().filter(|suppression| {
@@ -673,6 +683,16 @@ fn update_suppression<L: Language>(
         mutation,
     })
 }
+
+/// Convenient type that to mark a function that is responsible to create a mutation to add a suppression comment.
+/// - `token_offset`: the possible offset found in the [TextRange] of the emitted diagnostic
+/// - `mutation`: a [BatchMutation] where the consumer can apply the suppression comment
+/// - `suppression_text`: a string equals to "rome-ignore: lint(<RULE_GROUP>/<RULE_NAME>)"
+type SuppressionCommentEmitter<L> = fn(
+    token_offset: TokenAtOffset<SyntaxToken<L>>,
+    mutation: &mut BatchMutation<L>,
+    suppression_text: &str,
+) -> ();
 
 type SignalHandler<'a, L, Break> = &'a mut dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<Break>;
 

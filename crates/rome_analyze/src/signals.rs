@@ -5,13 +5,14 @@ use crate::{
     registry::{RuleLanguage, RuleRoot},
     rule::Rule,
     AnalyzerDiagnostic, AnalyzerOptions, Queryable, RuleGroup, ServiceBag,
+    SuppressionCommentEmitter,
 };
-use rome_console::{markup, MarkupBuf};
+use rome_console::MarkupBuf;
 use rome_diagnostics::{
     advice::CodeSuggestionAdvice, location::FileId, Applicability, CodeSuggestion, Diagnostic,
     Error, FileSpan,
 };
-use rome_rowan::{AstNode, BatchMutation, BatchMutationExt, Language, TriviaPieceKind};
+use rome_rowan::{BatchMutation, Language};
 use std::borrow::Cow;
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
@@ -21,7 +22,7 @@ use std::vec::IntoIter;
 /// emits a diagnostic, a code action, or both
 pub trait AnalyzerSignal<L: Language> {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic>;
-    fn actions(&self) -> Option<AnalyzerActionIter<L>>;
+    fn actions(&self) -> AnalyzerActionIter<L>;
 }
 
 /// Simple implementation of [AnalyzerSignal] generating a [AnalyzerDiagnostic]
@@ -73,8 +74,18 @@ where
         Some(AnalyzerDiagnostic::from_error(error))
     }
 
-    fn actions(&self) -> Option<AnalyzerActionIter<L>> {
+    fn actions(&self) -> AnalyzerActionIter<L> {
+        AnalyzerActionIter::new(vec![])
+    }
+}
+
+impl<L: Language> AnalyzerSignal<L> for AnalyzerAction<L> {
+    fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
         (self.action)()
+    }
+
+    fn actions(&self) -> AnalyzerActionIter<L> {
+        AnalyzerActionIter::new(vec![self.clone()])
     }
 }
 
@@ -95,7 +106,7 @@ pub struct AnalyzerAction<L: Language> {
 
 impl<L: Language> AnalyzerAction<L> {
     pub fn is_suppression(&self) -> bool {
-        self.category.matches("quickfix.rome.suppressRule")
+        self.category.matches(SUPPRESSION_ACTION_CATEGORY)
     }
 }
 
@@ -233,6 +244,9 @@ pub(crate) struct RuleSignal<'phase, R: Rule> {
     state: R::State,
     services: &'phase ServiceBag,
     options: AnalyzerOptions,
+    /// An optional action to suppress the rule.
+    apply_suppression_comment:
+        SuppressionCommentEmitter<<<R as Rule>::Query as Queryable>::Language>,
 }
 
 impl<'phase, R> RuleSignal<'phase, R>
@@ -246,6 +260,9 @@ where
         state: R::State,
         services: &'phase ServiceBag,
         options: AnalyzerOptions,
+        apply_suppression_comment: SuppressionCommentEmitter<
+            <<R as Rule>::Query as Queryable>::Language,
+        >,
     ) -> Self {
         Self {
             file_id,
@@ -254,6 +271,7 @@ where
             state,
             services,
             options,
+            apply_suppression_comment,
         }
     }
 }
@@ -269,88 +287,41 @@ where
         R::diagnostic(&ctx, &self.state).map(|diag| diag.into_analyzer_diagnostic(self.file_id))
     }
 
-    fn actions(&self) -> Option<AnalyzerActionIter<RuleLanguage<R>>> {
+    fn actions(&self) -> AnalyzerActionIter<RuleLanguage<R>> {
         let ctx =
-            RuleContext::new(&self.query_result, self.root, self.services, &self.options).ok()?;
-        let mut actions = Vec::new();
-        if let Some(action) = R::action(&ctx, &self.state) {
-            actions.push(AnalyzerAction {
-                rule_name: Some((<R::Group as RuleGroup>::NAME, R::METADATA.name)),
-                file_id: self.file_id,
-                category: action.category,
-                applicability: action.applicability,
-                mutation: action.mutation,
-                message: action.message,
-            });
-        };
-        let node_to_suppress = R::can_suppress(&ctx, &self.state);
-        // We now try to "guess" the node where to apply the suppression comment.
-        // Considering that the detection of suppression comments in the linter is "line based", we start
-        // querying all the ancestors of the current node, until we find the first ancestor that has a newline
-        // among its leading trivia.
-        //
-        // If we're not able to find an ancestor that meets these criteria, it means that the node is
-        // placed at row 1, so we take the node itself.
-        let result = node_to_suppress.map(|suppression_node| {
-            let ancestor = suppression_node.node().ancestors().find_map(|node| {
-                if node
-                    .first_token()
-                    .map(|token| {
-                        token
-                            .leading_trivia()
-                            .pieces()
-                            .any(|trivia| trivia.is_newline())
-                    })
-                    .unwrap_or(false)
-                {
-                    Some(node)
-                } else {
-                    None
-                }
-            });
-            if let Some(ancestor_node) = ancestor {
-                (false, ancestor_node.first_token())
-            } else {
-                (true, ctx.root().syntax().clone().first_token())
-            }
-        });
-        let suppression_action = result.and_then(|(is_root, first_token)| {
-            let rule = format!(
-                "lint({}/{})",
-                <R::Group as RuleGroup>::NAME,
-                R::METADATA.name
-            );
-            let mes = format!("// rome-ignore {}: suppressed", rule);
-
-            // We decorate
-            first_token.map(|first_token| {
-                let mut trivia = Vec::new();
-                if !is_root {
-                    trivia.push((TriviaPieceKind::Newline, "\n"));
-                }
-
-                trivia.extend([
-                    (TriviaPieceKind::SingleLineComment, mes.as_str()),
-                    (TriviaPieceKind::Newline, "\n"),
-                ]);
-                let mut mutation = ctx.root().begin();
-                let new_token = first_token.with_leading_trivia(trivia.clone());
-
-                mutation.replace_token_discard_trivia(first_token, new_token);
-                AnalyzerAction {
-                    group_name: <R::Group as RuleGroup>::NAME,
-                    rule_name: R::METADATA.name,
+            RuleContext::new(&self.query_result, self.root, self.services, &self.options).ok();
+        if let Some(ctx) = ctx {
+            let mut actions = Vec::new();
+            if let Some(action) = R::action(&ctx, &self.state) {
+                actions.push(AnalyzerAction {
+                    rule_name: Some((<R::Group as RuleGroup>::NAME, R::METADATA.name)),
                     file_id: self.file_id,
-                    category: ActionCategory::Other(Cow::Borrowed(SUPPRESSION_ACTION_CATEGORY)),
-                    applicability: Applicability::Always,
-                    mutation,
-                    message: markup! { "Suppress rule " {rule} }.to_owned(),
+                    category: action.category,
+                    applicability: action.applicability,
+                    mutation: action.mutation,
+                    message: action.message,
+                });
+            };
+            if let Some(text_range) = R::text_range(&ctx, &self.state) {
+                if let Some(suppression_action) =
+                    R::suppress(&ctx, &text_range, self.apply_suppression_comment)
+                {
+                    let action = AnalyzerAction {
+                        group_name: <R::Group as RuleGroup>::NAME,
+                        rule_name: R::METADATA.name,
+                        file_id: self.file_id,
+                        category: ActionCategory::Other(Cow::Borrowed(SUPPRESSION_ACTION_CATEGORY)),
+                        applicability: Applicability::Always,
+                        mutation: suppression_action.mutation,
+                        message: suppression_action.message,
+                    };
+                    actions.push(action);
                 }
-            })
-        });
-        if let Some(suppression_action) = suppression_action {
-            actions.push(suppression_action);
+            }
+
+            AnalyzerActionIter::new(actions)
+        } else {
+            AnalyzerActionIter::new(vec![])
         }
-        Some(AnalyzerActionIter::new(actions))
     }
 }

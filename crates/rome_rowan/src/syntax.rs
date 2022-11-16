@@ -3,26 +3,21 @@ mod node;
 mod token;
 mod trivia;
 
-use std::fmt::Debug;
-
-pub use trivia::{
-    SyntaxTrivia, SyntaxTriviaPiece, SyntaxTriviaPieceComments, SyntaxTriviaPieceNewline,
-    SyntaxTriviaPieceSkipped, SyntaxTriviaPieceWhitespace, SyntaxTriviaPiecesIterator, TriviaPiece,
-    TriviaPieceKind,
-};
-
+use crate::{AstNode, RawSyntaxKind};
 pub use element::{SyntaxElement, SyntaxElementKey};
 pub(crate) use node::SyntaxSlots;
 pub use node::{
     Preorder, PreorderWithTokens, SendNode, SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren,
     SyntaxNodeOptionExt, SyntaxSlot,
 };
-
-pub use token::SyntaxToken;
-
 use std::fmt;
-
-use crate::{AstNode, RawSyntaxKind};
+use std::fmt::Debug;
+pub use token::SyntaxToken;
+pub use trivia::{
+    SyntaxTrivia, SyntaxTriviaPiece, SyntaxTriviaPieceComments, SyntaxTriviaPieceNewline,
+    SyntaxTriviaPieceSkipped, SyntaxTriviaPieceWhitespace, SyntaxTriviaPiecesIterator, TriviaPiece,
+    TriviaPieceKind,
+};
 
 /// Type tag for each node or token of a language
 pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {

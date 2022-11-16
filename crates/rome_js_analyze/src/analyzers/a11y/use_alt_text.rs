@@ -1,4 +1,3 @@
-use crate::JsSuppressAction;
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
@@ -142,10 +141,6 @@ impl Rule for UseAltText {
             readers to understand content's purpose within a page."
             }),
         )
-    }
-
-    fn can_suppress(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<JsSuppressAction> {
-        Some(ctx.query().syntax().clone().into())
     }
 }
 

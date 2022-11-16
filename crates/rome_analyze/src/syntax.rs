@@ -110,6 +110,7 @@ mod tests {
             &metadata,
             &mut matcher,
             |_| unreachable!(),
+            |_, _, _| unreachable!(),
             &mut emit_signal,
         );
 

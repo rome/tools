@@ -2,11 +2,15 @@ use control_flow::make_visitor;
 use rome_analyze::{
     AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal, ControlFlow,
     InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry, Phases, RuleAction,
-    RuleRegistry, ServiceBag, SuppressAction, SyntaxVisitor,
+    RuleRegistry, ServiceBag, SyntaxVisitor,
 };
-use rome_diagnostics::category;
-use rome_diagnostics::location::FileId;
-use rome_js_syntax::{suppression::parse_suppression_comment, JsLanguage};
+use rome_diagnostics::file::FileId;
+use rome_js_factory::make::{jsx_expression_child, token};
+use rome_js_syntax::{
+    suppression::{parse_suppression_comment, SuppressionCategory},
+    JsLanguage, JsSyntaxToken, JsxAnyChild, T,
+};
+use rome_rowan::{AstNode, BatchMutation, TokenAtOffset, TriviaPieceKind};
 use serde::{Deserialize, Serialize};
 use std::{borrow::Cow, error::Error};
 
@@ -24,9 +28,9 @@ pub mod utils;
 
 pub use crate::registry::visit_registry;
 use crate::semantic_services::{SemanticModelBuilderVisitor, SemanticModelVisitor};
+use crate::utils::batch::JsBatchMutation;
 
 pub(crate) type JsRuleAction = RuleAction<JsLanguage>;
-pub(crate) type JsSuppressAction = SuppressAction<JsLanguage>;
 
 /// Return the static [MetadataRegistry] for the JS analyzer rules
 pub fn metadata() -> &'static MetadataRegistry {
@@ -85,6 +89,7 @@ where
         metadata(),
         InspectMatcher::new(registry.build(), inspect_matcher),
         parse_linter_suppression_comment,
+        apply_suppression_comment,
         &mut emit_signal,
     );
     analyzer.add_visitor(Phases::Syntax, make_visitor());
@@ -122,8 +127,7 @@ where
 
 #[cfg(test)]
 mod tests {
-
-    use rome_analyze::{AnalyzerOptions, Never, RuleCategories};
+    use rome_analyze::{AnalyzerOptions, Never, RuleCategories, RuleFilter};
     use rome_console::fmt::{Formatter, Termcolor};
     use rome_console::{markup, Markup};
     use rome_diagnostics::termcolor::NoColor;
@@ -131,6 +135,7 @@ mod tests {
     use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic, Severity};
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};
+    use std::slice;
 
     use crate::{analyze, AnalysisFilter, ControlFlow};
 
@@ -146,33 +151,37 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"<img src="image.png" aria-label="alt text" />
+        const SOURCE: &str = r#"if (a < b) {
+}
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
+        let rule_filter = RuleFilter::Rule("correctness", "flipBinExp");
         analyze(
             FileId::zero(),
             &parsed.tree(),
-            AnalysisFilter::default(),
+            AnalysisFilter {
+                enabled_rules: Some(slice::from_ref(&rule_filter)),
+                ..AnalysisFilter::default()
+            },
             &options,
             |signal| {
                 if let Some(mut diag) = signal.diagnostic() {
                     diag.set_severity(Severity::Warning);
                     error_ranges.push(diag.location().unwrap().span.unwrap());
-                    if let Some(actions) = signal.actions() {
-                        for action in actions {
-                            let new_code = action.mutation.commit();
-                            eprintln!("{new_code}");
-                        }
-                    }
                     let error = diag.with_file_path("ahahah").with_file_source_code(SOURCE);
                     let text = markup_to_string(markup! {
                         {PrintDiagnostic(&error)}
                     });
                     eprintln!("{text}");
+                }
+
+                for action in signal.actions() {
+                    let new_code = action.mutation.commit();
+                    eprintln!("{new_code}");
                 }
 
                 ControlFlow::<Never>::Continue(())
@@ -344,3 +353,70 @@ impl std::fmt::Display for RuleError {
 }
 
 impl Error for RuleError {}
+
+/// We now try to "guess" the token where to apply the suppression comment.
+/// Considering that the detection of suppression comments in the linter is "line based", we start
+/// querying the node covered by the text range of the diagnostic, until we find the first token that has a newline
+/// among its leading trivia.
+///
+/// If we're not able to find any token, it means that the range is
+/// placed at row 1, so we take the root itself.
+fn apply_suppression_comment(
+    current_token: TokenAtOffset<JsSyntaxToken>,
+    mutation: &mut BatchMutation<JsLanguage>,
+    suppression_text: &str,
+) {
+    let current_token = match current_token {
+        TokenAtOffset::None => None,
+        TokenAtOffset::Single(token) => find_token_with_newline(token),
+        TokenAtOffset::Between(token, _) => find_token_with_newline(token),
+    };
+    if let Some(current_token) = current_token {
+        if let Some(element) = current_token.ancestors().find_map(|node| {
+            if node
+                .first_token()
+                .map(|token| token.text_trimmed().contains('\n'))
+                .is_some()
+            {
+                JsxAnyChild::cast(node)
+            } else {
+                None
+            }
+        }) {
+            let jsx_comment = jsx_expression_child(
+                token(T!['{']).with_trailing_trivia([(
+                    TriviaPieceKind::SingleLineComment,
+                    format!("/* {} */", suppression_text).as_str(),
+                )]),
+                token(T!['}']),
+            );
+            mutation.add_jsx_element_after_element(
+                &element,
+                &JsxAnyChild::JsxExpressionChild(jsx_comment.build()),
+            );
+        } else {
+            let new_token = current_token.with_leading_trivia(vec![
+                (TriviaPieceKind::Newline, "\n"),
+                (
+                    TriviaPieceKind::SingleLineComment,
+                    format!("// {} ", suppression_text).as_str(),
+                ),
+                (TriviaPieceKind::Newline, "\n"),
+            ]);
+            mutation.replace_token_discard_trivia(current_token, new_token);
+        }
+    }
+}
+
+/// It checks if the current token has leading trivia newline. If not, it
+/// it peeks the previous token and recursively call itself
+fn find_token_with_newline(token: JsSyntaxToken) -> Option<JsSyntaxToken> {
+    let trivia = token.leading_trivia();
+    if trivia.pieces().any(|trivia| trivia.is_newline()) || token.text_trimmed().contains('\n') {
+        Some(token)
+    } else if let Some(token) = token.prev_token() {
+        find_token_with_newline(token)
+    } else {
+        None
+    }
+}

@@ -214,6 +214,17 @@ where
         self.replace_element_discard_trivia(prev_token.into(), next_token.into())
     }
 
+    /// Push a change to replace the "prev_token" with "next_token".
+    ///
+    /// Changes to take effect must be committed.
+    pub fn replace_token_transfer_trivia(
+        &mut self,
+        prev_token: SyntaxToken<L>,
+        next_token: SyntaxToken<L>,
+    ) {
+        self.replace_element_discard_trivia(prev_token.into(), next_token.into())
+    }
+
     /// Push a change to replace the "prev_element" with "next_element".
     ///
     /// Changes to take effect must be committed.

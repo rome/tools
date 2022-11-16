@@ -1,11 +1,10 @@
-use std::{cmp::Ordering, collections::BinaryHeap};
-
-use rome_diagnostics::location::FileId;
-use rome_rowan::{Language, TextRange};
-
 use crate::{
     AnalyzerOptions, AnalyzerSignal, Phases, QueryMatch, Rule, RuleFilter, RuleGroup, ServiceBag,
+    SuppressionCommentEmitter,
 };
+use rome_diagnostics::file::FileId;
+use rome_rowan::{Language, TextRange};
+use std::{cmp::Ordering, collections::BinaryHeap};
 
 /// The [QueryMatcher] trait is responsible of running lint rules on
 /// [QueryMatch] instances emitted by the various [Visitor](crate::Visitor)
@@ -24,6 +23,7 @@ pub struct MatchQueryParams<'phase, 'query, L: Language> {
     pub services: &'phase ServiceBag,
     pub signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
     pub options: &'query AnalyzerOptions,
+    pub apply_suppression_comment: SuppressionCommentEmitter<L>,
 }
 
 /// Opaque identifier for a group of rule
@@ -330,6 +330,7 @@ mod tests {
             &metadata,
             SuppressionMatcher,
             parse_suppression_comment,
+            |_, _, _| unreachable!(),
             &mut emit_signal,
         );
 

@@ -80,6 +80,18 @@ impl Language for JsLanguage {
 pub(crate) struct JsFileHandler;
 
 impl ExtensionHandler for JsFileHandler {
+    fn language(&self) -> super::Language {
+        super::Language::JavaScript
+    }
+
+    fn mime(&self) -> Mime {
+        Mime::Javascript
+    }
+
+    fn may_use_tabs(&self) -> bool {
+        true
+    }
+
     fn capabilities(&self) -> super::Capabilities {
         super::Capabilities {
             parser: ParserCapabilities { parse: Some(parse) },
@@ -100,18 +112,6 @@ impl ExtensionHandler for JsFileHandler {
                 format_on_type: Some(format_on_type),
             },
         }
-    }
-
-    fn language(&self) -> super::Language {
-        super::Language::JavaScript
-    }
-
-    fn mime(&self) -> super::Mime {
-        Mime::Javascript
-    }
-
-    fn may_use_tabs(&self) -> bool {
-        true
     }
 }
 
@@ -251,11 +251,9 @@ fn lint(params: LintParams) -> LintResults {
             if diagnostic_count <= params.max_diagnostics {
                 diagnostic.set_severity(severity);
 
-                if let Some(actions) = signal.actions() {
-                    for action in actions {
-                        if !action.is_suppression() {
-                            diagnostic = diagnostic.add_code_suggestion(action.into());
-                        }
+                for action in signal.actions() {
+                    if !action.is_suppression() {
+                        diagnostic = diagnostic.add_code_suggestion(action.into());
                     }
                 }
 
@@ -340,14 +338,17 @@ fn code_actions(
     let analyzer_options = compute_analyzer_options(&settings);
 
     analyze(file_id, &tree, filter, &analyzer_options, |signal| {
-        if let Some(action) = signal.actions() {
-            actions.extend(action.into_code_action_iter().map(|item| CodeAction {
-                category: item.category.clone(),
-                group_name: Cow::Borrowed(item.group_name),
-                rule_name: Cow::Borrowed(item.rule_name),
-                suggestion: item.suggestion,
-            }));
-        }
+        actions.extend(
+            signal
+                .actions()
+                .into_code_action_iter()
+                .map(|item| CodeAction {
+                    category: item.category.clone(),
+                    group_name: Cow::Borrowed(item.group_name),
+                    rule_name: Cow::Borrowed(item.rule_name),
+                    suggestion: item.suggestion,
+                }),
+        );
 
         ControlFlow::<Never>::Continue(())
     });
@@ -388,28 +389,26 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
     let analyzer_options = compute_analyzer_options(&settings);
     loop {
         let action = analyze(file_id, &tree, filter, &analyzer_options, |signal| {
-            if let Some(actions) = signal.actions() {
-                for action in actions {
-                    // suppression actions should not be part of the fixes (safe or suggested)
-                    if action.is_suppression() {
-                        continue;
-                    }
-                    match fix_file_mode {
-                        FixFileMode::SafeFixes => {
-                            if action.applicability == Applicability::MaybeIncorrect {
-                                skipped_suggested_fixes += 1;
-                            }
-                            if action.applicability == Applicability::Always {
-                                return ControlFlow::Break(action);
-                            }
+            for action in signal.actions() {
+                // suppression actions should not be part of the fixes (safe or suggested)
+                if action.is_suppression() {
+                    continue;
+                }
+                match fix_file_mode {
+                    FixFileMode::SafeFixes => {
+                        if action.applicability == Applicability::MaybeIncorrect {
+                            skipped_suggested_fixes += 1;
                         }
-                        FixFileMode::SafeAndSuggestedFixes => {
-                            if matches!(
-                                action.applicability,
-                                Applicability::Always | Applicability::MaybeIncorrect
-                            ) {
-                                return ControlFlow::Break(action);
-                            }
+                        if action.applicability == Applicability::Always {
+                            return ControlFlow::Break(action);
+                        }
+                    }
+                    FixFileMode::SafeAndSuggestedFixes => {
+                        if matches!(
+                            action.applicability,
+                            Applicability::Always | Applicability::MaybeIncorrect
+                        ) {
+                            return ControlFlow::Break(action);
                         }
                     }
                 }

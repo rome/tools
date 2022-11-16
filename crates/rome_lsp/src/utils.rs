@@ -1,11 +1,5 @@
-use std::any::Any;
-use std::collections::HashMap;
-use std::fmt::{Debug, Display};
-use std::io;
-
 use crate::line_index::{LineCol, LineIndex};
 use anyhow::{ensure, Context, Result};
-use rome_analyze::ActionCategory;
 use rome_console::fmt::Termcolor;
 use rome_console::fmt::{self, Formatter};
 use rome_console::MarkupBuf;
@@ -16,9 +10,13 @@ use rome_diagnostics::{
 use rome_rowan::{TextRange, TextSize};
 use rome_service::workspace::CodeAction;
 use rome_text_edit::{CompressedOp, DiffOp, TextEdit};
+use std::any::Any;
+use std::collections::HashMap;
+use std::fmt::{Debug, Display};
+use std::io;
 use tower_lsp::jsonrpc::Error as LspError;
 use tower_lsp::lsp_types::{self as lsp};
-use tracing::error;
+use tracing::{debug, error};
 
 pub(crate) fn position(line_index: &LineIndex, offset: TextSize) -> Result<lsp::Position> {
     let line_col = line_index.line_col(offset).with_context(|| {
@@ -120,19 +118,15 @@ pub(crate) fn code_fix_to_lsp(
     action: CodeAction,
 ) -> Result<lsp::CodeAction> {
     // Mark diagnostics emitted by the same rule as resolved by this action
-    let diagnostics: Vec<_> = action
-        .rule_name
-        .as_ref()
-        .filter(|_| matches!(action.category, ActionCategory::QuickFix))
-        .map(|(group_name, rule_name)| {
-            diagnostics
-                .iter()
-                .filter_map(|d| {
-                    let code = d.code.as_ref()?;
-                    let code = match code {
-                        lsp::NumberOrString::String(code) => code.as_str(),
-                        lsp::NumberOrString::Number(_) => return None,
-                    };
+    let diagnostics: Vec<_> = if action.category.matches("quickfix") {
+        diagnostics
+            .iter()
+            .filter_map(|d| {
+                let code = d.code.as_ref()?;
+                let code = match code {
+                    lsp::NumberOrString::String(code) => code.as_str(),
+                    lsp::NumberOrString::Number(_) => return None,
+                };
 
                     let code = code.strip_prefix("lint/")?;
                     let code = code.strip_prefix(group_name.as_ref())?;
