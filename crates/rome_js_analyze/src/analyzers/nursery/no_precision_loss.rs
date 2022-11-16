@@ -77,12 +77,16 @@ impl Rule for NoPrecisionLoss {
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
+        let value = node.as_number()?;
 
-        Some(RuleDiagnostic::new(
-            rule_category!(),
-            node.syntax().text_trimmed_range(),
-            markup! { "This number literal will lose precision at runtime." },
-        ))
+        Some(
+            RuleDiagnostic::new(
+                rule_category!(),
+                node.syntax().text_trimmed_range(),
+                markup! { "This number literal will lose precision at runtime." },
+            )
+            .note(markup! { "Runtime value: "{ value.to_string() } }),
+        )
     }
 }
 
