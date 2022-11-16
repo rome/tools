@@ -89,28 +89,17 @@ fn is_precision_lost(node: &JsNumberLiteralExpression) -> Option<bool> {
     let token = node.value_token().ok()?;
     let num = token.text_trimmed();
 
-    let num = num.replace('_', "").replace('E', "e");
+    let num = num.replace('_', "");
     let (radix, num) = get_radix_and_num(&num);
     if radix == 10 {
-        is_precision_lost_base_10(num)
+        is_precision_lost_in_base_10(num)
     } else {
-        Some(is_precision_lost_base_other(num, radix))
+        Some(is_precision_lost_in_base_other(num, radix))
     }
 }
 
-fn get_radix_and_num(num: &str) -> (u32, &str) {
-    let mut chars = num.chars();
-    match (chars.next(), chars.next()) {
-        (Some('0'), Some('x' | 'X')) => (16, &num[2..]),
-        (Some('0'), Some('o' | 'O')) => (8, &num[2..]),
-        (Some('0'), Some('b' | 'B')) => (2, &num[2..]),
-        (Some('0'), Some('0'..='7')) if chars.all(|it| matches!(it, '0'..='7')) => (8, &num[1..]),
-        _ => (10, num),
-    }
-}
-
-fn is_precision_lost_base_10(num: &str) -> Option<bool> {
-    let normalized = NormalizedNum::new(num);
+fn is_precision_lost_in_base_10(num: &str) -> Option<bool> {
+    let normalized = NormalizedNumber::new(&num);
     if normalized.is_zero() {
         return Some(false);
     }
@@ -123,7 +112,7 @@ fn is_precision_lost_base_10(num: &str) -> Option<bool> {
     Some(stored_num != normalized.to_scientific())
 }
 
-fn is_precision_lost_base_other(num: &str, radix: u32) -> bool {
+fn is_precision_lost_in_base_other(num: &str, radix: u32) -> bool {
     let parsed = match i64::from_str_radix(num, radix) {
         Ok(x) => x,
         Err(e) => {
@@ -137,7 +126,19 @@ fn is_precision_lost_base_other(num: &str, radix: u32) -> bool {
     const MAX_SAFE_INTEGER: i64 = 2_i64.pow(53) - 1;
     const MIN_SAFE_INTEGER: i64 = -MAX_SAFE_INTEGER;
 
-    !(MIN_SAFE_INTEGER..=MAX_SAFE_INTEGER).contains(&parsed)
+    parsed < MIN_SAFE_INTEGER || parsed > MAX_SAFE_INTEGER
+}
+
+fn get_radix_and_num(num: &str) -> (u32, &str) {
+    let mut chars = num.chars();
+    match (chars.next(), chars.next()) {
+        (Some('0'), Some('x' | 'X')) => (16, &num[2..]),
+        (Some('0'), Some('o' | 'O')) => (8, &num[2..]),
+        (Some('0'), Some('b' | 'B')) => (2, &num[2..]),
+        // Legacy octal literals
+        (Some('0'), Some('0'..='7')) if chars.all(|it| matches!(it, '0'..='7')) => (8, &num[1..]),
+        _ => (10, num),
+    }
 }
 
 fn remove_leading_zeros(num: &str) -> &str {
@@ -150,16 +151,16 @@ fn remove_trailing_zeros(num: &str) -> &str {
 
 #[derive(Debug)]
 /// Normalized number in the form `0.{digits}.{digits_rest}e{exponent}`
-struct NormalizedNum<'a> {
+struct NormalizedNumber<'a> {
     digits: &'a str,
     digits_rest: &'a str,
     exponent: isize,
 }
 
-impl NormalizedNum<'_> {
-    fn new(num: &str) -> NormalizedNum<'_> {
+impl NormalizedNumber<'_> {
+    fn new(num: &str) -> NormalizedNumber<'_> {
         let num = remove_leading_zeros(num);
-        let mut split = num.splitn(2, 'e');
+        let mut split = num.splitn(2, ['e', 'E']);
         let mantissa = split.next().unwrap();
         let exponent = split.next();
         let mut mantissa_parts = mantissa.splitn(2, '.');
@@ -167,20 +168,20 @@ impl NormalizedNum<'_> {
         let mut normalized = match (mantissa_parts.next().unwrap(), mantissa_parts.next()) {
             ("", Some(fraction)) => {
                 let digits = remove_leading_zeros(fraction);
-                NormalizedNum {
+                NormalizedNumber {
                     digits,
                     digits_rest: "",
                     exponent: digits.len() as isize - fraction.len() as isize,
                 }
             }
-            (integer, Some(fraction)) => NormalizedNum {
+            (integer, Some(fraction)) => NormalizedNumber {
                 digits: integer,
                 digits_rest: fraction,
                 exponent: integer.len() as isize,
             },
             (integer, None) => {
                 let digits = remove_trailing_zeros(integer);
-                NormalizedNum {
+                NormalizedNumber {
                     digits,
                     digits_rest: "",
                     exponent: integer.len() as isize,
