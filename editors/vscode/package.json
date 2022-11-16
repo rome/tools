@@ -114,7 +114,6 @@
 		"Linter"
 	],
 	"license": "MIT",
-	"preview": true,
 	"scripts": {
 		"compile": "esbuild src/main.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node --target=node14",
 		"watch": "npm run compile -- --sourcemap --watch",
