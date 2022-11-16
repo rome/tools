@@ -1,12 +1,12 @@
 use pico_args::Arguments;
 use rome_cli::Termination;
-#[cfg(target_family = "unix")]
 use std::env::temp_dir;
 use std::ffi::OsString;
-#[cfg(target_family = "unix")]
 use std::fs::{create_dir, create_dir_all, remove_dir_all};
 #[cfg(target_family = "unix")]
 use std::os::unix::fs::symlink;
+#[cfg(target_os = "windows")]
+use std::os::windows::fs::{symlink_dir, symlink_file};
 use std::path::{Path, PathBuf};
 
 use crate::configs::{
@@ -671,7 +671,6 @@ fn no_lint_if_files_are_listed_in_ignore_option() {
     ));
 }
 
-#[cfg(target_family = "unix")]
 #[test]
 fn fs_error_dereferenced_symlink() {
     let fs = MemoryFileSystem::default();
@@ -686,7 +685,16 @@ fn fs_error_dereferenced_symlink() {
     }
     create_dir(PathBuf::from(root_path.clone())).unwrap();
     create_dir(subdir_path.clone()).unwrap();
-    symlink(root_path.join("null"), root_path.join("broken_symlink")).unwrap();
+
+    #[cfg(target_family = "unix")]
+    {
+        symlink(root_path.join("null"), root_path.join("broken_symlink")).unwrap();
+    }
+
+    #[cfg(target_os = "windows")]
+    {
+        symlink_file(root_path.join("null"), root_path.join("broken_symlink")).unwrap();
+    }
 
     let result = run_cli(
         DynRef::Owned(Box::new(OsFileSystem)),
@@ -703,14 +711,16 @@ fn fs_error_dereferenced_symlink() {
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
-        "fs_error_dereferenced_symlink",
+        #[cfg(target_family = "unix")]
+        "fs_error_dereferenced_symlink_unix",
+        #[cfg(target_os = "windows")]
+        "fs_error_dereferenced_symlink_windows",
         fs,
         console,
         result,
     ));
 }
 
-#[cfg(target_family = "unix")]
 #[test]
 fn fs_error_infinite_symlink_exapansion() {
     let fs = MemoryFileSystem::default();
@@ -726,9 +736,20 @@ fn fs_error_infinite_symlink_exapansion() {
     }
     create_dir(PathBuf::from(root_path.clone())).unwrap();
     create_dir(subdir1_path.clone()).unwrap();
-    symlink(subdir1_path.clone(), root_path.join("self_symlink1")).unwrap();
+
     create_dir_all(subdir2_path.clone()).unwrap();
-    symlink(subdir1_path, subdir2_path.join("self_symlink2")).unwrap();
+
+    #[cfg(target_family = "unix")]
+    {
+        symlink(subdir1_path.clone(), root_path.join("self_symlink1")).unwrap();
+        symlink(subdir1_path, subdir2_path.join("self_symlink2")).unwrap();
+    }
+
+    #[cfg(target_os = "windows")]
+    {
+        symlink_dir(subdir1_path.clone(), root_path.join("self_symlink1")).unwrap();
+        symlink_dir(subdir1_path, subdir2_path.join("self_symlink2")).unwrap();
+    }
 
     let result = run_cli(
         DynRef::Owned(Box::new(OsFileSystem)),
@@ -745,7 +766,10 @@ fn fs_error_infinite_symlink_exapansion() {
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
-        "fs_error_infinite_symlink_exapansion",
+        #[cfg(target_family = "unix")]
+        "fs_error_infinite_symlink_exapansion_unix",
+        #[cfg(target_os = "windows")]
+        "fs_error_infinite_symlink_exapansion_windows",
         fs,
         console,
         result,
