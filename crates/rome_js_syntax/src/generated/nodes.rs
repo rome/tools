@@ -10913,6 +10913,48 @@ pub struct TsReturnTypeAnnotationFields {
     pub ty: SyntaxResult<TsAnyReturnType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsSatisfiesExpression {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsSatisfiesExpression {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsSatisfiesExpressionFields {
+        TsSatisfiesExpressionFields {
+            expression: self.expression(),
+            satisfies_token: self.satisfies_token(),
+            ty: self.ty(),
+        }
+    }
+    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn satisfies_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 2usize) }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsSatisfiesExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub struct TsSatisfiesExpressionFields {
+    pub expression: SyntaxResult<JsAnyExpression>,
+    pub satisfies_token: SyntaxResult<SyntaxToken>,
+    pub ty: SyntaxResult<TsType>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsSetterSignatureClassMember {
     pub(crate) syntax: SyntaxNode,
 }
@@ -12776,6 +12818,7 @@ pub enum JsAnyExpression {
     TsAsExpression(TsAsExpression),
     TsInstantiationExpression(TsInstantiationExpression),
     TsNonNullAssertionExpression(TsNonNullAssertionExpression),
+    TsSatisfiesExpression(TsSatisfiesExpression),
     TsTypeAssertionExpression(TsTypeAssertionExpression),
 }
 impl JsAnyExpression {
@@ -12986,6 +13029,12 @@ impl JsAnyExpression {
     pub fn as_ts_non_null_assertion_expression(&self) -> Option<&TsNonNullAssertionExpression> {
         match &self {
             JsAnyExpression::TsNonNullAssertionExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_satisfies_expression(&self) -> Option<&TsSatisfiesExpression> {
+        match &self {
+            JsAnyExpression::TsSatisfiesExpression(item) => Some(item),
             _ => None,
         }
     }
@@ -23740,6 +23789,39 @@ impl From<TsReturnTypeAnnotation> for SyntaxNode {
 impl From<TsReturnTypeAnnotation> for SyntaxElement {
     fn from(n: TsReturnTypeAnnotation) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsSatisfiesExpression {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(TS_SATISFIES_EXPRESSION as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == TS_SATISFIES_EXPRESSION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
+}
+impl std::fmt::Debug for TsSatisfiesExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsSatisfiesExpression")
+            .field("expression", &support::DebugSyntaxResult(self.expression()))
+            .field(
+                "satisfies_token",
+                &support::DebugSyntaxResult(self.satisfies_token()),
+            )
+            .field("ty", &support::DebugSyntaxResult(self.ty()))
+            .finish()
+    }
+}
+impl From<TsSatisfiesExpression> for SyntaxNode {
+    fn from(n: TsSatisfiesExpression) -> SyntaxNode { n.syntax }
+}
+impl From<TsSatisfiesExpression> for SyntaxElement {
+    fn from(n: TsSatisfiesExpression) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsSetterSignatureClassMember {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
@@ -26778,6 +26860,11 @@ impl From<TsNonNullAssertionExpression> for JsAnyExpression {
         JsAnyExpression::TsNonNullAssertionExpression(node)
     }
 }
+impl From<TsSatisfiesExpression> for JsAnyExpression {
+    fn from(node: TsSatisfiesExpression) -> JsAnyExpression {
+        JsAnyExpression::TsSatisfiesExpression(node)
+    }
+}
 impl From<TsTypeAssertionExpression> for JsAnyExpression {
     fn from(node: TsTypeAssertionExpression) -> JsAnyExpression {
         JsAnyExpression::TsTypeAssertionExpression(node)
@@ -26820,6 +26907,7 @@ impl AstNode for JsAnyExpression {
         .union(TsAsExpression::KIND_SET)
         .union(TsInstantiationExpression::KIND_SET)
         .union(TsNonNullAssertionExpression::KIND_SET)
+        .union(TsSatisfiesExpression::KIND_SET)
         .union(TsTypeAssertionExpression::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
@@ -26857,6 +26945,7 @@ impl AstNode for JsAnyExpression {
             | TS_AS_EXPRESSION
             | TS_INSTANTIATION_EXPRESSION
             | TS_NON_NULL_ASSERTION_EXPRESSION
+            | TS_SATISFIES_EXPRESSION
             | TS_TYPE_ASSERTION_EXPRESSION => true,
             k if JsAnyLiteralExpression::can_cast(k) => true,
             _ => false,
@@ -26938,6 +27027,9 @@ impl AstNode for JsAnyExpression {
                     syntax,
                 })
             }
+            TS_SATISFIES_EXPRESSION => {
+                JsAnyExpression::TsSatisfiesExpression(TsSatisfiesExpression { syntax })
+            }
             TS_TYPE_ASSERTION_EXPRESSION => {
                 JsAnyExpression::TsTypeAssertionExpression(TsTypeAssertionExpression { syntax })
             }
@@ -26988,6 +27080,7 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::TsAsExpression(it) => &it.syntax,
             JsAnyExpression::TsInstantiationExpression(it) => &it.syntax,
             JsAnyExpression::TsNonNullAssertionExpression(it) => &it.syntax,
+            JsAnyExpression::TsSatisfiesExpression(it) => &it.syntax,
             JsAnyExpression::TsTypeAssertionExpression(it) => &it.syntax,
             JsAnyExpression::JsAnyLiteralExpression(it) => it.syntax(),
         }
@@ -27028,6 +27121,7 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::TsAsExpression(it) => it.syntax,
             JsAnyExpression::TsInstantiationExpression(it) => it.syntax,
             JsAnyExpression::TsNonNullAssertionExpression(it) => it.syntax,
+            JsAnyExpression::TsSatisfiesExpression(it) => it.syntax,
             JsAnyExpression::TsTypeAssertionExpression(it) => it.syntax,
             JsAnyExpression::JsAnyLiteralExpression(it) => it.into_syntax(),
         }
@@ -27071,6 +27165,7 @@ impl std::fmt::Debug for JsAnyExpression {
             JsAnyExpression::TsAsExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsInstantiationExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsNonNullAssertionExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyExpression::TsSatisfiesExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsTypeAssertionExpression(it) => std::fmt::Debug::fmt(it, f),
         }
     }
@@ -27113,6 +27208,7 @@ impl From<JsAnyExpression> for SyntaxNode {
             JsAnyExpression::TsAsExpression(it) => it.into(),
             JsAnyExpression::TsInstantiationExpression(it) => it.into(),
             JsAnyExpression::TsNonNullAssertionExpression(it) => it.into(),
+            JsAnyExpression::TsSatisfiesExpression(it) => it.into(),
             JsAnyExpression::TsTypeAssertionExpression(it) => it.into(),
         }
     }
@@ -33264,6 +33360,11 @@ impl std::fmt::Display for TsRestTupleTypeElement {
     }
 }
 impl std::fmt::Display for TsReturnTypeAnnotation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsSatisfiesExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }

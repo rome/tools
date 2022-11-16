@@ -315,6 +315,7 @@ JsAnyExpression =
 	// Typescript
 	| TsTypeAssertionExpression
 	| TsAsExpression
+	| TsSatisfiesExpression
 	| TsNonNullAssertionExpression
 	| TsInstantiationExpression
 	// JSX
@@ -2131,6 +2132,11 @@ TsInstantiationExpression =
 TsAsExpression =
 	expression: JsAnyExpression
 	'as'
+	type: TsType
+
+TsSatisfiesExpression =
+	expression: JsAnyExpression
+	'satisfies'
 	type: TsType
 
 TsNonNullAssertionExpression =
