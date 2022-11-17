@@ -224,6 +224,7 @@ export interface Nursery {
 	noExplicitAny?: RuleConfiguration;
 	noInvalidConstructorSuper?: RuleConfiguration;
 	noPrecisionLoss?: RuleConfiguration;
+	noUnsafeFinally?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
@@ -406,6 +407,7 @@ export type Category =
 	| "lint/nursery/noExplicitAny"
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noPrecisionLoss"
+	| "lint/nursery/noUnsafeFinally"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useConst"
 	| "lint/nursery/useExhaustiveDependencies"

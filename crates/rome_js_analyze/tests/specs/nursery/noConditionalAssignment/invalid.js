@@ -18,4 +18,5 @@ for(; (x = y); ) { }
 var x; var b = (x = 0) ? 1 : 0;
 var x; var b = x && (y = 0) ? 1 : 0;
 (((3496.29)).bkufyydt = 2e308) ? foo : bar;
-    
+if (a += b) {}
+while ((c *= d)) {}

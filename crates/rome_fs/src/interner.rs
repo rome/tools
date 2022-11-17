@@ -1,59 +1,42 @@
-//! This module declares the [PathInterner] trait, a utility for creating
-//! de-duplicated [FileId]s from instances of [PathBuf]. It also provides a few
-//! implementations of that trait tailored for different use-cases, namely
-//! [IndexSetInterner] and [AtomicInterner]
-use std::{
-    path::PathBuf,
-    sync::atomic::{AtomicUsize, Ordering},
-};
+use std::path::PathBuf;
+use std::sync::RwLock;
 
 use crossbeam::channel::{unbounded, Receiver, Sender};
 use indexmap::IndexSet;
 use rome_diagnostics::file::FileId;
-use std::sync::RwLock;
 
-pub trait PathInterner {
-    fn intern_path(&self, path: PathBuf) -> FileId;
-}
-
-pub struct IndexSetInterner {
-    storage: RwLock<IndexSet<PathBuf>>,
-}
-
-impl PathInterner for IndexSetInterner {
-    fn intern_path(&self, path: PathBuf) -> FileId {
-        let (index, _) = self.storage.write().unwrap().insert_full(path);
-        FileId::from(index)
-    }
-}
-
-/// Fast implementation of [PathInterner] that is entirely lock-free, at the
-/// expense of not performing any de-duplication
+/// File paths interner cache
 ///
-/// It's intended to be used in situations where it is known in advance the
-/// interner will never see the same path twice (eg. directory traversals
-/// without symlinks)
-pub struct AtomicInterner {
-    counter: AtomicUsize,
-    storage: Sender<(FileId, PathBuf)>,
+/// The path interner stores an instance of [PathBuf] and
+/// returns its unique [FileId]
+pub struct PathInterner {
+    storage: RwLock<IndexSet<PathBuf>>,
+    handler: Sender<(FileId, PathBuf)>,
 }
 
-impl AtomicInterner {
+impl PathInterner {
     pub fn new() -> (Self, Receiver<(FileId, PathBuf)>) {
         let (send, recv) = unbounded();
         let interner = Self {
-            counter: AtomicUsize::new(0),
-            storage: send,
+            storage: RwLock::new(IndexSet::new()),
+            handler: send,
         };
 
         (interner, recv)
     }
-}
 
-impl PathInterner for AtomicInterner {
-    fn intern_path(&self, path: PathBuf) -> FileId {
-        let id = FileId::from(self.counter.fetch_add(1, Ordering::Relaxed));
-        self.storage.send((id, path)).ok();
-        id
+    /// Insert the path and get its [FileId]
+    ///
+    /// If an equivalent path already exists, it returns
+    /// the [FileId] of the existing path and `false`.
+    /// Otherwise, it inserts the new path and returns the [FileId]
+    /// of the inserted path and `true`
+    pub fn intern_path(&self, path: PathBuf) -> (FileId, bool) {
+        let (index, result) = self.storage.write().unwrap().insert_full(path.clone());
+        let field_id = FileId::from(index);
+        if result {
+            self.handler.send((field_id, path)).ok();
+        }
+        (field_id, result)
     }
 }

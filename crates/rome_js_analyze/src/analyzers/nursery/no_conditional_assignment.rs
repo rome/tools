@@ -1,8 +1,12 @@
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
+use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
+use rome_diagnostics::Applicability;
+use rome_js_factory::make;
 use rome_js_syntax::*;
-use rome_rowan::{declare_node_union, AstNode};
+use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
+
+use crate::JsRuleAction;
 
 declare_rule! {
     /// Disallow assignment operators in conditional expressions.
@@ -78,6 +82,23 @@ impl Rule for NoConditionalAssignment {
                 "Expected a conditional expression and instead saw an assignment."
             },
         ))
+    }
+
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let op = state.operator().ok()?;
+        if let JsAssignmentOperator::Assign = op {
+            let mut mutation = ctx.root().begin();
+            let token = state.operator_token().ok()?;
+            mutation.replace_token(token, make::token(JsSyntaxKind::EQ3));
+            Some(JsRuleAction {
+                mutation,
+                applicability: Applicability::MaybeIncorrect,
+                category: ActionCategory::QuickFix,
+                message: markup!("Did you mean '==='?").to_owned(),
+            })
+        } else {
+            None
+        }
     }
 }
 
