@@ -30,6 +30,8 @@ f(1);"#,
             case 4: console.log(4, a/*READ A2*/, c/*READ C*/, d/*?*/);
         }
         console.log(5, a/*READ A1*/);",
+    ok_reference_recursive,
+        "const fn/*#A*/ = (callback) => { callback(fn/*READ A*/) };",
 }
 
 // Read Hoisting
