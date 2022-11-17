@@ -35,3 +35,18 @@ bar = 1;
 const h = function foo() {
 	foo = 1;
 };
+
+const {
+	i,
+	j: { l },
+} = { i: 1, j: { l: 2 } };
+i = 4;
+l = 4;
+
+for (const k in [1, 2]) {
+	k = 4;
+}
+
+const [p, { q }] = [1, { q: 2 }];
+p = 3;
+q = 4;

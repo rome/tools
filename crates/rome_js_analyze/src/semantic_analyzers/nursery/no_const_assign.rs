@@ -2,7 +2,11 @@ use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{JsIdentifierAssignment, JsSyntaxKind, JsVariableDeclaration};
+use rome_js_syntax::{
+    JsAnyBindingPattern, JsArrayBindingPatternElementList, JsForVariableDeclaration,
+    JsIdentifierAssignment, JsObjectBindingPatternShorthandProperty, JsVariableDeclaration,
+    JsVariableDeclarator,
+};
 use rome_rowan::{AstNode, TextRange};
 
 declare_rule! {
@@ -62,20 +66,28 @@ impl Rule for NoConstAssign {
 
         let declared_binding = model.declaration(node)?;
 
-        let parent = declared_binding.syntax().parent()?;
+        let js_any_binding_parent = declared_binding
+            .syntax()
+            .ancestors()
+            .find(|n| !JsAnyBindingPattern::can_cast(n.kind()))?;
 
-        match parent.kind() {
-            JsSyntaxKind::JS_VARIABLE_DECLARATOR => {
-                if let Some(variable_declaration) = parent
-                    .ancestors()
-                    .find_map(|ancestor| JsVariableDeclaration::cast_ref(&ancestor))
-                {
-                    if variable_declaration.is_const() {
+        let js_any_binding_parent_kind = js_any_binding_parent.kind();
+        if JsVariableDeclarator::can_cast(js_any_binding_parent_kind)
+            || JsArrayBindingPatternElementList::can_cast(js_any_binding_parent_kind)
+            || JsObjectBindingPatternShorthandProperty::can_cast(js_any_binding_parent_kind)
+        {
+            for n in js_any_binding_parent.ancestors() {
+                if let Some(js_variable_declaration) = JsVariableDeclaration::cast_ref(&n) {
+                    if js_variable_declaration.is_const() {
+                        return Some(declared_binding.syntax().text_trimmed_range());
+                    }
+                }
+                if let Some(js_for_variable_declaration) = JsForVariableDeclaration::cast_ref(&n) {
+                    if js_for_variable_declaration.is_const() {
                         return Some(declared_binding.syntax().text_trimmed_range());
                     }
                 }
             }
-            _ => return None,
         }
 
         None

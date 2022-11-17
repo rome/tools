@@ -43,6 +43,21 @@ const h = function foo() {
 	foo = 1;
 };
 
+const {
+	i,
+	j: { l },
+} = { i: 1, j: { l: 2 } };
+i = 4;
+l = 4;
+
+for (const k in [1, 2]) {
+	k = 4;
+}
+
+const [p, { q }] = [1, { q: 2 }];
+p = 3;
+q = 4;
+
 ```
 
 # Diagnostics
@@ -207,6 +222,122 @@ noConstAssign.js:14:2 lint/nursery/noConstAssign ━━━━━━━━━━�
       │       ^
     5 │ 	c = 43;
     6 │ b = 4;
+  
+
+```
+
+```
+noConstAssign.js:43:1 lint/nursery/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign i because it's a constant
+  
+    41 │ 	j: { l },
+    42 │ } = { i: 1, j: { l: 2 } };
+  > 43 │ i = 4;
+       │ ^
+    44 │ l = 4;
+    45 │ 
+  
+  i This is where the variable is defined as constant
+  
+    39 │ const {
+  > 40 │ 	i,
+       │ 	^
+    41 │ 	j: { l },
+    42 │ } = { i: 1, j: { l: 2 } };
+  
+
+```
+
+```
+noConstAssign.js:44:1 lint/nursery/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign l because it's a constant
+  
+    42 │ } = { i: 1, j: { l: 2 } };
+    43 │ i = 4;
+  > 44 │ l = 4;
+       │ ^
+    45 │ 
+    46 │ for (const k in [1, 2]) {
+  
+  i This is where the variable is defined as constant
+  
+    39 │ const {
+    40 │ 	i,
+  > 41 │ 	j: { l },
+       │ 	     ^
+    42 │ } = { i: 1, j: { l: 2 } };
+    43 │ i = 4;
+  
+
+```
+
+```
+noConstAssign.js:47:2 lint/nursery/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign k because it's a constant
+  
+    46 │ for (const k in [1, 2]) {
+  > 47 │ 	k = 4;
+       │ 	^
+    48 │ }
+    49 │ 
+  
+  i This is where the variable is defined as constant
+  
+    44 │ l = 4;
+    45 │ 
+  > 46 │ for (const k in [1, 2]) {
+       │            ^
+    47 │ 	k = 4;
+    48 │ }
+  
+
+```
+
+```
+noConstAssign.js:51:1 lint/nursery/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign p because it's a constant
+  
+    50 │ const [p, { q }] = [1, { q: 2 }];
+  > 51 │ p = 3;
+       │ ^
+    52 │ q = 4;
+    53 │ 
+  
+  i This is where the variable is defined as constant
+  
+    48 │ }
+    49 │ 
+  > 50 │ const [p, { q }] = [1, { q: 2 }];
+       │        ^
+    51 │ p = 3;
+    52 │ q = 4;
+  
+
+```
+
+```
+noConstAssign.js:52:1 lint/nursery/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign q because it's a constant
+  
+    50 │ const [p, { q }] = [1, { q: 2 }];
+    51 │ p = 3;
+  > 52 │ q = 4;
+       │ ^
+    53 │ 
+  
+  i This is where the variable is defined as constant
+  
+    48 │ }
+    49 │ 
+  > 50 │ const [p, { q }] = [1, { q: 2 }];
+       │             ^
+    51 │ p = 3;
+    52 │ q = 4;
   
 
 ```
