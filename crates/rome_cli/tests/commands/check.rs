@@ -762,7 +762,7 @@ fn fs_error_infinite_symlink_exapansion() {
 
     remove_dir_all(root_path).unwrap();
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),

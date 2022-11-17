@@ -205,8 +205,6 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
         });
     }
 
-    dbg!(count, skipped);
-
     // Processing emitted error diagnostics, exit with a non-zero code
     if (count - skipped) == 0 {
         Err(Termination::NoFilesWereProcessed)
