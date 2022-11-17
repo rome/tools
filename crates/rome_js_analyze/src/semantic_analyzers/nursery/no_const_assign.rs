@@ -3,8 +3,7 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsAnyBindingPattern, JsArrayBindingPatternElementList, JsForVariableDeclaration,
-    JsIdentifierAssignment, JsObjectBindingPatternShorthandProperty, JsVariableDeclaration,
+    JsForVariableDeclaration, JsIdentifierAssignment, JsSyntaxKind::*, JsVariableDeclaration,
     JsVariableDeclarator,
 };
 use rome_rowan::{AstNode, TextRange};
@@ -66,23 +65,34 @@ impl Rule for NoConstAssign {
 
         let declared_binding = model.declaration(node)?;
 
-        let js_any_binding_parent = declared_binding
-            .syntax()
-            .ancestors()
-            .find(|n| !JsAnyBindingPattern::can_cast(n.kind()))?;
+        if let Some(possible_declarator) = declared_binding.syntax().ancestors().find(|node| {
+            !matches!(
+                node.kind(),
+                JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
+                    | JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST
+                    | JS_OBJECT_BINDING_PATTERN_PROPERTY
+                    | JS_OBJECT_BINDING_PATTERN
+                    | JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST
+                    | JS_ARRAY_BINDING_PATTERN
+                    | JS_IDENTIFIER_BINDING
+            )
+        }) {
+            if JsVariableDeclarator::can_cast(possible_declarator.kind()) {
+                let mut possible_declaration = possible_declarator.parent()?;
+                if possible_declaration.kind().is_list() {
+                    possible_declaration = possible_declaration.parent()?;
+                }
 
-        let js_any_binding_parent_kind = js_any_binding_parent.kind();
-        if JsVariableDeclarator::can_cast(js_any_binding_parent_kind)
-            || JsArrayBindingPatternElementList::can_cast(js_any_binding_parent_kind)
-            || JsObjectBindingPatternShorthandProperty::can_cast(js_any_binding_parent_kind)
-        {
-            for n in js_any_binding_parent.ancestors() {
-                if let Some(js_variable_declaration) = JsVariableDeclaration::cast_ref(&n) {
+                if let Some(js_variable_declaration) =
+                    JsVariableDeclaration::cast_ref(&possible_declaration)
+                {
                     if js_variable_declaration.is_const() {
                         return Some(declared_binding.syntax().text_trimmed_range());
                     }
                 }
-                if let Some(js_for_variable_declaration) = JsForVariableDeclaration::cast_ref(&n) {
+                if let Some(js_for_variable_declaration) =
+                    JsForVariableDeclaration::cast_ref(&possible_declaration)
+                {
                     if js_for_variable_declaration.is_const() {
                         return Some(declared_binding.syntax().text_trimmed_range());
                     }
