@@ -13,9 +13,9 @@ no files were processed in the specified folders.
 ```block
 prefix/ci.js internalError/fs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Unknown file type
+  ! Symbolic links are not supported
   
-  i Rome encountered a file system entry that's neither a file, directory or symbolic link
+  i Rome does not currently support visiting the content of symbolic links since it could lead to an infinite traversal loop
   
 
 ```

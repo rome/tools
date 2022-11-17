@@ -350,7 +350,7 @@ fn no_lint_if_linter_is_disabled_when_run_apply() {
         ]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     let mut buffer = String::new();
     fs.open(file_path)
@@ -386,7 +386,7 @@ fn no_lint_if_linter_is_disabled() {
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     let mut buffer = String::new();
     fs.open(file_path)
@@ -600,7 +600,7 @@ fn no_lint_when_file_is_ignored() {
         ]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     let mut buffer = String::new();
     fs.open(file_path)
@@ -644,7 +644,7 @@ fn no_lint_if_files_are_listed_in_ignore_option() {
         ]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     let mut buffer = String::new();
     fs.open(file_path_test1)
@@ -707,7 +707,7 @@ fn fs_error_dereferenced_symlink() {
 
     remove_dir_all(root_path).unwrap();
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -789,7 +789,7 @@ fn fs_error_unknown() {
         Arguments::from_vec(vec![OsString::from("check"), OsString::from("prefix")]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -814,7 +814,7 @@ fn file_too_large() {
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     // Do not store the content of the file in the snapshot
     fs.remove(file_path);
@@ -844,7 +844,7 @@ fn file_too_large_config_limit() {
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),

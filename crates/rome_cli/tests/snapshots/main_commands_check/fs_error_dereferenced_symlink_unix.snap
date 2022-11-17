@@ -1,8 +1,13 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 223
 expression: content
 ---
+# Termination Message
+
+```block
+no files were processed in the specified folders.
+```
+
 # Emitted Messages
 
 ```block

@@ -5,7 +5,7 @@ expression: content
 # Termination Message
 
 ```block
-no supported files were found in the specified folders.
+no files were processed in the specified folders.
 ```
 
 # Emitted Messages

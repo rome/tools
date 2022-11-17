@@ -859,7 +859,7 @@ fn format_is_disabled() {
         ]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     let mut file = fs
         .open(file_path)
@@ -1025,7 +1025,7 @@ fn does_not_format_ignored_files() {
         ]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     let mut file = fs
         .open(file_path)
@@ -1075,7 +1075,7 @@ fn does_not_format_if_files_are_listed_in_ignore_option() {
         ]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     let mut buffer = String::new();
     fs.open(file_path_test1)
@@ -1178,7 +1178,7 @@ fn file_too_large() {
         ]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     // Do not store the content of the file in the snapshot
     fs.remove(file_path);
@@ -1208,7 +1208,7 @@ fn file_too_large_config_limit() {
         Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -1238,7 +1238,7 @@ fn file_too_large_cli_limit() {
         ]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),

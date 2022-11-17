@@ -20,6 +20,12 @@ expression: content
   statement(  )  
 ```
 
+# Termination Message
+
+```block
+no files were processed in the specified folders.
+```
+
 # Emitted Messages
 
 

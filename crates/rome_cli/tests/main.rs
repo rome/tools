@@ -290,7 +290,7 @@ mod configuration {
             Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
         );
 
-        assert!(result.is_ok(), "run_cli returned {result:?}");
+        assert!(result.is_err(), "run_cli returned {result:?}");
 
         assert_cli_snapshot(SnapshotPayload::new(
             module_path!(),
@@ -381,7 +381,10 @@ mod configuration {
         let mut fs = MemoryFileSystem::default();
         let mut console = BufferConsole::default();
 
-        fs.insert(Path::new("rome.json").into(), CONFIG_INCORRECT_GLOBALS_V2.as_bytes());
+        fs.insert(
+            Path::new("rome.json").into(),
+            CONFIG_INCORRECT_GLOBALS_V2.as_bytes(),
+        );
         fs.insert(Path::new("file.js").into(), UNFORMATTED.as_bytes());
 
         let result = run_cli(

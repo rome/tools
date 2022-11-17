@@ -205,9 +205,11 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
         });
     }
 
+    dbg!(count, skipped);
+
     // Processing emitted error diagnostics, exit with a non-zero code
-    if (count) == 0 {
-        Err(Termination::NoSupportedFilesFound)
+    if (count - skipped) == 0 {
+        Err(Termination::NoFilesWereProcessed)
     } else if errors > 0 {
         Err(Termination::CheckError)
     } else {
@@ -607,6 +609,10 @@ struct TraversalOptions<'ctx, 'app> {
 }
 
 impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
+    fn increment_processed(&self) {
+        self.processed.fetch_add(1, Ordering::Relaxed);
+    }
+
     /// Send a message to the display thread
     fn push_message(&self, msg: impl Into<Message>) {
         self.messages.send(msg.into()).ok();
@@ -690,11 +696,8 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
 /// traversal function returns Err or panics)
 fn handle_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) {
     match catch_unwind(move || process_file(ctx, path, file_id)) {
-        Ok(Ok(FileStatus::Success)) => {
-            ctx.processed.fetch_add(1, Ordering::Relaxed);
-        }
+        Ok(Ok(FileStatus::Success)) => {}
         Ok(Ok(FileStatus::Message(msg))) => {
-            ctx.processed.fetch_add(1, Ordering::Relaxed);
             ctx.push_message(msg);
         }
         Ok(Ok(FileStatus::Ignored)) => {}
@@ -741,13 +744,16 @@ type FileResult = Result<FileStatus, Message>;
 fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileResult {
     tracing::trace_span!("process_file", path = ?path).in_scope(move || {
         let rome_path = RomePath::new(path, file_id);
+
         let supported_format = ctx
             .can_format(&rome_path)
             .with_file_id_and_code(file_id, category!("files/missingHandler"))?;
+
         let supported_lint = ctx
             .can_lint(&rome_path)
             .with_file_id_and_code(file_id, category!("files/missingHandler"))?;
-        let supported_file = match ctx.execution.traversal_mode() {
+
+        let unsupported_reason = match ctx.execution.traversal_mode() {
             TraversalMode::Check { .. } => supported_lint.reason.as_ref(),
             TraversalMode::CI { .. } => supported_lint
                 .reason
@@ -756,7 +762,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             TraversalMode::Format { .. } => supported_format.reason.as_ref(),
         };
 
-        if let Some(reason) = supported_file {
+        if let Some(reason) = unsupported_reason {
             return match reason {
                 UnsupportedReason::FileNotSupported => {
                     Err(Message::from(UnhandledDiagnostic.with_file_path(file_id)))
@@ -775,6 +781,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 
         let mut input = String::new();
         file.read_to_string(&mut input).with_file_id(file_id)?;
+        ctx.increment_processed();
 
         let file_guard = FileGuard::open(
             ctx.workspace,
@@ -799,12 +806,9 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             if fixed.code != input {
                 file.set_content(fixed.code.as_bytes())
                     .with_file_id(file_id)?;
-
-                return Ok(FileStatus::Success);
             }
 
-            // If the file isn't changed, do not increment the "fixed files" counter
-            return Ok(FileStatus::Ignored);
+            return Ok(FileStatus::Success);
         }
 
         let categories = if ctx.execution.is_format() || supported_lint.reason.is_some() {
