@@ -116,6 +116,10 @@ pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
 // test ts ts_export_default_function_overload
 // export default function test(a: string): string;
 // export default function test(a: string | undefined): string { return "hello" }
+//
+// test ts ts_export_function_overload
+// export function test(a: string): string;
+// export function test(a: string | undefined): string { return "hello" }
 pub(super) fn parse_function_export_default_declaration(p: &mut Parser) -> ParsedSyntax {
     if !is_at_function(p) {
         return Absent;
@@ -153,6 +157,10 @@ enum FunctionKind {
 }
 
 impl FunctionKind {
+    const fn is_export_default(&self) -> bool {
+        matches!(self, FunctionKind::ExportDefault)
+    }
+
     fn is_id_optional(&self) -> bool {
         matches!(self, FunctionKind::Expression | FunctionKind::ExportDefault)
     }
@@ -276,7 +284,11 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
             ));
         }
 
-        m.complete(p, TS_DECLARE_FUNCTION_DECLARATION)
+        if kind.is_export_default() {
+            m.complete(p, TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION)
+        } else {
+            m.complete(p, TS_DECLARE_FUNCTION_DECLARATION)
+        }
     } else {
         body.or_add_diagnostic(p, js_parse_error::expected_function_body);
 
