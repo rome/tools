@@ -2,24 +2,6 @@
 source: crates/rome_cli/tests/snap_test.rs
 expression: content
 ---
-## `rome.json`
-
-```json
-{
-  "formatter": {
-    "enabled": true,
-    "ignore": ["test.js"]
-  }
-}
-
-```
-
-## `test.js`
-
-```js
-  statement(  )  
-```
-
 # Termination Message
 
 ```block
