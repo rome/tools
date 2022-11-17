@@ -6,6 +6,7 @@ use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 
 use rome_js_syntax::JsNumberLiteralExpression;
+use rome_js_syntax::numbers::split_into_radix_and_number;
 use rome_rowan::AstNode;
 
 declare_rule! {
@@ -94,12 +95,11 @@ fn is_precision_lost(node: &JsNumberLiteralExpression) -> Option<bool> {
     let token = node.value_token().ok()?;
     let num = token.text_trimmed();
 
-    let num = num.replace('_', "");
-    let (radix, num) = get_radix_and_num(&num);
+    let (radix, num) = split_into_radix_and_number(num);
     if radix == 10 {
-        is_precision_lost_in_base_10(num)
+        is_precision_lost_in_base_10(&num)
     } else {
-        Some(is_precision_lost_in_base_other(num, radix))
+        Some(is_precision_lost_in_base_other(&num, radix))
     }
 }
 
@@ -135,17 +135,6 @@ fn is_precision_lost_in_base_other(num: &str, radix: u32) -> bool {
     !SAFE_RANGE.contains(&parsed)
 }
 
-fn get_radix_and_num(num: &str) -> (u32, &str) {
-    let mut chars = num.chars();
-    match (chars.next(), chars.next()) {
-        (Some('0'), Some('x' | 'X')) => (16, &num[2..]),
-        (Some('0'), Some('o' | 'O')) => (8, &num[2..]),
-        (Some('0'), Some('b' | 'B')) => (2, &num[2..]),
-        // Legacy octal literals
-        (Some('0'), Some('0'..='7')) if chars.all(|it| matches!(it, '0'..='7')) => (8, &num[1..]),
-        _ => (10, num),
-    }
-}
 
 fn remove_leading_zeros(num: &str) -> &str {
     num.trim_start_matches('0')
