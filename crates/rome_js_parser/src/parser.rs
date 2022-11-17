@@ -444,7 +444,6 @@ impl Marker {
                 Some(Event::Start {
                     kind: JsSyntaxKind::TOMBSTONE,
                     forward_parent: None,
-                    ..
                 }) => (),
                 _ => unreachable!(),
             }
