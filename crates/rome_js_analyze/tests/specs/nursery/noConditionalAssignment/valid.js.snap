@@ -34,7 +34,7 @@ switch (foo) { case baz + (a = b): bar(); }
 
 # Diagnostics
 ```
-valid.js:6:6 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.js:6:6 lint/nursery/noConditionalAssignment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -45,11 +45,15 @@ valid.js:6:6 lint/nursery/noConditionalAssignment ━━━━━━━━━━
     7 │ while ((a = b));
     8 │ do {} while ((a = b));
   
+  i Suggested fix: Did you mean '==='?
+  
+    6 │ if·((a·===·b));
+      │         ++     
 
 ```
 
 ```
-valid.js:7:9 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.js:7:9 lint/nursery/noConditionalAssignment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -60,11 +64,15 @@ valid.js:7:9 lint/nursery/noConditionalAssignment ━━━━━━━━━━
     8 │ do {} while ((a = b));
     9 │ for (;(a = b););
   
+  i Suggested fix: Did you mean '==='?
+  
+    7 │ while·((a·===·b));
+      │            ++     
 
 ```
 
 ```
-valid.js:8:15 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.js:8:15 lint/nursery/noConditionalAssignment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -75,11 +83,15 @@ valid.js:8:15 lint/nursery/noConditionalAssignment ━━━━━━━━━�
      9 │ for (;(a = b););
     10 │ for (;;) {}
   
+  i Suggested fix: Did you mean '==='?
+  
+    8 │ do·{}·while·((a·===·b));
+      │                  ++     
 
 ```
 
 ```
-valid.js:9:8 lint/nursery/noConditionalAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid.js:9:8 lint/nursery/noConditionalAssignment  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Expected a conditional expression and instead saw an assignment.
   
@@ -90,6 +102,10 @@ valid.js:9:8 lint/nursery/noConditionalAssignment ━━━━━━━━━━
     10 │ for (;;) {}
     11 │ if (someNode || (someNode = parentNode)) { }
   
+  i Suggested fix: Did you mean '==='?
+  
+    9 │ for·(;(a·===·b););
+      │           ++      
 
 ```
 
