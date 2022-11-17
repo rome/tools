@@ -787,17 +787,9 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-// different output than prettier
-function Component4() {
-
-  return (
-    <div>
-      {fn(datadatadatadatadatadatadatadatadatadatadatadatadatadatadatadata)}{' '}
-      <div/>
-    </div>
-  );
+declare module 'x' {
+  export default function (option: any): void
 }
-
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, FileId::zero(), syntax);

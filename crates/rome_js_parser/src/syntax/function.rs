@@ -67,7 +67,7 @@ pub(super) fn parse_function_declaration(
 
     let m = p.start();
     let mut function = if p.state.in_ambient_context() {
-        parse_ambient_function(p, m)
+        parse_ambient_function(p, m, AmbientFunctionKind::Declaration)
     } else {
         parse_function(
             p,
@@ -124,10 +124,22 @@ pub(super) fn parse_function_export_default_declaration(p: &mut Parser) -> Parse
     let m = p.start();
 
     Present(if p.state.in_ambient_context() {
-        parse_ambient_function(p, m)
+        parse_ambient_function(p, m, AmbientFunctionKind::ExportDefault)
     } else {
         parse_function(p, m, FunctionKind::ExportDefault)
     })
+}
+
+#[derive(PartialEq, Eq, Debug, Copy, Clone)]
+enum AmbientFunctionKind {
+    Declaration,
+    ExportDefault,
+}
+
+impl AmbientFunctionKind {
+    const fn is_export_default(&self) -> bool {
+        matches!(self, AmbientFunctionKind::ExportDefault)
+    }
 }
 
 #[derive(PartialEq, Eq, Debug, Copy, Clone)]
@@ -344,7 +356,7 @@ fn parse_function_id(p: &mut Parser, kind: FunctionKind, flags: SignatureFlags) 
 // declare module a {
 //   function test(): string;
 // }
-pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMarker {
+fn parse_ambient_function(p: &mut Parser, m: Marker, kind: AmbientFunctionKind) -> CompletedMarker {
     let stmt_start = p.cur_range().start();
 
     // test_err ts ts_declare_async_function
@@ -359,7 +371,17 @@ pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMark
     }
 
     p.expect(T![function]);
-    parse_binding(p).or_add_diagnostic(p, expected_binding);
+    let binding = parse_binding(p);
+    let is_binding_absent = binding.is_absent();
+
+    if !kind.is_export_default() && is_binding_absent {
+        // test_err ts ts_declare_function_export_declaration_missing_id
+        // declare module 'x' {
+        //   export function(option: any): void
+        // }
+        binding.or_add_diagnostic(p, expected_binding);
+    }
+
     parse_ts_type_parameters(p).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
@@ -379,7 +401,20 @@ pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMark
 
     if is_async {
         m.complete(p, JS_UNKNOWN_STATEMENT)
+    } else if kind.is_export_default() {
+        // test ts ts_declare_function_export_default_declaration
+        // declare module 'x' {
+        //   export default function(option: any): void
+        // }
+        // declare module 'y' {
+        //   export default function test(option: any): void
+        // }
+        m.complete(p, TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION)
     } else {
+        // test ts ts_declare_function_export_declaration
+        // declare module 'x' {
+        //   export function test(option: any): void
+        // }
         m.complete(p, TS_DECLARE_FUNCTION_DECLARATION)
     }
 }
