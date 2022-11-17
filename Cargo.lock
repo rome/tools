@@ -1044,15 +1044,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "mktemp"
-version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4bdc1f74dd7bb717d39f784f844e490d935b3aa7e383008006dbbf29c1f7820a"
-dependencies = [
- "uuid",
-]
-
-[[package]]
 name = "new_debug_unreachable"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1518,7 +1509,6 @@ dependencies = [
  "lazy_static",
  "libc",
  "mimalloc",
- "mktemp",
  "pico-args",
  "rayon",
  "rome_console",
@@ -2634,15 +2624,6 @@ name = "utf8-width"
 version = "0.1.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5190c9442dcdaf0ddd50f37420417d219ae5261bbf5db120d0f9bab996c9cba1"
-
-[[package]]
-name = "uuid"
-version = "1.2.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "422ee0de9031b5b948b97a8fc04e3aa35230001a722ddd27943e0be31564ce4c"
-dependencies = [
- "getrandom 0.2.7",
-]
 
 [[package]]
 name = "valuable"

@@ -49,4 +49,3 @@ tikv-jemallocator = "0.5.0"
 [dev-dependencies]
 insta = "1.18.2"
 tokio = { workspace = true, features = ["io-util"] }
-mktemp = "0.5.0"

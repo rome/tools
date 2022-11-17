@@ -26,7 +26,7 @@ return { something }
 # Termination Message
 
 ```block
-no files were processed in the specified folders.
+no files were processed in the specified paths.
 ```
 
 # Emitted Messages
