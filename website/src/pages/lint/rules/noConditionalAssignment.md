@@ -18,7 +18,7 @@ if (x = 0) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noConditionalAssignment.js:2:5 <a href="https://docs.rome.tools/lint/rules/noConditionalAssignment">lint/nursery/noConditionalAssignment</a> ━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noConditionalAssignment.js:2:5 <a href="https://docs.rome.tools/lint/rules/noConditionalAssignment">lint/nursery/noConditionalAssignment</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Expected a conditional expression and instead saw an assignment.</span>
   
@@ -28,6 +28,10 @@ if (x = 0) {
     <strong>3 │ </strong>    var b = 1;
     <strong>4 │ </strong>}
   
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Did you mean '==='?</span>
+  
+<strong>  </strong><strong>  2 │ </strong>if<span style="opacity: 0.8;">·</span>(x<span style="opacity: 0.8;">·</span>=<span style="color: MediumSeaGreen;">=</span><span style="color: MediumSeaGreen;">=</span><span style="opacity: 0.8;">·</span>0)<span style="opacity: 0.8;">·</span>{
+<strong>  </strong><strong>    │ </strong>       <span style="color: MediumSeaGreen;">+</span><span style="color: MediumSeaGreen;">+</span>     
 </code></pre>
 
 ```jsx
@@ -39,7 +43,7 @@ function setHeight(someNode) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noConditionalAssignment.js:5:14 <a href="https://docs.rome.tools/lint/rules/noConditionalAssignment">lint/nursery/noConditionalAssignment</a> ━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noConditionalAssignment.js:5:14 <a href="https://docs.rome.tools/lint/rules/noConditionalAssignment">lint/nursery/noConditionalAssignment</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Expected a conditional expression and instead saw an assignment.</span>
   
@@ -50,6 +54,10 @@ function setHeight(someNode) {
     <strong>6 │ </strong>}
     <strong>7 │ </strong>
   
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Did you mean '==='?</span>
+  
+<strong>  </strong><strong>  5 │ </strong><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span>}<span style="opacity: 0.8;">·</span>while<span style="opacity: 0.8;">·</span>(someNode<span style="opacity: 0.8;">·</span>=<span style="color: MediumSeaGreen;">=</span><span style="color: MediumSeaGreen;">=</span><span style="opacity: 0.8;">·</span>someNode.parentNode);
+<strong>  </strong><strong>    │ </strong>                       <span style="color: MediumSeaGreen;">+</span><span style="color: MediumSeaGreen;">+</span>                      
 </code></pre>
 
 ### Valid
