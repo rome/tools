@@ -86,7 +86,7 @@ impl Rule for NoPrecisionLoss {
                 node.syntax().text_trimmed_range(),
                 markup! { "This number literal will lose precision at runtime." },
             )
-            .note(markup! { "Runtime value: "{ value.to_string() } }),
+            .note(markup! { "The value at runtime will be "<Emphasis>{ value.to_string() }</Emphasis> }),
         )
     }
 }
