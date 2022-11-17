@@ -683,8 +683,8 @@ fn fs_error_dereferenced_symlink() {
     {
         remove_dir_all(root_path.clone());
     }
-    create_dir(PathBuf::from(root_path.clone())).unwrap();
-    create_dir(subdir_path.clone()).unwrap();
+    create_dir(root_path.clone()).unwrap();
+    create_dir(subdir_path).unwrap();
 
     #[cfg(target_family = "unix")]
     {
@@ -734,7 +734,7 @@ fn fs_error_infinite_symlink_exapansion() {
     {
         remove_dir_all(root_path.clone());
     }
-    create_dir(PathBuf::from(root_path.clone())).unwrap();
+    create_dir(root_path.clone()).unwrap();
     create_dir(subdir1_path.clone()).unwrap();
 
     create_dir_all(subdir2_path.clone()).unwrap();
