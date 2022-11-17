@@ -5,8 +5,8 @@ pub mod diagnostic;
 pub mod display;
 pub mod error;
 pub mod location;
-pub mod serde;
 pub mod panic;
+pub mod serde;
 
 #[doc(hidden)]
 // Convenience re-export for procedural macro
