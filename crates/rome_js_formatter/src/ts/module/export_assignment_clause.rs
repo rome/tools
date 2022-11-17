@@ -1,7 +1,7 @@
 use crate::prelude::*;
-use crate::utils::FormatWithSemicolon;
+use crate::utils::FormatStatementSemicolon;
 
-use rome_formatter::{format_args, write};
+use rome_formatter::write;
 use rome_js_syntax::TsExportAssignmentClause;
 use rome_js_syntax::TsExportAssignmentClauseFields;
 
@@ -18,10 +18,12 @@ impl FormatNodeRule<TsExportAssignmentClause> for FormatTsExportAssignmentClause
 
         write!(
             f,
-            [FormatWithSemicolon::new(
-                &format_args!(eq_token.format(), space(), expression.format()),
-                semicolon_token.as_ref()
-            )]
+            [
+                eq_token.format(),
+                space(),
+                expression.format(),
+                FormatStatementSemicolon::new(semicolon_token.as_ref())
+            ]
         )
     }
 }

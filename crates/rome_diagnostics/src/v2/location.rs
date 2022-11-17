@@ -119,7 +119,7 @@ impl<P> FilePath<P> {
     }
 
     /// Converts a `FilePath<P>` to `FilePath<&P::Target>`.
-    pub(crate) fn as_deref(&self) -> FilePath<&<P as Deref>::Target>
+    pub fn as_deref(&self) -> FilePath<&<P as Deref>::Target>
     where
         P: Deref,
     {

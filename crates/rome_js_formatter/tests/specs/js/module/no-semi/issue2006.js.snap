@@ -1,0 +1,69 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+expression: issue2006.js
+---
+
+# Input
+
+```js
+switch (n) {
+  case 11:
+    var c = a.e;
+    (i.a += Ga(c.e)), F(i, c.i, 0);
+}
+
+var c = a.e;
+(i.a += Ga(c.e)), F(i, c.i, 0);
+
+```
+
+
+=============================
+
+# Outputs
+
+## Output 1
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: Always
+-----
+
+```js
+switch (n) {
+	case 11:
+		var c = a.e;
+		(i.a += Ga(c.e)), F(i, c.i, 0);
+}
+
+var c = a.e;
+(i.a += Ga(c.e)), F(i, c.i, 0);
+```
+
+## Output 2
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: As needed
+-----
+
+```js
+switch (n) {
+	case 11:
+		var c = a.e
+		;(i.a += Ga(c.e)), F(i, c.i, 0)
+}
+
+var c = a.e
+;(i.a += Ga(c.e)), F(i, c.i, 0)
+```
+
+

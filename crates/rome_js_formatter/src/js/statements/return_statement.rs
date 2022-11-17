@@ -1,9 +1,9 @@
 use crate::prelude::*;
-use crate::utils::{FormatWithSemicolon, JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
+use crate::utils::{FormatOptionalSemicolon, FormatStatementSemicolon, JsAnyBinaryLikeExpression};
 
 use rome_formatter::{format_args, write, CstFormatContext};
 
-use crate::parentheses::get_expression_left_side;
+use crate::parentheses::{get_expression_left_side, JsAnyExpressionLeftSide};
 use rome_js_syntax::{
     JsAnyExpression, JsReturnStatement, JsSequenceExpression, JsSyntaxToken, JsThrowStatement,
 };
@@ -52,7 +52,7 @@ impl Format<JsFormatContext> for JsAnyStatementWithArgument {
                 .map_or(false, |comment| comment.kind().is_line());
 
             if is_last_comment_line {
-                write!(f, [semicolon.format()])?;
+                write!(f, [FormatOptionalSemicolon::new(Some(&semicolon))])?;
             }
 
             if has_dangling_comments {
@@ -60,24 +60,16 @@ impl Format<JsFormatContext> for JsAnyStatementWithArgument {
             }
 
             if !is_last_comment_line {
-                write!(f, [semicolon.format()])?;
+                write!(f, [FormatOptionalSemicolon::new(Some(&semicolon))])?;
             }
 
             Ok(())
         } else {
-            write!(
-                f,
-                [FormatWithSemicolon::new(
-                    &format_with(|f| {
-                        if let Some(argument) = &argument {
-                            write!(f, [space(), FormatReturnOrThrowArgument(argument)])?;
-                        }
+            if let Some(argument) = &argument {
+                write!(f, [space(), FormatReturnOrThrowArgument(argument)])?;
+            }
 
-                        Ok(())
-                    }),
-                    None
-                )]
-            )
+            write!(f, [FormatStatementSemicolon::new(None)])
         }
     }
 }
@@ -110,12 +102,14 @@ pub(super) struct FormatReturnOrThrowArgument<'a>(&'a JsAnyExpression);
 impl Format<JsFormatContext> for FormatReturnOrThrowArgument<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let argument = self.0;
+        let is_suppressed = f.comments().is_suppressed(argument.syntax());
 
         if has_argument_leading_comments(argument, f.context().comments())
             && !matches!(argument, JsAnyExpression::JsxTagExpression(_))
+            && !is_suppressed
         {
             write!(f, [text("("), &block_indent(&argument.format()), text(")")])
-        } else if is_binary_or_sequence_argument(argument) {
+        } else if is_binary_or_sequence_argument(argument) && !is_suppressed {
             write!(
                 f,
                 [group(&format_args![
@@ -137,21 +131,14 @@ impl Format<JsFormatContext> for FormatReturnOrThrowArgument<'_> {
 /// Traversing the left nodes is necessary in case the first node is parenthesized because
 /// parentheses will be removed (and be re-added by the return statement, but only if the argument breaks)
 fn has_argument_leading_comments(argument: &JsAnyExpression, comments: &JsComments) -> bool {
-    let mut current: Option<JsAnyBinaryLikeLeftExpression> = Some(argument.clone().into());
+    let mut current: Option<JsAnyExpressionLeftSide> = Some(argument.clone().into());
 
     while let Some(expression) = current {
         if comments.has_leading_own_line_comment(expression.syntax()) {
             return true;
         }
 
-        match expression {
-            JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => {
-                current = get_expression_left_side(&expression);
-            }
-            JsAnyBinaryLikeLeftExpression::JsPrivateName(_) => {
-                break;
-            }
-        }
+        current = get_expression_left_side(&expression);
     }
 
     false

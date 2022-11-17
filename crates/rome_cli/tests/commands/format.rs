@@ -1,7 +1,7 @@
 use crate::configs::{
     CONFIG_DISABLED_FORMATTER, CONFIG_FILE_SIZE_LIMIT, CONFIG_FORMAT,
-    CONFIG_FORMATTER_IGNORED_DIRECTORIES, CONFIG_FORMATTER_IGNORED_FILES, CONFIG_ISSUE_3175_1,
-    CONFIG_ISSUE_3175_2,
+    CONFIG_FORMATTER_AND_FILES_IGNORE, CONFIG_FORMATTER_IGNORED_DIRECTORIES,
+    CONFIG_FORMATTER_IGNORED_FILES, CONFIG_ISSUE_3175_1, CONFIG_ISSUE_3175_2,
 };
 use crate::snap_test::{markup_to_string, SnapshotPayload};
 use crate::{
@@ -543,6 +543,79 @@ fn trailing_comma_parse_errors() {
 }
 
 #[test]
+fn with_semicolons_options() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("file.js");
+    fs.insert(file_path.into(), UNFORMATTED.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--semicolons"),
+            OsString::from("as-needed"),
+            OsString::from("--write"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    dbg!(&content);
+    assert_eq!(content, "statement()\n");
+
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "with_semicolons_options",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn with_invalid_semicolons_option() {
+    let mut console = BufferConsole::default();
+    let mut fs = MemoryFileSystem::default();
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--semicolons"),
+            OsString::from("asneed"),
+            OsString::from("file.js"),
+        ]),
+    );
+
+    match result {
+        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--semicolons"),
+        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "with_invalid_semicolons_option",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
 fn indent_style_parse_errors() {
     let mut console = BufferConsole::default();
     let mut fs = MemoryFileSystem::default();
@@ -968,6 +1041,61 @@ fn does_not_format_ignored_files() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "does_not_format_ignored_files",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn does_not_format_if_files_are_listed_in_ignore_option() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("rome.json");
+    fs.insert(
+        file_path.into(),
+        CONFIG_FORMATTER_AND_FILES_IGNORE.as_bytes(),
+    );
+
+    let file_path_test1 = Path::new("test1.js");
+    fs.insert(file_path_test1.into(), UNFORMATTED.as_bytes());
+
+    let file_path_test2 = Path::new("test2.js");
+    fs.insert(file_path_test2.into(), UNFORMATTED.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            file_path_test1.as_os_str().into(),
+            file_path_test2.as_os_str().into(),
+            OsString::from("--write"),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut buffer = String::new();
+    fs.open(file_path_test1)
+        .unwrap()
+        .read_to_string(&mut buffer)
+        .unwrap();
+
+    assert_eq!(buffer, UNFORMATTED);
+
+    let mut buffer = String::new();
+    fs.open(file_path_test2)
+        .unwrap()
+        .read_to_string(&mut buffer)
+        .unwrap();
+
+    assert_eq!(buffer, UNFORMATTED);
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "does_not_format_if_files_are_listed_in_ignore_option",
         fs,
         console,
         result,

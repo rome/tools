@@ -10,6 +10,7 @@ import {
 	QuoteProperties,
 	QuoteStyle,
 	TrailingComma,
+	Semicolons,
 } from "./types";
 import {
 	createLocalStorage,
@@ -123,9 +124,22 @@ function App() {
 				settings: state.settings,
 			});
 
+			romeWorkerRef.current?.postMessage({
+				type: "update",
+				cursorPosition: state.cursorPosition,
+				filename: state.currentFile,
+				code: getCurrentCode(state),
+			});
+
 			prettierWorkerRef.current?.postMessage({
 				type: "updateSettings",
 				settings: state.settings,
+			});
+
+			prettierWorkerRef.current?.postMessage({
+				type: "format",
+				filename: state.currentFile,
+				code: getCurrentCode(state),
 			});
 		});
 	}, [loadingState, state.settings]);
@@ -216,8 +230,8 @@ export function usePlaygroundState(): [
 			// Single file mode
 			if (searchParams.get("code")) {
 				const ext = getExtension({
-					typescript: searchParams.get("typescript") === "true",
-					jsx: searchParams.get("jsx") === "true",
+					typescript: searchParams.get("typescript") !== "false",
+					jsx: searchParams.get("jsx") !== "false",
 					script: searchParams.get("script") === "true",
 				});
 				files[`main.${ext}`] = {
@@ -260,6 +274,9 @@ export function usePlaygroundState(): [
 					searchParams.get("indentWidth") ??
 						String(defaultPlaygroundState.settings.indentWidth),
 				),
+				semicolons:
+					(searchParams.get("semicolons") as Semicolons) ??
+					defaultPlaygroundState.settings.semicolons,
 				enabledNurseryRules:
 					searchParams.get("enabledNurseryRules") === "true" ||
 					defaultPlaygroundState.settings.enabledNurseryRules,

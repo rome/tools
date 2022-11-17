@@ -76,11 +76,14 @@ define_dategories! {
 
     // nursery
     "lint/nursery/noBannedTypes":"https://docs.rome.tools/lint/rules/noBannedTypes",
+    "lint/nursery/noConditionalAssignment": "https://docs.rome.tools/lint/rules/noConditionalAssignment",
     "lint/nursery/noConstAssign": "https://docs.rome.tools/lint/rules/noConstAssign",
     "lint/nursery/noDupeKeys":"https://docs.rome.tools/lint/rules/noDupeKeys",
     "lint/nursery/noExplicitAny": "https://docs.rome.tools/lint/rules/noExplicitAny",
     "lint/nursery/noInvalidConstructorSuper": "https://docs.rome.tools/lint/rules/noInvalidConstructorSuper",
+    "lint/nursery/noUnsafeFinally": "https://docs.rome.tools/lint/rules/noUnsafeFinally",
     "lint/nursery/useCamelCase": "https://docs.rome.tools/lint/rules/useCamelCase",
+    "lint/nursery/useConst":"https://docs.rome.tools/lint/rules/useConst",
     "lint/nursery/useExhaustiveDependencies": "https://docs.rome.tools/lint/rules/useExhaustiveDependencies",
     "lint/nursery/useFlatMap": "https://docs.rome.tools/lint/rules/useFlatMap",
     "lint/nursery/useNumericLiterals": "https://docs.rome.tools/lint/rules/useNumericLiterals",

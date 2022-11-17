@@ -1,6 +1,9 @@
 //! Extended AST node definitions for statements which are unique and special enough to generate code for manually
 
-use crate::{JsForVariableDeclaration, JsVariableDeclaration, T};
+use crate::{
+    JsAnyArrayAssignmentPatternElement, JsAnyAssignmentPattern, JsForVariableDeclaration,
+    JsVariableDeclaration, T,
+};
 use rome_rowan::SyntaxResult;
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
@@ -37,10 +40,21 @@ impl JsVariableDeclaration {
         })
     }
 }
+
 impl JsForVariableDeclaration {
     /// Whether the declaration is a const declaration
     pub fn is_const(&self) -> bool {
         self.variable_kind() == Ok(JsVariableKind::Const)
+    }
+
+    /// Whether the declaration is a let declaration
+    pub fn is_let(&self) -> bool {
+        self.variable_kind() == Ok(JsVariableKind::Let)
+    }
+
+    /// Whether the declaration is a var declaration
+    pub fn is_var(&self) -> bool {
+        self.variable_kind() == Ok(JsVariableKind::Var)
     }
 
     pub fn variable_kind(&self) -> SyntaxResult<JsVariableKind> {
@@ -54,6 +68,18 @@ impl JsForVariableDeclaration {
         })
     }
 }
+
+impl JsAnyArrayAssignmentPatternElement {
+    pub fn pattern(self) -> Option<JsAnyAssignmentPattern> {
+        match self {
+            Self::JsAnyAssignmentPattern(p) => Some(p),
+            Self::JsArrayAssignmentPatternRestElement(p) => p.pattern().ok(),
+            Self::JsAssignmentWithDefault(p) => p.pattern().ok(),
+            Self::JsArrayHole(_) => None,
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use rome_js_factory::syntax::{JsSyntaxKind::*, JsVariableDeclaration};
