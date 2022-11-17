@@ -6,7 +6,7 @@ JsModule {
             export_token: EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
             export_clause: JsExportDefaultDeclarationClause {
                 default_token: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")],
-                declaration: TsDeclareFunctionDeclaration {
+                declaration: TsDeclareFunctionExportDefaultDeclaration {
                     async_token: missing (optional),
                     function_token: FUNCTION_KW@15..24 "function" [] [Whitespace(" ")],
                     id: JsIdentifierBinding {
@@ -119,7 +119,7 @@ JsModule {
       0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
       1: JS_EXPORT_DEFAULT_DECLARATION_CLAUSE@7..48
         0: DEFAULT_KW@7..15 "default" [] [Whitespace(" ")]
-        1: TS_DECLARE_FUNCTION_DECLARATION@15..48
+        1: TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION@15..48
           0: (empty)
           1: FUNCTION_KW@15..24 "function" [] [Whitespace(" ")]
           2: JS_IDENTIFIER_BINDING@24..28

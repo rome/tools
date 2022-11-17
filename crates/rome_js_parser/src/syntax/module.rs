@@ -1193,9 +1193,10 @@ fn parse_export_default_declaration_clause(
     };
 
     let item_kind = match (kind, declaration.kind()) {
-        (ExportDefaultDeclarationKind::Function, Some(TS_DECLARE_FUNCTION_DECLARATION)) => {
-            ExportDefaultItemKind::FunctionOverload
-        }
+        (
+            ExportDefaultDeclarationKind::Function,
+            Some(TS_DECLARE_FUNCTION_DECLARATION | TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION),
+        ) => ExportDefaultItemKind::FunctionOverload,
         (ExportDefaultDeclarationKind::Function, _) => ExportDefaultItemKind::FunctionDeclaration,
         (ExportDefaultDeclarationKind::Interface, _) => ExportDefaultItemKind::Interface,
         _ => ExportDefaultItemKind::Declaration,

@@ -8163,6 +8163,64 @@ pub struct TsDeclareFunctionDeclarationFields {
     pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsDeclareFunctionExportDefaultDeclaration {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsDeclareFunctionExportDefaultDeclaration {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsDeclareFunctionExportDefaultDeclarationFields {
+        TsDeclareFunctionExportDefaultDeclarationFields {
+            async_token: self.async_token(),
+            function_token: self.function_token(),
+            id: self.id(),
+            type_parameters: self.type_parameters(),
+            parameters: self.parameters(),
+            return_type_annotation: self.return_type_annotation(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
+    pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 2usize) }
+    pub fn type_parameters(&self) -> Option<TsTypeParameters> {
+        support::node(&self.syntax, 3usize)
+    }
+    pub fn parameters(&self) -> SyntaxResult<JsParameters> {
+        support::required_node(&self.syntax, 4usize)
+    }
+    pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
+        support::node(&self.syntax, 5usize)
+    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsDeclareFunctionExportDefaultDeclaration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub struct TsDeclareFunctionExportDefaultDeclarationFields {
+    pub async_token: Option<SyntaxToken>,
+    pub function_token: SyntaxResult<SyntaxToken>,
+    pub id: Option<JsAnyBinding>,
+    pub type_parameters: Option<TsTypeParameters>,
+    pub parameters: SyntaxResult<JsParameters>,
+    pub return_type_annotation: Option<TsReturnTypeAnnotation>,
+    pub semicolon_token: Option<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsDeclareModifier {
     pub(crate) syntax: SyntaxNode,
 }
@@ -12621,7 +12679,7 @@ impl JsAnyExportClause {
 pub enum JsAnyExportDefaultDeclaration {
     JsClassExportDefaultDeclaration(JsClassExportDefaultDeclaration),
     JsFunctionExportDefaultDeclaration(JsFunctionExportDefaultDeclaration),
-    TsDeclareFunctionDeclaration(TsDeclareFunctionDeclaration),
+    TsDeclareFunctionExportDefaultDeclaration(TsDeclareFunctionExportDefaultDeclaration),
     TsInterfaceDeclaration(TsInterfaceDeclaration),
 }
 impl JsAnyExportDefaultDeclaration {
@@ -12641,9 +12699,13 @@ impl JsAnyExportDefaultDeclaration {
             _ => None,
         }
     }
-    pub fn as_ts_declare_function_declaration(&self) -> Option<&TsDeclareFunctionDeclaration> {
+    pub fn as_ts_declare_function_export_default_declaration(
+        &self,
+    ) -> Option<&TsDeclareFunctionExportDefaultDeclaration> {
         match &self {
-            JsAnyExportDefaultDeclaration::TsDeclareFunctionDeclaration(item) => Some(item),
+            JsAnyExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(item) => {
+                Some(item)
+            }
             _ => None,
         }
     }
@@ -21364,6 +21426,56 @@ impl From<TsDeclareFunctionDeclaration> for SyntaxNode {
 impl From<TsDeclareFunctionDeclaration> for SyntaxElement {
     fn from(n: TsDeclareFunctionDeclaration) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsDeclareFunctionExportDefaultDeclaration {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> = SyntaxKindSet::from_raw(RawSyntaxKind(
+        TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION as u16,
+    ));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
+}
+impl std::fmt::Debug for TsDeclareFunctionExportDefaultDeclaration {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsDeclareFunctionExportDefaultDeclaration")
+            .field(
+                "async_token",
+                &support::DebugOptionalElement(self.async_token()),
+            )
+            .field(
+                "function_token",
+                &support::DebugSyntaxResult(self.function_token()),
+            )
+            .field("id", &support::DebugOptionalElement(self.id()))
+            .field(
+                "type_parameters",
+                &support::DebugOptionalElement(self.type_parameters()),
+            )
+            .field("parameters", &support::DebugSyntaxResult(self.parameters()))
+            .field(
+                "return_type_annotation",
+                &support::DebugOptionalElement(self.return_type_annotation()),
+            )
+            .field(
+                "semicolon_token",
+                &support::DebugOptionalElement(self.semicolon_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsDeclareFunctionExportDefaultDeclaration> for SyntaxNode {
+    fn from(n: TsDeclareFunctionExportDefaultDeclaration) -> SyntaxNode { n.syntax }
+}
+impl From<TsDeclareFunctionExportDefaultDeclaration> for SyntaxElement {
+    fn from(n: TsDeclareFunctionExportDefaultDeclaration) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsDeclareModifier {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
@@ -26347,9 +26459,9 @@ impl From<JsFunctionExportDefaultDeclaration> for JsAnyExportDefaultDeclaration 
         JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(node)
     }
 }
-impl From<TsDeclareFunctionDeclaration> for JsAnyExportDefaultDeclaration {
-    fn from(node: TsDeclareFunctionDeclaration) -> JsAnyExportDefaultDeclaration {
-        JsAnyExportDefaultDeclaration::TsDeclareFunctionDeclaration(node)
+impl From<TsDeclareFunctionExportDefaultDeclaration> for JsAnyExportDefaultDeclaration {
+    fn from(node: TsDeclareFunctionExportDefaultDeclaration) -> JsAnyExportDefaultDeclaration {
+        JsAnyExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(node)
     }
 }
 impl From<TsInterfaceDeclaration> for JsAnyExportDefaultDeclaration {
@@ -26361,14 +26473,14 @@ impl AstNode for JsAnyExportDefaultDeclaration {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsClassExportDefaultDeclaration::KIND_SET
         .union(JsFunctionExportDefaultDeclaration::KIND_SET)
-        .union(TsDeclareFunctionDeclaration::KIND_SET)
+        .union(TsDeclareFunctionExportDefaultDeclaration::KIND_SET)
         .union(TsInterfaceDeclaration::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
             JS_CLASS_EXPORT_DEFAULT_DECLARATION
                 | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
-                | TS_DECLARE_FUNCTION_DECLARATION
+                | TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION
                 | TS_INTERFACE_DECLARATION
         )
     }
@@ -26384,9 +26496,9 @@ impl AstNode for JsAnyExportDefaultDeclaration {
                     JsFunctionExportDefaultDeclaration { syntax },
                 )
             }
-            TS_DECLARE_FUNCTION_DECLARATION => {
-                JsAnyExportDefaultDeclaration::TsDeclareFunctionDeclaration(
-                    TsDeclareFunctionDeclaration { syntax },
+            TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION => {
+                JsAnyExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(
+                    TsDeclareFunctionExportDefaultDeclaration { syntax },
                 )
             }
             TS_INTERFACE_DECLARATION => {
@@ -26402,7 +26514,9 @@ impl AstNode for JsAnyExportDefaultDeclaration {
         match self {
             JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(it) => &it.syntax,
             JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(it) => &it.syntax,
-            JsAnyExportDefaultDeclaration::TsDeclareFunctionDeclaration(it) => &it.syntax,
+            JsAnyExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(it) => {
+                &it.syntax
+            }
             JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(it) => &it.syntax,
         }
     }
@@ -26410,7 +26524,9 @@ impl AstNode for JsAnyExportDefaultDeclaration {
         match self {
             JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(it) => it.syntax,
             JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(it) => it.syntax,
-            JsAnyExportDefaultDeclaration::TsDeclareFunctionDeclaration(it) => it.syntax,
+            JsAnyExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(it) => {
+                it.syntax
+            }
             JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(it) => it.syntax,
         }
     }
@@ -26424,7 +26540,7 @@ impl std::fmt::Debug for JsAnyExportDefaultDeclaration {
             JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyExportDefaultDeclaration::TsDeclareFunctionDeclaration(it) => {
+            JsAnyExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
             JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(it) => {
@@ -26438,7 +26554,9 @@ impl From<JsAnyExportDefaultDeclaration> for SyntaxNode {
         match n {
             JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(it) => it.into(),
             JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(it) => it.into(),
-            JsAnyExportDefaultDeclaration::TsDeclareFunctionDeclaration(it) => it.into(),
+            JsAnyExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(it) => {
+                it.into()
+            }
             JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(it) => it.into(),
         }
     }
@@ -32826,6 +32944,11 @@ impl std::fmt::Display for TsConstructorType {
     }
 }
 impl std::fmt::Display for TsDeclareFunctionDeclaration {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsDeclareFunctionExportDefaultDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
