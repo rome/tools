@@ -60,8 +60,8 @@ impl Rule for InlineVariable {
         let expr = initializer.expression().ok()?;
         match expr {
             JsAnyExpression::JsArrowFunctionExpression(_)
-            | JsAnyExpression::JsFunctionExpression(_) 
-            | JsAnyExpression::JsClassExpression(_) 
+            | JsAnyExpression::JsFunctionExpression(_)
+            | JsAnyExpression::JsClassExpression(_)
             | JsAnyExpression::JsAssignmentExpression(_) => return None,
             _ => {}
         }
@@ -79,7 +79,6 @@ impl Rule for InlineVariable {
 
         // Inline variable
 
-        
         let expression = initializer.expression().ok()?;
         Some(State {
             references,

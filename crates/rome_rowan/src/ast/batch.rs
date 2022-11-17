@@ -347,7 +347,7 @@ where
                             // last write wins
                             if let Some(last) = modifications.last() {
                                 if last.0 == next_change.new_node_slot {
-                                    modifications.pop();      
+                                    modifications.pop();
                                 }
                             }
                             modifications.push((next_change.new_node_slot, next_change.new_node));
