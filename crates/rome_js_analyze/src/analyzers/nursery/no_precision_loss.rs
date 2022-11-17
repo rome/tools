@@ -5,8 +5,8 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 
-use rome_js_syntax::JsNumberLiteralExpression;
 use rome_js_syntax::numbers::split_into_radix_and_number;
+use rome_js_syntax::JsNumberLiteralExpression;
 use rome_rowan::AstNode;
 
 declare_rule! {
@@ -134,7 +134,6 @@ fn is_precision_lost_in_base_other(num: &str, radix: u32) -> bool {
 
     !SAFE_RANGE.contains(&parsed)
 }
-
 
 fn remove_leading_zeros(num: &str) -> &str {
     num.trim_start_matches('0')
