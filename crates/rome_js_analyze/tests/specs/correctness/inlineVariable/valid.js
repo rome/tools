@@ -18,3 +18,8 @@ statement(multipleDeclaratorsNotInlinable);
 
 let variable = expression();
 statement(variable);
+
+// Inline sequence expression
+
+const sequenceExpression = (1,2);
+console.log(sequenceExpression);
