@@ -392,6 +392,10 @@ export interface Nursery {
 	 */
 	noPrecisionLoss?: RuleConfiguration;
 	/**
+	 * Disallow returning a value from a setter
+	 */
+	noSetterReturn?: RuleConfiguration;
+	/**
 	 * Disallow comparison of expressions modifying the string case with non-compliant value.
 	 */
 	noStringCaseMismatch?: RuleConfiguration;
@@ -640,6 +644,7 @@ export type Category =
 	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstAssign"
 	| "lint/nursery/noConstructorReturn"
+	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noDupeKeys"
 	| "lint/nursery/noEmptyInterface"
 	| "lint/nursery/noExplicitAny"
