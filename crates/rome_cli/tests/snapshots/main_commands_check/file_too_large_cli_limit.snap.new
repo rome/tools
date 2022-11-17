@@ -1,0 +1,33 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 223
+expression: content
+---
+## `check.js`
+
+```js
+statement1();
+statement2();
+```
+
+# Termination Message
+
+```block
+no supported files were found in the specified folders.
+```
+
+# Emitted Messages
+
+```block
+check.js lint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Size of check.js is 27 B which exceeds configured maximum of 16 B for this project. The file size limit exists to prevent us inadvertently slowing down and loading large files that we shouldn't.
+  
+
+```
+
+```block
+Skipped 1 file(s)
+```
+
+

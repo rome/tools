@@ -381,8 +381,8 @@ mod configuration {
         let mut fs = MemoryFileSystem::default();
         let mut console = BufferConsole::default();
 
-        let file_path = Path::new("rome.json");
-        fs.insert(file_path.into(), CONFIG_INCORRECT_GLOBALS_V2.as_bytes());
+        fs.insert(Path::new("rome.json").into(), CONFIG_INCORRECT_GLOBALS_V2.as_bytes());
+        fs.insert(Path::new("file.js").into(), UNFORMATTED.as_bytes());
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
