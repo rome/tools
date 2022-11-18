@@ -692,7 +692,27 @@ async fn pull_quick_fixes() -> Result<()> {
         data: None,
     });
 
-    assert_eq!(res, vec![expected_code_action]);
+    let mut suppression_changes = HashMap::default();
+    suppression_changes.insert(lsp::Url::parse("test://workspace/document.js")?, vec![]);
+
+    let expected_suppression_action = lsp::CodeActionOrCommand::CodeAction(lsp::CodeAction {
+        title: String::from("Suppress rule lint/correctness/noCompareNegZero"),
+        kind: Some(lsp::CodeActionKind::new(
+            "quickfix.suppressRule.rome.correctness.noCompareNegZero",
+        )),
+        diagnostics: Some(vec![fixable_diagnostic(0)?]),
+        edit: Some(lsp::WorkspaceEdit {
+            changes: Some(suppression_changes),
+            document_changes: None,
+            change_annotations: None,
+        }),
+        command: None,
+        is_preferred: Some(true),
+        disabled: None,
+        data: None,
+    });
+
+    assert_eq!(res, vec![expected_code_action, expected_suppression_action]);
 
     server.close_document().await?;
 

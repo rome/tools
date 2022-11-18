@@ -338,18 +338,19 @@ pub trait Rule: RuleMeta + Sized {
     ) -> Option<SuppressAction<RuleLanguage<Self>>> {
         // if the rule belongs to `Lint`, we auto generate an action to suppress the rule
         if <Self::Group as RuleGroup>::Category::CATEGORY == RuleCategory::Lint {
-            let suppression_text = format!(
-                "rome-ignore: lint/{}/{}",
+            let rule_category = format!(
+                "lint/{}/{}",
                 <Self::Group as RuleGroup>::NAME,
                 Self::METADATA.name
             );
+            let suppression_text = format!("rome-ignore {}", rule_category);
             let mut mutation = ctx.root().begin();
             let token = ctx.root().syntax().token_at_offset(text_range.end());
             apply_suppression_comment(token, &mut mutation, suppression_text.as_str());
 
             Some(SuppressAction {
                 mutation,
-                message: markup! { "Suppress rule " {suppression_text} }.to_owned(),
+                message: markup! { "Suppress rule " {rule_category} }.to_owned(),
             })
         } else {
             None
