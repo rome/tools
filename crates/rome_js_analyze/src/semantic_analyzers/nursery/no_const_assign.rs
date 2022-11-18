@@ -6,7 +6,7 @@ use rome_js_syntax::{
     JsAnyArrayBindingPatternElement, JsAnyObjectBindingPatternMember,
     JsArrayBindingPatternElementList, JsForVariableDeclaration, JsIdentifierAssignment,
     JsIdentifierBinding, JsObjectBindingPatternPropertyList, JsVariableDeclaration,
-    JsVariableDeclarator,
+    JsVariableDeclarator, JsVariableDeclaratorList,
 };
 use rome_rowan::{AstNode, TextRange};
 
@@ -75,22 +75,21 @@ impl Rule for NoConstAssign {
                 && !JsIdentifierBinding::can_cast(node.kind())
         }) {
             if JsVariableDeclarator::can_cast(possible_declarator.kind()) {
-                let mut possible_declaration = possible_declarator.parent()?;
-                if possible_declaration.kind().is_list() {
-                    possible_declaration = possible_declaration.parent()?;
-                }
-
-                if let Some(js_variable_declaration) =
-                    JsVariableDeclaration::cast_ref(&possible_declaration)
-                {
-                    if js_variable_declaration.is_const() {
-                        return Some(declared_binding.syntax().text_trimmed_range());
-                    }
-                }
+                let possible_declaration = possible_declarator.parent()?;
                 if let Some(js_for_variable_declaration) =
                     JsForVariableDeclaration::cast_ref(&possible_declaration)
                 {
                     if js_for_variable_declaration.is_const() {
+                        return Some(declared_binding.syntax().text_trimmed_range());
+                    }
+                }
+
+                if let Some(js_variable_declaration) =
+                    JsVariableDeclaratorList::cast_ref(&possible_declaration)
+                        .and_then(|declaration| declaration.syntax().parent())
+                        .and_then(JsVariableDeclaration::cast)
+                {
+                    if js_variable_declaration.is_const() {
                         return Some(declared_binding.syntax().text_trimmed_range());
                     }
                 }
