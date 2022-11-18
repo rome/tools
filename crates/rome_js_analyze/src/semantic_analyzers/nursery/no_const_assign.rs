@@ -82,9 +82,7 @@ impl Rule for NoConstAssign {
                     if js_for_variable_declaration.is_const() {
                         return Some(declared_binding.syntax().text_trimmed_range());
                     }
-                }
-
-                else if let Some(js_variable_declaration) =
+                } else if let Some(js_variable_declaration) =
                     JsVariableDeclaratorList::cast_ref(&possible_declaration)
                         .and_then(|declaration| declaration.syntax().parent())
                         .and_then(JsVariableDeclaration::cast)
