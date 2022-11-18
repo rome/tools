@@ -764,6 +764,16 @@
             }
           ]
         },
+        "noPrecisionLoss": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noUnsafeFinally": {
           "anyOf": [
             {

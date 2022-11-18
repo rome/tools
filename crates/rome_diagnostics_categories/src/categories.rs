@@ -81,6 +81,7 @@ define_dategories! {
     "lint/nursery/noDupeKeys":"https://docs.rome.tools/lint/rules/noDupeKeys",
     "lint/nursery/noExplicitAny": "https://docs.rome.tools/lint/rules/noExplicitAny",
     "lint/nursery/noInvalidConstructorSuper": "https://docs.rome.tools/lint/rules/noInvalidConstructorSuper",
+    "lint/nursery/noPrecisionLoss": "https://docs.rome.tools/lint/rules/noPrecisionLoss",
     "lint/nursery/noUnsafeFinally": "https://docs.rome.tools/lint/rules/noUnsafeFinally",
     "lint/nursery/useCamelCase": "https://docs.rome.tools/lint/rules/useCamelCase",
     "lint/nursery/useConst":"https://docs.rome.tools/lint/rules/useConst",
