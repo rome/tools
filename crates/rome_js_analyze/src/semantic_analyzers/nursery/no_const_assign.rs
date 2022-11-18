@@ -3,7 +3,9 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsForVariableDeclaration, JsIdentifierAssignment, JsSyntaxKind::*, JsVariableDeclaration,
+    JsAnyArrayBindingPatternElement, JsAnyObjectBindingPatternMember,
+    JsArrayBindingPatternElementList, JsForVariableDeclaration, JsIdentifierAssignment,
+    JsIdentifierBinding, JsObjectBindingPatternPropertyList, JsVariableDeclaration,
     JsVariableDeclarator,
 };
 use rome_rowan::{AstNode, TextRange};
@@ -66,16 +68,11 @@ impl Rule for NoConstAssign {
         let declared_binding = model.declaration(node)?;
 
         if let Some(possible_declarator) = declared_binding.syntax().ancestors().find(|node| {
-            !matches!(
-                node.kind(),
-                JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
-                    | JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST
-                    | JS_OBJECT_BINDING_PATTERN_PROPERTY
-                    | JS_OBJECT_BINDING_PATTERN
-                    | JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST
-                    | JS_ARRAY_BINDING_PATTERN
-                    | JS_IDENTIFIER_BINDING
-            )
+            !JsAnyObjectBindingPatternMember::can_cast(node.kind())
+                && !JsObjectBindingPatternPropertyList::can_cast(node.kind())
+                && !JsAnyArrayBindingPatternElement::can_cast(node.kind())
+                && !JsArrayBindingPatternElementList::can_cast(node.kind())
+                && !JsIdentifierBinding::can_cast(node.kind())
         }) {
             if JsVariableDeclarator::can_cast(possible_declarator.kind()) {
                 let mut possible_declaration = possible_declarator.parent()?;

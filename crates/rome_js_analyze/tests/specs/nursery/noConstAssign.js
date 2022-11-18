@@ -50,3 +50,6 @@ for (const k in [1, 2]) {
 const [p, { q }] = [1, { q: 2 }];
 p = 3;
 q = 4;
+
+const { r, ...rest } = s;
+r = 4;

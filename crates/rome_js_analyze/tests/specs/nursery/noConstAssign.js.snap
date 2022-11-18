@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 99
+assertion_line: 73
 expression: noConstAssign.js
 ---
 # Input
@@ -57,6 +57,9 @@ for (const k in [1, 2]) {
 const [p, { q }] = [1, { q: 2 }];
 p = 3;
 q = 4;
+
+const { r, ...rest } = s;
+r = 4;
 
 ```
 
@@ -329,6 +332,7 @@ noConstAssign.js:52:1 lint/nursery/noConstAssign ━━━━━━━━━━�
   > 52 │ q = 4;
        │ ^
     53 │ 
+    54 │ const { r, ...rest } = s;
   
   i This is where the variable is defined as constant
   
@@ -338,6 +342,28 @@ noConstAssign.js:52:1 lint/nursery/noConstAssign ━━━━━━━━━━�
        │             ^
     51 │ p = 3;
     52 │ q = 4;
+  
+
+```
+
+```
+noConstAssign.js:55:1 lint/nursery/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign r because it's a constant
+  
+    54 │ const { r, ...rest } = s;
+  > 55 │ r = 4;
+       │ ^
+    56 │ 
+  
+  i This is where the variable is defined as constant
+  
+    52 │ q = 4;
+    53 │ 
+  > 54 │ const { r, ...rest } = s;
+       │         ^
+    55 │ r = 4;
+    56 │ 
   
 
 ```
