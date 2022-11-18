@@ -248,10 +248,10 @@ function FileView({
 			</h2>
 
 			<ul className="files-list">
-				{files.map((filename, i) => {
+				{files.map((filename) => {
 					return (
 						<FileViewItem
-							key={i}
+							key={filename}
 							isActive={filename === currentFile}
 							filename={filename}
 							canDelete={files.length > 1}
