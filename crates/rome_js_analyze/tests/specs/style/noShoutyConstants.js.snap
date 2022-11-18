@@ -28,54 +28,6 @@ export const bar = {
 
 # Diagnostics
 ```
-noShoutyConstants.js:1:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Redundant constant declaration.
-  
-  > 1 │ const FOO = "FOO";
-      │       ^^^^^^^^^^^
-    2 │ console.log(FOO, FOO2);
-    3 │ 
-  
-  i Used here.
-  
-    1 │ const FOO = "FOO";
-  > 2 │ console.log(FOO, FOO2);
-      │             ^^^
-    3 │ 
-    4 │ const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
-  
-  i Used here.
-  
-    4 │ const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
-    5 │ 
-  > 6 │ console.log(FOO, FOO4);
-      │             ^^^
-    7 │ 
-    8 │ let foo = "foo";
-  
-  i You should avoid declaring constants with a string that's the same
-        value as the variable name. It introduces a level of unnecessary
-        indirection when it's only two additional characters to inline.
-  
-  i Suggested fix: Use the constant value directly
-  
-     1    │ - const·FOO·=·"FOO";
-     2    │ - console.log(FOO,·FOO2);
-        1 │ + 
-        2 │ + console.log("FOO",·FOO2);
-     3  3 │   
-     4  4 │   const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
-     5  5 │   
-     6    │ - console.log(FOO,·FOO4);
-        6 │ + console.log("FOO",·FOO4);
-     7  7 │   
-     8  8 │   let foo = "foo";
-  
-
-```
-
-```
 noShoutyConstants.js:4:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Redundant constant declaration.

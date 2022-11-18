@@ -5,8 +5,8 @@ use rome_diagnostics::Applicability;
 use rome_js_semantic::{AllReferencesExtensions, Reference};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsIdentifierBinding, JsIdentifierExpression,
-    JsStringLiteralExpression, JsVariableDeclaration, JsVariableDeclarationClause,
-    JsVariableDeclarator, JsVariableDeclaratorList,
+    JsReferenceIdentifier, JsStringLiteralExpression, JsVariableDeclaration,
+    JsVariableDeclarationClause, JsVariableDeclarator, JsVariableDeclaratorList,
 };
 use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
 
@@ -106,6 +106,13 @@ impl Rule for NoShoutyConstants {
                         .ancestors()
                         .any(|n| JsVariableDeclarationClause::can_cast(n.kind()))
                 }) {
+                    return None;
+                }
+                // check if constant is used in multiple places
+                if binding
+                    .all_references(ctx.model()).count()
+                    > 1
+                {
                     return None;
                 }
 
