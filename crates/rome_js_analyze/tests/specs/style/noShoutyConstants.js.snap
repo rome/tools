@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 73
 expression: noShoutyConstants.js
 ---
 # Input
@@ -12,9 +13,17 @@ const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
 console.log(FOO, FOO4);
 
 let foo = "foo";
+const B = "B";
+export default B;
+export const A = "A";
 
-const A = "A";
-export default A;
+const BAR = "BAR";
+const BAR1 = "BAR1";
+console.log(BAR1);
+export const bar = {
+	foo: Bar,
+};
+
 ```
 
 # Diagnostics
@@ -140,6 +149,43 @@ noShoutyConstants.js:4:34 lint/style/noShoutyConstants  FIXABLE  ━━━━━
         6 │ + console.log(FOO,·"FOO4");
      7  7 │   
      8  8 │   let foo = "foo";
+  
+
+```
+
+```
+noShoutyConstants.js:14:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Redundant constant declaration.
+  
+    13 │ const BAR = "BAR";
+  > 14 │ const BAR1 = "BAR1";
+       │       ^^^^^^^^^^^^^
+    15 │ console.log(BAR1);
+    16 │ export const bar = {
+  
+  i Used here.
+  
+    13 │ const BAR = "BAR";
+    14 │ const BAR1 = "BAR1";
+  > 15 │ console.log(BAR1);
+       │             ^^^^
+    16 │ export const bar = {
+    17 │ 	foo: Bar,
+  
+  i You should avoid declaring constants with a string that's the same
+        value as the variable name. It introduces a level of unnecessary
+        indirection when it's only two additional characters to inline.
+  
+  i Suggested fix: Use the constant value directly
+  
+    12 12 │   
+    13 13 │   const BAR = "BAR";
+    14    │ - const·BAR1·=·"BAR1";
+    15    │ - console.log(BAR1);
+       14 │ + console.log("BAR1");
+    16 15 │   export const bar = {
+    17 16 │   	foo: Bar,
   
 
 ```

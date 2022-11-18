@@ -5,8 +5,8 @@ use rome_diagnostics::Applicability;
 use rome_js_semantic::{AllReferencesExtensions, Reference};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsIdentifierBinding, JsIdentifierExpression,
-    JsStringLiteralExpression, JsVariableDeclaration, JsVariableDeclarator,
-    JsVariableDeclaratorList,
+    JsStringLiteralExpression, JsVariableDeclaration, JsVariableDeclarationClause,
+    JsVariableDeclarator, JsVariableDeclaratorList,
 };
 use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
 
@@ -98,6 +98,14 @@ impl Rule for NoShoutyConstants {
             {
                 let model = ctx.model();
                 if model.is_exported(&binding) {
+                    return None;
+                }
+
+                if binding.all_references(ctx.model()).all(|r| {
+                    r.node()
+                        .ancestors()
+                        .any(|n| JsVariableDeclarationClause::can_cast(n.kind()))
+                }) {
                     return None;
                 }
 
