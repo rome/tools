@@ -237,7 +237,7 @@ pub fn create_config(
         .join("rome")
         .join("configuration_schema.json");
     let options = OpenOptions::default().read(true);
-    if let Ok(_) = fs.open_with_options(&schema_path, options) {
+    if fs.open_with_options(&schema_path, options).is_ok() {
         configuration.schema = schema_path.to_str().map(String::from);
     }
 

@@ -51,7 +51,7 @@ fn creates_config_file_when_rome_installed_via_package_manager() {
         .join("node_modules")
         .join("rome")
         .join("configuration_schema.json");
-    fs.insert(file_path.into(), *b"{}");
+    fs.insert(file_path, *b"{}");
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
