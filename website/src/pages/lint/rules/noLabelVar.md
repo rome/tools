@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noLabelVar
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noLabelVar (since v0.7.0)

@@ -1,7 +1,8 @@
+use std::borrow::Cow;
 use std::collections::HashMap;
 
 use anyhow::{Context, Result};
-use rome_analyze::ActionCategory;
+use rome_analyze::{ActionCategory, SourceActionKind};
 use rome_fs::RomePath;
 use rome_service::workspace::{
     FeatureName, FixFileMode, FixFileParams, PullActionsParams, SupportsFeatureParams,
@@ -15,7 +16,14 @@ use crate::line_index::LineIndex;
 use crate::session::Session;
 use crate::utils;
 
-const FIX_ALL: CodeActionKind = CodeActionKind::new("source.fixAll");
+const FIX_ALL_CATEGORY: ActionCategory = ActionCategory::Source(SourceActionKind::FixAll);
+
+fn fix_all_kind() -> CodeActionKind {
+    match FIX_ALL_CATEGORY.to_str() {
+        Cow::Borrowed(kind) => CodeActionKind::from(kind),
+        Cow::Owned(kind) => CodeActionKind::from(kind),
+    }
+}
 
 /// Queries the [`AnalysisServer`] for code actions of the file matching [FileId]
 ///
@@ -39,17 +47,14 @@ pub(crate) fn code_actions(
     let mut has_fix_all = false;
     let mut filters = Vec::new();
 
-    if let Some(filter) = params.context.only {
+    if let Some(filter) = &params.context.only {
         for kind in filter {
-            if kind == CodeActionKind::QUICKFIX {
-                filters.push(ActionCategory::QuickFix);
-            } else if kind == CodeActionKind::REFACTOR {
-                filters.push(ActionCategory::Refactor);
-            } else if kind == FIX_ALL {
+            let kind = kind.as_str();
+            if FIX_ALL_CATEGORY.matches(kind) {
                 has_fix_all = true;
-            } else {
-                tracing::warn!("unknown code action kind {kind:?} requested");
             }
+
+            filters.push(kind);
         }
     }
 
@@ -86,13 +91,15 @@ pub(crate) fn code_actions(
         .filter_map(|action| {
             // Remove actions that do not match the categories requested by the
             // language client
-            if !filters.is_empty() && !filters.contains(&action.category) {
+            let matches_filters = filters.iter().any(|filter| action.category.matches(filter));
+            if !filters.is_empty() && !matches_filters {
                 return None;
             }
 
-            let action = utils::code_fix_to_lsp(&url, &doc.line_index, &diagnostics, action);
-            has_fixes |= action.diagnostics.is_some();
+            let action =
+                utils::code_fix_to_lsp(&url, &doc.line_index, &diagnostics, action).ok()?;
 
+            has_fixes |= action.diagnostics.is_some();
             Some(CodeActionOrCommand::CodeAction(action))
         })
         .chain(fix_all)
@@ -103,7 +110,7 @@ pub(crate) fn code_actions(
     if has_fixes {
         actions.retain(|action| {
             if let CodeActionOrCommand::CodeAction(action) = action {
-                action.kind == Some(FIX_ALL) || action.diagnostics.is_some()
+                action.kind.as_ref() == Some(&fix_all_kind()) || action.diagnostics.is_some()
             } else {
                 true
             }
@@ -134,13 +141,18 @@ fn fix_all(
     let diagnostics = diagnostics
         .iter()
         .filter_map(|d| {
-            let code = d.code.as_ref().and_then(|code| match code {
-                lsp::NumberOrString::String(code) => Some(code.as_str()),
-                lsp::NumberOrString::Number(_) => None,
-            })?;
+            let code = d.code.as_ref()?;
+            let code = match code {
+                lsp::NumberOrString::String(code) => code.as_str(),
+                lsp::NumberOrString::Number(_) => return None,
+            };
+
+            let code = code.strip_prefix("lint/")?;
 
             let diag_range = utils::text_range(line_index, d.range).ok()?;
             let has_matching_rule = fixed.actions.iter().any(|action| {
+                let Some(code) = code.strip_prefix(action.group_name.as_ref()) else { return false };
+                let Some(code) = code.strip_prefix('/') else { return false };
                 code == action.rule_name && action.range.intersect(diag_range).is_some()
             });
 
@@ -158,10 +170,7 @@ fn fix_all(
         vec![lsp::TextEdit {
             range: lsp::Range {
                 start: lsp::Position::new(0, 0),
-                end: lsp::Position::new(
-                    line_index.newlines.len().try_into().unwrap_or(u32::MAX),
-                    0,
-                ),
+                end: lsp::Position::new(line_index.len(), 0),
             },
             new_text: fixed.code,
         }],
@@ -175,7 +184,7 @@ fn fix_all(
 
     Ok(Some(CodeActionOrCommand::CodeAction(lsp::CodeAction {
         title: String::from("Fix all auto-fixable issues"),
-        kind: Some(FIX_ALL),
+        kind: Some(fix_all_kind()),
         diagnostics: Some(diagnostics),
         edit: Some(edit),
         command: None,

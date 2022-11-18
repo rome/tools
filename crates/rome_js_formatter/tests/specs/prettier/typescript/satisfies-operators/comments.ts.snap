@@ -1,0 +1,212 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/satisfies-operators/comments.ts
+---
+
+# Input
+
+```js
+const t2 = {} /* comment */ satisfies {};
+const t3 = {} satisfies /* comment */ {};
+const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,3 +1,12 @@
+-const t2 = {} /* comment */ satisfies {};
+-const t3 = {} satisfies /* comment */ {};
+-const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
++const t2 = {}; /* comment */
++satisfies;
++{
++}
++const t3 = {};
++satisfies; /* comment */
++{
++}
++const t4 = {}; /* comment1 */
++satisfies; /* comment2 */
++{
++}
+```
+
+# Output
+
+```js
+const t2 = {}; /* comment */
+satisfies;
+{
+}
+const t3 = {};
+satisfies; /* comment */
+{
+}
+const t4 = {}; /* comment1 */
+satisfies; /* comment2 */
+{
+}
+```
+
+
+# Errors
+```
+comments.ts:1:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  > 1 │ const t2 = {} /* comment */ satisfies {};
+      │                             ^^^^^^^^^
+    2 │ const t3 = {} satisfies /* comment */ {};
+    3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+  
+  i An explicit or implicit semicolon is expected here...
+  
+  > 1 │ const t2 = {} /* comment */ satisfies {};
+      │                             ^^^^^^^^^
+    2 │ const t3 = {} satisfies /* comment */ {};
+    3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ const t2 = {} /* comment */ satisfies {};
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ const t3 = {} satisfies /* comment */ {};
+    3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+  
+comments.ts:1:39 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  > 1 │ const t2 = {} /* comment */ satisfies {};
+      │                                       ^
+    2 │ const t3 = {} satisfies /* comment */ {};
+    3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+  
+  i An explicit or implicit semicolon is expected here...
+  
+  > 1 │ const t2 = {} /* comment */ satisfies {};
+      │                                       ^
+    2 │ const t3 = {} satisfies /* comment */ {};
+    3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ const t2 = {} /* comment */ satisfies {};
+      │                             ^^^^^^^^^^^
+    2 │ const t3 = {} satisfies /* comment */ {};
+    3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+  
+comments.ts:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    1 │ const t2 = {} /* comment */ satisfies {};
+  > 2 │ const t3 = {} satisfies /* comment */ {};
+      │               ^^^^^^^^^
+    3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+    4 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    1 │ const t2 = {} /* comment */ satisfies {};
+  > 2 │ const t3 = {} satisfies /* comment */ {};
+      │               ^^^^^^^^^
+    3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+    4 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ const t2 = {} /* comment */ satisfies {};
+  > 2 │ const t3 = {} satisfies /* comment */ {};
+      │ ^^^^^^^^^^^^^^
+    3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+    4 │ 
+  
+comments.ts:2:39 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    1 │ const t2 = {} /* comment */ satisfies {};
+  > 2 │ const t3 = {} satisfies /* comment */ {};
+      │                                       ^
+    3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+    4 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    1 │ const t2 = {} /* comment */ satisfies {};
+  > 2 │ const t3 = {} satisfies /* comment */ {};
+      │                                       ^
+    3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+    4 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ const t2 = {} /* comment */ satisfies {};
+  > 2 │ const t3 = {} satisfies /* comment */ {};
+      │               ^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+    4 │ 
+  
+comments.ts:3:30 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    1 │ const t2 = {} /* comment */ satisfies {};
+    2 │ const t3 = {} satisfies /* comment */ {};
+  > 3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+      │                              ^^^^^^^^^
+    4 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    1 │ const t2 = {} /* comment */ satisfies {};
+    2 │ const t3 = {} satisfies /* comment */ {};
+  > 3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+      │                              ^^^^^^^^^
+    4 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ const t2 = {} /* comment */ satisfies {};
+    2 │ const t3 = {} satisfies /* comment */ {};
+  > 3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ 
+  
+comments.ts:3:55 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    1 │ const t2 = {} /* comment */ satisfies {};
+    2 │ const t3 = {} satisfies /* comment */ {};
+  > 3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+      │                                                       ^
+    4 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    1 │ const t2 = {} /* comment */ satisfies {};
+    2 │ const t3 = {} satisfies /* comment */ {};
+  > 3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+      │                                                       ^
+    4 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ const t2 = {} /* comment */ satisfies {};
+    2 │ const t3 = {} satisfies /* comment */ {};
+  > 3 │ const t4 = {} /* comment1 */ satisfies /* comment2 */ {};
+      │                              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ 
+  
+
+```
+
+

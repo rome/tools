@@ -43,11 +43,11 @@ else // comment
 if (10) /* comment */ // comment
 {true}
 else if (11) /* comment */
-	true
+true
 else if (12) // comment /* comment */ // comment
-	true
+true
 else if (13) /* comment */ /* comment */ // comment
-	true
+true
 else /* comment */
 {true}
 

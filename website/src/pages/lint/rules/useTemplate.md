@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useTemplate
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # useTemplate (since v0.7.0)

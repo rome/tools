@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useFlatMap
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # useFlatMap (since v10.0.0)

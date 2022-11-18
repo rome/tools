@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::utils::FormatWithSemicolon;
+use crate::utils::FormatStatementSemicolon;
 
 use rome_js_syntax::JsContinueStatement;
 use rome_js_syntax::JsContinueStatementFields;
@@ -17,20 +17,12 @@ impl FormatNodeRule<JsContinueStatement> for FormatJsContinueStatement {
             semicolon_token,
         } = node.as_fields();
 
-        write!(
-            f,
-            [FormatWithSemicolon::new(
-                &format_with(|f: &mut JsFormatter| {
-                    write!(f, [continue_token.format()])?;
+        write!(f, [continue_token.format()])?;
 
-                    if let Some(label) = &label_token {
-                        write!(f, [space(), label.format()])?;
-                    }
+        if let Some(label) = &label_token {
+            write!(f, [space(), label.format()])?;
+        }
 
-                    Ok(())
-                }),
-                semicolon_token.as_ref()
-            )]
-        )
+        write!(f, [FormatStatementSemicolon::new(semicolon_token.as_ref())])
     }
 }

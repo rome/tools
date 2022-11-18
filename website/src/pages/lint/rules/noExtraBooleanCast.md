@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noExtraBooleanCast
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noExtraBooleanCast (since v0.9.0)

@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noEmptyPattern
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noEmptyPattern (since v0.7.0)

@@ -75,14 +75,19 @@ define_dategories! {
 
 
     // nursery
-    "lint/nursery/useFlatMap": "https://docs.rome.tools/lint/rules/useFlatMap",
-    "lint/nursery/noConstAssign": "https://docs.rome.tools/lint/rules/noConstAssign",
-    "lint/nursery/noExplicitAny": "https://docs.rome.tools/lint/rules/noExplicitAny",
-    "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
-    "lint/nursery/noInvalidConstructorSuper": "https://docs.rome.tools/lint/rules/noInvalidConstructorSuper",
-    "lint/nursery/useExhaustiveDependencies": "https://docs.rome.tools/lint/rules/useExhaustiveDependencies",
-    "lint/nursery/useCamelCase": "https://docs.rome.tools/lint/rules/useCamelCase",
     "lint/nursery/noBannedTypes":"https://docs.rome.tools/lint/rules/noBannedTypes",
+    "lint/nursery/noConditionalAssignment": "https://docs.rome.tools/lint/rules/noConditionalAssignment",
+    "lint/nursery/noConstAssign": "https://docs.rome.tools/lint/rules/noConstAssign",
+    "lint/nursery/noDupeKeys":"https://docs.rome.tools/lint/rules/noDupeKeys",
+    "lint/nursery/noExplicitAny": "https://docs.rome.tools/lint/rules/noExplicitAny",
+    "lint/nursery/noInvalidConstructorSuper": "https://docs.rome.tools/lint/rules/noInvalidConstructorSuper",
+    "lint/nursery/noUnsafeFinally": "https://docs.rome.tools/lint/rules/noUnsafeFinally",
+    "lint/nursery/useCamelCase": "https://docs.rome.tools/lint/rules/useCamelCase",
+    "lint/nursery/useConst":"https://docs.rome.tools/lint/rules/useConst",
+    "lint/nursery/useExhaustiveDependencies": "https://docs.rome.tools/lint/rules/useExhaustiveDependencies",
+    "lint/nursery/useFlatMap": "https://docs.rome.tools/lint/rules/useFlatMap",
+    "lint/nursery/useNumericLiterals": "https://docs.rome.tools/lint/rules/useNumericLiterals",
+    "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
 
     ;
 
@@ -99,6 +104,7 @@ define_dategories! {
 
     "suppressions/unknownGroup",
     "suppressions/unknownRule",
+    "suppressions/unused",
     // Used in tests and examples
     "args/fileNotFound",
     "flags/invalid",

@@ -1,6 +1,6 @@
 ---
 title: Lint Rules
-layout: ../../../Layout.astro
+parent: linter/index
 emoji: 📏
 description: List of available lint rules.
 category: reference
@@ -448,10 +448,23 @@ Rules that belong to this group <strong>are not subject to semantic version</str
 Disallow certain types.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noConditionalAssignment">
+	<a href="/lint/rules/noConditionalAssignment">noConditionalAssignment</a>
+</h3>
+Disallow assignment operators in conditional expressions.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noConstAssign">
 	<a href="/lint/rules/noConstAssign">noConstAssign</a>
 </h3>
 Prevents from having <code>const</code> variables being re-assigned.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noDupeKeys">
+	<a href="/lint/rules/noDupeKeys">noDupeKeys</a>
+</h3>
+Prevents object literals having more than one property declaration for the same name.
+If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noExplicitAny">
@@ -467,10 +480,22 @@ Prevents the incorrect use of <code>super()</code> inside classes.
 It also checks whether a call <code>super()</code> is missing from classes that extends other constructors.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noUnsafeFinally">
+	<a href="/lint/rules/noUnsafeFinally">noUnsafeFinally</a>
+</h3>
+Disallow control flow statements in finally blocks.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="useCamelCase">
 	<a href="/lint/rules/useCamelCase">useCamelCase</a>
 </h3>
 Enforce camel case naming convention.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="useConst">
+	<a href="/lint/rules/useConst">useConst</a>
+</h3>
+Require <code>const</code> declarations for variables that are never reassigned after declared.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useExhaustiveDependencies">
@@ -483,6 +508,12 @@ Enforce all dependencies are correctly specified.
 	<a href="/lint/rules/useFlatMap">useFlatMap</a>
 </h3>
 Promotes the use of <code>.flatMap()</code> when <code>map().flat()</code> are used together.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="useNumericLiterals">
+	<a href="/lint/rules/useNumericLiterals">useNumericLiterals</a>
+</h3>
+Disallow <code>parseInt()</code> and <code>Number.parseInt()</code> in favor of binary, octal, and hexadecimal literals
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useValidForDirection">

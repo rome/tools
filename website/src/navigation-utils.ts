@@ -1,14 +1,20 @@
 import type Astro from "astro";
 
-export function buildGetPages(pages: Astro.MDXInstance<any>[]) {
-	return (category?: string): Astro.MDXInstance<any>[] => {
+type GlobInstance = Astro.MarkdownInstance<any> | Astro.MDXInstance<any>;
+
+function getTitle(page: GlobInstance): string {
+	return page.frontmatter.title ?? "";
+}
+
+export function buildGetPages(pages: GlobInstance[]) {
+	return (category?: string): GlobInstance[] => {
 		return pages
 			.filter(
 				(page) =>
 					category === undefined || page.frontmatter.category === category,
 			)
 			.sort((a, b) => {
-				return a.frontmatter.title.localeCompare(b.frontmatter.title);
+				return getTitle(a).localeCompare(getTitle(b));
 			});
 	};
 }

@@ -21,7 +21,9 @@ mod visitor;
 // Re-exported for use in the `declare_group` macro
 pub use rome_diagnostics::v2::category_concat;
 
-pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
+pub use crate::categories::{
+    ActionCategory, RefactorKind, RuleCategories, RuleCategory, SourceActionKind,
+};
 pub use crate::matcher::{InspectMatcher, MatchQueryParams, QueryMatcher, RuleKey, SignalEntry};
 pub use crate::options::{AnalyzerConfiguration, AnalyzerOptions, AnalyzerRules};
 pub use crate::query::{Ast, QueryKey, QueryMatch, Queryable};
@@ -162,6 +164,27 @@ where
             }
         }
 
+        for suppression in line_suppressions {
+            if suppression.did_suppress_signal {
+                continue;
+            }
+
+            let signal = DiagnosticSignal::new(|| {
+                let diag = SuppressionDiagnostic::new(
+                    ctx.file_id,
+                    category!("suppressions/unused"),
+                    suppression.comment_span,
+                    "Suppression comment is not being used",
+                );
+
+                AnalyzerDiagnostic::from_error(diag.into())
+            });
+
+            if let ControlFlow::Break(br) = (emit_signal)(&signal) {
+                return Some(br);
+            }
+        }
+
         None
     }
 }
@@ -203,6 +226,8 @@ struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break> {
 struct LineSuppression {
     /// Line index this comment is suppressing lint rules for
     line_index: usize,
+    /// Range of source text covered by the suppression comment
+    comment_span: TextRange,
     /// Range of source text this comment is suppressing lint rules for
     text_range: TextRange,
     /// Set to true if this comment has set the `suppress_all` flag to true
@@ -211,6 +236,9 @@ struct LineSuppression {
     /// List of all the rules this comment has started suppressing (must be
     /// removed from the suppressed set on expiration)
     suppressed_rules: Vec<RuleFilter<'static>>,
+    /// Set to `true` when a signal matching this suppression was emitted and
+    /// suppressed
+    did_suppress_signal: bool,
 }
 
 impl<'a, 'phase, L, Matcher, Break> PhaseRunner<'a, 'phase, L, Matcher, Break>
@@ -344,14 +372,14 @@ where
             // if it matchs the current line index, otherwise perform a binary
             // search over all the previously seen suppressions to find one
             // with a matching range
-            let suppression = self
-                .line_suppressions
-                .last()
-                .filter(|suppression| {
-                    suppression.line_index == *self.line_index
-                        && suppression.text_range.start() <= start
-                })
-                .or_else(|| {
+            let suppression = self.line_suppressions.last_mut().filter(|suppression| {
+                suppression.line_index == *self.line_index
+                    && suppression.text_range.start() <= start
+            });
+
+            let suppression = match suppression {
+                Some(suppression) => Some(suppression),
+                None => {
                     let index = self.line_suppressions.binary_search_by(|suppression| {
                         if suppression.text_range.end() < entry.text_range.start() {
                             Ordering::Less
@@ -362,21 +390,26 @@ where
                         }
                     });
 
-                    Some(&self.line_suppressions[index.ok()?])
-                });
+                    index.ok().map(|index| &mut self.line_suppressions[index])
+                }
+            };
 
-            let is_suppressed = suppression.map_or(false, |suppression| {
+            let suppression = suppression.filter(|suppression| {
                 if suppression.suppress_all {
                     return true;
                 }
+
                 suppression
                     .suppressed_rules
                     .iter()
                     .any(|filter| *filter == entry.rule)
             });
 
-            // Emit the signal if the rule that created it is not currently being suppressed
-            if !is_suppressed {
+            // If the signal is being suppressed mark the line suppression as
+            // hit, otherwise emit the signal
+            if let Some(suppression) = suppression {
+                suppression.did_suppress_signal = true;
+            } else {
                 (self.emit_signal)(&*entry.signal)?;
             }
 
@@ -479,9 +512,11 @@ where
 
         let entry = LineSuppression {
             line_index,
+            comment_span: range,
             text_range: range,
             suppress_all,
             suppressed_rules: suppressions,
+            did_suppress_signal: false,
         };
 
         self.line_suppressions.push(entry);

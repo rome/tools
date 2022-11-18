@@ -1,5 +1,8 @@
+use crate::js::classes::property_class_member::{
+    FormatClassPropertySemicolon, JsAnyPropertyClassMember,
+};
 use crate::prelude::*;
-use crate::utils::{FormatWithSemicolon, JsAnyAssignmentLike};
+use crate::utils::JsAnyAssignmentLike;
 use rome_formatter::write;
 use rome_js_syntax::TsPropertySignatureClassMember;
 
@@ -13,10 +16,16 @@ impl FormatNodeRule<TsPropertySignatureClassMember> for FormatTsPropertySignatur
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
         let semicolon_token = node.semicolon_token();
-        let body = format_with(|f| write!(f, [JsAnyAssignmentLike::from(node.clone())]));
+
         write!(
             f,
-            [FormatWithSemicolon::new(&body, semicolon_token.as_ref())]
+            [
+                JsAnyAssignmentLike::from(node.clone()),
+                FormatClassPropertySemicolon::new(
+                    &JsAnyPropertyClassMember::from(node.clone()),
+                    semicolon_token.as_ref()
+                )
+            ]
         )
     }
 }

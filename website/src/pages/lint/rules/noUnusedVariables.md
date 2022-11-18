@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noUnusedVariables
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noUnusedVariables (since v0.9.0)

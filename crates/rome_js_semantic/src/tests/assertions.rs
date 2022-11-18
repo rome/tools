@@ -108,7 +108,7 @@ pub fn assert(code: &str, test_name: &str) {
     let r = rome_js_parser::parse(code, FileId::zero(), SourceType::tsx());
 
     if r.has_errors() {
-        let mut console = EnvConsole::new(false);
+        let mut console = EnvConsole::default();
         for diag in r.into_diagnostics() {
             let error = diag
                 .with_file_path(FileId::zero())
@@ -756,7 +756,7 @@ fn error_assertion_not_attached_to_a_declaration(
         .with_file_path((test_name.to_string(), FileId::zero()))
         .with_file_source_code(code);
 
-    let mut console = EnvConsole::new(false);
+    let mut console = EnvConsole::default();
     console.log(markup! {
         {PrintDiagnostic(&error)}
     });
@@ -777,7 +777,7 @@ fn error_declaration_pointing_to_unknown_scope(
         .with_file_path((test_name.to_string(), FileId::zero()))
         .with_file_source_code(code);
 
-    let mut console = EnvConsole::new(false);
+    let mut console = EnvConsole::default();
     console.log(markup! {
         {PrintDiagnostic(&error)}
     });
@@ -802,7 +802,7 @@ fn error_assertion_name_clash(
         .with_file_path((test_name.to_string(), FileId::zero()))
         .with_file_source_code(code);
 
-    let mut console = EnvConsole::new(false);
+    let mut console = EnvConsole::default();
     console.log(markup! {
         {PrintDiagnostic(&error)}
     });
@@ -825,7 +825,7 @@ fn error_scope_end_assertion_points_to_non_existing_scope_start_assertion(
         .with_file_path((file_name.to_string(), FileId::zero()))
         .with_file_source_code(code);
 
-    let mut console = EnvConsole::new(false);
+    let mut console = EnvConsole::default();
     console.log(markup! {
         {PrintDiagnostic(&error)}
     });
@@ -852,7 +852,7 @@ fn error_scope_end_assertion_points_to_the_wrong_scope_start(
         .with_file_path((file_name.to_string(), FileId::zero()))
         .with_file_source_code(code);
 
-    let mut console = EnvConsole::new(false);
+    let mut console = EnvConsole::default();
     console.log(markup! {
         {PrintDiagnostic(&error)}
     });

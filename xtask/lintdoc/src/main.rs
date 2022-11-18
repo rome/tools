@@ -47,7 +47,7 @@ fn main() -> Result<()> {
     let mut reference_buffer = Vec::new();
     writeln!(index, "---")?;
     writeln!(index, "title: Lint Rules")?;
-    writeln!(index, "layout: ../../../Layout.astro")?;
+    writeln!(index, "parent: linter/index")?;
     writeln!(index, "emoji: 📏")?;
     writeln!(index, "description: List of available lint rules.")?;
     writeln!(index, "category: reference")?;
@@ -179,7 +179,7 @@ fn generate_rule(
     // Write the header for this lint rule
     writeln!(content, "---")?;
     writeln!(content, "title: Lint Rule {rule}")?;
-    writeln!(content, "layout: ../../../Layout.astro")?;
+    writeln!(content, "parent: lint/rules/index")?;
     writeln!(content, "---")?;
     writeln!(content)?;
 
@@ -474,7 +474,7 @@ fn assert_lint(
         if test.expect_diagnostic {
             // Print all diagnostics to help the user
             if all_diagnostics.len() > 1 {
-                let mut console = rome_console::EnvConsole::new(false);
+                let mut console = rome_console::EnvConsole::default();
                 for diag in all_diagnostics.iter() {
                     console.print(
                         rome_console::LogLevel::Error,
@@ -492,7 +492,7 @@ fn assert_lint(
             );
         } else {
             // Print all diagnostics to help the user
-            let mut console = rome_console::EnvConsole::new(false);
+            let mut console = rome_console::EnvConsole::default();
             for diag in all_diagnostics.iter() {
                 console.print(
                     rome_console::LogLevel::Error,

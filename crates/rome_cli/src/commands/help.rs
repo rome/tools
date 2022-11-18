@@ -18,7 +18,7 @@ const MAIN: Markup = markup! {
     - "<Emphasis>"help"</Emphasis>"         Prints this help message
 
 "<Emphasis>"OPTIONS:"</Emphasis>"
-    "<Dim>"--no-colors"</Dim>"              Disable the formatting of markup (print everything as plain text)
+    "<Dim>"--colors=<off|force>"</Dim>"     Set the formatting mode for markup: \"off\" prints everything as plain text, \"force\" forces the formatting of markup using ANSI even if the console output is determined to be incompatible
     "<Dim>"--use-server"</Dim>"             Connect to a running instance of the Rome daemon server
     "<Dim>"--version"</Dim>"                Show the Rome version information and quit
     "<Dim>"--files-max-size"</Dim>"         The maximum allowed size for source code files in bytes (default: 1MB)
@@ -48,6 +48,7 @@ const FORMAT_OPTIONS: Markup = markup! {
     "<Dim>"--quote-style <single|double>"</Dim>"            Changes the quotation character for strings (default: \")
     "<Dim>"--quote-properties <as-needed|preserve>"</Dim>"  Changes when properties in object should be quoted (default: as-needed)
     "<Dim>"--trailing-comma <all|es5|none>"</Dim>"          Changes trailing commas in multi-line comma-separated syntactic structures (default: all)
+    "<Dim>"--semicolons <always|as-needed>"</Dim>"          Changes when to print semicolons for statements (default: always)
     "
 };
 

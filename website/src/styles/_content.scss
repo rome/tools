@@ -41,6 +41,29 @@
 		}
 	}
 
+	p.parent-back {
+		margin: 0;
+		margin-top: 10px;
+		font-size: 18px;
+		font-weight: bold;
+
+		.symbol {
+			font-weight: bold;
+		}
+
+		a {
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+
+		+ h1 {
+			margin-top: 10px;
+		}
+	}
+
 	strong {
 		font-weight: bold;
 	}

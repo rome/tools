@@ -197,7 +197,7 @@ impl Rule for UseCamelCase {
                     batch.rename_node_declaration_with_retry(model, binding.clone(), candidates);
                 if renamed {
                     Some(JsRuleAction {
-                        category: ActionCategory::Refactor,
+                        category: ActionCategory::QuickFix,
                         applicability: Applicability::Always,
                         message: markup! { "Rename this symbol to camel case" }.to_owned(),
                         mutation: batch,

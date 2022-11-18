@@ -1,0 +1,722 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/satisfies-operators/ternary.ts
+---
+
+# Input
+
+```js
+foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    ? baaaaaaaaaaaaaaaaaaaaar
+    : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+
+foo = (condition ? firstValue : secondValue) satisfies SomeType;
+
+const foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+  ? baaaaaaaaaaaaaaaaaaaaar
+  : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+
+function foo() {
+  return (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    ? baaaaaaaaaaaaaaaaaaaaar
+    : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+}
+
+function foo() {
+  throw (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+      ? baaaaaaaaaaaaaaaaaaaaar
+      : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+}
+
+function foo() {
+  void ((coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    ? baaaaaaaaaaaaaaaaaaaaar
+    : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo);
+}
+
+bifornCringerMoshedPerplexSawder =
+  askTrovenaBeenaDependsRowans +
+  ((glimseGlyphsHazardNoopsTieTie === 0
+    ? averredBathersBoxroomBuggyNurl
+    : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
+
+bifornCringerMoshedPerplexSawder =
+  askTrovenaBeenaDependsRowans +
+  ((glimseGlyphsHazardNoopsTieTie === 0 &&
+  kochabCooieGameOnOboleUnweave === Math.PI
+    ? averredBathersBoxroomBuggyNurl
+    : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,50 +1,59 @@
+-foo = (
+-  coooooooooooooooooooooooooooooooooooooooooooooooooooond
+-    ? baaaaaaaaaaaaaaaaaaaaar
+-    : baaaaaaaaaaaaaaaaaaaaaz
+-) satisfies Fooooooooooo;
++foo = coooooooooooooooooooooooooooooooooooooooooooooooooooond
++  ? baaaaaaaaaaaaaaaaaaaaar
++  : baaaaaaaaaaaaaaaaaaaaaz;
++satisfies;
++Fooooooooooo;
+ 
+-foo = (condition ? firstValue : secondValue) satisfies SomeType;
++foo = condition ? firstValue : secondValue;
++satisfies;
++SomeType;
+ 
+-const foo = (
+-  coooooooooooooooooooooooooooooooooooooooooooooooooooond
+-    ? baaaaaaaaaaaaaaaaaaaaar
+-    : baaaaaaaaaaaaaaaaaaaaaz
+-) satisfies Fooooooooooo;
++const foo = coooooooooooooooooooooooooooooooooooooooooooooooooooond
++  ? baaaaaaaaaaaaaaaaaaaaar
++  : baaaaaaaaaaaaaaaaaaaaaz;
++satisfies;
++Fooooooooooo;
+ 
+ function foo() {
+-  return (
+-    coooooooooooooooooooooooooooooooooooooooooooooooooooond
+-      ? baaaaaaaaaaaaaaaaaaaaar
+-      : baaaaaaaaaaaaaaaaaaaaaz
+-  ) satisfies Fooooooooooo;
++  return coooooooooooooooooooooooooooooooooooooooooooooooooooond
++    ? baaaaaaaaaaaaaaaaaaaaar
++    : baaaaaaaaaaaaaaaaaaaaaz;
++  satisfies;
++  Fooooooooooo;
+ }
+ 
+ function foo() {
+-  throw (
+-    coooooooooooooooooooooooooooooooooooooooooooooooooooond
+-      ? baaaaaaaaaaaaaaaaaaaaar
+-      : baaaaaaaaaaaaaaaaaaaaaz
+-  ) satisfies Fooooooooooo;
++  throw coooooooooooooooooooooooooooooooooooooooooooooooooooond
++    ? baaaaaaaaaaaaaaaaaaaaar
++    : baaaaaaaaaaaaaaaaaaaaaz;
++  satisfies;
++  Fooooooooooo;
+ }
+ 
+ function foo() {
+-  void ((
+-    coooooooooooooooooooooooooooooooooooooooooooooooooooond
+-      ? baaaaaaaaaaaaaaaaaaaaar
+-      : baaaaaaaaaaaaaaaaaaaaaz
+-  ) satisfies Fooooooooooo);
++  void ((coooooooooooooooooooooooooooooooooooooooooooooooooooond
++    ? baaaaaaaaaaaaaaaaaaaaar
++    : baaaaaaaaaaaaaaaaaaaaaz)
++  satisfies;
++  Fooooooooooo;
++  )
+ }
+ 
+ bifornCringerMoshedPerplexSawder =
+   askTrovenaBeenaDependsRowans +
+   ((glimseGlyphsHazardNoopsTieTie === 0
+     ? averredBathersBoxroomBuggyNurl
+-    : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
++    : anodyneCondosMalateOverateRetinol)
++satisfies;
++AnnularCooeedSplicesWalksWayWay;
++)
+ 
+ bifornCringerMoshedPerplexSawder =
+   askTrovenaBeenaDependsRowans +
+   ((glimseGlyphsHazardNoopsTieTie === 0 &&
+   kochabCooieGameOnOboleUnweave === Math.PI
+     ? averredBathersBoxroomBuggyNurl
+-    : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
++    : anodyneCondosMalateOverateRetinol)
++satisfies;
++AnnularCooeedSplicesWalksWayWay;
++)
+```
+
+# Output
+
+```js
+foo = coooooooooooooooooooooooooooooooooooooooooooooooooooond
+  ? baaaaaaaaaaaaaaaaaaaaar
+  : baaaaaaaaaaaaaaaaaaaaaz;
+satisfies;
+Fooooooooooo;
+
+foo = condition ? firstValue : secondValue;
+satisfies;
+SomeType;
+
+const foo = coooooooooooooooooooooooooooooooooooooooooooooooooooond
+  ? baaaaaaaaaaaaaaaaaaaaar
+  : baaaaaaaaaaaaaaaaaaaaaz;
+satisfies;
+Fooooooooooo;
+
+function foo() {
+  return coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    ? baaaaaaaaaaaaaaaaaaaaar
+    : baaaaaaaaaaaaaaaaaaaaaz;
+  satisfies;
+  Fooooooooooo;
+}
+
+function foo() {
+  throw coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    ? baaaaaaaaaaaaaaaaaaaaar
+    : baaaaaaaaaaaaaaaaaaaaaz;
+  satisfies;
+  Fooooooooooo;
+}
+
+function foo() {
+  void ((coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    ? baaaaaaaaaaaaaaaaaaaaar
+    : baaaaaaaaaaaaaaaaaaaaaz)
+  satisfies;
+  Fooooooooooo;
+  )
+}
+
+bifornCringerMoshedPerplexSawder =
+  askTrovenaBeenaDependsRowans +
+  ((glimseGlyphsHazardNoopsTieTie === 0
+    ? averredBathersBoxroomBuggyNurl
+    : anodyneCondosMalateOverateRetinol)
+satisfies;
+AnnularCooeedSplicesWalksWayWay;
+)
+
+bifornCringerMoshedPerplexSawder =
+  askTrovenaBeenaDependsRowans +
+  ((glimseGlyphsHazardNoopsTieTie === 0 &&
+  kochabCooieGameOnOboleUnweave === Math.PI
+    ? averredBathersBoxroomBuggyNurl
+    : anodyneCondosMalateOverateRetinol)
+satisfies;
+AnnularCooeedSplicesWalksWayWay;
+)
+```
+
+
+# Errors
+```
+ternary.ts:3:32 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    1 │ foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    2 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 3 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+      │                                ^^^^^^^^^
+    4 │ 
+    5 │ foo = (condition ? firstValue : secondValue) satisfies SomeType;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    1 │ foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    2 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 3 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+      │                                ^^^^^^^^^
+    4 │ 
+    5 │ foo = (condition ? firstValue : secondValue) satisfies SomeType;
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 2 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 3 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ 
+    5 │ foo = (condition ? firstValue : secondValue) satisfies SomeType;
+  
+ternary.ts:3:42 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    1 │ foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    2 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 3 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+      │                                          ^^^^^^^^^^^^
+    4 │ 
+    5 │ foo = (condition ? firstValue : secondValue) satisfies SomeType;
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    1 │ foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    2 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 3 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+      │                                          ^^^^^^^^^^^^
+    4 │ 
+    5 │ foo = (condition ? firstValue : secondValue) satisfies SomeType;
+  
+  i ...Which is required to end this statement
+  
+    1 │ foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    2 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 3 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+      │                                ^^^^^^^^^^^^^^^^^^^^^^
+    4 │ 
+    5 │ foo = (condition ? firstValue : secondValue) satisfies SomeType;
+  
+ternary.ts:5:46 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    3 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+    4 │ 
+  > 5 │ foo = (condition ? firstValue : secondValue) satisfies SomeType;
+      │                                              ^^^^^^^^^
+    6 │ 
+    7 │ const foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    3 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+    4 │ 
+  > 5 │ foo = (condition ? firstValue : secondValue) satisfies SomeType;
+      │                                              ^^^^^^^^^
+    6 │ 
+    7 │ const foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+  
+  i ...Which is required to end this statement
+  
+    3 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+    4 │ 
+  > 5 │ foo = (condition ? firstValue : secondValue) satisfies SomeType;
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │ 
+    7 │ const foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+  
+ternary.ts:5:56 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    3 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+    4 │ 
+  > 5 │ foo = (condition ? firstValue : secondValue) satisfies SomeType;
+      │                                                        ^^^^^^^^
+    6 │ 
+    7 │ const foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    3 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+    4 │ 
+  > 5 │ foo = (condition ? firstValue : secondValue) satisfies SomeType;
+      │                                                        ^^^^^^^^
+    6 │ 
+    7 │ const foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+  
+  i ...Which is required to end this statement
+  
+    3 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+    4 │ 
+  > 5 │ foo = (condition ? firstValue : secondValue) satisfies SomeType;
+      │                                              ^^^^^^^^^^^^^^^^^^
+    6 │ 
+    7 │ const foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+  
+ternary.ts:9:30 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+     7 │ const foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+     8 │   ? baaaaaaaaaaaaaaaaaaaaar
+   > 9 │   : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │                              ^^^^^^^^^
+    10 │ 
+    11 │ function foo() {
+  
+  i An explicit or implicit semicolon is expected here...
+  
+     7 │ const foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+     8 │   ? baaaaaaaaaaaaaaaaaaaaar
+   > 9 │   : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │                              ^^^^^^^^^
+    10 │ 
+    11 │ function foo() {
+  
+  i ...Which is required to end this statement
+  
+     5 │ foo = (condition ? firstValue : secondValue) satisfies SomeType;
+     6 │ 
+   > 7 │ const foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   > 8 │   ? baaaaaaaaaaaaaaaaaaaaar
+   > 9 │   : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │ 
+    11 │ function foo() {
+  
+ternary.ts:9:40 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+     7 │ const foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+     8 │   ? baaaaaaaaaaaaaaaaaaaaar
+   > 9 │   : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │                                        ^^^^^^^^^^^^
+    10 │ 
+    11 │ function foo() {
+  
+  i An explicit or implicit semicolon is expected here...
+  
+     7 │ const foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+     8 │   ? baaaaaaaaaaaaaaaaaaaaar
+   > 9 │   : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │                                        ^^^^^^^^^^^^
+    10 │ 
+    11 │ function foo() {
+  
+  i ...Which is required to end this statement
+  
+     7 │ const foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+     8 │   ? baaaaaaaaaaaaaaaaaaaaar
+   > 9 │   : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │                              ^^^^^^^^^^^^^^^^^^^^^^
+    10 │ 
+    11 │ function foo() {
+  
+ternary.ts:14:32 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    12 │   return (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    13 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 14 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │                                ^^^^^^^^^
+    15 │ }
+    16 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    12 │   return (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    13 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 14 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │                                ^^^^^^^^^
+    15 │ }
+    16 │ 
+  
+  i ...Which is required to end this statement
+  
+    11 │ function foo() {
+  > 12 │   return (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 13 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 14 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    15 │ }
+    16 │ 
+  
+ternary.ts:14:42 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    12 │   return (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    13 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 14 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │                                          ^^^^^^^^^^^^
+    15 │ }
+    16 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    12 │   return (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    13 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 14 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │                                          ^^^^^^^^^^^^
+    15 │ }
+    16 │ 
+  
+  i ...Which is required to end this statement
+  
+    12 │   return (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    13 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 14 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │                                ^^^^^^^^^^^^^^^^^^^^^^
+    15 │ }
+    16 │ 
+  
+ternary.ts:20:34 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    18 │   throw (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    19 │       ? baaaaaaaaaaaaaaaaaaaaar
+  > 20 │       : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │                                  ^^^^^^^^^
+    21 │ }
+    22 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    18 │   throw (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    19 │       ? baaaaaaaaaaaaaaaaaaaaar
+  > 20 │       : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │                                  ^^^^^^^^^
+    21 │ }
+    22 │ 
+  
+  i ...Which is required to end this statement
+  
+    17 │ function foo() {
+  > 18 │   throw (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 19 │       ? baaaaaaaaaaaaaaaaaaaaar
+  > 20 │       : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    21 │ }
+    22 │ 
+  
+ternary.ts:20:44 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    18 │   throw (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    19 │       ? baaaaaaaaaaaaaaaaaaaaar
+  > 20 │       : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │                                            ^^^^^^^^^^^^
+    21 │ }
+    22 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    18 │   throw (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    19 │       ? baaaaaaaaaaaaaaaaaaaaar
+  > 20 │       : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │                                            ^^^^^^^^^^^^
+    21 │ }
+    22 │ 
+  
+  i ...Which is required to end this statement
+  
+    18 │   throw (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    19 │       ? baaaaaaaaaaaaaaaaaaaaar
+  > 20 │       : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo;
+       │                                  ^^^^^^^^^^^^^^^^^^^^^^
+    21 │ }
+    22 │ 
+  
+ternary.ts:26:32 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `)` but instead found `satisfies`
+  
+    24 │   void ((coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    25 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 26 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo);
+       │                                ^^^^^^^^^
+    27 │ }
+    28 │ 
+  
+  i Remove satisfies
+  
+ternary.ts:26:42 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    24 │   void ((coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    25 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 26 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo);
+       │                                          ^^^^^^^^^^^^
+    27 │ }
+    28 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    24 │   void ((coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    25 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 26 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo);
+       │                                          ^^^^^^^^^^^^
+    27 │ }
+    28 │ 
+  
+  i ...Which is required to end this statement
+  
+    24 │   void ((coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    25 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 26 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo);
+       │                                ^^^^^^^^^^^^^^^^^^^^^^
+    27 │ }
+    28 │ 
+  
+ternary.ts:26:54 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    24 │   void ((coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    25 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 26 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo);
+       │                                                      ^
+    27 │ }
+    28 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    24 │   void ((coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    25 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 26 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo);
+       │                                                      ^
+    27 │ }
+    28 │ 
+  
+  i ...Which is required to end this statement
+  
+    24 │   void ((coooooooooooooooooooooooooooooooooooooooooooooooooooond
+    25 │     ? baaaaaaaaaaaaaaaaaaaaar
+  > 26 │     : baaaaaaaaaaaaaaaaaaaaaz) satisfies Fooooooooooo);
+       │                                          ^^^^^^^^^^^^^
+    27 │ }
+    28 │ 
+  
+ternary.ts:33:42 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `)` but instead found `satisfies`
+  
+    31 │   ((glimseGlyphsHazardNoopsTieTie === 0
+    32 │     ? averredBathersBoxroomBuggyNurl
+  > 33 │     : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
+       │                                          ^^^^^^^^^
+    34 │ 
+    35 │ bifornCringerMoshedPerplexSawder =
+  
+  i Remove satisfies
+  
+ternary.ts:33:52 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    31 │   ((glimseGlyphsHazardNoopsTieTie === 0
+    32 │     ? averredBathersBoxroomBuggyNurl
+  > 33 │     : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
+       │                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    34 │ 
+    35 │ bifornCringerMoshedPerplexSawder =
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    31 │   ((glimseGlyphsHazardNoopsTieTie === 0
+    32 │     ? averredBathersBoxroomBuggyNurl
+  > 33 │     : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
+       │                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    34 │ 
+    35 │ bifornCringerMoshedPerplexSawder =
+  
+  i ...Which is required to end this statement
+  
+    31 │   ((glimseGlyphsHazardNoopsTieTie === 0
+    32 │     ? averredBathersBoxroomBuggyNurl
+  > 33 │     : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
+       │                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    34 │ 
+    35 │ bifornCringerMoshedPerplexSawder =
+  
+ternary.ts:33:83 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    31 │   ((glimseGlyphsHazardNoopsTieTie === 0
+    32 │     ? averredBathersBoxroomBuggyNurl
+  > 33 │     : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
+       │                                                                                   ^
+    34 │ 
+    35 │ bifornCringerMoshedPerplexSawder =
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    31 │   ((glimseGlyphsHazardNoopsTieTie === 0
+    32 │     ? averredBathersBoxroomBuggyNurl
+  > 33 │     : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
+       │                                                                                   ^
+    34 │ 
+    35 │ bifornCringerMoshedPerplexSawder =
+  
+  i ...Which is required to end this statement
+  
+    31 │   ((glimseGlyphsHazardNoopsTieTie === 0
+    32 │     ? averredBathersBoxroomBuggyNurl
+  > 33 │     : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
+       │                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    34 │ 
+    35 │ bifornCringerMoshedPerplexSawder =
+  
+ternary.ts:40:42 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `)` but instead found `satisfies`
+  
+    38 │   kochabCooieGameOnOboleUnweave === Math.PI
+    39 │     ? averredBathersBoxroomBuggyNurl
+  > 40 │     : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
+       │                                          ^^^^^^^^^
+    41 │ 
+  
+  i Remove satisfies
+  
+ternary.ts:40:52 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    38 │   kochabCooieGameOnOboleUnweave === Math.PI
+    39 │     ? averredBathersBoxroomBuggyNurl
+  > 40 │     : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
+       │                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    41 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    38 │   kochabCooieGameOnOboleUnweave === Math.PI
+    39 │     ? averredBathersBoxroomBuggyNurl
+  > 40 │     : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
+       │                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    41 │ 
+  
+  i ...Which is required to end this statement
+  
+    38 │   kochabCooieGameOnOboleUnweave === Math.PI
+    39 │     ? averredBathersBoxroomBuggyNurl
+  > 40 │     : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
+       │                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    41 │ 
+  
+ternary.ts:40:83 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+    38 │   kochabCooieGameOnOboleUnweave === Math.PI
+    39 │     ? averredBathersBoxroomBuggyNurl
+  > 40 │     : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
+       │                                                                                   ^
+    41 │ 
+  
+  i An explicit or implicit semicolon is expected here...
+  
+    38 │   kochabCooieGameOnOboleUnweave === Math.PI
+    39 │     ? averredBathersBoxroomBuggyNurl
+  > 40 │     : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
+       │                                                                                   ^
+    41 │ 
+  
+  i ...Which is required to end this statement
+  
+    38 │   kochabCooieGameOnOboleUnweave === Math.PI
+    39 │     ? averredBathersBoxroomBuggyNurl
+  > 40 │     : anodyneCondosMalateOverateRetinol) satisfies AnnularCooeedSplicesWalksWayWay);
+       │                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    41 │ 
+  
+
+```
+
+

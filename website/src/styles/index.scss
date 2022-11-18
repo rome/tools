@@ -10,7 +10,7 @@
 @import "_credits";
 @import "_buttons";
 @import "_docs";
-@import "_package-manager";
+@import "_pre";
 
 :root {
 	--primary-color: #{$color-4};
@@ -32,6 +32,7 @@
 	--table-even-row-color: rgba(0, 0, 0, 0.05);
 	--inline-code-background-color: rgba(0, 0, 0, 0.08);
 	--label-font-color: #{$gray-4};
+	--playground-border: rgba(39, 39, 42, 0.15);
 }
 
 @include dark-mode {
@@ -52,4 +53,5 @@
 	--search-input-background-color: rgba(0, 0, 0, 0.09);
 	--table-even-row-color: rgba(0, 0, 0, 0.09);
 	--inline-code-background-color: rgba(68, 73, 80, 0.7);
+	--playground-border: #1a1a1c;
 }

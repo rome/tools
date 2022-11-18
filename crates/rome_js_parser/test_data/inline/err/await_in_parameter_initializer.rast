@@ -74,45 +74,35 @@ JsModule {
                             eq_token: EQ@55..57 "=" [] [Whitespace(" ")],
                             expression: JsUnknownExpression {
                                 items: [
-                                    JsUnknown {
-                                        items: [
-                                            IDENT@57..63 "await" [] [Whitespace(" ")],
-                                        ],
+                                    AWAIT_KW@57..63 "await" [] [Whitespace(" ")],
+                                    JsCallExpression {
+                                        callee: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@63..64 "b" [] [],
+                                            },
+                                        },
+                                        optional_chain_token: missing (optional),
+                                        type_arguments: missing (optional),
+                                        arguments: JsCallArguments {
+                                            l_paren_token: L_PAREN@64..65 "(" [] [],
+                                            args: JsCallArgumentList [],
+                                            r_paren_token: R_PAREN@65..66 ")" [] [],
+                                        },
                                     },
                                 ],
                             },
                         },
                     },
-                    missing separator,
-                    JsFormalParameter {
-                        binding: JsIdentifierBinding {
-                            name_token: IDENT@63..64 "b" [] [],
-                        },
-                        question_mark_token: missing (optional),
-                        type_annotation: missing (optional),
-                        initializer: missing (optional),
-                    },
-                    missing separator,
-                    JsUnknownParameter {
-                        items: [
-                            L_PAREN@64..65 "(" [] [],
-                        ],
-                    },
                 ],
-                r_paren_token: R_PAREN@65..66 ")" [] [],
+                r_paren_token: R_PAREN@66..68 ")" [] [Whitespace(" ")],
             },
             return_type_annotation: missing (optional),
-            body: missing (required),
-        },
-        JsUnknownStatement {
-            items: [
-                R_PAREN@66..68 ")" [] [Whitespace(" ")],
-            ],
-        },
-        JsBlockStatement {
-            l_curly_token: L_CURLY@68..69 "{" [] [],
-            statements: JsStatementList [],
-            r_curly_token: R_CURLY@69..70 "}" [] [],
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@68..69 "{" [] [],
+                directives: JsDirectiveList [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@69..70 "}" [] [],
+            },
         },
     ],
     eof_token: EOF@70..71 "" [Newline("\n")] [],
@@ -158,45 +148,42 @@ JsModule {
         1: JS_DIRECTIVE_LIST@36..36
         2: JS_STATEMENT_LIST@36..36
         3: R_CURLY@36..37 "}" [] []
-    1: JS_FUNCTION_DECLARATION@37..66
+    1: JS_FUNCTION_DECLARATION@37..70
       0: (empty)
       1: FUNCTION_KW@37..47 "function" [Newline("\n")] [Whitespace(" ")]
       2: (empty)
       3: JS_IDENTIFIER_BINDING@47..52
         0: IDENT@47..52 "test2" [] []
       4: (empty)
-      5: JS_PARAMETERS@52..66
+      5: JS_PARAMETERS@52..68
         0: L_PAREN@52..53 "(" [] []
-        1: JS_PARAMETER_LIST@53..65
-          0: JS_FORMAL_PARAMETER@53..63
+        1: JS_PARAMETER_LIST@53..66
+          0: JS_FORMAL_PARAMETER@53..66
             0: JS_IDENTIFIER_BINDING@53..55
               0: IDENT@53..55 "a" [] [Whitespace(" ")]
             1: (empty)
             2: (empty)
-            3: JS_INITIALIZER_CLAUSE@55..63
+            3: JS_INITIALIZER_CLAUSE@55..66
               0: EQ@55..57 "=" [] [Whitespace(" ")]
-              1: JS_UNKNOWN_EXPRESSION@57..63
-                0: JS_UNKNOWN@57..63
-                  0: IDENT@57..63 "await" [] [Whitespace(" ")]
-          1: (empty)
-          2: JS_FORMAL_PARAMETER@63..64
-            0: JS_IDENTIFIER_BINDING@63..64
-              0: IDENT@63..64 "b" [] []
-            1: (empty)
-            2: (empty)
-            3: (empty)
-          3: (empty)
-          4: JS_UNKNOWN_PARAMETER@64..65
-            0: L_PAREN@64..65 "(" [] []
-        2: R_PAREN@65..66 ")" [] []
+              1: JS_UNKNOWN_EXPRESSION@57..66
+                0: AWAIT_KW@57..63 "await" [] [Whitespace(" ")]
+                1: JS_CALL_EXPRESSION@63..66
+                  0: JS_IDENTIFIER_EXPRESSION@63..64
+                    0: JS_REFERENCE_IDENTIFIER@63..64
+                      0: IDENT@63..64 "b" [] []
+                  1: (empty)
+                  2: (empty)
+                  3: JS_CALL_ARGUMENTS@64..66
+                    0: L_PAREN@64..65 "(" [] []
+                    1: JS_CALL_ARGUMENT_LIST@65..65
+                    2: R_PAREN@65..66 ")" [] []
+        2: R_PAREN@66..68 ")" [] [Whitespace(" ")]
       6: (empty)
-      7: (empty)
-    2: JS_UNKNOWN_STATEMENT@66..68
-      0: R_PAREN@66..68 ")" [] [Whitespace(" ")]
-    3: JS_BLOCK_STATEMENT@68..70
-      0: L_CURLY@68..69 "{" [] []
-      1: JS_STATEMENT_LIST@69..69
-      2: R_CURLY@69..70 "}" [] []
+      7: JS_FUNCTION_BODY@68..70
+        0: L_CURLY@68..69 "{" [] []
+        1: JS_DIRECTIVE_LIST@69..69
+        2: JS_STATEMENT_LIST@69..69
+        3: R_CURLY@69..70 "}" [] []
   3: EOF@70..71 "" [Newline("\n")] []
 --
 await_in_parameter_initializer.js:1:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -204,59 +191,18 @@ await_in_parameter_initializer.js:1:25 parse ━━━━━━━━━━━�
   × `await` is only allowed within async functions and at the top levels of modules.
   
   > 1 │ async function test(a = await b()) {}
-      │                         ^^^^^^^^^
+      │                         ^^^^^
     2 │ function test2(a = await b()) {}
     3 │ 
   
 --
 await_in_parameter_initializer.js:2:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Illegal use of `await` as an identifier inside of a module
+  × `await` is only allowed within async functions and at the top levels of modules.
   
     1 │ async function test(a = await b()) {}
   > 2 │ function test2(a = await b()) {}
       │                    ^^^^^
-    3 │ 
-  
---
-await_in_parameter_initializer.js:2:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `,` but instead found `b`
-  
-    1 │ async function test(a = await b()) {}
-  > 2 │ function test2(a = await b()) {}
-      │                          ^
-    3 │ 
-  
-  i Remove b
-  
---
-await_in_parameter_initializer.js:2:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `,` but instead found `(`
-  
-    1 │ async function test(a = await b()) {}
-  > 2 │ function test2(a = await b()) {}
-      │                           ^
-    3 │ 
-  
-  i Remove (
-  
---
-await_in_parameter_initializer.js:2:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected a function body but instead found ')'
-  
-    1 │ async function test(a = await b()) {}
-  > 2 │ function test2(a = await b()) {}
-      │                             ^
-    3 │ 
-  
-  i Expected a function body here
-  
-    1 │ async function test(a = await b()) {}
-  > 2 │ function test2(a = await b()) {}
-      │                             ^
     3 │ 
   
 --

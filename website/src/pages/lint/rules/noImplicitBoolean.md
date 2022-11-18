@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noImplicitBoolean
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noImplicitBoolean (since v0.7.0)

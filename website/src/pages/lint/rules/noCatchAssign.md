@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noCatchAssign
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noCatchAssign (since v0.7.0)

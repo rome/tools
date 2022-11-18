@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useBlockStatements
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # useBlockStatements (since v0.7.0)

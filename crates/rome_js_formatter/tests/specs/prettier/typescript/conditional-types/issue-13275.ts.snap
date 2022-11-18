@@ -1,0 +1,46 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/conditional-types/issue-13275.ts
+---
+
+# Input
+
+```js
+type Foo<T> = T extends ((...a: any[]) => infer R extends string) ? R : never;
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1 @@
+-type Foo<T> = T extends (...a: any[]) => infer R extends string ? R : never;
++type Foo<T> = T extends ((...a: any[]) => infer R extends string) ? R : never;
+```
+
+# Output
+
+```js
+type Foo<T> = T extends ((...a: any[]) => infer R extends string) ? R : never;
+```
+
+
+# Errors
+```
+issue-13275.ts:1:65 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `?` but instead found `)`
+  
+  > 1 │ type Foo<T> = T extends ((...a: any[]) => infer R extends string) ? R : never;
+      │                                                                 ^
+    2 │ 
+  
+  i Remove )
+  
+
+```
+
+

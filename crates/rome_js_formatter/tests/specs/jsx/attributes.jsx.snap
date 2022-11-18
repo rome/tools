@@ -77,6 +77,12 @@ const a = <Popconfirm
 	</Popconfirm>
 ;
 
+<OtherComponent
+	value={
+		new Set(veryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzz)
+	}
+/>
+
 ```
 
 
@@ -92,6 +98,7 @@ Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
+Semicolons: Always
 -----
 
 ```js
@@ -176,6 +183,14 @@ const a = (
 	</Popconfirm>
 );
 
+<OtherComponent
+	value={
+		new Set(
+			veryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzz,
+		)
+	}
+/>;
+
 
 ## Unimplemented nodes/tokens
 
@@ -187,6 +202,7 @@ const a = (
 
    10: 			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
    30: 			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+   85: 			veryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzz,
 ```
 
 

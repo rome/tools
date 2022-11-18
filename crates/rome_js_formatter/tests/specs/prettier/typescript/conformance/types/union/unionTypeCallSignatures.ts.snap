@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/conformance/types/union/unionTypeCallSignatures.ts
 ---
 
 # Input

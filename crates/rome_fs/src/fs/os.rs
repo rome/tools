@@ -1,5 +1,5 @@
 //! Implementation of the [FileSystem] and related traits for the underlying OS filesystem
-use super::{BoxedTraversal, File, UnhandledDiagnostic, UnhandledKind};
+use super::{BoxedTraversal, ErrorKind, File, FileSystemDiagnostic};
 use crate::fs::{FileSystemExt, OpenOptions};
 use crate::{
     fs::{TraversalContext, TraversalScope},
@@ -7,10 +7,11 @@ use crate::{
 };
 use rayon::{scope, Scope};
 use rome_diagnostics::v2::{adapters::IoError, DiagnosticExt, Error, FileId};
+use std::fs::DirEntry;
 use std::{
     ffi::OsStr,
     fs,
-    io::{self, Read, Seek, SeekFrom, Write},
+    io::{self, ErrorKind as IoErrorKind, Read, Seek, SeekFrom, Write},
     mem,
     path::{Path, PathBuf},
 };
@@ -102,15 +103,47 @@ impl<'scope> OsTraversalScope<'scope> {
 
 impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
     fn spawn(&self, ctx: &'scope dyn TraversalContext, path: PathBuf) {
-        let file_id = ctx.interner().intern_path(path.clone());
-
         let file_type = match path.metadata() {
             Ok(meta) => meta.file_type(),
             Err(err) => {
-                ctx.push_diagnostic(IoError::from(err).with_file_path(file_id));
+                ctx.push_diagnostic(
+                    IoError::from(err).with_file_path(path.to_string_lossy().to_string()),
+                );
                 return;
             }
         };
+
+        if file_type.is_symlink() {
+            tracing::info!("Translating symlink: {:?}", path);
+            let path = match fs::read_link(&path) {
+                Ok(path) => path,
+                Err(err) => {
+                    ctx.push_diagnostic(
+                        IoError::from(err).with_file_path(path.to_string_lossy().to_string()),
+                    );
+                    return;
+                }
+            };
+
+            if let Err(err) = fs::symlink_metadata(&path) {
+                if err.kind() == IoErrorKind::NotFound {
+                    let path = path.to_string_lossy().to_string();
+                    ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
+                        path: path.clone(),
+                        error_kind: ErrorKind::DereferencedSymlink(path),
+                    }));
+                } else {
+                    ctx.push_diagnostic(
+                        IoError::from(err).with_file_path(path.to_string_lossy().to_string()),
+                    );
+                }
+                return;
+            };
+
+            return self.spawn(ctx, path);
+        };
+
+        let (file_id, _) = ctx.interner().intern_path(path.clone());
 
         if file_type.is_file() {
             self.scope.spawn(move |_| {
@@ -126,9 +159,9 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
             return;
         }
 
-        ctx.push_diagnostic(Error::from(UnhandledDiagnostic {
-            file_id,
-            file_kind: UnhandledKind::from(file_type),
+        ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
+            path: path.to_string_lossy().to_string(),
+            error_kind: ErrorKind::from(file_type),
         }));
     }
 }
@@ -138,8 +171,7 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
 /// TODO: add support for ignore files in Rome
 const DEFAULT_IGNORE: &[&str; 5] = &[".git", ".svn", ".hg", ".yarn", "node_modules"];
 
-/// Traverse a single directory, scheduling any file to execute the context
-/// handler and sub-directories for subsequent traversal
+/// Traverse a single directory
 fn handle_dir<'scope>(
     scope: &Scope<'scope>,
     ctx: &'scope dyn TraversalContext,
@@ -169,53 +201,105 @@ fn handle_dir<'scope>(
             }
         };
 
-        let path = entry.path();
-        let file_id = ctx.interner().intern_path(path.clone());
-
-        let file_type = match entry.file_type() {
-            Ok(file_type) => file_type,
-            Err(err) => {
-                ctx.push_diagnostic(IoError::from(err).with_file_path(file_id));
-                continue;
-            }
-        };
-
-        if file_type.is_dir() {
-            scope.spawn(move |scope| {
-                handle_dir(scope, ctx, &path, file_id);
-            });
-            continue;
-        }
-
-        if file_type.is_file() {
-            // Performing this check here lets us skip scheduling unsupported
-            // files entirely as well as silently ignore unsupported files when
-            // doing a directory traversal but printing an error message if the
-            // user explicitly requests an unsupported file to be formatted
-            let rome_path = RomePath::new(&path, file_id);
-            if !ctx.can_handle(&rome_path) {
-                continue;
-            }
-
-            scope.spawn(move |_| {
-                ctx.handle_file(&path, file_id);
-            });
-            continue;
-        }
-
-        ctx.push_diagnostic(Error::from(UnhandledDiagnostic {
-            file_id,
-            file_kind: UnhandledKind::from(file_type),
-        }));
+        handle_dir_entry(scope, ctx, entry);
     }
 }
 
-impl From<fs::FileType> for UnhandledKind {
-    fn from(file_type: fs::FileType) -> Self {
-        if file_type.is_symlink() {
-            Self::Symlink
-        } else {
-            Self::Other
+/// Traverse a single directory entry, scheduling any file to execute the context
+/// handler and sub-directories for subsequent traversal
+fn handle_dir_entry<'scope>(
+    scope: &Scope<'scope>,
+    ctx: &'scope dyn TraversalContext,
+    entry: DirEntry,
+) {
+    let mut path = entry.path();
+
+    let mut file_type = match entry.file_type() {
+        Ok(file_type) => file_type,
+        Err(err) => {
+            ctx.push_diagnostic(
+                IoError::from(err).with_file_path(path.to_string_lossy().to_string()),
+            );
+            return;
         }
+    };
+
+    if file_type.is_symlink() {
+        tracing::info!("Translating symlink: {:?}", path);
+        let target_path = match fs::read_link(&path) {
+            Ok(path) => path,
+            Err(err) => {
+                ctx.push_diagnostic(
+                    IoError::from(err).with_file_path(path.to_string_lossy().to_string()),
+                );
+                return;
+            }
+        };
+
+        file_type = match path.metadata() {
+            Ok(meta) => meta.file_type(),
+            Err(err) => {
+                if err.kind() == IoErrorKind::NotFound {
+                    let path = path.to_string_lossy().to_string();
+                    ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
+                        path: path.clone(),
+                        error_kind: ErrorKind::DereferencedSymlink(path),
+                    }));
+                } else {
+                    ctx.push_diagnostic(
+                        IoError::from(err).with_file_path(path.to_string_lossy().to_string()),
+                    );
+                }
+                return;
+            }
+        };
+
+        path = target_path;
+    };
+
+    let (file_id, inserted) = ctx.interner().intern_path(path.clone());
+
+    // Determine whether an equivalent path already exists
+    if !inserted {
+        let path = path.to_string_lossy().to_string();
+        ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
+            path: path.clone(),
+            error_kind: ErrorKind::InfiniteSymlinkExpansion(path),
+        }));
+        return;
+    }
+
+    if file_type.is_dir() {
+        scope.spawn(move |scope| {
+            handle_dir(scope, ctx, &path, file_id);
+        });
+        return;
+    }
+
+    if file_type.is_file() {
+        // Performing this check here let's us skip skip unsupported
+        // files entirely, as well as silently ignore unsupported files when
+        // doing a directory traversal, but printing an error message if the
+        // user explicitly requests an unsupported file to be handled
+        let rome_path = RomePath::new(&path, file_id);
+        if !ctx.can_handle(&rome_path) {
+            return;
+        }
+
+        scope.spawn(move |_| {
+            ctx.handle_file(&path, file_id);
+        });
+        return;
+    }
+
+    ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
+        path: path.to_string_lossy().to_string(),
+        error_kind: ErrorKind::from(file_type),
+    }));
+}
+
+impl From<fs::FileType> for ErrorKind {
+    fn from(_: fs::FileType) -> Self {
+        Self::UnknownFileType
     }
 }

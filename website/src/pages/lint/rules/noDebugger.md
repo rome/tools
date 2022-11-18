@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noDebugger
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noDebugger (since v0.7.0)

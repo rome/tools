@@ -1,9 +1,7 @@
-use std::{
-    io,
-    panic::RefUnwindSafe,
-    path::{Path, PathBuf},
-    sync::Arc,
-};
+use std::io;
+use std::panic::RefUnwindSafe;
+use std::path::{Path, PathBuf};
+use std::sync::Arc;
 
 use crate::{PathInterner, RomePath};
 use rome_diagnostics::{
@@ -127,7 +125,7 @@ pub trait TraversalScope<'scope> {
 pub trait TraversalContext: Sync {
     /// Provides the traversal scope with an instance of [PathInterner], used
     /// to emit diagnostics for IO errors that may happen in the traversal process
-    fn interner(&self) -> &dyn PathInterner;
+    fn interner(&self) -> &PathInterner;
 
     /// Called by the traversal process to emit an error diagnostic associated
     /// with a particular file ID when an IO error happens
@@ -158,49 +156,59 @@ where
 
 #[derive(Debug, Diagnostic)]
 #[diagnostic(severity = Warning, category = "internalError/fs")]
-struct UnhandledDiagnostic {
+struct FileSystemDiagnostic {
     #[location(resource)]
-    file_id: FileId,
+    path: String,
     #[message]
     #[description]
     #[advice]
-    file_kind: UnhandledKind,
+    error_kind: ErrorKind,
 }
 
-#[derive(Clone, Copy, Debug)]
-enum UnhandledKind {
-    Symlink,
-    Other,
+#[derive(Clone, Debug)]
+enum ErrorKind {
+    /// Unknown file type
+    UnknownFileType,
+    /// Dereferenced (broken) symbolic link
+    DereferencedSymlink(String),
+    /// Symbolic link cycle or symbolic link infinite expansion
+    InfiniteSymlinkExpansion(String),
 }
 
-impl console::fmt::Display for UnhandledKind {
+impl console::fmt::Display for ErrorKind {
     fn fmt(&self, fmt: &mut console::fmt::Formatter) -> io::Result<()> {
         match self {
-            UnhandledKind::Symlink => fmt.write_str("Symbolic links are not supported"),
-            UnhandledKind::Other => fmt.write_str("Encountered an unknown file type"),
+            ErrorKind::UnknownFileType => fmt.write_str("Unknown file type"),
+            ErrorKind::DereferencedSymlink(_) => fmt.write_str("Dereferenced symlink"),
+            ErrorKind::InfiniteSymlinkExpansion(_) => fmt.write_str("Infinite symlink expansion"),
         }
     }
 }
 
-impl std::fmt::Display for UnhandledKind {
+impl std::fmt::Display for ErrorKind {
     fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            UnhandledKind::Symlink => write!(fmt, "Symbolic links are not supported"),
-            UnhandledKind::Other => write!(fmt, "Encountered an unknown file type"),
+            ErrorKind::UnknownFileType => write!(fmt, "Unknown file type"),
+            ErrorKind::DereferencedSymlink(_) => write!(fmt, "Dereferenced symlink"),
+            ErrorKind::InfiniteSymlinkExpansion(_) => write!(fmt, "Infinite symlink expansion"),
         }
     }
 }
 
-impl Advices for UnhandledKind {
+impl Advices for ErrorKind {
     fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
         match self {
-            UnhandledKind::Symlink => visitor.record_log(
-                LogCategory::Info,
-                &"Rome does not currently support visiting the content of symbolic links since it could lead to an infinite traversal loop",
-            ),
-            UnhandledKind::Other => visitor.record_log(
+            ErrorKind::UnknownFileType => visitor.record_log(
                 LogCategory::Info,
                 &"Rome encountered a file system entry that's neither a file, directory or symbolic link",
+            ),
+            ErrorKind::DereferencedSymlink(path) => visitor.record_log(
+                LogCategory::Info,
+                &format!("Rome encountered a file system entry that is a broken symbolic link: {}", path),
+            ),
+            ErrorKind::InfiniteSymlinkExpansion(path) => visitor.record_log(
+                LogCategory::Error,
+                &format!("Rome encountered a file system entry that leads to an infinite symbolic link expansion, causing an infinite cycle: {}", path),
             ),
         }
     }

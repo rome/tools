@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noUnnecessaryContinue
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noUnnecessaryContinue (since v0.7.0)

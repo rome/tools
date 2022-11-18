@@ -43,6 +43,7 @@ impl FormatRule<JsxChildList> for FormatJsxChildList {
     }
 }
 
+#[derive(Debug)]
 pub(crate) enum FormatChildrenResult {
     ForceMultiline(FormatMultilineChildren),
     BestFitting {
@@ -339,11 +340,13 @@ impl FormatJsxChildList {
 
             match child {
                 JsxElement(_) | JsxFragment(_) | JsxSelfClosingElement(_) => meta.any_tag = true,
-                JsxExpressionChild(expression)
-                    if !is_whitespace_jsx_expression(&expression, comments) =>
-                {
-                    meta.multiple_expressions = has_expression;
-                    has_expression = true;
+                JsxExpressionChild(expression) => {
+                    if is_whitespace_jsx_expression(&expression, comments) {
+                        meta.meaningful_text = true;
+                    } else {
+                        meta.multiple_expressions = has_expression;
+                        has_expression = true;
+                    }
                 }
                 JsxText(text) => {
                     meta.meaningful_text = meta.meaningful_text
@@ -565,6 +568,7 @@ impl MultilineBuilder {
     }
 }
 
+#[derive(Debug)]
 pub(crate) struct FormatMultilineChildren {
     layout: MultilineLayout,
     elements: RefCell<Vec<FormatElement>>,
@@ -640,6 +644,7 @@ impl FlatBuilder {
     }
 }
 
+#[derive(Debug)]
 pub(crate) struct FormatFlatChildren {
     elements: RefCell<Vec<FormatElement>>,
 }

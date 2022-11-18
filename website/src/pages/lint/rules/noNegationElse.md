@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noNegationElse
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noNegationElse (since v0.7.0)

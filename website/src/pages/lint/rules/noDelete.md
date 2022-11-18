@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noDelete
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noDelete (since v0.7.0)

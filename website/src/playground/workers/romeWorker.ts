@@ -2,50 +2,39 @@ import init, {
 	Configuration,
 	DiagnosticPrinter,
 	RomePath,
+	RuleCategories,
 	Workspace,
 } from "@rometools/wasm-web";
 import {
 	IndentStyle,
 	LoadingState,
-	PlaygroundState,
+	PlaygroundSettings,
 	QuoteProperties,
 	QuoteStyle,
 	RomeOutput,
-	SourceType,
+	Semicolons,
 } from "../types";
 
 let workspace: Workspace | null = null;
+let fileCounter = 0;
 
-const PATH_SCRIPT = {
-	path: "main.js",
-	id: 0,
-};
-
-const PATHS_MODULE = [
-	{ path: "main.mjs", id: 1 },
-	{ path: "main.jsx", id: 2 },
-	{ path: "main.ts", id: 3 },
-	{ path: "main.tsx", id: 4 },
-];
-
-function getPathForType(
-	sourceType: SourceType,
-	isTypeScript: boolean,
-	isJsx: boolean,
-): RomePath {
-	if (sourceType === SourceType.Script) {
-		return PATH_SCRIPT;
-	}
-
-	return PATHS_MODULE[Number(isTypeScript) * 2 + Number(isJsx)]!;
-}
-
-type CurrentFile = {
-	path: RomePath;
+type File = {
+	filename: string;
+	id: number;
+	content: string;
 	version: number;
 };
 
-let currentFile: CurrentFile | null = null;
+const files: Map<string, File> = new Map();
+
+let configuration: undefined | Configuration;
+
+function getPathForFile(file: File): RomePath {
+	return {
+		path: file.filename,
+		id: file.id,
+	};
+}
 
 self.addEventListener("message", async (e) => {
 	switch (e.data.type) {
@@ -64,29 +53,25 @@ self.addEventListener("message", async (e) => {
 			break;
 		}
 
-		case "format": {
+		case "updateSettings": {
 			if (!workspace) {
 				console.error("Workspace was not initialized");
 				break;
 			}
 
-			const playgroundState: PlaygroundState = e.data.playgroundState;
 			const {
-				code,
 				lineWidth,
 				indentStyle,
 				indentWidth,
 				quoteStyle,
 				quoteProperties,
-				typescript: isTypeScript,
-				jsx: isJsx,
-				sourceType,
-				cursorPosition,
 				enabledNurseryRules,
+				enabledLinting,
 				trailingComma,
-			} = playgroundState;
+				semicolons,
+			} = e.data.settings as PlaygroundSettings;
 
-			const configuration: Configuration = {
+			configuration = {
 				formatter: {
 					enabled: true,
 					formatWithErrors: true,
@@ -94,9 +79,11 @@ self.addEventListener("message", async (e) => {
 					indentStyle: indentStyle === IndentStyle.Tab ? "tab" : "space",
 					indentSize: indentWidth,
 				},
+
 				linter: {
-					enabled: true,
+					enabled: enabledLinting,
 				},
+
 				javascript: {
 					formatter: {
 						quoteStyle: quoteStyle === QuoteStyle.Double ? "double" : "single",
@@ -105,12 +92,15 @@ self.addEventListener("message", async (e) => {
 								? "preserve"
 								: "asNeeded",
 						trailingComma,
+						semicolons:
+							semicolons === Semicolons.Always ? "always" : "asNeeded",
 					},
 				},
 			};
+
 			if (enabledNurseryRules) {
 				configuration.linter = {
-					enabled: true,
+					enabled: enabledLinting,
 					rules: {
 						nursery: {
 							noConstAssign: "error",
@@ -119,55 +109,80 @@ self.addEventListener("message", async (e) => {
 					},
 				};
 			}
+
 			workspace.updateSettings({
 				configuration,
 			});
+			break;
+		}
 
-			const path = getPathForType(sourceType, isTypeScript, isJsx);
-			if (currentFile && currentFile?.path === path) {
-				workspace.changeFile({
-					path,
-					version: currentFile.version++,
-					content: code,
-				});
-			} else {
-				if (currentFile) {
-					workspace.closeFile({
-						path: currentFile.path,
-					});
-				}
+		case "update": {
+			if (!workspace) {
+				console.error("Workspace was not initialized");
+				break;
+			}
 
-				currentFile = {
-					path,
+			const { filename, code, cursorPosition } = e.data;
+
+			let file = files.get(filename);
+			if (file === undefined) {
+				file = {
+					filename,
 					version: 0,
+					content: code,
+					id: fileCounter++,
 				};
 
 				workspace.openFile({
-					path,
-					version: currentFile.version++,
+					path: getPathForFile(file),
+					version: 0,
+					content: code,
+				});
+			} else {
+				file = {
+					filename,
+					id: file.id,
+					version: file.version + 1,
+					content: code,
+				};
+
+				workspace.openFile({
+					path: getPathForFile(file),
+					version: file.version,
 					content: code,
 				});
 			}
+			files.set(filename, file);
+			const path = getPathForFile(file);
 
-			const syntax_tree = workspace.getSyntaxTree({
+			const syntaxTree = workspace.getSyntaxTree({
 				path,
 			});
-			const control_flow_graph = workspace.getControlFlowGraph({
+
+			const controlFlowGraph = workspace.getControlFlowGraph({
 				path,
 				cursor: cursorPosition,
 			});
-			const formatter_ir = workspace.getFormatterIr({
+
+			const formatterIr = workspace.getFormatterIr({
 				path,
 			});
 
-			const diagnostics = workspace.pullDiagnostics({
+			const categories: RuleCategories = [];
+			if (configuration?.formatter?.enabled) {
+				categories.push("Syntax");
+			}
+			if (configuration?.linter?.enabled) {
+				categories.push("Lint");
+			}
+			const diagnosticsResult = workspace.pullDiagnostics({
 				path,
-				categories: ["Syntax", "Lint"],
+				categories: categories,
 				max_diagnostics: Number.MAX_SAFE_INTEGER,
 			});
 
 			const printer = new DiagnosticPrinter(path.path, code);
-			for (const diag of diagnostics.diagnostics) {
+			for (const diag of diagnosticsResult.diagnostics) {
 				printer.print(diag);
 			}
 
@@ -176,16 +191,28 @@ self.addEventListener("message", async (e) => {
 			});
 
 			const romeOutput: RomeOutput = {
-				ast: syntax_tree.ast,
-				cst: syntax_tree.cst,
-				errors: printer.finish(),
-				formatted_code: printed.code,
-				formatter_ir,
-				control_flow_graph,
+				syntax: {
+					// Replace 4 spaced indentation with 2
+					// TODO replace this in Rome itself
+					ast: syntaxTree.ast.replace(/ {4}/g, "  "),
+					cst: syntaxTree.cst,
+				},
+				diagnostics: {
+					console: printer.finish(),
+					list: diagnosticsResult.diagnostics,
+				},
+				formatter: {
+					code: printed.code,
+					ir: formatterIr,
+				},
+				analysis: {
+					controlFlowGraph,
+				},
 			};
 
 			self.postMessage({
-				type: "formatted",
+				type: "updated",
+				filename,
 				romeOutput,
 			});
 			break;

@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noInvalidConstructorSuper
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noInvalidConstructorSuper (since v10.0.0)

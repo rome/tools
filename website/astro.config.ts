@@ -142,6 +142,13 @@ function inlineIntegration(): AstroIntegration {
 	};
 }
 
+function remarkDefaultLayoutPlugin() {
+	return function (tree, file) {
+		const { frontmatter } = file.data.astro;
+		frontmatter.layout = frontmatter.layout ?? "/Layout.astro";
+	};
+}
+
 // https://astro.build/config
 export default defineConfig({
 	site: "https://rome.tools",
@@ -152,9 +159,9 @@ export default defineConfig({
 		react(),
 		inlineIntegration(),
 		mdx(),
-		//compress({
-		//	path: "./build",
-		//}),
+		compress({
+			path: "./build",
+		}),
 	],
 
 	build: {
@@ -163,7 +170,7 @@ export default defineConfig({
 
 	markdown: {
 		syntaxHighlight: "prism",
-		remarkPlugins: [remarkToc],
+		remarkPlugins: [remarkToc, remarkDefaultLayoutPlugin],
 		rehypePlugins: [
 			rehypeSlug,
 			[

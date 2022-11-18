@@ -2,12 +2,18 @@
 source: crates/rome_cli/tests/snap_test.rs
 expression: content
 ---
+# Termination Message
+
+```block
+no files were processed in the specified paths.
+```
+
 # Emitted Messages
 
 ```block
 prefix/ci.js internalError/fs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Encountered an unknown file type
+  ! Unknown file type
   
   i Rome encountered a file system entry that's neither a file, directory or symbolic link
   

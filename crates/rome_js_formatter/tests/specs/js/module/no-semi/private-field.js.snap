@@ -1,0 +1,57 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+expression: private-field.js
+---
+
+# Input
+
+```js
+class C {
+  #field = 'value';
+  ["method"]() {}
+}
+
+```
+
+
+=============================
+
+# Outputs
+
+## Output 1
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: Always
+-----
+
+```js
+class C {
+	#field = "value";
+	["method"]() {}
+}
+```
+
+## Output 2
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: As needed
+-----
+
+```js
+class C {
+	#field = "value";
+	["method"]() {}
+}
+```
+
+

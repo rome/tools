@@ -19,7 +19,7 @@ expression: content
         "complexity": {
             "useSimplifiedLogicExpression": "warn"
         },
-        "style": {        
+        "style": {
             "useTemplate": {
                 "level": "error"
             }
@@ -41,6 +41,12 @@ expression: content
     }
   }
 }
+```
+
+# Termination Message
+
+```block
+no files were processed in the specified paths.
 ```
 
 # Emitted Messages

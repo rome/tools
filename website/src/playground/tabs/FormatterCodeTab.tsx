@@ -3,9 +3,10 @@ import Collapsible from "../Collapsible";
 import PrettierHeader from "../components/PrettierHeader";
 import RomeHeader from "../components/RomeHeader";
 import fastDiff from "fast-diff";
+import type { PrettierOutput } from "../types";
 
 interface Props {
-	prettier: string;
+	prettier: PrettierOutput;
 	rome: string;
 	extensions: any[];
 }
@@ -46,7 +47,12 @@ export default function FormatterCodeTab({
 	prettier,
 	extensions,
 }: Props) {
-	const hint = calculateHint(prettier, rome);
+	let hint;
+	if (prettier.type === "SUCCESS") {
+		hint = calculateHint(prettier.code, rome);
+	} else {
+		hint = <span className="error">Error</span>;
+	}
 
 	return (
 		<>
@@ -67,12 +73,20 @@ export default function FormatterCodeTab({
 					</>
 				}
 			>
-				<CodeMirror
-					value={prettier}
-					extensions={extensions}
-					placeholder="Prettier Output"
-					readOnly={true}
-				/>
+				{prettier.type === "ERROR" ? (
+					<CodeMirror
+						value={prettier.stack}
+						placeholder="Prettier Error"
+						readOnly={true}
+					/>
+				) : (
+					<CodeMirror
+						value={prettier.code}
+						extensions={extensions}
+						placeholder="Prettier Output"
+						readOnly={true}
+					/>
+				)}
 			</Collapsible>
 		</>
 	);

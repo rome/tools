@@ -1,0 +1,48 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+expression: semicolons-asi.js
+---
+
+# Input
+
+```js
+[1, 2];
+
+```
+
+
+=============================
+
+# Outputs
+
+## Output 1
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: Always
+-----
+
+```js
+[1, 2];
+```
+
+## Output 2
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: As needed
+-----
+
+```js
+;[1, 2]
+```
+
+

@@ -44,8 +44,8 @@ use rome_js_syntax::{
     JsAnyLiteralExpression, JsArrowFunctionExpression, JsAssignmentExpression, JsBinaryExpression,
     JsBinaryOperator, JsComputedMemberAssignment, JsComputedMemberExpression,
     JsConditionalExpression, JsLanguage, JsParenthesizedAssignment, JsParenthesizedExpression,
-    JsSequenceExpression, JsStaticMemberAssignment, JsStaticMemberExpression, JsSyntaxKind,
-    JsSyntaxNode, JsSyntaxToken, TsConditionalType, TsIndexedAccessType,
+    JsPrivateName, JsSequenceExpression, JsStaticMemberAssignment, JsStaticMemberExpression,
+    JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, TsConditionalType, TsIndexedAccessType,
     TsIntersectionTypeElementList, TsParenthesizedType, TsType, TsUnionTypeVariantList,
 };
 use rome_rowan::{declare_node_union, match_ast, AstNode, AstSeparatedList, SyntaxResult};
@@ -260,6 +260,24 @@ impl NeedsParentheses for JsAnyExpression {
     }
 }
 
+declare_node_union! {
+    pub(crate) JsAnyExpressionLeftSide = JsAnyExpression | JsPrivateName | JsAnyAssignmentPattern
+}
+
+impl NeedsParentheses for JsAnyExpressionLeftSide {
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        match self {
+            JsAnyExpressionLeftSide::JsAnyExpression(expression) => {
+                expression.needs_parentheses_with_parent(parent)
+            }
+            JsAnyExpressionLeftSide::JsPrivateName(_) => false,
+            JsAnyExpressionLeftSide::JsAnyAssignmentPattern(assignment) => {
+                assignment.needs_parentheses_with_parent(parent)
+            }
+        }
+    }
+}
+
 /// Returns the left most expression of `expression`.
 ///
 /// For example, returns `a` for `(a ? b : c) + d` because it first resolves the
@@ -267,47 +285,96 @@ impl NeedsParentheses for JsAnyExpression {
 /// expression, and finally resolves to the test condition of the conditional expression.
 pub(crate) fn resolve_left_most_expression(
     expression: &JsAnyExpression,
-) -> JsAnyBinaryLikeLeftExpression {
-    let mut current: JsAnyExpression = expression.clone();
+) -> JsAnyExpressionLeftSide {
+    let mut current: JsAnyExpressionLeftSide = expression.clone().into();
 
-    while let Some(left) = get_expression_left_side(&current) {
-        match left {
-            JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => {
-                current = expression;
+    loop {
+        match get_expression_left_side(&current) {
+            None => {
+                break current;
             }
-            left => {
-                return left;
+            Some(left) => {
+                current = left;
             }
         }
     }
-
-    current.into()
 }
 
 /// Returns the left side of an expression (an expression where the first child is a `Node` or [None]
 /// if the expression has no left side.
 pub(crate) fn get_expression_left_side(
-    expression: &JsAnyExpression,
-) -> Option<JsAnyBinaryLikeLeftExpression> {
+    current: &JsAnyExpressionLeftSide,
+) -> Option<JsAnyExpressionLeftSide> {
     use JsAnyExpression::*;
 
-    let left_expression = match expression {
-        JsSequenceExpression(sequence) => sequence.left().ok(),
-        JsStaticMemberExpression(member) => member.object().ok(),
-        JsComputedMemberExpression(member) => member.object().ok(),
-        JsTemplate(template) => template.tag(),
-        JsNewExpression(new) => new.callee().ok(),
-        JsCallExpression(call) => call.callee().ok(),
-        JsConditionalExpression(conditional) => conditional.test().ok(),
-        TsAsExpression(as_expression) => as_expression.expression().ok(),
-        TsNonNullAssertionExpression(non_null) => non_null.expression().ok(),
-        expression => {
-            return JsAnyBinaryLikeExpression::cast(expression.syntax().clone())
-                .and_then(|binary_like| binary_like.left().ok());
-        }
-    };
+    match current {
+        JsAnyExpressionLeftSide::JsAnyExpression(expression) => {
+            let left_expression = match expression {
+                JsSequenceExpression(sequence) => sequence.left().ok(),
+                JsStaticMemberExpression(member) => member.object().ok(),
+                JsComputedMemberExpression(member) => member.object().ok(),
+                JsTemplate(template) => template.tag(),
+                JsNewExpression(new) => new.callee().ok(),
+                JsCallExpression(call) => call.callee().ok(),
+                JsConditionalExpression(conditional) => conditional.test().ok(),
+                TsAsExpression(as_expression) => as_expression.expression().ok(),
+                TsNonNullAssertionExpression(non_null) => non_null.expression().ok(),
+                JsAssignmentExpression(assignment) => {
+                    return assignment.left().ok().map(JsAnyExpressionLeftSide::from)
+                }
+                JsPostUpdateExpression(expression) => {
+                    return expression.operand().ok().map(|assignment| {
+                        JsAnyExpressionLeftSide::from(JsAnyAssignmentPattern::JsAnyAssignment(
+                            assignment,
+                        ))
+                    })
+                }
+                expression => {
+                    return JsAnyBinaryLikeExpression::cast(expression.syntax().clone()).and_then(
+                        |binary_like| match binary_like.left().ok() {
+                            Some(JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression)) => {
+                                Some(JsAnyExpressionLeftSide::from(expression))
+                            }
+                            Some(JsAnyBinaryLikeLeftExpression::JsPrivateName(name)) => {
+                                Some(JsAnyExpressionLeftSide::from(name))
+                            }
+                            None => None,
+                        },
+                    );
+                }
+            };
 
-    left_expression.map(|left| left.into())
+            left_expression.map(JsAnyExpressionLeftSide::from)
+        }
+        JsAnyExpressionLeftSide::JsAnyAssignmentPattern(pattern) => {
+            use JsAnyAssignment::*;
+
+            let left = match pattern {
+                JsAnyAssignmentPattern::JsAnyAssignment(assignment) => match assignment {
+                    JsComputedMemberAssignment(computed) => {
+                        return computed.object().ok().map(JsAnyExpressionLeftSide::from)
+                    }
+                    JsStaticMemberAssignment(member) => {
+                        return member.object().ok().map(JsAnyExpressionLeftSide::from)
+                    }
+
+                    TsAsAssignment(parent) => parent.assignment().ok(),
+                    TsNonNullAssertionAssignment(parent) => parent.assignment().ok(),
+                    TsTypeAssertionAssignment(parent) => parent.assignment().ok(),
+                    JsParenthesizedAssignment(_)
+                    | JsIdentifierAssignment(_)
+                    | JsUnknownAssignment(_) => None,
+                },
+                JsAnyAssignmentPattern::JsArrayAssignmentPattern(_)
+                | JsAnyAssignmentPattern::JsObjectAssignmentPattern(_) => None,
+            };
+
+            left.map(|assignment| {
+                JsAnyExpressionLeftSide::from(JsAnyAssignmentPattern::JsAnyAssignment(assignment))
+            })
+        }
+        JsAnyExpressionLeftSide::JsPrivateName(_) => None,
+    }
 }
 
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]

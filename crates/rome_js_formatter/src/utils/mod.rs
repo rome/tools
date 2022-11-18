@@ -15,9 +15,11 @@ mod object_pattern_like;
 #[cfg(test)]
 mod quickcheck_utils;
 pub(crate) mod test_call;
+pub(crate) mod test_each_template;
 mod typescript;
 
 use crate::context::trailing_comma::FormatTrailingComma;
+use crate::context::Semicolons;
 use crate::parentheses::is_callee;
 pub(crate) use crate::parentheses::resolve_left_most_expression;
 use crate::prelude::*;
@@ -209,45 +211,67 @@ where
     nodes_and_modifiers
 }
 
-/// Format a some code followed by an optional semicolon, and performs
-/// semicolon insertion if it was missing in the input source and the
-/// preceding element wasn't an unknown node
-pub struct FormatWithSemicolon<'a> {
-    content: &'a dyn Format<JsFormatContext>,
+pub(crate) type FormatStatementSemicolon<'a> = FormatOptionalSemicolon<'a>;
+
+/// Formats a semicolon in a position where it is optional (not needed to maintain syntactical correctness).
+///
+/// * Inserts a new semicolon if it is absent and [JsFormatOptions::semicolons] is [Semicolons::Always].
+/// * Removes the semicolon if it is present and [JsFormatOptions::semicolons] is [Semicolons::AsNeeded].
+pub(crate) struct FormatOptionalSemicolon<'a> {
     semicolon: Option<&'a JsSyntaxToken>,
 }
 
-impl<'a> FormatWithSemicolon<'a> {
-    pub fn new(
-        content: &'a dyn Format<JsFormatContext>,
-        semicolon: Option<&'a JsSyntaxToken>,
-    ) -> Self {
-        Self { content, semicolon }
+impl<'a> FormatOptionalSemicolon<'a> {
+    pub(crate) fn new(semicolon: Option<&'a JsSyntaxToken>) -> Self {
+        Self { semicolon }
     }
 }
 
-impl Format<JsFormatContext> for FormatWithSemicolon<'_> {
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        let mut recording = f.start_recording();
-        write!(recording, [self.content])?;
-
-        let written = recording.stop();
-
-        let is_unknown =
-            written
-                .start_tag(TagKind::Verbatim)
-                .map_or(false, |signal| match signal {
-                    Tag::StartVerbatim(kind) => kind.is_unknown(),
-                    _ => unreachable!(),
-                });
-
-        if let Some(semicolon) = self.semicolon {
-            write!(f, [semicolon.format()])?;
-        } else if !is_unknown {
-            text(";").fmt(f)?;
+impl Format<JsFormatContext> for FormatOptionalSemicolon<'_> {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        match f.options().semicolons() {
+            Semicolons::Always => FormatSemicolon::new(self.semicolon).fmt(f),
+            Semicolons::AsNeeded => match self.semicolon {
+                None => Ok(()),
+                Some(semicolon) => format_removed(semicolon).fmt(f),
+            },
         }
+    }
+}
 
-        Ok(())
+/// Format some code followed by an optional semicolon.
+/// Performs semicolon insertion if it is missing in the input source, the [semicolons option](crate::JsFormatOptions::semicolons) is [Semicolons::Always], and the
+/// preceding element isn't an unknown node
+pub struct FormatSemicolon<'a> {
+    semicolon: Option<&'a JsSyntaxToken>,
+}
+
+impl<'a> FormatSemicolon<'a> {
+    pub fn new(semicolon: Option<&'a JsSyntaxToken>) -> Self {
+        Self { semicolon }
+    }
+}
+
+impl Format<JsFormatContext> for FormatSemicolon<'_> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        match self.semicolon {
+            Some(semicolon) => semicolon.format().fmt(f),
+            None => {
+                let is_after_unknown = f.elements().start_tag(TagKind::Verbatim).map_or(
+                    false,
+                    |signal| match signal {
+                        Tag::StartVerbatim(kind) => kind.is_unknown(),
+                        _ => unreachable!(),
+                    },
+                );
+
+                if !is_after_unknown {
+                    write!(f, [text(";")])?;
+                }
+
+                Ok(())
+            }
+        }
     }
 }
 

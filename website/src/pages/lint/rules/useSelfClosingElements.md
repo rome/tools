@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useSelfClosingElements
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # useSelfClosingElements (since v0.7.0)

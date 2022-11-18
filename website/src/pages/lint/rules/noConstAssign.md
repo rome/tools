@@ -1,6 +1,6 @@
 ---
 title: Lint Rule noConstAssign
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # noConstAssign (since v10.0.0)

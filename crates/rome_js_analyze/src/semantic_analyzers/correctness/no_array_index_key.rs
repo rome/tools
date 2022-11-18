@@ -150,7 +150,7 @@ impl Rule for NoArrayIndexKey {
                 .and_then(|arguments| arguments.parent::<JsCallExpression>())?;
             let callee = call_expression.callee().ok()?;
 
-            if is_react_call_api(&callee, model, ReactLibrary::React, "cloneElement")? {
+            if is_react_call_api(callee, model, ReactLibrary::React, "cloneElement") {
                 let binding = parameter.binding().ok()?;
                 let binding_origin = binding.as_js_any_binding()?.as_js_identifier_binding()?;
                 Some(NoArrayIndexKeyState {

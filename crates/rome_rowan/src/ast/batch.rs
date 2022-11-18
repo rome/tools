@@ -342,6 +342,14 @@ where
                         if *next_change_parent == current_parent {
                             // SAFETY: We can .pop().unwrap() because we .peek() above
                             let next_change = changes.pop().expect("changes.pop");
+
+                            // If we have two modification to the same slot,
+                            // last write wins
+                            if let Some(last) = modifications.last() {
+                                if last.0 == next_change.new_node_slot {
+                                    modifications.pop();
+                                }
+                            }
                             modifications.push((next_change.new_node_slot, next_change.new_node));
                             continue;
                         }
@@ -356,8 +364,11 @@ where
                 let is_list = current_parent.kind().is_list();
                 let mut removed_slots = 0;
 
+                dbg!(&modifications);
                 for (index, replace_with) in modifications {
-                    let index = index.checked_sub( removed_slots).unwrap_or_else(|| panic!("cannot replace element in slot {index} with {removed_slots} removed slots"));
+                    debug_assert!(index >= removed_slots);
+                    let index = index.checked_sub(removed_slots)
+                        .unwrap_or_else(|| panic!("cannot replace element in slot {index} with {removed_slots} removed slots"));
 
                     current_parent = if is_list && replace_with.is_none() {
                         removed_slots += 1;

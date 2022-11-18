@@ -1,6 +1,9 @@
 //! Extended AST node definitions for statements which are unique and special enough to generate code for manually
 
-use crate::{JsVariableDeclaration, T};
+use crate::{
+    JsAnyArrayAssignmentPatternElement, JsAnyAssignmentPattern, JsForVariableDeclaration,
+    JsVariableDeclaration, T,
+};
 use rome_rowan::SyntaxResult;
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
@@ -35,6 +38,45 @@ impl JsVariableDeclaration {
             T![var] => JsVariableKind::Var,
             _ => unreachable!(),
         })
+    }
+}
+
+impl JsForVariableDeclaration {
+    /// Whether the declaration is a const declaration
+    pub fn is_const(&self) -> bool {
+        self.variable_kind() == Ok(JsVariableKind::Const)
+    }
+
+    /// Whether the declaration is a let declaration
+    pub fn is_let(&self) -> bool {
+        self.variable_kind() == Ok(JsVariableKind::Let)
+    }
+
+    /// Whether the declaration is a var declaration
+    pub fn is_var(&self) -> bool {
+        self.variable_kind() == Ok(JsVariableKind::Var)
+    }
+
+    pub fn variable_kind(&self) -> SyntaxResult<JsVariableKind> {
+        let token_kind = self.kind_token().map(|t| t.kind())?;
+
+        Ok(match token_kind {
+            T![const] => JsVariableKind::Const,
+            T![let] => JsVariableKind::Let,
+            T![var] => JsVariableKind::Var,
+            _ => unreachable!(),
+        })
+    }
+}
+
+impl JsAnyArrayAssignmentPatternElement {
+    pub fn pattern(self) -> Option<JsAnyAssignmentPattern> {
+        match self {
+            Self::JsAnyAssignmentPattern(p) => Some(p),
+            Self::JsArrayAssignmentPatternRestElement(p) => p.pattern().ok(),
+            Self::JsAssignmentWithDefault(p) => p.pattern().ok(),
+            Self::JsArrayHole(_) => None,
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 ---
 title: Lint Rule useKeyWithClickEvents
-layout: ../../../Layout.astro
+parent: lint/rules/index
 ---
 
 # useKeyWithClickEvents (since v10.0.0)

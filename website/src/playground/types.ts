@@ -1,3 +1,4 @@
+import type { Diagnostic } from "@rometools/wasm-web";
 import type { Dispatch, SetStateAction } from "react";
 import type { parser } from "codemirror-lang-rome-ast";
 
@@ -5,94 +6,142 @@ export enum IndentStyle {
 	Tab = "tab",
 	Space = "space",
 }
+
 export enum SourceType {
 	Module = "module",
 	Script = "script",
 }
+
 export enum QuoteStyle {
 	Double = "double",
 	Single = "single",
 }
+
 export enum QuoteProperties {
 	AsNeeded = "as-needed",
 	Preserve = "preserve",
 }
+
 export enum TrailingComma {
 	All = "all",
 	ES5 = "es5",
 	None = "none",
 }
+
 export enum LoadingState {
 	Loading,
 	Success,
 	Error,
 }
 
-export interface RomeOutput {
-	ast: string;
-	cst: string;
-	errors: string;
-	formatted_code: string;
-	formatter_ir: string;
-	control_flow_graph: string;
+export enum Semicolons {
+	Always = "always",
+	AsNeeded = "as-needed",
 }
 
-export interface PlaygroundState {
-	code: string;
+export type PrettierOutput =
+	| { type: "SUCCESS"; code: string; ir: string }
+	| { type: "ERROR"; stack: string };
+
+export const emptyPrettierOutput: PrettierOutput = {
+	type: "SUCCESS",
+	code: "",
+	ir: "",
+};
+
+export interface RomeOutput {
+	syntax: {
+		ast: string;
+		cst: string;
+	};
+	diagnostics: {
+		console: string;
+		list: Diagnostic[];
+	};
+	formatter: {
+		code: string;
+		ir: string;
+	};
+	analysis: {
+		controlFlowGraph: string;
+	};
+}
+
+export const emptyRomeOutput: RomeOutput = {
+	syntax: {
+		ast: "",
+		cst: "",
+	},
+	diagnostics: {
+		console: "",
+		list: [],
+	},
+	formatter: {
+		code: "",
+		ir: "",
+	},
+	analysis: {
+		controlFlowGraph: "",
+	},
+};
+
+export interface PlaygroundSettings {
 	lineWidth: number;
 	indentStyle: IndentStyle;
 	indentWidth: number;
 	quoteStyle: QuoteStyle;
 	quoteProperties: QuoteProperties;
-	sourceType: SourceType;
 	trailingComma: TrailingComma;
-	typescript: boolean;
-	jsx: boolean;
-	cursorPosition: number;
+	semicolons: Semicolons;
 	enabledNurseryRules: boolean;
+	enabledLinting: boolean;
 }
 
-// change `lineWidth` and `indentWidth` to string type, just to fits our `usePlaygroundState` fallback usage
-export type RomeConfiguration = Omit<
-	PlaygroundState,
-	"code" | "lineWidth" | "indentWidth"
-> & { lineWidth: string; indentWidth: string };
+export interface PlaygroundFileState {
+	content: string;
+	prettier: PrettierOutput;
+	rome: RomeOutput;
+}
 
-export const defaultRomeConfig: RomeConfiguration = {
-	lineWidth: "80",
-	indentWidth: "2",
-	indentStyle: IndentStyle.Tab,
-	quoteStyle: QuoteStyle.Double,
-	quoteProperties: QuoteProperties.AsNeeded,
-	sourceType: SourceType.Module,
-	trailingComma: TrailingComma.All,
-	typescript: true,
-	jsx: true,
+export interface PlaygroundState {
+	currentFile: string;
+	singleFileMode: boolean;
+	tab: string;
+	cursorPosition: number;
+	files: Record<string, undefined | PlaygroundFileState>;
+	settings: PlaygroundSettings;
+}
+
+export const defaultPlaygroundState: PlaygroundState = {
 	cursorPosition: 0,
-	enabledNurseryRules: true,
+	tab: "formatter",
+	currentFile: "main.tsx",
+	singleFileMode: false,
+	files: {
+		"main.tsx": {
+			content: "",
+			prettier: emptyPrettierOutput,
+			rome: emptyRomeOutput,
+		},
+	},
+	settings: {
+		lineWidth: 80,
+		indentWidth: 2,
+		indentStyle: IndentStyle.Tab,
+		quoteStyle: QuoteStyle.Double,
+		quoteProperties: QuoteProperties.AsNeeded,
+		trailingComma: TrailingComma.All,
+		semicolons: Semicolons.Always,
+		enabledNurseryRules: true,
+		enabledLinting: true,
+	},
 };
 
 export interface PlaygroundProps {
 	setPlaygroundState: Dispatch<SetStateAction<PlaygroundState>>;
 	resetPlaygroundState: () => void;
 	playgroundState: PlaygroundState;
-	prettierOutput: { code: string; ir: string };
-	romeOutput: RomeOutput;
 }
-
-export type PlaygroundSettings = Pick<
-	PlaygroundState,
-	| "lineWidth"
-	| "indentWidth"
-	| "indentStyle"
-	| "quoteStyle"
-	| "quoteProperties"
-	| "sourceType"
-	| "trailingComma"
-	| "typescript"
-	| "jsx"
-	| "enabledNurseryRules"
->;
 
 export type Tree = ReturnType<typeof parser.parse>;
 type RangeMapKey = [number, number];

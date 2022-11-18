@@ -1,9 +1,9 @@
 ---
 import ExternalLinks from "./ExternalLinks.astro";
 import ActiveLink from "./ActiveLink.astro";
-import navigation from "../navigation.json";
+import navigation from "/navigation.json";
 
-import {buildGetPages, buildTOC} from "../navigation-utils";
+import {buildGetPages, buildTOC} from "/navigation-utils";
 
 const {props} = Astro;
 const {frontmatter = {}} = props;
@@ -25,7 +25,7 @@ for (const page of allPages) {
   <ul class="mobile-navigation">
     <li><a href="/">Docs</a></li>
     <li><a href="/playground">Playground</a></li>
-    <li><ActiveLink href="/blog/">Blog</ActiveLink></li>
+    <li><ActiveLink href="https://rome.tools/blog/">Blog</ActiveLink></li>
   </ul>
 
   <ExternalLinks />
