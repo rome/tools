@@ -21,8 +21,10 @@ pub trait AnalyzerSignal<L: Language> {
     fn action(&self) -> Option<AnalyzerAction<L>>;
 }
 
-/// Simple implementation of [AnalyzerSignal] generating a [AnalyzerDiagnostic] from a
-/// provided factory function
+/// Simple implementation of [AnalyzerSignal] generating a [AnalyzerDiagnostic]
+/// from a provided factory function. Optionally, this signal can be configured
+/// to also emit a code action, by calling `.with_action` with a secondary
+/// factory function for said action.
 pub(crate) struct DiagnosticSignal<D, A, L, T> {
     diagnostic: D,
     action: A,

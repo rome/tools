@@ -635,12 +635,19 @@ export type Category =
 	| "internalError/io"
 	| "internalError/fs"
 	| "internalError/panic"
-	| "lint"
 	| "parse"
 	| "parse/noSuperWithoutExtends"
+	| "lint"
+	| "lint/correctness"
+	| "lint/style"
+	| "lint/complexity"
+	| "lint/a11y"
+	| "lint/security"
+	| "lint/nursery"
 	| "suppressions/unknownGroup"
 	| "suppressions/unknownRule"
 	| "suppressions/unused"
+	| "suppressions/deprecatedSyntax"
 	| "args/fileNotFound"
 	| "flags/invalid"
 	| "semanticTests";
@@ -750,8 +757,7 @@ export interface PullActionsResult {
 }
 export interface CodeAction {
 	category: ActionCategory;
-	group_name: string;
-	rule_name: string;
+	rule_name?: [string, string];
 	suggestion: CodeSuggestion;
 }
 /**
@@ -858,15 +864,14 @@ export interface FixFileResult {
 	skipped_suggested_fixes: number;
 }
 export interface FixAction {
-	group_name: string;
 	/**
 	 * Source range at which this action was applied
 	 */
 	range: TextRange;
 	/**
-	 * Name of the rule that emitted this code action
+	 * Name of the rule group and rule that emitted this code action
 	 */
-	rule_name: string;
+	rule_name?: [string, string];
 }
 export interface RenameParams {
 	new_name: string;
