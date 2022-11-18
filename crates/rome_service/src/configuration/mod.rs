@@ -13,7 +13,7 @@ use std::fmt::{Debug, Display, Formatter};
 use std::io::ErrorKind;
 use std::marker::PhantomData;
 use std::num::NonZeroU64;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use tracing::{error, info};
 
 mod formatter;
@@ -232,12 +232,9 @@ pub fn create_config(
     })?;
 
     // we now check if rome is installed inside `node_modules` and if so, we
-    let schema_path = PathBuf::from("./")
-        .join("node_modules")
-        .join("rome")
-        .join("configuration_schema.json");
+    let schema_path = Path::new("./node_modules/rome/configuration_schema.json");
     let options = OpenOptions::default().read(true);
-    if fs.open_with_options(&schema_path, options).is_ok() {
+    if fs.open_with_options(schema_path, options).is_ok() {
         configuration.schema = schema_path.to_str().map(String::from);
     }
 
