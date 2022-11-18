@@ -23,14 +23,6 @@ fn fix_all_kind() -> CodeActionKind {
         Cow::Owned(kind) => CodeActionKind::from(kind),
     }
 }
-
-/// Checks
-fn is_suppression_action_kind(action_kind: &CodeActionKind) -> bool {
-    action_kind
-        .as_str()
-        .starts_with("quickfix.rome.suppressRule")
-}
-
 /// Queries the [`AnalysisServer`] for code actions of the file matching [FileId]
 ///
 /// If the AnalysisServer has no matching file, results in error.
@@ -116,13 +108,7 @@ pub(crate) fn code_actions(
     if has_fixes {
         actions.retain(|action| {
             if let CodeActionOrCommand::CodeAction(action) = action {
-                action.kind.as_ref() == Some(&fix_all_kind())
-                    || action
-                        .kind
-                        .as_ref()
-                        .map(is_suppression_action_kind)
-                        .unwrap_or(false)
-                    || action.diagnostics.is_some()
+                action.kind.as_ref() == Some(&fix_all_kind()) || action.diagnostics.is_some()
             } else {
                 true
             }
