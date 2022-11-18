@@ -1,6 +1,7 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
 pub(crate) mod declare_function_declaration;
+pub(crate) mod declare_function_export_default_declaration;
 pub(crate) mod enum_declaration;
 pub(crate) mod external_module_declaration;
 pub(crate) mod global_declaration;

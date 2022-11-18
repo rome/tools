@@ -9,6 +9,12 @@ statement1();
 statement2();
 ```
 
+# Termination Message
+
+```block
+no files were processed in the specified paths.
+```
+
 # Emitted Messages
 
 ```block

@@ -14,10 +14,10 @@ impl FormatRule<JsAnyExportDefaultDeclaration> for FormatJsAnyExportDefaultDecla
             JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(node) => {
                 node.format().fmt(f)
             }
-            JsAnyExportDefaultDeclaration::TsDeclareFunctionDeclaration(node) => {
+            JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(node) => node.format().fmt(f),
+            JsAnyExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(node) => {
                 node.format().fmt(f)
             }
-            JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(node) => node.format().fmt(f),
         }
     }
 }
