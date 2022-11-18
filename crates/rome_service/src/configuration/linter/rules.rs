@@ -769,6 +769,8 @@ struct NurserySchema {
     use_camel_case: Option<RuleConfiguration>,
     #[doc = "Require const declarations for variables that are never reassigned after declared."]
     use_const: Option<RuleConfiguration>,
+    #[doc = "Enforce default clauses in switch statements to be last"]
+    use_default_switch_clause_last: Option<RuleConfiguration>,
     #[doc = "Enforce all dependencies are correctly specified."]
     use_exhaustive_dependencies: Option<RuleConfiguration>,
     #[doc = "Promotes the use of .flatMap() when map().flat() are used together."]
@@ -780,7 +782,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 24] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 25] = [
         "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
@@ -801,6 +803,7 @@ impl Nursery {
         "noVoidTypeReturn",
         "useCamelCase",
         "useConst",
+        "useDefaultSwitchClauseLast",
         "useExhaustiveDependencies",
         "useFlatMap",
         "useNumericLiterals",

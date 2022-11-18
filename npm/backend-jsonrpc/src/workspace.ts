@@ -432,6 +432,10 @@ export interface Nursery {
 	 */
 	useConst?: RuleConfiguration;
 	/**
+	 * Enforce default clauses in switch statements to be last
+	 */
+	useDefaultSwitchClauseLast?: RuleConfiguration;
+	/**
 	 * Enforce all dependencies are correctly specified.
 	 */
 	useExhaustiveDependencies?: RuleConfiguration;
@@ -671,6 +675,7 @@ export type Category =
 	| "lint/nursery/noVoidTypeReturn"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useConst"
+	| "lint/nursery/useDefaultSwitchClauseLast"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useFlatMap"
 	| "lint/nursery/useNumericLiterals"
