@@ -364,7 +364,6 @@ where
                 let is_list = current_parent.kind().is_list();
                 let mut removed_slots = 0;
 
-                dbg!(&modifications);
                 for (index, replace_with) in modifications {
                     debug_assert!(index >= removed_slots);
                     let index = index.checked_sub(removed_slots)
