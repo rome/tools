@@ -542,7 +542,7 @@ fn assert_lint(
                 diag.set_severity(severity);
 
                 if let Some(action) = signal.action() {
-                    diag.add_code_suggestion(action.into());
+                    diag = diag.add_code_suggestion(action.into());
                 }
 
                 let error = diag

@@ -1,5 +1,6 @@
 use crate::prelude::*;
 use crate::utils::JsAnyConditional;
+use rome_diagnostics_categories::category;
 use rome_formatter::{
     comments::{
         CommentKind, CommentPlacement, CommentStyle, CommentTextPosition, Comments,
@@ -7,7 +8,7 @@ use rome_formatter::{
     },
     write,
 };
-use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
+use rome_js_syntax::suppression::parse_suppression_comment;
 use rome_js_syntax::{
     JsAnyClass, JsAnyName, JsAnyRoot, JsAnyStatement, JsArrayHole, JsArrowFunctionExpression,
     JsBlockStatement, JsCallArguments, JsCatchClause, JsEmptyStatement, JsFinallyClause,
@@ -136,7 +137,7 @@ impl CommentStyle for JsCommentStyle {
     fn is_suppression(text: &str) -> bool {
         parse_suppression_comment(text)
             .flat_map(|suppression| suppression.categories)
-            .any(|(category, _)| category == SuppressionCategory::Format)
+            .any(|(key, _)| key == category!("format"))
     }
 
     fn get_comment_kind(comment: &SyntaxTriviaPieceComments<JsLanguage>) -> CommentKind {
