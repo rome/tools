@@ -57,6 +57,8 @@ impl fmt::Display for CheckResult {
 pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<(), Termination> {
     init_thread_pool();
 
+    let verbose = session.args.contains("--verbose");
+
     // Check that at least one input file / directory was specified in the command line
     let mut inputs = vec![];
 
@@ -116,6 +118,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
                     remaining_diagnostics: &remaining_diagnostics,
                     errors: &mut errors,
                     report: &mut report,
+                    verbose,
                 });
             })
             .expect("failed to spawn console thread");
@@ -262,6 +265,8 @@ struct ProcessMessagesOptions<'ctx> {
     /// Mutable handle to a [Report] instance the console thread should write
     /// stats into
     report: &'ctx mut Report,
+    /// Whether the console thread should print diagnostics in verbose mode
+    verbose: bool,
 }
 
 #[derive(Debug, Diagnostic)]
@@ -328,6 +333,7 @@ fn process_messages(options: ProcessMessagesOptions) {
         remaining_diagnostics,
         errors,
         report,
+        verbose,
     } = options;
 
     let mut paths = HashMap::new();
@@ -412,7 +418,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                 if mode.should_report_to_terminal() {
                     if should_print {
                         console.error(markup! {
-                            {PrintDiagnostic(&err)}
+                            {PrintDiagnostic(&err, verbose)}
                         });
                     }
                 } else {
@@ -454,7 +460,7 @@ fn process_messages(options: ProcessMessagesOptions) {
 
                         let diag = diag.with_file_path(&name).with_file_source_code(&content);
                         console.error(markup! {
-                            {PrintDiagnostic(&diag)}
+                            {PrintDiagnostic(&diag, verbose)}
                         });
                     }
                 } else {
@@ -480,7 +486,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                                 let diag =
                                     diag.with_file_path(&name).with_file_source_code(&content);
                                 console.error(markup! {
-                                    {PrintDiagnostic(&diag)}
+                                    {PrintDiagnostic(&diag, verbose)}
                                 });
                             }
                         } else {
@@ -530,7 +536,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                             };
 
                             console.error(markup! {
-                                {PrintDiagnostic(&diag)}
+                                {PrintDiagnostic(&diag, verbose)}
                             });
                         } else {
                             let diag = FormatDiffDiagnostic {
@@ -542,7 +548,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                             };
 
                             console.error(markup! {
-                                {PrintDiagnostic(&diag)}
+                                {PrintDiagnostic(&diag, verbose)}
                             });
                         }
                     }

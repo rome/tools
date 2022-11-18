@@ -43,7 +43,7 @@ impl DiagnosticPrinter {
         }
     }
 
-    pub fn print(&mut self, diagnostic: IDiagnostic) -> Result<(), Error> {
+    pub fn print(&mut self, diagnostic: IDiagnostic, verbose: bool) -> Result<(), Error> {
         let diag: Diagnostic = diagnostic.into_serde().map_err(into_error)?;
         let err = diag
             .with_file_path(&self.file_name)
@@ -51,7 +51,7 @@ impl DiagnosticPrinter {
 
         let mut html = HTML(&mut self.buffer);
         Formatter::new(&mut html)
-            .write_markup(markup!({ PrintDiagnostic(&err) }))
+            .write_markup(markup!({ PrintDiagnostic(&err, verbose) }))
             .map_err(into_error)?;
 
         Ok(())

@@ -174,7 +174,7 @@ fn diagnostic_to_string(name: &str, source: &str, diag: AnalyzerDiagnostic) -> S
         .with_file_path((name, FileId::zero()))
         .with_file_source_code(source);
     let text = markup_to_string(markup! {
-        {PrintDiagnostic(&error)}
+        {PrintDiagnostic(&error, true)}
     });
 
     text

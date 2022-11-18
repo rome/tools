@@ -59,5 +59,5 @@ pub fn main() {
         },
     };
 
-    EnvConsole::default().error(markup!({ PrintDiagnostic(&diag) }));
+    EnvConsole::default().error(markup!({ PrintDiagnostic(&diag, true) }));
 }

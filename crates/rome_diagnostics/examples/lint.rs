@@ -90,5 +90,5 @@ console.log(FOO);";
         },
     };
 
-    EnvConsole::default().error(markup!({ PrintDiagnostic(&diag) }));
+    EnvConsole::default().error(markup!({ PrintDiagnostic(&diag, true) }));
 }

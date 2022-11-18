@@ -39,7 +39,7 @@ pub fn check_reformat(params: CheckReformatParams) {
                 .with_file_source_code(text.to_string());
             Formatter::new(&mut Termcolor(&mut buffer))
                 .write_markup(markup! {
-                    {PrintDiagnostic(&error)}
+                    {PrintDiagnostic(&error, true)}
                 })
                 .expect("failed to emit diagnostic");
         }

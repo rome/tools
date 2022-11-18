@@ -1086,3 +1086,35 @@ a == b;",
         result,
     ));
 }
+
+#[test]
+fn print_verbose() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("check.js");
+    fs.insert(file_path.into(), LINT_ERROR.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("check"),
+            OsString::from("--verbose"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    match result {
+        Err(Termination::CheckError) => {}
+        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "print_verbose",
+        fs,
+        console,
+        result,
+    ));
+}
