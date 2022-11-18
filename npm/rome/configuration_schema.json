@@ -686,6 +686,15 @@
             }
           ]
         },
+        "semicolons": {
+          "description": "Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.",
+          "default": "always",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Semicolons"
+            }
+          ]
+        },
         "trailingComma": {
           "description": "Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to \"all\".",
           "default": "all",
@@ -755,6 +764,17 @@
             }
           ]
         },
+        "noConditionalAssignment": {
+          "description": "Disallow assignment operators in conditional expressions.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noConstAssign": {
           "description": "Prevents from having const variables being re-assigned.",
           "anyOf": [
@@ -790,6 +810,28 @@
         },
         "noInvalidConstructorSuper": {
           "description": "Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noPrecisionLoss": {
+          "description": "Disallow literal numbers that lose precision",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noUnsafeFinally": {
+          "description": "Disallow control flow statements in finally blocks.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -1034,6 +1076,13 @@
           ]
         }
       }
+    },
+    "Semicolons": {
+      "type": "string",
+      "enum": [
+        "always",
+        "asNeeded"
+      ]
     },
     "Style": {
       "description": "A list of rules that belong to this group",

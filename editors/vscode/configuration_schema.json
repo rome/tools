@@ -765,6 +765,7 @@
           ]
         },
         "noConditionalAssignment": {
+          "description": "Disallow assignment operators in conditional expressions.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -819,6 +820,7 @@
           ]
         },
         "noPrecisionLoss": {
+          "description": "Disallow literal numbers that lose precision",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -829,6 +831,7 @@
           ]
         },
         "noUnsafeFinally": {
+          "description": "Disallow control flow statements in finally blocks.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
