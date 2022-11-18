@@ -7,7 +7,7 @@ use futures::stream::futures_unordered::FuturesUnordered;
 use futures::StreamExt;
 use rome_analyze::RuleCategories;
 use rome_console::markup;
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use rome_service::configuration::Configuration;
 use rome_service::workspace::{FeatureName, PullDiagnosticsParams, SupportsFeatureParams};

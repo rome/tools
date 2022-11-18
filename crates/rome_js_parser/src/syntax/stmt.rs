@@ -26,13 +26,13 @@ use crate::syntax::js_parse_error::{expected_binding, expected_statement};
 use crate::syntax::module::parse_import_or_import_equals_declaration;
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
 
+use crate::span::Span;
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
     parser, CompletedMarker, JsSyntaxFeature, Marker, ParseRecovery, ParseSeparatedList, Parser,
     SyntaxFeature, TokenSet,
 };
-use rome_diagnostics::Span;
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 

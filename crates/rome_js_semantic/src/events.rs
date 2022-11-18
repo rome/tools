@@ -139,7 +139,7 @@ impl SemanticEvent {
 /// use rome_js_parser::*;
 /// use rome_js_syntax::*;
 /// use rome_js_semantic::*;
-/// use rome_diagnostics::file::FileId;
+/// use rome_diagnostics::location::FileId;
 /// let tree = parse("let a = 1", FileId::zero(), SourceType::js_script());
 /// let mut extractor = SemanticEventExtractor::new();
 /// for e in tree.syntax().preorder() {
@@ -998,7 +998,7 @@ impl Iterator for SemanticEventIterator {
 /// use rome_js_parser::*;
 /// use rome_js_syntax::*;
 /// use rome_js_semantic::*;
-/// use rome_diagnostics::file::FileId;
+/// use rome_diagnostics::location::FileId;
 /// let tree = parse("let a = 1", FileId::zero(), SourceType::js_script());
 /// for e in semantic_events(tree.syntax()) {
 ///     dbg!(e);

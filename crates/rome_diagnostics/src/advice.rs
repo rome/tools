@@ -1,9 +1,9 @@
-use super::{
+use crate::Applicability;
+use crate::{
     display::Backtrace,
     location::{AsResource, AsSourceCode, AsSpan},
     Location,
 };
-use crate::Applicability;
 use rome_console::fmt::{self, Display};
 use rome_console::markup;
 use rome_text_edit::TextEdit;

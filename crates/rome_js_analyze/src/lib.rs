@@ -4,7 +4,7 @@ use rome_analyze::{
     InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry, Phases, RuleAction,
     RuleRegistry, ServiceBag, SyntaxVisitor,
 };
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_js_syntax::{
     suppression::{parse_suppression_comment, SuppressionCategory},
     JsLanguage,
@@ -123,8 +123,8 @@ mod tests {
     use rome_console::fmt::{Formatter, Termcolor};
     use rome_console::{markup, Markup};
     use rome_diagnostics::termcolor::NoColor;
-    use rome_diagnostics::v2::{Diagnostic, DiagnosticExt, PrintDiagnostic, Severity};
-    use rome_diagnostics::{file::FileId, v2::category};
+    use rome_diagnostics::{category, location::FileId};
+    use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic, Severity};
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};
 

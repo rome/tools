@@ -957,7 +957,7 @@ pub(crate) fn debug_assert_is_parent(node: &JsSyntaxNode, parent: &JsSyntaxNode)
 pub(crate) mod tests {
     use super::NeedsParentheses;
     use crate::transform;
-    use rome_diagnostics::file::FileId;
+    use rome_diagnostics::location::FileId;
     use rome_js_syntax::{JsLanguage, SourceType};
     use rome_rowan::AstNode;
 

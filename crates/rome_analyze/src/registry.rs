@@ -1,6 +1,6 @@
 use std::{borrow, collections::BTreeSet};
 
-use rome_diagnostics::v2::Error;
+use rome_diagnostics::Error;
 use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
 use rustc_hash::FxHashSet;
 

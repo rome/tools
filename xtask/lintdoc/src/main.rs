@@ -8,9 +8,9 @@ use rome_console::{
     fmt::{Formatter, HTML},
     markup, Console, Markup, MarkupBuf,
 };
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_diagnostics::termcolor::NoColor;
-use rome_diagnostics::v2::{Diagnostic, DiagnosticExt, PrintDiagnostic};
+use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic};
 use rome_js_analyze::{analyze, visit_registry};
 use rome_js_syntax::{JsLanguage, Language, LanguageVariant, ModuleKind, SourceType};
 use rome_service::settings::WorkspaceSettings;
@@ -463,7 +463,7 @@ fn assert_lint(
 
     let mut all_diagnostics = vec![];
 
-    let mut write_diagnostic = |code: &str, diag: rome_diagnostics::v2::Error| {
+    let mut write_diagnostic = |code: &str, diag: rome_diagnostics::Error| {
         let category = diag.category().map_or("", |code| code.name());
         Formatter::new(&mut write).write_markup(markup! {
             {PrintDiagnostic(&diag)}

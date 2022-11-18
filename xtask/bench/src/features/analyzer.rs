@@ -1,7 +1,7 @@
 use crate::BenchmarkSummary;
 use criterion::black_box;
 use rome_analyze::{AnalysisFilter, AnalyzerOptions, ControlFlow, Never, RuleCategories};
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_js_analyze::analyze;
 use rome_js_syntax::JsAnyRoot;
 use std::fmt::{Display, Formatter};

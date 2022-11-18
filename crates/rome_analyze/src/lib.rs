@@ -19,7 +19,7 @@ mod syntax;
 mod visitor;
 
 // Re-exported for use in the `declare_group` macro
-pub use rome_diagnostics::v2::category_concat;
+pub use rome_diagnostics::category_concat;
 
 pub use crate::categories::{
     ActionCategory, RefactorKind, RuleCategories, RuleCategory, SourceActionKind,
@@ -41,10 +41,10 @@ pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
 pub use crate::syntax::SyntaxVisitor;
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
 use rome_console::{markup, MarkupBuf};
-use rome_diagnostics::file::FileId;
-use rome_diagnostics::v2::advice::CodeSuggestionAdvice;
-use rome_diagnostics::v2::{
-    category, Advices, Category, Diagnostic, DiagnosticTags, Error, Location, Severity, Visit,
+use rome_diagnostics::advice::CodeSuggestionAdvice;
+use rome_diagnostics::{
+    category, Advices, Category, Diagnostic, DiagnosticTags, Error, FileId, Location, Severity,
+    Visit,
 };
 use rome_rowan::{
     AstNode, Direction, Language, SyntaxElement, SyntaxToken, TextRange, TextSize, TriviaPieceKind,

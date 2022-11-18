@@ -21,12 +21,12 @@ use crate::syntax::typescript::try_parse;
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, expected_ts_type_parameter};
 
 use crate::lexer::{LexContext, ReLexContext};
+use crate::span::Span;
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{
     Absent, CompletedMarker, ParseNodeList, ParseRecovery, ParseSeparatedList, ParsedSyntax,
     Parser, Present, SyntaxFeature,
 };
-use rome_diagnostics::Span;
 use rome_js_syntax::JsSyntaxKind::TS_TYPE_ANNOTATION;
 use rome_js_syntax::T;
 use rome_js_syntax::{JsSyntaxKind::*, *};

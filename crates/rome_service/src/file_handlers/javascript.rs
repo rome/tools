@@ -10,7 +10,7 @@ use rome_analyze::{
     AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Never, QueryMatch,
     RegistryVisitor, RuleCategories, RuleCategory, RuleFilter, RuleGroup,
 };
-use rome_diagnostics::{v2::category, Applicability, CodeSuggestion};
+use rome_diagnostics::{category, Applicability, CodeSuggestion, Severity};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::{analyze, analyze_with_inspect_matcher, visit_registry, RuleError};
@@ -32,7 +32,7 @@ use super::{
 use crate::configuration::to_analyzer_configuration;
 use crate::file_handlers::{FixAllParams, Language as LanguageId};
 use indexmap::IndexSet;
-use rome_diagnostics::{v2, v2::Diagnostic};
+use rome_diagnostics::Diagnostic;
 use rome_js_analyze::utils::rename::{RenameError, RenameSymbolExtensions};
 use std::borrow::Cow;
 use std::fmt::Debug;
@@ -223,7 +223,7 @@ fn lint(params: LintParams) -> LintResults {
     let mut diagnostic_count = diagnostics.len() as u64;
     let mut errors = diagnostics
         .iter()
-        .filter(|diag| diag.severity() <= v2::Severity::Error)
+        .filter(|diag| diag.severity() <= Severity::Error)
         .count();
 
     let has_lint = params.filter.categories.contains(RuleCategories::LINT);
@@ -243,9 +243,9 @@ fn lint(params: LintParams) -> LintResults {
                 .category()
                 .filter(|category| category.name().starts_with("lint/"))
                 .and_then(|category| params.rules.as_ref()?.get_severity_from_code(category))
-                .unwrap_or(v2::Severity::Error);
+                .unwrap_or(Severity::Error);
 
-            if severity <= v2::Severity::Error {
+            if severity <= Severity::Error {
                 errors += 1;
             }
 
@@ -256,7 +256,7 @@ fn lint(params: LintParams) -> LintResults {
                     diagnostic.add_code_suggestion(action.into());
                 }
 
-                diagnostics.push(v2::serde::Diagnostic::new(diagnostic));
+                diagnostics.push(rome_diagnostics::serde::Diagnostic::new(diagnostic));
             }
         }
 
