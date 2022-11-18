@@ -101,18 +101,16 @@ impl Rule for NoShoutyConstants {
                     return None;
                 }
 
+                // check if constant is used in multiple places
+                if binding.all_references(ctx.model()).count() > 1 {
+                    return None;
+                }
+                
                 if binding.all_references(ctx.model()).all(|r| {
                     r.node()
                         .ancestors()
                         .any(|n| JsVariableDeclarationClause::can_cast(n.kind()))
                 }) {
-                    return None;
-                }
-                // check if constant is used in multiple places
-                if binding
-                    .all_references(ctx.model()).count()
-                    > 1
-                {
                     return None;
                 }
 
