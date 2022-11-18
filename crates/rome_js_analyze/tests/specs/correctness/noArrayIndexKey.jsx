@@ -46,10 +46,23 @@ Children.forEach(this.props.children, function (child, index) {
     return foo;
 })
 
+function Test(props) {
+    return Children.map(props.children, function (child, index) {
+        return cloneElement(child, { key: index });
+    });
+}
 
 things.map((thing, index) => (
     React.cloneElement(thing, { key: index })
 ));
+
+things.flatMap((thing, index) => {
+    return <Component key={index} />;
+})
+
+Array.from(things, (thing, index) => {
+    return <Component key={index} />;
+})
 
 const mapping = {
     foo: () => (
@@ -164,3 +177,9 @@ function Component14() {
         </HoC>
     )
 }
+
+function Component15() {
+    return ids.map((id) => {
+        return <Component key={id} />
+    }
+})

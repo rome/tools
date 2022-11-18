@@ -1,16 +1,14 @@
-use crate::react::{is_react_call_api, ReactApiCall, ReactCloneElementCall, ReactLibrary};
+use crate::react::{is_react_call_api, ReactLibrary};
 use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
-    JsAnyCallArgument, JsArrowFunctionExpression, JsCallExpression, JsExpressionStatement,
-    JsFunctionDeclaration, JsFunctionExpression, JsIdentifierBinding, JsMethodClassMember,
-    JsMethodObjectMember, JsParameterList, JsParenthesizedExpression, JsPropertyObjectMember,
-    JsReferenceIdentifier, JsxAttribute, JsxOpeningElement, JsxSelfClosingElement,
+    JsAnyFunction, JsCallArgumentList, JsCallArguments, JsCallExpression, JsFormalParameter,
+    JsIdentifierBinding, JsObjectExpression, JsObjectMemberList, JsParameterList, JsParameters,
+    JsPropertyObjectMember, JsReferenceIdentifier, JsxAttribute,
 };
-use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
+use rome_rowan::{declare_node_union, AstNode};
 
 declare_rule! {
     /// Discourage the usage of Array index in keys.
@@ -46,18 +44,35 @@ declare_rule! {
 }
 
 declare_node_union! {
-    pub(crate) NoArrayIndexKeyQuery = JsxOpeningElement | JsxSelfClosingElement | JsCallExpression
+    pub(crate) NoArrayIndexKeyQuery = JsxAttribute | JsPropertyObjectMember
 }
 
-declare_node_union! {
-    pub(crate) KeyPropWithArrayIndex = JsxAttribute | JsPropertyObjectMember
-}
+impl NoArrayIndexKeyQuery {
+    const fn is_property_object_member(&self) -> bool {
+        matches!(self, NoArrayIndexKeyQuery::JsPropertyObjectMember(_))
+    }
 
-impl KeyPropWithArrayIndex {
+    fn is_key_property(&self) -> Option<bool> {
+        Some(match self {
+            NoArrayIndexKeyQuery::JsxAttribute(attribute) => {
+                let attribute_name = attribute.name().ok()?;
+                let name = attribute_name.as_jsx_name()?;
+                let name_token = name.value_token().ok()?;
+                name_token.text_trimmed() == "key"
+            }
+            NoArrayIndexKeyQuery::JsPropertyObjectMember(object_member) => {
+                let object_member_name = object_member.name().ok()?;
+                let name = object_member_name.as_js_literal_member_name()?;
+                let name = name.value().ok()?;
+                name.text_trimmed() == "key"
+            }
+        })
+    }
+
     /// Extracts the reference from the possible invalid prop
     fn as_js_reference_identifier(&self) -> Option<JsReferenceIdentifier> {
         match self {
-            KeyPropWithArrayIndex::JsxAttribute(attribute) => attribute
+            NoArrayIndexKeyQuery::JsxAttribute(attribute) => attribute
                 .initializer()?
                 .value()
                 .ok()?
@@ -67,48 +82,13 @@ impl KeyPropWithArrayIndex {
                 .as_js_identifier_expression()?
                 .name()
                 .ok(),
-            KeyPropWithArrayIndex::JsPropertyObjectMember(object_member) => object_member
+            NoArrayIndexKeyQuery::JsPropertyObjectMember(object_member) => object_member
                 .value()
                 .ok()?
                 .as_js_identifier_expression()?
                 .name()
                 .ok(),
         }
-    }
-}
-
-impl NoArrayIndexKeyQuery {
-    const fn is_call_expression(&self) -> bool {
-        matches!(self, NoArrayIndexKeyQuery::JsCallExpression(_))
-    }
-
-    fn find_key_attribute(&self, model: &SemanticModel) -> Option<KeyPropWithArrayIndex> {
-        match self {
-            NoArrayIndexKeyQuery::JsxOpeningElement(element) => element
-                .find_attribute_by_name("key")
-                .ok()?
-                .map(KeyPropWithArrayIndex::from),
-            NoArrayIndexKeyQuery::JsxSelfClosingElement(element) => element
-                .find_attribute_by_name("key")
-                .ok()?
-                .map(KeyPropWithArrayIndex::from),
-            NoArrayIndexKeyQuery::JsCallExpression(expression) => {
-                let create_clone_element =
-                    ReactCloneElementCall::from_call_expression(expression, model)?;
-                create_clone_element
-                    .find_prop_by_name("key")
-                    .map(KeyPropWithArrayIndex::from)
-            }
-        }
-    }
-
-    fn find_function_like_ancestor(&self) -> Option<FunctionLike> {
-        let element = match self {
-            NoArrayIndexKeyQuery::JsxOpeningElement(element) => element.syntax(),
-            NoArrayIndexKeyQuery::JsxSelfClosingElement(element) => element.syntax(),
-            NoArrayIndexKeyQuery::JsCallExpression(expression) => expression.syntax(),
-        };
-        element.ancestors().find_map(FunctionLike::cast)
     }
 }
 
@@ -127,40 +107,66 @@ impl Rule for NoArrayIndexKey {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
+
+        if !node.is_key_property()? {
+            return None;
+        }
+
         let model = ctx.model();
-        let attribute_key = node.find_key_attribute(model)?;
-        let reference = attribute_key.as_js_reference_identifier()?;
+        let reference = node.as_js_reference_identifier()?;
 
-        let value = reference.value_token().ok()?;
-        let function_parent = node.find_function_like_ancestor()?;
-        let key_value = value.text_trimmed();
+        // Given the reference identifier retrieved from the key property,
+        // find the declaration and ensure it resolves to the parameter of a function,
+        // and navigate up to the closest call expression
+        let parameter = model
+            .declaration(&reference)
+            .and_then(|declaration| declaration.syntax().parent())
+            .and_then(JsFormalParameter::cast)?;
+        let function = parameter
+            .parent::<JsParameterList>()
+            .and_then(|list| list.parent::<JsParameters>())
+            .and_then(|parameters| parameters.parent::<JsAnyFunction>())?;
+        let call_expression = function
+            .parent::<JsCallArgumentList>()
+            .and_then(|arguments| arguments.parent::<JsCallArguments>())
+            .and_then(|arguments| arguments.parent::<JsCallExpression>())?;
 
-        let is_inside_array_method = is_inside_array_method(&function_parent)?;
+        // Check if the caller is an array method and the parameter is the array index of that method
+        let is_array_method_index = is_array_method_index(&parameter, &call_expression)?;
 
-        if is_inside_array_method {
-            if node.is_call_expression() {
-                // 1. We scan the parent and look for a potential `React.Children` method call
-                // 2. If found, then we retrieve the incorrect `index`
-                // 3. If we fail to find a `React.Children` method call, then we try to find and `Array.` method call
-                let binding_origin = find_react_children_function_argument(&function_parent, model)
-                    .and_then(|function_argument| {
-                        find_array_index_key(key_value, &function_argument)
-                    })
-                    .or_else(|| find_array_index_key(key_value, &function_parent))?;
+        if !is_array_method_index {
+            return None;
+        }
+
+        if node.is_property_object_member() {
+            let object_expression = node
+                .parent::<JsObjectMemberList>()
+                .and_then(|list| list.parent::<JsObjectExpression>())?;
+
+            // Check if the object expression is passed to a `React.cloneElement` call
+            let call_expression = object_expression
+                .parent::<JsCallArgumentList>()
+                .and_then(|list| list.parent::<JsCallArguments>())
+                .and_then(|arguments| arguments.parent::<JsCallExpression>())?;
+            let callee = call_expression.callee().ok()?;
+
+            if is_react_call_api(&callee, model, ReactLibrary::React, "cloneElement")? {
+                let binding = parameter.binding().ok()?;
+                let binding_origin = binding.as_js_any_binding()?.as_js_identifier_binding()?;
                 Some(NoArrayIndexKeyState {
-                    binding_origin,
+                    binding_origin: binding_origin.clone(),
                     incorrect_prop: reference,
                 })
             } else {
-                let binding_origin = find_array_index_key(key_value, &function_parent)?;
-
-                Some(NoArrayIndexKeyState {
-                    binding_origin,
-                    incorrect_prop: reference,
-                })
+                None
             }
         } else {
-            None
+            let binding = parameter.binding().ok()?;
+            let binding_origin = binding.as_js_any_binding()?.as_js_identifier_binding()?;
+            Some(NoArrayIndexKeyState {
+                binding_origin: binding_origin.clone(),
+                incorrect_prop: reference,
+            })
         }
     }
 
@@ -189,21 +195,23 @@ impl Rule for NoArrayIndexKey {
     }
 }
 
-/// Given a function like node, it navigates the `callee` of its parent
+/// Given a parameter and a call expression, it navigates the `callee` of the call
 /// and check if the method called by this function belongs to an array method
+/// and if the parameter is an array index
 ///
 /// ```js
-/// Array.map(() => {
-///     return <Component />
+/// Array.map((_, index) => {
+///     return <Component key={index} />
 /// })
 /// ```
 ///
-/// Given this example, the input node is the arrow function and we navigate to
-/// retrieve the name `map` call and we check if it belongs to an `Array.prototype` method.
-fn is_inside_array_method(function_like_node: &FunctionLike) -> Option<bool> {
-    let function_parent = function_like_node.find_caller_parent()?;
-
-    let name = function_parent
+/// Given this example, the input node is the `index` and `Array.map(...)` call and we navigate to
+/// retrieve the name `map` and we check if it belongs to an `Array.prototype` method.
+fn is_array_method_index(
+    parameter: &JsFormalParameter,
+    call_expression: &JsCallExpression,
+) -> Option<bool> {
+    let name = call_expression
         .callee()
         .ok()?
         .as_js_static_member_expression()?
@@ -212,144 +220,15 @@ fn is_inside_array_method(function_like_node: &FunctionLike) -> Option<bool> {
         .as_js_name()?
         .value_token()
         .ok()?;
+    let name = name.text_trimmed();
 
-    Some(matches!(
-        name.text_trimmed(),
-        "map"
-            | "forEach"
-            | "filter"
-            | "some"
-            | "every"
-            | "find"
-            | "findIndex"
-            | "reduce"
-            | "reduceRight"
-    ))
-}
-
-declare_node_union! {
-    pub(crate) FunctionLike =  JsFunctionDeclaration
-        | JsFunctionExpression
-        | JsArrowFunctionExpression
-        | JsMethodClassMember
-        | JsMethodObjectMember
-}
-
-impl FunctionLike {
-    fn parameters(&self) -> Option<JsParameterList> {
-        let list = match self {
-            FunctionLike::JsFunctionDeclaration(node) => node.parameters().ok()?.items(),
-            FunctionLike::JsFunctionExpression(node) => node.parameters().ok()?.items(),
-            FunctionLike::JsArrowFunctionExpression(node) => {
-                node.parameters().ok()?.as_js_parameters()?.items()
-            }
-            FunctionLike::JsMethodClassMember(node) => node.parameters().ok()?.items(),
-            FunctionLike::JsMethodObjectMember(node) => node.parameters().ok()?.items(),
-        };
-        Some(list)
-    }
-
-    /// Find the call expression that contains the caller of the given function like node
-    fn find_caller_parent(&self) -> Option<JsCallExpression> {
-        let ancestors = self
-            .syntax()
-            .ancestors()
-            .skip(1) // skip self
-            .skip_while(|ancestor| JsParenthesizedExpression::can_cast(ancestor.kind()));
-        // Skip over the `JsCallArgumentList` and `JsCallArguments`
-        let mut ancestors = ancestors.skip(2);
-        ancestors.next().and_then(JsCallExpression::cast)
-    }
-}
-/// It checks if the index binding comes from an array function and has the same name
-/// used inside the `"key"` prop.
-///
-/// ```js
-/// Array.forEach((element, index, array) => {
-///     <Component key={index}/>
-/// });
-/// ```
-///
-/// We scan all the parameters and we check if its name
-fn find_array_index_key(
-    key_name: &str,
-    function_like_node: &FunctionLike,
-) -> Option<JsIdentifierBinding> {
-    let parameters = function_like_node.parameters()?;
-    parameters.iter().find_map(|parameter| {
-        let parameter = parameter
-            .ok()?
-            .as_js_any_formal_parameter()?
-            .as_js_formal_parameter()?
-            .binding()
-            .ok()?;
-        let last_parameter = parameter.as_js_any_binding()?.as_js_identifier_binding()?;
-
-        if last_parameter.name_token().ok()?.text_trimmed() == key_name {
-            Some(last_parameter.clone())
-        } else {
-            None
-        }
-    })
-}
-
-/// This function initially  checks if the [JsCallExpression] matches the following cases;
-///
-/// ```js
-/// React.Children.map();
-/// React.Children.forEach();
-/// Children.map();
-/// Children.forEach()
-/// ```
-/// Then, it navigates the arguments and return the second argument, only if it's
-///
-/// For example
-///
-/// ```js
-/// React.Children.map(this.props.children); // not correct
-/// React.Children.map(this.props.children, (child, index) => {}) // correct, returns arrow function expression
-/// React.Children.map(this.props.children, function(child, index) {}) // correct, returns function expression
-/// ```
-///
-fn find_react_children_function_argument(
-    call_expression: &FunctionLike,
-    model: &SemanticModel,
-) -> Option<FunctionLike> {
-    let function_parent = call_expression
-        .syntax()
-        .ancestors()
-        .find_map(|ancestor| JsExpressionStatement::cast_ref(&ancestor))?;
-
-    let call_expression = function_parent.expression().ok()?;
-    let call_expression = call_expression.as_js_call_expression()?;
-
-    let member_expression = call_expression.callee().ok()?;
-    let member_expression = member_expression.as_js_static_member_expression()?;
-
-    let member = member_expression.member().ok()?;
-    let array_call = matches!(
-        member.as_js_name()?.value_token().ok()?.text_trimmed(),
-        "forEach" | "map"
-    );
-
-    if !array_call {
-        return None;
-    }
-
-    let object = member_expression.object().ok()?;
-
-    // React.Children.forEach/map or Children.forEach/map
-    if is_react_call_api(&object, model, ReactLibrary::React, "Children")? {
-        let arguments = call_expression.arguments().ok()?;
-        let arguments = arguments.args();
-        let mut arguments = arguments.into_iter();
-
-        match (arguments.next(), arguments.next(), arguments.next()) {
-            (Some(_), Some(Ok(JsAnyCallArgument::JsAnyExpression(second_argument))), None) => {
-                FunctionLike::cast(second_argument.into_syntax())
-            }
-            _ => None,
-        }
+    if matches!(
+        name,
+        "map" | "flatMap" | "from" | "forEach" | "filter" | "some" | "every" | "find" | "findIndex"
+    ) {
+        Some(parameter.syntax().index() == 2)
+    } else if matches!(name, "reduce" | "reduceRight") {
+        Some(parameter.syntax().index() == 4)
     } else {
         None
     }
