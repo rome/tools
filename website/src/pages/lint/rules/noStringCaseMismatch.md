@@ -5,8 +5,7 @@ parent: lint/rules/index
 
 # noStringCaseMismatch (since v11.0.0)
 
-Checks for expressions modifying the case of a string in test expression of conditional
-statements with non-compliant value.
+Disallow comparison of expressions modifying the string case with non-compliant value.
 
 ## Examples
 

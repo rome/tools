@@ -9,8 +9,7 @@ use rome_rowan::{declare_node_union, AstNode, AstSeparatedList, BatchMutationExt
 use crate::JsRuleAction;
 
 declare_rule! {
-    /// Checks for expressions modifying the case of a string in test expression of conditional
-    /// statements with non-compliant value.
+    /// Disallow comparison of expressions modifying the string case with non-compliant value.
     ///
     /// ## Examples
     ///
