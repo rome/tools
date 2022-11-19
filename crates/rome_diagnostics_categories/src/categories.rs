@@ -85,6 +85,7 @@ define_dategories! {
     "lint/nursery/noDupeKeys":"https://docs.rome.tools/lint/rules/noDupeKeys",
     "lint/nursery/noEmptyInterface": "https://docs.rome.tools/lint/rules/noEmptyInterface",
     "lint/nursery/noExplicitAny": "https://docs.rome.tools/lint/rules/noExplicitAny",
+    "lint/nursery/noExtraNonNullAssertion":"https://docs.rome.tools/lint/rules/noExtraNonNullAssertion",
     "lint/nursery/noHeaderScope": "https://docs.rome.tools/lint/rules/noHeaderScope",
     "lint/nursery/noInvalidConstructorSuper": "https://docs.rome.tools/lint/rules/noInvalidConstructorSuper",
     "lint/nursery/noPrecisionLoss": "https://docs.rome.tools/lint/rules/noPrecisionLoss",

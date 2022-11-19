@@ -384,6 +384,10 @@ export interface Nursery {
 	 */
 	noExplicitAny?: RuleConfiguration;
 	/**
+	 * Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.
+	 */
+	noExtraNonNullAssertion?: RuleConfiguration;
+	/**
 	 * Check that the scope attribute is only used on th elements.
 	 */
 	noHeaderScope?: RuleConfiguration;
@@ -653,6 +657,7 @@ export type Category =
 	| "lint/nursery/noDupeKeys"
 	| "lint/nursery/noEmptyInterface"
 	| "lint/nursery/noExplicitAny"
+	| "lint/nursery/noExtraNonNullAssertion"
 	| "lint/nursery/noHeaderScope"
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noPrecisionLoss"
