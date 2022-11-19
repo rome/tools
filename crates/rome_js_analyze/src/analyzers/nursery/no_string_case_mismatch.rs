@@ -110,7 +110,7 @@ declare_node_union! {
 }
 
 pub(crate) struct CaseMismatchInfo {
-    expected_case: StringCase,
+    expected_case: ExpectedStringCase,
     expected_value: String,
     call: JsCallExpression,
     literal: JsAnyExpression,
@@ -118,10 +118,14 @@ pub(crate) struct CaseMismatchInfo {
 
 impl CaseMismatchInfo {
     fn from_binary_expr(expr: &JsBinaryExpression) -> Option<Self> {
-        let JsBinaryExpressionFields { left: Ok(left), right: Ok(right), operator_token: Ok(op) } = expr.as_fields() else { return None; };
-        if !matches!(op.kind(), JsSyntaxKind::EQ2 | JsSyntaxKind::EQ3) {
-            return None;
-        }
+        let (left, right) = match expr.as_fields() {
+            JsBinaryExpressionFields {
+                left: Ok(left),
+                right: Ok(right),
+                operator_token: Ok(op),
+            } if matches!(op.kind(), JsSyntaxKind::EQ2 | JsSyntaxKind::EQ3) => (left, right),
+            _ => return None,
+        };
         let (call, literal) = match (left, right) {
             (JsAnyExpression::JsCallExpression(call), other)
             | (other, JsAnyExpression::JsCallExpression(call)) => (call, other),
@@ -131,68 +135,72 @@ impl CaseMismatchInfo {
     }
 
     fn from_switch_stmt(stmt: &JsSwitchStatement) -> Vec<Self> {
-        let JsSwitchStatementFields { discriminant: Ok(JsAnyExpression::JsCallExpression(call)), cases, .. } = stmt.as_fields() else {
-             return Vec::new();
-        };
-
-        cases
-            .into_iter()
-            .flat_map(|case| case.as_js_case_clause().and_then(|case| case.test().ok()))
-            .flat_map(|test| Self::compare_call_with_literal(call.clone(), test))
-            .collect()
+        match stmt.as_fields() {
+            JsSwitchStatementFields {
+                discriminant: Ok(JsAnyExpression::JsCallExpression(call)),
+                cases,
+                ..
+            } => cases
+                .into_iter()
+                .flat_map(|case| case.as_js_case_clause().and_then(|case| case.test().ok()))
+                .flat_map(|test| Self::compare_call_with_literal(call.clone(), test))
+                .collect(),
+            _ => Vec::new(),
+        }
     }
 
     fn compare_call_with_literal(call: JsCallExpression, literal: JsAnyExpression) -> Option<Self> {
-        let expected_case = get_string_case_modification(&call)?;
+        let expected_case = ExpectedStringCase::from_call(&call)?;
         let literal_value = literal.as_string_constant()?;
         let expected_value = expected_case.convert(&literal_value);
-        if literal_value == expected_value {
-            return None;
+        if literal_value != expected_value {
+            Some(Self {
+                expected_case,
+                expected_value,
+                call,
+                literal,
+            })
+        } else {
+            None
         }
-        Some(Self {
-            expected_case,
-            expected_value,
-            call,
-            literal,
-        })
     }
 }
 
-fn get_string_case_modification(call: &JsCallExpression) -> Option<StringCase> {
-    if call.arguments().ok()?.args().len() != 0 {
-        return None;
-    }
-
-    let callee = call.callee().ok()?;
-    let member_expr = JsAnyMemberExpression::cast_ref(callee.syntax())?;
-    if member_expr.has_member_name("toLowerCase") {
-        return Some(StringCase::Lower);
-    }
-
-    if member_expr.has_member_name("toUpperCase") {
-        return Some(StringCase::Upper);
-    }
-
-    None
-}
-
-enum StringCase {
+enum ExpectedStringCase {
     Upper,
     Lower,
 }
 
-impl StringCase {
+impl ExpectedStringCase {
+    fn from_call(call: &JsCallExpression) -> Option<Self> {
+        if call.arguments().ok()?.args().len() != 0 {
+            return None;
+        }
+
+        let callee = call.callee().ok()?;
+        let member_expr = JsAnyMemberExpression::cast_ref(callee.syntax())?;
+        if member_expr.has_member_name("toLowerCase") {
+            return Some(Self::Lower);
+        }
+
+        if member_expr.has_member_name("toUpperCase") {
+            return Some(Self::Upper);
+        }
+
+        None
+    }
+
     fn convert(&self, s: &str) -> String {
         match self {
-            StringCase::Upper => s.to_uppercase(),
-            StringCase::Lower => s.to_lowercase(),
+            ExpectedStringCase::Upper => s.to_uppercase(),
+            ExpectedStringCase::Lower => s.to_lowercase(),
         }
     }
 
     fn description(&self) -> &str {
         match self {
-            StringCase::Upper => "upper case",
-            StringCase::Lower => "lower case",
+            ExpectedStringCase::Upper => "upper case",
+            ExpectedStringCase::Lower => "lower case",
         }
     }
 }
