@@ -16,20 +16,20 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// if (s.toUpperCase() === 'Abc') {}
+    /// if (s.toUpperCase() === "Abc") {}
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// while (s.toLowerCase() === 'Abc') {}
+    /// while (s.toLowerCase() === "Abc") {}
     /// ```
     /// ### Valid
     ///
     /// ```js
-    /// if (s.toUpperCase() === 'ABC') {}
-    /// while (s.toLowerCase() === 'abc') {}
-    /// for (;s.toLocaleLowerCase() === 'ABC';) {}
-    /// while (s.toLocaleUpperCase() === 'abc') {}
-    /// for (let s = "abc"; s === 'abc'; s = s.toUpperCase()) {}
+    /// if (s.toUpperCase() === "ABC") {}
+    /// while (s.toLowerCase() === "abc") {}
+    /// for (;s.toLocaleLowerCase() === "ABC";) {}
+    /// while (s.toLocaleUpperCase() === "abc") {}
+    /// for (let s = "abc"; s === "abc"; s = s.toUpperCase()) {}
     /// ```
     pub(crate) NoStringCaseMismatch {
         version: "11.0.0",
