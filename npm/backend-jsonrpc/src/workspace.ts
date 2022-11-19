@@ -148,6 +148,7 @@ export type TrailingComma = "all" | "es5" | "none";
  * A list of rules that belong to this group
  */
 export interface A11y {
+	noAccessKey?: RuleConfiguration;
 	noAutofocus?: RuleConfiguration;
 	noPositiveTabindex?: RuleConfiguration;
 	/**
@@ -389,6 +390,7 @@ export type Category =
 	| "lint/style/noUnusedTemplateLiteral"
 	| "lint/complexity/useSimplifiedLogicExpression"
 	| "lint/complexity/noExtraBooleanCast"
+	| "lint/a11y/noAccessKey"
 	| "lint/a11y/noAutofocus"
 	| "lint/a11y/noPositiveTabindex"
 	| "lint/a11y/useKeyWithMouseEvents"
