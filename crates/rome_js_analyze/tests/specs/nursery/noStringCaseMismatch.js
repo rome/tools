@@ -4,9 +4,11 @@ s.toLowerCase() === "abc";
 s.toUpperCase() === "20";
 s.toLowerCase() === "20";
 s.toLowerCase() === `eFg${12}`;
+s.toLowerCase() == `eFg${12}`;
 
 // invalid
 const a = s.toUpperCase() === "abc";
+const c = s.toUpperCase() == "abc";
 const a2 = "abc" === s.toUpperCase();
 if (s.toUpperCase() === "abc" && c == d && e == f) {}
 while (s.toUpperCase() === "abc" && c == d && e == f) {}
