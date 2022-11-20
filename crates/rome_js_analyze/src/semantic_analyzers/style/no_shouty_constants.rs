@@ -97,24 +97,13 @@ impl Rule for NoShoutyConstants {
             if let Some((binding, literal)) = is_id_and_string_literal_inner_text_equal(declarator)
             {
                 let model = ctx.model();
+                if model.is_exported(&binding) {
+                    return None;
+                }
 
                 if binding.all_references(ctx.model()).count() > 1 {
                     return None;
                 }
-
-                for reference in binding.all_references(ctx.model()) {
-                    if let Some(js_reference_identifier) =
-                        JsReferenceIdentifier::cast_ref(reference.node())
-                    {
-                        if model
-                            .is_exported(&js_reference_identifier)
-                            .unwrap_or_default()
-                        {
-                            return None;
-                        }
-                    }
-                }
-
                 return Some(State {
                     literal,
                     references: binding.all_references(ctx.model()).collect(),

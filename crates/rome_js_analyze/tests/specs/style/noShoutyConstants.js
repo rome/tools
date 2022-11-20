@@ -11,8 +11,8 @@ export default B;
 export const A = "A";
 
 const BAR = "BAR";
-const BAR1 = "BAR1";
-console.log(BAR1);
+
 export const bar = {
-	foo: Bar,
+	foo: BAR,
+	bar: BAR,
 };
