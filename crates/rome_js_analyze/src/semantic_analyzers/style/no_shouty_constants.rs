@@ -5,8 +5,8 @@ use rome_diagnostics::Applicability;
 use rome_js_semantic::{AllReferencesExtensions, Reference};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsIdentifierBinding, JsIdentifierExpression,
-    JsStringLiteralExpression, JsVariableDeclaration, JsVariableDeclarator,
-    JsVariableDeclaratorList,
+    JsReferenceIdentifier, JsShorthandPropertyObjectMember, JsStringLiteralExpression,
+    JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList,
 };
 use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
 
@@ -101,9 +101,27 @@ impl Rule for NoShoutyConstants {
                     return None;
                 }
 
-                if binding.all_references(ctx.model()).count() > 1 {
+                if binding.all_references(model).count() > 1 {
                     return None;
                 }
+
+                // skip export as js object shorthand property
+                for reference in binding.all_references(model) {
+                    if let Some(js_reference_identifier) =
+                        JsReferenceIdentifier::cast_ref(reference.node())
+                    {
+                        if js_reference_identifier
+                            .syntax()
+                            .parent()
+                            .map_or(false, |n| {
+                                JsShorthandPropertyObjectMember::can_cast(n.kind())
+                            })
+                        {
+                            return None;
+                        }
+                    }
+                }
+
                 return Some(State {
                     literal,
                     references: binding.all_references(ctx.model()).collect(),

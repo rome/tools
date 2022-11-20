@@ -23,3 +23,7 @@ export const d = {
 	foo: C
 };
 
+const D ="D";
+export const e = {
+	D
+};
