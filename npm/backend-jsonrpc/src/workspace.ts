@@ -364,6 +364,10 @@ export interface Nursery {
 	 */
 	noConstAssign?: RuleConfiguration;
 	/**
+	 * Disallow returning a value from a constructor
+	 */
+	noConstructorReturn?: RuleConfiguration;
+	/**
 	 * Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
 	 */
 	noDupeKeys?: RuleConfiguration;
@@ -635,6 +639,7 @@ export type Category =
 	| "lint/nursery/noBannedTypes"
 	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstAssign"
+	| "lint/nursery/noConstructorReturn"
 	| "lint/nursery/noDupeKeys"
 	| "lint/nursery/noEmptyInterface"
 	| "lint/nursery/noExplicitAny"
