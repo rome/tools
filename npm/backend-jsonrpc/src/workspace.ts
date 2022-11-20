@@ -416,6 +416,10 @@ export interface Nursery {
 	 */
 	noVar?: RuleConfiguration;
 	/**
+	 * Disallow returning a value from a function with the return type 'void'
+	 */
+	noVoidTypeReturn?: RuleConfiguration;
+	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
@@ -664,6 +668,7 @@ export type Category =
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnsafeFinally"
 	| "lint/nursery/noVar"
+	| "lint/nursery/noVoidTypeReturn"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useConst"
 	| "lint/nursery/useExhaustiveDependencies"
