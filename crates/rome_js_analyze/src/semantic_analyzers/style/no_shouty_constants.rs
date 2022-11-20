@@ -5,8 +5,8 @@ use rome_diagnostics::Applicability;
 use rome_js_semantic::{AllReferencesExtensions, Reference};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsIdentifierBinding, JsIdentifierExpression,
-    JsStringLiteralExpression, JsVariableDeclaration, JsVariableDeclarationClause,
-    JsVariableDeclarator, JsVariableDeclaratorList,
+    JsReferenceIdentifier, JsStringLiteralExpression, JsVariableDeclaration, JsVariableDeclarator,
+    JsVariableDeclaratorList,
 };
 use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
 
@@ -97,21 +97,22 @@ impl Rule for NoShoutyConstants {
             if let Some((binding, literal)) = is_id_and_string_literal_inner_text_equal(declarator)
             {
                 let model = ctx.model();
-                if model.is_exported(&binding) {
-                    return None;
+
+                if binding.all_references(ctx.model()).count() >1 {
+                    return None
                 }
 
-                // check if constant is used in multiple places
-                if binding.all_references(ctx.model()).count() > 1 {
-                    return None;
-                }
-
-                if binding.all_references(ctx.model()).all(|r| {
-                    r.node()
-                        .ancestors()
-                        .any(|n| JsVariableDeclarationClause::can_cast(n.kind()))
-                }) {
-                    return None;
+                for reference in binding.all_references(ctx.model()) {
+                 if let Some(js_reference_identifier) =
+                        JsReferenceIdentifier::cast_ref(reference.node())
+                    {
+                        if model
+                            .is_exported(&js_reference_identifier)
+                            .unwrap_or_default()
+                        {
+                            return None;
+                        }
+                    }
                 }
 
                 return Some(State {
