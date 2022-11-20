@@ -4,8 +4,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_semantic::{AllReferencesExtensions, Reference};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsIdentifierBinding, JsIdentifierExpression,
-    JsReferenceIdentifier, JsStringLiteralExpression, JsVariableDeclaration, JsVariableDeclarator,
+    JsAnyExpression, JsAnyLiteralExpression, JsIdentifierBinding, JsIdentifierExpression, JsStringLiteralExpression, JsVariableDeclaration, JsVariableDeclarator,
     JsVariableDeclaratorList,
 };
 use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
