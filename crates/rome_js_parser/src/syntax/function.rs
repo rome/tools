@@ -383,16 +383,23 @@ fn parse_ambient_function(p: &mut Parser, m: Marker, kind: AmbientFunctionKind) 
     }
 
     p.expect(T![function]);
-    let binding = parse_binding(p);
-    let is_binding_absent = binding.is_absent();
 
-    if !kind.is_export_default() && is_binding_absent {
-        // test_err ts ts_declare_function_export_declaration_missing_id
+    let is_generator = p.at(T![*]);
+    if is_generator {
+        // test_err ts ts_declare_generator_function
+        // declare function* test(): void;
         // declare module 'x' {
-        //   export function(option: any): void
+        //   export default function* test(): void
         // }
-        binding.or_add_diagnostic(p, expected_binding);
+        p.error(p.err_builder(
+            "Generators are not allowed in an ambient context.",
+            p.cur_range(),
+        ));
+        p.bump(T![*]);
     }
+
+    let binding = parse_binding(p);
+    let binding_range = p.cur_range();
 
     parse_ts_type_parameters(p).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
@@ -423,6 +430,13 @@ fn parse_ambient_function(p: &mut Parser, m: Marker, kind: AmbientFunctionKind) 
         // }
         m.complete(p, TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION)
     } else {
+        // test_err ts ts_declare_function_export_declaration_missing_id
+        // declare module 'x' {
+        //   export function(option: any): void
+        // }
+        if binding.is_absent() {
+            p.error(expected_binding(p, binding_range));
+        }
         // test ts ts_declare_function_export_declaration
         // declare module 'x' {
         //   export function test(option: any): void
