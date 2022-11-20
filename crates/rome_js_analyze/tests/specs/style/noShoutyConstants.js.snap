@@ -23,6 +23,14 @@ export const bar = {
 	foo: BAR,
 	bar: BAR,
 };
+
+const C = "C";
+
+export const d = {
+	foo: C
+};
+
+
 ```
 
 # Diagnostics
@@ -100,6 +108,45 @@ noShoutyConstants.js:4:34 lint/style/noShoutyConstants  FIXABLE  ━━━━━
         6 │ + console.log(FOO,·"FOO4");
      7  7 │   
      8  8 │   let foo = "foo";
+  
+
+```
+
+```
+noShoutyConstants.js:20:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Redundant constant declaration.
+  
+    18 │ };
+    19 │ 
+  > 20 │ const C = "C";
+       │       ^^^^^^^
+    21 │ 
+    22 │ export const d = {
+  
+  i Used here.
+  
+    22 │ export const d = {
+  > 23 │ 	foo: C
+       │ 	     ^
+    24 │ };
+    25 │ 
+  
+  i You should avoid declaring constants with a string that's the same
+        value as the variable name. It introduces a level of unnecessary
+        indirection when it's only two additional characters to inline.
+  
+  i Suggested fix: Use the constant value directly
+  
+    18 18 │   };
+    19 19 │   
+    20    │ - const·C·=·"C";
+    21    │ - 
+    22 20 │   export const d = {
+    23    │ - → foo:·C
+       21 │ + → foo:·"C"
+    24 22 │   };
+    25 23 │   
   
 
 ```

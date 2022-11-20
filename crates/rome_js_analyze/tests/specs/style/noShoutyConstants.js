@@ -16,3 +16,10 @@ export const bar = {
 	foo: BAR,
 	bar: BAR,
 };
+
+const C = "C";
+
+export const d = {
+	foo: C
+};
+
