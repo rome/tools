@@ -32,6 +32,21 @@ assert_semantics! {
     ok_scope_class_setter, ";class A { set/*START A*/ name(v) {}/*END A*/ }",
 }
 
+// Type parameters
+assert_semantics! {
+    ok_type_parameter, "export type /*START A*/ EventHandler<Event /*# Event */ /*@ A */ extends string> = `on${ Event /*READ Event */ }` /*END A*/",
+    ok_type_parameter_with_default, "export type /*START A */ EventHandler<Event /*# Event */ /*@ A */ extends string = 'click'> = `on${ Event /*READ Event */  }` /*END A*/",
+    ok_type_parameter_multiple_declaration, "
+        export type /*START ScopeA */ EventHandler<Event /*# EventA */ /*@ ScopeA */ extends string> = `on${ Event /*READ EventA */ }`; /*END ScopeA */
+        export type /*START ScopeB */ EventHandlerDefault<Event /*# EventB */ /*@ ScopeB */ extends string = 'click'> = `on${ Event /*READ EventB */  }`; /*END ScopeB */
+    ",
+    ok_type_parameter_interface, "
+        export interface /*START A*/ EventHandler<Event /*# Event */ /*@ A */ extends string> {
+            [`on${ Event /*READ Event */ }`]: (event: Event /*READ Event */, data: unknown) => void;
+        } /*END A*/
+    ",
+}
+
 // Others
 assert_semantics! {
     ok_scope_global, "/*START GLOBAL*//*END GLOBAL*/",
