@@ -372,6 +372,10 @@ export interface Nursery {
 	 */
 	noExplicitAny?: RuleConfiguration;
 	/**
+	 * Check that the scope attribute is only used on th elements.
+	 */
+	noHeaderScope?: RuleConfiguration;
+	/**
 	 * Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors.
 	 */
 	noInvalidConstructorSuper?: RuleConfiguration;
@@ -621,6 +625,7 @@ export type Category =
 	| "lint/nursery/noDupeKeys"
 	| "lint/nursery/noEmptyInterface"
 	| "lint/nursery/noExplicitAny"
+	| "lint/nursery/noHeaderScope"
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noPrecisionLoss"
 	| "lint/nursery/noUnsafeFinally"

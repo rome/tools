@@ -741,6 +741,8 @@ struct NurserySchema {
     no_empty_interface: Option<RuleConfiguration>,
     #[doc = "Disallow the any type usage"]
     no_explicit_any: Option<RuleConfiguration>,
+    #[doc = "Check that the scope attribute is only used on th elements."]
+    no_header_scope: Option<RuleConfiguration>,
     #[doc = "Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors."]
     no_invalid_constructor_super: Option<RuleConfiguration>,
     #[doc = "Disallow literal numbers that lose precision"]
@@ -762,13 +764,14 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 15] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 16] = [
         "noBannedTypes",
         "noConditionalAssignment",
         "noConstAssign",
         "noDupeKeys",
         "noEmptyInterface",
         "noExplicitAny",
+        "noHeaderScope",
         "noInvalidConstructorSuper",
         "noPrecisionLoss",
         "noUnsafeFinally",
