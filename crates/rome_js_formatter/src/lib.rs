@@ -787,9 +787,12 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-declare module 'x' {
-  export default function (option: any): void
-}
+export function formatNumber2(
+  value: string,
+  { a }: Omit<NumberFormatterProps, 'value' | 'defaultFractionDigits'> & {
+    useGrouping?: boolean;
+  }
+): string {}
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, FileId::zero(), syntax);
