@@ -98,12 +98,12 @@ impl Rule for NoShoutyConstants {
             {
                 let model = ctx.model();
 
-                if binding.all_references(ctx.model()).count() >1 {
-                    return None
+                if binding.all_references(ctx.model()).count() > 1 {
+                    return None;
                 }
 
                 for reference in binding.all_references(ctx.model()) {
-                 if let Some(js_reference_identifier) =
+                    if let Some(js_reference_identifier) =
                         JsReferenceIdentifier::cast_ref(reference.node())
                     {
                         if model
