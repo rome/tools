@@ -225,7 +225,7 @@ If none of these options work well for you, let us know by opening a discussion 
 
 This is the fastest way to set up Rome and will deliver the best experience. However, it is not yet adaptable to more complex repository setups.
 
-Replace the `lint` and `format` scripts with Rome's alternatives in your `package.json`:
+Replace the `lint` and `format` scripts with Rome's alternatives in your root `package.json`:
 
 ```diff
 {
@@ -299,6 +299,65 @@ You can run the `lint` script in your repository root or in individual packages 
 
 We're still [looking into](https://github.com/rome/tools/issues/3709) integrating Rome seamlessly with [Nx](https://nx.dev). In the meantime, you can use Rome directly from the CLI or in `package.json` scripts if you would like, as described in previous sections!
 
-## npm workspaces, Yarn berry workspaces, pnpm workspaces, lerna, ...
+## Workspaces, Lerna, etc.
 
-TODO
+After following the [Getting Started guide](/guides/getting-started) to install Rome in the root of the repository, you have two options:
+
+1. Use Rome directly in the root of your repository. We recommend this approach if it works for your repository. Rome is meant to handle monorepo setups as it evolves to cover more and more areas of developer tooling.
+2. Use Rome in individual packages. This may make sense if your packages are very different each other. You may even decide to lint with Rome in one of them, but with a different tool like ESLint in another!
+
+We explain each option below. For more in-depth information on Rome's equivalents to Prettier and ESLint configuration, you can additionally refer to the general Prettier and ESLint guide above.
+to
+If none of these options work well for you, let us know by opening a discussion on our GitHub!
+
+### Using Rome in the root
+
+This is the fastest way to set up Rome and will deliver the best experience. However, it is not yet adaptable to more complex repository setups.
+
+Add `lint` and `format` scripts with to your root `package.json`:
+
+```json
+{
+	"scripts": {
+		"format": "rome format --write .",
+		"lint": "rome check .",
+		"ci": "rome ci ."
+	}
+}
+```
+
+We recommend running `rome` on the whole directory (`.`). For more details and what to do if you need to ignore files, refer to the "Ignoring Files" section of the single package guide at the start of this page.
+
+We try to provide reasonable defaults, but if you would like to make customizations like fine tuning your lint rules, also refer to the single package guide for how to do that.
+
+### Using Rome in individual packages
+
+If you would like to use Rome in some of your packages but not in others, that is also possible.
+
+Usually, you can just run Rome directly as described immediately above, but ignore packages that you would like Rome to leave untouched.
+For example, if you are not ready to format and lint your `ui` and `frontend-app` packages, or would like to use other tools for them, you can ignore those in your `rome.json`:
+
+```json
+{
+	"formatter": {
+		"ignore": ["packages/ui", "packages/frontend-app"]
+	},
+	"linter": {
+		"ignore": ["packages/ui", "packages/frontend-app"]
+	}
+}
+```
+
+Alternatively, if you would like to keep all your tools isolated to individual packages, you can add the Rome commands to the `package.json` files of those individual packages:
+
+```json
+{
+	"scripts": {
+		"format": "rome format --write .",
+		"lint": "rome check .",
+		"ci": "rome ci ."
+	}
+}
+```
+
+Then, you can use your package manager or monorepo management tool (such as Lerna) in the root to run the scripts across all packages. For example, `npm` offers `npm run --workspaces format` to do this.
