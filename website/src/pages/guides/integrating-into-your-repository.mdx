@@ -70,11 +70,9 @@ Instead of ignoring files, it is also possible to run Rome only on specific expl
 <PackageManagerRomeCommand command="format --write **/*.ts" />
 <PackageManagerRomeCommand command="check **/*.ts" />
 
-Instead of ignoring files, it is also possible to run Rome only on specific explicitly included files. However, we recommend that you try using `ignore` if possible. If you explicitly specify which files to format or lint and later a new Rome version comes out with the capability to check even more types of files, you may lose out without noticing!
-
 ## Replacing Prettier and ESLint
 
-After following the [Getting Started guide](/guides/getting-started), let's look into replacing the each tool with Rome. Note that while we try to make the transition from these tools as easy as possible, there will always be some deviation from the behavior of these tools. You may see some reformatted code, missing lint rules, or lint errors from new rules when adopting Rome.
+After following the [Getting Started guide](/guides/getting-started), let's look into replacing each tool with Rome. Note that while we try to make the transition from these tools as easy as possible, there will always be some deviation from the behavior of these tools. You may see some reformatted code, missing lint rules, or lint errors from new rules when adopting Rome.
 
 ### Prettier
 
@@ -130,7 +128,7 @@ build
 
 #### Configuration options
 
-Prettier tries to avoid formatting Configuration options to reduce complexity and end debates over formatting styles, however they had to strike a balance and introduce some in order to enable widespread adoption. Rome follows the same philosophy. Our [configuration reference](/configuration/#formatter) shows the options available, which more or less directly map to Prettier options, sometimes named slightly differently. For example, your `.prettierrc` might specify the following:
+Prettier tries to avoid formatting Configuration options to reduce complexity and end debates over formatting styles, however they had to strike a balance and introduce a couple of options in order to enable widespread adoption. Rome follows the same philosophy. Our [configuration reference](/configuration/#formatter) shows the options available, which more or less directly map to Prettier options, sometimes named slightly differently. For example, your `.prettierrc` might specify the following:
 
 ```json
 {
@@ -152,7 +150,7 @@ To preserve this behavior as you introduce Rome, you can add the following to yo
 
 ### ESLint
 
-Similar to formatting, replace the scripts used for linting in the `package.json` file, for example:
+Similarly to formatting, replace the scripts used for linting in the `package.json` file, for example:
 
 ```diff
 "scripts": {
@@ -165,7 +163,7 @@ Similar to formatting, replace the scripts used for linting in the `package.json
 
 #### Ignoring files
 
-Ignoring files in the Rome linter works in the same way as ignoring them in the Rome formatter.
+Ignoring files for the Rome linter works in the same way as ignoring them for the Rome formatter in your `rome.json`:
 
 ```json
 {
@@ -175,7 +173,7 @@ Ignoring files in the Rome linter works in the same way as ignoring them in the 
 }
 ```
 
-This is equivalent to the `.eslintignore` file
+This is equivalent to the following `.eslintignore` file:
 
 ```
 build
@@ -238,9 +236,9 @@ Replace the `lint` and `format` scripts with Rome's alternatives in your root `p
 }
 ```
 
-We recommend running `rome format` on the whole directory (`.`). For more details and what to do if you need to ignore files, refer to the general guide for migration from Prettier above.
+We recommend running `rome format` on the whole directory (`.`). For more details and what to do if you need to ignore files, refer to the guide section for general migration from Prettier above.
 
-You can now use the same scripts you are used to, but they are backed by Rome's formatting and linting. You can remove your dependencies on Prettier and ESLint, as well as any `.eslintrc` files, `eslint-config-*` packages, and similar code. Refer to the general guide for migration from ESLint above if you have customized your linting after the turborepo setup and would like to apply similar customizations to Rome.
+You can now use the same scripts you are used to, but they are backed by Rome's formatting and linting. You can remove your dependencies on Prettier and ESLint, as well as any `.eslintrc` files, `eslint-config-*` packages, and similar code. If you have customized your linting after the turborepo setup and would like to apply similar customizations to Rome, refer to the guide section for general migration from ESLint above.
 
 ### Using Rome in individual packages
 
@@ -293,7 +291,7 @@ Or in a standard turborepo library, change:
 }
 ```
 
-You can run the `lint` script in your repository root or in individual packages like you are used to.
+You can run the `lint` script in your repository root or in individual packages as you are used to.
 
 ## Nx
 
@@ -314,7 +312,7 @@ If none of these options work well for you, let us know by opening a discussion 
 
 This is the fastest way to set up Rome and will deliver the best experience. However, it is not yet adaptable to more complex repository setups.
 
-Add `lint` and `format` scripts with to your root `package.json`:
+Add the following scripts to your root `package.json`:
 
 ```json
 {
@@ -326,16 +324,16 @@ Add `lint` and `format` scripts with to your root `package.json`:
 }
 ```
 
-We recommend running `rome` on the whole directory (`.`). For more details and what to do if you need to ignore files, refer to the "Ignoring Files" section of the single package guide at the start of this page.
+We recommend running `rome` on the whole directory (`.`). For more details and what to do if you need to ignore files, refer to "Ignoring Files" in the single package guide section at the start of this page.
 
-We try to provide reasonable defaults, but if you would like to make customizations like fine tuning your lint rules, also refer to the single package guide for how to do that.
+We try to provide reasonable defaults, but if you would like to make customizations like fine tuning your lint rules, you can also refer to the single package guide section to learn how to do that.
 
 ### Using Rome in individual packages
 
 If you would like to use Rome in some of your packages but not in others, that is also possible.
 
 Usually, you can just run Rome directly as described immediately above, but ignore packages that you would like Rome to leave untouched.
-For example, if you are not ready to format and lint your `ui` and `frontend-app` packages, or would like to use other tools for them, you can ignore those in your `rome.json`:
+For example, if you are not ready to format and lint your `ui` and `frontend-app` packages, or would like to use other tools for them, you can ignore those packages in your `rome.json`:
 
 ```json
 {
@@ -347,6 +345,8 @@ For example, if you are not ready to format and lint your `ui` and `frontend-app
 	}
 }
 ```
+
+#### With a monorepo command runner
 
 Alternatively, if you would like to keep all your tools isolated to individual packages, you can add the Rome commands to the `package.json` files of those individual packages:
 
