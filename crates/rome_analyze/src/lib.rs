@@ -44,7 +44,7 @@ pub use crate::syntax::SyntaxVisitor;
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
 
 use rome_console::markup;
-use rome_diagnostics::{category, Applicability, FileId};
+use rome_diagnostics::{category, Applicability, DiagnosticTags, FileId};
 use rome_rowan::{
     AstNode, BatchMutation, Direction, Language, SyntaxElement, SyntaxToken, TextRange, TextSize,
     TriviaPieceKind, WalkEvent,
@@ -508,6 +508,7 @@ where
                     range,
                     "Suppression is using a deprecated syntax",
                 )
+                .with_tags(DiagnosticTags::DEPRECATED_CODE)
             });
 
             let signal = signal.with_action(|| {

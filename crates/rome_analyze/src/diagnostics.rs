@@ -200,11 +200,10 @@ impl AnalyzerDiagnostic {
 }
 
 #[derive(Debug, Diagnostic)]
+#[diagnostic(severity = Warning)]
 pub(crate) struct SuppressionDiagnostic {
     #[category]
     category: &'static Category,
-    #[severity]
-    severity: Severity,
     #[location(span)]
     range: TextRange,
     #[location(resource)]
@@ -212,6 +211,8 @@ pub(crate) struct SuppressionDiagnostic {
     #[message]
     #[description]
     message: String,
+    #[tags]
+    tags: DiagnosticTags,
 }
 
 impl SuppressionDiagnostic {
@@ -224,9 +225,14 @@ impl SuppressionDiagnostic {
         Self {
             file_id,
             category,
-            severity: Severity::Warning,
             range,
             message: message.to_string(),
+            tags: DiagnosticTags::empty(),
         }
+    }
+
+    pub(crate) fn with_tags(mut self, tags: DiagnosticTags) -> Self {
+        self.tags |= tags;
+        self
     }
 }
