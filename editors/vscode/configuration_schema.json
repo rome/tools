@@ -969,6 +969,28 @@
             "null"
           ]
         },
+        "useAriaPropTypes": {
+          "description": "Enforce that ARIA state and property values are valid.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useAriaPropsForRole": {
+          "description": "Enforce that elements with ARIA roles must have all required attributes for that role",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useCamelCase": {
           "description": "Enforce camel case naming convention.",
           "anyOf": [

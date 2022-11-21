@@ -385,9 +385,17 @@ pub struct RuleDiagnostic {
 pub struct RuleAdvice {
     pub(crate) details: Vec<Detail>,
     pub(crate) notes: Vec<(LogCategory, MarkupBuf)>,
+    pub(crate) suggestion_list: Option<SuggestionList>,
     pub(crate) code_suggestion_list: Vec<CodeSuggestionAdvice<MarkupBuf>>,
 }
 
+#[derive(Debug, Default)]
+pub struct SuggestionList {
+    pub(crate) message: MarkupBuf,
+    pub(crate) list: Vec<MarkupBuf>,
+}
+
+// TODO: this code will be hit once https://github.com/rome/tools/issues/3829 is closed. Make sure it works as expected.
 impl Advices for RuleAdvice {
     fn record(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
         for detail in &self.details {
@@ -400,6 +408,19 @@ impl Advices for RuleAdvice {
         // we then print notes
         for (log_category, note) in &self.notes {
             visitor.record_log(*log_category, &markup! { {note} }.to_owned())?;
+        }
+
+        if let Some(suggestion_list) = &self.suggestion_list {
+            visitor.record_log(
+                LogCategory::Info,
+                &markup! { {suggestion_list.message} }.to_owned(),
+            )?;
+            let list: Vec<_> = suggestion_list
+                .list
+                .iter()
+                .map(|suggestion| suggestion as &dyn Display)
+                .collect();
+            visitor.record_list(&list)?;
         }
 
         // finally, we print possible code suggestions on how to fix the issue
@@ -484,6 +505,21 @@ impl RuleDiagnostic {
     /// Adds a footer to this [`RuleDiagnostic`], with the `Info` log category.
     pub fn note(self, msg: impl Display) -> Self {
         self.footer(LogCategory::Info, msg)
+    }
+
+    ///
+    pub fn note_list(mut self, message: impl Display, list: &[impl Display]) -> Self {
+        if !list.is_empty() {
+            self.rule_advice.suggestion_list = Some(SuggestionList {
+                message: markup! { {message} }.to_owned(),
+                list: list
+                    .iter()
+                    .map(|msg| markup! { {msg} }.to_owned())
+                    .collect(),
+            });
+        }
+
+        self
     }
 
     /// Adds a footer to this [`RuleDiagnostic`], with the `Warn` severity.

@@ -14,6 +14,8 @@ use serde::{Deserialize, Serialize};
 use std::{borrow::Cow, error::Error};
 
 mod analyzers;
+mod aria_analyzers;
+mod aria_services;
 mod assists;
 mod ast_utils;
 mod control_flow;
@@ -98,6 +100,8 @@ where
     analyzer.add_visitor(Phases::Semantic, SemanticModelVisitor);
     analyzer.add_visitor(Phases::Semantic, SyntaxVisitor::default());
 
+    analyzer.add_visitor(Phases::Accessibility, SyntaxVisitor::default());
+
     analyzer.run(AnalyzerContext {
         file_id,
         root: root.clone(),
@@ -150,9 +154,7 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"const obj = {
-  element: <>test</>
-};
+        const SOURCE: &str = r#"<span aria-current="invalid"></span>
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
@@ -191,7 +193,7 @@ mod tests {
             },
         );
 
-        assert_eq!(error_ranges.as_slice(), &[]);
+        // assert_eq!(error_ranges.as_slice(), &[]);
     }
 
     #[test]

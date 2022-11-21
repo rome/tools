@@ -42,7 +42,6 @@ use crate::signals::DiagnosticSignal;
 pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
 pub use crate::syntax::SyntaxVisitor;
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
-
 use rome_console::markup;
 use rome_diagnostics::{category, Applicability, DiagnosticTags, FileId};
 use rome_rowan::{

@@ -24,6 +24,7 @@ rome_js_analyze = { path = "../../crates/rome_js_analyze", optional = true }
 rome_js_syntax = { path = "../../crates/rome_js_syntax", optional = true }
 rome_js_factory = { path = "../../crates/rome_js_factory", optional = true }
 rome_js_formatter = { path = "../../crates/rome_js_formatter", optional = true }
+rome_aria = { path = "../../crates/rome_aria", optional = true }
 
 schemars = { version = "0.8.10", optional = true }
 serde_json = { version = "1.0.74", optional = true }
@@ -31,4 +32,5 @@ rome_service = { path = "../../crates/rome_service", features = ["schemars"], op
 
 [features]
 configuration = ["rome_analyze", "rome_js_analyze", "rome_js_syntax"]
+aria = ["rome_aria"]
 schema = ["schemars", "serde_json", "rome_rowan", "rome_service", "rome_js_syntax", "rome_js_factory", "rome_js_formatter"]
