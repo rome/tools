@@ -7,3 +7,6 @@ export type NestedContextDefault<S extends NestedContextDefault = ''> = '' | `($
 
 export type Whatever<S extends number> = `Hello ${S}`
 export type WhateverDefault<S extends number = 2> = `Hello ${S}`
+
+// Invalid
+export type Invalid<S extends number> = `Hello ${T}`
