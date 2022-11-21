@@ -390,7 +390,6 @@ fn apply_suppression_comment(payload: SuppressionCommentEmitterPayload<JsLanguag
         }
     };
     if let Some(current_token) = current_token {
-        dbg!(current_token.parent());
         if let Some(element) = current_token.ancestors().find_map(JsxAnyChild::cast) {
             let jsx_comment = jsx_expression_child(
                 token(T!['{']).with_trailing_trivia([(
