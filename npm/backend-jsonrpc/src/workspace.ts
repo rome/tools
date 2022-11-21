@@ -364,6 +364,10 @@ export interface Nursery {
 	 */
 	noDupeKeys?: RuleConfiguration;
 	/**
+	 * Disallow the declaration of empty interfaces.
+	 */
+	noEmptyInterface?: RuleConfiguration;
+	/**
 	 * Disallow the any type usage
 	 */
 	noExplicitAny?: RuleConfiguration;
@@ -619,6 +623,7 @@ export type Category =
 	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstAssign"
 	| "lint/nursery/noDupeKeys"
+	| "lint/nursery/noEmptyInterface"
 	| "lint/nursery/noExplicitAny"
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noPrecisionLoss"

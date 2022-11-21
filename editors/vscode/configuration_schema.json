@@ -797,6 +797,17 @@
             }
           ]
         },
+        "noEmptyInterface": {
+          "description": "Disallow the declaration of empty interfaces.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noExplicitAny": {
           "description": "Disallow the any type usage",
           "anyOf": [
