@@ -92,7 +92,7 @@ impl Rule for NoAccessKey {
             let expression = expression.expression().ok()?;
             let name = expression.as_js_identifier_expression()?.name().ok()?;
             let name_token = name.value_token().ok()?;
-            if matches!(name_token.text_trimmed(), "undefined" | "null") {
+            if name_token.text_trimmed() == "undefined" {
                 return None;
             }
         }
