@@ -3,7 +3,7 @@ use std::{any::type_name, fmt::Debug};
 
 use super::rename::*;
 use crate::utils::batch::JsBatchMutation;
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_js_semantic::{semantic_model, SemanticModelOptions};
 use rome_js_syntax::{
     JsAnyObjectMember, JsFormalParameter, JsIdentifierBinding, JsLanguage, JsVariableDeclarator,

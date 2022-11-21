@@ -48,6 +48,16 @@ impl JsObjectPatternLike {
         }
     }
 
+    fn is_inline(&self, comments: &JsComments) -> FormatResult<bool> {
+        let parent_kind = self.syntax().parent().kind();
+
+        Ok(
+            (matches!(parent_kind, Some(JsSyntaxKind::JS_FORMAL_PARAMETER))
+                || self.is_hug_parameter(comments))
+                && !self.l_curly_token()?.leading_trivia().has_skipped(),
+        )
+    }
+
     fn should_break_properties(&self) -> bool {
         let parent_kind = self.syntax().parent().kind();
 
@@ -60,7 +70,6 @@ impl JsObjectPatternLike {
                     | JsSyntaxKind::JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY
                     | JsSyntaxKind::JS_CATCH_DECLARATION
                     | JsSyntaxKind::JS_OBJECT_BINDING_PATTERN_PROPERTY
-                    | JsSyntaxKind::JS_FORMAL_PARAMETER
             )
         );
 
@@ -132,8 +141,7 @@ impl JsObjectPatternLike {
             return Ok(ObjectPatternLayout::Empty);
         }
 
-        if self.is_hug_parameter(comments) && !self.l_curly_token()?.leading_trivia().has_skipped()
-        {
+        if self.is_inline(comments)? {
             return Ok(ObjectPatternLayout::Inline);
         }
 

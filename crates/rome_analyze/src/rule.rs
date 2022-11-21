@@ -4,14 +4,14 @@ use crate::registry::{RegistryVisitor, RuleLanguage, RuleSuppressions};
 use crate::{AnalyzerDiagnostic, Phase, Phases, Queryable};
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
-use rome_diagnostics::file::FileId;
-use rome_diagnostics::v2::advice::CodeSuggestionAdvice;
-use rome_diagnostics::v2::location::AsSpan;
-use rome_diagnostics::v2::{
+use rome_diagnostics::advice::CodeSuggestionAdvice;
+use rome_diagnostics::location::AsSpan;
+use rome_diagnostics::location::FileId;
+use rome_diagnostics::Applicability;
+use rome_diagnostics::{
     Advices, Category, Diagnostic, DiagnosticTags, Location, LogCategory, MessageAndDescription,
     Visit,
 };
-use rome_diagnostics::Applicability;
 use rome_rowan::{BatchMutation, Language, TextRange};
 use serde::de::DeserializeOwned;
 

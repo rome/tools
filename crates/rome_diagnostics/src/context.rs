@@ -1,6 +1,6 @@
 use rome_console::fmt;
 
-use super::{
+use crate::{
     diagnostic::internal::AsDiagnostic,
     location::{AsResource, AsSourceCode},
     Category, Error, Resource, SourceCode,
@@ -156,7 +156,7 @@ mod internal {
     use rome_console::{fmt, markup};
     use rome_text_edit::TextEdit;
 
-    use crate::v2::{
+    use crate::{
         diagnostic::internal::AsDiagnostic, Advices, Backtrace, Category, Diagnostic,
         DiagnosticTags, LineIndex, LineIndexBuf, Location, LogCategory, Resource, Severity,
         SourceCode, Visit,

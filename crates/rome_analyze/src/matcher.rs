@@ -1,6 +1,6 @@
 use std::{cmp::Ordering, collections::BinaryHeap};
 
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_rowan::{Language, TextRange};
 
 use crate::{
@@ -153,8 +153,8 @@ where
 
 #[cfg(test)]
 mod tests {
-    use rome_diagnostics::v2::{Diagnostic, Error, Severity};
-    use rome_diagnostics::{file::FileId, v2::category};
+    use rome_diagnostics::{category, location::FileId};
+    use rome_diagnostics::{Diagnostic, Error, Severity};
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
         AstNode, TextRange, TextSize, TriviaPiece, TriviaPieceKind,

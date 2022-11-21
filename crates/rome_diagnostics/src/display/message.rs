@@ -8,7 +8,7 @@ use termcolor::NoColor;
 /// ## Examples
 ///
 /// ```
-/// use rome_diagnostics::v2::{Diagnostic, MessageAndDescription};
+/// use rome_diagnostics::{Diagnostic, MessageAndDescription};
 ///
 /// #[derive(Debug, Diagnostic)]
 /// struct TestDiagnostic {

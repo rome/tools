@@ -1,6 +1,6 @@
 use std::collections::BinaryHeap;
 
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
 
 use crate::{

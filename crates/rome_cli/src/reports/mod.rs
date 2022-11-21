@@ -2,7 +2,7 @@ pub mod formatter;
 
 use crate::reports::formatter::{FormatterReportFileDetail, FormatterReportSummary};
 use formatter::FormatterReport;
-use rome_diagnostics::v2::{Category, Severity};
+use rome_diagnostics::{Category, Severity};
 use rome_service::RomeError;
 use serde::Serialize;
 use std::collections::HashMap;

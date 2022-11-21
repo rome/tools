@@ -1,4 +1,4 @@
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_formatter::{FormatOptions, LineWidth};
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;

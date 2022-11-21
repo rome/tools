@@ -11,8 +11,7 @@ use rome_console::fmt::{self, Formatter};
 use rome_console::MarkupBuf;
 use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{
-    v2::{Diagnostic, DiagnosticTags, Location, PrintDescription, Severity, Visit},
-    Applicability,
+    Applicability, {Diagnostic, DiagnosticTags, Location, PrintDescription, Severity, Visit},
 };
 use rome_rowan::{TextRange, TextSize};
 use rome_service::workspace::CodeAction;

@@ -358,6 +358,7 @@ mod event;
 mod lexer;
 mod lossless_tree_sink;
 mod parse;
+mod span;
 mod state;
 
 #[cfg(any(test, feature = "tests"))]
@@ -381,9 +382,9 @@ pub use crate::{
 pub(crate) use parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser};
 use rome_console::fmt::Display;
 use rome_console::MarkupBuf;
-use rome_diagnostics::v2::console::markup;
-use rome_diagnostics::v2::location::AsSpan;
-use rome_diagnostics::v2::{
+use rome_diagnostics::console::markup;
+use rome_diagnostics::location::AsSpan;
+use rome_diagnostics::{
     Advices, Diagnostic, FileId, Location, LogCategory, MessageAndDescription, Visit,
 };
 use rome_js_syntax::{JsSyntaxKind, LanguageVariant};
@@ -498,7 +499,7 @@ impl ParseDiagnostic {
     /// ```
     /// use rome_console::fmt::{Termcolor};
     /// use rome_console::markup;
-    /// use rome_diagnostics::v2::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
+    /// use rome_diagnostics::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
     /// use rome_js_parser::ParseDiagnostic;
     /// use rome_js_syntax::TextRange;
     /// use rome_rowan::TextSize;
@@ -556,7 +557,7 @@ impl ParseDiagnostic {
     /// ```
     /// use rome_console::fmt::{Termcolor};
     /// use rome_console::markup;
-    /// use rome_diagnostics::v2::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
+    /// use rome_diagnostics::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
     /// use rome_js_parser::ParseDiagnostic;
     /// use rome_js_syntax::TextRange;
     /// use rome_rowan::TextSize;

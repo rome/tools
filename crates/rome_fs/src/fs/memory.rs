@@ -6,7 +6,7 @@ use std::str;
 use std::sync::Arc;
 
 use parking_lot::{lock_api::ArcMutexGuard, Mutex, RawMutex, RwLock};
-use rome_diagnostics::v2::Error;
+use rome_diagnostics::Error;
 
 use crate::fs::{FileSystemExt, OpenOptions};
 use crate::{FileSystem, RomePath, TraversalContext, TraversalScope};
@@ -75,6 +75,8 @@ impl FileSystem for MemoryFileSystem {
             self.open(path)
         } else if options.create_new || options.write {
             self.create(path)
+        } else if options.read {
+            self.read(path)
         } else {
             unimplemented!("the set of open options provided don't match any case")
         }
@@ -207,11 +209,11 @@ mod tests {
     };
 
     use parking_lot::Mutex;
-    use rome_diagnostics::v2::Error;
+    use rome_diagnostics::Error;
 
     use crate::fs::FileSystemExt;
     use crate::{FileSystem, MemoryFileSystem, PathInterner, RomePath, TraversalContext};
-    use rome_diagnostics::file::FileId;
+    use rome_diagnostics::location::FileId;
 
     #[test]
     fn file_read_write() {
