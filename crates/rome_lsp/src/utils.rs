@@ -16,7 +16,7 @@ use std::fmt::{Debug, Display};
 use std::io;
 use tower_lsp::jsonrpc::Error as LspError;
 use tower_lsp::lsp_types::{self as lsp};
-use tracing::{debug, error};
+use tracing::error;
 
 pub(crate) fn position(line_index: &LineIndex, offset: TextSize) -> Result<lsp::Position> {
     let line_col = line_index.line_col(offset).with_context(|| {
@@ -118,15 +118,19 @@ pub(crate) fn code_fix_to_lsp(
     action: CodeAction,
 ) -> Result<lsp::CodeAction> {
     // Mark diagnostics emitted by the same rule as resolved by this action
-    let diagnostics: Vec<_> = if action.category.matches("quickfix") {
-        diagnostics
-            .iter()
-            .filter_map(|d| {
-                let code = d.code.as_ref()?;
-                let code = match code {
-                    lsp::NumberOrString::String(code) => code.as_str(),
-                    lsp::NumberOrString::Number(_) => return None,
-                };
+    let diagnostics: Vec<_> = action
+        .rule_name
+        .as_ref()
+        .filter(|_| action.category.matches("quickfix"))
+        .map(|(group_name, rule_name)| {
+            diagnostics
+                .iter()
+                .filter_map(|d| {
+                    let code = d.code.as_ref()?;
+                    let code = match code {
+                        lsp::NumberOrString::String(code) => code.as_str(),
+                        lsp::NumberOrString::Number(_) => return None,
+                    };
 
                     let code = code.strip_prefix("lint/")?;
                     let code = code.strip_prefix(group_name.as_ref())?;

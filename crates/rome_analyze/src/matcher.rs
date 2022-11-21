@@ -2,7 +2,7 @@ use crate::{
     AnalyzerOptions, AnalyzerSignal, Phases, QueryMatch, Rule, RuleFilter, RuleGroup, ServiceBag,
     SuppressionCommentEmitter,
 };
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::FileId;
 use rome_rowan::{Language, TextRange};
 use std::{cmp::Ordering, collections::BinaryHeap};
 

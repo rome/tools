@@ -2,13 +2,12 @@ use control_flow::make_visitor;
 use rome_analyze::{
     AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal, ControlFlow,
     InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry, Phases, RuleAction,
-    RuleRegistry, ServiceBag, SuppressionCommentEmitterPayload, SyntaxVisitor,
+    RuleRegistry, ServiceBag, SuppressionCommentEmitterPayload, SuppressionKind, SyntaxVisitor,
 };
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::{category, FileId};
 use rome_js_factory::make::{jsx_expression_child, token};
 use rome_js_syntax::{
-    suppression::{parse_suppression_comment, SuppressionCategory},
-    JsLanguage, JsSyntaxToken, JsxAnyChild, T,
+    suppression::parse_suppression_comment, JsLanguage, JsSyntaxToken, JsxAnyChild, T,
 };
 use rome_rowan::{AstNode, TokenAtOffset, TriviaPieceKind};
 use serde::{Deserialize, Serialize};
@@ -264,7 +263,7 @@ mod tests {
                     }
 
                     if code == category!("suppressions/deprecatedSyntax") {
-                        assert!(signal.action().is_some());
+                        assert!(signal.actions().len() > 0);
                         warn_ranges.push(span.unwrap());
                     }
                 }

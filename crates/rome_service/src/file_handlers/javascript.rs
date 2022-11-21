@@ -17,8 +17,7 @@ use rome_analyze::{
     AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Never, QueryMatch,
     RegistryVisitor, RuleCategories, RuleCategory, RuleFilter, RuleGroup,
 };
-use rome_diagnostics::{category, Applicability, CodeSuggestion, Severity};
-use rome_diagnostics::{v2, v2::Diagnostic};
+use rome_diagnostics::{category, Applicability, Diagnostic, Severity};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::utils::rename::{RenameError, RenameSymbolExtensions};
@@ -338,17 +337,15 @@ fn code_actions(
     let analyzer_options = compute_analyzer_options(&settings);
 
     analyze(file_id, &tree, filter, &analyzer_options, |signal| {
-        actions.extend(
-            signal
-                .actions()
-                .into_code_action_iter()
-                .map(|item| CodeAction {
-                    category: item.category.clone(),
-                    group_name: Cow::Borrowed(item.group_name),
-                    rule_name: Cow::Borrowed(item.rule_name),
-                    suggestion: item.suggestion,
-                }),
-        );
+        actions.extend(signal.actions().into_code_action_iter().map(|item| {
+            CodeAction {
+                category: item.category.clone(),
+                rule_name: item
+                    .rule_name
+                    .map(|(group, name)| (Cow::Borrowed(group), Cow::Borrowed(name))),
+                suggestion: item.suggestion,
+            }
+        }));
 
         ControlFlow::<Never>::Continue(())
     });

@@ -75,7 +75,11 @@ where
     }
 
     fn actions(&self) -> AnalyzerActionIter<L> {
-        AnalyzerActionIter::new(vec![])
+        if let Some(action) = (self.action)() {
+            AnalyzerActionIter::new(vec![action])
+        } else {
+            AnalyzerActionIter::new(vec![])
+        }
     }
 }
 
@@ -115,14 +119,13 @@ impl<L: Language> From<AnalyzerAction<L>> for CodeSuggestionAdvice<MarkupBuf> {
     }
 }
 
-impl<'a, L: Language> From<AnalyzerAction<L>> for CodeSuggestionItem<'a> {
+impl<L: Language> From<AnalyzerAction<L>> for CodeSuggestionItem {
     fn from(action: AnalyzerAction<L>) -> Self {
         let (range, suggestion) = action.mutation.as_text_edits().unwrap_or_default();
 
         CodeSuggestionItem {
             rule_name: action.rule_name,
             category: action.category,
-            group_name: action.group_name,
             suggestion: CodeSuggestion {
                 span: FileSpan {
                     file: action.file_id,
@@ -186,15 +189,14 @@ pub struct CodeActionIter<L: Language> {
     iter: IntoIter<AnalyzerAction<L>>,
 }
 
-pub struct CodeSuggestionItem<'a> {
+pub struct CodeSuggestionItem {
     pub category: ActionCategory,
     pub suggestion: CodeSuggestion,
-    pub rule_name: &'a str,
-    pub group_name: &'a str,
+    pub rule_name: Option<(&'static str, &'static str)>,
 }
 
 impl<L: Language> Iterator for CodeActionIter<L> {
-    type Item = CodeSuggestionItem<'static>;
+    type Item = CodeSuggestionItem;
 
     fn next(&mut self) -> Option<Self::Item> {
         let action = self.iter.next()?;
@@ -296,8 +298,7 @@ where
                     R::suppress(&ctx, &text_range, self.apply_suppression_comment)
                 {
                     let action = AnalyzerAction {
-                        group_name: <R::Group as RuleGroup>::NAME,
-                        rule_name: R::METADATA.name,
+                        rule_name: Some((<R::Group as RuleGroup>::NAME, R::METADATA.name)),
                         file_id: self.file_id,
                         category: ActionCategory::Other(Cow::Borrowed(SUPPRESSION_ACTION_CATEGORY)),
                         applicability: Applicability::Always,
