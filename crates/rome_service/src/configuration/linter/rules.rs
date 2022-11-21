@@ -737,6 +737,8 @@ struct NurserySchema {
     no_const_assign: Option<RuleConfiguration>,
     #[doc = "Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake."]
     no_dupe_keys: Option<RuleConfiguration>,
+    #[doc = "Disallow the declaration of empty interfaces."]
+    no_empty_interface: Option<RuleConfiguration>,
     #[doc = "Disallow the any type usage"]
     no_explicit_any: Option<RuleConfiguration>,
     #[doc = "Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors."]
@@ -760,11 +762,12 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 14] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 15] = [
         "noBannedTypes",
         "noConditionalAssignment",
         "noConstAssign",
         "noDupeKeys",
+        "noEmptyInterface",
         "noExplicitAny",
         "noInvalidConstructorSuper",
         "noPrecisionLoss",
