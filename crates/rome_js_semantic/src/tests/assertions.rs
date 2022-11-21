@@ -669,10 +669,6 @@ impl SemanticAssertions {
                 // where we expect
                 let e = events.iter().find(|event| match event {
                     SemanticEvent::ScopeEnded { started_at, .. } => {
-                        println!(
-                            "started_at: {:?} scope_start_assertions_range: {:?}",
-                            started_at, scope_start_assertions_range
-                        );
                         *started_at == scope_start_assertions_range.start()
                     }
                     _ => false,
