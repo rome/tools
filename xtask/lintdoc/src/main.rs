@@ -466,7 +466,7 @@ fn assert_lint(
     let mut write_diagnostic = |code: &str, diag: rome_diagnostics::Error| {
         let category = diag.category().map_or("", |code| code.name());
         Formatter::new(&mut write).write_markup(markup! {
-            {PrintDiagnostic(&diag, true)}
+            {PrintDiagnostic::verbose(&diag)}
         })?;
 
         all_diagnostics.push(diag);
@@ -479,7 +479,7 @@ fn assert_lint(
                     console.print(
                         rome_console::LogLevel::Error,
                         markup! {
-                            {PrintDiagnostic(diag, true)}
+                            {PrintDiagnostic::verbose(diag)}
                         },
                     );
                 }
@@ -497,7 +497,7 @@ fn assert_lint(
                 console.print(
                     rome_console::LogLevel::Error,
                     markup! {
-                        {PrintDiagnostic(diag, true)}
+                        {PrintDiagnostic::verbose(diag)}
                     },
                 );
             }

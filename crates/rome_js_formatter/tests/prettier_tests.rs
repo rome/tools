@@ -226,7 +226,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
                 .with_file_source_code(parse_input.clone());
             Formatter::new(&mut Termcolor(&mut buffer))
                 .write_markup(markup! {
-                    {PrintDiagnostic(&error, true)}
+                    {PrintDiagnostic::verbose(&error)}
                 })
                 .expect("failed to emit diagnostic");
         }

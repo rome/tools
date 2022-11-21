@@ -150,7 +150,7 @@ impl TestCaseFiles {
     pub(crate) fn emit_errors(&self, errors: &[Error], buffer: &mut Buffer) {
         for error in errors {
             if let Err(err) = Formatter::new(&mut Termcolor(&mut *buffer)).write_markup(markup! {
-                {PrintDiagnostic(error, true)}
+                {PrintDiagnostic::verbose(error)}
             }) {
                 eprintln!("Failed to print diagnostic: {}", err);
             }

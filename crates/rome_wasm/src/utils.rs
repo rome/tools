@@ -51,7 +51,13 @@ impl DiagnosticPrinter {
 
         let mut html = HTML(&mut self.buffer);
         Formatter::new(&mut html)
-            .write_markup(markup!({ PrintDiagnostic(&err, verbose) }))
+            .write_markup(markup!({
+                if verbose {
+                    PrintDiagnostic::verbose(&err)
+                } else {
+                    PrintDiagnostic::simple(&err)
+                }
+            }))
             .map_err(into_error)?;
 
         Ok(())

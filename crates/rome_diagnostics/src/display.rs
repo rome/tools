@@ -33,11 +33,30 @@ impl<'fmt, D: AsDiagnostic + ?Sized> std::fmt::Display for PrintDescription<'fmt
 
 /// Helper struct for printing a diagnostic as markup into any formatter
 /// implementing [rome_console::fmt::Write].
-pub struct PrintDiagnostic<'fmt, D: ?Sized>(pub &'fmt D, pub bool);
+pub struct PrintDiagnostic<'fmt, D: ?Sized> {
+    diag: &'fmt D,
+    verbose: bool,
+}
+
+impl<'fmt, D: AsDiagnostic + ?Sized> PrintDiagnostic<'fmt, D> {
+    pub fn simple(diag: &'fmt D) -> Self {
+        Self {
+            diag,
+            verbose: false,
+        }
+    }
+
+    pub fn verbose(diag: &'fmt D) -> Self {
+        Self {
+            diag,
+            verbose: true,
+        }
+    }
+}
 
 impl<'fmt, D: AsDiagnostic + ?Sized> fmt::Display for PrintDiagnostic<'fmt, D> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> io::Result<()> {
-        let diagnostic = self.0.as_diagnostic();
+        let diagnostic = self.diag.as_diagnostic();
 
         // Print the header for the diagnostic
         fmt.write_markup(markup! {
@@ -49,7 +68,7 @@ impl<'fmt, D: AsDiagnostic + ?Sized> fmt::Display for PrintDiagnostic<'fmt, D> {
         let mut fmt = IndentWriter::wrap(fmt, &mut slot, true, "  ");
         let mut visitor = PrintAdvices(&mut fmt);
 
-        print_advices(&mut visitor, diagnostic, self.1)
+        print_advices(&mut visitor, diagnostic, self.verbose)
     }
 }
 
@@ -729,7 +748,7 @@ mod tests {
     fn test_header() {
         let diag = TestDiagnostic::<LogAdvices>::with_location();
 
-        let diag = markup!({ PrintDiagnostic(&diag, true) }).to_owned();
+        let diag = markup!({ PrintDiagnostic::verbose(&diag) }).to_owned();
 
         let expected = markup!{
             "path:1:1 internalError/io "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -753,7 +772,7 @@ mod tests {
             ..TestDiagnostic::empty()
         };
 
-        let diag = markup!({ PrintDiagnostic(&diag, true) }).to_owned();
+        let diag = markup!({ PrintDiagnostic::verbose(&diag) }).to_owned();
 
         let expected = markup!{
             "internalError/io "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -783,7 +802,7 @@ mod tests {
             ..TestDiagnostic::empty()
         };
 
-        let diag = markup!({ PrintDiagnostic(&diag, true) }).to_owned();
+        let diag = markup!({ PrintDiagnostic::verbose(&diag) }).to_owned();
 
         let expected = markup!{
             "internalError/io "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -808,7 +827,7 @@ mod tests {
             ..TestDiagnostic::empty()
         };
 
-        let diag = markup!({ PrintDiagnostic(&diag, true) }).to_owned();
+        let diag = markup!({ PrintDiagnostic::verbose(&diag) }).to_owned();
 
         let expected = markup!{
             "internalError/io "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -833,7 +852,7 @@ mod tests {
             ..TestDiagnostic::empty()
         };
 
-        let diag = markup!({ PrintDiagnostic(&diag, true) }).to_owned();
+        let diag = markup!({ PrintDiagnostic::verbose(&diag) }).to_owned();
 
         let expected = markup!{
             "internalError/io "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -858,7 +877,7 @@ mod tests {
             ..TestDiagnostic::empty()
         };
 
-        let diag = markup!({ PrintDiagnostic(&diag, true) }).to_owned();
+        let diag = markup!({ PrintDiagnostic::verbose(&diag) }).to_owned();
 
         let expected = markup!{
             "internalError/io "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -884,7 +903,7 @@ mod tests {
             ..TestDiagnostic::empty()
         };
 
-        let diag = markup!({ PrintDiagnostic(&diag, true) }).to_owned();
+        let diag = markup!({ PrintDiagnostic::verbose(&diag) }).to_owned();
 
         let expected = markup!{
             "internalError/io "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -908,7 +927,7 @@ mod tests {
             ..TestDiagnostic::empty()
         };
 
-        let diag = markup!({ PrintDiagnostic(&diag, true) }).to_owned();
+        let diag = markup!({ PrintDiagnostic::verbose(&diag) }).to_owned();
 
         let expected = markup!{
             "internalError/io "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
