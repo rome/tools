@@ -9,9 +9,8 @@ mod diff;
 mod frame;
 mod message;
 
-use crate::v2::display::frame::SourceFile;
-
-use super::{
+use crate::display::frame::SourceFile;
+use crate::{
     diagnostic::internal::AsDiagnostic, Advices, Diagnostic, DiagnosticTags, Location, LogCategory,
     Resource, Severity, Visit,
 };
@@ -546,17 +545,17 @@ mod tests {
     use std::io;
 
     use rome_console::{fmt, markup};
-    use rome_diagnostics::v2::{DiagnosticTags, Severity};
+    use rome_diagnostics::{DiagnosticTags, Severity};
     use rome_diagnostics_categories::{category, Category};
     use rome_text_edit::TextEdit;
     use rome_text_size::{TextRange, TextSize};
     use serde_json::{from_value, json};
 
-    use crate::v2::{
+    use crate::{self as rome_diagnostics};
+    use crate::{
         Advices, Diagnostic, FilePath, Location, LogCategory, PrintDiagnostic, Resource,
         SourceCode, Visit,
     };
-    use crate::{self as rome_diagnostics};
 
     #[derive(Debug)]
     struct TestDiagnostic<A> {

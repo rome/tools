@@ -1,7 +1,5 @@
 use rome_console::{markup, ConsoleExt, EnvConsole};
-use rome_diagnostics::v2::{
-    Diagnostic, LineIndexBuf, PrintDiagnostic, Resource, Result, SourceCode,
-};
+use rome_diagnostics::{Diagnostic, LineIndexBuf, PrintDiagnostic, Resource, Result, SourceCode};
 use rome_rowan::{TextRange, TextSize};
 use serde_json::Error;
 

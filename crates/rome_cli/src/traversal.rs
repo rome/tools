@@ -8,13 +8,11 @@ use crossbeam::{
 };
 use rome_console::{fmt, markup, Console, ConsoleExt};
 use rome_diagnostics::{
-    file::FileId,
-    v2::{
-        self,
-        adapters::{IoError, StdError},
-        category, Advices, Category, DiagnosticExt, Error, FilePath, PrintDescription,
-        PrintDiagnostic, Severity, Visit,
-    },
+    adapters::{IoError, StdError},
+    category,
+    location::FileId,
+    Advices, Category, Diagnostic, DiagnosticExt, Error, FilePath, PrintDescription,
+    PrintDiagnostic, Resource, Severity, Visit,
 };
 use rome_fs::{FileSystem, OpenOptions, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
@@ -266,7 +264,7 @@ struct ProcessMessagesOptions<'ctx> {
     report: &'ctx mut Report,
 }
 
-#[derive(Debug, v2::Diagnostic)]
+#[derive(Debug, Diagnostic)]
 #[diagnostic(
     category = "format",
     message = "File content differs from formatting output"
@@ -278,7 +276,7 @@ struct CIDiffDiagnostic<'a> {
     diff: FormatDiffAdvice<'a>,
 }
 
-#[derive(Debug, v2::Diagnostic)]
+#[derive(Debug, Diagnostic)]
 #[diagnostic(
     severity = Information,
     category = "format",
@@ -304,12 +302,12 @@ impl Advices for FormatDiffAdvice<'_> {
     }
 }
 
-#[derive(Debug, v2::Diagnostic)]
+#[derive(Debug, Diagnostic)]
 struct TraversalDiagnostic<'a> {
     #[location(resource)]
     file_name: Option<&'a str>,
     #[severity]
-    severity: v2::Severity,
+    severity: Severity,
     #[category]
     category: &'static Category,
     #[message]
@@ -371,7 +369,7 @@ fn process_messages(options: ProcessMessagesOptions) {
 
             Message::Error(mut err) => {
                 if let Some(location) = err.location() {
-                    if let v2::Resource::File(FilePath::FileId(file_id)) = location.resource {
+                    if let Resource::File(FilePath::FileId(file_id)) = location.resource {
                         // Retrieves the file name from the file ID cache, if it's a miss
                         // flush entries from the interner channel until it's found
                         let file_name = match paths.get(&file_id) {
@@ -423,7 +421,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                         .location()
                         .and_then(|location| {
                             let path = match &location.resource {
-                                v2::Resource::File(file) => file,
+                                Resource::File(file) => file,
                                 _ => return None,
                             };
 
@@ -944,7 +942,7 @@ where
     }
 }
 
-#[derive(Debug, v2::Diagnostic)]
+#[derive(Debug, Diagnostic)]
 #[diagnostic(category = "internalError/panic", tags(INTERNAL))]
 struct PanicDiagnostic {
     #[description]
@@ -952,11 +950,11 @@ struct PanicDiagnostic {
     message: String,
 }
 
-#[derive(Debug, v2::Diagnostic)]
+#[derive(Debug, Diagnostic)]
 #[diagnostic(category = "files/missingHandler", message = "unhandled file type")]
 struct UnhandledDiagnostic;
 
-#[derive(Debug, v2::Diagnostic)]
+#[derive(Debug, Diagnostic)]
 #[diagnostic(category = "parse", message = "Skipped file with syntax errors")]
 struct SkippedDiagnostic;
 

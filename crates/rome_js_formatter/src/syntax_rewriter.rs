@@ -531,7 +531,7 @@ where
 mod tests {
     use super::JsFormatSyntaxRewriter;
     use crate::{format_node, JsFormatOptions, TextRange};
-    use rome_diagnostics::file::FileId;
+    use rome_diagnostics::location::FileId;
     use rome_formatter::{SourceMarker, TransformSourceMap};
     use rome_js_parser::{parse, parse_module};
     use rome_js_syntax::{

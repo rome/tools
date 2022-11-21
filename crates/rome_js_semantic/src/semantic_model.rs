@@ -616,7 +616,7 @@ impl SemanticModel {
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
     /// use rome_js_semantic::{semantic_model, SemanticModelOptions, SemanticScopeExtensions};
-    /// use rome_diagnostics::file::FileId;
+    /// use rome_diagnostics::location::FileId;
     ///
     /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", FileId::zero(), SourceType::js_module());
     /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
@@ -659,7 +659,7 @@ impl SemanticModel {
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
     /// use rome_js_semantic::{semantic_model, DeclarationExtensions, SemanticModelOptions};
-    /// use rome_diagnostics::file::FileId;
+    /// use rome_diagnostics::location::FileId;
     ///
     /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", FileId::zero(), SourceType::js_module());
     /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
@@ -693,7 +693,7 @@ impl SemanticModel {
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsIdentifierBinding};
     /// use rome_js_semantic::{semantic_model, AllReferencesExtensions, SemanticModelOptions};
-    /// use rome_diagnostics::file::FileId;
+    /// use rome_diagnostics::location::FileId;
     ///
     /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", FileId::zero(), SourceType::js_module());
     /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
@@ -1147,7 +1147,7 @@ pub fn semantic_model(root: &JsAnyRoot, options: SemanticModelOptions) -> Semant
 #[cfg(test)]
 mod test {
     use super::*;
-    use rome_diagnostics::file::FileId;
+    use rome_diagnostics::location::FileId;
     use rome_js_syntax::{JsReferenceIdentifier, JsSyntaxKind, SourceType, TsIdentifierBinding};
     use rome_rowan::SyntaxNodeCast;
 

@@ -8,7 +8,7 @@ use serde::{
     Deserialize, Deserializer, Serialize, Serializer,
 };
 
-use super::{
+use crate::{
     diagnostic::internal::AsDiagnostic, diagnostic::DiagnosticTag, Advices as _, Backtrace,
     Category, DiagnosticTags, LogCategory, Resource, Severity, SourceCode, Visit,
 };
@@ -366,8 +366,7 @@ mod tests {
     use serde_json::{from_value, json, to_value, Value};
 
     use crate::{
-        self as rome_diagnostics,
-        v2::{Advices, LogCategory, Visit},
+        self as rome_diagnostics, {Advices, LogCategory, Visit},
     };
     use rome_diagnostics_macros::Diagnostic;
 
