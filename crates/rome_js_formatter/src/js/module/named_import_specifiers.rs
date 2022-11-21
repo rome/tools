@@ -3,7 +3,6 @@ use crate::prelude::*;
 use rome_formatter::write;
 use rome_js_syntax::JsNamedImportSpecifiers;
 use rome_js_syntax::JsNamedImportSpecifiersFields;
-use rome_rowan::AstSeparatedElement;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsNamedImportSpecifiers;
