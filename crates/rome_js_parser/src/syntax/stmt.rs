@@ -585,7 +585,9 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
     let start = p.cur_range();
     p.expect(T![continue]); // continue keyword
 
-    let error = if !p.has_preceding_line_break() && p.at(T![ident]) {
+    // test async_continue_stmt
+    // async: for(a of b) continue async;
+    let error = if !p.has_preceding_line_break() && is_at_identifier(p) {
         let label_name = p.cur_src();
 
         let error = match p.state.get_labelled_item(label_name) {
@@ -608,7 +610,7 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
 			}
 		};
 
-        p.bump_any();
+        p.bump_remap(T![ident]);
 
         error
     } else if !p.state.continue_allowed() {
