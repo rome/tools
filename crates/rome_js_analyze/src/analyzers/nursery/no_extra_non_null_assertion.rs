@@ -60,7 +60,7 @@ impl Rule for NoExtraNonNullAssertion {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-		let parent = node.parent::<JsAnyExpression>()?;
+        let parent = node.parent::<JsAnyExpression>()?;
 
         if has_extra_non_null_assertion(parent)? {
             return Some(());
