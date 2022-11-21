@@ -693,7 +693,22 @@ async fn pull_quick_fixes() -> Result<()> {
     });
 
     let mut suppression_changes = HashMap::default();
-    suppression_changes.insert(lsp::Url::parse("test://workspace/document.js")?, vec![]);
+    suppression_changes.insert(
+        lsp::Url::parse("test://workspace/document.js")?,
+        vec![lsp::TextEdit {
+            range: lsp::Range {
+                start: lsp::Position {
+                    line: 0,
+                    character: 2,
+                },
+                end: lsp::Position {
+                    line: 0,
+                    character: 2,
+                },
+            },
+            new_text: String::from("\n// rome-ignore lint/correctness/noCompareNegZero \n"),
+        }],
+    );
 
     let expected_suppression_action = lsp::CodeActionOrCommand::CodeAction(lsp::CodeAction {
         title: String::from("Suppress rule lint/correctness/noCompareNegZero"),
@@ -707,7 +722,7 @@ async fn pull_quick_fixes() -> Result<()> {
             change_annotations: None,
         }),
         command: None,
-        is_preferred: Some(true),
+        is_preferred: None,
         disabled: None,
         data: None,
     });

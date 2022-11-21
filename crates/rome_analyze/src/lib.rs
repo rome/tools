@@ -692,7 +692,7 @@ type SuppressionCommentEmitter<L> = fn(
     token_offset: TokenAtOffset<SyntaxToken<L>>,
     mutation: &mut BatchMutation<L>,
     suppression_text: &str,
-) -> ();
+);
 
 type SignalHandler<'a, L, Break> = &'a mut dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<Break>;
 

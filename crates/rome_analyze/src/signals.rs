@@ -79,16 +79,6 @@ where
     }
 }
 
-impl<L: Language> AnalyzerSignal<L> for AnalyzerAction<L> {
-    fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
-        (self.action)()
-    }
-
-    fn actions(&self) -> AnalyzerActionIter<L> {
-        AnalyzerActionIter::new(vec![self.clone()])
-    }
-}
-
 /// Code Action object returned by the analyzer, generated from a [crate::RuleAction]
 /// with additional information about the rule injected by the analyzer
 ///
@@ -245,8 +235,7 @@ pub(crate) struct RuleSignal<'phase, R: Rule> {
     services: &'phase ServiceBag,
     options: AnalyzerOptions,
     /// An optional action to suppress the rule.
-    apply_suppression_comment:
-        SuppressionCommentEmitter<<<R as Rule>::Query as Queryable>::Language>,
+    apply_suppression_comment: SuppressionCommentEmitter<RuleLanguage<R>>,
 }
 
 impl<'phase, R> RuleSignal<'phase, R>

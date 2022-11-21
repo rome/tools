@@ -345,7 +345,7 @@ pub trait Rule: RuleMeta + Sized {
             );
             let suppression_text = format!("rome-ignore {}", rule_category);
             let mut mutation = ctx.root().begin();
-            let token = ctx.root().syntax().token_at_offset(text_range.end());
+            let token = ctx.root().syntax().token_at_offset(text_range.start());
             apply_suppression_comment(token, &mut mutation, suppression_text.as_str());
 
             Some(SuppressAction {

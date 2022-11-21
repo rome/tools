@@ -1,8 +1,10 @@
 use rome_text_edit::TextEdit;
-use rome_text_size::TextRange;
+use rome_text_size::{TextRange, TextSize};
 use tracing::debug;
 
-use crate::{AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxSlot, SyntaxToken};
+use crate::{
+    AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxSlot, SyntaxToken, TriviaPiece,
+};
 use std::{
     cmp,
     collections::BinaryHeap,
@@ -222,7 +224,29 @@ where
         prev_token: SyntaxToken<L>,
         next_token: SyntaxToken<L>,
     ) {
-        self.replace_element_discard_trivia(prev_token.into(), next_token.into())
+        let leading_trivia: Vec<_> = prev_token
+            .leading_trivia()
+            .pieces()
+            .chain(prev_token.leading_trivia().pieces())
+            .map(|piece| TriviaPiece::new(piece.kind(), TextSize::of(piece.text())))
+            .collect();
+
+        let trailing_trivia: Vec<_> = next_token
+            .trailing_trivia()
+            .pieces()
+            .chain(next_token.trailing_trivia().pieces())
+            .map(|piece| TriviaPiece::new(piece.kind(), TextSize::of(piece.text())))
+            .collect();
+
+        self.replace_token_discard_trivia(
+            prev_token,
+            SyntaxToken::new_detached(
+                next_token.kind(),
+                &next_token.token_text(),
+                leading_trivia,
+                trailing_trivia,
+            ),
+        )
     }
 
     /// Push a change to replace the "prev_element" with "next_element".

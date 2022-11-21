@@ -175,7 +175,9 @@ pub(crate) fn code_fix_to_lsp(
         },
         edit: Some(edit),
         command: None,
-        is_preferred: if matches!(suggestion.applicability, Applicability::Always) {
+        is_preferred: if matches!(suggestion.applicability, Applicability::Always)
+            && !action.category.matches("quickfix.suppressRule")
+        {
             Some(true)
         } else {
             None

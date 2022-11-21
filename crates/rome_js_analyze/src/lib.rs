@@ -135,7 +135,6 @@ mod tests {
     use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic, Severity};
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};
-    use std::slice;
 
     use crate::{analyze, AnalysisFilter, ControlFlow};
 
@@ -151,24 +150,30 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"if (a < b) {
-}
+        const SOURCE: &str = r#"function f() {
+            return (
+                <div
+                ><img /></div>
+            )
+        };
+        f();
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
-        let rule_filter = RuleFilter::Rule("correctness", "flipBinExp");
+        let _rule_filter = RuleFilter::Rule("correctness", "flipBinExp");
         analyze(
             FileId::zero(),
             &parsed.tree(),
             AnalysisFilter {
-                enabled_rules: Some(slice::from_ref(&rule_filter)),
+                // enabled_rules: Some(slice::from_ref(&rule_filter)),
                 ..AnalysisFilter::default()
             },
             &options,
             |signal| {
+                dbg!("here");
                 if let Some(mut diag) = signal.diagnostic() {
                     diag.set_severity(Severity::Warning);
                     error_ranges.push(diag.location().unwrap().span.unwrap());
@@ -368,8 +373,12 @@ fn apply_suppression_comment(
 ) {
     let current_token = match current_token {
         TokenAtOffset::None => None,
-        TokenAtOffset::Single(token) => find_token_with_newline(token),
-        TokenAtOffset::Between(token, _) => find_token_with_newline(token),
+        TokenAtOffset::Single(token) | TokenAtOffset::Between(token, _) => {
+            Some(match find_token_with_newline(token.clone()) {
+                None => token,
+                Some(token) => token,
+            })
+        }
     };
     if let Some(current_token) = current_token {
         if let Some(element) = current_token.ancestors().find_map(|node| {
@@ -403,7 +412,7 @@ fn apply_suppression_comment(
                 ),
                 (TriviaPieceKind::Newline, "\n"),
             ]);
-            mutation.replace_token_discard_trivia(current_token, new_token);
+            mutation.replace_token_transfer_trivia(current_token, new_token);
         }
     }
 }
@@ -411,12 +420,20 @@ fn apply_suppression_comment(
 /// It checks if the current token has leading trivia newline. If not, it
 /// it peeks the previous token and recursively call itself
 fn find_token_with_newline(token: JsSyntaxToken) -> Option<JsSyntaxToken> {
-    let trivia = token.leading_trivia();
-    if trivia.pieces().any(|trivia| trivia.is_newline()) || token.text_trimmed().contains('\n') {
-        Some(token)
-    } else if let Some(token) = token.prev_token() {
-        find_token_with_newline(token)
-    } else {
-        None
+    let mut current_token = token;
+    loop {
+        let trivia = current_token.leading_trivia();
+        if trivia.pieces().any(|trivia| trivia.is_newline())
+            || current_token.text_trimmed().contains('\n')
+        {
+            break;
+        } else if let Some(token) = current_token.prev_token() {
+            current_token = token;
+            continue;
+        } else {
+            return None;
+        }
     }
+
+    Some(current_token)
 }
