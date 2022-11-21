@@ -17,7 +17,7 @@ use crate::configs::{
 };
 use crate::snap_test::SnapshotPayload;
 use crate::{assert_cli_snapshot, run_cli, FORMATTED, LINT_ERROR, PARSE_ERROR};
-use rome_console::{BufferConsole, LogLevel};
+use rome_console::{BufferConsole, LogLevel, MarkupBuf};
 use rome_fs::{ErrorEntry, FileSystemExt, MemoryFileSystem, OsFileSystem};
 use rome_service::DynRef;
 
@@ -939,7 +939,38 @@ fn max_diagnostics_default() {
         _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
     }
 
-    assert_eq!(console.out_buffer.len(), 21);
+    let mut diagnostic_count = 0;
+    let mut filtered_messages = Vec::new();
+
+    for msg in console.out_buffer {
+        let MarkupBuf(nodes) = &msg.content;
+        let is_diagnostic = nodes.iter().any(|node| {
+            node.content.contains("useWhile") || node.content.contains("useBlockStatements")
+        });
+
+        if is_diagnostic {
+            diagnostic_count += 1;
+        } else {
+            filtered_messages.push(msg);
+        }
+    }
+
+    console.out_buffer = filtered_messages;
+
+    for i in 0..60 {
+        let file_path = format!("src/file_{i}.js");
+        fs.remove(Path::new(&file_path));
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "max_diagnostics_default",
+        fs,
+        console,
+        result,
+    ));
+
+    assert_eq!(diagnostic_count, 20);
 }
 
 #[test]
@@ -968,7 +999,38 @@ fn max_diagnostics() {
         _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
     }
 
-    assert_eq!(console.out_buffer.len(), 11);
+    let mut diagnostic_count = 0;
+    let mut filtered_messages = Vec::new();
+
+    for msg in console.out_buffer {
+        let MarkupBuf(nodes) = &msg.content;
+        let is_diagnostic = nodes.iter().any(|node| {
+            node.content.contains("useWhile") || node.content.contains("useBlockStatements")
+        });
+
+        if is_diagnostic {
+            diagnostic_count += 1;
+        } else {
+            filtered_messages.push(msg);
+        }
+    }
+
+    console.out_buffer = filtered_messages;
+
+    for i in 0..60 {
+        let file_path = format!("src/file_{i}.js");
+        fs.remove(Path::new(&file_path));
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "max_diagnostics",
+        fs,
+        console,
+        result,
+    ));
+
+    assert_eq!(diagnostic_count, 10);
 }
 
 #[test]
