@@ -1,3 +1,5 @@
+use rome_diagnostics_categories::Category;
+
 /// Single instance of a suppression comment, with the following syntax:
 ///
 /// `// rome-ignore { <category> { (<value>) }? }+: <reason>`
@@ -17,7 +19,7 @@ pub struct Suppression<'a> {
     ///
     /// Categories are pair of the category name +
     /// an optional category value
-    pub categories: Vec<(&'a str, Option<&'a str>)>,
+    pub categories: Vec<(&'a Category, Option<&'a str>)>,
     /// Reason for this suppression comment to exist
     pub reason: &'a str,
 }
@@ -56,6 +58,11 @@ pub fn parse_suppression_comment(comment: &str) -> impl Iterator<Item = Suppress
 
             let (category, rest) = line.split_at(separator);
             let category = category.trim_end();
+            let category: Option<&'static Category> = if !category.is_empty() {
+                Some(category.parse().ok()?)
+            } else {
+                None
+            };
 
             // Skip over and match the separator
             let (separator, rest) = rest.split_at(1);
@@ -63,7 +70,7 @@ pub fn parse_suppression_comment(comment: &str) -> impl Iterator<Item = Suppress
             match separator {
                 // Colon token: stop parsing categories
                 ":" => {
-                    if !category.is_empty() {
+                    if let Some(category) = category {
                         categories.push((category, None));
                     }
 
@@ -72,6 +79,7 @@ pub fn parse_suppression_comment(comment: &str) -> impl Iterator<Item = Suppress
                 }
                 // Paren token: parse a category + value
                 "(" => {
+                    let category = category?;
                     let paren = rest.find(')')?;
 
                     let (value, rest) = rest.split_at(paren);
@@ -83,7 +91,7 @@ pub fn parse_suppression_comment(comment: &str) -> impl Iterator<Item = Suppress
                 }
                 // Whitespace: push a category without value
                 _ => {
-                    if !category.is_empty() {
+                    if let Some(category) = category {
                         categories.push((category, None));
                     }
 
@@ -97,28 +105,10 @@ pub fn parse_suppression_comment(comment: &str) -> impl Iterator<Item = Suppress
     })
 }
 
-pub enum SuppressionCategory {
-    Format,
-    Lint,
-}
-
-impl PartialEq<&str> for SuppressionCategory {
-    fn eq(&self, other: &&str) -> bool {
-        matches!(
-            (self, *other),
-            (Self::Format, "format") | (Self::Lint, "lint")
-        )
-    }
-}
-
-impl PartialEq<SuppressionCategory> for &'_ str {
-    fn eq(&self, other: &SuppressionCategory) -> bool {
-        other.eq(self)
-    }
-}
-
 #[cfg(test)]
 mod tests {
+    use rome_diagnostics_categories::category;
+
     use super::{parse_suppression_comment, Suppression};
 
     #[test]
@@ -126,7 +116,7 @@ mod tests {
         assert_eq!(
             parse_suppression_comment("// rome-ignore parse: explanation1").collect::<Vec<_>>(),
             vec![Suppression {
-                categories: vec![("parse", None)],
+                categories: vec![(category!("parse"), None)],
                 reason: "explanation1"
             }],
         );
@@ -134,7 +124,7 @@ mod tests {
         assert_eq!(
             parse_suppression_comment("/** rome-ignore parse: explanation2 */").collect::<Vec<_>>(),
             vec![Suppression {
-                categories: vec![("parse", None)],
+                categories: vec![(category!("parse"), None)],
                 reason: "explanation2"
             }],
         );
@@ -147,7 +137,7 @@ mod tests {
             )
             .collect::<Vec<_>>(),
             vec![Suppression {
-                categories: vec![("parse", None)],
+                categories: vec![(category!("parse"), None)],
                 reason: "explanation3"
             }],
         );
@@ -161,7 +151,7 @@ mod tests {
             )
             .collect::<Vec<_>>(),
             vec![Suppression {
-                categories: vec![("parse", None)],
+                categories: vec![(category!("parse"), None)],
                 reason: "explanation4"
             }],
         );
@@ -171,7 +161,7 @@ mod tests {
         assert_eq!(
             parse_suppression_comment("/* rome-ignore format: explanation").collect::<Vec<_>>(),
             vec![Suppression {
-                categories: vec![("format", None)],
+                categories: vec![(category!("format"), None)],
                 reason: "explanation"
             }],
         );
@@ -179,7 +169,7 @@ mod tests {
         assert_eq!(
             parse_suppression_comment("/* rome-ignore format: explanation *").collect::<Vec<_>>(),
             vec![Suppression {
-                categories: vec![("format", None)],
+                categories: vec![(category!("format"), None)],
                 reason: "explanation"
             }],
         );
@@ -187,7 +177,7 @@ mod tests {
         assert_eq!(
             parse_suppression_comment("/* rome-ignore format: explanation /").collect::<Vec<_>>(),
             vec![Suppression {
-                categories: vec![("format", None)],
+                categories: vec![(category!("format"), None)],
                 reason: "explanation"
             }],
         );
@@ -199,7 +189,10 @@ mod tests {
             parse_suppression_comment("// rome-ignore parse(foo) parse(dog): explanation")
                 .collect::<Vec<_>>(),
             vec![Suppression {
-                categories: vec![("parse", Some("foo")), ("parse", Some("dog"))],
+                categories: vec![
+                    (category!("parse"), Some("foo")),
+                    (category!("parse"), Some("dog"))
+                ],
                 reason: "explanation"
             }],
         );
@@ -208,7 +201,10 @@ mod tests {
             parse_suppression_comment("/** rome-ignore parse(bar) parse(cat): explanation */")
                 .collect::<Vec<_>>(),
             vec![Suppression {
-                categories: vec![("parse", Some("bar")), ("parse", Some("cat"))],
+                categories: vec![
+                    (category!("parse"), Some("bar")),
+                    (category!("parse"), Some("cat"))
+                ],
                 reason: "explanation"
             }],
         );
@@ -221,7 +217,10 @@ mod tests {
             )
             .collect::<Vec<_>>(),
             vec![Suppression {
-                categories: vec![("parse", Some("yes")), ("parse", Some("frog"))],
+                categories: vec![
+                    (category!("parse"), Some("yes")),
+                    (category!("parse"), Some("frog"))
+                ],
                 reason: "explanation"
             }],
         );
@@ -235,7 +234,10 @@ mod tests {
             )
             .collect::<Vec<_>>(),
             vec![Suppression {
-                categories: vec![("parse", Some("wow")), ("parse", Some("fish"))],
+                categories: vec![
+                    (category!("parse"), Some("wow")),
+                    (category!("parse"), Some("fish"))
+                ],
                 reason: "explanation"
             }],
         );
@@ -247,7 +249,7 @@ mod tests {
             parse_suppression_comment("// rome-ignore format lint: explanation")
                 .collect::<Vec<_>>(),
             vec![Suppression {
-                categories: vec![("format", None), ("lint", None)],
+                categories: vec![(category!("format"), None), (category!("lint"), None)],
                 reason: "explanation"
             }],
         );

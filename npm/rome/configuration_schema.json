@@ -830,6 +830,17 @@
             }
           ]
         },
+        "noHeaderScope": {
+          "description": "Check that the scope attribute is only used on th elements.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noInvalidConstructorSuper": {
           "description": "Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors.",
           "anyOf": [

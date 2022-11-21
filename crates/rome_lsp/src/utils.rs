@@ -4,7 +4,7 @@ use std::fmt::{Debug, Display};
 use std::io;
 
 use crate::line_index::{LineCol, LineIndex};
-use anyhow::{Context, Result};
+use anyhow::{ensure, Context, Result};
 use rome_analyze::ActionCategory;
 use rome_console::fmt::Termcolor;
 use rome_console::fmt::{self, Formatter};
@@ -120,38 +120,43 @@ pub(crate) fn code_fix_to_lsp(
     action: CodeAction,
 ) -> Result<lsp::CodeAction> {
     // Mark diagnostics emitted by the same rule as resolved by this action
-    let diagnostics: Vec<_> = if matches!(action.category, ActionCategory::QuickFix) {
-        diagnostics
-            .iter()
-            .filter_map(|d| {
-                let code = d.code.as_ref()?;
-                let code = match code {
-                    lsp::NumberOrString::String(code) => code.as_str(),
-                    lsp::NumberOrString::Number(_) => return None,
-                };
+    let diagnostics: Vec<_> = action
+        .rule_name
+        .as_ref()
+        .filter(|_| matches!(action.category, ActionCategory::QuickFix))
+        .map(|(group_name, rule_name)| {
+            diagnostics
+                .iter()
+                .filter_map(|d| {
+                    let code = d.code.as_ref()?;
+                    let code = match code {
+                        lsp::NumberOrString::String(code) => code.as_str(),
+                        lsp::NumberOrString::Number(_) => return None,
+                    };
 
-                let code = code.strip_prefix("lint/")?;
-                let code = code.strip_prefix(action.group_name.as_ref())?;
-                let code = code.strip_prefix('/')?;
+                    let code = code.strip_prefix("lint/")?;
+                    let code = code.strip_prefix(group_name.as_ref())?;
+                    let code = code.strip_prefix('/')?;
 
-                if code == action.rule_name {
-                    Some(d.clone())
-                } else {
-                    None
-                }
-            })
-            .collect()
-    } else {
-        Vec::new()
-    };
+                    if code == rule_name {
+                        Some(d.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect()
+        })
+        .unwrap_or_default();
 
     let kind = action.category.to_str();
     let mut kind = kind.into_owned();
 
-    kind.push('.');
-    kind.push_str(action.group_name.as_ref());
-    kind.push('.');
-    kind.push_str(action.rule_name.as_ref());
+    if let Some((group, rule)) = action.rule_name {
+        kind.push('.');
+        kind.push_str(group.as_ref());
+        kind.push('.');
+        kind.push_str(rule.as_ref());
+    }
 
     let suggestion = action.suggestion;
 
@@ -194,9 +199,13 @@ pub(crate) fn diagnostic_to_lsp<D: Diagnostic>(
     diagnostic: D,
     url: &lsp::Url,
     line_index: &LineIndex,
-) -> Option<lsp::Diagnostic> {
-    let location = diagnostic.location()?;
-    let span = range(line_index, location.span?).ok()?;
+) -> Result<lsp::Diagnostic> {
+    let location = diagnostic
+        .location()
+        .context("diagnostic has no location")?;
+
+    let span = location.span.context("diagnostic location has no span")?;
+    let span = range(line_index, span).context("failed to convert diagnostic span to LSP range")?;
 
     let severity = match diagnostic.severity() {
         Severity::Fatal | Severity::Error => lsp::DiagnosticSeverity::ERROR,
@@ -210,6 +219,7 @@ pub(crate) fn diagnostic_to_lsp<D: Diagnostic>(
         .map(|category| lsp::NumberOrString::String(category.name().to_string()));
 
     let message = PrintDescription(&diagnostic).to_string();
+    ensure!(!message.is_empty(), "diagnostic description is empty");
 
     let mut related_information = None;
     let mut visitor = RelatedInformationVisitor {
@@ -239,7 +249,7 @@ pub(crate) fn diagnostic_to_lsp<D: Diagnostic>(
         }
     };
 
-    Some(lsp::Diagnostic::new(
+    Ok(lsp::Diagnostic::new(
         span,
         Some(severity),
         code,

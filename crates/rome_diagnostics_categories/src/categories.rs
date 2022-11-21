@@ -82,6 +82,7 @@ define_dategories! {
     "lint/nursery/noDupeKeys":"https://docs.rome.tools/lint/rules/noDupeKeys",
     "lint/nursery/noEmptyInterface": "https://docs.rome.tools/lint/rules/noEmptyInterface",
     "lint/nursery/noExplicitAny": "https://docs.rome.tools/lint/rules/noExplicitAny",
+    "lint/nursery/noHeaderScope": "https://docs.rome.tools/lint/rules/noHeaderScope",
     "lint/nursery/noInvalidConstructorSuper": "https://docs.rome.tools/lint/rules/noInvalidConstructorSuper",
     "lint/nursery/noPrecisionLoss": "https://docs.rome.tools/lint/rules/noPrecisionLoss",
     "lint/nursery/noUnsafeFinally": "https://docs.rome.tools/lint/rules/noUnsafeFinally",
@@ -100,14 +101,26 @@ define_dategories! {
     "internalError/io",
     "internalError/fs",
     "internalError/panic",
-    "lint",
+
     // parse categories
     "parse",
     "parse/noSuperWithoutExtends",
 
+    // Lint groups
+    "lint",
+    "lint/correctness",
+    "lint/style",
+    "lint/complexity",
+    "lint/a11y",
+    "lint/security",
+    "lint/nursery",
+
+    // Suppression comments
     "suppressions/unknownGroup",
     "suppressions/unknownRule",
     "suppressions/unused",
+    "suppressions/deprecatedSyntax",
+
     // Used in tests and examples
     "args/fileNotFound",
     "flags/invalid",

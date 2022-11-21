@@ -135,7 +135,7 @@ impl Session {
     /// Computes diagnostics for the file matching the provided url and publishes
     /// them to the client. Called from [`handlers::text_document`] when a file's
     /// contents changes.
-    #[tracing::instrument(level = "trace", skip(self), err)]
+    #[tracing::instrument(level = "trace", skip_all, fields(url = display(&url), diagnostic_count), err)]
     pub(crate) async fn update_diagnostics(&self, url: lsp_types::Url) -> anyhow::Result<()> {
         let rome_path = self.file_path(&url);
         let doc = self.document(&url)?;
@@ -144,22 +144,39 @@ impl Session {
             path: rome_path.clone(),
         })?;
 
-        let diagnostics = if unsupported_lint.reason.is_none() {
+        let diagnostics = if let Some(reason) = unsupported_lint.reason {
+            tracing::trace!("linting not supported: {reason:?}");
+            // Sending empty vector clears published diagnostics
+            vec![]
+        } else {
             let result = self.workspace.pull_diagnostics(PullDiagnosticsParams {
                 path: rome_path,
                 categories: RuleCategories::SYNTAX | RuleCategories::LINT,
                 max_diagnostics: u64::MAX,
             })?;
 
-            result
+            tracing::trace!("rome diagnostics: {:#?}", result.diagnostics);
+
+            let result = result
                 .diagnostics
                 .into_iter()
-                .filter_map(|d| utils::diagnostic_to_lsp(d, &url, &doc.line_index))
-                .collect()
-        } else {
-            // Sending empty vector clears published diagnostics
-            vec![]
+                .filter_map(
+                    |d| match utils::diagnostic_to_lsp(d, &url, &doc.line_index) {
+                        Ok(diag) => Some(diag),
+                        Err(err) => {
+                            tracing::error!("failed to convert diagnostic to LSP: {err:?}");
+                            None
+                        }
+                    },
+                )
+                .collect();
+
+            tracing::trace!("lsp diagnostics: {:#?}", result);
+
+            result
         };
+
+        tracing::Span::current().record("diagnostic_count", diagnostics.len());
 
         self.client
             .publish_diagnostics(url, diagnostics, Some(doc.version))

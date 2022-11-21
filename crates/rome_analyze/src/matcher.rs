@@ -154,16 +154,17 @@ where
 #[cfg(test)]
 mod tests {
     use rome_diagnostics::{category, location::FileId};
-    use rome_diagnostics::{Diagnostic, Error, Severity};
+    use rome_diagnostics::{Diagnostic, Severity};
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
         AstNode, TextRange, TextSize, TriviaPiece, TriviaPieceKind,
     };
 
+    use crate::SuppressionKind;
     use crate::{
-        signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerDiagnostic, AnalyzerOptions,
-        AnalyzerSignal, ControlFlow, MetadataRegistry, Never, Phases, QueryMatch, QueryMatcher,
-        RuleKey, ServiceBag, SignalEntry, SyntaxVisitor,
+        signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal,
+        ControlFlow, MetadataRegistry, Never, Phases, QueryMatch, QueryMatcher, RuleKey,
+        ServiceBag, SignalEntry, SyntaxVisitor,
     };
 
     use super::MatchQueryParams;
@@ -193,11 +194,9 @@ mod tests {
 
             let span = node.text_trimmed_range();
             params.signal_queue.push(SignalEntry {
-                signal: Box::new(DiagnosticSignal::new(move || {
-                    AnalyzerDiagnostic::from_error(Error::from(TestDiagnostic {
-                        span,
-                        location: FileId::zero(),
-                    }))
+                signal: Box::new(DiagnosticSignal::new(move || TestDiagnostic {
+                    span,
+                    location: FileId::zero(),
                 })),
                 rule: RuleKey::new("group", "rule"),
                 text_range: span,
@@ -316,11 +315,11 @@ mod tests {
             ControlFlow::Continue(())
         };
 
-        fn parse_suppression_comment(comment: &str) -> Vec<Option<&str>> {
+        fn parse_suppression_comment(comment: &'_ str) -> Vec<SuppressionKind<'_>> {
             comment
                 .trim_start_matches("//")
                 .split(' ')
-                .map(Some)
+                .map(SuppressionKind::Rule)
                 .collect()
         }
 

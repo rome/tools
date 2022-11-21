@@ -253,7 +253,7 @@ fn lint(params: LintParams) -> LintResults {
                 diagnostic.set_severity(severity);
 
                 if let Some(action) = signal.action() {
-                    diagnostic.add_code_suggestion(action.into());
+                    diagnostic = diagnostic.add_code_suggestion(action.into());
                 }
 
                 diagnostics.push(rome_diagnostics::serde::Diagnostic::new(diagnostic));
@@ -340,8 +340,9 @@ fn code_actions(
         if let Some(action) = signal.action() {
             actions.push(CodeAction {
                 category: action.category.clone(),
-                group_name: Cow::Borrowed(action.group_name),
-                rule_name: Cow::Borrowed(action.rule_name),
+                rule_name: action
+                    .rule_name
+                    .map(|(group, rule)| (Cow::Borrowed(group), Cow::Borrowed(rule))),
                 suggestion: CodeSuggestion::from(action),
             });
         }
@@ -417,14 +418,17 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
                         None => {
                             return Err(RomeError::RuleError(
                                 RuleError::ReplacedRootWithNonRootError {
-                                    rule_name: Cow::Borrowed(action.rule_name),
+                                    rule_name: action.rule_name.map(|(group, rule)| {
+                                        (Cow::Borrowed(group), Cow::Borrowed(rule))
+                                    }),
                                 },
                             ))
                         }
                     };
                     actions.push(FixAction {
-                        group_name: Cow::Borrowed(action.group_name),
-                        rule_name: Cow::Borrowed(action.rule_name),
+                        rule_name: action
+                            .rule_name
+                            .map(|(group, rule)| (Cow::Borrowed(group), Cow::Borrowed(rule))),
                         range,
                     });
                 }

@@ -15,6 +15,7 @@ rome_js_factory = { path = "../rome_js_factory" }
 rome_formatter = { path = "../rome_formatter" }
 rome_rowan = { path = "../rome_rowan" }
 rome_text_size = { path = "../rome_text_size"}
+rome_diagnostics_categories = { path = "../rome_diagnostics_categories"}
 tracing = { workspace = true }
 unicode-width = "0.1.9"
 serde = { version = "1.0.136", features = ["derive"], optional = true }
