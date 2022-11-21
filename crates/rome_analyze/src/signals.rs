@@ -1,3 +1,5 @@
+use std::marker::PhantomData;
+
 use crate::{
     categories::ActionCategory,
     context::RuleContext,
@@ -6,8 +8,10 @@ use crate::{
     AnalyzerDiagnostic, AnalyzerOptions, Queryable, RuleGroup, ServiceBag,
 };
 use rome_console::MarkupBuf;
-use rome_diagnostics::advice::CodeSuggestionAdvice;
-use rome_diagnostics::{location::FileId, Applicability, CodeSuggestion, FileSpan};
+use rome_diagnostics::{
+    advice::CodeSuggestionAdvice, location::FileId, Applicability, CodeSuggestion, Diagnostic,
+    Error, FileSpan,
+};
 use rome_rowan::{BatchMutation, Language};
 
 /// Event raised by the analyzer when a [Rule](crate::Rule)
@@ -17,31 +21,57 @@ pub trait AnalyzerSignal<L: Language> {
     fn action(&self) -> Option<AnalyzerAction<L>>;
 }
 
-/// Simple implementation of [AnalyzerSignal] generating a [AnalyzerDiagnostic] from a
-/// provided factory function
-pub(crate) struct DiagnosticSignal<F> {
-    factory: F,
+/// Simple implementation of [AnalyzerSignal] generating a [AnalyzerDiagnostic]
+/// from a provided factory function. Optionally, this signal can be configured
+/// to also emit a code action, by calling `.with_action` with a secondary
+/// factory function for said action.
+pub(crate) struct DiagnosticSignal<D, A, L, T> {
+    diagnostic: D,
+    action: A,
+    _diag: PhantomData<(L, T)>,
 }
 
-impl<F> DiagnosticSignal<F>
+impl<L: Language, D, T> DiagnosticSignal<D, fn() -> Option<AnalyzerAction<L>>, L, T>
 where
-    F: Fn() -> AnalyzerDiagnostic,
+    D: Fn() -> T,
+    T: Diagnostic + Send + Sync + 'static,
 {
-    pub(crate) fn new(factory: F) -> Self {
-        Self { factory }
+    pub(crate) fn new(factory: D) -> Self {
+        Self {
+            diagnostic: factory,
+            action: || None,
+            _diag: PhantomData,
+        }
     }
 }
 
-impl<L: Language, F> AnalyzerSignal<L> for DiagnosticSignal<F>
+impl<L: Language, D, A, T> DiagnosticSignal<D, A, L, T> {
+    pub(crate) fn with_action<B>(self, factory: B) -> DiagnosticSignal<D, B, L, T>
+    where
+        B: Fn() -> Option<AnalyzerAction<L>>,
+    {
+        DiagnosticSignal {
+            diagnostic: self.diagnostic,
+            action: factory,
+            _diag: PhantomData,
+        }
+    }
+}
+
+impl<L: Language, D, A, T> AnalyzerSignal<L> for DiagnosticSignal<D, A, L, T>
 where
-    F: Fn() -> AnalyzerDiagnostic,
+    D: Fn() -> T,
+    T: Diagnostic + Send + Sync + 'static,
+    A: Fn() -> Option<AnalyzerAction<L>>,
 {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
-        Some((self.factory)())
+        let diag = (self.diagnostic)();
+        let error = Error::from(diag);
+        Some(AnalyzerDiagnostic::from_error(error))
     }
 
     fn action(&self) -> Option<AnalyzerAction<L>> {
-        None
+        (self.action)()
     }
 }
 
@@ -52,8 +82,7 @@ where
 /// a diagnostic emitted by the same signal
 #[derive(Debug)]
 pub struct AnalyzerAction<L: Language> {
-    pub group_name: &'static str,
-    pub rule_name: &'static str,
+    pub rule_name: Option<(&'static str, &'static str)>,
     pub file_id: FileId,
     pub category: ActionCategory,
     pub applicability: Applicability,
@@ -145,8 +174,7 @@ where
             RuleContext::new(&self.query_result, self.root, self.services, &self.options).ok()?;
 
         R::action(&ctx, &self.state).map(|action| AnalyzerAction {
-            group_name: <R::Group as RuleGroup>::NAME,
-            rule_name: R::METADATA.name,
+            rule_name: Some((<R::Group as RuleGroup>::NAME, R::METADATA.name)),
             file_id: self.file_id,
             category: action.category,
             applicability: action.applicability,

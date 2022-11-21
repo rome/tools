@@ -99,14 +99,26 @@ define_dategories! {
     "internalError/io",
     "internalError/fs",
     "internalError/panic",
-    "lint",
+
     // parse categories
     "parse",
     "parse/noSuperWithoutExtends",
 
+    // Lint groups
+    "lint",
+    "lint/correctness",
+    "lint/style",
+    "lint/complexity",
+    "lint/a11y",
+    "lint/security",
+    "lint/nursery",
+
+    // Suppression comments
     "suppressions/unknownGroup",
     "suppressions/unknownRule",
     "suppressions/unused",
+    "suppressions/deprecatedSyntax",
+
     // Used in tests and examples
     "args/fileNotFound",
     "flags/invalid",

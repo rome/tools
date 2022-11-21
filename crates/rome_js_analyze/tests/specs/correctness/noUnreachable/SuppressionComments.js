@@ -1,4 +1,4 @@
-// rome-ignore lint(correctness/noUnreachable): this comment does nothing
+// rome-ignore lint/correctness/noUnreachable: this comment does nothing
 function SuppressionComments1() {
     beforeReturn();
     return;
@@ -8,6 +8,6 @@ function SuppressionComments1() {
 function SuppressionComments2() {
     beforeReturn();
     return;
-    // rome-ignore lint(correctness/noUnreachable): supress warning
+    // rome-ignore lint/correctness/noUnreachable: supress warning
     afterReturn();
 }

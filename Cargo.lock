@@ -1693,6 +1693,7 @@ dependencies = [
  "quickcheck_macros",
  "rome_console",
  "rome_diagnostics",
+ "rome_diagnostics_categories",
  "rome_formatter",
  "rome_fs",
  "rome_js_factory",
@@ -1750,6 +1751,7 @@ dependencies = [
 name = "rome_js_syntax"
 version = "0.0.0"
 dependencies = [
+ "rome_diagnostics_categories",
  "rome_js_factory",
  "rome_rowan",
  "schemars",

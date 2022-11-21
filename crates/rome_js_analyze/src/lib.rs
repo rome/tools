@@ -2,13 +2,11 @@ use control_flow::make_visitor;
 use rome_analyze::{
     AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal, ControlFlow,
     InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry, Phases, RuleAction,
-    RuleRegistry, ServiceBag, SyntaxVisitor,
+    RuleRegistry, ServiceBag, SuppressionKind, SyntaxVisitor,
 };
+use rome_diagnostics::category;
 use rome_diagnostics::location::FileId;
-use rome_js_syntax::{
-    suppression::{parse_suppression_comment, SuppressionCategory},
-    JsLanguage,
-};
+use rome_js_syntax::{suppression::parse_suppression_comment, JsLanguage};
 use serde::{Deserialize, Serialize};
 use std::{borrow::Cow, error::Error};
 
@@ -61,14 +59,19 @@ where
     F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
     B: 'a,
 {
-    fn parse_linter_suppression_comment(text: &str) -> Vec<Option<&str>> {
+    fn parse_linter_suppression_comment(text: &str) -> Vec<SuppressionKind> {
         parse_suppression_comment(text)
             .flat_map(|comment| comment.categories)
             .filter_map(|(key, value)| {
-                if key == SuppressionCategory::Lint {
-                    Some(value)
+                if key == category!("lint") {
+                    if let Some(value) = value {
+                        Some(SuppressionKind::MaybeLegacy(value))
+                    } else {
+                        Some(SuppressionKind::Everything)
+                    }
                 } else {
-                    None
+                    let category = key.name();
+                    category.strip_prefix("lint/").map(SuppressionKind::Rule)
                 }
             })
             .collect()
@@ -181,6 +184,25 @@ mod tests {
         const SOURCE: &str = "
             function checkSuppressions1(a, b) {
                 a == b;
+                // rome-ignore lint/correctness:whole group
+                a == b;
+                // rome-ignore lint/correctness/noDoubleEquals: single rule
+                a == b;
+                /* rome-ignore lint/correctness/useWhile: multiple block comments */ /* rome-ignore lint/correctness/noDoubleEquals: multiple block comments */
+                a == b;
+                // rome-ignore lint/correctness/useWhile: multiple line comments
+                // rome-ignore lint/correctness/noDoubleEquals: multiple line comments
+                a == b;
+                a == b;
+            }
+
+            // rome-ignore lint/correctness/noDoubleEquals: do not suppress warning for the whole function
+            function checkSuppressions2(a, b) {
+                a == b;
+            }
+
+            function checkSuppressions3(a, b) {
+                a == b;
                 // rome-ignore lint(correctness): whole group
                 a == b;
                 // rome-ignore lint(correctness/noDoubleEquals): single rule
@@ -194,7 +216,7 @@ mod tests {
             }
 
             // rome-ignore lint(correctness/noDoubleEquals): do not suppress warning for the whole function
-            function checkSuppressions2(a, b) {
+            function checkSuppressions4(a, b) {
                 a == b;
             }
         ";
@@ -202,6 +224,8 @@ mod tests {
         let parsed = parse(SOURCE, FileId::zero(), SourceType::js_module());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
+        let mut warn_ranges: Vec<TextRange> = Vec::new();
+
         let options = AnalyzerOptions::default();
         analyze(
             FileId::zero(),
@@ -211,14 +235,20 @@ mod tests {
             |signal| {
                 if let Some(mut diag) = signal.diagnostic() {
                     diag.set_severity(Severity::Warning);
+
                     let span = diag.get_span();
                     let error = diag
                         .with_file_path(FileId::zero())
                         .with_file_source_code(SOURCE);
-                    let code = error.category().unwrap();
 
+                    let code = error.category().unwrap();
                     if code == category!("lint/correctness/noDoubleEquals") {
                         error_ranges.push(span.unwrap());
+                    }
+
+                    if code == category!("suppressions/deprecatedSyntax") {
+                        assert!(signal.action().is_some());
+                        warn_ranges.push(span.unwrap());
                     }
                 }
 
@@ -230,8 +260,24 @@ mod tests {
             error_ranges.as_slice(),
             &[
                 TextRange::new(TextSize::from(67), TextSize::from(69)),
-                TextRange::new(TextSize::from(658), TextSize::from(660)),
-                TextRange::new(TextSize::from(853), TextSize::from(855)),
+                TextRange::new(TextSize::from(651), TextSize::from(653)),
+                TextRange::new(TextSize::from(845), TextSize::from(847)),
+                TextRange::new(TextSize::from(932), TextSize::from(934)),
+                TextRange::new(TextSize::from(1523), TextSize::from(1525)),
+                TextRange::new(TextSize::from(1718), TextSize::from(1720)),
+            ]
+        );
+
+        assert_eq!(
+            warn_ranges.as_slice(),
+            &[
+                TextRange::new(TextSize::from(954), TextSize::from(999)),
+                TextRange::new(TextSize::from(1040), TextSize::from(1100)),
+                TextRange::new(TextSize::from(1141), TextSize::from(1210)),
+                TextRange::new(TextSize::from(1211), TextSize::from(1286)),
+                TextRange::new(TextSize::from(1327), TextSize::from(1392)),
+                TextRange::new(TextSize::from(1409), TextSize::from(1480)),
+                TextRange::new(TextSize::from(1556), TextSize::from(1651)),
             ]
         );
     }
@@ -239,7 +285,7 @@ mod tests {
     #[test]
     fn suppression_syntax() {
         const SOURCE: &str = "
-            // rome-ignore lint(correctness/noDoubleEquals): single rule
+            // rome-ignore lint/correctness/noDoubleEquals: single rule
             a == b;
         ";
 
@@ -268,16 +314,26 @@ mod tests {
 #[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum RuleError {
     /// The rule with the specified name replaced the root of the file with a node that is not a valid root for that language.
-    ReplacedRootWithNonRootError { rule_name: Cow<'static, str> },
+    ReplacedRootWithNonRootError {
+        rule_name: Option<(Cow<'static, str>, Cow<'static, str>)>,
+    },
 }
 
 impl std::fmt::Display for RuleError {
     fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            RuleError::ReplacedRootWithNonRootError { rule_name } => {
+            RuleError::ReplacedRootWithNonRootError {
+                rule_name: Some((group, rule)),
+            } => {
                 std::write!(
                     fmt,
-                    "the rule '{rule_name}' replaced the root of the file with a non-root node."
+                    "the rule '{group}/{rule}' replaced the root of the file with a non-root node."
+                )
+            }
+            RuleError::ReplacedRootWithNonRootError { rule_name: None } => {
+                std::write!(
+                    fmt,
+                    "a code action replaced the root of the file with a non-root node."
                 )
             }
         }

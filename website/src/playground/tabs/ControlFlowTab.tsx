@@ -29,7 +29,7 @@ export default function ControlFlowTab({ graph }: Props) {
 	}, [graph]);
 
 	return (
-		// rome-ignore lint(security/noDangerouslySetInnerHtml): SVG should be safe
+		// rome-ignore lint/security/noDangerouslySetInnerHtml: SVG should be safe
 		<div className="mermaid" dangerouslySetInnerHTML={{ __html: graphSVG }} />
 	);
 }

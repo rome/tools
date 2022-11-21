@@ -93,7 +93,7 @@ fn write_analysis_to_snapshot(
             diag.set_severity(Severity::Warning);
             if let Some(action) = event.action() {
                 check_code_action(input_file, input_code, source_type, &action);
-                diag.add_code_suggestion(action.into());
+                diag = diag.add_code_suggestion(action.into());
             }
 
             diagnostics.push(diagnostic_to_string(file_name, input_code, diag));
