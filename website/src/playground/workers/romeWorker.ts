@@ -7,6 +7,7 @@ import init, {
 } from "@rometools/wasm-web";
 import {
 	IndentStyle,
+	LintRules,
 	LoadingState,
 	PlaygroundSettings,
 	QuoteProperties,
@@ -65,7 +66,7 @@ self.addEventListener("message", async (e) => {
 				indentWidth,
 				quoteStyle,
 				quoteProperties,
-				enabledNurseryRules,
+				lintRules,
 				enabledLinting,
 				trailingComma,
 				semicolons,
@@ -98,10 +99,19 @@ self.addEventListener("message", async (e) => {
 				},
 			};
 
-			if (enabledNurseryRules) {
+			if(lintRules===LintRules.All){
 				configuration.linter = {
 					enabled: enabledLinting,
 					rules: {
+						correctness:{
+							noRestrictedGlobals: "error",
+							noUndeclaredVariables: "error",
+							noUnusedVariables:"error",
+							noUselessFragments:"error",
+						},
+						style:{
+							useFragmentSyntax:"error",
+						},
 						nursery: {
 							noConstAssign: "error",
 							useExhaustiveDependencies: "error",

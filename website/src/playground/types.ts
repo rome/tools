@@ -17,6 +17,11 @@ export enum QuoteStyle {
 	Single = "single",
 }
 
+export enum LintRules{
+	Recommended = "recommended",
+	All = "all",
+}
+
 export enum QuoteProperties {
 	AsNeeded = "as-needed",
 	Preserve = "preserve",
@@ -93,7 +98,7 @@ export interface PlaygroundSettings {
 	quoteProperties: QuoteProperties;
 	trailingComma: TrailingComma;
 	semicolons: Semicolons;
-	enabledNurseryRules: boolean;
+	lintRules: LintRules;
 	enabledLinting: boolean;
 }
 
@@ -132,7 +137,7 @@ export const defaultPlaygroundState: PlaygroundState = {
 		quoteProperties: QuoteProperties.AsNeeded,
 		trailingComma: TrailingComma.All,
 		semicolons: Semicolons.Always,
-		enabledNurseryRules: true,
+		lintRules: LintRules.Recommended,
 		enabledLinting: true,
 	},
 };

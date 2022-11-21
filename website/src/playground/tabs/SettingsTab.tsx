@@ -1,5 +1,6 @@
 import {
 	IndentStyle,
+	LintRules,
 	PlaygroundState,
 	QuoteProperties,
 	QuoteStyle,
@@ -41,7 +42,7 @@ export default function SettingsTab({
 			quoteProperties,
 			trailingComma,
 			semicolons,
-			enabledNurseryRules,
+			lintRules,
 			enabledLinting,
 		},
 	},
@@ -74,9 +75,9 @@ export default function SettingsTab({
 		setPlaygroundState,
 		"semicolons",
 	);
-	const setEnabledNurseryRules = createPlaygroundSettingsSetter(
+	const setLintRules = createPlaygroundSettingsSetter(
 		setPlaygroundState,
-		"enabledNurseryRules",
+		"lintRules",
 	);
 	const setEnabledLinting = createPlaygroundSettingsSetter(
 		setPlaygroundState,
@@ -210,8 +211,8 @@ export default function SettingsTab({
 				setSemicolons={setSemicolons}
 			/>
 			<LinterSettings
-				enabledNurseryRules={enabledNurseryRules}
-				setEnabledNurseryRules={setEnabledNurseryRules}
+				lintRules={lintRules}
+				setLintRules={setLintRules}
 				enabledLinting={enabledLinting}
 				setEnabledLinting={setEnabledLinting}
 			/>
@@ -597,13 +598,13 @@ function FormatterSettings({
 }
 
 function LinterSettings({
-	enabledNurseryRules,
-	setEnabledNurseryRules,
+	lintRules,
+	setLintRules,
 	enabledLinting,
 	setEnabledLinting,
 }: {
-	enabledNurseryRules: boolean;
-	setEnabledNurseryRules: (value: boolean) => void;
+	lintRules: LintRules;
+	setLintRules: (value: LintRules) => void;
 	enabledLinting: boolean;
 	setEnabledLinting: (value: boolean) => void;
 }) {
@@ -622,16 +623,18 @@ function LinterSettings({
 					<label htmlFor="linting-enabled">Linter enabled</label>
 				</div>
 				<div className="field-row">
-					<input
-						id="nursery-rules"
-						aria-describedby="nursery-rules-description"
-						name="nursery-rules"
-						type="checkbox"
+					<label htmlFor="trailingComma">Lint Rules</label>
+					<select
+						id="lint-rules"
+						aria-describedby="lint-rules-description"
+						name="lint-rules"
 						disabled={!enabledLinting}
-						checked={enabledNurseryRules}
-						onChange={(e) => setEnabledNurseryRules(e.target.checked)}
-					/>
-					<label htmlFor="nursery-rules">Nursery lint rules</label>
+						value={lintRules ?? LintRules.Recommended}
+						onChange={(e) => setLintRules(e.target.value as LintRules)}
+					>
+						<option value={LintRules.Recommended}>Recommended</option>
+						<option value={LintRules.All}>All</option>
+					</select>
 				</div>
 			</section>
 		</>
