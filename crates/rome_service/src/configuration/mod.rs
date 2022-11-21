@@ -13,7 +13,7 @@ use std::fmt::{Debug, Display, Formatter};
 use std::io::ErrorKind;
 use std::marker::PhantomData;
 use std::num::NonZeroU64;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use tracing::{error, info};
 
 mod formatter;
@@ -31,6 +31,10 @@ use rome_js_analyze::metadata;
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(deny_unknown_fields)]
 pub struct Configuration {
+    /// A field for the [JSON schema](https://json-schema.org/) specification
+    #[serde(rename(serialize = "$schema", deserialize = "$schema"))]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub schema: Option<String>,
     /// The configuration of the filesystem
     #[serde(skip_serializing_if = "Option::is_none")]
     pub files: Option<FilesConfiguration>,
@@ -58,6 +62,7 @@ impl Default for Configuration {
             }),
             formatter: None,
             javascript: None,
+            schema: None,
         }
     }
 }
@@ -212,7 +217,7 @@ pub fn load_config(
 /// - the program doesn't have the write rights
 pub fn create_config(
     fs: &mut DynRef<dyn FileSystem>,
-    configuration: Configuration,
+    mut configuration: Configuration,
 ) -> Result<(), RomeError> {
     let path = PathBuf::from(fs.config_name());
 
@@ -225,6 +230,13 @@ pub fn create_config(
             RomeError::CantReadFile(path.clone())
         }
     })?;
+
+    // we now check if rome is installed inside `node_modules` and if so, we
+    let schema_path = Path::new("./node_modules/rome/configuration_schema.json");
+    let options = OpenOptions::default().read(true);
+    if fs.open_with_options(schema_path, options).is_ok() {
+        configuration.schema = schema_path.to_str().map(String::from);
+    }
 
     let contents = serde_json::to_string_pretty(&configuration)
         .map_err(|_| RomeError::Configuration(ConfigurationError::SerializationError))?;
