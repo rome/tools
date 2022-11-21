@@ -120,7 +120,7 @@ pub fn parse_common(
     file_id: FileId,
     source_type: SourceType,
 ) -> (Vec<Event>, Vec<ParseDiagnostic>, Vec<Trivia>) {
-    let mut parser = crate::Parser::new(text, file_id, source_type);
+    let mut parser = crate::JsParser::new(text, file_id, source_type);
     crate::syntax::program::parse(&mut parser);
 
     let (events, trivia, errors) = parser.finish();
@@ -191,7 +191,7 @@ pub fn parse(text: &str, file_id: FileId, source_type: SourceType) -> Parse<JsAn
 /// Losslessly Parse text into an expression [`Parse`](Parse) which can then be turned into an untyped root [`JsSyntaxNode`](JsSyntaxNode).
 /// Or turned into a typed [`JsExpressionSnipped`](JsExpressionSnipped) with [`tree`](Parse::tree).
 pub fn parse_expression(text: &str, file_id: FileId) -> Parse<JsExpressionSnipped> {
-    let mut parser = crate::Parser::new(text, file_id, SourceType::js_module());
+    let mut parser = crate::JsParser::new(text, file_id, SourceType::js_module());
     crate::syntax::expr::parse_expression_snipped(&mut parser).unwrap();
     let (events, tokens, errors) = parser.finish();
 

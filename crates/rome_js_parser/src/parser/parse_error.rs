@@ -1,5 +1,5 @@
 use crate::span::Span;
-use crate::{ParseDiagnostic, Parser};
+use crate::{JsParser, ParseDiagnostic};
 use rome_js_syntax::{JsSyntaxKind, TextRange};
 use std::ops::Range;
 
@@ -51,11 +51,11 @@ pub(crate) fn expected_token_any(tokens: &[JsSyntaxKind]) -> impl ToDiagnostic {
 }
 
 pub(crate) trait ToDiagnostic {
-    fn to_diagnostic(self, p: &Parser) -> ParseDiagnostic;
+    fn to_diagnostic(self, p: &JsParser) -> ParseDiagnostic;
 }
 
 impl ToDiagnostic for ParseDiagnostic {
-    fn to_diagnostic(self, _: &Parser) -> ParseDiagnostic {
+    fn to_diagnostic(self, _: &JsParser) -> ParseDiagnostic {
         self
     }
 }
@@ -104,7 +104,7 @@ impl ExpectedNodeDiagnosticBuilder {
 }
 
 impl ToDiagnostic for ExpectedNodeDiagnosticBuilder {
-    fn to_diagnostic(self, p: &Parser) -> ParseDiagnostic {
+    fn to_diagnostic(self, p: &JsParser) -> ParseDiagnostic {
         let range = &self.range;
 
         let msg = if range.is_empty()
@@ -140,7 +140,7 @@ fn article_for(name: &str) -> &'static str {
 struct ExpectedToken(&'static str);
 
 impl ToDiagnostic for ExpectedToken {
-    fn to_diagnostic(self, p: &Parser) -> ParseDiagnostic {
+    fn to_diagnostic(self, p: &JsParser) -> ParseDiagnostic {
         match p.cur() {
             JsSyntaxKind::EOF => p
                 .err_builder(
@@ -161,7 +161,7 @@ impl ToDiagnostic for ExpectedToken {
 struct ExpectedTokens(String);
 
 impl ToDiagnostic for ExpectedTokens {
-    fn to_diagnostic(self, p: &Parser) -> ParseDiagnostic {
+    fn to_diagnostic(self, p: &JsParser) -> ParseDiagnostic {
         match p.cur() {
             JsSyntaxKind::EOF => p
                 .err_builder(

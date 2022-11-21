@@ -1,4 +1,4 @@
-use crate::{CompletedMarker, Parser, TokenSet};
+use crate::{CompletedMarker, JsParser, TokenSet};
 use rome_js_syntax::JsSyntaxKind;
 use rome_js_syntax::JsSyntaxKind::EOF;
 use std::error::Error;
@@ -80,7 +80,7 @@ impl ParseRecovery {
     /// specified in the recovery set, the EOF, or a line break (depending on configuration).
     /// Returns `Ok(unknown_node)` if recovery was successful, and `Err(RecoveryError::Eof)` if the parser
     /// is at the end of the file (before starting recovery).
-    pub fn recover(&self, p: &mut Parser) -> RecoveryResult {
+    pub fn recover(&self, p: &mut JsParser) -> RecoveryResult {
         if p.at(EOF) {
             return Err(RecoveryError::Eof);
         }
@@ -103,7 +103,7 @@ impl ParseRecovery {
     }
 
     #[inline]
-    fn recovered(&self, p: &Parser) -> bool {
+    fn recovered(&self, p: &JsParser) -> bool {
         p.at_ts(self.recovery_set) || p.at(EOF) || (self.line_break && p.has_preceding_line_break())
     }
 }

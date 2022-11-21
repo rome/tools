@@ -4,14 +4,14 @@ use super::module::parse_module_body;
 use super::stmt::parse_statements;
 use crate::state::{ChangeParserState, EnableStrictMode};
 use crate::syntax::stmt::parse_directives;
-use crate::{CompletedMarker, Parser};
+use crate::{CompletedMarker, JsParser};
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::ModuleKind;
 
 // test_err unterminated_unicode_codepoint
 // let s = "\u{200";
 
-pub(crate) fn parse(p: &mut Parser) -> CompletedMarker {
+pub(crate) fn parse(p: &mut JsParser) -> CompletedMarker {
     let m = p.start();
     p.eat(JS_SHEBANG);
 

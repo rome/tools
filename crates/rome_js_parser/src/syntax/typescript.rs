@@ -9,7 +9,7 @@ use crate::syntax::expr::{parse_identifier, parse_lhs_expr, parse_unary_expr, Ex
 use crate::syntax::js_parse_error::expected_expression;
 
 use crate::syntax::typescript::ts_parse_error::expected_ts_type;
-use crate::{Absent, CompletedMarker, Marker, ParsedSyntax, Parser, Present};
+use crate::{Absent, CompletedMarker, JsParser, Marker, ParsedSyntax, Present};
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind;
 
@@ -38,7 +38,7 @@ impl TsIdentifierContext {
     }
 }
 fn parse_ts_identifier_binding(
-    p: &mut Parser,
+    p: &mut JsParser,
     ts_identifier_context: TsIdentifierContext,
 ) -> ParsedSyntax {
     parse_identifier(p, TS_IDENTIFIER_BINDING).map(|mut ident| {
@@ -63,7 +63,7 @@ fn parse_ts_identifier_binding(
 // let y = <string> x;
 // var d = <Error>({ name: "foo", message: "bar" });
 pub(crate) fn parse_ts_type_assertion_expression(
-    p: &mut Parser,
+    p: &mut JsParser,
     context: ExpressionContext,
 ) -> ParsedSyntax {
     if !p.at(T![<]) {
@@ -78,7 +78,7 @@ pub(crate) fn parse_ts_type_assertion_expression(
     Present(m.complete(p, TS_TYPE_ASSERTION_EXPRESSION))
 }
 
-pub(crate) fn parse_ts_implements_clause(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_implements_clause(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![implements]) {
         return Absent;
     }
@@ -93,7 +93,7 @@ pub(crate) fn parse_ts_implements_clause(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_IMPLEMENTS_CLAUSE))
 }
 
-fn expect_ts_type_list(p: &mut Parser, clause_name: &str) -> CompletedMarker {
+fn expect_ts_type_list(p: &mut JsParser, clause_name: &str) -> CompletedMarker {
     let list = p.start();
 
     if parse_ts_name_with_type_arguments(p).is_absent() {
@@ -118,7 +118,7 @@ fn expect_ts_type_list(p: &mut Parser, clause_name: &str) -> CompletedMarker {
     list.complete(p, TS_TYPE_LIST)
 }
 
-fn parse_ts_name_with_type_arguments(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_name_with_type_arguments(p: &mut JsParser) -> ParsedSyntax {
     parse_ts_name(p).map(|name| {
         let m = name.precede(p);
 
@@ -131,8 +131,8 @@ fn parse_ts_name_with_type_arguments(p: &mut Parser) -> ParsedSyntax {
 }
 
 pub(crate) fn try_parse<T, E>(
-    p: &mut Parser,
-    func: impl FnOnce(&mut Parser) -> Result<T, E>,
+    p: &mut JsParser,
+    func: impl FnOnce(&mut JsParser) -> Result<T, E>,
 ) -> Result<T, E> {
     let checkpoint = p.checkpoint();
 
@@ -148,7 +148,7 @@ pub(crate) fn try_parse<T, E>(
 }
 
 /// Must be at `[ident:` or `<modifiers> [ident:`
-pub(crate) fn is_at_ts_index_signature_member(p: &mut Parser) -> bool {
+pub(crate) fn is_at_ts_index_signature_member(p: &mut JsParser) -> bool {
     let mut offset = 0;
     while is_nth_at_modifier(p, offset, false) {
         offset += 1;
@@ -172,7 +172,7 @@ pub(crate) enum MemberParent {
 }
 
 pub(crate) fn expect_ts_index_signature_member(
-    p: &mut Parser,
+    p: &mut JsParser,
     m: Marker,
     parent: MemberParent,
 ) -> CompletedMarker {
@@ -214,7 +214,7 @@ pub(crate) fn expect_ts_index_signature_member(
     )
 }
 
-fn eat_members_separator(p: &mut Parser, parent: MemberParent) {
+fn eat_members_separator(p: &mut JsParser, parent: MemberParent) {
     let (comma, semi_colon) = match parent {
         MemberParent::Class => (false, true),
         MemberParent::TypeOrInterface => (true, true),
@@ -253,7 +253,7 @@ fn eat_members_separator(p: &mut Parser, parent: MemberParent) {
 // @test export default class Test {}
 
 /// Skips over any TypeScript decorator syntax.
-pub(crate) fn skip_ts_decorators(p: &mut Parser) {
+pub(crate) fn skip_ts_decorators(p: &mut JsParser) {
     if !p.at(T![@]) {
         return;
     }
@@ -265,7 +265,7 @@ pub(crate) fn skip_ts_decorators(p: &mut Parser) {
     });
 }
 
-fn parse_decorator(p: &mut Parser) -> ParsedSyntax {
+fn parse_decorator(p: &mut JsParser) -> ParsedSyntax {
     if p.at(T![@]) {
         let m = p.start();
         p.bump(T![@]);

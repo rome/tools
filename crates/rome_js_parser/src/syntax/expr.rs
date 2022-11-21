@@ -33,7 +33,7 @@ use crate::JsSyntaxFeature::{Jsx, StrictMode, TypeScript};
 use crate::Marker;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-    syntax, ParseRecovery, ParseSeparatedList, ParsedSyntax, Parser, SyntaxFeature, TokenSet,
+    syntax, JsParser, ParseRecovery, ParseSeparatedList, ParsedSyntax, SyntaxFeature, TokenSet,
 };
 use bitflags::bitflags;
 use rome_js_syntax::{JsSyntaxKind::*, *};
@@ -119,7 +119,7 @@ impl Default for ExpressionContext {
 
 /// Parses an expression or recovers to the point of where the next statement starts
 pub(crate) fn parse_expression_or_recover_to_next_statement(
-    p: &mut Parser,
+    p: &mut JsParser,
     assign: bool,
     context: ExpressionContext,
 ) -> RecoveryResult {
@@ -161,7 +161,7 @@ pub(crate) fn parse_expression_or_recover_to_next_statement(
 // 01n, 0_0, 01.2 // lexer errors
 // "test
 // continues" // unterminated string literal
-pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_literal_expression(p: &mut JsParser) -> ParsedSyntax {
     let literal_kind = match p.cur() {
         JsSyntaxKind::JS_NUMBER_LITERAL => {
             return parse_number_literal_expression(p)
@@ -187,7 +187,7 @@ pub(super) fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, literal_kind))
 }
 
-pub(crate) fn parse_big_int_literal_expression(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_big_int_literal_expression(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(JS_NUMBER_LITERAL) || !p.cur_src().ends_with('n') {
         return Absent;
     }
@@ -197,7 +197,7 @@ pub(crate) fn parse_big_int_literal_expression(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_BIG_INT_LITERAL_EXPRESSION))
 }
 
-pub(crate) fn parse_number_literal_expression(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_number_literal_expression(p: &mut JsParser) -> ParsedSyntax {
     let cur_src = p.cur_src();
     if !p.at(JS_NUMBER_LITERAL) || cur_src.ends_with('n') {
         return Absent;
@@ -228,7 +228,7 @@ pub(crate) fn parse_number_literal_expression(p: &mut Parser) -> ParsedSyntax {
 /// Parses an assignment expression or any higher expression
 /// https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#prod-AssignmentExpression
 pub(crate) fn parse_assignment_expression_or_higher(
-    p: &mut Parser,
+    p: &mut JsParser,
     context: ExpressionContext,
 ) -> ParsedSyntax {
     let arrow_expression = parse_arrow_function_expression(p);
@@ -241,7 +241,7 @@ pub(crate) fn parse_assignment_expression_or_higher(
 }
 
 fn parse_assignment_expression_or_higher_base(
-    p: &mut Parser,
+    p: &mut JsParser,
     context: ExpressionContext,
 ) -> ParsedSyntax {
     // test reparse_yield_as_identifier
@@ -288,7 +288,7 @@ fn parse_assignment_expression_or_higher_base(
 // ({ eval } = o)
 // ({ foo: { eval }}) = o
 fn parse_assign_expr_recursive(
-    p: &mut Parser,
+    p: &mut JsParser,
     mut target: CompletedMarker,
     checkpoint: Checkpoint,
     context: ExpressionContext,
@@ -350,7 +350,7 @@ fn is_assign_token(kind: JsSyntaxKind) -> bool {
 //  yield
 //  yield
 // }
-fn parse_yield_expression(p: &mut Parser, context: ExpressionContext) -> CompletedMarker {
+fn parse_yield_expression(p: &mut JsParser, context: ExpressionContext) -> CompletedMarker {
     let m = p.start();
     let yield_range = p.cur_range();
     p.expect(T![yield]);
@@ -402,7 +402,7 @@ fn parse_yield_expression(p: &mut Parser, context: ExpressionContext) -> Complet
 // test conditional_expr
 // foo ? bar : baz
 // foo ? bar : baz ? bar : baz
-pub(super) fn parse_conditional_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+pub(super) fn parse_conditional_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
     // test_err conditional_expr_err
     // foo ? bar baz
     // foo ? bar baz ? foo : bar
@@ -430,7 +430,7 @@ pub(super) fn parse_conditional_expr(p: &mut Parser, context: ExpressionContext)
 
 /// A binary expression such as `2 + 2` or `foo * bar + 2` or a logical expression 'a || b'
 fn parse_binary_or_logical_expression(
-    p: &mut Parser,
+    p: &mut JsParser,
     left_precedence: OperatorPrecedence,
     context: ExpressionContext,
 ) -> ParsedSyntax {
@@ -466,7 +466,7 @@ fn parse_binary_or_logical_expression(
 // foo + * 2;
 // !foo * bar;
 fn parse_binary_or_logical_expression_recursive(
-    p: &mut Parser,
+    p: &mut JsParser,
     mut left: ParsedSyntax,
     left_precedence: OperatorPrecedence,
     context: ExpressionContext,
@@ -660,7 +660,7 @@ fn parse_binary_or_logical_expression_recursive(
 
 // test_err new_exprs
 // new;
-fn parse_member_expression_or_higher(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+fn parse_member_expression_or_higher(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
     parse_primary_expression(p, context)
         .map(|lhs| parse_member_expression_rest(p, lhs, context, true, &mut false))
 }
@@ -669,7 +669,7 @@ fn parse_member_expression_or_higher(p: &mut Parser, context: ExpressionContext)
 // foo()?.baz[].;
 // BAR`b
 fn parse_member_expression_rest(
-    p: &mut Parser,
+    p: &mut JsParser,
     lhs: CompletedMarker,
     context: ExpressionContext,
     allow_optional_chain: bool,
@@ -763,7 +763,7 @@ fn parse_member_expression_rest(
 // var x1 = new SS<number>(); // OK
 // var x3 = new SS();         // OK
 // var x4 = new SS;           // OK
-fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+fn parse_new_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
     if !p.at(T![new]) {
         return Absent;
     }
@@ -847,7 +847,7 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
 //   }
 // }
 // super();
-fn parse_super_expression(p: &mut Parser) -> ParsedSyntax {
+fn parse_super_expression(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![super]) {
         return Absent;
     }
@@ -897,7 +897,7 @@ fn parse_super_expression(p: &mut Parser) -> ParsedSyntax {
 //   }
 // }
 fn parse_static_member_expression(
-    p: &mut Parser,
+    p: &mut JsParser,
     lhs: CompletedMarker,
     operator: JsSyntaxKind,
 ) -> ParsedSyntax {
@@ -909,7 +909,7 @@ fn parse_static_member_expression(
     Present(m.complete(p, JS_STATIC_MEMBER_EXPRESSION))
 }
 
-pub(super) fn parse_private_name(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_private_name(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![#]) {
         return Absent;
     }
@@ -943,7 +943,7 @@ pub(super) fn parse_private_name(p: &mut Parser) -> ParsedSyntax {
     }
 }
 
-pub(super) fn parse_any_name(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_any_name(p: &mut JsParser) -> ParsedSyntax {
     match p.cur() {
         T![#] => parse_private_name(p),
         _ => parse_name(p),
@@ -958,7 +958,7 @@ pub(super) fn parse_any_name(p: &mut Parser) -> ParsedSyntax {
 // foo[bar][baz]
 // foo?.[bar]
 fn parse_computed_member_expression(
-    p: &mut Parser,
+    p: &mut JsParser,
     lhs: CompletedMarker,
     optional_chain: bool,
 ) -> ParsedSyntax {
@@ -982,7 +982,7 @@ fn parse_computed_member_expression(
 }
 
 /// An identifier name, either an ident or a keyword
-pub(super) fn parse_name(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_name(p: &mut JsParser) -> ParsedSyntax {
     if is_at_name(p) {
         let m = p.start();
         p.bump_remap(T![ident]);
@@ -1011,7 +1011,7 @@ pub(super) fn parse_name(p: &mut Parser) -> ParsedSyntax {
 // foo(a,b var;
 // foo (,,b);
 // foo (a, ...);
-fn parse_call_arguments(p: &mut Parser) -> ParsedSyntax {
+fn parse_call_arguments(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T!['(']) {
         return Absent;
     }
@@ -1088,7 +1088,7 @@ fn parse_call_arguments(p: &mut Parser) -> ParsedSyntax {
 // ((foo))
 // (foo)
 
-fn parse_parenthesized_expression(p: &mut Parser) -> ParsedSyntax {
+fn parse_parenthesized_expression(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T!['(']) {
         return Absent;
     }
@@ -1121,14 +1121,14 @@ fn parse_parenthesized_expression(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_PARENTHESIZED_EXPRESSION))
 }
 
-pub(crate) fn parse_expression_snipped(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_expression_snipped(p: &mut JsParser) -> ParsedSyntax {
     let m = p.start();
     parse_expression(p, ExpressionContext::default()).or_add_diagnostic(p, expected_expression);
     m.complete(p, JS_EXPRESSION_SNIPPED).into()
 }
 
 /// A general expression.
-pub(crate) fn parse_expression(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+pub(crate) fn parse_expression(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
     let first = parse_assignment_expression_or_higher(p, context);
 
     if p.at(T![,]) {
@@ -1144,7 +1144,7 @@ pub(crate) fn parse_expression(p: &mut Parser, context: ExpressionContext) -> Pa
 // test_err sequence_expr
 // 1, 2, , 4
 fn parse_sequence_expression_recursive(
-    p: &mut Parser,
+    p: &mut JsParser,
     left: ParsedSyntax,
     context: ExpressionContext,
 ) -> ParsedSyntax {
@@ -1167,11 +1167,11 @@ fn parse_sequence_expression_recursive(
 }
 
 #[inline]
-pub(crate) fn is_at_expression(p: &mut Parser) -> bool {
+pub(crate) fn is_at_expression(p: &mut JsParser) -> bool {
     is_nth_at_expression(p, 0)
 }
 
-pub(crate) fn is_nth_at_expression(p: &mut Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_expression(p: &mut JsParser, n: usize) -> bool {
     match p.nth(n) {
         T![!]
         | T!['(']
@@ -1211,7 +1211,7 @@ pub(crate) fn is_nth_at_expression(p: &mut Parser, n: usize) -> bool {
 }
 
 /// A primary expression such as a literal, an object, an array, or `this`.
-fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
     let parsed_literal_expression = parse_literal_expression(p);
     if parsed_literal_expression.is_present() {
         return parsed_literal_expression;
@@ -1396,7 +1396,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
     Present(complete)
 }
 
-fn parse_identifier_expression(p: &mut Parser) -> ParsedSyntax {
+fn parse_identifier_expression(p: &mut JsParser) -> ParsedSyntax {
     parse_reference_identifier(p)
         .map(|identifier| identifier.precede(p).complete(p, JS_IDENTIFIER_EXPRESSION))
 }
@@ -1404,11 +1404,11 @@ fn parse_identifier_expression(p: &mut Parser) -> ParsedSyntax {
 // test_err identifier
 // yield;
 // await;
-pub(crate) fn parse_reference_identifier(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_reference_identifier(p: &mut JsParser) -> ParsedSyntax {
     parse_identifier(p, JS_REFERENCE_IDENTIFIER)
 }
 
-pub(crate) fn is_nth_at_reference_identifier(p: &mut Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_reference_identifier(p: &mut JsParser, n: usize) -> bool {
     is_nth_at_identifier(p, n)
 }
 
@@ -1434,7 +1434,7 @@ pub(crate) fn is_nth_at_reference_identifier(p: &mut Parser, n: usize) -> bool {
 /// An identifier is invalid if:
 /// * It is named `await` inside of an async function
 /// * It is named `yield` inside of a generator function or in strict mode
-pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSyntax {
+pub(super) fn parse_identifier(p: &mut JsParser, kind: JsSyntaxKind) -> ParsedSyntax {
     if !is_at_identifier(p) {
         return Absent;
     }
@@ -1491,19 +1491,19 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
 }
 
 #[inline]
-pub(crate) fn is_at_identifier(p: &mut Parser) -> bool {
+pub(crate) fn is_at_identifier(p: &mut JsParser) -> bool {
     is_nth_at_identifier(p, 0)
 }
 
 #[inline]
-pub(crate) fn is_nth_at_identifier(p: &mut Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_identifier(p: &mut JsParser, n: usize) -> bool {
     p.nth_at(n, T![ident])
         || p.nth(n).is_contextual_keyword()
         || p.nth(n).is_future_reserved_keyword()
 }
 
 #[inline]
-pub(crate) fn is_nth_at_identifier_or_keyword(p: &mut Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_identifier_or_keyword(p: &mut JsParser, n: usize) -> bool {
     p.nth(n).is_keyword() || is_nth_at_identifier(p, n)
 }
 
@@ -1519,7 +1519,7 @@ pub(crate) fn is_nth_at_identifier_or_keyword(p: &mut Parser, n: usize) -> bool 
 // let a = `foo ${}`
 // let b = `${a a}`
 fn parse_template_literal(
-    p: &mut Parser,
+    p: &mut JsParser,
     marker: Marker,
     in_optional_chain: bool,
     tagged: bool,
@@ -1564,13 +1564,13 @@ fn parse_template_literal(
 
 #[inline]
 pub(crate) fn parse_template_elements<P>(
-    p: &mut Parser,
+    p: &mut JsParser,
     chunk_kind: JsSyntaxKind,
     element_kind: JsSyntaxKind,
     tagged: bool,
     parse_element: P,
 ) where
-    P: Fn(&mut Parser) -> Option<CompletedMarker>,
+    P: Fn(&mut JsParser) -> Option<CompletedMarker>,
 {
     while !p.at(EOF) && !p.at(BACKTICK) {
         match p.cur() {
@@ -1611,7 +1611,7 @@ pub(crate) fn parse_template_elements<P>(
 struct ArrayElementsList;
 
 impl ParseSeparatedList for ArrayElementsList {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         match p.cur() {
             T![...] => parse_spread_element(p, ExpressionContext::default()),
             T![,] => Present(p.start().complete(p, JS_ARRAY_HOLE)),
@@ -1619,11 +1619,11 @@ impl ParseSeparatedList for ArrayElementsList {
         }
     }
 
-    fn is_at_list_end(&self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool {
         p.at(T![']'])
     }
 
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+    fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
@@ -1658,7 +1658,7 @@ impl ParseSeparatedList for ArrayElementsList {
 
 // test_err array_expr_incomplete
 // let a = [
-fn parse_array_expr(p: &mut Parser) -> ParsedSyntax {
+fn parse_array_expr(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T!['[']) {
         return Absent;
     }
@@ -1676,7 +1676,7 @@ fn parse_array_expr(p: &mut Parser) -> ParsedSyntax {
 // test_err spread
 // [...]
 /// A spread element consisting of three dots and an assignment expression such as `...foo`
-fn parse_spread_element(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+fn parse_spread_element(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
     if !p.at(T![...]) {
         return Absent;
     }
@@ -1688,7 +1688,7 @@ fn parse_spread_element(p: &mut Parser, context: ExpressionContext) -> ParsedSyn
 }
 
 /// A left hand side expression, either a member expression or a call expression such as `foo()`.
-pub(super) fn parse_lhs_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+pub(super) fn parse_lhs_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
     // super.foo and super[bar]
     // test super_property_access
     // super.foo
@@ -1704,7 +1704,7 @@ pub(super) fn parse_lhs_expr(p: &mut Parser, context: ExpressionContext) -> Pars
 }
 
 fn parse_call_expression_rest(
-    p: &mut Parser,
+    p: &mut JsParser,
     lhs: CompletedMarker,
     context: ExpressionContext,
 ) -> CompletedMarker {
@@ -1787,7 +1787,7 @@ fn parse_call_expression_rest(
 // test postfix_expr
 // foo++
 // foo--
-fn parse_postfix_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+fn parse_postfix_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
     let checkpoint = p.checkpoint();
     let lhs = parse_lhs_expr(p, context);
     lhs.map(|marker| {
@@ -1817,7 +1817,7 @@ fn parse_postfix_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSynta
 }
 
 /// A unary expression such as `!foo` or `++bar`
-pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
     const UNARY_SINGLE: TokenSet =
         token_set![T![delete], T![void], T![typeof], T![+], T![-], T![~], T![!]];
 
@@ -2091,14 +2091,14 @@ impl RewriteParseEvents for DeleteExpressionRewriter {
     }
 }
 
-pub(super) fn is_at_name(p: &mut Parser) -> bool {
+pub(super) fn is_at_name(p: &mut JsParser) -> bool {
     is_nth_at_name(p, 0)
 }
 
-pub(super) fn is_nth_at_name(p: &mut Parser, offset: usize) -> bool {
+pub(super) fn is_nth_at_name(p: &mut JsParser, offset: usize) -> bool {
     p.nth_at(offset, T![ident]) || p.nth(offset).is_keyword()
 }
 
-pub(super) fn is_nth_at_any_name(p: &mut Parser, n: usize) -> bool {
+pub(super) fn is_nth_at_any_name(p: &mut JsParser, n: usize) -> bool {
     is_nth_at_name(p, n) || p.nth_at(n, T![#])
 }

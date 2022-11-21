@@ -9,7 +9,7 @@ use crate::syntax::typescript::{
     is_nth_at_any_ts_namespace_declaration, parse_any_ts_namespace_declaration_clause,
     parse_ts_enum_declaration, parse_ts_interface_declaration, parse_ts_type_alias_declaration,
 };
-use crate::{Absent, ParsedSyntax, Parser};
+use crate::{Absent, JsParser, ParsedSyntax};
 use rome_js_syntax::JsSyntaxKind::JS_VARIABLE_DECLARATION_CLAUSE;
 use rome_js_syntax::T;
 use rome_rowan::{TextRange, TextSize};
@@ -23,7 +23,7 @@ use rome_rowan::{TextRange, TextSize};
 // export let a = ;
 // export const b;
 // export let d, c;
-pub(crate) fn parse_variable_declaration_clause(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_variable_declaration_clause(p: &mut JsParser) -> ParsedSyntax {
     let start = p.cur_range().start();
 
     parse_variable_declaration(p, VariableDeclarationParent::Clause).map(|declaration| {
@@ -33,7 +33,7 @@ pub(crate) fn parse_variable_declaration_clause(p: &mut Parser) -> ParsedSyntax 
     })
 }
 
-pub(crate) fn is_nth_at_declaration_clause(p: &mut Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_declaration_clause(p: &mut JsParser, n: usize) -> bool {
     if matches!(
         p.nth(n),
         T![function] | T![const] | T![enum] | T![class] | T![import]
@@ -68,7 +68,7 @@ pub(crate) fn is_nth_at_declaration_clause(p: &mut Parser, n: usize) -> bool {
     false
 }
 
-pub(crate) fn parse_declaration_clause(p: &mut Parser, stmt_start_pos: TextSize) -> ParsedSyntax {
+pub(crate) fn parse_declaration_clause(p: &mut JsParser, stmt_start_pos: TextSize) -> ParsedSyntax {
     match p.cur() {
         T![function] => parse_function_declaration(p, StatementContext::StatementList),
         T![class] => parse_class_declaration(p, StatementContext::StatementList),

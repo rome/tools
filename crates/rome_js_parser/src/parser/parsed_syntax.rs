@@ -1,7 +1,7 @@
 use crate::parser::parse_recovery::RecoveryResult;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParseRecovery, ToDiagnostic};
-use crate::{CompletedMarker, Marker, ParseDiagnostic, Parser};
+use crate::{CompletedMarker, JsParser, Marker, ParseDiagnostic};
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::TextRange;
 
@@ -167,11 +167,11 @@ impl ParsedSyntax {
     #[allow(unused)]
     pub fn add_diagnostic_if_present<E, D>(
         self,
-        p: &mut Parser,
+        p: &mut JsParser,
         error_builder: E,
     ) -> Option<CompletedMarker>
     where
-        E: FnOnce(&Parser, TextRange) -> D,
+        E: FnOnce(&JsParser, TextRange) -> D,
         D: ToDiagnostic,
     {
         match self {
@@ -190,11 +190,11 @@ impl ParsedSyntax {
     #[inline]
     pub fn or_add_diagnostic<E, D>(
         self,
-        p: &mut Parser,
+        p: &mut JsParser,
         error_builder: E,
     ) -> Option<CompletedMarker>
     where
-        E: FnOnce(&Parser, TextRange) -> D,
+        E: FnOnce(&JsParser, TextRange) -> D,
         D: ToDiagnostic,
     {
         match self {
@@ -211,9 +211,9 @@ impl ParsedSyntax {
     /// a new marker and adds an error to the current parser position.
     /// See [CompletedMarker.precede]
     #[inline]
-    pub fn precede_or_add_diagnostic<E, D>(self, p: &mut Parser, error_builder: E) -> Marker
+    pub fn precede_or_add_diagnostic<E, D>(self, p: &mut JsParser, error_builder: E) -> Marker
     where
-        E: FnOnce(&Parser, TextRange) -> D,
+        E: FnOnce(&JsParser, TextRange) -> D,
         D: ToDiagnostic,
     {
         match self {
@@ -228,7 +228,7 @@ impl ParsedSyntax {
 
     /// Creates a new marker that precedes this syntax or starts a new marker
     #[inline]
-    pub fn precede(self, p: &mut Parser) -> Marker {
+    pub fn precede(self, p: &mut JsParser) -> Marker {
         match self {
             Present(marker) => marker.precede(p),
             Absent => p.start(),
@@ -246,12 +246,12 @@ impl ParsedSyntax {
     /// is already at a valid position according to the [ParseRecovery].
     pub fn or_recover<E>(
         self,
-        p: &mut Parser,
+        p: &mut JsParser,
         recovery: &ParseRecovery,
         error_builder: E,
     ) -> RecoveryResult
     where
-        E: FnOnce(&Parser, TextRange) -> ParseDiagnostic,
+        E: FnOnce(&JsParser, TextRange) -> ParseDiagnostic,
     {
         match self {
             Present(syntax) => Ok(syntax),

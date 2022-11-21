@@ -379,7 +379,7 @@ pub use crate::{
     parse::*,
     token_set::TokenSet,
 };
-pub(crate) use parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser};
+pub(crate) use parser::{Checkpoint, CompletedMarker, JsParser, Marker, ParseRecovery};
 use rome_console::fmt::Display;
 use rome_console::MarkupBuf;
 use rome_diagnostics::console::markup;
@@ -628,10 +628,10 @@ pub trait TreeSink {
 /// A syntax feature that may or may not be supported depending on the file type and parser configuration
 pub(crate) trait SyntaxFeature: Sized {
     /// Returns `true` if the current parsing context supports this syntax feature.
-    fn is_supported(&self, p: &Parser) -> bool;
+    fn is_supported(&self, p: &JsParser) -> bool;
 
     /// Returns `true` if the current parsing context doesn't support this syntax feature.
-    fn is_unsupported(&self, p: &Parser) -> bool {
+    fn is_unsupported(&self, p: &JsParser) -> bool {
         !self.is_supported(p)
     }
 
@@ -639,10 +639,15 @@ pub(crate) trait SyntaxFeature: Sized {
     /// supported.
     ///
     /// Returns the parsed syntax.
-    fn exclusive_syntax<S, E, D>(&self, p: &mut Parser, syntax: S, error_builder: E) -> ParsedSyntax
+    fn exclusive_syntax<S, E, D>(
+        &self,
+        p: &mut JsParser,
+        syntax: S,
+        error_builder: E,
+    ) -> ParsedSyntax
     where
         S: Into<ParsedSyntax>,
-        E: FnOnce(&Parser, &CompletedMarker) -> D,
+        E: FnOnce(&JsParser, &CompletedMarker) -> D,
         D: ToDiagnostic,
     {
         syntax.into().map(|mut syntax| {
@@ -663,13 +668,13 @@ pub(crate) trait SyntaxFeature: Sized {
     /// Returns the parsed syntax.
     fn parse_exclusive_syntax<P, E>(
         &self,
-        p: &mut Parser,
+        p: &mut JsParser,
         parse: P,
         error_builder: E,
     ) -> ParsedSyntax
     where
-        P: FnOnce(&mut Parser) -> ParsedSyntax,
-        E: FnOnce(&Parser, &CompletedMarker) -> ParseDiagnostic,
+        P: FnOnce(&mut JsParser) -> ParsedSyntax,
+        E: FnOnce(&JsParser, &CompletedMarker) -> ParseDiagnostic,
     {
         if self.is_supported(p) {
             parse(p)
@@ -694,10 +699,10 @@ pub(crate) trait SyntaxFeature: Sized {
     /// supported.
     ///
     /// Returns the parsed syntax.
-    fn excluding_syntax<S, E>(&self, p: &mut Parser, syntax: S, error_builder: E) -> ParsedSyntax
+    fn excluding_syntax<S, E>(&self, p: &mut JsParser, syntax: S, error_builder: E) -> ParsedSyntax
     where
         S: Into<ParsedSyntax>,
-        E: FnOnce(&Parser, &CompletedMarker) -> ParseDiagnostic,
+        E: FnOnce(&JsParser, &CompletedMarker) -> ParseDiagnostic,
     {
         syntax.into().map(|mut syntax| {
             if self.is_unsupported(p) {
@@ -722,7 +727,7 @@ pub enum JsSyntaxFeature {
 }
 
 impl SyntaxFeature for JsSyntaxFeature {
-    fn is_supported(&self, p: &Parser) -> bool {
+    fn is_supported(&self, p: &JsParser) -> bool {
         match self {
             JsSyntaxFeature::SloppyMode => p.state.strict().is_none(),
             JsSyntaxFeature::StrictMode => p.state.strict().is_some(),

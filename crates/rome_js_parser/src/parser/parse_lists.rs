@@ -1,6 +1,6 @@
 ///! A set of traits useful to parse various types of lists
 use super::{ParsedSyntax, ParserProgress, RecoveryResult};
-use crate::{CompletedMarker, Marker, Parser};
+use crate::{CompletedMarker, JsParser, Marker};
 use rome_js_syntax::JsSyntaxKind;
 
 /// Use this trait to parse simple lists that don't have particular requirements.
@@ -19,10 +19,10 @@ use rome_js_syntax::JsSyntaxKind;
 /// ```
 pub(crate) trait ParseNodeList {
     /// Parses a single element of the list
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax;
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax;
 
     /// It creates a marker just before starting a list
-    fn start_list(&mut self, p: &mut Parser) -> Marker {
+    fn start_list(&mut self, p: &mut JsParser) -> Marker {
         p.start()
     }
 
@@ -30,13 +30,13 @@ pub(crate) trait ParseNodeList {
     /// the trait will exit from the loop.
     ///
     /// Usually here you want to check the current token.
-    fn is_at_list_end(&self, p: &mut Parser) -> bool;
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool;
 
     /// This method is used to recover the parser in case [Self::parse_element] returns [ParsedSyntax::Absent]
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult;
+    fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult;
 
     /// It creates a [ParsedSyntax] that will contain the list
-    fn finish_list(&mut self, p: &mut Parser, m: Marker) {
+    fn finish_list(&mut self, p: &mut JsParser, m: Marker) {
         m.complete(p, Self::list_kind());
     }
 
@@ -48,7 +48,7 @@ pub(crate) trait ParseNodeList {
     /// # Panics
     ///
     /// It panics if the parser doesn't advance at each cycle of the loop
-    fn parse_list(&mut self, p: &mut Parser) {
+    fn parse_list(&mut self, p: &mut JsParser) {
         let elements = self.start_list(p);
         let mut progress = ParserProgress::default();
 
@@ -81,10 +81,10 @@ pub(crate) trait ParseNodeList {
 /// ```
 pub(crate) trait ParseSeparatedList {
     /// Parses a single element of the list
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax;
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax;
 
     /// It creates a marker just before starting a list
-    fn start_list(&mut self, p: &mut Parser) -> Marker {
+    fn start_list(&mut self, p: &mut JsParser) -> Marker {
         p.start()
     }
 
@@ -92,14 +92,14 @@ pub(crate) trait ParseSeparatedList {
     /// the trait will exit from the loop.
     ///
     /// Usually here you want to check the current token.
-    fn is_at_list_end(&self, p: &mut Parser) -> bool;
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool;
 
     /// This method is used to recover the parser in case [Self::parse_element] returns [ParsedSyntax::Absent]
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult;
+    fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult;
 
     /// It creates a [ParsedSyntax] that will contain the list
     /// Only called if the list isn't empty
-    fn finish_list(&mut self, p: &mut Parser, m: Marker) -> CompletedMarker {
+    fn finish_list(&mut self, p: &mut JsParser, m: Marker) -> CompletedMarker {
         m.complete(p, Self::list_kind())
     }
 
@@ -119,7 +119,7 @@ pub(crate) trait ParseSeparatedList {
     ///
     /// If present, it [parses](Self::parse_separating_element) it and continues with loop.
     /// If not present, it adds a missing marker.
-    fn expect_separator(&mut self, p: &mut Parser) -> bool {
+    fn expect_separator(&mut self, p: &mut JsParser) -> bool {
         p.expect(self.separating_element_kind())
     }
 
@@ -128,7 +128,7 @@ pub(crate) trait ParseSeparatedList {
     /// # Panics
     ///
     /// It panics if the parser doesn't advance at each cycle of the loop
-    fn parse_list(&mut self, p: &mut Parser) -> CompletedMarker {
+    fn parse_list(&mut self, p: &mut JsParser) -> CompletedMarker {
         let elements = self.start_list(p);
         let mut progress = ParserProgress::default();
         let mut first = true;

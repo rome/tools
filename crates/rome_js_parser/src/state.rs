@@ -1,4 +1,4 @@
-use crate::Parser;
+use crate::JsParser;
 use bitflags::bitflags;
 use indexmap::IndexMap;
 use rome_js_syntax::SourceType;
@@ -258,7 +258,7 @@ impl DebugParserStateCheckpoint {
     }
 }
 
-impl<'t> Parser<'t> {
+impl<'t> JsParser<'t> {
     /// Applies the passed in change to the parser's state and reverts the
     /// changes when the returned [ParserStateGuard] goes out of scope.
     pub(crate) fn with_scoped_state<'p, C: ChangeParserState>(
@@ -275,7 +275,7 @@ impl<'t> Parser<'t> {
     pub(crate) fn with_state<C, F, R>(&mut self, change: C, func: F) -> R
     where
         C: ChangeParserState,
-        F: FnOnce(&mut Parser) -> R,
+        F: FnOnce(&mut JsParser) -> R,
     {
         let snapshot = change.apply(&mut self.state);
         let result = func(self);
@@ -291,11 +291,11 @@ where
     C: ChangeParserState,
 {
     snapshot: C::Snapshot,
-    inner: &'parser mut Parser<'t>,
+    inner: &'parser mut JsParser<'t>,
 }
 
 impl<'parser, 't, C: ChangeParserState> ParserStateGuard<'parser, 't, C> {
-    fn new(parser: &'parser mut Parser<'t>, snapshot: C::Snapshot) -> Self {
+    fn new(parser: &'parser mut JsParser<'t>, snapshot: C::Snapshot) -> Self {
         Self {
             snapshot,
             inner: parser,
@@ -312,7 +312,7 @@ impl<'parser, 't, C: ChangeParserState> Drop for ParserStateGuard<'parser, 't, C
 }
 
 impl<'parser, 't, C: ChangeParserState> Deref for ParserStateGuard<'parser, 't, C> {
-    type Target = Parser<'t>;
+    type Target = JsParser<'t>;
 
     fn deref(&self) -> &Self::Target {
         self.inner

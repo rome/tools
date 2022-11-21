@@ -1,28 +1,28 @@
 use crate::parser::expected_node;
 use crate::{
     parser::{expected_any, ToDiagnostic},
-    CompletedMarker, ParseDiagnostic, Parser,
+    CompletedMarker, JsParser, ParseDiagnostic,
 };
 use rome_diagnostics::location::AsSpan;
 use rome_rowan::TextRange;
 
-pub(crate) fn expected_ts_enum_member(p: &Parser, range: TextRange) -> ParseDiagnostic {
+pub(crate) fn expected_ts_enum_member(p: &JsParser, range: TextRange) -> ParseDiagnostic {
     expected_any(&["identifier", "string literal", "computed name"], range).to_diagnostic(p)
 }
 
 pub(crate) fn unexpected_abstract_member_with_body(
-    p: &Parser,
+    p: &JsParser,
     range: TextRange,
 ) -> ParseDiagnostic {
     p.err_builder("abstract members should not have a body", range)
 }
 
-pub(crate) fn abstract_member_cannot_be_async(p: &Parser, range: &TextRange) -> ParseDiagnostic {
+pub(crate) fn abstract_member_cannot_be_async(p: &JsParser, range: &TextRange) -> ParseDiagnostic {
     p.err_builder("async members cannot be abstract", range)
 }
 
 pub(crate) fn ts_member_cannot_be(
-    p: &Parser,
+    p: &JsParser,
     range: impl AsSpan,
     member_type_name: &str,
     modifier_name: &str,
@@ -32,7 +32,7 @@ pub(crate) fn ts_member_cannot_be(
 }
 
 pub(crate) fn ts_modifier_cannot_appear_on_a_constructor_declaration(
-    p: &Parser,
+    p: &JsParser,
     modifier_range: TextRange,
 ) -> ParseDiagnostic {
     let modifier = p.source(modifier_range);
@@ -43,7 +43,7 @@ pub(crate) fn ts_modifier_cannot_appear_on_a_constructor_declaration(
 }
 
 pub(crate) fn ts_modifier_cannot_appear_on_a_parameter(
-    p: &Parser,
+    p: &JsParser,
     modifier_range: TextRange,
 ) -> ParseDiagnostic {
     let modifier = p.source(modifier_range);
@@ -54,7 +54,7 @@ pub(crate) fn ts_modifier_cannot_appear_on_a_parameter(
 }
 
 pub(crate) fn ts_accessibility_modifier_already_seen(
-    p: &Parser,
+    p: &JsParser,
     second_range: TextRange,
     first_range: TextRange,
 ) -> ParseDiagnostic {
@@ -63,13 +63,17 @@ pub(crate) fn ts_accessibility_modifier_already_seen(
         .detail(first_range, "first modifier")
 }
 
-pub(crate) fn ts_only_syntax_error(p: &Parser, syntax: &str, range: TextRange) -> ParseDiagnostic {
+pub(crate) fn ts_only_syntax_error(
+    p: &JsParser,
+    syntax: &str,
+    range: TextRange,
+) -> ParseDiagnostic {
     p.err_builder(format!("{} are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.", syntax)
         ,range).hint( "TypeScript only syntax")
 }
 
 pub(crate) fn ts_accessor_type_parameters_error(
-    p: &Parser,
+    p: &JsParser,
     type_parameters: &CompletedMarker,
 ) -> ParseDiagnostic {
     p.err_builder(
@@ -79,7 +83,7 @@ pub(crate) fn ts_accessor_type_parameters_error(
 }
 
 pub(crate) fn ts_constructor_type_parameters_error(
-    p: &Parser,
+    p: &JsParser,
     type_parameters: &CompletedMarker,
 ) -> ParseDiagnostic {
     p.err_builder(
@@ -89,7 +93,7 @@ pub(crate) fn ts_constructor_type_parameters_error(
 }
 
 pub(crate) fn ts_set_accessor_return_type_error(
-    p: &Parser,
+    p: &JsParser,
     type_annotation: &CompletedMarker,
 ) -> ParseDiagnostic {
     p.err_builder(
@@ -98,10 +102,10 @@ pub(crate) fn ts_set_accessor_return_type_error(
     )
 }
 
-pub(crate) fn expected_ts_type(p: &Parser, range: TextRange) -> ParseDiagnostic {
+pub(crate) fn expected_ts_type(p: &JsParser, range: TextRange) -> ParseDiagnostic {
     expected_node("type", range).to_diagnostic(p)
 }
 
-pub(crate) fn expected_ts_type_parameter(p: &Parser, range: TextRange) -> ParseDiagnostic {
+pub(crate) fn expected_ts_type_parameter(p: &JsParser, range: TextRange) -> ParseDiagnostic {
     expected_node("type parameter", range).to_diagnostic(p)
 }

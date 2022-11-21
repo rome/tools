@@ -9,11 +9,11 @@ use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{ParseDiagnostic, ParsedSyntax, Parser, SyntaxFeature, ToDiagnostic};
+use crate::{JsParser, ParseDiagnostic, ParsedSyntax, SyntaxFeature, ToDiagnostic};
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind as SyntaxKindTrait;
 
-pub(crate) fn parse_binding_pattern(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+pub(crate) fn parse_binding_pattern(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
     match p.cur() {
         T!['['] => ArrayBindingPattern.parse_array_pattern(p),
         T!['{'] if context.is_object_expression_allowed() => {
@@ -24,17 +24,17 @@ pub(crate) fn parse_binding_pattern(p: &mut Parser, context: ExpressionContext) 
 }
 
 #[inline]
-pub(crate) fn is_at_identifier_binding(p: &mut Parser) -> bool {
+pub(crate) fn is_at_identifier_binding(p: &mut JsParser) -> bool {
     is_nth_at_identifier_binding(p, 0)
 }
 
 #[inline]
-pub(crate) fn is_nth_at_identifier_binding(p: &mut Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_identifier_binding(p: &mut JsParser, n: usize) -> bool {
     is_nth_at_identifier(p, n)
 }
 
 #[inline]
-pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_binding(p: &mut JsParser) -> ParsedSyntax {
     parse_identifier_binding(p)
 }
 
@@ -59,7 +59,7 @@ pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax {
 /// * the same identifier is bound multiple times inside of a `let` or const` declaration
 /// * it is named "yield" inside of a generator function or in strict mode
 /// * it is named "await" inside of an async function
-pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_identifier_binding(p: &mut JsParser) -> ParsedSyntax {
     let parsed = parse_identifier(p, JS_IDENTIFIER_BINDING);
 
     parsed.map(|mut identifier| {
@@ -145,12 +145,12 @@ impl ParseWithDefaultPattern for BindingPatternWithDefault {
     }
 
     #[inline]
-    fn expected_pattern_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
+    fn expected_pattern_error(p: &JsParser, range: TextRange) -> ParseDiagnostic {
         expected_binding(p, range)
     }
 
     #[inline]
-    fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_pattern(&self, p: &mut JsParser) -> ParsedSyntax {
         parse_binding_pattern(p, ExpressionContext::default())
     }
 }
@@ -201,7 +201,7 @@ impl ParseArrayPattern<BindingPatternWithDefault> for ArrayBindingPattern {
     }
 
     #[inline]
-    fn expected_element_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
+    fn expected_element_error(p: &JsParser, range: TextRange) -> ParseDiagnostic {
         expected_any(
             &[
                 "identifier",
@@ -243,7 +243,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
     }
 
     #[inline]
-    fn expected_property_pattern_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
+    fn expected_property_pattern_error(p: &JsParser, range: TextRange) -> ParseDiagnostic {
         expected_any(&["identifier", "member name", "rest pattern"], range).to_diagnostic(p)
     }
 
@@ -264,7 +264,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
     // let { a b } = c
     // let { = "test" } = c
     // let { , d } = c
-    fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_property_pattern(&self, p: &mut JsParser) -> ParsedSyntax {
         if !is_at_object_member_name(p) && !p.at_ts(token_set![T![:], T![=]]) {
             return Absent;
         }
@@ -305,7 +305,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
     // async function test() {
     //   let { ...await } = a;
     // }
-    fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_rest_property_pattern(&self, p: &mut JsParser) -> ParsedSyntax {
         if p.at(T![...]) {
             let m = p.start();
             p.bump(T![...]);

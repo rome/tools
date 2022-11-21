@@ -1,5 +1,5 @@
 use crate::token_source::TokenSourceCheckpoint;
-use crate::{CompletedMarker, Event, Marker, ParseDiagnostic, Parser, TextSize, ToDiagnostic};
+use crate::{CompletedMarker, Event, JsParser, Marker, ParseDiagnostic, TextSize, ToDiagnostic};
 use rome_console::fmt::Display;
 use rome_diagnostics::location::AsSpan;
 use rome_js_syntax::{JsSyntaxKind, TextRange};
@@ -19,14 +19,14 @@ pub(crate) struct RewriteParser<'parser, 'source> {
     /// The byte offset of the current token from the start of the source
     offset: TextSize,
 
-    inner: &'parser mut Parser<'source>,
+    inner: &'parser mut JsParser<'source>,
 
     /// Offset to the next not yet processed trivia in [TokenSource::trivia_list].
     trivia_offset: usize,
 }
 
 impl<'parser, 'source> RewriteParser<'parser, 'source> {
-    pub fn new(p: &'parser mut Parser<'source>, checkpoint: TokenSourceCheckpoint) -> Self {
+    pub fn new(p: &'parser mut JsParser<'source>, checkpoint: TokenSourceCheckpoint) -> Self {
         Self {
             inner: p,
             offset: checkpoint.current_start(),

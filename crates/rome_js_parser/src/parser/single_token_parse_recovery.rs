@@ -1,5 +1,5 @@
 use crate::lexer::{JsSyntaxKind, T};
-use crate::{ParseDiagnostic, Parser, TokenSet};
+use crate::{JsParser, ParseDiagnostic, TokenSet};
 
 /// This struct contains the information needed to the parser to recover from a certain error
 ///
@@ -34,7 +34,7 @@ impl SingleTokenParseRecovery {
     /// Recover from an error with a [recovery set](TokenSet) or by using a `{` or `}`.
     ///
     /// If [SingleTokenParseRecovery] has an error, it gets tracked in the events.
-    pub fn recover(&self, p: &mut Parser) {
+    pub fn recover(&self, p: &mut JsParser) {
         let error = self.get_error();
         if let Some(error) = error {
             p.error(error);
@@ -52,7 +52,7 @@ impl SingleTokenParseRecovery {
     }
 
     /// Checks if the parsing phase is recoverable by checking curly braces and [tokens set](TokenSet)
-    fn parsing_is_recoverable(&self, parser: &Parser) -> bool {
+    fn parsing_is_recoverable(&self, parser: &JsParser) -> bool {
         self.is_at_token_set(parser) || self.is_at_braces(parser) || self.is_at_eof(parser)
     }
 
@@ -66,15 +66,15 @@ impl SingleTokenParseRecovery {
         self.unknown_node_kind
     }
 
-    fn is_at_braces(&self, parser: &Parser) -> bool {
+    fn is_at_braces(&self, parser: &JsParser) -> bool {
         matches!(parser.cur(), T!['{'] | T!['}'] if self.include_braces)
     }
 
-    fn is_at_token_set(&self, parser: &Parser) -> bool {
+    fn is_at_token_set(&self, parser: &JsParser) -> bool {
         parser.at_ts(self.recovery)
     }
 
-    fn is_at_eof(&self, parser: &Parser) -> bool {
+    fn is_at_eof(&self, parser: &JsParser) -> bool {
         parser.cur() == JsSyntaxKind::EOF
     }
 }

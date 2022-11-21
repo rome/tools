@@ -6,7 +6,7 @@ use std::num::NonZeroU32;
 use crate::lexer::TextSize;
 use crate::parser::rewrite_parser::{RewriteParser, RewriteToken};
 use crate::parser::Checkpoint;
-use crate::{ParseDiagnostic, Parser, TreeSink};
+use crate::{JsParser, ParseDiagnostic, TreeSink};
 use rome_js_syntax::JsSyntaxKind::{self, *};
 
 /// Events emitted by the Parser, these events are later
@@ -144,7 +144,7 @@ pub(crate) trait RewriteParseEvents {
 pub(crate) fn rewrite_events<T: RewriteParseEvents>(
     rewriter: &mut T,
     checkpoint: Checkpoint,
-    p: &mut Parser,
+    p: &mut JsParser,
 ) {
     // Only rewind the events but do not reset the parser errors nor parser state.
     // The current parsed grammar is a super-set of the grammar that gets re-parsed. Thus, any

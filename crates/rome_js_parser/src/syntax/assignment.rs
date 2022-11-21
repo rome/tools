@@ -12,7 +12,7 @@ use crate::syntax::js_parse_error::{
 use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{Checkpoint, CompletedMarker, ParseDiagnostic, Parser};
+use crate::{Checkpoint, CompletedMarker, JsParser, ParseDiagnostic};
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::AstNode;
 
@@ -60,7 +60,7 @@ use rome_rowan::AstNode;
 /// Converts the passed in lhs expression to an assignment pattern
 /// The passed checkpoint allows to restore the parser to the state before it started parsing the expression.
 pub(crate) fn expression_to_assignment_pattern(
-    p: &mut Parser,
+    p: &mut JsParser,
     target: CompletedMarker,
     checkpoint: Checkpoint,
 ) -> CompletedMarker {
@@ -94,7 +94,7 @@ pub(crate) fn expression_to_assignment_pattern(
 //     setValue = val;
 //   }
 // }.y = 42 } = { x: 23 });
-pub(crate) fn parse_assignment_pattern(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_assignment_pattern(p: &mut JsParser) -> ParsedSyntax {
     let checkpoint = p.checkpoint();
     let assignment_expression = parse_conditional_expr(p, ExpressionContext::default());
 
@@ -104,7 +104,7 @@ pub(crate) fn parse_assignment_pattern(p: &mut Parser) -> ParsedSyntax {
 
 /// Re-parses an expression as an assignment.
 pub(crate) fn expression_to_assignment(
-    p: &mut Parser,
+    p: &mut JsParser,
     target: CompletedMarker,
     checkpoint: Checkpoint,
 ) -> CompletedMarker {
@@ -131,7 +131,7 @@ pub(crate) enum AssignmentExprPrecedence {
 }
 
 impl AssignmentExprPrecedence {
-    fn parse_expression(&self, p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+    fn parse_expression(&self, p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
         match self {
             AssignmentExprPrecedence::Unary => parse_unary_expr(p, context),
             AssignmentExprPrecedence::Conditional => parse_conditional_expr(p, context),
@@ -140,7 +140,7 @@ impl AssignmentExprPrecedence {
 }
 
 pub(crate) fn parse_assignment(
-    p: &mut Parser,
+    p: &mut JsParser,
     expr_kind: AssignmentExprPrecedence,
     context: ExpressionContext,
 ) -> ParsedSyntax {
@@ -159,12 +159,12 @@ impl ParseWithDefaultPattern for AssignmentPatternWithDefault {
     }
 
     #[inline]
-    fn expected_pattern_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
+    fn expected_pattern_error(p: &JsParser, range: TextRange) -> ParseDiagnostic {
         expected_assignment_target(p, range)
     }
 
     #[inline]
-    fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_pattern(&self, p: &mut JsParser) -> ParsedSyntax {
         parse_assignment_pattern(p)
     }
 }
@@ -217,7 +217,7 @@ impl ParseArrayPattern<AssignmentPatternWithDefault> for ArrayAssignmentPattern 
     }
 
     #[inline]
-    fn expected_element_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
+    fn expected_element_error(p: &JsParser, range: TextRange) -> ParseDiagnostic {
         expected_any(&["assignment target", "rest element", "comma"], range).to_diagnostic(p)
     }
 
@@ -249,7 +249,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
     }
 
     #[inline]
-    fn expected_property_pattern_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
+    fn expected_property_pattern_error(p: &JsParser, range: TextRange) -> ParseDiagnostic {
         expected_any(&["assignment target", "rest property"], range).to_diagnostic(p)
     }
 
@@ -269,7 +269,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
     // ({:="test"} = {});
     // ({:=} = {});
     // ({ a b } = {});
-    fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_property_pattern(&self, p: &mut JsParser) -> ParsedSyntax {
         let m = p.start();
 
         let kind = if (is_at_identifier(p) || p.at(T![=])) && !p.nth_at(1, T![:]) {
@@ -309,7 +309,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
     // ({ ...{a} } = b);
     // ({ ...rest, other_assignment } = a);
     // ({ ...rest, } = a);
-    fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_rest_property_pattern(&self, p: &mut JsParser) -> ParsedSyntax {
         if !p.at(T![...]) {
             return Absent;
         }
@@ -337,7 +337,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 }
 
 fn try_expression_to_assignment(
-    p: &mut Parser,
+    p: &mut JsParser,
     target: CompletedMarker,
     checkpoint: Checkpoint,
 ) -> Result<CompletedMarker, CompletedMarker> {

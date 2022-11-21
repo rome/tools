@@ -30,7 +30,7 @@ use crate::span::Span;
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-    parser, CompletedMarker, JsSyntaxFeature, Marker, ParseRecovery, ParseSeparatedList, Parser,
+    parser, CompletedMarker, JsParser, JsSyntaxFeature, Marker, ParseRecovery, ParseSeparatedList,
     SyntaxFeature, TokenSet,
 };
 use rome_js_syntax::{JsSyntaxKind::*, *};
@@ -81,7 +81,7 @@ pub const STMT_RECOVERY_SET: TokenSet = token_set![
 // let foo4
 // let foo5
 // function foo6() { return true }
-pub(crate) fn semi(p: &mut Parser, err_range: TextRange) -> bool {
+pub(crate) fn semi(p: &mut JsParser, err_range: TextRange) -> bool {
     // test_err semicolons_err
     // let foo = bar throw foo
 
@@ -109,7 +109,7 @@ pub(crate) fn semi(p: &mut Parser, err_range: TextRange) -> bool {
 ///
 /// Returns false if neither a semicolon was present and the current position doesn't allow an automatic
 /// semicolon insertion.
-pub(crate) fn optional_semi(p: &mut Parser) -> bool {
+pub(crate) fn optional_semi(p: &mut JsParser) -> bool {
     if p.eat(T![;]) {
         return true;
     }
@@ -117,7 +117,7 @@ pub(crate) fn optional_semi(p: &mut Parser) -> bool {
     is_semi(p, 0)
 }
 
-pub(super) fn is_semi(p: &mut Parser, offset: usize) -> bool {
+pub(super) fn is_semi(p: &mut JsParser, offset: usize) -> bool {
     p.nth_at(offset, T![;])
         || p.nth_at(offset, EOF)
         || p.nth_at(offset, T!['}'])
@@ -152,7 +152,7 @@ impl StatementContext {
 /// caller has to pass a recovery set.
 ///
 /// If not passed, [STMT_RECOVERY_SET] will be used as recovery set
-pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
+pub(crate) fn parse_statement(p: &mut JsParser, context: StatementContext) -> ParsedSyntax {
     match p.cur() {
         // test_err import_decl_not_top_level
         // {
@@ -311,7 +311,7 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
     }
 }
 
-pub(crate) fn parse_non_top_level_export(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_non_top_level_export(p: &mut JsParser) -> ParsedSyntax {
     parse_export(p).map(|mut export| {
         let error = match p.source_type.module_kind() {
             ModuleKind::Module => p
@@ -352,9 +352,9 @@ pub(crate) fn parse_non_top_level_export(p: &mut Parser) -> ParsedSyntax {
 //
 // test_err labelled_function_declaration_strict_mode
 // label1: function a() {}
-fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
+fn parse_labeled_statement(p: &mut JsParser, context: StatementContext) -> ParsedSyntax {
     parse_identifier(p, JS_LABELED_STATEMENT).map(|identifier| {
-		fn parse_body(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
+		fn parse_body(p: &mut JsParser, context: StatementContext) -> ParsedSyntax {
 			if is_at_identifier(p) && p.nth_at(1, T![:]) && StrictMode.is_unsupported(p) {
 				// Re-use the parent context to catch `if (true) label1: label2: function A() {}
 				parse_labeled_statement(p, context)
@@ -431,7 +431,7 @@ fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedS
 // protected = 3;
 // public = 4;
 // implements = 5;
-fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax {
+fn parse_expression_statement(p: &mut JsParser) -> ParsedSyntax {
     let start = p.cur_range().start();
 
     let expr =
@@ -457,7 +457,7 @@ fn parse_expression_statement(p: &mut Parser) -> ParsedSyntax {
 // }
 
 /// A debugger statement such as `debugger;`
-fn parse_debugger_statement(p: &mut Parser) -> ParsedSyntax {
+fn parse_debugger_statement(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![debugger]) {
         return Absent;
     }
@@ -472,7 +472,7 @@ fn parse_debugger_statement(p: &mut Parser) -> ParsedSyntax {
 // test throw_stmt
 // throw new Error("foo");
 // throw "foo"
-fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax {
+fn parse_throw_statement(p: &mut JsParser) -> ParsedSyntax {
     // test_err throw_stmt_err
     // throw
     // new Error("oh no :(")
@@ -519,7 +519,7 @@ fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax {
 // }
 
 /// A break statement with an optional label such as `break a;`
-fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
+fn parse_break_statement(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![break]) {
         return Absent;
     }
@@ -577,7 +577,7 @@ fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
 //   continue foo;
 // }
 /// A continue statement with an optional label such as `continue a;`
-fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
+fn parse_continue_statement(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![continue]) {
         return Absent;
     }
@@ -639,7 +639,7 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
 //   return
 // }
 /// A return statement with an optional value such as `return a;`
-fn parse_return_statement(p: &mut Parser) -> ParsedSyntax {
+fn parse_return_statement(p: &mut JsParser) -> ParsedSyntax {
     // test_err return_stmt_err
     // return;
     // return foo;
@@ -671,7 +671,7 @@ fn parse_return_statement(p: &mut Parser) -> ParsedSyntax {
 // test empty_stmt
 // ;
 /// An empty statement denoted by a single semicolon.
-fn parse_empty_statement(p: &mut Parser) -> ParsedSyntax {
+fn parse_empty_statement(p: &mut JsParser) -> ParsedSyntax {
     if p.at(T![;]) {
         let m = p.start();
         p.bump_any(); // bump ;
@@ -686,12 +686,12 @@ fn parse_empty_statement(p: &mut Parser) -> ParsedSyntax {
 // {{{{}}}}
 // { foo = bar; }
 /// A block statement consisting of statements wrapped in curly brackets.
-pub(crate) fn parse_block_stmt(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_block_stmt(p: &mut JsParser) -> ParsedSyntax {
     parse_block_impl(p, JS_BLOCK_STATEMENT)
 }
 
 /// A block wrapped in curly brackets. Can either be a function body or a block statement.
-pub(super) fn parse_block_impl(p: &mut Parser, block_kind: JsSyntaxKind) -> ParsedSyntax {
+pub(super) fn parse_block_impl(p: &mut JsParser, block_kind: JsSyntaxKind) -> ParsedSyntax {
     if !p.at(T!['{']) {
         return Absent;
     }
@@ -759,7 +759,7 @@ pub(super) fn parse_block_impl(p: &mut Parser, block_kind: JsSyntaxKind) -> Pars
 /// Parses the directives and returns
 /// * The marker for the following statement list. May already contain a parsed out expression statement
 /// * A checkpoint containing the previous strict mode
-pub(crate) fn parse_directives(p: &mut Parser) -> (Marker, Option<EnableStrictModeSnapshot>) {
+pub(crate) fn parse_directives(p: &mut JsParser) -> (Marker, Option<EnableStrictModeSnapshot>) {
     let list = p.start();
     let mut directives_list = list.complete(p, JS_DIRECTIVE_LIST);
     let mut strict_mode_snapshot: Option<EnableStrictModeSnapshot> = None;
@@ -811,7 +811,7 @@ pub(crate) fn parse_directives(p: &mut Parser) -> (Marker, Option<EnableStrictMo
 
 /// Top level items or items inside of a block statement, this also handles module items so we can
 /// easily recover from erroneous module declarations in scripts
-pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool, statement_list: Marker) {
+pub(crate) fn parse_statements(p: &mut JsParser, stop_on_r_curly: bool, statement_list: Marker) {
     let mut progress = ParserProgress::default();
 
     // test_err statements_closing_curly
@@ -850,7 +850,7 @@ pub(crate) fn parse_statements(p: &mut Parser, stop_on_r_curly: bool, statement_
 
 /// An expression wrapped in parentheses such as `()`
 /// Returns `true` if the closing parentheses is present
-fn parenthesized_expression(p: &mut Parser) -> bool {
+fn parenthesized_expression(p: &mut JsParser) -> bool {
     let has_l_paren = p.expect(T!['(']);
 
     parse_expression(
@@ -868,7 +868,7 @@ fn parenthesized_expression(p: &mut Parser) -> bool {
 // if (true) {}
 // if (true) false
 // if (bar) {} else if (true) {} else {}
-fn parse_if_statement(p: &mut Parser) -> ParsedSyntax {
+fn parse_if_statement(p: &mut JsParser) -> ParsedSyntax {
     // test_err if_stmt_err
     // if (true) else {}
     // if (true) else
@@ -907,7 +907,7 @@ fn parse_if_statement(p: &mut Parser) -> ParsedSyntax {
 //   }
 // }
 /// A with statement such as `with (foo) something()`
-fn parse_with_statement(p: &mut Parser) -> ParsedSyntax {
+fn parse_with_statement(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![with]) {
         return Absent;
     }
@@ -934,7 +934,7 @@ fn parse_with_statement(p: &mut Parser) -> ParsedSyntax {
 // test while_stmt
 // while (true) {}
 // while (5) {}
-fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
+fn parse_while_statement(p: &mut JsParser) -> ParsedSyntax {
     // test_err while_stmt_err
     // while true {}
     // while {}
@@ -955,7 +955,7 @@ fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_WHILE_STATEMENT))
 }
 
-pub(crate) fn is_nth_at_variable_declarations(p: &mut Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_variable_declarations(p: &mut JsParser, n: usize) -> bool {
     match p.nth(n) {
         T![var] | T![const] => true,
         T![let] if is_nth_at_let_variable_statement(p, n) => true,
@@ -963,7 +963,7 @@ pub(crate) fn is_nth_at_variable_declarations(p: &mut Parser, n: usize) -> bool 
     }
 }
 
-pub(crate) fn is_nth_at_let_variable_statement(p: &mut Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_let_variable_statement(p: &mut JsParser, n: usize) -> bool {
     if !p.nth_at(n, T![let]) {
         return false;
     }
@@ -987,7 +987,10 @@ pub(crate) fn is_nth_at_let_variable_statement(p: &mut Parser, n: usize) -> bool
 // const e;
 // let [f];
 // const { g };
-pub(crate) fn parse_variable_statement(p: &mut Parser, context: StatementContext) -> ParsedSyntax {
+pub(crate) fn parse_variable_statement(
+    p: &mut JsParser,
+    context: StatementContext,
+) -> ParsedSyntax {
     // test_err var_decl_err
     // var a =;
     // const b = 5 let c = 5;
@@ -1022,7 +1025,7 @@ pub(crate) fn parse_variable_statement(p: &mut Parser, context: StatementContext
 }
 
 pub(super) fn parse_variable_declaration(
-    p: &mut Parser,
+    p: &mut JsParser,
     declaration_context: VariableDeclarationParent,
 ) -> ParsedSyntax {
     let m = p.start();
@@ -1054,7 +1057,7 @@ pub(super) enum VariableDeclarationParent {
 /// * the second element is the range of all variable declarations except the first one. Is [None] if
 ///   there's only one declaration.
 fn eat_variable_declaration(
-    p: &mut Parser,
+    p: &mut JsParser,
     declaration_parent: VariableDeclarationParent,
 ) -> Option<(CompletedMarker, Option<TextRange>)> {
     let mut context = VariableDeclaratorContext::new(declaration_parent);
@@ -1102,7 +1105,7 @@ struct VariableDeclaratorList {
 // const;
 // const
 impl ParseSeparatedList for VariableDeclaratorList {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_variable_declarator(p, &self.declarator_context).map(|declarator| {
             if self.declarator_context.is_first {
                 self.declarator_context.is_first = false;
@@ -1115,7 +1118,7 @@ impl ParseSeparatedList for VariableDeclaratorList {
         })
     }
 
-    fn is_at_list_end(&self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool {
         if self.declarator_context.is_first {
             false
         } else {
@@ -1123,7 +1126,7 @@ impl ParseSeparatedList for VariableDeclaratorList {
         }
     }
 
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+    fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(JS_UNKNOWN, STMT_RECOVERY_SET.union(token_set!(T![,])))
@@ -1140,7 +1143,7 @@ impl ParseSeparatedList for VariableDeclaratorList {
         T![,]
     }
 
-    fn finish_list(&mut self, p: &mut Parser, m: Marker) -> CompletedMarker {
+    fn finish_list(&mut self, p: &mut JsParser, m: Marker) -> CompletedMarker {
         if self.declarator_context.is_first {
             let m = m.complete(p, JS_UNKNOWN);
             let range = m.range(p);
@@ -1192,7 +1195,10 @@ impl VariableDeclaratorContext {
 // };
 //
 // A single declarator, either `ident` or `ident = assign_expr`
-fn parse_variable_declarator(p: &mut Parser, context: &VariableDeclaratorContext) -> ParsedSyntax {
+fn parse_variable_declarator(
+    p: &mut JsParser,
+    context: &VariableDeclaratorContext,
+) -> ParsedSyntax {
     p.state.duplicate_binding_parent = context.duplicate_binding_parent_name();
     let id = parse_binding_pattern(p, ExpressionContext::default());
     p.state.duplicate_binding_parent = None;
@@ -1333,7 +1339,7 @@ fn parse_variable_declarator(p: &mut Parser, context: &VariableDeclaratorContext
 // let a: string = "test", b!: number;
 // let a // ASI
 // !function test() {}
-fn parse_ts_variable_annotation(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_variable_annotation(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![!]) {
         return parse_ts_type_annotation(p);
     }
@@ -1368,7 +1374,7 @@ fn parse_ts_variable_annotation(p: &mut Parser) -> ParsedSyntax {
 // do { } while (true)
 // do { throw Error("foo") } while (true)
 // do { break; } while (true)
-fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
+fn parse_do_statement(p: &mut JsParser) -> ParsedSyntax {
     // test_err do_while_stmt_err
     // do while (true)
     // do while ()
@@ -1404,7 +1410,7 @@ fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// Parses the header of a for statement into the current node and returns whatever it is a for in/of or "regular" for statement
-fn parse_for_head(p: &mut Parser, has_l_paren: bool, is_for_await: bool) -> JsSyntaxKind {
+fn parse_for_head(p: &mut JsParser, has_l_paren: bool, is_for_await: bool) -> JsSyntaxKind {
     // for (;...
     if p.at(T![;]) {
         parse_normal_for_head(p);
@@ -1509,7 +1515,7 @@ fn parse_for_head(p: &mut Parser, has_l_paren: bool, is_for_await: bool) -> JsSy
 
 /// Parses the parenthesized part of a non for in or for of statement
 /// Expects to be positioned right after the initializer
-fn parse_normal_for_head(p: &mut Parser) {
+fn parse_normal_for_head(p: &mut JsParser) {
     p.expect(T![;]);
 
     if !p.at(T![;]) {
@@ -1526,7 +1532,7 @@ fn parse_normal_for_head(p: &mut Parser) {
 }
 
 /// Expects to be positioned right before the of or in keyword
-fn parse_for_of_or_in_head(p: &mut Parser) -> JsSyntaxKind {
+fn parse_for_of_or_in_head(p: &mut JsParser) -> JsSyntaxKind {
     let is_in = p.at(T![in]);
 
     if is_in {
@@ -1554,7 +1560,7 @@ fn parse_for_of_or_in_head(p: &mut Parser) -> JsSyntaxKind {
 // for (let foo of []) {}
 // for (let i = 5, j = 6; i < j; ++j) {}
 // for await (let a of []) {}
-fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
+fn parse_for_statement(p: &mut JsParser) -> ParsedSyntax {
     // test_err for_stmt_err
     // for ;; {}
     // for let i = 5; i < 10; i++ {}
@@ -1611,15 +1617,19 @@ fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
 struct SwitchCaseStatementList;
 
 impl ParseNodeList for SwitchCaseStatementList {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_statement(p, StatementContext::StatementList)
     }
 
-    fn is_at_list_end(&self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool {
         p.at_ts(token_set![T![default], T![case], T!['}']])
     }
 
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> parser::RecoveryResult {
+    fn recover(
+        &mut self,
+        p: &mut JsParser,
+        parsed_element: ParsedSyntax,
+    ) -> parser::RecoveryResult {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
@@ -1633,7 +1643,7 @@ impl ParseNodeList for SwitchCaseStatementList {
 }
 
 // We return the range in case its a default clause so we can report multiple default clauses in a better way
-fn parse_switch_clause(p: &mut Parser, first_default: &mut Option<TextRange>) -> ParsedSyntax {
+fn parse_switch_clause(p: &mut JsParser, first_default: &mut Option<TextRange>) -> ParsedSyntax {
     let m = p.start();
     match p.cur() {
         T![default] => {
@@ -1690,7 +1700,7 @@ struct SwitchCasesList {
 }
 
 impl ParseNodeList for SwitchCasesList {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         let clause = parse_switch_clause(p, &mut self.first_default);
 
         if let Present(marker) = &clause {
@@ -1702,11 +1712,11 @@ impl ParseNodeList for SwitchCasesList {
         clause
     }
 
-    fn is_at_list_end(&self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool {
         p.at(T!['}'])
     }
 
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+    fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
         if let Present(marker) = parsed_element {
             Ok(marker)
         } else {
@@ -1756,7 +1766,7 @@ impl ParseNodeList for SwitchCasesList {
 //  case bar:
 //  default:
 // }
-fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
+fn parse_switch_statement(p: &mut JsParser) -> ParsedSyntax {
     // test_err switch_stmt_err
     // switch foo {}
     // switch {}
@@ -1784,7 +1794,7 @@ fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_SWITCH_STATEMENT))
 }
 
-fn parse_catch_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_catch_clause(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![catch]) {
         return Absent;
     }
@@ -1798,7 +1808,7 @@ fn parse_catch_clause(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_CATCH_CLAUSE))
 }
 
-fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
+fn parse_catch_declaration(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T!['(']) {
         return Absent;
     }
@@ -1859,7 +1869,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
 // try {} catch {} finally {}
 // try {} catch (e) {} finally {}
 // try {} finally {}
-pub(crate) fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_try_statement(p: &mut JsParser) -> ParsedSyntax {
     // TODO: recover from `try catch` and `try finally`. The issue is block_items
     // will cause infinite recursion because parsing a stmt would not consume the catch token
     // and block_items would not exit, and if we exited on any error that would greatly limit

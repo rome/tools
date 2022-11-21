@@ -15,7 +15,7 @@ use crate::syntax::jsx::jsx_parse_errors::{
 };
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{
-    parser::RecoveryResult, CompletedMarker, ParseNodeList, ParseRecovery, ParsedSyntax, Parser,
+    parser::RecoveryResult, CompletedMarker, JsParser, ParseNodeList, ParseRecovery, ParsedSyntax,
     SyntaxFeature,
 };
 use crate::{Absent, Present};
@@ -47,7 +47,7 @@ use super::typescript::parse_ts_type_arguments;
 // test jsx jsx_equal_content
 // <span></span>;
 // <span>=</span>;
-pub(crate) fn parse_jsx_tag_expression(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_jsx_tag_expression(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![<]) {
         return Absent;
     }
@@ -90,7 +90,7 @@ pub(crate) fn parse_jsx_tag_expression(p: &mut Parser) -> ParsedSyntax {
 ///
 /// `in_expression` must be `true` if this element is a direct child of the `JsxElementExpression` (root of an expression).
 /// It should be false when parsing any child node.
-fn parse_any_jsx_tag(p: &mut Parser, in_expression: bool) -> ParsedSyntax {
+fn parse_any_jsx_tag(p: &mut JsParser, in_expression: bool) -> ParsedSyntax {
     match parse_any_jsx_opening_tag(p, in_expression) {
         Some(OpeningElement::SelfClosing(marker)) => Present(marker),
         Some(OpeningElement::Fragment(fragment_opening)) => {
@@ -122,7 +122,7 @@ enum OpeningElement {
     SelfClosing(CompletedMarker),
 }
 
-fn parse_any_jsx_opening_tag(p: &mut Parser, in_expression: bool) -> Option<OpeningElement> {
+fn parse_any_jsx_opening_tag(p: &mut JsParser, in_expression: bool) -> Option<OpeningElement> {
     if !p.at(T![<]) {
         return None;
     }
@@ -185,7 +185,7 @@ fn parse_any_jsx_opening_tag(p: &mut Parser, in_expression: bool) -> Option<Open
 }
 
 fn expect_closing_fragment(
-    p: &mut Parser,
+    p: &mut JsParser,
     in_expression: bool,
     opening_range: TextRange,
 ) -> CompletedMarker {
@@ -215,7 +215,7 @@ fn expect_closing_fragment(
 }
 
 fn expect_closing_element(
-    p: &mut Parser,
+    p: &mut JsParser,
     in_expression: bool,
     opening_name_marker: Option<CompletedMarker>,
     opening_range: TextRange,
@@ -283,7 +283,7 @@ fn expect_closing_element(
 
 /// Expects a JSX token that may be followed by JSX child content.
 /// Ensures that the child content is lexed with the [LexContext::JsxChild] context.
-fn expect_jsx_token(p: &mut Parser, token: JsSyntaxKind, before_child_content: bool) {
+fn expect_jsx_token(p: &mut JsParser, token: JsSyntaxKind, before_child_content: bool) {
     if !before_child_content {
         p.expect(token);
     } else if p.at(token) {
@@ -298,7 +298,7 @@ fn expect_jsx_token(p: &mut Parser, token: JsSyntaxKind, before_child_content: b
 struct JsxChildrenList;
 
 impl ParseNodeList for JsxChildrenList {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         match p.cur() {
             // test jsx jsx_element_children
             // <a>
@@ -327,13 +327,13 @@ impl ParseNodeList for JsxChildrenList {
         }
     }
 
-    fn is_at_list_end(&self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool {
         let at_l_angle0 = p.at(T![<]);
         let at_slash1 = p.nth_at(1, T![/]);
         at_l_angle0 && at_slash1
     }
 
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+    fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
@@ -350,11 +350,11 @@ impl ParseNodeList for JsxChildrenList {
 }
 
 #[inline]
-fn parse_jsx_children(p: &mut Parser) {
+fn parse_jsx_children(p: &mut JsParser) {
     JsxChildrenList.parse_list(p);
 }
 
-fn parse_jsx_expression_child(p: &mut Parser) -> ParsedSyntax {
+fn parse_jsx_expression_child(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T!['{']) {
         return ParsedSyntax::Absent;
     }
@@ -406,7 +406,7 @@ fn parse_jsx_expression_child(p: &mut Parser) -> ParsedSyntax {
 // test_err jsx jsx_namespace_member_element_name
 // <namespace:a></namespace:a>;
 // <namespace:a.b></namespace:a.b>;
-fn parse_jsx_any_element_name(p: &mut Parser) -> ParsedSyntax {
+fn parse_jsx_any_element_name(p: &mut JsParser) -> ParsedSyntax {
     let name = parse_jsx_name_or_namespace(p);
     name.map(|mut name| {
         if name.kind() == JSX_NAME && (p.at(T![.]) || !is_intrinsic_element(name.text(p))) {
@@ -451,7 +451,7 @@ fn is_intrinsic_element(element_name: &str) -> bool {
 // <if />;
 // <namespace:name></namespace:name>;
 // <dashed-namespaced:dashed-name />;
-fn parse_jsx_name_or_namespace(p: &mut Parser) -> ParsedSyntax {
+fn parse_jsx_name_or_namespace(p: &mut JsParser) -> ParsedSyntax {
     parse_jsx_name(p).map(|identifier| {
         if p.at(T![:]) {
             let m = identifier.precede(p);
@@ -464,7 +464,7 @@ fn parse_jsx_name_or_namespace(p: &mut Parser) -> ParsedSyntax {
     })
 }
 
-fn parse_jsx_name(p: &mut Parser) -> ParsedSyntax {
+fn parse_jsx_name(p: &mut JsParser) -> ParsedSyntax {
     p.re_lex(ReLexContext::JsxIdentifier);
 
     if p.at(JSX_IDENT) {
@@ -487,7 +487,7 @@ struct JsxAttributeList;
 //   continues here' />;
 // <div invalid-unicode-escape="\u10000\u20000" />;
 impl ParseNodeList for JsxAttributeList {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         if matches!(p.cur(), T!['{'] | T![...]) {
             parse_jsx_spread_attribute(p)
         } else {
@@ -495,11 +495,11 @@ impl ParseNodeList for JsxAttributeList {
         }
     }
 
-    fn is_at_list_end(&self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool {
         matches!(p.cur(), T![>] | T![/] | T![<])
     }
 
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+    fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
@@ -515,7 +515,7 @@ impl ParseNodeList for JsxAttributeList {
     }
 }
 
-fn parse_jsx_attribute(p: &mut Parser) -> ParsedSyntax {
+fn parse_jsx_attribute(p: &mut JsParser) -> ParsedSyntax {
     if !is_nth_at_identifier_or_keyword(p, 0) {
         return Absent;
     }
@@ -543,7 +543,7 @@ fn parse_jsx_attribute(p: &mut Parser) -> ParsedSyntax {
 //       // @ts-ignore */ /* prettier-ignore */
 //       invalidProp="HelloWorld"
 //     />;
-fn parse_jsx_spread_attribute(p: &mut Parser) -> ParsedSyntax {
+fn parse_jsx_spread_attribute(p: &mut JsParser) -> ParsedSyntax {
     if !matches!(p.cur(), T![...] | T!['{']) {
         return Absent;
     }
@@ -572,7 +572,7 @@ fn parse_jsx_spread_attribute(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JSX_SPREAD_ATTRIBUTE))
 }
 
-fn parse_jsx_attribute_initializer_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_jsx_attribute_initializer_clause(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![=]) {
         return Absent;
     }
@@ -590,7 +590,7 @@ fn parse_jsx_attribute_initializer_clause(p: &mut Parser) -> ParsedSyntax {
     ParsedSyntax::Present(m.complete(p, JsSyntaxKind::JSX_ATTRIBUTE_INITIALIZER_CLAUSE))
 }
 
-fn parse_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
+fn parse_jsx_attribute_value(p: &mut JsParser) -> ParsedSyntax {
     match p.cur() {
         // test jsx jsx_element_attribute_expression
         // <div id={1} />;
@@ -611,7 +611,7 @@ fn parse_jsx_attribute_value(p: &mut Parser) -> ParsedSyntax {
 }
 // test_err jsx jsx_element_attribute_expression_error
 // <div className={asdf asdf} />;
-fn parse_jsx_expression_attribute_value(p: &mut Parser) -> ParsedSyntax {
+fn parse_jsx_expression_attribute_value(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T!['{']) {
         return ParsedSyntax::Absent;
     }
@@ -694,7 +694,7 @@ fn parse_jsx_expression_attribute_value(p: &mut Parser) -> ParsedSyntax {
 //   {super()}
 //   {new.target}
 // </div>
-fn parse_jsx_assignment_expression(p: &mut Parser, is_spread: bool) -> ParsedSyntax {
+fn parse_jsx_assignment_expression(p: &mut JsParser, is_spread: bool) -> ParsedSyntax {
     let expr = parse_expression(p, ExpressionContext::default());
 
     expr.map(|mut expr| {

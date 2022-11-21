@@ -36,7 +36,7 @@ pub(crate) struct ParserProgress(Option<TextSize>);
 impl ParserProgress {
     /// Returns true if the current parser position is passed this position
     #[inline]
-    pub fn has_progressed(&self, p: &Parser) -> bool {
+    pub fn has_progressed(&self, p: &JsParser) -> bool {
         match self.0 {
             None => true,
             Some(pos) => pos < p.tokens.position(),
@@ -49,7 +49,7 @@ impl ParserProgress {
     ///
     /// Panics if the parser is still at this position
     #[inline]
-    pub fn assert_progressing(&mut self, p: &Parser) {
+    pub fn assert_progressing(&mut self, p: &JsParser) {
         assert!(
             self.has_progressed(p),
             "The parser is no longer progressing. Stuck at '{}' {:?}:{:?}",
@@ -66,7 +66,7 @@ impl ParserProgress {
 ///
 /// The Parser yields lower level events instead of nodes.
 /// These events are then processed into a syntax tree through a [`TreeSink`] implementation.
-pub(crate) struct Parser<'s> {
+pub(crate) struct JsParser<'s> {
     file_id: FileId,
     pub(super) tokens: TokenSource<'s>,
     pub(super) events: Vec<Event>,
@@ -77,12 +77,12 @@ pub(crate) struct Parser<'s> {
     skipping: bool,
 }
 
-impl<'s> Parser<'s> {
+impl<'s> JsParser<'s> {
     /// Creates a new parser that parses the `source`.
-    pub fn new(source: &'s str, file_id: FileId, source_type: SourceType) -> Parser<'s> {
+    pub fn new(source: &'s str, file_id: FileId, source_type: SourceType) -> JsParser<'s> {
         let token_source = TokenSource::from_str(source, file_id);
 
-        Parser {
+        JsParser {
             file_id,
             events: vec![],
             state: ParserState::new(&source_type),
@@ -325,7 +325,7 @@ impl<'s> Parser<'s> {
     /// Allows parsing an unsupported syntax as skipped trivia tokens.
     pub fn parse_as_skipped_trivia_tokens<P>(&mut self, parse: P)
     where
-        P: FnOnce(&mut Parser),
+        P: FnOnce(&mut JsParser),
     {
         let events_pos = self.events.len();
         self.skipping = true;
@@ -344,7 +344,7 @@ impl<'s> Parser<'s> {
     #[inline]
     pub fn lookahead<F, R>(&mut self, op: F) -> R
     where
-        F: FnOnce(&mut Parser) -> R,
+        F: FnOnce(&mut JsParser) -> R,
     {
         let checkpoint = self.checkpoint();
         let result = op(self);
@@ -416,7 +416,7 @@ impl Marker {
     /// Finishes the syntax tree node and assigns `kind` to it,
     /// and mark the create a `CompletedMarker` for possible future
     /// operation like `.precede()` to deal with forward_parent.
-    pub fn complete(mut self, p: &mut Parser, kind: JsSyntaxKind) -> CompletedMarker {
+    pub fn complete(mut self, p: &mut JsParser, kind: JsSyntaxKind) -> CompletedMarker {
         self.bomb.defuse();
         let idx = self.pos as usize;
         match p.events[idx] {
@@ -436,7 +436,7 @@ impl Marker {
 
     /// Abandons the syntax tree node. All its children
     /// are attached to its parent instead.
-    pub fn abandon(mut self, p: &mut Parser) {
+    pub fn abandon(mut self, p: &mut JsParser) {
         self.bomb.defuse();
         let idx = self.pos as usize;
         if idx == p.events.len() - 1 {
@@ -498,7 +498,7 @@ impl CompletedMarker {
     }
 
     /// Change the kind of node this marker represents
-    pub fn change_kind(&mut self, p: &mut Parser, new_kind: JsSyntaxKind) {
+    pub fn change_kind(&mut self, p: &mut JsParser, new_kind: JsSyntaxKind) {
         self.kind = new_kind;
         match p
             .events
@@ -512,12 +512,12 @@ impl CompletedMarker {
         }
     }
 
-    pub fn change_to_unknown(&mut self, p: &mut Parser) {
+    pub fn change_to_unknown(&mut self, p: &mut JsParser) {
         self.change_kind(p, self.kind().to_unknown());
     }
 
     /// Get the range of the marker
-    pub fn range(&self, p: &Parser) -> TextRange {
+    pub fn range(&self, p: &JsParser) -> TextRange {
         let end = p.events[self.old_start as usize..self.finish_pos as usize]
             .iter()
             .rev()
@@ -531,7 +531,7 @@ impl CompletedMarker {
     }
 
     /// Get the underlying text of a marker
-    pub fn text<'a>(&self, p: &'a Parser) -> &'a str {
+    pub fn text<'a>(&self, p: &'a JsParser) -> &'a str {
         &p.tokens.source()[self.range(p)]
     }
 
@@ -547,7 +547,7 @@ impl CompletedMarker {
     /// Append a new `START` events as `[START, FINISH, NEWSTART]`,
     /// then mark `NEWSTART` as `START`'s parent with saving its relative
     /// distance to `NEWSTART` into forward_parent(=2 in this case);
-    pub fn precede(self, p: &mut Parser) -> Marker {
+    pub fn precede(self, p: &mut JsParser) -> Marker {
         let mut new_pos = p.start();
         let idx = self.start_pos as usize;
         match p.events[idx] {
@@ -567,7 +567,7 @@ impl CompletedMarker {
     }
 
     /// Undo this completion and turns into a `Marker`
-    pub fn undo_completion(self, p: &mut Parser) -> Marker {
+    pub fn undo_completion(self, p: &mut JsParser) -> Marker {
         let start_idx = self.start_pos as usize;
         let finish_idx = self.finish_pos as usize;
 
@@ -604,7 +604,7 @@ pub struct Checkpoint {
 
 #[cfg(test)]
 mod tests {
-    use crate::Parser;
+    use crate::JsParser;
     use rome_diagnostics::location::FileId;
     use rome_js_syntax::{JsSyntaxKind, SourceType};
     use rome_rowan::AstNode;
@@ -612,14 +612,14 @@ mod tests {
     #[test]
     fn example() {
         use crate::syntax::expr::parse_expression_snipped;
-        use crate::{process, LosslessTreeSink, Parser};
+        use crate::{process, JsParser, LosslessTreeSink};
         use rome_js_syntax::{JsAnyExpression, JsExpressionSnipped};
 
         let source = "(void b)";
 
         // File id is used for the labels inside parser errors to report them, the file id
         // is used to look up a file's source code and path inside of a codespan `Files` implementation.
-        let mut parser = Parser::new(source, FileId::zero(), SourceType::default());
+        let mut parser = JsParser::new(source, FileId::zero(), SourceType::default());
 
         // Use one of the syntax parsing functions to parse an expression.
         // This adds node and token events to the parser which are then used to make a node.
@@ -664,7 +664,7 @@ mod tests {
         expected = "Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a marker's parent."
     )]
     fn uncompleted_markers_panic() {
-        let mut parser = Parser::new("'use strict'", FileId::zero(), SourceType::default());
+        let mut parser = JsParser::new("'use strict'", FileId::zero(), SourceType::default());
 
         let _ = parser.start();
         // drop the marker without calling complete or abandon
@@ -672,7 +672,7 @@ mod tests {
 
     #[test]
     fn completed_marker_doesnt_panic() {
-        let mut p = Parser::new("'use strict'", FileId::zero(), SourceType::default());
+        let mut p = JsParser::new("'use strict'", FileId::zero(), SourceType::default());
 
         let m = p.start();
         p.expect(JsSyntaxKind::JS_STRING_LITERAL);
@@ -681,7 +681,7 @@ mod tests {
 
     #[test]
     fn abandoned_marker_doesnt_panic() {
-        let mut p = Parser::new("'use strict'", FileId::zero(), SourceType::default());
+        let mut p = JsParser::new("'use strict'", FileId::zero(), SourceType::default());
 
         let m = p.start();
         m.abandon(&mut p);
