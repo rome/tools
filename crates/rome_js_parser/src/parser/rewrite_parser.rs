@@ -1,4 +1,4 @@
-use crate::token_source::TokenSourceCheckpoint;
+use crate::token_source::{TokenSource, TokenSourceCheckpoint};
 use crate::{CompletedMarker, Event, JsParser, Marker, ParseDiagnostic, TextSize, ToDiagnostic};
 use rome_console::fmt::Display;
 use rome_diagnostics::location::AsSpan;

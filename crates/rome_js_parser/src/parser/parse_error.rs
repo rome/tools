@@ -1,4 +1,5 @@
 use crate::span::Span;
+use crate::token_source::TokenSource;
 use crate::{JsParser, ParseDiagnostic};
 use rome_js_syntax::{JsSyntaxKind, TextRange};
 use std::ops::Range;

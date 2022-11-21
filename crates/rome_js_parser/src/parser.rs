@@ -12,10 +12,11 @@ pub(crate) mod single_token_parse_recovery;
 
 use crate::lexer::{LexContext, ReLexContext};
 pub(crate) use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
+use crate::token_source::TokenSource;
 use crate::*;
 use crate::{
     state::ParserStateCheckpoint,
-    token_source::{TokenSource, TokenSourceCheckpoint, Trivia},
+    token_source::{JsTokenSource, TokenSourceCheckpoint, Trivia},
 };
 use drop_bomb::DebugDropBomb;
 pub(crate) use parse_error::*;
@@ -68,7 +69,7 @@ impl ParserProgress {
 /// These events are then processed into a syntax tree through a [`TreeSink`] implementation.
 pub(crate) struct JsParser<'s> {
     file_id: FileId,
-    pub(super) tokens: TokenSource<'s>,
+    pub(super) tokens: JsTokenSource<'s>,
     pub(super) events: Vec<Event>,
     pub(super) state: ParserState,
     pub source_type: SourceType,
@@ -80,7 +81,7 @@ pub(crate) struct JsParser<'s> {
 impl<'s> JsParser<'s> {
     /// Creates a new parser that parses the `source`.
     pub fn new(source: &'s str, file_id: FileId, source_type: SourceType) -> JsParser<'s> {
-        let token_source = TokenSource::from_str(source, file_id);
+        let token_source = JsTokenSource::from_str(source, file_id);
 
         JsParser {
             file_id,

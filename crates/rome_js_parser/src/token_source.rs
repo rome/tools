@@ -3,7 +3,7 @@ use crate::ParseDiagnostic;
 use rome_diagnostics::location::FileId;
 use rome_js_syntax::JsSyntaxKind;
 use rome_js_syntax::JsSyntaxKind::EOF;
-use rome_rowan::{TextSize, TriviaPieceKind};
+use rome_rowan::{SyntaxKind, TextSize, TriviaPieceKind};
 use std::collections::VecDeque;
 
 /// A comment or a whitespace trivia in the source code.
@@ -53,8 +53,39 @@ impl Trivia {
     }
 }
 
+pub trait TokenSource<'source> {
+    type Kind: SyntaxKind;
+    type Checkpoint;
+
+    /// Returns the kind of the current non-trivia token
+    fn current(&self) -> Self::Kind;
+
+    /// Returns the range of the current non-trivia token
+    fn current_range(&self) -> TextRange;
+
+    /// Gets the kind of the nth non-trivia token
+    fn nth(&mut self, n: usize) -> Self::Kind;
+
+    /// Restores the token source to a previous state
+    fn rewind(&mut self, checkpoint: Self::Checkpoint);
+
+    /// Creates a checkpoint to which it can later return using [Self::rewind].
+    fn checkpoint(&self) -> Self::Checkpoint;
+
+    /// Returns the source text
+    fn source(&self) -> &'source str;
+
+    /// Returns the byte offset of the current token from the start of the source document
+    fn position(&self) -> TextSize {
+        self.current_range().start()
+    }
+
+    /// Ends this token source and returns the source text's trivia
+    fn finish(self) -> (Vec<Trivia>, Vec<ParseDiagnostic>);
+}
+
 /// Token source for the parser that skips over any non-trivia token.
-pub struct TokenSource<'l> {
+pub struct JsTokenSource<'l> {
     lexer: BufferedLexer<'l>,
 
     /// List of the skipped trivia. Needed to construct the CST and compute the non-trivia token offsets.
@@ -80,10 +111,10 @@ struct Lookahead {
     after_newline: bool,
 }
 
-impl<'l> TokenSource<'l> {
+impl<'l> JsTokenSource<'l> {
     /// Creates a new token source.
-    pub(crate) fn new(lexer: BufferedLexer<'l>) -> TokenSource<'l> {
-        TokenSource {
+    pub(crate) fn new(lexer: BufferedLexer<'l>) -> JsTokenSource<'l> {
+        JsTokenSource {
             lexer,
             trivia_list: vec![],
             lookahead_offset: 0,
@@ -92,10 +123,10 @@ impl<'l> TokenSource<'l> {
     }
 
     /// Creates a new token source for the given string
-    pub fn from_str(source: &'l str, file_id: FileId) -> TokenSource<'l> {
+    pub fn from_str(source: &'l str, file_id: FileId) -> JsTokenSource<'l> {
         let lexer = Lexer::from_str(source, file_id);
         let buffered = BufferedLexer::new(lexer);
-        let mut source = TokenSource::new(buffered);
+        let mut source = JsTokenSource::new(buffered);
 
         source.next_non_trivia_token(LexContext::default(), true);
         source
@@ -132,28 +163,6 @@ impl<'l> TokenSource<'l> {
         if self.lookahead_offset != 0 {
             debug_assert!(self.lookahead_offset >= processed_tokens);
             self.lookahead_offset -= processed_tokens;
-        }
-    }
-
-    /// Returns the kind of the current non-trivia token
-    #[inline(always)]
-    pub fn current(&self) -> JsSyntaxKind {
-        self.lexer.current()
-    }
-
-    /// Returns the range of the current non-trivia token
-    #[inline(always)]
-    pub fn current_range(&self) -> TextRange {
-        self.lexer.current_range()
-    }
-
-    /// Gets the kind of the nth non-trivia token
-    #[inline(always)]
-    pub fn nth(&mut self, n: usize) -> JsSyntaxKind {
-        if n == 0 {
-            self.current()
-        } else {
-            self.lookahead(n).map_or(EOF, |lookahead| lookahead.kind)
         }
     }
 
@@ -225,28 +234,6 @@ impl<'l> TokenSource<'l> {
         None
     }
 
-    pub fn rewind(&mut self, checkpoint: TokenSourceCheckpoint) {
-        assert!(self.trivia_list.len() >= checkpoint.trivia_len as usize);
-        self.trivia_list.truncate(checkpoint.trivia_len as usize);
-        self.lexer.rewind(checkpoint.lexer);
-        self.non_trivia_lookahead.clear();
-        self.lookahead_offset = 0;
-    }
-
-    pub fn checkpoint(&self) -> TokenSourceCheckpoint {
-        TokenSourceCheckpoint {
-            trivia_len: self.trivia_list.len() as u32,
-            lexer: self.lexer.checkpoint(),
-        }
-    }
-
-    /// Returns the source text
-    #[inline(always)]
-    pub fn source(&self) -> &'l str {
-        self.lexer.source()
-    }
-
-    /// Bumps the current token and moves the parser to the next non-trivia token
     #[inline(always)]
     pub fn bump(&mut self, context: LexContext) {
         if self.current() != EOF {
@@ -290,15 +277,60 @@ impl<'l> TokenSource<'l> {
 
         new_kind
     }
+}
 
-    /// Returns the byte offset of the current token from the start of the source document
+impl<'source> TokenSource<'source> for JsTokenSource<'source> {
+    type Checkpoint = TokenSourceCheckpoint;
+    type Kind = JsSyntaxKind;
+
+    /// Returns the kind of the current non-trivia token
     #[inline(always)]
-    pub fn position(&self) -> TextSize {
+    fn current(&self) -> JsSyntaxKind {
+        self.lexer.current()
+    }
+
+    /// Returns the range of the current non-trivia token
+    #[inline(always)]
+    fn current_range(&self) -> TextRange {
+        self.lexer.current_range()
+    }
+
+    /// Gets the kind of the nth non-trivia token
+    #[inline(always)]
+    fn nth(&mut self, n: usize) -> JsSyntaxKind {
+        if n == 0 {
+            self.current()
+        } else {
+            self.lookahead(n).map_or(EOF, |lookahead| lookahead.kind)
+        }
+    }
+
+    fn rewind(&mut self, checkpoint: TokenSourceCheckpoint) {
+        assert!(self.trivia_list.len() >= checkpoint.trivia_len as usize);
+        self.trivia_list.truncate(checkpoint.trivia_len as usize);
+        self.lexer.rewind(checkpoint.lexer);
+        self.non_trivia_lookahead.clear();
+        self.lookahead_offset = 0;
+    }
+
+    fn checkpoint(&self) -> TokenSourceCheckpoint {
+        TokenSourceCheckpoint {
+            trivia_len: self.trivia_list.len() as u32,
+            lexer: self.lexer.checkpoint(),
+        }
+    }
+
+    #[inline(always)]
+    fn source(&self) -> &'source str {
+        self.lexer.source()
+    }
+
+    #[inline(always)]
+    fn position(&self) -> TextSize {
         self.current_range().start()
     }
 
-    /// Ends this token source and returns the source text's trivia
-    pub fn finish(self) -> (Vec<Trivia>, Vec<ParseDiagnostic>) {
+    fn finish(self) -> (Vec<Trivia>, Vec<ParseDiagnostic>) {
         (self.trivia_list, self.lexer.finish())
     }
 }

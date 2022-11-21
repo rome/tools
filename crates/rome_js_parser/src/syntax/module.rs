@@ -22,6 +22,7 @@ use crate::syntax::typescript::{
     parse_ts_enum_declaration, parse_ts_import_equals_declaration_rest,
     parse_ts_interface_declaration, skip_ts_decorators,
 };
+use crate::token_source::TokenSource;
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{
     Absent, CompletedMarker, JsParser, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax,

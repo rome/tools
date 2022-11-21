@@ -32,6 +32,7 @@ use crate::syntax::typescript::{
     skip_ts_decorators,
 };
 
+use crate::token_source::TokenSource;
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{

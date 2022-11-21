@@ -27,6 +27,7 @@ use crate::syntax::jsx::parse_jsx_tag_expression;
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
+use crate::token_source::TokenSource;
 use crate::Checkpoint;
 use crate::CompletedMarker;
 use crate::JsSyntaxFeature::{Jsx, StrictMode, TypeScript};
