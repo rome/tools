@@ -122,11 +122,7 @@ impl Rule for NoEmptyInterface {
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let diagnostic = RuleDiagnostic::new(
-            rule_category!(),
-            ctx.query().range(),
-            state.as_str(),
-        );
+        let diagnostic = RuleDiagnostic::new(rule_category!(), ctx.query().range(), state.as_str());
 
         Some(diagnostic)
     }
