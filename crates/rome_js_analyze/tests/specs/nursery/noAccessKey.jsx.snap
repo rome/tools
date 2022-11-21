@@ -21,7 +21,7 @@ expression: noAccessKey.jsx
 
 # Diagnostics
 ```
-noAccessKey.jsx:2:22 lint/a11y/noAccessKey  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noAccessKey.jsx:2:22 lint/nursery/noAccessKey  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid the accessKey attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.
   
@@ -33,7 +33,7 @@ noAccessKey.jsx:2:22 lint/a11y/noAccessKey  FIXABLE  ━━━━━━━━━
   
   i Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard actions across applications.
   
-  i Safe fix: Remove the accessKey attribute.
+  i Suggested fix: Remove the accessKey attribute.
   
     2 │ <input·type="submit"·accessKey="s"·value="Submit"·/>;
       │                      --------------                  
@@ -41,7 +41,7 @@ noAccessKey.jsx:2:22 lint/a11y/noAccessKey  FIXABLE  ━━━━━━━━━
 ```
 
 ```
-noAccessKey.jsx:3:9 lint/a11y/noAccessKey  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noAccessKey.jsx:3:9 lint/nursery/noAccessKey  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid the accessKey attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.
   
@@ -54,7 +54,7 @@ noAccessKey.jsx:3:9 lint/a11y/noAccessKey  FIXABLE  ━━━━━━━━━�
   
   i Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard actions across applications.
   
-  i Safe fix: Remove the accessKey attribute.
+  i Suggested fix: Remove the accessKey attribute.
   
     3 │ <button·accessKey="n">Next</button>;
       │         -------------               

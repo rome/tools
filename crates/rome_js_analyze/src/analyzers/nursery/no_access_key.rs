@@ -125,7 +125,7 @@ impl Rule for NoAccessKey {
         mutation.remove_node(node.clone());
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
-            applicability: Applicability::Always,
+            applicability: Applicability::MaybeIncorrect,
             message: markup! { "Remove the "<Emphasis>"accessKey"</Emphasis>" attribute." }
                 .to_owned(),
             mutation,
