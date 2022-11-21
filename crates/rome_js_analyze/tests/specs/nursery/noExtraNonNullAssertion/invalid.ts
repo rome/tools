@@ -34,3 +34,7 @@ class Case9 {
 }
 
 case10!!.prop = null;
+
+case11!?.[computedField];
+
+case12!?.[a.b!!];

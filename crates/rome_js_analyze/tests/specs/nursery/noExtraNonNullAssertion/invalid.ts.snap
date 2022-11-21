@@ -42,6 +42,10 @@ class Case9 {
 
 case10!!.prop = null;
 
+case11!?.[computedField];
+
+case12!?.[a.b!!];
+
 ```
 
 # Diagnostics
@@ -237,11 +241,30 @@ invalid.ts:36:1 lint/nursery/noExtraNonNullAssertion  FIXABLE  ━━━━━�
   > 36 │ case10!!.prop = null;
        │ ^^^^^^^
     37 │ 
+    38 │ case11!?.[computedField];
   
   i Safe fix: Remove extra non-null assertion.
   
     36 │ case10!!.prop·=·null;
        │        -             
+
+```
+
+```
+invalid.ts:40:11 lint/nursery/noExtraNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden extra non-null assertion.
+  
+    38 │ case11!?.[computedField];
+    39 │ 
+  > 40 │ case12!?.[a.b!!];
+       │           ^^^^
+    41 │ 
+  
+  i Safe fix: Remove extra non-null assertion.
+  
+    40 │ case12!?.[a.b!!];
+       │               -  
 
 ```
 
