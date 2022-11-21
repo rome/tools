@@ -125,7 +125,7 @@ impl Rule for NoEmptyInterface {
         let diagnostic = RuleDiagnostic::new(
             rule_category!(),
             ctx.query().range(),
-            markup! {""{state.as_str()}""}.to_owned(),
+            state.as_str(),
         );
 
         Some(diagnostic)
