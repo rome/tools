@@ -1,7 +1,10 @@
 use crate::categories::{ActionCategory, RuleCategory};
 use crate::context::RuleContext;
 use crate::registry::{RegistryVisitor, RuleLanguage, RuleSuppressions};
-use crate::{AnalyzerDiagnostic, Phase, Phases, Queryable, SuppressionCommentEmitter};
+use crate::{
+    AnalyzerDiagnostic, Phase, Phases, Queryable, SuppressionCommentEmitter,
+    SuppressionCommentEmitterPayload,
+};
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
 use rome_diagnostics::advice::CodeSuggestionAdvice;
@@ -346,7 +349,12 @@ pub trait Rule: RuleMeta + Sized {
             let suppression_text = format!("rome-ignore {}", rule_category);
             let mut mutation = ctx.root().begin();
             let token = ctx.root().syntax().token_at_offset(text_range.start());
-            apply_suppression_comment(token, &mut mutation, suppression_text.as_str());
+            apply_suppression_comment(SuppressionCommentEmitterPayload {
+                suppression_text: suppression_text.as_str(),
+                mutation: &mut mutation,
+                token_offset: token,
+                diagnostic_text_range: &text_range,
+            });
 
             Some(SuppressAction {
                 mutation,

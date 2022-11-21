@@ -2,7 +2,7 @@ use control_flow::make_visitor;
 use rome_analyze::{
     AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal, ControlFlow,
     InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry, Phases, RuleAction,
-    RuleRegistry, ServiceBag, SyntaxVisitor,
+    RuleRegistry, ServiceBag, SuppressionCommentEmitterPayload, SyntaxVisitor,
 };
 use rome_diagnostics::file::FileId;
 use rome_js_factory::make::{jsx_expression_child, token};
@@ -10,7 +10,7 @@ use rome_js_syntax::{
     suppression::{parse_suppression_comment, SuppressionCategory},
     JsLanguage, JsSyntaxToken, JsxAnyChild, T,
 };
-use rome_rowan::{AstNode, BatchMutation, TokenAtOffset, TriviaPieceKind};
+use rome_rowan::{AstNode, TokenAtOffset, TriviaPieceKind};
 use serde::{Deserialize, Serialize};
 use std::{borrow::Cow, error::Error};
 
@@ -366,32 +366,32 @@ impl Error for RuleError {}
 ///
 /// If we're not able to find any token, it means that the range is
 /// placed at row 1, so we take the root itself.
-fn apply_suppression_comment(
-    current_token: TokenAtOffset<JsSyntaxToken>,
-    mutation: &mut BatchMutation<JsLanguage>,
-    suppression_text: &str,
-) {
-    let current_token = match current_token {
+fn apply_suppression_comment(payload: SuppressionCommentEmitterPayload<JsLanguage>) {
+    let SuppressionCommentEmitterPayload {
+        token_offset,
+        mutation,
+        suppression_text,
+        diagnostic_text_range,
+    } = payload;
+    let current_token = match token_offset {
         TokenAtOffset::None => None,
-        TokenAtOffset::Single(token) | TokenAtOffset::Between(token, _) => {
-            Some(match find_token_with_newline(token.clone()) {
-                None => token,
-                Some(token) => token,
-            })
+        TokenAtOffset::Single(token) => Some(match find_token_with_newline(token.clone()) {
+            None => token,
+            Some(token) => token,
+        }),
+        TokenAtOffset::Between(left_token, right_token) => {
+            let chosen_token = if right_token.text_range().start() == diagnostic_text_range.start()
+            {
+                right_token
+            } else {
+                left_token
+            };
+            Some(chosen_token)
         }
     };
     if let Some(current_token) = current_token {
-        if let Some(element) = current_token.ancestors().find_map(|node| {
-            if node
-                .first_token()
-                .map(|token| token.text_trimmed().contains('\n'))
-                .is_some()
-            {
-                JsxAnyChild::cast(node)
-            } else {
-                None
-            }
-        }) {
+        dbg!(current_token.parent());
+        if let Some(element) = current_token.ancestors().find_map(JsxAnyChild::cast) {
             let jsx_comment = jsx_expression_child(
                 token(T!['{']).with_trailing_trivia([(
                     TriviaPieceKind::SingleLineComment,
@@ -399,7 +399,7 @@ fn apply_suppression_comment(
                 )]),
                 token(T!['}']),
             );
-            mutation.add_jsx_element_after_element(
+            mutation.add_jsx_element_before_element(
                 &element,
                 &JsxAnyChild::JsxExpressionChild(jsx_comment.build()),
             );

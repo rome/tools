@@ -685,14 +685,18 @@ fn update_suppression<L: Language>(
 }
 
 /// Convenient type that to mark a function that is responsible to create a mutation to add a suppression comment.
-/// - `token_offset`: the possible offset found in the [TextRange] of the emitted diagnostic
-/// - `mutation`: a [BatchMutation] where the consumer can apply the suppression comment
-/// - `suppression_text`: a string equals to "rome-ignore: lint(<RULE_GROUP>/<RULE_NAME>)"
-type SuppressionCommentEmitter<L> = fn(
-    token_offset: TokenAtOffset<SyntaxToken<L>>,
-    mutation: &mut BatchMutation<L>,
-    suppression_text: &str,
-);
+pub struct SuppressionCommentEmitterPayload<'a, L: Language> {
+    /// The possible offset found in the [TextRange] of the emitted diagnostic
+    pub token_offset: TokenAtOffset<SyntaxToken<L>>,
+    /// A [BatchMutation] where the consumer can apply the suppression comment
+    pub mutation: &'a mut BatchMutation<L>,
+    /// A string equals to "rome-ignore: lint(<RULE_GROUP>/<RULE_NAME>)"
+    pub suppression_text: &'a str,
+    /// The original range of the diagnostic where the rule was triggered
+    pub diagnostic_text_range: &'a TextRange,
+}
+
+type SuppressionCommentEmitter<L> = fn(SuppressionCommentEmitterPayload<L>);
 
 type SignalHandler<'a, L, Break> = &'a mut dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<Break>;
 
