@@ -297,7 +297,6 @@ pub struct A11y {
 #[allow(dead_code)]
 #[doc = r" A list of rules that belong to this group"]
 struct A11ySchema {
-    no_access_key: Option<RuleConfiguration>,
     no_autofocus: Option<RuleConfiguration>,
     no_positive_tabindex: Option<RuleConfiguration>,
     use_alt_text: Option<RuleConfiguration>,
@@ -310,8 +309,7 @@ struct A11ySchema {
 }
 impl A11y {
     const CATEGORY_NAME: &'static str = "a11y";
-    pub(crate) const CATEGORY_RULES: [&'static str; 10] = [
-        "noAccessKey",
+    pub(crate) const CATEGORY_RULES: [&'static str; 9] = [
         "noAutofocus",
         "noPositiveTabindex",
         "useAltText",
@@ -322,8 +320,7 @@ impl A11y {
         "useKeyWithMouseEvents",
         "useValidAnchor",
     ];
-    const RECOMMENDED_RULES: [&'static str; 10] = [
-        "noAccessKey",
+    const RECOMMENDED_RULES: [&'static str; 9] = [
         "noAutofocus",
         "noPositiveTabindex",
         "useAltText",
@@ -334,7 +331,7 @@ impl A11y {
         "useKeyWithMouseEvents",
         "useValidAnchor",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 10] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 9] = [
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[2]),
@@ -344,7 +341,6 @@ impl A11y {
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[6]),
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[7]),
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[8]),
-        RuleFilter::Rule("a11y", Self::CATEGORY_RULES[9]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -371,7 +367,7 @@ impl A11y {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 10] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 9] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
@@ -691,6 +687,7 @@ pub struct Nursery {
 #[allow(dead_code)]
 #[doc = r" A list of rules that belong to this group"]
 struct NurserySchema {
+    no_access_key: Option<RuleConfiguration>,
     no_banned_types: Option<RuleConfiguration>,
     no_conditional_assignment: Option<RuleConfiguration>,
     no_const_assign: Option<RuleConfiguration>,
@@ -708,7 +705,8 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 14] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 15] = [
+        "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
         "noConstAssign",
@@ -724,8 +722,9 @@ impl Nursery {
         "useNumericLiterals",
         "useValidForDirection",
     ];
-    const RECOMMENDED_RULES: [&'static str; 0] = [];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 0] = [];
+    const RECOMMENDED_RULES: [&'static str; 1] = ["noAccessKey"];
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 1] =
+        [RuleFilter::Rule("nursery", Self::CATEGORY_RULES[0])];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
@@ -751,7 +750,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 0] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 1] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }

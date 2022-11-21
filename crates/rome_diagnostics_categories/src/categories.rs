@@ -60,7 +60,6 @@ define_dategories! {
     "lint/complexity/noExtraBooleanCast": "https://docs.rome.tools/lint/rules/noExtraBooleanCast",
 
     // a11y group
-    "lint/a11y/noAccessKey": "https://docs.rome.tools/lint/rules/noAccessKey",
     "lint/a11y/noAutofocus": "https://docs.rome.tools/lint/rules/noAutofocus",
     "lint/a11y/noPositiveTabindex": "https://docs.rome.tools/lint/rules/noPositiveTabindex",
     "lint/a11y/useKeyWithMouseEvents": "https://docs.rome.tools/lint/rules/useKeyWithMouseEvents",
@@ -76,6 +75,7 @@ define_dategories! {
 
 
     // nursery
+    "lint/nursery/noAccessKey": "https://docs.rome.tools/lint/rules/noAccessKey",
     "lint/nursery/noBannedTypes":"https://docs.rome.tools/lint/rules/noBannedTypes",
     "lint/nursery/noConditionalAssignment": "https://docs.rome.tools/lint/rules/noConditionalAssignment",
     "lint/nursery/noConstAssign": "https://docs.rome.tools/lint/rules/noConstAssign",

@@ -148,7 +148,6 @@ export type TrailingComma = "all" | "es5" | "none";
  * A list of rules that belong to this group
  */
 export interface A11y {
-	noAccessKey?: RuleConfiguration;
 	noAutofocus?: RuleConfiguration;
 	noPositiveTabindex?: RuleConfiguration;
 	/**
@@ -218,6 +217,7 @@ export interface Correctness {
  * A list of rules that belong to this group
  */
 export interface Nursery {
+	noAccessKey?: RuleConfiguration;
 	noBannedTypes?: RuleConfiguration;
 	noConditionalAssignment?: RuleConfiguration;
 	noConstAssign?: RuleConfiguration;
@@ -390,7 +390,6 @@ export type Category =
 	| "lint/style/noUnusedTemplateLiteral"
 	| "lint/complexity/useSimplifiedLogicExpression"
 	| "lint/complexity/noExtraBooleanCast"
-	| "lint/a11y/noAccessKey"
 	| "lint/a11y/noAutofocus"
 	| "lint/a11y/noPositiveTabindex"
 	| "lint/a11y/useKeyWithMouseEvents"
@@ -402,6 +401,7 @@ export type Category =
 	| "lint/a11y/useAltText"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
+	| "lint/nursery/noAccessKey"
 	| "lint/nursery/noBannedTypes"
 	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstAssign"

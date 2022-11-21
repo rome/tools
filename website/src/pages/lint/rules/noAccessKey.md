@@ -22,7 +22,7 @@ this rule suggests users remove the `accessKey` attribute on elements.
 <input type="submit" accessKey="s" value="Submit" />
 ```
 
-<pre class="language-text"><code class="language-text">a11y/noAccessKey.js:1:22 <a href="https://docs.rome.tools/lint/rules/noAccessKey">lint/a11y/noAccessKey</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noAccessKey.js:1:22 <a href="https://docs.rome.tools/lint/rules/noAccessKey">lint/nursery/noAccessKey</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid the </span><span style="color: Tomato;"><strong>accessKey</strong></span><span style="color: Tomato;"> attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.</span>
   
@@ -42,7 +42,7 @@ this rule suggests users remove the `accessKey` attribute on elements.
 <a href="https://webaim.org/" accessKey="w">WebAIM.org</a>
 ```
 
-<pre class="language-text"><code class="language-text">a11y/noAccessKey.js:1:31 <a href="https://docs.rome.tools/lint/rules/noAccessKey">lint/a11y/noAccessKey</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noAccessKey.js:1:31 <a href="https://docs.rome.tools/lint/rules/noAccessKey">lint/nursery/noAccessKey</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid the </span><span style="color: Tomato;"><strong>accessKey</strong></span><span style="color: Tomato;"> attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.</span>
   
@@ -62,7 +62,7 @@ this rule suggests users remove the `accessKey` attribute on elements.
 <button accessKey="n">Next</button>
 ```
 
-<pre class="language-text"><code class="language-text">a11y/noAccessKey.js:1:9 <a href="https://docs.rome.tools/lint/rules/noAccessKey">lint/a11y/noAccessKey</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noAccessKey.js:1:9 <a href="https://docs.rome.tools/lint/rules/noAccessKey">lint/nursery/noAccessKey</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid the </span><span style="color: Tomato;"><strong>accessKey</strong></span><span style="color: Tomato;"> attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.</span>
   
