@@ -2,7 +2,9 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{JsxAttribute, JsxOpeningElement, JsxSelfClosingElement};
+use rome_js_syntax::{
+    JsxAnyElementName, JsxAttribute, JsxAttributeList, JsxOpeningElement, JsxSelfClosingElement,
+};
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 
 use crate::JsRuleAction;
@@ -44,41 +46,43 @@ declare_node_union! {
     pub(crate) JsxAnyElement = JsxOpeningElement | JsxSelfClosingElement
 }
 
+impl JsxAnyElement {
+    fn name(&self) -> Option<JsxAnyElementName> {
+        match self {
+            JsxAnyElement::JsxOpeningElement(element) => element.name().ok(),
+            JsxAnyElement::JsxSelfClosingElement(element) => element.name().ok(),
+        }
+    }
+}
+
 impl Rule for NoHeaderScope {
-    type Query = Ast<JsxAnyElement>;
-    type State = JsxAttribute;
+    type Query = Ast<JsxAttribute>;
+    type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-        let node = ctx.query();
+        let attr = ctx.query();
 
-        match node {
-            JsxAnyElement::JsxOpeningElement(element) => {
-                let binding = element.name().ok()?;
-                let jsx_name = binding.as_jsx_name()?;
+        if attr.name().ok()?.syntax().text_trimmed() != "scope" {
+            return None;
+        }
 
-                if jsx_name.text() != "th" {
-                    return element.find_attribute_by_name("scope").ok()?;
-                }
-            }
-            JsxAnyElement::JsxSelfClosingElement(element) => {
-                let binding = element.name().ok()?;
-                let jsx_name = binding.as_jsx_name()?;
+        let jsx_element = attr
+            .parent::<JsxAttributeList>()?
+            .parent::<JsxAnyElement>()?;
 
-                if jsx_name.text() != "th" {
-                    return element.find_attribute_by_name("scope").ok()?;
-                }
-            }
+        if jsx_element.name()?.as_jsx_name()?.syntax().text_trimmed() != "th" {
+            return Some(());
         }
 
         None
     }
 
-    fn diagnostic(_: &RuleContext<Self>, jsx_attr: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let diagnostic = RuleDiagnostic::new(
             rule_category!(),
-            jsx_attr.range(),
+            ctx.query().range(),
             markup! {"Avoid using the "<Emphasis>"scope"</Emphasis>" attribute on elements other than "<Emphasis>"th"</Emphasis>" elements."}
                 .to_owned(),
         );
@@ -86,10 +90,10 @@ impl Rule for NoHeaderScope {
         Some(diagnostic)
     }
 
-    fn action(ctx: &RuleContext<Self>, jsx_attr: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let mut mutation = ctx.root().begin();
 
-        mutation.remove_node(jsx_attr.clone());
+        mutation.remove_node(ctx.query().clone());
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
