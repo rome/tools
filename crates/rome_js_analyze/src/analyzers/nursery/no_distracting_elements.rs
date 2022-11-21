@@ -79,7 +79,7 @@ impl Rule for NoDistractingElements {
             markup! {"Don't use '"{name.text_trimmed()}"' element."}.to_owned(),
         )
         .note(markup! {
-            "Visually distracting elements can cause accessibility issues and should be avoided"
+            "Visually distracting elements can cause accessibility issues and should be avoided."
         });
 
         Some(diagnostic)

@@ -24,7 +24,7 @@ noDistractingElements.jsx:3:5 lint/nursery/noDistractingElements  FIXABLE  ━�
     4 │     <blink/>
     5 │ </div>
   
-  i Visually distracting elements can cause accessibility issues and should be avoided
+  i Visually distracting elements can cause accessibility issues and should be avoided.
   
   i Suggested fix: Remove 'marquee' element.
   
@@ -44,7 +44,7 @@ noDistractingElements.jsx:4:5 lint/nursery/noDistractingElements  FIXABLE  ━�
       │     ^^^^^^^^
     5 │ </div>
   
-  i Visually distracting elements can cause accessibility issues and should be avoided
+  i Visually distracting elements can cause accessibility issues and should be avoided.
   
   i Suggested fix: Remove 'blink' element.
   
