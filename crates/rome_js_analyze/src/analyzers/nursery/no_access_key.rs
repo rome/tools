@@ -80,8 +80,8 @@ impl Rule for NoAccessKey {
             .parent::<JsxAttributeList>()
             .and_then(|list| list.parent::<JsxAnyElement>())?;
 
-        // We do not know if the `accessKey` prop is used as the `accessKey` attribute on HTML elements
-        // inside a user-created React component
+        // We do not know if the `accessKey` prop is used for HTML elements
+        // or for user-created React components
         if !element.is_html_element()? {
             return None;
         }
