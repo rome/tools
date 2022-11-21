@@ -44,6 +44,7 @@ function generateNativePackage(platform, arch) {
 
 	console.log(`Copy binary ${binaryTarget}`);
 	fs.copyFileSync(binarySource, binaryTarget);
+	fs.chmodSync(binaryTarget, 0o755);
 }
 
 function updateWasmPackage(target) {

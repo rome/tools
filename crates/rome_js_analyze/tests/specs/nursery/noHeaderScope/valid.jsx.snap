@@ -1,0 +1,15 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 73
+expression: valid.jsx
+---
+# Input
+```js
+<>
+	<th scope="col"></th>
+	<th scope={scope}></th>
+</>
+
+```
+
+

@@ -28,7 +28,7 @@ fn fix_all_kind() -> CodeActionKind {
 /// Queries the [`AnalysisServer`] for code actions of the file matching [FileId]
 ///
 /// If the AnalysisServer has no matching file, results in error.
-#[tracing::instrument(level = "trace", skip(session), err)]
+#[tracing::instrument(level = "trace", skip_all, fields(uri = display(&params.text_document.uri), range = debug(params.range), only = debug(&params.context.only), diagnostics = debug(&params.context.diagnostics)), err)]
 pub(crate) fn code_actions(
     session: &Session,
     params: CodeActionParams,
@@ -151,9 +151,10 @@ fn fix_all(
 
             let diag_range = utils::text_range(line_index, d.range).ok()?;
             let has_matching_rule = fixed.actions.iter().any(|action| {
-                let Some(code) = code.strip_prefix(action.group_name.as_ref()) else { return false };
+                let Some((group_name, rule_name)) = &action.rule_name else { return false };
+                let Some(code) = code.strip_prefix(group_name.as_ref()) else { return false };
                 let Some(code) = code.strip_prefix('/') else { return false };
-                code == action.rule_name && action.range.intersect(diag_range).is_some()
+                code == rule_name && action.range.intersect(diag_range).is_some()
             });
 
             if has_matching_rule {
