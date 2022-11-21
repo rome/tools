@@ -16,12 +16,10 @@
 #![allow(clippy::or_fun_call)]
 
 #[rustfmt::skip]
-mod tables;
 mod errors;
 mod tests;
 
 pub mod buffered_lexer;
-mod bytes;
 #[cfg(feature = "highlight")]
 mod highlight;
 
@@ -29,18 +27,16 @@ use bitflags::bitflags;
 #[cfg(feature = "highlight")]
 pub use highlight::*;
 
-use tables::derived_property::*;
-
 pub(crate) use buffered_lexer::BufferedLexer;
 pub use rome_js_syntax::*;
 
-use self::bytes::{
-    lookup_byte,
-    Dispatch::{self, *},
-};
 use crate::ParseDiagnostic;
 use rome_diagnostics::location::FileId;
 use rome_js_syntax::JsSyntaxKind::*;
+use rome_js_unicode_table::{
+    is_id_continue, is_id_start, lookup_byte,
+    Dispatch::{self, *},
+};
 
 use self::errors::invalid_digits_after_unicode_escape_sequence;
 
@@ -60,14 +56,6 @@ const UNICODE_SPACES: [char; 19] = [
     '\u{2005}', '\u{2006}', '\u{2007}', '\u{2008}', '\u{2009}', '\u{200A}', '\u{200B}', '\u{202F}',
     '\u{205F}', '\u{3000}', '\u{FEFF}',
 ];
-
-fn is_id_start(c: char) -> bool {
-    c == '_' || c == '$' || ID_Start(c)
-}
-
-fn is_id_continue(c: char) -> bool {
-    c == '$' || c == '\u{200d}' || c == '\u{200c}' || ID_Continue(c)
-}
 
 /// Context in which the lexer should lex the next token
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Default)]

@@ -1,0 +1,32 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+2@
+```
+
+
+## Diagnostics
+
+```
+structure_number_with_trailing_garbage.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × unexpected character `@`
+  
+  > 1 │ 2@
+      │  ^
+  
+```
+
+## Tokens
+
+```
+JSON_NUMBER_LITERAL: `2` (0..1)
+ERROR_TOKEN: `@` (1..2)
+EOF: `` (2..2)
+```
+

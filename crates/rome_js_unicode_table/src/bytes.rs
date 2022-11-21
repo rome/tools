@@ -1,56 +1,117 @@
 use Dispatch::*;
 
-pub(crate) fn lookup_byte(byte: u8) -> Dispatch {
-    // Safety: our lookup table maps all values of u8, so it's impossible for a u8 to be out of bounds
-    unsafe { *DISPATCHER.get_unchecked(byte as usize) }
-}
-
-// Every handler a byte coming in could be mapped to
-#[allow(non_camel_case_types, clippy::upper_case_acronyms)]
+/// Every handler a byte coming in could be mapped to
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 #[repr(u8)]
-pub(crate) enum Dispatch {
+pub enum Dispatch {
+    /// Error token
     ERR,
+
+    /// Whitespace
     WHS,
+
+    /// Exclamation
     EXL,
+
+    /// Single `'` or Double quote `"`
     QOT,
+
+    /// ASCII identifier, or `$`, `_`
     IDT,
+
+    /// Hash `#`
     HAS,
+
+    /// Percentage `%`
     PRC,
+
+    /// Ampersand `&`
     AMP,
+
+    /// Left paren `(`
     PNO,
+
+    /// Right paren `)`
     PNC,
+
+    /// Multiply `*`
     MUL,
+
+    /// Plus `+`
     PLS,
+
+    /// Comma `,`
     COM,
+
+    /// Minus `-`
     MIN,
+
+    /// Dot `.`
     PRD,
+
+    /// Slash `/`
     SLH,
+
+    /// Zero 0
     ZER,
+
+    /// Digit (1-9)
     DIG,
+
+    /// Colon `:`
     COL,
+
+    /// Semicolon `;`
     SEM,
+
+    ///`Less than `<`
     LSS,
+
+    /// Equal `=`
     EQL,
+
+    /// More than `>`
     MOR,
+    /// Question `?`
     QST,
+    /// At `@`
     AT_,
+
+    /// Left bracket `[`
     BTO,
+
+    /// Backslash `\`
     BSL,
+
+    /// Right bracket `]`
     BTC,
+
+    /// `^`
     CRT,
+
+    /// Tick `
     TPL,
+
+    /// Left curly bracket `{`
     BEO,
+
+    /// Pipe `|`
     PIP,
+
+    /// Right curly bracket `}`
     BEC,
+
+    /// Tilde `~`
     TLD,
+
+    /// Unicode range (non ASCII)
     UNI,
 }
 
 // A lookup table mapping any incoming byte to a handler function
 // This is taken from the ratel project lexer and modified
 // FIXME: Should we ignore the first ascii control chars which are nearly never seen instead of returning Err?
-static DISPATCHER: [Dispatch; 256] = [
+pub(crate) static DISPATCHER: [Dispatch; 256] = [
     //0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F   //
     ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, WHS, WHS, WHS, WHS, WHS, ERR, ERR, // 0
     ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, // 1

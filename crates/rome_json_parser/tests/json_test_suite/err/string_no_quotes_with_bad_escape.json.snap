@@ -1,0 +1,41 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+[\n]
+```
+
+
+## Diagnostics
+
+```
+string_no_quotes_with_bad_escape.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × unexpected character `\`
+  
+  > 1 │ [\n]
+      │  ^
+  
+string_no_quotes_with_bad_escape.json:1:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The JSON standard doesn't allow identifiers
+  
+  > 1 │ [\n]
+      │   ^
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+ERROR_TOKEN: `\` (1..2)
+IDENT: `n` (2..3)
+R_BRACK: `]` (3..4)
+EOF: `` (4..4)
+```
+

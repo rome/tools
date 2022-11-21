@@ -1,0 +1,35 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+{"a" b}
+```
+
+
+## Diagnostics
+
+```
+object_missing_colon.json:1:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The JSON standard doesn't allow identifiers
+  
+  > 1 │ {"a" b}
+      │      ^
+  
+```
+
+## Tokens
+
+```
+L_CURLY: `{` (0..1)
+JSON_STRING_LITERAL: `"a"` (1..4)
+WHITESPACE: ` ` (4..5)
+IDENT: `b` (5..6)
+R_CURLY: `}` (6..7)
+EOF: `` (7..7)
+```
+

@@ -1,0 +1,33 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+[Infinity]
+```
+
+
+## Diagnostics
+
+```
+number_infinity.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The JSON standard doesn't allow identifiers
+  
+  > 1 │ [Infinity]
+      │  ^^^^^^^^
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+IDENT: `Infinity` (1..9)
+R_BRACK: `]` (9..10)
+EOF: `` (10..10)
+```
+

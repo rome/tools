@@ -1,0 +1,12 @@
+[package]
+edition = "2021"
+name = "rome_js_unicode_table"
+version = "0.0.0"
+authors = ["Rome Tools"]
+license = "MIT"
+description = "Unicode table for JavaScript IDs"
+repository = "https://github.com/rome/tools"
+
+[dependencies]
+
+[dev-dependencies]

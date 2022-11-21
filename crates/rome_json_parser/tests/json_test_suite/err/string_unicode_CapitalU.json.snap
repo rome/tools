@@ -1,0 +1,33 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+"\UA66D"
+```
+
+
+## Diagnostics
+
+```
+string_unicode_CapitalU.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Invalid escape sequence
+  
+  > 1 │ "\UA66D"
+      │  ^^
+  
+  i Valid escape sequences are: `\\`, `\/`, `/"`, `\b\`, `\f`, `\n`, `\r`, `\t` or any unicode escape sequence `\uXXXX` where X is hexedecimal number. 
+  
+```
+
+## Tokens
+
+```
+ERROR_TOKEN: `"\UA66D"` (0..8)
+EOF: `` (8..8)
+```
+
