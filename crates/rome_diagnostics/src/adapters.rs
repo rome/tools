@@ -6,7 +6,7 @@ use std::io;
 
 use rome_console::{fmt, markup};
 
-use super::{category, Category, Diagnostic};
+use crate::{category, Category, Diagnostic};
 
 /// Implements [Diagnostic] over types implementing [std::error::Error].
 #[derive(Debug)]

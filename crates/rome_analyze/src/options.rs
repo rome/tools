@@ -1,5 +1,5 @@
 use crate::{RuleKey, TextRange, TextSize};
-use rome_diagnostics::v2::{Diagnostic, LineIndexBuf, Resource, SourceCode};
+use rome_diagnostics::{Diagnostic, LineIndexBuf, Resource, SourceCode};
 use serde::Deserialize;
 use serde_json::Error;
 use serde_json::Value;

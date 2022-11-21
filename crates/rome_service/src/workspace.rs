@@ -55,7 +55,7 @@ use crate::{Configuration, Deserialize, RomeError, Serialize};
 use rome_analyze::ActionCategory;
 pub use rome_analyze::RuleCategories;
 use rome_console::{markup, Markup, MarkupBuf};
-use rome_diagnostics::{v2, CodeSuggestion};
+use rome_diagnostics::CodeSuggestion;
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_js_syntax::{TextRange, TextSize};
@@ -183,7 +183,7 @@ pub struct PullDiagnosticsParams {
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct PullDiagnosticsResult {
-    pub diagnostics: Vec<v2::serde::Diagnostic>,
+    pub diagnostics: Vec<rome_diagnostics::serde::Diagnostic>,
     pub errors: usize,
     pub skipped_diagnostics: u64,
 }

@@ -6,9 +6,8 @@ use crate::{
     AnalyzerDiagnostic, AnalyzerOptions, Queryable, RuleGroup, ServiceBag,
 };
 use rome_console::MarkupBuf;
-use rome_diagnostics::file::FileSpan;
-use rome_diagnostics::v2::advice::CodeSuggestionAdvice;
-use rome_diagnostics::{file::FileId, Applicability, CodeSuggestion};
+use rome_diagnostics::advice::CodeSuggestionAdvice;
+use rome_diagnostics::{location::FileId, Applicability, CodeSuggestion, FileSpan};
 use rome_rowan::{BatchMutation, Language};
 
 /// Event raised by the analyzer when a [Rule](crate::Rule)

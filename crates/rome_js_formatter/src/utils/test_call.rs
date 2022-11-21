@@ -429,7 +429,7 @@ impl Iterator for CalleeNamesIterator {
 #[cfg(test)]
 mod test {
     use super::{contains_a_test_pattern, is_test_each_pattern_callee};
-    use rome_diagnostics::file::FileId;
+    use rome_diagnostics::location::FileId;
     use rome_js_parser::parse;
     use rome_js_syntax::{JsCallExpression, JsTemplate, SourceType};
     use rome_rowan::AstNodeList;

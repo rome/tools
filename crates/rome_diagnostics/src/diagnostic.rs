@@ -1,255 +1,186 @@
-use crate::{
-    file::{FileId, FileSpan, Span},
-    v2::Category,
-    Applicability, CodeSuggestion, DiagnosticTag,
-};
-use rome_console::fmt::Display;
-use rome_console::{markup, MarkupBuf};
-use rome_text_edit::TextEdit;
+use std::{fmt::Debug, io};
+
+use bitflags::bitflags;
 use serde::{Deserialize, Serialize};
 
-/// A diagnostic message that can give information
-/// like errors or warnings.
-#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
-#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
-pub struct Diagnostic {
-    pub file_id: FileId,
+use rome_console::fmt;
 
-    pub severity: Severity,
-    pub code: Option<&'static Category>,
-    pub title: MarkupBuf,
-    pub summary: Option<String>,
-    pub tag: Option<DiagnosticTag>,
+use crate::{Category, Location, Visit};
 
-    pub primary: Option<SubDiagnostic>,
-    pub children: Vec<SubDiagnostic>,
-    pub suggestions: Vec<CodeSuggestion>,
-    pub footers: Vec<Footer>,
-}
-
-impl Diagnostic {
-    /// Creates a new [`Diagnostic`] with the `Error` severity.
-    pub fn error(file_id: FileId, code: &'static Category, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Error, title, Some(code))
-    }
-
-    /// Creates a new [`Diagnostic`] with the `Warning` severity.
-    pub fn warning(file_id: FileId, code: &'static Category, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Warning, title, Some(code))
-    }
-
-    /// Creates a new [`Diagnostic`] with the `Help` severity.
-    pub fn help(file_id: FileId, code: &'static Category, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Help, title, Some(code))
-    }
-
-    /// Creates a new [`Diagnostic`] with the `Note` severity.
-    pub fn note(file_id: FileId, code: &'static Category, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Note, title, Some(code))
-    }
-
-    /// Creates a new [`Diagnostic`] with the `Bug` severity.
-    pub fn bug(file_id: FileId, code: &'static Category, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Bug, title, Some(code))
-    }
-
-    /// Creates a new [`Diagnostic`] that will be used in a builder-like way
-    /// to modify labels, and suggestions.
-    pub fn new(file_id: FileId, severity: Severity, title: impl Display) -> Self {
-        Self::new_with_code(file_id, severity, title, None)
-    }
-
-    /// Creates a new [`Diagnostic`] with an error code that will be used in a builder-like way
-    /// to modify labels, and suggestions.
-    pub fn new_with_code(
-        file_id: FileId,
-        severity: Severity,
-        title: impl Display,
-        code: Option<&'static Category>,
-    ) -> Self {
-        Self {
-            file_id,
-            code,
-            severity,
-            title: markup!({ title }).to_owned(),
-            summary: None,
-            primary: None,
-            tag: None,
-            children: vec![],
-            suggestions: vec![],
-            footers: vec![],
-        }
-    }
-
-    /// Overwrites the severity of this diagnostic.
-    pub fn severity(mut self, severity: Severity) -> Self {
-        self.severity = severity;
-        self
-    }
-
-    /// Set an explicit plain-text summary for this diagnostic.
-    pub fn summary(mut self, summary: impl Into<String>) -> Self {
-        self.summary = Some(summary.into());
-        self
-    }
-
-    /// Marks this diagnostic as deprecated code, which will
-    /// be displayed in the language server.
-    ///
-    /// This does not have any influence on the diagnostic rendering.
-    pub fn deprecated(mut self) -> Self {
-        self.tag = if matches!(self.tag, Some(DiagnosticTag::Unnecessary)) {
-            Some(DiagnosticTag::Both)
-        } else {
-            Some(DiagnosticTag::Deprecated)
-        };
-        self
-    }
-
-    /// Marks this diagnostic as unnecessary code, which will
-    /// be displayed in the language server.
-    ///
-    /// This does not have any influence on the diagnostic rendering.
-    pub fn unnecessary(mut self) -> Self {
-        self.tag = if matches!(self.tag, Some(DiagnosticTag::Deprecated)) {
-            Some(DiagnosticTag::Both)
-        } else {
-            Some(DiagnosticTag::Unnecessary)
-        };
-        self
-    }
-
-    /// Attaches a label to this [`Diagnostic`], that will point to another file
-    /// that is provided.
-    pub fn label_in_file(mut self, severity: Severity, span: FileSpan, msg: impl Display) -> Self {
-        self.children.push(SubDiagnostic {
-            severity,
-            msg: markup!({ msg }).to_owned(),
-            span,
-        });
-        self
-    }
-
-    /// Attaches a label to this [`Diagnostic`].
-    ///
-    /// The given span has to be in the file that was provided while creating this [`Diagnostic`].
-    pub fn label(mut self, severity: Severity, span: impl Span, msg: impl Display) -> Self {
-        self.children.push(SubDiagnostic {
-            severity,
-            msg: markup!({ msg }).to_owned(),
-            span: FileSpan::new(self.file_id, span),
-        });
-        self
-    }
-
-    /// Attaches a primary label to this [`Diagnostic`].
-    pub fn primary(mut self, span: impl Span, msg: impl Display) -> Self {
-        self.primary = Some(SubDiagnostic {
-            severity: self.severity,
-            msg: markup!({ msg }).to_owned(),
-            span: FileSpan::new(self.file_id, span),
-        });
-        self
-    }
-
-    /// Attaches a secondary label to this [`Diagnostic`].
-    pub fn secondary(self, span: impl Span, msg: impl Display) -> Self {
-        self.label(Severity::Note, span, msg)
-    }
-
-    /// Add a suggestion to this `Diagnostic`
-    pub fn suggestion_full(
-        mut self,
-        span: impl Span,
-        msg: impl Display,
-        suggestion: TextEdit,
-        applicability: Applicability,
-    ) -> Self {
-        let file = self.file_id;
-        let span = FileSpan {
-            file,
-            range: span.as_range(),
-        };
-        let suggestion = CodeSuggestion {
-            applicability,
-            msg: markup!({ msg }).to_owned(),
-            labels: vec![],
-            span,
-            suggestion,
-        };
-        self.suggestions.push(suggestion);
-        self
-    }
-
-    /// Adds a footer to this `Diagnostic`, which will be displayed under the actual error.
-    pub fn footer(mut self, severity: Severity, msg: impl Display) -> Self {
-        self.footers.push(Footer {
-            msg: markup!({ msg }).to_owned(),
-            severity,
-        });
-        self
-    }
-
-    /// Adds a footer to this `Diagnostic`, with the `Help` severity.
-    pub fn footer_help(self, msg: impl Display) -> Self {
-        self.footer(Severity::Help, msg)
-    }
-
-    /// Adds a footer to this `Diagnostic`, with the `Note` severity.
-    pub fn footer_note(self, msg: impl Display) -> Self {
-        self.footer(Severity::Note, msg)
-    }
-
-    /// Checks if the severity of the current diagnostic is [Severity::Error] or higher
-    pub fn is_error(&self) -> bool {
-        self.severity >= Severity::Error
-    }
-}
-
-/// A severity level for diagnostic messages.
+/// The `Diagnostic` trait defines the metadata that can be exposed by error
+/// types in order to print details diagnostics in the console of the editor
 ///
-/// These are ordered in the following way:
-#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Debug, Serialize, Deserialize)]
-#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
-pub enum Severity {
-    /// A help message.
-    Help,
-    /// A note.
-    Note,
-    /// A warning.
-    Warning,
-    /// An error.
-    Error,
-    /// An unexpected bug.
-    Bug,
-}
+/// ## Implementation
+///
+/// Most types should not have to implement this trait manually, and should
+/// instead rely on the `Diagnostic` derive macro also provided by this crate:
+///
+/// ```
+/// # use rome_diagnostics::Diagnostic;
+/// #[derive(Debug, Diagnostic)]
+/// #[diagnostic(category = "lint/style/noShoutyConstants", tags(FIXABLE))]
+/// struct ExampleDiagnostic {
+///     #[message]
+///     #[description]
+///     message: String,
+/// }
+/// ```
+pub trait Diagnostic: Debug {
+    /// The category of a diagnostic uniquely identifying this
+    /// diagnostic type, such as `lint/correctness/noArguments`, `args/invalid`
+    /// or `format/disabled`.
+    fn category(&self) -> Option<&'static Category> {
+        None
+    }
 
-impl From<Severity> for &'static str {
-    fn from(level: Severity) -> Self {
-        match level {
-            Severity::Bug => "bug",
-            Severity::Error => "error",
-            Severity::Warning => "warning",
-            Severity::Help => "help",
-            Severity::Note => "note",
-        }
+    /// The severity defines whether this diagnostic reports an error, a
+    /// warning, an information or a hint to the user.
+    fn severity(&self) -> Severity {
+        Severity::Error
+    }
+
+    /// The description is a text-only explanation of the issue this diagnostic
+    /// is reporting, intended for display contexts that do not support rich
+    /// markup such as in-editor popovers
+    ///
+    /// The description should generally be as exhaustive as possible, since
+    /// the clients that do not support rendering markup will not render the
+    /// advices for the diagnostic either.
+    fn description(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let _ = fmt;
+        Ok(())
+    }
+
+    /// An explanation of the issue this diagnostic is reporting
+    ///
+    /// In general it's better to keep this message as short as possible, and
+    /// instead rely on advices to better convey contextual explanations to the
+    /// user.
+    fn message(&self, fmt: &mut fmt::Formatter<'_>) -> io::Result<()> {
+        let _ = fmt;
+        Ok(())
+    }
+
+    /// Advices are the main building blocks used compose rich errors. They are
+    /// implemented using a visitor pattern, where consumers of a diagnostic
+    /// can visit the object and collect the advices that make it up for the
+    /// purpose of display or introspection.
+    fn advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+        let _ = visitor;
+        Ok(())
+    }
+
+    /// Diagnostics can defines additional advices to be printed if the user
+    /// requires more detail about the diagnostic.
+    fn verbose_advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+        let _ = visitor;
+        Ok(())
+    }
+
+    /// A diagnostic can be tied to a specific "location": this can be a file,
+    /// memory buffer, command line argument, etc. It may also be tied to a
+    /// specific text range within the content of that location. Finally, it
+    /// may also provide the source string for that location (this is required
+    /// in order to display a code frame advice for the diagnostic).
+    fn location(&self) -> Option<Location<'_>> {
+        None
+    }
+
+    /// Tags convey additional boolean metadata about the nature of a diagnostic:
+    /// - If the diagnostic can be automatically fixed
+    /// - If the diagnostic resulted from and internal error
+    /// - If the diagnostic is being emitted as part of a crash / fatal error
+    /// - If the diagnostic is a warning about a piece of unused or unnecessary code
+    /// - If the diagnostic is a warning about a piece of deprecated or obsolete code.
+    fn tags(&self) -> DiagnosticTags {
+        DiagnosticTags::empty()
+    }
+
+    /// Similarly to the `source` method of the [std::error::Error] trait, this
+    /// returns another diagnostic that's the logical "cause" for this issue.
+    /// For instance, a "request failed" diagnostic may have been cause by a
+    /// "deserialization error". This allows low-level error to be wrapped in
+    /// higher level concepts, while retaining enough information to display
+    /// and fix the underlying issue.
+    fn source(&self) -> Option<&dyn Diagnostic> {
+        None
     }
 }
 
-/// Everything that can be added to a diagnostic, like
-/// a suggestion that will be displayed under the actual error.
-#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
-pub struct SubDiagnostic {
-    pub severity: Severity,
-    pub msg: MarkupBuf,
-    pub span: FileSpan,
+/// The severity to associate to a diagnostic.
+pub enum Severity {
+    /// Reports a crash.
+    Fatal,
+    /// Reports an error.
+    Error,
+    /// Reports a warning.
+    Warning,
+    /// Reports an information.
+    Information,
+    /// Reports a hint.
+    Hint,
 }
 
-/// A note or help that is displayed under the diagnostic.
-#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+/// Internal enum used to automatically generate bit offsets for [DiagnosticTags]
+/// and help with the implementation of `serde` and `schemars` for tags.
+#[derive(Serialize, Deserialize)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
-pub struct Footer {
-    pub msg: MarkupBuf,
-    pub severity: Severity,
+pub(super) enum DiagnosticTag {
+    Fixable,
+    Internal,
+    UnnecessaryCode,
+    DeprecatedCode,
+}
+
+bitflags! {
+    pub struct DiagnosticTags: u8 {
+        /// This diagnostic has a fix suggestion.
+        const FIXABLE = 1 << DiagnosticTag::Fixable as u8;
+        /// This diagnostic results from an internal error.
+        const INTERNAL = 1 << DiagnosticTag::Internal as u8;
+        /// This diagnostic tags unused or unnecessary code, this may change
+        /// how the diagnostic is render in editors.
+        const UNNECESSARY_CODE = 1 << DiagnosticTag::UnnecessaryCode as u8;
+        /// This diagnostic tags deprecated or obsolete code, this may change
+        /// how the diagnostic is render in editors.
+        const DEPRECATED_CODE = 1 << DiagnosticTag::DeprecatedCode as u8;
+    }
+}
+
+pub(crate) mod internal {
+    //! The `AsDiagnostic` trait needs to be declared as public as its referred
+    //! to in the `where` clause of other public items, but as it's not part of
+    //! the public API it's declared in a private module so it's not accessible
+    //! outside of the crate
+
+    use std::fmt::Debug;
+
+    use crate::Diagnostic;
+
+    /// Since [Error](crate::Error) must implement `From<T: Diagnostic>` to
+    /// be used with the `?` operator, it cannot implement the [Diagnostic]
+    /// trait (as that would conflict with the implementation of `From<T> for T`
+    /// in the standard library). The [AsDiagnostic] exists as an internal
+    /// implementation detail to bridge this gap and allow various types and
+    /// functions in `rome_diagnostics` to be generic over all diagnostics +
+    /// `Error`.
+    pub trait AsDiagnostic: Debug {
+        type Diagnostic: Diagnostic + ?Sized;
+        fn as_diagnostic(&self) -> &Self::Diagnostic;
+        fn as_dyn(&self) -> &dyn Diagnostic;
+    }
+
+    impl<D: Diagnostic> AsDiagnostic for D {
+        type Diagnostic = D;
+
+        fn as_diagnostic(&self) -> &Self::Diagnostic {
+            self
+        }
+
+        fn as_dyn(&self) -> &dyn Diagnostic {
+            self
+        }
+    }
 }

@@ -3,7 +3,7 @@ use std::sync::RwLock;
 
 use crossbeam::channel::{unbounded, Receiver, Sender};
 use indexmap::IndexSet;
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 
 /// File paths interner cache
 ///

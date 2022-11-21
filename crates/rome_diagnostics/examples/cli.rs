@@ -1,7 +1,7 @@
 use std::io;
 
 use rome_console::{markup, ConsoleExt, EnvConsole};
-use rome_diagnostics::v2::{Advices, Diagnostic, LogCategory, PrintDiagnostic, Resource, Visit};
+use rome_diagnostics::{Advices, Diagnostic, LogCategory, PrintDiagnostic, Resource, Visit};
 use rome_rowan::{TextRange, TextSize};
 
 #[derive(Debug, Diagnostic)]

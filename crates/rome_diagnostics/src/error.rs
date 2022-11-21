@@ -25,7 +25,7 @@ use std::{
 
 use rome_console::fmt;
 
-use super::{
+use crate::{
     diagnostic::internal::AsDiagnostic, Category, Diagnostic, DiagnosticTags, Location, Severity,
     Visit,
 };
@@ -234,7 +234,7 @@ mod tests {
         },
     };
 
-    use crate::v2::{Diagnostic, Error, Result};
+    use crate::{Diagnostic, Error, Result};
 
     #[derive(Debug)]
     struct TestDiagnostic(Arc<AtomicBool>);

@@ -490,7 +490,7 @@ impl FusedIterator for JsxSplitChunksIterator<'_> {}
 #[cfg(test)]
 mod tests {
     use crate::utils::jsx::{jsx_split_children, JsxChild, JsxSplitChunksIterator, JsxTextChunk};
-    use rome_diagnostics::file::FileId;
+    use rome_diagnostics::location::FileId;
     use rome_formatter::comments::Comments;
     use rome_js_parser::parse;
     use rome_js_syntax::{JsxChildList, JsxText, SourceType};

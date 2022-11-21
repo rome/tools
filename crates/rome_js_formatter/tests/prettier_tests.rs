@@ -1,4 +1,4 @@
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_rowan::{TextRange, TextSize};
 use similar::{utils::diff_lines, Algorithm, ChangeTag, TextDiff};
 use std::fs::remove_file;
@@ -15,11 +15,11 @@ use std::{
     sync::Once,
 };
 
+use rome_diagnostics::console::fmt::{Formatter, Termcolor};
+use rome_diagnostics::console::markup;
 use rome_diagnostics::termcolor;
-use rome_diagnostics::v2::console::fmt::{Formatter, Termcolor};
-use rome_diagnostics::v2::console::markup;
-use rome_diagnostics::v2::DiagnosticExt;
-use rome_diagnostics::v2::PrintDiagnostic;
+use rome_diagnostics::DiagnosticExt;
+use rome_diagnostics::PrintDiagnostic;
 use rome_formatter::{FormatOptions, IndentStyle};
 use rome_js_formatter::context::JsFormatOptions;
 use rome_js_parser::parse;

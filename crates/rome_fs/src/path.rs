@@ -7,7 +7,7 @@ use std::fs::read_to_string;
 use std::io::Read;
 use std::{fs::File, io, io::Write, ops::Deref, path::PathBuf};
 
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 
 #[derive(Debug, Clone, Eq, Hash, PartialEq)]
 #[cfg_attr(

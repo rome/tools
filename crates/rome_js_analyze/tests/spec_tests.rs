@@ -7,9 +7,9 @@ use rome_console::{
     fmt::{Formatter, Termcolor},
     markup, Markup,
 };
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_diagnostics::termcolor::NoColor;
-use rome_diagnostics::v2::{DiagnosticExt, PrintDiagnostic, Severity};
+use rome_diagnostics::{DiagnosticExt, PrintDiagnostic, Severity};
 use rome_js_parser::{
     parse,
     test_utils::{assert_errors_are_absent, has_unknown_nodes_or_empty_slots},

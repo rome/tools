@@ -5,7 +5,7 @@ pub use crate::configuration::linter::rules::Rules;
 use crate::settings::LinterSettings;
 use crate::{ConfigurationError, MatchOptions, Matcher, RomeError};
 use indexmap::IndexSet;
-use rome_diagnostics::v2::Severity;
+use rome_diagnostics::Severity;
 pub use rules::*;
 #[cfg(feature = "schemars")]
 use schemars::{gen::SchemaGenerator, schema::Schema, JsonSchema};

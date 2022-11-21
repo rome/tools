@@ -353,7 +353,7 @@ impl Closure {
 #[cfg(test)]
 mod test {
     use super::*;
-    use rome_diagnostics::file::FileId;
+    use rome_diagnostics::location::FileId;
     use rome_js_syntax::{JsArrowFunctionExpression, JsSyntaxKind, SourceType};
     use rome_rowan::SyntaxNodeCast;
 

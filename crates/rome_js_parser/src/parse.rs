@@ -2,7 +2,7 @@
 
 use crate::token_source::Trivia;
 use crate::*;
-pub use rome_diagnostics::file::FileId;
+pub use rome_diagnostics::location::FileId;
 use rome_js_syntax::{
     JsAnyRoot, JsExpressionSnipped, JsLanguage, JsModule, JsScript, JsSyntaxNode, ModuleKind,
     SourceType,
@@ -49,7 +49,7 @@ impl<T> Parse<T> {
     /// use rome_js_parser::parse_script;
     /// use rome_js_syntax::{JsIfStatement, JsSyntaxKind};
     /// use rome_rowan::{AstNode, AstNodeList};
-    /// use rome_diagnostics::file::FileId;
+    /// use rome_diagnostics::location::FileId;
     ///
     /// let parse = parse_script(
     ///     "
@@ -135,7 +135,7 @@ pub fn parse_common(
 /// use rome_js_parser::parse_script;
 /// use rome_js_syntax::{JsSyntaxToken, SourceType, JsSyntaxList, JsComputedMemberExpression};
 /// use rome_rowan::{AstNode, Direction};
-/// use rome_diagnostics::file::FileId;
+/// use rome_diagnostics::location::FileId;
 ///
 /// let parse = parse_script("foo.bar[2]", FileId::zero());
 /// // Parse returns a JS Root which contains two lists, the directives and the statements, let's get the statements

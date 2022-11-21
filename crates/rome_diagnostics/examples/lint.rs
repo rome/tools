@@ -1,7 +1,7 @@
 use std::io;
 
 use rome_console::{markup, ConsoleExt, EnvConsole};
-use rome_diagnostics::v2::{
+use rome_diagnostics::{
     Advices, Diagnostic, FilePath, Location, LogCategory, PrintDiagnostic, Resource, SourceCode,
     Visit,
 };

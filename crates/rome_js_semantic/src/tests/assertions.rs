@@ -1,8 +1,8 @@
 use crate::{semantic_events, SemanticEvent};
 use rome_console::{markup, ConsoleExt, EnvConsole};
-use rome_diagnostics::file::FileId;
-use rome_diagnostics::v2::location::AsSpan;
-use rome_diagnostics::v2::{
+use rome_diagnostics::location::AsSpan;
+use rome_diagnostics::location::FileId;
+use rome_diagnostics::{
     Advices, Diagnostic, DiagnosticExt, Location, LogCategory, PrintDiagnostic, Visit,
 };
 use rome_js_syntax::{JsAnyRoot, JsSyntaxToken, SourceType, TextRange, TextSize, WalkEvent};
@@ -669,10 +669,6 @@ impl SemanticAssertions {
                 // where we expect
                 let e = events.iter().find(|event| match event {
                     SemanticEvent::ScopeEnded { started_at, .. } => {
-                        println!(
-                            "started_at: {:?} scope_start_assertions_range: {:?}",
-                            started_at, scope_start_assertions_range
-                        );
                         *started_at == scope_start_assertions_range.start()
                     }
                     _ => false,
