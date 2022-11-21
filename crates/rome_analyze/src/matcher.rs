@@ -330,7 +330,7 @@ mod tests {
             &metadata,
             SuppressionMatcher,
             parse_suppression_comment,
-            |_, _, _| unreachable!(),
+            |_| unreachable!(),
             &mut emit_signal,
         );
 

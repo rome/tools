@@ -353,7 +353,7 @@ pub trait Rule: RuleMeta + Sized {
                 suppression_text: suppression_text.as_str(),
                 mutation: &mut mutation,
                 token_offset: token,
-                diagnostic_text_range: &text_range,
+                diagnostic_text_range: text_range,
             });
 
             Some(SuppressAction {
