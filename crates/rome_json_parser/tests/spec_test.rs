@@ -52,7 +52,7 @@ pub fn run(test_case: &str, _snapshot_name: &str, test_directory: &str, outcome:
         for diagnostic in diagnostics {
             let error = diagnostic
                 .clone()
-                .with_file_path(&file_name)
+                .with_file_path(file_name)
                 .with_file_source_code(&content);
 
             formatter

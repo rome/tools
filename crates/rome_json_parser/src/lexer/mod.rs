@@ -510,8 +510,8 @@ impl<'src> Lexer<'src> {
                             self.advance(1);
                         }
 
-                        Some(_) => match state {
-                            LexStringState::InString => {
+                        Some(_) => {
+                            if matches!(state, LexStringState::InString) {
                                 let c = self.current_char_unchecked();
                                 self.diagnostics.push(
                                     ParseDiagnostic::new(
@@ -519,15 +519,14 @@ impl<'src> Lexer<'src> {
                                         "Invalid escape sequence",
                                         escape_start..self.text_position() + (c as char).text_len(),
                                     )
-                                    .hint(r#"Valid escape sequences are: `\\`, `\/`, `/"`, `\b\`, `\f`, `\n`, `\r`, `\t` or any unicode escape sequence `\uXXXX` where X is hexedecimal number. "#),
+                                        .hint(r#"Valid escape sequences are: `\\`, `\/`, `/"`, `\b\`, `\f`, `\n`, `\r`, `\t` or any unicode escape sequence `\uXXXX` where X is hexedecimal number. "#),
                                 );
                                 state = LexStringState::InvalidEscapeSequence;
                             }
-                            _ => {}
-                        },
+                        }
 
-                        None => match state {
-                            LexStringState::InString => {
+                        None => {
+                            if matches!(state, LexStringState::InString) {
                                 self.diagnostics.push(ParseDiagnostic::new(
                                     self.file_id,
                                     "Expected an escape sequence following a backslash, but found none",
@@ -537,8 +536,7 @@ impl<'src> Lexer<'src> {
                                 );
                                 state = LexStringState::InvalidEscapeSequence;
                             }
-                            _ => {}
-                        },
+                        }
                     }
                 }
                 WHS if matches!(chr, b'\n' | b'\r') => {
@@ -615,11 +613,12 @@ impl<'src> Lexer<'src> {
         self.assert_byte(b'u');
         self.assert_at_char_boundary();
 
-        let start = self
-            .text_position()
+        let start = self.text_position();
+
+        let start = start
             // Subtract 1 to get position of `\`
             .checked_sub(TextSize::from(1))
-            .unwrap_or(self.text_position());
+            .unwrap_or(start);
 
         self.advance(1); // Advance over `u'`
 
