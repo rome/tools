@@ -40,6 +40,8 @@ class Case9 {
   }
 }
 
+case10!!.prop = null;
+
 ```
 
 # Diagnostics
@@ -222,6 +224,24 @@ invalid.ts:32:5 lint/nursery/noExtraNonNullAssertion  FIXABLE  ━━━━━�
   
     32 │ ····this.property!!;
        │                   - 
+
+```
+
+```
+invalid.ts:36:1 lint/nursery/noExtraNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden extra non-null assertion.
+  
+    34 │ }
+    35 │ 
+  > 36 │ case10!!.prop = null;
+       │ ^^^^^^^
+    37 │ 
+  
+  i Safe fix: Remove extra non-null assertion.
+  
+    36 │ case10!!.prop·=·null;
+       │        -             
 
 ```
 

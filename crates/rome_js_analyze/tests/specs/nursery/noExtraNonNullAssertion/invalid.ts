@@ -32,3 +32,5 @@ class Case9 {
     this.property!!;
   }
 }
+
+case10!!.prop = null;

@@ -2,9 +2,8 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{JsAnyExpression, JsParenthesizedExpression, TsNonNullAssertionExpression};
+use rome_js_syntax::{JsAnyExpression, TsNonNullAssertionExpression};
 use rome_rowan::{AstNode, BatchMutationExt};
-use std::iter;
 
 use crate::JsRuleAction;
 
@@ -61,9 +60,9 @@ impl Rule for NoExtraNonNullAssertion {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        let parent = node.syntax().parent()?;
+		let parent = node.parent::<JsAnyExpression>()?;
 
-        if has_extra_non_null_assertion(JsAnyExpression::cast(parent)?) {
+        if has_extra_non_null_assertion(parent)? {
             return Some(());
         }
 
@@ -74,7 +73,7 @@ impl Rule for NoExtraNonNullAssertion {
         let diagnostic = RuleDiagnostic::new(
             rule_category!(),
             ctx.query().range(),
-            markup! {"Forbidden extra non-null assertion."}.to_owned(),
+            "Forbidden extra non-null assertion.",
         );
 
         Some(diagnostic)
@@ -101,39 +100,21 @@ impl Rule for NoExtraNonNullAssertion {
 /// - TsNonNullAssertionExpression > TsNonNullAssertionExpression
 /// - JsCallExpression[optional] > TsNonNullAssertionExpression
 /// - JsStaticMemberExpression[optional] > TsNonNullAssertionExpression
-/// - Any of above wrapped by JsParenthesizedExpression
-fn has_extra_non_null_assertion(expression: JsAnyExpression) -> bool {
-    match expression {
-        JsAnyExpression::TsNonNullAssertionExpression(_) => return true,
+fn has_extra_non_null_assertion(expression: JsAnyExpression) -> Option<bool> {
+    match expression.omit_parentheses() {
+        JsAnyExpression::TsNonNullAssertionExpression(_) => return Some(true),
         JsAnyExpression::JsStaticMemberExpression(static_member_exp) => {
             if static_member_exp.is_optional() {
-                return true;
+                return Some(true);
             }
         }
         JsAnyExpression::JsCallExpression(call_exp) => {
             if call_exp.is_optional() {
-                return true;
-            }
-        }
-        JsAnyExpression::JsParenthesizedExpression(parenthesized_exp) => {
-            if let Some(parent) = get_chain_parent(parenthesized_exp) {
-                return has_extra_non_null_assertion(parent);
+                return Some(true);
             }
         }
         _ => {}
     }
 
-    false
-}
-
-/// Traversal by parent to find the parent of the parenthesis chain.
-fn get_chain_parent(expression: JsParenthesizedExpression) -> Option<JsAnyExpression> {
-    iter::successors(expression.parent::<JsAnyExpression>(), |expression| {
-        if matches!(expression, JsAnyExpression::JsParenthesizedExpression(_)) {
-            expression.parent::<JsAnyExpression>()
-        } else {
-            None
-        }
-    })
-    .last()
+    Some(false)
 }
