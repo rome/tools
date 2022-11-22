@@ -43,7 +43,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoShoutyConstants {
-        version: "0.7.1",
+        version: "0.7.0",
         name: "noShoutyConstants",
         recommended: true,
     }
