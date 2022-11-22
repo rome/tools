@@ -2,8 +2,9 @@ use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::{markup, MarkupBuf};
-use rome_js_syntax::{JsxAnyAttribute, JsxAttribute, JsxOpeningElement, JsxSelfClosingElement};
-use rome_rowan::{declare_node_union, AstNode};
+use rome_js_syntax::jsx_ext::JsxAnyElement;
+use rome_js_syntax::JsxAttribute;
+use rome_rowan::AstNode;
 
 declare_rule! {
     /// Enforce that `onMouseOver`/`onMouseOut` are accompanied by `onFocus`/`onBlur` for keyboard-only users.
@@ -49,10 +50,6 @@ declare_rule! {
     }
 }
 
-declare_node_union! {
-    pub(crate) JsxAnyElement = JsxOpeningElement | JsxSelfClosingElement
-}
-
 pub(crate) enum UseKeyWithMouseEventsState {
     MissingOnFocus,
     MissingOnBlur,
@@ -68,101 +65,6 @@ impl UseKeyWithMouseEventsState {
                 markup! {"onMouseOver must be accompanied by onFocus for accessibility."}.to_owned()
             }
         }
-    }
-}
-
-impl JsxAnyElement {
-    fn is_custom_component(&self) -> Option<bool> {
-        match self {
-            JsxAnyElement::JsxSelfClosingElement(element) => {
-                element.name().ok()?.as_jsx_name().map(|_| true)
-            }
-            JsxAnyElement::JsxOpeningElement(element) => {
-                element.name().ok()?.as_jsx_name().map(|_| true)
-            }
-        }
-    }
-
-    fn has_trailing_spread_prop(&self, current_attribute: impl Into<JsxAnyAttribute>) -> bool {
-        match self {
-            JsxAnyElement::JsxSelfClosingElement(element) => {
-                element.has_trailing_spread_prop(current_attribute)
-            }
-            JsxAnyElement::JsxOpeningElement(element) => {
-                element.has_trailing_spread_prop(current_attribute)
-            }
-        }
-    }
-
-    fn find_on_mouse_over_attribute(&self) -> Option<JsxAttribute> {
-        match self {
-            JsxAnyElement::JsxSelfClosingElement(element) => {
-                element.find_attribute_by_name("onMouseOver").ok()?
-            }
-            JsxAnyElement::JsxOpeningElement(element) => {
-                element.find_attribute_by_name("onMouseOver").ok()?
-            }
-        }
-    }
-
-    fn find_on_mouse_out_attribute(&self) -> Option<JsxAttribute> {
-        match self {
-            JsxAnyElement::JsxSelfClosingElement(element) => {
-                element.find_attribute_by_name("onMouseOut").ok()?
-            }
-            JsxAnyElement::JsxOpeningElement(element) => {
-                element.find_attribute_by_name("onMouseOut").ok()?
-            }
-        }
-    }
-
-    fn find_on_focus_attribute(&self) -> Option<JsxAttribute> {
-        match self {
-            JsxAnyElement::JsxSelfClosingElement(element) => {
-                element.find_attribute_by_name("onFocus").ok()?
-            }
-            JsxAnyElement::JsxOpeningElement(element) => {
-                element.find_attribute_by_name("onFocus").ok()?
-            }
-        }
-    }
-
-    fn find_on_blur_attribute(&self) -> Option<JsxAttribute> {
-        match self {
-            JsxAnyElement::JsxSelfClosingElement(element) => {
-                element.find_attribute_by_name("onBlur").ok()?
-            }
-            JsxAnyElement::JsxOpeningElement(element) => {
-                element.find_attribute_by_name("onBlur").ok()?
-            }
-        }
-    }
-
-    fn has_valid_focus_attributes(&self) -> Option<bool> {
-        if let Some(on_mouse_over_attribute) = self.find_on_mouse_over_attribute() {
-            if !self.has_trailing_spread_prop(on_mouse_over_attribute) {
-                let on_focus_attribute = self.find_on_focus_attribute();
-
-                if on_focus_attribute.is_none() || is_value_undefined_or_null(&on_focus_attribute?)
-                {
-                    return None;
-                }
-            }
-        }
-        Some(true)
-    }
-
-    fn has_valid_blur_attributes(&self) -> Option<bool> {
-        if let Some(on_mouse_attribute) = self.find_on_mouse_out_attribute() {
-            if !self.has_trailing_spread_prop(on_mouse_attribute) {
-                let on_blur_attribute = self.find_on_blur_attribute();
-
-                if on_blur_attribute.is_none() || is_value_undefined_or_null(&on_blur_attribute?) {
-                    return None;
-                }
-            }
-        }
-        Some(true)
     }
 }
 

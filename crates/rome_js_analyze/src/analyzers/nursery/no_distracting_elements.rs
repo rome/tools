@@ -2,8 +2,9 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
+use rome_js_syntax::jsx_ext::JsxAnyElement;
 use rome_js_syntax::*;
-use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
+use rome_rowan::{AstNode, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -38,24 +39,6 @@ declare_rule! {
     }
 }
 
-declare_node_union! {
-    pub(crate) JsxAnyElement = JsxOpeningElement | JsxSelfClosingElement
-}
-
-impl JsxAnyElement {
-    fn simple_jsx_name_token(&self) -> Option<JsSyntaxToken> {
-        let name = match self {
-            JsxAnyElement::JsxOpeningElement(element) => element.name().ok()?,
-            JsxAnyElement::JsxSelfClosingElement(element) => element.name().ok()?,
-        };
-        match name {
-            JsxAnyElementName::JsxName(name) => name.value_token().ok(),
-            JsxAnyElementName::JsxReferenceIdentifier(ident) => ident.value_token().ok(),
-            _ => None,
-        }
-    }
-}
-
 impl Rule for NoDistractingElements {
     type Query = Ast<JsxAnyElement>;
     type State = JsSyntaxToken;
@@ -64,7 +47,7 @@ impl Rule for NoDistractingElements {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let element = ctx.query();
-        let name = element.simple_jsx_name_token()?;
+        let name = element.name_value_token()?;
         match name.text_trimmed() {
             "marquee" | "blink" => Some(name),
             _ => None,

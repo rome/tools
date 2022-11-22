@@ -1,10 +1,10 @@
 use std::collections::HashSet;
 
 use crate::{
-    JsxAnyAttribute, JsxAttribute, JsxAttributeList, JsxName, JsxOpeningElement,
-    JsxSelfClosingElement, JsxString, TextSize,
+    JsSyntaxToken, JsxAnyAttribute, JsxAnyElementName, JsxAttribute, JsxAttributeList, JsxName,
+    JsxOpeningElement, JsxSelfClosingElement, JsxString, TextSize,
 };
-use rome_rowan::{AstNode, AstNodeList, SyntaxResult, SyntaxTokenText};
+use rome_rowan::{declare_node_union, AstNode, AstNodeList, SyntaxResult, SyntaxTokenText};
 
 impl JsxString {
     /// Get the inner text of a string not including the quotes
@@ -313,5 +313,111 @@ impl JsxAttributeList {
             }
         }
         false
+    }
+}
+
+declare_node_union! {
+    pub JsxAnyElement = JsxOpeningElement | JsxSelfClosingElement
+}
+
+impl JsxAnyElement {
+    pub fn name_value_token(&self) -> Option<JsSyntaxToken> {
+        match self.name().ok()? {
+            JsxAnyElementName::JsxMemberName(member) => member.member().ok()?.value_token().ok(),
+            JsxAnyElementName::JsxName(name) => name.value_token().ok(),
+            JsxAnyElementName::JsxNamespaceName(name) => name.name().ok()?.value_token().ok(),
+            JsxAnyElementName::JsxReferenceIdentifier(name) => name.value_token().ok(),
+        }
+    }
+
+    pub fn attributes(&self) -> JsxAttributeList {
+        match self {
+            JsxAnyElement::JsxOpeningElement(element) => element.attributes(),
+            JsxAnyElement::JsxSelfClosingElement(element) => element.attributes(),
+        }
+    }
+
+    pub fn name(&self) -> SyntaxResult<JsxAnyElementName> {
+        match self {
+            JsxAnyElement::JsxOpeningElement(element) => element.name(),
+            JsxAnyElement::JsxSelfClosingElement(element) => element.name(),
+        }
+    }
+
+    pub fn is_custom_component(&self) -> Option<bool> {
+        self.name().ok()?.as_jsx_name().map(|_| true)
+    }
+
+    pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<JsxAnyAttribute>) -> bool {
+        match self {
+            JsxAnyElement::JsxSelfClosingElement(element) => {
+                element.has_trailing_spread_prop(current_attribute)
+            }
+            JsxAnyElement::JsxOpeningElement(element) => {
+                element.has_trailing_spread_prop(current_attribute)
+            }
+        }
+    }
+
+    pub fn find_attribute_by_name(&self, name_to_lookup: &str) -> Option<JsxAttribute> {
+        match self {
+            JsxAnyElement::JsxSelfClosingElement(element) => {
+                element.find_attribute_by_name(name_to_lookup).ok()?
+            }
+            JsxAnyElement::JsxOpeningElement(element) => {
+                element.find_attribute_by_name(name_to_lookup).ok()?
+            }
+        }
+    }
+
+    pub fn has_valid_focus_attributes(&self) -> Option<bool> {
+        if let Some(on_mouse_over_attribute) = self.find_attribute_by_name("onMouseOver") {
+            if !self.has_trailing_spread_prop(on_mouse_over_attribute) {
+                let on_focus_attribute = self.find_attribute_by_name("onFocus")?;
+                if on_focus_attribute.is_value_undefined_or_null() {
+                    return None;
+                }
+            }
+        }
+        Some(true)
+    }
+
+    pub fn has_valid_blur_attributes(&self) -> Option<bool> {
+        if let Some(on_mouse_attribute) = self.find_attribute_by_name("onMouseOut") {
+            if !self.has_trailing_spread_prop(on_mouse_attribute) {
+                let on_blur_attribute = self.find_attribute_by_name("onBlur")?;
+                if on_blur_attribute.is_value_undefined_or_null() {
+                    return None;
+                }
+            }
+        }
+        Some(true)
+    }
+}
+
+impl JsxAttribute {
+    fn is_value_undefined_or_null(&self) -> bool {
+        self.initializer()
+            .and_then(|x| {
+                let expression = x
+                    .value()
+                    .ok()?
+                    .as_jsx_expression_attribute_value()?
+                    .expression()
+                    .ok()?;
+
+                if let Some(id) = expression.as_js_identifier_expression() {
+                    let name = id.name().ok()?.syntax().text_trimmed();
+
+                    return Some(name == "undefined");
+                }
+
+                expression
+                    .as_js_any_literal_expression()?
+                    .as_js_null_literal_expression()?;
+
+                Some(true)
+            })
+            .unwrap_or(false)
     }
 }
