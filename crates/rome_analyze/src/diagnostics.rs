@@ -128,13 +128,6 @@ impl AnalyzerDiagnostic {
         }
     }
 
-    /// Sets the severity of the current diagnostic
-    pub fn set_severity(&mut self, new_severity: Severity) {
-        if let DiagnosticKind::Rule { severity, .. } = &mut self.kind {
-            *severity = Some(new_severity);
-        }
-    }
-
     pub fn get_span(&self) -> Option<TextRange> {
         match &self.kind {
             DiagnosticKind::Rule {

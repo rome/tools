@@ -153,7 +153,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use rome_diagnostics::{category, location::FileId};
+    use rome_diagnostics::{category, location::FileId, DiagnosticExt};
     use rome_diagnostics::{Diagnostic, Severity};
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
@@ -306,10 +306,10 @@ mod tests {
 
         let mut diagnostics = Vec::new();
         let mut emit_signal = |signal: &dyn AnalyzerSignal<RawLanguage>| -> ControlFlow<Never> {
-            let mut diag = signal.diagnostic().expect("diagnostic");
-            diag.set_severity(Severity::Warning);
-            let code = diag.category().expect("code");
+            let diag = signal.diagnostic().expect("diagnostic");
             let range = diag.get_span().expect("range");
+            let error = diag.with_severity(Severity::Warning);
+            let code = error.category().expect("code");
 
             diagnostics.push((code, range));
             ControlFlow::Continue(())

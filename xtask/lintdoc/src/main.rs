@@ -539,7 +539,6 @@ fn assert_lint(
                 let severity = settings.get_severity_from_rule_code(category).expect(
                     "If you see this error, it means you need to run cargo codegen-configuration",
                 );
-                diag.set_severity(severity);
 
                 for action in signal.actions() {
                     if !action.is_suppression() {
@@ -548,6 +547,7 @@ fn assert_lint(
                 }
 
                 let error = diag
+                    .with_severity(severity)
                     .with_file_path((file.clone(), FileId::zero()))
                     .with_file_source_code(code);
                 let res = write_diagnostic(code, error);

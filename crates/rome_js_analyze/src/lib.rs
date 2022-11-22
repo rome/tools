@@ -173,10 +173,12 @@ mod tests {
             &options,
             |signal| {
                 dbg!("here");
-                if let Some(mut diag) = signal.diagnostic() {
-                    diag.set_severity(Severity::Warning);
+                if let Some(diag) = signal.diagnostic() {
                     error_ranges.push(diag.location().span.unwrap());
-                    let error = diag.with_file_path("ahahah").with_file_source_code(SOURCE);
+                    let error = diag
+                        .with_severity(Severity::Warning)
+                        .with_file_path("ahahah")
+                        .with_file_source_code(SOURCE);
                     let text = markup_to_string(markup! {
                         {PrintDiagnostic::verbose(&error)}
                     });
@@ -249,11 +251,10 @@ mod tests {
             AnalysisFilter::default(),
             &options,
             |signal| {
-                if let Some(mut diag) = signal.diagnostic() {
-                    diag.set_severity(Severity::Warning);
-
+                if let Some(diag) = signal.diagnostic() {
                     let span = diag.get_span();
                     let error = diag
+                        .with_severity(Severity::Warning)
                         .with_file_path(FileId::zero())
                         .with_file_source_code(SOURCE);
 

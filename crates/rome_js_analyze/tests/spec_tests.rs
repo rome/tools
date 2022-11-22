@@ -1,7 +1,6 @@
 use json_comments::StripComments;
 use rome_analyze::{
-    AnalysisFilter, AnalyzerAction, AnalyzerDiagnostic, AnalyzerOptions, ControlFlow, Never,
-    RuleFilter,
+    AnalysisFilter, AnalyzerAction, AnalyzerOptions, ControlFlow, Never, RuleFilter,
 };
 use rome_console::{
     fmt::{Formatter, Termcolor},
@@ -10,7 +9,7 @@ use rome_console::{
 use rome_diagnostics::advice::CodeSuggestionAdvice;
 use rome_diagnostics::location::FileId;
 use rome_diagnostics::termcolor::NoColor;
-use rome_diagnostics::{DiagnosticExt, PrintDiagnostic, Severity};
+use rome_diagnostics::{DiagnosticExt, Error, PrintDiagnostic, Severity};
 use rome_js_parser::{
     parse,
     test_utils::{assert_errors_are_absent, has_unknown_nodes_or_empty_slots},
@@ -91,15 +90,14 @@ fn write_analysis_to_snapshot(
     let options = AnalyzerOptions::default();
     rome_js_analyze::analyze(FileId::zero(), &root, filter, &options, |event| {
         if let Some(mut diag) = event.diagnostic() {
-            diag.set_severity(Severity::Warning);
             for action in event.actions() {
                 if !action.is_suppression() {
                     check_code_action(input_file, input_code, source_type, &action);
                     diag = diag.add_code_suggestion(CodeSuggestionAdvice::from(action));
                 }
             }
-
-            diagnostics.push(diagnostic_to_string(file_name, input_code, diag));
+            let error = diag.with_severity(Severity::Warning);
+            diagnostics.push(diagnostic_to_string(file_name, input_code, error));
             return ControlFlow::Continue(());
         }
 
@@ -169,7 +167,7 @@ fn markup_to_string(markup: Markup) -> String {
     String::from_utf8(buffer).unwrap()
 }
 #[allow(clippy::let_and_return)]
-fn diagnostic_to_string(name: &str, source: &str, diag: AnalyzerDiagnostic) -> String {
+fn diagnostic_to_string(name: &str, source: &str, diag: Error) -> String {
     let error = diag
         .with_file_path((name, FileId::zero()))
         .with_file_source_code(source);

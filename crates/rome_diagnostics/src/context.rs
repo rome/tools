@@ -3,7 +3,7 @@ use rome_console::fmt;
 use crate::{
     diagnostic::internal::AsDiagnostic,
     location::{AsResource, AsSourceCode},
-    Category, DiagnosticTags, Error, Resource, SourceCode,
+    Category, DiagnosticTags, Error, Resource, Severity, SourceCode,
 };
 
 /// This trait is implemented for all types implementing [Diagnostic](super::Diagnostic)
@@ -42,6 +42,11 @@ pub trait DiagnosticExt: internal::Sealed + Sized {
     fn with_tags(self, tags: DiagnosticTags) -> Error
     where
         Error: From<internal::TagsDiagnostic<Self>>;
+
+    /// Returns a new diagnostic with additional `severity`
+    fn with_severity(self, severity: Severity) -> Error
+    where
+        Error: From<internal::SeverityDiagnostic<Self>>;
 }
 
 impl<E: AsDiagnostic> internal::Sealed for E {}
@@ -94,6 +99,16 @@ impl<E: AsDiagnostic> DiagnosticExt for E {
         Error: From<internal::TagsDiagnostic<Self>>,
     {
         Error::from(internal::TagsDiagnostic { tags, source: self })
+    }
+
+    fn with_severity(self, severity: Severity) -> Error
+    where
+        Error: From<internal::SeverityDiagnostic<Self>>,
+    {
+        Error::from(internal::SeverityDiagnostic {
+            severity,
+            source: self,
+        })
     }
 }
 
@@ -520,7 +535,7 @@ mod internal {
     }
 
     /// Diagnostic type returned by [super::DiagnosticExt::with_tags],
-    /// ùerges `tags` with the tags of its source
+    /// replaces `tags` with the tags of its source
     pub struct TagsDiagnostic<E> {
         pub(super) tags: DiagnosticTags,
         pub(super) source: E,
@@ -566,6 +581,56 @@ mod internal {
 
         fn tags(&self) -> DiagnosticTags {
             self.source.as_diagnostic().tags() | self.tags
+        }
+    }
+
+    /// Diagnostic type returned by [super::DiagnosticExt::with_severity],
+    /// replaces `severity` with the severity of its source
+    pub struct SeverityDiagnostic<E> {
+        pub(super) severity: Severity,
+        pub(super) source: E,
+    }
+
+    impl<E: Debug> Debug for SeverityDiagnostic<E> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            f.debug_struct("Diagnostic")
+                .field("severity", &self.severity)
+                .field("source", &self.source)
+                .finish()
+        }
+    }
+
+    impl<E: AsDiagnostic> Diagnostic for SeverityDiagnostic<E> {
+        fn category(&self) -> Option<&'static Category> {
+            self.source.as_diagnostic().category()
+        }
+
+        fn severity(&self) -> Severity {
+            self.severity
+        }
+
+        fn description(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            self.source.as_diagnostic().description(fmt)
+        }
+
+        fn message(&self, fmt: &mut fmt::Formatter<'_>) -> io::Result<()> {
+            self.source.as_diagnostic().message(fmt)
+        }
+
+        fn advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+            self.source.as_diagnostic().advices(visitor)
+        }
+
+        fn verbose_advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+            self.source.as_diagnostic().verbose_advices(visitor)
+        }
+
+        fn location(&self) -> Option<Location<'_>> {
+            self.source.as_diagnostic().location()
+        }
+
+        fn tags(&self) -> DiagnosticTags {
+            self.source.as_diagnostic().tags()
         }
     }
 }
