@@ -154,4 +154,43 @@ noShoutyConstants.js:20:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━
 
 ```
 
+```
+noShoutyConstants.js:26:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Redundant constant declaration.
+  
+    24 │ };
+    25 │ 
+  > 26 │ const D ="D";
+       │       ^^^^^^
+    27 │ export const e = {
+    28 │ 	D
+  
+  i Used here.
+  
+    26 │ const D ="D";
+    27 │ export const e = {
+  > 28 │ 	D
+       │ 	^
+    29 │ };
+  
+  i You should avoid declaring constants with a string that's the same
+        value as the variable name. It introduces a level of unnecessary
+        indirection when it's only two additional characters to inline.
+  
+  i Suggested fix: Use the constant value directly
+  
+    23 23 │   	foo: C
+    24 24 │   };
+    25    │ - 
+    26    │ - const·D·="D";
+    27 25 │   export const e = {
+    28    │ - → D
+       26 │ + → 
+       27 │ + → D:"D"
+    29 28 │   };
+  
+
+```
+
 

@@ -2,13 +2,15 @@ use crate::{semantic_services::Semantic, utils::batch::JsBatchMutation, JsRuleAc
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
+use rome_js_factory::make::{js_literal_member_name, js_property_object_member};
 use rome_js_semantic::{AllReferencesExtensions, Reference};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsIdentifierBinding, JsIdentifierExpression,
-    JsReferenceIdentifier, JsShorthandPropertyObjectMember, JsStringLiteralExpression,
-    JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList,
+    JsAnyExpression, JsAnyLiteralExpression, JsAnyObjectMemberName, JsIdentifierBinding,
+    JsIdentifierExpression, JsReferenceIdentifier, JsShorthandPropertyObjectMember,
+    JsStringLiteralExpression, JsSyntaxKind, JsVariableDeclaration, JsVariableDeclarator,
+    JsVariableDeclaratorList,
 };
-use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
+use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast, SyntaxToken};
 
 declare_rule! {
     /// Disallow the use of constants which its value is the upper-case version of its name.
@@ -41,7 +43,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoShoutyConstants {
-        version: "0.7.0",
+        version: "0.7.1",
         name: "noShoutyConstants",
         recommended: true,
     }
@@ -105,23 +107,6 @@ impl Rule for NoShoutyConstants {
                     return None;
                 }
 
-                // skip export as js object shorthand property
-                for reference in binding.all_references(model) {
-                    if let Some(js_reference_identifier) =
-                        JsReferenceIdentifier::cast_ref(reference.node())
-                    {
-                        if js_reference_identifier
-                            .syntax()
-                            .parent()
-                            .map_or(false, |n| {
-                                JsShorthandPropertyObjectMember::can_cast(n.kind())
-                            })
-                        {
-                            return None;
-                        }
-                    }
-                }
-
                 return Some(State {
                     literal,
                     references: binding.all_references(ctx.model()).collect(),
@@ -166,15 +151,36 @@ impl Rule for NoShoutyConstants {
         batch.remove_js_variable_declarator(ctx.query());
 
         for reference in state.references.iter() {
-            let node = reference
+            let literal = literal.clone();
+            if let Some(node) = reference.node().parent()?.cast::<JsIdentifierExpression>() {
+                batch.replace_node(
+                    JsAnyExpression::JsIdentifierExpression(node),
+                    JsAnyExpression::JsAnyLiteralExpression(literal),
+                );
+            } else if let Some(node) = reference
                 .node()
                 .parent()?
-                .cast::<JsIdentifierExpression>()?;
+                .cast::<JsShorthandPropertyObjectMember>()
+            {
+                // for replacing JsShorthandPropertyObjectMember
+                let new_element = js_property_object_member(
+                    JsAnyObjectMemberName::JsLiteralMemberName(js_literal_member_name(
+                        SyntaxToken::new_detached(
+                            JsSyntaxKind::JS_LITERAL_MEMBER_NAME,
+                            JsReferenceIdentifier::cast_ref(reference.node())?
+                                .value_token()
+                                .ok()?
+                                .text(),
+                            [],
+                            [],
+                        ),
+                    )),
+                    SyntaxToken::new_detached(JsSyntaxKind::COLON, ":", [], []),
+                    JsAnyExpression::JsAnyLiteralExpression(literal),
+                );
 
-            batch.replace_node(
-                JsAnyExpression::JsIdentifierExpression(node),
-                JsAnyExpression::JsAnyLiteralExpression(literal.clone()),
-            );
+                batch.replace_element(node.into_syntax().into(), new_element.into_syntax().into());
+            }
         }
 
         Some(JsRuleAction {
