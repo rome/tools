@@ -10,15 +10,16 @@ use rome_analyze::{
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{
-    JsAnyImportClause, JsAnyModuleItem, JsImport, JsModule, JsSyntaxToken, TriviaPieceKind,
+use rome_js_syntax::{JsAnyImportClause, JsAnyModuleItem, JsImport, JsLanguage, JsModule};
+use rome_rowan::{
+    syntax::SyntaxTrivia, AstNode, AstNodeExt, AstNodeList, BatchMutationExt, SyntaxTokenText,
+    SyntaxTriviaPiece,
 };
-use rome_rowan::{AstNode, AstNodeExt, AstNodeList, BatchMutationExt, SyntaxTokenText};
 
 use crate::JsRuleAction;
 
 declare_rule! {
-    /// Provides a whole-source code action to sort the imports in the file
+    /// Provides a whole-source code action to sort the imports in the file alphabetically
     ///
     /// ## Examples
     ///
@@ -58,8 +59,7 @@ impl Rule for OrganizeImports {
 
         let mut groups = Vec::new();
 
-        let mut first_slot = 0;
-        let mut group_leading_newlines = 0;
+        let mut first_node = None;
         let mut nodes = BTreeMap::new();
 
         for item in root.items() {
@@ -67,10 +67,9 @@ impl Rule for OrganizeImports {
                 JsAnyModuleItem::JsImport(import) => import,
                 JsAnyModuleItem::JsAnyStatement(_) | JsAnyModuleItem::JsExport(_) => {
                     // If we have pending nodes and encounter a non-import node, append the nodes to a new group
-                    if !nodes.is_empty() {
+                    if let Some(first_node) = first_node.take() {
                         groups.push(ImportGroup {
-                            first_slot,
-                            leading_newlines: group_leading_newlines,
+                            first_node,
                             nodes: take(&mut nodes),
                         });
                     }
@@ -79,24 +78,21 @@ impl Rule for OrganizeImports {
             };
 
             let first_token = import.import_token().ok()?;
-            let leading_newlines = count_leading_newlines(&first_token);
 
-            if !nodes.is_empty() {
-                // If this is not the first import in the group, check for a group break
-                if leading_newlines >= 2 {
+            // If this is not the first import in the group, check for a group break
+            if has_empty_line(first_token.leading_trivia()) {
+                if let Some(first_node) = first_node.take() {
                     groups.push(ImportGroup {
-                        first_slot,
-                        leading_newlines: group_leading_newlines,
+                        first_node,
                         nodes: take(&mut nodes),
                     });
-
-                    first_slot = import.syntax().index();
-                    group_leading_newlines = 2;
                 }
-            } else {
-                // If this is the first import in the group save the number of leading newlines
-                first_slot = import.syntax().index();
-                group_leading_newlines = leading_newlines.min(2);
+            }
+
+            // If this is the first import in the group save the leading trivia
+            // and slot index
+            if first_node.is_none() {
+                first_node = Some(import.clone());
             }
 
             let source = match import.import_clause().ok()? {
@@ -118,12 +114,8 @@ impl Rule for OrganizeImports {
         }
 
         // Flush the remaining nodes
-        if !nodes.is_empty() {
-            groups.push(ImportGroup {
-                first_slot,
-                leading_newlines: group_leading_newlines,
-                nodes,
-            });
+        if let Some(first_node) = first_node.take() {
+            groups.push(ImportGroup { first_node, nodes });
         }
 
         groups
@@ -146,10 +138,51 @@ impl Rule for OrganizeImports {
         while let Some((item_slot, item)) = iter.next() {
             // If the current position in the old list is lower than the start
             // of the new group, append the old node to the new list
-            if item_slot < next_group.first_slot {
+            if item_slot < next_group.first_node.syntax().index() {
                 new_list.push(item);
                 continue;
             }
+
+            // Extract the leading trivia for the whole group from the leading
+            // trivia for the import token of the first node in the group. If
+            // the trivia contains empty lines the leading trivia for the group
+            // comprise all trivia pieces coming before the empty line that's
+            // closest to the token. Otherwise the group leading trivia is
+            // created from all the newline and whitespace pieces on the first
+            // token before the first comment or skipped piece.
+            let group_first_token = next_group.first_node.import_token().ok()?;
+            let group_leading_trivia = group_first_token.leading_trivia();
+
+            let mut prev_newline = None;
+            let mut group_leading_trivia: Vec<_> = group_leading_trivia
+                .pieces()
+                .enumerate()
+                .rev()
+                .find_map(|(index, piece)| {
+                    if piece.is_whitespace() {
+                        return None;
+                    }
+
+                    let is_newline = piece.is_newline();
+                    if let Some(first_newline) = prev_newline.filter(|_| is_newline) {
+                        return Some(first_newline + 1);
+                    }
+
+                    prev_newline = is_newline.then_some(index);
+                    None
+                })
+                .map_or_else(
+                    || {
+                        group_leading_trivia
+                            .pieces()
+                            .take_while(is_ascii_whitespace)
+                            .collect()
+                    },
+                    |length| group_leading_trivia.pieces().take(length).collect(),
+                );
+
+            let mut saved_leading_trivia = Vec::new();
+            let group_leading_pieces = group_leading_trivia.len();
 
             let nodes_iter = next_group
                 .nodes
@@ -166,15 +199,40 @@ impl Rule for OrganizeImports {
                         .unwrap_or_else(|| panic!("mising node {item_slot} {node_index}"));
                 }
 
-                // Preserve the leading newlines count for the first import in
-                // the group, and normalize it to 1 for the rest of the nodes
-                let expected_leading_newlines = if node_index == 0 {
-                    next_group.leading_newlines
-                } else {
-                    1
-                };
+                let first_token = node.import_token().ok()?;
+                let mut node = node.clone().detach();
 
-                let node = normalize_leading_newlines(node, expected_leading_newlines)?;
+                if node_index == 0 && group_first_token != first_token {
+                    // If this node was not previously in the leading position
+                    // but is being moved there, replace its leading whitespace
+                    // with the group's leading trivia
+                    let group_leading_trivia = group_leading_trivia.drain(..);
+                    let mut token_leading_trivia = first_token.leading_trivia().pieces().peekable();
+
+                    // Save off the leading whitespace of the token to be
+                    // reused by the import take the place of this node in the list
+                    while let Some(piece) = token_leading_trivia.next_if(is_ascii_whitespace) {
+                        saved_leading_trivia.push(piece);
+                    }
+
+                    node = node.with_import_token(first_token.with_leading_trivia_pieces(
+                        exact_chain(group_leading_trivia, token_leading_trivia),
+                    ));
+                } else if node_index > 0 && group_first_token == first_token {
+                    // If this node used to be in the leading position but
+                    // got moved, remove the group leading trivia from its
+                    // first token
+                    let saved_leading_trivia = saved_leading_trivia.drain(..);
+                    let token_leading_trivia = first_token
+                        .leading_trivia()
+                        .pieces()
+                        .skip(group_leading_pieces);
+
+                    node = node.with_import_token(first_token.with_leading_trivia_pieces(
+                        exact_chain(saved_leading_trivia, token_leading_trivia),
+                    ));
+                }
+
                 new_list.push(JsAnyModuleItem::JsImport(node));
             }
 
@@ -212,10 +270,8 @@ pub(crate) struct ImportGroups {
 
 #[derive(Debug)]
 struct ImportGroup {
-    /// The starting index of this group in the module's item list
-    first_slot: usize,
-    /// The number of leading newlines the first import in the group should have
-    leading_newlines: usize,
+    /// The import that was at the start of the group before sorting
+    first_node: JsImport,
     /// Multimap storing all the imports for each import source in the group,
     /// sorted in alphabetical order
     nodes: BTreeMap<ImportKey, Vec<JsImport>>,
@@ -271,61 +327,34 @@ impl PartialEq for ImportKey {
     }
 }
 
-/// Return a copy of `node` with `expected_leading_newlines` newline trivia
-/// pieces at the start of its leading trivia
-fn normalize_leading_newlines(
-    node: &JsImport,
-    expected_leading_newlines: usize,
-) -> Option<JsImport> {
-    let first_token = node.import_token().ok()?;
-    let actual_leading_newlines = count_leading_newlines(&first_token);
-
-    if actual_leading_newlines != expected_leading_newlines {
-        let mut first_token = first_token.detach();
-
-        first_token = if actual_leading_newlines > expected_leading_newlines {
-            // The node has more leading newlines than necessary: skip the
-            // excess trivia pieces when reconstructing the leading trivia
-            let diff = actual_leading_newlines - expected_leading_newlines;
-            let leading_trivia: Vec<_> = first_token.leading_trivia().pieces().skip(diff).collect();
-
-            first_token.with_leading_trivia(
-                leading_trivia
-                    .iter()
-                    .map(|piece| (piece.kind(), piece.text())),
-            )
-        } else {
-            // The node has less leading newlines than necessary: prepend the
-            // reconstructed leading trivia with additional newline pieces
-            let leading_trivia: Vec<_> = first_token.leading_trivia().pieces().collect();
-
-            let diff = expected_leading_newlines - actual_leading_newlines;
-            let total_len = leading_trivia.len() + diff;
-
-            first_token.with_leading_trivia((0..total_len).map(|index| {
-                if let Some(index) = index.checked_sub(diff) {
-                    let piece = &leading_trivia[index];
-                    (piece.kind(), piece.text())
-                } else {
-                    // TODO: Use "\r\n" if the file is using CRLF line terminators
-                    (TriviaPieceKind::Newline, "\n")
-                }
-            }))
-        };
-
-        Some(node.clone().detach().with_import_token(first_token))
-    } else {
-        Some(node.clone())
-    }
+/// Returns true is this trivia piece is "ASCII whitespace" (newline or whitespace)
+fn is_ascii_whitespace(piece: &SyntaxTriviaPiece<JsLanguage>) -> bool {
+    piece.is_newline() || piece.is_whitespace()
 }
 
-/// Return the number of newline trivia pieces contained in the leading trivia
-/// of `token` before the first comment or skipped trivia
-fn count_leading_newlines(token: &JsSyntaxToken) -> usize {
-    token
-        .leading_trivia()
+/// Returns true if the provided trivia contains an empty line (two consecutive newline pieces, ignoring whitespace)
+fn has_empty_line(trivia: SyntaxTrivia<JsLanguage>) -> bool {
+    let mut was_newline = false;
+    trivia
         .pieces()
-        .take_while(|piece| !piece.is_comments() && !piece.is_skipped())
-        .filter(|piece| piece.is_newline())
-        .count()
+        .filter(|piece| !piece.is_whitespace())
+        .any(|piece| {
+            let prev_newline = was_newline;
+            was_newline = piece.is_newline();
+            prev_newline && was_newline
+        })
+}
+
+/// Returns an iterator yielding the full content of `lhs`, then the full
+/// content of `rhs`. This is similar to the `.chain()` method on the
+/// [Iterator] trait except the returned iterator implements [ExactSizeIterator]
+fn exact_chain<'a, T>(
+    mut lhs: impl Iterator<Item = T> + ExactSizeIterator + 'a,
+    mut rhs: impl Iterator<Item = T> + ExactSizeIterator + 'a,
+) -> impl Iterator<Item = T> + ExactSizeIterator + 'a {
+    let total_len = lhs.len() + rhs.len();
+    (0..total_len).map(move |_| {
+        // SAFETY: The above range iterator should have the exact length of lhs + rhs
+        lhs.next().or_else(|| rhs.next()).unwrap()
+    })
 }
