@@ -348,6 +348,10 @@ export interface Correctness {
  */
 export interface Nursery {
 	/**
+	 * Enforce that the accessKey attribute is not used on any HTML element.
+	 */
+	noAccessKey?: RuleConfiguration;
+	/**
 	 * Disallow certain types.
 	 */
 	noBannedTypes?: RuleConfiguration;
@@ -623,6 +627,7 @@ export type Category =
 	| "lint/a11y/useAltText"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
+	| "lint/nursery/noAccessKey"
 	| "lint/nursery/noBannedTypes"
 	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstAssign"

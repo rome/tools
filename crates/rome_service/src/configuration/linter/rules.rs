@@ -729,6 +729,8 @@ pub struct Nursery {
 #[allow(dead_code)]
 #[doc = r" A list of rules that belong to this group"]
 struct NurserySchema {
+    #[doc = "Enforce that the accessKey attribute is not used on any HTML element."]
+    no_access_key: Option<RuleConfiguration>,
     #[doc = "Disallow certain types."]
     no_banned_types: Option<RuleConfiguration>,
     #[doc = "Disallow assignment operators in conditional expressions."]
@@ -766,7 +768,8 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 17] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 18] = [
+        "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
         "noConstAssign",
@@ -785,8 +788,9 @@ impl Nursery {
         "useNumericLiterals",
         "useValidForDirection",
     ];
-    const RECOMMENDED_RULES: [&'static str; 0] = [];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 0] = [];
+    const RECOMMENDED_RULES: [&'static str; 1] = ["noAccessKey"];
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 1] =
+        [RuleFilter::Rule("nursery", Self::CATEGORY_RULES[0])];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
@@ -812,7 +816,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 0] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 1] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
