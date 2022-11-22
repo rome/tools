@@ -144,7 +144,7 @@ impl CallInfo {
 fn get_callee(expr: &JsCallExpression, model: &SemanticModel) -> Option<&'static str> {
     let callee = expr.callee().ok()?.omit_parentheses();
     if let Some(id) = callee.as_reference_identifier() {
-        if id.has_name("parseInt") && model.declaration(&id).is_none() {
+        if id.has_name("parseInt") && model.binding(&id).is_none() {
             return Some("parseInt()");
         }
     }
@@ -152,7 +152,7 @@ fn get_callee(expr: &JsCallExpression, model: &SemanticModel) -> Option<&'static
     let callee = JsAnyMemberExpression::cast_ref(callee.syntax())?;
     let object = callee.get_object_reference_identifier()?;
     if object.has_name("Number")
-        && model.declaration(&object).is_none()
+        && model.binding(&object).is_none()
         && callee.has_member_name("parseInt")
     {
         return Some("Number.parseInt()");

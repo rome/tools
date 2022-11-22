@@ -119,7 +119,7 @@ impl Rule for NoArrayIndexKey {
         // find the declaration and ensure it resolves to the parameter of a function,
         // and navigate up to the closest call expression
         let parameter = model
-            .declaration(&reference)
+            .binding(&reference)
             .and_then(|declaration| declaration.syntax().parent())
             .and_then(JsFormalParameter::cast)?;
         let function = parameter

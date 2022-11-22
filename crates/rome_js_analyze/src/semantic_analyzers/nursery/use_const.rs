@@ -4,7 +4,7 @@ use rome_console::markup;
 
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_semantic::{AllReferencesExtensions, Scope, SemanticModel, SemanticScopeExtensions};
+use rome_js_semantic::{ReferencesExtensions, Scope, SemanticModel, SemanticScopeExtensions};
 use rome_js_syntax::*;
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 
@@ -182,7 +182,7 @@ fn check_binding_can_be_const(
 
     // In a for-in or for-of loop or if it has an initializer
     if in_for_in_or_of_loop || has_initializer {
-        return if writes.len() == 0 {
+        return if writes.next().is_none() {
             Some(ConstCheckResult::Fix)
         } else {
             None
@@ -195,7 +195,10 @@ fn check_binding_can_be_const(
         _ => return None,
     };
 
-    let host = write.node().ancestors().find_map(DestructuringHost::cast)?;
+    let host = write
+        .syntax()
+        .ancestors()
+        .find_map(DestructuringHost::cast)?;
     if host.has_member_expr_assignment() || host.has_outer_variables(write.scope()) {
         return None;
     }

@@ -2,7 +2,7 @@ use crate::{semantic_services::Semantic, utils::batch::JsBatchMutation, JsRuleAc
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_semantic::{AllReferencesExtensions, Reference};
+use rome_js_semantic::{Reference, ReferencesExtensions};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsIdentifierBinding, JsIdentifierExpression,
     JsStringLiteralExpression, JsVariableDeclaration, JsVariableDeclarator,
@@ -103,7 +103,7 @@ impl Rule for NoShoutyConstants {
 
                 return Some(State {
                     literal,
-                    references: binding.all_references(ctx.model()).collect(),
+                    references: binding.all_references(model).collect(),
                 });
             }
         }
@@ -123,7 +123,7 @@ impl Rule for NoShoutyConstants {
         );
 
         for reference in state.references.iter() {
-            let node = reference.node();
+            let node = reference.syntax();
             diag = diag.detail(node.text_trimmed_range(), "Used here.")
         }
 
@@ -146,7 +146,7 @@ impl Rule for NoShoutyConstants {
 
         for reference in state.references.iter() {
             let node = reference
-                .node()
+                .syntax()
                 .parent()?
                 .cast::<JsIdentifierExpression>()?;
 
