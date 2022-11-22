@@ -749,6 +749,8 @@ struct NurserySchema {
     no_invalid_constructor_super: Option<RuleConfiguration>,
     #[doc = "Disallow literal numbers that lose precision"]
     no_precision_loss: Option<RuleConfiguration>,
+    #[doc = "Disallow comparison of expressions modifying the string case with non-compliant value."]
+    no_string_case_mismatch: Option<RuleConfiguration>,
     #[doc = "Disallow control flow statements in finally blocks."]
     no_unsafe_finally: Option<RuleConfiguration>,
     #[doc = "Enforce camel case naming convention."]
@@ -766,7 +768,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 17] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 18] = [
         "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
@@ -777,6 +779,7 @@ impl Nursery {
         "noHeaderScope",
         "noInvalidConstructorSuper",
         "noPrecisionLoss",
+        "noStringCaseMismatch",
         "noUnsafeFinally",
         "useCamelCase",
         "useConst",

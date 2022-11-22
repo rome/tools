@@ -388,6 +388,10 @@ export interface Nursery {
 	 */
 	noPrecisionLoss?: RuleConfiguration;
 	/**
+	 * Disallow comparison of expressions modifying the string case with non-compliant value.
+	 */
+	noStringCaseMismatch?: RuleConfiguration;
+	/**
 	 * Disallow control flow statements in finally blocks.
 	 */
 	noUnsafeFinally?: RuleConfiguration;
@@ -633,6 +637,7 @@ export type Category =
 	| "lint/nursery/noHeaderScope"
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noPrecisionLoss"
+	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnsafeFinally"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useConst"

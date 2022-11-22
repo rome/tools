@@ -863,6 +863,17 @@
             }
           ]
         },
+        "noStringCaseMismatch": {
+          "description": "Disallow comparison of expressions modifying the string case with non-compliant value.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noUnsafeFinally": {
           "description": "Disallow control flow statements in finally blocks.",
           "anyOf": [
