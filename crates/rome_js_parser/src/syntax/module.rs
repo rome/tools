@@ -131,8 +131,8 @@ pub(crate) fn parse_import_or_import_equals_declaration(p: &mut JsParser) -> Par
     let import = p.start();
     p.expect(T![import]);
 
-    debug_assert!(p.state.name_map.is_empty());
-    p.state.duplicate_binding_parent = Some("import");
+    debug_assert!(p.state().name_map.is_empty());
+    p.state_mut().duplicate_binding_parent = Some("import");
 
     let statement = if is_at_identifier_binding(p) && (p.nth_at(1, T![=]) || p.nth_at(2, T![=])) {
         let import_equals = parse_ts_import_equals_declaration_rest(p, import, start);
@@ -156,7 +156,7 @@ pub(crate) fn parse_import_or_import_equals_declaration(p: &mut JsParser) -> Par
                 &["default import", "namespace import", "named import"],
                 range,
             )
-            .to_diagnostic(p)
+            .into_diagnostic(p)
         });
 
         let end = p.cur_range().start();
@@ -165,8 +165,8 @@ pub(crate) fn parse_import_or_import_equals_declaration(p: &mut JsParser) -> Par
         Present(import.complete(p, JS_IMPORT))
     };
 
-    p.state.duplicate_binding_parent = None;
-    p.state.name_map.clear();
+    p.state_mut().duplicate_binding_parent = None;
+    p.state_mut().name_map.clear();
 
     statement
 }
@@ -178,7 +178,7 @@ fn parse_import_clause(p: &mut JsParser) -> ParsedSyntax {
         return parse_import_bare_clause(p);
     }
 
-    let pos = p.tokens.position();
+    let pos = p.source().position();
     let m = p.start();
 
     // test ts ts_import_clause_types
@@ -204,7 +204,7 @@ fn parse_import_clause(p: &mut JsParser) -> ParsedSyntax {
         _ => {
             // SAFETY: Safe because the parser only eats the "type" keyword if it's followed by
             // either a *, {, or binding
-            debug_assert_eq!(pos, p.tokens.position());
+            debug_assert_eq!(pos, p.source().position());
             m.abandon(p);
             return Absent;
         }
@@ -502,7 +502,7 @@ impl ParseSeparatedList for ImportAssertionList {
                 STMT_RECOVERY_SET.union(token_set![T![,], T!['}']]),
             )
             .enable_recovery_on_line_break(),
-            |p, range| expected_node("import assertion entry", range).to_diagnostic(p),
+            |p, range| expected_node("import assertion entry", range).into_diagnostic(p),
         )
     }
 
@@ -527,9 +527,9 @@ fn parse_import_assertion_entry(
     let key_range = p.cur_range();
 
     let key = match p.cur() {
-        JS_STRING_LITERAL => Some(p.cur_src().trim_matches(&['\'', '"'][..])),
-        T![ident] => Some(p.cur_src()),
-        t if t.is_keyword() => Some(p.cur_src()),
+        JS_STRING_LITERAL => Some(p.cur_text().trim_matches(&['\'', '"'][..])),
+        T![ident] => Some(p.cur_text()),
+        t if t.is_keyword() => Some(p.cur_text()),
         _ => None,
     }
     .map(String::from);
@@ -543,7 +543,7 @@ fn parse_import_assertion_entry(
         }
         T![:] => {
             p.error(
-                expected_any(&["identifier", "string literal"], p.cur_range()).to_diagnostic(p),
+                expected_any(&["identifier", "string literal"], p.cur_range()).into_diagnostic(p),
             );
         }
         _ => {
@@ -1108,7 +1108,8 @@ fn parse_export_default_clause(p: &mut JsParser) -> ParsedSyntax {
         // export default (class {})
         // export default a + b;
         // export default (function a() {})
-        if let Some(existing_default_item) = p.state.default_item.as_ref().filter(|_| p.is_module())
+        if let Some(existing_default_item) =
+            p.state().default_item.as_ref().filter(|_| p.is_module())
         {
             if existing_default_item.kind.is_overload()
                 && (default_item_kind.is_overload() || default_item_kind.is_function_declaration())
@@ -1139,7 +1140,7 @@ fn parse_export_default_clause(p: &mut JsParser) -> ParsedSyntax {
         // export default interface B { a: string }
         // export default function test() {}
         else if !default_item_kind.is_interface() {
-            p.state.default_item = Some(ExportDefaultItem {
+            p.state_mut().default_item = Some(ExportDefaultItem {
                 range: clause.range(p).into(),
                 kind: default_item_kind,
             });
@@ -1193,7 +1194,7 @@ fn parse_export_default_declaration_clause(
         }
     };
 
-    let item_kind = match (kind, declaration.kind()) {
+    let item_kind = match (kind, declaration.kind(p)) {
         (
             ExportDefaultDeclarationKind::Function,
             Some(TS_DECLARE_FUNCTION_DECLARATION | TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION),

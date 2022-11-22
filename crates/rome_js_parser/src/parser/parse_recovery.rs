@@ -89,7 +89,7 @@ impl ParseRecovery {
             return Err(RecoveryError::AlreadyRecovered);
         }
 
-        if p.state.speculative_parsing {
+        if p.state().speculative_parsing {
             return Err(RecoveryError::RecoveryDisabled);
         }
 

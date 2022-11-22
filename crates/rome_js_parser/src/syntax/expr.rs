@@ -189,7 +189,7 @@ pub(super) fn parse_literal_expression(p: &mut JsParser) -> ParsedSyntax {
 }
 
 pub(crate) fn parse_big_int_literal_expression(p: &mut JsParser) -> ParsedSyntax {
-    if !p.at(JS_NUMBER_LITERAL) || !p.cur_src().ends_with('n') {
+    if !p.at(JS_NUMBER_LITERAL) || !p.cur_text().ends_with('n') {
         return Absent;
     }
 
@@ -199,13 +199,13 @@ pub(crate) fn parse_big_int_literal_expression(p: &mut JsParser) -> ParsedSyntax
 }
 
 pub(crate) fn parse_number_literal_expression(p: &mut JsParser) -> ParsedSyntax {
-    let cur_src = p.cur_src();
+    let cur_src = p.cur_text();
     if !p.at(JS_NUMBER_LITERAL) || cur_src.ends_with('n') {
         return Absent;
     }
 
     // Forbid legacy octal number in strict mode
-    if p.state.strict().is_some()
+    if p.state().strict().is_some()
         && cur_src.starts_with('0')
         && cur_src
             .chars()
@@ -250,7 +250,7 @@ fn parse_assignment_expression_or_higher_base(
     // function foo() { yield *bar; }
     // function bar() { yield; }
     // function baz() { yield }
-    if p.at(T![yield]) && (p.state.in_generator() || is_nth_at_expression(p, 1)) {
+    if p.at(T![yield]) && (p.state().in_generator() || is_nth_at_expression(p, 1)) {
         return Present(parse_yield_expression(p, context));
     }
 
@@ -297,7 +297,7 @@ fn parse_assign_expr_recursive(
     let assign_operator = p.cur();
     if is_assign_token(assign_operator) {
         let target = if matches!(
-            target.kind(),
+            target.kind(p),
             JS_BINARY_EXPRESSION | TS_TYPE_ASSERTION_EXPRESSION
         ) {
             // Special handling for binary expressions and type assertions to avoid having to deal with `a as string = ...`
@@ -385,7 +385,7 @@ fn parse_yield_expression(p: &mut JsParser, context: ExpressionContext) -> Compl
     // function foo() { yield; }
     // function foo() { yield foo; }
     // function foo() { yield *foo; }
-    if !(p.state.in_generator() && p.state.in_function()) {
+    if !(p.state().in_generator() && p.state().in_function()) {
         // test_err yield_expr_in_parameter_initializer
         // function* test(a = yield "test") {}
         // function test2(a = yield "test") {}
@@ -497,7 +497,7 @@ fn parse_binary_or_logical_expression_recursive(
         if Jsx.is_supported(p)
             && op == T![<]
             && p.nth_at(1, T![/])
-            && !p.tokens.has_next_preceding_trivia()
+            && !p.source_mut().has_next_preceding_trivia()
         {
             // test_err jsx jsx_child_expression_missing_r_curly
             // <test>{ 4 + 3</test>
@@ -542,7 +542,7 @@ fn parse_binary_or_logical_expression_recursive(
             // ~3 ** 2;
             // !true ** 2;
 
-            if op == T![**] && left.kind() == JS_UNARY_EXPRESSION {
+            if op == T![**] && left.kind(p) == JS_UNARY_EXPRESSION {
                 let err = p
 					.err_builder(
 						"unparenthesized unary expression can't appear on the left-hand side of '**'",
@@ -553,7 +553,7 @@ fn parse_binary_or_logical_expression_recursive(
 
                 p.error(err);
                 is_unknown = true;
-            } else if op != T![in] && left.kind() == JS_PRIVATE_NAME {
+            } else if op != T![in] && left.kind(p) == JS_PRIVATE_NAME {
                 p.error(private_names_only_allowed_on_left_side_of_in_expression(
                     p,
                     left.range(p),
@@ -565,7 +565,7 @@ fn parse_binary_or_logical_expression_recursive(
                 .err_builder(
                     format!(
                         "Expected an expression for the left hand side of the `{}` operator.",
-                        p.source(op_range),
+                        p.text(op_range),
                     ),
                     op_range,
                 )
@@ -629,7 +629,7 @@ fn parse_binary_or_logical_expression_recursive(
         // Left at this point becomes the right-hand side of a binary expression
         // or is a standalone expression. Private names aren't allowed as standalone expressions
         // nor on the right-hand side
-        if left.kind() == JS_PRIVATE_NAME {
+        if left.kind(p) == JS_PRIVATE_NAME {
             // test_err private_name_presence_check_recursive
             // class A {
             // 	#prop;
@@ -732,7 +732,7 @@ fn parse_member_expression_rest(
             BACKTICK => {
                 // test ts ts_optional_chain_call
                 // (<A, B>() => {})?.<A, B>();
-                let m = match lhs.kind() {
+                let m = match lhs.kind(p) {
                     TS_INSTANTIATION_EXPRESSION => lhs.undo_completion(p),
                     _ => lhs.precede(p),
                 };
@@ -774,11 +774,11 @@ fn parse_new_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax 
 
     // new.target
     if p.eat(T![.]) {
-        if p.at(T![ident]) && p.cur_src() == "target" {
+        if p.at(T![ident]) && p.cur_text() == "target" {
             p.bump_remap(TARGET);
         } else if is_at_identifier(p) {
             let identifier_range = p.cur_range();
-            let name = p.cur_src();
+            let name = p.cur_text();
             let error = p
                 .err_builder(
                     format!("'{name}' is not a valid meta-property for keyword 'new'."),
@@ -813,7 +813,7 @@ fn parse_new_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax 
 
             p.error(error);
         }
-        if let TS_INSTANTIATION_EXPRESSION = lhs.kind() {
+        if let TS_INSTANTIATION_EXPRESSION = lhs.kind(p) {
             lhs.undo_completion(p).abandon(p)
         };
     }
@@ -862,7 +862,7 @@ fn parse_super_expression(p: &mut JsParser) -> ParsedSyntax {
             "Super doesn't support optional chaining as super can never be null",
             super_expression.range(p),
         ));
-    } else if p.at(T!['(']) && !p.state.in_constructor() {
+    } else if p.at(T!['(']) && !p.state().in_constructor() {
         p.error(p.err_builder(
             "`super` is only valid inside of a class constructor of a subclass.",
             super_expression.range(p),
@@ -1270,14 +1270,14 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
                 // test_err import_no_meta
                 // import.foo
                 // import.metaa
-                if p.at(T![ident]) && p.source(p.cur_range()) == "meta" {
+                if p.at(T![ident]) && p.text(p.cur_range()) == "meta" {
                     p.bump_remap(META);
                     m.complete(p, IMPORT_META)
                 } else if p.at(T![ident]) {
                     let err = p.err_builder(
                         format!(
                             "Expected `meta` following an import keyword, but found `{}`",
-                            p.source(p.cur_range())
+                            p.text(p.cur_range())
                         ),
                         p.cur_range(),
                     );
@@ -1441,13 +1441,13 @@ pub(super) fn parse_identifier(p: &mut JsParser, kind: JsSyntaxKind) -> ParsedSy
     }
 
     let error = match p.cur() {
-        T![yield] if p.state.in_generator() => Some(p.err_builder(
+        T![yield] if p.state().in_generator() => Some(p.err_builder(
             "Illegal use of `yield` as an identifier in generator function",
             p.cur_range(),
         )),
         t if t.is_future_reserved_keyword() => {
             if StrictMode.is_supported(p) {
-                let name = p.cur_src();
+                let name = p.cur_text();
                 Some(p.err_builder(
                     format!(
                         "Illegal use of reserved keyword `{}` as an identifier in strict mode",
@@ -1461,13 +1461,13 @@ pub(super) fn parse_identifier(p: &mut JsParser, kind: JsSyntaxKind) -> ParsedSy
         }
         // test ts await_in_ambient_context
         // declare const await: any;
-        T![await] if !p.state.in_ambient_context() => {
-            if p.state.in_async() {
+        T![await] if !p.state().in_ambient_context() => {
+            if p.state().in_async() {
                 Some(p.err_builder(
                     "Illegal use of `await` as an identifier in an async context",
                     p.cur_range(),
                 ))
-            } else if p.source_type.is_module() {
+            } else if p.source_type().is_module() {
                 Some(p.err_builder(
                     "Illegal use of `await` as an identifier inside of a module",
                     p.cur_range(),
@@ -1720,12 +1720,12 @@ fn parse_call_expression_rest(
 
         // Cloning here is necessary because parsing out the type arguments may rewind in which
         // case we want to return the `lhs`.
-        let m = match lhs.kind() {
+        let m = match lhs.kind(p) {
             TS_INSTANTIATION_EXPRESSION if !p.at(T![?.]) => lhs.clone().undo_completion(p),
             _ => lhs.clone().precede(p),
         };
 
-        let start_pos = p.tokens.position();
+        let start_pos = p.source().position();
         let optional_chain_call = p.eat(T![?.]);
         in_optional_chain = in_optional_chain || optional_chain_call;
 
@@ -1753,7 +1753,7 @@ fn parse_call_expression_rest(
 
         if type_arguments.is_some() || p.at(T!['(']) {
             parse_call_arguments(p)
-                .or_add_diagnostic(p, |p, _| expected_token(T!['(']).to_diagnostic(p));
+                .or_add_diagnostic(p, |p, _| expected_token(T!['(']).into_diagnostic(p));
             lhs = m.complete(p, JS_CALL_EXPRESSION);
         } else {
             break if optional_chain_call {
@@ -1776,7 +1776,7 @@ fn parse_call_expression_rest(
                 // * if the parser is at '?.': It takes the branch right above, ensuring that no token was consumed
                 // * if the parser is at '<': `parse_ts_type_arguments_in_expression` rewinds if what follows aren't  valid type arguments and this is the only way we can reach this branch
                 // * if the parser is at '(': This always parses out as valid arguments.
-                debug_assert_eq!(p.tokens.position(), start_pos);
+                debug_assert_eq!(p.source().position(), start_pos);
                 m.abandon(p);
                 lhs
             };
@@ -1844,7 +1844,7 @@ pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> 
         let unary = parse_unary_expr(p, context);
 
         let is_top_level_module_or_async_fn =
-            p.state.in_async() && (p.state.is_top_level() || p.state.in_function());
+            p.state().in_async() && (p.state().is_top_level() || p.state().in_function());
 
         if !is_top_level_module_or_async_fn {
             // test reparse_await_as_identifier
@@ -2028,7 +2028,7 @@ pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> 
 
         if is_delete && kind != JS_UNKNOWN_EXPRESSION && TypeScript.is_supported(p) {
             if let Some(res) = res {
-                match res.kind() {
+                match res.kind(p) {
                     JS_STATIC_MEMBER_EXPRESSION | JS_COMPUTED_MEMBER_EXPRESSION => {}
                     _ => {
                         kind = JS_UNKNOWN_EXPRESSION;

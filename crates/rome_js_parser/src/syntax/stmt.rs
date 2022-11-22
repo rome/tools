@@ -163,13 +163,13 @@ pub(crate) fn parse_statement(p: &mut JsParser, context: StatementContext) -> Pa
         T![import] if !token_set![T![.], T!['(']].contains(p.nth(1)) => {
             let mut import = parse_import_or_import_equals_declaration(p).unwrap();
 
-            if import.kind() == TS_IMPORT_EQUALS_DECLARATION {
+            if import.kind(p) == TS_IMPORT_EQUALS_DECLARATION {
                 return Present(import);
             }
 
             import.change_kind(p, JS_UNKNOWN_STATEMENT);
 
-            let error = match p.source_type.module_kind() {
+            let error = match p.source_type().module_kind() {
                 ModuleKind::Script => p
                     .err_builder(
                         "Illegal use of an import declaration outside of a module",
@@ -241,7 +241,7 @@ pub(crate) fn parse_statement(p: &mut JsParser, context: StatementContext) -> Pa
         _ if is_at_identifier(p) && p.nth_at(1, T![:]) => parse_labeled_statement(p, context),
         T![let]
             if is_nth_at_let_variable_statement(p, 0)
-                && (p.cur_src() == "let" || !p.has_nth_preceding_line_break(1)) =>
+                && (p.cur_text() == "let" || !p.has_nth_preceding_line_break(1)) =>
         {
             // test_err let_newline_in_async_function
             // async function f() {
@@ -302,7 +302,7 @@ pub(crate) fn parse_statement(p: &mut JsParser, context: StatementContext) -> Pa
                 p,
                 parse_any_ts_namespace_declaration_statement,
                 |p, declaration| {
-                    ts_only_syntax_error(p, p.source(name.as_range()), declaration.range(p))
+                    ts_only_syntax_error(p, p.text(name.as_range()), declaration.range(p))
                 },
             )
         }
@@ -313,7 +313,7 @@ pub(crate) fn parse_statement(p: &mut JsParser, context: StatementContext) -> Pa
 
 pub(crate) fn parse_non_top_level_export(p: &mut JsParser) -> ParsedSyntax {
     parse_export(p).map(|mut export| {
-        let error = match p.source_type.module_kind() {
+        let error = match p.source_type().module_kind() {
             ModuleKind::Module => p
                 .err_builder(
                     "Illegal use of an export declaration not at the top level",
@@ -366,11 +366,11 @@ fn parse_labeled_statement(p: &mut JsParser, context: StatementContext) -> Parse
 		p.bump(T![:]);
 
 		let identifier_range = identifier.range(p);
-		let is_valid_identifier = !identifier.kind().is_unknown();
+		let is_valid_identifier = !identifier.kind(p).is_unknown();
 		let labelled_statement = identifier.undo_completion(p);
-        let label = p.source(identifier_range);
+        let label = p.text(identifier_range);
 
-		let body = match p.state.get_labelled_item(label) {
+		let body = match p.state().get_labelled_item(label) {
 			None => {
 				let labelled_item = match p.cur() {
 					T![for] | T![do] | T![while] => LabelledItem::Iteration(identifier_range),
@@ -401,7 +401,7 @@ fn parse_labeled_statement(p: &mut JsParser, context: StatementContext) -> Parse
 		};
 
         match body.or_add_diagnostic(p, expected_statement) {
-            Some(mut body) if context.is_single_statement() && body.kind() == JS_FUNCTION_DECLARATION => {
+            Some(mut body) if context.is_single_statement() && body.kind(p) == JS_FUNCTION_DECLARATION => {
                 // test_err labelled_function_decl_in_single_statement_context
                 // if (true) label1: label2: function a() {}
                 p.error(p.err_builder("Labelled function declarations are only allowed at top-level or inside a block", body.range(p)).hint( "Wrap the labelled statement in a block statement"));
@@ -528,9 +528,9 @@ fn parse_break_statement(p: &mut JsParser) -> ParsedSyntax {
     p.expect(T![break]); // break keyword
 
     let error = if !p.has_preceding_line_break() && p.at(T![ident]) {
-        let label_name = p.cur_src();
+        let label_name = p.cur_text();
 
-        let error = match p.state.get_labelled_item(label_name) {
+        let error = match p.state().get_labelled_item(label_name) {
             Some(_) => None,
             None => Some(
                 p.err_builder(
@@ -543,7 +543,7 @@ fn parse_break_statement(p: &mut JsParser) -> ParsedSyntax {
 
         p.bump_any();
         error
-    } else if !p.state.break_allowed() {
+    } else if !p.state().break_allowed() {
         Some(p.err_builder("A `break` statement can only be used within an enclosing iteration or switch statement.", start, ))
     } else {
         None
@@ -588,9 +588,9 @@ fn parse_continue_statement(p: &mut JsParser) -> ParsedSyntax {
     // test async_continue_stmt
     // async: for(a of b) continue async;
     let error = if !p.has_preceding_line_break() && is_at_identifier(p) {
-        let label_name = p.cur_src();
+        let label_name = p.cur_text();
 
-        let error = match p.state.get_labelled_item(label_name) {
+        let error = match p.state().get_labelled_item(label_name) {
 			Some(LabelledItem::Iteration(_)) => None,
 			Some(LabelledItem::Other(range)) => {
 				Some(p.err_builder("A `continue` statement can only jump to a label of an enclosing `for`, `while` or `do while` statement.", p.cur_range())
@@ -613,7 +613,7 @@ fn parse_continue_statement(p: &mut JsParser) -> ParsedSyntax {
         p.bump_remap(T![ident]);
 
         error
-    } else if !p.state.continue_allowed() {
+    } else if !p.state().continue_allowed() {
         Some(
             p.err_builder(
                 "A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.",start ),
@@ -656,7 +656,7 @@ fn parse_return_statement(p: &mut JsParser) -> ParsedSyntax {
     semi(p, TextRange::new(start, p.cur_range().end()));
     let mut complete = m.complete(p, JS_RETURN_STATEMENT);
 
-    if !p.state.in_function() {
+    if !p.state().in_function() {
         let err = p.err_builder(
             "Illegal return statement outside of a function",
             complete.range(p),
@@ -710,7 +710,7 @@ pub(super) fn parse_block_impl(p: &mut JsParser, block_kind: JsSyntaxKind) -> Pa
     p.expect(T!['}']);
 
     if let Some(strict_snapshot) = strict_snapshot {
-        EnableStrictMode::restore(&mut p.state, strict_snapshot);
+        EnableStrictMode::restore(p.state_mut(), strict_snapshot);
     }
 
     Present(m.complete(p, block_kind))
@@ -776,7 +776,7 @@ pub(crate) fn parse_directives(p: &mut JsParser) -> (Marker, Option<EnableStrict
             .expect("A string token always yields a valid expression");
 
         // Something like "use strict".length isn't a valid directive
-        if expression.kind() != JS_STRING_LITERAL_EXPRESSION {
+        if expression.kind(p) != JS_STRING_LITERAL_EXPRESSION {
             // Turned out not to be a directive.
             // Start statement list before the just parsed expression statement
             let statement = expression.precede(p).complete(p, JS_EXPRESSION_STATEMENT);
@@ -787,14 +787,14 @@ pub(crate) fn parse_directives(p: &mut JsParser) -> (Marker, Option<EnableStrict
         let directive = expression.undo_completion(p);
         semi(p, directive_range);
 
-        let directive_text = p.source(directive_range);
+        let directive_text = p.text(directive_range);
 
         let directive_is_use_strict =
             directive_text == "\"use strict\"" || directive_text == "'use strict'";
 
         if directive_is_use_strict && strict_mode_snapshot.is_none() {
             strict_mode_snapshot = Some(
-                EnableStrictMode(StrictModeState::Explicit(directive_range)).apply(&mut p.state),
+                EnableStrictMode(StrictModeState::Explicit(directive_range)).apply(p.state_mut()),
             );
         }
 
@@ -1084,10 +1084,10 @@ fn eat_variable_declaration(
         remaining_declarator_range: None,
     };
 
-    debug_assert!(p.state.name_map.is_empty());
+    debug_assert!(p.state().name_map.is_empty());
     let list = variable_declarator_list.parse_list(p);
 
-    p.state.name_map.clear();
+    p.state_mut().name_map.clear();
     Some((list, variable_declarator_list.remaining_declarator_range))
 }
 
@@ -1199,18 +1199,18 @@ fn parse_variable_declarator(
     p: &mut JsParser,
     context: &VariableDeclaratorContext,
 ) -> ParsedSyntax {
-    p.state.duplicate_binding_parent = context.duplicate_binding_parent_name();
+    p.state_mut().duplicate_binding_parent = context.duplicate_binding_parent_name();
     let id = parse_binding_pattern(p, ExpressionContext::default());
-    p.state.duplicate_binding_parent = None;
+    p.state_mut().duplicate_binding_parent = None;
 
     id.map(|id| {
-        let id_kind = id.kind();
+        let id_kind = id.kind(p);
         let id_range = id.range(p);
         let m = id.precede(p);
 
         let ts_annotation = TypeScript.parse_exclusive_syntax(p, parse_ts_variable_annotation,
             |p, annotation| {
-                let name = match annotation.kind() {
+                let name = match annotation.kind(p) {
                     TS_TYPE_ANNOTATION => "type annotation",
                     TS_DEFINITE_VARIABLE_ANNOTATION => "definite assertion assignments",
                     _ => unreachable!(),
@@ -1220,8 +1220,8 @@ fn parse_variable_declarator(
             })
             .ok();
 
-        let last_name_map = std::mem::take(&mut p.state.name_map);
-        let duplicate_binding_parent = p.state.duplicate_binding_parent.take();
+        let last_name_map = std::mem::take(&mut p.state_mut().name_map);
+        let duplicate_binding_parent = p.state_mut().duplicate_binding_parent.take();
 
         let mut initializer = parse_initializer_clause(
             p,
@@ -1233,7 +1233,7 @@ fn parse_variable_declarator(
         if let (Some(initializer), Some(ts_annotation)) =
             (initializer.as_mut(), ts_annotation.as_ref())
         {
-            if ts_annotation.kind() == TS_DEFINITE_VARIABLE_ANNOTATION {
+            if ts_annotation.kind(p) == TS_DEFINITE_VARIABLE_ANNOTATION {
                 // test_err ts_definite_variable_with_initializer
                 // let a!: string = "test";
                 p.error(
@@ -1246,8 +1246,8 @@ fn parse_variable_declarator(
             }
         }
 
-        p.state.name_map = last_name_map;
-        p.state.duplicate_binding_parent = duplicate_binding_parent;
+        p.state_mut().name_map = last_name_map;
+        p.state_mut().duplicate_binding_parent = duplicate_binding_parent;
 
         // Heuristic to determine if we're in a for of or for in loop. This may be off if
         // the user uses a for of/in with multiple declarations but this isn't allowed anyway.
@@ -1304,7 +1304,7 @@ fn parse_variable_declarator(
                 }
             }
         } else if initializer.is_none()
-            && !p.state.in_ambient_context()
+            && !p.state().in_ambient_context()
             && matches!(
                 id_kind,
                 JS_ARRAY_BINDING_PATTERN | JS_OBJECT_BINDING_PATTERN
@@ -1317,7 +1317,7 @@ fn parse_variable_declarator(
                 );
 
             p.error(err);
-        } else if initializer.is_none() && context.is_const.is_some() && !p.state.in_ambient_context() {
+        } else if initializer.is_none() && context.is_const.is_some() && !p.state().in_ambient_context() {
             let err = p
                 .err_builder("Const var declarations must have an initialized value", id_range)
                 .hint( "this variable needs to be initialized");
@@ -1458,7 +1458,8 @@ fn parse_for_head(p: &mut JsParser, has_l_paren: bool, is_for_await: bool) -> Js
         // for (some_expression`
         let checkpoint = p.checkpoint();
 
-        let starts_with_async_of = p.at(T![async]) && p.nth_at(1, T![of]) && p.cur_src() == "async";
+        let starts_with_async_of =
+            p.at(T![async]) && p.nth_at(1, T![of]) && p.cur_text() == "async";
         let init_expr = parse_expression(
             p,
             ExpressionContext::default()
@@ -1475,7 +1476,7 @@ fn parse_for_head(p: &mut JsParser, has_l_paren: bool, is_for_await: bool) -> Js
                 if TypeScript.is_supported(p)
                     && p.at(T![in])
                     && matches!(
-                        assignment.kind(),
+                        assignment.kind(p),
                         JS_ARRAY_ASSIGNMENT_PATTERN | JS_OBJECT_ASSIGNMENT_PATTERN
                     )
                 {
@@ -1704,7 +1705,7 @@ impl ParseNodeList for SwitchCasesList {
         let clause = parse_switch_clause(p, &mut self.first_default);
 
         if let Present(marker) = &clause {
-            if marker.kind() == JS_DEFAULT_CLAUSE && self.first_default.is_none() {
+            if marker.kind(p) == JS_DEFAULT_CLAUSE && self.first_default.is_none() {
                 self.first_default = Some(marker.range(p));
             }
         }
@@ -1832,7 +1833,7 @@ fn parse_catch_declaration(p: &mut JsParser) -> ParsedSyntax {
                     p.bump(T![:]);
 
                     if let Some(ty) = parse_ts_type(p).or_add_diagnostic(p, expected_ts_type) {
-                        if !matches!(ty.kind(), TS_ANY_TYPE | TS_UNKNOWN_TYPE) {
+                        if !matches!(ty.kind(p), TS_ANY_TYPE | TS_UNKNOWN_TYPE) {
                             p.error(
                                 p
                                     .err_builder("Catch clause variable type annotation must be 'any' or 'unknown' if specified.", ty.range(p))

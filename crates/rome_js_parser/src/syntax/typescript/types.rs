@@ -1039,7 +1039,7 @@ fn parse_ts_literal_type(p: &mut JsParser) -> ParsedSyntax {
             .or_else(|| parse_big_int_literal_expression(p))
             .unwrap();
 
-        let type_kind = match number_expr.kind() {
+        let type_kind = match number_expr.kind(p) {
             JS_NUMBER_LITERAL_EXPRESSION => TS_NUMBER_LITERAL_TYPE,
             JS_BIG_INT_LITERAL_EXPRESSION => TS_BIG_INT_LITERAL_TYPE,
             _ => unreachable!(),
@@ -1052,7 +1052,7 @@ fn parse_ts_literal_type(p: &mut JsParser) -> ParsedSyntax {
     }
 
     parse_literal_expression(p).map(|mut expression| {
-        let type_kind = match expression.kind() {
+        let type_kind = match expression.kind(p) {
             JS_NUMBER_LITERAL_EXPRESSION => TS_NUMBER_LITERAL_TYPE,
             JS_BIG_INT_LITERAL_EXPRESSION => TS_BIG_INT_LITERAL_TYPE,
             JS_NULL_LITERAL_EXPRESSION => TS_NULL_LITERAL_TYPE,

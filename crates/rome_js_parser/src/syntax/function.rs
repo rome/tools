@@ -66,7 +66,7 @@ pub(super) fn parse_function_declaration(
     }
 
     let m = p.start();
-    let mut function = if p.state.in_ambient_context() {
+    let mut function = if p.state().in_ambient_context() {
         parse_ambient_function(p, m, AmbientFunctionKind::Declaration)
     } else {
         parse_function(
@@ -78,7 +78,7 @@ pub(super) fn parse_function_declaration(
         )
     };
 
-    if context != StatementContext::StatementList && !function.kind().is_unknown() {
+    if context != StatementContext::StatementList && !function.kind(p).is_unknown() {
         if JsSyntaxFeature::StrictMode.is_supported(p) {
             // test_err function_in_single_statement_context_strict
             // if (true) function a() {}
@@ -127,7 +127,7 @@ pub(super) fn parse_function_export_default_declaration(p: &mut JsParser) -> Par
 
     let m = p.start();
 
-    Present(if p.state.in_ambient_context() {
+    Present(if p.state().in_ambient_context() {
         parse_ambient_function(p, m, AmbientFunctionKind::ExportDefault)
     } else {
         parse_function(p, m, FunctionKind::ExportDefault)
@@ -581,7 +581,7 @@ fn parse_possible_parenthesized_arrow_function_expression(p: &mut JsParser) -> P
 
     // Test if we already tried to parse this position as an arrow function and failed.
     // If so, bail out immediately.
-    if p.state.not_parenthesized_arrow.contains(&start_pos) {
+    if p.state().not_parenthesized_arrow.contains(&start_pos) {
         return Absent;
     }
 
@@ -598,7 +598,7 @@ fn parse_possible_parenthesized_arrow_function_expression(p: &mut JsParser) -> P
             // the callback returns `Err` (which is the case that this branch is handling).
             m.abandon(p);
 
-            p.state.not_parenthesized_arrow.insert(start_pos);
+            p.state_mut().not_parenthesized_arrow.insert(start_pos);
             Absent
         }
     }
@@ -772,14 +772,14 @@ fn is_parenthesized_arrow_function_expression_impl(
 /// Computes the signature flags for parsing the parameters of an arrow expression. These
 /// have different semantics from parsing the body
 fn arrow_function_parameter_flags(p: &JsParser, mut flags: SignatureFlags) -> SignatureFlags {
-    if p.state.in_generator() {
+    if p.state().in_generator() {
         // Arrow functions inherit whatever yield is a valid identifier name from the parent.
         flags |= SignatureFlags::GENERATOR;
     }
 
     // The arrow function is in an async context if the outer function is in an async context or itself is
     // declared async
-    if p.state.in_async() {
+    if p.state().in_async() {
         flags |= SignatureFlags::ASYNC;
     }
 
@@ -846,7 +846,7 @@ fn parse_arrow_body(p: &mut JsParser, mut flags: SignatureFlags) -> ParsedSyntax
     //     () => super();
     //  }
     // }
-    if p.state.in_constructor() {
+    if p.state().in_constructor() {
         flags |= SignatureFlags::CONSTRUCTOR
     }
 
@@ -871,7 +871,7 @@ pub(crate) fn parse_any_parameter(
     };
 
     parameter.map(|mut parameter| {
-        if parameter.kind() == TS_THIS_PARAMETER {
+        if parameter.kind(p) == TS_THIS_PARAMETER {
             if TypeScript.is_unsupported(p) {
                 parameter.change_to_unknown(p);
                 p.error(ts_only_syntax_error(
@@ -1016,7 +1016,7 @@ pub(crate) fn parse_formal_parameter(
 ) -> ParsedSyntax {
     skip_ts_decorators(p);
     parse_binding_pattern(p, expression_context).map(|binding| {
-        let binding_kind = binding.kind();
+        let binding_kind = binding.kind(p);
         let binding_range = binding.range(p);
         let m = binding.precede(p);
         let mut valid = true;

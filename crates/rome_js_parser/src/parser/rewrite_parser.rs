@@ -1,7 +1,9 @@
+use crate::parser::JsLanguageParser;
 use crate::token_source::{TokenSource, TokenSourceCheckpoint};
 use crate::{CompletedMarker, Event, JsParser, Marker, ParseDiagnostic, TextSize, ToDiagnostic};
 use rome_console::fmt::Display;
 use rome_diagnostics::location::AsSpan;
+use rome_js_syntax::JsSyntaxKind::TOMBSTONE;
 use rome_js_syntax::{JsSyntaxKind, TextRange};
 
 /// Simplified parser API for when rewriting the AST structure with `rewrite_events`.
@@ -38,7 +40,7 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
     pub fn start(&mut self) -> RewriteMarker {
         let pos = self.inner.events.len() as u32;
         self.skip_trivia(false);
-        self.inner.push_event(Event::tombstone());
+        self.inner.push_event(Event::tombstone(TOMBSTONE));
         RewriteMarker(Marker::new(pos, self.offset))
     }
 
@@ -53,7 +55,7 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
         // class Test {}
 
         // If the parser originally skipped this token as trivia, then make sure to also consume the trivia.
-        if let Some(trivia) = self.inner.tokens.trivia_list.get(self.trivia_offset) {
+        if let Some(trivia) = self.inner.source().trivia_list.get(self.trivia_offset) {
             if trivia.kind().is_skipped() && trivia.offset() == self.offset {
                 self.trivia_offset += 1;
             }
@@ -64,7 +66,7 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
     }
 
     fn skip_trivia(&mut self, trailing: bool) {
-        let remaining_trivia = &self.inner.tokens.trivia_list[self.trivia_offset..];
+        let remaining_trivia = &self.inner.source().trivia_list[self.trivia_offset..];
         for trivia in remaining_trivia {
             // Don't skip over any "skipped token trivia". These get consumed when bumping the token.
             if trailing != trivia.trailing()
@@ -87,21 +89,21 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
         self.skip_trivia(false); // Skip the leading trivia up to the current token.
         assert_eq!(
             self.offset,
-            self.inner.tokens.position(),
+            self.inner.source().position(),
             "Rewrite didn't consume all tokens"
         );
     }
 
     /// Returns true if the parser is in strict mode
     pub fn is_strict_mode(&self) -> bool {
-        self.inner.state.strict().is_some()
+        self.inner.state().strict().is_some()
     }
 
     pub fn err_builder(&self, message: impl Display, span: impl AsSpan) -> ParseDiagnostic {
         self.inner.err_builder(message, span)
     }
 
-    pub fn error(&mut self, diagnostic: impl ToDiagnostic) {
+    pub fn error(&mut self, diagnostic: impl ToDiagnostic<JsLanguageParser>) {
         self.inner.error(diagnostic)
     }
 }

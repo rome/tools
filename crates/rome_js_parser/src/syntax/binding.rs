@@ -63,7 +63,7 @@ pub(crate) fn parse_identifier_binding(p: &mut JsParser) -> ParsedSyntax {
     let parsed = parse_identifier(p, JS_IDENTIFIER_BINDING);
 
     parsed.map(|mut identifier| {
-        if identifier.kind().is_unknown() {
+        if identifier.kind(p).is_unknown() {
             return identifier;
         }
 
@@ -83,7 +83,7 @@ pub(crate) fn parse_identifier_binding(p: &mut JsParser) -> ParsedSyntax {
             return identifier;
         }
 
-        if let Some(parent) = p.state.duplicate_binding_parent {
+        if let Some(parent) = p.state().duplicate_binding_parent {
             if identifier_name == "let" {
                 let err = p
                     .err_builder(
@@ -101,7 +101,7 @@ pub(crate) fn parse_identifier_binding(p: &mut JsParser) -> ParsedSyntax {
                 return identifier;
             }
 
-            if let Some(existing) = p.state.name_map.get(identifier_name) {
+            if let Some(existing) = p.state().name_map.get(identifier_name) {
                 let err = p
                     .err_builder(
                         format!(
@@ -127,9 +127,10 @@ pub(crate) fn parse_identifier_binding(p: &mut JsParser) -> ParsedSyntax {
             }
 
             let identifier_name = String::from(identifier_name);
-            p.state
+            let identifier_range = identifier.range(p);
+            p.state_mut()
                 .name_map
-                .insert(identifier_name, identifier.range(p).as_range());
+                .insert(identifier_name, identifier_range.as_range());
         }
 
         identifier
@@ -211,7 +212,7 @@ impl ParseArrayPattern<BindingPatternWithDefault> for ArrayBindingPattern {
             ],
             range,
         )
-        .to_diagnostic(p)
+        .into_diagnostic(p)
     }
 
     #[inline]
@@ -244,7 +245,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
 
     #[inline]
     fn expected_property_pattern_error(p: &JsParser, range: TextRange) -> ParseDiagnostic {
-        expected_any(&["identifier", "member name", "rest pattern"], range).to_diagnostic(p)
+        expected_any(&["identifier", "member name", "rest pattern"], range).into_diagnostic(p)
     }
 
     // test object_property_binding
@@ -285,9 +286,9 @@ impl ParseObjectPattern for ObjectBindingPattern {
 
         // test destructuring_initializer_binding
         // const { value, f = (value) => value } = item
-        let parent = p.state.duplicate_binding_parent.take();
+        let parent = p.state_mut().duplicate_binding_parent.take();
         parse_initializer_clause(p, ExpressionContext::default()).ok();
-        p.state.duplicate_binding_parent = parent;
+        p.state_mut().duplicate_binding_parent = parent;
 
         Present(m.complete(p, kind))
     }
@@ -314,10 +315,10 @@ impl ParseObjectPattern for ObjectBindingPattern {
                 .or_add_diagnostic(p, expected_identifier);
 
             if let Some(mut inner) = inner {
-                if inner.kind() != JS_IDENTIFIER_BINDING {
+                if inner.kind(p) != JS_IDENTIFIER_BINDING {
                     let inner_range = inner.range(p);
                     // Don't add multiple errors
-                    if inner.kind() != JS_UNKNOWN_BINDING {
+                    if inner.kind(p) != JS_UNKNOWN_BINDING {
                         p.error(p.err_builder("Expected identifier binding", inner_range,).hint( "Object rest patterns must bind to an identifier, other patterns are not allowed."));
                     }
 

@@ -40,7 +40,7 @@ impl SingleTokenParseRecovery {
             p.error(error);
         }
 
-        if p.state.speculative_parsing {
+        if p.state().speculative_parsing {
             return;
         }
 

@@ -265,7 +265,7 @@ impl<'t> JsParser<'t> {
         &'p mut self,
         change: C,
     ) -> ParserStateGuard<'p, 't, C> {
-        let snapshot = change.apply(&mut self.state);
+        let snapshot = change.apply(self.state_mut());
         ParserStateGuard::new(self, snapshot)
     }
 
@@ -277,9 +277,9 @@ impl<'t> JsParser<'t> {
         C: ChangeParserState,
         F: FnOnce(&mut JsParser) -> R,
     {
-        let snapshot = change.apply(&mut self.state);
+        let snapshot = change.apply(self.state_mut());
         let result = func(self);
-        C::restore(&mut self.state, snapshot);
+        C::restore(self.state_mut(), snapshot);
         result
     }
 }
@@ -307,7 +307,7 @@ impl<'parser, 't, C: ChangeParserState> Drop for ParserStateGuard<'parser, 't, C
     fn drop(&mut self) {
         let snapshot = std::mem::take(&mut self.snapshot);
 
-        C::restore(&mut self.inner.state, snapshot);
+        C::restore(self.inner.state_mut(), snapshot);
     }
 }
 

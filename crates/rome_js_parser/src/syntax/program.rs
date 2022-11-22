@@ -17,7 +17,7 @@ pub(crate) fn parse(p: &mut JsParser) -> CompletedMarker {
 
     let (statement_list, strict_snapshot) = parse_directives(p);
 
-    let result = match p.source_type.module_kind() {
+    let result = match p.source_type().module_kind() {
         ModuleKind::Script => {
             parse_statements(p, false, statement_list);
             m.complete(p, JS_SCRIPT)
@@ -29,7 +29,7 @@ pub(crate) fn parse(p: &mut JsParser) -> CompletedMarker {
     };
 
     if let Some(strict_snapshot) = strict_snapshot {
-        EnableStrictMode::restore(&mut p.state, strict_snapshot);
+        EnableStrictMode::restore(p.state_mut(), strict_snapshot);
     }
 
     result

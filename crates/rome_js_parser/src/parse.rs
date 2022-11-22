@@ -119,7 +119,7 @@ pub fn parse_common(
     text: &str,
     file_id: FileId,
     source_type: SourceType,
-) -> (Vec<Event>, Vec<ParseDiagnostic>, Vec<Trivia>) {
+) -> (Vec<Event<JsSyntaxKind>>, Vec<ParseDiagnostic>, Vec<Trivia>) {
     let mut parser = crate::JsParser::new(text, file_id, source_type);
     crate::syntax::program::parse(&mut parser);
 

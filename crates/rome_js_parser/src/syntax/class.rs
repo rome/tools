@@ -148,7 +148,7 @@ pub(super) fn parse_class_declaration(p: &mut JsParser, context: StatementContex
 
     let mut class = parse_class(p, ClassKind::Declaration);
 
-    if !class.kind().is_unknown() && context.is_single_statement() {
+    if !class.kind(p).is_unknown() && context.is_single_statement() {
         // test_err class_in_single_statement_context
         // if (true) class A {}
         p.error(
@@ -227,7 +227,7 @@ fn parse_class(p: &mut JsParser, kind: ClassKind) -> CompletedMarker {
     // parse class id
     match id {
         Present(id) => {
-            let text = p.source(id.range(p));
+            let text = p.text(id.range(p));
             if TypeScript.is_supported(p) && is_reserved_type_name(text) {
                 let err = p
                     .err_builder(format!(
@@ -518,7 +518,7 @@ fn parse_class_member(p: &mut JsParser, inside_abstract_class: bool) -> ParsedSy
                 }
             }
 
-            let modifiers_valid = modifiers.validate_and_complete(p, member.kind());
+            let modifiers_valid = modifiers.validate_and_complete(p, member.kind(p));
 
             if !valid || !modifiers_valid {
                 member.change_to_unknown(p);
@@ -569,7 +569,7 @@ fn parse_class_member_impl(
     member_marker: Marker,
     modifiers: &mut ClassMemberModifiers,
 ) -> ParsedSyntax {
-    let start_token_pos = p.tokens.position();
+    let start_token_pos = p.source().position();
     let generator_range = p.cur_range();
 
     // Seems like we're at a generator method
@@ -811,7 +811,7 @@ fn parse_class_member_impl(
             // class B { set: String; get: Number }
             let mut property = parse_property_class_member_body(p, member_marker, modifiers);
 
-            if !property.kind().is_unknown() && is_constructor {
+            if !property.kind(p).is_unknown() && is_constructor {
                 let err = p.err_builder(
                     "class properties may not be called `constructor`",
                     property.range(p),
@@ -827,7 +827,7 @@ fn parse_class_member_impl(
             // test_err block_stmt_in_class
             // class S{{}}
             debug_assert_eq!(
-                p.tokens.position(),
+                p.source().position(),
                 start_token_pos,
                 "Parser shouldn't be progressing when returning Absent"
             );
@@ -917,7 +917,7 @@ fn parse_property_class_member_body(
 
     expect_member_semi(p, &member_marker, "class property");
 
-    let is_signature = modifiers.is_signature() || p.state.in_ambient_context();
+    let is_signature = modifiers.is_signature() || p.state().in_ambient_context();
     let kind = if is_signature {
         TS_PROPERTY_SIGNATURE_CLASS_MEMBER
     } else {
@@ -936,7 +936,7 @@ fn parse_property_class_member_body(
                 "Property cannot have an initializer because it is marked abstract.",
                 initializer.range(p),
             ));
-        } else if modifiers.has(ModifierKind::Declare) || p.state.in_ambient_context() {
+        } else if modifiers.has(ModifierKind::Declare) || p.state().in_ambient_context() {
             // test_err ts ts_property_initializer_ambient_context
             // declare class A { prop = "test" }
             // class B { declare prop = "test" }
@@ -1020,7 +1020,7 @@ fn parse_ts_property_annotation(
                 range,
             ));
             valid = false;
-        } else if modifiers.has(ModifierKind::Declare) || p.state.in_ambient_context() {
+        } else if modifiers.has(ModifierKind::Declare) || p.state().in_ambient_context() {
             // test_err ts ts_definite_assignment_in_ambient_context
             // declare class A { prop!: string }
             // class B { declare prop!: string }
@@ -1192,7 +1192,7 @@ fn parse_method_class_member_rest(
             "A method signature cannot be declared as a generator.",
             member.range(p),
         ));
-    } else if p.state.in_ambient_context() && is_async {
+    } else if p.state().in_ambient_context() && is_async {
         // test_err ts ts_ambient_async_method
         // declare class A { async method(); }
         p.error(p.err_builder(
@@ -1341,7 +1341,7 @@ fn expect_method_body(
     //          set test(v) {}
     //      }
     // }
-    if p.state.in_ambient_context() {
+    if p.state().in_ambient_context() {
         match body {
             Present(body) => p.error(unexpected_body_inside_ambient_context(p, body.range(p))),
             Absent => {
@@ -1507,7 +1507,7 @@ fn parse_constructor_parameter(p: &mut JsParser, context: ExpressionContext) -> 
         parse_any_parameter(p, ParameterContext::Implementation, context).map(|mut parameter| {
             // test_err ts ts_constructor_this_parameter
             // class C { constructor(this) {} }
-            if parameter.kind() == TS_THIS_PARAMETER {
+            if parameter.kind(p) == TS_THIS_PARAMETER {
                 p.error(p.err_builder(
                     "A constructor cannot have a 'this' parameter.",
                     parameter.range(p),
@@ -1586,7 +1586,7 @@ pub(crate) fn is_nth_at_modifier(p: &mut JsParser, n: usize, constructor_paramet
 // }
 fn is_at_constructor(p: &JsParser, modifiers: &ClassMemberModifiers) -> bool {
     !modifiers.has(ModifierKind::Static)
-        && (p.at(T![constructor]) || matches!(p.cur_src(), "\"constructor\"" | "'constructor'"))
+        && (p.at(T![constructor]) || matches!(p.cur_text(), "\"constructor\"" | "'constructor'"))
 }
 
 // test class_member_modifiers
@@ -1956,7 +1956,7 @@ impl ClassMemberModifiers {
             return Some(p.err_builder(
                 format!(
                     "'{}' modifier can only be used in TypeScript files",
-                    p.source(modifier.as_text_range())
+                    p.text(modifier.as_text_range())
                 ),
                 modifier.as_text_range(),
             ));
@@ -1983,7 +1983,7 @@ impl ClassMemberModifiers {
             return Some(p.err_builder(
                 format!(
                     "'{}' modifier cannot appear on an index signature.",
-                    p.source(modifier.as_text_range())
+                    p.text(modifier.as_text_range())
                 ),
                 modifier.as_text_range(),
             ));

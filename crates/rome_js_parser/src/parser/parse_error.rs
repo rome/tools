@@ -1,7 +1,9 @@
+use crate::parser::{LanguageParser, Parser};
 use crate::span::Span;
 use crate::token_source::TokenSource;
-use crate::{JsParser, ParseDiagnostic};
+use crate::ParseDiagnostic;
 use rome_js_syntax::{JsSyntaxKind, TextRange};
+use rome_rowan::SyntaxKind;
 use std::ops::Range;
 
 ///! Provides helper functions to build common diagnostic messages
@@ -17,7 +19,10 @@ pub(crate) fn expected_any(names: &[&str], range: TextRange) -> ExpectedNodeDiag
 }
 
 #[must_use]
-pub(crate) fn expected_token(token: JsSyntaxKind) -> impl ToDiagnostic {
+pub(crate) fn expected_token<K>(token: K) -> ExpectedToken
+where
+    K: SyntaxKind,
+{
     ExpectedToken(
         token
             .to_string()
@@ -26,7 +31,7 @@ pub(crate) fn expected_token(token: JsSyntaxKind) -> impl ToDiagnostic {
 }
 
 #[must_use]
-pub(crate) fn expected_token_any(tokens: &[JsSyntaxKind]) -> impl ToDiagnostic {
+pub(crate) fn expected_token_any(tokens: &[JsSyntaxKind]) -> ExpectedTokens {
     use std::fmt::Write;
     let mut expected = String::new();
 
@@ -51,12 +56,12 @@ pub(crate) fn expected_token_any(tokens: &[JsSyntaxKind]) -> impl ToDiagnostic {
     ExpectedTokens(expected)
 }
 
-pub(crate) trait ToDiagnostic {
-    fn to_diagnostic(self, p: &JsParser) -> ParseDiagnostic;
+pub trait ToDiagnostic<L: LanguageParser> {
+    fn into_diagnostic(self, p: &Parser<L>) -> ParseDiagnostic;
 }
 
-impl ToDiagnostic for ParseDiagnostic {
-    fn to_diagnostic(self, _: &JsParser) -> ParseDiagnostic {
+impl<L: LanguageParser> ToDiagnostic<L> for ParseDiagnostic {
+    fn into_diagnostic(self, _: &Parser<L>) -> ParseDiagnostic {
         self
     }
 }
@@ -104,13 +109,13 @@ impl ExpectedNodeDiagnosticBuilder {
     }
 }
 
-impl ToDiagnostic for ExpectedNodeDiagnosticBuilder {
-    fn to_diagnostic(self, p: &JsParser) -> ParseDiagnostic {
+impl<L: LanguageParser> ToDiagnostic<L> for ExpectedNodeDiagnosticBuilder {
+    fn into_diagnostic(self, p: &Parser<L>) -> ParseDiagnostic {
         let range = &self.range;
 
         let msg = if range.is_empty()
-            && p.tokens
-                .source()
+            && p.source()
+                .text()
                 .get(Range::<_>::from(range.as_range()))
                 .is_none()
         {
@@ -122,7 +127,7 @@ impl ToDiagnostic for ExpectedNodeDiagnosticBuilder {
             format!(
                 "expected {} but instead found '{}'",
                 self.names,
-                p.source(range.as_range())
+                p.text(range.as_range())
             )
         };
 
@@ -138,44 +143,42 @@ fn article_for(name: &str) -> &'static str {
     }
 }
 
-struct ExpectedToken(&'static str);
+pub(crate) struct ExpectedToken(&'static str);
 
-impl ToDiagnostic for ExpectedToken {
-    fn to_diagnostic(self, p: &JsParser) -> ParseDiagnostic {
-        match p.cur() {
-            JsSyntaxKind::EOF => p
-                .err_builder(
-                    format!("expected `{}` but instead the file ends", self.0),
-                    p.cur_range(),
-                )
-                .detail(p.cur_range(), "the file ends here"),
-            _ => p
-                .err_builder(
-                    format!("expected `{}` but instead found `{}`", self.0, p.cur_src()),
-                    p.cur_range(),
-                )
-                .hint(format!("Remove {}", p.cur_src())),
+impl<L: LanguageParser> ToDiagnostic<L> for ExpectedToken {
+    fn into_diagnostic(self, p: &Parser<L>) -> ParseDiagnostic {
+        if p.cur() == L::EOF {
+            p.err_builder(
+                format!("expected `{}` but instead the file ends", self.0),
+                p.cur_range(),
+            )
+            .detail(p.cur_range(), "the file ends here")
+        } else {
+            p.err_builder(
+                format!("expected `{}` but instead found `{}`", self.0, p.cur_text()),
+                p.cur_range(),
+            )
+            .hint(format!("Remove {}", p.cur_text()))
         }
     }
 }
 
-struct ExpectedTokens(String);
+pub(crate) struct ExpectedTokens(String);
 
-impl ToDiagnostic for ExpectedTokens {
-    fn to_diagnostic(self, p: &JsParser) -> ParseDiagnostic {
-        match p.cur() {
-            JsSyntaxKind::EOF => p
-                .err_builder(
-                    format!("expected {} but instead the file ends", self.0),
-                    p.cur_range(),
-                )
-                .detail(p.cur_range(), "the file ends here"),
-            _ => p
-                .err_builder(
-                    format!("expected {} but instead found `{}`", self.0, p.cur_src()),
-                    p.cur_range(),
-                )
-                .hint(format!("Remove {}", p.cur_src())),
+impl<L: LanguageParser> ToDiagnostic<L> for ExpectedTokens {
+    fn into_diagnostic(self, p: &Parser<L>) -> ParseDiagnostic {
+        if p.cur() == L::EOF {
+            p.err_builder(
+                format!("expected {} but instead the file ends", self.0),
+                p.cur_range(),
+            )
+            .detail(p.cur_range(), "the file ends here")
+        } else {
+            p.err_builder(
+                format!("expected {} but instead found `{}`", self.0, p.cur_text()),
+                p.cur_range(),
+            )
+            .hint(format!("Remove {}", p.cur_text()))
         }
     }
 }

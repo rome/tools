@@ -64,7 +64,7 @@ pub(crate) fn expression_to_assignment_pattern(
     target: CompletedMarker,
     checkpoint: Checkpoint,
 ) -> CompletedMarker {
-    match target.kind() {
+    match target.kind(p) {
         JS_OBJECT_EXPRESSION => {
             p.rewind(checkpoint);
             ObjectAssignmentPattern.parse_object_pattern(p).unwrap()
@@ -218,7 +218,7 @@ impl ParseArrayPattern<AssignmentPatternWithDefault> for ArrayAssignmentPattern 
 
     #[inline]
     fn expected_element_error(p: &JsParser, range: TextRange) -> ParseDiagnostic {
-        expected_any(&["assignment target", "rest element", "comma"], range).to_diagnostic(p)
+        expected_any(&["assignment target", "rest element", "comma"], range).into_diagnostic(p)
     }
 
     #[inline]
@@ -250,7 +250,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 
     #[inline]
     fn expected_property_pattern_error(p: &JsParser, range: TextRange) -> ParseDiagnostic {
-        expected_any(&["assignment target", "rest property"], range).to_diagnostic(p)
+        expected_any(&["assignment target", "rest property"], range).into_diagnostic(p)
     }
 
     // test property_assignment_target
@@ -321,7 +321,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 
         if let Some(mut target) = target {
             if matches!(
-                target.kind(),
+                target.kind(p),
                 JS_OBJECT_ASSIGNMENT_PATTERN | JS_ARRAY_ASSIGNMENT_PATTERN
             ) {
                 target.change_kind(p, JS_UNKNOWN_ASSIGNMENT);
@@ -342,7 +342,7 @@ fn try_expression_to_assignment(
     checkpoint: Checkpoint,
 ) -> Result<CompletedMarker, CompletedMarker> {
     if !matches!(
-        target.kind(),
+        target.kind(p),
         JS_PARENTHESIZED_EXPRESSION
             | JS_STATIC_MEMBER_EXPRESSION
             | JS_COMPUTED_MEMBER_EXPRESSION

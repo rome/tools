@@ -69,6 +69,21 @@ impl SyntaxKind for RawLanguageKind {
             RawLanguageKind::EXPRESSION_LIST | RawLanguageKind::SEPARATED_EXPRESSION_LIST
         )
     }
+
+    fn to_string(&self) -> Option<&'static str> {
+        let str = match self {
+            COMMA_TOKEN => ",",
+            RawLanguageKind::FOR_KW => "for",
+            RawLanguageKind::L_PAREN_TOKEN => "(",
+            RawLanguageKind::SEMICOLON_TOKEN => ";",
+            RawLanguageKind::R_PAREN_TOKEN => ")",
+            RawLanguageKind::EQUAL_TOKEN => "=",
+            RawLanguageKind::LET_TOKEN => "let",
+            RawLanguageKind::PLUS_TOKEN => "+",
+            _ => return None,
+        };
+        Some(str)
+    }
 }
 
 #[doc(hidden)]

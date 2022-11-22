@@ -409,9 +409,9 @@ fn parse_jsx_expression_child(p: &mut JsParser) -> ParsedSyntax {
 fn parse_jsx_any_element_name(p: &mut JsParser) -> ParsedSyntax {
     let name = parse_jsx_name_or_namespace(p);
     name.map(|mut name| {
-        if name.kind() == JSX_NAME && (p.at(T![.]) || !is_intrinsic_element(name.text(p))) {
+        if name.kind(p) == JSX_NAME && (p.at(T![.]) || !is_intrinsic_element(name.text(p))) {
             name.change_kind(p, JSX_REFERENCE_IDENTIFIER)
-        } else if name.kind() == JSX_NAMESPACE_NAME && p.at(T![.]) {
+        } else if name.kind(p) == JSX_NAMESPACE_NAME && p.at(T![.]) {
             let error = p.err_builder(
                 "JSX property access expressions cannot include JSX namespace names.",
                 name.range(p),
@@ -554,7 +554,7 @@ fn parse_jsx_spread_attribute(p: &mut JsParser) -> ParsedSyntax {
     p.expect(T![...]);
 
     let argument = parse_expression(p, ExpressionContext::default()).map(|mut expr| {
-        if expr.kind() == JS_SEQUENCE_EXPRESSION {
+        if expr.kind(p) == JS_SEQUENCE_EXPRESSION {
             p.error(p.err_builder(
                 "Comma operator isn't a valid value for a JSX spread argument.",
                 expr.range(p),
@@ -704,7 +704,7 @@ fn parse_jsx_assignment_expression(p: &mut JsParser, is_spread: bool) -> ParsedS
             "This expression is not valid as a JSX expression."
         };
 
-        let err = match expr.kind() {
+        let err = match expr.kind(p) {
             JsSyntaxKind::IMPORT_META
             | JsSyntaxKind::NEW_TARGET
             | JsSyntaxKind::JS_CLASS_EXPRESSION => Some(p.err_builder(msg, expr.range(p))),

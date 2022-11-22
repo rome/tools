@@ -369,7 +369,7 @@ mod tests;
 pub mod syntax;
 mod token_source;
 
-use crate::parser::ToDiagnostic;
+use crate::parser::{JsLanguageParser, ToDiagnostic};
 pub(crate) use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
 pub(crate) use crate::ParsedSyntax::{Absent, Present};
 pub use crate::{
@@ -648,7 +648,7 @@ pub(crate) trait SyntaxFeature: Sized {
     where
         S: Into<ParsedSyntax>,
         E: FnOnce(&JsParser, &CompletedMarker) -> D,
-        D: ToDiagnostic,
+        D: ToDiagnostic<JsLanguageParser>,
     {
         syntax.into().map(|mut syntax| {
             if self.is_unsupported(p) {
@@ -729,10 +729,10 @@ pub enum JsSyntaxFeature {
 impl SyntaxFeature for JsSyntaxFeature {
     fn is_supported(&self, p: &JsParser) -> bool {
         match self {
-            JsSyntaxFeature::SloppyMode => p.state.strict().is_none(),
-            JsSyntaxFeature::StrictMode => p.state.strict().is_some(),
-            JsSyntaxFeature::TypeScript => p.source_type.language().is_typescript(),
-            JsSyntaxFeature::Jsx => p.source_type.variant() == LanguageVariant::Jsx,
+            JsSyntaxFeature::SloppyMode => p.state().strict().is_none(),
+            JsSyntaxFeature::StrictMode => p.state().strict().is_some(),
+            JsSyntaxFeature::TypeScript => p.source_type().language().is_typescript(),
+            JsSyntaxFeature::Jsx => p.source_type().variant() == LanguageVariant::Jsx,
         }
     }
 }

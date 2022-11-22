@@ -42,11 +42,11 @@ fn parse_ts_identifier_binding(
     ts_identifier_context: TsIdentifierContext,
 ) -> ParsedSyntax {
     parse_identifier(p, TS_IDENTIFIER_BINDING).map(|mut ident| {
-        if ident.kind().is_unknown() {
+        if ident.kind(p).is_unknown() {
             return ident;
         }
 
-        let name = p.source(ident.range(p));
+        let name = p.text(ident.range(p));
         let is_reserved_word_this_context = ts_identifier_context.is_reserved_word(name);
         if is_reserved_word_this_context {
             let error = p.err_builder(format!("Type alias cannot be {}", name), ident.range(p));
@@ -136,9 +136,9 @@ pub(crate) fn try_parse<T, E>(
 ) -> Result<T, E> {
     let checkpoint = p.checkpoint();
 
-    let old_value = std::mem::replace(&mut p.state.speculative_parsing, true);
+    let old_value = std::mem::replace(&mut p.state_mut().speculative_parsing, true);
     let res = func(p);
-    p.state.speculative_parsing = old_value;
+    p.state_mut().speculative_parsing = old_value;
 
     if res.is_err() {
         p.rewind(checkpoint);
@@ -184,7 +184,7 @@ pub(crate) fn expect_ts_index_signature_member(
                 p,
                 p.cur_range(),
                 "index signature",
-                p.cur_src(),
+                p.cur_text(),
             ));
             p.bump_any();
         }

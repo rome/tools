@@ -114,7 +114,7 @@ fn is_reserved_enum_name(name: &str) -> bool {
 fn parse_ts_enum_id(p: &mut JsParser, enum_token_range: TextRange) {
     match parse_binding(p) {
         Present(id) => {
-            let text = p.source(id.range(p));
+            let text = p.text(id.range(p));
             if is_reserved_enum_name(text) {
                 let err = p.err_builder(
                     format!(

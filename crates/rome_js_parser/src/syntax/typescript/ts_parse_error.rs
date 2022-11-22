@@ -7,7 +7,7 @@ use rome_diagnostics::location::AsSpan;
 use rome_rowan::TextRange;
 
 pub(crate) fn expected_ts_enum_member(p: &JsParser, range: TextRange) -> ParseDiagnostic {
-    expected_any(&["identifier", "string literal", "computed name"], range).to_diagnostic(p)
+    expected_any(&["identifier", "string literal", "computed name"], range).into_diagnostic(p)
 }
 
 pub(crate) fn unexpected_abstract_member_with_body(
@@ -35,7 +35,7 @@ pub(crate) fn ts_modifier_cannot_appear_on_a_constructor_declaration(
     p: &JsParser,
     modifier_range: TextRange,
 ) -> ParseDiagnostic {
-    let modifier = p.source(modifier_range);
+    let modifier = p.text(modifier_range);
     p.err_builder(
         format!("'{modifier}' cannot appear on a constructor declaration."),
         modifier_range,
@@ -46,7 +46,7 @@ pub(crate) fn ts_modifier_cannot_appear_on_a_parameter(
     p: &JsParser,
     modifier_range: TextRange,
 ) -> ParseDiagnostic {
-    let modifier = p.source(modifier_range);
+    let modifier = p.text(modifier_range);
     p.err_builder(
         format!("'{modifier}' cannot appear on a parameter."),
         modifier_range,
@@ -103,9 +103,9 @@ pub(crate) fn ts_set_accessor_return_type_error(
 }
 
 pub(crate) fn expected_ts_type(p: &JsParser, range: TextRange) -> ParseDiagnostic {
-    expected_node("type", range).to_diagnostic(p)
+    expected_node("type", range).into_diagnostic(p)
 }
 
 pub(crate) fn expected_ts_type_parameter(p: &JsParser, range: TextRange) -> ParseDiagnostic {
-    expected_node("type parameter", range).to_diagnostic(p)
+    expected_node("type parameter", range).into_diagnostic(p)
 }

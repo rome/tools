@@ -1,8 +1,7 @@
 use crate::parser::parse_recovery::RecoveryResult;
 use crate::parser::ParsedSyntax::{Absent, Present};
-use crate::parser::{ParseRecovery, ToDiagnostic};
+use crate::parser::{JsLanguageParser, LanguageParser, ParseRecovery, Parser, ToDiagnostic};
 use crate::{CompletedMarker, JsParser, Marker, ParseDiagnostic};
-use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::TextRange;
 
 /// Syntax that is either present in the source tree or absent.
@@ -156,10 +155,13 @@ impl ParsedSyntax {
 
     /// Returns the kind of the syntax if it is present or [None] otherwise
     #[inline]
-    pub fn kind(&self) -> Option<JsSyntaxKind> {
+    pub fn kind<L>(&self, p: &Parser<L>) -> Option<L::Kind>
+    where
+        L: LanguageParser,
+    {
         match self {
             Absent => None,
-            Present(marker) => Some(marker.kind()),
+            Present(marker) => Some(marker.kind(p)),
         }
     }
 
@@ -172,7 +174,7 @@ impl ParsedSyntax {
     ) -> Option<CompletedMarker>
     where
         E: FnOnce(&JsParser, TextRange) -> D,
-        D: ToDiagnostic,
+        D: ToDiagnostic<JsLanguageParser>,
     {
         match self {
             Present(syntax) => {
@@ -195,7 +197,7 @@ impl ParsedSyntax {
     ) -> Option<CompletedMarker>
     where
         E: FnOnce(&JsParser, TextRange) -> D,
-        D: ToDiagnostic,
+        D: ToDiagnostic<JsLanguageParser>,
     {
         match self {
             Present(syntax) => Some(syntax),
@@ -214,7 +216,7 @@ impl ParsedSyntax {
     pub fn precede_or_add_diagnostic<E, D>(self, p: &mut JsParser, error_builder: E) -> Marker
     where
         E: FnOnce(&JsParser, TextRange) -> D,
-        D: ToDiagnostic,
+        D: ToDiagnostic<JsLanguageParser>,
     {
         match self {
             Present(completed) => completed.precede(p),

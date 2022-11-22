@@ -55,7 +55,6 @@ impl Trivia {
 
 pub trait TokenSource<'source> {
     type Kind: SyntaxKind;
-    type Checkpoint;
 
     /// Returns the kind of the current non-trivia token
     fn current(&self) -> Self::Kind;
@@ -63,25 +62,35 @@ pub trait TokenSource<'source> {
     /// Returns the range of the current non-trivia token
     fn current_range(&self) -> TextRange;
 
-    /// Gets the kind of the nth non-trivia token
-    fn nth(&mut self, n: usize) -> Self::Kind;
-
-    /// Restores the token source to a previous state
-    fn rewind(&mut self, checkpoint: Self::Checkpoint);
-
-    /// Creates a checkpoint to which it can later return using [Self::rewind].
-    fn checkpoint(&self) -> Self::Checkpoint;
-
     /// Returns the source text
-    fn source(&self) -> &'source str;
+    fn text(&self) -> &'source str;
 
     /// Returns the byte offset of the current token from the start of the source document
     fn position(&self) -> TextSize {
         self.current_range().start()
     }
 
+    fn bump(&mut self);
+
+    fn skip_as_trivia(&mut self);
+
     /// Ends this token source and returns the source text's trivia
     fn finish(self) -> (Vec<Trivia>, Vec<ParseDiagnostic>);
+}
+
+pub trait BumpWithContext<'source>: TokenSource<'source> {
+    type Context;
+
+    fn bump_with_context(&mut self, context: Self::Context);
+
+    /// Skips the current token as skipped token trivia
+    fn skip_as_trivia_with_context(&mut self, context: Self::Context);
+}
+
+/// Token source that supports inspecting the 'nth' token (lookahead)
+pub trait NthToken<'source>: TokenSource<'source> {
+    /// Gets the kind of the nth non-trivia token
+    fn nth(&mut self, n: usize) -> Self::Kind;
 }
 
 /// Token source for the parser that skips over any non-trivia token.
@@ -234,33 +243,20 @@ impl<'l> JsTokenSource<'l> {
         None
     }
 
-    #[inline(always)]
-    pub fn bump(&mut self, context: LexContext) {
-        if self.current() != EOF {
-            if !context.is_regular() {
-                self.lookahead_offset = 0;
-                self.non_trivia_lookahead.clear();
-            }
-
-            self.next_non_trivia_token(context, false);
-        }
+    /// Restores the token source to a previous state
+    pub fn rewind(&mut self, checkpoint: TokenSourceCheckpoint) {
+        assert!(self.trivia_list.len() >= checkpoint.trivia_len as usize);
+        self.trivia_list.truncate(checkpoint.trivia_len as usize);
+        self.lexer.rewind(checkpoint.lexer);
+        self.non_trivia_lookahead.clear();
+        self.lookahead_offset = 0;
     }
 
-    /// Skips the current token as skipped token trivia
-    pub fn skip_as_trivia(&mut self, context: LexContext) {
-        if self.current() != EOF {
-            if !context.is_regular() {
-                self.lookahead_offset = 0;
-                self.non_trivia_lookahead.clear();
-            }
-
-            self.trivia_list.push(Trivia::new(
-                TriviaPieceKind::Skipped,
-                self.current_range(),
-                false,
-            ));
-
-            self.next_non_trivia_token(context, true)
+    /// Creates a checkpoint to which it can later return using [Self::rewind].
+    pub fn checkpoint(&self) -> TokenSourceCheckpoint {
+        TokenSourceCheckpoint {
+            trivia_len: self.trivia_list.len() as u32,
+            lexer: self.lexer.checkpoint(),
         }
     }
 
@@ -280,7 +276,6 @@ impl<'l> JsTokenSource<'l> {
 }
 
 impl<'source> TokenSource<'source> for JsTokenSource<'source> {
-    type Checkpoint = TokenSourceCheckpoint;
     type Kind = JsSyntaxKind;
 
     /// Returns the kind of the current non-trivia token
@@ -295,33 +290,8 @@ impl<'source> TokenSource<'source> for JsTokenSource<'source> {
         self.lexer.current_range()
     }
 
-    /// Gets the kind of the nth non-trivia token
     #[inline(always)]
-    fn nth(&mut self, n: usize) -> JsSyntaxKind {
-        if n == 0 {
-            self.current()
-        } else {
-            self.lookahead(n).map_or(EOF, |lookahead| lookahead.kind)
-        }
-    }
-
-    fn rewind(&mut self, checkpoint: TokenSourceCheckpoint) {
-        assert!(self.trivia_list.len() >= checkpoint.trivia_len as usize);
-        self.trivia_list.truncate(checkpoint.trivia_len as usize);
-        self.lexer.rewind(checkpoint.lexer);
-        self.non_trivia_lookahead.clear();
-        self.lookahead_offset = 0;
-    }
-
-    fn checkpoint(&self) -> TokenSourceCheckpoint {
-        TokenSourceCheckpoint {
-            trivia_len: self.trivia_list.len() as u32,
-            lexer: self.lexer.checkpoint(),
-        }
-    }
-
-    #[inline(always)]
-    fn source(&self) -> &'source str {
+    fn text(&self) -> &'source str {
         self.lexer.source()
     }
 
@@ -330,8 +300,63 @@ impl<'source> TokenSource<'source> for JsTokenSource<'source> {
         self.current_range().start()
     }
 
+    #[inline(always)]
+    fn bump(&mut self) {
+        self.bump_with_context(LexContext::Regular)
+    }
+
+    fn skip_as_trivia(&mut self) {
+        self.skip_as_trivia_with_context(LexContext::Regular)
+    }
+
     fn finish(self) -> (Vec<Trivia>, Vec<ParseDiagnostic>) {
         (self.trivia_list, self.lexer.finish())
+    }
+}
+
+impl<'source> BumpWithContext<'source> for JsTokenSource<'source> {
+    type Context = LexContext;
+
+    #[inline(always)]
+    fn bump_with_context(&mut self, context: Self::Context) {
+        if self.current() != EOF {
+            if !context.is_regular() {
+                self.lookahead_offset = 0;
+                self.non_trivia_lookahead.clear();
+            }
+
+            self.next_non_trivia_token(context, false);
+        }
+    }
+
+    /// Skips the current token as skipped token trivia
+    fn skip_as_trivia_with_context(&mut self, context: LexContext) {
+        if self.current() != EOF {
+            if !context.is_regular() {
+                self.lookahead_offset = 0;
+                self.non_trivia_lookahead.clear();
+            }
+
+            self.trivia_list.push(Trivia::new(
+                TriviaPieceKind::Skipped,
+                self.current_range(),
+                false,
+            ));
+
+            self.next_non_trivia_token(context, true)
+        }
+    }
+}
+
+impl<'source> NthToken<'source> for JsTokenSource<'source> {
+    /// Gets the kind of the nth non-trivia token
+    #[inline(always)]
+    fn nth(&mut self, n: usize) -> JsSyntaxKind {
+        if n == 0 {
+            self.current()
+        } else {
+            self.lookahead(n).map_or(EOF, |lookahead| lookahead.kind)
+        }
     }
 }
 
