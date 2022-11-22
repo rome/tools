@@ -1,28 +1,37 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 223
 expression: content
 ---
+# Termination Message
+
+```block
+no files were processed in the specified paths.
+```
+
 # Emitted Messages
 
 ```block
-C:\Users\User\AppData\Local\Temp\rome_test_infinite_symlink_exapansion\prefix internalError/fs ━━━━━━━━━━
+<TEMP_DIR>/rome_test_infinite_symlink_exapansion/prefix internalError/fs ━━━━━━━━━━
 
   ! Infinite symlink expansion
   
-  × Rome encountered a file system entry that leads to an infinite symbolic link expansion, causing an infinite cycle: C:\Users\User\AppData\Local\Temp\rome_test_infinite_symlink_exapansion\prefix
+  × Rome encountered a file system entry that leads to an infinite symbolic link expansion, causing an infinite cycle: <TEMP_DIR>/rome_test_infinite_symlink_exapansion/prefix
   
 
 ```
 
 ```block
-C:\Users\User\AppData\Local\Temp\rome_test_infinite_symlink_exapansion\prefix internalError/fs ━━━━━━━━━━
+<TEMP_DIR>/rome_test_infinite_symlink_exapansion/prefix internalError/fs ━━━━━━━━━━
 
   ! Infinite symlink expansion
   
-  × Rome encountered a file system entry that leads to an infinite symbolic link expansion, causing an infinite cycle: C:\Users\User\AppData\Local\Temp\rome_test_infinite_symlink_exapansion\prefix
+  × Rome encountered a file system entry that leads to an infinite symbolic link expansion, causing an infinite cycle: <TEMP_DIR>/rome_test_infinite_symlink_exapansion/prefix
   
 
+```
+
+```block
+Checked 0 file(s) in <TIME>
 ```
 
 

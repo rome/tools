@@ -671,6 +671,21 @@ fn no_lint_if_files_are_listed_in_ignore_option() {
     ));
 }
 
+/// Creating a symbolic link will fail on Windows if the current process is
+/// unprivileged. Since running tests as administrator is uncommon and
+/// constraining, this error gets silently ignored if we're not running on CI
+/// (the workflows are being being run with the correct permissions on CI)
+#[cfg(target_os = "windows")]
+macro_rules! check_windows_symlink {
+    ($result:expr) => {
+        match $result {
+            Ok(res) => res,
+            Err(err) if option_env!("CI") == Some("1") => panic!("failed to create symlink: {err}"),
+            Err(_) => return,
+        }
+    };
+}
+
 #[test]
 fn fs_error_dereferenced_symlink() {
     let fs = MemoryFileSystem::default();
@@ -693,7 +708,10 @@ fn fs_error_dereferenced_symlink() {
 
     #[cfg(target_os = "windows")]
     {
-        symlink_file(root_path.join("null"), root_path.join("broken_symlink")).unwrap();
+        check_windows_symlink!(symlink_file(
+            root_path.join("null"),
+            root_path.join("broken_symlink")
+        ));
     }
 
     let result = run_cli(
@@ -747,8 +765,14 @@ fn fs_error_infinite_symlink_exapansion() {
 
     #[cfg(target_os = "windows")]
     {
-        symlink_dir(subdir1_path.clone(), root_path.join("self_symlink1")).unwrap();
-        symlink_dir(subdir1_path, subdir2_path.join("self_symlink2")).unwrap();
+        check_windows_symlink!(symlink_dir(
+            subdir1_path.clone(),
+            root_path.join("self_symlink1")
+        ));
+        check_windows_symlink!(symlink_dir(
+            subdir1_path,
+            subdir2_path.join("self_symlink2")
+        ));
     }
 
     let result = run_cli(
