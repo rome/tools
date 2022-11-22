@@ -46,6 +46,14 @@ case11!?.[computedField];
 
 case12!?.[a.b!!];
 
+case13!!! = null
+
+case14!! = null
+
+if (case15!!) {}
+
+if (!case16!!) {}
+
 ```
 
 # Diagnostics
@@ -260,11 +268,106 @@ invalid.ts:40:11 lint/nursery/noExtraNonNullAssertion  FIXABLE  ━━━━━�
   > 40 │ case12!?.[a.b!!];
        │           ^^^^
     41 │ 
+    42 │ case13!!! = null
   
   i Safe fix: Remove extra non-null assertion.
   
     40 │ case12!?.[a.b!!];
        │               -  
+
+```
+
+```
+invalid.ts:42:1 lint/nursery/noExtraNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden extra non-null assertion.
+  
+    40 │ case12!?.[a.b!!];
+    41 │ 
+  > 42 │ case13!!! = null
+       │ ^^^^^^^^
+    43 │ 
+    44 │ case14!! = null
+  
+  i Safe fix: Remove extra non-null assertion.
+  
+    42 │ case13!!!·=·null
+       │         -       
+
+```
+
+```
+invalid.ts:42:1 lint/nursery/noExtraNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden extra non-null assertion.
+  
+    40 │ case12!?.[a.b!!];
+    41 │ 
+  > 42 │ case13!!! = null
+       │ ^^^^^^^
+    43 │ 
+    44 │ case14!! = null
+  
+  i Safe fix: Remove extra non-null assertion.
+  
+    42 │ case13!!!·=·null
+       │         -       
+
+```
+
+```
+invalid.ts:44:1 lint/nursery/noExtraNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden extra non-null assertion.
+  
+    42 │ case13!!! = null
+    43 │ 
+  > 44 │ case14!! = null
+       │ ^^^^^^^
+    45 │ 
+    46 │ if (case15!!) {}
+  
+  i Safe fix: Remove extra non-null assertion.
+  
+    44 │ case14!!·=·null
+       │        -       
+
+```
+
+```
+invalid.ts:46:5 lint/nursery/noExtraNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden extra non-null assertion.
+  
+    44 │ case14!! = null
+    45 │ 
+  > 46 │ if (case15!!) {}
+       │     ^^^^^^^
+    47 │ 
+    48 │ if (!case16!!) {}
+  
+  i Safe fix: Remove extra non-null assertion.
+  
+    46 │ if·(case15!!)·{}
+       │            -    
+
+```
+
+```
+invalid.ts:48:6 lint/nursery/noExtraNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden extra non-null assertion.
+  
+    46 │ if (case15!!) {}
+    47 │ 
+  > 48 │ if (!case16!!) {}
+       │      ^^^^^^^
+    49 │ 
+  
+  i Safe fix: Remove extra non-null assertion.
+  
+    48 │ if·(!case16!!)·{}
+       │             -    
 
 ```
 

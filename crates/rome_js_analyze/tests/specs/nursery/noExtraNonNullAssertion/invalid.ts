@@ -38,3 +38,11 @@ case10!!.prop = null;
 case11!?.[computedField];
 
 case12!?.[a.b!!];
+
+case13!!! = null
+
+case14!! = null
+
+if (case15!!) {}
+
+if (!case16!!) {}

@@ -2,8 +2,10 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{JsAnyExpression, TsNonNullAssertionExpression};
-use rome_rowan::{AstNode, BatchMutationExt};
+use rome_js_syntax::{
+    JsAnyAssignment, JsAnyExpression, TsNonNullAssertionAssignment, TsNonNullAssertionExpression,
+};
+use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -52,18 +54,59 @@ declare_rule! {
     }
 }
 
+declare_node_union! {
+    pub(crate) TsAnyNonNullAssertion = TsNonNullAssertionAssignment | TsNonNullAssertionExpression
+}
+
 impl Rule for NoExtraNonNullAssertion {
-    type Query = Ast<TsNonNullAssertionExpression>;
+    type Query = Ast<TsAnyNonNullAssertion>;
     type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        let parent = node.parent::<JsAnyExpression>()?;
 
-        if has_extra_non_null_assertion(parent)? {
-            return Some(());
+        match node {
+            TsAnyNonNullAssertion::TsNonNullAssertionAssignment(_) => {
+                let parent = node.parent::<JsAnyAssignment>()?;
+
+                // Cases considered as invalid:
+                // - TsNonNullAssertionAssignment > TsNonNullAssertionAssignment
+                let has_extra_non_assertion = match parent {
+                    JsAnyAssignment::TsNonNullAssertionAssignment(_) => true,
+                    _ => false,
+                };
+
+                if has_extra_non_assertion {
+                    return Some(());
+                }
+            }
+            TsAnyNonNullAssertion::TsNonNullAssertionExpression(_) => {
+                let parent = node.parent::<JsAnyExpression>()?;
+
+                // Cases considered as invalid:
+                // - TsNonNullAssertionAssignment > TsNonNullAssertionExpression
+                // - TsNonNullAssertionExpression > TsNonNullAssertionExpression
+                // - JsCallExpression[optional] > TsNonNullAssertionExpression
+                // - JsStaticMemberExpression[optional] > TsNonNullAssertionExpression
+                let has_extra_non_assertion = match parent.omit_parentheses() {
+                    JsAnyExpression::JsAssignmentExpression(expr) => expr
+                        .left()
+                        .ok()?
+                        .as_js_any_assignment()?
+                        .as_ts_non_null_assertion_assignment()
+                        .is_some(),
+                    JsAnyExpression::TsNonNullAssertionExpression(_) => true,
+                    JsAnyExpression::JsStaticMemberExpression(expr) => expr.is_optional(),
+                    JsAnyExpression::JsCallExpression(expr) => expr.is_optional(),
+                    _ => false,
+                };
+
+                if has_extra_non_assertion {
+                    return Some(());
+                }
+            }
         }
 
         None
@@ -83,7 +126,16 @@ impl Rule for NoExtraNonNullAssertion {
         let mut mutation = ctx.root().begin();
         let node = ctx.query();
 
-        mutation.remove_token(node.excl_token().ok()?);
+        let excl_token = match node {
+            TsAnyNonNullAssertion::TsNonNullAssertionAssignment(assignment) => {
+                assignment.excl_token().ok()?
+            }
+            TsAnyNonNullAssertion::TsNonNullAssertionExpression(expression) => {
+                expression.excl_token().ok()?
+            }
+        };
+
+        mutation.remove_token(excl_token);
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
@@ -92,29 +144,4 @@ impl Rule for NoExtraNonNullAssertion {
             mutation,
         })
     }
-}
-
-/// Verify if a given expression has an extra non-null assertion.
-///
-/// Cases considered as invalid:
-/// - TsNonNullAssertionExpression > TsNonNullAssertionExpression
-/// - JsCallExpression[optional] > TsNonNullAssertionExpression
-/// - JsStaticMemberExpression[optional] > TsNonNullAssertionExpression
-fn has_extra_non_null_assertion(expression: JsAnyExpression) -> Option<bool> {
-    match expression.omit_parentheses() {
-        JsAnyExpression::TsNonNullAssertionExpression(_) => return Some(true),
-        JsAnyExpression::JsStaticMemberExpression(static_member_exp) => {
-            if static_member_exp.is_optional() {
-                return Some(true);
-            }
-        }
-        JsAnyExpression::JsCallExpression(call_exp) => {
-            if call_exp.is_optional() {
-                return Some(true);
-            }
-        }
-        _ => {}
-    }
-
-    Some(false)
 }
