@@ -753,6 +753,8 @@ struct NurserySchema {
     no_string_case_mismatch: Option<RuleConfiguration>,
     #[doc = "Disallow control flow statements in finally blocks."]
     no_unsafe_finally: Option<RuleConfiguration>,
+    #[doc = "Disallow the use of var"]
+    no_var: Option<RuleConfiguration>,
     #[doc = "Enforce camel case naming convention."]
     use_camel_case: Option<RuleConfiguration>,
     #[doc = "Require const declarations for variables that are never reassigned after declared."]
@@ -768,7 +770,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 18] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 19] = [
         "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
@@ -781,6 +783,7 @@ impl Nursery {
         "noPrecisionLoss",
         "noStringCaseMismatch",
         "noUnsafeFinally",
+        "noVar",
         "useCamelCase",
         "useConst",
         "useExhaustiveDependencies",

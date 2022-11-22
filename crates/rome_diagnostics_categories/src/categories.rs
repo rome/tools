@@ -87,6 +87,7 @@ define_dategories! {
     "lint/nursery/noPrecisionLoss": "https://docs.rome.tools/lint/rules/noPrecisionLoss",
     "lint/nursery/noStringCaseMismatch": "https://docs.rome.tools/lint/rules/noStringCaseMismatch",
     "lint/nursery/noUnsafeFinally": "https://docs.rome.tools/lint/rules/noUnsafeFinally",
+    "lint/nursery/noVar": "https://docs.rome.tools/lint/rules/noVar",
     "lint/nursery/useCamelCase": "https://docs.rome.tools/lint/rules/useCamelCase",
     "lint/nursery/useConst":"https://docs.rome.tools/lint/rules/useConst",
     "lint/nursery/useExhaustiveDependencies": "https://docs.rome.tools/lint/rules/useExhaustiveDependencies",
