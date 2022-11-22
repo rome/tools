@@ -76,12 +76,12 @@ impl Rule for UseKeyWithMouseEvents {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
 
-        if node.is_custom_component().is_some() {
-            if node.has_valid_focus_attributes().is_none() {
+        if node.is_custom_component() {
+            if !has_valid_focus_attributes(node) {
                 return Some(UseKeyWithMouseEventsState::MissingOnFocus);
             }
 
-            if node.has_valid_blur_attributes().is_none() {
+            if !has_valid_blur_attributes(node) {
                 return Some(UseKeyWithMouseEventsState::MissingOnBlur);
             }
         }
@@ -102,4 +102,26 @@ impl Rule for UseKeyWithMouseEvents {
             .note(footer_note_text),
         )
     }
+}
+
+fn has_valid_focus_attributes(elem: &JsxAnyElement) -> bool {
+    if let Some(on_mouse_over_attribute) = elem.find_attribute_by_name("onMouseOver") {
+        if !elem.has_trailing_spread_prop(on_mouse_over_attribute) {
+            return elem
+                .find_attribute_by_name("onFocus")
+                .map_or(false, |it| !it.is_value_undefined_or_null());
+        }
+    }
+    true
+}
+
+fn has_valid_blur_attributes(elem: &JsxAnyElement) -> bool {
+    if let Some(on_mouse_attribute) = elem.find_attribute_by_name("onMouseOut") {
+        if !elem.has_trailing_spread_prop(on_mouse_attribute) {
+            return elem
+                .find_attribute_by_name("onBlur")
+                .map_or(false, |it| !it.is_value_undefined_or_null());
+        }
+    }
+    true
 }

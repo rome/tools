@@ -344,8 +344,8 @@ impl JsxAnyElement {
         }
     }
 
-    pub fn is_custom_component(&self) -> Option<bool> {
-        self.name().ok()?.as_jsx_name().map(|_| true)
+    pub fn is_custom_component(&self) -> bool {
+        self.name().map_or(false, |it| it.as_jsx_name().is_some())
     }
 
     pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<JsxAnyAttribute>) -> bool {
@@ -369,34 +369,10 @@ impl JsxAnyElement {
             }
         }
     }
-
-    pub fn has_valid_focus_attributes(&self) -> Option<bool> {
-        if let Some(on_mouse_over_attribute) = self.find_attribute_by_name("onMouseOver") {
-            if !self.has_trailing_spread_prop(on_mouse_over_attribute) {
-                let on_focus_attribute = self.find_attribute_by_name("onFocus")?;
-                if on_focus_attribute.is_value_undefined_or_null() {
-                    return None;
-                }
-            }
-        }
-        Some(true)
-    }
-
-    pub fn has_valid_blur_attributes(&self) -> Option<bool> {
-        if let Some(on_mouse_attribute) = self.find_attribute_by_name("onMouseOut") {
-            if !self.has_trailing_spread_prop(on_mouse_attribute) {
-                let on_blur_attribute = self.find_attribute_by_name("onBlur")?;
-                if on_blur_attribute.is_value_undefined_or_null() {
-                    return None;
-                }
-            }
-        }
-        Some(true)
-    }
 }
 
 impl JsxAttribute {
-    fn is_value_undefined_or_null(&self) -> bool {
+    pub fn is_value_undefined_or_null(&self) -> bool {
         self.initializer()
             .and_then(|x| {
                 let expression = x
