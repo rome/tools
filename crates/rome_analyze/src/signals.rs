@@ -1,11 +1,11 @@
-use std::marker::PhantomData;
-
+use crate::categories::SUPPRESSION_ACTION_CATEGORY;
 use crate::{
     categories::ActionCategory,
     context::RuleContext,
     registry::{RuleLanguage, RuleRoot},
     rule::Rule,
     AnalyzerDiagnostic, AnalyzerOptions, Queryable, RuleGroup, ServiceBag,
+    SuppressionCommentEmitter,
 };
 use rome_console::MarkupBuf;
 use rome_diagnostics::{
@@ -13,12 +13,16 @@ use rome_diagnostics::{
     Error, FileSpan,
 };
 use rome_rowan::{BatchMutation, Language};
+use std::borrow::Cow;
+use std::iter::FusedIterator;
+use std::marker::PhantomData;
+use std::vec::IntoIter;
 
 /// Event raised by the analyzer when a [Rule](crate::Rule)
 /// emits a diagnostic, a code action, or both
 pub trait AnalyzerSignal<L: Language> {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic>;
-    fn action(&self) -> Option<AnalyzerAction<L>>;
+    fn actions(&self) -> AnalyzerActionIter<L>;
 }
 
 /// Simple implementation of [AnalyzerSignal] generating a [AnalyzerDiagnostic]
@@ -70,8 +74,12 @@ where
         Some(AnalyzerDiagnostic::from_error(error))
     }
 
-    fn action(&self) -> Option<AnalyzerAction<L>> {
-        (self.action)()
+    fn actions(&self) -> AnalyzerActionIter<L> {
+        if let Some(action) = (self.action)() {
+            AnalyzerActionIter::new([action])
+        } else {
+            AnalyzerActionIter::new(vec![])
+        }
     }
 }
 
@@ -80,7 +88,7 @@ where
 ///
 /// This struct can be converted into a [CodeSuggestion] and injected into
 /// a diagnostic emitted by the same signal
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AnalyzerAction<L: Language> {
     pub rule_name: Option<(&'static str, &'static str)>,
     pub file_id: FileId,
@@ -90,13 +98,19 @@ pub struct AnalyzerAction<L: Language> {
     pub mutation: BatchMutation<L>,
 }
 
-impl<L> From<AnalyzerAction<L>> for CodeSuggestionAdvice<MarkupBuf>
-where
-    L: Language,
-{
+impl<L: Language> AnalyzerAction<L> {
+    pub fn is_suppression(&self) -> bool {
+        self.category.matches(SUPPRESSION_ACTION_CATEGORY)
+    }
+}
+
+pub struct AnalyzerActionIter<L: Language> {
+    analyzer_actions: IntoIter<AnalyzerAction<L>>,
+}
+
+impl<L: Language> From<AnalyzerAction<L>> for CodeSuggestionAdvice<MarkupBuf> {
     fn from(action: AnalyzerAction<L>) -> Self {
         let (_, suggestion) = action.mutation.as_text_edits().unwrap_or_default();
-
         CodeSuggestionAdvice {
             applicability: action.applicability,
             msg: action.message,
@@ -105,22 +119,118 @@ where
     }
 }
 
-impl<L> From<AnalyzerAction<L>> for CodeSuggestion
-where
-    L: Language,
-{
+impl<L: Language> From<AnalyzerAction<L>> for CodeSuggestionItem {
     fn from(action: AnalyzerAction<L>) -> Self {
         let (range, suggestion) = action.mutation.as_text_edits().unwrap_or_default();
 
-        CodeSuggestion {
-            span: FileSpan {
-                file: action.file_id,
-                range,
+        CodeSuggestionItem {
+            rule_name: action.rule_name,
+            category: action.category,
+            suggestion: CodeSuggestion {
+                span: FileSpan {
+                    file: action.file_id,
+                    range,
+                },
+                applicability: action.applicability,
+                msg: action.message,
+                suggestion,
+                labels: vec![],
             },
-            applicability: action.applicability,
-            msg: action.message,
-            suggestion,
-            labels: vec![],
+        }
+    }
+}
+
+impl<L: Language> AnalyzerActionIter<L> {
+    pub fn new<I>(actions: I) -> Self
+    where
+        I: IntoIterator<Item = AnalyzerAction<L>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        Self {
+            analyzer_actions: actions
+                .into_iter()
+                .collect::<Vec<AnalyzerAction<L>>>()
+                .into_iter(),
+        }
+    }
+}
+
+impl<L: Language> Iterator for AnalyzerActionIter<L> {
+    type Item = AnalyzerAction<L>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.analyzer_actions.next()
+    }
+}
+
+impl<L: Language> FusedIterator for AnalyzerActionIter<L> {}
+
+impl<L: Language> ExactSizeIterator for AnalyzerActionIter<L> {
+    fn len(&self) -> usize {
+        self.analyzer_actions.len()
+    }
+}
+
+pub struct CodeSuggestionAdviceIter<L: Language> {
+    iter: IntoIter<AnalyzerAction<L>>,
+}
+
+impl<L: Language> Iterator for CodeSuggestionAdviceIter<L> {
+    type Item = CodeSuggestionAdvice<MarkupBuf>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let action = self.iter.next()?;
+        Some(action.into())
+    }
+}
+
+impl<L: Language> FusedIterator for CodeSuggestionAdviceIter<L> {}
+
+impl<L: Language> ExactSizeIterator for CodeSuggestionAdviceIter<L> {
+    fn len(&self) -> usize {
+        self.iter.len()
+    }
+}
+
+pub struct CodeActionIter<L: Language> {
+    iter: IntoIter<AnalyzerAction<L>>,
+}
+
+pub struct CodeSuggestionItem {
+    pub category: ActionCategory,
+    pub suggestion: CodeSuggestion,
+    pub rule_name: Option<(&'static str, &'static str)>,
+}
+
+impl<L: Language> Iterator for CodeActionIter<L> {
+    type Item = CodeSuggestionItem;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let action = self.iter.next()?;
+        Some(action.into())
+    }
+}
+
+impl<L: Language> FusedIterator for CodeActionIter<L> {}
+
+impl<L: Language> ExactSizeIterator for CodeActionIter<L> {
+    fn len(&self) -> usize {
+        self.iter.len()
+    }
+}
+
+impl<L: Language> AnalyzerActionIter<L> {
+    /// Returns an iterator that yields [CodeSuggestionAdvice]
+    pub fn into_code_suggestion_advices(self) -> CodeSuggestionAdviceIter<L> {
+        CodeSuggestionAdviceIter {
+            iter: self.analyzer_actions,
+        }
+    }
+
+    /// Returns an iterator that yields [CodeAction]
+    pub fn into_code_action_iter(self) -> CodeActionIter<L> {
+        CodeActionIter {
+            iter: self.analyzer_actions,
         }
     }
 }
@@ -133,6 +243,8 @@ pub(crate) struct RuleSignal<'phase, R: Rule> {
     state: R::State,
     services: &'phase ServiceBag,
     options: AnalyzerOptions,
+    /// An optional action to suppress the rule.
+    apply_suppression_comment: SuppressionCommentEmitter<RuleLanguage<R>>,
 }
 
 impl<'phase, R> RuleSignal<'phase, R>
@@ -146,6 +258,9 @@ where
         state: R::State,
         services: &'phase ServiceBag,
         options: AnalyzerOptions,
+        apply_suppression_comment: SuppressionCommentEmitter<
+            <<R as Rule>::Query as Queryable>::Language,
+        >,
     ) -> Self {
         Self {
             file_id,
@@ -154,6 +269,7 @@ where
             state,
             services,
             options,
+            apply_suppression_comment,
         }
     }
 }
@@ -169,17 +285,40 @@ where
         R::diagnostic(&ctx, &self.state).map(|diag| diag.into_analyzer_diagnostic(self.file_id))
     }
 
-    fn action(&self) -> Option<AnalyzerAction<RuleLanguage<R>>> {
+    fn actions(&self) -> AnalyzerActionIter<RuleLanguage<R>> {
         let ctx =
-            RuleContext::new(&self.query_result, self.root, self.services, &self.options).ok()?;
+            RuleContext::new(&self.query_result, self.root, self.services, &self.options).ok();
+        if let Some(ctx) = ctx {
+            let mut actions = Vec::new();
+            if let Some(action) = R::action(&ctx, &self.state) {
+                actions.push(AnalyzerAction {
+                    rule_name: Some((<R::Group as RuleGroup>::NAME, R::METADATA.name)),
+                    file_id: self.file_id,
+                    category: action.category,
+                    applicability: action.applicability,
+                    mutation: action.mutation,
+                    message: action.message,
+                });
+            };
+            if let Some(text_range) = R::text_range(&ctx, &self.state) {
+                if let Some(suppression_action) =
+                    R::suppress(&ctx, &text_range, self.apply_suppression_comment)
+                {
+                    let action = AnalyzerAction {
+                        rule_name: Some((<R::Group as RuleGroup>::NAME, R::METADATA.name)),
+                        file_id: self.file_id,
+                        category: ActionCategory::Other(Cow::Borrowed(SUPPRESSION_ACTION_CATEGORY)),
+                        applicability: Applicability::Always,
+                        mutation: suppression_action.mutation,
+                        message: suppression_action.message,
+                    };
+                    actions.push(action);
+                }
+            }
 
-        R::action(&ctx, &self.state).map(|action| AnalyzerAction {
-            rule_name: Some((<R::Group as RuleGroup>::NAME, R::METADATA.name)),
-            file_id: self.file_id,
-            category: action.category,
-            applicability: action.applicability,
-            message: action.message,
-            mutation: action.mutation,
-        })
+            AnalyzerActionIter::new(actions)
+        } else {
+            AnalyzerActionIter::new(vec![])
+        }
     }
 }

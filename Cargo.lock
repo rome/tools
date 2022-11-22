@@ -1495,6 +1495,7 @@ dependencies = [
  "schemars",
  "serde",
  "serde_json",
+ "tracing",
 ]
 
 [[package]]
@@ -1823,6 +1824,7 @@ dependencies = [
  "schemars",
  "serde",
  "serde_json",
+ "tracing",
 ]
 
 [[package]]

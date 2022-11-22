@@ -7,6 +7,7 @@ use crate::{
     matcher::MatchQueryParams,
     registry::{NodeLanguage, Phases},
     AnalyzerOptions, LanguageRoot, QueryMatch, QueryMatcher, ServiceBag, SignalEntry,
+    SuppressionCommentEmitter,
 };
 
 /// Mutable context objects shared by all visitors
@@ -19,6 +20,7 @@ pub struct VisitorContext<'phase, 'query, L: Language> {
     pub(crate) query_matcher: &'query mut dyn QueryMatcher<L>,
     pub(crate) signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
     pub options: &'query AnalyzerOptions,
+    pub apply_suppression_comment: SuppressionCommentEmitter<L>,
 }
 
 impl<'phase, 'query, L: Language> VisitorContext<'phase, 'query, L> {
@@ -31,6 +33,7 @@ impl<'phase, 'query, L: Language> VisitorContext<'phase, 'query, L> {
             services: self.services,
             signal_queue: self.signal_queue,
             options: self.options,
+            apply_suppression_comment: self.apply_suppression_comment,
         })
     }
 }
