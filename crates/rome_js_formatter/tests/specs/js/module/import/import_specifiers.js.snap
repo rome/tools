@@ -36,6 +36,9 @@ import {
 loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong"
 
 import { a as b } from "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong"
+
+import a, { loooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooooonnoong"
+
 ```
 
 
@@ -93,6 +96,10 @@ import {
 } from "loooooooooooooooooooooooooooooooooooooooooooooong";
 
 import { a as b } from "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong";
+
+import a, {
+	loooooooooooooooooooooong
+} from "loooooooooooooooooooooooooooooooooooooooooooooooonnoong";
 
 
 ## Lines exceeding width of 80 characters

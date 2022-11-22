@@ -28,3 +28,5 @@ import {
 loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong"
 
 import { a as b } from "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong"
+
+import a, { loooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooooonnoong"
