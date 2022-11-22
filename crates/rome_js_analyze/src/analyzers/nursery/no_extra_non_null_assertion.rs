@@ -73,12 +73,7 @@ impl Rule for NoExtraNonNullAssertion {
 
                 // Cases considered as invalid:
                 // - TsNonNullAssertionAssignment > TsNonNullAssertionAssignment
-                let has_extra_non_assertion = match parent {
-                    JsAnyAssignment::TsNonNullAssertionAssignment(_) => true,
-                    _ => false,
-                };
-
-                if has_extra_non_assertion {
+                if matches!(parent, JsAnyAssignment::TsNonNullAssertionAssignment(_)) {
                     return Some(());
                 }
             }
