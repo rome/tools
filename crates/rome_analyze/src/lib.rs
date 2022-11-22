@@ -684,7 +684,7 @@ fn update_suppression<L: Language>(
     })
 }
 
-/// Convenient type that to mark a function that is responsible to create a mutation to add a suppression comment.
+/// Payload received by the function responsible to mark a suppression comment
 pub struct SuppressionCommentEmitterPayload<'a, L: Language> {
     /// The possible offset found in the [TextRange] of the emitted diagnostic
     pub token_offset: TokenAtOffset<SyntaxToken<L>>,
@@ -696,6 +696,7 @@ pub struct SuppressionCommentEmitterPayload<'a, L: Language> {
     pub diagnostic_text_range: &'a TextRange,
 }
 
+/// Convenient type that to mark a function that is responsible to create a mutation to add a suppression comment.
 type SuppressionCommentEmitter<L> = fn(SuppressionCommentEmitterPayload<L>);
 
 type SignalHandler<'a, L, Break> = &'a mut dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<Break>;

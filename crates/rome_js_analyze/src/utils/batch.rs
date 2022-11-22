@@ -214,31 +214,22 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
         after_element: &JsxAnyChild,
         new_element: &JsxAnyChild,
     ) -> bool {
-        let old_list = after_element.syntax().parent().and_then(JsxChildList::cast);
-        if let Some(old_list) = old_list {
-            let jsx_child_list = after_element
-                .syntax()
-                .parent()
-                .map(|parent| {
-                    let list = JsxChildList::cast(parent)?;
-                    let mut new_items = vec![];
-                    for element in list {
-                        new_items.push(element.clone());
-                        if element == *after_element {
-                            new_items.push(new_element.clone());
-                        }
+        let old_list = after_element.parent::<JsxChildList>();
+        if let Some(old_list) = &old_list {
+            let jsx_child_list = {
+                let mut new_items = vec![];
+                for element in old_list {
+                    new_items.push(element.clone());
+                    if element == *after_element {
+                        new_items.push(new_element.clone());
                     }
+                }
 
-                    Some(jsx_child_list(new_items))
-                })
-                .unwrap_or(None);
+                jsx_child_list(new_items)
+            };
 
-            if let Some(jsx_child_list) = jsx_child_list {
-                self.replace_node(old_list, jsx_child_list);
-                true
-            } else {
-                false
-            }
+            self.replace_node(old_list.clone(), jsx_child_list);
+            true
         } else {
             false
         }
@@ -250,30 +241,21 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
         new_element: &JsxAnyChild,
     ) -> bool {
         let old_list = after_element.syntax().parent().and_then(JsxChildList::cast);
-        if let Some(old_list) = old_list {
-            let jsx_child_list = after_element
-                .syntax()
-                .parent()
-                .map(|parent| {
-                    let list = JsxChildList::cast(parent)?;
-                    let mut new_items = vec![];
-                    for element in list {
-                        if element == *after_element {
-                            new_items.push(new_element.clone());
-                        }
-                        new_items.push(element.clone());
+        if let Some(old_list) = &old_list {
+            let jsx_child_list = {
+                let mut new_items = vec![];
+                for element in old_list {
+                    if element == *after_element {
+                        new_items.push(new_element.clone());
                     }
+                    new_items.push(element.clone());
+                }
 
-                    Some(jsx_child_list(new_items))
-                })
-                .unwrap_or(None);
+                jsx_child_list(new_items)
+            };
 
-            if let Some(jsx_child_list) = jsx_child_list {
-                self.replace_node(old_list, jsx_child_list);
-                true
-            } else {
-                false
-            }
+            self.replace_node(old_list.clone(), jsx_child_list);
+            true
         } else {
             false
         }

@@ -402,7 +402,7 @@ fn apply_suppression_comment(payload: SuppressionCommentEmitterPayload<JsLanguag
                 &JsxAnyChild::JsxExpressionChild(jsx_comment.build()),
             );
         } else {
-            let new_token = current_token.with_leading_trivia(vec![
+            let new_token = current_token.with_leading_trivia([
                 (TriviaPieceKind::Newline, "\n"),
                 (
                     TriviaPieceKind::SingleLineComment,

@@ -76,7 +76,7 @@ where
 
     fn actions(&self) -> AnalyzerActionIter<L> {
         if let Some(action) = (self.action)() {
-            AnalyzerActionIter::new(vec![action])
+            AnalyzerActionIter::new([action])
         } else {
             AnalyzerActionIter::new(vec![])
         }
@@ -141,9 +141,16 @@ impl<L: Language> From<AnalyzerAction<L>> for CodeSuggestionItem {
 }
 
 impl<L: Language> AnalyzerActionIter<L> {
-    pub fn new(actions: Vec<AnalyzerAction<L>>) -> Self {
+    pub fn new<I>(actions: I) -> Self
+    where
+        I: IntoIterator<Item = AnalyzerAction<L>>,
+        I::IntoIter: ExactSizeIterator,
+    {
         Self {
-            analyzer_actions: actions.into_iter(),
+            analyzer_actions: actions
+                .into_iter()
+                .collect::<Vec<AnalyzerAction<L>>>()
+                .into_iter(),
         }
     }
 }

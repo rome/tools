@@ -333,7 +333,7 @@ pub trait Rule: RuleMeta + Sized {
     }
 
     /// Create a code action that allows to suppress the rule. The function
-    /// has to return the node to which the suppression comment needs to be applied.
+    /// returns the node to which the suppression comment is applied.
     fn suppress(
         ctx: &RuleContext<Self>,
         text_range: &TextRange,
