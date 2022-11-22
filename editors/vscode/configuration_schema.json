@@ -753,6 +753,17 @@
       "description": "A list of rules that belong to this group",
       "type": "object",
       "properties": {
+        "noAccessKey": {
+          "description": "Enforce that the accessKey attribute is not used on any HTML element.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noBannedTypes": {
           "description": "Disallow certain types.",
           "anyOf": [
@@ -863,8 +874,30 @@
             }
           ]
         },
+        "noStringCaseMismatch": {
+          "description": "Disallow comparison of expressions modifying the string case with non-compliant value.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noUnsafeFinally": {
           "description": "Disallow control flow statements in finally blocks.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noVar": {
+          "description": "Disallow the use of var",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

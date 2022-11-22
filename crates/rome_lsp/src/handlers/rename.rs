@@ -5,7 +5,7 @@ use anyhow::{Context, Result};
 use tower_lsp::lsp_types::{RenameParams, WorkspaceEdit};
 use tracing::trace;
 
-#[tracing::instrument(level = "trace", skip(session), err)]
+#[tracing::instrument(level = "debug", skip(session), err)]
 pub(crate) fn rename(session: &Session, params: RenameParams) -> Result<Option<WorkspaceEdit>> {
     let url = params.text_document_position.text_document.uri;
     let rome_path = session.file_path(&url);

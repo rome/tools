@@ -75,6 +75,7 @@ define_dategories! {
 
 
     // nursery
+    "lint/nursery/noAccessKey": "https://docs.rome.tools/lint/rules/noAccessKey",
     "lint/nursery/noBannedTypes":"https://docs.rome.tools/lint/rules/noBannedTypes",
     "lint/nursery/noConditionalAssignment": "https://docs.rome.tools/lint/rules/noConditionalAssignment",
     "lint/nursery/noConstAssign": "https://docs.rome.tools/lint/rules/noConstAssign",
@@ -85,7 +86,9 @@ define_dategories! {
     "lint/nursery/noHeaderScope": "https://docs.rome.tools/lint/rules/noHeaderScope",
     "lint/nursery/noInvalidConstructorSuper": "https://docs.rome.tools/lint/rules/noInvalidConstructorSuper",
     "lint/nursery/noPrecisionLoss": "https://docs.rome.tools/lint/rules/noPrecisionLoss",
+    "lint/nursery/noStringCaseMismatch": "https://docs.rome.tools/lint/rules/noStringCaseMismatch",
     "lint/nursery/noUnsafeFinally": "https://docs.rome.tools/lint/rules/noUnsafeFinally",
+    "lint/nursery/noVar": "https://docs.rome.tools/lint/rules/noVar",
     "lint/nursery/useCamelCase": "https://docs.rome.tools/lint/rules/useCamelCase",
     "lint/nursery/useConst":"https://docs.rome.tools/lint/rules/useConst",
     "lint/nursery/useExhaustiveDependencies": "https://docs.rome.tools/lint/rules/useExhaustiveDependencies",

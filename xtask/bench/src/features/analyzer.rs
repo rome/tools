@@ -31,7 +31,7 @@ pub fn run_analyzer(root: &JsAnyRoot) {
     let options = AnalyzerOptions::default();
     analyze(FileId::zero(), root, filter, &options, |event| {
         black_box(event.diagnostic());
-        black_box(event.action());
+        black_box(event.actions());
         ControlFlow::<Never>::Continue(())
     });
 }

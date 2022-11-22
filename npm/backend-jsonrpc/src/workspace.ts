@@ -348,6 +348,10 @@ export interface Correctness {
  */
 export interface Nursery {
 	/**
+	 * Enforce that the accessKey attribute is not used on any HTML element.
+	 */
+	noAccessKey?: RuleConfiguration;
+	/**
 	 * Disallow certain types.
 	 */
 	noBannedTypes?: RuleConfiguration;
@@ -388,9 +392,17 @@ export interface Nursery {
 	 */
 	noPrecisionLoss?: RuleConfiguration;
 	/**
+	 * Disallow comparison of expressions modifying the string case with non-compliant value.
+	 */
+	noStringCaseMismatch?: RuleConfiguration;
+	/**
 	 * Disallow control flow statements in finally blocks.
 	 */
 	noUnsafeFinally?: RuleConfiguration;
+	/**
+	 * Disallow the use of var
+	 */
+	noVar?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
@@ -623,6 +635,7 @@ export type Category =
 	| "lint/a11y/useAltText"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
+	| "lint/nursery/noAccessKey"
 	| "lint/nursery/noBannedTypes"
 	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstAssign"
@@ -633,7 +646,9 @@ export type Category =
 	| "lint/nursery/noHeaderScope"
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noPrecisionLoss"
+	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnsafeFinally"
+	| "lint/nursery/noVar"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useConst"
 	| "lint/nursery/useExhaustiveDependencies"
@@ -781,7 +796,7 @@ export type ActionCategory =
 	| { Source: SourceActionKind }
 	| { Other: string };
 /**
- * A Suggestion that is provided by rslint, and can be reported to the user, and can be automatically applied if it has the right [`Applicability`].
+ * A Suggestion that is provided by Rome's linter, and can be reported to the user, and can be automatically applied if it has the right [`Applicability`].
  */
 export interface CodeSuggestion {
 	applicability: Applicability;

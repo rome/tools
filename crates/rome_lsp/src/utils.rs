@@ -1,11 +1,5 @@
-use std::any::Any;
-use std::collections::HashMap;
-use std::fmt::{Debug, Display};
-use std::io;
-
 use crate::line_index::{LineCol, LineIndex};
 use anyhow::{ensure, Context, Result};
-use rome_analyze::ActionCategory;
 use rome_console::fmt::Termcolor;
 use rome_console::fmt::{self, Formatter};
 use rome_console::MarkupBuf;
@@ -16,6 +10,10 @@ use rome_diagnostics::{
 use rome_rowan::{TextRange, TextSize};
 use rome_service::workspace::CodeAction;
 use rome_text_edit::{CompressedOp, DiffOp, TextEdit};
+use std::any::Any;
+use std::collections::HashMap;
+use std::fmt::{Debug, Display};
+use std::io;
 use tower_lsp::jsonrpc::Error as LspError;
 use tower_lsp::lsp_types::{self as lsp};
 use tracing::error;
@@ -123,7 +121,7 @@ pub(crate) fn code_fix_to_lsp(
     let diagnostics: Vec<_> = action
         .rule_name
         .as_ref()
-        .filter(|_| matches!(action.category, ActionCategory::QuickFix))
+        .filter(|_| action.category.matches("quickfix"))
         .map(|(group_name, rule_name)| {
             diagnostics
                 .iter()
@@ -181,7 +179,9 @@ pub(crate) fn code_fix_to_lsp(
         },
         edit: Some(edit),
         command: None,
-        is_preferred: if matches!(suggestion.applicability, Applicability::Always) {
+        is_preferred: if matches!(suggestion.applicability, Applicability::Always)
+            && !action.category.matches("quickfix.suppressRule")
+        {
             Some(true)
         } else {
             None

@@ -442,6 +442,13 @@ Nursery rules get promoted to other groups once they become stable or may be rem
 Rules that belong to this group <strong>are not subject to semantic version</strong>.
 <div class="category-rules">
 <section class="rule">
+<h3 data-toc-exclude id="noAccessKey">
+	<a href="/lint/rules/noAccessKey">noAccessKey</a>
+	<span class="recommended">recommended</span>
+</h3>
+Enforce that the <code>accessKey</code> attribute is not used on any HTML element.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noBannedTypes">
 	<a href="/lint/rules/noBannedTypes">noBannedTypes</a>
 </h3>
@@ -504,10 +511,22 @@ It also checks whether a call <code>super()</code> is missing from classes that 
 Disallow literal numbers that lose precision
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noStringCaseMismatch">
+	<a href="/lint/rules/noStringCaseMismatch">noStringCaseMismatch</a>
+</h3>
+Disallow comparison of expressions modifying the string case with non-compliant value.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noUnsafeFinally">
 	<a href="/lint/rules/noUnsafeFinally">noUnsafeFinally</a>
 </h3>
 Disallow control flow statements in finally blocks.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noVar">
+	<a href="/lint/rules/noVar">noVar</a>
+</h3>
+Disallow the use of <code>var</code>
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useCamelCase">

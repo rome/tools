@@ -1,3 +1,9 @@
+use super::{
+    AnalyzerCapabilities, DebugCapabilities, ExtensionHandler, FormatterCapabilities, LintParams,
+    LintResults, Mime, ParserCapabilities,
+};
+use crate::configuration::to_analyzer_configuration;
+use crate::file_handlers::{FixAllParams, Language as LanguageId};
 use crate::{
     settings::{FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle},
     workspace::{
@@ -6,13 +12,15 @@ use crate::{
     },
     RomeError, Rules,
 };
+use indexmap::IndexSet;
 use rome_analyze::{
     AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Never, QueryMatch,
     RegistryVisitor, RuleCategories, RuleCategory, RuleFilter, RuleGroup,
 };
-use rome_diagnostics::{category, Applicability, CodeSuggestion, Severity};
+use rome_diagnostics::{category, Applicability, Diagnostic, Severity};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
+use rome_js_analyze::utils::rename::{RenameError, RenameSymbolExtensions};
 use rome_js_analyze::{analyze, analyze_with_inspect_matcher, visit_registry, RuleError};
 use rome_js_formatter::context::{
     trailing_comma::TrailingComma, QuoteProperties, QuoteStyle, Semicolons,
@@ -24,16 +32,6 @@ use rome_js_syntax::{
     JsAnyRoot, JsLanguage, JsSyntaxNode, SourceType, TextRange, TextSize, TokenAtOffset,
 };
 use rome_rowan::{AstNode, BatchMutationExt, Direction};
-
-use super::{
-    AnalyzerCapabilities, DebugCapabilities, ExtensionHandler, FormatterCapabilities, LintParams,
-    LintResults, Mime, ParserCapabilities,
-};
-use crate::configuration::to_analyzer_configuration;
-use crate::file_handlers::{FixAllParams, Language as LanguageId};
-use indexmap::IndexSet;
-use rome_diagnostics::Diagnostic;
-use rome_js_analyze::utils::rename::{RenameError, RenameSymbolExtensions};
 use std::borrow::Cow;
 use std::fmt::Debug;
 use tracing::debug;
@@ -81,6 +79,18 @@ impl Language for JsLanguage {
 pub(crate) struct JsFileHandler;
 
 impl ExtensionHandler for JsFileHandler {
+    fn language(&self) -> super::Language {
+        super::Language::JavaScript
+    }
+
+    fn mime(&self) -> Mime {
+        Mime::Javascript
+    }
+
+    fn may_use_tabs(&self) -> bool {
+        true
+    }
+
     fn capabilities(&self) -> super::Capabilities {
         super::Capabilities {
             parser: ParserCapabilities { parse: Some(parse) },
@@ -101,18 +111,6 @@ impl ExtensionHandler for JsFileHandler {
                 format_on_type: Some(format_on_type),
             },
         }
-    }
-
-    fn language(&self) -> super::Language {
-        super::Language::JavaScript
-    }
-
-    fn mime(&self) -> super::Mime {
-        Mime::Javascript
-    }
-
-    fn may_use_tabs(&self) -> bool {
-        true
     }
 }
 
@@ -252,8 +250,10 @@ fn lint(params: LintParams) -> LintResults {
             if diagnostic_count <= params.max_diagnostics {
                 diagnostic.set_severity(severity);
 
-                if let Some(action) = signal.action() {
-                    diagnostic = diagnostic.add_code_suggestion(action.into());
+                for action in signal.actions() {
+                    if !action.is_suppression() {
+                        diagnostic = diagnostic.add_code_suggestion(action.into());
+                    }
                 }
 
                 diagnostics.push(rome_diagnostics::serde::Diagnostic::new(diagnostic));
@@ -337,15 +337,15 @@ fn code_actions(
     let analyzer_options = compute_analyzer_options(&settings);
 
     analyze(file_id, &tree, filter, &analyzer_options, |signal| {
-        if let Some(action) = signal.action() {
-            actions.push(CodeAction {
-                category: action.category.clone(),
-                rule_name: action
+        actions.extend(signal.actions().into_code_action_iter().map(|item| {
+            CodeAction {
+                category: item.category.clone(),
+                rule_name: item
                     .rule_name
-                    .map(|(group, rule)| (Cow::Borrowed(group), Cow::Borrowed(rule))),
-                suggestion: CodeSuggestion::from(action),
-            });
-        }
+                    .map(|(group, name)| (Cow::Borrowed(group), Cow::Borrowed(name))),
+                suggestion: item.suggestion,
+            }
+        }));
 
         ControlFlow::<Never>::Continue(())
     });
@@ -386,7 +386,11 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
     let analyzer_options = compute_analyzer_options(&settings);
     loop {
         let action = analyze(file_id, &tree, filter, &analyzer_options, |signal| {
-            if let Some(action) = signal.action() {
+            for action in signal.actions() {
+                // suppression actions should not be part of the fixes (safe or suggested)
+                if action.is_suppression() {
+                    continue;
+                }
                 match fix_file_mode {
                     FixFileMode::SafeFixes => {
                         if action.applicability == Applicability::MaybeIncorrect {
