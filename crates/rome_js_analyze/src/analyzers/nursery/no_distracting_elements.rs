@@ -59,7 +59,7 @@ impl Rule for NoDistractingElements {
         let diagnostic = RuleDiagnostic::new(
             rule_category!(),
             element.range(),
-            markup! {"Don't use '"{name.text_trimmed()}"' element."}.to_owned(),
+            markup! {"Don't use the '"{name.text_trimmed()}"' element."}.to_owned(),
         )
         .note(markup! {
             "Visually distracting elements can cause accessibility issues and should be avoided."
@@ -76,7 +76,7 @@ impl Rule for NoDistractingElements {
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Remove '"{name.text_trimmed()}"' element." }.to_owned(),
+            message: markup! { "Remove the '"{name.text_trimmed()}"' element." }.to_owned(),
             mutation,
         })
     }

@@ -15,7 +15,7 @@ expression: noDistractingElements.jsx
 ```
 noDistractingElements.jsx:3:5 lint/nursery/noDistractingElements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use 'marquee' element.
+  ! Don't use the 'marquee' element.
   
     1 │ <div>
     2 │     <div/>
@@ -26,7 +26,7 @@ noDistractingElements.jsx:3:5 lint/nursery/noDistractingElements  FIXABLE  ━�
   
   i Visually distracting elements can cause accessibility issues and should be avoided.
   
-  i Suggested fix: Remove 'marquee' element.
+  i Suggested fix: Remove the 'marquee' element.
   
     3 │ ····<marquee/>
       │     ----------
@@ -36,7 +36,7 @@ noDistractingElements.jsx:3:5 lint/nursery/noDistractingElements  FIXABLE  ━�
 ```
 noDistractingElements.jsx:4:5 lint/nursery/noDistractingElements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use 'blink' element.
+  ! Don't use the 'blink' element.
   
     2 │     <div/>
     3 │     <marquee/>
@@ -46,7 +46,7 @@ noDistractingElements.jsx:4:5 lint/nursery/noDistractingElements  FIXABLE  ━�
   
   i Visually distracting elements can cause accessibility issues and should be avoided.
   
-  i Suggested fix: Remove 'blink' element.
+  i Suggested fix: Remove the 'blink' element.
   
     4 │ ····<blink/>
       │     --------

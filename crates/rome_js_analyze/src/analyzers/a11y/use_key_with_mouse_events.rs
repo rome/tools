@@ -3,7 +3,6 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::{markup, MarkupBuf};
 use rome_js_syntax::jsx_ext::JsxAnyElement;
-use rome_js_syntax::JsxAttribute;
 use rome_rowan::AstNode;
 
 declare_rule! {
@@ -103,30 +102,4 @@ impl Rule for UseKeyWithMouseEvents {
             .note(footer_note_text),
         )
     }
-}
-
-fn is_value_undefined_or_null(attribute: &JsxAttribute) -> bool {
-    attribute
-        .initializer()
-        .and_then(|x| {
-            let expression = x
-                .value()
-                .ok()?
-                .as_jsx_expression_attribute_value()?
-                .expression()
-                .ok()?;
-
-            if let Some(id) = expression.as_js_identifier_expression() {
-                let name = id.name().ok()?.syntax().text_trimmed();
-
-                return Some(name == "undefined");
-            }
-
-            expression
-                .as_js_any_literal_expression()?
-                .as_js_null_literal_expression()?;
-
-            Some(true)
-        })
-        .unwrap_or(false)
 }
