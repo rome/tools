@@ -152,9 +152,7 @@ impl Rules {
             None
         }
     }
-    pub(crate) fn is_recommended(&self) -> bool {
-        !matches!(self.recommended, Some(false))
-    }
+    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     #[doc = r" It returns a tuple of filters. The first element of the tuple are the enabled rules,"]
     #[doc = r" while the second element are the disabled rules."]
     #[doc = r""]
@@ -353,9 +351,7 @@ impl A11y {
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[7]),
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[8]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool {
-        !matches!(self.recommended, Some(false))
-    }
+    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -375,9 +371,7 @@ impl A11y {
         }))
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool {
-        Self::CATEGORY_RULES.contains(&rule_name)
-    }
+    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::CATEGORY_RULES.contains(&rule_name) }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -441,9 +435,7 @@ impl Complexity {
         RuleFilter::Rule("complexity", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("complexity", Self::CATEGORY_RULES[1]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool {
-        !matches!(self.recommended, Some(false))
-    }
+    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -463,9 +455,7 @@ impl Complexity {
         }))
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool {
-        Self::CATEGORY_RULES.contains(&rule_name)
-    }
+    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::CATEGORY_RULES.contains(&rule_name) }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -670,9 +660,7 @@ impl Correctness {
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[29]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[30]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool {
-        !matches!(self.recommended, Some(false))
-    }
+    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -692,9 +680,7 @@ impl Correctness {
         }))
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool {
-        Self::CATEGORY_RULES.contains(&rule_name)
-    }
+    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::CATEGORY_RULES.contains(&rule_name) }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -751,10 +737,10 @@ struct NurserySchema {
     no_conditional_assignment: Option<RuleConfiguration>,
     #[doc = "Prevents from having const variables being re-assigned."]
     no_const_assign: Option<RuleConfiguration>,
-    #[doc = "Enforces that no distracting elements are used."]
-    no_distracting_elements: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a constructor"]
     no_constructor_return: Option<RuleConfiguration>,
+    #[doc = "Enforces that no distracting elements are used."]
+    no_distracting_elements: Option<RuleConfiguration>,
     #[doc = "Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake."]
     no_dupe_keys: Option<RuleConfiguration>,
     #[doc = "Disallow the declaration of empty interfaces."]
@@ -817,9 +803,7 @@ impl Nursery {
     const RECOMMENDED_RULES: [&'static str; 1] = ["noAccessKey"];
     const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 1] =
         [RuleFilter::Rule("nursery", Self::CATEGORY_RULES[0])];
-    pub(crate) fn is_recommended(&self) -> bool {
-        !matches!(self.recommended, Some(false))
-    }
+    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -839,9 +823,7 @@ impl Nursery {
         }))
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool {
-        Self::CATEGORY_RULES.contains(&rule_name)
-    }
+    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::CATEGORY_RULES.contains(&rule_name) }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -909,9 +891,7 @@ impl Security {
         RuleFilter::Rule("security", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("security", Self::CATEGORY_RULES[1]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool {
-        !matches!(self.recommended, Some(false))
-    }
+    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -931,9 +911,7 @@ impl Security {
         }))
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool {
-        Self::CATEGORY_RULES.contains(&rule_name)
-    }
+    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::CATEGORY_RULES.contains(&rule_name) }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -1044,9 +1022,7 @@ impl Style {
         RuleFilter::Rule("style", Self::CATEGORY_RULES[9]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[10]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool {
-        !matches!(self.recommended, Some(false))
-    }
+    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -1066,9 +1042,7 @@ impl Style {
         }))
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool {
-        Self::CATEGORY_RULES.contains(&rule_name)
-    }
+    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::CATEGORY_RULES.contains(&rule_name) }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
