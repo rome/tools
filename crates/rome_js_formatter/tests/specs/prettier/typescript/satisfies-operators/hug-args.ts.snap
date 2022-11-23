@@ -27,54 +27,23 @@ window.postMessage(
 -  topic: item.topic,
 -} satisfies IActionMessage);
 +window.postMessage(
-+    {
-+      context: item.context,
-+      topic: item.topic
-+    } satisfies IActionMessage
-+  );
++  {
++    context: item.context,
++    topic: item.topic,
++  } satisfies IActionMessage,
++);
 ```
 
 # Output
 
 ```js
 window.postMessage(
-    {
-      context: item.context,
-      topic: item.topic
-    } satisfies IActionMessage
-  );
+  {
+    context: item.context,
+    topic: item.topic,
+  } satisfies IActionMessage,
+);
 ```
 
-
-# Errors
-```
-hug-args.ts:5:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `,` but instead found `satisfies`
-  
-    3 │       context: item.context,
-    4 │       topic: item.topic
-  > 5 │     } satisfies IActionMessage
-      │       ^^^^^^^^^
-    6 │   );
-    7 │ 
-  
-  i Remove satisfies
-  
-hug-args.ts:5:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `,` but instead found `IActionMessage`
-  
-    3 │       context: item.context,
-    4 │       topic: item.topic
-  > 5 │     } satisfies IActionMessage
-      │                 ^^^^^^^^^^^^^^
-    6 │   );
-    7 │ 
-  
-  i Remove IActionMessage
-  
-
-```
 
 
