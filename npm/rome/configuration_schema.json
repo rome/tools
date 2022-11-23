@@ -852,6 +852,17 @@
             }
           ]
         },
+        "noExtraNonNullAssertion": {
+          "description": "Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noHeaderScope": {
           "description": "Check that the scope attribute is only used on th elements.",
           "anyOf": [
