@@ -8,7 +8,7 @@ parent: lint/rules/index
 Disallow control flow statements in finally blocks.
 
 JavaScript suspends the control flow statements of `try` and `catch` blocks until
-the execution of finally block finishes. So, when `return`, `throw, `break`, or `continue`is used in finally, control flow statements inside`try`and`catch` are overwritten,
+the execution of finally block finishes. So, when `return`, `throw`, `break` or `continue` is used in finally, control flow statements inside `try` and `catch` are overwritten,
 which is considered as unexpected behavior.
 
 ## Examples
