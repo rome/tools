@@ -874,6 +874,17 @@
             }
           ]
         },
+        "noSetterReturn": {
+          "description": "Disallow returning a value from a setter",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noStringCaseMismatch": {
           "description": "Disallow comparison of expressions modifying the string case with non-compliant value.",
           "anyOf": [
