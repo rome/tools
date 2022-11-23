@@ -182,7 +182,7 @@ pub fn parse_module(text: &str, file_id: FileId) -> Parse<JsModule> {
 pub fn parse(text: &str, file_id: FileId, source_type: SourceType) -> Parse<JsAnyRoot> {
     tracing::debug_span!("parse", file_id = ?file_id).in_scope(move || {
         let (events, errors, tokens) = parse_common(text, file_id, source_type);
-        let mut tree_sink = LosslessTreeSink::new(text, &tokens);
+        let mut tree_sink = JsLosslessTreeSink::new(text, &tokens);
         rome_parser::event::process(&mut tree_sink, events, errors);
         let (green, parse_errors) = tree_sink.finish();
         Parse::new(green, parse_errors)
@@ -196,7 +196,7 @@ pub fn parse_expression(text: &str, file_id: FileId) -> Parse<JsExpressionSnippe
     crate::syntax::expr::parse_expression_snipped(&mut parser).unwrap();
     let (events, tokens, errors) = parser.finish();
 
-    let mut tree_sink = LosslessTreeSink::new(text, &tokens);
+    let mut tree_sink = JsLosslessTreeSink::new(text, &tokens);
     rome_parser::event::process(&mut tree_sink, events, errors);
     let (green, parse_errors) = tree_sink.finish();
     Parse::new_script(green, parse_errors)

@@ -259,6 +259,7 @@ pub mod parsed_syntax;
 pub mod prelude;
 pub mod token_set;
 pub mod token_source;
+pub mod tree_sink;
 
 use crate::parsed_syntax::ParsedSyntax;
 use crate::parsed_syntax::ParsedSyntax::{Absent, Present};
@@ -376,8 +377,6 @@ pub trait Parser: Sized {
     type Kind: SyntaxKind;
     type Source: TokenSource<Kind = Self::Kind>;
 
-    const EOF: Self::Kind;
-
     /// Returns a reference to the [`ParsingContext`](ParsingContext)
     fn context(&self) -> &ParserContext<Self::Kind>;
 
@@ -482,7 +481,7 @@ pub trait Parser: Sized {
     /// Bumps the current token regardless of its kind and advances to the next token.
     fn bump_any(&mut self) {
         let kind = self.cur();
-        assert_ne!(kind, Self::EOF);
+        assert_ne!(kind, Self::Kind::EOF);
 
         self.do_bump(kind);
     }
@@ -639,24 +638,6 @@ pub trait Parser: Sized {
         self.context_mut().push_event(Event::tombstone());
         Marker::new(pos, start)
     }
-}
-
-/// An abstraction for syntax tree implementations
-pub trait TreeSink {
-    type Kind: SyntaxKind;
-
-    /// Adds new token to the current branch.
-    fn token(&mut self, kind: Self::Kind, end: TextSize);
-
-    /// Start new branch and make it current.
-    fn start_node(&mut self, kind: Self::Kind);
-
-    /// Finish current branch and restore previous
-    /// branch as current.
-    fn finish_node(&mut self);
-
-    /// Emit errors
-    fn errors(&mut self, errors: Vec<ParseDiagnostic>);
 }
 
 /// Captures the progress of the parser and allows to test if the parsing is still making progress

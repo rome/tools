@@ -281,7 +281,7 @@ where
     P: Parser,
 {
     fn into_diagnostic(self, p: &P) -> ParseDiagnostic {
-        if p.cur() == P::EOF {
+        if p.cur() == P::Kind::EOF {
             p.err_builder(
                 format!("expected `{}` but instead the file ends", self.0),
                 p.cur_range(),
@@ -304,7 +304,7 @@ where
     P: Parser,
 {
     fn into_diagnostic(self, p: &P) -> ParseDiagnostic {
-        if p.cur() == P::EOF {
+        if p.cur() == P::Kind::EOF {
             p.err_builder(
                 format!("expected {} but instead the file ends", self.0),
                 p.cur_range(),

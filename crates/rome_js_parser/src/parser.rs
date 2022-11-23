@@ -20,7 +20,6 @@ use crate::{
 pub(crate) use parse_error::*;
 pub(crate) use parsed_syntax::ParsedSyntax;
 use rome_diagnostics::location::FileId;
-use rome_js_syntax::JsSyntaxKind::EOF;
 use rome_js_syntax::{
     JsSyntaxKind::{self},
     SourceType,
@@ -151,8 +150,6 @@ impl<'source> Parser for JsParser<'source> {
     type Kind = JsSyntaxKind;
     type Source = JsTokenSource<'source>;
 
-    const EOF: Self::Kind = EOF;
-
     fn context(&self) -> &ParserContext<Self::Kind> {
         &self.context
     }
@@ -217,6 +214,7 @@ pub struct JsParserCheckpoint {
 #[cfg(test)]
 mod tests {
     use crate::prelude::*;
+    use crate::JsLosslessTreeSink;
     use rome_diagnostics::location::FileId;
     use rome_js_syntax::{JsSyntaxKind, SourceType};
     use rome_rowan::AstNode;
@@ -224,7 +222,7 @@ mod tests {
     #[test]
     fn example() {
         use crate::syntax::expr::parse_expression_snipped;
-        use crate::{JsParser, LosslessTreeSink};
+        use crate::JsParser;
         use rome_js_syntax::{JsAnyExpression, JsExpressionSnipped};
 
         let source = "(void b)";
@@ -247,7 +245,7 @@ mod tests {
         // At each point (Start, Token, Finish, Error) it also consumes whitespace.
         // Other abstractions can also yield lossy syntax nodes if whitespace is not wanted.
         // Swap this for a LossyTreeSink for a lossy AST result.
-        let mut sink = LosslessTreeSink::new(source, &tokens);
+        let mut sink = JsLosslessTreeSink::new(source, &tokens);
 
         rome_parser::event::process(&mut sink, events, errors);
 

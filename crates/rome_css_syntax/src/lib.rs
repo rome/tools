@@ -53,6 +53,7 @@ impl CssSyntaxKind {
 
 impl rome_rowan::SyntaxKind for CssSyntaxKind {
     const TOMBSTONE: Self = CssSyntaxKind::TOMBSTONE;
+    const EOF: Self = EOF;
 
     fn is_unknown(&self) -> bool {
         matches!(self, CSS_UNKNOWN)

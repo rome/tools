@@ -83,7 +83,7 @@ impl<K: SyntaxKind> ParseRecovery<K> {
     where
         P: Parser<Kind = K>,
     {
-        if p.at(P::EOF) {
+        if p.at(P::Kind::EOF) {
             return Err(RecoveryError::Eof);
         }
 
@@ -110,7 +110,7 @@ impl<K: SyntaxKind> ParseRecovery<K> {
         P: Parser<Kind = K>,
     {
         p.at_ts(self.recovery_set)
-            || p.at(P::EOF)
+            || p.at(P::Kind::EOF)
             || (self.line_break && p.has_preceding_line_break())
     }
 }

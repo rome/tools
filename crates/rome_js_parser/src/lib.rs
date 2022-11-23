@@ -111,7 +111,6 @@
 mod parser;
 #[macro_use]
 mod lexer;
-mod lossless_tree_sink;
 mod parse;
 mod rewrite;
 mod span;
@@ -130,12 +129,13 @@ use crate::prelude::*;
 pub(crate) use crate::ParsedSyntax::{Absent, Present};
 pub use crate::{
     lexer::{LexContext, ReLexContext},
-    lossless_tree_sink::LosslessTreeSink,
     parse::*,
 };
 pub(crate) use parser::{JsParser, ParseRecovery};
 use rome_diagnostics::console::markup;
-use rome_js_syntax::{JsSyntaxKind, LanguageVariant};
+use rome_js_factory::JsSyntaxFactory;
+use rome_js_syntax::{JsLanguage, JsSyntaxKind, LanguageVariant};
+use rome_parser::tree_sink::LosslessTreeSink;
 pub(crate) use state::{ParserState, StrictMode};
 use std::fmt::Debug;
 
@@ -160,3 +160,5 @@ impl SyntaxFeature for JsSyntaxFeature {
         }
     }
 }
+
+pub type JsLosslessTreeSink<'source> = LosslessTreeSink<'source, JsLanguage, JsSyntaxFactory>;

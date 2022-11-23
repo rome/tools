@@ -60,7 +60,9 @@ pub trait ParseNodeList {
         let elements = self.start_list(p);
         let mut progress = ParserProgress::default();
 
-        while !p.at(Self::Parser::EOF) && !self.is_at_list_end(p) {
+        while !p.at(<<Self::Parser<'source> as Parser>::Kind as SyntaxKind>::EOF)
+            && !self.is_at_list_end(p)
+        {
             progress.assert_progressing(p);
 
             let parsed_element = self.parse_element(p);
@@ -151,7 +153,7 @@ pub trait ParseSeparatedList {
         let elements = self.start_list(p);
         let mut progress = ParserProgress::default();
         let mut first = true;
-        while !p.at(Self::Parser::EOF) && !self.is_at_list_end(p) {
+        while !p.at(<Self::Parser<'source> as Parser>::Kind::EOF) && !self.is_at_list_end(p) {
             if first {
                 first = false;
             } else {

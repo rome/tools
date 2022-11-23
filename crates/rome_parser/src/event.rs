@@ -4,7 +4,7 @@ use std::mem;
 use std::num::NonZeroU32;
 
 use crate::diagnostic::ParseDiagnostic;
-use crate::TreeSink;
+use crate::tree_sink::TreeSink;
 use rome_rowan::{SyntaxKind, TextSize};
 
 /// Events emitted by the Parser, these events are later

@@ -1,35 +1,60 @@
 use crate::prelude::*;
-use rome_js_factory::JsSyntaxTreeBuilder;
-use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, TextRange, TextSize};
-use rome_parser::token_source::Trivia;
-use rome_parser::TreeSink;
-use rome_rowan::TriviaPiece;
+use crate::token_source::Trivia;
+use rome_rowan::{
+    Language, SyntaxFactory, SyntaxKind, SyntaxNode, TextRange, TextSize, TreeBuilder, TriviaPiece,
+};
+
+/// An abstraction for syntax tree implementations
+pub trait TreeSink {
+    type Kind: SyntaxKind;
+
+    /// Adds new token to the current branch.
+    fn token(&mut self, kind: Self::Kind, end: TextSize);
+
+    /// Start new branch and make it current.
+    fn start_node(&mut self, kind: Self::Kind);
+
+    /// Finish current branch and restore previous
+    /// branch as current.
+    fn finish_node(&mut self);
+
+    /// Emit errors
+    fn errors(&mut self, errors: Vec<ParseDiagnostic>);
+}
 
 /// Structure for converting events to a syntax tree representation, while preserving whitespace.
 ///
 /// `LosslessTreeSink` also handles attachment of trivia (whitespace) to nodes.
 #[derive(Debug)]
-pub struct LosslessTreeSink<'a> {
+pub struct LosslessTreeSink<'a, L, Factory>
+where
+    L: Language,
+    Factory: SyntaxFactory<Kind = L::Kind>,
+{
     text: &'a str,
     trivia_list: &'a [Trivia],
     text_pos: TextSize,
     trivia_pos: usize,
     parents_count: usize,
     errors: Vec<ParseDiagnostic>,
-    inner: JsSyntaxTreeBuilder,
+    inner: TreeBuilder<'static, L, Factory>,
     /// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
     needs_eof: bool,
     trivia_pieces: Vec<TriviaPiece>,
 }
 
-impl<'a> TreeSink for LosslessTreeSink<'a> {
-    type Kind = JsSyntaxKind;
+impl<'a, L, Factory> TreeSink for LosslessTreeSink<'a, L, Factory>
+where
+    L: Language,
+    Factory: SyntaxFactory<Kind = L::Kind>,
+{
+    type Kind = L::Kind;
 
-    fn token(&mut self, kind: JsSyntaxKind, end: TextSize) {
+    fn token(&mut self, kind: L::Kind, end: TextSize) {
         self.do_token(kind, end);
     }
 
-    fn start_node(&mut self, kind: JsSyntaxKind) {
+    fn start_node(&mut self, kind: L::Kind) {
         self.inner.start_node(kind);
         self.parents_count += 1;
     }
@@ -38,7 +63,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
         self.parents_count -= 1;
 
         if self.parents_count == 0 && self.needs_eof {
-            self.do_token(JsSyntaxKind::EOF, TextSize::from(self.text.len() as u32));
+            self.do_token(L::Kind::EOF, TextSize::from(self.text.len() as u32));
         }
 
         self.inner.finish_node();
@@ -49,7 +74,11 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
     }
 }
 
-impl<'a> LosslessTreeSink<'a> {
+impl<'a, L, Factory> LosslessTreeSink<'a, L, Factory>
+where
+    L: Language,
+    Factory: SyntaxFactory<Kind = L::Kind>,
+{
     pub fn new(text: &'a str, trivia: &'a [Trivia]) -> Self {
         Self {
             text,
@@ -57,7 +86,7 @@ impl<'a> LosslessTreeSink<'a> {
             text_pos: 0.into(),
             trivia_pos: 0,
             parents_count: 0,
-            inner: JsSyntaxTreeBuilder::default(),
+            inner: TreeBuilder::default(),
             errors: vec![],
             needs_eof: true,
             trivia_pieces: Vec::with_capacity(128),
@@ -68,13 +97,13 @@ impl<'a> LosslessTreeSink<'a> {
     ///
     /// If tree is finished without a [rome_js_syntax::JsSyntaxKind::EOF], one will be generated and all pending trivia
     /// will be appended to its leading trivia.
-    pub fn finish(self) -> (JsSyntaxNode, Vec<ParseDiagnostic>) {
+    pub fn finish(self) -> (SyntaxNode<L>, Vec<ParseDiagnostic>) {
         (self.inner.finish(), self.errors)
     }
 
     #[inline]
-    fn do_token(&mut self, kind: JsSyntaxKind, token_end: TextSize) {
-        if kind == JsSyntaxKind::EOF {
+    fn do_token(&mut self, kind: L::Kind, token_end: TextSize) {
+        if kind == L::Kind::EOF {
             self.needs_eof = false;
         }
 

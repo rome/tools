@@ -34,6 +34,7 @@ impl JsonSyntaxKind {
 
 impl rome_rowan::SyntaxKind for JsonSyntaxKind {
     const TOMBSTONE: Self = JsonSyntaxKind::TOMBSTONE;
+    const EOF: Self = JsonSyntaxKind::EOF;
 
     fn is_unknown(&self) -> bool {
         matches!(self, JsonSyntaxKind::JSON_UNKNOWN)

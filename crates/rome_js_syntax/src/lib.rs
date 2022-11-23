@@ -81,6 +81,7 @@ impl JsSyntaxKind {
 
 impl rome_rowan::SyntaxKind for JsSyntaxKind {
     const TOMBSTONE: Self = TOMBSTONE;
+    const EOF: Self = EOF;
 
     fn is_unknown(&self) -> bool {
         matches!(

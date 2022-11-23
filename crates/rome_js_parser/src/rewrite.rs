@@ -5,7 +5,8 @@ use crate::parser::rewrite_parser::{RewriteParser, RewriteToken};
 use crate::parser::JsParserCheckpoint;
 use crate::JsParser;
 use rome_js_syntax::JsSyntaxKind;
-use rome_parser::{event::process, prelude::*, TreeSink};
+use rome_parser::tree_sink::TreeSink;
+use rome_parser::{event::process, prelude::*};
 
 struct RewriteParseEventsTreeSink<'r, 'p, T> {
     reparse: &'r mut T,

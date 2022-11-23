@@ -41,7 +41,7 @@ pub fn benchmark_parse_lib(id: &str, code: &str, source_type: SourceType) -> Ben
     let stats = print_diff(stats, dhat::HeapStats::get());
 
     let tree_sink_timer = timing::start();
-    let mut tree_sink = rome_js_parser::LosslessTreeSink::new(code, &trivia);
+    let mut tree_sink = rome_js_parser::JsLosslessTreeSink::new(code, &trivia);
     rome_parser::event::process(&mut tree_sink, events, diagnostics);
     let (_green, diagnostics) = tree_sink.finish();
     let tree_sink_duration = tree_sink_timer.stop();
