@@ -1,5 +1,6 @@
 use rome_console::fmt;
 
+use crate::context::internal::{SeverityDiagnostic, TagsDiagnostic};
 use crate::{
     diagnostic::internal::AsDiagnostic,
     location::{AsResource, AsSourceCode},
@@ -134,6 +135,18 @@ pub trait Context<T, E>: internal::Sealed {
     fn with_file_path(self, path: impl AsResource) -> Result<T, Error>
     where
         Error: From<internal::FilePathDiagnostic<E>>;
+
+    /// If `self` is an error, returns a new diagnostic using the provided
+    /// `severity` if `self` doesn't already have one.
+    fn with_severity(self, severity: Severity) -> Result<T, Error>
+    where
+        Error: From<internal::SeverityDiagnostic<E>>;
+
+    /// If `self` is an error, returns a new diagnostic using the provided
+    /// `tags` if `self` doesn't already have one.
+    fn with_tags(self, tags: DiagnosticTags) -> Result<T, Error>
+    where
+        Error: From<internal::TagsDiagnostic<E>>;
 }
 
 impl<T, E: AsDiagnostic> internal::Sealed for Result<T, E> {}
@@ -168,6 +181,26 @@ impl<T, E: AsDiagnostic> Context<T, E> for Result<T, E> {
         match self {
             Ok(value) => Ok(value),
             Err(source) => Err(source.with_file_path(path)),
+        }
+    }
+
+    fn with_severity(self, severity: Severity) -> Result<T, Error>
+    where
+        Error: From<SeverityDiagnostic<E>>,
+    {
+        match self {
+            Ok(value) => Ok(value),
+            Err(source) => Err(source.with_severity(severity)),
+        }
+    }
+
+    fn with_tags(self, tags: DiagnosticTags) -> Result<T, Error>
+    where
+        Error: From<TagsDiagnostic<E>>,
+    {
+        match self {
+            Ok(value) => Ok(value),
+            Err(source) => Err(source.with_tags(tags)),
         }
     }
 }
@@ -535,7 +568,7 @@ mod internal {
     }
 
     /// Diagnostic type returned by [super::DiagnosticExt::with_tags],
-    /// replaces `tags` with the tags of its source
+    /// merges `tags` with the tags of its source
     pub struct TagsDiagnostic<E> {
         pub(super) tags: DiagnosticTags,
         pub(super) source: E,

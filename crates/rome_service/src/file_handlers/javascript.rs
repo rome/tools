@@ -241,7 +241,7 @@ fn lint(params: LintParams) -> LintResults {
                 .category()
                 .filter(|category| category.name().starts_with("lint/"))
                 .and_then(|category| params.rules.as_ref()?.get_severity_from_code(category))
-                .unwrap_or(Severity::Error);
+                .unwrap_or(Severity::Warning);
 
             if severity <= Severity::Error {
                 errors += 1;
@@ -253,6 +253,7 @@ fn lint(params: LintParams) -> LintResults {
                         diagnostic = diagnostic.add_code_suggestion(action.into());
                     }
                 }
+
                 let error = diagnostic.with_severity(severity);
 
                 diagnostics.push(rome_diagnostics::serde::Diagnostic::new(error));

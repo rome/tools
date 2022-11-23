@@ -38,8 +38,6 @@ impl From<RuleDiagnostic> for AnalyzerDiagnostic {
 enum DiagnosticKind {
     /// It holds various info related to diagnostics emitted by the rules
     Rule {
-        /// The severity of the rule
-        severity: Option<Severity>,
         /// The diagnostic emitted by a rule
         rule_diagnostic: RuleDiagnostic,
     },
@@ -76,7 +74,7 @@ impl Diagnostic for AnalyzerDiagnostic {
 
     fn severity(&self) -> Severity {
         match &self.kind {
-            DiagnosticKind::Rule { severity, .. } => severity.unwrap_or(Severity::Error),
+            DiagnosticKind::Rule { .. } => Severity::Error,
             DiagnosticKind::Raw(error) => error.severity(),
         }
     }
@@ -142,14 +140,10 @@ impl AnalyzerDiagnostic {
     pub fn add_code_suggestion(mut self, suggestion: CodeSuggestionAdvice<MarkupBuf>) -> Self {
         self.kind = match self.kind {
             DiagnosticKind::Rule {
-                severity,
                 mut rule_diagnostic,
             } => {
                 rule_diagnostic.tags = DiagnosticTags::FIXABLE;
-                DiagnosticKind::Rule {
-                    severity,
-                    rule_diagnostic,
-                }
+                DiagnosticKind::Rule { rule_diagnostic }
             }
             DiagnosticKind::Raw(error) => {
                 DiagnosticKind::Raw(error.with_tags(DiagnosticTags::FIXABLE))
