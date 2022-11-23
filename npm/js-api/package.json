@@ -40,23 +40,26 @@
     "typescript": "^4.8.2",
     "vitest": "^0.22.0",
     "vite": "^3.0.8",
+    "@rometools/wasm-bundler": "../wasm-bundler",
     "@rometools/wasm-nodejs": "../wasm-nodejs",
-    "@rometools/backend-jsonrpc": "../backend-jsonrpc",
-    "rome": "../rome"
+    "@rometools/wasm-web": "../wasm-web"
   },
   "peerDependencies": {
-    "rome": "^10.0.0",
+    "@rometools/wasm-bundler": "^10.0.0",
     "@rometools/wasm-nodejs": "^10.0.0",
-    "@rometools/backend-jsonrpc": "^10.0.0"
+    "@rometools/wasm-web": "^10.0.0"
   },
   "peerDependenciesMeta": {
     "rome": {
       "optional": false
     },
+    "@rometools/wasm-bundler": {
+      "optional": true
+    },
     "@rometools/wasm-nodejs": {
       "optional": true
     },
-    "@rometools/backend-jsonrpc": {
+    "@rometools/wasm-web": {
       "optional": true
     }
   }

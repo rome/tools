@@ -1,13 +1,20 @@
-import { describe, expect, it } from "vitest";
-import { BackendKind, Rome } from "../../dist";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { Distribution, Rome } from "../dist";
 
 describe("Rome WebAssembly formatContent", () => {
-	it("should format content", async () => {
-		const rome = await Rome.create({
-			backendKind: BackendKind.NODE,
+	let rome: Rome;
+	beforeEach(async () => {
+		rome = await Rome.create({
+			distribution: Distribution.NODE,
 		});
+	});
 
-		let result = await rome.formatContent("function f   () {  }", {
+	afterEach(() => {
+		rome.shutdown();
+	});
+
+	it("should format content", () => {
+		let result = rome.formatContent("function f   () {  }", {
 			filePath: "example.js",
 		});
 
@@ -15,13 +22,9 @@ describe("Rome WebAssembly formatContent", () => {
 		expect(result.diagnostics).toEqual([]);
 	});
 
-	it("should not format and have diagnostics", async () => {
-		const rome = await Rome.create({
-			backendKind: BackendKind.NODE,
-		});
-
+	it("should not format and have diagnostics", () => {
 		let content = "function   () {  }";
-		let result = await rome.formatContent(content, {
+		let result = rome.formatContent(content, {
 			filePath: "example.js",
 		});
 
@@ -33,12 +36,8 @@ describe("Rome WebAssembly formatContent", () => {
 		expect(result.diagnostics).toMatchSnapshot("syntax error");
 	});
 
-	it("should format content in debug mode", async () => {
-		const rome = await Rome.create({
-			backendKind: BackendKind.NODE,
-		});
-
-		let result = await rome.formatContent("function f() {}", {
+	it("should format content in debug mode", () => {
+		let result = rome.formatContent("function f() {}", {
 			filePath: "example.js",
 			debug: true,
 		});
@@ -50,12 +49,8 @@ describe("Rome WebAssembly formatContent", () => {
 		);
 	});
 
-	it("should not format content with range", async () => {
-		const rome = await Rome.create({
-			backendKind: BackendKind.NODE,
-		});
-
-		let result = await rome.formatContent("let a   ; function g () {  }", {
+	it("should not format content with range", () => {
+		let result = rome.formatContent("let a   ; function g () {  }", {
 			filePath: "file.js",
 			range: [20, 25],
 		});
@@ -64,12 +59,8 @@ describe("Rome WebAssembly formatContent", () => {
 		expect(result.diagnostics).toEqual([]);
 	});
 
-	it("should not format content with range in debug mode", async () => {
-		const rome = await Rome.create({
-			backendKind: BackendKind.NODE,
-		});
-
-		let result = await rome.formatContent("let a   ; function g () {  }", {
+	it("should not format content with range in debug mode", () => {
+		let result = rome.formatContent("let a   ; function g () {  }", {
 			filePath: "file.js",
 			range: [20, 25],
 			debug: true,
@@ -92,18 +83,14 @@ describe("Rome WebAssembly formatContent", () => {
 		);
 	});
 
-	it("should format content with custom configuration (8 spaces, single quotes, preserve quotes)", async () => {
-		const rome = await Rome.create({
-			backendKind: BackendKind.NODE,
-		});
-
+	it("should format content with custom configuration (8 spaces, single quotes, preserve quotes)", () => {
 		let content = `function   f() { return { "foo": 'bar' }  }`;
 		let formatted = `function f() {
         return { 'foo': 'bar' };
 }
 `;
 
-		await rome.applyConfiguration({
+		rome.applyConfiguration({
 			formatter: {
 				indentStyle: "space",
 				indentSize: 8,
@@ -116,7 +103,7 @@ describe("Rome WebAssembly formatContent", () => {
 			},
 		});
 
-		let result = await rome.formatContent(content, {
+		let result = rome.formatContent(content, {
 			filePath: "example.js",
 		});
 
