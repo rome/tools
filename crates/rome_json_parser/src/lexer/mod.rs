@@ -7,9 +7,9 @@ use rome_diagnostics::FileId;
 use std::iter::FusedIterator;
 use std::ops::Add;
 
-use crate::ParseDiagnostic;
 use rome_js_unicode_table::{is_id_continue, is_id_start, lookup_byte, Dispatch::*};
 use rome_json_syntax::{JsonSyntaxKind, JsonSyntaxKind::*, TextLen, TextRange, TextSize, T};
+use rome_parser::diagnostic::ParseDiagnostic;
 
 pub struct Token {
     kind: JsonSyntaxKind,

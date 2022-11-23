@@ -1784,6 +1784,7 @@ dependencies = [
  "rome_diagnostics",
  "rome_js_unicode_table",
  "rome_json_syntax",
+ "rome_parser",
  "rome_rowan",
  "tests_macros",
 ]
