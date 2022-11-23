@@ -763,6 +763,8 @@ struct NurserySchema {
     no_unsafe_finally: Option<RuleConfiguration>,
     #[doc = "Disallow the use of var"]
     no_var: Option<RuleConfiguration>,
+    #[doc = "Disallow returning a value from a function with the return type 'void'"]
+    no_void_type_return: Option<RuleConfiguration>,
     #[doc = "Enforce camel case naming convention."]
     use_camel_case: Option<RuleConfiguration>,
     #[doc = "Require const declarations for variables that are never reassigned after declared."]
@@ -778,7 +780,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 23] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 24] = [
         "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
@@ -796,6 +798,7 @@ impl Nursery {
         "noStringCaseMismatch",
         "noUnsafeFinally",
         "noVar",
+        "noVoidTypeReturn",
         "useCamelCase",
         "useConst",
         "useExhaustiveDependencies",
