@@ -10,6 +10,44 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonObject {
+        l_curly_token: L_CURLY@0..1 "{" [] [],
+        json_member_list: JsonMemberList [
+            JsonMember {
+                key: JsonString {
+                    value_token: JSON_STRING_LITERAL@1..3 "\"a" [] [],
+                },
+                colon_token: missing (required),
+                value: missing (required),
+            },
+        ],
+        r_curly_token: missing (required),
+    },
+    eof_token: EOF@3..3 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..3
+  0: JSON_OBJECT@0..3
+    0: L_CURLY@0..1 "{" [] []
+    1: JSON_MEMBER_LIST@1..3
+      0: JSON_MEMBER@1..3
+        0: JSON_STRING@1..3
+          0: JSON_STRING_LITERAL@1..3 "\"a" [] []
+        1: (empty)
+        2: (empty)
+    2: (empty)
+  1: EOF@3..3 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -25,13 +63,18 @@ structure_open_object_open_string.json:1:2 parse ━━━━━━━━━━�
   > 1 │ {"a
       │    
   
+structure_open_object_open_string.json:1:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `:` but instead the file ends
+  
+  > 1 │ {"a
+      │    
+  
+  i the file ends here
+  
+  > 1 │ {"a
+      │    
+  
 ```
 
-## Tokens
-
-```
-L_CURLY: `{` (0..1)
-JSON_STRING_LITERAL: `"a` (1..3)
-EOF: `` (3..3)
-```
 

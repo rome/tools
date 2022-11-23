@@ -10,10 +10,25 @@ false
 ```
 
 
-## Tokens
+## AST
 
 ```
-FALSE_KW: `false` (0..5)
-EOF: `` (5..5)
+JsonRoot {
+    value: JsonBoolean {
+        value: FALSE_KW@0..5 "false" [] [],
+    },
+    eof_token: EOF@5..5 "" [] [],
+}
 ```
+
+## CST 
+
+```
+0: JSON_ROOT@0..5
+  0: JSON_BOOLEAN@0..5
+    0: FALSE_KW@0..5 "false" [] []
+  1: EOF@5..5 "" [] []
+
+```
+
 

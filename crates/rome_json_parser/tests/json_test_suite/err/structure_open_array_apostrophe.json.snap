@@ -10,6 +10,39 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonArray {
+        l_brack_token: L_BRACK@0..1 "[" [] [],
+        elements: JsonArrayElementList [
+            JsonUnknown {
+                items: [
+                    ERROR_TOKEN@1..2 "'" [] [],
+                ],
+            },
+        ],
+        r_brack_token: missing (required),
+    },
+    eof_token: EOF@2..2 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..2
+  0: JSON_ARRAY@0..2
+    0: L_BRACK@0..1 "[" [] []
+    1: JSON_ARRAY_ELEMENT_LIST@1..2
+      0: JSON_UNKNOWN@1..2
+        0: ERROR_TOKEN@1..2 "'" [] []
+    2: (empty)
+  1: EOF@2..2 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -22,13 +55,30 @@ structure_open_array_apostrophe.json:1:2 parse ━━━━━━━━━━━
   
   i Use double quotes to escape the string.
   
+structure_open_array_apostrophe.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected an array, an object, or a literal but instead found '''
+  
+  > 1 │ ['
+      │  ^
+  
+  i Expected an array, an object, or a literal here
+  
+  > 1 │ ['
+      │  ^
+  
+structure_open_array_apostrophe.json:1:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `]` but instead the file ends
+  
+  > 1 │ ['
+      │   
+  
+  i the file ends here
+  
+  > 1 │ ['
+      │   
+  
 ```
 
-## Tokens
-
-```
-L_BRACK: `[` (0..1)
-ERROR_TOKEN: `'` (1..2)
-EOF: `` (2..2)
-```
 

@@ -10,6 +10,29 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonUnknown {
+        items: [
+            ERROR_TOKEN@0..1 "*" [] [],
+        ],
+    },
+    eof_token: EOF@1..1 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..1
+  0: JSON_UNKNOWN@0..1
+    0: ERROR_TOKEN@0..1 "*" [] []
+  1: EOF@1..1 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -20,12 +43,18 @@ structure_single_star.json:1:1 parse ━━━━━━━━━━━━━━�
   > 1 │ *
       │ ^
   
+structure_single_star.json:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected an array, an object, or a literal but instead found '*'
+  
+  > 1 │ *
+      │ ^
+  
+  i Expected an array, an object, or a literal here
+  
+  > 1 │ *
+      │ ^
+  
 ```
 
-## Tokens
-
-```
-ERROR_TOKEN: `*` (0..1)
-EOF: `` (1..1)
-```
 

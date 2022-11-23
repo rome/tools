@@ -10,6 +10,90 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonArray {
+        l_brack_token: L_BRACK@0..1 "[" [] [],
+        elements: JsonArrayElementList [
+            JsonUnknown {
+                items: [
+                    ERROR_TOKEN@1..6 "\"\\{[\"" [] [],
+                    ERROR_TOKEN@6..7 "\\" [] [],
+                ],
+            },
+            missing separator,
+            JsonObject {
+                l_curly_token: L_CURLY@7..8 "{" [] [],
+                json_member_list: JsonMemberList [
+                    JsonMember {
+                        key: missing (required),
+                        colon_token: missing (required),
+                        value: JsonArray {
+                            l_brack_token: L_BRACK@8..9 "[" [] [],
+                            elements: JsonArrayElementList [
+                                JsonUnknown {
+                                    items: [
+                                        ERROR_TOKEN@9..14 "\"\\{[\"" [] [],
+                                        ERROR_TOKEN@14..15 "\\" [] [],
+                                    ],
+                                },
+                                missing separator,
+                                JsonObject {
+                                    l_curly_token: L_CURLY@15..16 "{" [] [],
+                                    json_member_list: JsonMemberList [],
+                                    r_curly_token: missing (required),
+                                },
+                            ],
+                            r_brack_token: missing (required),
+                        },
+                    },
+                ],
+                r_curly_token: missing (required),
+            },
+        ],
+        r_brack_token: missing (required),
+    },
+    eof_token: EOF@16..16 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..16
+  0: JSON_ARRAY@0..16
+    0: L_BRACK@0..1 "[" [] []
+    1: JSON_ARRAY_ELEMENT_LIST@1..16
+      0: JSON_UNKNOWN@1..7
+        0: ERROR_TOKEN@1..6 "\"\\{[\"" [] []
+        1: ERROR_TOKEN@6..7 "\\" [] []
+      1: (empty)
+      2: JSON_OBJECT@7..16
+        0: L_CURLY@7..8 "{" [] []
+        1: JSON_MEMBER_LIST@8..16
+          0: JSON_MEMBER@8..16
+            0: (empty)
+            1: (empty)
+            2: JSON_ARRAY@8..16
+              0: L_BRACK@8..9 "[" [] []
+              1: JSON_ARRAY_ELEMENT_LIST@9..16
+                0: JSON_UNKNOWN@9..15
+                  0: ERROR_TOKEN@9..14 "\"\\{[\"" [] []
+                  1: ERROR_TOKEN@14..15 "\\" [] []
+                1: (empty)
+                2: JSON_OBJECT@15..16
+                  0: L_CURLY@15..16 "{" [] []
+                  1: JSON_MEMBER_LIST@16..16
+                  2: (empty)
+              2: (empty)
+        2: (empty)
+    2: (empty)
+  1: EOF@16..16 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -45,19 +129,72 @@ structure_open_open.json:1:15 parse ━━━━━━━━━━━━━━�
   > 1 │ ["\{["\{["\{["\{
       │               ^
   
+structure_open_open.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected an array, an object, or a literal but instead found '"\{["\'
+  
+  > 1 │ ["\{["\{["\{["\{
+      │  ^^^^^^
+  
+  i Expected an array, an object, or a literal here
+  
+  > 1 │ ["\{["\{["\{["\{
+      │  ^^^^^^
+  
+structure_open_open.json:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `{`
+  
+  > 1 │ ["\{["\{["\{["\{
+      │        ^
+  
+  i Remove {
+  
+structure_open_open.json:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a property but instead found '['
+  
+  > 1 │ ["\{["\{["\{["\{
+      │         ^
+  
+  i Expected a property here
+  
+  > 1 │ ["\{["\{["\{["\{
+      │         ^
+  
+structure_open_open.json:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected an array, an object, or a literal but instead found '"\{["\'
+  
+  > 1 │ ["\{["\{["\{["\{
+      │          ^^^^^^
+  
+  i Expected an array, an object, or a literal here
+  
+  > 1 │ ["\{["\{["\{["\{
+      │          ^^^^^^
+  
+structure_open_open.json:1:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `{`
+  
+  > 1 │ ["\{["\{["\{["\{
+      │                ^
+  
+  i Remove {
+  
+structure_open_open.json:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `}` but instead the file ends
+  
+  > 1 │ ["\{["\{["\{["\{
+      │                 
+  
+  i the file ends here
+  
+  > 1 │ ["\{["\{["\{["\{
+      │                 
+  
 ```
 
-## Tokens
-
-```
-L_BRACK: `[` (0..1)
-ERROR_TOKEN: `"\{["` (1..6)
-ERROR_TOKEN: `\` (6..7)
-L_CURLY: `{` (7..8)
-L_BRACK: `[` (8..9)
-ERROR_TOKEN: `"\{["` (9..14)
-ERROR_TOKEN: `\` (14..15)
-L_CURLY: `{` (15..16)
-EOF: `` (16..16)
-```
 

@@ -10,6 +10,55 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonUnknown {
+        items: [
+            L_CURLY@0..1 "{" [] [],
+            JsonUnknown {
+                items: [
+                    JsonUnknown {
+                        items: [
+                            ERROR_TOKEN@1..4 "'a'" [] [],
+                        ],
+                    },
+                    JsonMember {
+                        key: missing (required),
+                        colon_token: COLON@4..5 ":" [] [],
+                        value: JsonNumber {
+                            value_token: JSON_NUMBER_LITERAL@5..6 "0" [] [],
+                        },
+                    },
+                ],
+            },
+            R_CURLY@6..7 "}" [] [],
+        ],
+    },
+    eof_token: EOF@7..7 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..7
+  0: JSON_UNKNOWN@0..7
+    0: L_CURLY@0..1 "{" [] []
+    1: JSON_UNKNOWN@1..6
+      0: JSON_UNKNOWN@1..4
+        0: ERROR_TOKEN@1..4 "'a'" [] []
+      1: JSON_MEMBER@4..6
+        0: (empty)
+        1: COLON@4..5 ":" [] []
+        2: JSON_NUMBER@5..6
+          0: JSON_NUMBER_LITERAL@5..6 "0" [] []
+    2: R_CURLY@6..7 "}" [] []
+  1: EOF@7..7 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -22,16 +71,27 @@ object_single_quote.json:1:2 parse ━━━━━━━━━━━━━━━
   
   i Use double quotes to escape the string.
   
+object_single_quote.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a property but instead found ''a''
+  
+  > 1 │ {'a':0}
+      │  ^^^
+  
+  i Expected a property here
+  
+  > 1 │ {'a':0}
+      │  ^^^
+  
+object_single_quote.json:1:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `:`
+  
+  > 1 │ {'a':0}
+      │     ^
+  
+  i Remove :
+  
 ```
 
-## Tokens
-
-```
-L_CURLY: `{` (0..1)
-ERROR_TOKEN: `'a'` (1..4)
-COLON: `:` (4..5)
-JSON_NUMBER_LITERAL: `0` (5..6)
-R_CURLY: `}` (6..7)
-EOF: `` (7..7)
-```
 

@@ -10,11 +10,75 @@ expression: snapshot
 ```
 
 
-## Tokens
+## AST
 
 ```
-L_CURLY: `{` (0..1)
-L_BRACK: `[` (1..2)
-EOF: `` (2..2)
+JsonRoot {
+    value: JsonObject {
+        l_curly_token: L_CURLY@0..1 "{" [] [],
+        json_member_list: JsonMemberList [
+            JsonMember {
+                key: missing (required),
+                colon_token: missing (required),
+                value: JsonArray {
+                    l_brack_token: L_BRACK@1..2 "[" [] [],
+                    elements: JsonArrayElementList [],
+                    r_brack_token: missing (required),
+                },
+            },
+        ],
+        r_curly_token: missing (required),
+    },
+    eof_token: EOF@2..2 "" [] [],
+}
 ```
+
+## CST 
+
+```
+0: JSON_ROOT@0..2
+  0: JSON_OBJECT@0..2
+    0: L_CURLY@0..1 "{" [] []
+    1: JSON_MEMBER_LIST@1..2
+      0: JSON_MEMBER@1..2
+        0: (empty)
+        1: (empty)
+        2: JSON_ARRAY@1..2
+          0: L_BRACK@1..2 "[" [] []
+          1: JSON_ARRAY_ELEMENT_LIST@2..2
+          2: (empty)
+    2: (empty)
+  1: EOF@2..2 "" [] []
+
+```
+
+## Diagnostics
+
+```
+structure_open_object_open_array.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a property but instead found '['
+  
+  > 1 │ {[
+      │  ^
+  
+  i Expected a property here
+  
+  > 1 │ {[
+      │  ^
+  
+structure_open_object_open_array.json:1:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `]` but instead the file ends
+  
+  > 1 │ {[
+      │   
+  
+  i the file ends here
+  
+  > 1 │ {[
+      │   
+  
+```
+
 

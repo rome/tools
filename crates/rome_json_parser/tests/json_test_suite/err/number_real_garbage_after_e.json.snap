@@ -10,6 +10,41 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonArray {
+        l_brack_token: L_BRACK@0..1 "[" [] [],
+        elements: JsonArrayElementList [
+            JsonUnknown {
+                items: [
+                    ERROR_TOKEN@1..3 "1e" [] [],
+                    IDENT@3..4 "a" [] [],
+                ],
+            },
+        ],
+        r_brack_token: R_BRACK@4..5 "]" [] [],
+    },
+    eof_token: EOF@5..5 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..5
+  0: JSON_ARRAY@0..5
+    0: L_BRACK@0..1 "[" [] []
+    1: JSON_ARRAY_ELEMENT_LIST@1..4
+      0: JSON_UNKNOWN@1..4
+        0: ERROR_TOKEN@1..3 "1e" [] []
+        1: IDENT@3..4 "a" [] []
+    2: R_BRACK@4..5 "]" [] []
+  1: EOF@5..5 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -25,22 +60,18 @@ number_real_garbage_after_e.json:1:2 parse ━━━━━━━━━━━━�
   > 1 │ [1ea]
       │    ^
   
-number_real_garbage_after_e.json:1:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+number_real_garbage_after_e.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × The JSON standard doesn't allow identifiers
+  × expected an array, an object, or a literal but instead found '1ea'
   
   > 1 │ [1ea]
-      │    ^
+      │  ^^^
+  
+  i Expected an array, an object, or a literal here
+  
+  > 1 │ [1ea]
+      │  ^^^
   
 ```
 
-## Tokens
-
-```
-L_BRACK: `[` (0..1)
-ERROR_TOKEN: `1e` (1..3)
-IDENT: `a` (3..4)
-R_BRACK: `]` (4..5)
-EOF: `` (5..5)
-```
 

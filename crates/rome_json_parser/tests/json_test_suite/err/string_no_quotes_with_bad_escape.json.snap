@@ -10,6 +10,41 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonArray {
+        l_brack_token: L_BRACK@0..1 "[" [] [],
+        elements: JsonArrayElementList [
+            JsonUnknown {
+                items: [
+                    ERROR_TOKEN@1..2 "\\" [] [],
+                    IDENT@2..3 "n" [] [],
+                ],
+            },
+        ],
+        r_brack_token: R_BRACK@3..4 "]" [] [],
+    },
+    eof_token: EOF@4..4 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..4
+  0: JSON_ARRAY@0..4
+    0: L_BRACK@0..1 "[" [] []
+    1: JSON_ARRAY_ELEMENT_LIST@1..3
+      0: JSON_UNKNOWN@1..3
+        0: ERROR_TOKEN@1..2 "\\" [] []
+        1: IDENT@2..3 "n" [] []
+    2: R_BRACK@3..4 "]" [] []
+  1: EOF@4..4 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -20,22 +55,18 @@ string_no_quotes_with_bad_escape.json:1:2 parse ━━━━━━━━━━�
   > 1 │ [\n]
       │  ^
   
-string_no_quotes_with_bad_escape.json:1:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+string_no_quotes_with_bad_escape.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × The JSON standard doesn't allow identifiers
+  × expected an array, an object, or a literal but instead found '\n'
   
   > 1 │ [\n]
-      │   ^
+      │  ^^
+  
+  i Expected an array, an object, or a literal here
+  
+  > 1 │ [\n]
+      │  ^^
   
 ```
 
-## Tokens
-
-```
-L_BRACK: `[` (0..1)
-ERROR_TOKEN: `\` (1..2)
-IDENT: `n` (2..3)
-R_BRACK: `]` (3..4)
-EOF: `` (4..4)
-```
 

@@ -10,6 +10,39 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonArray {
+        l_brack_token: L_BRACK@0..1 "[" [] [],
+        elements: JsonArrayElementList [
+            JsonUnknown {
+                items: [
+                    ERROR_TOKEN@1..12 "\"\\uD800\\u1\"" [] [],
+                ],
+            },
+        ],
+        r_brack_token: R_BRACK@12..13 "]" [] [],
+    },
+    eof_token: EOF@13..13 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..13
+  0: JSON_ARRAY@0..13
+    0: L_BRACK@0..1 "[" [] []
+    1: JSON_ARRAY_ELEMENT_LIST@1..12
+      0: JSON_UNKNOWN@1..12
+        0: ERROR_TOKEN@1..12 "\"\\uD800\\u1\"" [] []
+    2: R_BRACK@12..13 "]" [] []
+  1: EOF@13..13 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -27,14 +60,18 @@ string_1_surrogate_then_escape_u1.json:1:9 parse ━━━━━━━━━━�
   
   i A unicode escape sequence must consist of 4 hexadecimal numbers: `\uXXXX`, e.g. `\u002F' for '/'.
   
+string_1_surrogate_then_escape_u1.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected an array, an object, or a literal but instead found '"\uD800\u1"'
+  
+  > 1 │ ["\uD800\u1"]
+      │  ^^^^^^^^^^^
+  
+  i Expected an array, an object, or a literal here
+  
+  > 1 │ ["\uD800\u1"]
+      │  ^^^^^^^^^^^
+  
 ```
 
-## Tokens
-
-```
-L_BRACK: `[` (0..1)
-ERROR_TOKEN: `"\uD800\u1"` (1..12)
-R_BRACK: `]` (12..13)
-EOF: `` (13..13)
-```
 

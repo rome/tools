@@ -10,6 +10,29 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonUnknown {
+        items: [
+            ERROR_TOKEN@0..8 "\"\\UA66D\"" [] [],
+        ],
+    },
+    eof_token: EOF@8..8 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..8
+  0: JSON_UNKNOWN@0..8
+    0: ERROR_TOKEN@0..8 "\"\\UA66D\"" [] []
+  1: EOF@8..8 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -22,12 +45,18 @@ string_unicode_CapitalU.json:1:2 parse ━━━━━━━━━━━━━�
   
   i Valid escape sequences are: `\\`, `\/`, `/"`, `\b\`, `\f`, `\n`, `\r`, `\t` or any unicode escape sequence `\uXXXX` where X is hexedecimal number. 
   
+string_unicode_CapitalU.json:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected an array, an object, or a literal but instead found '"\UA66D"'
+  
+  > 1 │ "\UA66D"
+      │ ^^^^^^^^
+  
+  i Expected an array, an object, or a literal here
+  
+  > 1 │ "\UA66D"
+      │ ^^^^^^^^
+  
 ```
 
-## Tokens
-
-```
-ERROR_TOKEN: `"\UA66D"` (0..8)
-EOF: `` (8..8)
-```
 

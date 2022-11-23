@@ -10,6 +10,39 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonArray {
+        l_brack_token: L_BRACK@0..1 "[" [] [],
+        elements: JsonArrayElementList [
+            JsonUnknown {
+                items: [
+                    ERROR_TOKEN@1..6 "2.e+3" [] [],
+                ],
+            },
+        ],
+        r_brack_token: R_BRACK@6..7 "]" [] [],
+    },
+    eof_token: EOF@7..7 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..7
+  0: JSON_ARRAY@0..7
+    0: L_BRACK@0..1 "[" [] []
+    1: JSON_ARRAY_ELEMENT_LIST@1..6
+      0: JSON_UNKNOWN@1..6
+        0: ERROR_TOKEN@1..6 "2.e+3" [] []
+    2: R_BRACK@6..7 "]" [] []
+  1: EOF@7..7 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -22,14 +55,18 @@ number_2.e_plus_3.json:1:4 parse ━━━━━━━━━━━━━━━�
   
   i Remove the `.`
   
+number_2.e_plus_3.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected an array, an object, or a literal but instead found '2.e+3'
+  
+  > 1 │ [2.e+3]
+      │  ^^^^^
+  
+  i Expected an array, an object, or a literal here
+  
+  > 1 │ [2.e+3]
+      │  ^^^^^
+  
 ```
 
-## Tokens
-
-```
-L_BRACK: `[` (0..1)
-ERROR_TOKEN: `2.e+3` (1..6)
-R_BRACK: `]` (6..7)
-EOF: `` (7..7)
-```
 

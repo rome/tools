@@ -39,24 +39,26 @@ SyntaxElement = SyntaxElement
 
 JsonUnknown = SyntaxElement*
 
-JsonRoot = JsonValue
+JsonRoot =
+    value: JsonAnyValue
+    eof: 'EOF'
 
-JsonValue =  JsonString | JsonBoolean | JsonNull | JsonNumber | JsonArray | JsonObject | JsonUnknown
+JsonAnyValue =  JsonString | JsonBoolean | JsonNull | JsonNumber | JsonArray | JsonObject | JsonUnknown
 
 JsonObject = '{' JsonMemberList? '}'
 
 JsonMemberList = (JsonMember (',' JsonMember)* )
 
-JsonMember = key: JsonString ':' value: JsonValue
+JsonMember = key: JsonString ':' value: JsonAnyValue
 
 JsonArray = '[' elements: JsonArrayElementList? ']'
 
-JsonArrayElementList = (JsonValue (',' JsonValue)* )
+JsonArrayElementList = (JsonAnyValue (',' JsonAnyValue)* )
 
-JsonBoolean = 'true' | 'false'
+JsonBoolean = value: ('true' | 'false')
 
-JsonNull = 'null'
+JsonNull = value: 'null'
 
-JsonString = 'json_string_literal'
+JsonString = value: 'json_string_literal'
 
-JsonNumber = 'json_number_literal'
+JsonNumber = value: 'json_number_literal'

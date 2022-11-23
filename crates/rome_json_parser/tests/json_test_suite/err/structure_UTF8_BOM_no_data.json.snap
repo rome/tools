@@ -10,6 +10,29 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonUnknown {
+        items: [
+            ERROR_TOKEN@0..3 "\u{feff}" [] [],
+        ],
+    },
+    eof_token: EOF@3..3 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..3
+  0: JSON_UNKNOWN@0..3
+    0: ERROR_TOKEN@0..3 "\u{feff}" [] []
+  1: EOF@3..3 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -20,12 +43,18 @@ structure_UTF8_BOM_no_data.json:1:1 parse ━━━━━━━━━━━━�
   > 1 │ �
       │ 
   
+structure_UTF8_BOM_no_data.json:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected an array, an object, or a literal but instead found '�'
+  
+  > 1 │ �
+      │ 
+  
+  i Expected an array, an object, or a literal here
+  
+  > 1 │ �
+      │ 
+  
 ```
 
-## Tokens
-
-```
-ERROR_TOKEN: `﻿` (0..3)
-EOF: `` (3..3)
-```
 

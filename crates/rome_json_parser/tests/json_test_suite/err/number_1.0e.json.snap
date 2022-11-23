@@ -10,6 +10,39 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonArray {
+        l_brack_token: L_BRACK@0..1 "[" [] [],
+        elements: JsonArrayElementList [
+            JsonUnknown {
+                items: [
+                    ERROR_TOKEN@1..5 "1.0e" [] [],
+                ],
+            },
+        ],
+        r_brack_token: R_BRACK@5..6 "]" [] [],
+    },
+    eof_token: EOF@6..6 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..6
+  0: JSON_ARRAY@0..6
+    0: L_BRACK@0..1 "[" [] []
+    1: JSON_ARRAY_ELEMENT_LIST@1..5
+      0: JSON_UNKNOWN@1..5
+        0: ERROR_TOKEN@1..5 "1.0e" [] []
+    2: R_BRACK@5..6 "]" [] []
+  1: EOF@6..6 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -25,14 +58,18 @@ number_1.0e.json:1:2 parse ━━━━━━━━━━━━━━━━━�
   > 1 │ [1.0e]
       │      ^
   
+number_1.0e.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected an array, an object, or a literal but instead found '1.0e'
+  
+  > 1 │ [1.0e]
+      │  ^^^^
+  
+  i Expected an array, an object, or a literal here
+  
+  > 1 │ [1.0e]
+      │  ^^^^
+  
 ```
 
-## Tokens
-
-```
-L_BRACK: `[` (0..1)
-ERROR_TOKEN: `1.0e` (1..5)
-R_BRACK: `]` (5..6)
-EOF: `` (6..6)
-```
 

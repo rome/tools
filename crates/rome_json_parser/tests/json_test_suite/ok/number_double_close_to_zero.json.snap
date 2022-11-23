@@ -11,14 +11,35 @@ expression: snapshot
 ```
 
 
-## Tokens
+## AST
 
 ```
-L_BRACK: `[` (0..1)
-JSON_NUMBER_LITERAL: `-0.000000000000000000000000000000000000000000000000000000000000000000000000000001` (1..82)
-R_BRACK: `]` (82..83)
-NEWLINE: `
-` (83..84)
-EOF: `` (84..84)
+JsonRoot {
+    value: JsonArray {
+        l_brack_token: L_BRACK@0..1 "[" [] [],
+        elements: JsonArrayElementList [
+            JsonNumber {
+                value_token: JSON_NUMBER_LITERAL@1..82 "-0.000000000000000000000000000000000000000000000000000000000000000000000000000001" [] [],
+            },
+        ],
+        r_brack_token: R_BRACK@82..83 "]" [] [],
+    },
+    eof_token: EOF@83..84 "" [Newline("\n")] [],
+}
 ```
+
+## CST 
+
+```
+0: JSON_ROOT@0..84
+  0: JSON_ARRAY@0..83
+    0: L_BRACK@0..1 "[" [] []
+    1: JSON_ARRAY_ELEMENT_LIST@1..82
+      0: JSON_NUMBER@1..82
+        0: JSON_NUMBER_LITERAL@1..82 "-0.000000000000000000000000000000000000000000000000000000000000000000000000000001" [] []
+    2: R_BRACK@82..83 "]" [] []
+  1: EOF@83..84 "" [Newline("\n")] []
+
+```
+
 

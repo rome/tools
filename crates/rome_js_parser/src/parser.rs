@@ -4,7 +4,6 @@
 //! These events are then applied to a `TreeSink`.
 
 use rome_parser::*;
-pub(crate) mod parse_error;
 pub(crate) mod rewrite_parser;
 pub(crate) mod single_token_parse_recovery;
 
@@ -17,7 +16,6 @@ use crate::{
     state::ParserStateCheckpoint,
     token_source::{JsTokenSource, TokenSourceCheckpoint},
 };
-pub(crate) use parse_error::*;
 pub(crate) use parsed_syntax::ParsedSyntax;
 use rome_diagnostics::location::FileId;
 use rome_js_syntax::{

@@ -10,6 +10,45 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonUnknown {
+        items: [
+            L_CURLY@0..1 "{" [] [],
+            JsonUnknown {
+                items: [
+                    JsonUnknown {
+                        items: [
+                            ERROR_TOKEN@1..5 "🇨" [] [],
+                            ERROR_TOKEN@5..9 "🇭" [] [],
+                        ],
+                    },
+                ],
+            },
+            R_CURLY@9..10 "}" [] [],
+        ],
+    },
+    eof_token: EOF@10..10 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..10
+  0: JSON_UNKNOWN@0..10
+    0: L_CURLY@0..1 "{" [] []
+    1: JSON_UNKNOWN@1..9
+      0: JSON_UNKNOWN@1..9
+        0: ERROR_TOKEN@1..5 "🇨" [] []
+        1: ERROR_TOKEN@5..9 "🇭" [] []
+    2: R_CURLY@9..10 "}" [] []
+  1: EOF@10..10 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -27,15 +66,18 @@ object_emoji.json:1:3 parse ━━━━━━━━━━━━━━━━━�
   > 1 │ {🇨🇭}
       │   ^
   
+object_emoji.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a property but instead found '🇨'
+  
+  > 1 │ {🇨🇭}
+      │  ^
+  
+  i Expected a property here
+  
+  > 1 │ {🇨🇭}
+      │  ^
+  
 ```
 
-## Tokens
-
-```
-L_CURLY: `{` (0..1)
-ERROR_TOKEN: `🇨` (1..5)
-ERROR_TOKEN: `🇭` (5..9)
-R_CURLY: `}` (9..10)
-EOF: `` (10..10)
-```
 

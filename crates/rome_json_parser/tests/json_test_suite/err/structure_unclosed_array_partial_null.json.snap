@@ -10,27 +10,68 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonArray {
+        l_brack_token: L_BRACK@0..2 "[" [] [Whitespace(" ")],
+        elements: JsonArrayElementList [
+            JsonBoolean {
+                value: FALSE_KW@2..7 "false" [] [],
+            },
+            COMMA@7..9 "," [] [Whitespace(" ")],
+            JsonUnknown {
+                items: [
+                    IDENT@9..12 "nul" [] [],
+                ],
+            },
+        ],
+        r_brack_token: missing (required),
+    },
+    eof_token: EOF@12..12 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..12
+  0: JSON_ARRAY@0..12
+    0: L_BRACK@0..2 "[" [] [Whitespace(" ")]
+    1: JSON_ARRAY_ELEMENT_LIST@2..12
+      0: JSON_BOOLEAN@2..7
+        0: FALSE_KW@2..7 "false" [] []
+      1: COMMA@7..9 "," [] [Whitespace(" ")]
+      2: JSON_UNKNOWN@9..12
+        0: IDENT@9..12 "nul" [] []
+    2: (empty)
+  1: EOF@12..12 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
 structure_unclosed_array_partial_null.json:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × The JSON standard doesn't allow identifiers
+  × String values must be double quoted.
   
   > 1 │ [ false, nul
       │          ^^^
   
+structure_unclosed_array_partial_null.json:1:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `]` but instead the file ends
+  
+  > 1 │ [ false, nul
+      │             
+  
+  i the file ends here
+  
+  > 1 │ [ false, nul
+      │             
+  
 ```
 
-## Tokens
-
-```
-L_BRACK: `[` (0..1)
-WHITESPACE: ` ` (1..2)
-FALSE_KW: `false` (2..7)
-COMMA: `,` (7..8)
-WHITESPACE: ` ` (8..9)
-IDENT: `nul` (9..12)
-EOF: `` (12..12)
-```
 

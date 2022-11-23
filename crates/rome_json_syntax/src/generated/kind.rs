@@ -26,8 +26,6 @@ pub enum JsonSyntaxKind {
     ERROR_TOKEN,
     NEWLINE,
     WHITESPACE,
-    TRUE,
-    FALSE,
     IDENT,
     COMMENT,
     MULTILINE_COMMENT,

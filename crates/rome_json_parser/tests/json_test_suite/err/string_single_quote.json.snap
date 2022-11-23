@@ -10,6 +10,39 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonArray {
+        l_brack_token: L_BRACK@0..1 "[" [] [],
+        elements: JsonArrayElementList [
+            JsonUnknown {
+                items: [
+                    ERROR_TOKEN@1..15 "'single quote'" [] [],
+                ],
+            },
+        ],
+        r_brack_token: R_BRACK@15..16 "]" [] [],
+    },
+    eof_token: EOF@16..16 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..16
+  0: JSON_ARRAY@0..16
+    0: L_BRACK@0..1 "[" [] []
+    1: JSON_ARRAY_ELEMENT_LIST@1..15
+      0: JSON_UNKNOWN@1..15
+        0: ERROR_TOKEN@1..15 "'single quote'" [] []
+    2: R_BRACK@15..16 "]" [] []
+  1: EOF@16..16 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -22,14 +55,18 @@ string_single_quote.json:1:2 parse ━━━━━━━━━━━━━━━
   
   i Use double quotes to escape the string.
   
+string_single_quote.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected an array, an object, or a literal but instead found ''single quote''
+  
+  > 1 │ ['single quote']
+      │  ^^^^^^^^^^^^^^
+  
+  i Expected an array, an object, or a literal here
+  
+  > 1 │ ['single quote']
+      │  ^^^^^^^^^^^^^^
+  
 ```
 
-## Tokens
-
-```
-L_BRACK: `[` (0..1)
-ERROR_TOKEN: `'single quote'` (1..15)
-R_BRACK: `]` (15..16)
-EOF: `` (16..16)
-```
 
