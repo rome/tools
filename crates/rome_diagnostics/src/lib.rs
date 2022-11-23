@@ -9,6 +9,7 @@ pub mod diagnostic;
 pub mod display;
 pub mod error;
 pub mod location;
+pub mod panic;
 pub mod serde;
 
 mod suggestion;

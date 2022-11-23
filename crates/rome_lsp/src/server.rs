@@ -305,7 +305,7 @@ impl LanguageServer for LSPServer {
     }
 
     async fn code_action(&self, params: CodeActionParams) -> LspResult<Option<CodeActionResponse>> {
-        rome_diagnostics::v2::panic::catch_unwind(move || {
+        rome_diagnostics::panic::catch_unwind(move || {
             handlers::analysis::code_actions(&self.session, params).map_err(into_lsp_error)
         })
         .map_err(into_lsp_error)?
@@ -315,7 +315,7 @@ impl LanguageServer for LSPServer {
         &self,
         params: DocumentFormattingParams,
     ) -> LspResult<Option<Vec<TextEdit>>> {
-        rome_diagnostics::v2::panic::catch_unwind(move || {
+        rome_diagnostics::panic::catch_unwind(move || {
             handlers::formatting::format(&self.session, params).map_err(into_lsp_error)
         })
         .map_err(into_lsp_error)?
@@ -325,7 +325,7 @@ impl LanguageServer for LSPServer {
         &self,
         params: DocumentRangeFormattingParams,
     ) -> LspResult<Option<Vec<TextEdit>>> {
-        rome_diagnostics::v2::panic::catch_unwind(move || {
+        rome_diagnostics::panic::catch_unwind(move || {
             handlers::formatting::format_range(&self.session, params).map_err(into_lsp_error)
         })
         .map_err(into_lsp_error)?
@@ -335,14 +335,14 @@ impl LanguageServer for LSPServer {
         &self,
         params: DocumentOnTypeFormattingParams,
     ) -> LspResult<Option<Vec<TextEdit>>> {
-        rome_diagnostics::v2::panic::catch_unwind(move || {
+        rome_diagnostics::panic::catch_unwind(move || {
             handlers::formatting::format_on_type(&self.session, params).map_err(into_lsp_error)
         })
         .map_err(into_lsp_error)?
     }
 
     async fn rename(&self, params: RenameParams) -> LspResult<Option<WorkspaceEdit>> {
-        rome_diagnostics::v2::panic::catch_unwind(move || {
+        rome_diagnostics::panic::catch_unwind(move || {
             let rename_enabled = self
                 .session
                 .config
