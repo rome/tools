@@ -58,8 +58,8 @@ impl ExpectedNodeDiagnosticBuilder {
     }
 }
 
-impl<L: LanguageParser> ToDiagnostic<L> for ExpectedNodeDiagnosticBuilder {
-    fn into_diagnostic(self, p: &Parser<L>) -> ParseDiagnostic {
+impl<'a, P: Parser<'a>> ToDiagnostic<P> for ExpectedNodeDiagnosticBuilder {
+    fn into_diagnostic(self, p: &P) -> ParseDiagnostic {
         let range = &self.range;
 
         let msg = if range.is_empty()

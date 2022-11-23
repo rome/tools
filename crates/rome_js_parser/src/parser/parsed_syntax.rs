@@ -1,6 +1,6 @@
 use crate::parser::parse_recovery::RecoveryResult;
+use crate::parser::ParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
-use crate::parser::{JsLanguageParser, ParseRecovery};
 use crate::prelude::*;
 use crate::JsParser;
 use rome_rowan::TextRange;
@@ -156,9 +156,9 @@ impl ParsedSyntax {
 
     /// Returns the kind of the syntax if it is present or [None] otherwise
     #[inline]
-    pub fn kind<L>(&self, p: &Parser<L>) -> Option<L::Kind>
+    pub fn kind<'a, P>(&self, p: &P) -> Option<P::Kind>
     where
-        L: LanguageParser,
+        P: Parser<'a>,
     {
         match self {
             Absent => None,
@@ -168,14 +168,14 @@ impl ParsedSyntax {
 
     /// Adds a diagnostic at the current parser position if the syntax is present and return its marker.
     #[allow(unused)]
-    pub fn add_diagnostic_if_present<E, D>(
+    pub fn add_diagnostic_if_present<'source, E, D>(
         self,
-        p: &mut JsParser,
+        p: &mut JsParser<'source>,
         error_builder: E,
     ) -> Option<CompletedMarker>
     where
         E: FnOnce(&JsParser, TextRange) -> D,
-        D: ToDiagnostic<JsLanguageParser>,
+        D: ToDiagnostic<JsParser<'source>>,
     {
         match self {
             Present(syntax) => {
@@ -191,14 +191,14 @@ impl ParsedSyntax {
 
     /// It returns the syntax if present or adds a diagnostic at the current parser position.
     #[inline]
-    pub fn or_add_diagnostic<E, D>(
+    pub fn or_add_diagnostic<'source, E, D>(
         self,
-        p: &mut JsParser,
+        p: &mut JsParser<'source>,
         error_builder: E,
     ) -> Option<CompletedMarker>
     where
         E: FnOnce(&JsParser, TextRange) -> D,
-        D: ToDiagnostic<JsLanguageParser>,
+        D: ToDiagnostic<JsParser<'source>>,
     {
         match self {
             Present(syntax) => Some(syntax),
@@ -214,10 +214,14 @@ impl ParsedSyntax {
     /// a new marker and adds an error to the current parser position.
     /// See [CompletedMarker.precede]
     #[inline]
-    pub fn precede_or_add_diagnostic<E, D>(self, p: &mut JsParser, error_builder: E) -> Marker
+    pub fn precede_or_add_diagnostic<'source, E, D>(
+        self,
+        p: &mut JsParser<'source>,
+        error_builder: E,
+    ) -> Marker
     where
         E: FnOnce(&JsParser, TextRange) -> D,
-        D: ToDiagnostic<JsLanguageParser>,
+        D: ToDiagnostic<JsParser<'source>>,
     {
         match self {
             Present(completed) => completed.precede(p),

@@ -3,6 +3,7 @@
 //! the parser yields events like `Start node`, `Error`, etc.
 //! These events are then applied to a `TreeSink`.
 
+use rome_parser::*;
 pub(crate) mod parse_error;
 mod parse_lists;
 mod parse_recovery;
@@ -28,7 +29,9 @@ use rome_js_syntax::{
     JsSyntaxKind::{self},
     SourceType,
 };
-use rome_parser::{ParserCheckpoint, Rewind};
+use rome_parser::event::Event;
+use rome_parser::token_source::Trivia;
+use rome_parser::{ParserContext, ParserContextCheckpoint, Rewind};
 use rome_rowan::TextSize;
 
 /// Captures the progress of the parser and allows to test if the parsing is still making progress
@@ -64,18 +67,30 @@ impl ParserProgress {
     }
 }
 
-pub(crate) type JsParser<'source> = Parser<'source, JsLanguageParser>;
-
 /// An extremely fast, error tolerant, completely lossless JavaScript parser
 ///
 /// The Parser yields lower level events instead of nodes.
 /// These events are then processed into a syntax tree through a [`TreeSink`] implementation.
-pub(crate) struct JsLanguageParser {
+pub(crate) struct JsParser<'source> {
     pub(super) state: ParserState,
     pub source_type: SourceType,
+    context: ParserContext<JsSyntaxKind>,
+    source: JsTokenSource<'source>,
 }
 
-impl JsLanguageParser {
+impl<'source> JsParser<'source> {
+    /// Creates a new parser that parses the `source`.
+    pub fn new(source: &'source str, file_id: FileId, source_type: SourceType) -> Self {
+        let source = JsTokenSource::from_str(source, file_id);
+
+        JsParser {
+            state: ParserState::new(&source_type),
+            source_type,
+            context: ParserContext::new(file_id),
+            source,
+        }
+    }
+
     pub fn state(&self) -> &ParserState {
         &self.state
     }
@@ -92,117 +107,22 @@ impl JsLanguageParser {
     pub const fn is_module(&self) -> bool {
         self.source_type.module_kind().is_module()
     }
-}
-
-impl<'s> LanguageParser for JsLanguageParser {
-    type Kind = JsSyntaxKind;
-    type Source<'source> = JsTokenSource<'source>;
-
-    const EOF: Self::Kind = EOF;
-
-    fn validate_token(
-        &self,
-        kind: Self::Kind,
-        p: &Parser<Self>,
-    ) -> Result<Self::Kind, (Self::Kind, ParseDiagnostic)>
-    where
-        Self: Sized,
-    {
-        if kind.is_keyword() && p.source().has_unicode_escape() {
-            Err((
-                JsSyntaxKind::ERROR_TOKEN,
-                p.err_builder(
-                    format!(
-                        "'{}' keyword cannot contain escape character.",
-                        kind.to_string().expect("to return a value for a keyword")
-                    ),
-                    p.cur_range(),
-                ),
-            ))
-        } else {
-            Ok(kind)
-        }
-    }
-}
-
-impl<'s> Rewind for JsLanguageParser {
-    type Checkpoint = ParserStateCheckpoint;
-
-    fn checkpoint(&self) -> Self::Checkpoint {
-        self.state.checkpoint()
-    }
-
-    fn rewind(&mut self, checkpoint: Self::Checkpoint) {
-        self.state.restore(checkpoint)
-    }
-}
-
-pub(crate) trait JsParserExtensions {
-    /// Creates a new parser that parses the `source`.
-    fn new(source: &str, file_id: FileId, source_type: SourceType) -> JsParser;
-
-    /// Tests if there's a line break before the nth token.
-    fn has_nth_preceding_line_break(&mut self, n: usize) -> bool;
-
-    /// Tests if there's a line break before the current token (between the last and current)
-    fn has_preceding_line_break(&self) -> bool;
-
-    /// Re-lexes the current token in the specified context. Returns the kind
-    /// of the re-lexed token (can be the same as before if the context doesn't make a difference for the current token)
-    fn re_lex(&mut self, context: ReLexContext) -> JsSyntaxKind;
-
-    /// Stores the parser state and position before calling the function and restores the state
-    /// and position before returning.
-    ///
-    /// Useful in situation where the parser must advance a few tokens to determine whatever a syntax is
-    /// of one or the other kind.
-    fn lookahead<F, R>(&mut self, op: F) -> R
-    where
-        F: FnOnce(&mut JsParser) -> R;
-
-    /// Applies the passed in change to the parser's state and reverts the
-    /// changes when the returned [ParserStateGuard] goes out of scope.
-    fn with_scoped_state<'p, 't, C: ChangeParserState>(
-        &'p mut self,
-        change: C,
-    ) -> ParserStateGuard<'p, 't, C>;
-
-    /// Applies the passed in change to the parser state before applying the passed `func` and
-    /// restores the state to before the change before returning the result.
-    fn with_state<C, F, R>(&mut self, change: C, func: F) -> R
-    where
-        C: ChangeParserState,
-        F: FnOnce(&mut JsParser) -> R;
-}
-
-impl<'source> JsParserExtensions for Parser<'source, JsLanguageParser> {
-    /// Creates a new parser that parses the `source`.
-    fn new(source: &str, file_id: FileId, source_type: SourceType) -> JsParser {
-        let token_source = JsTokenSource::from_str(source, file_id);
-
-        let language_parser = JsLanguageParser {
-            state: ParserState::new(&source_type),
-            source_type,
-        };
-
-        Parser::from_language(file_id, token_source, language_parser)
-    }
 
     /// Tests if there's a line break before the nth token.
     #[inline]
-    fn has_nth_preceding_line_break(&mut self, n: usize) -> bool {
+    pub fn has_nth_preceding_line_break(&mut self, n: usize) -> bool {
         self.source_mut().has_nth_preceding_line_break(n)
     }
 
     /// Tests if there's a line break before the current token (between the last and current)
     #[inline]
-    fn has_preceding_line_break(&self) -> bool {
+    pub fn has_preceding_line_break(&self) -> bool {
         self.source().has_preceding_line_break()
     }
 
     /// Re-lexes the current token in the specified context. Returns the kind
     /// of the re-lexed token (can be the same as before if the context doesn't make a difference for the current token)
-    fn re_lex(&mut self, context: ReLexContext) -> JsSyntaxKind {
+    pub fn re_lex(&mut self, context: ReLexContext) -> JsSyntaxKind {
         self.source_mut().re_lex(context)
     }
 
@@ -212,7 +132,7 @@ impl<'source> JsParserExtensions for Parser<'source, JsLanguageParser> {
     /// Useful in situation where the parser must advance a few tokens to determine whatever a syntax is
     /// of one or the other kind.
     #[inline]
-    fn lookahead<F, R>(&mut self, op: F) -> R
+    pub fn lookahead<F, R>(&mut self, op: F) -> R
     where
         F: FnOnce(&mut JsParser) -> R,
     {
@@ -225,10 +145,10 @@ impl<'source> JsParserExtensions for Parser<'source, JsLanguageParser> {
 
     /// Applies the passed in change to the parser's state and reverts the
     /// changes when the returned [ParserStateGuard] goes out of scope.
-    fn with_scoped_state<'p, 't, C: ChangeParserState>(
+    pub fn with_scoped_state<'p, C: ChangeParserState>(
         &'p mut self,
         change: C,
-    ) -> ParserStateGuard<'p, 't, C> {
+    ) -> ParserStateGuard<'p, 'source, C> {
         let snapshot = change.apply(self.state_mut());
         ParserStateGuard::new(self, snapshot)
     }
@@ -236,7 +156,7 @@ impl<'source> JsParserExtensions for Parser<'source, JsLanguageParser> {
     /// Applies the passed in change to the parser state before applying the passed `func` and
     /// restores the state to before the change before returning the result.
     #[inline]
-    fn with_state<C, F, R>(&mut self, change: C, func: F) -> R
+    pub fn with_state<C, F, R>(&mut self, change: C, func: F) -> R
     where
         C: ChangeParserState,
         F: FnOnce(&mut JsParser) -> R,
@@ -246,9 +166,103 @@ impl<'source> JsParserExtensions for Parser<'source, JsLanguageParser> {
         C::restore(self.state_mut(), snapshot);
         result
     }
+
+    pub fn finish(self) -> (Vec<Event<JsSyntaxKind>>, Vec<Trivia>, Vec<ParseDiagnostic>) {
+        let (events, mut diagnostics) = self.context.finish();
+        let (trivia, source_diagnostics) = self.source.finish();
+
+        diagnostics.extend(source_diagnostics);
+
+        (events, trivia, diagnostics)
+    }
 }
 
-pub type JsParserCheckpoint = ParserCheckpoint<ParserStateCheckpoint, TokenSourceCheckpoint>;
+impl<'source> Parser<'source> for JsParser<'source> {
+    type Kind = JsSyntaxKind;
+    type Source = JsTokenSource<'source>;
+
+    const EOF: Self::Kind = EOF;
+
+    fn context(&self) -> &ParserContext<Self::Kind> {
+        &self.context
+    }
+
+    fn context_mut(&mut self) -> &mut ParserContext<Self::Kind> {
+        &mut self.context
+    }
+
+    fn source(&self) -> &Self::Source {
+        &self.source
+    }
+
+    fn source_mut(&mut self) -> &mut Self::Source {
+        &mut self.source
+    }
+
+    fn do_bump_with_context(
+        &mut self,
+        kind: Self::Kind,
+        context: <Self::Source as BumpWithContext<'source>>::Context,
+    ) where
+        Self::Source: BumpWithContext<'source>,
+    {
+        let kind = if kind.is_keyword() && self.source().has_unicode_escape() {
+            self.error(self.err_builder(
+                format!(
+                    "'{}' keyword cannot contain escape character.",
+                    kind.to_string().expect("to return a value for a keyword")
+                ),
+                self.cur_range(),
+            ));
+            JsSyntaxKind::ERROR_TOKEN
+        } else {
+            kind
+        };
+
+        let end = self.cur_range().end();
+        self.context_mut().push_token(kind, end);
+
+        if self.context().is_skipping() {
+            self.source_mut().skip_as_trivia_with_context(context);
+        } else {
+            self.source_mut().bump_with_context(context);
+        }
+    }
+
+    fn do_bump(&mut self, kind: Self::Kind) {
+        self.do_bump_with_context(kind, LexContext::Regular)
+    }
+}
+
+impl<'s> Rewind for JsParser<'s> {
+    type Checkpoint = JsParserCheckpoint;
+
+    fn checkpoint(&self) -> Self::Checkpoint {
+        JsParserCheckpoint {
+            context: self.context.checkpoint(),
+            source: self.source.checkpoint(),
+            state: self.state.checkpoint(),
+        }
+    }
+
+    fn rewind(&mut self, checkpoint: Self::Checkpoint) {
+        let JsParserCheckpoint {
+            context,
+            source,
+            state,
+        } = checkpoint;
+
+        self.context.rewind(context);
+        self.source.rewind(source);
+        self.state.restore(state);
+    }
+}
+
+pub struct JsParserCheckpoint {
+    pub(super) context: ParserContextCheckpoint,
+    pub(super) source: TokenSourceCheckpoint,
+    state: ParserStateCheckpoint,
+}
 
 #[cfg(test)]
 mod tests {

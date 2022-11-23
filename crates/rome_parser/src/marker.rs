@@ -1,7 +1,7 @@
 use crate::event::Event;
 use crate::event::Event::Token;
 use crate::token_source::TokenSource;
-use crate::{LanguageParser, Parser};
+use crate::Parser;
 
 use drop_bomb::DebugDropBomb;
 use rome_rowan::{SyntaxKind, TextRange, TextSize};
@@ -41,13 +41,15 @@ impl Marker {
     /// Finishes the syntax tree node and assigns `kind` to it,
     /// and mark the create a `CompletedMarker` for possible future
     /// operation like `.precede()` to deal with forward_parent.
-    pub fn complete<L>(mut self, p: &mut Parser<L>, kind: L::Kind) -> CompletedMarker
+    pub fn complete<'a, P>(mut self, p: &mut P, kind: P::Kind) -> CompletedMarker
     where
-        L: LanguageParser,
+        P: Parser<'a>,
     {
         self.bomb.defuse();
+        let context = p.context_mut();
+
         let idx = self.pos as usize;
-        match p.events[idx] {
+        match context.events[idx] {
             Event::Start {
                 kind: ref mut slot, ..
             } => {
@@ -55,8 +57,8 @@ impl Marker {
             }
             _ => unreachable!(),
         }
-        let finish_pos = p.events.len() as u32;
-        p.push_event(Event::Finish);
+        let finish_pos = context.events.len() as u32;
+        context.push_event(Event::Finish);
 
         let new = CompletedMarker::new(self.pos, finish_pos, self.start);
         new.old_start(self.old_start)
@@ -64,23 +66,23 @@ impl Marker {
 
     /// Abandons the syntax tree node. All its children
     /// are attached to its parent instead.
-    pub fn abandon<L>(mut self, p: &mut Parser<L>)
+    pub fn abandon<'a, P>(mut self, p: &mut P)
     where
-        L: LanguageParser,
+        P: Parser<'a>,
     {
         self.bomb.defuse();
         let idx = self.pos as usize;
-        if idx == p.events.len() - 1 {
+        if idx == p.context().events.len() - 1 {
             if let Some(Event::Start {
                 forward_parent: None,
                 kind,
-            }) = p.events.pop()
+            }) = p.context_mut().events.pop()
             {
-                assert_eq!(kind, L::Kind::TOMBSTONE);
+                assert_eq!(kind, P::Kind::TOMBSTONE);
             }
         }
         if let Some(idx) = self.child_idx {
-            match p.events[idx] {
+            match p.context_mut().events[idx] {
                 Event::Start {
                     ref mut forward_parent,
                     ..
@@ -127,11 +129,12 @@ impl CompletedMarker {
     }
 
     /// Change the kind of node this marker represents
-    pub fn change_kind<L>(&mut self, p: &mut Parser<L>, new_kind: L::Kind)
+    pub fn change_kind<'a, P>(&mut self, p: &mut P, new_kind: P::Kind)
     where
-        L: LanguageParser,
+        P: Parser<'a>,
     {
         match p
+            .context_mut()
             .events
             .get_mut(self.start_pos as usize)
             .expect("Finish position of marker is OOB")
@@ -143,19 +146,19 @@ impl CompletedMarker {
         }
     }
 
-    pub fn change_to_unknown<L: LanguageParser>(&mut self, p: &mut Parser<L>)
+    pub fn change_to_unknown<'a, P>(&mut self, p: &mut P)
     where
-        L: LanguageParser,
+        P: Parser<'a>,
     {
         self.change_kind(p, self.kind(p).to_unknown());
     }
 
     /// Get the range of the marker
-    pub fn range<L>(&self, p: &Parser<L>) -> TextRange
+    pub fn range<'a, P>(&self, p: &P) -> TextRange
     where
-        L: LanguageParser,
+        P: Parser<'a>,
     {
-        let end = p.events[self.old_start as usize..self.finish_pos as usize]
+        let end = p.context().events[self.old_start as usize..self.finish_pos as usize]
             .iter()
             .rev()
             .find_map(|event| match event {
@@ -168,11 +171,11 @@ impl CompletedMarker {
     }
 
     /// Get the underlying text of a marker
-    pub fn text<'a, L>(&self, p: &'a Parser<L>) -> &'a str
+    pub fn text<'a, P>(&self, p: &P) -> &'a str
     where
-        L: LanguageParser,
+        P: Parser<'a>,
     {
-        &p.source.text()[self.range(p)]
+        &p.source().text()[self.range(p)]
     }
 
     /// This method allows to create a new node which starts
@@ -187,13 +190,13 @@ impl CompletedMarker {
     /// Append a new `START` events as `[START, FINISH, NEWSTART]`,
     /// then mark `NEWSTART` as `START`'s parent with saving its relative
     /// distance to `NEWSTART` into forward_parent(=2 in this case);
-    pub fn precede<L>(self, p: &mut Parser<L>) -> Marker
+    pub fn precede<'a, P>(self, p: &mut P) -> Marker
     where
-        L: LanguageParser,
+        P: Parser<'a>,
     {
         let mut new_pos = p.start();
         let idx = self.start_pos as usize;
-        match p.events[idx] {
+        match p.context_mut().events[idx] {
             Event::Start {
                 ref mut forward_parent,
                 ..
@@ -210,32 +213,34 @@ impl CompletedMarker {
     }
 
     /// Undo this completion and turns into a `Marker`
-    pub fn undo_completion<L>(self, p: &mut Parser<L>) -> Marker
+    pub fn undo_completion<'a, P>(self, p: &mut P) -> Marker
     where
-        L: LanguageParser,
+        P: Parser<'a>,
     {
         let start_idx = self.start_pos as usize;
         let finish_idx = self.finish_pos as usize;
 
-        match p.events[start_idx] {
+        let events = &mut p.context_mut().events;
+
+        match events[start_idx] {
             Event::Start {
                 ref mut kind,
                 forward_parent: None,
-            } => *kind = L::Kind::TOMBSTONE,
+            } => *kind = P::Kind::TOMBSTONE,
             _ => unreachable!(),
         }
-        match p.events[finish_idx] {
+        match events[finish_idx] {
             ref mut slot @ Event::Finish { .. } => *slot = Event::tombstone(),
             _ => unreachable!(),
         }
         Marker::new(self.start_pos, self.offset)
     }
 
-    pub fn kind<L>(&self, p: &Parser<L>) -> L::Kind
+    pub fn kind<'a, P>(&self, p: &P) -> P::Kind
     where
-        L: LanguageParser,
+        P: Parser<'a>,
     {
-        match p.events[self.start_pos as usize] {
+        match p.context().events[self.start_pos as usize] {
             Event::Start { kind, .. } => kind,
             _ => unreachable!(),
         }

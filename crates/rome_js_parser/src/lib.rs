@@ -369,7 +369,6 @@ mod prelude;
 pub mod syntax;
 mod token_source;
 
-use crate::parser::JsLanguageParser;
 pub(crate) use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
 use crate::prelude::*;
 pub(crate) use crate::ParsedSyntax::{Absent, Present};
@@ -398,16 +397,16 @@ pub(crate) trait SyntaxFeature: Sized {
     /// supported.
     ///
     /// Returns the parsed syntax.
-    fn exclusive_syntax<S, E, D>(
+    fn exclusive_syntax<'source, S, E, D>(
         &self,
-        p: &mut JsParser,
+        p: &mut JsParser<'source>,
         syntax: S,
         error_builder: E,
     ) -> ParsedSyntax
     where
         S: Into<ParsedSyntax>,
-        E: FnOnce(&JsParser, &CompletedMarker) -> D,
-        D: ToDiagnostic<JsLanguageParser>,
+        E: FnOnce(&JsParser<'source>, &CompletedMarker) -> D,
+        D: ToDiagnostic<JsParser<'source>>,
     {
         syntax.into().map(|mut syntax| {
             if self.is_unsupported(p) {
@@ -438,9 +437,9 @@ pub(crate) trait SyntaxFeature: Sized {
         if self.is_supported(p) {
             parse(p)
         } else {
-            let diagnostics_checkpoint = p.diagnostics().len();
+            let diagnostics_checkpoint = p.context().diagnostics().len();
             let syntax = parse(p);
-            p.truncate_diagnostics(diagnostics_checkpoint);
+            p.context_mut().truncate_diagnostics(diagnostics_checkpoint);
 
             match syntax {
                 Present(mut syntax) => {

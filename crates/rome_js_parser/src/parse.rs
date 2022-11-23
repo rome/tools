@@ -1,6 +1,5 @@
 //! Utilities for high level parsing of js code.
 
-use crate::parser::JsParserExtensions;
 use crate::*;
 pub use rome_diagnostics::location::FileId;
 use rome_js_syntax::{

@@ -1,4 +1,4 @@
-use crate::{LanguageParser, Parser};
+use crate::Parser;
 use rome_diagnostics::console::fmt::Display;
 use rome_diagnostics::console::{markup, MarkupBuf};
 use rome_diagnostics::location::AsSpan;
@@ -115,9 +115,8 @@ impl ParseDiagnostic {
     /// # use rome_console::fmt::{Termcolor};
     /// # use rome_console::markup;
     /// # use rome_diagnostics::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
-    /// # use rome_js_parser::ParseDiagnostic;
-    /// # use rome_js_syntax::TextRange;
-    /// # use rome_rowan::TextSize;
+    /// # use rome_parser::diagnostic::ParseDiagnostic;
+    /// # use rome_rowan::{TextSize, TextRange};
     /// # use std::fmt::Write;
     ///
     /// let source = "const a";
@@ -173,9 +172,8 @@ impl ParseDiagnostic {
     /// # use rome_console::fmt::{Termcolor};
     /// # use rome_console::markup;
     /// # use rome_diagnostics::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
-    /// # use rome_js_parser::ParseDiagnostic;
-    /// # use rome_js_syntax::TextRange;
-    /// # use rome_rowan::TextSize;
+    /// # use rome_parser::diagnostic::ParseDiagnostic;
+    /// # use rome_rowan::{TextSize, TextRange};
     /// # use std::fmt::Write;
     ///
     /// let source = "const a";
@@ -225,12 +223,12 @@ impl ParseDiagnostic {
     }
 }
 
-pub trait ToDiagnostic<L: LanguageParser> {
-    fn into_diagnostic(self, p: &Parser<L>) -> ParseDiagnostic;
+pub trait ToDiagnostic<P> {
+    fn into_diagnostic(self, p: &P) -> ParseDiagnostic;
 }
 
-impl<L: LanguageParser> ToDiagnostic<L> for ParseDiagnostic {
-    fn into_diagnostic(self, _: &Parser<L>) -> ParseDiagnostic {
+impl<'a, P: Parser<'a>> ToDiagnostic<P> for ParseDiagnostic {
+    fn into_diagnostic(self, _: &P) -> ParseDiagnostic {
         self
     }
 }
@@ -275,9 +273,9 @@ pub fn expected_token_any<K: SyntaxKind>(tokens: &[K]) -> ExpectedTokens {
 
 pub struct ExpectedToken(&'static str);
 
-impl<L: LanguageParser> ToDiagnostic<L> for ExpectedToken {
-    fn into_diagnostic(self, p: &Parser<L>) -> ParseDiagnostic {
-        if p.cur() == L::EOF {
+impl<'a, P: Parser<'a>> ToDiagnostic<P> for ExpectedToken {
+    fn into_diagnostic(self, p: &P) -> ParseDiagnostic {
+        if p.cur() == P::EOF {
             p.err_builder(
                 format!("expected `{}` but instead the file ends", self.0),
                 p.cur_range(),
@@ -295,9 +293,9 @@ impl<L: LanguageParser> ToDiagnostic<L> for ExpectedToken {
 
 pub struct ExpectedTokens(String);
 
-impl<L: LanguageParser> ToDiagnostic<L> for ExpectedTokens {
-    fn into_diagnostic(self, p: &Parser<L>) -> ParseDiagnostic {
-        if p.cur() == L::EOF {
+impl<'a, P: Parser<'a>> ToDiagnostic<P> for ExpectedTokens {
+    fn into_diagnostic(self, p: &P) -> ParseDiagnostic {
+        if p.cur() == P::EOF {
             p.err_builder(
                 format!("expected {} but instead the file ends", self.0),
                 p.cur_range(),

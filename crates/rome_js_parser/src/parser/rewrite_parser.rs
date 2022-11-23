@@ -1,4 +1,4 @@
-use crate::parser::{JsLanguageParser, JsParser};
+use crate::parser::JsParser;
 use crate::token_source::TokenSourceCheckpoint;
 
 use crate::prelude::*;
@@ -44,9 +44,9 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
 
     /// Starts a marker for a new node.
     pub fn start(&mut self) -> RewriteMarker {
-        let pos = self.inner.events().len() as u32;
+        let pos = self.inner.context().events().len() as u32;
         self.skip_trivia(false);
-        self.inner.push_event(Event::tombstone());
+        self.inner.context_mut().push_event(Event::tombstone());
         RewriteMarker(Marker::new(pos, self.offset))
     }
 
@@ -54,7 +54,7 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
     pub fn bump(&mut self, token: RewriteToken) {
         self.skip_trivia(false);
         debug_assert!(self.offset < token.end);
-        self.inner.push_token(token.kind, token.end);
+        self.inner.context_mut().push_token(token.kind, token.end);
 
         // test ts ts_decorator_assignment
         // @test(--a)
@@ -109,7 +109,7 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
         self.inner.err_builder(message, span)
     }
 
-    pub fn error(&mut self, diagnostic: impl ToDiagnostic<JsLanguageParser>) {
+    pub fn error(&mut self, diagnostic: impl ToDiagnostic<JsParser<'source>>) {
         self.inner.error(diagnostic)
     }
 }

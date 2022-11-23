@@ -12,6 +12,7 @@ rome_js_syntax = { path = "../../crates/rome_js_syntax" }
 rome_js_parser = { path = "../../crates/rome_js_parser" }
 rome_js_semantic = { path = "../../crates/rome_js_semantic" }
 rome_diagnostics = { path = "../../crates/rome_diagnostics" }
+rome_parser = { path = "../../crates/rome_parser" }
 pico-args = { version = "0.5.0", features=["eq-separator"] }
 ascii_table = "4.0.2"
 colored = "2.0.0"
