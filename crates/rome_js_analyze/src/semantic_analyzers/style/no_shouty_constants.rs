@@ -80,7 +80,7 @@ fn is_id_and_string_literal_inner_text_equal(
 
 pub struct State {
     literal: JsStringLiteralExpression,
-    references: Vec<Reference>,
+    reference: Reference,
 }
 
 impl Rule for NoShoutyConstants {
@@ -109,7 +109,7 @@ impl Rule for NoShoutyConstants {
 
                 return Some(State {
                     literal,
-                    references: binding.all_references(ctx.model()).collect(),
+                    reference: binding.all_references(ctx.model()).next()?,
                 });
             }
         }
@@ -128,10 +128,8 @@ impl Rule for NoShoutyConstants {
             },
         );
 
-        for reference in state.references.iter() {
-            let node = reference.node();
-            diag = diag.detail(node.text_trimmed_range(), "Used here.")
-        }
+        let node = state.reference.node();
+        diag = diag.detail(node.text_trimmed_range(), "Used here.");
 
         let diag = diag.note(
             markup! {"You should avoid declaring constants with a string that's the same
@@ -150,37 +148,40 @@ impl Rule for NoShoutyConstants {
 
         batch.remove_js_variable_declarator(ctx.query());
 
-        for reference in state.references.iter() {
-            let literal = literal.clone();
-            if let Some(node) = reference.node().parent()?.cast::<JsIdentifierExpression>() {
-                batch.replace_node(
-                    JsAnyExpression::JsIdentifierExpression(node),
-                    JsAnyExpression::JsAnyLiteralExpression(literal),
-                );
-            } else if let Some(node) = reference
-                .node()
-                .parent()?
-                .cast::<JsShorthandPropertyObjectMember>()
-            {
-                // for replacing JsShorthandPropertyObjectMember
-                let new_element = js_property_object_member(
-                    JsAnyObjectMemberName::JsLiteralMemberName(js_literal_member_name(
-                        SyntaxToken::new_detached(
-                            JsSyntaxKind::JS_LITERAL_MEMBER_NAME,
-                            JsReferenceIdentifier::cast_ref(reference.node())?
-                                .value_token()
-                                .ok()?
-                                .text(),
-                            [],
-                            [],
-                        ),
-                    )),
-                    SyntaxToken::new_detached(JsSyntaxKind::COLON, ":", [], []),
-                    JsAnyExpression::JsAnyLiteralExpression(literal),
-                );
+        if let Some(node) = state
+            .reference
+            .node()
+            .parent()?
+            .cast::<JsIdentifierExpression>()
+        {
+            batch.replace_node(
+                JsAnyExpression::JsIdentifierExpression(node),
+                JsAnyExpression::JsAnyLiteralExpression(literal),
+            );
+        } else if let Some(node) = state
+            .reference
+            .node()
+            .parent()?
+            .cast::<JsShorthandPropertyObjectMember>()
+        {
+            // for replacing JsShorthandPropertyObjectMember
+            let new_element = js_property_object_member(
+                JsAnyObjectMemberName::JsLiteralMemberName(js_literal_member_name(
+                    SyntaxToken::new_detached(
+                        JsSyntaxKind::JS_LITERAL_MEMBER_NAME,
+                        JsReferenceIdentifier::cast_ref(state.reference.node())?
+                            .value_token()
+                            .ok()?
+                            .text(),
+                        [],
+                        [],
+                    ),
+                )),
+                SyntaxToken::new_detached(JsSyntaxKind::COLON, ":", [], []),
+                JsAnyExpression::JsAnyLiteralExpression(literal),
+            );
 
-                batch.replace_element(node.into_syntax().into(), new_element.into_syntax().into());
-            }
+            batch.replace_element(node.into_syntax().into(), new_element.into_syntax().into());
         }
 
         Some(JsRuleAction {
