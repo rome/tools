@@ -11,6 +11,7 @@ import {
 	QuoteStyle,
 	TrailingComma,
 	Semicolons,
+	LintRules,
 } from "./types";
 import {
 	createLocalStorage,
@@ -318,9 +319,9 @@ function initState(
 			semicolons:
 				(searchParams.get("semicolons") as Semicolons) ??
 				defaultPlaygroundState.settings.semicolons,
-			enabledNurseryRules:
-				searchParams.get("enabledNurseryRules") === "true" ||
-				defaultPlaygroundState.settings.enabledNurseryRules,
+			lintRules:
+				(searchParams.get("lintRules") as LintRules) ??
+				defaultPlaygroundState.settings.lintRules,
 			enabledLinting:
 				searchParams.get("enabledLinting") === "true" ||
 				defaultPlaygroundState.settings.enabledLinting,
