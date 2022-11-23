@@ -574,7 +574,7 @@ export interface Diagnostic {
 	advices: Advices;
 	category?: Category;
 	description: string;
-	location?: Location;
+	location: Location;
 	message: MarkupBuf;
 	severity: Severity;
 	source?: Diagnostic;
@@ -687,7 +687,7 @@ export type Category =
 	| "flags/invalid"
 	| "semanticTests";
 export interface Location {
-	path: Resource_for_String;
+	path?: Resource_for_String;
 	source_code?: string;
 	span?: TextRange;
 }
