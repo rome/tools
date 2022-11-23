@@ -2,7 +2,7 @@
 edition = "2021"
 name = "rome_json_parser"
 version = "0.0.0"
-authors = ["Rome Tools"]
+authors = ["Rome Tools and Contributors"]
 license = "MIT"
 description = "An extremely fast JSON parser"
 repository = "https://github.com/rome/tools"
