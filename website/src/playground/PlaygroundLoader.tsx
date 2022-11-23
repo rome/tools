@@ -279,7 +279,7 @@ export function usePlaygroundState(): [
 					(searchParams.get("semicolons") as Semicolons) ??
 					defaultPlaygroundState.settings.semicolons,
 				lintRules:
-					(searchParams.get("lintRules") as LintRules)??
+					(searchParams.get("lintRules") as LintRules) ??
 					defaultPlaygroundState.settings.lintRules,
 				enabledLinting:
 					searchParams.get("enabledLinting") === "true" ||

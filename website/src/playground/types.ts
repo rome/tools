@@ -17,7 +17,7 @@ export enum QuoteStyle {
 	Single = "single",
 }
 
-export enum LintRules{
+export enum LintRules {
 	Recommended = "recommended",
 	All = "all",
 }

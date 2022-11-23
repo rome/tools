@@ -99,18 +99,18 @@ self.addEventListener("message", async (e) => {
 				},
 			};
 
-			if(lintRules===LintRules.All){
+			if (lintRules === LintRules.All) {
 				configuration.linter = {
 					enabled: enabledLinting,
 					rules: {
-						correctness:{
+						correctness: {
 							noRestrictedGlobals: "error",
 							noUndeclaredVariables: "error",
-							noUnusedVariables:"error",
-							noUselessFragments:"error",
+							noUnusedVariables: "error",
+							noUselessFragments: "error",
 						},
-						style:{
-							useFragmentSyntax:"error",
+						style: {
+							useFragmentSyntax: "error",
 						},
 						nursery: {
 							noConstAssign: "error",
