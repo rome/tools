@@ -1,7 +1,8 @@
-use crate::token_source::Trivia;
-use crate::{ParseDiagnostic, TreeSink};
+use crate::prelude::*;
 use rome_js_factory::JsSyntaxTreeBuilder;
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, TextRange, TextSize};
+use rome_parser::token_source::Trivia;
+use rome_parser::TreeSink;
 use rome_rowan::TriviaPiece;
 
 /// Structure for converting events to a syntax tree representation, while preserving whitespace.
@@ -22,6 +23,8 @@ pub struct LosslessTreeSink<'a> {
 }
 
 impl<'a> TreeSink for LosslessTreeSink<'a> {
+    type Kind = JsSyntaxKind;
+
     fn token(&mut self, kind: JsSyntaxKind, end: TextSize) {
         self.do_token(kind, end);
     }

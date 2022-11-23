@@ -1,97 +1,12 @@
 use crate::lexer::{BufferedLexer, LexContext, Lexer, LexerCheckpoint, ReLexContext, TextRange};
-use crate::ParseDiagnostic;
+use crate::prelude::*;
 use rome_diagnostics::location::FileId;
 use rome_js_syntax::JsSyntaxKind;
 use rome_js_syntax::JsSyntaxKind::EOF;
-use rome_rowan::{SyntaxKind, TextSize, TriviaPieceKind};
+use rome_parser::token_source::Trivia;
+use rome_parser::Rewind;
+use rome_rowan::{TextSize, TriviaPieceKind};
 use std::collections::VecDeque;
-
-/// A comment or a whitespace trivia in the source code.
-#[derive(Debug, Copy, Clone)]
-pub struct Trivia {
-    /// The kind of the trivia token.
-    kind: TriviaPieceKind,
-
-    /// The range of the trivia in the source text
-    range: TextRange,
-
-    /// Whatever this is the trailing or leading trivia of a non-trivia token.
-    trailing: bool,
-}
-
-impl Trivia {
-    fn new(kind: TriviaPieceKind, range: TextRange, trailing: bool) -> Self {
-        Self {
-            kind,
-            range,
-            trailing,
-        }
-    }
-    /// Returns the kind of the token
-    pub fn kind(&self) -> TriviaPieceKind {
-        self.kind
-    }
-
-    /// Returns the token's length in bytes
-    pub fn len(&self) -> TextSize {
-        self.range.len()
-    }
-
-    /// Returns the byte offset of the trivia in the source text
-    pub fn offset(&self) -> TextSize {
-        self.range.start()
-    }
-
-    /// Returns `true` if this is the trailing trivia of a non-trivia token or false otherwise.
-    pub fn trailing(&self) -> bool {
-        self.trailing
-    }
-
-    /// Returns the text range of this trivia
-    pub fn text_range(&self) -> TextRange {
-        self.range
-    }
-}
-
-pub trait TokenSource<'source> {
-    type Kind: SyntaxKind;
-
-    /// Returns the kind of the current non-trivia token
-    fn current(&self) -> Self::Kind;
-
-    /// Returns the range of the current non-trivia token
-    fn current_range(&self) -> TextRange;
-
-    /// Returns the source text
-    fn text(&self) -> &'source str;
-
-    /// Returns the byte offset of the current token from the start of the source document
-    fn position(&self) -> TextSize {
-        self.current_range().start()
-    }
-
-    fn bump(&mut self);
-
-    fn skip_as_trivia(&mut self);
-
-    /// Ends this token source and returns the source text's trivia
-    fn finish(self) -> (Vec<Trivia>, Vec<ParseDiagnostic>);
-}
-
-pub trait BumpWithContext<'source>: TokenSource<'source> {
-    type Context;
-
-    fn bump_with_context(&mut self, context: Self::Context);
-
-    /// Skips the current token as skipped token trivia
-    fn skip_as_trivia_with_context(&mut self, context: Self::Context);
-}
-
-/// Token source that supports inspecting the 'nth' token (lookahead)
-pub trait NthToken<'source>: TokenSource<'source> {
-    /// Gets the kind of the nth non-trivia token
-    fn nth(&mut self, n: usize) -> Self::Kind;
-}
 
 /// Token source for the parser that skips over any non-trivia token.
 pub struct JsTokenSource<'l> {
@@ -243,23 +158,6 @@ impl<'l> JsTokenSource<'l> {
         None
     }
 
-    /// Restores the token source to a previous state
-    pub fn rewind(&mut self, checkpoint: TokenSourceCheckpoint) {
-        assert!(self.trivia_list.len() >= checkpoint.trivia_len as usize);
-        self.trivia_list.truncate(checkpoint.trivia_len as usize);
-        self.lexer.rewind(checkpoint.lexer);
-        self.non_trivia_lookahead.clear();
-        self.lookahead_offset = 0;
-    }
-
-    /// Creates a checkpoint to which it can later return using [Self::rewind].
-    pub fn checkpoint(&self) -> TokenSourceCheckpoint {
-        TokenSourceCheckpoint {
-            trivia_len: self.trivia_list.len() as u32,
-            lexer: self.lexer.checkpoint(),
-        }
-    }
-
     pub fn re_lex(&mut self, mode: ReLexContext) -> JsSyntaxKind {
         let current_kind = self.current();
 
@@ -357,6 +255,27 @@ impl<'source> NthToken<'source> for JsTokenSource<'source> {
         } else {
             self.lookahead(n).map_or(EOF, |lookahead| lookahead.kind)
         }
+    }
+}
+
+impl<'source> Rewind for JsTokenSource<'source> {
+    type Checkpoint = TokenSourceCheckpoint;
+
+    /// Creates a checkpoint to which it can later return using [Self::rewind].
+    fn checkpoint(&self) -> TokenSourceCheckpoint {
+        TokenSourceCheckpoint {
+            trivia_len: self.trivia_list.len() as u32,
+            lexer: self.lexer.checkpoint(),
+        }
+    }
+
+    /// Restores the token source to a previous state
+    fn rewind(&mut self, checkpoint: TokenSourceCheckpoint) {
+        assert!(self.trivia_list.len() >= checkpoint.trivia_len as usize);
+        self.trivia_list.truncate(checkpoint.trivia_len as usize);
+        self.lexer.rewind(checkpoint.lexer);
+        self.non_trivia_lookahead.clear();
+        self.lookahead_offset = 0;
     }
 }
 

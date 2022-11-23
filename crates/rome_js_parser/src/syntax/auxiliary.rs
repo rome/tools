@@ -1,3 +1,4 @@
+use crate::prelude::*;
 use crate::syntax::class::parse_class_declaration;
 use crate::syntax::function::parse_function_declaration;
 use crate::syntax::module::parse_import_or_import_equals_declaration;

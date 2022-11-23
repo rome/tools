@@ -1,9 +1,6 @@
-use crate::parser::{LanguageParser, Parser};
+use crate::prelude::*;
 use crate::span::Span;
-use crate::token_source::TokenSource;
-use crate::ParseDiagnostic;
-use rome_js_syntax::{JsSyntaxKind, TextRange};
-use rome_rowan::SyntaxKind;
+use rome_js_syntax::TextRange;
 use std::ops::Range;
 
 ///! Provides helper functions to build common diagnostic messages
@@ -16,54 +13,6 @@ pub(crate) fn expected_node(name: &str, range: TextRange) -> ExpectedNodeDiagnos
 /// Creates a diagnostic saying that any of the nodes in [names] was expected at range
 pub(crate) fn expected_any(names: &[&str], range: TextRange) -> ExpectedNodeDiagnosticBuilder {
     ExpectedNodeDiagnosticBuilder::with_any(names, range)
-}
-
-#[must_use]
-pub(crate) fn expected_token<K>(token: K) -> ExpectedToken
-where
-    K: SyntaxKind,
-{
-    ExpectedToken(
-        token
-            .to_string()
-            .expect("Expected token to be a punctuation or keyword."),
-    )
-}
-
-#[must_use]
-pub(crate) fn expected_token_any(tokens: &[JsSyntaxKind]) -> ExpectedTokens {
-    use std::fmt::Write;
-    let mut expected = String::new();
-
-    for (index, token) in tokens.iter().enumerate() {
-        if index > 0 {
-            expected.push_str(", ");
-        }
-
-        if index == tokens.len() - 1 {
-            expected.push_str("or ");
-        }
-
-        let _ = write!(
-            &mut expected,
-            "'{}'",
-            token
-                .to_string()
-                .expect("Expected token to be a punctuation or keyword.")
-        );
-    }
-
-    ExpectedTokens(expected)
-}
-
-pub trait ToDiagnostic<L: LanguageParser> {
-    fn into_diagnostic(self, p: &Parser<L>) -> ParseDiagnostic;
-}
-
-impl<L: LanguageParser> ToDiagnostic<L> for ParseDiagnostic {
-    fn into_diagnostic(self, _: &Parser<L>) -> ParseDiagnostic {
-        self
-    }
 }
 
 pub(crate) struct ExpectedNodeDiagnosticBuilder {
@@ -140,45 +89,5 @@ fn article_for(name: &str) -> &'static str {
     match name.chars().next() {
         Some('a' | 'e' | 'i' | 'o' | 'u') => "an",
         _ => "a",
-    }
-}
-
-pub(crate) struct ExpectedToken(&'static str);
-
-impl<L: LanguageParser> ToDiagnostic<L> for ExpectedToken {
-    fn into_diagnostic(self, p: &Parser<L>) -> ParseDiagnostic {
-        if p.cur() == L::EOF {
-            p.err_builder(
-                format!("expected `{}` but instead the file ends", self.0),
-                p.cur_range(),
-            )
-            .detail(p.cur_range(), "the file ends here")
-        } else {
-            p.err_builder(
-                format!("expected `{}` but instead found `{}`", self.0, p.cur_text()),
-                p.cur_range(),
-            )
-            .hint(format!("Remove {}", p.cur_text()))
-        }
-    }
-}
-
-pub(crate) struct ExpectedTokens(String);
-
-impl<L: LanguageParser> ToDiagnostic<L> for ExpectedTokens {
-    fn into_diagnostic(self, p: &Parser<L>) -> ParseDiagnostic {
-        if p.cur() == L::EOF {
-            p.err_builder(
-                format!("expected {} but instead the file ends", self.0),
-                p.cur_range(),
-            )
-            .detail(p.cur_range(), "the file ends here")
-        } else {
-            p.err_builder(
-                format!("expected {} but instead found `{}`", self.0, p.cur_text()),
-                p.cur_range(),
-            )
-            .hint(format!("Remove {}", p.cur_text()))
-        }
     }
 }

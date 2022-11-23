@@ -8,7 +8,8 @@ use super::expr::parse_expression;
 use super::module::parse_export;
 use super::typescript::*;
 use crate::parser::RecoveryResult;
-use crate::parser::{expected_token, ParseNodeList, ParsedSyntax, ParserProgress};
+use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
+use crate::prelude::*;
 use crate::state::{
     BreakableKind, ChangeParserState, EnableStrictMode, EnableStrictModeSnapshot, EnterBreakable,
     LabelledItem, StrictMode as StrictModeState, WithLabel,
@@ -29,14 +30,12 @@ use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax
 use crate::span::Span;
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{
-    parser, CompletedMarker, JsParser, JsSyntaxFeature, Marker, ParseRecovery, ParseSeparatedList,
-    SyntaxFeature, TokenSet,
-};
+use crate::{parser, JsParser, JsSyntaxFeature, ParseRecovery, ParseSeparatedList, SyntaxFeature};
 use rome_js_syntax::{JsSyntaxKind::*, *};
+use rome_parser::diagnostic::expected_token;
 use rome_rowan::SyntaxKind;
 
-pub const STMT_RECOVERY_SET: TokenSet = token_set![
+pub const STMT_RECOVERY_SET: TokenSet<JsSyntaxKind> = token_set![
     L_CURLY,
     VAR_KW,
     FUNCTION_KW,

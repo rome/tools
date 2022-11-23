@@ -1,7 +1,8 @@
 ///! A set of traits useful to parse various types of lists
 use super::{ParsedSyntax, ParserProgress, RecoveryResult};
-use crate::{CompletedMarker, JsParser, Marker};
+use crate::parser::JsParser;
 use rome_js_syntax::JsSyntaxKind;
+use rome_parser::{CompletedMarker, Marker};
 
 /// Use this trait to parse simple lists that don't have particular requirements.
 ///

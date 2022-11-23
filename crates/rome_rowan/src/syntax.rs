@@ -21,6 +21,8 @@ pub use trivia::{
 
 /// Type tag for each node or token of a language
 pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {
+    const TOMBSTONE: Self;
+
     /// Returns `true` if this is an unknown node kind.
     fn is_unknown(&self) -> bool;
 

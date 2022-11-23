@@ -1,6 +1,7 @@
+use crate::prelude::*;
 use crate::{
-    parser::{expected_any, expected_node, ToDiagnostic},
-    JsParser, ParseDiagnostic,
+    parser::{expected_any, expected_node},
+    JsParser,
 };
 use rome_js_syntax::TextRange;
 

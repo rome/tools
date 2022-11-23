@@ -36,10 +36,13 @@ pub enum RawLanguageKind {
     CONDITION = 14,
     PLUS_TOKEN = 15,
     WHITESPACE = 16,
+    TOMBSTONE = 17,
     __LAST,
 }
 
 impl SyntaxKind for RawLanguageKind {
+    const TOMBSTONE: Self = RawLanguageKind::TOMBSTONE;
+
     fn is_unknown(&self) -> bool {
         self == &RawLanguageKind::UNKNOWN
     }

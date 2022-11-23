@@ -1,16 +1,23 @@
-//! Extremely fast, lossless, and error tolerant JSON Parser.
-
-pub use crate::lexer::{Lexer, Token};
-use rome_console::fmt::Display;
-use rome_console::{markup, MarkupBuf};
+use crate::{LanguageParser, Parser};
+use rome_diagnostics::console::fmt::Display;
+use rome_diagnostics::console::{markup, MarkupBuf};
 use rome_diagnostics::location::AsSpan;
 use rome_diagnostics::{
     Advices, Diagnostic, FileId, Location, LogCategory, MessageAndDescription, Visit,
 };
-use rome_json_syntax::TextRange;
+use rome_rowan::{SyntaxKind, TextRange};
 
-mod lexer;
-
+/// A specialized diagnostic for the parser
+///
+/// Parser diagnostics are always **errors**.
+///
+/// A parser diagnostics structured in this way:
+/// 1. a mandatory message and a mandatory [TextRange]
+/// 2. a list of details, useful to give more information and context around the error
+/// 3. a hint, which should tell the user how they could fix their issue
+///
+/// These information **are printed in this exact order**.
+///
 #[derive(Debug, Diagnostic, Clone)]
 #[diagnostic(category = "parse", severity = Error)]
 pub struct ParseDiagnostic {
@@ -19,7 +26,8 @@ pub struct ParseDiagnostic {
     span: Option<TextRange>,
     /// Reference to a file where the issue occurred
     #[location(resource)]
-    file_id: FileId,
+    pub(super) file_id: FileId,
+
     #[message]
     #[description]
     message: MessageAndDescription,
@@ -107,8 +115,8 @@ impl ParseDiagnostic {
     /// # use rome_console::fmt::{Termcolor};
     /// # use rome_console::markup;
     /// # use rome_diagnostics::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
-    /// # use rome_json_parser::ParseDiagnostic;
-    /// # use rome_json_syntax::TextRange;
+    /// # use rome_js_parser::ParseDiagnostic;
+    /// # use rome_js_syntax::TextRange;
     /// # use rome_rowan::TextSize;
     /// # use std::fmt::Write;
     ///
@@ -165,8 +173,8 @@ impl ParseDiagnostic {
     /// # use rome_console::fmt::{Termcolor};
     /// # use rome_console::markup;
     /// # use rome_diagnostics::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
-    /// # use rome_json_parser::ParseDiagnostic;
-    /// # use rome_json_syntax::TextRange;
+    /// # use rome_js_parser::ParseDiagnostic;
+    /// # use rome_js_syntax::TextRange;
     /// # use rome_rowan::TextSize;
     /// # use std::fmt::Write;
     ///
@@ -209,5 +217,98 @@ impl ParseDiagnostic {
     pub fn hint(mut self, message: impl Display) -> Self {
         self.advice.add_hint(message);
         self
+    }
+
+    /// Retrieves the range that belongs to the diagnostic
+    pub(crate) fn diagnostic_range(&self) -> Option<&TextRange> {
+        self.span.as_ref()
+    }
+}
+
+pub trait ToDiagnostic<L: LanguageParser> {
+    fn into_diagnostic(self, p: &Parser<L>) -> ParseDiagnostic;
+}
+
+impl<L: LanguageParser> ToDiagnostic<L> for ParseDiagnostic {
+    fn into_diagnostic(self, _: &Parser<L>) -> ParseDiagnostic {
+        self
+    }
+}
+
+#[must_use]
+pub fn expected_token<K>(token: K) -> ExpectedToken
+where
+    K: SyntaxKind,
+{
+    ExpectedToken(
+        token
+            .to_string()
+            .expect("Expected token to be a punctuation or keyword."),
+    )
+}
+
+#[must_use]
+pub fn expected_token_any<K: SyntaxKind>(tokens: &[K]) -> ExpectedTokens {
+    use std::fmt::Write;
+    let mut expected = String::new();
+
+    for (index, token) in tokens.iter().enumerate() {
+        if index > 0 {
+            expected.push_str(", ");
+        }
+
+        if index == tokens.len() - 1 {
+            expected.push_str("or ");
+        }
+
+        let _ = write!(
+            &mut expected,
+            "'{}'",
+            token
+                .to_string()
+                .expect("Expected token to be a punctuation or keyword.")
+        );
+    }
+
+    ExpectedTokens(expected)
+}
+
+pub struct ExpectedToken(&'static str);
+
+impl<L: LanguageParser> ToDiagnostic<L> for ExpectedToken {
+    fn into_diagnostic(self, p: &Parser<L>) -> ParseDiagnostic {
+        if p.cur() == L::EOF {
+            p.err_builder(
+                format!("expected `{}` but instead the file ends", self.0),
+                p.cur_range(),
+            )
+            .detail(p.cur_range(), "the file ends here")
+        } else {
+            p.err_builder(
+                format!("expected `{}` but instead found `{}`", self.0, p.cur_text()),
+                p.cur_range(),
+            )
+            .hint(format!("Remove {}", p.cur_text()))
+        }
+    }
+}
+
+pub struct ExpectedTokens(String);
+
+impl<L: LanguageParser> ToDiagnostic<L> for ExpectedTokens {
+    fn into_diagnostic(self, p: &Parser<L>) -> ParseDiagnostic {
+        if p.cur() == L::EOF {
+            p.err_builder(
+                format!("expected {} but instead the file ends", self.0),
+                p.cur_range(),
+            )
+            .detail(p.cur_range(), "the file ends here")
+        } else {
+            p.err_builder(
+                format!("expected {} but instead found `{}`", self.0, p.cur_text()),
+                p.cur_range(),
+            )
+            .hint(format!("Remove {}", p.cur_text()))
+        }
     }
 }

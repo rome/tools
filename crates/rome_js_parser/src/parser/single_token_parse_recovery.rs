@@ -1,5 +1,7 @@
 use crate::lexer::{JsSyntaxKind, T};
-use crate::{JsParser, ParseDiagnostic, TokenSet};
+use crate::prelude::*;
+use crate::JsParser;
+use rome_parser::diagnostic::ParseDiagnostic;
 
 /// This struct contains the information needed to the parser to recover from a certain error
 ///
@@ -10,7 +12,7 @@ pub(crate) struct SingleTokenParseRecovery {
     /// The [Diagnostic] to emit
     error: Option<ParseDiagnostic>,
     /// It tells the parser to recover if the position is inside a set of [tokens](TokenSet)
-    recovery: TokenSet,
+    recovery: TokenSet<JsSyntaxKind>,
     /// It tells the parser to recover if the current token is a curly brace
     include_braces: bool,
     /// The kind of the unknown node the parser inserts if it isn't able to recover because
@@ -20,7 +22,7 @@ pub(crate) struct SingleTokenParseRecovery {
 
 #[allow(deprecated)]
 impl SingleTokenParseRecovery {
-    pub fn new(recovery: TokenSet, unknown_node_kind: JsSyntaxKind) -> Self {
+    pub fn new(recovery: TokenSet<JsSyntaxKind>, unknown_node_kind: JsSyntaxKind) -> Self {
         Self {
             error: None,
             recovery,

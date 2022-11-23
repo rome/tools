@@ -1,12 +1,14 @@
 //! Utilities for high level parsing of js code.
 
-use crate::token_source::Trivia;
+use crate::parser::JsParserExtensions;
 use crate::*;
 pub use rome_diagnostics::location::FileId;
 use rome_js_syntax::{
     JsAnyRoot, JsExpressionSnipped, JsLanguage, JsModule, JsScript, JsSyntaxNode, ModuleKind,
     SourceType,
 };
+use rome_parser::event::Event;
+use rome_parser::token_source::Trivia;
 use rome_rowan::AstNode;
 use std::marker::PhantomData;
 
@@ -182,7 +184,7 @@ pub fn parse(text: &str, file_id: FileId, source_type: SourceType) -> Parse<JsAn
     tracing::debug_span!("parse", file_id = ?file_id).in_scope(move || {
         let (events, errors, tokens) = parse_common(text, file_id, source_type);
         let mut tree_sink = LosslessTreeSink::new(text, &tokens);
-        crate::process(&mut tree_sink, events, errors);
+        rome_parser::event::process(&mut tree_sink, events, errors);
         let (green, parse_errors) = tree_sink.finish();
         Parse::new(green, parse_errors)
     })
@@ -196,7 +198,7 @@ pub fn parse_expression(text: &str, file_id: FileId) -> Parse<JsExpressionSnippe
     let (events, tokens, errors) = parser.finish();
 
     let mut tree_sink = LosslessTreeSink::new(text, &tokens);
-    crate::process(&mut tree_sink, events, errors);
+    rome_parser::event::process(&mut tree_sink, events, errors);
     let (green, parse_errors) = tree_sink.finish();
     Parse::new_script(green, parse_errors)
 }

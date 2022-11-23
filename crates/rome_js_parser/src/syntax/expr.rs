@@ -4,12 +4,12 @@
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
 use super::typescript::*;
-use crate::event::rewrite_events;
-use crate::event::RewriteParseEvents;
 use crate::lexer::{LexContext, ReLexContext};
 use crate::parser::rewrite_parser::{RewriteMarker, RewriteParser};
-use crate::parser::ToDiagnostic;
-use crate::parser::{expected_token, ParserProgress, RecoveryResult};
+use crate::parser::{JsParserCheckpoint, ParserProgress, RecoveryResult};
+use crate::prelude::*;
+use crate::rewrite::rewrite_events;
+use crate::rewrite::RewriteParseEvents;
 use crate::syntax::assignment::parse_assignment;
 use crate::syntax::assignment::AssignmentExprPrecedence;
 use crate::syntax::assignment::{expression_to_assignment, expression_to_assignment_pattern};
@@ -27,19 +27,15 @@ use crate::syntax::jsx::parse_jsx_tag_expression;
 use crate::syntax::object::parse_object_expression;
 use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
-use crate::token_source::TokenSource;
-use crate::Checkpoint;
-use crate::CompletedMarker;
 use crate::JsSyntaxFeature::{Jsx, StrictMode, TypeScript};
-use crate::Marker;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{
-    syntax, JsParser, ParseRecovery, ParseSeparatedList, ParsedSyntax, SyntaxFeature, TokenSet,
-};
+use crate::{syntax, JsParser, ParseRecovery, ParseSeparatedList, ParsedSyntax, SyntaxFeature};
 use bitflags::bitflags;
 use rome_js_syntax::{JsSyntaxKind::*, *};
+use rome_parser::diagnostic::expected_token;
 
-pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
+pub const EXPR_RECOVERY_SET: TokenSet<JsSyntaxKind> =
+    token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub(crate) struct ExpressionContext(ExpressionContextFlags);
@@ -291,7 +287,7 @@ fn parse_assignment_expression_or_higher_base(
 fn parse_assign_expr_recursive(
     p: &mut JsParser,
     mut target: CompletedMarker,
-    checkpoint: Checkpoint,
+    checkpoint: JsParserCheckpoint,
     context: ExpressionContext,
 ) -> ParsedSyntax {
     let assign_operator = p.cur();
@@ -1819,7 +1815,7 @@ fn parse_postfix_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyn
 
 /// A unary expression such as `!foo` or `++bar`
 pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
-    const UNARY_SINGLE: TokenSet =
+    const UNARY_SINGLE: TokenSet<JsSyntaxKind> =
         token_set![T![delete], T![void], T![typeof], T![+], T![-], T![~], T![!]];
 
     if p.at(T![await]) {

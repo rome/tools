@@ -2,9 +2,10 @@
 
 use super::module::parse_module_body;
 use super::stmt::parse_statements;
+use crate::prelude::*;
 use crate::state::{ChangeParserState, EnableStrictMode};
 use crate::syntax::stmt::parse_directives;
-use crate::{CompletedMarker, JsParser};
+use crate::JsParser;
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::ModuleKind;
 

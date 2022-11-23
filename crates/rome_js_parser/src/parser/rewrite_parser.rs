@@ -1,10 +1,16 @@
-use crate::parser::JsLanguageParser;
-use crate::token_source::{TokenSource, TokenSourceCheckpoint};
-use crate::{CompletedMarker, Event, JsParser, Marker, ParseDiagnostic, TextSize, ToDiagnostic};
+use crate::parser::{JsLanguageParser, JsParser};
+use crate::token_source::TokenSourceCheckpoint;
+
+use crate::prelude::*;
 use rome_console::fmt::Display;
 use rome_diagnostics::location::AsSpan;
-use rome_js_syntax::JsSyntaxKind::TOMBSTONE;
 use rome_js_syntax::{JsSyntaxKind, TextRange};
+use rome_parser::{
+    diagnostic::{ParseDiagnostic, ToDiagnostic},
+    event::Event,
+    CompletedMarker, Marker,
+};
+use rome_rowan::TextSize;
 
 /// Simplified parser API for when rewriting the AST structure with `rewrite_events`.
 ///
@@ -38,9 +44,9 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
 
     /// Starts a marker for a new node.
     pub fn start(&mut self) -> RewriteMarker {
-        let pos = self.inner.events.len() as u32;
+        let pos = self.inner.events().len() as u32;
         self.skip_trivia(false);
-        self.inner.push_event(Event::tombstone(TOMBSTONE));
+        self.inner.push_event(Event::tombstone());
         RewriteMarker(Marker::new(pos, self.offset))
     }
 

@@ -1,4 +1,5 @@
 use crate::parser::expected_any;
+use crate::prelude::*;
 use crate::span::Span;
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{is_nth_at_identifier, parse_identifier, ExpressionContext};
@@ -9,7 +10,7 @@ use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{JsParser, ParseDiagnostic, ParsedSyntax, SyntaxFeature, ToDiagnostic};
+use crate::{JsParser, ParsedSyntax, SyntaxFeature};
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind as SyntaxKindTrait;
 

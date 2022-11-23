@@ -1,5 +1,6 @@
 use crate::lexer::TextSize;
-use crate::parser::{expected_any, expected_node, ParserProgress, RecoveryResult, ToDiagnostic};
+use crate::parser::{expected_any, expected_node, ParserProgress, RecoveryResult};
+use crate::prelude::*;
 use crate::state::{EnterAmbientContext, ExportDefaultItem, ExportDefaultItemKind};
 use crate::syntax::binding::{
     is_at_identifier_binding, is_nth_at_identifier_binding, parse_binding, parse_identifier_binding,
@@ -22,11 +23,9 @@ use crate::syntax::typescript::{
     parse_ts_enum_declaration, parse_ts_import_equals_declaration_rest,
     parse_ts_interface_declaration, skip_ts_decorators,
 };
-use crate::token_source::TokenSource;
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{
-    Absent, CompletedMarker, JsParser, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax,
-    Present, SyntaxFeature,
+    Absent, JsParser, ParseRecovery, ParseSeparatedList, ParsedSyntax, Present, SyntaxFeature,
 };
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::{JsSyntaxKind, TextRange, T};

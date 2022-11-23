@@ -1,4 +1,5 @@
-use crate::parser::{expected_token, RecoveryResult};
+use crate::parser::RecoveryResult;
+use crate::prelude::*;
 use crate::syntax::binding::{
     is_nth_at_identifier_binding, parse_binding, parse_identifier_binding,
 };
@@ -17,10 +18,11 @@ use crate::syntax::typescript::{
     parse_ts_type, parse_ts_type_parameters, TypeMembers,
 };
 use crate::{
-    syntax, Absent, CompletedMarker, JsParser, Marker, ParseNodeList, ParseRecovery,
-    ParseSeparatedList, ParsedSyntax, Present,
+    syntax, Absent, JsParser, ParseNodeList, ParseRecovery, ParseSeparatedList, ParsedSyntax,
+    Present,
 };
 use rome_js_syntax::{JsSyntaxKind::*, *};
+use rome_parser::diagnostic::expected_token;
 
 fn parse_literal_as_ts_enum_member(p: &mut JsParser) -> ParsedSyntax {
     let m = p.start();

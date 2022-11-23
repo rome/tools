@@ -1,4 +1,4 @@
-use crate::ParseDiagnostic;
+use crate::prelude::*;
 use rome_diagnostics::location::FileId;
 
 pub fn invalid_digits_after_unicode_escape_sequence(

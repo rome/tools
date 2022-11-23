@@ -1,4 +1,5 @@
 use crate::parser::{ParsedSyntax, ParserProgress, RecoveryResult};
+use crate::prelude::*;
 use crate::state::{
     EnableStrictMode, EnterClassPropertyInitializer, EnterClassStaticInitializationBlock,
     EnterParameters, SignatureFlags,
@@ -32,13 +33,9 @@ use crate::syntax::typescript::{
     skip_ts_decorators,
 };
 
-use crate::token_source::TokenSource;
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{
-    CompletedMarker, JsParser, Marker, ParseDiagnostic, ParseNodeList, ParseRecovery, StrictMode,
-    SyntaxFeature,
-};
+use crate::{JsParser, ParseNodeList, ParseRecovery, StrictMode, SyntaxFeature};
 use bitflags::bitflags;
 use drop_bomb::DebugDropBomb;
 use rome_js_syntax::JsSyntaxKind::*;

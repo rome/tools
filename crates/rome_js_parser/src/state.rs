@@ -1,4 +1,4 @@
-use crate::JsParser;
+use crate::prelude::*;
 use bitflags::bitflags;
 use indexmap::IndexMap;
 use rome_js_syntax::SourceType;
@@ -258,32 +258,6 @@ impl DebugParserStateCheckpoint {
     }
 }
 
-impl<'t> JsParser<'t> {
-    /// Applies the passed in change to the parser's state and reverts the
-    /// changes when the returned [ParserStateGuard] goes out of scope.
-    pub(crate) fn with_scoped_state<'p, C: ChangeParserState>(
-        &'p mut self,
-        change: C,
-    ) -> ParserStateGuard<'p, 't, C> {
-        let snapshot = change.apply(self.state_mut());
-        ParserStateGuard::new(self, snapshot)
-    }
-
-    /// Applies the passed in change to the parser state before applying the passed `func` and
-    /// restores the state to before the change before returning the result.
-    #[inline]
-    pub(crate) fn with_state<C, F, R>(&mut self, change: C, func: F) -> R
-    where
-        C: ChangeParserState,
-        F: FnOnce(&mut JsParser) -> R,
-    {
-        let snapshot = change.apply(self.state_mut());
-        let result = func(self);
-        C::restore(self.state_mut(), snapshot);
-        result
-    }
-}
-
 /// Reverts state changes to their previous value when it goes out of scope.
 /// Can be used like a regular parser.
 pub(crate) struct ParserStateGuard<'parser, 't, C>
@@ -295,7 +269,7 @@ where
 }
 
 impl<'parser, 't, C: ChangeParserState> ParserStateGuard<'parser, 't, C> {
-    fn new(parser: &'parser mut JsParser<'t>, snapshot: C::Snapshot) -> Self {
+    pub(super) fn new(parser: &'parser mut JsParser<'t>, snapshot: C::Snapshot) -> Self {
         Self {
             snapshot,
             inner: parser,

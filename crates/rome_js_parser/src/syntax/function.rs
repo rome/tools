@@ -1,4 +1,5 @@
 use crate::parser::{ParsedSyntax, ParserProgress};
+use crate::prelude::*;
 use crate::state::{EnterFunction, EnterParameters, SignatureFlags};
 use crate::syntax::binding::{
     is_at_identifier_binding, is_nth_at_identifier_binding, parse_binding, parse_binding_pattern,
@@ -18,7 +19,7 @@ use crate::syntax::typescript::{
 
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{CompletedMarker, JsParser, JsSyntaxFeature, Marker, ParseRecovery, SyntaxFeature};
+use crate::{JsParser, JsSyntaxFeature, ParseRecovery, SyntaxFeature};
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::{JsSyntaxKind, TextRange, T};
 use rome_rowan::SyntaxKind;
@@ -1106,9 +1107,9 @@ pub(super) fn skip_parameter_start(p: &mut JsParser) -> bool {
 
     if p.at(T!['[']) || p.at(T!['{']) {
         // Array or object pattern. Try to parse it and return true if there were no parsing errors
-        let previous_error_count = p.diagnostics.len();
+        let previous_error_count = p.diagnostics().len();
         let pattern = parse_binding_pattern(p, ExpressionContext::default());
-        pattern.is_present() && p.diagnostics.len() == previous_error_count
+        pattern.is_present() && p.diagnostics().len() == previous_error_count
     } else {
         false
     }

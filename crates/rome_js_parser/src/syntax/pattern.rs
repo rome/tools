@@ -1,9 +1,10 @@
 ///! Provides traits for parsing pattern like nodes
 use crate::parser::ParserProgress;
+use crate::prelude::*;
 use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::js_parse_error;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{CompletedMarker, JsParser, ParseDiagnostic, ParseRecovery, ParsedSyntax};
+use crate::{JsParser, ParseRecovery, ParsedSyntax};
 use rome_js_syntax::JsSyntaxKind::{EOF, JS_ARRAY_HOLE};
 use rome_js_syntax::{JsSyntaxKind, TextRange, T};
 

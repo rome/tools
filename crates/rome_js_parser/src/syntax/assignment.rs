@@ -1,6 +1,7 @@
-use crate::event::{rewrite_events, RewriteParseEvents};
 use crate::parser::rewrite_parser::{RewriteMarker, RewriteParser, RewriteToken};
-use crate::parser::{expected_any, ParsedSyntax, ToDiagnostic};
+use crate::parser::{expected_any, JsParserCheckpoint, ParsedSyntax};
+use crate::prelude::*;
+use crate::rewrite::{rewrite_events, RewriteParseEvents};
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{
     is_at_identifier, parse_conditional_expr, parse_unary_expr, ExpressionContext,
@@ -11,9 +12,10 @@ use crate::syntax::js_parse_error::{
 };
 use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
+use crate::JsParser;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{Checkpoint, CompletedMarker, JsParser, ParseDiagnostic};
 use rome_js_syntax::{JsSyntaxKind::*, *};
+use rome_parser::Rewind;
 use rome_rowan::AstNode;
 
 // test assignment_target
@@ -62,7 +64,7 @@ use rome_rowan::AstNode;
 pub(crate) fn expression_to_assignment_pattern(
     p: &mut JsParser,
     target: CompletedMarker,
-    checkpoint: Checkpoint,
+    checkpoint: JsParserCheckpoint,
 ) -> CompletedMarker {
     match target.kind(p) {
         JS_OBJECT_EXPRESSION => {
@@ -106,7 +108,7 @@ pub(crate) fn parse_assignment_pattern(p: &mut JsParser) -> ParsedSyntax {
 pub(crate) fn expression_to_assignment(
     p: &mut JsParser,
     target: CompletedMarker,
-    checkpoint: Checkpoint,
+    checkpoint: JsParserCheckpoint,
 ) -> CompletedMarker {
     try_expression_to_assignment(p, target, checkpoint).unwrap_or_else(
         // test_err js_regex_assignment
@@ -339,7 +341,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
 fn try_expression_to_assignment(
     p: &mut JsParser,
     target: CompletedMarker,
-    checkpoint: Checkpoint,
+    checkpoint: JsParserCheckpoint,
 ) -> Result<CompletedMarker, CompletedMarker> {
     if !matches!(
         target.kind(p),

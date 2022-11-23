@@ -1,10 +1,11 @@
+use crate::prelude::*;
 pub mod jsx_parse_errors;
 
 use rome_js_syntax::JsSyntaxKind::*;
+use rome_parser::diagnostic::expected_token;
 use rome_rowan::TextRange;
 
 use crate::lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
-use crate::parser::expected_token;
 use crate::syntax::expr::{
     is_nth_at_identifier_or_keyword, parse_expression, parse_name, ExpressionContext,
 };
@@ -15,8 +16,7 @@ use crate::syntax::jsx::jsx_parse_errors::{
 };
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{
-    parser::RecoveryResult, CompletedMarker, JsParser, ParseNodeList, ParseRecovery, ParsedSyntax,
-    SyntaxFeature,
+    parser::RecoveryResult, JsParser, ParseNodeList, ParseRecovery, ParsedSyntax, SyntaxFeature,
 };
 use crate::{Absent, Present};
 

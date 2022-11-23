@@ -1,6 +1,7 @@
-use crate::parser::{expected_any, expected_node, ToDiagnostic};
+use crate::parser::{expected_any, expected_node};
+use crate::prelude::*;
 use crate::span::Span;
-use crate::{JsParser, ParseDiagnostic};
+use crate::JsParser;
 use rome_js_syntax::TextRange;
 
 ///! Provides factory function to create common diagnostics for the JavaScript syntax

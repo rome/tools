@@ -1,16 +1,17 @@
 //! TypeScript specific functions.
 
+use crate::prelude::*;
 mod statement;
 pub mod ts_parse_error;
 mod types;
 
-use crate::parser::expected_token_any;
 use crate::syntax::expr::{parse_identifier, parse_lhs_expr, parse_unary_expr, ExpressionContext};
 use crate::syntax::js_parse_error::expected_expression;
 
 use crate::syntax::typescript::ts_parse_error::expected_ts_type;
-use crate::{Absent, CompletedMarker, JsParser, Marker, ParsedSyntax, Present};
+use crate::{Absent, JsParser, ParsedSyntax, Present};
 use rome_js_syntax::{JsSyntaxKind::*, *};
+use rome_parser::diagnostic::expected_token_any;
 use rome_rowan::SyntaxKind;
 
 pub(crate) use self::statement::*;

@@ -1,8 +1,6 @@
 use crate::parser::expected_node;
-use crate::{
-    parser::{expected_any, ToDiagnostic},
-    CompletedMarker, JsParser, ParseDiagnostic,
-};
+use crate::prelude::*;
+use crate::{parser::expected_any, JsParser};
 use rome_diagnostics::location::AsSpan;
 use rome_rowan::TextRange;
 

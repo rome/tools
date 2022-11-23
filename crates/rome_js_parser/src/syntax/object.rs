@@ -2,6 +2,7 @@
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParsedSyntax, RecoveryResult};
+use crate::prelude::*;
 use crate::state::{EnterParameters, SignatureFlags};
 use crate::syntax::expr::{
     is_nth_at_reference_identifier, parse_assignment_expression_or_higher, parse_expression,

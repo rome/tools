@@ -1,4 +1,5 @@
-use crate::{CompletedMarker, JsParser, TokenSet};
+use crate::parser::JsParser;
+use crate::prelude::*;
 use rome_js_syntax::JsSyntaxKind;
 use rome_js_syntax::JsSyntaxKind::EOF;
 use std::error::Error;
@@ -53,13 +54,13 @@ pub(crate) type RecoveryResult = Result<CompletedMarker, RecoveryError>;
 /// A safe recovery point for an array element could by finding the next `,` or `]`.
 pub(crate) struct ParseRecovery {
     node_kind: JsSyntaxKind,
-    recovery_set: TokenSet,
+    recovery_set: TokenSet<JsSyntaxKind>,
     line_break: bool,
 }
 
 impl ParseRecovery {
     /// Creates a new parse recovery that eats all tokens until it finds any token in the passed recovery set.
-    pub fn new(node_kind: JsSyntaxKind, recovery_set: TokenSet) -> Self {
+    pub fn new(node_kind: JsSyntaxKind, recovery_set: TokenSet<JsSyntaxKind>) -> Self {
         Self {
             node_kind,
             recovery_set,

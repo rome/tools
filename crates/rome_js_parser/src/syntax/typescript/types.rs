@@ -1,4 +1,5 @@
 use crate::parser::{RecoveryError, RecoveryResult};
+use crate::prelude::*;
 use crate::state::{EnterType, SignatureFlags};
 use crate::syntax::expr::{
     is_at_identifier, is_nth_at_identifier, is_nth_at_identifier_or_keyword,
@@ -24,8 +25,8 @@ use crate::lexer::{LexContext, ReLexContext};
 use crate::span::Span;
 use crate::JsSyntaxFeature::TypeScript;
 use crate::{
-    Absent, CompletedMarker, JsParser, ParseNodeList, ParseRecovery, ParseSeparatedList,
-    ParsedSyntax, Present, SyntaxFeature,
+    Absent, JsParser, ParseNodeList, ParseRecovery, ParseSeparatedList, ParsedSyntax, Present,
+    SyntaxFeature,
 };
 use rome_js_syntax::JsSyntaxKind::TS_TYPE_ANNOTATION;
 use rome_js_syntax::T;
