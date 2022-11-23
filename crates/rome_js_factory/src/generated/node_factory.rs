@@ -5804,6 +5804,20 @@ pub fn ts_return_type_annotation(
         ],
     ))
 }
+pub fn ts_satisfies_assignment(
+    assignment: JsAnyAssignment,
+    satisfies_token: SyntaxToken,
+    ty: TsType,
+) -> TsSatisfiesAssignment {
+    TsSatisfiesAssignment::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::TS_SATISFIES_ASSIGNMENT,
+        [
+            Some(SyntaxElement::Node(assignment.into_syntax())),
+            Some(SyntaxElement::Token(satisfies_token)),
+            Some(SyntaxElement::Node(ty.into_syntax())),
+        ],
+    ))
+}
 pub fn ts_satisfies_expression(
     expression: JsAnyExpression,
     satisfies_token: SyntaxToken,

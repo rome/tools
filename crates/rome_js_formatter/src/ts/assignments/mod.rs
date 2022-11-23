@@ -2,4 +2,5 @@
 
 pub(crate) mod as_assignment;
 pub(crate) mod non_null_assertion_assignment;
+pub(crate) mod satisfies_assignment;
 pub(crate) mod type_assertion_assignment;

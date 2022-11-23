@@ -853,6 +853,7 @@ JsAnyAssignment =
 	| JsParenthesizedAssignment
 	| TsNonNullAssertionAssignment
 	| TsAsAssignment
+	| TsSatisfiesAssignment
 	| TsTypeAssertionAssignment
 	| JsUnknownAssignment
 
@@ -899,6 +900,14 @@ TsNonNullAssertionAssignment =
 TsAsAssignment =
 	assignment: JsAnyAssignment
 	'as'
+	type: TsType
+
+// Only valid inside of parenthesized assignments
+// (a satisfies string) = "test";
+//  ^^^^^^^^^^^^
+TsSatisfiesAssignment =
+	assignment: JsAnyAssignment
+	'satisfies'
 	type: TsType
 
 TsTypeAssertionAssignment =

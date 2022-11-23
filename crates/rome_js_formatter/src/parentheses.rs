@@ -368,6 +368,7 @@ pub(crate) fn get_expression_left_side(
                     }
 
                     TsAsAssignment(parent) => parent.assignment().ok(),
+                    TsSatisfiesAssignment(parent) => parent.assignment().ok(),
                     TsNonNullAssertionAssignment(parent) => parent.assignment().ok(),
                     TsTypeAssertionAssignment(parent) => parent.assignment().ok(),
                     JsParenthesizedAssignment(_)
@@ -802,6 +803,7 @@ impl NeedsParentheses for JsAnyAssignment {
             JsAnyAssignment::JsStaticMemberAssignment(assignment) => assignment.needs_parentheses(),
             JsAnyAssignment::JsUnknownAssignment(assignment) => assignment.needs_parentheses(),
             JsAnyAssignment::TsAsAssignment(assignment) => assignment.needs_parentheses(),
+            JsAnyAssignment::TsSatisfiesAssignment(assignment) => assignment.needs_parentheses(),
             JsAnyAssignment::TsNonNullAssertionAssignment(assignment) => {
                 assignment.needs_parentheses()
             }
@@ -829,6 +831,9 @@ impl NeedsParentheses for JsAnyAssignment {
                 assignment.needs_parentheses_with_parent(parent)
             }
             JsAnyAssignment::TsAsAssignment(assignment) => {
+                assignment.needs_parentheses_with_parent(parent)
+            }
+            JsAnyAssignment::TsSatisfiesAssignment(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
             JsAnyAssignment::TsNonNullAssertionAssignment(assignment) => {
