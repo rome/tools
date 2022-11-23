@@ -182,6 +182,8 @@ impl Rule for NoShoutyConstants {
             );
 
             batch.replace_element(node.into_syntax().into(), new_element.into_syntax().into());
+        } else {
+            return None;
         }
 
         Some(JsRuleAction {
