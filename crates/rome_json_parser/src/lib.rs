@@ -73,9 +73,7 @@ impl Advices for ParserAdvice {
             } = detail;
             visitor.record_log(LogCategory::Info, &markup! { {message} }.to_owned())?;
             let location = Location::builder().span(span).resource(file_id).build();
-            if let Some(location) = location {
-                visitor.record_frame(location)?;
-            }
+            visitor.record_frame(location)?;
         }
         if let Some(hint) = &self.hint {
             visitor.record_log(LogCategory::Info, &markup! { {hint} }.to_owned())?;

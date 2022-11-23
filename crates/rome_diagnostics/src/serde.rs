@@ -24,7 +24,7 @@ pub struct Diagnostic {
     message: MarkupBuf,
     advices: Advices,
     verbose_advices: Advices,
-    location: Option<Location>,
+    location: Location,
     tags: DiagnosticTags,
     source: Option<Box<Self>>,
 }
@@ -54,7 +54,7 @@ impl Diagnostic {
         // SAFETY: The Advices visitor never returns an error
         diag.verbose_advices(&mut verbose_advices).unwrap();
 
-        let location = diag.location().map(Location::from);
+        let location = diag.location().into();
 
         let tags = diag.tags();
 
@@ -99,14 +99,12 @@ impl super::Diagnostic for Diagnostic {
         self.verbose_advices.record(visitor)
     }
 
-    fn location(&self) -> Option<super::Location<'_>> {
-        self.location.as_ref().and_then(|location| {
-            super::Location::builder()
-                .resource(&location.path)
-                .span(&location.span)
-                .source_code(&location.source_code)
-                .build()
-        })
+    fn location(&self) -> super::Location<'_> {
+        super::Location::builder()
+            .resource(&self.location.path)
+            .span(&self.location.span)
+            .source_code(&self.location.source_code)
+            .build()
     }
 
     fn tags(&self) -> DiagnosticTags {
@@ -134,7 +132,7 @@ impl<'fmt, D: super::Diagnostic + ?Sized> std::fmt::Display for PrintDescription
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[cfg_attr(test, derive(Eq, PartialEq))]
 struct Location {
-    path: Resource<String>,
+    path: Option<Resource<String>>,
     span: Option<TextRange>,
     source_code: Option<String>,
 }
@@ -142,7 +140,7 @@ struct Location {
 impl From<super::Location<'_>> for Location {
     fn from(loc: super::Location<'_>) -> Self {
         Self {
-            path: loc.resource.to_owned(),
+            path: loc.resource.map(super::Resource::to_owned),
             span: loc.span,
             source_code: loc
                 .source_code
@@ -261,7 +259,7 @@ impl super::Advices for Advice {
                 visitor.record_list(&as_display)
             }
             Advice::Frame(location) => visitor.record_frame(super::Location {
-                resource: location.path.as_deref(),
+                resource: location.path.as_ref().map(super::Resource::as_deref),
                 span: location.span,
                 source_code: location.source_code.as_deref().map(|text| SourceCode {
                     text,

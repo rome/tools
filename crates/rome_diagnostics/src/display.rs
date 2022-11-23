@@ -64,30 +64,28 @@ impl<'fmt, D: Diagnostic + ?Sized> fmt::Display for PrintHeader<'fmt, D> {
         let mut slot = None;
         let mut fmt = CountWidth::wrap(f, &mut slot);
 
-        // Print the diagnostic location if it has one
-        if let Some(location) = diagnostic.location() {
-            // Print the path if it's a file
-            let file_name = match &location.resource {
-                Resource::File(file) => file.path(),
-                _ => None,
-            };
+        // Print the diagnostic location if it has a file path
+        let location = diagnostic.location();
+        let file_name = match &location.resource {
+            Some(Resource::File(file)) => file.path(),
+            _ => None,
+        };
 
-            if let Some(name) = file_name {
-                fmt.write_str(name)?;
+        if let Some(name) = file_name {
+            fmt.write_str(name)?;
 
-                // Print the line and column position if the location has a span and source code
-                // (the source code is necessary to convert a byte offset into a line + column)
-                if let (Some(span), Some(source_code)) = (location.span, location.source_code) {
-                    let file = SourceFile::new(source_code);
-                    if let Ok(location) = file.location(span.start()) {
-                        fmt.write_markup(markup! {
-                            ":"{location.line_number.get()}":"{location.column_number.get()}
-                        })?;
-                    }
+            // Print the line and column position if the location has a span and source code
+            // (the source code is necessary to convert a byte offset into a line + column)
+            if let (Some(span), Some(source_code)) = (location.span, location.source_code) {
+                let file = SourceFile::new(source_code);
+                if let Ok(location) = file.location(span.start()) {
+                    fmt.write_markup(markup! {
+                        ":"{location.line_number.get()}":"{location.column_number.get()}
+                    })?;
                 }
-
-                fmt.write_str(" ")?;
             }
+
+            fmt.write_str(" ")?;
         }
 
         // Print the category of the diagnostic, with a hyperlink if
@@ -182,18 +180,14 @@ where
 {
     // Visit the advices of the diagnostic with a lightweight visitor that
     // detects if the diagnostic has any frame or backtrace advice
-    let skip_frame = if let Some(location) = diagnostic.location() {
-        let mut frame_visitor = FrameVisitor {
-            location,
-            skip_frame: false,
-        };
-
-        diagnostic.advices(&mut frame_visitor)?;
-
-        frame_visitor.skip_frame
-    } else {
-        false
+    let mut frame_visitor = FrameVisitor {
+        location: diagnostic.location(),
+        skip_frame: false,
     };
+
+    diagnostic.advices(&mut frame_visitor)?;
+
+    let skip_frame = frame_visitor.skip_frame;
 
     // Print the message for the diagnostic as a log advice
     print_message_advice(visitor, diagnostic, skip_frame)?;
@@ -276,7 +270,8 @@ where
     // If the diagnostic has no explicit code frame or backtrace advice, print
     // a code frame advice with the location of the diagnostic
     if !skip_frame {
-        if let Some(location) = diagnostic.location().filter(|loc| loc.span.is_some()) {
+        let location = diagnostic.location();
+        if location.span.is_some() {
             visitor.record_frame(location)?;
         }
     }
@@ -624,7 +619,7 @@ mod tests {
             Ok(())
         }
 
-        fn location(&self) -> Option<Location<'_>> {
+        fn location(&self) -> Location<'_> {
             Location::builder()
                 .resource(&self.path)
                 .span(&self.span)
@@ -668,7 +663,7 @@ mod tests {
     impl Advices for FrameAdvice {
         fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
             visitor.record_frame(Location {
-                resource: Resource::File(FilePath::Path("other_path")),
+                resource: Some(Resource::File(FilePath::Path("other_path"))),
                 span: Some(TextRange::new(TextSize::from(8), TextSize::from(16))),
                 source_code: Some(SourceCode {
                     text: "context location context",

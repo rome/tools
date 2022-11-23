@@ -69,7 +69,7 @@ impl Error {
     }
 
     /// Calls [Diagnostic::location] on the [Diagnostic] wrapped by this [Error].
-    pub fn location(&self) -> Option<Location<'_>> {
+    pub fn location(&self) -> Location<'_> {
         self.as_diagnostic().location()
     }
 

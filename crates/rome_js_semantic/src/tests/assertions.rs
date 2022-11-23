@@ -185,9 +185,7 @@ impl Advices for TestAdvice {
         for (span, message) in &self.advices {
             let location = Location::builder().span(&span).build();
             visitor.record_log(LogCategory::Info, &message)?;
-            if let Some(location) = location {
-                visitor.record_frame(location)?;
-            }
+            visitor.record_frame(location)?;
         }
         Ok(())
     }

@@ -44,7 +44,7 @@ impl Advices for LintAdvices {
 
         visitor.record_log(LogCategory::Info, &"This constant is declared here")?;
         visitor.record_frame(Location {
-            resource: Resource::File(FilePath::Path(&self.path)),
+            resource: Some(Resource::File(FilePath::Path(&self.path))),
             span: Some(self.declaration_span),
             source_code: Some(SourceCode {
                 text: &self.source_code,

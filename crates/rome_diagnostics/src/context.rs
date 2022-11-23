@@ -221,7 +221,7 @@ mod internal {
             self.source.as_diagnostic().verbose_advices(visitor)
         }
 
-        fn location(&self) -> Option<Location<'_>> {
+        fn location(&self) -> Location<'_> {
             self.source.as_diagnostic().location()
         }
 
@@ -321,7 +321,7 @@ mod internal {
             self.source.as_diagnostic().verbose_advices(visitor)
         }
 
-        fn location(&self) -> Option<Location<'_>> {
+        fn location(&self) -> Location<'_> {
             self.source.as_diagnostic().location()
         }
 
@@ -371,32 +371,24 @@ mod internal {
             self.source.as_diagnostic().verbose_advices(visitor)
         }
 
-        fn location(&self) -> Option<Location<'_>> {
-            self.source
-                .as_diagnostic()
-                .location()
-                .map(|loc| Location {
-                    resource: match loc.resource {
-                        Resource::Argv => Resource::Argv,
-                        Resource::Memory => Resource::Memory,
-                        Resource::File(file) => {
-                            if let Some(Resource::File(path)) = &self.path {
-                                Resource::File(file.or(path.as_deref()))
-                            } else {
-                                Resource::File(file)
-                            }
+        fn location(&self) -> Location<'_> {
+            let loc = self.source.as_diagnostic().location();
+            Location {
+                resource: match loc.resource {
+                    Some(Resource::Argv) => Some(Resource::Argv),
+                    Some(Resource::Memory) => Some(Resource::Memory),
+                    Some(Resource::File(file)) => {
+                        if let Some(Resource::File(path)) = &self.path {
+                            Some(Resource::File(file.or(path.as_deref())))
+                        } else {
+                            Some(Resource::File(file))
                         }
-                    },
-                    span: loc.span,
-                    source_code: loc.source_code,
-                })
-                .or_else(|| {
-                    Some(Location {
-                        resource: self.path.as_ref()?.as_deref(),
-                        span: None,
-                        source_code: None,
-                    })
-                })
+                    }
+                    None => self.path.as_ref().map(Resource::as_deref),
+                },
+                span: loc.span,
+                source_code: loc.source_code,
+            }
         }
 
         fn tags(&self) -> DiagnosticTags {
@@ -464,14 +456,14 @@ mod internal {
             }
         }
 
-        fn location(&self) -> Option<Location<'_>> {
-            let location = self.source.as_diagnostic().location()?;
-            Some(Location {
+        fn location(&self) -> Location<'_> {
+            let location = self.source.as_diagnostic().location();
+            Location {
                 source_code: location
                     .source_code
                     .or_else(|| Some(self.source_code.as_ref()?.as_deref())),
                 ..location
-            })
+            }
         }
 
         fn tags(&self) -> DiagnosticTags {
@@ -568,7 +560,7 @@ mod internal {
             self.source.as_diagnostic().verbose_advices(visitor)
         }
 
-        fn location(&self) -> Option<Location<'_>> {
+        fn location(&self) -> Location<'_> {
             self.source.as_diagnostic().location()
         }
 
