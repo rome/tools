@@ -193,7 +193,7 @@ self.addEventListener("message", async (e) => {
 
 			const printer = new DiagnosticPrinter(path.path, code);
 			for (const diag of diagnosticsResult.diagnostics) {
-				printer.print(diag);
+				printer.print_verbose(diag);
 			}
 
 			const printed = workspace.formatFile({
