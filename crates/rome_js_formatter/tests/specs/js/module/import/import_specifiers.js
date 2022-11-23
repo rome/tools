@@ -26,3 +26,7 @@ import { loooooooooooooooooooooooooooooooooooooooooooooooooong, } from "looooooo
 import { 
 // comment 
 loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong"
+
+import { a as b } from "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong"
+
+import a, { loooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooooonnoong"
