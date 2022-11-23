@@ -123,7 +123,7 @@ impl ParseDiagnostic {
     ///     .with_file_source_code(source.to_string());
     /// Formatter::new(&mut Termcolor(&mut write))
     ///     .write_markup(markup! {
-    ///     {PrintDiagnostic(&error)}
+    ///     {PrintDiagnostic::verbose(&error)}
     /// })
     ///     .expect("failed to emit diagnostic");
     ///
@@ -181,7 +181,7 @@ impl ParseDiagnostic {
     ///     .with_file_source_code(source.to_string());
     /// Formatter::new(&mut Termcolor(&mut write))
     ///     .write_markup(markup! {
-    ///     {PrintDiagnostic(&error)}
+    ///     {PrintDiagnostic::verbose(&error)}
     /// })
     ///     .expect("failed to emit diagnostic");
     ///
