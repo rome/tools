@@ -1,7 +1,7 @@
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, RefactorKind, Rule};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_semantic::{AllReferencesExtensions, Reference};
+use rome_js_semantic::{Reference, ReferencesExtensions};
 use rome_js_syntax::{
     JsAnyBinding, JsAnyBindingPattern, JsAnyExpression, JsIdentifierExpression,
     JsVariableDeclarator,
@@ -98,7 +98,7 @@ impl Rule for InlineVariable {
 
         for reference in references {
             let node = reference
-                .node()
+                .syntax()
                 .parent()?
                 .cast::<JsIdentifierExpression>()?;
 

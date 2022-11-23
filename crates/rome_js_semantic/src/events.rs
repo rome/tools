@@ -81,6 +81,7 @@ pub enum SemanticEvent {
         range: TextRange,
         scope_id: usize,
         parent_scope_id: Option<usize>,
+        is_closure: bool,
     },
 
     /// Tracks where a scope ends
@@ -261,21 +262,30 @@ impl SemanticEventExtractor {
             JS_MODULE | JS_SCRIPT => self.push_scope(
                 node.text_range(),
                 ScopeHoisting::DontHoistDeclarationsToParent,
+                false,
             ),
+
             JS_FUNCTION_DECLARATION
-            | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
             | JS_FUNCTION_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
-            | JS_CLASS_DECLARATION
-            | JS_CLASS_EXPORT_DEFAULT_DECLARATION
-            | JS_CLASS_EXPRESSION
             | JS_CONSTRUCTOR_CLASS_MEMBER
             | JS_METHOD_CLASS_MEMBER
             | JS_GETTER_CLASS_MEMBER
             | JS_SETTER_CLASS_MEMBER
             | JS_METHOD_OBJECT_MEMBER
             | JS_GETTER_OBJECT_MEMBER
-            | JS_SETTER_OBJECT_MEMBER
+            | JS_SETTER_OBJECT_MEMBER => {
+                self.push_scope(
+                    node.text_range(),
+                    ScopeHoisting::DontHoistDeclarationsToParent,
+                    true,
+                );
+            }
+
+            JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
+            | JS_CLASS_DECLARATION
+            | JS_CLASS_EXPORT_DEFAULT_DECLARATION
+            | JS_CLASS_EXPRESSION
             | JS_FUNCTION_BODY
             | TS_INTERFACE_DECLARATION
             | TS_ENUM_DECLARATION
@@ -284,12 +294,17 @@ impl SemanticEventExtractor {
                 self.push_scope(
                     node.text_range(),
                     ScopeHoisting::DontHoistDeclarationsToParent,
+                    false,
                 );
             }
 
             JS_BLOCK_STATEMENT | JS_FOR_STATEMENT | JS_FOR_OF_STATEMENT | JS_FOR_IN_STATEMENT
             | JS_SWITCH_STATEMENT | JS_CATCH_CLAUSE => {
-                self.push_scope(node.text_range(), ScopeHoisting::HoistDeclarationsToParent);
+                self.push_scope(
+                    node.text_range(),
+                    ScopeHoisting::HoistDeclarationsToParent,
+                    false,
+                );
             }
 
             _ => {}
@@ -543,7 +558,7 @@ impl SemanticEventExtractor {
         self.stash.pop_front()
     }
 
-    fn push_scope(&mut self, range: TextRange, hoisting: ScopeHoisting) {
+    fn push_scope(&mut self, range: TextRange, hoisting: ScopeHoisting, is_closure: bool) {
         let scope_id = self.next_scope_id;
         self.next_scope_id += 1;
 
@@ -553,6 +568,7 @@ impl SemanticEventExtractor {
             range,
             scope_id,
             parent_scope_id,
+            is_closure,
         });
 
         self.scopes.push(Scope {

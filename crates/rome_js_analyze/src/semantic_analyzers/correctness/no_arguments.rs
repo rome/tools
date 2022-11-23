@@ -45,7 +45,7 @@ impl Rule for NoArguments {
         let name = value_token.text_trimmed();
         if name == "arguments" {
             let model = ctx.model();
-            let declaration = model.declaration(reference);
+            let declaration = model.binding(reference);
 
             if declaration.is_none() {
                 return Some(());

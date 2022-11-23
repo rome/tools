@@ -143,62 +143,55 @@ impl Rule for UseExhaustiveDependencies {
                 .all_captures(model)
                 .into_iter()
                 .filter_map(|capture| {
-                    capture.declaration().and_then(|declaration| {
-                        let declaration_syntax = declaration.syntax();
-                        let node = declaration_syntax.parent()?;
-                        use JsSyntaxKind::*;
-                        match node.kind() {
-                            JS_FUNCTION_DECLARATION
-                            | JS_CLASS_DECLARATION
-                            | TS_ENUM_DECLARATION
-                            | TS_TYPE_ALIAS_DECLARATION
-                            | TS_DECLARE_FUNCTION_DECLARATION => None,
-                            _ => {
-                                // Ignore if imported
-                                if let Some(true) = declaration_syntax
-                                    .clone()
-                                    .cast::<JsIdentifierBinding>()
-                                    .map(|node| model.is_imported(&node))
-                                    .or_else(|| {
-                                        Some(
-                                            model.is_imported(&node.cast::<TsIdentifierBinding>()?),
-                                        )
-                                    })
-                                {
-                                    None
-                                } else {
-                                    let binding = declaration
+                    let binding = capture.binding();
+                    let binding_syntax = binding.syntax();
+                    let node = binding_syntax.parent()?;
+                    use JsSyntaxKind::*;
+                    match node.kind() {
+                        JS_FUNCTION_DECLARATION
+                        | JS_CLASS_DECLARATION
+                        | TS_ENUM_DECLARATION
+                        | TS_TYPE_ALIAS_DECLARATION
+                        | TS_DECLARE_FUNCTION_DECLARATION => None,
+                        _ => {
+                            // Ignore if imported
+                            if let Some(true) = binding_syntax
+                                .clone()
+                                .cast::<JsIdentifierBinding>()
+                                .map(|node| model.is_imported(&node))
+                                .or_else(|| {
+                                    Some(model.is_imported(&node.cast::<TsIdentifierBinding>()?))
+                                })
+                            {
+                                None
+                            } else {
+                                let binding =
+                                    binding.syntax().clone().cast::<JsIdentifierBinding>()?;
+
+                                // Ignore if constant
+                                if let Some(declarator) = binding.parent::<JsVariableDeclarator>() {
+                                    let declaration = declarator
                                         .syntax()
-                                        .clone()
-                                        .cast::<JsIdentifierBinding>()?;
+                                        .ancestors()
+                                        .filter_map(JsVariableDeclaration::cast)
+                                        .next()?;
 
-                                    // Ignore if constant
-                                    if let Some(declarator) =
-                                        binding.parent::<JsVariableDeclarator>()
-                                    {
-                                        let declaration = declarator
-                                            .syntax()
-                                            .ancestors()
-                                            .filter_map(JsVariableDeclaration::cast)
-                                            .next()?;
-
-                                        if declaration.is_const() {
-                                            let initializer = declarator.initializer()?;
-                                            let expr = initializer.expression().ok()?;
-                                            if model.is_constant(&expr) {
-                                                return None;
-                                            }
+                                    if declaration.is_const() {
+                                        let initializer = declarator.initializer()?;
+                                        let expr = initializer.expression().ok()?;
+                                        if model.is_constant(&expr) {
+                                            return None;
                                         }
                                     }
-
-                                    // Ignore if stable
-                                    let not_stable =
-                                        !is_binding_react_stable(&binding, &options.stable_config);
-                                    not_stable.then_some(capture)
                                 }
+
+                                // Ignore if stable
+                                let not_stable =
+                                    !is_binding_react_stable(&binding, &options.stable_config);
+                                not_stable.then_some(capture)
                             }
                         }
-                    })
+                    }
                 })
                 .map(|x| (x.node().text_trimmed().to_string(), x))
                 .collect();

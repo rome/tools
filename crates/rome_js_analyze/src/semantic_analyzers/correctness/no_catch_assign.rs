@@ -1,6 +1,7 @@
 use crate::{semantic_services::Semantic, JsRuleAction};
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
+use rome_js_semantic::ReferencesExtensions;
 use rome_js_syntax::{JsCatchClause, JsSyntaxNode};
 use rome_rowan::AstNode;
 
@@ -68,9 +69,9 @@ impl Rule for NoCatchAssign {
                     .as_js_identifier_binding()?;
                 let catch_binding_syntax = catch_binding.syntax();
                 let mut invalid_assignment = vec![];
-                for reference in model.all_writes(identifier_binding) {
+                for reference in identifier_binding.all_writes(model) {
                     invalid_assignment
-                        .push((reference.node().clone(), catch_binding_syntax.clone()));
+                        .push((reference.syntax().clone(), catch_binding_syntax.clone()));
                 }
 
                 Some(invalid_assignment)
