@@ -27,6 +27,13 @@ impl<K: SyntaxKind> TokenSet<K> {
         }
     }
 
+    /// Constructs a token set for a single kind from a kind's raw `u16` representation.
+    ///
+    /// # Safety
+    ///
+    /// This method is marked unsafe to discourage its usage over using `TokenSet::singleton`.
+    /// It exists to support the `token_set` macro in a `const` context.
+    #[doc(hidden)]
     pub const unsafe fn from_raw(kind: u16) -> Self {
         TokenSet(mask(kind), PhantomData)
     }
