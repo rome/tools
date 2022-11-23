@@ -598,7 +598,8 @@ impl JsAnyExpression {
             JsAnyExpression::JsAssignmentExpression(_) => OperatorPrecedence::Assignment,
             JsAnyExpression::JsInExpression(_)
             | JsAnyExpression::JsInstanceofExpression(_)
-            | JsAnyExpression::TsAsExpression(_) => OperatorPrecedence::Relational,
+            | JsAnyExpression::TsAsExpression(_)
+            | JsAnyExpression::TsSatisfiesExpression(_) => OperatorPrecedence::Relational,
             JsAnyExpression::JsLogicalExpression(expression) => expression.operator()?.precedence(),
             JsAnyExpression::JsBinaryExpression(expression) => expression.operator()?.precedence(),
             JsAnyExpression::TsTypeAssertionExpression(_)
@@ -820,10 +821,10 @@ impl JsCallExpression {
         is_optional_chain(self.clone().into())
     }
 
-    /// Get [JsAnyCallArgument] by it index inside the [JsCallExpression] argument list.  
+    /// Get [JsAnyCallArgument] by it index inside the [JsCallExpression] argument list.
     ///
-    /// Each index inside "indices" should be unique.  
-    /// "indices" must be sorted.  
+    /// Each index inside "indices" should be unique.
+    /// "indices" must be sorted.
     ///
     /// Supports maximum of 16 indices to avoid stack overflow. Eeach argument will consume:
     ///

@@ -154,6 +154,9 @@ impl NeedsParentheses for JsAnyExpression {
             JsAnyExpression::JsxTagExpression(jsx) => jsx.needs_parentheses(),
             JsAnyExpression::NewTarget(target) => target.needs_parentheses(),
             JsAnyExpression::TsAsExpression(as_expression) => as_expression.needs_parentheses(),
+            JsAnyExpression::TsSatisfiesExpression(satisfies_expression) => {
+                satisfies_expression.needs_parentheses()
+            }
             JsAnyExpression::TsNonNullAssertionExpression(non_null) => non_null.needs_parentheses(),
             JsAnyExpression::TsTypeAssertionExpression(type_assertion) => {
                 type_assertion.needs_parentheses()
@@ -247,6 +250,9 @@ impl NeedsParentheses for JsAnyExpression {
             JsAnyExpression::TsAsExpression(as_expression) => {
                 as_expression.needs_parentheses_with_parent(parent)
             }
+            JsAnyExpression::TsSatisfiesExpression(satisfies_expression) => {
+                satisfies_expression.needs_parentheses_with_parent(parent)
+            }
             JsAnyExpression::TsNonNullAssertionExpression(non_null) => {
                 non_null.needs_parentheses_with_parent(parent)
             }
@@ -318,6 +324,9 @@ pub(crate) fn get_expression_left_side(
                 JsCallExpression(call) => call.callee().ok(),
                 JsConditionalExpression(conditional) => conditional.test().ok(),
                 TsAsExpression(as_expression) => as_expression.expression().ok(),
+                TsSatisfiesExpression(satisfies_expression) => {
+                    satisfies_expression.expression().ok()
+                }
                 TsNonNullAssertionExpression(non_null) => non_null.expression().ok(),
                 JsAssignmentExpression(assignment) => {
                     return assignment.left().ok().map(JsAnyExpressionLeftSide::from)

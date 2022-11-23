@@ -1108,6 +1108,7 @@ impl<'src> Lexer<'src> {
             b"require" => REQUIRE_KW,
             b"number" => NUMBER_KW,
             b"object" => OBJECT_KW,
+            b"satisfies" => SATISFIES_KW,
             b"set" => SET_KW,
             b"string" => STRING_KW,
             b"symbol" => SYMBOL_KW,

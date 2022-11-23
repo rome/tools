@@ -118,6 +118,7 @@ impl NeedsParentheses for JsxTagExpression {
                 matches!(binary.operator(), Ok(JsBinaryOperator::LessThan)) && is_left
             }
             JsSyntaxKind::TS_AS_EXPRESSION
+            | JsSyntaxKind::TS_SATISFIES_EXPRESSION
             | JsSyntaxKind::JS_AWAIT_EXPRESSION
             | JsSyntaxKind::JS_EXTENDS_CLAUSE
             | JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION

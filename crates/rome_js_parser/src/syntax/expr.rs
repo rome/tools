@@ -482,6 +482,7 @@ fn parse_binary_or_logical_expression_recursive(
         let op = p.re_lex(ReLexContext::BinaryOperator);
 
         if (op == T![as] && p.has_preceding_line_break())
+            || (op == T![satisfies] && p.has_preceding_line_break())
             || (op == T![in] && !context.is_in_included())
         {
             break;
@@ -595,6 +596,32 @@ fn parse_binary_or_logical_expression_recursive(
                 as_expression.change_to_unknown(p);
             }
             left = Present(as_expression);
+            continue;
+        }
+
+        // test ts ts_satisfies_expression
+        // interface A {
+        //    a: string
+        // };
+        // let x = { a: 'test' } satisfies A;
+        // let y = { a: 'test', b: 'test' } satisfies A;
+        // const z = undefined satisfies 1;
+        // let not_a_satisfies_expression = undefined
+        // satisfies;
+        // let precedence = "hello" satisfies string + 3 satisfies number satisfies number;
+        if op == T![satisfies] {
+            parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+            let mut satisfies_expression = m.complete(p, TS_SATISFIES_EXPRESSION);
+
+            if TypeScript.is_unsupported(p) {
+                p.error(ts_only_syntax_error(
+                    p,
+                    "'satisfies' expression",
+                    satisfies_expression.range(p),
+                ));
+                satisfies_expression.change_to_unknown(p);
+            }
+            left = Present(satisfies_expression);
             continue;
         }
 

@@ -10,7 +10,7 @@ use rome_js_syntax::{
     JsConditionalExpression, JsInitializerClause, JsNewExpression, JsReturnStatement,
     JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, JsThrowStatement,
     JsUnaryExpression, JsYieldArgument, SourceType, TsAsExpression, TsConditionalType,
-    TsNonNullAssertionExpression, TsType,
+    TsNonNullAssertionExpression, TsSatisfiesExpression, TsType,
 };
 use rome_rowan::{declare_node_union, match_ast, AstNode, SyntaxResult};
 
@@ -395,6 +395,19 @@ impl FormatJsAnyConditionalRule {
                         }
 
                         Ancestor::Root(as_expression.into_syntax())
+                    },
+                    TsSatisfiesExpression(satisfies_expression) => {
+                        if satisfies_expression
+                            .expression()
+                            .as_ref()
+                            == Ok(&expression)
+                        {
+                            parent = satisfies_expression.syntax().parent();
+                            expression = satisfies_expression.into();
+                            break;
+                        }
+
+                        Ancestor::Root(satisfies_expression.into_syntax())
                     },
                     _ => Ancestor::Root(ancestor),
                 }

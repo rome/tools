@@ -577,6 +577,7 @@ pub(crate) fn needs_binary_like_parentheses(
     match parent.kind() {
         JsSyntaxKind::JS_EXTENDS_CLAUSE
         | JsSyntaxKind::TS_AS_EXPRESSION
+        | JsSyntaxKind::TS_SATISFIES_EXPRESSION
         | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
         | JsSyntaxKind::JS_UNARY_EXPRESSION
         | JsSyntaxKind::JS_AWAIT_EXPRESSION

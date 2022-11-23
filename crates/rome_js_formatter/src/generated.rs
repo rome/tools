@@ -2756,6 +2756,44 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsAsExpression {
         )
     }
 }
+impl FormatRule<rome_js_syntax::TsSatisfiesExpression>
+    for crate::ts::expressions::satisfies_expression::FormatTsSatisfiesExpression
+{
+    type Context = JsFormatContext;
+    #[inline(always)]
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsSatisfiesExpression,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsSatisfiesExpression>::fmt(self, node, f)
+    }
+}
+impl AsFormat for rome_js_syntax::TsSatisfiesExpression {
+    type Format<'a> = FormatRefWithRule<
+        'a,
+        rome_js_syntax::TsSatisfiesExpression,
+        crate::ts::expressions::satisfies_expression::FormatTsSatisfiesExpression,
+    >;
+    fn format(&self) -> Self::Format<'_> {
+        FormatRefWithRule::new(
+            self,
+            crate::ts::expressions::satisfies_expression::FormatTsSatisfiesExpression::default(),
+        )
+    }
+}
+impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsSatisfiesExpression {
+    type Format = FormatOwnedWithRule<
+        rome_js_syntax::TsSatisfiesExpression,
+        crate::ts::expressions::satisfies_expression::FormatTsSatisfiesExpression,
+    >;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule::new(
+            self,
+            crate::ts::expressions::satisfies_expression::FormatTsSatisfiesExpression::default(),
+        )
+    }
+}
 impl FormatRule<rome_js_syntax::TsNonNullAssertionExpression>
     for crate::ts::expressions::non_null_assertion_expression::FormatTsNonNullAssertionExpression
 {
