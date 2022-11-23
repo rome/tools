@@ -397,9 +397,7 @@ impl Advices for RuleAdvice {
                 detail.log_category,
                 &markup! { {detail.message} }.to_owned(),
             )?;
-            if let Some(location) = Location::builder().span(&detail.range).build() {
-                visitor.record_frame(location)?;
-            }
+            visitor.record_frame(Location::builder().span(&detail.range).build())?;
         }
         // we then print notes
         for (log_category, note) in &self.notes {

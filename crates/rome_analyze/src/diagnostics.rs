@@ -81,7 +81,7 @@ impl Diagnostic for AnalyzerDiagnostic {
         }
     }
 
-    fn location(&self) -> Option<Location<'_>> {
+    fn location(&self) -> Location<'_> {
         match &self.kind {
             DiagnosticKind::Rule {
                 rule_diagnostic,
@@ -111,13 +111,12 @@ impl Diagnostic for AnalyzerDiagnostic {
                         detail.log_category,
                         &markup! { {detail.message} }.to_owned(),
                     )?;
-                    if let Some(location) = Location::builder()
-                        .span(&detail.range)
-                        .resource(file_id)
-                        .build()
-                    {
-                        visitor.record_frame(location)?;
-                    }
+                    visitor.record_frame(
+                        Location::builder()
+                            .span(&detail.range)
+                            .resource(file_id)
+                            .build(),
+                    )?;
                 }
                 // we then print notes
                 for (log_category, note) in &rule_advices.notes {
@@ -169,7 +168,7 @@ impl AnalyzerDiagnostic {
             DiagnosticKind::Rule {
                 rule_diagnostic, ..
             } => rule_diagnostic.span,
-            DiagnosticKind::Raw(error) => error.location().and_then(|location| location.span),
+            DiagnosticKind::Raw(error) => error.location().span,
         }
     }
 
