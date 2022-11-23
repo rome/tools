@@ -1,0 +1,38 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+[1.0e]
+```
+
+
+## Diagnostics
+
+```
+number_1.0e.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Missing exponent
+  
+  > 1 │ [1.0e]
+      │  ^^^^
+  
+  i Expected a digit as the exponent
+  
+  > 1 │ [1.0e]
+      │      ^
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+ERROR_TOKEN: `1.0e` (1..5)
+R_BRACK: `]` (5..6)
+EOF: `` (6..6)
+```
+

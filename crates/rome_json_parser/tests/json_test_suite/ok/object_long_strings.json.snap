@@ -1,0 +1,36 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+{"x":[{"id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}], "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+```
+
+
+## Tokens
+
+```
+L_CURLY: `{` (0..1)
+JSON_STRING_LITERAL: `"x"` (1..4)
+COLON: `:` (4..5)
+L_BRACK: `[` (5..6)
+L_CURLY: `{` (6..7)
+JSON_STRING_LITERAL: `"id"` (7..11)
+COLON: `:` (11..12)
+WHITESPACE: ` ` (12..13)
+JSON_STRING_LITERAL: `"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"` (13..55)
+R_CURLY: `}` (55..56)
+R_BRACK: `]` (56..57)
+COMMA: `,` (57..58)
+WHITESPACE: ` ` (58..59)
+JSON_STRING_LITERAL: `"id"` (59..63)
+COLON: `:` (63..64)
+WHITESPACE: ` ` (64..65)
+JSON_STRING_LITERAL: `"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"` (65..107)
+R_CURLY: `}` (107..108)
+EOF: `` (108..108)
+```
+

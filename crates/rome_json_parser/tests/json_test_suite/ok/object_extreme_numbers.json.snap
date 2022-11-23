@@ -1,0 +1,32 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+{ "min": -1.0e+28, "max": 1.0e+28 }
+```
+
+
+## Tokens
+
+```
+L_CURLY: `{` (0..1)
+WHITESPACE: ` ` (1..2)
+JSON_STRING_LITERAL: `"min"` (2..7)
+COLON: `:` (7..8)
+WHITESPACE: ` ` (8..9)
+JSON_NUMBER_LITERAL: `-1.0e+28` (9..17)
+COMMA: `,` (17..18)
+WHITESPACE: ` ` (18..19)
+JSON_STRING_LITERAL: `"max"` (19..24)
+COLON: `:` (24..25)
+WHITESPACE: ` ` (25..26)
+JSON_NUMBER_LITERAL: `1.0e+28` (26..33)
+WHITESPACE: ` ` (33..34)
+R_CURLY: `}` (34..35)
+EOF: `` (35..35)
+```
+

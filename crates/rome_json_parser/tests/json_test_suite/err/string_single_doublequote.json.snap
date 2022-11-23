@@ -1,0 +1,36 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+"
+```
+
+
+## Diagnostics
+
+```
+string_single_doublequote.json:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Missing closing quote
+  
+  > 1 │ "
+      │ ^
+  
+  i file ends here
+  
+  > 1 │ "
+      │  
+  
+```
+
+## Tokens
+
+```
+JSON_STRING_LITERAL: `"` (0..1)
+EOF: `` (1..1)
+```
+

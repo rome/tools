@@ -1,0 +1,42 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+[<null>]
+```
+
+
+## Diagnostics
+
+```
+structure_angle_bracket_null.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × unexpected character `<`
+  
+  > 1 │ [<null>]
+      │  ^
+  
+structure_angle_bracket_null.json:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × unexpected character `>`
+  
+  > 1 │ [<null>]
+      │       ^
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+ERROR_TOKEN: `<` (1..2)
+NULL_KW: `null` (2..6)
+ERROR_TOKEN: `>` (6..7)
+R_BRACK: `]` (7..8)
+EOF: `` (8..8)
+```
+

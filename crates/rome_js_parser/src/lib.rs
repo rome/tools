@@ -497,13 +497,13 @@ impl ParseDiagnostic {
     /// ## Examples
     ///
     /// ```
-    /// use rome_console::fmt::{Termcolor};
-    /// use rome_console::markup;
-    /// use rome_diagnostics::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
-    /// use rome_js_parser::ParseDiagnostic;
-    /// use rome_js_syntax::TextRange;
-    /// use rome_rowan::TextSize;
-    /// use std::fmt::Write;
+    /// # use rome_console::fmt::{Termcolor};
+    /// # use rome_console::markup;
+    /// # use rome_diagnostics::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
+    /// # use rome_js_parser::ParseDiagnostic;
+    /// # use rome_js_syntax::TextRange;
+    /// # use rome_rowan::TextSize;
+    /// # use std::fmt::Write;
     ///
     /// let source = "const a";
     /// let range = TextRange::new(TextSize::from(0), TextSize::from(5));
@@ -555,13 +555,13 @@ impl ParseDiagnostic {
     /// ## Examples
     ///
     /// ```
-    /// use rome_console::fmt::{Termcolor};
-    /// use rome_console::markup;
-    /// use rome_diagnostics::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
-    /// use rome_js_parser::ParseDiagnostic;
-    /// use rome_js_syntax::TextRange;
-    /// use rome_rowan::TextSize;
-    /// use std::fmt::Write;
+    /// # use rome_console::fmt::{Termcolor};
+    /// # use rome_console::markup;
+    /// # use rome_diagnostics::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
+    /// # use rome_js_parser::ParseDiagnostic;
+    /// # use rome_js_syntax::TextRange;
+    /// # use rome_rowan::TextSize;
+    /// # use std::fmt::Write;
     ///
     /// let source = "const a";
     /// let range = TextRange::new(TextSize::from(0), TextSize::from(5));

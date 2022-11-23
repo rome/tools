@@ -1,0 +1,33 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+[012]
+```
+
+
+## Diagnostics
+
+```
+number_with_leading_zero.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The JSON standard doesn't allow octal number notation (numbers starting with zero)
+  
+  > 1 │ [012]
+      │  ^
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+ERROR_TOKEN: `012` (1..4)
+R_BRACK: `]` (4..5)
+EOF: `` (5..5)
+```
+

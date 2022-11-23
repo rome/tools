@@ -1,0 +1,34 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+{'a'
+```
+
+
+## Diagnostics
+
+```
+structure_open_object_string_with_apostrophes.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × JSON standard does not allow single quoted strings
+  
+  > 1 │ {'a'
+      │  ^^^
+  
+  i Use double quotes to escape the string.
+  
+```
+
+## Tokens
+
+```
+L_CURLY: `{` (0..1)
+ERROR_TOKEN: `'a'` (1..4)
+EOF: `` (4..4)
+```
+

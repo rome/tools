@@ -1,0 +1,23 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+{"\uDFAA":0}
+```
+
+
+## Tokens
+
+```
+L_CURLY: `{` (0..1)
+JSON_STRING_LITERAL: `"\uDFAA"` (1..9)
+COLON: `:` (9..10)
+JSON_NUMBER_LITERAL: `0` (10..11)
+R_CURLY: `}` (11..12)
+EOF: `` (12..12)
+```
+

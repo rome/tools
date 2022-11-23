@@ -1,0 +1,35 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+[9.e+]
+```
+
+
+## Diagnostics
+
+```
+number_9.e+.json:1:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Missing fraction
+  
+  > 1 │ [9.e+]
+      │    ^
+  
+  i Remove the `.`
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+ERROR_TOKEN: `9.e+` (1..5)
+R_BRACK: `]` (5..6)
+EOF: `` (6..6)
+```
+
