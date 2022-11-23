@@ -20,14 +20,12 @@ use crate::syntax::object::{
 use crate::syntax::stmt::optional_semi;
 use crate::syntax::typescript::try_parse;
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, expected_ts_type_parameter};
+use rome_parser::parse_lists::{ParseNodeList, ParseSeparatedList};
 
 use crate::lexer::{LexContext, ReLexContext};
 use crate::span::Span;
 use crate::JsSyntaxFeature::TypeScript;
-use crate::{
-    Absent, JsParser, ParseNodeList, ParseRecovery, ParseSeparatedList, ParsedSyntax, Present,
-    SyntaxFeature,
-};
+use crate::{Absent, JsParser, ParseRecovery, ParsedSyntax, Present};
 use rome_js_syntax::JsSyntaxKind::TS_TYPE_ANNOTATION;
 use rome_js_syntax::T;
 use rome_js_syntax::{JsSyntaxKind::*, *};
@@ -120,6 +118,11 @@ pub(crate) fn parse_ts_type_parameters(p: &mut JsParser) -> ParsedSyntax {
 struct TsTypeParameterList;
 
 impl ParseSeparatedList for TsTypeParameterList {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = TS_TYPE_PARAMETER_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_ts_type_parameter(p)
     }
@@ -138,10 +141,6 @@ impl ParseSeparatedList for TsTypeParameterList {
             .enable_recovery_on_line_break(),
             expected_ts_type_parameter,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        TS_TYPE_PARAMETER_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
@@ -729,6 +728,11 @@ fn parse_ts_object_type(p: &mut JsParser) -> ParsedSyntax {
 pub(crate) struct TypeMembers;
 
 impl ParseNodeList for TypeMembers {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = TS_TYPE_MEMBER_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_ts_type_member(p)
     }
@@ -744,10 +748,6 @@ impl ParseNodeList for TypeMembers {
                 .enable_recovery_on_line_break(),
             expected_property_or_signature,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        TS_TYPE_MEMBER_LIST
     }
 }
 
@@ -928,6 +928,11 @@ fn parse_ts_tuple_type(p: &mut JsParser) -> ParsedSyntax {
 struct TsTupleTypeElementList;
 
 impl ParseSeparatedList for TsTupleTypeElementList {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = TS_TUPLE_TYPE_ELEMENT_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         if is_at_named_tuple_type_element(p) {
             let m = p.start();
@@ -992,10 +997,6 @@ impl ParseSeparatedList for TsTupleTypeElementList {
             ),
             expected_ts_type,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        TS_TUPLE_TYPE_ELEMENT_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
@@ -1359,6 +1360,11 @@ struct TypeArgumentsList {
 }
 
 impl ParseSeparatedList for TypeArgumentsList {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = TS_TYPE_ARGUMENT_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_ts_type(p)
     }
@@ -1394,10 +1400,6 @@ impl ParseSeparatedList for TypeArgumentsList {
                 expected_ts_type_parameter,
             )
         }
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        TS_TYPE_ARGUMENT_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {

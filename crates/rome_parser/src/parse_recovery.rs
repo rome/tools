@@ -1,7 +1,5 @@
-use crate::parser::JsParser;
 use crate::prelude::*;
-use rome_js_syntax::JsSyntaxKind;
-use rome_js_syntax::JsSyntaxKind::EOF;
+use rome_rowan::SyntaxKind;
 use std::error::Error;
 use std::fmt::{Display, Formatter};
 
@@ -47,20 +45,20 @@ impl Display for RecoveryError {
     }
 }
 
-pub(crate) type RecoveryResult = Result<CompletedMarker, RecoveryError>;
+pub type RecoveryResult = Result<CompletedMarker, RecoveryError>;
 
 /// Recovers the parser by finding a token/point (depending on the configuration) from where
 /// the caller knows how to proceed parsing. The recovery wraps all the skipped tokens inside of an `Unknown` node.
 /// A safe recovery point for an array element could by finding the next `,` or `]`.
-pub(crate) struct ParseRecovery {
-    node_kind: JsSyntaxKind,
-    recovery_set: TokenSet<JsSyntaxKind>,
+pub struct ParseRecovery<K: SyntaxKind> {
+    node_kind: K,
+    recovery_set: TokenSet<K>,
     line_break: bool,
 }
 
-impl ParseRecovery {
+impl<K: SyntaxKind> ParseRecovery<K> {
     /// Creates a new parse recovery that eats all tokens until it finds any token in the passed recovery set.
-    pub fn new(node_kind: JsSyntaxKind, recovery_set: TokenSet<JsSyntaxKind>) -> Self {
+    pub fn new(node_kind: K, recovery_set: TokenSet<K>) -> Self {
         Self {
             node_kind,
             recovery_set,
@@ -81,8 +79,11 @@ impl ParseRecovery {
     /// specified in the recovery set, the EOF, or a line break (depending on configuration).
     /// Returns `Ok(unknown_node)` if recovery was successful, and `Err(RecoveryError::Eof)` if the parser
     /// is at the end of the file (before starting recovery).
-    pub fn recover(&self, p: &mut JsParser) -> RecoveryResult {
-        if p.at(EOF) {
+    pub fn recover<P>(&self, p: &mut P) -> RecoveryResult
+    where
+        P: Parser<Kind = K>,
+    {
+        if p.at(P::EOF) {
             return Err(RecoveryError::Eof);
         }
 
@@ -90,7 +91,7 @@ impl ParseRecovery {
             return Err(RecoveryError::AlreadyRecovered);
         }
 
-        if p.state().speculative_parsing {
+        if p.is_speculative_parsing() {
             return Err(RecoveryError::RecoveryDisabled);
         }
 
@@ -104,7 +105,12 @@ impl ParseRecovery {
     }
 
     #[inline]
-    fn recovered(&self, p: &JsParser) -> bool {
-        p.at_ts(self.recovery_set) || p.at(EOF) || (self.line_break && p.has_preceding_line_break())
+    fn recovered<P>(&self, p: &P) -> bool
+    where
+        P: Parser<Kind = K>,
+    {
+        p.at_ts(self.recovery_set)
+            || p.at(P::EOF)
+            || (self.line_break && p.has_preceding_line_break())
     }
 }

@@ -4,7 +4,6 @@ use rome_diagnostics::location::FileId;
 use rome_js_syntax::JsSyntaxKind;
 use rome_js_syntax::JsSyntaxKind::EOF;
 use rome_parser::token_source::Trivia;
-use rome_parser::Rewind;
 use rome_rowan::{TextSize, TriviaPieceKind};
 use std::collections::VecDeque;
 
@@ -90,26 +89,9 @@ impl<'l> JsTokenSource<'l> {
         }
     }
 
-    /// Returns true if the current token is preceded by a line break
-    #[inline(always)]
-    pub fn has_preceding_line_break(&self) -> bool {
-        self.lexer.has_preceding_line_break()
-    }
-
     #[inline(always)]
     pub fn has_unicode_escape(&self) -> bool {
         self.lexer.has_unicode_escape()
-    }
-
-    /// Returns true if the nth non-trivia token is preceded by a line break
-    #[inline(always)]
-    pub fn has_nth_preceding_line_break(&mut self, n: usize) -> bool {
-        if n == 0 {
-            self.has_preceding_line_break()
-        } else {
-            self.lookahead(n)
-                .map_or(false, |lookahead| lookahead.after_newline)
-        }
     }
 
     /// Returns `true` if the next token has any preceding trivia (either trailing trivia of the current
@@ -171,9 +153,26 @@ impl<'l> JsTokenSource<'l> {
 
         new_kind
     }
+
+    /// Creates a checkpoint to which it can later return using [Self::rewind].
+    pub fn checkpoint(&self) -> TokenSourceCheckpoint {
+        TokenSourceCheckpoint {
+            trivia_len: self.trivia_list.len() as u32,
+            lexer: self.lexer.checkpoint(),
+        }
+    }
+
+    /// Restores the token source to a previous state
+    pub fn rewind(&mut self, checkpoint: TokenSourceCheckpoint) {
+        assert!(self.trivia_list.len() >= checkpoint.trivia_len as usize);
+        self.trivia_list.truncate(checkpoint.trivia_len as usize);
+        self.lexer.rewind(checkpoint.lexer);
+        self.non_trivia_lookahead.clear();
+        self.lookahead_offset = 0;
+    }
 }
 
-impl<'source> TokenSource<'source> for JsTokenSource<'source> {
+impl<'source> TokenSource for JsTokenSource<'source> {
     type Kind = JsSyntaxKind;
 
     /// Returns the kind of the current non-trivia token
@@ -198,6 +197,12 @@ impl<'source> TokenSource<'source> for JsTokenSource<'source> {
         self.current_range().start()
     }
 
+    /// Returns true if the current token is preceded by a line break
+    #[inline(always)]
+    fn has_preceding_line_break(&self) -> bool {
+        self.lexer.has_preceding_line_break()
+    }
+
     #[inline(always)]
     fn bump(&mut self) {
         self.bump_with_context(LexContext::Regular)
@@ -212,7 +217,7 @@ impl<'source> TokenSource<'source> for JsTokenSource<'source> {
     }
 }
 
-impl<'source> BumpWithContext<'source> for JsTokenSource<'source> {
+impl<'source> BumpWithContext for JsTokenSource<'source> {
     type Context = LexContext;
 
     #[inline(always)]
@@ -246,7 +251,7 @@ impl<'source> BumpWithContext<'source> for JsTokenSource<'source> {
     }
 }
 
-impl<'source> NthToken<'source> for JsTokenSource<'source> {
+impl<'source> NthToken for JsTokenSource<'source> {
     /// Gets the kind of the nth non-trivia token
     #[inline(always)]
     fn nth(&mut self, n: usize) -> JsSyntaxKind {
@@ -256,26 +261,16 @@ impl<'source> NthToken<'source> for JsTokenSource<'source> {
             self.lookahead(n).map_or(EOF, |lookahead| lookahead.kind)
         }
     }
-}
 
-impl<'source> Rewind for JsTokenSource<'source> {
-    type Checkpoint = TokenSourceCheckpoint;
-
-    /// Creates a checkpoint to which it can later return using [Self::rewind].
-    fn checkpoint(&self) -> TokenSourceCheckpoint {
-        TokenSourceCheckpoint {
-            trivia_len: self.trivia_list.len() as u32,
-            lexer: self.lexer.checkpoint(),
+    /// Returns true if the nth non-trivia token is preceded by a line break
+    #[inline(always)]
+    fn has_nth_preceding_line_break(&mut self, n: usize) -> bool {
+        if n == 0 {
+            self.has_preceding_line_break()
+        } else {
+            self.lookahead(n)
+                .map_or(false, |lookahead| lookahead.after_newline)
         }
-    }
-
-    /// Restores the token source to a previous state
-    fn rewind(&mut self, checkpoint: TokenSourceCheckpoint) {
-        assert!(self.trivia_list.len() >= checkpoint.trivia_len as usize);
-        self.trivia_list.truncate(checkpoint.trivia_len as usize);
-        self.lexer.rewind(checkpoint.lexer);
-        self.non_trivia_lookahead.clear();
-        self.lookahead_offset = 0;
     }
 }
 

@@ -19,9 +19,10 @@ use crate::syntax::typescript::{
     parse_ts_return_type_annotation, parse_ts_type_annotation, parse_ts_type_parameters,
 };
 use crate::JsSyntaxFeature::TypeScript;
-use crate::{JsParser, ParseRecovery, ParseSeparatedList, SyntaxFeature};
+use crate::{JsParser, ParseRecovery};
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::{JsSyntaxKind, T};
+use rome_parser::parse_lists::ParseSeparatedList;
 
 // test object_expr
 // let a = {};
@@ -35,6 +36,11 @@ use rome_js_syntax::{JsSyntaxKind, T};
 struct ObjectMembersList;
 
 impl ParseSeparatedList for ObjectMembersList {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = JS_OBJECT_MEMBER_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_object_member(p)
     }
@@ -50,10 +56,6 @@ impl ParseSeparatedList for ObjectMembersList {
                 .enable_recovery_on_line_break(),
             js_parse_error::expected_object_member,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        JS_OBJECT_MEMBER_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {

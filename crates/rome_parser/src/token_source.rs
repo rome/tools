@@ -48,7 +48,7 @@ impl Trivia {
     }
 }
 
-pub trait TokenSource<'source> {
+pub trait TokenSource {
     type Kind: SyntaxKind;
 
     /// Returns the kind of the current non-trivia token
@@ -58,12 +58,15 @@ pub trait TokenSource<'source> {
     fn current_range(&self) -> TextRange;
 
     /// Returns the source text
-    fn text(&self) -> &'source str;
+    fn text(&self) -> &str;
 
     /// Returns the byte offset of the current token from the start of the source document
     fn position(&self) -> TextSize {
         self.current_range().start()
     }
+
+    /// Returns true if the current token is preceded by a line break
+    fn has_preceding_line_break(&self) -> bool;
 
     fn bump(&mut self);
 
@@ -73,7 +76,7 @@ pub trait TokenSource<'source> {
     fn finish(self) -> (Vec<Trivia>, Vec<ParseDiagnostic>);
 }
 
-pub trait BumpWithContext<'source>: TokenSource<'source> {
+pub trait BumpWithContext: TokenSource {
     type Context;
 
     fn bump_with_context(&mut self, context: Self::Context);
@@ -83,7 +86,10 @@ pub trait BumpWithContext<'source>: TokenSource<'source> {
 }
 
 /// Token source that supports inspecting the 'nth' token (lookahead)
-pub trait NthToken<'source>: TokenSource<'source> {
+pub trait NthToken: TokenSource {
     /// Gets the kind of the nth non-trivia token
     fn nth(&mut self, n: usize) -> Self::Kind;
+
+    /// Returns true if the nth non-trivia token is preceded by a line break
+    fn has_nth_preceding_line_break(&mut self, n: usize) -> bool;
 }

@@ -1,5 +1,5 @@
 use crate::lexer::TextSize;
-use crate::parser::{expected_any, expected_node, ParserProgress, RecoveryResult};
+use crate::parser::{expected_any, expected_node, RecoveryResult};
 use crate::prelude::*;
 use crate::state::{EnterAmbientContext, ExportDefaultItem, ExportDefaultItemKind};
 use crate::syntax::binding::{
@@ -24,11 +24,11 @@ use crate::syntax::typescript::{
     parse_ts_interface_declaration, skip_ts_decorators,
 };
 use crate::JsSyntaxFeature::TypeScript;
-use crate::{
-    Absent, JsParser, ParseRecovery, ParseSeparatedList, ParsedSyntax, Present, SyntaxFeature,
-};
+use crate::{Absent, JsParser, ParseRecovery, ParsedSyntax, Present};
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::{JsSyntaxKind, TextRange, T};
+use rome_parser::parse_lists::ParseSeparatedList;
+use rome_parser::ParserProgress;
 use std::collections::HashMap;
 
 use super::auxiliary::{is_nth_at_declaration_clause, parse_declaration_clause};
@@ -346,6 +346,10 @@ fn parse_named_import_specifier_list(p: &mut JsParser) -> ParsedSyntax {
 struct NamedImportSpecifierList;
 
 impl ParseSeparatedList for NamedImportSpecifierList {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+    const LIST_KIND: Self::Kind = JS_NAMED_IMPORT_SPECIFIER_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_any_named_import_specifier(p)
     }
@@ -364,10 +368,6 @@ impl ParseSeparatedList for NamedImportSpecifierList {
             .enable_recovery_on_line_break(),
             expected_named_import_specifier,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        JS_NAMED_IMPORT_SPECIFIER_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
@@ -485,6 +485,11 @@ struct ImportAssertionList {
 }
 
 impl ParseSeparatedList for ImportAssertionList {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = JS_IMPORT_ASSERTION_ENTRY_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_import_assertion_entry(p, &mut self.assertion_keys)
     }
@@ -503,10 +508,6 @@ impl ParseSeparatedList for ImportAssertionList {
             .enable_recovery_on_line_break(),
             |p, range| expected_node("import assertion entry", range).into_diagnostic(p),
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        JS_IMPORT_ASSERTION_ENTRY_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
@@ -715,6 +716,11 @@ fn parse_export_named_clause(p: &mut JsParser) -> ParsedSyntax {
 struct ExportNamedSpecifierList;
 
 impl ParseSeparatedList for ExportNamedSpecifierList {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = JS_EXPORT_NAMED_SPECIFIER_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_any_export_named_specifier(p)
     }
@@ -733,10 +739,6 @@ impl ParseSeparatedList for ExportNamedSpecifierList {
             .enable_recovery_on_line_break(),
             expected_export_name_specifier,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        JS_EXPORT_NAMED_SPECIFIER_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
@@ -998,6 +1000,11 @@ fn parse_export_named_from_clause(p: &mut JsParser) -> ParsedSyntax {
 struct ExportNamedFromSpecifierList;
 
 impl ParseSeparatedList for ExportNamedFromSpecifierList {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = JS_EXPORT_NAMED_FROM_SPECIFIER_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_export_named_from_specifier(p)
     }
@@ -1016,10 +1023,6 @@ impl ParseSeparatedList for ExportNamedFromSpecifierList {
             .enable_recovery_on_line_break(),
             expected_literal_export_name,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        JS_EXPORT_NAMED_FROM_SPECIFIER_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {

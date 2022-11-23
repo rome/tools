@@ -223,11 +223,14 @@ impl ParseDiagnostic {
     }
 }
 
-pub trait ToDiagnostic<P> {
+pub trait ToDiagnostic<P>
+where
+    P: Parser,
+{
     fn into_diagnostic(self, p: &P) -> ParseDiagnostic;
 }
 
-impl<'a, P: Parser<'a>> ToDiagnostic<P> for ParseDiagnostic {
+impl<P: Parser> ToDiagnostic<P> for ParseDiagnostic {
     fn into_diagnostic(self, _: &P) -> ParseDiagnostic {
         self
     }
@@ -273,7 +276,10 @@ pub fn expected_token_any<K: SyntaxKind>(tokens: &[K]) -> ExpectedTokens {
 
 pub struct ExpectedToken(&'static str);
 
-impl<'a, P: Parser<'a>> ToDiagnostic<P> for ExpectedToken {
+impl<P> ToDiagnostic<P> for ExpectedToken
+where
+    P: Parser,
+{
     fn into_diagnostic(self, p: &P) -> ParseDiagnostic {
         if p.cur() == P::EOF {
             p.err_builder(
@@ -293,7 +299,10 @@ impl<'a, P: Parser<'a>> ToDiagnostic<P> for ExpectedToken {
 
 pub struct ExpectedTokens(String);
 
-impl<'a, P: Parser<'a>> ToDiagnostic<P> for ExpectedTokens {
+impl<P> ToDiagnostic<P> for ExpectedTokens
+where
+    P: Parser,
+{
     fn into_diagnostic(self, p: &P) -> ParseDiagnostic {
         if p.cur() == P::EOF {
             p.err_builder(

@@ -8,7 +8,6 @@ use super::expr::parse_expression;
 use super::module::parse_export;
 use super::typescript::*;
 use crate::parser::RecoveryResult;
-use crate::parser::{ParseNodeList, ParsedSyntax, ParserProgress};
 use crate::prelude::*;
 use crate::state::{
     BreakableKind, ChangeParserState, EnableStrictMode, EnableStrictModeSnapshot, EnterBreakable,
@@ -30,9 +29,11 @@ use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax
 use crate::span::Span;
 use crate::JsSyntaxFeature::{StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{parser, JsParser, JsSyntaxFeature, ParseRecovery, ParseSeparatedList, SyntaxFeature};
+use crate::{parser, JsParser, JsSyntaxFeature, ParseRecovery};
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_parser::diagnostic::expected_token;
+use rome_parser::parse_lists::{ParseNodeList, ParseSeparatedList};
+use rome_parser::ParserProgress;
 use rome_rowan::SyntaxKind;
 
 pub const STMT_RECOVERY_SET: TokenSet<JsSyntaxKind> = token_set![
@@ -1104,6 +1105,11 @@ struct VariableDeclaratorList {
 // const;
 // const
 impl ParseSeparatedList for VariableDeclaratorList {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = JS_VARIABLE_DECLARATOR_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_variable_declarator(p, &self.declarator_context).map(|declarator| {
             if self.declarator_context.is_first {
@@ -1134,10 +1140,6 @@ impl ParseSeparatedList for VariableDeclaratorList {
         )
     }
 
-    fn list_kind() -> JsSyntaxKind {
-        JS_VARIABLE_DECLARATOR_LIST
-    }
-
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
         T![,]
     }
@@ -1149,7 +1151,7 @@ impl ParseSeparatedList for VariableDeclaratorList {
             p.error(expected_binding(p, range));
             m
         } else {
-            m.complete(p, Self::list_kind())
+            m.complete(p, Self::LIST_KIND)
         }
     }
 }
@@ -1617,6 +1619,11 @@ fn parse_for_statement(p: &mut JsParser) -> ParsedSyntax {
 struct SwitchCaseStatementList;
 
 impl ParseNodeList for SwitchCaseStatementList {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = JS_STATEMENT_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_statement(p, StatementContext::StatementList)
     }
@@ -1635,10 +1642,6 @@ impl ParseNodeList for SwitchCaseStatementList {
             &ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
             js_parse_error::expected_case,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        JS_STATEMENT_LIST
     }
 }
 
@@ -1700,6 +1703,11 @@ struct SwitchCasesList {
 }
 
 impl ParseNodeList for SwitchCasesList {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = JS_SWITCH_CASE_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         let clause = parse_switch_clause(p, &mut self.first_default);
 
@@ -1746,10 +1754,6 @@ impl ParseNodeList for SwitchCasesList {
                 }
             }
         }
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        JS_SWITCH_CASE_LIST
     }
 }
 

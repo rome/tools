@@ -41,9 +41,9 @@ impl Marker {
     /// Finishes the syntax tree node and assigns `kind` to it,
     /// and mark the create a `CompletedMarker` for possible future
     /// operation like `.precede()` to deal with forward_parent.
-    pub fn complete<'a, P>(mut self, p: &mut P, kind: P::Kind) -> CompletedMarker
+    pub fn complete<P>(mut self, p: &mut P, kind: P::Kind) -> CompletedMarker
     where
-        P: Parser<'a>,
+        P: Parser,
     {
         self.bomb.defuse();
         let context = p.context_mut();
@@ -66,9 +66,9 @@ impl Marker {
 
     /// Abandons the syntax tree node. All its children
     /// are attached to its parent instead.
-    pub fn abandon<'a, P>(mut self, p: &mut P)
+    pub fn abandon<P>(mut self, p: &mut P)
     where
-        P: Parser<'a>,
+        P: Parser,
     {
         self.bomb.defuse();
         let idx = self.pos as usize;
@@ -129,9 +129,9 @@ impl CompletedMarker {
     }
 
     /// Change the kind of node this marker represents
-    pub fn change_kind<'a, P>(&mut self, p: &mut P, new_kind: P::Kind)
+    pub fn change_kind<P>(&mut self, p: &mut P, new_kind: P::Kind)
     where
-        P: Parser<'a>,
+        P: Parser,
     {
         match p
             .context_mut()
@@ -146,17 +146,17 @@ impl CompletedMarker {
         }
     }
 
-    pub fn change_to_unknown<'a, P>(&mut self, p: &mut P)
+    pub fn change_to_unknown<P>(&mut self, p: &mut P)
     where
-        P: Parser<'a>,
+        P: Parser,
     {
         self.change_kind(p, self.kind(p).to_unknown());
     }
 
     /// Get the range of the marker
-    pub fn range<'a, P>(&self, p: &P) -> TextRange
+    pub fn range<P>(&self, p: &P) -> TextRange
     where
-        P: Parser<'a>,
+        P: Parser,
     {
         let end = p.context().events[self.old_start as usize..self.finish_pos as usize]
             .iter()
@@ -171,9 +171,9 @@ impl CompletedMarker {
     }
 
     /// Get the underlying text of a marker
-    pub fn text<'a, P>(&self, p: &P) -> &'a str
+    pub fn text<'a, P>(&self, p: &'a P) -> &'a str
     where
-        P: Parser<'a>,
+        P: Parser,
     {
         &p.source().text()[self.range(p)]
     }
@@ -190,9 +190,9 @@ impl CompletedMarker {
     /// Append a new `START` events as `[START, FINISH, NEWSTART]`,
     /// then mark `NEWSTART` as `START`'s parent with saving its relative
     /// distance to `NEWSTART` into forward_parent(=2 in this case);
-    pub fn precede<'a, P>(self, p: &mut P) -> Marker
+    pub fn precede<P>(self, p: &mut P) -> Marker
     where
-        P: Parser<'a>,
+        P: Parser,
     {
         let mut new_pos = p.start();
         let idx = self.start_pos as usize;
@@ -213,9 +213,9 @@ impl CompletedMarker {
     }
 
     /// Undo this completion and turns into a `Marker`
-    pub fn undo_completion<'a, P>(self, p: &mut P) -> Marker
+    pub fn undo_completion<P>(self, p: &mut P) -> Marker
     where
-        P: Parser<'a>,
+        P: Parser,
     {
         let start_idx = self.start_pos as usize;
         let finish_idx = self.finish_pos as usize;
@@ -236,9 +236,9 @@ impl CompletedMarker {
         Marker::new(self.start_pos, self.offset)
     }
 
-    pub fn kind<'a, P>(&self, p: &P) -> P::Kind
+    pub fn kind<P>(&self, p: &P) -> P::Kind
     where
-        P: Parser<'a>,
+        P: Parser,
     {
         match p.context().events[self.start_pos as usize] {
             Event::Start { kind, .. } => kind,

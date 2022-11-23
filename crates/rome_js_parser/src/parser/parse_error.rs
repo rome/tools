@@ -58,7 +58,7 @@ impl ExpectedNodeDiagnosticBuilder {
     }
 }
 
-impl<'a, P: Parser<'a>> ToDiagnostic<P> for ExpectedNodeDiagnosticBuilder {
+impl<P: Parser> ToDiagnostic<P> for ExpectedNodeDiagnosticBuilder {
     fn into_diagnostic(self, p: &P) -> ParseDiagnostic {
         let range = &self.range;
 

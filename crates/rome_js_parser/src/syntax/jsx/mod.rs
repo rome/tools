@@ -3,6 +3,7 @@ pub mod jsx_parse_errors;
 
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_parser::diagnostic::expected_token;
+use rome_parser::parse_lists::ParseNodeList;
 use rome_rowan::TextRange;
 
 use crate::lexer::{JsSyntaxKind, LexContext, ReLexContext, T};
@@ -15,9 +16,7 @@ use crate::syntax::jsx::jsx_parse_errors::{
     jsx_expected_closing_tag,
 };
 use crate::JsSyntaxFeature::TypeScript;
-use crate::{
-    parser::RecoveryResult, JsParser, ParseNodeList, ParseRecovery, ParsedSyntax, SyntaxFeature,
-};
+use crate::{parser::RecoveryResult, JsParser, ParseRecovery, ParsedSyntax};
 use crate::{Absent, Present};
 
 use super::typescript::parse_ts_type_arguments;
@@ -298,6 +297,10 @@ fn expect_jsx_token(p: &mut JsParser, token: JsSyntaxKind, before_child_content:
 struct JsxChildrenList;
 
 impl ParseNodeList for JsxChildrenList {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+    const LIST_KIND: Self::Kind = JsSyntaxKind::JSX_CHILD_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         match p.cur() {
             // test jsx jsx_element_children
@@ -342,10 +345,6 @@ impl ParseNodeList for JsxChildrenList {
             ),
             jsx_expected_children,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        JsSyntaxKind::JSX_CHILD_LIST
     }
 }
 
@@ -487,6 +486,10 @@ struct JsxAttributeList;
 //   continues here' />;
 // <div invalid-unicode-escape="\u10000\u20000" />;
 impl ParseNodeList for JsxAttributeList {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+    const LIST_KIND: Self::Kind = JsSyntaxKind::JSX_ATTRIBUTE_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         if matches!(p.cur(), T!['{'] | T![...]) {
             parse_jsx_spread_attribute(p)
@@ -508,10 +511,6 @@ impl ParseNodeList for JsxAttributeList {
             ),
             jsx_expected_attribute,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        JsSyntaxKind::JSX_ATTRIBUTE_LIST
     }
 }
 

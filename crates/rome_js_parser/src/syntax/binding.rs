@@ -10,7 +10,7 @@ use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{JsParser, ParsedSyntax, SyntaxFeature};
+use crate::{JsParser, ParsedSyntax};
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind as SyntaxKindTrait;
 

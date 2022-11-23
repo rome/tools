@@ -1,4 +1,4 @@
-use crate::parser::{ParsedSyntax, ParserProgress, RecoveryResult};
+use crate::parser::{ParsedSyntax, RecoveryResult};
 use crate::prelude::*;
 use crate::state::{
     EnableStrictMode, EnterClassPropertyInitializer, EnterClassStaticInitializationBlock,
@@ -35,12 +35,15 @@ use crate::syntax::typescript::{
 
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{JsParser, ParseNodeList, ParseRecovery, StrictMode, SyntaxFeature};
+use crate::{JsParser, StrictMode};
 use bitflags::bitflags;
 use drop_bomb::DebugDropBomb;
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::TextSize;
 use rome_js_syntax::{JsSyntaxKind, T};
+use rome_parser::parse_lists::ParseNodeList;
+use rome_parser::parse_recovery::ParseRecovery;
+use rome_parser::ParserProgress;
 use rome_rowan::{SyntaxKind, TextRange};
 use smallvec::SmallVec;
 use std::fmt::Debug;
@@ -415,6 +418,11 @@ struct ClassMembersList {
 }
 
 impl ParseNodeList for ClassMembersList {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: JsSyntaxKind = JS_CLASS_MEMBER_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_class_member(p, self.inside_abstract_class)
     }
@@ -453,10 +461,6 @@ impl ParseNodeList for ClassMembersList {
             ),
             js_parse_error::expected_class_member,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        JS_CLASS_MEMBER_LIST
     }
 }
 

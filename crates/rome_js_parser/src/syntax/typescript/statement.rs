@@ -17,12 +17,10 @@ use crate::syntax::typescript::{
     expect_ts_type_list, parse_ts_identifier_binding, parse_ts_implements_clause, parse_ts_name,
     parse_ts_type, parse_ts_type_parameters, TypeMembers,
 };
-use crate::{
-    syntax, Absent, JsParser, ParseNodeList, ParseRecovery, ParseSeparatedList, ParsedSyntax,
-    Present,
-};
+use crate::{syntax, Absent, JsParser, ParseRecovery, ParsedSyntax, Present};
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_parser::diagnostic::expected_token;
+use rome_parser::parse_lists::{ParseNodeList, ParseSeparatedList};
 
 fn parse_literal_as_ts_enum_member(p: &mut JsParser) -> ParsedSyntax {
     let m = p.start();
@@ -75,6 +73,11 @@ fn parse_ts_enum_member(p: &mut JsParser) -> ParsedSyntax {
 struct TsEnumMembersList;
 
 impl ParseSeparatedList for TsEnumMembersList {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = TS_ENUM_MEMBER_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_ts_enum_member(p)
     }
@@ -93,10 +96,6 @@ impl ParseSeparatedList for TsEnumMembersList {
             .enable_recovery_on_line_break(),
             expected_ts_enum_member,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        TS_ENUM_MEMBER_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {

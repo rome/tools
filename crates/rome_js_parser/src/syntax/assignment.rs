@@ -15,7 +15,6 @@ use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDef
 use crate::JsParser;
 use crate::ParsedSyntax::{Absent, Present};
 use rome_js_syntax::{JsSyntaxKind::*, *};
-use rome_parser::Rewind;
 use rome_rowan::AstNode;
 
 // test assignment_target

@@ -1,5 +1,4 @@
 ///! Provides traits for parsing pattern like nodes
-use crate::parser::ParserProgress;
 use crate::prelude::*;
 use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::js_parse_error;
@@ -7,6 +6,7 @@ use crate::ParsedSyntax::{Absent, Present};
 use crate::{JsParser, ParseRecovery, ParsedSyntax};
 use rome_js_syntax::JsSyntaxKind::{EOF, JS_ARRAY_HOLE};
 use rome_js_syntax::{JsSyntaxKind, TextRange, T};
+use rome_parser::ParserProgress;
 
 /// Trait for parsing a pattern with an optional default of the form `pattern = default`
 pub(crate) trait ParseWithDefaultPattern {
@@ -102,7 +102,11 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
     }
 
     /// Parses a single array element
-    fn parse_any_array_element(&self, p: &mut JsParser, recovery: &ParseRecovery) -> ParsedSyntax {
+    fn parse_any_array_element(
+        &self,
+        p: &mut JsParser,
+        recovery: &ParseRecovery<JsSyntaxKind>,
+    ) -> ParsedSyntax {
         match p.cur() {
             T![,] => Present(p.start().complete(p, JS_ARRAY_HOLE)),
             T![...] => self
@@ -196,7 +200,7 @@ pub(crate) trait ParseObjectPattern {
     fn parse_any_property_pattern(
         &self,
         p: &mut JsParser,
-        recovery: &ParseRecovery,
+        recovery: &ParseRecovery<JsSyntaxKind>,
     ) -> ParsedSyntax {
         if p.at(T![...]) {
             self.parse_rest_property_pattern(p)
@@ -224,7 +228,7 @@ fn validate_rest_pattern(
     p: &mut JsParser,
     mut rest: CompletedMarker,
     end_token: JsSyntaxKind,
-    recovery: &ParseRecovery,
+    recovery: &ParseRecovery<JsSyntaxKind>,
 ) -> CompletedMarker {
     if p.at(end_token) {
         return rest;

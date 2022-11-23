@@ -6,7 +6,7 @@
 use super::typescript::*;
 use crate::lexer::{LexContext, ReLexContext};
 use crate::parser::rewrite_parser::{RewriteMarker, RewriteParser};
-use crate::parser::{JsParserCheckpoint, ParserProgress, RecoveryResult};
+use crate::parser::{JsParserCheckpoint, RecoveryResult};
 use crate::prelude::*;
 use crate::rewrite::rewrite_events;
 use crate::rewrite::RewriteParseEvents;
@@ -29,10 +29,12 @@ use crate::syntax::stmt::{is_semi, STMT_RECOVERY_SET};
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, ts_only_syntax_error};
 use crate::JsSyntaxFeature::{Jsx, StrictMode, TypeScript};
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{syntax, JsParser, ParseRecovery, ParseSeparatedList, ParsedSyntax, SyntaxFeature};
+use crate::{syntax, JsParser, ParseRecovery, ParsedSyntax};
 use bitflags::bitflags;
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_parser::diagnostic::expected_token;
+use rome_parser::parse_lists::ParseSeparatedList;
+use rome_parser::ParserProgress;
 
 pub const EXPR_RECOVERY_SET: TokenSet<JsSyntaxKind> =
     token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -1608,6 +1610,10 @@ pub(crate) fn parse_template_elements<P>(
 struct ArrayElementsList;
 
 impl ParseSeparatedList for ArrayElementsList {
+    type Kind = JsSyntaxKind;
+    type Parser<'a> = JsParser<'a>;
+    const LIST_KIND: JsSyntaxKind = JS_ARRAY_ELEMENT_LIST;
+
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         match p.cur() {
             T![...] => parse_spread_element(p, ExpressionContext::default()),
@@ -1629,10 +1635,6 @@ impl ParseSeparatedList for ArrayElementsList {
             ),
             js_parse_error::expected_array_element,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        JS_ARRAY_ELEMENT_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
