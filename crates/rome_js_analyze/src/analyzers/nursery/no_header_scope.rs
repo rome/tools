@@ -2,10 +2,9 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{
-    JsxAnyElementName, JsxAttribute, JsxAttributeList, JsxOpeningElement, JsxSelfClosingElement,
-};
-use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
+use rome_js_syntax::jsx_ext::JsxAnyElement;
+use rome_js_syntax::{JsxAttribute, JsxAttributeList};
+use rome_rowan::{AstNode, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -42,19 +41,6 @@ declare_rule! {
     }
 }
 
-declare_node_union! {
-    pub(crate) JsxAnyElement = JsxOpeningElement | JsxSelfClosingElement
-}
-
-impl JsxAnyElement {
-    fn name(&self) -> Option<JsxAnyElementName> {
-        match self {
-            JsxAnyElement::JsxOpeningElement(element) => element.name().ok(),
-            JsxAnyElement::JsxSelfClosingElement(element) => element.name().ok(),
-        }
-    }
-}
-
 impl Rule for NoHeaderScope {
     type Query = Ast<JsxAttribute>;
     type State = ();
@@ -72,7 +58,7 @@ impl Rule for NoHeaderScope {
             .parent::<JsxAttributeList>()?
             .parent::<JsxAnyElement>()?;
 
-        if jsx_element.name()?.as_jsx_name()?.syntax().text_trimmed() != "th" {
+        if jsx_element.name_value_token()?.text_trimmed() != "th" {
             return Some(());
         }
 

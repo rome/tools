@@ -739,6 +739,8 @@ struct NurserySchema {
     no_const_assign: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a constructor"]
     no_constructor_return: Option<RuleConfiguration>,
+    #[doc = "Enforces that no distracting elements are used."]
+    no_distracting_elements: Option<RuleConfiguration>,
     #[doc = "Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake."]
     no_dupe_keys: Option<RuleConfiguration>,
     #[doc = "Disallow the declaration of empty interfaces."]
@@ -774,12 +776,13 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 21] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 22] = [
         "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
         "noConstAssign",
         "noConstructorReturn",
+        "noDistractingElements",
         "noDupeKeys",
         "noEmptyInterface",
         "noExplicitAny",
