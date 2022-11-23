@@ -23,7 +23,16 @@ function MyComponent2() {
   useEffect(() => {}, [a]);
 }
 
+// dependency more deep than capture
+// Note: This can be a valid case, but there is
+// no way for the lint rule to know
 
+function MyComponent1() {
+  let someObj = getObj();
+  useEffect(() => {
+      console.log(someObj)
+  }, [someObj.id]);
+}
 ```
 
 # Diagnostics
@@ -104,6 +113,62 @@ extraDependenciesInvalid.js:17:3 lint/nursery/useExhaustiveDependencies ━━�
        │                        ^
     18 │ }
     19 │ 
+  
+
+```
+
+```
+extraDependenciesInvalid.js:26:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This hook specifies a dependency more specific that its captures
+  
+    24 │ function MyComponent1() {
+    25 │   let someObj = getObj();
+  > 26 │   useEffect(() => {
+       │   ^^^^^^^^^
+    27 │       console.log(someObj)
+    28 │   }, [someObj.id]);
+  
+  i This capture is more generic than...
+  
+    25 │   let someObj = getObj();
+    26 │   useEffect(() => {
+  > 27 │       console.log(someObj)
+       │                   ^^^^^^^
+    28 │   }, [someObj.id]);
+    29 │ }
+  
+  i ...this dependency.
+  
+    26 │   useEffect(() => {
+    27 │       console.log(someObj)
+  > 28 │   }, [someObj.id]);
+       │       ^^^^^^^^^^
+    29 │ }
+  
+
+```
+
+```
+extraDependenciesInvalid.js:26:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This hook do not specify all of its dependencies.
+  
+    24 │ function MyComponent1() {
+    25 │   let someObj = getObj();
+  > 26 │   useEffect(() => {
+       │   ^^^^^^^^^
+    27 │       console.log(someObj)
+    28 │   }, [someObj.id]);
+  
+  i This dependency is not specified in the hook dependency list.
+  
+    25 │   let someObj = getObj();
+    26 │   useEffect(() => {
+  > 27 │       console.log(someObj)
+       │                   ^^^^^^^
+    28 │   }, [someObj.id]);
+    29 │ }
   
 
 ```
