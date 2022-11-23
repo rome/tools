@@ -122,7 +122,11 @@ pub enum Fix {
     /// When a dependency needs to be removed.
     RemoveDependency(TextRange, Vec<TextRange>),
     /// When a dependency is more deep than the capture
-    DependencyTooDeep(TextRange, TextRange, TextRange),
+    DependencyTooDeep {
+        function_name_range: TextRange,
+        capture_range: TextRange,
+        dependency_range: TextRange,
+    }
 }
 
 fn get_whole_static_member_expression(
@@ -250,9 +254,9 @@ impl Rule for UseExhaustiveDependencies {
                 let mut suggested_fix = None;
                 let mut is_captured_covered = false;
                 for (dependency_text, dependency_range) in deps.iter() {
-                    let capture_deeper_dependency = capture_text.starts_with(dependency_text);
-                    let dependency_deeper_capture = dependency_text.starts_with(capture_text);
-                    match (capture_deeper_dependency, dependency_deeper_capture) {
+                    let capture_deeper_than_dependency = capture_text.starts_with(dependency_text);
+                    let dependency_deeper_then_capture = dependency_text.starts_with(capture_text);
+                    match (capture_deeper_than_dependency, dependency_deeper_then_capture) {
                         // capture == dependency
                         (true, true) => {
                             suggested_fix = None;
@@ -276,11 +280,11 @@ impl Rule for UseExhaustiveDependencies {
                         (false, true) => {
                             // We need to continue, because it may still have a perfect match
                             // in the dependency list
-                            suggested_fix = Some(Fix::DependencyTooDeep(
-                                result.function_name_range,
-                                *capture_range,
-                                *dependency_range,
-                            ));
+                            suggested_fix = Some(Fix::DependencyTooDeep {
+                                function_name_range: result.function_name_range,
+                                capture_range: *capture_range,
+                                dependency_range: *dependency_range,
+                            });
                         }
                         _ => {}
                     }
@@ -364,16 +368,16 @@ impl Rule for UseExhaustiveDependencies {
 
                 Some(diag)
             }
-            Fix::DependencyTooDeep(use_effect_range, capture, dependency) => {
+            Fix::DependencyTooDeep { function_name_range, capture_range, dependency_range } => {
                 let diag = RuleDiagnostic::new(
                     rule_category!(),
-                    use_effect_range,
+                    function_name_range,
                     markup! {
                         "This hook specifies a dependency more specific that its captures"
                     },
                 )
-                .detail(capture, "This capture is more generic than...")
-                .detail(dependency, "...this dependency.");
+                .detail(capture_range, "This capture is more generic than...")
+                .detail(dependency_range, "...this dependency.");
                 Some(diag)
             }
         }
