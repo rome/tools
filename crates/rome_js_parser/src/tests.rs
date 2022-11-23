@@ -1,9 +1,9 @@
 use crate::{markup, parse, parse_module, test_utils::assert_errors_are_absent, Parse};
 use expect_test::expect_file;
 use rome_console::fmt::{Formatter, Termcolor};
-use rome_diagnostics::file::FileId;
-use rome_diagnostics::v2::DiagnosticExt;
-use rome_diagnostics::{file::SimpleFiles, v2::PrintDiagnostic};
+use rome_diagnostics::location::FileId;
+use rome_diagnostics::DiagnosticExt;
+use rome_diagnostics::PrintDiagnostic;
 use rome_js_syntax::{JsAnyRoot, JsSyntaxKind, SourceType};
 use rome_js_syntax::{JsCallArguments, JsLogicalExpression, JsSyntaxToken};
 use rome_rowan::{AstNode, Direction, TextSize};
@@ -116,11 +116,6 @@ fn run_and_expect_errors(path: &str, _: &str, _: &str, _: &str) {
 
     let (parse, ast) = try_parse_with_printed_ast(path.to_str().unwrap(), &text);
     assert_errors_are_present(&parse, &path);
-    let mut files = SimpleFiles::new();
-    files.add(
-        path.file_name().unwrap().to_string_lossy().to_string(),
-        text.to_string(),
-    );
     let mut actual = format!("{}\n\n{:#?}", ast, parse.syntax());
     for diag in parse.diagnostics() {
         let mut write = rome_diagnostics::termcolor::Buffer::no_color();

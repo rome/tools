@@ -5,9 +5,8 @@ use wasm_bindgen::prelude::*;
 
 use rome_console::fmt::HTML;
 use rome_console::{fmt::Formatter, markup};
-use rome_diagnostics::file::SimpleFile;
-use rome_diagnostics::v2::serde::Diagnostic;
-use rome_diagnostics::v2::{DiagnosticExt, PrintDiagnostic};
+use rome_diagnostics::serde::Diagnostic;
+use rome_diagnostics::{DiagnosticExt, LineIndexBuf, PrintDiagnostic, SourceCode};
 
 use super::IDiagnostic;
 
@@ -24,7 +23,8 @@ pub(crate) fn set_panic_hook() {
 
 #[wasm_bindgen]
 pub struct DiagnosticPrinter {
-    file: SimpleFile,
+    file_name: String,
+    file_source: SourceCode<String, LineIndexBuf>,
     buffer: Vec<u8>,
 }
 
@@ -32,15 +32,22 @@ pub struct DiagnosticPrinter {
 impl DiagnosticPrinter {
     #[wasm_bindgen(constructor)]
     pub fn new(file_name: String, file_source: String) -> Self {
+        let line_starts = LineIndexBuf::from_source_text(&file_source);
         Self {
-            file: SimpleFile::new(file_name, file_source),
+            file_name,
+            file_source: SourceCode {
+                text: file_source,
+                line_starts: Some(line_starts),
+            },
             buffer: Vec::new(),
         }
     }
 
     pub fn print(&mut self, diagnostic: IDiagnostic) -> Result<(), Error> {
         let diag: Diagnostic = diagnostic.into_serde().map_err(into_error)?;
-        let err = diag.with_file_source_code(self.file.source_code());
+        let err = diag
+            .with_file_path(&self.file_name)
+            .with_file_source_code(&self.file_source);
 
         let mut html = HTML(&mut self.buffer);
         Formatter::new(&mut html)

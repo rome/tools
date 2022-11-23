@@ -283,7 +283,7 @@ impl From<&LexerCheckpoint> for LookaheadToken {
 mod tests {
     use super::BufferedLexer;
     use crate::lexer::{LexContext, Lexer, TextRange, TextSize};
-    use rome_diagnostics::file::FileId;
+    use rome_diagnostics::location::FileId;
     use rome_js_syntax::JsSyntaxKind::{JS_NUMBER_LITERAL, NEWLINE, WHITESPACE};
     use rome_js_syntax::T;
 

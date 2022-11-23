@@ -28,6 +28,10 @@ export interface UpdateSettingsParams {
  */
 export interface Configuration {
 	/**
+	 * A field for the [JSON schema](https://json-schema.org/) specification
+	 */
+	$schema?: string;
+	/**
 	 * The configuration of the filesystem
 	 */
 	files?: FilesConfiguration;
@@ -148,99 +152,293 @@ export type TrailingComma = "all" | "es5" | "none";
  * A list of rules that belong to this group
  */
 export interface A11y {
+	/**
+	 * Avoid the autoFocus attribute
+	 */
 	noAutofocus?: RuleConfiguration;
+	/**
+	 * Prevent the usage of positive integers on tabIndex property
+	 */
 	noPositiveTabindex?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	/**
+	 * It asserts that alternative text to images or areas, help to rely on to screen readers to understand the purpose and the context of the image.
+	 */
 	useAltText?: RuleConfiguration;
+	/**
+	 * Enforce that anchor elements have content and that the content is accessible to screen readers.
+	 */
 	useAnchorContent?: RuleConfiguration;
+	/**
+	 * Disallow target="_blank" attribute without rel="noreferrer"
+	 */
 	useBlankTarget?: RuleConfiguration;
+	/**
+	 * Enforces the usage of the attribute type for the element button
+	 */
 	useButtonType?: RuleConfiguration;
+	/**
+	 * Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event.
+	 */
 	useKeyWithClickEvents?: RuleConfiguration;
+	/**
+	 * Enforce that onMouseOver/onMouseOut are accompanied by onFocus/onBlur for keyboard-only users. It is important to take into account users with physical disabilities who cannot use a mouse, who use assistive technology or screenreader.
+	 */
 	useKeyWithMouseEvents?: RuleConfiguration;
+	/**
+	 * Enforce that all anchors are valid, and they are navigable elements.
+	 */
 	useValidAnchor?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
  */
 export interface Complexity {
+	/**
+	 * Disallow unnecessary boolean casts
+	 */
 	noExtraBooleanCast?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	/**
+	 * Discard redundant terms from logical expressions.
+	 */
 	useSimplifiedLogicExpression?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
  */
 export interface Correctness {
+	/**
+	 * Disallow the use of arguments
+	 */
 	noArguments?: RuleConfiguration;
+	/**
+	 * Discourage the usage of Array index in keys.
+	 */
 	noArrayIndexKey?: RuleConfiguration;
+	/**
+	 * Disallows using an async function as a Promise executor.
+	 */
 	noAsyncPromiseExecutor?: RuleConfiguration;
+	/**
+	 * Disallow reassigning exceptions in catch clauses
+	 */
 	noCatchAssign?: RuleConfiguration;
+	/**
+	 * Prevent passing of children as props.
+	 */
 	noChildrenProp?: RuleConfiguration;
+	/**
+	 * Prevent comments from being inserted as text nodes
+	 */
 	noCommentText?: RuleConfiguration;
+	/**
+	 * Disallow comparing against -0
+	 */
 	noCompareNegZero?: RuleConfiguration;
+	/**
+	 * Disallow the use of debugger
+	 */
 	noDebugger?: RuleConfiguration;
+	/**
+	 * Disallow the use of the delete operator
+	 */
 	noDelete?: RuleConfiguration;
+	/**
+	 * Require the use of === and !==
+	 */
 	noDoubleEquals?: RuleConfiguration;
+	/**
+	 * Disallow duplicate function arguments name.
+	 */
 	noDupeArgs?: RuleConfiguration;
+	/**
+	 * Disallows empty destructuring patterns.
+	 */
 	noEmptyPattern?: RuleConfiguration;
+	/**
+	 * Disallow reassigning function declarations.
+	 */
 	noFunctionAssign?: RuleConfiguration;
+	/**
+	 * Disallow assigning to imported bindings
+	 */
 	noImportAssign?: RuleConfiguration;
+	/**
+	 * Disallow labels that share a name with a variable
+	 */
 	noLabelVar?: RuleConfiguration;
+	/**
+	 * Disallow unclear usage of multiple space characters in regular expression literals
+	 */
 	noMultipleSpacesInRegularExpressionLiterals?: RuleConfiguration;
+	/**
+	 * Disallow new operators with the Symbol object
+	 */
 	noNewSymbol?: RuleConfiguration;
+	/**
+	 * Prevent the usage of the return value of React.render.
+	 */
 	noRenderReturnValue?: RuleConfiguration;
+	/**
+	 * This rule allows you to specify global variable names that you don’t want to use in your application.
+	 */
 	noRestrictedGlobals?: RuleConfiguration;
+	/**
+	 * Disallow identifiers from shadowing restricted names.
+	 */
 	noShadowRestrictedNames?: RuleConfiguration;
+	/**
+	 * Disallow sparse arrays
+	 */
 	noSparseArray?: RuleConfiguration;
+	/**
+	 * Prevents the usage of variables that haven't been declared inside the document
+	 */
 	noUndeclaredVariables?: RuleConfiguration;
+	/**
+	 * Avoid using unnecessary continue.
+	 */
 	noUnnecessaryContinue?: RuleConfiguration;
+	/**
+	 * Disallow unreachable code
+	 */
 	noUnreachable?: RuleConfiguration;
+	/**
+	 * Disallow using unsafe negation.
+	 */
 	noUnsafeNegation?: RuleConfiguration;
+	/**
+	 * Disallow unused variables.
+	 */
 	noUnusedVariables?: RuleConfiguration;
+	/**
+	 * Disallow unnecessary fragments
+	 */
 	noUselessFragments?: RuleConfiguration;
+	/**
+	 * This rules prevents void elements (AKA self-closing elements) from having children.
+	 */
 	noVoidElementsWithChildren?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	/**
+	 * Enforces case clauses have a single statement, emits a quick fix wrapping the statements in a block
+	 */
 	useSingleCaseStatement?: RuleConfiguration;
+	/**
+	 * This rule verifies the result of typeof $expr unary expressions is being compared to valid values, either string literals containing valid type names or other typeof expressions
+	 */
 	useValidTypeof?: RuleConfiguration;
+	/**
+	 * Enforce the use of while loops instead of for loops when the initializer and update expressions are not needed
+	 */
 	useWhile?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
  */
 export interface Nursery {
+	/**
+	 * Enforce that the accessKey attribute is not used on any HTML element.
+	 */
+	noAccessKey?: RuleConfiguration;
+	/**
+	 * Disallow certain types.
+	 */
 	noBannedTypes?: RuleConfiguration;
+	/**
+	 * Disallow assignment operators in conditional expressions.
+	 */
 	noConditionalAssignment?: RuleConfiguration;
+	/**
+	 * Prevents from having const variables being re-assigned.
+	 */
 	noConstAssign?: RuleConfiguration;
+	/**
+	 * Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
+	 */
 	noDupeKeys?: RuleConfiguration;
+	/**
+	 * Disallow the declaration of empty interfaces.
+	 */
+	noEmptyInterface?: RuleConfiguration;
+	/**
+	 * Disallow the any type usage
+	 */
 	noExplicitAny?: RuleConfiguration;
+	/**
+	 * Check that the scope attribute is only used on th elements.
+	 */
+	noHeaderScope?: RuleConfiguration;
+	/**
+	 * Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors.
+	 */
 	noInvalidConstructorSuper?: RuleConfiguration;
+	/**
+	 * Disallow literal numbers that lose precision
+	 */
 	noPrecisionLoss?: RuleConfiguration;
+	/**
+	 * Disallow comparison of expressions modifying the string case with non-compliant value.
+	 */
+	noStringCaseMismatch?: RuleConfiguration;
+	/**
+	 * Disallow control flow statements in finally blocks.
+	 */
 	noUnsafeFinally?: RuleConfiguration;
+	/**
+	 * Disallow the use of var
+	 */
+	noVar?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	/**
+	 * Enforce camel case naming convention.
+	 */
 	useCamelCase?: RuleConfiguration;
+	/**
+	 * Require const declarations for variables that are never reassigned after declared.
+	 */
 	useConst?: RuleConfiguration;
+	/**
+	 * Enforce all dependencies are correctly specified.
+	 */
 	useExhaustiveDependencies?: RuleConfiguration;
+	/**
+	 * Promotes the use of .flatMap() when map().flat() are used together.
+	 */
 	useFlatMap?: RuleConfiguration;
+	/**
+	 * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
+	 */
 	useNumericLiterals?: RuleConfiguration;
+	/**
+	 * Enforce "for" loop update clause moving the counter in the right direction.
+	 */
 	useValidForDirection?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
  */
 export interface Security {
+	/**
+	 * Prevent the usage of dangerous JSX props
+	 */
 	noDangerouslySetInnerHtml?: RuleConfiguration;
+	/**
+	 * Report when a DOM element or a component uses both children and dangerouslySetInnerHTML prop.
+	 */
 	noDangerouslySetInnerHtmlWithChildren?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
@@ -251,20 +449,53 @@ export interface Security {
  * A list of rules that belong to this group
  */
 export interface Style {
+	/**
+	 * Disallow implicit true values on JSX boolean attributes
+	 */
 	noImplicitBoolean?: RuleConfiguration;
+	/**
+	 * Disallow negation in the condition of an if statement if it has an else clause
+	 */
 	noNegationElse?: RuleConfiguration;
+	/**
+	 * Disallow the use of constants which its value is the upper-case version of its name.
+	 */
 	noShoutyConstants?: RuleConfiguration;
+	/**
+	 * Disallow template literals if interpolation and special-character handling are not needed
+	 */
 	noUnusedTemplateLiteral?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	/**
+	 * Requires following curly brace conventions. JavaScript allows the omission of curly braces when a block contains only one statement. However, it is considered by many to be best practice to never omit curly braces around blocks, even when they are optional, because it can lead to bugs and reduces code clarity.
+	 */
 	useBlockStatements?: RuleConfiguration;
+	/**
+	 * This rule enforces the use of <>...</> over <Fragment>...</Fragment>.
+	 */
 	useFragmentSyntax?: RuleConfiguration;
+	/**
+	 * Enforce using concise optional chain instead of chained logical expressions.
+	 */
 	useOptionalChain?: RuleConfiguration;
+	/**
+	 * Prevent extra closing tags for components without children
+	 */
 	useSelfClosingElements?: RuleConfiguration;
+	/**
+	 * When expressing array types, this rule promotes the usage of T[] shorthand instead of Array<T>.
+	 */
 	useShorthandArrayType?: RuleConfiguration;
+	/**
+	 * Disallow multiple variable declarations in the same variable statement
+	 */
 	useSingleVarDeclarator?: RuleConfiguration;
+	/**
+	 * Template literals are preferred over string concatenation.
+	 */
 	useTemplate?: RuleConfiguration;
 }
 export type RuleConfiguration = RulePlainConfiguration | RuleWithOptions;
@@ -400,14 +631,19 @@ export type Category =
 	| "lint/a11y/useAltText"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
+	| "lint/nursery/noAccessKey"
 	| "lint/nursery/noBannedTypes"
 	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstAssign"
 	| "lint/nursery/noDupeKeys"
+	| "lint/nursery/noEmptyInterface"
 	| "lint/nursery/noExplicitAny"
+	| "lint/nursery/noHeaderScope"
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noPrecisionLoss"
+	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnsafeFinally"
+	| "lint/nursery/noVar"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useConst"
 	| "lint/nursery/useExhaustiveDependencies"
@@ -419,12 +655,19 @@ export type Category =
 	| "internalError/io"
 	| "internalError/fs"
 	| "internalError/panic"
-	| "lint"
 	| "parse"
 	| "parse/noSuperWithoutExtends"
+	| "lint"
+	| "lint/correctness"
+	| "lint/style"
+	| "lint/complexity"
+	| "lint/a11y"
+	| "lint/security"
+	| "lint/nursery"
 	| "suppressions/unknownGroup"
 	| "suppressions/unknownRule"
 	| "suppressions/unused"
+	| "suppressions/deprecatedSyntax"
 	| "args/fileNotFound"
 	| "flags/invalid"
 	| "semanticTests";
@@ -534,8 +777,7 @@ export interface PullActionsResult {
 }
 export interface CodeAction {
 	category: ActionCategory;
-	group_name: string;
-	rule_name: string;
+	rule_name?: [string, string];
 	suggestion: CodeSuggestion;
 }
 /**
@@ -549,7 +791,7 @@ export type ActionCategory =
 	| { Source: SourceActionKind }
 	| { Other: string };
 /**
- * A Suggestion that is provided by rslint, and can be reported to the user, and can be automatically applied if it has the right [`Applicability`].
+ * A Suggestion that is provided by Rome's linter, and can be reported to the user, and can be automatically applied if it has the right [`Applicability`].
  */
 export interface CodeSuggestion {
 	applicability: Applicability;
@@ -642,15 +884,14 @@ export interface FixFileResult {
 	skipped_suggested_fixes: number;
 }
 export interface FixAction {
-	group_name: string;
 	/**
 	 * Source range at which this action was applied
 	 */
 	range: TextRange;
 	/**
-	 * Name of the rule that emitted this code action
+	 * Name of the rule group and rule that emitted this code action
 	 */
-	rule_name: string;
+	rule_name?: [string, string];
 }
 export interface RenameParams {
 	new_name: string;

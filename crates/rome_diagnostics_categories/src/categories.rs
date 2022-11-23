@@ -75,14 +75,19 @@ define_dategories! {
 
 
     // nursery
+    "lint/nursery/noAccessKey": "https://docs.rome.tools/lint/rules/noAccessKey",
     "lint/nursery/noBannedTypes":"https://docs.rome.tools/lint/rules/noBannedTypes",
     "lint/nursery/noConditionalAssignment": "https://docs.rome.tools/lint/rules/noConditionalAssignment",
     "lint/nursery/noConstAssign": "https://docs.rome.tools/lint/rules/noConstAssign",
     "lint/nursery/noDupeKeys":"https://docs.rome.tools/lint/rules/noDupeKeys",
+    "lint/nursery/noEmptyInterface": "https://docs.rome.tools/lint/rules/noEmptyInterface",
     "lint/nursery/noExplicitAny": "https://docs.rome.tools/lint/rules/noExplicitAny",
+    "lint/nursery/noHeaderScope": "https://docs.rome.tools/lint/rules/noHeaderScope",
     "lint/nursery/noInvalidConstructorSuper": "https://docs.rome.tools/lint/rules/noInvalidConstructorSuper",
     "lint/nursery/noPrecisionLoss": "https://docs.rome.tools/lint/rules/noPrecisionLoss",
+    "lint/nursery/noStringCaseMismatch": "https://docs.rome.tools/lint/rules/noStringCaseMismatch",
     "lint/nursery/noUnsafeFinally": "https://docs.rome.tools/lint/rules/noUnsafeFinally",
+    "lint/nursery/noVar": "https://docs.rome.tools/lint/rules/noVar",
     "lint/nursery/useCamelCase": "https://docs.rome.tools/lint/rules/useCamelCase",
     "lint/nursery/useConst":"https://docs.rome.tools/lint/rules/useConst",
     "lint/nursery/useExhaustiveDependencies": "https://docs.rome.tools/lint/rules/useExhaustiveDependencies",
@@ -98,14 +103,26 @@ define_dategories! {
     "internalError/io",
     "internalError/fs",
     "internalError/panic",
-    "lint",
+
     // parse categories
     "parse",
     "parse/noSuperWithoutExtends",
 
+    // Lint groups
+    "lint",
+    "lint/correctness",
+    "lint/style",
+    "lint/complexity",
+    "lint/a11y",
+    "lint/security",
+    "lint/nursery",
+
+    // Suppression comments
     "suppressions/unknownGroup",
     "suppressions/unknownRule",
     "suppressions/unused",
+    "suppressions/deprecatedSyntax",
+
     // Used in tests and examples
     "args/fileNotFound",
     "flags/invalid",

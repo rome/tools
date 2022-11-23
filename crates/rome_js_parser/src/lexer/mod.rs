@@ -39,7 +39,7 @@ use self::bytes::{
     Dispatch::{self, *},
 };
 use crate::ParseDiagnostic;
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_js_syntax::JsSyntaxKind::*;
 
 use self::errors::invalid_digits_after_unicode_escape_sequence;

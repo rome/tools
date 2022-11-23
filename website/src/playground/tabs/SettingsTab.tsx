@@ -385,7 +385,7 @@ function FilenameInput({
 	return (
 		<input
 			type="text"
-			// rome-ignore lint(a11y/noAutofocus): Not sure how else to do this
+			// rome-ignore lint/a11y/noAutofocus: Not sure how else to do this
 			autoFocus={true}
 			onKeyDown={onKeyDown}
 			onChange={onChange}

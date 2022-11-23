@@ -2,7 +2,7 @@ use std::borrow::Cow;
 
 use bitflags::bitflags;
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(
     feature = "serde",
     derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
@@ -19,6 +19,9 @@ pub enum RuleCategory {
     /// signals
     Action,
 }
+
+/// Actions that suppress rules should start with this string
+pub const SUPPRESSION_ACTION_CATEGORY: &str = "quickfix.suppressRule";
 
 /// The category of a code action, this type maps directly to the
 /// [CodeActionKind] type in the Language Server Protocol specification

@@ -1,6 +1,6 @@
-use std::borrow::Cow;
-use std::collections::HashMap;
-
+use crate::line_index::LineIndex;
+use crate::session::Session;
+use crate::utils;
 use anyhow::{Context, Result};
 use rome_analyze::{ActionCategory, SourceActionKind};
 use rome_fs::RomePath;
@@ -8,13 +8,12 @@ use rome_service::workspace::{
     FeatureName, FixFileMode, FixFileParams, PullActionsParams, SupportsFeatureParams,
 };
 use rome_service::RomeError;
+use std::borrow::Cow;
+use std::collections::HashMap;
 use tower_lsp::lsp_types::{
     self as lsp, CodeActionKind, CodeActionOrCommand, CodeActionParams, CodeActionResponse,
 };
-
-use crate::line_index::LineIndex;
-use crate::session::Session;
-use crate::utils;
+use tracing::debug;
 
 const FIX_ALL_CATEGORY: ActionCategory = ActionCategory::Source(SourceActionKind::FixAll);
 
@@ -24,11 +23,10 @@ fn fix_all_kind() -> CodeActionKind {
         Cow::Owned(kind) => CodeActionKind::from(kind),
     }
 }
-
 /// Queries the [`AnalysisServer`] for code actions of the file matching [FileId]
 ///
 /// If the AnalysisServer has no matching file, results in error.
-#[tracing::instrument(level = "trace", skip(session), err)]
+#[tracing::instrument(level = "debug", skip_all, fields(uri = display(&params.text_document.uri), range = debug(params.range), only = debug(&params.context.only), diagnostics = debug(&params.context.diagnostics)), err)]
 pub(crate) fn code_actions(
     session: &Session,
     params: CodeActionParams,
@@ -117,11 +115,13 @@ pub(crate) fn code_actions(
         });
     }
 
+    debug!("Suggested actions: \n{:?}", &actions);
+
     Ok(Some(actions))
 }
 
 /// Generate a "fix all" code action for the given document
-#[tracing::instrument(level = "trace", skip(session), err)]
+#[tracing::instrument(level = "debug", skip(session), err)]
 fn fix_all(
     session: &Session,
     url: &lsp::Url,
@@ -151,9 +151,10 @@ fn fix_all(
 
             let diag_range = utils::text_range(line_index, d.range).ok()?;
             let has_matching_rule = fixed.actions.iter().any(|action| {
-                let Some(code) = code.strip_prefix(action.group_name.as_ref()) else { return false };
+                let Some((group_name, rule_name)) = &action.rule_name else { return false };
+                let Some(code) = code.strip_prefix(group_name.as_ref()) else { return false };
                 let Some(code) = code.strip_prefix('/') else { return false };
-                code == action.rule_name && action.range.intersect(diag_range).is_some()
+                code == rule_name && action.range.intersect(diag_range).is_some()
             });
 
             if has_matching_rule {

@@ -895,7 +895,7 @@ impl FusedIterator for BinaryLikePreorder {}
 mod tests {
     use crate::utils::binary_like_expression::{BinaryLikePreorder, VisitEvent};
     use crate::utils::JsAnyBinaryLikeExpression;
-    use rome_diagnostics::file::FileId;
+    use rome_diagnostics::location::FileId;
     use rome_js_parser::parse_module;
     use rome_js_syntax::JsLogicalExpression;
     use rome_rowan::AstNode;

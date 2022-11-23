@@ -1,7 +1,7 @@
 use crate::traversal::traverse;
 use crate::{CliSession, Termination};
 use rome_console::{markup, ConsoleExt};
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
 use rome_fs::RomePath;
 use rome_service::workspace::{

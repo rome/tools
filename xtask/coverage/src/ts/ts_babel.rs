@@ -3,7 +3,7 @@ use crate::{
     check_file_encoding,
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
 };
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_js_syntax::{LanguageVariant, SourceType};
 use rome_rowan::SyntaxKind;
 use std::path::Path;

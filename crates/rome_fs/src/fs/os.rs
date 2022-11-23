@@ -6,7 +6,7 @@ use crate::{
     FileSystem, RomePath,
 };
 use rayon::{scope, Scope};
-use rome_diagnostics::v2::{adapters::IoError, DiagnosticExt, Error, FileId};
+use rome_diagnostics::{adapters::IoError, DiagnosticExt, Error, FileId};
 use std::fs::DirEntry;
 use std::{
     ffi::OsStr,

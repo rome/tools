@@ -1495,6 +1495,7 @@ dependencies = [
  "schemars",
  "serde",
  "serde_json",
+ "tracing",
 ]
 
 [[package]]
@@ -1693,6 +1694,7 @@ dependencies = [
  "quickcheck_macros",
  "rome_console",
  "rome_diagnostics",
+ "rome_diagnostics_categories",
  "rome_formatter",
  "rome_fs",
  "rome_js_factory",
@@ -1750,6 +1752,7 @@ dependencies = [
 name = "rome_js_syntax"
 version = "0.0.0"
 dependencies = [
+ "rome_diagnostics_categories",
  "rome_js_factory",
  "rome_rowan",
  "schemars",
@@ -1821,6 +1824,7 @@ dependencies = [
  "schemars",
  "serde",
  "serde_json",
+ "tracing",
 ]
 
 [[package]]
@@ -2918,6 +2922,7 @@ dependencies = [
  "git2",
  "pico-args",
  "proc-macro2",
+ "pulldown-cmark",
  "quote",
  "rome_analyze",
  "rome_js_analyze",

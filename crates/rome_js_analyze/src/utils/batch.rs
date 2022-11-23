@@ -1,8 +1,9 @@
+use rome_js_factory::make::jsx_child_list;
 use rome_js_syntax::{
     JsAnyConstructorParameter, JsAnyFormalParameter, JsAnyObjectMember, JsAnyParameter,
     JsConstructorParameterList, JsFormalParameter, JsLanguage, JsObjectMemberList, JsParameterList,
     JsSyntaxKind, JsSyntaxNode, JsVariableDeclaration, JsVariableDeclarator,
-    JsVariableDeclaratorList, JsVariableStatement,
+    JsVariableDeclaratorList, JsVariableStatement, JsxAnyChild, JsxChildList,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutation};
 
@@ -19,6 +20,20 @@ pub trait JsBatchMutation {
     /// Removes the object member, and:
     /// 1 - removes commas around the member to keep the list valid.
     fn remove_js_object_member(&mut self, parameter: &JsAnyObjectMember) -> bool;
+
+    /// It attempts to add a new element after the given element
+    fn add_jsx_element_after_element(
+        &mut self,
+        after_element: &JsxAnyChild,
+        new_element: &JsxAnyChild,
+    ) -> bool;
+
+    /// It attempts to add a new element before the given element
+    fn add_jsx_element_before_element(
+        &mut self,
+        after_element: &JsxAnyChild,
+        new_element: &JsxAnyChild,
+    ) -> bool;
 }
 
 fn remove_js_formal_parameter_from_js_parameter_list(
@@ -192,6 +207,58 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
                 Some(true)
             })
             .unwrap_or(false)
+    }
+
+    fn add_jsx_element_after_element(
+        &mut self,
+        after_element: &JsxAnyChild,
+        new_element: &JsxAnyChild,
+    ) -> bool {
+        let old_list = after_element.parent::<JsxChildList>();
+        if let Some(old_list) = &old_list {
+            let jsx_child_list = {
+                let mut new_items = vec![];
+                for element in old_list {
+                    new_items.push(element.clone());
+                    if element == *after_element {
+                        new_items.push(new_element.clone());
+                    }
+                }
+
+                jsx_child_list(new_items)
+            };
+
+            self.replace_node(old_list.clone(), jsx_child_list);
+            true
+        } else {
+            false
+        }
+    }
+
+    fn add_jsx_element_before_element(
+        &mut self,
+        after_element: &JsxAnyChild,
+        new_element: &JsxAnyChild,
+    ) -> bool {
+        let old_list = after_element.syntax().parent().and_then(JsxChildList::cast);
+        if let Some(old_list) = &old_list {
+            let jsx_child_list = {
+                let mut new_items = vec![];
+                for element in old_list {
+                    if element == *after_element {
+                        new_items.push(new_element.clone());
+                    }
+                    new_items.push(element.clone());
+                }
+
+                jsx_child_list(new_items)
+            };
+
+            self.replace_node(old_list.clone(), jsx_child_list);
+            true
+        } else {
+            false
+        }
     }
 }
 

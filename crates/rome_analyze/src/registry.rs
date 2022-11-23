@@ -1,9 +1,3 @@
-use std::{borrow, collections::BTreeSet};
-
-use rome_diagnostics::v2::Error;
-use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
-use rustc_hash::FxHashSet;
-
 use crate::{
     context::RuleContext,
     matcher::{GroupKey, MatchQueryParams},
@@ -12,6 +6,10 @@ use crate::{
     AnalysisFilter, GroupCategory, QueryMatcher, Rule, RuleGroup, RuleKey, RuleMetadata,
     SignalEntry,
 };
+use rome_diagnostics::Error;
+use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
+use rustc_hash::FxHashSet;
+use std::{borrow, collections::BTreeSet};
 
 /// Defines all the phases that the [RuleRegistry] supports.
 #[repr(usize)]
@@ -365,6 +363,7 @@ impl<L: Language + Default> RegistryRule<L> {
                     result,
                     params.services,
                     params.options.clone(),
+                    params.apply_suppression_comment,
                 ));
 
                 params.signal_queue.push(SignalEntry {

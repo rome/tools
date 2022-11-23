@@ -2,7 +2,7 @@ use crate::options::OptionsDeserializationDiagnostic;
 use crate::{
     registry::RuleRoot, AnalyzerOptions, FromServices, Queryable, Rule, RuleKey, ServiceBag,
 };
-use rome_diagnostics::v2::{Error, Result};
+use rome_diagnostics::{Error, Result};
 use std::ops::Deref;
 
 type RuleQueryResult<R> = <<R as Rule>::Query as Queryable>::Output;

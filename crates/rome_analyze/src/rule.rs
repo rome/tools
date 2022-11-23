@@ -1,18 +1,21 @@
 use crate::categories::{ActionCategory, RuleCategory};
 use crate::context::RuleContext;
 use crate::registry::{RegistryVisitor, RuleLanguage, RuleSuppressions};
-use crate::{AnalyzerDiagnostic, Phase, Phases, Queryable};
+use crate::{
+    AnalyzerDiagnostic, Phase, Phases, Queryable, SuppressionCommentEmitter,
+    SuppressionCommentEmitterPayload,
+};
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
-use rome_diagnostics::file::FileId;
-use rome_diagnostics::v2::advice::CodeSuggestionAdvice;
-use rome_diagnostics::v2::location::AsSpan;
-use rome_diagnostics::v2::{
+use rome_diagnostics::advice::CodeSuggestionAdvice;
+use rome_diagnostics::location::AsSpan;
+use rome_diagnostics::location::FileId;
+use rome_diagnostics::Applicability;
+use rome_diagnostics::{
     Advices, Category, Diagnostic, DiagnosticTags, Location, LogCategory, MessageAndDescription,
     Visit,
 };
-use rome_diagnostics::Applicability;
-use rome_rowan::{BatchMutation, Language, TextRange};
+use rome_rowan::{AstNode, BatchMutation, BatchMutationExt, Language, TextRange};
 use serde::de::DeserializeOwned;
 
 /// Static metadata containing information about a rule
@@ -234,7 +237,7 @@ impl_group_language!(
 /// Trait implemented by all analysis rules: declares interest to a certain AstNode type,
 /// and a callback function to be executed on all nodes matching the query to possibly
 /// raise an analysis event
-pub trait Rule: RuleMeta {
+pub trait Rule: RuleMeta + Sized {
     /// The type of AstNode this rule is interested in
     type Query: Queryable;
     /// A generic type that will be kept in memory between a call to `run` and
@@ -327,6 +330,39 @@ pub trait Rule: RuleMeta {
     ) -> Option<RuleAction<RuleLanguage<Self>>> {
         let (..) = (ctx, state);
         None
+    }
+
+    /// Create a code action that allows to suppress the rule. The function
+    /// returns the node to which the suppression comment is applied.
+    fn suppress(
+        ctx: &RuleContext<Self>,
+        text_range: &TextRange,
+        apply_suppression_comment: SuppressionCommentEmitter<RuleLanguage<Self>>,
+    ) -> Option<SuppressAction<RuleLanguage<Self>>> {
+        // if the rule belongs to `Lint`, we auto generate an action to suppress the rule
+        if <Self::Group as RuleGroup>::Category::CATEGORY == RuleCategory::Lint {
+            let rule_category = format!(
+                "lint/{}/{}",
+                <Self::Group as RuleGroup>::NAME,
+                Self::METADATA.name
+            );
+            let suppression_text = format!("rome-ignore {}", rule_category);
+            let mut mutation = ctx.root().begin();
+            let token = ctx.root().syntax().token_at_offset(text_range.start());
+            apply_suppression_comment(SuppressionCommentEmitterPayload {
+                suppression_text: suppression_text.as_str(),
+                mutation: &mut mutation,
+                token_offset: token,
+                diagnostic_text_range: text_range,
+            });
+
+            Some(SuppressAction {
+                mutation,
+                message: markup! { "Suppress rule " {rule_category} }.to_owned(),
+            })
+        } else {
+            None
+        }
     }
 }
 
@@ -479,6 +515,13 @@ impl RuleDiagnostic {
 pub struct RuleAction<L: Language> {
     pub category: ActionCategory,
     pub applicability: Applicability,
+    pub message: MarkupBuf,
+    pub mutation: BatchMutation<L>,
+}
+
+/// An action meant to suppress a lint rule
+#[derive(Clone)]
+pub struct SuppressAction<L: Language> {
     pub message: MarkupBuf,
     pub mutation: BatchMutation<L>,
 }
