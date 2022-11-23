@@ -125,7 +125,7 @@ fn run_and_expect_errors(path: &str, _: &str, _: &str, _: &str) {
             .with_file_source_code(text.to_string());
         Formatter::new(&mut Termcolor(&mut write))
             .write_markup(markup! {
-                {PrintDiagnostic(&error)}
+                {PrintDiagnostic::verbose(&error)}
             })
             .expect("failed to emit diagnostic");
         write!(
@@ -378,7 +378,7 @@ fn diagnostics_print_correctly() {
 
         Formatter::new(&mut Termcolor(&mut write))
             .write_markup(markup! {
-                {PrintDiagnostic(&error)}
+                {PrintDiagnostic::verbose(&error)}
             })
             .expect("failed to emit diagnostic");
 

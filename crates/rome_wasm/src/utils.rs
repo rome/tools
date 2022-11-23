@@ -43,7 +43,19 @@ impl DiagnosticPrinter {
         }
     }
 
-    pub fn print(&mut self, diagnostic: IDiagnostic) -> Result<(), Error> {
+    pub fn print_simple(&mut self, diagnostic: IDiagnostic) -> Result<(), Error> {
+        self.print(diagnostic, |err| PrintDiagnostic::simple(err))
+    }
+
+    pub fn print_verbose(&mut self, diagnostic: IDiagnostic) -> Result<(), Error> {
+        self.print(diagnostic, |err| PrintDiagnostic::verbose(err))
+    }
+
+    fn print(
+        &mut self,
+        diagnostic: IDiagnostic,
+        printer: fn(&rome_diagnostics::Error) -> PrintDiagnostic<rome_diagnostics::Error>,
+    ) -> Result<(), Error> {
         let diag: Diagnostic = diagnostic.into_serde().map_err(into_error)?;
         let err = diag
             .with_file_path(&self.file_name)
@@ -51,7 +63,7 @@ impl DiagnosticPrinter {
 
         let mut html = HTML(&mut self.buffer);
         Formatter::new(&mut html)
-            .write_markup(markup!({ PrintDiagnostic(&err) }))
+            .write_markup(markup!({ printer(&err) }))
             .map_err(into_error)?;
 
         Ok(())

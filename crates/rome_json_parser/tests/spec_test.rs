@@ -57,7 +57,7 @@ pub fn run(test_case: &str, _snapshot_name: &str, test_directory: &str, outcome:
 
             formatter
                 .write_markup(markup! {
-                    {PrintDiagnostic(&error)}
+                    {PrintDiagnostic::verbose(&error)}
                 })
                 .expect("failed to emit diagnostic");
         }

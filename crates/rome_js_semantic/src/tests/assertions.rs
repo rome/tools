@@ -114,7 +114,7 @@ pub fn assert(code: &str, test_name: &str) {
                 .with_file_path(FileId::zero())
                 .with_file_source_code(code);
             console.log(markup! {
-                {PrintDiagnostic(&error)}
+                {PrintDiagnostic::verbose(&error)}
             });
         }
         panic!("Compilation error");
@@ -752,7 +752,7 @@ fn error_assertion_not_attached_to_a_declaration(
 
     let mut console = EnvConsole::default();
     console.log(markup! {
-        {PrintDiagnostic(&error)}
+        {PrintDiagnostic::verbose(&error)}
     });
     panic!("This assertion must be attached to a SemanticEvent::DeclarationFound.");
 }
@@ -773,7 +773,7 @@ fn error_declaration_pointing_to_unknown_scope(
 
     let mut console = EnvConsole::default();
     console.log(markup! {
-        {PrintDiagnostic(&error)}
+        {PrintDiagnostic::verbose(&error)}
     });
 }
 
@@ -798,7 +798,7 @@ fn error_assertion_name_clash(
 
     let mut console = EnvConsole::default();
     console.log(markup! {
-        {PrintDiagnostic(&error)}
+        {PrintDiagnostic::verbose(&error)}
     });
 
     panic!("Assertion label conflict");
@@ -821,7 +821,7 @@ fn error_scope_end_assertion_points_to_non_existing_scope_start_assertion(
 
     let mut console = EnvConsole::default();
     console.log(markup! {
-        {PrintDiagnostic(&error)}
+        {PrintDiagnostic::verbose(&error)}
     });
     panic!("Scope start assertion not found.");
 }
@@ -848,7 +848,7 @@ fn error_scope_end_assertion_points_to_the_wrong_scope_start(
 
     let mut console = EnvConsole::default();
     console.log(markup! {
-        {PrintDiagnostic(&error)}
+        {PrintDiagnostic::verbose(&error)}
     });
     panic!("Wrong scope start");
 }

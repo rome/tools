@@ -106,7 +106,7 @@ impl Display for ParseMeasurement {
                 .with_file_source_code(self.code.clone());
             rome_diagnostics::console::fmt::Formatter::new(&mut Termcolor(&mut buffer))
                 .write_markup(markup! {
-                    {PrintDiagnostic(&error)}
+                    {PrintDiagnostic::verbose(&error)}
                 })
                 .unwrap();
         }
