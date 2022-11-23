@@ -141,7 +141,7 @@ impl SemanticModel {
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
     /// use rome_js_semantic::{semantic_model, SemanticModelOptions, SemanticScopeExtensions};
-    /// use rome_diagnostics::file::FileId;
+    /// use rome_diagnostics::FileId;
     ///
     /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", FileId::zero(), SourceType::js_module());
     /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
@@ -191,7 +191,7 @@ impl SemanticModel {
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
     /// use rome_js_semantic::{semantic_model, BindingExtensions, SemanticModelOptions};
-    /// use rome_diagnostics::file::FileId;
+    /// use rome_diagnostics::FileId;
     ///
     /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", FileId::zero(), SourceType::js_module());
     /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
