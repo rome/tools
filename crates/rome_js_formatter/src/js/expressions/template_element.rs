@@ -106,6 +106,7 @@ impl Format<JsFormatContext> for FormatTemplateElement {
                                 | JsConditionalExpression(_)
                                 | JsSequenceExpression(_)
                                 | TsAsExpression(_)
+                                | TsSatisfiesExpression(_)
                                 | JsBinaryExpression(_)
                                 | JsLogicalExpression(_)
                                 | JsInstanceofExpression(_)

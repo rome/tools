@@ -34,36 +34,24 @@ const bar5 = [1,2,3].reduce((carry, value) => {
 ```diff
 --- Prettier
 +++ Rome
-@@ -2,23 +2,17 @@
-   return [...carry, value];
- }, [] satisfies unknown satisfies number[]);
- 
--const bar2 = [1, 2, 3].reduce(
--  (carry, value) => {
--    return [...carry, value];
--  },
+@@ -6,7 +6,7 @@
+   (carry, value) => {
+     return [...carry, value];
+   },
 -  [1, 2, 3] satisfies unknown satisfies number[]
--);
-+const bar2 = [1, 2, 3].reduce((carry, value) => {
-+  return [...carry, value];
-+}, [1, 2, 3] satisfies unknown satisfies number[]);
++  [1, 2, 3] satisfies unknown satisfies number[],
+ );
  
  const bar3 = [1, 2, 3].reduce((carry, value) => {
-   return { ...carry, [value]: true };
- }, {} satisfies unknown satisfies { [key: number]: boolean });
- 
--const bar4 = [1, 2, 3].reduce(
--  (carry, value) => {
--    return { ...carry, [value]: true };
--  },
+@@ -17,7 +17,7 @@
+   (carry, value) => {
+     return { ...carry, [value]: true };
+   },
 -  { 1: true } satisfies unknown satisfies { [key: number]: boolean }
--);
-+const bar4 = [1, 2, 3].reduce((carry, value) => {
-+  return { ...carry, [value]: true };
-+}, { 1: true } satisfies unknown satisfies { [key: number]: boolean });
++  { 1: true } satisfies unknown satisfies { [key: number]: boolean },
+ );
  
  const bar5 = [1, 2, 3].reduce((carry, value) => {
-   return [...carry, value];
 ```
 
 # Output
@@ -73,17 +61,23 @@ const bar1 = [1, 2, 3].reduce((carry, value) => {
   return [...carry, value];
 }, [] satisfies unknown satisfies number[]);
 
-const bar2 = [1, 2, 3].reduce((carry, value) => {
-  return [...carry, value];
-}, [1, 2, 3] satisfies unknown satisfies number[]);
+const bar2 = [1, 2, 3].reduce(
+  (carry, value) => {
+    return [...carry, value];
+  },
+  [1, 2, 3] satisfies unknown satisfies number[],
+);
 
 const bar3 = [1, 2, 3].reduce((carry, value) => {
   return { ...carry, [value]: true };
 }, {} satisfies unknown satisfies { [key: number]: boolean });
 
-const bar4 = [1, 2, 3].reduce((carry, value) => {
-  return { ...carry, [value]: true };
-}, { 1: true } satisfies unknown satisfies { [key: number]: boolean });
+const bar4 = [1, 2, 3].reduce(
+  (carry, value) => {
+    return { ...carry, [value]: true };
+  },
+  { 1: true } satisfies unknown satisfies { [key: number]: boolean },
+);
 
 const bar5 = [1, 2, 3].reduce((carry, value) => {
   return [...carry, value];

@@ -414,6 +414,7 @@ pub(crate) fn is_first_in_statement(node: JsSyntaxNode, mode: FirstInStatementMo
             | JsSyntaxKind::JS_CALL_EXPRESSION
             | JsSyntaxKind::JS_NEW_EXPRESSION
             | JsSyntaxKind::TS_AS_EXPRESSION
+            | JsSyntaxKind::TS_SATISFIES_EXPRESSION
             | JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION => parent,
             JsSyntaxKind::JS_SEQUENCE_EXPRESSION => {
                 let sequence = JsSequenceExpression::unwrap_cast(parent);
