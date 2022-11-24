@@ -116,7 +116,7 @@ impl<T: AstNode<Language = JsLanguage>> Parse<T> {
     }
 }
 
-pub fn parse_common(
+fn parse_common(
     text: &str,
     file_id: FileId,
     source_type: SourceType,

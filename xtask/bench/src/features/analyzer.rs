@@ -1,9 +1,6 @@
+use crate::language::Analyze;
+use crate::test_case::TestCase;
 use crate::BenchmarkSummary;
-use criterion::black_box;
-use rome_analyze::{AnalysisFilter, AnalyzerOptions, ControlFlow, Never, RuleCategories};
-use rome_diagnostics::location::FileId;
-use rome_js_analyze::analyze;
-use rome_js_syntax::JsAnyRoot;
 use std::fmt::{Display, Formatter};
 use std::time::Duration;
 
@@ -12,28 +9,15 @@ pub struct AnalyzerMeasurement {
     id: String,
     analysis: Duration,
 }
-pub fn benchmark_analyze_lib(id: &str, root: &JsAnyRoot) -> BenchmarkSummary {
+pub fn benchmark_analyze_lib(case: &TestCase, analyze: &Analyze) -> BenchmarkSummary {
     let analyzer_timer = timing::start();
-    run_analyzer(root);
+    analyze.analyze();
     let analyzer_duration = analyzer_timer.stop();
 
     BenchmarkSummary::Analyzer(AnalyzerMeasurement {
-        id: id.to_string(),
+        id: case.filename().to_string(),
         analysis: analyzer_duration,
     })
-}
-
-pub fn run_analyzer(root: &JsAnyRoot) {
-    let filter = AnalysisFilter {
-        categories: RuleCategories::SYNTAX | RuleCategories::LINT,
-        ..AnalysisFilter::default()
-    };
-    let options = AnalyzerOptions::default();
-    analyze(FileId::zero(), root, filter, &options, |event| {
-        black_box(event.diagnostic());
-        black_box(event.actions());
-        ControlFlow::<Never>::Continue(())
-    });
 }
 
 impl AnalyzerMeasurement {
