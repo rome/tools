@@ -797,6 +797,17 @@
             }
           ]
         },
+        "noConstEnum": {
+          "description": "Disallow TypeScript const enum",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noConstructorReturn": {
           "description": "Disallow returning a value from a constructor",
           "anyOf": [

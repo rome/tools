@@ -364,6 +364,10 @@ export interface Nursery {
 	 */
 	noConstAssign?: RuleConfiguration;
 	/**
+	 * Disallow TypeScript const enum
+	 */
+	noConstEnum?: RuleConfiguration;
+	/**
 	 * Disallow returning a value from a constructor
 	 */
 	noConstructorReturn?: RuleConfiguration;
@@ -659,6 +663,7 @@ export type Category =
 	| "lint/nursery/noBannedTypes"
 	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstAssign"
+	| "lint/nursery/noConstEnum"
 	| "lint/nursery/noDistractingElements"
 	| "lint/nursery/noConstructorReturn"
 	| "lint/nursery/noSetterReturn"
