@@ -116,6 +116,11 @@ impl UnresolvedReference {
         let reference = &self.data.unresolved_references[self.id];
         &self.data.node_by_range[&reference.range]
     }
+
+    pub fn range(&self) -> &TextRange {
+        let reference = &self.data.unresolved_references[self.id];
+        &reference.range
+    }
 }
 
 /// Marker trait that groups all "AstNode" that have declarations

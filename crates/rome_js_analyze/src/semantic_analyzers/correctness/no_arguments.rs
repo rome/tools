@@ -1,8 +1,7 @@
-use crate::{semantic_services::Semantic, JsRuleAction};
+use crate::semantic_services::SemanticServices;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::JsReferenceIdentifier;
-use rome_rowan::AstNode;
+use rome_js_syntax::TextRange;
 
 declare_rule! {
     /// Disallow the use of ```arguments```
@@ -33,40 +32,33 @@ declare_rule! {
 }
 
 impl Rule for NoArguments {
-    type Query = Semantic<JsReferenceIdentifier>;
-    type State = ();
-    type Signals = Option<Self::State>;
+    type Query = SemanticServices;
+    type State = TextRange;
+    type Signals = Vec<Self::State>;
     type Options = ();
 
-    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
-        let reference = ctx.query();
-        let value_token = reference.value_token().ok()?;
+    fn run(ctx: &RuleContext<Self>) -> Self::Signals {
+        let model = ctx.query();
 
-        let name = value_token.text_trimmed();
-        if name == "arguments" {
-            let model = ctx.model();
-            let declaration = model.binding(reference);
+        let mut found_arguments = vec![];
 
-            if declaration.is_none() {
-                return Some(());
+        for unresolved_reference in model.all_unresolved_references() {
+            let name = unresolved_reference.syntax().text_trimmed();
+            if name == "arguments" {
+                let range = unresolved_reference.range();
+                found_arguments.push(*range);
             }
         }
 
-        None
+        found_arguments
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query();
-
+    fn diagnostic(_: &RuleContext<Self>, range: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::new(rule_category!(),
-            node.syntax().text_trimmed_range(),
+            range,
             markup! {
                 "Use the "<Emphasis>"rest parameters"</Emphasis>" instead of "<Emphasis>"arguments"</Emphasis>"."
             },
         ).note(markup! {<Emphasis>"arguments"</Emphasis>" does not have "<Emphasis>"Array.prototype"</Emphasis>" methods and can be inconvenient to use."}))
-    }
-
-    fn action(_: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        None
     }
 }
