@@ -1,0 +1,31 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+å
+```
+
+
+## Diagnostics
+
+```
+structure_unicode-identifier.json:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The JSON standard doesn't allow identifiers
+  
+  > 1 │ å
+      │ ^
+  
+```
+
+## Tokens
+
+```
+IDENT: `å` (0..2)
+EOF: `` (2..2)
+```
+

@@ -5,8 +5,8 @@ use std::sync::Arc;
 
 use crate::{PathInterner, RomePath};
 use rome_diagnostics::{
-    file::FileId,
-    v2::{console, Advices, Diagnostic, LogCategory, Visit},
+    location::FileId,
+    {console, Advices, Diagnostic, LogCategory, Visit},
 };
 
 mod memory;
@@ -14,7 +14,7 @@ mod os;
 
 pub use memory::{ErrorEntry, MemoryFileSystem};
 pub use os::OsFileSystem;
-use rome_diagnostics::v2::Error;
+use rome_diagnostics::Error;
 pub const CONFIG_NAME: &str = "rome.json";
 
 pub trait FileSystem: Send + Sync + RefUnwindSafe {

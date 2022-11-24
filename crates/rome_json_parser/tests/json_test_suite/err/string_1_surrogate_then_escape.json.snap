@@ -1,0 +1,37 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+["\uD800\"]
+```
+
+
+## Diagnostics
+
+```
+string_1_surrogate_then_escape.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Missing closing quote
+  
+  > 1 │ ["\uD800\"]
+      │  ^^^^^^^^^^
+  
+  i file ends here
+  
+  > 1 │ ["\uD800\"]
+      │            
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+JSON_STRING_LITERAL: `"\uD800\"]` (1..11)
+EOF: `` (11..11)
+```
+

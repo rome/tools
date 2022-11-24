@@ -2,13 +2,14 @@ use control_flow::make_visitor;
 use rome_analyze::{
     AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal, ControlFlow,
     InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry, Phases, RuleAction,
-    RuleRegistry, ServiceBag, SyntaxVisitor,
+    RuleRegistry, ServiceBag, SuppressionCommentEmitterPayload, SuppressionKind, SyntaxVisitor,
 };
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::{category, FileId};
+use rome_js_factory::make::{jsx_expression_child, token};
 use rome_js_syntax::{
-    suppression::{parse_suppression_comment, SuppressionCategory},
-    JsLanguage,
+    suppression::parse_suppression_comment, JsLanguage, JsSyntaxToken, JsxAnyChild, T,
 };
+use rome_rowan::{AstNode, TokenAtOffset, TriviaPieceKind};
 use serde::{Deserialize, Serialize};
 use std::{borrow::Cow, error::Error};
 
@@ -26,6 +27,7 @@ pub mod utils;
 
 pub use crate::registry::visit_registry;
 use crate::semantic_services::{SemanticModelBuilderVisitor, SemanticModelVisitor};
+use crate::utils::batch::JsBatchMutation;
 
 pub(crate) type JsRuleAction = RuleAction<JsLanguage>;
 
@@ -61,14 +63,19 @@ where
     F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
     B: 'a,
 {
-    fn parse_linter_suppression_comment(text: &str) -> Vec<Option<&str>> {
+    fn parse_linter_suppression_comment(text: &str) -> Vec<SuppressionKind> {
         parse_suppression_comment(text)
             .flat_map(|comment| comment.categories)
             .filter_map(|(key, value)| {
-                if key == SuppressionCategory::Lint {
-                    Some(value)
+                if key == category!("lint") {
+                    if let Some(value) = value {
+                        Some(SuppressionKind::MaybeLegacy(value))
+                    } else {
+                        Some(SuppressionKind::Everything)
+                    }
                 } else {
-                    None
+                    let category = key.name();
+                    category.strip_prefix("lint/").map(SuppressionKind::Rule)
                 }
             })
             .collect()
@@ -81,6 +88,7 @@ where
         metadata(),
         InspectMatcher::new(registry.build(), inspect_matcher),
         parse_linter_suppression_comment,
+        apply_suppression_comment,
         &mut emit_signal,
     );
     analyzer.add_visitor(Phases::Syntax, make_visitor());
@@ -118,13 +126,12 @@ where
 
 #[cfg(test)]
 mod tests {
-
-    use rome_analyze::{AnalyzerOptions, Never, RuleCategories};
+    use rome_analyze::{AnalyzerOptions, Never, RuleCategories, RuleFilter};
     use rome_console::fmt::{Formatter, Termcolor};
     use rome_console::{markup, Markup};
     use rome_diagnostics::termcolor::NoColor;
-    use rome_diagnostics::v2::{Diagnostic, DiagnosticExt, PrintDiagnostic, Severity};
-    use rome_diagnostics::{file::FileId, v2::category};
+    use rome_diagnostics::{category, location::FileId};
+    use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic, Severity};
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};
 
@@ -142,31 +149,43 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"<img src="image.png" aria-label="alt text" />
+        const SOURCE: &str = r#"function f() {
+            return (
+                <div
+                ><img /></div>
+            )
+        };
+        f();
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
+        let _rule_filter = RuleFilter::Rule("correctness", "flipBinExp");
         analyze(
             FileId::zero(),
             &parsed.tree(),
-            AnalysisFilter::default(),
+            AnalysisFilter {
+                // enabled_rules: Some(slice::from_ref(&rule_filter)),
+                ..AnalysisFilter::default()
+            },
             &options,
             |signal| {
+                dbg!("here");
                 if let Some(mut diag) = signal.diagnostic() {
                     diag.set_severity(Severity::Warning);
-                    error_ranges.push(diag.location().unwrap().span.unwrap());
-                    if let Some(action) = signal.action() {
-                        let new_code = action.mutation.commit();
-                        eprintln!("{new_code}");
-                    }
+                    error_ranges.push(diag.location().span.unwrap());
                     let error = diag.with_file_path("ahahah").with_file_source_code(SOURCE);
                     let text = markup_to_string(markup! {
-                        {PrintDiagnostic(&error)}
+                        {PrintDiagnostic::verbose(&error)}
                     });
                     eprintln!("{text}");
+                }
+
+                for action in signal.actions() {
+                    let new_code = action.mutation.commit();
+                    eprintln!("{new_code}");
                 }
 
                 ControlFlow::<Never>::Continue(())
@@ -181,6 +200,25 @@ mod tests {
         const SOURCE: &str = "
             function checkSuppressions1(a, b) {
                 a == b;
+                // rome-ignore lint/correctness:whole group
+                a == b;
+                // rome-ignore lint/correctness/noDoubleEquals: single rule
+                a == b;
+                /* rome-ignore lint/correctness/useWhile: multiple block comments */ /* rome-ignore lint/correctness/noDoubleEquals: multiple block comments */
+                a == b;
+                // rome-ignore lint/correctness/useWhile: multiple line comments
+                // rome-ignore lint/correctness/noDoubleEquals: multiple line comments
+                a == b;
+                a == b;
+            }
+
+            // rome-ignore lint/correctness/noDoubleEquals: do not suppress warning for the whole function
+            function checkSuppressions2(a, b) {
+                a == b;
+            }
+
+            function checkSuppressions3(a, b) {
+                a == b;
                 // rome-ignore lint(correctness): whole group
                 a == b;
                 // rome-ignore lint(correctness/noDoubleEquals): single rule
@@ -194,7 +232,7 @@ mod tests {
             }
 
             // rome-ignore lint(correctness/noDoubleEquals): do not suppress warning for the whole function
-            function checkSuppressions2(a, b) {
+            function checkSuppressions4(a, b) {
                 a == b;
             }
         ";
@@ -202,6 +240,8 @@ mod tests {
         let parsed = parse(SOURCE, FileId::zero(), SourceType::js_module());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
+        let mut warn_ranges: Vec<TextRange> = Vec::new();
+
         let options = AnalyzerOptions::default();
         analyze(
             FileId::zero(),
@@ -211,14 +251,20 @@ mod tests {
             |signal| {
                 if let Some(mut diag) = signal.diagnostic() {
                     diag.set_severity(Severity::Warning);
+
                     let span = diag.get_span();
                     let error = diag
                         .with_file_path(FileId::zero())
                         .with_file_source_code(SOURCE);
-                    let code = error.category().unwrap();
 
+                    let code = error.category().unwrap();
                     if code == category!("lint/correctness/noDoubleEquals") {
                         error_ranges.push(span.unwrap());
+                    }
+
+                    if code == category!("suppressions/deprecatedSyntax") {
+                        assert!(signal.actions().len() > 0);
+                        warn_ranges.push(span.unwrap());
                     }
                 }
 
@@ -230,8 +276,24 @@ mod tests {
             error_ranges.as_slice(),
             &[
                 TextRange::new(TextSize::from(67), TextSize::from(69)),
-                TextRange::new(TextSize::from(658), TextSize::from(660)),
-                TextRange::new(TextSize::from(853), TextSize::from(855)),
+                TextRange::new(TextSize::from(651), TextSize::from(653)),
+                TextRange::new(TextSize::from(845), TextSize::from(847)),
+                TextRange::new(TextSize::from(932), TextSize::from(934)),
+                TextRange::new(TextSize::from(1523), TextSize::from(1525)),
+                TextRange::new(TextSize::from(1718), TextSize::from(1720)),
+            ]
+        );
+
+        assert_eq!(
+            warn_ranges.as_slice(),
+            &[
+                TextRange::new(TextSize::from(954), TextSize::from(999)),
+                TextRange::new(TextSize::from(1040), TextSize::from(1100)),
+                TextRange::new(TextSize::from(1141), TextSize::from(1210)),
+                TextRange::new(TextSize::from(1211), TextSize::from(1286)),
+                TextRange::new(TextSize::from(1327), TextSize::from(1392)),
+                TextRange::new(TextSize::from(1409), TextSize::from(1480)),
+                TextRange::new(TextSize::from(1556), TextSize::from(1651)),
             ]
         );
     }
@@ -239,7 +301,7 @@ mod tests {
     #[test]
     fn suppression_syntax() {
         const SOURCE: &str = "
-            // rome-ignore lint(correctness/noDoubleEquals): single rule
+            // rome-ignore lint/correctness/noDoubleEquals: single rule
             a == b;
         ";
 
@@ -268,16 +330,26 @@ mod tests {
 #[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum RuleError {
     /// The rule with the specified name replaced the root of the file with a node that is not a valid root for that language.
-    ReplacedRootWithNonRootError { rule_name: Cow<'static, str> },
+    ReplacedRootWithNonRootError {
+        rule_name: Option<(Cow<'static, str>, Cow<'static, str>)>,
+    },
 }
 
 impl std::fmt::Display for RuleError {
     fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            RuleError::ReplacedRootWithNonRootError { rule_name } => {
+            RuleError::ReplacedRootWithNonRootError {
+                rule_name: Some((group, rule)),
+            } => {
                 std::write!(
                     fmt,
-                    "the rule '{rule_name}' replaced the root of the file with a non-root node."
+                    "the rule '{group}/{rule}' replaced the root of the file with a non-root node."
+                )
+            }
+            RuleError::ReplacedRootWithNonRootError { rule_name: None } => {
+                std::write!(
+                    fmt,
+                    "a code action replaced the root of the file with a non-root node."
                 )
             }
         }
@@ -285,3 +357,81 @@ impl std::fmt::Display for RuleError {
 }
 
 impl Error for RuleError {}
+
+/// We now try to "guess" the token where to apply the suppression comment.
+/// Considering that the detection of suppression comments in the linter is "line based", we start
+/// querying the node covered by the text range of the diagnostic, until we find the first token that has a newline
+/// among its leading trivia.
+///
+/// If we're not able to find any token, it means that the range is
+/// placed at row 1, so we take the root itself.
+fn apply_suppression_comment(payload: SuppressionCommentEmitterPayload<JsLanguage>) {
+    let SuppressionCommentEmitterPayload {
+        token_offset,
+        mutation,
+        suppression_text,
+        diagnostic_text_range,
+    } = payload;
+    let current_token = match token_offset {
+        TokenAtOffset::None => None,
+        TokenAtOffset::Single(token) => Some(match find_token_with_newline(token.clone()) {
+            None => token,
+            Some(token) => token,
+        }),
+        TokenAtOffset::Between(left_token, right_token) => {
+            let chosen_token = if right_token.text_range().start() == diagnostic_text_range.start()
+            {
+                right_token
+            } else {
+                left_token
+            };
+            Some(chosen_token)
+        }
+    };
+    if let Some(current_token) = current_token {
+        if let Some(element) = current_token.ancestors().find_map(JsxAnyChild::cast) {
+            let jsx_comment = jsx_expression_child(
+                token(T!['{']).with_trailing_trivia([(
+                    TriviaPieceKind::SingleLineComment,
+                    format!("/* {} */", suppression_text).as_str(),
+                )]),
+                token(T!['}']),
+            );
+            mutation.add_jsx_element_before_element(
+                &element,
+                &JsxAnyChild::JsxExpressionChild(jsx_comment.build()),
+            );
+        } else {
+            let new_token = current_token.with_leading_trivia([
+                (TriviaPieceKind::Newline, "\n"),
+                (
+                    TriviaPieceKind::SingleLineComment,
+                    format!("// {} ", suppression_text).as_str(),
+                ),
+                (TriviaPieceKind::Newline, "\n"),
+            ]);
+            mutation.replace_token_transfer_trivia(current_token, new_token);
+        }
+    }
+}
+
+/// It checks if the current token has leading trivia newline. If not, it
+/// it peeks the previous token and recursively call itself
+fn find_token_with_newline(token: JsSyntaxToken) -> Option<JsSyntaxToken> {
+    let mut current_token = token;
+    loop {
+        let trivia = current_token.leading_trivia();
+        if trivia.pieces().any(|trivia| trivia.is_newline())
+            || current_token.text_trimmed().contains('\n')
+        {
+            break;
+        } else if let Some(token) = current_token.prev_token() {
+            current_token = token;
+            continue;
+        } else {
+            return None;
+        }
+    }
+
+    Some(current_token)
+}

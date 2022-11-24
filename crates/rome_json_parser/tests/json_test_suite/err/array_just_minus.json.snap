@@ -1,0 +1,33 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+[-]
+```
+
+
+## Diagnostics
+
+```
+array_just_minus.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Minus must be followed by a digit
+  
+  > 1 │ [-]
+      │  ^
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+ERROR_TOKEN: `-` (1..2)
+R_BRACK: `]` (2..3)
+EOF: `` (3..3)
+```
+

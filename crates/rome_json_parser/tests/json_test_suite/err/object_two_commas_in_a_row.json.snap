@@ -1,0 +1,28 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+{"a":"b",,"c":"d"}
+```
+
+
+## Tokens
+
+```
+L_CURLY: `{` (0..1)
+JSON_STRING_LITERAL: `"a"` (1..4)
+COLON: `:` (4..5)
+JSON_STRING_LITERAL: `"b"` (5..8)
+COMMA: `,` (8..9)
+COMMA: `,` (9..10)
+JSON_STRING_LITERAL: `"c"` (10..13)
+COLON: `:` (13..14)
+JSON_STRING_LITERAL: `"d"` (14..17)
+R_CURLY: `}` (17..18)
+EOF: `` (18..18)
+```
+

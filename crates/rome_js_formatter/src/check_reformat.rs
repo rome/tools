@@ -1,8 +1,8 @@
 use crate::{format_node, JsFormatOptions};
-use rome_diagnostics::v2::console::fmt::{Formatter, Termcolor};
-use rome_diagnostics::v2::console::markup;
-use rome_diagnostics::v2::{DiagnosticExt, PrintDiagnostic};
-use rome_diagnostics::{file::FileId, termcolor};
+use rome_diagnostics::console::fmt::{Formatter, Termcolor};
+use rome_diagnostics::console::markup;
+use rome_diagnostics::{location::FileId, termcolor};
+use rome_diagnostics::{DiagnosticExt, PrintDiagnostic};
 use rome_js_parser::parse;
 use rome_js_syntax::{JsSyntaxNode, SourceType};
 
@@ -38,7 +38,7 @@ pub fn check_reformat(params: CheckReformatParams) {
                 .with_file_source_code(text.to_string());
             Formatter::new(&mut Termcolor(&mut buffer))
                 .write_markup(markup! {
-                    {PrintDiagnostic(&error)}
+                    {PrintDiagnostic::verbose(&error)}
                 })
                 .expect("failed to emit diagnostic");
         }

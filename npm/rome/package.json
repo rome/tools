@@ -18,6 +18,7 @@
     "files": [
         "bin/rome",
         "scripts/postinstall.js",
+        "configuration_schema.json",
         "README.md"
     ],
     "keywords": [

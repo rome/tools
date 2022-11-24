@@ -1,0 +1,33 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+[１]
+```
+
+
+## Diagnostics
+
+```
+number_U+FF11_fullwidth_digit_one.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × unexpected character `１`
+  
+  > 1 │ [１]
+      │  ^^
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+ERROR_TOKEN: `１` (1..4)
+R_BRACK: `]` (4..5)
+EOF: `` (5..5)
+```
+

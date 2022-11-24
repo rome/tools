@@ -1,0 +1,33 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+[0.1.2]
+```
+
+
+## Diagnostics
+
+```
+number_0.1.2.json:1:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Invalid fraction part
+  
+  > 1 │ [0.1.2]
+      │     ^
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+ERROR_TOKEN: `0.1.2` (1..6)
+R_BRACK: `]` (6..7)
+EOF: `` (7..7)
+```
+

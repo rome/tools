@@ -1,0 +1,23 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+["x",,]
+```
+
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+JSON_STRING_LITERAL: `"x"` (1..4)
+COMMA: `,` (4..5)
+COMMA: `,` (5..6)
+R_BRACK: `]` (6..7)
+EOF: `` (7..7)
+```
+

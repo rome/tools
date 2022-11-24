@@ -24,6 +24,8 @@ export { loooooooooooooooooooooooooooooooooooooooooooooooooong, } from "looooooo
 export { 
 // comment 
 loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong"
+
+export { a as b } from "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong"
 ```
 
 
@@ -64,11 +66,14 @@ export {
 	loooooooooooooooooooooooooooooooooooooooooooooooooong,
 } from "loooooooooooooooooooooooooooooooooooooooooooooong";
 
+export { a as b } from "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong";
+
 
 ## Lines exceeding width of 80 characters
 
    13: export { loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong";
    15: export { loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong";
+   22: export { a as b } from "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong";
 ```
 
 

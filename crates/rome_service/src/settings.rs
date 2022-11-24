@@ -3,7 +3,7 @@ use crate::{
     RomeError, Rules,
 };
 use indexmap::IndexSet;
-use rome_diagnostics::v2::Category;
+use rome_diagnostics::Category;
 use rome_formatter::{IndentStyle, LineWidth};
 use rome_fs::RomePath;
 use rome_js_syntax::JsLanguage;
@@ -81,7 +81,7 @@ impl WorkspaceSettings {
     pub fn get_severity_from_rule_code(
         &self,
         code: &Category,
-    ) -> Option<rome_diagnostics::v2::Severity> {
+    ) -> Option<rome_diagnostics::Severity> {
         let rules = self.linter.rules.as_ref();
         if let Some(rules) = rules {
             rules.get_severity_from_code(code)

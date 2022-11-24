@@ -1,7 +1,7 @@
 mod features;
 mod utils;
 
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_js_parser::parse;
 use rome_js_syntax::SourceType;
 use std::collections::HashMap;

@@ -1,0 +1,64 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noAccessKey.jsx
+---
+# Input
+```js
+// invalid
+<input type="submit" accessKey="s" value="Submit" />;
+<button accessKey="n">Next</button>;
+
+// valid
+<input accessKey={undefined} />;
+<input accessKey={null} />;
+<button>Next</button>;
+<Input accessKey="s" />;
+<Button accessKey="n" />;
+<RadioGroup.Radio accessKey="a" />;
+<context.Provider accessKey={key} />;
+
+```
+
+# Diagnostics
+```
+noAccessKey.jsx:2:22 lint/nursery/noAccessKey  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the accessKey attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.
+  
+    1 │ // invalid
+  > 2 │ <input type="submit" accessKey="s" value="Submit" />;
+      │                      ^^^^^^^^^^^^^
+    3 │ <button accessKey="n">Next</button>;
+    4 │ 
+  
+  i Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard actions across applications.
+  
+  i Suggested fix: Remove the accessKey attribute.
+  
+    2 │ <input·type="submit"·accessKey="s"·value="Submit"·/>;
+      │                      --------------                  
+
+```
+
+```
+noAccessKey.jsx:3:9 lint/nursery/noAccessKey  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the accessKey attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.
+  
+    1 │ // invalid
+    2 │ <input type="submit" accessKey="s" value="Submit" />;
+  > 3 │ <button accessKey="n">Next</button>;
+      │         ^^^^^^^^^^^^^
+    4 │ 
+    5 │ // valid
+  
+  i Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard actions across applications.
+  
+  i Suggested fix: Remove the accessKey attribute.
+  
+    3 │ <button·accessKey="n">Next</button>;
+      │         -------------               
+
+```
+
+

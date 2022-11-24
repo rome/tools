@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use super::*;
 use rome_js_syntax::{
     JsArrowFunctionExpression, JsConstructorClassMember, JsFunctionDeclaration,
@@ -7,6 +5,7 @@ use rome_js_syntax::{
     JsMethodClassMember, JsMethodObjectMember, JsSetterClassMember, JsSetterObjectMember,
 };
 use rome_rowan::{AstNode, SyntaxNode, SyntaxNodeCast};
+use std::sync::Arc;
 
 /// Marker trait that groups all "AstNode" that have closure
 pub trait HasClosureAstNode {
@@ -84,7 +83,7 @@ pub struct Capture {
     data: Arc<SemanticModelData>,
     ty: CaptureType,
     node: JsSyntaxNode,
-    declaration_range: TextRange,
+    binding_id: BindingIndex,
 }
 
 impl Capture {
@@ -98,15 +97,12 @@ impl Capture {
         &self.node
     }
 
-    /// Returns the declaration of this capture
-    pub fn declaration(&self) -> Option<Binding> {
-        self.data
-            .node_by_range
-            .get(&self.declaration_range)
-            .map(|node| super::Binding {
-                data: self.data.clone(),
-                node: node.clone(),
-            })
+    /// Returns the binding of this capture
+    pub fn binding(&self) -> Binding {
+        Binding {
+            data: self.data.clone(),
+            index: self.binding_id,
+        }
     }
 
     /// Returns the non trimmed text range of declaration of this capture.
@@ -116,7 +112,8 @@ impl Capture {
     /// self.declaration().text_range()
     /// ```
     pub fn declaration_range(&self) -> &TextRange {
-        &self.declaration_range
+        let binding = self.data.binding(self.binding_id);
+        &binding.range
     }
 }
 
@@ -124,7 +121,7 @@ pub struct AllCapturesIter {
     data: Arc<SemanticModelData>,
     closure_range: TextRange,
     scopes: Vec<usize>,
-    references: Vec<ScopeReference>,
+    references: Vec<SemanticModelScopeReference>,
 }
 
 impl Iterator for AllCapturesIter {
@@ -133,22 +130,22 @@ impl Iterator for AllCapturesIter {
     fn next(&mut self) -> Option<Self::Item> {
         'references: loop {
             while let Some(reference) = self.references.pop() {
-                let declaration_range = self.data.declared_at_by_range[&reference.range];
-                if self.closure_range.intersect(declaration_range).is_none() {
+                let binding = &self.data.bindings[reference.binding_id];
+                if self.closure_range.intersect(binding.range).is_none() {
+                    let reference = &binding.references[reference.reference_id];
                     return Some(Capture {
                         data: self.data.clone(),
-                        node: self.data.node_by_range[&reference.range].clone(),
+                        node: self.data.node_by_range[&reference.range].clone(), // TODO change node to store the range
                         ty: CaptureType::ByReference,
-                        declaration_range,
+                        binding_id: binding.id,
                     });
                 }
             }
 
             'scopes: while let Some(scope_id) = self.scopes.pop() {
                 let scope = &self.data.scopes[scope_id];
-                let node = &self.data.node_by_range[&scope.range];
 
-                if AnyHasClosureNode::from_node(node).is_some() {
+                if scope.is_closure {
                     continue 'scopes;
                 } else {
                     self.references.clear();
@@ -180,8 +177,7 @@ impl Iterator for ChildrenIter {
     fn next(&mut self) -> Option<Self::Item> {
         while let Some(scope_id) = self.scopes.pop() {
             let scope = &self.data.scopes[scope_id];
-            let node = &self.data.node_by_range[&scope.range];
-            if AnyHasClosureNode::from_node(node).is_some() {
+            if scope.is_closure {
                 return Some(Closure {
                     data: self.data.clone(),
                     scope_id,
@@ -210,9 +206,8 @@ impl Iterator for DescendentsIter {
     fn next(&mut self) -> Option<Self::Item> {
         while let Some(scope_id) = self.scopes.pop() {
             let scope = &self.data.scopes[scope_id];
-            let node = &self.data.node_by_range[&scope.range];
             self.scopes.extend(scope.children.iter());
-            if AnyHasClosureNode::from_node(node).is_some() {
+            if scope.is_closure {
                 return Some(Closure {
                     data: self.data.clone(),
                     scope_id,
@@ -350,10 +345,21 @@ impl Closure {
     }
 }
 
+pub trait ClosureExtensions {
+    fn closure(&self, model: &SemanticModel) -> Closure
+    where
+        Self: HasClosureAstNode + Sized,
+    {
+        model.closure(self)
+    }
+}
+
+impl<T: HasClosureAstNode> ClosureExtensions for T {}
+
 #[cfg(test)]
 mod test {
     use super::*;
-    use rome_diagnostics::file::FileId;
+    use rome_diagnostics::location::FileId;
     use rome_js_syntax::{JsArrowFunctionExpression, JsSyntaxKind, SourceType};
     use rome_rowan::SyntaxNodeCast;
 

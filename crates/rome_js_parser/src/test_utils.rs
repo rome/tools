@@ -1,6 +1,6 @@
 use rome_console::fmt::{Formatter, Termcolor};
-use rome_diagnostics::v2::DiagnosticExt;
-use rome_diagnostics::{termcolor::Buffer, v2::PrintDiagnostic};
+use rome_diagnostics::DiagnosticExt;
+use rome_diagnostics::{termcolor::Buffer, PrintDiagnostic};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode};
 use rome_rowan::{AstNode, SyntaxKind, SyntaxSlot};
 use std::{fmt::Debug, path::Path};
@@ -51,7 +51,7 @@ where
             .with_file_source_code(syntax.to_string());
         Formatter::new(&mut Termcolor(&mut buffer))
             .write_markup(markup! {
-                {PrintDiagnostic(&error)}
+                {PrintDiagnostic::verbose(&error)}
             })
             .unwrap();
     }

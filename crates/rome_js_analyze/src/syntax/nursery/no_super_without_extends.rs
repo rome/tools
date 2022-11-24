@@ -1,7 +1,7 @@
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_diagnostics::v2::category;
+use rome_diagnostics::category;
 use rome_js_syntax::{JsClassDeclaration, JsSuperExpression};
 use rome_rowan::AstNode;
 

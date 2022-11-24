@@ -5,7 +5,7 @@ use atty::Stream;
 use colored::Colorize;
 use indicatif::ProgressBar;
 use rome_diagnostics::termcolor::Buffer;
-use rome_diagnostics::v2::{DiagnosticExt, Error};
+use rome_diagnostics::{DiagnosticExt, Error};
 use serde_json::Value;
 use std::collections::HashMap;
 use std::io::Write;

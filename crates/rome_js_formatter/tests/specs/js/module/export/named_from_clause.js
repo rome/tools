@@ -16,3 +16,5 @@ export { loooooooooooooooooooooooooooooooooooooooooooooooooong, } from "looooooo
 export { 
 // comment 
 loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong"
+
+export { a as b } from "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong"

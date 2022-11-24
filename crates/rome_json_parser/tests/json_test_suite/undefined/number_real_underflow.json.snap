@@ -1,0 +1,21 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+[123e-10000000]
+```
+
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+JSON_NUMBER_LITERAL: `123e-10000000` (1..14)
+R_BRACK: `]` (14..15)
+EOF: `` (15..15)
+```
+

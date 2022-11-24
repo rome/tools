@@ -2,12 +2,12 @@
 use crate::features::print_diff;
 use crate::BenchmarkSummary;
 use itertools::Itertools;
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::console::fmt::Termcolor;
+use rome_diagnostics::console::markup;
+use rome_diagnostics::location::FileId;
 use rome_diagnostics::termcolor::Buffer;
-use rome_diagnostics::v2::console::fmt::Termcolor;
-use rome_diagnostics::v2::console::markup;
-use rome_diagnostics::v2::DiagnosticExt;
-use rome_diagnostics::v2::PrintDiagnostic;
+use rome_diagnostics::DiagnosticExt;
+use rome_diagnostics::PrintDiagnostic;
 use rome_js_parser::{parse_common, Parse, ParseDiagnostic};
 use rome_js_syntax::{JsAnyRoot, SourceType};
 use std::fmt::{Display, Formatter};
@@ -91,7 +91,7 @@ impl Display for ParseMeasurement {
         let diagnostics = &self
             .diagnostics
             .iter()
-            .map(|diagnostic| rome_diagnostics::v2::Error::from(diagnostic.clone()))
+            .map(|diagnostic| rome_diagnostics::Error::from(diagnostic.clone()))
             .group_by(|x| x.severity());
         for (severity, items) in diagnostics {
             let _ = writeln!(f, "\t\t{:?}: {}", severity, items.count());
@@ -104,9 +104,9 @@ impl Display for ParseMeasurement {
                 .clone()
                 .with_file_path(self.id.to_string())
                 .with_file_source_code(self.code.clone());
-            rome_diagnostics::v2::console::fmt::Formatter::new(&mut Termcolor(&mut buffer))
+            rome_diagnostics::console::fmt::Formatter::new(&mut Termcolor(&mut buffer))
                 .write_markup(markup! {
-                    {PrintDiagnostic(&error)}
+                    {PrintDiagnostic::verbose(&error)}
                 })
                 .unwrap();
         }

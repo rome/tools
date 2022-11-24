@@ -8,7 +8,7 @@ use rome_js_syntax::{
     JsCallExpression, JsForVariableDeclaration, JsIdentifierAssignment, JsIdentifierBinding,
     JsLanguage, JsParenthesizedExpression, JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode,
     JsSyntaxToken, JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList,
-    JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
+    JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding, TsTypeParameter,
 };
 use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast, SyntaxNodeOptionExt, SyntaxTokenText};
 
@@ -81,6 +81,7 @@ pub enum SemanticEvent {
         range: TextRange,
         scope_id: usize,
         parent_scope_id: Option<usize>,
+        is_closure: bool,
     },
 
     /// Tracks where a scope ends
@@ -139,7 +140,7 @@ impl SemanticEvent {
 /// use rome_js_parser::*;
 /// use rome_js_syntax::*;
 /// use rome_js_semantic::*;
-/// use rome_diagnostics::file::FileId;
+/// use rome_diagnostics::location::FileId;
 /// let tree = parse("let a = 1", FileId::zero(), SourceType::js_script());
 /// let mut extractor = SemanticEventExtractor::new();
 /// for e in tree.syntax().preorder() {
@@ -245,7 +246,7 @@ impl SemanticEventExtractor {
         use rome_js_syntax::JsSyntaxKind::*;
 
         match node.kind() {
-            JS_IDENTIFIER_BINDING | TS_IDENTIFIER_BINDING => {
+            JS_IDENTIFIER_BINDING | TS_IDENTIFIER_BINDING | TS_TYPE_PARAMETER => {
                 self.enter_identifier_binding(node);
             }
             JS_REFERENCE_IDENTIFIER | JSX_REFERENCE_IDENTIFIER => {
@@ -261,21 +262,30 @@ impl SemanticEventExtractor {
             JS_MODULE | JS_SCRIPT => self.push_scope(
                 node.text_range(),
                 ScopeHoisting::DontHoistDeclarationsToParent,
+                false,
             ),
+
             JS_FUNCTION_DECLARATION
-            | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
             | JS_FUNCTION_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
-            | JS_CLASS_DECLARATION
-            | JS_CLASS_EXPORT_DEFAULT_DECLARATION
-            | JS_CLASS_EXPRESSION
             | JS_CONSTRUCTOR_CLASS_MEMBER
             | JS_METHOD_CLASS_MEMBER
             | JS_GETTER_CLASS_MEMBER
             | JS_SETTER_CLASS_MEMBER
             | JS_METHOD_OBJECT_MEMBER
             | JS_GETTER_OBJECT_MEMBER
-            | JS_SETTER_OBJECT_MEMBER
+            | JS_SETTER_OBJECT_MEMBER => {
+                self.push_scope(
+                    node.text_range(),
+                    ScopeHoisting::DontHoistDeclarationsToParent,
+                    true,
+                );
+            }
+
+            JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
+            | JS_CLASS_DECLARATION
+            | JS_CLASS_EXPORT_DEFAULT_DECLARATION
+            | JS_CLASS_EXPRESSION
             | JS_FUNCTION_BODY
             | TS_INTERFACE_DECLARATION
             | TS_ENUM_DECLARATION
@@ -284,12 +294,17 @@ impl SemanticEventExtractor {
                 self.push_scope(
                     node.text_range(),
                     ScopeHoisting::DontHoistDeclarationsToParent,
+                    false,
                 );
             }
 
             JS_BLOCK_STATEMENT | JS_FOR_STATEMENT | JS_FOR_OF_STATEMENT | JS_FOR_IN_STATEMENT
             | JS_SWITCH_STATEMENT | JS_CATCH_CLAUSE => {
-                self.push_scope(node.text_range(), ScopeHoisting::HoistDeclarationsToParent);
+                self.push_scope(
+                    node.text_range(),
+                    ScopeHoisting::HoistDeclarationsToParent,
+                    false,
+                );
             }
 
             _ => {}
@@ -322,8 +337,8 @@ impl SemanticEventExtractor {
         use JsSyntaxKind::*;
         debug_assert!(matches!(
             node.kind(),
-            JS_IDENTIFIER_BINDING | TS_IDENTIFIER_BINDING
-        ), "specified node is not a identifier binding (JS_IDENTIFIER_BINDING, TS_IDENTIFIER_BINDING)");
+            JS_IDENTIFIER_BINDING | TS_IDENTIFIER_BINDING | TS_TYPE_PARAMETER
+        ), "specified node is not a identifier binding (JS_IDENTIFIER_BINDING, TS_IDENTIFIER_BINDING, TS_TYPE_PARAMETER)");
 
         let (name_token, is_var) = match node.kind() {
             JS_IDENTIFIER_BINDING => {
@@ -335,6 +350,12 @@ impl SemanticEventExtractor {
             TS_IDENTIFIER_BINDING => {
                 let binding = node.clone().cast::<TsIdentifierBinding>()?;
                 let name_token = binding.name_token().ok()?;
+                let is_var = Self::is_var(&binding);
+                (name_token, is_var)
+            }
+            TS_TYPE_PARAMETER => {
+                let binding = node.clone().cast::<TsTypeParameter>()?;
+                let name_token = binding.name().ok()?.ident_token().ok()?;
                 let is_var = Self::is_var(&binding);
                 (name_token, is_var)
             }
@@ -537,7 +558,7 @@ impl SemanticEventExtractor {
         self.stash.pop_front()
     }
 
-    fn push_scope(&mut self, range: TextRange, hoisting: ScopeHoisting) {
+    fn push_scope(&mut self, range: TextRange, hoisting: ScopeHoisting, is_closure: bool) {
         let scope_id = self.next_scope_id;
         self.next_scope_id += 1;
 
@@ -547,6 +568,7 @@ impl SemanticEventExtractor {
             range,
             scope_id,
             parent_scope_id,
+            is_closure,
         });
 
         self.scopes.push(Scope {
@@ -998,7 +1020,7 @@ impl Iterator for SemanticEventIterator {
 /// use rome_js_parser::*;
 /// use rome_js_syntax::*;
 /// use rome_js_semantic::*;
-/// use rome_diagnostics::file::FileId;
+/// use rome_diagnostics::location::FileId;
 /// let tree = parse("let a = 1", FileId::zero(), SourceType::js_script());
 /// for e in semantic_events(tree.syntax()) {
 ///     dbg!(e);

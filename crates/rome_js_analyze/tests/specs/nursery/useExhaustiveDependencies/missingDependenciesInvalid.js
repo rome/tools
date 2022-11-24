@@ -61,3 +61,12 @@ function MyComponent5() {
     return () => console.log(a);
   }, []);
 }
+
+// Capturing an object property
+
+function MyComponent1() {
+  let someObj = getObj();
+  useEffect(() => {
+      console.log(someObj.name)
+  });
+}

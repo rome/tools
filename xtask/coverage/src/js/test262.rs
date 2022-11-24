@@ -2,7 +2,7 @@ use crate::runner::{
     create_unknown_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
 };
 use regex::Regex;
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_js_parser::parse;
 use rome_js_syntax::SourceType;
 use rome_rowan::syntax::SyntaxKind;

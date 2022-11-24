@@ -1,0 +1,36 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+["x", truth]
+```
+
+
+## Diagnostics
+
+```
+object_bad_value.json:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The JSON standard doesn't allow identifiers
+  
+  > 1 │ ["x", truth]
+      │       ^^^^^
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+JSON_STRING_LITERAL: `"x"` (1..4)
+COMMA: `,` (4..5)
+WHITESPACE: ` ` (5..6)
+IDENT: `truth` (6..11)
+R_BRACK: `]` (11..12)
+EOF: `` (12..12)
+```
+

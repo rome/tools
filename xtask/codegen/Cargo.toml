@@ -16,6 +16,7 @@ ureq = "2.4.0"
 git2 = { version = "0.15.0", default-features = false }
 filetime = "0.2.15"
 case = "1.0.0"
+pulldown-cmark = { version = "0.9", default-features = false }
 
 rome_rowan = { path = "../../crates/rome_rowan", optional = true }
 rome_analyze = { path = "../../crates/rome_analyze", optional = true }

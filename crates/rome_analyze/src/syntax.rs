@@ -49,7 +49,7 @@ impl<L: Language> Visitor for SyntaxVisitor<L> {
 #[cfg(test)]
 mod tests {
 
-    use rome_diagnostics::file::FileId;
+    use rome_diagnostics::location::FileId;
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
         AstNode,
@@ -109,6 +109,7 @@ mod tests {
         let mut analyzer = Analyzer::new(
             &metadata,
             &mut matcher,
+            |_| unreachable!(),
             |_| unreachable!(),
             &mut emit_signal,
         );
