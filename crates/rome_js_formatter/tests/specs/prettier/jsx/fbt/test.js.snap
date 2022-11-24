@@ -138,7 +138,7 @@ third = (
 +    <fbt:param>First</fbt:param>,<fbt:param>Second</fbt:param>
    </fbt>
  );
-
+ 
  x = (
    <fbt>
 -    <fbt:param>First</fbt:param>
@@ -147,9 +147,9 @@ third = (
 +    <fbt:param>First</fbt:param>,<fbt:param>Second</fbt:param>
    </fbt>
  );
-
+ 
 @@ -62,33 +59,35 @@
-
+ 
  x = (
    <fbt>
 -    {hour}
@@ -160,7 +160,7 @@ third = (
 +    {hour}:{minute}:{second}
    </fbt>
  );
-
+ 
  x = (
    <fbt>
 -    {hour}:
@@ -169,7 +169,7 @@ third = (
 +    {hour}:{minute}:{second}
    </fbt>
  );
-
+ 
  first = (
    <fbt>
 -    Text<br />
@@ -183,7 +183,7 @@ third = (
 +    <br />
    </fbt>
  );
-
+ 
  second = (
    <fbt>
 -    Text<br />More text<br />And more<br />
@@ -195,7 +195,7 @@ third = (
 +    <br />
    </fbt>
  );
-
+ 
 ```
 
 # Output

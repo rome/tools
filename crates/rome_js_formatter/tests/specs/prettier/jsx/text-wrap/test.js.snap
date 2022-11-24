@@ -429,7 +429,7 @@ x = <div>
 </div>
 
 x = <div><span/>bar</div>
-
+  
 x = <div>
   <span>
     <strong>{name}</strong>’s{' '}
@@ -441,15 +441,15 @@ x = <div>
 x = <HelpBlock>
   {parameter.Description}: {errorMsg}
 </HelpBlock>
-
+  
 x = <label>
   {value} solution{plural}
 </label>
-
+  
 x = <span>Copy &quot;{name}&quot;</span>
-
+  
 x = <BasicText light>(avg. {value}/5)</BasicText>
-
+  
 x = <p>
   Use the <code>Button</code>'s
 </p>;
@@ -474,7 +474,7 @@ let myDiv = ReactTestUtils.renderIntoDocument(
 --- Prettier
 +++ Rome
 @@ -318,7 +318,11 @@
-
+ 
  line_after_br_2 = (
    <div>
 -    A<br />B<br />C
@@ -485,7 +485,7 @@ let myDiv = ReactTestUtils.renderIntoDocument(
 +    C
    </div>
  );
-
+ 
 @@ -331,6 +335,7 @@
  dont_preserve_blank_lines_when_jsx_contains_text = (
    <div>
