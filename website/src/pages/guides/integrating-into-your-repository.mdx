@@ -50,6 +50,16 @@ Alternatively, they can be part of a script that your CI pipeline runs:
 }
 ```
 
+`rome ci` by default runs both formatter and linter checks. If you are not ready to adopt both, you can disable e.g. the linter in `rome.json`:
+
+```json
+{
+	"linter": {
+		"enabled": false
+	}
+}
+```
+
 ### Ignoring files
 
 If you have files that do not require formatting or linting, such as compilation outputs in a `build` directory or scattered `generated` files, you can ignore them by extending your `rome.json` with the following:
