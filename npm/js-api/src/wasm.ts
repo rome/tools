@@ -11,15 +11,15 @@ export enum Distribution {
 	/**
 	 * Use this if you want to communicate with the WebAssembly client built for bundlers
 	 */
-	BUNDLER,
+	BUNDLER = 0,
 	/**
 	 * Use this if you want to communicate with the WebAssembly client built for Node.JS
 	 */
-	NODE,
+	NODE = 1,
 	/**
 	 * Use this if you want to communicate with the WebAssembly client built for the Web
 	 */
-	WEB,
+	WEB = 2,
 }
 
 let isInitialized = {
