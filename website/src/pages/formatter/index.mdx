@@ -50,6 +50,23 @@ OPTIONS:
     --stdin-file-path <string>               A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js
 ```
 
+## Configuration
+
+You may want to [configure rome](/configuration/#formatter) using `rome.json`. The following defaults are applied:
+
+```json
+{
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "tab",
+    "indentSize": 2,
+    "lineWidth": 80,
+    "ignore": []
+  }
+}
+```
+
 ## Ignoring Code
 
 There are times when the way we format code might not be ideal. For these cases you can use a format suppression comment:
