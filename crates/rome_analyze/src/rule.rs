@@ -2,8 +2,7 @@ use crate::categories::{ActionCategory, RuleCategory};
 use crate::context::RuleContext;
 use crate::registry::{RegistryVisitor, RuleLanguage, RuleSuppressions};
 use crate::{
-    AnalyzerDiagnostic, Phase, Phases, Queryable, SuppressionCommentEmitter,
-    SuppressionCommentEmitterPayload,
+    Phase, Phases, Queryable, SuppressionCommentEmitter, SuppressionCommentEmitterPayload,
 };
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
@@ -494,13 +493,6 @@ impl RuleDiagnostic {
 
     pub(crate) fn span(&self) -> Option<TextRange> {
         self.span
-    }
-
-    /// Convert this [`RuleDiagnostic`] into an instance of [`AnalyzerDiagnostic`] by
-    /// injecting the name of the rule that emitted it and the ID of the file
-    /// the rule was being run on
-    pub(crate) fn into_analyzer_diagnostic(self) -> AnalyzerDiagnostic {
-        AnalyzerDiagnostic::from_rule_diagnostic(self)
     }
 
     pub fn advices(&self) -> &RuleAdvice {

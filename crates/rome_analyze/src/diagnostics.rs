@@ -22,6 +22,18 @@ pub struct AnalyzerDiagnostic {
     code_suggestion_list: Vec<CodeSuggestionAdvice<MarkupBuf>>,
 }
 
+impl From<RuleDiagnostic> for AnalyzerDiagnostic {
+    fn from(rule_diagnostic: RuleDiagnostic) -> Self {
+        Self {
+            kind: DiagnosticKind::Rule {
+                rule_diagnostic,
+                severity: None,
+            },
+            code_suggestion_list: vec![],
+        }
+    }
+}
+
 #[derive(Debug)]
 enum DiagnosticKind {
     /// It holds various info related to diagnostics emitted by the rules
@@ -108,17 +120,6 @@ impl Diagnostic for AnalyzerDiagnostic {
 }
 
 impl AnalyzerDiagnostic {
-    /// Creates a diagnostic from a [RuleDiagnostic]
-    pub fn from_rule_diagnostic(rule_diagnostic: RuleDiagnostic) -> Self {
-        Self {
-            kind: DiagnosticKind::Rule {
-                rule_diagnostic,
-                severity: None,
-            },
-            code_suggestion_list: vec![],
-        }
-    }
-
     /// Creates a diagnostic from a generic [Error]
     pub fn from_error(error: Error) -> Self {
         Self {
