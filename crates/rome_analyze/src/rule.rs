@@ -9,7 +9,6 @@ use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
 use rome_diagnostics::advice::CodeSuggestionAdvice;
 use rome_diagnostics::location::AsSpan;
-use rome_diagnostics::location::FileId;
 use rome_diagnostics::Applicability;
 use rome_diagnostics::{
     Advices, Category, Diagnostic, DiagnosticTags, Location, LogCategory, MessageAndDescription,
@@ -500,8 +499,8 @@ impl RuleDiagnostic {
     /// Convert this [`RuleDiagnostic`] into an instance of [`AnalyzerDiagnostic`] by
     /// injecting the name of the rule that emitted it and the ID of the file
     /// the rule was being run on
-    pub(crate) fn into_analyzer_diagnostic(self, file_id: FileId) -> AnalyzerDiagnostic {
-        AnalyzerDiagnostic::from_rule_diagnostic(file_id, self)
+    pub(crate) fn into_analyzer_diagnostic(self) -> AnalyzerDiagnostic {
+        AnalyzerDiagnostic::from_rule_diagnostic(self)
     }
 
     pub fn advices(&self) -> &RuleAdvice {
