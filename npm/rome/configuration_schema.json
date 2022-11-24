@@ -980,6 +980,17 @@
             }
           ]
         },
+        "useDefaultSwitchClauseLast": {
+          "description": "Enforce default clauses in switch statements to be last",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useExhaustiveDependencies": {
           "description": "Enforce all dependencies are correctly specified.",
           "anyOf": [
