@@ -172,7 +172,7 @@ impl FormatJsxChildList {
                                 Some(JsxChild::NonText(JsxAnyChild::JsxSelfClosingElement(_)))
                             );
 
-                            // Here we handle the case when we have a newline between a ascii punctuation word and a jsx element
+                            // Here we handle the case when we have a newline between an ascii punctuation word and a jsx element
                             // We need to use the previous and the next element
                             // [JsxChild::Word, JsxChild::Newline, JsxChild::NonText]
                             // ```
@@ -183,7 +183,7 @@ impl FormatJsxChildList {
                             // ```
                             !is_next_element_self_closing && word.is_ascii_punctuation()
                         } else if let Some(JsxChild::Word(next_word)) = children_iter.peek() {
-                            // Here we handle the case when we have a ascii punctuation word between a new line and a jsx element
+                            // Here we handle the case when we have an ascii punctuation word between a new line and a jsx element
                             // Here we need to look ahead two elements
                             // [JsxChild::Newline, JsxChild::Word, JsxChild::NonText]
                             // ```
