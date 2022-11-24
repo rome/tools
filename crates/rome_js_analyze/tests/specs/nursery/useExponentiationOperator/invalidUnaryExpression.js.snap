@@ -19,7 +19,7 @@ async () => Math.pow(a, await b)
 
 # Diagnostics
 ```
-invalidUnaryExpression.js:2:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidUnaryExpression.js:2:1 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -41,7 +41,7 @@ invalidUnaryExpression.js:2:1 lint/nursery/useExponentiation  FIXABLE  ━━━
 ```
 
 ```
-invalidUnaryExpression.js:3:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidUnaryExpression.js:3:1 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -65,7 +65,7 @@ invalidUnaryExpression.js:3:1 lint/nursery/useExponentiation  FIXABLE  ━━━
 ```
 
 ```
-invalidUnaryExpression.js:4:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidUnaryExpression.js:4:1 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -89,7 +89,7 @@ invalidUnaryExpression.js:4:1 lint/nursery/useExponentiation  FIXABLE  ━━━
 ```
 
 ```
-invalidUnaryExpression.js:5:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidUnaryExpression.js:5:1 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -113,7 +113,7 @@ invalidUnaryExpression.js:5:1 lint/nursery/useExponentiation  FIXABLE  ━━━
 ```
 
 ```
-invalidUnaryExpression.js:6:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidUnaryExpression.js:6:1 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -137,7 +137,7 @@ invalidUnaryExpression.js:6:1 lint/nursery/useExponentiation  FIXABLE  ━━━
 ```
 
 ```
-invalidUnaryExpression.js:7:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidUnaryExpression.js:7:1 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -161,7 +161,7 @@ invalidUnaryExpression.js:7:1 lint/nursery/useExponentiation  FIXABLE  ━━━
 ```
 
 ```
-invalidUnaryExpression.js:8:13 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidUnaryExpression.js:8:13 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -185,7 +185,7 @@ invalidUnaryExpression.js:8:13 lint/nursery/useExponentiation  FIXABLE  ━━�
 ```
 
 ```
-invalidUnaryExpression.js:9:13 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidUnaryExpression.js:9:13 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   

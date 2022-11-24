@@ -29,7 +29,7 @@ Math.pow(/**/a/**/, /**/b/**/)
 
 # Diagnostics
 ```
-invalidWithoutAutofix.js:2:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidWithoutAutofix.js:2:1 lint/nursery/useExponentiationOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -43,7 +43,7 @@ invalidWithoutAutofix.js:2:1 lint/nursery/useExponentiation ━━━━━━�
 ```
 
 ```
-invalidWithoutAutofix.js:3:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidWithoutAutofix.js:3:1 lint/nursery/useExponentiationOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -58,7 +58,7 @@ invalidWithoutAutofix.js:3:1 lint/nursery/useExponentiation ━━━━━━�
 ```
 
 ```
-invalidWithoutAutofix.js:4:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidWithoutAutofix.js:4:1 lint/nursery/useExponentiationOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -73,7 +73,7 @@ invalidWithoutAutofix.js:4:1 lint/nursery/useExponentiation ━━━━━━�
 ```
 
 ```
-invalidWithoutAutofix.js:5:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidWithoutAutofix.js:5:1 lint/nursery/useExponentiationOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -88,7 +88,7 @@ invalidWithoutAutofix.js:5:1 lint/nursery/useExponentiation ━━━━━━�
 ```
 
 ```
-invalidWithoutAutofix.js:8:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidWithoutAutofix.js:8:1 lint/nursery/useExponentiationOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -102,7 +102,7 @@ invalidWithoutAutofix.js:8:1 lint/nursery/useExponentiation ━━━━━━�
 ```
 
 ```
-invalidWithoutAutofix.js:9:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidWithoutAutofix.js:9:1 lint/nursery/useExponentiationOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -117,7 +117,7 @@ invalidWithoutAutofix.js:9:1 lint/nursery/useExponentiation ━━━━━━�
 ```
 
 ```
-invalidWithoutAutofix.js:10:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidWithoutAutofix.js:10:1 lint/nursery/useExponentiationOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -132,7 +132,7 @@ invalidWithoutAutofix.js:10:1 lint/nursery/useExponentiation ━━━━━━�
 ```
 
 ```
-invalidWithoutAutofix.js:11:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidWithoutAutofix.js:11:1 lint/nursery/useExponentiationOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -147,7 +147,7 @@ invalidWithoutAutofix.js:11:1 lint/nursery/useExponentiation ━━━━━━�
 ```
 
 ```
-invalidWithoutAutofix.js:14:14 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidWithoutAutofix.js:14:14 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -170,7 +170,7 @@ invalidWithoutAutofix.js:14:14 lint/nursery/useExponentiation  FIXABLE  ━━�
 ```
 
 ```
-invalidWithoutAutofix.js:15:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidWithoutAutofix.js:15:1 lint/nursery/useExponentiationOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -185,7 +185,7 @@ invalidWithoutAutofix.js:15:1 lint/nursery/useExponentiation ━━━━━━�
 ```
 
 ```
-invalidWithoutAutofix.js:16:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidWithoutAutofix.js:16:1 lint/nursery/useExponentiationOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -200,7 +200,7 @@ invalidWithoutAutofix.js:16:1 lint/nursery/useExponentiation ━━━━━━�
 ```
 
 ```
-invalidWithoutAutofix.js:17:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidWithoutAutofix.js:17:1 lint/nursery/useExponentiationOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -215,7 +215,7 @@ invalidWithoutAutofix.js:17:1 lint/nursery/useExponentiation ━━━━━━�
 ```
 
 ```
-invalidWithoutAutofix.js:18:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidWithoutAutofix.js:18:1 lint/nursery/useExponentiationOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -230,7 +230,7 @@ invalidWithoutAutofix.js:18:1 lint/nursery/useExponentiation ━━━━━━�
 ```
 
 ```
-invalidWithoutAutofix.js:19:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidWithoutAutofix.js:19:1 lint/nursery/useExponentiationOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   

@@ -25,7 +25,7 @@ Math.pow(a, b)**Math.pow(c, d)
 
 # Diagnostics
 ```
-invalidAdjacentTokens.js:2:3 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidAdjacentTokens.js:2:3 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -47,7 +47,7 @@ invalidAdjacentTokens.js:2:3 lint/nursery/useExponentiation  FIXABLE  ━━━�
 ```
 
 ```
-invalidAdjacentTokens.js:3:5 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidAdjacentTokens.js:3:5 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -71,7 +71,7 @@ invalidAdjacentTokens.js:3:5 lint/nursery/useExponentiation  FIXABLE  ━━━�
 ```
 
 ```
-invalidAdjacentTokens.js:12:2 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidAdjacentTokens.js:12:2 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -94,7 +94,7 @@ invalidAdjacentTokens.js:12:2 lint/nursery/useExponentiation  FIXABLE  ━━━
 ```
 
 ```
-invalidAdjacentTokens.js:13:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidAdjacentTokens.js:13:1 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -118,7 +118,7 @@ invalidAdjacentTokens.js:13:1 lint/nursery/useExponentiation  FIXABLE  ━━━
 ```
 
 ```
-invalidAdjacentTokens.js:13:18 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidAdjacentTokens.js:13:18 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -142,7 +142,7 @@ invalidAdjacentTokens.js:13:18 lint/nursery/useExponentiation  FIXABLE  ━━�
 ```
 
 ```
-invalidAdjacentTokens.js:14:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidAdjacentTokens.js:14:1 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -166,7 +166,7 @@ invalidAdjacentTokens.js:14:1 lint/nursery/useExponentiation  FIXABLE  ━━━
 ```
 
 ```
-invalidAdjacentTokens.js:14:10 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidAdjacentTokens.js:14:10 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -190,7 +190,7 @@ invalidAdjacentTokens.js:14:10 lint/nursery/useExponentiation  FIXABLE  ━━�
 ```
 
 ```
-invalidAdjacentTokens.js:14:26 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidAdjacentTokens.js:14:26 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -214,7 +214,7 @@ invalidAdjacentTokens.js:14:26 lint/nursery/useExponentiation  FIXABLE  ━━�
 ```
 
 ```
-invalidAdjacentTokens.js:15:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidAdjacentTokens.js:15:1 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
@@ -236,7 +236,7 @@ invalidAdjacentTokens.js:15:1 lint/nursery/useExponentiation  FIXABLE  ━━━
 ```
 
 ```
-invalidAdjacentTokens.js:15:17 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidAdjacentTokens.js:15:17 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
 
   ! Use the '**' operator instead of 'Math.pow'.
   
