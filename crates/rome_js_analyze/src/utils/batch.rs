@@ -1,7 +1,9 @@
+use rome_js_factory::make::jsx_child_list;
 use rome_js_syntax::{
-    JsAnyConstructorParameter, JsAnyFormalParameter, JsAnyParameter, JsConstructorParameterList,
-    JsFormalParameter, JsLanguage, JsParameterList, JsSyntaxKind, JsSyntaxNode,
-    JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList, JsVariableStatement,
+    JsAnyConstructorParameter, JsAnyFormalParameter, JsAnyObjectMember, JsAnyParameter,
+    JsConstructorParameterList, JsFormalParameter, JsLanguage, JsObjectMemberList, JsParameterList,
+    JsSyntaxKind, JsSyntaxNode, JsVariableDeclaration, JsVariableDeclarator,
+    JsVariableDeclaratorList, JsVariableStatement, JsxAnyChild, JsxChildList,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutation};
 
@@ -14,6 +16,24 @@ pub trait JsBatchMutation {
     /// Removes the parameter, and:
     /// 1 - removes commas around the parameter to keep the list valid.
     fn remove_js_formal_parameter(&mut self, parameter: &JsFormalParameter) -> bool;
+
+    /// Removes the object member, and:
+    /// 1 - removes commas around the member to keep the list valid.
+    fn remove_js_object_member(&mut self, parameter: &JsAnyObjectMember) -> bool;
+
+    /// It attempts to add a new element after the given element
+    fn add_jsx_element_after_element(
+        &mut self,
+        after_element: &JsxAnyChild,
+        new_element: &JsxAnyChild,
+    ) -> bool;
+
+    /// It attempts to add a new element before the given element
+    fn add_jsx_element_before_element(
+        &mut self,
+        after_element: &JsxAnyChild,
+        new_element: &JsxAnyChild,
+    ) -> bool;
 }
 
 fn remove_js_formal_parameter_from_js_parameter_list(
@@ -34,7 +54,7 @@ fn remove_js_formal_parameter_from_js_parameter_list(
                     node,
                 )) if node == parameter => {
                     batch.remove_node(node.clone());
-                    if let Some(comma) = element.trailing_separator().ok().flatten() {
+                    if let Ok(Some(comma)) = element.trailing_separator() {
                         batch.remove_token(comma.clone());
                     }
                     break;
@@ -49,7 +69,7 @@ fn remove_js_formal_parameter_from_js_parameter_list(
     // removes the comma before this element
     if elements.next().is_none() {
         if let Some(element) = previous_element {
-            if let Some(comma) = element.trailing_separator().ok().flatten() {
+            if let Ok(Some(comma)) = element.trailing_separator() {
                 batch.remove_token(comma.clone());
             }
         }
@@ -76,7 +96,7 @@ fn remove_js_formal_parameter_from_js_constructor_parameter_list(
                     JsAnyFormalParameter::JsFormalParameter(node),
                 ) if node == parameter => {
                     batch.remove_node(node.clone());
-                    if let Some(comma) = element.trailing_separator().ok().flatten() {
+                    if let Ok(Some(comma)) = element.trailing_separator() {
                         batch.remove_token(comma.clone());
                     }
                     break;
@@ -91,7 +111,7 @@ fn remove_js_formal_parameter_from_js_constructor_parameter_list(
     // removes the comma before this element
     if elements.next().is_none() {
         if let Some(element) = previous_element {
-            if let Some(comma) = element.trailing_separator().ok().flatten() {
+            if let Ok(Some(comma)) = element.trailing_separator() {
                 batch.remove_token(comma.clone());
             }
         }
@@ -120,7 +140,7 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
                         if let Ok(node) = element.node() {
                             if node == declarator {
                                 self.remove_node(node.clone());
-                                if let Some(comma) = element.trailing_separator().ok().flatten() {
+                                if let Ok(Some(comma)) = element.trailing_separator() {
                                     self.remove_token(comma.clone());
                                 }
                                 break;
@@ -139,7 +159,7 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
 
                     if remove_previous_element_comma {
                         if let Some(element) = previous_element {
-                            if let Some(comma) = element.trailing_separator().ok().flatten() {
+                            if let Ok(Some(comma)) = element.trailing_separator() {
                                 self.remove_token(comma.clone());
                             }
                         }
@@ -168,14 +188,88 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
             })
             .unwrap_or(false)
     }
+
+    fn remove_js_object_member(&mut self, member: &JsAnyObjectMember) -> bool {
+        member
+            .syntax()
+            .parent()
+            .and_then(|parent| {
+                let parent = JsObjectMemberList::cast(parent)?;
+                for element in parent.elements() {
+                    if element.node() == Ok(member) {
+                        self.remove_node(member.clone());
+                        if let Ok(Some(comma)) = element.trailing_separator() {
+                            self.remove_token(comma.clone());
+                        }
+                    }
+                }
+
+                Some(true)
+            })
+            .unwrap_or(false)
+    }
+
+    fn add_jsx_element_after_element(
+        &mut self,
+        after_element: &JsxAnyChild,
+        new_element: &JsxAnyChild,
+    ) -> bool {
+        let old_list = after_element.parent::<JsxChildList>();
+        if let Some(old_list) = &old_list {
+            let jsx_child_list = {
+                let mut new_items = vec![];
+                for element in old_list {
+                    new_items.push(element.clone());
+                    if element == *after_element {
+                        new_items.push(new_element.clone());
+                    }
+                }
+
+                jsx_child_list(new_items)
+            };
+
+            self.replace_node(old_list.clone(), jsx_child_list);
+            true
+        } else {
+            false
+        }
+    }
+
+    fn add_jsx_element_before_element(
+        &mut self,
+        after_element: &JsxAnyChild,
+        new_element: &JsxAnyChild,
+    ) -> bool {
+        let old_list = after_element.syntax().parent().and_then(JsxChildList::cast);
+        if let Some(old_list) = &old_list {
+            let jsx_child_list = {
+                let mut new_items = vec![];
+                for element in old_list {
+                    if element == *after_element {
+                        new_items.push(new_element.clone());
+                    }
+                    new_items.push(element.clone());
+                }
+
+                jsx_child_list(new_items)
+            };
+
+            self.replace_node(old_list.clone(), jsx_child_list);
+            true
+        } else {
+            false
+        }
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use crate::assert_remove_ok;
+    use rome_js_syntax::{JsAnyObjectMember, JsFormalParameter, JsVariableDeclarator};
 
     // Remove JsVariableDeclarator
     assert_remove_ok! {
+        JsVariableDeclarator,
         ok_remove_variable_declarator_single,
             "let a;",
             "",
@@ -195,6 +289,7 @@ mod tests {
 
     // Remove JsFormalParameter from functions
     assert_remove_ok! {
+        JsFormalParameter,
         ok_remove_formal_parameter_single,
             "function f(a) {}",
             "function f() {}",
@@ -214,6 +309,7 @@ mod tests {
 
     // Remove JsFormalParameter from class constructors
     assert_remove_ok! {
+        JsFormalParameter,
         ok_remove_formal_parameter_from_class_constructor_single,
             "class A { constructor(a) {} }",
             "class A { constructor() {} }",
@@ -229,5 +325,25 @@ mod tests {
         ok_remove_formal_parameter_from_class_constructor_middle,
             "class A { constructor(b, a, c) {} }",
             "class A { constructor(b, c) {} }",
+    }
+
+    // Remove JsAnyObjectMember from object expression
+    assert_remove_ok! {
+        JsAnyObjectMember,
+        ok_remove_first_member,
+            "({ a: 1, b: 2 })",
+            "({ b: 2 })",
+        ok_remove_middle_member,
+            "({ z: 1, a: 2, b: 3 })",
+            "({ z: 1, b: 3 })",
+        ok_remove_last_member,
+            "({ z: 1, a: 2 })",
+            "({ z: 1, })",
+        ok_remove_last_member_trailing_comma,
+            "({ z: 1, a: 2, })",
+            "({ z: 1, })",
+        ok_remove_only_member,
+            "({ a: 2 })",
+            "({ })",
     }
 }

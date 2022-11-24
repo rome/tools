@@ -1,20 +1,17 @@
-use std::collections::hash_map::IntoIter;
-use std::{
-    collections::HashMap,
-    io,
-    panic::AssertUnwindSafe,
-    path::{Path, PathBuf},
-    str,
-    sync::Arc,
-};
+use std::collections::{hash_map::IntoIter, HashMap};
+use std::io;
+use std::panic::AssertUnwindSafe;
+use std::path::{Path, PathBuf};
+use std::str;
+use std::sync::Arc;
 
 use parking_lot::{lock_api::ArcMutexGuard, Mutex, RawMutex, RwLock};
-use rome_diagnostics::v2::Error;
+use rome_diagnostics::Error;
 
 use crate::fs::{FileSystemExt, OpenOptions};
 use crate::{FileSystem, RomePath, TraversalContext, TraversalScope};
 
-use super::{BoxedTraversal, File, UnhandledDiagnostic, UnhandledKind};
+use super::{BoxedTraversal, ErrorKind, File, FileSystemDiagnostic};
 
 /// Fully in-memory file system, stores the content of all known files in a hashmap
 #[derive(Default)]
@@ -42,10 +39,11 @@ type FileEntry = Arc<Mutex<Vec<u8>>>;
 /// emitted when they are reached through a filesystem traversal. This is
 /// mainly useful as a mechanism to test the handling of filesystem error in
 /// client code.
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Debug)]
 pub enum ErrorEntry {
-    SymbolicLink,
-    Unknown,
+    UnknownFileType,
+    DereferencedSymlink(PathBuf),
+    InfiniteSymlinkExpansion(PathBuf),
 }
 
 impl MemoryFileSystem {
@@ -77,6 +75,8 @@ impl FileSystem for MemoryFileSystem {
             self.open(path)
         } else if options.create_new || options.write {
             self.create(path)
+        } else if options.read {
+            self.read(path)
         } else {
             unimplemented!("the set of open options provided don't match any case")
         }
@@ -171,7 +171,7 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
                 };
 
                 if should_process_file {
-                    let file_id = ctx.interner().intern_path(path.into());
+                    let (file_id, _) = ctx.interner().intern_path(path.into());
                     let rome_path = RomePath::new(path, file_id);
                     if !ctx.can_handle(&rome_path) {
                         continue;
@@ -183,13 +183,16 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
 
         for (path, entry) in &self.fs.errors {
             if path.strip_prefix(&base).is_ok() {
-                let file_id = ctx.interner().intern_path(path.into());
-
-                ctx.push_diagnostic(Error::from(UnhandledDiagnostic {
-                    file_id,
-                    file_kind: match entry {
-                        ErrorEntry::SymbolicLink => UnhandledKind::Symlink,
-                        ErrorEntry::Unknown => UnhandledKind::Other,
+                ctx.push_diagnostic(Error::from(FileSystemDiagnostic {
+                    path: path.to_string_lossy().to_string(),
+                    error_kind: match entry {
+                        ErrorEntry::UnknownFileType => ErrorKind::UnknownFileType,
+                        ErrorEntry::DereferencedSymlink(path) => {
+                            ErrorKind::DereferencedSymlink(path.to_string_lossy().to_string())
+                        }
+                        ErrorEntry::InfiniteSymlinkExpansion(path) => {
+                            ErrorKind::InfiniteSymlinkExpansion(path.to_string_lossy().to_string())
+                        }
                     },
                 }));
             }
@@ -206,13 +209,11 @@ mod tests {
     };
 
     use parking_lot::Mutex;
-    use rome_diagnostics::v2::Error;
+    use rome_diagnostics::Error;
 
     use crate::fs::FileSystemExt;
-    use crate::{
-        AtomicInterner, FileSystem, MemoryFileSystem, PathInterner, RomePath, TraversalContext,
-    };
-    use rome_diagnostics::file::FileId;
+    use crate::{FileSystem, MemoryFileSystem, PathInterner, RomePath, TraversalContext};
+    use rome_diagnostics::location::FileId;
 
     #[test]
     fn file_read_write() {
@@ -268,12 +269,12 @@ mod tests {
         fs.insert(PathBuf::from("dir2/file2"), "dir2/file1".as_bytes());
 
         struct TestContext {
-            interner: AtomicInterner,
+            interner: PathInterner,
             visited: Mutex<Vec<PathBuf>>,
         }
 
         impl TraversalContext for TestContext {
-            fn interner(&self) -> &dyn PathInterner {
+            fn interner(&self) -> &PathInterner {
                 &self.interner
             }
 
@@ -290,7 +291,7 @@ mod tests {
             }
         }
 
-        let (interner, _) = AtomicInterner::new();
+        let (interner, _) = PathInterner::new();
         let mut ctx = TestContext {
             interner,
             visited: Mutex::default(),

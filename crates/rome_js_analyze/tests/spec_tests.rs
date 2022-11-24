@@ -1,3 +1,4 @@
+use json_comments::StripComments;
 use rome_analyze::{
     AnalysisFilter, AnalyzerAction, AnalyzerDiagnostic, AnalyzerOptions, ControlFlow, Never,
     RuleFilter,
@@ -6,9 +7,10 @@ use rome_console::{
     fmt::{Formatter, Termcolor},
     markup, Markup,
 };
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::advice::CodeSuggestionAdvice;
+use rome_diagnostics::location::FileId;
 use rome_diagnostics::termcolor::NoColor;
-use rome_diagnostics::v2::{DiagnosticExt, PrintDiagnostic, Severity};
+use rome_diagnostics::{DiagnosticExt, PrintDiagnostic, Severity};
 use rome_js_parser::{
     parse,
     test_utils::{assert_errors_are_absent, has_unknown_nodes_or_empty_slots},
@@ -19,7 +21,7 @@ use std::{
     ffi::OsStr, fmt::Write, fs::read_to_string, os::raw::c_int, path::Path, slice, sync::Once,
 };
 
-tests_macros::gen_tests! {"tests/specs/**/*.{cjs,js,jsx,tsx,ts}", crate::run_test, "module"}
+tests_macros::gen_tests! {"tests/specs/**/*.{cjs,js,jsx,tsx,ts,json,jsonc}", crate::run_test, "module"}
 
 fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     register_leak_checker();
@@ -29,10 +31,6 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     let input_code = read_to_string(input_file)
         .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
 
-    let source_type = input_file.try_into().unwrap();
-    let parsed = parse(&input_code, FileId::zero(), source_type);
-    let root = parsed.tree();
-
     let (group, rule) = parse_test_path(input_file);
 
     let rule_filter = RuleFilter::Rule(group, rule);
@@ -41,30 +39,77 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
         ..AnalysisFilter::default()
     };
 
+    let mut snapshot = String::new();
+    let extension = input_file.extension().unwrap_or_default();
+
+    if extension == "json" || extension == "jsonc" {
+        let input_code = StripComments::new(input_code.as_bytes());
+        let scripts: Vec<String> = serde_json::from_reader(input_code).unwrap();
+        for script in scripts {
+            write_analysis_to_snapshot(
+                &mut snapshot,
+                &script,
+                SourceType::js_script(),
+                filter,
+                file_name,
+                input_file,
+            )
+        }
+    } else {
+        let source_type = input_file.try_into().unwrap();
+        write_analysis_to_snapshot(
+            &mut snapshot,
+            &input_code,
+            source_type,
+            filter,
+            file_name,
+            input_file,
+        );
+    }
+
+    insta::with_settings!({
+        prepend_module_to_snapshot => false,
+        snapshot_path => input_file.parent().unwrap(),
+    }, {
+        insta::assert_snapshot!(file_name, snapshot, file_name);
+    });
+}
+
+fn write_analysis_to_snapshot(
+    snapshot: &mut String,
+    input_code: &str,
+    source_type: SourceType,
+    filter: AnalysisFilter,
+    file_name: &str,
+    input_file: &Path,
+) {
+    let parsed = parse(input_code, FileId::zero(), source_type);
+    let root = parsed.tree();
+
     let mut diagnostics = Vec::new();
     let mut code_fixes = Vec::new();
     let options = AnalyzerOptions::default();
     rome_js_analyze::analyze(FileId::zero(), &root, filter, &options, |event| {
         if let Some(mut diag) = event.diagnostic() {
             diag.set_severity(Severity::Warning);
-            if let Some(action) = event.action() {
-                check_code_action(input_file, &input_code, source_type, &action);
-                diag.add_code_suggestion(action.into());
+            for action in event.actions() {
+                if !action.is_suppression() {
+                    check_code_action(input_file, input_code, source_type, &action);
+                    diag = diag.add_code_suggestion(CodeSuggestionAdvice::from(action));
+                }
             }
 
-            diagnostics.push(diagnostic_to_string(file_name, &input_code, diag));
+            diagnostics.push(diagnostic_to_string(file_name, input_code, diag));
             return ControlFlow::Continue(());
         }
 
-        if let Some(action) = event.action() {
-            check_code_action(input_file, &input_code, source_type, &action);
-            code_fixes.push(code_fix_to_string(&input_code, action));
+        for action in event.actions() {
+            check_code_action(input_file, input_code, source_type, &action);
+            code_fixes.push(code_fix_to_string(input_code, action));
         }
 
         ControlFlow::<Never>::Continue(())
     });
-
-    let mut snapshot = String::new();
 
     writeln!(snapshot, "# Input").unwrap();
     writeln!(snapshot, "```js").unwrap();
@@ -91,13 +136,6 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
             writeln!(snapshot).unwrap();
         }
     }
-
-    insta::with_settings!({
-        prepend_module_to_snapshot => false,
-        snapshot_path => input_file.parent().unwrap(),
-    }, {
-        insta::assert_snapshot!(file_name, snapshot, file_name);
-    });
 }
 
 /// The test runner for the analyzer is currently designed to have a
@@ -136,7 +174,7 @@ fn diagnostic_to_string(name: &str, source: &str, diag: AnalyzerDiagnostic) -> S
         .with_file_path((name, FileId::zero()))
         .with_file_source_code(source);
     let text = markup_to_string(markup! {
-        {PrintDiagnostic(&error)}
+        {PrintDiagnostic::verbose(&error)}
     });
 
     text

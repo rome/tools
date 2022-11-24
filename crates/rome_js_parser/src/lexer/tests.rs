@@ -2,9 +2,9 @@
 #![allow(unused_mut, unused_variables, unused_assignments)]
 
 use super::{LexContext, Lexer, TextSize};
+use crate::span::Span;
 use quickcheck_macros::quickcheck;
-use rome_diagnostics::file::FileId;
-use rome_diagnostics::Span;
+use rome_diagnostics::location::FileId;
 use rome_js_syntax::JsSyntaxKind::{self, EOF};
 use std::sync::mpsc::channel;
 use std::thread;

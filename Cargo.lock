@@ -895,6 +895,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "json_comments"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "41ee439ee368ba4a77ac70d04f14015415af8600d6c894dc1f11bd79758c57d5"
+
+[[package]]
 name = "lazy_static"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1489,6 +1495,7 @@ dependencies = [
  "schemars",
  "serde",
  "serde_json",
+ "tracing",
 ]
 
 [[package]]
@@ -1646,6 +1653,7 @@ version = "0.0.0"
 dependencies = [
  "countme",
  "insta",
+ "json_comments",
  "lazy_static",
  "roaring",
  "rome_analyze",
@@ -1686,6 +1694,7 @@ dependencies = [
  "quickcheck_macros",
  "rome_console",
  "rome_diagnostics",
+ "rome_diagnostics_categories",
  "rome_formatter",
  "rome_fs",
  "rome_js_factory",
@@ -1719,6 +1728,7 @@ dependencies = [
  "rome_diagnostics",
  "rome_js_factory",
  "rome_js_syntax",
+ "rome_js_unicode_table",
  "rome_rowan",
  "smallvec",
  "tests_macros",
@@ -1743,6 +1753,7 @@ dependencies = [
 name = "rome_js_syntax"
 version = "0.0.0"
 dependencies = [
+ "rome_diagnostics_categories",
  "rome_js_factory",
  "rome_rowan",
  "schemars",
@@ -1750,11 +1761,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_js_unicode_table"
+version = "0.0.0"
+
+[[package]]
 name = "rome_json_factory"
 version = "0.0.0"
 dependencies = [
  "rome_json_syntax",
  "rome_rowan",
+]
+
+[[package]]
+name = "rome_json_parser"
+version = "0.0.0"
+dependencies = [
+ "insta",
+ "quickcheck",
+ "quickcheck_macros",
+ "rome_console",
+ "rome_diagnostics",
+ "rome_js_unicode_table",
+ "rome_json_syntax",
+ "rome_rowan",
+ "tests_macros",
 ]
 
 [[package]]
@@ -1814,6 +1844,7 @@ dependencies = [
  "schemars",
  "serde",
  "serde_json",
+ "tracing",
 ]
 
 [[package]]
@@ -2911,6 +2942,7 @@ dependencies = [
  "git2",
  "pico-args",
  "proc-macro2",
+ "pulldown-cmark",
  "quote",
  "rome_analyze",
  "rome_js_analyze",

@@ -68,6 +68,15 @@ function MyComponent5() {
   }, []);
 }
 
+// Capturing an object property
+
+function MyComponent1() {
+  let someObj = getObj();
+  useEffect(() => {
+      console.log(someObj.name)
+  });
+}
+
 ```
 
 # Diagnostics
@@ -459,6 +468,30 @@ missingDependenciesInvalid.js:59:3 lint/nursery/useExhaustiveDependencies ━━
        │                              ^
     62 │   }, []);
     63 │ }
+  
+
+```
+
+```
+missingDependenciesInvalid.js:69:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This hook do not specify all of its dependencies.
+  
+    67 │ function MyComponent1() {
+    68 │   let someObj = getObj();
+  > 69 │   useEffect(() => {
+       │   ^^^^^^^^^
+    70 │       console.log(someObj.name)
+    71 │   });
+  
+  i This dependency is not specified in the hook dependency list.
+  
+    68 │   let someObj = getObj();
+    69 │   useEffect(() => {
+  > 70 │       console.log(someObj.name)
+       │                   ^^^^^^^^^^^^
+    71 │   });
+    72 │ }
   
 
 ```

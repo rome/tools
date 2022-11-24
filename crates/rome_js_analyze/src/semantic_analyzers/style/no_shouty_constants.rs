@@ -2,13 +2,15 @@ use crate::{semantic_services::Semantic, utils::batch::JsBatchMutation, JsRuleAc
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_semantic::{AllReferencesExtensions, Reference};
+use rome_js_factory::make::{js_literal_member_name, js_property_object_member};
+use rome_js_semantic::{Reference, ReferencesExtensions};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsIdentifierBinding, JsIdentifierExpression,
-    JsStringLiteralExpression, JsVariableDeclaration, JsVariableDeclarator,
+    JsAnyExpression, JsAnyLiteralExpression, JsAnyObjectMemberName, JsIdentifierBinding,
+    JsIdentifierExpression, JsReferenceIdentifier, JsShorthandPropertyObjectMember,
+    JsStringLiteralExpression, JsSyntaxKind, JsVariableDeclaration, JsVariableDeclarator,
     JsVariableDeclaratorList,
 };
-use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
+use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast, SyntaxToken};
 
 declare_rule! {
     /// Disallow the use of constants which its value is the upper-case version of its name.
@@ -78,7 +80,7 @@ fn is_id_and_string_literal_inner_text_equal(
 
 pub struct State {
     literal: JsStringLiteralExpression,
-    references: Vec<Reference>,
+    reference: Reference,
 }
 
 impl Rule for NoShoutyConstants {
@@ -101,9 +103,13 @@ impl Rule for NoShoutyConstants {
                     return None;
                 }
 
+                if binding.all_references(model).count() > 1 {
+                    return None;
+                }
+
                 return Some(State {
                     literal,
-                    references: binding.all_references(ctx.model()).collect(),
+                    reference: binding.all_references(model).next()?,
                 });
             }
         }
@@ -122,10 +128,8 @@ impl Rule for NoShoutyConstants {
             },
         );
 
-        for reference in state.references.iter() {
-            let node = reference.node();
-            diag = diag.detail(node.text_trimmed_range(), "Used here.")
-        }
+        let node = state.reference.syntax();
+        diag = diag.detail(node.text_trimmed_range(), "Used here.");
 
         let diag = diag.note(
             markup! {"You should avoid declaring constants with a string that's the same
@@ -144,20 +148,46 @@ impl Rule for NoShoutyConstants {
 
         batch.remove_js_variable_declarator(ctx.query());
 
-        for reference in state.references.iter() {
-            let node = reference
-                .node()
-                .parent()?
-                .cast::<JsIdentifierExpression>()?;
-
+        if let Some(node) = state
+            .reference
+            .syntax()
+            .parent()?
+            .cast::<JsIdentifierExpression>()
+        {
             batch.replace_node(
                 JsAnyExpression::JsIdentifierExpression(node),
-                JsAnyExpression::JsAnyLiteralExpression(literal.clone()),
+                JsAnyExpression::JsAnyLiteralExpression(literal),
             );
+        } else if let Some(node) = state
+            .reference
+            .syntax()
+            .parent()?
+            .cast::<JsShorthandPropertyObjectMember>()
+        {
+            // for replacing JsShorthandPropertyObjectMember
+            let new_element = js_property_object_member(
+                JsAnyObjectMemberName::JsLiteralMemberName(js_literal_member_name(
+                    SyntaxToken::new_detached(
+                        JsSyntaxKind::JS_LITERAL_MEMBER_NAME,
+                        JsReferenceIdentifier::cast_ref(state.reference.syntax())?
+                            .value_token()
+                            .ok()?
+                            .text(),
+                        [],
+                        [],
+                    ),
+                )),
+                SyntaxToken::new_detached(JsSyntaxKind::COLON, ":", [], []),
+                JsAnyExpression::JsAnyLiteralExpression(literal),
+            );
+
+            batch.replace_element(node.into_syntax().into(), new_element.into_syntax().into());
+        } else {
+            return None;
         }
 
         Some(JsRuleAction {
-            category: ActionCategory::Refactor,
+            category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Use the constant value directly" }.to_owned(),
             mutation: batch,

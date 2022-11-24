@@ -1,7 +1,7 @@
 use crate::semantic_services::Semantic;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_semantic::{AllReferencesExtensions, Reference};
+use rome_js_semantic::{Reference, ReferencesExtensions};
 use rome_js_syntax::{JsFunctionDeclaration, JsIdentifierBinding};
 use rome_rowan::AstNode;
 
@@ -140,7 +140,7 @@ impl Rule for NoFunctionAssign {
 
         let mut hoisted_quantity = 0;
         for reference in state.all_writes.iter() {
-            let node = reference.node();
+            let node = reference.syntax();
             diag = diag.detail(node.text_trimmed_range(), "Reassigned here.");
 
             hoisted_quantity += i32::from(reference.is_using_hoisted_declaration());

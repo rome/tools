@@ -1,0 +1,37 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+["asd]
+```
+
+
+## Diagnostics
+
+```
+structure_array_with_unclosed_string.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Missing closing quote
+  
+  > 1 │ ["asd]
+      │  ^^^^^
+  
+  i file ends here
+  
+  > 1 │ ["asd]
+      │       
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+JSON_STRING_LITERAL: `"asd]` (1..6)
+EOF: `` (6..6)
+```
+

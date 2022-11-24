@@ -1,0 +1,21 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+[-237462374673276894279832749832423479823246327846]
+```
+
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+JSON_NUMBER_LITERAL: `-237462374673276894279832749832423479823246327846` (1..50)
+R_BRACK: `]` (50..51)
+EOF: `` (51..51)
+```
+

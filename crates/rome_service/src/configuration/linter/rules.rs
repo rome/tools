@@ -3,7 +3,7 @@
 use crate::{ConfigurationError, RomeError, RuleConfiguration};
 use indexmap::{IndexMap, IndexSet};
 use rome_analyze::RuleFilter;
-use rome_diagnostics::v2::{Category, Severity};
+use rome_diagnostics::{Category, Severity};
 #[cfg(feature = "schemars")]
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -297,14 +297,23 @@ pub struct A11y {
 #[allow(dead_code)]
 #[doc = r" A list of rules that belong to this group"]
 struct A11ySchema {
+    #[doc = "Avoid the autoFocus attribute"]
     no_autofocus: Option<RuleConfiguration>,
+    #[doc = "Prevent the usage of positive integers on tabIndex property"]
     no_positive_tabindex: Option<RuleConfiguration>,
+    #[doc = "It asserts that alternative text to images or areas, help to rely on to screen readers to understand the purpose and the context of the image."]
     use_alt_text: Option<RuleConfiguration>,
+    #[doc = "Enforce that anchor elements have content and that the content is accessible to screen readers."]
     use_anchor_content: Option<RuleConfiguration>,
+    #[doc = "Disallow target=\"_blank\" attribute without rel=\"noreferrer\""]
     use_blank_target: Option<RuleConfiguration>,
+    #[doc = "Enforces the usage of the attribute type for the element button"]
     use_button_type: Option<RuleConfiguration>,
+    #[doc = "Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event."]
     use_key_with_click_events: Option<RuleConfiguration>,
+    #[doc = "Enforce that onMouseOver/onMouseOut are accompanied by onFocus/onBlur for keyboard-only users. It is important to take into account users with physical disabilities who cannot use a mouse, who use assistive technology or screenreader."]
     use_key_with_mouse_events: Option<RuleConfiguration>,
+    #[doc = "Enforce that all anchors are valid, and they are navigable elements."]
     use_valid_anchor: Option<RuleConfiguration>,
 }
 impl A11y {
@@ -411,7 +420,9 @@ pub struct Complexity {
 #[allow(dead_code)]
 #[doc = r" A list of rules that belong to this group"]
 struct ComplexitySchema {
+    #[doc = "Disallow unnecessary boolean casts"]
     no_extra_boolean_cast: Option<RuleConfiguration>,
+    #[doc = "Discard redundant terms from logical expressions."]
     use_simplified_logic_expression: Option<RuleConfiguration>,
 }
 impl Complexity {
@@ -493,36 +504,67 @@ pub struct Correctness {
 #[allow(dead_code)]
 #[doc = r" A list of rules that belong to this group"]
 struct CorrectnessSchema {
+    #[doc = "Disallow the use of arguments"]
     no_arguments: Option<RuleConfiguration>,
+    #[doc = "Discourage the usage of Array index in keys."]
     no_array_index_key: Option<RuleConfiguration>,
+    #[doc = "Disallows using an async function as a Promise executor."]
     no_async_promise_executor: Option<RuleConfiguration>,
+    #[doc = "Disallow reassigning exceptions in catch clauses"]
     no_catch_assign: Option<RuleConfiguration>,
+    #[doc = "Prevent passing of children as props."]
     no_children_prop: Option<RuleConfiguration>,
+    #[doc = "Prevent comments from being inserted as text nodes"]
     no_comment_text: Option<RuleConfiguration>,
+    #[doc = "Disallow comparing against -0"]
     no_compare_neg_zero: Option<RuleConfiguration>,
+    #[doc = "Disallow the use of debugger"]
     no_debugger: Option<RuleConfiguration>,
+    #[doc = "Disallow the use of the delete operator"]
     no_delete: Option<RuleConfiguration>,
+    #[doc = "Require the use of === and !=="]
     no_double_equals: Option<RuleConfiguration>,
+    #[doc = "Disallow duplicate function arguments name."]
     no_dupe_args: Option<RuleConfiguration>,
+    #[doc = "Disallows empty destructuring patterns."]
     no_empty_pattern: Option<RuleConfiguration>,
+    #[doc = "Disallow reassigning function declarations."]
     no_function_assign: Option<RuleConfiguration>,
+    #[doc = "Disallow assigning to imported bindings"]
     no_import_assign: Option<RuleConfiguration>,
+    #[doc = "Disallow labels that share a name with a variable"]
     no_label_var: Option<RuleConfiguration>,
+    #[doc = "Disallow unclear usage of multiple space characters in regular expression literals"]
     no_multiple_spaces_in_regular_expression_literals: Option<RuleConfiguration>,
+    #[doc = "Disallow new operators with the Symbol object"]
     no_new_symbol: Option<RuleConfiguration>,
+    #[doc = "Prevent the usage of the return value of React.render."]
     no_render_return_value: Option<RuleConfiguration>,
+    #[doc = "This rule allows you to specify global variable names that you don’t want to use in your application."]
     no_restricted_globals: Option<RuleConfiguration>,
+    #[doc = "Disallow identifiers from shadowing restricted names."]
     no_shadow_restricted_names: Option<RuleConfiguration>,
+    #[doc = "Disallow sparse arrays"]
     no_sparse_array: Option<RuleConfiguration>,
+    #[doc = "Prevents the usage of variables that haven't been declared inside the document"]
     no_undeclared_variables: Option<RuleConfiguration>,
+    #[doc = "Avoid using unnecessary continue."]
     no_unnecessary_continue: Option<RuleConfiguration>,
+    #[doc = "Disallow unreachable code"]
     no_unreachable: Option<RuleConfiguration>,
+    #[doc = "Disallow using unsafe negation."]
     no_unsafe_negation: Option<RuleConfiguration>,
+    #[doc = "Disallow unused variables."]
     no_unused_variables: Option<RuleConfiguration>,
+    #[doc = "Disallow unnecessary fragments"]
     no_useless_fragments: Option<RuleConfiguration>,
+    #[doc = "This rules prevents void elements (AKA self-closing elements) from having children."]
     no_void_elements_with_children: Option<RuleConfiguration>,
+    #[doc = "Enforces case clauses have a single statement, emits a quick fix wrapping the statements in a block"]
     use_single_case_statement: Option<RuleConfiguration>,
+    #[doc = "This rule verifies the result of typeof $expr unary expressions is being compared to valid values, either string literals containing valid type names or other typeof expressions"]
     use_valid_typeof: Option<RuleConfiguration>,
+    #[doc = "Enforce the use of while loops instead of for loops when the initializer and update expressions are not needed"]
     use_while: Option<RuleConfiguration>,
 }
 impl Correctness {
@@ -687,31 +729,89 @@ pub struct Nursery {
 #[allow(dead_code)]
 #[doc = r" A list of rules that belong to this group"]
 struct NurserySchema {
+    #[doc = "Enforce that the accessKey attribute is not used on any HTML element."]
+    no_access_key: Option<RuleConfiguration>,
+    #[doc = "Disallow certain types."]
     no_banned_types: Option<RuleConfiguration>,
+    #[doc = "Disallow assignment operators in conditional expressions."]
+    no_conditional_assignment: Option<RuleConfiguration>,
+    #[doc = "Prevents from having const variables being re-assigned."]
     no_const_assign: Option<RuleConfiguration>,
+    #[doc = "Disallow returning a value from a constructor"]
+    no_constructor_return: Option<RuleConfiguration>,
+    #[doc = "Enforces that no distracting elements are used."]
+    no_distracting_elements: Option<RuleConfiguration>,
+    #[doc = "Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake."]
+    no_dupe_keys: Option<RuleConfiguration>,
+    #[doc = "Disallow the declaration of empty interfaces."]
+    no_empty_interface: Option<RuleConfiguration>,
+    #[doc = "Disallow the any type usage"]
     no_explicit_any: Option<RuleConfiguration>,
+    #[doc = "Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files."]
+    no_extra_non_null_assertion: Option<RuleConfiguration>,
+    #[doc = "Check that the scope attribute is only used on th elements."]
+    no_header_scope: Option<RuleConfiguration>,
+    #[doc = "Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors."]
     no_invalid_constructor_super: Option<RuleConfiguration>,
+    #[doc = "Disallow literal numbers that lose precision"]
+    no_precision_loss: Option<RuleConfiguration>,
+    #[doc = "Disallow returning a value from a setter"]
+    no_setter_return: Option<RuleConfiguration>,
+    #[doc = "Disallow comparison of expressions modifying the string case with non-compliant value."]
+    no_string_case_mismatch: Option<RuleConfiguration>,
+    #[doc = "Disallow control flow statements in finally blocks."]
+    no_unsafe_finally: Option<RuleConfiguration>,
+    #[doc = "Disallow the use of var"]
+    no_var: Option<RuleConfiguration>,
+    #[doc = "Disallow returning a value from a function with the return type 'void'"]
+    no_void_type_return: Option<RuleConfiguration>,
+    #[doc = "Enforce camel case naming convention."]
     use_camel_case: Option<RuleConfiguration>,
+    #[doc = "Require const declarations for variables that are never reassigned after declared."]
+    use_const: Option<RuleConfiguration>,
+    #[doc = "Enforce default clauses in switch statements to be last"]
+    use_default_switch_clause_last: Option<RuleConfiguration>,
+    #[doc = "Enforce all dependencies are correctly specified."]
     use_exhaustive_dependencies: Option<RuleConfiguration>,
+    #[doc = "Promotes the use of .flatMap() when map().flat() are used together."]
     use_flat_map: Option<RuleConfiguration>,
+    #[doc = "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals"]
     use_numeric_literals: Option<RuleConfiguration>,
+    #[doc = "Enforce \"for\" loop update clause moving the counter in the right direction."]
     use_valid_for_direction: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 9] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 25] = [
+        "noAccessKey",
         "noBannedTypes",
+        "noConditionalAssignment",
         "noConstAssign",
+        "noConstructorReturn",
+        "noDistractingElements",
+        "noDupeKeys",
+        "noEmptyInterface",
         "noExplicitAny",
+        "noExtraNonNullAssertion",
+        "noHeaderScope",
         "noInvalidConstructorSuper",
+        "noPrecisionLoss",
+        "noSetterReturn",
+        "noStringCaseMismatch",
+        "noUnsafeFinally",
+        "noVar",
+        "noVoidTypeReturn",
         "useCamelCase",
+        "useConst",
+        "useDefaultSwitchClauseLast",
         "useExhaustiveDependencies",
         "useFlatMap",
         "useNumericLiterals",
         "useValidForDirection",
     ];
-    const RECOMMENDED_RULES: [&'static str; 0] = [];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 0] = [];
+    const RECOMMENDED_RULES: [&'static str; 1] = ["noAccessKey"];
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 1] =
+        [RuleFilter::Rule("nursery", Self::CATEGORY_RULES[0])];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
@@ -737,7 +837,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 0] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 1] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
@@ -781,7 +881,9 @@ pub struct Security {
 #[allow(dead_code)]
 #[doc = r" A list of rules that belong to this group"]
 struct SecuritySchema {
+    #[doc = "Prevent the usage of dangerous JSX props"]
     no_dangerously_set_inner_html: Option<RuleConfiguration>,
+    #[doc = "Report when a DOM element or a component uses both children and dangerouslySetInnerHTML prop."]
     no_dangerously_set_inner_html_with_children: Option<RuleConfiguration>,
 }
 impl Security {
@@ -867,16 +969,27 @@ pub struct Style {
 #[allow(dead_code)]
 #[doc = r" A list of rules that belong to this group"]
 struct StyleSchema {
+    #[doc = "Disallow implicit true values on JSX boolean attributes"]
     no_implicit_boolean: Option<RuleConfiguration>,
+    #[doc = "Disallow negation in the condition of an if statement if it has an else clause"]
     no_negation_else: Option<RuleConfiguration>,
+    #[doc = "Disallow the use of constants which its value is the upper-case version of its name."]
     no_shouty_constants: Option<RuleConfiguration>,
+    #[doc = "Disallow template literals if interpolation and special-character handling are not needed"]
     no_unused_template_literal: Option<RuleConfiguration>,
+    #[doc = "Requires following curly brace conventions. JavaScript allows the omission of curly braces when a block contains only one statement. However, it is considered by many to be best practice to never omit curly braces around blocks, even when they are optional, because it can lead to bugs and reduces code clarity."]
     use_block_statements: Option<RuleConfiguration>,
+    #[doc = "This rule enforces the use of <>...</> over <Fragment>...</Fragment>."]
     use_fragment_syntax: Option<RuleConfiguration>,
+    #[doc = "Enforce using concise optional chain instead of chained logical expressions."]
     use_optional_chain: Option<RuleConfiguration>,
+    #[doc = "Prevent extra closing tags for components without children"]
     use_self_closing_elements: Option<RuleConfiguration>,
+    #[doc = "When expressing array types, this rule promotes the usage of T[] shorthand instead of Array<T>."]
     use_shorthand_array_type: Option<RuleConfiguration>,
+    #[doc = "Disallow multiple variable declarations in the same variable statement"]
     use_single_var_declarator: Option<RuleConfiguration>,
+    #[doc = "Template literals are preferred over string concatenation."]
     use_template: Option<RuleConfiguration>,
 }
 impl Style {

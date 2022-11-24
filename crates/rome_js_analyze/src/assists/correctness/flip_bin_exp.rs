@@ -1,4 +1,4 @@
-use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule};
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, RefactorKind, Rule};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -63,7 +63,7 @@ impl Rule for FlipBinExp {
         mutation.replace_node(prev_right, new_right);
 
         Some(JsRuleAction {
-            category: ActionCategory::Refactor,
+            category: ActionCategory::Refactor(RefactorKind::None),
             applicability: Applicability::Always,
             message: markup! { "Flip Binary Expression" }.to_owned(),
             mutation,

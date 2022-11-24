@@ -1,9 +1,9 @@
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_formatter::{FormatOptions, LineWidth};
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
 use rome_js_formatter::context::trailing_comma::TrailingComma;
-use rome_js_formatter::context::{JsFormatOptions, QuoteProperties, QuoteStyle};
+use rome_js_formatter::context::{JsFormatOptions, QuoteProperties, QuoteStyle, Semicolons};
 use rome_js_formatter::format_node;
 use rome_js_parser::parse;
 use rome_js_syntax::{ModuleKind, SourceType};
@@ -83,6 +83,21 @@ impl From<SerializableTrailingComma> for TrailingComma {
     }
 }
 
+#[derive(Debug, Eq, PartialEq, Clone, Copy, Deserialize, Serialize)]
+pub enum SerializableSemicolons {
+    Always,
+    AsNeeded,
+}
+
+impl From<SerializableSemicolons> for Semicolons {
+    fn from(test: SerializableSemicolons) -> Self {
+        match test {
+            SerializableSemicolons::Always => Semicolons::Always,
+            SerializableSemicolons::AsNeeded => Semicolons::AsNeeded,
+        }
+    }
+}
+
 #[derive(Debug, Deserialize, Serialize, Clone, Copy)]
 pub struct SerializableFormatOptions {
     /// The indent style.
@@ -99,6 +114,8 @@ pub struct SerializableFormatOptions {
 
     /// Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
     pub trailing_comma: Option<SerializableTrailingComma>,
+
+    pub semicolons: Option<SerializableSemicolons>,
 }
 
 impl From<SerializableFormatOptions> for JsFormatOptions {
@@ -124,6 +141,10 @@ impl From<SerializableFormatOptions> for JsFormatOptions {
             .with_trailing_comma(
                 test.trailing_comma
                     .map_or_else(|| TrailingComma::All, |value| value.into()),
+            )
+            .with_semicolons(
+                test.semicolons
+                    .map_or_else(|| Semicolons::Always, |value| value.into()),
             )
     }
 }

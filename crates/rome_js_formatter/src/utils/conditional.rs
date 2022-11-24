@@ -778,7 +778,7 @@ fn format_jsx_chain_alternate(alternate: &JsAnyExpression) -> FormatJsxChainExpr
 }
 
 /// Wraps all expressions in parentheses if they break EXCEPT
-/// * Nested conditionals in the alterante
+/// * Nested conditionals in the alternate
 /// * `null`
 /// * `undefined`
 struct FormatJsxChainExpression<'a> {

@@ -17,6 +17,11 @@ export enum QuoteStyle {
 	Single = "single",
 }
 
+export enum LintRules {
+	Recommended = "recommended",
+	All = "all",
+}
+
 export enum QuoteProperties {
 	AsNeeded = "as-needed",
 	Preserve = "preserve",
@@ -32,6 +37,11 @@ export enum LoadingState {
 	Loading,
 	Success,
 	Error,
+}
+
+export enum Semicolons {
+	Always = "always",
+	AsNeeded = "as-needed",
 }
 
 export type PrettierOutput =
@@ -87,7 +97,8 @@ export interface PlaygroundSettings {
 	quoteStyle: QuoteStyle;
 	quoteProperties: QuoteProperties;
 	trailingComma: TrailingComma;
-	enabledNurseryRules: boolean;
+	semicolons: Semicolons;
+	lintRules: LintRules;
 	enabledLinting: boolean;
 }
 
@@ -125,7 +136,8 @@ export const defaultPlaygroundState: PlaygroundState = {
 		quoteStyle: QuoteStyle.Double,
 		quoteProperties: QuoteProperties.AsNeeded,
 		trailingComma: TrailingComma.All,
-		enabledNurseryRules: true,
+		semicolons: Semicolons.Always,
+		lintRules: LintRules.Recommended,
 		enabledLinting: true,
 	},
 };

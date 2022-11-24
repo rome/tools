@@ -1,0 +1,39 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+{"a":"a
+```
+
+
+## Diagnostics
+
+```
+object_unterminated-value.json:1:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Missing closing quote
+  
+  > 1 │ {"a":"a
+      │      ^^
+  
+  i file ends here
+  
+  > 1 │ {"a":"a
+      │        
+  
+```
+
+## Tokens
+
+```
+L_CURLY: `{` (0..1)
+JSON_STRING_LITERAL: `"a"` (1..4)
+COLON: `:` (4..5)
+JSON_STRING_LITERAL: `"a` (5..7)
+EOF: `` (7..7)
+```
+

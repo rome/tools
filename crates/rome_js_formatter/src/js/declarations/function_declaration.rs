@@ -6,7 +6,8 @@ use rome_formatter::{write, RemoveSoftLinesBuffer};
 use rome_js_syntax::{
     JsAnyBinding, JsFunctionBody, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
     JsFunctionExpression, JsParameters, JsSyntaxToken, TsAnyReturnType,
-    TsDeclareFunctionDeclaration, TsReturnTypeAnnotation, TsType, TsTypeParameters,
+    TsDeclareFunctionDeclaration, TsDeclareFunctionExportDefaultDeclaration,
+    TsReturnTypeAnnotation, TsType, TsTypeParameters,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 
@@ -24,7 +25,8 @@ declare_node_union! {
         JsFunctionDeclaration |
         JsFunctionExpression |
         JsFunctionExportDefaultDeclaration |
-        TsDeclareFunctionDeclaration
+        TsDeclareFunctionDeclaration |
+        TsDeclareFunctionExportDefaultDeclaration
 }
 
 #[derive(Copy, Clone, Debug, Default)]
@@ -42,6 +44,9 @@ impl FormatFunction {
                 declaration.async_token()
             }
             FormatFunction::TsDeclareFunctionDeclaration(member) => member.async_token(),
+            FormatFunction::TsDeclareFunctionExportDefaultDeclaration(member) => {
+                member.async_token()
+            }
         }
     }
 
@@ -52,7 +57,12 @@ impl FormatFunction {
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.function_token()
             }
-            FormatFunction::TsDeclareFunctionDeclaration(member) => member.function_token(),
+            FormatFunction::TsDeclareFunctionDeclaration(declaration) => {
+                declaration.function_token()
+            }
+            FormatFunction::TsDeclareFunctionExportDefaultDeclaration(declaration) => {
+                declaration.function_token()
+            }
         }
     }
 
@@ -64,6 +74,7 @@ impl FormatFunction {
                 declaration.star_token()
             }
             FormatFunction::TsDeclareFunctionDeclaration(_) => None,
+            FormatFunction::TsDeclareFunctionExportDefaultDeclaration(_) => None,
         }
     }
 
@@ -72,7 +83,10 @@ impl FormatFunction {
             FormatFunction::JsFunctionDeclaration(declaration) => declaration.id().map(Some),
             FormatFunction::JsFunctionExpression(expression) => Ok(expression.id()),
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => Ok(declaration.id()),
-            FormatFunction::TsDeclareFunctionDeclaration(member) => member.id().map(Some),
+            FormatFunction::TsDeclareFunctionDeclaration(declaration) => declaration.id().map(Some),
+            FormatFunction::TsDeclareFunctionExportDefaultDeclaration(declaration) => {
+                Ok(declaration.id())
+            }
         }
     }
 
@@ -83,7 +97,12 @@ impl FormatFunction {
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.type_parameters()
             }
-            FormatFunction::TsDeclareFunctionDeclaration(member) => member.type_parameters(),
+            FormatFunction::TsDeclareFunctionDeclaration(declaration) => {
+                declaration.type_parameters()
+            }
+            FormatFunction::TsDeclareFunctionExportDefaultDeclaration(declaration) => {
+                declaration.type_parameters()
+            }
         }
     }
 
@@ -94,7 +113,10 @@ impl FormatFunction {
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.parameters()
             }
-            FormatFunction::TsDeclareFunctionDeclaration(member) => member.parameters(),
+            FormatFunction::TsDeclareFunctionDeclaration(declaration) => declaration.parameters(),
+            FormatFunction::TsDeclareFunctionExportDefaultDeclaration(declaration) => {
+                declaration.parameters()
+            }
         }
     }
 
@@ -107,7 +129,12 @@ impl FormatFunction {
             FormatFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.return_type_annotation()
             }
-            FormatFunction::TsDeclareFunctionDeclaration(member) => member.return_type_annotation(),
+            FormatFunction::TsDeclareFunctionDeclaration(declaration) => {
+                declaration.return_type_annotation()
+            }
+            FormatFunction::TsDeclareFunctionExportDefaultDeclaration(declaration) => {
+                declaration.return_type_annotation()
+            }
         }
     }
 
@@ -119,6 +146,7 @@ impl FormatFunction {
                 Some(declaration.body()?)
             }
             FormatFunction::TsDeclareFunctionDeclaration(_) => None,
+            FormatFunction::TsDeclareFunctionExportDefaultDeclaration(_) => None,
         })
     }
 

@@ -64,13 +64,28 @@ impl FormatNodeRule<JsImportNamedClause> for FormatJsImportNamedClause {
                             )),
                             Ok(separator),
                         ) => {
-                            if specifier.syntax().has_comments_direct()
-                                || separator
-                                    .map(|sep| {
-                                        sep.has_leading_comments() || sep.has_trailing_comments()
-                                    })
-                                    .unwrap_or(false)
-                            {
+                            if f.comments().has_comments(specifier.syntax()) {
+                                write!(f, [named_import.format()])
+                            } else {
+                                let JsNamedImportSpecifiersFields {
+                                    l_curly_token,
+                                    specifiers: _,
+                                    r_curly_token,
+                                } = specifiers.as_fields();
+                                write!(f, [l_curly_token.format(), space(), specifier.format(),])?;
+
+                                if let Some(separator) = separator {
+                                    format_removed(separator).fmt(f)?;
+                                }
+
+                                write!(f, [space(), r_curly_token.format()])
+                            }
+                        }
+                        (
+                            Ok(JsAnyNamedImportSpecifier::JsNamedImportSpecifier(specifier)),
+                            Ok(separator),
+                        ) => {
+                            if f.comments().has_comments(specifier.syntax()) {
                                 write!(f, [named_import.format()])
                             } else {
                                 let JsNamedImportSpecifiersFields {

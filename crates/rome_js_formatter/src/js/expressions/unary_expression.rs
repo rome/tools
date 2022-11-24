@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write, CstFormatContext};
+use rome_formatter::{format_args, write};
 
 use crate::parentheses::{unary_like_expression_needs_parentheses, NeedsParentheses};
 
@@ -33,7 +33,9 @@ impl FormatNodeRule<JsUnaryExpression> for FormatJsUnaryExpression {
             write!(f, [space()])?;
         }
 
-        if f.context().comments().has_comments(argument.syntax()) {
+        if f.comments().has_comments(argument.syntax())
+            && !f.comments().is_suppressed(argument.syntax())
+        {
             write!(
                 f,
                 [group(&format_args![

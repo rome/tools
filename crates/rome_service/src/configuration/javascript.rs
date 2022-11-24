@@ -1,5 +1,7 @@
 use indexmap::IndexSet;
-use rome_js_formatter::context::{trailing_comma::TrailingComma, QuoteProperties, QuoteStyle};
+use rome_js_formatter::context::{
+    trailing_comma::TrailingComma, QuoteProperties, QuoteStyle, Semicolons,
+};
 use serde::{Deserialize, Serialize};
 
 #[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq)]
@@ -42,6 +44,9 @@ pub struct JavascriptFormatter {
     /// Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
     #[serde(with = "PlainTrailingComma")]
     pub trailing_comma: TrailingComma,
+    /// Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.
+    #[serde(with = "PlainSemicolons")]
+    pub semicolons: Semicolons,
 }
 
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Default)]
@@ -70,4 +75,13 @@ pub enum PlainTrailingComma {
     All,
     ES5,
     None,
+}
+
+#[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[serde(rename_all = "camelCase", remote = "Semicolons")]
+pub enum PlainSemicolons {
+    #[default]
+    Always,
+    AsNeeded,
 }

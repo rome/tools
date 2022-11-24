@@ -6,7 +6,7 @@ use crate::{
 };
 use pico_args::Arguments;
 use rome_cli::Termination;
-use rome_console::BufferConsole;
+use rome_console::{BufferConsole, MarkupBuf};
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use rome_service::DynRef;
 use std::ffi::OsString;
@@ -376,7 +376,7 @@ fn file_too_large() {
         Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     // Do not store the content of the file in the snapshot
     fs.remove(file_path);
@@ -406,7 +406,7 @@ fn file_too_large_config_limit() {
         Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -436,7 +436,7 @@ fn file_too_large_cli_limit() {
         ]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -538,7 +538,39 @@ fn max_diagnostics_default() {
         _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
     }
 
-    assert_eq!(console.out_buffer.len(), 51);
+    let mut diagnostic_count = 0;
+    let mut filtered_messages = Vec::new();
+
+    for msg in console.out_buffer {
+        let MarkupBuf(nodes) = &msg.content;
+        let is_diagnostic = nodes.iter().any(|node| {
+            node.content
+                .contains("File content differs from formatting output")
+        });
+
+        if is_diagnostic {
+            diagnostic_count += 1;
+        } else {
+            filtered_messages.push(msg);
+        }
+    }
+
+    console.out_buffer = filtered_messages;
+
+    for i in 0..60 {
+        let file_path = format!("src/file_{i}.js");
+        fs.remove(Path::new(&file_path));
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "max_diagnostics_default",
+        fs,
+        console,
+        result,
+    ));
+
+    assert_eq!(diagnostic_count, 50);
 }
 
 #[test]
@@ -567,5 +599,69 @@ fn max_diagnostics() {
         _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
     }
 
-    assert_eq!(console.out_buffer.len(), 11);
+    let mut diagnostic_count = 0;
+    let mut filtered_messages = Vec::new();
+
+    for msg in console.out_buffer {
+        let MarkupBuf(nodes) = &msg.content;
+        let is_diagnostic = nodes.iter().any(|node| {
+            node.content
+                .contains("File content differs from formatting output")
+        });
+
+        if is_diagnostic {
+            diagnostic_count += 1;
+        } else {
+            filtered_messages.push(msg);
+        }
+    }
+
+    console.out_buffer = filtered_messages;
+
+    for i in 0..60 {
+        let file_path = format!("src/file_{i}.js");
+        fs.remove(Path::new(&file_path));
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "max_diagnostics",
+        fs,
+        console,
+        result,
+    ));
+
+    assert_eq!(diagnostic_count, 10);
+}
+
+#[test]
+fn print_verbose() {
+    let mut fs = MemoryFileSystem::default();
+
+    let file_path = Path::new("ci.js");
+    fs.insert(file_path.into(), LINT_ERROR.as_bytes());
+
+    let mut console = BufferConsole::default();
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("ci"),
+            OsString::from("--verbose"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    match &result {
+        Err(Termination::CheckError) => {}
+        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "print_verbose",
+        fs,
+        console,
+        result,
+    ));
 }

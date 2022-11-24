@@ -368,8 +368,8 @@ impl<L: Language, N: AstNode<Language = L>> DoubleEndedIterator for AstNodeListI
 #[derive(Clone, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct AstSeparatedElement<L: Language, N> {
-    node: SyntaxResult<N>,
-    trailing_separator: SyntaxResult<Option<SyntaxToken<L>>>,
+    pub node: SyntaxResult<N>,
+    pub trailing_separator: SyntaxResult<Option<SyntaxToken<L>>>,
 }
 
 impl<L: Language, N: AstNode<Language = L>> AstSeparatedElement<L, N> {

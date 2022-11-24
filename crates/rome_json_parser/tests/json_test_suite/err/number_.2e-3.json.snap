@@ -1,0 +1,34 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+[.2e-3]
+```
+
+
+## Diagnostics
+
+```
+number_.2e-3.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × unexpected character `.`
+  
+  > 1 │ [.2e-3]
+      │  ^
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+ERROR_TOKEN: `.` (1..2)
+JSON_NUMBER_LITERAL: `2e-3` (2..6)
+R_BRACK: `]` (6..7)
+EOF: `` (7..7)
+```
+

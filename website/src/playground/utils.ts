@@ -9,6 +9,7 @@ import {
 	QuoteStyle,
 	QuoteProperties,
 	TrailingComma,
+	Semicolons,
 	PrettierOutput,
 	PlaygroundSettings,
 	emptyPrettierOutput,
@@ -55,6 +56,7 @@ export function useWindowSize(): Size {
 		width: undefined,
 		height: undefined,
 	});
+
 	useEffect(() => {
 		// Handler to call on window resize
 		function handleResize() {
@@ -64,11 +66,16 @@ export function useWindowSize(): Size {
 
 		// Add event listener
 		window.addEventListener("resize", handleResize);
+
 		// Call handler right away so state gets updated with initial window size
 		handleResize();
+
 		// Remove event listener on cleanup
-		return () => window.removeEventListener("resize", handleResize);
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
 	}, []); // Empty array ensures that effect is only run on mount
+
 	return windowSize;
 }
 
@@ -150,6 +157,7 @@ export function formatWithPrettier(
 		quoteStyle: QuoteStyle;
 		quoteProperties: QuoteProperties;
 		trailingComma: TrailingComma;
+		semicolons: Semicolons;
 	},
 ): PrettierOutput {
 	try {
@@ -162,6 +170,7 @@ export function formatWithPrettier(
 			singleQuote: options.quoteStyle === QuoteStyle.Single,
 			quoteProps: options.quoteProperties,
 			trailingComma: options.trailingComma,
+			semi: options.semicolons === Semicolons.Always,
 		};
 
 		// @ts-ignore
@@ -217,7 +226,7 @@ export function decodeCode(encoded: string): string {
 	try {
 		return fromBinary(atob(encoded));
 	} catch {
-		return "";
+		return encoded;
 	}
 }
 

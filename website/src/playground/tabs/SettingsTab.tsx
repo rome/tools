@@ -1,8 +1,10 @@
 import {
 	IndentStyle,
+	LintRules,
 	PlaygroundState,
 	QuoteProperties,
 	QuoteStyle,
+	Semicolons,
 	SourceType,
 	TrailingComma,
 } from "../types";
@@ -39,7 +41,8 @@ export default function SettingsTab({
 			quoteStyle,
 			quoteProperties,
 			trailingComma,
-			enabledNurseryRules,
+			semicolons,
+			lintRules,
 			enabledLinting,
 		},
 	},
@@ -68,9 +71,13 @@ export default function SettingsTab({
 		setPlaygroundState,
 		"trailingComma",
 	);
-	const setEnabledNurseryRules = createPlaygroundSettingsSetter(
+	const setSemicolons = createPlaygroundSettingsSetter(
 		setPlaygroundState,
-		"enabledNurseryRules",
+		"semicolons",
+	);
+	const setLintRules = createPlaygroundSettingsSetter(
+		setPlaygroundState,
+		"lintRules",
 	);
 	const setEnabledLinting = createPlaygroundSettingsSetter(
 		setPlaygroundState,
@@ -200,10 +207,12 @@ export default function SettingsTab({
 				setQuoteProperties={setQuoteProperties}
 				trailingComma={trailingComma}
 				setTrailingComma={setTrailingComma}
+				semicolons={semicolons}
+				setSemicolons={setSemicolons}
 			/>
 			<LinterSettings
-				enabledNurseryRules={enabledNurseryRules}
-				setEnabledNurseryRules={setEnabledNurseryRules}
+				lintRules={lintRules}
+				setLintRules={setLintRules}
 				enabledLinting={enabledLinting}
 				setEnabledLinting={setEnabledLinting}
 			/>
@@ -240,10 +249,10 @@ function FileView({
 			</h2>
 
 			<ul className="files-list">
-				{files.map((filename, i) => {
+				{files.map((filename) => {
 					return (
 						<FileViewItem
-							key={i}
+							key={filename}
 							isActive={filename === currentFile}
 							filename={filename}
 							canDelete={files.length > 1}
@@ -376,7 +385,7 @@ function FilenameInput({
 	return (
 		<input
 			type="text"
-			// rome-ignore lint(a11y/noAutofocus): Not sure how else to do this
+			// rome-ignore lint/a11y/noAutofocus: Not sure how else to do this
 			autoFocus={true}
 			onKeyDown={onKeyDown}
 			onChange={onChange}
@@ -477,6 +486,8 @@ function FormatterSettings({
 	setQuoteProperties,
 	trailingComma,
 	setTrailingComma,
+	semicolons,
+	setSemicolons,
 }: {
 	lineWidth: number;
 	setLineWidth: (value: number) => void;
@@ -490,6 +501,8 @@ function FormatterSettings({
 	setQuoteProperties: (value: QuoteProperties) => void;
 	trailingComma: TrailingComma;
 	setTrailingComma: (value: TrailingComma) => void;
+	semicolons: Semicolons;
+	setSemicolons: (value: Semicolons) => void;
 }) {
 	return (
 		<>
@@ -566,19 +579,32 @@ function FormatterSettings({
 						<option value={TrailingComma.None}>None</option>
 					</select>
 				</div>
+
+				<div className="field-row">
+					<label htmlFor="trailingComma">Semicolons</label>
+					<select
+						id="semicolons"
+						name="semicolons"
+						value={semicolons ?? "always"}
+						onChange={(e) => setSemicolons(e.target.value as Semicolons)}
+					>
+						<option value={Semicolons.Always}>Always</option>
+						<option value={Semicolons.AsNeeded}>As needed</option>
+					</select>
+				</div>
 			</section>
 		</>
 	);
 }
 
 function LinterSettings({
-	enabledNurseryRules,
-	setEnabledNurseryRules,
+	lintRules,
+	setLintRules,
 	enabledLinting,
 	setEnabledLinting,
 }: {
-	enabledNurseryRules: boolean;
-	setEnabledNurseryRules: (value: boolean) => void;
+	lintRules: LintRules;
+	setLintRules: (value: LintRules) => void;
 	enabledLinting: boolean;
 	setEnabledLinting: (value: boolean) => void;
 }) {
@@ -597,16 +623,18 @@ function LinterSettings({
 					<label htmlFor="linting-enabled">Linter enabled</label>
 				</div>
 				<div className="field-row">
-					<input
-						id="nursery-rules"
-						aria-describedby="nursery-rules-description"
-						name="nursery-rules"
-						type="checkbox"
+					<label htmlFor="trailingComma">Lint Rules</label>
+					<select
+						id="lint-rules"
+						aria-describedby="lint-rules-description"
+						name="lint-rules"
 						disabled={!enabledLinting}
-						checked={enabledNurseryRules}
-						onChange={(e) => setEnabledNurseryRules(e.target.checked)}
-					/>
-					<label htmlFor="nursery-rules">Nursery lint rules</label>
+						value={lintRules ?? LintRules.Recommended}
+						onChange={(e) => setLintRules(e.target.value as LintRules)}
+					>
+						<option value={LintRules.Recommended}>Recommended</option>
+						<option value={LintRules.All}>All</option>
+					</select>
 				</div>
 			</section>
 		</>

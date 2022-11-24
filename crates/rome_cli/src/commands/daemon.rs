@@ -209,10 +209,17 @@ pub(super) fn rome_log_dir() -> PathBuf {
 /// - All spans and events at level debug in crates whose name starts with `rome`
 struct LoggingFilter;
 
+/// Tracing filter used for spans emitted by `rome*` crates
+const SELF_FILTER: LevelFilter = if cfg!(debug_assertions) {
+    LevelFilter::TRACE
+} else {
+    LevelFilter::DEBUG
+};
+
 impl LoggingFilter {
     fn is_enabled(&self, meta: &Metadata<'_>) -> bool {
         let filter = if meta.target().starts_with("rome") {
-            LevelFilter::DEBUG
+            SELF_FILTER
         } else {
             LevelFilter::INFO
         };
@@ -235,6 +242,6 @@ impl<S> Filter<S> for LoggingFilter {
     }
 
     fn max_level_hint(&self) -> Option<LevelFilter> {
-        Some(LevelFilter::DEBUG)
+        Some(SELF_FILTER)
     }
 }

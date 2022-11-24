@@ -48,7 +48,7 @@ impl Rule for NoNewSymbol {
 
         if reference.has_name("Symbol") {
             let model = ctx.model();
-            let declaration = model.declaration(&reference);
+            let declaration = model.binding(&reference);
 
             if declaration.is_none() {
                 return Some(());

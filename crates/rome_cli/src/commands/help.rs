@@ -18,7 +18,7 @@ const MAIN: Markup = markup! {
     - "<Emphasis>"help"</Emphasis>"         Prints this help message
 
 "<Emphasis>"OPTIONS:"</Emphasis>"
-    "<Dim>"--no-colors"</Dim>"              Disable the formatting of markup (print everything as plain text)
+    "<Dim>"--colors=<off|force>"</Dim>"     Set the formatting mode for markup: \"off\" prints everything as plain text, \"force\" forces the formatting of markup using ANSI even if the console output is determined to be incompatible
     "<Dim>"--use-server"</Dim>"             Connect to a running instance of the Rome daemon server
     "<Dim>"--version"</Dim>"                Show the Rome version information and quit
     "<Dim>"--files-max-size"</Dim>"         The maximum allowed size for source code files in bytes (default: 1MB)
@@ -37,6 +37,7 @@ const CHECK: Markup = markup! {
     "<Dim>"--apply"</Dim>"                       Apply safe fixes
     "<Dim>"--apply-suggested"</Dim>"             Apply safe and suggested fixes
     "<Dim>"--max-diagnostics"</Dim>"             Cap the amount of diagnostics displayed (default: 20)
+    "<Dim>"--verbose"</Dim>"                     Print additional verbose advices on diagnostics
 "
 };
 
@@ -48,6 +49,7 @@ const FORMAT_OPTIONS: Markup = markup! {
     "<Dim>"--quote-style <single|double>"</Dim>"            Changes the quotation character for strings (default: \")
     "<Dim>"--quote-properties <as-needed|preserve>"</Dim>"  Changes when properties in object should be quoted (default: as-needed)
     "<Dim>"--trailing-comma <all|es5|none>"</Dim>"          Changes trailing commas in multi-line comma-separated syntactic structures (default: all)
+    "<Dim>"--semicolons <always|as-needed>"</Dim>"          Changes when to print semicolons for statements (default: always)
     "
 };
 
@@ -62,7 +64,8 @@ const CI: Markup = markup! {
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--formatter-enabled"</Dim>"                      Allow to enable or disable the formatter check. (default: true)
     "<Dim>"--linter-enabled"</Dim>"                         Allow to enable or disable the linter check. (default: true)
-    "<Dim>"--max-diagnostics"</Dim>"                        Cap the amount of diagnostics displayed (default: 50)"
+    "<Dim>"--max-diagnostics"</Dim>"                        Cap the amount of diagnostics displayed (default: 50)
+    "<Dim>"--verbose"</Dim>"                                Print additional verbose advices on diagnostics"
     {FORMAT_OPTIONS}
 };
 
@@ -77,7 +80,8 @@ const FORMAT: Markup = markup! {
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--write"</Dim>"                                  Edit the files in place (beware!) instead of printing the diff to the console
     "<Dim>"--skip-errors"</Dim>"                            Skip over files containing syntax errors instead of emitting an error diagnostic.
-    "<Dim>"--max-diagnostics"</Dim>"                        Cap the amount of diagnostics displayed (default: 50)"
+    "<Dim>"--max-diagnostics"</Dim>"                        Cap the amount of diagnostics displayed (default: 50)
+    "<Dim>"--verbose"</Dim>"                                Print additional verbose advices on diagnostics"
     {FORMAT_OPTIONS}
    ""<Dim>"--stdin-file-path <string>"</Dim>"               A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js
 "

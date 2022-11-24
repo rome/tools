@@ -7,7 +7,7 @@ use futures::Sink;
 use futures::SinkExt;
 use futures::Stream;
 use futures::StreamExt;
-use rome_diagnostics::v2::FileId;
+use rome_diagnostics::FileId;
 use rome_fs::RomePath;
 use rome_lsp::LSPServer;
 use rome_lsp::ServerFactory;
@@ -27,15 +27,8 @@ use tower::timeout::Timeout;
 use tower::{Service, ServiceExt};
 use tower_lsp::jsonrpc;
 use tower_lsp::jsonrpc::Response;
+use tower_lsp::lsp_types as lsp;
 use tower_lsp::lsp_types::ClientCapabilities;
-use tower_lsp::lsp_types::CodeActionContext;
-use tower_lsp::lsp_types::CodeActionKind;
-use tower_lsp::lsp_types::CodeActionOrCommand;
-use tower_lsp::lsp_types::CodeActionParams;
-use tower_lsp::lsp_types::CodeActionResponse;
-use tower_lsp::lsp_types::Diagnostic;
-use tower_lsp::lsp_types::DiagnosticRelatedInformation;
-use tower_lsp::lsp_types::DiagnosticSeverity;
 use tower_lsp::lsp_types::DidChangeTextDocumentParams;
 use tower_lsp::lsp_types::DidCloseTextDocumentParams;
 use tower_lsp::lsp_types::DidOpenTextDocumentParams;
@@ -43,9 +36,6 @@ use tower_lsp::lsp_types::DocumentFormattingParams;
 use tower_lsp::lsp_types::FormattingOptions;
 use tower_lsp::lsp_types::InitializeResult;
 use tower_lsp::lsp_types::InitializedParams;
-use tower_lsp::lsp_types::Location;
-use tower_lsp::lsp_types::NumberOrString;
-use tower_lsp::lsp_types::PartialResultParams;
 use tower_lsp::lsp_types::Position;
 use tower_lsp::lsp_types::PublishDiagnosticsParams;
 use tower_lsp::lsp_types::Range;
@@ -546,44 +536,44 @@ async fn pull_diagnostics() -> Result<()> {
             PublishDiagnosticsParams {
                 uri: Url::parse("test://workspace/document.js")?,
                 version: Some(0),
-                diagnostics: vec![Diagnostic {
-                    range: Range {
-                        start: Position {
+                diagnostics: vec![lsp::Diagnostic {
+                    range: lsp::Range {
+                        start: lsp::Position {
                             line: 0,
-                            character: 5
+                            character: 5,
                         },
-                        end: Position {
+                        end: lsp::Position {
                             line: 0,
-                            character: 7
-                        }
+                            character: 7,
+                        },
                     },
-                    severity: Some(DiagnosticSeverity::ERROR),
-                    code: Some(NumberOrString::String(String::from(
-                        "lint/correctness/noDoubleEquals"
+                    severity: Some(lsp::DiagnosticSeverity::ERROR),
+                    code: Some(lsp::NumberOrString::String(String::from(
+                        "lint/correctness/noDoubleEquals",
                     ))),
                     code_description: None,
                     source: Some(String::from("rome")),
                     message: String::from(
-                        "Use === instead of ==.\n== is only allowed when comparing against `null`"
+                        "Use === instead of ==.\n== is only allowed when comparing against `null`",
                     ),
-                    related_information: Some(vec![DiagnosticRelatedInformation {
-                        location: Location {
-                            uri: Url::parse("test://workspace/document.js")?,
-                            range: Range {
-                                start: Position {
+                    related_information: Some(vec![lsp::DiagnosticRelatedInformation {
+                        location: lsp::Location {
+                            uri: lsp::Url::parse("test://workspace/document.js")?,
+                            range: lsp::Range {
+                                start: lsp::Position {
                                     line: 0,
-                                    character: 5
+                                    character: 5,
                                 },
-                                end: Position {
+                                end: lsp::Position {
                                     line: 0,
-                                    character: 7
-                                }
-                            }
+                                    character: 7,
+                                },
+                            },
                         },
-                        message: String::new()
+                        message: String::new(),
                     }]),
                     tags: None,
-                    data: None
+                    data: None,
                 }],
             }
         ))
@@ -595,6 +585,28 @@ async fn pull_diagnostics() -> Result<()> {
     reader.abort();
 
     Ok(())
+}
+
+fn fixable_diagnostic(line: u32) -> Result<lsp::Diagnostic> {
+    Ok(lsp::Diagnostic {
+        range: lsp::Range {
+            start: lsp::Position { line, character: 3 },
+            end: lsp::Position {
+                line,
+                character: 11,
+            },
+        },
+        severity: Some(lsp::DiagnosticSeverity::ERROR),
+        code: Some(lsp::NumberOrString::String(String::from(
+            "lint/correctness/noCompareNegZero",
+        ))),
+        code_description: None,
+        source: Some(String::from("rome")),
+        message: String::from("Do not use the === operator to compare against -0."),
+        related_information: None,
+        tags: None,
+        data: None,
+    })
 }
 
 #[tokio::test]
@@ -610,34 +622,34 @@ async fn pull_quick_fixes() -> Result<()> {
     server.initialize().await?;
     server.initialized().await?;
 
-    server.open_document("if(a == b) {}").await?;
+    server.open_document("if(a === -0) {}").await?;
 
-    let res: CodeActionResponse = server
+    let res: lsp::CodeActionResponse = server
         .request(
             "textDocument/codeAction",
             "pull_code_actions",
-            CodeActionParams {
-                text_document: TextDocumentIdentifier {
-                    uri: Url::parse("test://workspace/document.js")?,
+            lsp::CodeActionParams {
+                text_document: lsp::TextDocumentIdentifier {
+                    uri: lsp::Url::parse("test://workspace/document.js")?,
                 },
-                range: Range {
-                    start: Position {
+                range: lsp::Range {
+                    start: lsp::Position {
                         line: 0,
                         character: 6,
                     },
-                    end: Position {
+                    end: lsp::Position {
                         line: 0,
                         character: 6,
                     },
                 },
-                context: CodeActionContext {
-                    diagnostics: vec![],
-                    only: Some(vec![CodeActionKind::QUICKFIX]),
+                context: lsp::CodeActionContext {
+                    diagnostics: vec![fixable_diagnostic(0)?],
+                    only: Some(vec![lsp::CodeActionKind::QUICKFIX]),
                 },
-                work_done_progress_params: WorkDoneProgressParams {
+                work_done_progress_params: lsp::WorkDoneProgressParams {
                     work_done_token: None,
                 },
-                partial_result_params: PartialResultParams {
+                partial_result_params: lsp::PartialResultParams {
                     partial_result_token: None,
                 },
             },
@@ -645,15 +657,77 @@ async fn pull_quick_fixes() -> Result<()> {
         .await?
         .context("codeAction returned None")?;
 
-    let code_actions: Vec<_> = res
-        .iter()
-        .map(|action| match action {
-            CodeActionOrCommand::Command(_) => panic!("unexpected command"),
-            CodeActionOrCommand::CodeAction(action) => &action.title,
-        })
-        .collect();
+    let mut changes = HashMap::default();
+    changes.insert(
+        lsp::Url::parse("test://workspace/document.js")?,
+        vec![lsp::TextEdit {
+            range: lsp::Range {
+                start: lsp::Position {
+                    line: 0,
+                    character: 9,
+                },
+                end: lsp::Position {
+                    line: 0,
+                    character: 10,
+                },
+            },
+            new_text: String::new(),
+        }],
+    );
 
-    assert_eq!(code_actions.as_slice(), &["Use ==="]);
+    let expected_code_action = lsp::CodeActionOrCommand::CodeAction(lsp::CodeAction {
+        title: String::from("Replace -0 with 0"),
+        kind: Some(lsp::CodeActionKind::new(
+            "quickfix.rome.correctness.noCompareNegZero",
+        )),
+        diagnostics: Some(vec![fixable_diagnostic(0)?]),
+        edit: Some(lsp::WorkspaceEdit {
+            changes: Some(changes),
+            document_changes: None,
+            change_annotations: None,
+        }),
+        command: None,
+        is_preferred: Some(true),
+        disabled: None,
+        data: None,
+    });
+
+    let mut suppression_changes = HashMap::default();
+    suppression_changes.insert(
+        lsp::Url::parse("test://workspace/document.js")?,
+        vec![lsp::TextEdit {
+            range: lsp::Range {
+                start: lsp::Position {
+                    line: 0,
+                    character: 3,
+                },
+                end: lsp::Position {
+                    line: 0,
+                    character: 3,
+                },
+            },
+            new_text: String::from("\n// rome-ignore lint/correctness/noCompareNegZero \n"),
+        }],
+    );
+
+    let expected_suppression_action = lsp::CodeActionOrCommand::CodeAction(lsp::CodeAction {
+        title: String::from("Suppress rule lint/correctness/noCompareNegZero"),
+        kind: Some(lsp::CodeActionKind::new(
+            "quickfix.suppressRule.rome.correctness.noCompareNegZero",
+        )),
+        diagnostics: Some(vec![fixable_diagnostic(0)?]),
+        edit: Some(lsp::WorkspaceEdit {
+            changes: Some(suppression_changes),
+            document_changes: None,
+            change_annotations: None,
+        }),
+        command: None,
+        is_preferred: None,
+        disabled: None,
+        data: None,
+    });
+
+    assert_eq!(res, vec![expected_code_action, expected_suppression_action]);
 
     server.close_document().await?;
 
@@ -680,32 +754,32 @@ async fn pull_refactors() -> Result<()> {
         .open_document("let variable = \"value\"; func(variable);")
         .await?;
 
-    let res: CodeActionResponse = server
+    let res: lsp::CodeActionResponse = server
         .request(
             "textDocument/codeAction",
             "pull_code_actions",
-            CodeActionParams {
-                text_document: TextDocumentIdentifier {
-                    uri: Url::parse("test://workspace/document.js")?,
+            lsp::CodeActionParams {
+                text_document: lsp::TextDocumentIdentifier {
+                    uri: lsp::Url::parse("test://workspace/document.js")?,
                 },
-                range: Range {
-                    start: Position {
+                range: lsp::Range {
+                    start: lsp::Position {
                         line: 0,
                         character: 7,
                     },
-                    end: Position {
+                    end: lsp::Position {
                         line: 0,
                         character: 7,
                     },
                 },
-                context: CodeActionContext {
+                context: lsp::CodeActionContext {
                     diagnostics: vec![],
-                    only: Some(vec![CodeActionKind::REFACTOR]),
+                    only: Some(vec![lsp::CodeActionKind::REFACTOR]),
                 },
-                work_done_progress_params: WorkDoneProgressParams {
+                work_done_progress_params: lsp::WorkDoneProgressParams {
                     work_done_token: None,
                 },
-                partial_result_params: PartialResultParams {
+                partial_result_params: lsp::PartialResultParams {
                     partial_result_token: None,
                 },
             },
@@ -713,15 +787,160 @@ async fn pull_refactors() -> Result<()> {
         .await?
         .context("codeAction returned None")?;
 
-    let code_actions: Vec<_> = res
-        .iter()
-        .map(|action| match action {
-            CodeActionOrCommand::Command(_) => panic!("unexpected command"),
-            CodeActionOrCommand::CodeAction(action) => &action.title,
-        })
-        .collect();
+    let mut changes = HashMap::default();
 
-    assert_eq!(code_actions.as_slice(), &["Inline variable"]);
+    changes.insert(
+        lsp::Url::parse("test://workspace/document.js")?,
+        vec![
+            lsp::TextEdit {
+                range: lsp::Range {
+                    start: lsp::Position {
+                        line: 0,
+                        character: 0,
+                    },
+                    end: lsp::Position {
+                        line: 0,
+                        character: 15,
+                    },
+                },
+                new_text: String::from("func("),
+            },
+            lsp::TextEdit {
+                range: lsp::Range {
+                    start: lsp::Position {
+                        line: 0,
+                        character: 22,
+                    },
+                    end: lsp::Position {
+                        line: 0,
+                        character: 37,
+                    },
+                },
+                new_text: String::new(),
+            },
+        ],
+    );
+
+    let expected_action = lsp::CodeActionOrCommand::CodeAction(lsp::CodeAction {
+        title: String::from("Inline variable"),
+        kind: Some(lsp::CodeActionKind::new(
+            "refactor.inline.rome.correctness.inlineVariable",
+        )),
+        diagnostics: None,
+        edit: Some(lsp::WorkspaceEdit {
+            changes: Some(changes),
+            document_changes: None,
+            change_annotations: None,
+        }),
+        command: None,
+        is_preferred: Some(true),
+        disabled: None,
+        data: None,
+    });
+
+    assert_eq!(res, vec![expected_action]);
+
+    server.close_document().await?;
+
+    server.shutdown().await?;
+    reader.abort();
+
+    Ok(())
+}
+
+#[tokio::test]
+async fn pull_fix_all() -> Result<()> {
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
+    let (stream, sink) = client.split();
+    let mut server = Server::new(service);
+
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
+    let reader = tokio::spawn(client_handler(stream, sink, sender));
+
+    server.initialize().await?;
+    server.initialized().await?;
+
+    server
+        .open_document("if(a === -0) {}\nif(a === -0) {}\nif(a === -0) {}")
+        .await?;
+
+    let res: lsp::CodeActionResponse = server
+        .request(
+            "textDocument/codeAction",
+            "pull_code_actions",
+            lsp::CodeActionParams {
+                text_document: lsp::TextDocumentIdentifier {
+                    uri: lsp::Url::parse("test://workspace/document.js")?,
+                },
+                range: lsp::Range {
+                    start: lsp::Position {
+                        line: 0,
+                        character: 7,
+                    },
+                    end: lsp::Position {
+                        line: 0,
+                        character: 7,
+                    },
+                },
+                context: lsp::CodeActionContext {
+                    diagnostics: vec![
+                        fixable_diagnostic(0)?,
+                        fixable_diagnostic(1)?,
+                        fixable_diagnostic(2)?,
+                    ],
+                    only: Some(vec![lsp::CodeActionKind::new("source.fixAll")]),
+                },
+                work_done_progress_params: lsp::WorkDoneProgressParams {
+                    work_done_token: None,
+                },
+                partial_result_params: lsp::PartialResultParams {
+                    partial_result_token: None,
+                },
+            },
+        )
+        .await?
+        .context("codeAction returned None")?;
+
+    let mut changes = HashMap::default();
+
+    changes.insert(
+        lsp::Url::parse("test://workspace/document.js")?,
+        vec![lsp::TextEdit {
+            range: lsp::Range {
+                start: lsp::Position {
+                    line: 0,
+                    character: 0,
+                },
+                end: lsp::Position {
+                    line: 3,
+                    character: 0,
+                },
+            },
+            new_text: String::from("if(a === 0) {}\nif(a === 0) {}\nif(a === 0) {}"),
+        }],
+    );
+
+    let expected_action = lsp::CodeActionOrCommand::CodeAction(lsp::CodeAction {
+        title: String::from("Fix all auto-fixable issues"),
+        kind: Some(lsp::CodeActionKind::new("source.fixAll.rome")),
+        diagnostics: Some(vec![
+            fixable_diagnostic(0)?,
+            fixable_diagnostic(1)?,
+            fixable_diagnostic(2)?,
+        ]),
+        edit: Some(lsp::WorkspaceEdit {
+            changes: Some(changes),
+            document_changes: None,
+            change_annotations: None,
+        }),
+        command: None,
+        is_preferred: Some(true),
+        disabled: None,
+        data: None,
+    });
+
+    assert_eq!(res, vec![expected_action]);
 
     server.close_document().await?;
 

@@ -1,0 +1,36 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+{"a":"b"}//
+```
+
+
+## Diagnostics
+
+```
+object_trailing_comment_slash_open.json:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × JSON standard does not allow comments.
+  
+  > 1 │ {"a":"b"}//
+      │          ^^
+  
+```
+
+## Tokens
+
+```
+L_CURLY: `{` (0..1)
+JSON_STRING_LITERAL: `"a"` (1..4)
+COLON: `:` (4..5)
+JSON_STRING_LITERAL: `"b"` (5..8)
+R_CURLY: `}` (8..9)
+COMMENT: `//` (9..11)
+EOF: `` (11..11)
+```
+

@@ -6318,6 +6318,21 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsFunctionExportDefa
         FormatOwnedWithRule :: new (self , crate :: js :: declarations :: function_export_default_declaration :: FormatJsFunctionExportDefaultDeclaration :: default ())
     }
 }
+impl FormatRule < rome_js_syntax :: TsDeclareFunctionExportDefaultDeclaration > for crate :: ts :: declarations :: declare_function_export_default_declaration :: FormatTsDeclareFunctionExportDefaultDeclaration { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: TsDeclareFunctionExportDefaultDeclaration , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: TsDeclareFunctionExportDefaultDeclaration > :: fmt (self , node , f) } }
+impl AsFormat for rome_js_syntax::TsDeclareFunctionExportDefaultDeclaration {
+    type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: TsDeclareFunctionExportDefaultDeclaration , crate :: ts :: declarations :: declare_function_export_default_declaration :: FormatTsDeclareFunctionExportDefaultDeclaration > ;
+    fn format(&self) -> Self::Format<'_> {
+        FormatRefWithRule :: new (self , crate :: ts :: declarations :: declare_function_export_default_declaration :: FormatTsDeclareFunctionExportDefaultDeclaration :: default ())
+    }
+}
+impl IntoFormat<crate::JsFormatContext>
+    for rome_js_syntax::TsDeclareFunctionExportDefaultDeclaration
+{
+    type Format = FormatOwnedWithRule < rome_js_syntax :: TsDeclareFunctionExportDefaultDeclaration , crate :: ts :: declarations :: declare_function_export_default_declaration :: FormatTsDeclareFunctionExportDefaultDeclaration > ;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule :: new (self , crate :: ts :: declarations :: declare_function_export_default_declaration :: FormatTsDeclareFunctionExportDefaultDeclaration :: default ())
+    }
+}
 impl FormatRule<rome_js_syntax::JsExportNamedShorthandSpecifier>
     for crate::js::module::export_named_shorthand_specifier::FormatJsExportNamedShorthandSpecifier
 {

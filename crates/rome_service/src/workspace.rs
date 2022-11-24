@@ -55,7 +55,7 @@ use crate::{Configuration, Deserialize, RomeError, Serialize};
 use rome_analyze::ActionCategory;
 pub use rome_analyze::RuleCategories;
 use rome_console::{markup, Markup, MarkupBuf};
-use rome_diagnostics::{v2, CodeSuggestion};
+use rome_diagnostics::CodeSuggestion;
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_js_syntax::{TextRange, TextSize};
@@ -183,8 +183,8 @@ pub struct PullDiagnosticsParams {
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct PullDiagnosticsResult {
-    pub diagnostics: Vec<v2::serde::Diagnostic>,
-    pub has_errors: bool,
+    pub diagnostics: Vec<rome_diagnostics::serde::Diagnostic>,
+    pub errors: usize,
     pub skipped_diagnostics: u64,
 }
 
@@ -205,7 +205,7 @@ pub struct PullActionsResult {
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct CodeAction {
     pub category: ActionCategory,
-    pub rule_name: Cow<'static, str>,
+    pub rule_name: Option<(Cow<'static, str>, Cow<'static, str>)>,
     pub suggestion: CodeSuggestion,
 }
 
@@ -261,8 +261,8 @@ pub struct FixFileResult {
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct FixAction {
-    /// Name of the rule that emitted this code action
-    pub rule_name: Cow<'static, str>,
+    /// Name of the rule group and rule that emitted this code action
+    pub rule_name: Option<(Cow<'static, str>, Cow<'static, str>)>,
     /// Source range at which this action was applied
     pub range: TextRange,
 }

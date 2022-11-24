@@ -52,6 +52,7 @@ mod help {
 mod main {
     use super::*;
     use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
+    use rome_service::workspace;
 
     #[test]
     fn unknown_command() {
@@ -181,51 +182,38 @@ mod main {
             _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
         }
     }
-}
-
-mod init {
-    use super::*;
-    use crate::configs::CONFIG_INIT_DEFAULT;
-    use crate::snap_test::SnapshotPayload;
-    use pico_args::Arguments;
-    use rome_console::BufferConsole;
-    use rome_fs::{FileSystemExt, MemoryFileSystem};
-    use rome_service::DynRef;
-    use std::ffi::OsString;
-    use std::path::Path;
 
     #[test]
-    fn creates_config_file() {
-        let mut fs = MemoryFileSystem::default();
-        let mut console = BufferConsole::default();
+    fn no_colors() {
+        let workspace = workspace::server();
+        let args = Arguments::from_vec(vec![OsString::from("--colors=off")]);
+        let result = CliSession::new(&*workspace, args).and_then(|session| session.run());
 
-        let result = run_cli(
-            DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
-            Arguments::from_vec(vec![OsString::from("init")]),
-        );
         assert!(result.is_ok(), "run_cli returned {result:?}");
+    }
 
-        let file_path = Path::new("rome.json");
+    #[test]
+    fn force_colors() {
+        let workspace = workspace::server();
+        let args = Arguments::from_vec(vec![OsString::from("--colors=force")]);
+        let result = CliSession::new(&*workspace, args).and_then(|session| session.run());
 
-        let mut file = fs
-            .open(file_path)
-            .expect("configuration file was not written on disk");
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+    }
 
-        let mut content = String::new();
-        file.read_to_string(&mut content)
-            .expect("failed to read file from memory FS");
-        assert_eq!(content, CONFIG_INIT_DEFAULT);
+    #[test]
+    fn invalid_colors() {
+        let workspace = workspace::server();
+        let args = Arguments::from_vec(vec![OsString::from("--colors=other")]);
 
-        drop(file);
+        let result = CliSession::new(&*workspace, args).and_then(|session| session.run());
 
-        assert_cli_snapshot(SnapshotPayload::new(
-            module_path!(),
-            "creates_config_file",
-            fs,
-            console,
-            result,
-        ));
+        match result {
+            Err(Termination::ParseError { argument, .. }) => {
+                assert_eq!(argument, "--colors");
+            }
+            _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
+        }
     }
 }
 
@@ -256,7 +244,7 @@ mod configuration {
             Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
         );
 
-        assert!(result.is_ok(), "run_cli returned {result:?}");
+        assert!(result.is_err(), "run_cli returned {result:?}");
 
         assert_cli_snapshot(SnapshotPayload::new(
             module_path!(),
@@ -347,8 +335,11 @@ mod configuration {
         let mut fs = MemoryFileSystem::default();
         let mut console = BufferConsole::default();
 
-        let file_path = Path::new("rome.json");
-        fs.insert(file_path.into(), CONFIG_INCORRECT_GLOBALS_V2.as_bytes());
+        fs.insert(
+            Path::new("rome.json").into(),
+            CONFIG_INCORRECT_GLOBALS_V2.as_bytes(),
+        );
+        fs.insert(Path::new("file.js").into(), UNFORMATTED.as_bytes());
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),

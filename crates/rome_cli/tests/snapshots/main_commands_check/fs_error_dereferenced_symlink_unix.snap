@@ -1,0 +1,23 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+# Termination Message
+
+```block
+no files were processed in the specified paths.
+```
+
+# Emitted Messages
+
+```block
+/tmp/rome_test_broken_symlink/broken_symlink internalError/fs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Dereferenced symlink
+  
+  i Rome encountered a file system entry that is a broken symbolic link: /tmp/rome_test_broken_symlink/broken_symlink
+  
+
+```
+
+

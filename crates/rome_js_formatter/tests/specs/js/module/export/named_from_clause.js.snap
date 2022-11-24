@@ -15,6 +15,17 @@ export {
     lorem_lorem_lorem_lorem_lorem_lorem_lorem_lorem_lorem,
     lorem_lorem_lorem_lorem_lorem_ as ipsum_ipsum_ipsum_ipsum_ipsum_ipsum_
 } from "fancy" assert { type: "json", "type2": "json", type23: "json", "type24": "json"}
+
+
+export { loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong"
+
+export { loooooooooooooooooooooooooooooooooooooooooooooooooong, } from "loooooooooooooooooooooooooooooooooooooooooooooong"
+
+export { 
+// comment 
+loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong"
+
+export { a as b } from "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong"
 ```
 
 
@@ -30,6 +41,7 @@ Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
+Semicolons: Always
 -----
 
 ```js
@@ -44,6 +56,24 @@ export {
 	type23: "json",
 	"type24": "json",
 };
+
+export { loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong";
+
+export { loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong";
+
+export {
+	// comment
+	loooooooooooooooooooooooooooooooooooooooooooooooooong,
+} from "loooooooooooooooooooooooooooooooooooooooooooooong";
+
+export { a as b } from "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong";
+
+
+## Lines exceeding width of 80 characters
+
+   13: export { loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong";
+   15: export { loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong";
+   22: export { a as b } from "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong";
 ```
 
 

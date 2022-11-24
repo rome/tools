@@ -7,7 +7,7 @@ use crate::{
     },
     RomeError, Rules,
 };
-pub use javascript::JsFormatSettings;
+pub use javascript::JsFormatterSettings;
 use rome_analyze::AnalysisFilter;
 use rome_formatter::Printed;
 use rome_fs::RomePath;
@@ -167,8 +167,8 @@ pub(crate) struct LintParams<'a> {
 }
 
 pub(crate) struct LintResults {
-    pub(crate) diagnostics: Vec<rome_diagnostics::v2::serde::Diagnostic>,
-    pub(crate) has_errors: bool,
+    pub(crate) diagnostics: Vec<rome_diagnostics::serde::Diagnostic>,
+    pub(crate) errors: usize,
     pub(crate) skipped_diagnostics: u64,
 }
 

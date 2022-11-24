@@ -21,7 +21,7 @@ use drop_bomb::DebugDropBomb;
 pub(crate) use parse_error::*;
 pub(crate) use parse_lists::{ParseNodeList, ParseSeparatedList};
 pub(crate) use parsed_syntax::ParsedSyntax;
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_js_syntax::{
     JsSyntaxKind::{self},
     SourceType, TextRange,
@@ -444,7 +444,6 @@ impl Marker {
                 Some(Event::Start {
                     kind: JsSyntaxKind::TOMBSTONE,
                     forward_parent: None,
-                    ..
                 }) => (),
                 _ => unreachable!(),
             }
@@ -606,7 +605,7 @@ pub struct Checkpoint {
 #[cfg(test)]
 mod tests {
     use crate::Parser;
-    use rome_diagnostics::file::FileId;
+    use rome_diagnostics::location::FileId;
     use rome_js_syntax::{JsSyntaxKind, SourceType};
     use rome_rowan::AstNode;
 

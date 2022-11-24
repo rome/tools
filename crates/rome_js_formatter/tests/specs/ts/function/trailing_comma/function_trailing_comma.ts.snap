@@ -1,0 +1,213 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+expression: function_trailing_comma.ts
+---
+
+# Input
+
+```js
+function test<
+	longlonglonglonglonglonglongT1,
+	longlonglonglonglonglonglongT2,
+	longlonglonglonglonglonglongT3
+	>(
+	longlonglonglonglonglonglongItem1,
+	longlonglonglonglonglonglongItem2,
+	longlonglonglonglonglonglongItem3
+) {}
+const test1 = <
+	longlonglonglonglonglonglongT1,
+	longlonglonglonglonglonglongT2,
+	longlonglonglonglonglonglongT3
+	>(
+	longlonglonglonglonglonglongItem1,
+	longlonglonglonglonglonglongItem2,
+	longlonglonglonglonglonglongItem3
+) => {};
+test<
+	longlonglonglonglonglonglongT1,
+	longlonglonglonglonglonglongT2,
+	longlonglonglonglonglonglongT3
+	>(
+	longlonglonglonglonglonglongItem1,
+	longlonglonglonglonglonglongItem2,
+	longlonglonglonglonglonglongItem3,
+);
+
+this.test(	longlonglonglonglonglonglongT1,
+	longlonglonglonglonglonglongT2,
+	longlonglonglonglonglonglongT3);
+
+connect(
+	mapStateToPropsmapStateToProps,
+	mapDispatchToPropsmapDispatchToProps,
+	mergePropsmergeProps,
+)(Component)
+
+```
+
+
+=============================
+
+# Outputs
+
+## Output 1
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: Always
+-----
+
+```js
+function test<
+	longlonglonglonglonglonglongT1,
+	longlonglonglonglonglonglongT2,
+	longlonglonglonglonglonglongT3,
+>(
+	longlonglonglonglonglonglongItem1,
+	longlonglonglonglonglonglongItem2,
+	longlonglonglonglonglonglongItem3,
+) {}
+const test1 = <
+	longlonglonglonglonglonglongT1,
+	longlonglonglonglonglonglongT2,
+	longlonglonglonglonglonglongT3,
+>(
+	longlonglonglonglonglonglongItem1,
+	longlonglonglonglonglonglongItem2,
+	longlonglonglonglonglonglongItem3,
+) => {};
+test<
+	longlonglonglonglonglonglongT1,
+	longlonglonglonglonglonglongT2,
+	longlonglonglonglonglonglongT3
+>(
+	longlonglonglonglonglonglongItem1,
+	longlonglonglonglonglonglongItem2,
+	longlonglonglonglonglonglongItem3,
+);
+
+this.test(
+	longlonglonglonglonglonglongT1,
+	longlonglonglonglonglonglongT2,
+	longlonglonglonglonglonglongT3,
+);
+
+connect(
+	mapStateToPropsmapStateToProps,
+	mapDispatchToPropsmapDispatchToProps,
+	mergePropsmergeProps,
+)(Component);
+```
+
+## Output 2
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: ES5
+Semicolons: Always
+-----
+
+```js
+function test<
+	longlonglonglonglonglonglongT1,
+	longlonglonglonglonglonglongT2,
+	longlonglonglonglonglonglongT3
+>(
+	longlonglonglonglonglonglongItem1,
+	longlonglonglonglonglonglongItem2,
+	longlonglonglonglonglonglongItem3
+) {}
+const test1 = <
+	longlonglonglonglonglonglongT1,
+	longlonglonglonglonglonglongT2,
+	longlonglonglonglonglonglongT3
+>(
+	longlonglonglonglonglonglongItem1,
+	longlonglonglonglonglonglongItem2,
+	longlonglonglonglonglonglongItem3
+) => {};
+test<
+	longlonglonglonglonglonglongT1,
+	longlonglonglonglonglonglongT2,
+	longlonglonglonglonglonglongT3
+>(
+	longlonglonglonglonglonglongItem1,
+	longlonglonglonglonglonglongItem2,
+	longlonglonglonglonglonglongItem3
+);
+
+this.test(
+	longlonglonglonglonglonglongT1,
+	longlonglonglonglonglonglongT2,
+	longlonglonglonglonglonglongT3
+);
+
+connect(
+	mapStateToPropsmapStateToProps,
+	mapDispatchToPropsmapDispatchToProps,
+	mergePropsmergeProps
+)(Component);
+```
+
+## Output 3
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: None
+Semicolons: Always
+-----
+
+```js
+function test<
+	longlonglonglonglonglonglongT1,
+	longlonglonglonglonglonglongT2,
+	longlonglonglonglonglonglongT3
+>(
+	longlonglonglonglonglonglongItem1,
+	longlonglonglonglonglonglongItem2,
+	longlonglonglonglonglonglongItem3
+) {}
+const test1 = <
+	longlonglonglonglonglonglongT1,
+	longlonglonglonglonglonglongT2,
+	longlonglonglonglonglonglongT3
+>(
+	longlonglonglonglonglonglongItem1,
+	longlonglonglonglonglonglongItem2,
+	longlonglonglonglonglonglongItem3
+) => {};
+test<
+	longlonglonglonglonglonglongT1,
+	longlonglonglonglonglonglongT2,
+	longlonglonglonglonglonglongT3
+>(
+	longlonglonglonglonglonglongItem1,
+	longlonglonglonglonglonglongItem2,
+	longlonglonglonglonglonglongItem3
+);
+
+this.test(
+	longlonglonglonglonglonglongT1,
+	longlonglonglonglonglonglongT2,
+	longlonglonglonglonglonglongT3
+);
+
+connect(
+	mapStateToPropsmapStateToProps,
+	mapDispatchToPropsmapDispatchToProps,
+	mergePropsmergeProps
+)(Component);
+```
+
+

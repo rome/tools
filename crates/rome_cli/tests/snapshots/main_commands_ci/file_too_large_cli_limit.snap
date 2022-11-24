@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 223
 expression: content
 ---
 ## `ci.js`
@@ -8,6 +7,12 @@ expression: content
 ```js
 statement1();
 statement2();
+```
+
+# Termination Message
+
+```block
+no files were processed in the specified paths.
 ```
 
 # Emitted Messages
@@ -21,7 +26,7 @@ ci.js lint ━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ```block
-Skipped 1 files
+Skipped 1 file(s)
 ```
 
 

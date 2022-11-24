@@ -54,7 +54,7 @@ pub enum Termination {
     IncompatibleArguments(&'static str, &'static str),
 
     /// Returned by a traversal command when error diagnostics were emitted
-    #[error("errors where emitted while running checks")]
+    #[error("some errors were emitted while running checks")]
     CheckError,
 
     #[error("the value of the argument {0} is too high, maximum accepted {1}")]
@@ -76,6 +76,9 @@ pub enum Termination {
 
     #[error("The combination of configuration and arguments is invalid: \n {0}")]
     IncompatibleEndConfiguration(&'static str),
+
+    #[error("no files were processed in the specified paths.")]
+    NoFilesWereProcessed,
 }
 
 fn command_name() -> String {

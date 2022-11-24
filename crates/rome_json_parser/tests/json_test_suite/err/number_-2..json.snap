@@ -1,0 +1,35 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+[-2.]
+```
+
+
+## Diagnostics
+
+```
+number_-2..json:1:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Missing fraction
+  
+  > 1 │ [-2.]
+      │     ^
+  
+  i Remove the `.`
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+ERROR_TOKEN: `-2.` (1..4)
+R_BRACK: `]` (4..5)
+EOF: `` (5..5)
+```
+

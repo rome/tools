@@ -5,7 +5,7 @@
 //! [website]: https://rome.tools
 
 use rome_cli::{open_transport, setup_panic_handler, Arguments, CliSession, Termination};
-use rome_diagnostics::v2::set_bottom_frame;
+use rome_diagnostics::set_bottom_frame;
 use rome_service::workspace;
 use tokio::runtime::Runtime;
 
@@ -35,5 +35,6 @@ fn main() -> Result<(), Termination> {
         workspace::server()
     };
 
-    CliSession::new(&*workspace, args).run()
+    let session = CliSession::new(&*workspace, args)?;
+    session.run()
 }

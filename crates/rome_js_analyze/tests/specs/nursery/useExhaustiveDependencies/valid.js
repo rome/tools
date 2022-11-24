@@ -92,3 +92,19 @@ function MyComponent6() {
     });
 }
 
+// Capturing an object property
+function MyComponent7() {
+    let someObj = getObj();
+    useEffect(() => {
+        console.log(someObj.name);
+        console.log(someObj.age)
+    }, [someObj.name, someObj.age]);
+}
+
+// Specified dependency cover captures 
+
+function MyComponent8({ a }) {
+    useEffect(() => {
+      console.log(a.b);
+    }, [a]);
+  }

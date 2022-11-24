@@ -1,8 +1,8 @@
 use crate::{semantic_events, SemanticEvent};
 use rome_console::{markup, ConsoleExt, EnvConsole};
-use rome_diagnostics::file::FileId;
-use rome_diagnostics::v2::location::AsSpan;
-use rome_diagnostics::v2::{
+use rome_diagnostics::location::AsSpan;
+use rome_diagnostics::location::FileId;
+use rome_diagnostics::{
     Advices, Diagnostic, DiagnosticExt, Location, LogCategory, PrintDiagnostic, Visit,
 };
 use rome_js_syntax::{JsAnyRoot, JsSyntaxToken, SourceType, TextRange, TextSize, WalkEvent};
@@ -108,13 +108,13 @@ pub fn assert(code: &str, test_name: &str) {
     let r = rome_js_parser::parse(code, FileId::zero(), SourceType::tsx());
 
     if r.has_errors() {
-        let mut console = EnvConsole::new(false);
+        let mut console = EnvConsole::default();
         for diag in r.into_diagnostics() {
             let error = diag
                 .with_file_path(FileId::zero())
                 .with_file_source_code(code);
             console.log(markup! {
-                {PrintDiagnostic(&error)}
+                {PrintDiagnostic::verbose(&error)}
             });
         }
         panic!("Compilation error");
@@ -185,9 +185,7 @@ impl Advices for TestAdvice {
         for (span, message) in &self.advices {
             let location = Location::builder().span(&span).build();
             visitor.record_log(LogCategory::Info, &message)?;
-            if let Some(location) = location {
-                visitor.record_frame(location)?;
-            }
+            visitor.record_frame(location)?;
         }
         Ok(())
     }
@@ -669,10 +667,6 @@ impl SemanticAssertions {
                 // where we expect
                 let e = events.iter().find(|event| match event {
                     SemanticEvent::ScopeEnded { started_at, .. } => {
-                        println!(
-                            "started_at: {:?} scope_start_assertions_range: {:?}",
-                            started_at, scope_start_assertions_range
-                        );
                         *started_at == scope_start_assertions_range.start()
                     }
                     _ => false,
@@ -756,9 +750,9 @@ fn error_assertion_not_attached_to_a_declaration(
         .with_file_path((test_name.to_string(), FileId::zero()))
         .with_file_source_code(code);
 
-    let mut console = EnvConsole::new(false);
+    let mut console = EnvConsole::default();
     console.log(markup! {
-        {PrintDiagnostic(&error)}
+        {PrintDiagnostic::verbose(&error)}
     });
     panic!("This assertion must be attached to a SemanticEvent::DeclarationFound.");
 }
@@ -777,9 +771,9 @@ fn error_declaration_pointing_to_unknown_scope(
         .with_file_path((test_name.to_string(), FileId::zero()))
         .with_file_source_code(code);
 
-    let mut console = EnvConsole::new(false);
+    let mut console = EnvConsole::default();
     console.log(markup! {
-        {PrintDiagnostic(&error)}
+        {PrintDiagnostic::verbose(&error)}
     });
 }
 
@@ -802,9 +796,9 @@ fn error_assertion_name_clash(
         .with_file_path((test_name.to_string(), FileId::zero()))
         .with_file_source_code(code);
 
-    let mut console = EnvConsole::new(false);
+    let mut console = EnvConsole::default();
     console.log(markup! {
-        {PrintDiagnostic(&error)}
+        {PrintDiagnostic::verbose(&error)}
     });
 
     panic!("Assertion label conflict");
@@ -825,9 +819,9 @@ fn error_scope_end_assertion_points_to_non_existing_scope_start_assertion(
         .with_file_path((file_name.to_string(), FileId::zero()))
         .with_file_source_code(code);
 
-    let mut console = EnvConsole::new(false);
+    let mut console = EnvConsole::default();
     console.log(markup! {
-        {PrintDiagnostic(&error)}
+        {PrintDiagnostic::verbose(&error)}
     });
     panic!("Scope start assertion not found.");
 }
@@ -852,9 +846,9 @@ fn error_scope_end_assertion_points_to_the_wrong_scope_start(
         .with_file_path((file_name.to_string(), FileId::zero()))
         .with_file_source_code(code);
 
-    let mut console = EnvConsole::new(false);
+    let mut console = EnvConsole::default();
     console.log(markup! {
-        {PrintDiagnostic(&error)}
+        {PrintDiagnostic::verbose(&error)}
     });
     panic!("Wrong scope start");
 }

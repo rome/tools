@@ -1,8 +1,9 @@
 use crate::{
-    configuration::FilesConfiguration, Configuration, MatchOptions, Matcher, RomeError, Rules,
+    configuration::FilesConfiguration, Configuration, ConfigurationError, MatchOptions, Matcher,
+    RomeError, Rules,
 };
 use indexmap::IndexSet;
-use rome_diagnostics::v2::Category;
+use rome_diagnostics::Category;
 use rome_formatter::{IndentStyle, LineWidth};
 use rome_fs::RomePath;
 use rome_js_syntax::JsLanguage;
@@ -50,9 +51,10 @@ impl WorkspaceSettings {
             .as_ref()
             .and_then(|j| j.formatter.as_ref());
         if let Some(formatter) = formatter {
-            self.languages.javascript.format.quote_style = Some(formatter.quote_style);
-            self.languages.javascript.format.quote_properties = Some(formatter.quote_properties);
-            self.languages.javascript.format.trailing_comma = Some(formatter.trailing_comma);
+            self.languages.javascript.formatter.quote_style = Some(formatter.quote_style);
+            self.languages.javascript.formatter.quote_properties = Some(formatter.quote_properties);
+            self.languages.javascript.formatter.trailing_comma = Some(formatter.trailing_comma);
+            self.languages.javascript.formatter.semicolons = Some(formatter.semicolons);
         }
 
         // linter part
@@ -79,7 +81,7 @@ impl WorkspaceSettings {
     pub fn get_severity_from_rule_code(
         &self,
         code: &Category,
-    ) -> Option<rome_diagnostics::v2::Severity> {
+    ) -> Option<rome_diagnostics::Severity> {
         let rules = self.linter.rules.as_ref();
         if let Some(rules) = rules {
             rules.get_severity_from_code(code)
@@ -154,7 +156,7 @@ pub struct LanguagesSettings {
 
 pub trait Language: rome_rowan::Language {
     /// Formatter settings type for this language
-    type FormatSettings: Default;
+    type FormatterSettings: Default;
 
     type LinterSettings: Default;
 
@@ -168,7 +170,7 @@ pub trait Language: rome_rowan::Language {
     /// per-language and editor provided formatter settings
     fn resolve_format_options(
         global: &FormatSettings,
-        language: &Self::FormatSettings,
+        language: &Self::FormatterSettings,
         path: &RomePath,
     ) -> Self::FormatOptions;
 }
@@ -176,7 +178,7 @@ pub trait Language: rome_rowan::Language {
 #[derive(Debug, Default)]
 pub struct LanguageSettings<L: Language> {
     /// Formatter settings for this language
-    pub format: L::FormatSettings,
+    pub formatter: L::FormatterSettings,
 
     /// Linter settings for this language
     pub linter: L::LinterSettings,
@@ -190,6 +192,9 @@ pub struct LanguageSettings<L: Language> {
 pub struct FilesSettings {
     /// File size limit in bytes
     pub max_size: NonZeroU64,
+
+    /// List of paths/files to matcher
+    pub ignored_files: Matcher,
 }
 
 /// Limit the size of files to 1.0 MiB by default
@@ -201,6 +206,11 @@ impl Default for FilesSettings {
     fn default() -> Self {
         Self {
             max_size: DEFAULT_FILE_SIZE_LIMIT,
+            ignored_files: Matcher::new(MatchOptions {
+                case_sensitive: true,
+                require_literal_leading_dot: false,
+                require_literal_separator: false,
+            }),
         }
     }
 }
@@ -209,8 +219,24 @@ impl TryFrom<FilesConfiguration> for FilesSettings {
     type Error = RomeError;
 
     fn try_from(config: FilesConfiguration) -> Result<Self, Self::Error> {
+        let mut matcher = Matcher::new(MatchOptions {
+            case_sensitive: true,
+            require_literal_leading_dot: false,
+            require_literal_separator: false,
+        });
+        if let Some(ignore) = config.ignore {
+            for pattern in ignore {
+                matcher.add_pattern(&pattern).map_err(|err| {
+                    RomeError::Configuration(ConfigurationError::InvalidIgnorePattern(
+                        pattern.to_string(),
+                        err.msg.to_string(),
+                    ))
+                })?;
+            }
+        }
         Ok(Self {
             max_size: config.max_size.unwrap_or(DEFAULT_FILE_SIZE_LIMIT),
+            ignored_files: matcher,
         })
     }
 }
@@ -244,7 +270,7 @@ impl<'a> SettingsHandle<'a> {
     {
         L::resolve_format_options(
             &self.inner.formatter,
-            &L::lookup_settings(&self.inner.languages).format,
+            &L::lookup_settings(&self.inner.languages).formatter,
             path,
         )
     }

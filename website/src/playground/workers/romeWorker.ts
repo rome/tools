@@ -7,11 +7,13 @@ import init, {
 } from "@rometools/wasm-web";
 import {
 	IndentStyle,
+	LintRules,
 	LoadingState,
 	PlaygroundSettings,
 	QuoteProperties,
 	QuoteStyle,
 	RomeOutput,
+	Semicolons,
 } from "../types";
 
 let workspace: Workspace | null = null;
@@ -64,9 +66,10 @@ self.addEventListener("message", async (e) => {
 				indentWidth,
 				quoteStyle,
 				quoteProperties,
-				enabledNurseryRules,
+				lintRules,
 				enabledLinting,
 				trailingComma,
+				semicolons,
 			} = e.data.settings as PlaygroundSettings;
 
 			configuration = {
@@ -90,14 +93,25 @@ self.addEventListener("message", async (e) => {
 								? "preserve"
 								: "asNeeded",
 						trailingComma,
+						semicolons:
+							semicolons === Semicolons.Always ? "always" : "asNeeded",
 					},
 				},
 			};
 
-			if (enabledNurseryRules) {
+			if (lintRules === LintRules.All) {
 				configuration.linter = {
 					enabled: enabledLinting,
 					rules: {
+						correctness: {
+							noRestrictedGlobals: "error",
+							noUndeclaredVariables: "error",
+							noUnusedVariables: "error",
+							noUselessFragments: "error",
+						},
+						style: {
+							useFragmentSyntax: "error",
+						},
 						nursery: {
 							noConstAssign: "error",
 							useExhaustiveDependencies: "error",
@@ -179,7 +193,7 @@ self.addEventListener("message", async (e) => {
 
 			const printer = new DiagnosticPrinter(path.path, code);
 			for (const diag of diagnosticsResult.diagnostics) {
-				printer.print(diag);
+				printer.print_verbose(diag);
 			}
 
 			const printed = workspace.formatFile({

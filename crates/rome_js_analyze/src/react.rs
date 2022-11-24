@@ -117,107 +117,6 @@ impl ReactApiCall for ReactCreateElementCall {
     }
 }
 
-/// A convenient data structure that returns the three arguments of the [React.cloneElement] call
-///
-///[React.cloneElement]: https://reactjs.org/docs/react-api.html#cloneelement
-pub(crate) struct ReactCloneElementCall {
-    /// The type of the react element
-    #[allow(dead_code)]
-    pub(crate) element_type: JsAnyCallArgument,
-    /// Optional props
-    pub(crate) new_props: Option<JsObjectExpression>,
-    /// Optional children
-    #[allow(dead_code)]
-    pub(crate) children: Option<JsAnyExpression>,
-}
-
-impl ReactCloneElementCall {
-    /// Checks if the current node is a possible `cloneElement` call.
-    ///
-    /// There are two cases:
-    ///
-    /// First case
-    /// ```js
-    /// React.cloneElement()
-    /// ```
-    /// We check if the node is a static member expression with the specific members. Also, if `React`
-    /// has been imported in the current scope, we make sure that the binding `React` has been imported
-    /// from the `"react"` module.
-    ///
-    /// Second case
-    ///
-    /// ```js
-    /// cloneElement()
-    /// ```
-    ///
-    /// The logic of this second case is very similar to the previous one, simply the node that we have
-    /// to inspect is different.
-    pub(crate) fn from_call_expression(
-        call_expression: &JsCallExpression,
-        model: &SemanticModel,
-    ) -> Option<Self> {
-        let callee = call_expression.callee().ok()?;
-        let is_react_clone_element =
-            is_react_call_api(callee, model, ReactLibrary::React, "cloneElement");
-
-        if is_react_clone_element {
-            let arguments = call_expression.arguments().ok()?.args();
-            // React.cloneElement() should not be processed
-            if !arguments.is_empty() {
-                let mut iter = arguments.iter();
-                let first_argument = if let Some(first_argument) = iter.next() {
-                    first_argument.ok()?
-                } else {
-                    return None;
-                };
-                let second_argument =
-                    iter.next()
-                        .and_then(|argument| argument.ok())
-                        .and_then(|argument| {
-                            argument
-                                .as_js_any_expression()?
-                                .as_js_object_expression()
-                                .cloned()
-                        });
-                let third_argument = iter
-                    .next()
-                    .and_then(|argument| argument.ok())
-                    .and_then(|argument| argument.as_js_any_expression().cloned());
-
-                Some(ReactCloneElementCall {
-                    element_type: first_argument,
-                    new_props: second_argument,
-                    children: third_argument,
-                })
-            } else {
-                None
-            }
-        } else {
-            None
-        }
-    }
-}
-
-impl ReactApiCall for ReactCloneElementCall {
-    fn find_prop_by_name(&self, prop_name: &str) -> Option<JsPropertyObjectMember> {
-        self.new_props.as_ref().and_then(|props| {
-            let members = props.members();
-            members.iter().find_map(|member| {
-                let member = member.ok()?;
-                let property = member.as_js_property_object_member()?;
-                let property_name = property.name().ok()?;
-
-                let property_name = property_name.as_js_literal_member_name()?;
-                if property_name.name().ok()? == prop_name {
-                    Some(property.clone())
-                } else {
-                    None
-                }
-            })
-        })
-    }
-}
-
 #[derive(Debug, Clone, Copy)]
 pub(crate) enum ReactLibrary {
     React,
@@ -281,7 +180,7 @@ pub(crate) fn is_react_call_api(
         if !callee.has_member_name(api_name) {
             return false;
         }
-        return match model.declaration(&object) {
+        return match model.binding(&object) {
             Some(decl) => is_react_export(decl, lib),
             None => object.has_name(lib.global_name()),
         };
@@ -289,7 +188,7 @@ pub(crate) fn is_react_call_api(
 
     if let Some(ident) = expr.as_reference_identifier() {
         return model
-            .declaration(&ident)
+            .binding(&ident)
             .and_then(|it| is_named_react_export(it, lib, api_name))
             .unwrap_or(false);
     }
@@ -316,7 +215,7 @@ pub(crate) fn jsx_member_name_is_react_fragment(
     }
 
     let lib = ReactLibrary::React;
-    match model.declaration(object) {
+    match model.binding(object) {
         Some(declaration) => Some(is_react_export(declaration, lib)),
         None => Some(object.value_token().ok()?.text_trimmed() == lib.global_name()),
     }
@@ -332,7 +231,7 @@ pub(crate) fn jsx_reference_identifier_is_fragment(
     name: &JsxReferenceIdentifier,
     model: &SemanticModel,
 ) -> Option<bool> {
-    match model.declaration(name) {
+    match model.binding(name) {
         Some(reference) => is_named_react_export(reference, ReactLibrary::React, "Fragment"),
         None => {
             let value_token = name.value_token().ok()?;

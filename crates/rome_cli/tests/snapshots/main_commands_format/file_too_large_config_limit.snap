@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 223
 expression: content
 ---
 ## `rome.json`
@@ -20,6 +19,12 @@ statement1();
 statement2();
 ```
 
+# Termination Message
+
+```block
+no files were processed in the specified paths.
+```
+
 # Emitted Messages
 
 ```block
@@ -31,7 +36,7 @@ format.js lint ━━━━━━━━━━━━━━━━━━━━━�
 ```
 
 ```block
-Skipped 1 files
+Skipped 1 file(s)
 ```
 
 

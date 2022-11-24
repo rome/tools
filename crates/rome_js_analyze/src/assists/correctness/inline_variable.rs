@@ -1,7 +1,7 @@
-use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule};
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, RefactorKind, Rule};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_semantic::{AllReferencesExtensions, Reference};
+use rome_js_semantic::{Reference, ReferencesExtensions};
 use rome_js_syntax::{
     JsAnyBinding, JsAnyBindingPattern, JsAnyExpression, JsIdentifierExpression,
     JsVariableDeclarator,
@@ -54,6 +54,20 @@ impl Rule for InlineVariable {
             | JsAnyBindingPattern::JsObjectBindingPattern(_) => return None,
         };
 
+        // Do not inline if the initializer is not inlinable
+
+        let initializer = declarator.initializer()?;
+        let expr = initializer.expression().ok()?;
+        match expr {
+            JsAnyExpression::JsArrowFunctionExpression(_)
+            | JsAnyExpression::JsFunctionExpression(_)
+            | JsAnyExpression::JsClassExpression(_)
+            | JsAnyExpression::JsAssignmentExpression(_) => return None,
+            _ => {}
+        }
+
+        // Do not inline if there is a write
+
         let mut references = Vec::new();
         for reference in binding.all_references(semantic_model) {
             if reference.is_write() {
@@ -63,7 +77,8 @@ impl Rule for InlineVariable {
             references.push(reference);
         }
 
-        let initializer = declarator.initializer()?;
+        // Inline variable
+
         let expression = initializer.expression().ok()?;
         Some(State {
             references,
@@ -83,7 +98,7 @@ impl Rule for InlineVariable {
 
         for reference in references {
             let node = reference
-                .node()
+                .syntax()
                 .parent()?
                 .cast::<JsIdentifierExpression>()?;
 
@@ -94,7 +109,7 @@ impl Rule for InlineVariable {
         }
 
         Some(JsRuleAction {
-            category: ActionCategory::Refactor,
+            category: ActionCategory::Refactor(RefactorKind::Inline),
             applicability: Applicability::Always,
             message: markup! { "Inline variable" }.to_owned(),
             mutation,

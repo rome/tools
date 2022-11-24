@@ -1,6 +1,8 @@
+use std::borrow::Cow;
+
 use bitflags::bitflags;
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(
     feature = "serde",
     derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
@@ -18,16 +20,148 @@ pub enum RuleCategory {
     Action,
 }
 
-#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+/// Actions that suppress rules should start with this string
+pub const SUPPRESSION_ACTION_CATEGORY: &str = "quickfix.suppressRule";
+
+/// The category of a code action, this type maps directly to the
+/// [CodeActionKind] type in the Language Server Protocol specification
+///
+/// [CodeActionKind]: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#codeActionKind
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(
     feature = "serde",
     derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
 pub enum ActionCategory {
+    /// Base kind for quickfix actions: 'quickfix'.
+    ///
     /// This action provides a fix to the diagnostic emitted by the same signal
     QuickFix,
+    /// Base kind for refactoring actions: 'refactor'.
+    ///
     /// This action provides an optional refactor opportunity
-    Refactor,
+    Refactor(RefactorKind),
+    /// Base kind for source actions: `source`.
+    ///
+    /// Source code actions apply to the entire file.
+    Source(SourceActionKind),
+    /// This action is using a base kind not covered by any of the previous
+    /// variants
+    Other(Cow<'static, str>),
+}
+
+impl ActionCategory {
+    /// Returns true if this category matches the provided filter
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_analyze::{ActionCategory, RefactorKind};
+    ///
+    /// assert!(ActionCategory::QuickFix.matches("quickfix"));
+    /// assert!(!ActionCategory::QuickFix.matches("refactor"));
+    ///
+    /// assert!(ActionCategory::Refactor(RefactorKind::None).matches("refactor"));
+    /// assert!(!ActionCategory::Refactor(RefactorKind::None).matches("refactor.extract"));
+    ///
+    /// assert!(ActionCategory::Refactor(RefactorKind::Extract).matches("refactor"));
+    /// assert!(ActionCategory::Refactor(RefactorKind::Extract).matches("refactor.extract"));
+    /// ```
+    pub fn matches(&self, filter: &str) -> bool {
+        self.to_str().starts_with(filter)
+    }
+
+    /// Returns the representation of this [ActionCategory] as a `CodeActionKind` string
+    pub fn to_str(&self) -> Cow<'static, str> {
+        match self {
+            ActionCategory::QuickFix => Cow::Borrowed("quickfix.rome"),
+
+            ActionCategory::Refactor(RefactorKind::None) => Cow::Borrowed("refactor.rome"),
+            ActionCategory::Refactor(RefactorKind::Extract) => {
+                Cow::Borrowed("refactor.extract.rome")
+            }
+            ActionCategory::Refactor(RefactorKind::Inline) => Cow::Borrowed("refactor.inline.rome"),
+            ActionCategory::Refactor(RefactorKind::Rewrite) => {
+                Cow::Borrowed("refactor.rewrite.rome")
+            }
+            ActionCategory::Refactor(RefactorKind::Other(tag)) => {
+                Cow::Owned(format!("refactor.{tag}.rome"))
+            }
+
+            ActionCategory::Source(SourceActionKind::None) => Cow::Borrowed("source.rome"),
+            ActionCategory::Source(SourceActionKind::FixAll) => Cow::Borrowed("source.fixAll.rome"),
+            ActionCategory::Source(SourceActionKind::OrganizeImports) => {
+                Cow::Borrowed("source.organizeImports.rome")
+            }
+            ActionCategory::Source(SourceActionKind::Other(tag)) => {
+                Cow::Owned(format!("source.{tag}.rome"))
+            }
+
+            ActionCategory::Other(tag) => Cow::Owned(format!("{tag}.rome")),
+        }
+    }
+}
+
+/// The sub-category of a refactor code action
+#[derive(Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
+pub enum RefactorKind {
+    /// This action describes a refactor with no particular sub-category
+    None,
+    /// Base kind for refactoring extraction actions: 'refactor.extract'.
+    ///
+    /// Example extract actions:
+    /// - Extract method
+    /// - Extract function
+    /// - Extract variable
+    /// - Extract interface from class
+    Extract,
+    /// Base kind for refactoring inline actions: 'refactor.inline'.
+    ///
+    /// Example inline actions:
+    /// - Inline function
+    /// - Inline variable
+    /// - Inline constant
+    /// - ...
+    Inline,
+    /// Base kind for refactoring rewrite actions: 'refactor.rewrite'.
+    ///
+    /// Example rewrite actions:
+    /// - Convert JavaScript function to class
+    /// - Add or remove parameter
+    /// - Encapsulate field
+    /// - Make method static
+    /// - Move method to base class
+    /// - ...
+    Rewrite,
+    /// This action is using a refactor kind not covered by any of the previous
+    /// variants
+    Other(Cow<'static, str>),
+}
+
+/// The sub-category of a source code action
+#[derive(Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
+pub enum SourceActionKind {
+    /// This action describes a source action with no particular sub-category
+    None,
+    // Base kind for a 'fix all' source action: `source.fixAll`.
+    //
+    // 'Fix all' actions automatically fix errors that have a clear fix that
+    // do not require user input. They should not suppress errors or perform
+    // unsafe fixes such as generating new types or classes.
+    FixAll,
+    /// Base kind for an organize imports source action: `source.organizeImports`.
+    OrganizeImports,
+    /// This action is using a source action kind not covered by any of the
+    /// previous variants
+    Other(Cow<'static, str>),
 }
 
 bitflags! {

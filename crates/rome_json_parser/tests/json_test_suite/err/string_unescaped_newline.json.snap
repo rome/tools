@@ -1,0 +1,67 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+["new
+line"]
+```
+
+
+## Diagnostics
+
+```
+string_unescaped_newline.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Missing closing quote
+  
+  > 1 │ ["new
+      │  ^^^^
+    2 │ line"]
+  
+  i line breaks here
+  
+  > 1 │ ["new
+      │      
+  > 2 │ line"]
+      │ 
+  
+string_unescaped_newline.json:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The JSON standard doesn't allow identifiers
+  
+    1 │ ["new
+  > 2 │ line"]
+      │ ^^^^
+  
+string_unescaped_newline.json:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Missing closing quote
+  
+    1 │ ["new
+  > 2 │ line"]
+      │     ^^
+  
+  i file ends here
+  
+    1 │ ["new
+  > 2 │ line"]
+      │       
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+JSON_STRING_LITERAL: `"new` (1..5)
+NEWLINE: `
+` (5..6)
+IDENT: `line` (6..10)
+JSON_STRING_LITERAL: `"]` (10..12)
+EOF: `` (12..12)
+```
+

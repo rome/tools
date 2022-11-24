@@ -15,7 +15,7 @@ use crate::{
 use dashmap::{mapref::entry::Entry, DashMap};
 use indexmap::IndexSet;
 use rome_analyze::{AnalysisFilter, RuleFilter};
-use rome_diagnostics::v2::{serde::Diagnostic, DiagnosticExt};
+use rome_diagnostics::{serde::Diagnostic, DiagnosticExt};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_js_parser::ParseDiagnostic;
@@ -206,17 +206,28 @@ impl WorkspaceServer {
     /// If the file path matches, than `true` is returned and it should be considered ignored.
     fn is_file_ignored(&self, rome_path: &RomePath, feature: &FeatureName) -> bool {
         let settings = self.settings();
+        let is_ignored_by_file_config = settings
+            .as_ref()
+            .files
+            .ignored_files
+            .matches_path(rome_path.as_path());
         match feature {
-            FeatureName::Format => settings
-                .as_ref()
-                .formatter
-                .ignored_files
-                .matches_path(rome_path.as_path()),
-            FeatureName::Lint => settings
-                .as_ref()
-                .linter
-                .ignored_files
-                .matches_path(rome_path.as_path()),
+            FeatureName::Format => {
+                settings
+                    .as_ref()
+                    .formatter
+                    .ignored_files
+                    .matches_path(rome_path.as_path())
+                    || is_ignored_by_file_config
+            }
+            FeatureName::Lint => {
+                settings
+                    .as_ref()
+                    .linter
+                    .ignored_files
+                    .matches_path(rome_path.as_path())
+                    || is_ignored_by_file_config
+            }
         }
     }
 }
@@ -397,7 +408,7 @@ impl Workspace for WorkspaceServer {
                     Diagnostic::new(diag)
                 })
                 .collect(),
-            has_errors: results.has_errors,
+            errors: results.errors,
             skipped_diagnostics: results.skipped_diagnostics,
         })
     }

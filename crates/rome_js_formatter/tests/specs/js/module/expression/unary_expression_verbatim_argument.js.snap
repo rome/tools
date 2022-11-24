@@ -1,0 +1,45 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+expression: unary_expression_verbatim_argument.js
+---
+
+# Input
+
+```js
+// https://github.com/rome/tools/issues/3735
+
+!(
+	// rome-ignore format: Work around https://github.com/rome/tools/issues/3734
+	a && b
+);
+
+
+
+```
+
+
+=============================
+
+# Outputs
+
+## Output 1
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: Always
+-----
+
+```js
+// https://github.com/rome/tools/issues/3735
+
+!(
+	// rome-ignore format: Work around https://github.com/rome/tools/issues/3734
+	a && b
+);
+```
+
+

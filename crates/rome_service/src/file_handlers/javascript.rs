@@ -1,3 +1,9 @@
+use super::{
+    AnalyzerCapabilities, DebugCapabilities, ExtensionHandler, FormatterCapabilities, LintParams,
+    LintResults, Mime, ParserCapabilities,
+};
+use crate::configuration::to_analyzer_configuration;
+use crate::file_handlers::{FixAllParams, Language as LanguageId};
 use crate::{
     settings::{FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle},
     workspace::{
@@ -6,15 +12,19 @@ use crate::{
     },
     RomeError, Rules,
 };
+use indexmap::IndexSet;
 use rome_analyze::{
     AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Never, QueryMatch,
     RegistryVisitor, RuleCategories, RuleCategory, RuleFilter, RuleGroup,
 };
-use rome_diagnostics::{v2::category, Applicability, CodeSuggestion};
+use rome_diagnostics::{category, Applicability, Diagnostic, Severity};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
+use rome_js_analyze::utils::rename::{RenameError, RenameSymbolExtensions};
 use rome_js_analyze::{analyze, analyze_with_inspect_matcher, visit_registry, RuleError};
-use rome_js_formatter::context::{trailing_comma::TrailingComma, QuoteProperties, QuoteStyle};
+use rome_js_formatter::context::{
+    trailing_comma::TrailingComma, QuoteProperties, QuoteStyle, Semicolons,
+};
 use rome_js_formatter::{context::JsFormatOptions, format_node};
 use rome_js_parser::Parse;
 use rome_js_semantic::{semantic_model, SemanticModelOptions};
@@ -22,26 +32,17 @@ use rome_js_syntax::{
     JsAnyRoot, JsLanguage, JsSyntaxNode, SourceType, TextRange, TextSize, TokenAtOffset,
 };
 use rome_rowan::{AstNode, BatchMutationExt, Direction};
-
-use super::{
-    AnalyzerCapabilities, DebugCapabilities, ExtensionHandler, FormatterCapabilities, LintParams,
-    LintResults, Mime, ParserCapabilities,
-};
-use crate::configuration::to_analyzer_configuration;
-use crate::file_handlers::{FixAllParams, Language as LanguageId};
-use indexmap::IndexSet;
-use rome_diagnostics::{v2, v2::Diagnostic};
-use rome_js_analyze::utils::rename::{RenameError, RenameSymbolExtensions};
 use std::borrow::Cow;
 use std::fmt::Debug;
 use tracing::debug;
 
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
-pub struct JsFormatSettings {
+pub struct JsFormatterSettings {
     pub quote_style: Option<QuoteStyle>,
     pub quote_properties: Option<QuoteProperties>,
     pub trailing_comma: Option<TrailingComma>,
+    pub semicolons: Option<Semicolons>,
 }
 
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
@@ -51,7 +52,7 @@ pub struct JsLinterSettings {
 }
 
 impl Language for JsLanguage {
-    type FormatSettings = JsFormatSettings;
+    type FormatterSettings = JsFormatterSettings;
     type FormatOptions = JsFormatOptions;
     type LinterSettings = JsLinterSettings;
 
@@ -61,7 +62,7 @@ impl Language for JsLanguage {
 
     fn resolve_format_options(
         global: &FormatSettings,
-        language: &JsFormatSettings,
+        language: &JsFormatterSettings,
         path: &RomePath,
     ) -> JsFormatOptions {
         JsFormatOptions::new(path.as_path().try_into().unwrap_or_default())
@@ -70,6 +71,7 @@ impl Language for JsLanguage {
             .with_quote_style(language.quote_style.unwrap_or_default())
             .with_quote_properties(language.quote_properties.unwrap_or_default())
             .with_trailing_comma(language.trailing_comma.unwrap_or_default())
+            .with_semicolons(language.semicolons.unwrap_or_default())
     }
 }
 
@@ -77,6 +79,18 @@ impl Language for JsLanguage {
 pub(crate) struct JsFileHandler;
 
 impl ExtensionHandler for JsFileHandler {
+    fn language(&self) -> super::Language {
+        super::Language::JavaScript
+    }
+
+    fn mime(&self) -> Mime {
+        Mime::Javascript
+    }
+
+    fn may_use_tabs(&self) -> bool {
+        true
+    }
+
     fn capabilities(&self) -> super::Capabilities {
         super::Capabilities {
             parser: ParserCapabilities { parse: Some(parse) },
@@ -97,18 +111,6 @@ impl ExtensionHandler for JsFileHandler {
                 format_on_type: Some(format_on_type),
             },
         }
-    }
-
-    fn language(&self) -> super::Language {
-        super::Language::JavaScript
-    }
-
-    fn mime(&self) -> super::Mime {
-        Mime::Javascript
-    }
-
-    fn may_use_tabs(&self) -> bool {
-        true
     }
 }
 
@@ -217,9 +219,10 @@ fn lint(params: LintParams) -> LintResults {
     let analyzer_options = compute_analyzer_options(&params.settings);
 
     let mut diagnostic_count = diagnostics.len() as u64;
-    let mut has_errors = diagnostics
+    let mut errors = diagnostics
         .iter()
-        .any(|diag| diag.severity() <= v2::Severity::Error);
+        .filter(|diag| diag.severity() <= Severity::Error)
+        .count();
 
     let has_lint = params.filter.categories.contains(RuleCategories::LINT);
 
@@ -238,20 +241,22 @@ fn lint(params: LintParams) -> LintResults {
                 .category()
                 .filter(|category| category.name().starts_with("lint/"))
                 .and_then(|category| params.rules.as_ref()?.get_severity_from_code(category))
-                .unwrap_or(v2::Severity::Error);
+                .unwrap_or(Severity::Error);
 
-            if severity <= v2::Severity::Error {
-                has_errors = true;
+            if severity <= Severity::Error {
+                errors += 1;
             }
 
             if diagnostic_count <= params.max_diagnostics {
                 diagnostic.set_severity(severity);
 
-                if let Some(action) = signal.action() {
-                    diagnostic.add_code_suggestion(action.into());
+                for action in signal.actions() {
+                    if !action.is_suppression() {
+                        diagnostic = diagnostic.add_code_suggestion(action.into());
+                    }
                 }
 
-                diagnostics.push(v2::serde::Diagnostic::new(diagnostic));
+                diagnostics.push(rome_diagnostics::serde::Diagnostic::new(diagnostic));
             }
         }
 
@@ -262,7 +267,7 @@ fn lint(params: LintParams) -> LintResults {
 
     LintResults {
         diagnostics,
-        has_errors,
+        errors,
         skipped_diagnostics,
     }
 }
@@ -332,13 +337,15 @@ fn code_actions(
     let analyzer_options = compute_analyzer_options(&settings);
 
     analyze(file_id, &tree, filter, &analyzer_options, |signal| {
-        if let Some(action) = signal.action() {
-            actions.push(CodeAction {
-                category: action.category,
-                rule_name: Cow::Borrowed(action.rule_name),
-                suggestion: CodeSuggestion::from(action),
-            });
-        }
+        actions.extend(signal.actions().into_code_action_iter().map(|item| {
+            CodeAction {
+                category: item.category.clone(),
+                rule_name: item
+                    .rule_name
+                    .map(|(group, name)| (Cow::Borrowed(group), Cow::Borrowed(name))),
+                suggestion: item.suggestion,
+            }
+        }));
 
         ControlFlow::<Never>::Continue(())
     });
@@ -379,7 +386,11 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
     let analyzer_options = compute_analyzer_options(&settings);
     loop {
         let action = analyze(file_id, &tree, filter, &analyzer_options, |signal| {
-            if let Some(action) = signal.action() {
+            for action in signal.actions() {
+                // suppression actions should not be part of the fixes (safe or suggested)
+                if action.is_suppression() {
+                    continue;
+                }
                 match fix_file_mode {
                     FixFileMode::SafeFixes => {
                         if action.applicability == Applicability::MaybeIncorrect {
@@ -411,13 +422,17 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
                         None => {
                             return Err(RomeError::RuleError(
                                 RuleError::ReplacedRootWithNonRootError {
-                                    rule_name: Cow::Borrowed(action.rule_name),
+                                    rule_name: action.rule_name.map(|(group, rule)| {
+                                        (Cow::Borrowed(group), Cow::Borrowed(rule))
+                                    }),
                                 },
                             ))
                         }
                     };
                     actions.push(FixAction {
-                        rule_name: Cow::Borrowed(action.rule_name),
+                        rule_name: action
+                            .rule_name
+                            .map(|(group, rule)| (Cow::Borrowed(group), Cow::Borrowed(rule))),
                         range,
                     });
                 }

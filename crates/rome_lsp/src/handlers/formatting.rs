@@ -32,7 +32,7 @@ pub(crate) fn format(
         Err(err) => return Err(Error::from(err)),
     };
 
-    let num_lines: u32 = doc.line_index.newlines.len().try_into()?;
+    let num_lines: u32 = doc.line_index.len();
 
     let range = Range {
         start: Position::default(),
@@ -50,7 +50,7 @@ pub(crate) fn format(
     Ok(Some(edits))
 }
 
-#[tracing::instrument(level = "trace", skip(session), err)]
+#[tracing::instrument(level = "debug", skip(session), err)]
 pub(crate) fn format_range(
     session: &Session,
     params: DocumentRangeFormattingParams,
@@ -89,23 +89,17 @@ pub(crate) fn format_range(
     // Recalculate the actual range that was reformatted from the formatter result
     let formatted_range = match formatted.range() {
         Some(range) => {
-            let start_loc = doc.line_index.line_col(range.start());
-            let end_loc = doc.line_index.line_col(range.end());
+            let start_loc = utils::position(&doc.line_index, range.start())?;
+            let end_loc = utils::position(&doc.line_index, range.end())?;
             Range {
-                start: Position {
-                    line: start_loc.line,
-                    character: start_loc.col,
-                },
-                end: Position {
-                    line: end_loc.line,
-                    character: end_loc.col,
-                },
+                start: start_loc,
+                end: end_loc,
             }
         }
         None => Range {
             start: Position::default(),
             end: Position {
-                line: doc.line_index.newlines.len().try_into()?,
+                line: doc.line_index.len(),
                 character: 0,
             },
         },
@@ -117,7 +111,7 @@ pub(crate) fn format_range(
     }]))
 }
 
-#[tracing::instrument(level = "trace", skip(session), err)]
+#[tracing::instrument(level = "debug", skip(session), err)]
 pub(crate) fn format_on_type(
     session: &Session,
     params: DocumentOnTypeFormattingParams,
@@ -147,23 +141,17 @@ pub(crate) fn format_on_type(
     // Recalculate the actual range that was reformatted from the formatter result
     let formatted_range = match formatted.range() {
         Some(range) => {
-            let start_loc = doc.line_index.line_col(range.start());
-            let end_loc = doc.line_index.line_col(range.end());
+            let start_loc = utils::position(&doc.line_index, range.start())?;
+            let end_loc = utils::position(&doc.line_index, range.end())?;
             Range {
-                start: Position {
-                    line: start_loc.line,
-                    character: start_loc.col,
-                },
-                end: Position {
-                    line: end_loc.line,
-                    character: end_loc.col,
-                },
+                start: start_loc,
+                end: end_loc,
             }
         }
         None => Range {
             start: Position::default(),
             end: Position {
-                line: doc.line_index.newlines.len().try_into()?,
+                line: doc.line_index.len(),
                 character: 0,
             },
         },

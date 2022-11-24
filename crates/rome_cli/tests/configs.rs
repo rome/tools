@@ -17,6 +17,16 @@ pub const CONFIG_INIT_DEFAULT: &str = r#"{
   }
 }"#;
 
+pub const CONFIG_INIT_DEFAULT_WHEN_INSTALLED: &str = r#"{
+  "$schema": "./node_modules/rome/configuration_schema.json",
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  }
+}"#;
+
 pub const CONFIG_DISABLED_FORMATTER: &str = r#"{
   "formatter": {
     "enabled": false
@@ -38,7 +48,7 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
         "complexity": {
             "useSimplifiedLogicExpression": "warn"
         },
-        "style": {        
+        "style": {
             "useTemplate": {
                 "level": "error"
             }
@@ -172,6 +182,16 @@ pub const CONFIG_FORMATTER_IGNORED_FILES: &str = r#"{
 }
 "#;
 
+pub const CONFIG_FORMATTER_AND_FILES_IGNORE: &str = r#"{
+  "files": {
+    "ignore": ["test1.js"]
+  },
+  "formatter": {
+    "enabled": true,
+    "ignore": ["test2.js"]
+  }
+}"#;
+
 pub const CONFIG_FORMATTER_IGNORED_DIRECTORIES: &str = r#"{
   "formatter": {
     "ignore": ["scripts/*"]
@@ -186,6 +206,16 @@ pub const CONFIG_LINTER_IGNORED_FILES: &str = r#"{
   }
 }
 "#;
+
+pub const CONFIG_LINTER_AND_FILES_IGNORE: &str = r#"{
+  "files": {
+    "ignore": ["test1.js"]
+  },
+  "linter": {
+    "enabled": true,
+    "ignore": ["test2.js"]
+  }
+}"#;
 
 pub const CONFIG_FILE_SIZE_LIMIT: &str = r#"{
   "files": {
