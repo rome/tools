@@ -7,10 +7,9 @@ use rome_js_syntax::{
 };
 use rome_rowan::syntax::SyntaxTrivia;
 use rome_rowan::{
-    AstNode, SyntaxKind, SyntaxRewriter, SyntaxToken, SyntaxTriviaPiece, TextSize, VisitNodeSignal,
+    chain_pieces, AstNode, SyntaxKind, SyntaxRewriter, SyntaxToken, TextSize, VisitNodeSignal,
 };
 use std::collections::BTreeSet;
-use std::iter::FusedIterator;
 
 pub(super) fn transform(root: JsSyntaxNode) -> (JsSyntaxNode, TransformSourceMap) {
     let mut rewriter = JsFormatSyntaxRewriter::default();
@@ -428,103 +427,6 @@ fn has_type_cast_comment_or_skipped(trivia: &SyntaxTrivia<JsLanguage>) -> bool {
             piece.is_skipped()
         }
     })
-}
-
-fn chain_pieces<F, S>(first: F, second: S) -> ChainTriviaPiecesIterator<F, S>
-where
-    F: Iterator<Item = SyntaxTriviaPiece<JsLanguage>>,
-    S: Iterator<Item = SyntaxTriviaPiece<JsLanguage>>,
-{
-    ChainTriviaPiecesIterator::new(first, second)
-}
-
-/// Chain iterator that chains two iterators over syntax trivia together.
-///
-/// This is the same as Rust's [Chain] iterator but implements [ExactSizeIterator].
-/// Rust doesn't implement [ExactSizeIterator] because adding the sizes of both pieces may overflow.
-///
-/// Implementing [ExactSizeIterator] in our case is safe because this may only overflow if
-/// a source document has more than 2^32 trivia which isn't possible because our source documents are limited to 2^32
-/// length.
-struct ChainTriviaPiecesIterator<F, S> {
-    first: Option<F>,
-    second: S,
-}
-
-impl<F, S> ChainTriviaPiecesIterator<F, S> {
-    fn new(first: F, second: S) -> Self {
-        Self {
-            first: Some(first),
-            second,
-        }
-    }
-}
-
-impl<F, S> Iterator for ChainTriviaPiecesIterator<F, S>
-where
-    F: Iterator<Item = SyntaxTriviaPiece<JsLanguage>>,
-    S: Iterator<Item = SyntaxTriviaPiece<JsLanguage>>,
-{
-    type Item = SyntaxTriviaPiece<JsLanguage>;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        match &mut self.first {
-            Some(first) => match first.next() {
-                Some(next) => Some(next),
-                None => {
-                    self.first.take();
-                    self.second.next()
-                }
-            },
-            None => self.second.next(),
-        }
-    }
-
-    fn size_hint(&self) -> (usize, Option<usize>) {
-        match &self.first {
-            Some(first) => {
-                let (first_lower, first_upper) = first.size_hint();
-                let (second_lower, second_upper) = self.second.size_hint();
-
-                let lower = first_lower.saturating_add(second_lower);
-
-                let upper = match (first_upper, second_upper) {
-                    (Some(first), Some(second)) => first.checked_add(second),
-                    _ => None,
-                };
-
-                (lower, upper)
-            }
-            None => self.second.size_hint(),
-        }
-    }
-}
-
-impl<F, S> FusedIterator for ChainTriviaPiecesIterator<F, S>
-where
-    F: Iterator<Item = SyntaxTriviaPiece<JsLanguage>>,
-    S: Iterator<Item = SyntaxTriviaPiece<JsLanguage>>,
-{
-}
-
-impl<F, S> ExactSizeIterator for ChainTriviaPiecesIterator<F, S>
-where
-    F: ExactSizeIterator<Item = SyntaxTriviaPiece<JsLanguage>>,
-    S: ExactSizeIterator<Item = SyntaxTriviaPiece<JsLanguage>>,
-{
-    fn len(&self) -> usize {
-        match &self.first {
-            Some(first) => {
-                let first_len = first.len();
-                let second_len = self.second.len();
-
-                // SAFETY: Should be safe because a program can never contain more than u32 pieces
-                // because the text ranges are represented as u32 (and each piece must at least contain a single character).
-                first_len + second_len
-            }
-            None => self.second.len(),
-        }
-    }
 }
 
 #[cfg(test)]

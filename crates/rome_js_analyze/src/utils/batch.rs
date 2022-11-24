@@ -29,10 +29,10 @@ pub trait JsBatchMutation {
     ) -> bool;
 
     /// It attempts to add a new element before the given element
-    fn add_jsx_element_before_element(
+    fn add_jsx_elements_before_element(
         &mut self,
-        after_element: &AnyJsxChild,
-        new_element: &AnyJsxChild,
+        after_element: &JsxAnyChild,
+        new_elements: &[JsxAnyChild],
     ) -> bool;
 }
 
@@ -228,17 +228,17 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
                 jsx_child_list(new_items)
             };
 
-            self.replace_node(old_list.clone(), jsx_child_list);
+            self.replace_node_discard_trivia(old_list.clone(), jsx_child_list);
             true
         } else {
             false
         }
     }
 
-    fn add_jsx_element_before_element(
+    fn add_jsx_elements_before_element(
         &mut self,
-        after_element: &AnyJsxChild,
-        new_element: &AnyJsxChild,
+        after_element: &JsxAnyChild,
+        new_elements: &[JsxAnyChild],
     ) -> bool {
         let old_list = after_element.syntax().parent().and_then(JsxChildList::cast);
         if let Some(old_list) = &old_list {
@@ -246,7 +246,7 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
                 let mut new_items = vec![];
                 for element in old_list {
                     if element == *after_element {
-                        new_items.push(new_element.clone());
+                        new_items.extend(new_elements.to_vec());
                     }
                     new_items.push(element.clone());
                 }
@@ -254,7 +254,7 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
                 jsx_child_list(new_items)
             };
 
-            self.replace_node(old_list.clone(), jsx_child_list);
+            self.replace_node_discard_trivia(old_list.clone(), jsx_child_list);
             true
         } else {
             false

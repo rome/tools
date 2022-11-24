@@ -21,6 +21,7 @@ use std::{
 };
 
 tests_macros::gen_tests! {"tests/specs/**/*.{cjs,js,jsx,tsx,ts,json,jsonc}", crate::run_test, "module"}
+tests_macros::gen_tests! {"tests/suppression/**/*.{cjs,js,jsx,tsx,ts,json,jsonc}", crate::run_suppression_test, "module"}
 
 fn scripts_from_json(extension: &OsStr, input_code: &str) -> Option<Vec<String>> {
     if extension == "json" || extension == "jsonc" {
@@ -60,6 +61,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
                 filter,
                 file_name,
                 input_file,
+                CheckActionType::Lint,
             )
         }
     } else {
@@ -73,6 +75,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
             filter,
             file_name,
             input_file,
+            CheckActionType::Lint,
         );
     }
 
@@ -84,13 +87,25 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     });
 }
 
-fn write_analysis_to_snapshot(
+enum CheckActionType {
+    Suppression,
+    Lint,
+}
+
+impl CheckActionType {
+    const fn is_suppression(&self) -> bool {
+        matches!(self, Self::Suppression)
+    }
+}
+
+pub(crate) fn write_analysis_to_snapshot(
     snapshot: &mut String,
     input_code: &str,
     source_type: SourceType,
     filter: AnalysisFilter,
     file_name: &str,
     input_file: &Path,
+    check_action_type: CheckActionType,
 ) {
     let parsed = parse(input_code, FileId::zero(), source_type);
     let root = parsed.tree();
@@ -118,7 +133,12 @@ fn write_analysis_to_snapshot(
     rome_js_analyze::analyze(FileId::zero(), &root, filter, &options, |event| {
         if let Some(mut diag) = event.diagnostic() {
             for action in event.actions() {
-                if !action.is_suppression() {
+                if check_action_type.is_suppression() {
+                    if action.is_suppression() {
+                        check_code_action(input_file, input_code, source_type, &action);
+                        diag = diag.add_code_suggestion(CodeSuggestionAdvice::from(action));
+                    }
+                } else if !action.is_suppression() {
                     check_code_action(input_file, input_code, source_type, &action);
                     diag = diag.add_code_suggestion(CodeSuggestionAdvice::from(action));
                 }
@@ -129,8 +149,15 @@ fn write_analysis_to_snapshot(
         }
 
         for action in event.actions() {
-            check_code_action(input_file, input_code, source_type, &action);
-            code_fixes.push(code_fix_to_string(input_code, action));
+            if check_action_type.is_suppression() {
+                if action.category.matches("quickfix.suppressRule") {
+                    check_code_action(input_file, input_code, source_type, &action);
+                    code_fixes.push(code_fix_to_string(input_code, action));
+                }
+            } else if !action.category.matches("quickfix.suppressRule") {
+                check_code_action(input_file, input_code, source_type, &action);
+                code_fixes.push(code_fix_to_string(input_code, action));
+            }
         }
 
         ControlFlow::<Never>::Continue(())
@@ -178,7 +205,7 @@ fn parse_test_path(file: &Path) -> (&str, &str) {
     let ancestor_1 = ancestor_0.parent().unwrap();
     let name_1 = ancestor_1.file_name().unwrap();
 
-    if name_1.to_str().unwrap() == "specs" {
+    if matches!(name_1.to_str().unwrap(), "specs" | "suppression") {
         (name_0.to_str().unwrap(), file_stem.to_str().unwrap())
     } else {
         (name_1.to_str().unwrap(), name_0.to_str().unwrap())
@@ -254,8 +281,7 @@ extern "C" fn check_leaks() {
         panic!("\n{report}")
     }
 }
-
-fn register_leak_checker() {
+pub(crate) fn register_leak_checker() {
     // Import the atexit function from libc
     extern "C" {
         fn atexit(f: extern "C" fn()) -> c_int;
@@ -267,5 +293,41 @@ fn register_leak_checker() {
     ONCE.call_once(|| unsafe {
         countme::enable(true);
         atexit(check_leaks);
+    });
+}
+
+pub(crate) fn run_suppression_test(input: &'static str, _: &str, _: &str, _: &str) {
+    register_leak_checker();
+
+    let input_file = Path::new(input);
+    let file_name = input_file.file_name().and_then(OsStr::to_str).unwrap();
+    let input_code = read_to_string(input_file)
+        .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
+
+    let (group, rule) = parse_test_path(input_file);
+
+    let rule_filter = RuleFilter::Rule(group, rule);
+    let filter = AnalysisFilter {
+        enabled_rules: Some(slice::from_ref(&rule_filter)),
+        ..AnalysisFilter::default()
+    };
+
+    dbg!(&rule_filter);
+    let mut snapshot = String::new();
+    write_analysis_to_snapshot(
+        &mut snapshot,
+        &input_code,
+        SourceType::jsx(),
+        filter,
+        file_name,
+        input_file,
+        CheckActionType::Suppression,
+    );
+
+    insta::with_settings!({
+        prepend_module_to_snapshot => false,
+        snapshot_path => input_file.parent().unwrap(),
+    }, {
+        insta::assert_snapshot!(file_name, snapshot, file_name);
     });
 }

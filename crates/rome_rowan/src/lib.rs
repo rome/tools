@@ -45,7 +45,7 @@ pub use crate::{
     },
     syntax_factory::*,
     syntax_node_text::SyntaxNodeText,
-    syntax_rewriter::{SyntaxRewriter, VisitNodeSignal},
+    syntax_rewriter::{chain_pieces, ChainTriviaPiecesIterator, SyntaxRewriter, VisitNodeSignal},
     syntax_token_text::SyntaxTokenText,
     tree_builder::{Checkpoint, TreeBuilder},
     utility_types::{Direction, NodeOrToken, TokenAtOffset, WalkEvent},
