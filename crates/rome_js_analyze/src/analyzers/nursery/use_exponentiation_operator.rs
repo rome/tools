@@ -48,14 +48,14 @@ declare_rule! {
     /// let quux = (-1) ** n;
     /// ```
     ///
-    pub(crate) UseExponentiation {
+    pub(crate) UseExponentiationOperator {
         version: "11.0.0",
-        name: "useExponentiation",
+        name: "useExponentiationOperator",
         recommended: false,
     }
 }
 
-impl Rule for UseExponentiation {
+impl Rule for UseExponentiationOperator {
     type Query = Ast<JsCallExpression>;
     type State = ();
     type Signals = Option<Self::State>;

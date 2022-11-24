@@ -784,7 +784,7 @@ struct NurserySchema {
     #[doc = "Enforce all dependencies are correctly specified."]
     use_exhaustive_dependencies: Option<RuleConfiguration>,
     #[doc = "Disallow the use of Math.pow in favor of the ** operator."]
-    use_exponentiation: Option<RuleConfiguration>,
+    use_exponentiation_operator: Option<RuleConfiguration>,
     #[doc = "Promotes the use of .flatMap() when map().flat() are used together."]
     use_flat_map: Option<RuleConfiguration>,
     #[doc = "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals"]
@@ -822,7 +822,7 @@ impl Nursery {
         "useConst",
         "useDefaultSwitchClauseLast",
         "useExhaustiveDependencies",
-        "useExponentiation",
+        "useExponentiationOperator",
         "useFlatMap",
         "useNumericLiterals",
         "useValidForDirection",

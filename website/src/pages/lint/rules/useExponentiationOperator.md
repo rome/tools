@@ -1,9 +1,9 @@
 ---
-title: Lint Rule useExponentiation
+title: Lint Rule useExponentiationOperator
 parent: lint/rules/index
 ---
 
-# useExponentiation (since v11.0.0)
+# useExponentiationOperator (since v11.0.0)
 
 Disallow the use of `Math.pow` in favor of the `**` operator.
 
@@ -21,7 +21,7 @@ Source: https://eslint.org/docs/latest/rules/prefer-exponentiation-operator
 const foo = Math.pow(2, 8);
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useExponentiation.js:1:13 <a href="https://docs.rome.tools/lint/rules/useExponentiation">lint/nursery/useExponentiation</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/useExponentiationOperator.js:1:13 <a href="https://docs.rome.tools/lint/rules/useExponentiationOperator">lint/nursery/useExponentiationOperator</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Use the '**' operator instead of 'Math.pow'.</span>
   
@@ -41,7 +41,7 @@ const foo = Math.pow(2, 8);
 const bar = Math.pow(a, b);
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useExponentiation.js:1:13 <a href="https://docs.rome.tools/lint/rules/useExponentiation">lint/nursery/useExponentiation</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/useExponentiationOperator.js:1:13 <a href="https://docs.rome.tools/lint/rules/useExponentiationOperator">lint/nursery/useExponentiationOperator</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Use the '**' operator instead of 'Math.pow'.</span>
   
@@ -61,7 +61,7 @@ const bar = Math.pow(a, b);
 let baz = Math.pow(a + b, c + d);
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useExponentiation.js:1:11 <a href="https://docs.rome.tools/lint/rules/useExponentiation">lint/nursery/useExponentiation</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/useExponentiationOperator.js:1:11 <a href="https://docs.rome.tools/lint/rules/useExponentiationOperator">lint/nursery/useExponentiationOperator</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Use the '**' operator instead of 'Math.pow'.</span>
   
@@ -81,7 +81,7 @@ let baz = Math.pow(a + b, c + d);
 let quux = Math.pow(-1, n);
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useExponentiation.js:1:12 <a href="https://docs.rome.tools/lint/rules/useExponentiation">lint/nursery/useExponentiation</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/useExponentiationOperator.js:1:12 <a href="https://docs.rome.tools/lint/rules/useExponentiationOperator">lint/nursery/useExponentiationOperator</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Use the '**' operator instead of 'Math.pow'.</span>
   
