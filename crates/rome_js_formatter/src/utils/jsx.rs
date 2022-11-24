@@ -282,12 +282,12 @@ where
                         }
 
                         (relative_start, JsxTextChunk::Word(word)) => {
-                            builder.entry(JsxChild::Word(JsxWord {
-                                text: value_token
-                                    .token_text()
-                                    .slice(TextRange::at(relative_start, word.text_len())),
-                                source_position: value_token.text_range().start() + relative_start,
-                            }));
+                            let text = value_token
+                                .token_text()
+                                .slice(TextRange::at(relative_start, word.text_len()));
+                            let source_position = value_token.text_range().start() + relative_start;
+
+                            builder.entry(JsxChild::Word(JsxWord::new(text, source_position)));
                         }
                     }
                 }
@@ -331,6 +331,12 @@ impl JsxSplitChildrenBuilder {
                 } else if matches!(child, JsxChild::NonText(_) | JsxChild::Word(_)) {
                     self.buffer.push(child);
                 }
+            }
+            Some(JsxChild::Word(word)) => {
+                if let JsxChild::NonText(JsxAnyChild::JsxSelfClosingElement(_)) = child {
+                    word.is_next_element_self_closing = true;
+                }
+                self.buffer.push(child)
             }
             _ => self.buffer.push(child),
         }
@@ -403,10 +409,23 @@ impl JsxChild {
 pub(crate) struct JsxWord {
     text: SyntaxTokenText,
     source_position: TextSize,
+    is_next_element_self_closing: bool,
 }
 
 impl JsxWord {
-    pub fn is_ascii_punctuation(&self) -> bool {
+    fn new(text: SyntaxTokenText, source_position: TextSize) -> Self {
+        JsxWord {
+            text,
+            source_position,
+            is_next_element_self_closing: false,
+        }
+    }
+
+    pub(crate) fn is_next_element_self_closing(&self) -> bool {
+        self.is_next_element_self_closing
+    }
+
+    pub(crate) fn is_ascii_punctuation(&self) -> bool {
         self.text.chars().count() == 1
             && self
                 .text
