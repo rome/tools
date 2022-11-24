@@ -1,4 +1,4 @@
-use rome_js_semantic::{AllReferencesExtensions, SemanticModel};
+use rome_js_semantic::{ReferencesExtensions, SemanticModel};
 use rome_js_syntax::{
     JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxKind,
     JsSyntaxNode, JsSyntaxToken,
@@ -7,24 +7,24 @@ use rome_rowan::{AstNode, BatchMutation, SyntaxNodeCast, TriviaPiece};
 use serde::{Deserialize, Serialize};
 
 pub trait RenamableNode {
-    fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode>;
+    fn binding(&self, model: &SemanticModel) -> Option<JsSyntaxNode>;
 }
 
 impl RenamableNode for JsIdentifierBinding {
-    fn declaration(&self, _: &SemanticModel) -> Option<JsSyntaxNode> {
+    fn binding(&self, _: &SemanticModel) -> Option<JsSyntaxNode> {
         Some(self.syntax().clone())
     }
 }
 
 impl RenamableNode for JsReferenceIdentifier {
-    fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
-        Some(model.declaration(self)?.syntax().clone())
+    fn binding(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
+        Some(model.binding(self)?.syntax().clone())
     }
 }
 
 impl RenamableNode for JsIdentifierAssignment {
-    fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
-        Some(model.declaration(self)?.syntax().clone())
+    fn binding(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
+        Some(model.binding(self)?.syntax().clone())
     }
 }
 
@@ -35,16 +35,16 @@ pub enum JsAnyRenamableDeclaration {
 }
 
 impl RenamableNode for JsAnyRenamableDeclaration {
-    fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
+    fn binding(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
         match self {
             JsAnyRenamableDeclaration::JsIdentifierBinding(node) => {
-                RenamableNode::declaration(node, model)
+                RenamableNode::binding(node, model)
             }
             JsAnyRenamableDeclaration::JsReferenceIdentifier(node) => {
-                RenamableNode::declaration(node, model)
+                RenamableNode::binding(node, model)
             }
             JsAnyRenamableDeclaration::JsIdentifierAssignment(node) => {
-                RenamableNode::declaration(node, model)
+                RenamableNode::binding(node, model)
             }
         }
     }
@@ -164,7 +164,7 @@ impl RenameSymbolExtensions for BatchMutation<JsLanguage> {
         new_name: &str,
     ) -> bool {
         let prev_binding = match node
-            .declaration(model)
+            .binding(model)
             .and_then(|node| node.cast::<JsIdentifierBinding>())
         {
             Some(prev_binding) => prev_binding,
@@ -205,14 +205,14 @@ impl RenameSymbolExtensions for BatchMutation<JsLanguage> {
                 return false;
             }
 
-            let prev_token = match reference.node().kind() {
+            let prev_token = match reference.syntax().kind() {
                 JsSyntaxKind::JS_REFERENCE_IDENTIFIER => reference
-                    .node()
+                    .syntax()
                     .clone()
                     .cast::<JsReferenceIdentifier>()
                     .and_then(|node| node.value_token().ok()),
                 JsSyntaxKind::JS_IDENTIFIER_ASSIGNMENT => reference
-                    .node()
+                    .syntax()
                     .clone()
                     .cast::<JsIdentifierAssignment>()
                     .and_then(|node| node.name_token().ok()),

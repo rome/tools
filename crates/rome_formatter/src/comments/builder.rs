@@ -639,7 +639,7 @@ mod tests {
         DecoratedComment, SourceComment,
     };
     use crate::{TextSize, TransformSourceMap, TransformSourceMapBuilder};
-    use rome_diagnostics::file::FileId;
+    use rome_diagnostics::location::FileId;
     use rome_js_parser::parse_module;
     use rome_js_syntax::{
         JsIdentifierExpression, JsLanguage, JsParameters, JsParenthesizedExpression,

@@ -8,7 +8,7 @@ use tracing::{error, field};
 use crate::{documents::Document, session::Session, utils};
 
 /// Handler for `textDocument/didOpen` LSP notification
-#[tracing::instrument(level = "trace", skip(session), err)]
+#[tracing::instrument(level = "debug", skip(session), err)]
 pub(crate) async fn did_open(
     session: &Session,
     params: lsp_types::DidOpenTextDocumentParams,
@@ -38,7 +38,7 @@ pub(crate) async fn did_open(
 }
 
 /// Handler for `textDocument/didChange` LSP notification
-#[tracing::instrument(level = "trace", skip_all, fields(url = field::display(&params.text_document.uri), version = params.text_document.version), err)]
+#[tracing::instrument(level = "debug", skip_all, fields(url = field::display(&params.text_document.uri), version = params.text_document.version), err)]
 pub(crate) async fn did_change(
     session: &Session,
     params: lsp_types::DidChangeTextDocumentParams,
@@ -87,7 +87,7 @@ pub(crate) async fn did_change(
 }
 
 /// Handler for `textDocument/didClose` LSP notification
-#[tracing::instrument(level = "trace", skip(session), err)]
+#[tracing::instrument(level = "debug", skip(session), err)]
 pub(crate) async fn did_close(
     session: &Session,
     params: lsp_types::DidCloseTextDocumentParams,

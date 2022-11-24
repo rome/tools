@@ -18,6 +18,7 @@ countme = { workspace = true }
 serde = { version = "1.0.133", optional = true, default-features = false }
 rome_text_edit = { path = "../rome_text_edit" }
 schemars = { version = "0.8.10", optional = true }
+tracing = { workspace = true }
 
 [dev-dependencies]
 quickcheck = "1.0.3"

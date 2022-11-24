@@ -1,0 +1,35 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+[]
+```
+
+
+## Diagnostics
+
+```
+structure_whitespace_formfeed.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The JSON standard only allows tabs, whitespace, carriage return and line feed whitespace.
+  
+  > 1 │ [↡]
+      │  
+  
+  i Use a regular whitespace character instead.
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+WHITESPACE: `` (1..2)
+R_BRACK: `]` (2..3)
+EOF: `` (3..3)
+```
+

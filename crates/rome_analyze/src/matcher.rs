@@ -1,11 +1,10 @@
-use std::{cmp::Ordering, collections::BinaryHeap};
-
-use rome_diagnostics::file::FileId;
-use rome_rowan::{Language, TextRange};
-
 use crate::{
     AnalyzerOptions, AnalyzerSignal, Phases, QueryMatch, Rule, RuleFilter, RuleGroup, ServiceBag,
+    SuppressionCommentEmitter,
 };
+use rome_diagnostics::FileId;
+use rome_rowan::{Language, TextRange};
+use std::{cmp::Ordering, collections::BinaryHeap};
 
 /// The [QueryMatcher] trait is responsible of running lint rules on
 /// [QueryMatch] instances emitted by the various [Visitor](crate::Visitor)
@@ -24,6 +23,7 @@ pub struct MatchQueryParams<'phase, 'query, L: Language> {
     pub services: &'phase ServiceBag,
     pub signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
     pub options: &'query AnalyzerOptions,
+    pub apply_suppression_comment: SuppressionCommentEmitter<L>,
 }
 
 /// Opaque identifier for a group of rule
@@ -153,17 +153,18 @@ where
 
 #[cfg(test)]
 mod tests {
-    use rome_diagnostics::v2::{Diagnostic, Error, Severity};
-    use rome_diagnostics::{file::FileId, v2::category};
+    use rome_diagnostics::{category, location::FileId};
+    use rome_diagnostics::{Diagnostic, Severity};
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
         AstNode, TextRange, TextSize, TriviaPiece, TriviaPieceKind,
     };
 
+    use crate::SuppressionKind;
     use crate::{
-        signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerDiagnostic, AnalyzerOptions,
-        AnalyzerSignal, ControlFlow, MetadataRegistry, Never, Phases, QueryMatch, QueryMatcher,
-        RuleKey, ServiceBag, SignalEntry, SyntaxVisitor,
+        signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal,
+        ControlFlow, MetadataRegistry, Never, Phases, QueryMatch, QueryMatcher, RuleKey,
+        ServiceBag, SignalEntry, SyntaxVisitor,
     };
 
     use super::MatchQueryParams;
@@ -193,11 +194,9 @@ mod tests {
 
             let span = node.text_trimmed_range();
             params.signal_queue.push(SignalEntry {
-                signal: Box::new(DiagnosticSignal::new(move || {
-                    AnalyzerDiagnostic::from_error(Error::from(TestDiagnostic {
-                        span,
-                        location: FileId::zero(),
-                    }))
+                signal: Box::new(DiagnosticSignal::new(move || TestDiagnostic {
+                    span,
+                    location: FileId::zero(),
                 })),
                 rule: RuleKey::new("group", "rule"),
                 text_range: span,
@@ -316,11 +315,11 @@ mod tests {
             ControlFlow::Continue(())
         };
 
-        fn parse_suppression_comment(comment: &str) -> Vec<Option<&str>> {
+        fn parse_suppression_comment(comment: &'_ str) -> Vec<SuppressionKind<'_>> {
             comment
                 .trim_start_matches("//")
                 .split(' ')
-                .map(Some)
+                .map(SuppressionKind::Rule)
                 .collect()
         }
 
@@ -331,6 +330,7 @@ mod tests {
             &metadata,
             SuppressionMatcher,
             parse_suppression_comment,
+            |_| unreachable!(),
             &mut emit_signal,
         );
 

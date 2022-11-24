@@ -42,7 +42,7 @@ impl Rule for NoUndeclaredVariables {
         ctx.query()
             .all_unresolved_references()
             .filter_map(|reference| {
-                let node = reference.node().clone();
+                let node = reference.syntax().clone();
                 let node = AnyIdentifier::unwrap_cast(node);
                 let token = match node {
                     AnyIdentifier::JsReferenceIdentifier(node) => node.value_token(),

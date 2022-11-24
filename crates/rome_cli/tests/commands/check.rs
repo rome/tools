@@ -17,7 +17,7 @@ use crate::configs::{
 };
 use crate::snap_test::SnapshotPayload;
 use crate::{assert_cli_snapshot, run_cli, FORMATTED, LINT_ERROR, PARSE_ERROR};
-use rome_console::{BufferConsole, LogLevel};
+use rome_console::{BufferConsole, LogLevel, MarkupBuf};
 use rome_fs::{ErrorEntry, FileSystemExt, MemoryFileSystem, OsFileSystem};
 use rome_service::DynRef;
 
@@ -939,7 +939,38 @@ fn max_diagnostics_default() {
         _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
     }
 
-    assert_eq!(console.out_buffer.len(), 21);
+    let mut diagnostic_count = 0;
+    let mut filtered_messages = Vec::new();
+
+    for msg in console.out_buffer {
+        let MarkupBuf(nodes) = &msg.content;
+        let is_diagnostic = nodes.iter().any(|node| {
+            node.content.contains("useWhile") || node.content.contains("useBlockStatements")
+        });
+
+        if is_diagnostic {
+            diagnostic_count += 1;
+        } else {
+            filtered_messages.push(msg);
+        }
+    }
+
+    console.out_buffer = filtered_messages;
+
+    for i in 0..60 {
+        let file_path = format!("src/file_{i}.js");
+        fs.remove(Path::new(&file_path));
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "max_diagnostics_default",
+        fs,
+        console,
+        result,
+    ));
+
+    assert_eq!(diagnostic_count, 20);
 }
 
 #[test]
@@ -968,7 +999,38 @@ fn max_diagnostics() {
         _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
     }
 
-    assert_eq!(console.out_buffer.len(), 11);
+    let mut diagnostic_count = 0;
+    let mut filtered_messages = Vec::new();
+
+    for msg in console.out_buffer {
+        let MarkupBuf(nodes) = &msg.content;
+        let is_diagnostic = nodes.iter().any(|node| {
+            node.content.contains("useWhile") || node.content.contains("useBlockStatements")
+        });
+
+        if is_diagnostic {
+            diagnostic_count += 1;
+        } else {
+            filtered_messages.push(msg);
+        }
+    }
+
+    console.out_buffer = filtered_messages;
+
+    for i in 0..60 {
+        let file_path = format!("src/file_{i}.js");
+        fs.remove(Path::new(&file_path));
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "max_diagnostics",
+        fs,
+        console,
+        result,
+    ));
+
+    assert_eq!(diagnostic_count, 10);
 }
 
 #[test]
@@ -987,6 +1049,70 @@ fn no_supported_file_found() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "no_supported_file_found",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn deprecated_suppression_comment() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("file.js");
+    fs.insert(
+        file_path.into(),
+        *b"// rome-ignore lint(correctness/noDoubleEquals): test
+a == b;",
+    );
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            std::ffi::OsString::from("check"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "deprecated_suppression_comment",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn print_verbose() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("check.js");
+    fs.insert(file_path.into(), LINT_ERROR.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("check"),
+            OsString::from("--verbose"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    match result {
+        Err(Termination::CheckError) => {}
+        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "print_verbose",
         fs,
         console,
         result,

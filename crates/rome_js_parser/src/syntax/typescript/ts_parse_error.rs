@@ -3,7 +3,7 @@ use crate::{
     parser::{expected_any, ToDiagnostic},
     CompletedMarker, ParseDiagnostic, Parser,
 };
-use rome_diagnostics::v2::location::AsSpan;
+use rome_diagnostics::location::AsSpan;
 use rome_rowan::TextRange;
 
 pub(crate) fn expected_ts_enum_member(p: &Parser, range: TextRange) -> ParseDiagnostic {

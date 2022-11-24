@@ -1,5 +1,5 @@
 * text=auto eol=lf
-crates/rome_js_parser/src/lexer/tables.rs linguist-generated=true text=auto eol=lf
+crates/rome_js_unicode_table/src/tables.rs linguist-generated=true text=auto eol=lf
 **/generated/* linguist-generated=true text=auto eol=lf
 crates/rome_js_analyze/src/analyzers.rs linguist-generated=true text=auto eol=lf
 crates/rome_js_analyze/src/assists.rs linguist-generated=true text=auto eol=lf
@@ -11,6 +11,8 @@ crates/rome_js_analyze/src/registry.rs linguist-generated=true text=auto eol=lf
 crates/rome_service/src/configuration/linter/rules.rs linguist-generated=true text=auto eol=lf
 npm/backend-jsonrpc/src/workspace.ts linguist-generated=true text=auto eol=lf
 website/src/docs/lint/rules/**/*.md linguist-generated=true text=auto eol=lf
+npm/rome/configuration_schema.json linguist-generated=true text=auto eol=lf
+editors/vscode/configuration_schema.json linguist-generated=true text=auto eol=lf
 
 
 crates/rome_js_formatter/tests/**/*.ts.prettier-snap linguist-language=TypeScript
@@ -19,4 +21,5 @@ crates/rome_js_formatter/tests/**/*.ts.snap linguist-language=Markdown
 crates/rome_js_formatter/tests/**/*.js.snap linguist-language=Markdown
 crates/rome_cli/tests/**/*.snap linguist-language=Markdown
 crates/rome_js_analyze/tests/specs/**/*.snap linguist-language=Markdown
+
 

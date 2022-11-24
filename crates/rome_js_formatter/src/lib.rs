@@ -566,7 +566,7 @@ mod tests {
     use super::{format_node, format_range};
 
     use crate::context::{JsFormatOptions, Semicolons};
-    use rome_diagnostics::file::FileId;
+    use rome_diagnostics::location::FileId;
     use rome_formatter::IndentStyle;
     use rome_js_parser::{parse, parse_script};
     use rome_js_syntax::SourceType;

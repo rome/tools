@@ -180,7 +180,7 @@ pub(crate) fn is_react_call_api(
         if !callee.has_member_name(api_name) {
             return false;
         }
-        return match model.declaration(&object) {
+        return match model.binding(&object) {
             Some(decl) => is_react_export(decl, lib),
             None => object.has_name(lib.global_name()),
         };
@@ -188,7 +188,7 @@ pub(crate) fn is_react_call_api(
 
     if let Some(ident) = expr.as_reference_identifier() {
         return model
-            .declaration(&ident)
+            .binding(&ident)
             .and_then(|it| is_named_react_export(it, lib, api_name))
             .unwrap_or(false);
     }
@@ -215,7 +215,7 @@ pub(crate) fn jsx_member_name_is_react_fragment(
     }
 
     let lib = ReactLibrary::React;
-    match model.declaration(object) {
+    match model.binding(object) {
         Some(declaration) => Some(is_react_export(declaration, lib)),
         None => Some(object.value_token().ok()?.text_trimmed() == lib.global_name()),
     }
@@ -231,7 +231,7 @@ pub(crate) fn jsx_reference_identifier_is_fragment(
     name: &JsxReferenceIdentifier,
     model: &SemanticModel,
 ) -> Option<bool> {
-    match model.declaration(name) {
+    match model.binding(name) {
         Some(reference) => is_named_react_export(reference, ReactLibrary::React, "Fragment"),
         None => {
             let value_token = name.value_token().ok()?;

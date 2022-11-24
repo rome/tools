@@ -50,7 +50,7 @@ pub(crate) fn format(
     Ok(Some(edits))
 }
 
-#[tracing::instrument(level = "trace", skip(session), err)]
+#[tracing::instrument(level = "debug", skip(session), err)]
 pub(crate) fn format_range(
     session: &Session,
     params: DocumentRangeFormattingParams,
@@ -111,7 +111,7 @@ pub(crate) fn format_range(
     }]))
 }
 
-#[tracing::instrument(level = "trace", skip(session), err)]
+#[tracing::instrument(level = "debug", skip(session), err)]
 pub(crate) fn format_on_type(
     session: &Session,
     params: DocumentOnTypeFormattingParams,

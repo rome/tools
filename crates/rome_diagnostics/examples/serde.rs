@@ -1,7 +1,5 @@
 use rome_console::{markup, ConsoleExt, EnvConsole};
-use rome_diagnostics::v2::{
-    Diagnostic, LineIndexBuf, PrintDiagnostic, Resource, Result, SourceCode,
-};
+use rome_diagnostics::{Diagnostic, LineIndexBuf, PrintDiagnostic, Resource, Result, SourceCode};
 use rome_rowan::{TextRange, TextSize};
 use serde_json::Error;
 
@@ -55,6 +53,6 @@ fn from_str(input: &str) -> Result<serde_json::Value> {
 
 pub fn main() {
     if let Err(err) = from_str("{\"syntax_error\"") {
-        EnvConsole::default().error(markup!({ PrintDiagnostic(&err) }));
+        EnvConsole::default().error(markup!({ PrintDiagnostic::verbose(&err) }));
     };
 }

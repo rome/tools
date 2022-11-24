@@ -1,0 +1,36 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+[ false, nul
+```
+
+
+## Diagnostics
+
+```
+structure_unclosed_array_partial_null.json:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The JSON standard doesn't allow identifiers
+  
+  > 1 │ [ false, nul
+      │          ^^^
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+WHITESPACE: ` ` (1..2)
+FALSE_KW: `false` (2..7)
+COMMA: `,` (7..8)
+WHITESPACE: ` ` (8..9)
+IDENT: `nul` (9..12)
+EOF: `` (12..12)
+```
+

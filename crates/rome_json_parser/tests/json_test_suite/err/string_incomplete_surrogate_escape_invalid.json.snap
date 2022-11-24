@@ -1,0 +1,35 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+["\uD800\uD800\x"]
+```
+
+
+## Diagnostics
+
+```
+string_incomplete_surrogate_escape_invalid.json:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Invalid escape sequence
+  
+  > 1 │ ["\uD800\uD800\x"]
+      │               ^^
+  
+  i Valid escape sequences are: `\\`, `\/`, `/"`, `\b\`, `\f`, `\n`, `\r`, `\t` or any unicode escape sequence `\uXXXX` where X is hexedecimal number. 
+  
+```
+
+## Tokens
+
+```
+L_BRACK: `[` (0..1)
+ERROR_TOKEN: `"\uD800\uD800\x"` (1..17)
+R_BRACK: `]` (17..18)
+EOF: `` (18..18)
+```
+

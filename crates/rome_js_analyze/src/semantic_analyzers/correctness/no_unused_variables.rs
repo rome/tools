@@ -4,7 +4,7 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, Rul
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make::{ident, js_identifier_binding};
-use rome_js_semantic::{AllReferencesExtensions, SemanticScopeExtensions};
+use rome_js_semantic::{ReferencesExtensions, SemanticScopeExtensions};
 use rome_js_syntax::{
     JsClassExpression, JsConstructorParameterList, JsConstructorParameters, JsFunctionDeclaration,
     JsFunctionExpression, JsIdentifierBinding, JsParameterList, JsParameters, JsSyntaxKind,
@@ -237,7 +237,7 @@ impl Rule for NoUnusedVariables {
                 // Another possibility is if all its references are "inside" the same declaration
                 if let Some(declarator) = declarator.as_ref() {
                     let node = declarator.syntax();
-                    if r.node().ancestors().any(|n| n == *node) {
+                    if r.syntax().ancestors().any(|n| n == *node) {
                         continue;
                     }
                 }

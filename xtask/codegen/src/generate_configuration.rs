@@ -1,7 +1,10 @@
 use case::CaseExt;
 use proc_macro2::{Ident, Literal, Span};
+use pulldown_cmark::{Event, Parser, Tag};
 use quote::quote;
-use rome_analyze::{GroupCategory, Queryable, RegistryVisitor, Rule, RuleCategory, RuleGroup};
+use rome_analyze::{
+    GroupCategory, Queryable, RegistryVisitor, Rule, RuleCategory, RuleGroup, RuleMetadata,
+};
 use rome_js_analyze::visit_registry;
 use rome_js_syntax::JsLanguage;
 use std::collections::BTreeMap;
@@ -13,7 +16,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
 
     #[derive(Default)]
     struct LintRulesVisitor {
-        groups: BTreeMap<&'static str, BTreeMap<&'static str, bool>>,
+        groups: BTreeMap<&'static str, BTreeMap<&'static str, RuleMetadata>>,
     }
 
     impl RegistryVisitor<JsLanguage> for LintRulesVisitor {
@@ -32,7 +35,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
             self.groups
                 .entry(<R::Group as RuleGroup>::NAME)
                 .or_insert_with(BTreeMap::new)
-                .insert(R::METADATA.name, R::METADATA.recommended);
+                .insert(R::METADATA.name, R::METADATA);
         }
     }
 
@@ -57,7 +60,50 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
 
         let mut number_of_recommended_rules: u8 = 0;
         let number_of_rules = Literal::u8_unsuffixed(rules.len() as u8);
-        for (index, (rule, recommended)) in rules.iter().enumerate() {
+        for (index, (rule, metadata)) in rules.iter().enumerate() {
+            let summary = {
+                let mut docs = String::new();
+                let parser = Parser::new(metadata.docs);
+                for event in parser {
+                    match event {
+                        Event::Text(text) => {
+                            docs.push_str(text.as_ref());
+                        }
+                        Event::Code(text) => {
+                            docs.push_str(text.as_ref());
+                        }
+                        Event::SoftBreak => {
+                            docs.push(' ');
+                        }
+
+                        Event::Start(Tag::Paragraph) => {}
+                        Event::End(Tag::Paragraph) => {
+                            break;
+                        }
+
+                        Event::Start(tag) => match tag {
+                            Tag::Strong | Tag::Paragraph => {
+                                continue;
+                            }
+
+                            _ => panic!("Unimplemented tag {:?}", { tag }),
+                        },
+
+                        Event::End(tag) => match tag {
+                            Tag::Strong | Tag::Paragraph => {
+                                continue;
+                            }
+                            _ => panic!("Unimplemented tag {:?}", { tag }),
+                        },
+
+                        _ => {
+                            panic!("Unimplemented event {:?}", { event })
+                        }
+                    }
+                }
+                docs
+            };
+
             let rule_position = Literal::u8_unsuffixed(index as u8);
             let rule_identifier = Ident::new(&to_lower_snake_case(rule), Span::call_site());
             let declaration = quote! {
@@ -65,7 +111,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
                 pub #rule_identifier: RuleConfiguration
             };
             declarations.push(declaration);
-            if *recommended {
+            if metadata.recommended {
                 lines_recommended_rule_as_filter.push(quote! {
                     RuleFilter::Rule(#group, Self::CATEGORY_RULES[#rule_position])
                 });
@@ -79,6 +125,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
                  #rule
             });
             schema_lines_rules.push(quote! {
+                #[doc = #summary]
                 #rule_identifier: Option<RuleConfiguration>
             });
         }
@@ -242,7 +289,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         use crate::{ConfigurationError, RomeError, RuleConfiguration};
         use rome_analyze::RuleFilter;
         use indexmap::{IndexMap, IndexSet};
-        use rome_diagnostics::v2::{Category, Severity};
+        use rome_diagnostics::{Category, Severity};
 
         #[derive(Deserialize, Serialize, Debug, Clone)]
         #[cfg_attr(feature = "schemars", derive(JsonSchema))]

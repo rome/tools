@@ -3,8 +3,8 @@ use rome_formatter::write;
 
 use crate::utils::FormatInitializerClause;
 
-use rome_js_syntax::JsFormalParameter;
 use rome_js_syntax::JsFormalParameterFields;
+use rome_js_syntax::{JsAnyBindingPattern, JsFormalParameter};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsFormalParameter;
@@ -18,14 +18,23 @@ impl FormatNodeRule<JsFormalParameter> for FormatJsFormalParameter {
             initializer,
         } = node.as_fields();
 
-        write![
-            f,
-            [
-                binding.format(),
-                question_mark_token.format(),
-                type_annotation.format(),
-                FormatInitializerClause::new(initializer.as_ref())
+        let content = format_with(|f| {
+            write![
+                f,
+                [
+                    binding.format(),
+                    question_mark_token.format(),
+                    type_annotation.format()
+                ]
             ]
-        ]
+        });
+
+        if let JsAnyBindingPattern::JsObjectBindingPattern(_) = node.binding()? {
+            write![f, [group(&content)]]?;
+        } else {
+            write![f, [content]]?;
+        }
+
+        write![f, [FormatInitializerClause::new(initializer.as_ref())]]
     }
 }

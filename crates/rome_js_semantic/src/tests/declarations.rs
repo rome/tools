@@ -18,6 +18,7 @@ assert_semantics! {
 // Functions
 assert_semantics! {
     ok_declaration_function, ";function/*START A*/ f(a/*#a*//*@A*/) {/*START B*/ let b/*#b*//*@B*/ = 1; }",
+    ok_declaration_self_invocation, ";(function f/*#F*/() {})();",
     ok_declaration_arrow_function, ";(/*START A*/ a/*#a*//*@A*/) => {/*START B*/ let b/*#b*//*@B*/ = 1; }",
 }
 

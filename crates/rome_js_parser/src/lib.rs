@@ -358,6 +358,7 @@ mod event;
 mod lexer;
 mod lossless_tree_sink;
 mod parse;
+mod span;
 mod state;
 
 #[cfg(any(test, feature = "tests"))]
@@ -381,9 +382,9 @@ pub use crate::{
 pub(crate) use parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser};
 use rome_console::fmt::Display;
 use rome_console::MarkupBuf;
-use rome_diagnostics::v2::console::markup;
-use rome_diagnostics::v2::location::AsSpan;
-use rome_diagnostics::v2::{
+use rome_diagnostics::console::markup;
+use rome_diagnostics::location::AsSpan;
+use rome_diagnostics::{
     Advices, Diagnostic, FileId, Location, LogCategory, MessageAndDescription, Visit,
 };
 use rome_js_syntax::{JsSyntaxKind, LanguageVariant};
@@ -463,10 +464,9 @@ impl Advices for ParserAdvice {
                 file_id,
             } = detail;
             visitor.record_log(LogCategory::Info, &markup! { {message} }.to_owned())?;
+
             let location = Location::builder().span(span).resource(file_id).build();
-            if let Some(location) = location {
-                visitor.record_frame(location)?;
-            }
+            visitor.record_frame(location)?;
         }
         if let Some(hint) = &self.hint {
             visitor.record_log(LogCategory::Info, &markup! { {hint} }.to_owned())?;
@@ -496,13 +496,13 @@ impl ParseDiagnostic {
     /// ## Examples
     ///
     /// ```
-    /// use rome_console::fmt::{Termcolor};
-    /// use rome_console::markup;
-    /// use rome_diagnostics::v2::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
-    /// use rome_js_parser::ParseDiagnostic;
-    /// use rome_js_syntax::TextRange;
-    /// use rome_rowan::TextSize;
-    /// use std::fmt::Write;
+    /// # use rome_console::fmt::{Termcolor};
+    /// # use rome_console::markup;
+    /// # use rome_diagnostics::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
+    /// # use rome_js_parser::ParseDiagnostic;
+    /// # use rome_js_syntax::TextRange;
+    /// # use rome_rowan::TextSize;
+    /// # use std::fmt::Write;
     ///
     /// let source = "const a";
     /// let range = TextRange::new(TextSize::from(0), TextSize::from(5));
@@ -516,7 +516,7 @@ impl ParseDiagnostic {
     ///     .with_file_source_code(source.to_string());
     /// Formatter::new(&mut Termcolor(&mut write))
     ///     .write_markup(markup! {
-    ///     {PrintDiagnostic(&error)}
+    ///     {PrintDiagnostic::verbose(&error)}
     /// })
     ///     .expect("failed to emit diagnostic");
     ///
@@ -554,13 +554,13 @@ impl ParseDiagnostic {
     /// ## Examples
     ///
     /// ```
-    /// use rome_console::fmt::{Termcolor};
-    /// use rome_console::markup;
-    /// use rome_diagnostics::v2::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
-    /// use rome_js_parser::ParseDiagnostic;
-    /// use rome_js_syntax::TextRange;
-    /// use rome_rowan::TextSize;
-    /// use std::fmt::Write;
+    /// # use rome_console::fmt::{Termcolor};
+    /// # use rome_console::markup;
+    /// # use rome_diagnostics::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
+    /// # use rome_js_parser::ParseDiagnostic;
+    /// # use rome_js_syntax::TextRange;
+    /// # use rome_rowan::TextSize;
+    /// # use std::fmt::Write;
     ///
     /// let source = "const a";
     /// let range = TextRange::new(TextSize::from(0), TextSize::from(5));
@@ -574,7 +574,7 @@ impl ParseDiagnostic {
     ///     .with_file_source_code(source.to_string());
     /// Formatter::new(&mut Termcolor(&mut write))
     ///     .write_markup(markup! {
-    ///     {PrintDiagnostic(&error)}
+    ///     {PrintDiagnostic::verbose(&error)}
     /// })
     ///     .expect("failed to emit diagnostic");
     ///

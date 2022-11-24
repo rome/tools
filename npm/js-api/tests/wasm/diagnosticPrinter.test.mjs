@@ -10,7 +10,7 @@ if(expr()) {
 }`;
 		const printer = new DiagnosticPrinter("file.js", SOURCE_CODE);
 
-		printer.print({
+		printer.print_verbose({
 			advices: {
 				advices: [],
 			},
@@ -42,7 +42,7 @@ if(expr()) {
 			},
 		});
 
-		printer.print({
+		printer.print_verbose({
 			advices: {
 				advices: [],
 			},

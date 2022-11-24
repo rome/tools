@@ -1,6 +1,6 @@
 use crate::lexer::{BufferedLexer, LexContext, Lexer, LexerCheckpoint, ReLexContext, TextRange};
 use crate::ParseDiagnostic;
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::location::FileId;
 use rome_js_syntax::JsSyntaxKind;
 use rome_js_syntax::JsSyntaxKind::EOF;
 use rome_rowan::{TextSize, TriviaPieceKind};

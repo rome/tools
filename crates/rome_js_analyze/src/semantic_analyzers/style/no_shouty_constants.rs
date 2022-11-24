@@ -3,7 +3,7 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, Rul
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make::{js_literal_member_name, js_property_object_member};
-use rome_js_semantic::{AllReferencesExtensions, Reference};
+use rome_js_semantic::{Reference, ReferencesExtensions};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsAnyObjectMemberName, JsIdentifierBinding,
     JsIdentifierExpression, JsReferenceIdentifier, JsShorthandPropertyObjectMember,
@@ -109,7 +109,7 @@ impl Rule for NoShoutyConstants {
 
                 return Some(State {
                     literal,
-                    reference: binding.all_references(ctx.model()).next()?,
+                    references: binding.all_references(model).next()?,
                 });
             }
         }

@@ -25,7 +25,8 @@ fn main() -> Result<()> {
     content.push('\n');
     content.push_str("<h3>Code contributors</h3>");
     content.push('\n');
-    content.push_str("<ul class=\"team-list contributors\">");
+    content.push_str("<ul class=\"credits-people-list contributors\">");
+    content.push('\n');
     for contributor in contributors {
         let mut contributor_html = String::new();
         let escaped_login = html_escape::encode_text(&contributor.login);
@@ -46,6 +47,7 @@ fn main() -> Result<()> {
         write!(content, "\" alt=\"{}\" />", contributor.login)?;
         write!(content, "<span>{}</span>", escaped_login)?;
         content.push_str("</a></li>");
+        content.push('\n');
     }
 
     content.push_str("</ul>");

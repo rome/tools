@@ -10,6 +10,7 @@ use rome_fs::CONFIG_NAME;
 use rome_service::workspace::{RageEntry, RageParams, RageResult};
 use rome_service::{workspace, Workspace};
 use std::collections::HashMap;
+use std::panic::RefUnwindSafe;
 use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::sync::{Arc, Mutex};
 use tokio::io::{AsyncRead, AsyncWrite};
@@ -31,6 +32,8 @@ pub struct LSPServer {
     /// initialized on this server instance
     is_initialized: Arc<AtomicBool>,
 }
+
+impl RefUnwindSafe for LSPServer {}
 
 impl LSPServer {
     fn new(
@@ -58,7 +61,7 @@ impl LSPServer {
         requests::syntax_tree::syntax_tree(&self.session, &url).map_err(into_lsp_error)
     }
 
-    #[tracing::instrument(skip(self), name = "rome/rage", level = "trace")]
+    #[tracing::instrument(skip(self), name = "rome/rage", level = "debug")]
     async fn rage(&self, params: RageParams) -> LspResult<RageResult> {
         let mut entries = vec![
             RageEntry::section("Server"),
@@ -185,7 +188,7 @@ impl LSPServer {
 
 #[tower_lsp::async_trait]
 impl LanguageServer for LSPServer {
-    #[tracing::instrument(level = "trace", skip(self))]
+    #[tracing::instrument(level = "debug", skip(self))]
     async fn initialize(&self, params: InitializeParams) -> LspResult<InitializeResult> {
         info!("Starting Rome Language Server...");
         self.is_initialized.store(true, Ordering::Relaxed);
@@ -219,7 +222,7 @@ impl LanguageServer for LSPServer {
         Ok(init)
     }
 
-    #[tracing::instrument(level = "trace", skip(self))]
+    #[tracing::instrument(level = "debug", skip(self))]
     async fn initialized(&self, params: InitializedParams) {
         let _ = params;
 
@@ -244,14 +247,14 @@ impl LanguageServer for LSPServer {
         Ok(())
     }
 
-    #[tracing::instrument(level = "trace", skip(self))]
+    #[tracing::instrument(level = "debug", skip(self))]
     async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
         let _ = params;
         self.session.fetch_client_configuration().await;
         self.setup_capabilities().await;
     }
 
-    #[tracing::instrument(level = "trace", skip(self))]
+    #[tracing::instrument(level = "debug", skip(self))]
     async fn did_change_watched_files(&self, params: DidChangeWatchedFilesParams) {
         let file_paths = params
             .changes
@@ -302,44 +305,59 @@ impl LanguageServer for LSPServer {
     }
 
     async fn code_action(&self, params: CodeActionParams) -> LspResult<Option<CodeActionResponse>> {
-        handlers::analysis::code_actions(&self.session, params).map_err(into_lsp_error)
+        rome_diagnostics::panic::catch_unwind(move || {
+            handlers::analysis::code_actions(&self.session, params).map_err(into_lsp_error)
+        })
+        .map_err(into_lsp_error)?
     }
 
     async fn formatting(
         &self,
         params: DocumentFormattingParams,
     ) -> LspResult<Option<Vec<TextEdit>>> {
-        handlers::formatting::format(&self.session, params).map_err(into_lsp_error)
+        rome_diagnostics::panic::catch_unwind(move || {
+            handlers::formatting::format(&self.session, params).map_err(into_lsp_error)
+        })
+        .map_err(into_lsp_error)?
     }
 
     async fn range_formatting(
         &self,
         params: DocumentRangeFormattingParams,
     ) -> LspResult<Option<Vec<TextEdit>>> {
-        handlers::formatting::format_range(&self.session, params).map_err(into_lsp_error)
+        rome_diagnostics::panic::catch_unwind(move || {
+            handlers::formatting::format_range(&self.session, params).map_err(into_lsp_error)
+        })
+        .map_err(into_lsp_error)?
     }
 
     async fn on_type_formatting(
         &self,
         params: DocumentOnTypeFormattingParams,
     ) -> LspResult<Option<Vec<TextEdit>>> {
-        handlers::formatting::format_on_type(&self.session, params).map_err(into_lsp_error)
+        rome_diagnostics::panic::catch_unwind(move || {
+            handlers::formatting::format_on_type(&self.session, params).map_err(into_lsp_error)
+        })
+        .map_err(into_lsp_error)?
     }
 
     async fn rename(&self, params: RenameParams) -> LspResult<Option<WorkspaceEdit>> {
-        let rename_enabled = self
-            .session
-            .config
-            .read()
-            .ok()
-            .and_then(|config| config.settings.rename)
-            .unwrap_or(false);
+        rome_diagnostics::panic::catch_unwind(move || {
+            let rename_enabled = self
+                .session
+                .config
+                .read()
+                .ok()
+                .and_then(|config| config.settings.rename)
+                .unwrap_or(false);
 
-        if rename_enabled {
-            handlers::rename::rename(&self.session, params).map_err(into_lsp_error)
-        } else {
-            Ok(None)
-        }
+            if rename_enabled {
+                handlers::rename::rename(&self.session, params).map_err(into_lsp_error)
+            } else {
+                Ok(None)
+            }
+        })
+        .map_err(into_lsp_error)?
     }
 }
 

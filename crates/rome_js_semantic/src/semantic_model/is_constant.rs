@@ -12,7 +12,7 @@ pub fn is_constant(expr: &JsAnyExpression) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use rome_diagnostics::v2::FileId;
+    use rome_diagnostics::FileId;
     use rome_js_syntax::{JsIdentifierBinding, JsVariableDeclarator, SourceType};
 
     use crate::{semantic_model, SemanticModelOptions};

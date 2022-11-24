@@ -4,7 +4,7 @@ use rome_console::markup;
 
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_semantic::{AllReferencesExtensions, Scope, SemanticModel, SemanticScopeExtensions};
+use rome_js_semantic::{ReferencesExtensions, Scope, SemanticModel, SemanticScopeExtensions};
 use rome_js_syntax::*;
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 
@@ -70,8 +70,8 @@ declare_node_union! {
 }
 
 pub(crate) struct ConstBindings {
-    can_be_const: Vec<JsIdentifierBinding>,
-    can_fix: bool,
+    pub can_be_const: Vec<JsIdentifierBinding>,
+    pub can_fix: bool,
 }
 
 enum ConstCheckResult {
@@ -141,7 +141,7 @@ impl Rule for UseConst {
 }
 
 impl ConstBindings {
-    fn new(declaration: &VariableDeclaration, model: &SemanticModel) -> Option<Self> {
+    pub fn new(declaration: &VariableDeclaration, model: &SemanticModel) -> Option<Self> {
         let mut state = Self {
             can_be_const: Vec::new(),
             can_fix: true,
@@ -182,7 +182,7 @@ fn check_binding_can_be_const(
 
     // In a for-in or for-of loop or if it has an initializer
     if in_for_in_or_of_loop || has_initializer {
-        return if writes.len() == 0 {
+        return if writes.next().is_none() {
             Some(ConstCheckResult::Fix)
         } else {
             None
@@ -195,7 +195,10 @@ fn check_binding_can_be_const(
         _ => return None,
     };
 
-    let host = write.node().ancestors().find_map(DestructuringHost::cast)?;
+    let host = write
+        .syntax()
+        .ancestors()
+        .find_map(DestructuringHost::cast)?;
     if host.has_member_expr_assignment() || host.has_outer_variables(write.scope()) {
         return None;
     }
@@ -208,7 +211,7 @@ fn check_binding_can_be_const(
 }
 
 impl VariableDeclaration {
-    fn for_each_declarator(&self, f: impl FnMut(JsVariableDeclarator)) {
+    pub fn for_each_declarator(&self, f: impl FnMut(JsVariableDeclarator)) {
         match self {
             VariableDeclaration::JsVariableDeclaration(x) => x
                 .declarators()
@@ -221,7 +224,7 @@ impl VariableDeclaration {
         }
     }
 
-    fn for_each_binding(&self, mut f: impl FnMut(JsIdentifierBinding, &JsVariableDeclarator)) {
+    pub fn for_each_binding(&self, mut f: impl FnMut(JsIdentifierBinding, &JsVariableDeclarator)) {
         self.for_each_declarator(|declarator| {
             if let Ok(pattern) = declarator.id() {
                 with_binding_pat_identifiers(pattern, &mut |binding| {
@@ -232,17 +235,24 @@ impl VariableDeclaration {
         });
     }
 
-    fn kind_token(&self) -> Option<JsSyntaxToken> {
+    pub fn kind_token(&self) -> Option<JsSyntaxToken> {
         match self {
             Self::JsVariableDeclaration(x) => x.kind().ok(),
             Self::JsForVariableDeclaration(x) => x.kind_token().ok(),
         }
     }
 
-    fn is_let(&self) -> bool {
+    pub fn is_let(&self) -> bool {
         match self {
             Self::JsVariableDeclaration(it) => it.is_let(),
             Self::JsForVariableDeclaration(it) => it.is_let(),
+        }
+    }
+
+    pub fn is_var(&self) -> bool {
+        match self {
+            Self::JsVariableDeclaration(it) => it.is_var(),
+            Self::JsForVariableDeclaration(it) => it.is_var(),
         }
     }
 }
