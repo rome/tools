@@ -26,10 +26,10 @@ pub trait ParseNodeList {
     const LIST_KIND: Self::Kind;
 
     /// Parses a single element of the list
-    fn parse_element<'source>(&mut self, p: &mut Self::Parser<'source>) -> ParsedSyntax;
+    fn parse_element(&mut self, p: &mut Self::Parser<'_>) -> ParsedSyntax;
 
     /// It creates a marker just before starting a list
-    fn start_list<'source>(&mut self, p: &mut Self::Parser<'source>) -> Marker {
+    fn start_list(&mut self, p: &mut Self::Parser<'_>) -> Marker {
         p.start()
     }
 
@@ -37,17 +37,14 @@ pub trait ParseNodeList {
     /// the trait will exit from the loop.
     ///
     /// Usually here you want to check the current token.
-    fn is_at_list_end<'source>(&self, p: &mut Self::Parser<'source>) -> bool;
+    fn is_at_list_end(&self, p: &mut Self::Parser<'_>) -> bool;
 
     /// This method is used to recover the parser in case [Self::parse_element] returns [ParsedSyntax::Absent]
-    fn recover<'source>(
-        &mut self,
-        p: &mut Self::Parser<'source>,
-        parsed_element: ParsedSyntax,
-    ) -> RecoveryResult;
+    fn recover(&mut self, p: &mut Self::Parser<'_>, parsed_element: ParsedSyntax)
+        -> RecoveryResult;
 
     /// It creates a [ParsedSyntax] that will contain the list
-    fn finish_list<'source>(&mut self, p: &mut Self::Parser<'source>, m: Marker) {
+    fn finish_list(&mut self, p: &mut Self::Parser<'_>, m: Marker) {
         m.complete(p, Self::LIST_KIND);
     }
 
@@ -56,11 +53,11 @@ pub trait ParseNodeList {
     /// # Panics
     ///
     /// It panics if the parser doesn't advance at each cycle of the loop
-    fn parse_list<'source>(&mut self, p: &mut Self::Parser<'source>) {
+    fn parse_list(&mut self, p: &mut Self::Parser<'_>) {
         let elements = self.start_list(p);
         let mut progress = ParserProgress::default();
 
-        while !p.at(<<Self::Parser<'source> as Parser>::Kind as SyntaxKind>::EOF)
+        while !p.at(<<Self::Parser<'_> as Parser>::Kind as SyntaxKind>::EOF)
             && !self.is_at_list_end(p)
         {
             progress.assert_progressing(p);
@@ -97,10 +94,10 @@ pub trait ParseSeparatedList {
     const LIST_KIND: Self::Kind;
 
     /// Parses a single element of the list
-    fn parse_element<'source>(&mut self, p: &mut Self::Parser<'source>) -> ParsedSyntax;
+    fn parse_element(&mut self, p: &mut Self::Parser<'_>) -> ParsedSyntax;
 
     /// It creates a marker just before starting a list
-    fn start_list<'source>(&mut self, p: &mut Self::Parser<'source>) -> Marker {
+    fn start_list(&mut self, p: &mut Self::Parser<'_>) -> Marker {
         p.start()
     }
 
@@ -108,22 +105,15 @@ pub trait ParseSeparatedList {
     /// the trait will exit from the loop.
     ///
     /// Usually here you want to check the current token.
-    fn is_at_list_end<'source>(&self, p: &mut Self::Parser<'source>) -> bool;
+    fn is_at_list_end(&self, p: &mut Self::Parser<'_>) -> bool;
 
     /// This method is used to recover the parser in case [Self::parse_element] returns [ParsedSyntax::Absent]
-    fn recover<'source>(
-        &mut self,
-        p: &mut Self::Parser<'source>,
-        parsed_element: ParsedSyntax,
-    ) -> RecoveryResult;
+    fn recover(&mut self, p: &mut Self::Parser<'_>, parsed_element: ParsedSyntax)
+        -> RecoveryResult;
 
     /// It creates a [ParsedSyntax] that will contain the list
     /// Only called if the list isn't empty
-    fn finish_list<'source>(
-        &mut self,
-        p: &mut Self::Parser<'source>,
-        m: Marker,
-    ) -> CompletedMarker {
+    fn finish_list(&mut self, p: &mut Self::Parser<'_>, m: Marker) -> CompletedMarker {
         m.complete(p, Self::LIST_KIND)
     }
 
@@ -140,7 +130,7 @@ pub trait ParseSeparatedList {
     ///
     /// If present, it [parses](Self::parse_separating_element) it and continues with loop.
     /// If not present, it adds a missing marker.
-    fn expect_separator<'source>(&mut self, p: &mut Self::Parser<'source>) -> bool {
+    fn expect_separator(&mut self, p: &mut Self::Parser<'_>) -> bool {
         p.expect(self.separating_element_kind())
     }
 
@@ -149,11 +139,11 @@ pub trait ParseSeparatedList {
     /// # Panics
     ///
     /// It panics if the parser doesn't advance at each cycle of the loop
-    fn parse_list<'source>(&mut self, p: &mut Self::Parser<'source>) -> CompletedMarker {
+    fn parse_list(&mut self, p: &mut Self::Parser<'_>) -> CompletedMarker {
         let elements = self.start_list(p);
         let mut progress = ParserProgress::default();
         let mut first = true;
-        while !p.at(<Self::Parser<'source> as Parser>::Kind::EOF) && !self.is_at_list_end(p) {
+        while !p.at(<Self::Parser<'_> as Parser>::Kind::EOF) && !self.is_at_list_end(p) {
             if first {
                 first = false;
             } else {

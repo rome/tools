@@ -684,10 +684,10 @@ pub trait SyntaxFeature: Sized {
     type Parser<'source>: Parser;
 
     /// Returns `true` if the current parsing context supports this syntax feature.
-    fn is_supported<'source>(&self, p: &Self::Parser<'source>) -> bool;
+    fn is_supported(&self, p: &Self::Parser<'_>) -> bool;
 
     /// Returns `true` if the current parsing context doesn't support this syntax feature.
-    fn is_unsupported<'source>(&self, p: &Self::Parser<'source>) -> bool {
+    fn is_unsupported(&self, p: &Self::Parser<'_>) -> bool {
         !self.is_supported(p)
     }
 
