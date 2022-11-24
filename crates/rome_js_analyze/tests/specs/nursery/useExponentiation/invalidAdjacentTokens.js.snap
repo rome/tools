@@ -1,0 +1,260 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 74
+expression: invalidAdjacentTokens.js
+---
+# Input
+```js
+// tokens that cannot be adjacent
+a+Math.pow(++b, c);
+(a)+(Math).pow((++b), c);
+
+// not supported yet
+//Math.pow(a, b)in c
+//Math.pow(a, (b))in (c)
+//a+Math.pow(++b, c)in d
+//a+Math.pow( ++b, c )in d
+
+// tokens that cannot be adjacent, but the autofix inserts parens required for precedence
++Math.pow(++a, b)
+Math.pow(a, b) + Math.pow(c, d)
+Math.pow(Math.pow(a, b), Math.pow(c, d))
+Math.pow(a, b)**Math.pow(c, d)
+
+```
+
+# Diagnostics
+```
+invalidAdjacentTokens.js:2:3 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    1 │ // tokens that cannot be adjacent
+  > 2 │ a+Math.pow(++b, c);
+      │   ^^^^^^^^^^^^^^^^
+    3 │ (a)+(Math).pow((++b), c);
+    4 │ 
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+     1  1 │   // tokens that cannot be adjacent
+     2    │ - a+Math.pow(++b,·c);
+        2 │ + a+++b**c;
+     3  3 │   (a)+(Math).pow((++b), c);
+     4  4 │   
+  
+
+```
+
+```
+invalidAdjacentTokens.js:3:5 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    1 │ // tokens that cannot be adjacent
+    2 │ a+Math.pow(++b, c);
+  > 3 │ (a)+(Math).pow((++b), c);
+      │     ^^^^^^^^^^^^^^^^^^^^
+    4 │ 
+    5 │ // not supported yet
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+     1  1 │   // tokens that cannot be adjacent
+     2  2 │   a+Math.pow(++b, c);
+     3    │ - (a)+(Math).pow((++b),·c);
+        3 │ + (a)+++b**c;
+     4  4 │   
+     5  5 │   // not supported yet
+  
+
+```
+
+```
+invalidAdjacentTokens.js:12:2 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    11 │ // tokens that cannot be adjacent, but the autofix inserts parens required for precedence
+  > 12 │ +Math.pow(++a, b)
+       │  ^^^^^^^^^^^^^^^^
+    13 │ Math.pow(a, b) + Math.pow(c, d)
+    14 │ Math.pow(Math.pow(a, b), Math.pow(c, d))
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    10 10 │   
+    11 11 │   // tokens that cannot be adjacent, but the autofix inserts parens required for precedence
+    12    │ - +Math.pow(++a,·b)
+       12 │ + +(++a**b)
+    13 13 │   Math.pow(a, b) + Math.pow(c, d)
+    14 14 │   Math.pow(Math.pow(a, b), Math.pow(c, d))
+  
+
+```
+
+```
+invalidAdjacentTokens.js:13:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    11 │ // tokens that cannot be adjacent, but the autofix inserts parens required for precedence
+    12 │ +Math.pow(++a, b)
+  > 13 │ Math.pow(a, b) + Math.pow(c, d)
+       │ ^^^^^^^^^^^^^^
+    14 │ Math.pow(Math.pow(a, b), Math.pow(c, d))
+    15 │ Math.pow(a, b)**Math.pow(c, d)
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    11 11 │   // tokens that cannot be adjacent, but the autofix inserts parens required for precedence
+    12 12 │   +Math.pow(++a, b)
+    13    │ - Math.pow(a,·b)·+·Math.pow(c,·d)
+       13 │ + a**b·+·Math.pow(c,·d)
+    14 14 │   Math.pow(Math.pow(a, b), Math.pow(c, d))
+    15 15 │   Math.pow(a, b)**Math.pow(c, d)
+  
+
+```
+
+```
+invalidAdjacentTokens.js:13:18 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    11 │ // tokens that cannot be adjacent, but the autofix inserts parens required for precedence
+    12 │ +Math.pow(++a, b)
+  > 13 │ Math.pow(a, b) + Math.pow(c, d)
+       │                  ^^^^^^^^^^^^^^
+    14 │ Math.pow(Math.pow(a, b), Math.pow(c, d))
+    15 │ Math.pow(a, b)**Math.pow(c, d)
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    11 11 │   // tokens that cannot be adjacent, but the autofix inserts parens required for precedence
+    12 12 │   +Math.pow(++a, b)
+    13    │ - Math.pow(a,·b)·+·Math.pow(c,·d)
+       13 │ + Math.pow(a,·b)·+·c**d
+    14 14 │   Math.pow(Math.pow(a, b), Math.pow(c, d))
+    15 15 │   Math.pow(a, b)**Math.pow(c, d)
+  
+
+```
+
+```
+invalidAdjacentTokens.js:14:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    12 │ +Math.pow(++a, b)
+    13 │ Math.pow(a, b) + Math.pow(c, d)
+  > 14 │ Math.pow(Math.pow(a, b), Math.pow(c, d))
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    15 │ Math.pow(a, b)**Math.pow(c, d)
+    16 │ 
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    12 12 │   +Math.pow(++a, b)
+    13 13 │   Math.pow(a, b) + Math.pow(c, d)
+    14    │ - Math.pow(Math.pow(a,·b),·Math.pow(c,·d))
+       14 │ + Math.pow(a,·b)**Math.pow(c,·d)
+    15 15 │   Math.pow(a, b)**Math.pow(c, d)
+    16 16 │   
+  
+
+```
+
+```
+invalidAdjacentTokens.js:14:10 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    12 │ +Math.pow(++a, b)
+    13 │ Math.pow(a, b) + Math.pow(c, d)
+  > 14 │ Math.pow(Math.pow(a, b), Math.pow(c, d))
+       │          ^^^^^^^^^^^^^^
+    15 │ Math.pow(a, b)**Math.pow(c, d)
+    16 │ 
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    12 12 │   +Math.pow(++a, b)
+    13 13 │   Math.pow(a, b) + Math.pow(c, d)
+    14    │ - Math.pow(Math.pow(a,·b),·Math.pow(c,·d))
+       14 │ + Math.pow(a**b,·Math.pow(c,·d))
+    15 15 │   Math.pow(a, b)**Math.pow(c, d)
+    16 16 │   
+  
+
+```
+
+```
+invalidAdjacentTokens.js:14:26 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    12 │ +Math.pow(++a, b)
+    13 │ Math.pow(a, b) + Math.pow(c, d)
+  > 14 │ Math.pow(Math.pow(a, b), Math.pow(c, d))
+       │                          ^^^^^^^^^^^^^^
+    15 │ Math.pow(a, b)**Math.pow(c, d)
+    16 │ 
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    12 12 │   +Math.pow(++a, b)
+    13 13 │   Math.pow(a, b) + Math.pow(c, d)
+    14    │ - Math.pow(Math.pow(a,·b),·Math.pow(c,·d))
+       14 │ + Math.pow(Math.pow(a,·b),·c**d)
+    15 15 │   Math.pow(a, b)**Math.pow(c, d)
+    16 16 │   
+  
+
+```
+
+```
+invalidAdjacentTokens.js:15:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    13 │ Math.pow(a, b) + Math.pow(c, d)
+    14 │ Math.pow(Math.pow(a, b), Math.pow(c, d))
+  > 15 │ Math.pow(a, b)**Math.pow(c, d)
+       │ ^^^^^^^^^^^^^^
+    16 │ 
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    13 13 │   Math.pow(a, b) + Math.pow(c, d)
+    14 14 │   Math.pow(Math.pow(a, b), Math.pow(c, d))
+    15    │ - Math.pow(a,·b)**Math.pow(c,·d)
+       15 │ + a**b**Math.pow(c,·d)
+    16 16 │   
+  
+
+```
+
+```
+invalidAdjacentTokens.js:15:17 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    13 │ Math.pow(a, b) + Math.pow(c, d)
+    14 │ Math.pow(Math.pow(a, b), Math.pow(c, d))
+  > 15 │ Math.pow(a, b)**Math.pow(c, d)
+       │                 ^^^^^^^^^^^^^^
+    16 │ 
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    13 13 │   Math.pow(a, b) + Math.pow(c, d)
+    14 14 │   Math.pow(Math.pow(a, b), Math.pow(c, d))
+    15    │ - Math.pow(a,·b)**Math.pow(c,·d)
+       15 │ + Math.pow(a,·b)**c**d
+    16 16 │   
+  
+
+```
+
+

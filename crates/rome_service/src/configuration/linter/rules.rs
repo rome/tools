@@ -783,6 +783,8 @@ struct NurserySchema {
     use_default_switch_clause_last: Option<RuleConfiguration>,
     #[doc = "Enforce all dependencies are correctly specified."]
     use_exhaustive_dependencies: Option<RuleConfiguration>,
+    #[doc = "Disallow the use of Math.pow in favor of the ** operator."]
+    use_exponentiation: Option<RuleConfiguration>,
     #[doc = "Promotes the use of .flatMap() when map().flat() are used together."]
     use_flat_map: Option<RuleConfiguration>,
     #[doc = "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals"]
@@ -792,7 +794,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 30] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 31] = [
         "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
@@ -820,6 +822,7 @@ impl Nursery {
         "useConst",
         "useDefaultSwitchClauseLast",
         "useExhaustiveDependencies",
+        "useExponentiation",
         "useFlatMap",
         "useNumericLiterals",
         "useValidForDirection",

@@ -1,0 +1,320 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 74
+expression: invalidParentsWithLowerPrecedence.js
+---
+# Input
+```js
+// parents with a lower precedence
+a * Math.pow(b, c);
+
+Math.pow(a, b) * c;
+
+a + Math.pow(b, c);
+
+Math.pow(a, b)/c;
+
+a < Math.pow(b, c);
+
+Math.pow(a, b) > c;
+
+a === Math.pow(b, c);
+
+a ? Math.pow(b, c) : d;
+
+a = Math.pow(b, c);
+
+a += Math.pow(b, c);
+
+function *f() { yield Math.pow(a, b) }
+
+a, Math.pow(b, c), d
+
+```
+
+# Diagnostics
+```
+invalidParentsWithLowerPrecedence.js:2:5 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    1 │ // parents with a lower precedence
+  > 2 │ a * Math.pow(b, c);
+      │     ^^^^^^^^^^^^^^
+    3 │ 
+    4 │ Math.pow(a, b) * c;
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+     1  1 │   // parents with a lower precedence
+     2    │ - a·*·Math.pow(b,·c);
+        2 │ + a·*·b**c;
+     3  3 │   
+     4  4 │   Math.pow(a, b) * c;
+  
+
+```
+
+```
+invalidParentsWithLowerPrecedence.js:4:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    2 │ a * Math.pow(b, c);
+    3 │ 
+  > 4 │ Math.pow(a, b) * c;
+      │ ^^^^^^^^^^^^^^
+    5 │ 
+    6 │ a + Math.pow(b, c);
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+     2  2 │   a * Math.pow(b, c);
+     3  3 │   
+     4    │ - Math.pow(a,·b)·*·c;
+        4 │ + a**b·*·c;
+     5  5 │   
+     6  6 │   a + Math.pow(b, c);
+  
+
+```
+
+```
+invalidParentsWithLowerPrecedence.js:6:5 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    4 │ Math.pow(a, b) * c;
+    5 │ 
+  > 6 │ a + Math.pow(b, c);
+      │     ^^^^^^^^^^^^^^
+    7 │ 
+    8 │ Math.pow(a, b)/c;
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+     4  4 │   Math.pow(a, b) * c;
+     5  5 │   
+     6    │ - a·+·Math.pow(b,·c);
+        6 │ + a·+·b**c;
+     7  7 │   
+     8  8 │   Math.pow(a, b)/c;
+  
+
+```
+
+```
+invalidParentsWithLowerPrecedence.js:8:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+     6 │ a + Math.pow(b, c);
+     7 │ 
+   > 8 │ Math.pow(a, b)/c;
+       │ ^^^^^^^^^^^^^^
+     9 │ 
+    10 │ a < Math.pow(b, c);
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+     6  6 │   a + Math.pow(b, c);
+     7  7 │   
+     8    │ - Math.pow(a,·b)/c;
+        8 │ + a**b/c;
+     9  9 │   
+    10 10 │   a < Math.pow(b, c);
+  
+
+```
+
+```
+invalidParentsWithLowerPrecedence.js:10:5 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+     8 │ Math.pow(a, b)/c;
+     9 │ 
+  > 10 │ a < Math.pow(b, c);
+       │     ^^^^^^^^^^^^^^
+    11 │ 
+    12 │ Math.pow(a, b) > c;
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+     8  8 │   Math.pow(a, b)/c;
+     9  9 │   
+    10    │ - a·<·Math.pow(b,·c);
+       10 │ + a·<·b**c;
+    11 11 │   
+    12 12 │   Math.pow(a, b) > c;
+  
+
+```
+
+```
+invalidParentsWithLowerPrecedence.js:12:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    10 │ a < Math.pow(b, c);
+    11 │ 
+  > 12 │ Math.pow(a, b) > c;
+       │ ^^^^^^^^^^^^^^
+    13 │ 
+    14 │ a === Math.pow(b, c);
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    10 10 │   a < Math.pow(b, c);
+    11 11 │   
+    12    │ - Math.pow(a,·b)·>·c;
+       12 │ + a**b·>·c;
+    13 13 │   
+    14 14 │   a === Math.pow(b, c);
+  
+
+```
+
+```
+invalidParentsWithLowerPrecedence.js:14:7 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    12 │ Math.pow(a, b) > c;
+    13 │ 
+  > 14 │ a === Math.pow(b, c);
+       │       ^^^^^^^^^^^^^^
+    15 │ 
+    16 │ a ? Math.pow(b, c) : d;
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    12 12 │   Math.pow(a, b) > c;
+    13 13 │   
+    14    │ - a·===·Math.pow(b,·c);
+       14 │ + a·===·b**c;
+    15 15 │   
+    16 16 │   a ? Math.pow(b, c) : d;
+  
+
+```
+
+```
+invalidParentsWithLowerPrecedence.js:16:5 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    14 │ a === Math.pow(b, c);
+    15 │ 
+  > 16 │ a ? Math.pow(b, c) : d;
+       │     ^^^^^^^^^^^^^^
+    17 │ 
+    18 │ a = Math.pow(b, c);
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    14 14 │   a === Math.pow(b, c);
+    15 15 │   
+    16    │ - a·?·Math.pow(b,·c)·:·d;
+       16 │ + a·?·b**c·:·d;
+    17 17 │   
+    18 18 │   a = Math.pow(b, c);
+  
+
+```
+
+```
+invalidParentsWithLowerPrecedence.js:18:5 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    16 │ a ? Math.pow(b, c) : d;
+    17 │ 
+  > 18 │ a = Math.pow(b, c);
+       │     ^^^^^^^^^^^^^^
+    19 │ 
+    20 │ a += Math.pow(b, c);
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    16 16 │   a ? Math.pow(b, c) : d;
+    17 17 │   
+    18    │ - a·=·Math.pow(b,·c);
+       18 │ + a·=·b**c;
+    19 19 │   
+    20 20 │   a += Math.pow(b, c);
+  
+
+```
+
+```
+invalidParentsWithLowerPrecedence.js:20:6 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    18 │ a = Math.pow(b, c);
+    19 │ 
+  > 20 │ a += Math.pow(b, c);
+       │      ^^^^^^^^^^^^^^
+    21 │ 
+    22 │ function *f() { yield Math.pow(a, b) }
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    18 18 │   a = Math.pow(b, c);
+    19 19 │   
+    20    │ - a·+=·Math.pow(b,·c);
+       20 │ + a·+=·b**c;
+    21 21 │   
+    22 22 │   function *f() { yield Math.pow(a, b) }
+  
+
+```
+
+```
+invalidParentsWithLowerPrecedence.js:22:23 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    20 │ a += Math.pow(b, c);
+    21 │ 
+  > 22 │ function *f() { yield Math.pow(a, b) }
+       │                       ^^^^^^^^^^^^^^
+    23 │ 
+    24 │ a, Math.pow(b, c), d
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    20 20 │   a += Math.pow(b, c);
+    21 21 │   
+    22    │ - function·*f()·{·yield·Math.pow(a,·b)·}
+       22 │ + function·*f()·{·yield·a**b·}
+    23 23 │   
+    24 24 │   a, Math.pow(b, c), d
+  
+
+```
+
+```
+invalidParentsWithLowerPrecedence.js:24:4 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    22 │ function *f() { yield Math.pow(a, b) }
+    23 │ 
+  > 24 │ a, Math.pow(b, c), d
+       │    ^^^^^^^^^^^^^^
+    25 │ 
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    22 22 │   function *f() { yield Math.pow(a, b) }
+    23 23 │   
+    24    │ - a,·Math.pow(b,·c),·d
+       24 │ + a,·b**c,·d
+    25 25 │   
+  
+
+```
+
+

@@ -460,6 +460,10 @@ export interface Nursery {
 	 */
 	useExhaustiveDependencies?: RuleConfiguration;
 	/**
+	 * Disallow the use of Math.pow in favor of the ** operator.
+	 */
+	useExponentiation?: RuleConfiguration;
+	/**
 	 * Promotes the use of .flatMap() when map().flat() are used together.
 	 */
 	useFlatMap?: RuleConfiguration;
@@ -699,6 +703,7 @@ export type Category =
 	| "lint/nursery/useConst"
 	| "lint/nursery/useDefaultSwitchClauseLast"
 	| "lint/nursery/useExhaustiveDependencies"
+	| "lint/nursery/useExponentiation"
 	| "lint/nursery/useFlatMap"
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/useValidForDirection"

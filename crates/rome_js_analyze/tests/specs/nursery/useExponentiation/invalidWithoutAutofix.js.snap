@@ -1,0 +1,246 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 74
+expression: invalidWithoutAutofix.js
+---
+# Input
+```js
+// shouldn't autofix if the call doesn't have exactly two arguments
+Math.pow()
+Math.pow(a)
+Math.pow(a, b, c)
+Math.pow(a, b, c, d)
+
+// shouldn't autofix if any of the arguments is spread
+Math.pow(...a)
+Math.pow(...a, b)
+Math.pow(a, ...b)
+Math.pow(a, b, ...c)
+
+// shouldn't autofix if that would remove comments
+/* comment */Math.pow(a, b)
+Math.pow(/**/a, b)
+Math.pow(a, b/**/)
+Math.pow(a, b)/* comment */;
+Math.pow(a, b)// comment;
+Math.pow(/**/a/**/, /**/b/**/)
+
+```
+
+# Diagnostics
+```
+invalidWithoutAutofix.js:2:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    1 │ // shouldn't autofix if the call doesn't have exactly two arguments
+  > 2 │ Math.pow()
+      │ ^^^^^^^^^^
+    3 │ Math.pow(a)
+    4 │ Math.pow(a, b, c)
+  
+
+```
+
+```
+invalidWithoutAutofix.js:3:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    1 │ // shouldn't autofix if the call doesn't have exactly two arguments
+    2 │ Math.pow()
+  > 3 │ Math.pow(a)
+      │ ^^^^^^^^^^^
+    4 │ Math.pow(a, b, c)
+    5 │ Math.pow(a, b, c, d)
+  
+
+```
+
+```
+invalidWithoutAutofix.js:4:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    2 │ Math.pow()
+    3 │ Math.pow(a)
+  > 4 │ Math.pow(a, b, c)
+      │ ^^^^^^^^^^^^^^^^^
+    5 │ Math.pow(a, b, c, d)
+    6 │ 
+  
+
+```
+
+```
+invalidWithoutAutofix.js:5:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    3 │ Math.pow(a)
+    4 │ Math.pow(a, b, c)
+  > 5 │ Math.pow(a, b, c, d)
+      │ ^^^^^^^^^^^^^^^^^^^^
+    6 │ 
+    7 │ // shouldn't autofix if any of the arguments is spread
+  
+
+```
+
+```
+invalidWithoutAutofix.js:8:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+     7 │ // shouldn't autofix if any of the arguments is spread
+   > 8 │ Math.pow(...a)
+       │ ^^^^^^^^^^^^^^
+     9 │ Math.pow(...a, b)
+    10 │ Math.pow(a, ...b)
+  
+
+```
+
+```
+invalidWithoutAutofix.js:9:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+     7 │ // shouldn't autofix if any of the arguments is spread
+     8 │ Math.pow(...a)
+   > 9 │ Math.pow(...a, b)
+       │ ^^^^^^^^^^^^^^^^^
+    10 │ Math.pow(a, ...b)
+    11 │ Math.pow(a, b, ...c)
+  
+
+```
+
+```
+invalidWithoutAutofix.js:10:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+     8 │ Math.pow(...a)
+     9 │ Math.pow(...a, b)
+  > 10 │ Math.pow(a, ...b)
+       │ ^^^^^^^^^^^^^^^^^
+    11 │ Math.pow(a, b, ...c)
+    12 │ 
+  
+
+```
+
+```
+invalidWithoutAutofix.js:11:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+     9 │ Math.pow(...a, b)
+    10 │ Math.pow(a, ...b)
+  > 11 │ Math.pow(a, b, ...c)
+       │ ^^^^^^^^^^^^^^^^^^^^
+    12 │ 
+    13 │ // shouldn't autofix if that would remove comments
+  
+
+```
+
+```
+invalidWithoutAutofix.js:14:14 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    13 │ // shouldn't autofix if that would remove comments
+  > 14 │ /* comment */Math.pow(a, b)
+       │              ^^^^^^^^^^^^^^
+    15 │ Math.pow(/**/a, b)
+    16 │ Math.pow(a, b/**/)
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    12 12 │   
+    13 13 │   // shouldn't autofix if that would remove comments
+    14    │ - /*·comment·*/Math.pow(a,·b)
+       14 │ + /*·comment·*/a**b
+    15 15 │   Math.pow(/**/a, b)
+    16 16 │   Math.pow(a, b/**/)
+  
+
+```
+
+```
+invalidWithoutAutofix.js:15:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    13 │ // shouldn't autofix if that would remove comments
+    14 │ /* comment */Math.pow(a, b)
+  > 15 │ Math.pow(/**/a, b)
+       │ ^^^^^^^^^^^^^^^^^^
+    16 │ Math.pow(a, b/**/)
+    17 │ Math.pow(a, b)/* comment */;
+  
+
+```
+
+```
+invalidWithoutAutofix.js:16:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    14 │ /* comment */Math.pow(a, b)
+    15 │ Math.pow(/**/a, b)
+  > 16 │ Math.pow(a, b/**/)
+       │ ^^^^^^^^^^^^^^^^^^
+    17 │ Math.pow(a, b)/* comment */;
+    18 │ Math.pow(a, b)// comment;
+  
+
+```
+
+```
+invalidWithoutAutofix.js:17:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    15 │ Math.pow(/**/a, b)
+    16 │ Math.pow(a, b/**/)
+  > 17 │ Math.pow(a, b)/* comment */;
+       │ ^^^^^^^^^^^^^^
+    18 │ Math.pow(a, b)// comment;
+    19 │ Math.pow(/**/a/**/, /**/b/**/)
+  
+
+```
+
+```
+invalidWithoutAutofix.js:18:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    16 │ Math.pow(a, b/**/)
+    17 │ Math.pow(a, b)/* comment */;
+  > 18 │ Math.pow(a, b)// comment;
+       │ ^^^^^^^^^^^^^^
+    19 │ Math.pow(/**/a/**/, /**/b/**/)
+    20 │ 
+  
+
+```
+
+```
+invalidWithoutAutofix.js:19:1 lint/nursery/useExponentiation ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    17 │ Math.pow(a, b)/* comment */;
+    18 │ Math.pow(a, b)// comment;
+  > 19 │ Math.pow(/**/a/**/, /**/b/**/)
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    20 │ 
+  
+
+```
+
+

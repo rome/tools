@@ -1,0 +1,610 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 74
+expression: invalid.js
+---
+# Input
+```js
+Math.pow(a, b);
+(Math).pow(a, b);
+
+// able to catch some workarounds
+Math['pow'](a, b);
+Math["pow"](a, b);
+Math[`pow`](a, b);
+(Math)['pow'](a, b);
+(Math)["pow"](a, b);
+(Math)[`pow`](a, b);
+
+// non-expression parents that don't require parens
+var x = Math.pow(a, b);
+if(Math.pow(a, b)){}
+for(;Math.pow(a, b);){}
+switch(foo){ case Math.pow(a, b): break; }
+{ foo: Math.pow(a, b) }
+function foo(bar, baz = Math.pow(a, b), quux){}
+`${Math.pow(a, b)}`
+
+// already parenthesised, shouldn't insert extra parens
++(Math.pow(a, b))
+(Math.pow(a, b)).toString()
+
+// Optional chaining
+Math.pow?.(a, b)
+Math?.pow(a, b)
+Math?.pow?.(a, b)
+;(Math?.pow)(a, b)
+;(Math?.pow)?.(a, b)
+
+// doesn't put extra parens
+Math.pow((a + b), (c + d))
+
+// tokens that can be adjacent
+a+Math.pow(b, c)+d
+
+```
+
+# Diagnostics
+```
+invalid.js:1:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+  > 1 │ Math.pow(a, b);
+      │ ^^^^^^^^^^^^^^
+    2 │ (Math).pow(a, b);
+    3 │ 
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+     1    │ - Math.pow(a,·b);
+        1 │ + a**b;
+     2  2 │   (Math).pow(a, b);
+     3  3 │   
+  
+
+```
+
+```
+invalid.js:2:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    1 │ Math.pow(a, b);
+  > 2 │ (Math).pow(a, b);
+      │ ^^^^^^^^^^^^^^^^
+    3 │ 
+    4 │ // able to catch some workarounds
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+     1  1 │   Math.pow(a, b);
+     2    │ - (Math).pow(a,·b);
+        2 │ + a**b;
+     3  3 │   
+     4  4 │   // able to catch some workarounds
+  
+
+```
+
+```
+invalid.js:5:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    4 │ // able to catch some workarounds
+  > 5 │ Math['pow'](a, b);
+      │ ^^^^^^^^^^^^^^^^^
+    6 │ Math["pow"](a, b);
+    7 │ Math[`pow`](a, b);
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+     3  3 │   
+     4  4 │   // able to catch some workarounds
+     5    │ - Math['pow'](a,·b);
+        5 │ + a**b;
+     6  6 │   Math["pow"](a, b);
+     7  7 │   Math[`pow`](a, b);
+  
+
+```
+
+```
+invalid.js:6:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    4 │ // able to catch some workarounds
+    5 │ Math['pow'](a, b);
+  > 6 │ Math["pow"](a, b);
+      │ ^^^^^^^^^^^^^^^^^
+    7 │ Math[`pow`](a, b);
+    8 │ (Math)['pow'](a, b);
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+     4  4 │   // able to catch some workarounds
+     5  5 │   Math['pow'](a, b);
+     6    │ - Math["pow"](a,·b);
+        6 │ + a**b;
+     7  7 │   Math[`pow`](a, b);
+     8  8 │   (Math)['pow'](a, b);
+  
+
+```
+
+```
+invalid.js:7:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    5 │ Math['pow'](a, b);
+    6 │ Math["pow"](a, b);
+  > 7 │ Math[`pow`](a, b);
+      │ ^^^^^^^^^^^^^^^^^
+    8 │ (Math)['pow'](a, b);
+    9 │ (Math)["pow"](a, b);
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+     5  5 │   Math['pow'](a, b);
+     6  6 │   Math["pow"](a, b);
+     7    │ - Math[`pow`](a,·b);
+        7 │ + a**b;
+     8  8 │   (Math)['pow'](a, b);
+     9  9 │   (Math)["pow"](a, b);
+  
+
+```
+
+```
+invalid.js:8:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+     6 │ Math["pow"](a, b);
+     7 │ Math[`pow`](a, b);
+   > 8 │ (Math)['pow'](a, b);
+       │ ^^^^^^^^^^^^^^^^^^^
+     9 │ (Math)["pow"](a, b);
+    10 │ (Math)[`pow`](a, b);
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+     6  6 │   Math["pow"](a, b);
+     7  7 │   Math[`pow`](a, b);
+     8    │ - (Math)['pow'](a,·b);
+        8 │ + a**b;
+     9  9 │   (Math)["pow"](a, b);
+    10 10 │   (Math)[`pow`](a, b);
+  
+
+```
+
+```
+invalid.js:9:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+     7 │ Math[`pow`](a, b);
+     8 │ (Math)['pow'](a, b);
+   > 9 │ (Math)["pow"](a, b);
+       │ ^^^^^^^^^^^^^^^^^^^
+    10 │ (Math)[`pow`](a, b);
+    11 │ 
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+     7  7 │   Math[`pow`](a, b);
+     8  8 │   (Math)['pow'](a, b);
+     9    │ - (Math)["pow"](a,·b);
+        9 │ + a**b;
+    10 10 │   (Math)[`pow`](a, b);
+    11 11 │   
+  
+
+```
+
+```
+invalid.js:10:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+     8 │ (Math)['pow'](a, b);
+     9 │ (Math)["pow"](a, b);
+  > 10 │ (Math)[`pow`](a, b);
+       │ ^^^^^^^^^^^^^^^^^^^
+    11 │ 
+    12 │ // non-expression parents that don't require parens
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+     8  8 │   (Math)['pow'](a, b);
+     9  9 │   (Math)["pow"](a, b);
+    10    │ - (Math)[`pow`](a,·b);
+       10 │ + a**b;
+    11 11 │   
+    12 12 │   // non-expression parents that don't require parens
+  
+
+```
+
+```
+invalid.js:13:9 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    12 │ // non-expression parents that don't require parens
+  > 13 │ var x = Math.pow(a, b);
+       │         ^^^^^^^^^^^^^^
+    14 │ if(Math.pow(a, b)){}
+    15 │ for(;Math.pow(a, b);){}
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    11 11 │   
+    12 12 │   // non-expression parents that don't require parens
+    13    │ - var·x·=·Math.pow(a,·b);
+       13 │ + var·x·=·a**b;
+    14 14 │   if(Math.pow(a, b)){}
+    15 15 │   for(;Math.pow(a, b);){}
+  
+
+```
+
+```
+invalid.js:14:4 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    12 │ // non-expression parents that don't require parens
+    13 │ var x = Math.pow(a, b);
+  > 14 │ if(Math.pow(a, b)){}
+       │    ^^^^^^^^^^^^^^
+    15 │ for(;Math.pow(a, b);){}
+    16 │ switch(foo){ case Math.pow(a, b): break; }
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    12 12 │   // non-expression parents that don't require parens
+    13 13 │   var x = Math.pow(a, b);
+    14    │ - if(Math.pow(a,·b)){}
+       14 │ + if(a**b){}
+    15 15 │   for(;Math.pow(a, b);){}
+    16 16 │   switch(foo){ case Math.pow(a, b): break; }
+  
+
+```
+
+```
+invalid.js:15:6 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    13 │ var x = Math.pow(a, b);
+    14 │ if(Math.pow(a, b)){}
+  > 15 │ for(;Math.pow(a, b);){}
+       │      ^^^^^^^^^^^^^^
+    16 │ switch(foo){ case Math.pow(a, b): break; }
+    17 │ { foo: Math.pow(a, b) }
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    13 13 │   var x = Math.pow(a, b);
+    14 14 │   if(Math.pow(a, b)){}
+    15    │ - for(;Math.pow(a,·b);){}
+       15 │ + for(;a**b;){}
+    16 16 │   switch(foo){ case Math.pow(a, b): break; }
+    17 17 │   { foo: Math.pow(a, b) }
+  
+
+```
+
+```
+invalid.js:16:19 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    14 │ if(Math.pow(a, b)){}
+    15 │ for(;Math.pow(a, b);){}
+  > 16 │ switch(foo){ case Math.pow(a, b): break; }
+       │                   ^^^^^^^^^^^^^^
+    17 │ { foo: Math.pow(a, b) }
+    18 │ function foo(bar, baz = Math.pow(a, b), quux){}
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    14 14 │   if(Math.pow(a, b)){}
+    15 15 │   for(;Math.pow(a, b);){}
+    16    │ - switch(foo){·case·Math.pow(a,·b):·break;·}
+       16 │ + switch(foo){·case·a**b:·break;·}
+    17 17 │   { foo: Math.pow(a, b) }
+    18 18 │   function foo(bar, baz = Math.pow(a, b), quux){}
+  
+
+```
+
+```
+invalid.js:17:8 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    15 │ for(;Math.pow(a, b);){}
+    16 │ switch(foo){ case Math.pow(a, b): break; }
+  > 17 │ { foo: Math.pow(a, b) }
+       │        ^^^^^^^^^^^^^^
+    18 │ function foo(bar, baz = Math.pow(a, b), quux){}
+    19 │ `${Math.pow(a, b)}`
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    15 15 │   for(;Math.pow(a, b);){}
+    16 16 │   switch(foo){ case Math.pow(a, b): break; }
+    17    │ - {·foo:·Math.pow(a,·b)·}
+       17 │ + {·foo:·a**b·}
+    18 18 │   function foo(bar, baz = Math.pow(a, b), quux){}
+    19 19 │   `${Math.pow(a, b)}`
+  
+
+```
+
+```
+invalid.js:18:25 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    16 │ switch(foo){ case Math.pow(a, b): break; }
+    17 │ { foo: Math.pow(a, b) }
+  > 18 │ function foo(bar, baz = Math.pow(a, b), quux){}
+       │                         ^^^^^^^^^^^^^^
+    19 │ `${Math.pow(a, b)}`
+    20 │ 
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    16 16 │   switch(foo){ case Math.pow(a, b): break; }
+    17 17 │   { foo: Math.pow(a, b) }
+    18    │ - function·foo(bar,·baz·=·Math.pow(a,·b),·quux){}
+       18 │ + function·foo(bar,·baz·=·a**b,·quux){}
+    19 19 │   `${Math.pow(a, b)}`
+    20 20 │   
+  
+
+```
+
+```
+invalid.js:19:4 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    17 │ { foo: Math.pow(a, b) }
+    18 │ function foo(bar, baz = Math.pow(a, b), quux){}
+  > 19 │ `${Math.pow(a, b)}`
+       │    ^^^^^^^^^^^^^^
+    20 │ 
+    21 │ // already parenthesised, shouldn't insert extra parens
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    17 17 │   { foo: Math.pow(a, b) }
+    18 18 │   function foo(bar, baz = Math.pow(a, b), quux){}
+    19    │ - `${Math.pow(a,·b)}`
+       19 │ + `${a**b}`
+    20 20 │   
+    21 21 │   // already parenthesised, shouldn't insert extra parens
+  
+
+```
+
+```
+invalid.js:22:3 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    21 │ // already parenthesised, shouldn't insert extra parens
+  > 22 │ +(Math.pow(a, b))
+       │   ^^^^^^^^^^^^^^
+    23 │ (Math.pow(a, b)).toString()
+    24 │ 
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    20 20 │   
+    21 21 │   // already parenthesised, shouldn't insert extra parens
+    22    │ - +(Math.pow(a,·b))
+       22 │ + +(a**b)
+    23 23 │   (Math.pow(a, b)).toString()
+    24 24 │   
+  
+
+```
+
+```
+invalid.js:23:2 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    21 │ // already parenthesised, shouldn't insert extra parens
+    22 │ +(Math.pow(a, b))
+  > 23 │ (Math.pow(a, b)).toString()
+       │  ^^^^^^^^^^^^^^
+    24 │ 
+    25 │ // Optional chaining
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    21 21 │   // already parenthesised, shouldn't insert extra parens
+    22 22 │   +(Math.pow(a, b))
+    23    │ - (Math.pow(a,·b)).toString()
+       23 │ + (a**b).toString()
+    24 24 │   
+    25 25 │   // Optional chaining
+  
+
+```
+
+```
+invalid.js:26:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    25 │ // Optional chaining
+  > 26 │ Math.pow?.(a, b)
+       │ ^^^^^^^^^^^^^^^^
+    27 │ Math?.pow(a, b)
+    28 │ Math?.pow?.(a, b)
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    24 24 │   
+    25 25 │   // Optional chaining
+    26    │ - Math.pow?.(a,·b)
+       26 │ + a**b
+    27 27 │   Math?.pow(a, b)
+    28 28 │   Math?.pow?.(a, b)
+  
+
+```
+
+```
+invalid.js:27:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    25 │ // Optional chaining
+    26 │ Math.pow?.(a, b)
+  > 27 │ Math?.pow(a, b)
+       │ ^^^^^^^^^^^^^^^
+    28 │ Math?.pow?.(a, b)
+    29 │ ;(Math?.pow)(a, b)
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    25 25 │   // Optional chaining
+    26 26 │   Math.pow?.(a, b)
+    27    │ - Math?.pow(a,·b)
+       27 │ + a**b
+    28 28 │   Math?.pow?.(a, b)
+    29 29 │   ;(Math?.pow)(a, b)
+  
+
+```
+
+```
+invalid.js:28:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    26 │ Math.pow?.(a, b)
+    27 │ Math?.pow(a, b)
+  > 28 │ Math?.pow?.(a, b)
+       │ ^^^^^^^^^^^^^^^^^
+    29 │ ;(Math?.pow)(a, b)
+    30 │ ;(Math?.pow)?.(a, b)
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    26 26 │   Math.pow?.(a, b)
+    27 27 │   Math?.pow(a, b)
+    28    │ - Math?.pow?.(a,·b)
+       28 │ + a**b
+    29 29 │   ;(Math?.pow)(a, b)
+    30 30 │   ;(Math?.pow)?.(a, b)
+  
+
+```
+
+```
+invalid.js:29:2 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    27 │ Math?.pow(a, b)
+    28 │ Math?.pow?.(a, b)
+  > 29 │ ;(Math?.pow)(a, b)
+       │  ^^^^^^^^^^^^^^^^^
+    30 │ ;(Math?.pow)?.(a, b)
+    31 │ 
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    27 27 │   Math?.pow(a, b)
+    28 28 │   Math?.pow?.(a, b)
+    29    │ - ;(Math?.pow)(a,·b)
+       29 │ + ;a**b
+    30 30 │   ;(Math?.pow)?.(a, b)
+    31 31 │   
+  
+
+```
+
+```
+invalid.js:30:2 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    28 │ Math?.pow?.(a, b)
+    29 │ ;(Math?.pow)(a, b)
+  > 30 │ ;(Math?.pow)?.(a, b)
+       │  ^^^^^^^^^^^^^^^^^^^
+    31 │ 
+    32 │ // doesn't put extra parens
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    28 28 │   Math?.pow?.(a, b)
+    29 29 │   ;(Math?.pow)(a, b)
+    30    │ - ;(Math?.pow)?.(a,·b)
+       30 │ + ;a**b
+    31 31 │   
+    32 32 │   // doesn't put extra parens
+  
+
+```
+
+```
+invalid.js:33:1 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    32 │ // doesn't put extra parens
+  > 33 │ Math.pow((a + b), (c + d))
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    34 │ 
+    35 │ // tokens that can be adjacent
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    31 31 │   
+    32 32 │   // doesn't put extra parens
+    33    │ - Math.pow((a·+·b),·(c·+·d))
+       33 │ + (a·+·b)**(c·+·d)
+    34 34 │   
+    35 35 │   // tokens that can be adjacent
+  
+
+```
+
+```
+invalid.js:36:3 lint/nursery/useExponentiation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    35 │ // tokens that can be adjacent
+  > 36 │ a+Math.pow(b, c)+d
+       │   ^^^^^^^^^^^^^^
+    37 │ 
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    34 34 │   
+    35 35 │   // tokens that can be adjacent
+    36    │ - a+Math.pow(b,·c)+d
+       36 │ + a+b**c+d
+    37 37 │   
+  
+
+```
+
+
