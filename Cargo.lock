@@ -1754,7 +1754,8 @@ dependencies = [
 name = "rome_js_syntax"
 version = "0.0.0"
 dependencies = [
- "rome_diagnostics_categories",
+ "rome_console",
+ "rome_diagnostics",
  "rome_js_factory",
  "rome_rowan",
  "schemars",

@@ -9,7 +9,8 @@ repository = "https://github.com/rome/tools"
 
 [dependencies]
 rome_rowan = { path = "../rome_rowan" }
-rome_diagnostics_categories = { path = "../rome_diagnostics_categories" }
+rome_diagnostics = { path = "../rome_diagnostics" }
+rome_console = { path = "../rome_console" }
 serde = { version = "1.0.136", features = ["derive"], optional = true }
 schemars = { version = "0.8.10", optional = true }
 

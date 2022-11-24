@@ -49,6 +49,8 @@ impl<L: Language> Visitor for SyntaxVisitor<L> {
 #[cfg(test)]
 mod tests {
 
+    use std::convert::Infallible;
+
     use rome_diagnostics::location::FileId;
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
@@ -109,7 +111,7 @@ mod tests {
         let mut analyzer = Analyzer::new(
             &metadata,
             &mut matcher,
-            |_| unreachable!(),
+            |_| -> Vec<Result<_, Infallible>> { unreachable!() },
             |_| unreachable!(),
             &mut emit_signal,
         );

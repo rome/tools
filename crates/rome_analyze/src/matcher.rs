@@ -153,6 +153,8 @@ where
 
 #[cfg(test)]
 mod tests {
+    use std::convert::Infallible;
+
     use rome_diagnostics::{category, location::FileId, DiagnosticExt};
     use rome_diagnostics::{Diagnostic, Severity};
     use rome_rowan::{
@@ -315,11 +317,14 @@ mod tests {
             ControlFlow::Continue(())
         };
 
-        fn parse_suppression_comment(comment: &'_ str) -> Vec<SuppressionKind<'_>> {
+        fn parse_suppression_comment(
+            comment: &'_ str,
+        ) -> Vec<Result<SuppressionKind<'_>, Infallible>> {
             comment
                 .trim_start_matches("//")
                 .split(' ')
                 .map(SuppressionKind::Rule)
+                .map(Ok)
                 .collect()
         }
 
