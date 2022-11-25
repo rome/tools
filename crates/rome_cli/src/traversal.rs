@@ -207,7 +207,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
     }
 
     // Processing emitted error diagnostics, exit with a non-zero code
-    if (count - skipped) == 0 {
+    if count.saturating_sub(skipped) == 0 {
         Err(Termination::NoFilesWereProcessed)
     } else if errors > 0 {
         Err(Termination::CheckError)
