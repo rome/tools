@@ -6,6 +6,8 @@ use rome_formatter::{FormatResult, Formatted, PrintResult, Printed};
 use rome_js_analyze::analyze;
 use rome_js_formatter::context::{JsFormatContext, JsFormatOptions};
 use rome_js_syntax::{JsAnyRoot, JsSyntaxNode, SourceType};
+use rome_json_formatter::context::{JsonFormatContext, JsonFormatOptions};
+use rome_json_syntax::JsonSyntaxNode;
 use rome_parser::prelude::ParseDiagnostic;
 
 pub enum Parse<'a> {
@@ -46,7 +48,7 @@ impl Parsed {
             Parsed::JavaScript(parse, source_type) => {
                 Some(FormatNode::JavaScript(parse.syntax(), *source_type))
             }
-            Parsed::Json(_) => None,
+            Parsed::Json(parse) => Some(FormatNode::Json(parse.syntax())),
         }
     }
 
@@ -67,6 +69,7 @@ impl Parsed {
 
 pub enum FormatNode {
     JavaScript(JsSyntaxNode, SourceType),
+    Json(JsonSyntaxNode),
 }
 
 impl FormatNode {
@@ -76,18 +79,24 @@ impl FormatNode {
                 rome_js_formatter::format_node(JsFormatOptions::new(*source_type), root)
                     .map(FormattedNode::JavaScript)
             }
+            FormatNode::Json(root) => {
+                rome_json_formatter::format_node(JsonFormatOptions::default(), root)
+                    .map(FormattedNode::Json)
+            }
         }
     }
 }
 
 pub enum FormattedNode {
     JavaScript(Formatted<JsFormatContext>),
+    Json(Formatted<JsonFormatContext>),
 }
 
 impl FormattedNode {
     pub fn print(&self) -> PrintResult<Printed> {
         match self {
             FormattedNode::JavaScript(formatted) => formatted.print(),
+            FormattedNode::Json(formatted) => formatted.print(),
         }
     }
 }
