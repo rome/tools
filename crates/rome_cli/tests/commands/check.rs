@@ -68,6 +68,9 @@ const UPGRADE_SEVERITY_CODE: &str = r#"class A extends B {
     constructor() {}
 }"#;
 
+const NURSERY_UNSTABLE: &str = r#"const array = ["split", "the text", "into words"];
+array.map(sentence => sentence.split(' ')).flat();"#;
+
 #[test]
 fn ok() {
     let mut fs = MemoryFileSystem::default();
@@ -1258,6 +1261,35 @@ fn config_recommended_group() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "config_recommended_group",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn nursery_unstable() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("check.js");
+    fs.insert(file_path.into(), NURSERY_UNSTABLE.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+    );
+
+    match result {
+        Ok(()) => {}
+        Err(Termination::CheckError) => {}
+        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "nursery_unstable",
         fs,
         console,
         result,
