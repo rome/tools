@@ -25,10 +25,7 @@ pub struct AnalyzerDiagnostic {
 impl From<RuleDiagnostic> for AnalyzerDiagnostic {
     fn from(rule_diagnostic: RuleDiagnostic) -> Self {
         Self {
-            kind: DiagnosticKind::Rule {
-                rule_diagnostic,
-                severity: None,
-            },
+            kind: DiagnosticKind::Rule(rule_diagnostic),
             code_suggestion_list: vec![],
         }
     }
@@ -37,10 +34,7 @@ impl From<RuleDiagnostic> for AnalyzerDiagnostic {
 #[derive(Debug)]
 enum DiagnosticKind {
     /// It holds various info related to diagnostics emitted by the rules
-    Rule {
-        /// The diagnostic emitted by a rule
-        rule_diagnostic: RuleDiagnostic,
-    },
+    Rule(RuleDiagnostic),
     /// We have raw information to create a basic [Diagnostic]
     Raw(Error),
 }
@@ -48,26 +42,22 @@ enum DiagnosticKind {
 impl Diagnostic for AnalyzerDiagnostic {
     fn category(&self) -> Option<&'static Category> {
         match &self.kind {
-            DiagnosticKind::Rule {
-                rule_diagnostic, ..
-            } => Some(rule_diagnostic.category),
+            DiagnosticKind::Rule(rule_diagnostic) => Some(rule_diagnostic.category),
             DiagnosticKind::Raw(error) => error.category(),
         }
     }
     fn description(&self, fmt: &mut Formatter<'_>) -> std::fmt::Result {
         match &self.kind {
-            DiagnosticKind::Rule {
-                rule_diagnostic, ..
-            } => Debug::fmt(&rule_diagnostic.message, fmt),
+            DiagnosticKind::Rule(rule_diagnostic) => Debug::fmt(&rule_diagnostic.message, fmt),
             DiagnosticKind::Raw(error) => error.description(fmt),
         }
     }
 
     fn message(&self, fmt: &mut rome_console::fmt::Formatter<'_>) -> std::io::Result<()> {
         match &self.kind {
-            DiagnosticKind::Rule {
-                rule_diagnostic, ..
-            } => rome_console::fmt::Display::fmt(&rule_diagnostic.message, fmt),
+            DiagnosticKind::Rule(rule_diagnostic) => {
+                rome_console::fmt::Display::fmt(&rule_diagnostic.message, fmt)
+            }
             DiagnosticKind::Raw(error) => error.message(fmt),
         }
     }
@@ -81,20 +71,15 @@ impl Diagnostic for AnalyzerDiagnostic {
 
     fn tags(&self) -> DiagnosticTags {
         match &self.kind {
-            DiagnosticKind::Rule {
-                rule_diagnostic, ..
-            } => rule_diagnostic.tags,
+            DiagnosticKind::Rule(rule_diagnostic) => rule_diagnostic.tags,
             DiagnosticKind::Raw(error) => error.tags(),
         }
     }
 
     fn location(&self) -> Location<'_> {
         match &self.kind {
-            DiagnosticKind::Rule {
-                rule_diagnostic, ..
-            } => {
-                let builder = Location::builder().span(&rule_diagnostic.span);
-                builder.build()
+            DiagnosticKind::Rule(rule_diagnostic) => {
+                Location::builder().span(&rule_diagnostic.span).build()
             }
             DiagnosticKind::Raw(error) => error.location(),
         }
@@ -102,9 +87,7 @@ impl Diagnostic for AnalyzerDiagnostic {
 
     fn advices(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
         match &self.kind {
-            DiagnosticKind::Rule {
-                rule_diagnostic, ..
-            } => rule_diagnostic.advices().record(visitor)?,
+            DiagnosticKind::Rule(rule_diagnostic) => rule_diagnostic.advices().record(visitor)?,
             DiagnosticKind::Raw(error) => error.advices(visitor)?,
         }
 
@@ -128,9 +111,7 @@ impl AnalyzerDiagnostic {
 
     pub fn get_span(&self) -> Option<TextRange> {
         match &self.kind {
-            DiagnosticKind::Rule {
-                rule_diagnostic, ..
-            } => rule_diagnostic.span,
+            DiagnosticKind::Rule(rule_diagnostic) => rule_diagnostic.span,
             DiagnosticKind::Raw(error) => error.location().span,
         }
     }
@@ -139,11 +120,9 @@ impl AnalyzerDiagnostic {
     /// a automatic code fix.
     pub fn add_code_suggestion(mut self, suggestion: CodeSuggestionAdvice<MarkupBuf>) -> Self {
         self.kind = match self.kind {
-            DiagnosticKind::Rule {
-                mut rule_diagnostic,
-            } => {
+            DiagnosticKind::Rule(mut rule_diagnostic) => {
                 rule_diagnostic.tags = DiagnosticTags::FIXABLE;
-                DiagnosticKind::Rule { rule_diagnostic }
+                DiagnosticKind::Rule(rule_diagnostic)
             }
             DiagnosticKind::Raw(error) => {
                 DiagnosticKind::Raw(error.with_tags(DiagnosticTags::FIXABLE))

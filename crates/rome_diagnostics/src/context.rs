@@ -658,7 +658,7 @@ mod internal {
             self.source.as_diagnostic().verbose_advices(visitor)
         }
 
-        fn location(&self) -> Option<Location<'_>> {
+        fn location(&self) -> Location<'_> {
             self.source.as_diagnostic().location()
         }
 
