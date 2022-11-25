@@ -13,6 +13,7 @@ rome_console = { path = "../rome_console" }
 rome_diagnostics = { path = "../rome_diagnostics" }
 rome_json_syntax = { path = "../rome_json_syntax" }
 rome_js_unicode_table = { path = "../rome_js_unicode_table" }
+rome_parser = { path = "../rome_parser" }
 
 [dev-dependencies]
 tests_macros = { path = "../tests_macros" }

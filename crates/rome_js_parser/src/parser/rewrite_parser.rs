@@ -1,8 +1,16 @@
+use crate::parser::JsParser;
 use crate::token_source::TokenSourceCheckpoint;
-use crate::{CompletedMarker, Event, Marker, ParseDiagnostic, Parser, TextSize, ToDiagnostic};
+
+use crate::prelude::*;
 use rome_console::fmt::Display;
 use rome_diagnostics::location::AsSpan;
 use rome_js_syntax::{JsSyntaxKind, TextRange};
+use rome_parser::{
+    diagnostic::{ParseDiagnostic, ToDiagnostic},
+    event::Event,
+    CompletedMarker, Marker,
+};
+use rome_rowan::TextSize;
 
 /// Simplified parser API for when rewriting the AST structure with `rewrite_events`.
 ///
@@ -19,14 +27,14 @@ pub(crate) struct RewriteParser<'parser, 'source> {
     /// The byte offset of the current token from the start of the source
     offset: TextSize,
 
-    inner: &'parser mut Parser<'source>,
+    inner: &'parser mut JsParser<'source>,
 
     /// Offset to the next not yet processed trivia in [TokenSource::trivia_list].
     trivia_offset: usize,
 }
 
 impl<'parser, 'source> RewriteParser<'parser, 'source> {
-    pub fn new(p: &'parser mut Parser<'source>, checkpoint: TokenSourceCheckpoint) -> Self {
+    pub fn new(p: &'parser mut JsParser<'source>, checkpoint: TokenSourceCheckpoint) -> Self {
         Self {
             inner: p,
             offset: checkpoint.current_start(),
@@ -36,9 +44,9 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
 
     /// Starts a marker for a new node.
     pub fn start(&mut self) -> RewriteMarker {
-        let pos = self.inner.events.len() as u32;
+        let pos = self.inner.context().events().len() as u32;
         self.skip_trivia(false);
-        self.inner.push_event(Event::tombstone());
+        self.inner.context_mut().push_event(Event::tombstone());
         RewriteMarker(Marker::new(pos, self.offset))
     }
 
@@ -46,14 +54,14 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
     pub fn bump(&mut self, token: RewriteToken) {
         self.skip_trivia(false);
         debug_assert!(self.offset < token.end);
-        self.inner.push_token(token.kind, token.end);
+        self.inner.context_mut().push_token(token.kind, token.end);
 
         // test ts ts_decorator_assignment
         // @test(--a)
         // class Test {}
 
         // If the parser originally skipped this token as trivia, then make sure to also consume the trivia.
-        if let Some(trivia) = self.inner.tokens.trivia_list.get(self.trivia_offset) {
+        if let Some(trivia) = self.inner.source().trivia_list.get(self.trivia_offset) {
             if trivia.kind().is_skipped() && trivia.offset() == self.offset {
                 self.trivia_offset += 1;
             }
@@ -64,7 +72,7 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
     }
 
     fn skip_trivia(&mut self, trailing: bool) {
-        let remaining_trivia = &self.inner.tokens.trivia_list[self.trivia_offset..];
+        let remaining_trivia = &self.inner.source().trivia_list[self.trivia_offset..];
         for trivia in remaining_trivia {
             // Don't skip over any "skipped token trivia". These get consumed when bumping the token.
             if trailing != trivia.trailing()
@@ -87,21 +95,21 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
         self.skip_trivia(false); // Skip the leading trivia up to the current token.
         assert_eq!(
             self.offset,
-            self.inner.tokens.position(),
+            self.inner.source().position(),
             "Rewrite didn't consume all tokens"
         );
     }
 
     /// Returns true if the parser is in strict mode
     pub fn is_strict_mode(&self) -> bool {
-        self.inner.state.strict().is_some()
+        self.inner.state().strict().is_some()
     }
 
     pub fn err_builder(&self, message: impl Display, span: impl AsSpan) -> ParseDiagnostic {
         self.inner.err_builder(message, span)
     }
 
-    pub fn error(&mut self, diagnostic: impl ToDiagnostic) {
+    pub fn error(&mut self, diagnostic: impl ToDiagnostic<JsParser<'source>>) {
         self.inner.error(diagnostic)
     }
 }

@@ -1,8 +1,6 @@
-use crate::parser::parse_recovery::RecoveryResult;
-use crate::parser::ParsedSyntax::{Absent, Present};
-use crate::parser::{ParseRecovery, ToDiagnostic};
-use crate::{CompletedMarker, Marker, ParseDiagnostic, Parser};
-use rome_js_syntax::JsSyntaxKind;
+use crate::parse_recovery::{ParseRecovery, RecoveryResult};
+use crate::parsed_syntax::ParsedSyntax::{Absent, Present};
+use crate::prelude::*;
 use rome_rowan::TextRange;
 
 /// Syntax that is either present in the source tree or absent.
@@ -28,7 +26,7 @@ use rome_rowan::TextRange;
 /// This is a custom enum over using `Option` because [ParsedSyntax::Absent] values must be handled by the caller.
 #[derive(Debug, PartialEq, Eq)]
 #[must_use = "this `ParsedSyntax` may be an `Absent` variant, which should be handled"]
-pub(crate) enum ParsedSyntax {
+pub enum ParsedSyntax {
     /// A syntax that isn't present in the source code. Used when a parse rule can't match the current
     /// token of the parser.
     Absent,
@@ -156,23 +154,27 @@ impl ParsedSyntax {
 
     /// Returns the kind of the syntax if it is present or [None] otherwise
     #[inline]
-    pub fn kind(&self) -> Option<JsSyntaxKind> {
+    pub fn kind<P>(&self, p: &P) -> Option<P::Kind>
+    where
+        P: Parser,
+    {
         match self {
             Absent => None,
-            Present(marker) => Some(marker.kind()),
+            Present(marker) => Some(marker.kind(p)),
         }
     }
 
     /// Adds a diagnostic at the current parser position if the syntax is present and return its marker.
     #[allow(unused)]
-    pub fn add_diagnostic_if_present<E, D>(
+    pub fn add_diagnostic_if_present<P, E, D>(
         self,
-        p: &mut Parser,
+        p: &mut P,
         error_builder: E,
     ) -> Option<CompletedMarker>
     where
-        E: FnOnce(&Parser, TextRange) -> D,
-        D: ToDiagnostic,
+        P: Parser,
+        E: FnOnce(&P, TextRange) -> D,
+        D: ToDiagnostic<P>,
     {
         match self {
             Present(syntax) => {
@@ -188,14 +190,11 @@ impl ParsedSyntax {
 
     /// It returns the syntax if present or adds a diagnostic at the current parser position.
     #[inline]
-    pub fn or_add_diagnostic<E, D>(
-        self,
-        p: &mut Parser,
-        error_builder: E,
-    ) -> Option<CompletedMarker>
+    pub fn or_add_diagnostic<P, E, D>(self, p: &mut P, error_builder: E) -> Option<CompletedMarker>
     where
-        E: FnOnce(&Parser, TextRange) -> D,
-        D: ToDiagnostic,
+        P: Parser,
+        E: FnOnce(&P, TextRange) -> D,
+        D: ToDiagnostic<P>,
     {
         match self {
             Present(syntax) => Some(syntax),
@@ -211,10 +210,11 @@ impl ParsedSyntax {
     /// a new marker and adds an error to the current parser position.
     /// See [CompletedMarker.precede]
     #[inline]
-    pub fn precede_or_add_diagnostic<E, D>(self, p: &mut Parser, error_builder: E) -> Marker
+    pub fn precede_or_add_diagnostic<P, E, D>(self, p: &mut P, error_builder: E) -> Marker
     where
-        E: FnOnce(&Parser, TextRange) -> D,
-        D: ToDiagnostic,
+        P: Parser,
+        E: FnOnce(&P, TextRange) -> D,
+        D: ToDiagnostic<P>,
     {
         match self {
             Present(completed) => completed.precede(p),
@@ -228,7 +228,10 @@ impl ParsedSyntax {
 
     /// Creates a new marker that precedes this syntax or starts a new marker
     #[inline]
-    pub fn precede(self, p: &mut Parser) -> Marker {
+    pub fn precede<P>(self, p: &mut P) -> Marker
+    where
+        P: Parser,
+    {
         match self {
             Present(marker) => marker.precede(p),
             Absent => p.start(),
@@ -244,14 +247,15 @@ impl ParsedSyntax {
     ///
     /// The error recovery can fail if the parser is located at the EOF token or if the parser
     /// is already at a valid position according to the [ParseRecovery].
-    pub fn or_recover<E>(
+    pub fn or_recover<P, E>(
         self,
-        p: &mut Parser,
-        recovery: &ParseRecovery,
+        p: &mut P,
+        recovery: &ParseRecovery<P::Kind>,
         error_builder: E,
     ) -> RecoveryResult
     where
-        E: FnOnce(&Parser, TextRange) -> ParseDiagnostic,
+        P: Parser,
+        E: FnOnce(&P, TextRange) -> ParseDiagnostic,
     {
         match self {
             Present(syntax) => Ok(syntax),

@@ -36,10 +36,15 @@ pub enum RawLanguageKind {
     CONDITION = 14,
     PLUS_TOKEN = 15,
     WHITESPACE = 16,
+    TOMBSTONE = 17,
+    EOF = 18,
     __LAST,
 }
 
 impl SyntaxKind for RawLanguageKind {
+    const TOMBSTONE: Self = RawLanguageKind::TOMBSTONE;
+    const EOF: Self = RawLanguageKind::EOF;
+
     fn is_unknown(&self) -> bool {
         self == &RawLanguageKind::UNKNOWN
     }
@@ -68,6 +73,21 @@ impl SyntaxKind for RawLanguageKind {
             self,
             RawLanguageKind::EXPRESSION_LIST | RawLanguageKind::SEPARATED_EXPRESSION_LIST
         )
+    }
+
+    fn to_string(&self) -> Option<&'static str> {
+        let str = match self {
+            COMMA_TOKEN => ",",
+            RawLanguageKind::FOR_KW => "for",
+            RawLanguageKind::L_PAREN_TOKEN => "(",
+            RawLanguageKind::SEMICOLON_TOKEN => ";",
+            RawLanguageKind::R_PAREN_TOKEN => ")",
+            RawLanguageKind::EQUAL_TOKEN => "=",
+            RawLanguageKind::LET_TOKEN => "let",
+            RawLanguageKind::PLUS_TOKEN => "+",
+            _ => return None,
+        };
+        Some(str)
     }
 }
 

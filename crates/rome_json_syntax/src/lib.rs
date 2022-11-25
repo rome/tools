@@ -33,6 +33,9 @@ impl JsonSyntaxKind {
 }
 
 impl rome_rowan::SyntaxKind for JsonSyntaxKind {
+    const TOMBSTONE: Self = JsonSyntaxKind::TOMBSTONE;
+    const EOF: Self = JsonSyntaxKind::EOF;
+
     fn is_unknown(&self) -> bool {
         matches!(self, JsonSyntaxKind::JSON_UNKNOWN)
     }
@@ -57,6 +60,10 @@ impl rome_rowan::SyntaxKind for JsonSyntaxKind {
 
     fn is_list(&self) -> bool {
         JsonSyntaxKind::is_list(*self)
+    }
+
+    fn to_string(&self) -> Option<&'static str> {
+        JsonSyntaxKind::to_string(self)
     }
 }
 

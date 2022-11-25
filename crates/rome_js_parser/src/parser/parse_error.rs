@@ -1,6 +1,6 @@
+use crate::prelude::*;
 use crate::span::Span;
-use crate::{ParseDiagnostic, Parser};
-use rome_js_syntax::{JsSyntaxKind, TextRange};
+use rome_js_syntax::TextRange;
 use std::ops::Range;
 
 ///! Provides helper functions to build common diagnostic messages
@@ -13,51 +13,6 @@ pub(crate) fn expected_node(name: &str, range: TextRange) -> ExpectedNodeDiagnos
 /// Creates a diagnostic saying that any of the nodes in [names] was expected at range
 pub(crate) fn expected_any(names: &[&str], range: TextRange) -> ExpectedNodeDiagnosticBuilder {
     ExpectedNodeDiagnosticBuilder::with_any(names, range)
-}
-
-#[must_use]
-pub(crate) fn expected_token(token: JsSyntaxKind) -> impl ToDiagnostic {
-    ExpectedToken(
-        token
-            .to_string()
-            .expect("Expected token to be a punctuation or keyword."),
-    )
-}
-
-#[must_use]
-pub(crate) fn expected_token_any(tokens: &[JsSyntaxKind]) -> impl ToDiagnostic {
-    use std::fmt::Write;
-    let mut expected = String::new();
-
-    for (index, token) in tokens.iter().enumerate() {
-        if index > 0 {
-            expected.push_str(", ");
-        }
-
-        if index == tokens.len() - 1 {
-            expected.push_str("or ");
-        }
-
-        let _ = write!(
-            &mut expected,
-            "'{}'",
-            token
-                .to_string()
-                .expect("Expected token to be a punctuation or keyword.")
-        );
-    }
-
-    ExpectedTokens(expected)
-}
-
-pub(crate) trait ToDiagnostic {
-    fn to_diagnostic(self, p: &Parser) -> ParseDiagnostic;
-}
-
-impl ToDiagnostic for ParseDiagnostic {
-    fn to_diagnostic(self, _: &Parser) -> ParseDiagnostic {
-        self
-    }
 }
 
 pub(crate) struct ExpectedNodeDiagnosticBuilder {
@@ -103,13 +58,13 @@ impl ExpectedNodeDiagnosticBuilder {
     }
 }
 
-impl ToDiagnostic for ExpectedNodeDiagnosticBuilder {
-    fn to_diagnostic(self, p: &Parser) -> ParseDiagnostic {
+impl<P: Parser> ToDiagnostic<P> for ExpectedNodeDiagnosticBuilder {
+    fn into_diagnostic(self, p: &P) -> ParseDiagnostic {
         let range = &self.range;
 
         let msg = if range.is_empty()
-            && p.tokens
-                .source()
+            && p.source()
+                .text()
                 .get(Range::<_>::from(range.as_range()))
                 .is_none()
         {
@@ -121,7 +76,7 @@ impl ToDiagnostic for ExpectedNodeDiagnosticBuilder {
             format!(
                 "expected {} but instead found '{}'",
                 self.names,
-                p.source(range.as_range())
+                p.text(range.as_range())
             )
         };
 
@@ -134,47 +89,5 @@ fn article_for(name: &str) -> &'static str {
     match name.chars().next() {
         Some('a' | 'e' | 'i' | 'o' | 'u') => "an",
         _ => "a",
-    }
-}
-
-struct ExpectedToken(&'static str);
-
-impl ToDiagnostic for ExpectedToken {
-    fn to_diagnostic(self, p: &Parser) -> ParseDiagnostic {
-        match p.cur() {
-            JsSyntaxKind::EOF => p
-                .err_builder(
-                    format!("expected `{}` but instead the file ends", self.0),
-                    p.cur_range(),
-                )
-                .detail(p.cur_range(), "the file ends here"),
-            _ => p
-                .err_builder(
-                    format!("expected `{}` but instead found `{}`", self.0, p.cur_src()),
-                    p.cur_range(),
-                )
-                .hint(format!("Remove {}", p.cur_src())),
-        }
-    }
-}
-
-struct ExpectedTokens(String);
-
-impl ToDiagnostic for ExpectedTokens {
-    fn to_diagnostic(self, p: &Parser) -> ParseDiagnostic {
-        match p.cur() {
-            JsSyntaxKind::EOF => p
-                .err_builder(
-                    format!("expected {} but instead the file ends", self.0),
-                    p.cur_range(),
-                )
-                .detail(p.cur_range(), "the file ends here"),
-            _ => p
-                .err_builder(
-                    format!("expected {} but instead found `{}`", self.0, p.cur_src()),
-                    p.cur_range(),
-                )
-                .hint(format!("Remove {}", p.cur_src())),
-        }
     }
 }

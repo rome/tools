@@ -21,6 +21,9 @@ pub use trivia::{
 
 /// Type tag for each node or token of a language
 pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {
+    const TOMBSTONE: Self;
+    const EOF: Self;
+
     /// Returns `true` if this is an unknown node kind.
     fn is_unknown(&self) -> bool;
 
@@ -38,6 +41,9 @@ pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {
 
     /// Returns `true` if this kind is a list node.
     fn is_list(&self) -> bool;
+
+    /// Returns a string for keywords and punctuation tokens or `None` otherwise.
+    fn to_string(&self) -> Option<&'static str>;
 }
 
 pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Hash {

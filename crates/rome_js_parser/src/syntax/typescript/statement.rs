@@ -1,4 +1,5 @@
-use crate::parser::{expected_token, RecoveryResult};
+use crate::parser::RecoveryResult;
+use crate::prelude::*;
 use crate::syntax::binding::{
     is_nth_at_identifier_binding, parse_binding, parse_identifier_binding,
 };
@@ -16,13 +17,12 @@ use crate::syntax::typescript::{
     expect_ts_type_list, parse_ts_identifier_binding, parse_ts_implements_clause, parse_ts_name,
     parse_ts_type, parse_ts_type_parameters, TypeMembers,
 };
-use crate::{
-    syntax, Absent, CompletedMarker, Marker, ParseNodeList, ParseRecovery, ParseSeparatedList,
-    ParsedSyntax, Parser, Present,
-};
+use crate::{syntax, Absent, JsParser, ParseRecovery, ParsedSyntax, Present};
 use rome_js_syntax::{JsSyntaxKind::*, *};
+use rome_parser::diagnostic::expected_token;
+use rome_parser::parse_lists::{ParseNodeList, ParseSeparatedList};
 
-fn parse_literal_as_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_literal_as_ts_enum_member(p: &mut JsParser) -> ParsedSyntax {
     let m = p.start();
     match p.cur() {
         JS_STRING_LITERAL | T![ident] => {
@@ -45,7 +45,7 @@ fn parse_literal_as_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// An individual enum member
-fn parse_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_enum_member(p: &mut JsParser) -> ParsedSyntax {
     let member = p.start();
 
     let name = match p.cur() {
@@ -73,15 +73,20 @@ fn parse_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
 struct TsEnumMembersList;
 
 impl ParseSeparatedList for TsEnumMembersList {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = TS_ENUM_MEMBER_LIST;
+
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_ts_enum_member(p)
     }
 
-    fn is_at_list_end(&self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool {
         p.at(T!['}'])
     }
 
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+    fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
@@ -91,10 +96,6 @@ impl ParseSeparatedList for TsEnumMembersList {
             .enable_recovery_on_line_break(),
             expected_ts_enum_member,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        TS_ENUM_MEMBER_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
@@ -111,10 +112,10 @@ fn is_reserved_enum_name(name: &str) -> bool {
     super::is_reserved_type_name(name)
 }
 
-fn parse_ts_enum_id(p: &mut Parser, enum_token_range: TextRange) {
+fn parse_ts_enum_id(p: &mut JsParser, enum_token_range: TextRange) {
     match parse_binding(p) {
         Present(id) => {
-            let text = p.source(id.range(p));
+            let text = p.text(id.range(p));
             if is_reserved_enum_name(text) {
                 let err = p.err_builder(
                     format!(
@@ -151,11 +152,11 @@ fn parse_ts_enum_id(p: &mut Parser, enum_token_range: TextRange) {
     }
 }
 
-pub(crate) fn is_at_ts_enum_declaration(p: &mut Parser) -> bool {
+pub(crate) fn is_at_ts_enum_declaration(p: &mut JsParser) -> bool {
     is_nth_at_ts_enum_declaration(p, 0)
 }
 
-pub(crate) fn is_nth_at_ts_enum_declaration(p: &mut Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_ts_enum_declaration(p: &mut JsParser, n: usize) -> bool {
     match p.nth(n) {
         T![enum] => true,
         T![const] => p.nth_at(n + 1, T![enum]),
@@ -170,7 +171,7 @@ pub(crate) fn is_nth_at_ts_enum_declaration(p: &mut Parser, n: usize) -> bool {
 //
 // test_err ts typescript_enum_incomplete
 // enum A {
-pub(crate) fn parse_ts_enum_declaration(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_enum_declaration(p: &mut JsParser) -> ParsedSyntax {
     if !is_at_ts_enum_declaration(p) {
         return Absent;
     }
@@ -196,7 +197,7 @@ pub(crate) fn parse_ts_enum_declaration(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, TS_ENUM_DECLARATION))
 }
 
-pub(crate) fn parse_ts_type_alias_declaration(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_type_alias_declaration(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![type]) {
         return Absent;
     }
@@ -217,7 +218,7 @@ pub(crate) fn parse_ts_type_alias_declaration(p: &mut Parser) -> ParsedSyntax {
 
 // test ts ts_declare_const_initializer
 // declare module test { const X; }
-pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_declare_statement(p: &mut JsParser) -> ParsedSyntax {
     if !is_at_ts_declare_statement(p) {
         return Absent;
     }
@@ -235,7 +236,7 @@ pub(crate) fn parse_ts_declare_statement(p: &mut Parser) -> ParsedSyntax {
 }
 
 #[inline]
-pub(crate) fn is_at_ts_declare_statement(p: &mut Parser) -> bool {
+pub(crate) fn is_at_ts_declare_statement(p: &mut JsParser) -> bool {
     if !p.at(T![declare]) || p.has_nth_preceding_line_break(1) {
         return false;
     }
@@ -244,7 +245,7 @@ pub(crate) fn is_at_ts_declare_statement(p: &mut Parser) -> bool {
 }
 
 #[inline]
-pub(crate) fn is_at_ts_interface_declaration(p: &mut Parser) -> bool {
+pub(crate) fn is_at_ts_interface_declaration(p: &mut JsParser) -> bool {
     if !p.at(T![interface]) || p.has_nth_preceding_line_break(1) {
         return false;
     }
@@ -288,7 +289,7 @@ pub(crate) fn is_at_ts_interface_declaration(p: &mut Parser) -> bool {
 // interface C {
 //     protected  [a: number]: string;
 // }
-pub(crate) fn parse_ts_interface_declaration(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_interface_declaration(p: &mut JsParser) -> ParsedSyntax {
     if !is_at_ts_interface_declaration(p) {
         return Absent;
     }
@@ -314,7 +315,7 @@ pub(crate) fn parse_ts_interface_declaration(p: &mut Parser) -> ParsedSyntax {
 // interface E extends A, {}
 /// Eats an interface's `extends` or an `extends` (not allowed but for better recovery) clauses
 /// Attaches the clauses to the currently active node
-fn eat_interface_heritage_clause(p: &mut Parser) {
+fn eat_interface_heritage_clause(p: &mut JsParser) {
     let mut first_extends: Option<CompletedMarker> = None;
     loop {
         if p.at(T![extends]) {
@@ -347,7 +348,7 @@ fn eat_interface_heritage_clause(p: &mut Parser) {
 // interface A<Prop> { prop: Prop }
 // interface B extends A<string> {}
 // interface C extends A<number>, B {}
-fn parse_ts_extends_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_extends_clause(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![extends]) {
         return Absent;
     }
@@ -359,7 +360,7 @@ fn parse_ts_extends_clause(p: &mut Parser) -> ParsedSyntax {
 }
 
 #[inline]
-pub(crate) fn is_at_any_ts_namespace_declaration(p: &mut Parser) -> bool {
+pub(crate) fn is_at_any_ts_namespace_declaration(p: &mut JsParser) -> bool {
     if p.has_nth_preceding_line_break(1) {
         return false;
     }
@@ -376,7 +377,7 @@ pub(crate) fn is_at_any_ts_namespace_declaration(p: &mut Parser) -> bool {
 }
 
 #[inline]
-pub(crate) fn is_nth_at_any_ts_namespace_declaration(p: &mut Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_any_ts_namespace_declaration(p: &mut JsParser, n: usize) -> bool {
     if p.has_nth_preceding_line_break(n + 1) {
         return false;
     }
@@ -393,7 +394,7 @@ pub(crate) fn is_nth_at_any_ts_namespace_declaration(p: &mut Parser, n: usize) -
 }
 
 pub(crate) fn parse_any_ts_namespace_declaration_clause(
-    p: &mut Parser,
+    p: &mut JsParser,
     stmt_start_pos: TextSize,
 ) -> ParsedSyntax {
     match p.cur() {
@@ -405,7 +406,7 @@ pub(crate) fn parse_any_ts_namespace_declaration_clause(
     }
 }
 
-pub(crate) fn parse_any_ts_namespace_declaration_statement(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_any_ts_namespace_declaration_statement(p: &mut JsParser) -> ParsedSyntax {
     parse_any_ts_namespace_declaration_clause(p, p.cur_range().start())
 }
 
@@ -430,7 +431,7 @@ pub(crate) fn parse_any_ts_namespace_declaration_statement(p: &mut Parser) -> Pa
 // declare module a; // missing body
 // declare module "a" declare module "b"; // missing semi
 fn parse_ts_namespace_or_module_declaration_clause(
-    p: &mut Parser,
+    p: &mut JsParser,
     stmt_start_pos: TextSize,
 ) -> ParsedSyntax {
     if !matches!(p.cur(), T![namespace] | T![module]) {
@@ -472,7 +473,7 @@ fn parse_ts_namespace_or_module_declaration_clause(
 // module number {}
 // module string {}
 // declare module never {}
-fn parse_ts_module_name(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_module_name(p: &mut JsParser) -> ParsedSyntax {
     let mut left = parse_ts_identifier_binding(p, super::TsIdentifierContext::Module);
 
     while p.at(T![.]) {
@@ -485,7 +486,7 @@ fn parse_ts_module_name(p: &mut Parser) -> ParsedSyntax {
     left
 }
 
-fn parse_ts_module_block(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_module_block(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T!['{']) {
         return Absent;
     }
@@ -510,7 +511,7 @@ fn parse_ts_module_block(p: &mut Parser) -> ParsedSyntax {
 // let global;
 // global // not a global declaration
 // console.log("a");
-fn parse_ts_global_declaration(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_global_declaration(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![global]) {
         return Absent;
     }
@@ -531,7 +532,7 @@ fn parse_ts_global_declaration(p: &mut Parser) -> ParsedSyntax {
 
 /// Parses everything after the `import` of an import equals declaration
 pub(crate) fn parse_ts_import_equals_declaration_rest(
-    p: &mut Parser,
+    p: &mut JsParser,
     m: Marker,
     stmt_start_pos: TextSize,
 ) -> CompletedMarker {
@@ -554,7 +555,7 @@ pub(crate) fn parse_ts_import_equals_declaration_rest(
     m.complete(p, TS_IMPORT_EQUALS_DECLARATION)
 }
 
-fn parse_ts_external_module_reference(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_external_module_reference(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![require]) {
         return Absent;
     }

@@ -1,5 +1,6 @@
 use crate::lexer::TextSize;
-use crate::parser::{expected_any, expected_node, ParserProgress, RecoveryResult, ToDiagnostic};
+use crate::parser::{expected_any, expected_node, RecoveryResult};
+use crate::prelude::*;
 use crate::state::{EnterAmbientContext, ExportDefaultItem, ExportDefaultItemKind};
 use crate::syntax::binding::{
     is_at_identifier_binding, is_nth_at_identifier_binding, parse_binding, parse_identifier_binding,
@@ -23,12 +24,11 @@ use crate::syntax::typescript::{
     parse_ts_interface_declaration, skip_ts_decorators,
 };
 use crate::JsSyntaxFeature::TypeScript;
-use crate::{
-    Absent, CompletedMarker, Marker, ParseRecovery, ParseSeparatedList, ParsedSyntax, Parser,
-    Present, SyntaxFeature,
-};
+use crate::{Absent, JsParser, ParseRecovery, ParsedSyntax, Present};
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::{JsSyntaxKind, TextRange, T};
+use rome_parser::parse_lists::ParseSeparatedList;
+use rome_parser::ParserProgress;
 use std::collections::HashMap;
 
 use super::auxiliary::{is_nth_at_declaration_clause, parse_declaration_clause};
@@ -40,7 +40,7 @@ use super::auxiliary::{is_nth_at_declaration_clause, parse_declaration_clause};
 // export { a };
 // c();
 // import { c } from "c";
-pub(crate) fn parse_module_body(p: &mut Parser, statement_list: Marker) {
+pub(crate) fn parse_module_body(p: &mut JsParser, statement_list: Marker) {
     parse_module_item_list(p, ModuleItemListParent::Module, statement_list);
 }
 
@@ -55,7 +55,7 @@ impl ModuleItemListParent {
     }
 
     #[inline]
-    fn is_at_list_end(&self, p: &Parser) -> bool {
+    fn is_at_list_end(&self, p: &JsParser) -> bool {
         if p.at(EOF) {
             return true;
         }
@@ -68,7 +68,7 @@ impl ModuleItemListParent {
 }
 
 pub(crate) fn parse_module_item_list(
-    p: &mut Parser,
+    p: &mut JsParser,
     parent: ModuleItemListParent,
     list_marker: Marker,
 ) {
@@ -107,7 +107,7 @@ pub(crate) fn parse_module_item_list(
     list_marker.complete(p, JS_MODULE_ITEM_LIST);
 }
 
-fn parse_module_item(p: &mut Parser) -> ParsedSyntax {
+fn parse_module_item(p: &mut JsParser) -> ParsedSyntax {
     match p.cur() {
         T![import] if !token_set![T![.], T!['(']].contains(p.nth(1)) => {
             parse_import_or_import_equals_declaration(p)
@@ -121,7 +121,7 @@ fn parse_module_item(p: &mut Parser) -> ParsedSyntax {
     }
 }
 
-pub(crate) fn parse_import_or_import_equals_declaration(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_import_or_import_equals_declaration(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![import]) {
         return Absent;
     }
@@ -130,8 +130,8 @@ pub(crate) fn parse_import_or_import_equals_declaration(p: &mut Parser) -> Parse
     let import = p.start();
     p.expect(T![import]);
 
-    debug_assert!(p.state.name_map.is_empty());
-    p.state.duplicate_binding_parent = Some("import");
+    debug_assert!(p.state().name_map.is_empty());
+    p.state_mut().duplicate_binding_parent = Some("import");
 
     let statement = if is_at_identifier_binding(p) && (p.nth_at(1, T![=]) || p.nth_at(2, T![=])) {
         let import_equals = parse_ts_import_equals_declaration_rest(p, import, start);
@@ -155,7 +155,7 @@ pub(crate) fn parse_import_or_import_equals_declaration(p: &mut Parser) -> Parse
                 &["default import", "namespace import", "named import"],
                 range,
             )
-            .to_diagnostic(p)
+            .into_diagnostic(p)
         });
 
         let end = p.cur_range().start();
@@ -164,20 +164,20 @@ pub(crate) fn parse_import_or_import_equals_declaration(p: &mut Parser) -> Parse
         Present(import.complete(p, JS_IMPORT))
     };
 
-    p.state.duplicate_binding_parent = None;
-    p.state.name_map.clear();
+    p.state_mut().duplicate_binding_parent = None;
+    p.state_mut().name_map.clear();
 
     statement
 }
 
 // test import_default_clause
 // import foo from "test";
-fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_import_clause(p: &mut JsParser) -> ParsedSyntax {
     if p.at(JS_STRING_LITERAL) {
         return parse_import_bare_clause(p);
     }
 
-    let pos = p.tokens.position();
+    let pos = p.source().position();
     let m = p.start();
 
     // test ts ts_import_clause_types
@@ -203,7 +203,7 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
         _ => {
             // SAFETY: Safe because the parser only eats the "type" keyword if it's followed by
             // either a *, {, or binding
-            debug_assert_eq!(pos, p.tokens.position());
+            debug_assert_eq!(pos, p.source().position());
             m.abandon(p);
             return Absent;
         }
@@ -221,7 +221,7 @@ fn parse_import_clause(p: &mut Parser) -> ParsedSyntax {
 /// Parses the rest of an import named or default clause.
 /// Rest meaning, everything after `type binding`
 fn parse_import_default_or_named_clause_rest(
-    p: &mut Parser,
+    p: &mut JsParser,
     m: Marker,
     is_typed: bool,
 ) -> CompletedMarker {
@@ -264,7 +264,7 @@ fn parse_import_default_or_named_clause_rest(
 // test import_bare_clause
 // import "test";
 // import "no_semicolon"
-fn parse_import_bare_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_import_bare_clause(p: &mut JsParser) -> ParsedSyntax {
     parse_module_source(p).map(|module_source| {
         let m = module_source.precede(p);
         parse_import_assertion(p).ok();
@@ -274,7 +274,7 @@ fn parse_import_bare_clause(p: &mut Parser) -> ParsedSyntax {
 
 // test import_decl
 // import * as foo from "bla";
-fn parse_import_namespace_clause_rest(p: &mut Parser, m: Marker) -> CompletedMarker {
+fn parse_import_namespace_clause_rest(p: &mut JsParser, m: Marker) -> CompletedMarker {
     p.expect(T![*]);
 
     p.expect(T![as]);
@@ -292,7 +292,7 @@ fn parse_import_namespace_clause_rest(p: &mut Parser, m: Marker) -> CompletedMar
 // import e, { f } from "b";
 // import g, * as lorem from "c";
 // import { f as x, default as w, "a-b-c" as y } from "b";
-fn parse_import_named_clause_rest(p: &mut Parser, m: Marker) -> CompletedMarker {
+fn parse_import_named_clause_rest(p: &mut JsParser, m: Marker) -> CompletedMarker {
     parse_default_import_specifier(p).ok();
     parse_named_import(p).or_add_diagnostic(p, expected_named_import);
     p.expect(T![from]);
@@ -302,7 +302,7 @@ fn parse_import_named_clause_rest(p: &mut Parser, m: Marker) -> CompletedMarker 
     m.complete(p, JS_IMPORT_NAMED_CLAUSE)
 }
 
-fn parse_default_import_specifier(p: &mut Parser) -> ParsedSyntax {
+fn parse_default_import_specifier(p: &mut JsParser) -> ParsedSyntax {
     parse_binding(p).map(|binding| {
         let m = binding.precede(p);
         p.expect(T![,]);
@@ -310,14 +310,14 @@ fn parse_default_import_specifier(p: &mut Parser) -> ParsedSyntax {
     })
 }
 
-fn parse_named_import(p: &mut Parser) -> ParsedSyntax {
+fn parse_named_import(p: &mut JsParser) -> ParsedSyntax {
     match p.cur() {
         T![*] => parse_namespace_import_specifier(p),
         _ => parse_named_import_specifier_list(p),
     }
 }
 
-fn parse_namespace_import_specifier(p: &mut Parser) -> ParsedSyntax {
+fn parse_namespace_import_specifier(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![*]) {
         return Absent;
     }
@@ -330,7 +330,7 @@ fn parse_namespace_import_specifier(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_NAMESPACE_IMPORT_SPECIFIER))
 }
 
-fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax {
+fn parse_named_import_specifier_list(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T!['{']) {
         return Absent;
     }
@@ -346,15 +346,19 @@ fn parse_named_import_specifier_list(p: &mut Parser) -> ParsedSyntax {
 struct NamedImportSpecifierList;
 
 impl ParseSeparatedList for NamedImportSpecifierList {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+    const LIST_KIND: Self::Kind = JS_NAMED_IMPORT_SPECIFIER_LIST;
+
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_any_named_import_specifier(p)
     }
 
-    fn is_at_list_end(&self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool {
         p.at(T!['}'])
     }
 
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+    fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
@@ -364,10 +368,6 @@ impl ParseSeparatedList for NamedImportSpecifierList {
             .enable_recovery_on_line_break(),
             expected_named_import_specifier,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        JS_NAMED_IMPORT_SPECIFIER_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
@@ -392,7 +392,7 @@ impl ParseSeparatedList for NamedImportSpecifierList {
 // import { "literal-name" } from "./mod";
 // import { type "literal-name" } from "./mod";
 // import {
-fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
+fn parse_any_named_import_specifier(p: &mut JsParser) -> ParsedSyntax {
     if !is_nth_at_literal_export_name(p, 0) {
         // covers `type` and `as` too
         return Absent;
@@ -463,7 +463,7 @@ fn parse_any_named_import_specifier(p: &mut Parser) -> ParsedSyntax {
 // import "x" assert;
 // import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
 // import { a } from "a.json" assert
-fn parse_import_assertion(p: &mut Parser) -> ParsedSyntax {
+fn parse_import_assertion(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![assert]) || p.has_preceding_line_break() {
         return Absent;
     }
@@ -485,15 +485,20 @@ struct ImportAssertionList {
 }
 
 impl ParseSeparatedList for ImportAssertionList {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = JS_IMPORT_ASSERTION_ENTRY_LIST;
+
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_import_assertion_entry(p, &mut self.assertion_keys)
     }
 
-    fn is_at_list_end(&self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool {
         p.at(T!['}'])
     }
 
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+    fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
@@ -501,12 +506,8 @@ impl ParseSeparatedList for ImportAssertionList {
                 STMT_RECOVERY_SET.union(token_set![T![,], T!['}']]),
             )
             .enable_recovery_on_line_break(),
-            |p, range| expected_node("import assertion entry", range).to_diagnostic(p),
+            |p, range| expected_node("import assertion entry", range).into_diagnostic(p),
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        JS_IMPORT_ASSERTION_ENTRY_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
@@ -519,16 +520,16 @@ impl ParseSeparatedList for ImportAssertionList {
 }
 
 fn parse_import_assertion_entry(
-    p: &mut Parser,
+    p: &mut JsParser,
     seen_assertion_keys: &mut HashMap<String, TextRange>,
 ) -> ParsedSyntax {
     let m = p.start();
     let key_range = p.cur_range();
 
     let key = match p.cur() {
-        JS_STRING_LITERAL => Some(p.cur_src().trim_matches(&['\'', '"'][..])),
-        T![ident] => Some(p.cur_src()),
-        t if t.is_keyword() => Some(p.cur_src()),
+        JS_STRING_LITERAL => Some(p.cur_text().trim_matches(&['\'', '"'][..])),
+        T![ident] => Some(p.cur_text()),
+        t if t.is_keyword() => Some(p.cur_text()),
         _ => None,
     }
     .map(String::from);
@@ -542,7 +543,7 @@ fn parse_import_assertion_entry(
         }
         T![:] => {
             p.error(
-                expected_any(&["identifier", "string literal"], p.cur_range()).to_diagnostic(p),
+                expected_any(&["identifier", "string literal"], p.cur_range()).into_diagnostic(p),
             );
         }
         _ => {
@@ -594,7 +595,7 @@ fn parse_import_assertion_entry(
 // test_err export_huge_function_in_script
 // // SCRIPT
 // export function A () { return "Kinsmen hot Moria tea serves. Sticky camp spell covering forged they're Oakenshield vines. Admirable relatives march regained wheel Ere eternally on rest parts unhappy? Leave hundreds market's Argonath answered avail grieve doing goodness! Wrong miserable well-wishers wander stood immediately neither Agreed goat poison holes fire? Nobody tosses a Dwarf. Brigands Bilbo Baggins prisoner stinker birthday injuries. Kili's loosened shy spiders till. Gandalf's death was not in vain. Nor would he have you give up hope. Bread kindly ghost Beorn's jelly. Andûril two-faced bitterness biding seemed says drinking splendor feed light unnoticed one! Carven nearest Eärendil fireworks former. Mattress smelling wandering teaching appear taste wise Mithril uprooted winter forebearers wheel. Let's beside Proudfoots succumbed! Excuse Anárion stolen helpless nudge study shown holding form? Changes point Snowbourn material side outer highest eaves flash-flame relic descendant lurking. Thousand death Agreed oppose whole? Glóin head's hurts feasting fight shiny legacy. Thror's broken odds suffice believe well-protected? Rightfully manners begged Maggot's fairer. Unheard-of grog shields sad wondering gardener killed gone Galadriel! Pan Frodo fingers spreads magic parting amount interest idly naked. It's some form of Elvish. I can't read it. Silverwork Wraiths riddled enchantment apple anywhere."; }
-pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_export(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![export]) {
         return Absent;
     }
@@ -655,7 +656,7 @@ pub(super) fn parse_export(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_EXPORT))
 }
 
-fn parse_export_named_or_named_from_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_export_named_or_named_from_clause(p: &mut JsParser) -> ParsedSyntax {
     let checkpoint = p.checkpoint();
     match parse_export_named_clause(p) {
         Present(_) if p.at(T![from]) => {
@@ -686,7 +687,7 @@ fn parse_export_named_or_named_from_clause(p: &mut Parser) -> ParsedSyntax {
 //
 // test_err ts ts_export_type
 // export type
-fn parse_export_named_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_export_named_clause(p: &mut JsParser) -> ParsedSyntax {
     if !matches!(p.cur(), T!['{'] | T![type]) {
         return Absent;
     }
@@ -715,15 +716,20 @@ fn parse_export_named_clause(p: &mut Parser) -> ParsedSyntax {
 struct ExportNamedSpecifierList;
 
 impl ParseSeparatedList for ExportNamedSpecifierList {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = JS_EXPORT_NAMED_SPECIFIER_LIST;
+
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_any_export_named_specifier(p)
     }
 
-    fn is_at_list_end(&self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool {
         p.at(T!['}'])
     }
 
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+    fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
@@ -735,10 +741,6 @@ impl ParseSeparatedList for ExportNamedSpecifierList {
         )
     }
 
-    fn list_kind() -> JsSyntaxKind {
-        JS_EXPORT_NAMED_SPECIFIER_LIST
-    }
-
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
         T![,]
     }
@@ -748,7 +750,7 @@ impl ParseSeparatedList for ExportNamedSpecifierList {
     }
 }
 
-fn parse_any_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
+fn parse_any_export_named_specifier(p: &mut JsParser) -> ParsedSyntax {
     if !matches!(p.cur(), T![type] | T![as] | T![default]) && !is_nth_at_literal_export_name(p, 0) {
         return Absent;
     }
@@ -849,13 +851,13 @@ struct SpecifierMetadata {
 // export { type as };
 // export { type a as aa };
 fn specifier_metadata<LocalNamePred, AliasPred>(
-    p: &mut Parser,
+    p: &mut JsParser,
     is_nth_name: LocalNamePred,
     is_nth_alias: AliasPred,
 ) -> SpecifierMetadata
 where
-    LocalNamePred: Fn(&mut Parser, usize) -> bool,
-    AliasPred: Fn(&mut Parser, usize) -> bool,
+    LocalNamePred: Fn(&mut JsParser, usize) -> bool,
+    AliasPred: Fn(&mut JsParser, usize) -> bool,
 {
     let mut metadata = SpecifierMetadata::default();
 
@@ -921,7 +923,7 @@ where
 // export * from 5;
 // export as from "test";
 // export from "test";
-fn parse_export_from_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_export_from_clause(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![*]) && !p.at(T![from]) && !p.nth_at(1, T![from]) {
         return Absent;
     }
@@ -963,7 +965,7 @@ fn parse_export_from_clause(p: &mut Parser) -> ParsedSyntax {
 //
 // test_err escaped_from
 // export {} \u0066rom "./escaped-from.js";
-fn parse_export_named_from_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_export_named_from_clause(p: &mut JsParser) -> ParsedSyntax {
     if !matches!(p.cur(), T!['{'] | T![type]) {
         return Absent;
     }
@@ -998,15 +1000,20 @@ fn parse_export_named_from_clause(p: &mut Parser) -> ParsedSyntax {
 struct ExportNamedFromSpecifierList;
 
 impl ParseSeparatedList for ExportNamedFromSpecifierList {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = JS_EXPORT_NAMED_FROM_SPECIFIER_LIST;
+
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_export_named_from_specifier(p)
     }
 
-    fn is_at_list_end(&self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool {
         p.at(T!['}'])
     }
 
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+    fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
@@ -1016,10 +1023,6 @@ impl ParseSeparatedList for ExportNamedFromSpecifierList {
             .enable_recovery_on_line_break(),
             expected_literal_export_name,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        JS_EXPORT_NAMED_FROM_SPECIFIER_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
@@ -1034,7 +1037,7 @@ impl ParseSeparatedList for ExportNamedFromSpecifierList {
 // test ts ts_export_named_from_specifier_with_type
 // export { type A } from "a"
 // export { type } from "./type";
-fn parse_export_named_from_specifier(p: &mut Parser) -> ParsedSyntax {
+fn parse_export_named_from_specifier(p: &mut JsParser) -> ParsedSyntax {
     if !matches!(p.cur(), T![type] | T![as]) && !is_nth_at_literal_export_name(p, 0) {
         return Absent;
     }
@@ -1074,7 +1077,7 @@ fn parse_export_named_from_specifier(p: &mut Parser) -> ParsedSyntax {
     }
 }
 
-fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_export_default_clause(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![default]) {
         return Absent;
     }
@@ -1107,7 +1110,8 @@ fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
         // export default (class {})
         // export default a + b;
         // export default (function a() {})
-        if let Some(existing_default_item) = p.state.default_item.as_ref().filter(|_| p.is_module())
+        if let Some(existing_default_item) =
+            p.state().default_item.as_ref().filter(|_| p.is_module())
         {
             if existing_default_item.kind.is_overload()
                 && (default_item_kind.is_overload() || default_item_kind.is_function_declaration())
@@ -1138,7 +1142,7 @@ fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
         // export default interface B { a: string }
         // export default function test() {}
         else if !default_item_kind.is_interface() {
-            p.state.default_item = Some(ExportDefaultItem {
+            p.state_mut().default_item = Some(ExportDefaultItem {
                 range: clause.range(p).into(),
                 kind: default_item_kind,
             });
@@ -1158,7 +1162,7 @@ enum ExportDefaultDeclarationKind {
 }
 
 fn parse_export_default_declaration_clause(
-    p: &mut Parser,
+    p: &mut JsParser,
     kind: ExportDefaultDeclarationKind,
 ) -> (ParsedSyntax, ExportDefaultItemKind) {
     if !p.at(T![default]) {
@@ -1192,7 +1196,7 @@ fn parse_export_default_declaration_clause(
         }
     };
 
-    let item_kind = match (kind, declaration.kind()) {
+    let item_kind = match (kind, declaration.kind(p)) {
         (
             ExportDefaultDeclarationKind::Function,
             Some(TS_DECLARE_FUNCTION_DECLARATION | TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION),
@@ -1228,7 +1232,7 @@ fn parse_export_default_declaration_clause(
 //
 // test_err export_default_expression_clause_err
 // export default a, b;
-fn parse_export_default_expression_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_export_default_expression_clause(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![default]) && !is_nth_at_expression(p, 1) {
         return Absent;
     }
@@ -1244,7 +1248,7 @@ fn parse_export_default_expression_clause(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE))
 }
 
-fn parse_export_as_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_export_as_clause(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![as]) {
         return Absent;
     }
@@ -1260,7 +1264,7 @@ fn parse_export_as_clause(p: &mut Parser) -> ParsedSyntax {
 // test ts ts_export_namespace_clause
 // export function isPrime(x: number): boolean;
 // export as namespace mathLib;
-fn parse_ts_export_namespace_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_export_namespace_clause(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![as]) && !p.nth_at(1, T![namespace]) {
         return Absent;
     }
@@ -1285,7 +1289,7 @@ fn parse_ts_export_namespace_clause(p: &mut Parser) -> ParsedSyntax {
 // test ts ts_export_assignment_qualified_name
 // declare const a: { b: string }
 // export = a.b;
-fn parse_ts_export_assignment_clause(p: &mut Parser) -> ParsedSyntax {
+fn parse_ts_export_assignment_clause(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![=]) {
         return Absent;
     }
@@ -1306,7 +1310,7 @@ fn parse_ts_export_assignment_clause(p: &mut Parser) -> ParsedSyntax {
 // export declare type C = string;
 // export declare class D {}
 // export declare function e()
-fn parse_ts_export_declare_clause(p: &mut Parser, stmt_start: TextSize) -> ParsedSyntax {
+fn parse_ts_export_declare_clause(p: &mut JsParser, stmt_start: TextSize) -> ParsedSyntax {
     if !p.at(T![declare]) {
         return Absent;
     }
@@ -1320,7 +1324,7 @@ fn parse_ts_export_declare_clause(p: &mut Parser, stmt_start: TextSize) -> Parse
     Present(m.complete(p, TS_EXPORT_DECLARE_CLAUSE))
 }
 
-fn is_nth_at_literal_export_name(p: &mut Parser, n: usize) -> bool {
+fn is_nth_at_literal_export_name(p: &mut JsParser, n: usize) -> bool {
     match p.nth(n) {
         JS_STRING_LITERAL | T![ident] => true,
         t if t.is_keyword() => true,
@@ -1328,7 +1332,7 @@ fn is_nth_at_literal_export_name(p: &mut Parser, n: usize) -> bool {
     }
 }
 
-fn parse_literal_export_name(p: &mut Parser) -> ParsedSyntax {
+fn parse_literal_export_name(p: &mut JsParser) -> ParsedSyntax {
     match p.cur() {
         JS_STRING_LITERAL | T![ident] => {
             let m = p.start();
@@ -1344,7 +1348,7 @@ fn parse_literal_export_name(p: &mut Parser) -> ParsedSyntax {
     }
 }
 
-pub(crate) fn parse_module_source(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_module_source(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(JS_STRING_LITERAL) {
         Absent
     } else {

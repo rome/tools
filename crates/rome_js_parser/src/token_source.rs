@@ -1,60 +1,14 @@
 use crate::lexer::{BufferedLexer, LexContext, Lexer, LexerCheckpoint, ReLexContext, TextRange};
-use crate::ParseDiagnostic;
+use crate::prelude::*;
 use rome_diagnostics::location::FileId;
 use rome_js_syntax::JsSyntaxKind;
 use rome_js_syntax::JsSyntaxKind::EOF;
+use rome_parser::token_source::Trivia;
 use rome_rowan::{TextSize, TriviaPieceKind};
 use std::collections::VecDeque;
 
-/// A comment or a whitespace trivia in the source code.
-#[derive(Debug, Copy, Clone)]
-pub struct Trivia {
-    /// The kind of the trivia token.
-    kind: TriviaPieceKind,
-
-    /// The range of the trivia in the source text
-    range: TextRange,
-
-    /// Whatever this is the trailing or leading trivia of a non-trivia token.
-    trailing: bool,
-}
-
-impl Trivia {
-    fn new(kind: TriviaPieceKind, range: TextRange, trailing: bool) -> Self {
-        Self {
-            kind,
-            range,
-            trailing,
-        }
-    }
-    /// Returns the kind of the token
-    pub fn kind(&self) -> TriviaPieceKind {
-        self.kind
-    }
-
-    /// Returns the token's length in bytes
-    pub fn len(&self) -> TextSize {
-        self.range.len()
-    }
-
-    /// Returns the byte offset of the trivia in the source text
-    pub fn offset(&self) -> TextSize {
-        self.range.start()
-    }
-
-    /// Returns `true` if this is the trailing trivia of a non-trivia token or false otherwise.
-    pub fn trailing(&self) -> bool {
-        self.trailing
-    }
-
-    /// Returns the text range of this trivia
-    pub fn text_range(&self) -> TextRange {
-        self.range
-    }
-}
-
 /// Token source for the parser that skips over any non-trivia token.
-pub struct TokenSource<'l> {
+pub struct JsTokenSource<'l> {
     lexer: BufferedLexer<'l>,
 
     /// List of the skipped trivia. Needed to construct the CST and compute the non-trivia token offsets.
@@ -80,10 +34,10 @@ struct Lookahead {
     after_newline: bool,
 }
 
-impl<'l> TokenSource<'l> {
+impl<'l> JsTokenSource<'l> {
     /// Creates a new token source.
-    pub(crate) fn new(lexer: BufferedLexer<'l>) -> TokenSource<'l> {
-        TokenSource {
+    pub(crate) fn new(lexer: BufferedLexer<'l>) -> JsTokenSource<'l> {
+        JsTokenSource {
             lexer,
             trivia_list: vec![],
             lookahead_offset: 0,
@@ -92,10 +46,10 @@ impl<'l> TokenSource<'l> {
     }
 
     /// Creates a new token source for the given string
-    pub fn from_str(source: &'l str, file_id: FileId) -> TokenSource<'l> {
+    pub fn from_str(source: &'l str, file_id: FileId) -> JsTokenSource<'l> {
         let lexer = Lexer::from_str(source, file_id);
         let buffered = BufferedLexer::new(lexer);
-        let mut source = TokenSource::new(buffered);
+        let mut source = JsTokenSource::new(buffered);
 
         source.next_non_trivia_token(LexContext::default(), true);
         source
@@ -135,48 +89,9 @@ impl<'l> TokenSource<'l> {
         }
     }
 
-    /// Returns the kind of the current non-trivia token
-    #[inline(always)]
-    pub fn current(&self) -> JsSyntaxKind {
-        self.lexer.current()
-    }
-
-    /// Returns the range of the current non-trivia token
-    #[inline(always)]
-    pub fn current_range(&self) -> TextRange {
-        self.lexer.current_range()
-    }
-
-    /// Gets the kind of the nth non-trivia token
-    #[inline(always)]
-    pub fn nth(&mut self, n: usize) -> JsSyntaxKind {
-        if n == 0 {
-            self.current()
-        } else {
-            self.lookahead(n).map_or(EOF, |lookahead| lookahead.kind)
-        }
-    }
-
-    /// Returns true if the current token is preceded by a line break
-    #[inline(always)]
-    pub fn has_preceding_line_break(&self) -> bool {
-        self.lexer.has_preceding_line_break()
-    }
-
     #[inline(always)]
     pub fn has_unicode_escape(&self) -> bool {
         self.lexer.has_unicode_escape()
-    }
-
-    /// Returns true if the nth non-trivia token is preceded by a line break
-    #[inline(always)]
-    pub fn has_nth_preceding_line_break(&mut self, n: usize) -> bool {
-        if n == 0 {
-            self.has_preceding_line_break()
-        } else {
-            self.lookahead(n)
-                .map_or(false, |lookahead| lookahead.after_newline)
-        }
     }
 
     /// Returns `true` if the next token has any preceding trivia (either trailing trivia of the current
@@ -225,14 +140,21 @@ impl<'l> TokenSource<'l> {
         None
     }
 
-    pub fn rewind(&mut self, checkpoint: TokenSourceCheckpoint) {
-        assert!(self.trivia_list.len() >= checkpoint.trivia_len as usize);
-        self.trivia_list.truncate(checkpoint.trivia_len as usize);
-        self.lexer.rewind(checkpoint.lexer);
-        self.non_trivia_lookahead.clear();
-        self.lookahead_offset = 0;
+    pub fn re_lex(&mut self, mode: ReLexContext) -> JsSyntaxKind {
+        let current_kind = self.current();
+
+        let new_kind = self.lexer.re_lex(mode);
+
+        // Only need to clear the lookahead cache when the token did change
+        if current_kind != new_kind {
+            self.non_trivia_lookahead.clear();
+            self.lookahead_offset = 0;
+        }
+
+        new_kind
     }
 
+    /// Creates a checkpoint to which it can later return using [Self::rewind].
     pub fn checkpoint(&self) -> TokenSourceCheckpoint {
         TokenSourceCheckpoint {
             trivia_len: self.trivia_list.len() as u32,
@@ -240,15 +162,66 @@ impl<'l> TokenSource<'l> {
         }
     }
 
-    /// Returns the source text
+    /// Restores the token source to a previous state
+    pub fn rewind(&mut self, checkpoint: TokenSourceCheckpoint) {
+        assert!(self.trivia_list.len() >= checkpoint.trivia_len as usize);
+        self.trivia_list.truncate(checkpoint.trivia_len as usize);
+        self.lexer.rewind(checkpoint.lexer);
+        self.non_trivia_lookahead.clear();
+        self.lookahead_offset = 0;
+    }
+}
+
+impl<'source> TokenSource for JsTokenSource<'source> {
+    type Kind = JsSyntaxKind;
+
+    /// Returns the kind of the current non-trivia token
     #[inline(always)]
-    pub fn source(&self) -> &'l str {
+    fn current(&self) -> JsSyntaxKind {
+        self.lexer.current()
+    }
+
+    /// Returns the range of the current non-trivia token
+    #[inline(always)]
+    fn current_range(&self) -> TextRange {
+        self.lexer.current_range()
+    }
+
+    #[inline(always)]
+    fn text(&self) -> &'source str {
         self.lexer.source()
     }
 
-    /// Bumps the current token and moves the parser to the next non-trivia token
     #[inline(always)]
-    pub fn bump(&mut self, context: LexContext) {
+    fn position(&self) -> TextSize {
+        self.current_range().start()
+    }
+
+    /// Returns true if the current token is preceded by a line break
+    #[inline(always)]
+    fn has_preceding_line_break(&self) -> bool {
+        self.lexer.has_preceding_line_break()
+    }
+
+    #[inline(always)]
+    fn bump(&mut self) {
+        self.bump_with_context(LexContext::Regular)
+    }
+
+    fn skip_as_trivia(&mut self) {
+        self.skip_as_trivia_with_context(LexContext::Regular)
+    }
+
+    fn finish(self) -> (Vec<Trivia>, Vec<ParseDiagnostic>) {
+        (self.trivia_list, self.lexer.finish())
+    }
+}
+
+impl<'source> BumpWithContext for JsTokenSource<'source> {
+    type Context = LexContext;
+
+    #[inline(always)]
+    fn bump_with_context(&mut self, context: Self::Context) {
         if self.current() != EOF {
             if !context.is_regular() {
                 self.lookahead_offset = 0;
@@ -260,7 +233,7 @@ impl<'l> TokenSource<'l> {
     }
 
     /// Skips the current token as skipped token trivia
-    pub fn skip_as_trivia(&mut self, context: LexContext) {
+    fn skip_as_trivia_with_context(&mut self, context: LexContext) {
         if self.current() != EOF {
             if !context.is_regular() {
                 self.lookahead_offset = 0;
@@ -276,30 +249,28 @@ impl<'l> TokenSource<'l> {
             self.next_non_trivia_token(context, true)
         }
     }
+}
 
-    pub fn re_lex(&mut self, mode: ReLexContext) -> JsSyntaxKind {
-        let current_kind = self.current();
-
-        let new_kind = self.lexer.re_lex(mode);
-
-        // Only need to clear the lookahead cache when the token did change
-        if current_kind != new_kind {
-            self.non_trivia_lookahead.clear();
-            self.lookahead_offset = 0;
-        }
-
-        new_kind
-    }
-
-    /// Returns the byte offset of the current token from the start of the source document
+impl<'source> NthToken for JsTokenSource<'source> {
+    /// Gets the kind of the nth non-trivia token
     #[inline(always)]
-    pub fn position(&self) -> TextSize {
-        self.current_range().start()
+    fn nth(&mut self, n: usize) -> JsSyntaxKind {
+        if n == 0 {
+            self.current()
+        } else {
+            self.lookahead(n).map_or(EOF, |lookahead| lookahead.kind)
+        }
     }
 
-    /// Ends this token source and returns the source text's trivia
-    pub fn finish(self) -> (Vec<Trivia>, Vec<ParseDiagnostic>) {
-        (self.trivia_list, self.lexer.finish())
+    /// Returns true if the nth non-trivia token is preceded by a line break
+    #[inline(always)]
+    fn has_nth_preceding_line_break(&mut self, n: usize) -> bool {
+        if n == 0 {
+            self.has_preceding_line_break()
+        } else {
+            self.lookahead(n)
+                .map_or(false, |lookahead| lookahead.after_newline)
+        }
     }
 }
 

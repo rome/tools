@@ -80,6 +80,9 @@ impl JsSyntaxKind {
 }
 
 impl rome_rowan::SyntaxKind for JsSyntaxKind {
+    const TOMBSTONE: Self = TOMBSTONE;
+    const EOF: Self = EOF;
+
     fn is_unknown(&self) -> bool {
         matches!(
             self,
@@ -250,6 +253,10 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
 
     fn is_list(&self) -> bool {
         JsSyntaxKind::is_list(*self)
+    }
+
+    fn to_string(&self) -> Option<&'static str> {
+        JsSyntaxKind::to_string(self)
     }
 }
 

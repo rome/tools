@@ -1,7 +1,8 @@
+use crate::parse_recovery::RecoveryResult;
 ///! A set of traits useful to parse various types of lists
-use super::{ParsedSyntax, ParserProgress, RecoveryResult};
-use crate::{CompletedMarker, Marker, Parser};
-use rome_js_syntax::JsSyntaxKind;
+use crate::prelude::*;
+use crate::ParserProgress;
+use rome_rowan::SyntaxKind;
 
 /// Use this trait to parse simple lists that don't have particular requirements.
 ///
@@ -17,12 +18,18 @@ use rome_js_syntax::JsSyntaxKind;
 ///   // impl missing members
 /// }
 /// ```
-pub(crate) trait ParseNodeList {
+pub trait ParseNodeList {
+    type Kind: SyntaxKind;
+    type Parser<'source>: Parser<Kind = Self::Kind>;
+
+    /// The kind of the list node
+    const LIST_KIND: Self::Kind;
+
     /// Parses a single element of the list
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax;
+    fn parse_element(&mut self, p: &mut Self::Parser<'_>) -> ParsedSyntax;
 
     /// It creates a marker just before starting a list
-    fn start_list(&mut self, p: &mut Parser) -> Marker {
+    fn start_list(&mut self, p: &mut Self::Parser<'_>) -> Marker {
         p.start()
     }
 
@@ -30,29 +37,29 @@ pub(crate) trait ParseNodeList {
     /// the trait will exit from the loop.
     ///
     /// Usually here you want to check the current token.
-    fn is_at_list_end(&self, p: &mut Parser) -> bool;
+    fn is_at_list_end(&self, p: &mut Self::Parser<'_>) -> bool;
 
     /// This method is used to recover the parser in case [Self::parse_element] returns [ParsedSyntax::Absent]
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult;
+    fn recover(&mut self, p: &mut Self::Parser<'_>, parsed_element: ParsedSyntax)
+        -> RecoveryResult;
 
     /// It creates a [ParsedSyntax] that will contain the list
-    fn finish_list(&mut self, p: &mut Parser, m: Marker) {
-        m.complete(p, Self::list_kind());
+    fn finish_list(&mut self, p: &mut Self::Parser<'_>, m: Marker) {
+        m.complete(p, Self::LIST_KIND);
     }
-
-    /// The kind of the list node
-    fn list_kind() -> JsSyntaxKind;
 
     /// Parses a simple list
     ///
     /// # Panics
     ///
     /// It panics if the parser doesn't advance at each cycle of the loop
-    fn parse_list(&mut self, p: &mut Parser) {
+    fn parse_list(&mut self, p: &mut Self::Parser<'_>) {
         let elements = self.start_list(p);
         let mut progress = ParserProgress::default();
 
-        while !p.at(JsSyntaxKind::EOF) && !self.is_at_list_end(p) {
+        while !p.at(<<Self::Parser<'_> as Parser>::Kind as SyntaxKind>::EOF)
+            && !self.is_at_list_end(p)
+        {
             progress.assert_progressing(p);
 
             let parsed_element = self.parse_element(p);
@@ -79,12 +86,18 @@ pub(crate) trait ParseNodeList {
 ///   // impl missing members
 /// }
 /// ```
-pub(crate) trait ParseSeparatedList {
+pub trait ParseSeparatedList {
+    type Kind: SyntaxKind;
+    type Parser<'source>: Parser<Kind = Self::Kind>;
+
+    /// The kind of the list node
+    const LIST_KIND: Self::Kind;
+
     /// Parses a single element of the list
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax;
+    fn parse_element(&mut self, p: &mut Self::Parser<'_>) -> ParsedSyntax;
 
     /// It creates a marker just before starting a list
-    fn start_list(&mut self, p: &mut Parser) -> Marker {
+    fn start_list(&mut self, p: &mut Self::Parser<'_>) -> Marker {
         p.start()
     }
 
@@ -92,22 +105,20 @@ pub(crate) trait ParseSeparatedList {
     /// the trait will exit from the loop.
     ///
     /// Usually here you want to check the current token.
-    fn is_at_list_end(&self, p: &mut Parser) -> bool;
+    fn is_at_list_end(&self, p: &mut Self::Parser<'_>) -> bool;
 
     /// This method is used to recover the parser in case [Self::parse_element] returns [ParsedSyntax::Absent]
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult;
+    fn recover(&mut self, p: &mut Self::Parser<'_>, parsed_element: ParsedSyntax)
+        -> RecoveryResult;
 
     /// It creates a [ParsedSyntax] that will contain the list
     /// Only called if the list isn't empty
-    fn finish_list(&mut self, p: &mut Parser, m: Marker) -> CompletedMarker {
-        m.complete(p, Self::list_kind())
+    fn finish_list(&mut self, p: &mut Self::Parser<'_>, m: Marker) -> CompletedMarker {
+        m.complete(p, Self::LIST_KIND)
     }
 
-    /// The kind of the list node
-    fn list_kind() -> JsSyntaxKind;
-
     /// The [SyntaxKind] of the element that separates the elements of the list
-    fn separating_element_kind(&mut self) -> JsSyntaxKind;
+    fn separating_element_kind(&mut self) -> Self::Kind;
 
     /// `true` if the list allows for an optional trailing element
     fn allow_trailing_separating_element(&self) -> bool {
@@ -119,7 +130,7 @@ pub(crate) trait ParseSeparatedList {
     ///
     /// If present, it [parses](Self::parse_separating_element) it and continues with loop.
     /// If not present, it adds a missing marker.
-    fn expect_separator(&mut self, p: &mut Parser) -> bool {
+    fn expect_separator(&mut self, p: &mut Self::Parser<'_>) -> bool {
         p.expect(self.separating_element_kind())
     }
 
@@ -128,11 +139,11 @@ pub(crate) trait ParseSeparatedList {
     /// # Panics
     ///
     /// It panics if the parser doesn't advance at each cycle of the loop
-    fn parse_list(&mut self, p: &mut Parser) -> CompletedMarker {
+    fn parse_list(&mut self, p: &mut Self::Parser<'_>) -> CompletedMarker {
         let elements = self.start_list(p);
         let mut progress = ParserProgress::default();
         let mut first = true;
-        while !p.at(JsSyntaxKind::EOF) && !self.is_at_list_end(p) {
+        while !p.at(<Self::Parser<'_> as Parser>::Kind::EOF) && !self.is_at_list_end(p) {
             if first {
                 first = false;
             } else {

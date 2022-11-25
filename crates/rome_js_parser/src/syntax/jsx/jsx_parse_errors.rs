@@ -1,23 +1,24 @@
+use crate::prelude::*;
 use crate::{
-    parser::{expected_any, expected_node, ToDiagnostic},
-    ParseDiagnostic, Parser,
+    parser::{expected_any, expected_node},
+    JsParser,
 };
 use rome_js_syntax::TextRange;
 
-pub(crate) fn jsx_expected_attribute(p: &Parser, range: TextRange) -> ParseDiagnostic {
-    expected_node("JSX attribute", range).to_diagnostic(p)
+pub(crate) fn jsx_expected_attribute(p: &JsParser, range: TextRange) -> ParseDiagnostic {
+    expected_node("JSX attribute", range).into_diagnostic(p)
 }
 
-pub(crate) fn jsx_expected_attribute_value(p: &Parser, range: TextRange) -> ParseDiagnostic {
-    expected_node("JSX attribute value", range).to_diagnostic(p)
+pub(crate) fn jsx_expected_attribute_value(p: &JsParser, range: TextRange) -> ParseDiagnostic {
+    expected_node("JSX attribute value", range).into_diagnostic(p)
 }
 
-pub(crate) fn jsx_expected_children(p: &Parser, range: TextRange) -> ParseDiagnostic {
-    expected_any(&["JSX Expression", "Element", "text"], range).to_diagnostic(p)
+pub(crate) fn jsx_expected_children(p: &JsParser, range: TextRange) -> ParseDiagnostic {
+    expected_any(&["JSX Expression", "Element", "text"], range).into_diagnostic(p)
 }
 
 pub(crate) fn jsx_expected_closing_tag(
-    p: &Parser,
+    p: &JsParser,
     opening_name: &str,
     opening_range: TextRange,
     closing_range: TextRange,
