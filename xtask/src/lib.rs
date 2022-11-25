@@ -45,7 +45,7 @@ pub fn reformat(text: impl Display) -> Result<String> {
 
 pub fn reformat_with_command(text: impl Display, command: impl Display) -> Result<String> {
     reformat_without_preamble(text).map(|formatted| {
-        format!("//! This is a generated file. Don't modify it by hand! Run '{}' to re-generate the file. \n\n{}", command, formatted)
+        format!("//! This is a generated file. Don't modify it by hand! Run '{}' to re-generate the file.\n\n{}", command, formatted)
     })
 }
 

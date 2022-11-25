@@ -1,4 +1,4 @@
-//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file. 
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 pub(crate) mod identifier_binding;
 pub(crate) mod index_signature_parameter;
