@@ -1,5 +1,5 @@
 //! This module provides important and useful traits to help to format tokens and nodes
-//! when implementing the [crate::FormatNodeRule] trait.
+//! when implementing a syntax formatter.
 
 pub(crate) use crate::{
     builders::format_or_verbatim, comments::JsComments, AsFormat as _, FormatNodeRule,
