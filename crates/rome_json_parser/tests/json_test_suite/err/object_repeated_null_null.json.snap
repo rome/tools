@@ -10,18 +10,131 @@ expression: snapshot
 ```
 
 
-## Tokens
+## AST
 
 ```
-L_CURLY: `{` (0..1)
-NULL_KW: `null` (1..5)
-COLON: `:` (5..6)
-NULL_KW: `null` (6..10)
-COMMA: `,` (10..11)
-NULL_KW: `null` (11..15)
-COLON: `:` (15..16)
-NULL_KW: `null` (16..20)
-R_CURLY: `}` (20..21)
-EOF: `` (21..21)
+JsonRoot {
+    value: JsonObject {
+        l_curly_token: L_CURLY@0..1 "{" [] [],
+        json_member_list: JsonMemberList [
+            JsonMember {
+                key: missing (required),
+                colon_token: missing (required),
+                value: JsonNull {
+                    value_token: NULL_KW@1..5 "null" [] [],
+                },
+            },
+            missing separator,
+            JsonMember {
+                key: missing (required),
+                colon_token: COLON@5..6 ":" [] [],
+                value: JsonNull {
+                    value_token: NULL_KW@6..10 "null" [] [],
+                },
+            },
+            COMMA@10..11 "," [] [],
+            JsonMember {
+                key: missing (required),
+                colon_token: missing (required),
+                value: JsonNull {
+                    value_token: NULL_KW@11..15 "null" [] [],
+                },
+            },
+            missing separator,
+            JsonMember {
+                key: missing (required),
+                colon_token: COLON@15..16 ":" [] [],
+                value: JsonNull {
+                    value_token: NULL_KW@16..20 "null" [] [],
+                },
+            },
+        ],
+        r_curly_token: R_CURLY@20..21 "}" [] [],
+    },
+    eof_token: EOF@21..21 "" [] [],
+}
 ```
+
+## CST 
+
+```
+0: JSON_ROOT@0..21
+  0: JSON_OBJECT@0..21
+    0: L_CURLY@0..1 "{" [] []
+    1: JSON_MEMBER_LIST@1..20
+      0: JSON_MEMBER@1..5
+        0: (empty)
+        1: (empty)
+        2: JSON_NULL@1..5
+          0: NULL_KW@1..5 "null" [] []
+      1: (empty)
+      2: JSON_MEMBER@5..10
+        0: (empty)
+        1: COLON@5..6 ":" [] []
+        2: JSON_NULL@6..10
+          0: NULL_KW@6..10 "null" [] []
+      3: COMMA@10..11 "," [] []
+      4: JSON_MEMBER@11..15
+        0: (empty)
+        1: (empty)
+        2: JSON_NULL@11..15
+          0: NULL_KW@11..15 "null" [] []
+      5: (empty)
+      6: JSON_MEMBER@15..20
+        0: (empty)
+        1: COLON@15..16 ":" [] []
+        2: JSON_NULL@16..20
+          0: NULL_KW@16..20 "null" [] []
+    2: R_CURLY@20..21 "}" [] []
+  1: EOF@21..21 "" [] []
+
+```
+
+## Diagnostics
+
+```
+object_repeated_null_null.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a property but instead found 'null'
+  
+  > 1 │ {null:null,null:null}
+      │  ^^^^
+  
+  i Expected a property here
+  
+  > 1 │ {null:null,null:null}
+      │  ^^^^
+  
+object_repeated_null_null.json:1:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `:`
+  
+  > 1 │ {null:null,null:null}
+      │      ^
+  
+  i Remove :
+  
+object_repeated_null_null.json:1:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a property but instead found 'null'
+  
+  > 1 │ {null:null,null:null}
+      │            ^^^^
+  
+  i Expected a property here
+  
+  > 1 │ {null:null,null:null}
+      │            ^^^^
+  
+object_repeated_null_null.json:1:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `:`
+  
+  > 1 │ {null:null,null:null}
+      │                ^
+  
+  i Remove :
+  
+```
+
 

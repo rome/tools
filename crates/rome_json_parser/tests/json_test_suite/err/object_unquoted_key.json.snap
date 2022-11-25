@@ -10,27 +10,60 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonUnknown {
+        items: [
+            L_CURLY@0..1 "{" [] [],
+            JsonUnknown {
+                items: [
+                    JsonUnknown {
+                        items: [
+                            IDENT@1..2 "a" [] [],
+                            COLON@2..4 ":" [] [Whitespace(" ")],
+                            JsonString {
+                                value_token: JSON_STRING_LITERAL@4..7 "\"b\"" [] [],
+                            },
+                        ],
+                    },
+                ],
+            },
+            R_CURLY@7..8 "}" [] [],
+        ],
+    },
+    eof_token: EOF@8..8 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..8
+  0: JSON_UNKNOWN@0..8
+    0: L_CURLY@0..1 "{" [] []
+    1: JSON_UNKNOWN@1..7
+      0: JSON_UNKNOWN@1..7
+        0: IDENT@1..2 "a" [] []
+        1: COLON@2..4 ":" [] [Whitespace(" ")]
+        2: JSON_STRING@4..7
+          0: JSON_STRING_LITERAL@4..7 "\"b\"" [] []
+    2: R_CURLY@7..8 "}" [] []
+  1: EOF@8..8 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
 object_unquoted_key.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × The JSON standard doesn't allow identifiers
+  × Property key must be double quoted
   
   > 1 │ {a: "b"}
       │  ^
   
 ```
 
-## Tokens
-
-```
-L_CURLY: `{` (0..1)
-IDENT: `a` (1..2)
-COLON: `:` (2..3)
-WHITESPACE: ` ` (3..4)
-JSON_STRING_LITERAL: `"b"` (4..7)
-R_CURLY: `}` (7..8)
-EOF: `` (8..8)
-```
 

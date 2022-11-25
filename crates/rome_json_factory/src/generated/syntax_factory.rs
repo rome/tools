@@ -48,17 +48,10 @@ impl SyntaxFactory for JsonSyntaxFactory {
             }
             JSON_BOOLEAN => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if element.kind() == TRUE {
-                        slots.mark_present();
-                        current_element = elements.next();
-                    }
-                }
-                slots.next_slot();
-                if let Some(element) = &current_element {
-                    if element.kind() == FALSE {
+                    if matches!(element.kind(), T![true] | T![false]) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -91,7 +84,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsonValue::can_cast(element.kind()) {
+                    if JsonAnyValue::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -178,10 +171,17 @@ impl SyntaxFactory for JsonSyntaxFactory {
             }
             JSON_ROOT => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsonValue::can_cast(element.kind()) {
+                    if JsonAnyValue::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if element.kind() == T![EOF] {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -217,7 +217,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
             JSON_ARRAY_ELEMENT_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                JsonValue::can_cast,
+                JsonAnyValue::can_cast,
                 T ! [,],
                 false,
             ),

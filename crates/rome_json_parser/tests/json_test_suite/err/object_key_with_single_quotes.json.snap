@@ -10,12 +10,58 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonUnknown {
+        items: [
+            L_CURLY@0..1 "{" [] [],
+            JsonUnknown {
+                items: [
+                    JsonUnknown {
+                        items: [
+                            IDENT@1..4 "key" [] [],
+                            COLON@4..6 ":" [] [Whitespace(" ")],
+                        ],
+                    },
+                    JsonUnknown {
+                        items: [
+                            ERROR_TOKEN@6..13 "'value'" [] [],
+                        ],
+                    },
+                ],
+            },
+            R_CURLY@13..14 "}" [] [],
+        ],
+    },
+    eof_token: EOF@14..14 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..14
+  0: JSON_UNKNOWN@0..14
+    0: L_CURLY@0..1 "{" [] []
+    1: JSON_UNKNOWN@1..13
+      0: JSON_UNKNOWN@1..6
+        0: IDENT@1..4 "key" [] []
+        1: COLON@4..6 ":" [] [Whitespace(" ")]
+      1: JSON_UNKNOWN@6..13
+        0: ERROR_TOKEN@6..13 "'value'" [] []
+    2: R_CURLY@13..14 "}" [] []
+  1: EOF@14..14 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
 object_key_with_single_quotes.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × The JSON standard doesn't allow identifiers
+  × Property key must be double quoted
   
   > 1 │ {key: 'value'}
       │  ^^^
@@ -31,15 +77,4 @@ object_key_with_single_quotes.json:1:7 parse ━━━━━━━━━━━�
   
 ```
 
-## Tokens
-
-```
-L_CURLY: `{` (0..1)
-IDENT: `key` (1..4)
-COLON: `:` (4..5)
-WHITESPACE: ` ` (5..6)
-ERROR_TOKEN: `'value'` (6..13)
-R_CURLY: `}` (13..14)
-EOF: `` (14..14)
-```
 

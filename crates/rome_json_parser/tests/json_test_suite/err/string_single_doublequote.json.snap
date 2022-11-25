@@ -10,6 +10,27 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonString {
+        value_token: JSON_STRING_LITERAL@0..1 "\"" [] [],
+    },
+    eof_token: EOF@1..1 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..1
+  0: JSON_STRING@0..1
+    0: JSON_STRING_LITERAL@0..1 "\"" [] []
+  1: EOF@1..1 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -27,10 +48,4 @@ string_single_doublequote.json:1:1 parse ━━━━━━━━━━━━━
   
 ```
 
-## Tokens
-
-```
-JSON_STRING_LITERAL: `"` (0..1)
-EOF: `` (1..1)
-```
 

@@ -10,12 +10,35 @@ expression: snapshot
 ```
 
 
-## Tokens
+## AST
 
 ```
-L_BRACK: `[` (0..1)
-JSON_STRING_LITERAL: `"⍂㈴⍂"` (1..12)
-R_BRACK: `]` (12..13)
-EOF: `` (13..13)
+JsonRoot {
+    value: JsonArray {
+        l_brack_token: L_BRACK@0..1 "[" [] [],
+        elements: JsonArrayElementList [
+            JsonString {
+                value_token: JSON_STRING_LITERAL@1..12 "\"⍂㈴⍂\"" [] [],
+            },
+        ],
+        r_brack_token: R_BRACK@12..13 "]" [] [],
+    },
+    eof_token: EOF@13..13 "" [] [],
+}
 ```
+
+## CST 
+
+```
+0: JSON_ROOT@0..13
+  0: JSON_ARRAY@0..13
+    0: L_BRACK@0..1 "[" [] []
+    1: JSON_ARRAY_ELEMENT_LIST@1..12
+      0: JSON_STRING@1..12
+        0: JSON_STRING_LITERAL@1..12 "\"⍂㈴⍂\"" [] []
+    2: R_BRACK@12..13 "]" [] []
+  1: EOF@13..13 "" [] []
+
+```
+
 

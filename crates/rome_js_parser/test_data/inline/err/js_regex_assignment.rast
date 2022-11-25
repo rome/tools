@@ -44,21 +44,6 @@ js_regex_assignment.js:1:1 parse ━━━━━━━━━━━━━━━�
 --
 js_regex_assignment.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × expected an expression, or an assignment but instead found ''
-  
-    1 │ /=0*_:m/=/*_:|
-  > 2 │ 
-      │ 
-  
-  i Expected an expression, or an assignment here
-  
-    1 │ /=0*_:m/=/*_:|
-  > 2 │ 
-      │ 
-  
---
-js_regex_assignment.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
   × unterminated block comment
   
     1 │ /=0*_:m/=/*_:|
