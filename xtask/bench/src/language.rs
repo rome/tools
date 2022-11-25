@@ -73,7 +73,7 @@ impl FormatNode {
     pub fn format_node(&self) -> FormatResult<FormattedNode> {
         match self {
             Self::JavaScript(root, source_type) => {
-                rome_js_formatter::format_node(JsFormatOptions::new(source_type.clone()), root)
+                rome_js_formatter::format_node(JsFormatOptions::new(*source_type), root)
                     .map(FormattedNode::JavaScript)
             }
         }

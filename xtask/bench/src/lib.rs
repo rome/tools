@@ -179,7 +179,8 @@ pub fn run(args: RunArgs) {
                                 Some(analyze) => {
                                     group.bench_function(test_case.filename(), |b| {
                                         b.iter(|| {
-                                            criterion::black_box(analyze.analyze());
+                                            analyze.analyze();
+                                            criterion::black_box(());
                                         })
                                     });
                                 }
