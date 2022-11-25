@@ -1,6 +1,6 @@
 # Rome JavaScript Bindings
 
-Official JavaScript bindings for the package [rome](https://www.npmjs.com/package/rome)
+Official JavaScript bindings for [Rome](https://rome.tools/)
 
 > **Warning**:
 > The API is currently in alpha. It is not yet ready for production use. We appreciate your support and feedback as we work to make it ready for everyone.
@@ -8,26 +8,40 @@ Official JavaScript bindings for the package [rome](https://www.npmjs.com/packag
 ## Installation
 
 ```shell
-npm i rome
 npm i @rometools/js-api
+npm i @rometools/wasm-<dist>
 ```
 
-The package `rome` is marked as **peer dependency** of this package.
+You need to install one of the `@rometools/wasm-*` package as a **peer dependency** for this package to work correctly, out of the following distributions:
+- `@rometools/wasm-bundler`: Install this package if you're using a bundler that supports importing `*.wasm` files directly
+- `@rometools/wasm-nodejs`: Install this package if you're using Node.js to load the WebAssembly bundle use the `fs` API
+- `@rometools/wasm-web`: Install this package if you are targeting the web platform to load the WASM bundle using the `fetch` API
 
 ## Usage
 
 ```js
-import { Rome, BackendKind } from "@rometools/js-api";
+import { Rome, Distribution } from "@rometools/js-api";
 
 const rome = await Rome.create({
-	backendKind: BackendKind.NODE,
+	distribution: Distribution.NODE, // Or BUNDLER / WEB depending on the distribution package you've installed
 });
 
-const result = await rome.formatContent("function f   () {  }", {
+const formatted = await rome.formatContent("function f   (a, b) { return a == b; }", {
 	filePath: "example.js",
 });
 
-console.log(result.content);
+console.log('Formatted content: ', formatted.content);
+
+const result = await rome.lintContent(formatted.content, {
+	filePath: "example.js",
+});
+
+const html = rome.printDiagnostics(result.diagnostics, {
+	filePath: "example.js",
+	fileSource: formatted.content,
+});
+
+console.log('Lint diagnostics: ', html);
 ```
 
 ## Philosophy
