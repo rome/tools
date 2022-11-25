@@ -377,10 +377,10 @@ pub trait Parser: Sized {
     type Kind: SyntaxKind;
     type Source: TokenSource<Kind = Self::Kind>;
 
-    /// Returns a reference to the [`ParsingContext`](ParsingContext)
+    /// Returns a reference to the [`ParserContext`](ParserContext)
     fn context(&self) -> &ParserContext<Self::Kind>;
 
-    /// Returns a mutable reference to the [`ParsingContext`](ParsingContext).
+    /// Returns a mutable reference to the [`ParserContext`](ParserContext).
     fn context_mut(&mut self) -> &mut ParserContext<Self::Kind>;
 
     /// Returns a reference to the [`TokenSource``](TokenSource]
