@@ -297,7 +297,7 @@ fn generate_formatter(repo: &GitRepo, language_kind: LanguageKind) {
     for (kind, name) in names {
         let module = name_to_module(&kind, &name, language_kind);
         let path = module.as_path();
-        modules.insert(&repo, &path);
+        modules.insert(repo, &path);
 
         let node_id = Ident::new(&name, Span::call_site());
         let format_id = Ident::new(&format!("Format{name}"), Span::call_site());

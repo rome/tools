@@ -6,7 +6,7 @@ use rome_js_syntax::{JsSyntaxToken, SourceType};
 use std::borrow::Cow;
 use unicode_width::UnicodeWidthStr;
 
-pub(crate) trait ToAsciiLowercaseCow {
+pub trait ToAsciiLowercaseCow {
     /// Returns the same value as String::to_lowercase. The only difference
     /// is that this functions returns ```Cow``` and does not allocate
     /// if the string is already in lowercase.
