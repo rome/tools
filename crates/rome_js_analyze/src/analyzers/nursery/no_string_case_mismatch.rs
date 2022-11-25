@@ -34,7 +34,7 @@ declare_rule! {
     pub(crate) NoStringCaseMismatch {
         version: "11.0.0",
         name: "noStringCaseMismatch",
-        recommended: false,
+        recommended: true,
     }
 }
 

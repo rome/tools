@@ -824,10 +824,51 @@ impl Nursery {
         "useNumericLiterals",
         "useValidForDirection",
     ];
-    const RECOMMENDED_RULES: [&'static str; 2] = ["noAccessKey", "useAriaPropsForRole"];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 2] = [
+    const RECOMMENDED_RULES: [&'static str; 21] = [
+        "noAccessKey",
+        "noBannedTypes",
+        "noConditionalAssignment",
+        "noConstructorReturn",
+        "noDistractingElements",
+        "noDupeKeys",
+        "noEmptyInterface",
+        "noExplicitAny",
+        "noExtraNonNullAssertion",
+        "noHeaderScope",
+        "noInvalidConstructorSuper",
+        "noPrecisionLoss",
+        "noSetterReturn",
+        "noStringCaseMismatch",
+        "noUnsafeFinally",
+        "noVoidTypeReturn",
+        "useAriaPropsForRole",
+        "useDefaultSwitchClauseLast",
+        "useFlatMap",
+        "useNumericLiterals",
+        "useValidForDirection",
+    ];
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 21] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[0]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[5]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[6]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[7]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[8]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[9]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[10]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[11]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[12]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[14]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[16]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[17]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[18]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[20]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[22]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[25]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[27]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[28]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[29]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -854,7 +895,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 2] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 21] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }

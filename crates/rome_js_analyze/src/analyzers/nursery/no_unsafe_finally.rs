@@ -127,7 +127,7 @@ declare_rule! {
     pub(crate) NoUnsafeFinally {
         version: "11.0.0",
         name: "noUnsafeFinally",
-        recommended: false,
+        recommended: true,
     }
 }
 
