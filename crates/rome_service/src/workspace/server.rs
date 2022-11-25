@@ -15,7 +15,7 @@ use crate::{
 use dashmap::{mapref::entry::Entry, DashMap};
 use indexmap::IndexSet;
 use rome_analyze::{AnalysisFilter, RuleFilter};
-use rome_diagnostics::{serde::Diagnostic, DiagnosticExt};
+use rome_diagnostics::{serde::Diagnostic as SerdeDiagnostic, Diagnostic, DiagnosticExt, Severity};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_parser::diagnostic::ParseDiagnostic;
@@ -84,8 +84,11 @@ impl AnyParse {
     }
 
     /// This function transforms diagnostics coming from the parser into serializable diagnostics
-    pub(crate) fn into_diagnostics(self) -> Vec<Diagnostic> {
-        self.diagnostics.into_iter().map(Diagnostic::new).collect()
+    pub(crate) fn into_diagnostics(self) -> Vec<SerdeDiagnostic> {
+        self.diagnostics
+            .into_iter()
+            .map(SerdeDiagnostic::new)
+            .collect()
     }
 
     fn has_errors(&self) -> bool {
@@ -372,44 +375,57 @@ impl Workspace for WorkspaceServer {
         &self,
         params: PullDiagnosticsParams,
     ) -> Result<PullDiagnosticsResult, RomeError> {
-        let capabilities = self.get_capabilities(&params.path);
-        let lint = capabilities
-            .analyzer
-            .lint
-            .ok_or_else(self.build_capability_error(&params.path))?;
-
-        let settings = self.settings.read().unwrap();
         let feature = if params.categories.is_syntax() {
             FeatureName::Format
         } else {
             FeatureName::Lint
         };
-        let parse = self.get_parse(params.path.clone(), Some(feature))?;
-        let rules = settings.linter().rules.as_ref();
-        let rule_filter_list = self.build_rule_filter_list(rules);
-        let mut filter = AnalysisFilter::from_enabled_rules(Some(rule_filter_list.as_slice()));
-        filter.categories = params.categories;
 
-        let results = lint(LintParams {
-            rome_path: &params.path,
-            parse,
-            filter,
-            rules,
-            settings: self.settings(),
-            max_diagnostics: params.max_diagnostics,
-        });
+        let parse = self.get_parse(params.path.clone(), Some(feature))?;
+        let settings = self.settings.read().unwrap();
+
+        let (diagnostics, errors, skipped_diagnostics) = if let Some(lint) =
+            self.get_capabilities(&params.path).analyzer.lint
+        {
+            let rules = settings.linter().rules.as_ref();
+            let rule_filter_list = self.build_rule_filter_list(rules);
+            let mut filter = AnalysisFilter::from_enabled_rules(Some(rule_filter_list.as_slice()));
+            filter.categories = params.categories;
+
+            let results = lint(LintParams {
+                rome_path: &params.path,
+                parse,
+                filter,
+                rules,
+                settings: self.settings(),
+                max_diagnostics: params.max_diagnostics,
+            });
+
+            (
+                results.diagnostics,
+                results.errors,
+                results.skipped_diagnostics,
+            )
+        } else {
+            let parse_diagnostics = parse.into_diagnostics();
+            let errors = parse_diagnostics
+                .iter()
+                .filter(|diag| diag.severity() <= Severity::Error)
+                .count();
+
+            (parse_diagnostics, errors, 0)
+        };
 
         Ok(PullDiagnosticsResult {
-            diagnostics: results
-                .diagnostics
+            diagnostics: diagnostics
                 .into_iter()
                 .map(|diag| {
                     let diag = diag.with_file_path(params.path.as_path().display().to_string());
-                    Diagnostic::new(diag)
+                    SerdeDiagnostic::new(diag)
                 })
                 .collect(),
-            errors: results.errors,
-            skipped_diagnostics: results.skipped_diagnostics,
+            errors,
+            skipped_diagnostics,
         })
     }
 

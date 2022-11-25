@@ -1,11 +1,46 @@
 use super::{ExtensionHandler, Mime};
-use crate::file_handlers::{Capabilities, ParserCapabilities};
+use crate::file_handlers::{Capabilities, FormatterCapabilities, ParserCapabilities};
 use crate::file_handlers::{DebugCapabilities, Language as LanguageId};
+use crate::settings::{
+    FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle,
+};
 use crate::workspace::server::AnyParse;
 use crate::workspace::GetSyntaxTreeResult;
+use crate::RomeError;
+use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
+use rome_json_formatter::context::JsonFormatOptions;
+use rome_json_formatter::format_node;
 use rome_json_parser::JsonParse;
-use rome_json_syntax::{JsonRoot, JsonSyntaxNode};
+use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
+use rome_rowan::{TextRange, TextSize, TokenAtOffset};
+use tracing::debug;
+
+const JSON_SETTINGS: LanguageSettings<JsonLanguage> = LanguageSettings {
+    formatter: (),
+    linter: (),
+    globals: None,
+};
+
+impl Language for JsonLanguage {
+    type FormatterSettings = ();
+    type LinterSettings = ();
+    type FormatOptions = JsonFormatOptions;
+
+    fn lookup_settings(_: &LanguagesSettings) -> &LanguageSettings<Self> {
+        &JSON_SETTINGS
+    }
+
+    fn resolve_format_options(
+        global: &FormatSettings,
+        _language: &Self::FormatterSettings,
+        _path: &RomePath,
+    ) -> Self::FormatOptions {
+        JsonFormatOptions::default()
+            .with_indent_style(global.indent_style.unwrap_or_default())
+            .with_line_width(global.line_width.unwrap_or_default())
+    }
+}
 
 #[derive(Debug, Default, PartialEq, Eq)]
 pub(crate) struct JsonFileHandler;
@@ -29,12 +64,26 @@ impl ExtensionHandler for JsonFileHandler {
             debug: DebugCapabilities {
                 debug_syntax_tree: Some(debug_syntax_tree),
                 debug_control_flow: None,
-                debug_formatter_ir: None,
+                debug_formatter_ir: Some(debug_formatter_ir),
             },
             analyzer: Default::default(),
-            formatter: Default::default(),
+            formatter: formatter_capabilities(),
         }
     }
+}
+
+#[cfg(debug_assertions)]
+fn formatter_capabilities() -> FormatterCapabilities {
+    FormatterCapabilities {
+        format: Some(format),
+        format_range: Some(format_range),
+        format_on_type: Some(format_on_type),
+    }
+}
+
+#[cfg(not(debug_assertions))]
+fn formatter_capabilities() -> FormatterCapabilities {
+    FormatterCapabilities::default()
 }
 
 fn parse(rome_path: &RomePath, _: LanguageId, text: &str) -> AnyParse {
@@ -51,6 +100,88 @@ fn debug_syntax_tree(_rome_path: &RomePath, parse: AnyParse) -> GetSyntaxTreeRes
         cst: format!("{syntax:#?}"),
         ast: format!("{tree:#?}"),
     }
+}
+
+fn debug_formatter_ir(
+    rome_path: &RomePath,
+    parse: AnyParse,
+    settings: SettingsHandle,
+) -> Result<String, RomeError> {
+    let options = settings.format_options::<JsonLanguage>(rome_path);
+
+    let tree = parse.syntax();
+    let formatted = format_node(options, &tree)?;
+
+    let root_element = formatted.into_document();
+    Ok(root_element.to_string())
+}
+
+#[tracing::instrument(level = "debug", skip(parse))]
+fn format(
+    rome_path: &RomePath,
+    parse: AnyParse,
+    settings: SettingsHandle,
+) -> Result<Printed, RomeError> {
+    let options = settings.format_options::<JsonLanguage>(rome_path);
+
+    debug!("Format with the following options: \n{}", options);
+
+    let tree = parse.syntax();
+    let formatted = format_node(options, &tree)?;
+
+    match formatted.print() {
+        Ok(printed) => Ok(printed),
+        Err(error) => Err(RomeError::FormatError(error.into())),
+    }
+}
+
+fn format_range(
+    rome_path: &RomePath,
+    parse: AnyParse,
+    settings: SettingsHandle,
+    range: TextRange,
+) -> Result<Printed, RomeError> {
+    let options = settings.format_options::<JsonLanguage>(rome_path);
+
+    let tree = parse.syntax();
+    let printed = rome_json_formatter::format_range(options, &tree, range)?;
+    Ok(printed)
+}
+
+fn format_on_type(
+    rome_path: &RomePath,
+    parse: AnyParse,
+    settings: SettingsHandle,
+    offset: TextSize,
+) -> Result<Printed, RomeError> {
+    let options = settings.format_options::<JsonLanguage>(rome_path);
+
+    let tree = parse.syntax();
+
+    let range = tree.text_range();
+    if offset < range.start() || offset > range.end() {
+        return Err(RomeError::FormatError(FormatError::RangeError {
+            input: TextRange::at(offset, TextSize::from(0)),
+            tree: range,
+        }));
+    }
+
+    let token = match tree.token_at_offset(offset) {
+        // File is empty, do nothing
+        TokenAtOffset::None => panic!("empty file"),
+        TokenAtOffset::Single(token) => token,
+        // The cursor should be right after the closing character that was just typed,
+        // select the previous token as the correct one
+        TokenAtOffset::Between(token, _) => token,
+    };
+
+    let root_node = match token.parent() {
+        Some(node) => node,
+        None => panic!("found a token with no parent"),
+    };
+
+    let printed = rome_json_formatter::format_sub_tree(options, &root_node)?;
+    Ok(printed)
 }
 
 impl From<JsonParse> for AnyParse {

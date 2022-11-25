@@ -644,6 +644,14 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
     }
 }
 
+// enum CanHandle {
+//     /// Rome supports the requested operation
+//     Yes,
+//     /// Rome supports parsing the file but not the requested operation.
+//     MissingHandler,
+//
+// }
+
 impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
     fn interner(&self) -> &PathInterner {
         &self.interner

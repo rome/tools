@@ -26,6 +26,8 @@ where
     N: AstNode<Language = JsonLanguage>,
 {
     fn fmt(&self, node: &N, f: &mut JsonFormatter) -> FormatResult<()> {
+        f.comments().mark_suppression_checked(node.syntax());
+
         self.fmt_fields(node, f)
     }
 

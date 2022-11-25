@@ -26,6 +26,7 @@ rome_js_formatter = { path = "../rome_js_formatter", features = ["serde"] }
 rome_js_semantic = { path = "../rome_js_semantic" }
 rome_json_parser = { path = "../rome_json_parser" }
 rome_json_syntax = { path = "../rome_json_syntax" }
+rome_json_formatter = { path = "../rome_json_formatter" }
 rome_rowan = { path = "../rome_rowan", features = ["serde"] }
 rome_text_edit = { path = "../rome_text_edit" }
 indexmap = { workspace = true, features = ["serde"] }
