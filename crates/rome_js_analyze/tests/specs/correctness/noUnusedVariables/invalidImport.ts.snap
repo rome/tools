@@ -1,0 +1,43 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: invalidImport.ts
+---
+# Input
+```js
+import A from 'A';
+import y = a;
+
+```
+
+# Diagnostics
+```
+invalidImport.ts:1:8 lint/correctness/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This variable is unused.
+  
+  > 1 │ import A from 'A';
+      │        ^
+    2 │ import y = a;
+    3 │ 
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
+
+```
+
+```
+invalidImport.ts:2:8 lint/correctness/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This variable is unused.
+  
+    1 │ import A from 'A';
+  > 2 │ import y = a;
+      │        ^
+    3 │ 
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
+
+```
+
+

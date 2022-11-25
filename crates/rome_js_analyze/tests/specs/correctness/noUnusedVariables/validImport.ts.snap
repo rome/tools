@@ -1,0 +1,12 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: validImport.ts
+---
+# Input
+```js
+import y = "";
+console.log(y);
+
+```
+
+

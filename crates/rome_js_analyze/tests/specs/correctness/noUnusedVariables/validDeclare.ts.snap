@@ -1,0 +1,11 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: validDeclare.ts
+---
+# Input
+```js
+declare function a(a);
+declare const b = 1;
+```
+
+

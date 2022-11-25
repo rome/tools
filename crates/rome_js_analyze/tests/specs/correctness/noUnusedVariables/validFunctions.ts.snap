@@ -1,0 +1,49 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: validFunctions.ts
+---
+# Input
+```js
+// used function declaration
+function a() {}
+a()
+
+// we never flag function expressions
+(function f() {})
+
+// overloaded functions
+function add(a: string, b: string): string;
+function add(a: number, b: number): number;
+function add(a: any, b: any): any {
+	return a + b;
+}
+add(1, 1);
+
+```
+
+# Diagnostics
+```
+validFunctions.ts:2:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This function is unused.
+  
+    1 │ // used function declaration
+  > 2 │ function a() {}
+      │          ^
+    3 │ a()
+    4 │ 
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
+  i Suggested fix: If this is intentional, prepend a with an underscore.
+  
+     1  1 │   // used function declaration
+     2    │ - function·a()·{}
+        2 │ + function·_a()·{}
+     3  3 │   a()
+     4  4 │   
+  
+
+```
+
+

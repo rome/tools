@@ -4,6 +4,7 @@
 
 #[macro_use]
 mod generated;
+pub mod binding_ext;
 pub mod expr_ext;
 pub mod import_ext;
 pub mod jsx_ext;

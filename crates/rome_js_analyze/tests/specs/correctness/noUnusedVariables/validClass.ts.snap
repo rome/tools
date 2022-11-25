@@ -1,0 +1,81 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: validClass.ts
+---
+# Input
+```js
+class A {
+    constructor(a: number) {
+        console.log(a)
+    }
+    f(a: number) {
+        console.log(a)
+    }
+}
+console.log(new A(1));
+
+// we never flag class expressions
+new (class B { })
+
+// a and b are actually properties
+class C {
+    constructor(private a, public b) {}
+}
+console.log(new C(1, 2));
+
+```
+
+# Diagnostics
+```
+validClass.ts:16:25 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This parameter is unused.
+  
+    14 │ // a and b are actually properties
+    15 │ class C {
+  > 16 │     constructor(private a, public b) {}
+       │                         ^
+    17 │ }
+    18 │ console.log(new C(1, 2));
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
+  i Suggested fix: If this is intentional, prepend a with an underscore.
+  
+    14 14 │   // a and b are actually properties
+    15 15 │   class C {
+    16    │ - ····constructor(private·a,·public·b)·{}
+       16 │ + ····constructor(private·_a,·public·b)·{}
+    17 17 │   }
+    18 18 │   console.log(new C(1, 2));
+  
+
+```
+
+```
+validClass.ts:16:35 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This parameter is unused.
+  
+    14 │ // a and b are actually properties
+    15 │ class C {
+  > 16 │     constructor(private a, public b) {}
+       │                                   ^
+    17 │ }
+    18 │ console.log(new C(1, 2));
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
+  i Suggested fix: If this is intentional, prepend b with an underscore.
+  
+    14 14 │   // a and b are actually properties
+    15 15 │   class C {
+    16    │ - ····constructor(private·a,·public·b)·{}
+       16 │ + ····constructor(private·a,·public·_b)·{}
+    17 17 │   }
+    18 18 │   console.log(new C(1, 2));
+  
+
+```
+
+
