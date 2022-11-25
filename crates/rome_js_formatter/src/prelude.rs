@@ -8,6 +8,4 @@ pub(crate) use crate::{
 pub use rome_formatter::prelude::*;
 pub use rome_rowan::{AstNode as _, AstNodeList as _, AstSeparatedList as _};
 
-pub use crate::separated::{
-    FormatAstSeparatedListExtension, FormatSeparatedOptions, TrailingSeparator,
-};
+pub use crate::separated::{FormatAstSeparatedListExtension, TrailingSeparator};

@@ -167,7 +167,7 @@
 mod cst;
 mod js;
 mod jsx;
-pub mod prelude;
+mod prelude;
 mod ts;
 pub mod utils;
 
