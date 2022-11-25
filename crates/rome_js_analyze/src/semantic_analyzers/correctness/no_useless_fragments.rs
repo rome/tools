@@ -9,12 +9,10 @@ use rome_js_factory::make::{
     ident, js_expression_statement, js_string_literal_expression, jsx_tag_expression,
 };
 use rome_js_syntax::{
-    JsLanguage, JsSyntaxKind, JsxAnyChild, JsxAnyElementName, JsxAnyTag, JsxChildList, JsxElement,
-    JsxFragment, JsxTagExpression,
+    JsLanguage, JsParenthesizedExpression, JsSyntaxKind, JsxAnyChild, JsxAnyElementName, JsxAnyTag,
+    JsxChildList, JsxElement, JsxFragment, JsxTagExpression,
 };
-use rome_rowan::{
-    declare_node_union, AstNode, AstNodeList, BatchMutation, BatchMutationExt, SyntaxNodeOptionExt,
-};
+use rome_rowan::{declare_node_union, AstNode, AstNodeList, BatchMutation, BatchMutationExt};
 
 declare_rule! {
     /// Disallow unnecessary fragments
@@ -108,31 +106,42 @@ impl Rule for NoUselessFragments {
         let model = ctx.model();
         match node {
             NoUselessFragmentsQuery::JsxFragment(fragment) => {
-                let matches_allowed_parents = node
+                let parents_where_fragments_must_be_preserved = node
                     .syntax()
                     .parent()
                     .map(|parent| match JsxTagExpression::try_cast(parent) {
-                        Ok(parent) => {
-                            let parent_kind = parent.syntax().parent().kind();
-                            matches!(
-                                parent_kind,
-                                Some(
+                        Ok(parent) => parent
+                            .syntax()
+                            .parent()
+                            .and_then(|parent| {
+                                if let Some(parenthesized_expression) =
+                                    JsParenthesizedExpression::cast_ref(&parent)
+                                {
+                                    parenthesized_expression.syntax().parent()
+                                } else {
+                                    Some(parent)
+                                }
+                            })
+                            .map(|parent| {
+                                matches!(
+                                    parent.kind(),
                                     JsSyntaxKind::JS_RETURN_STATEMENT
                                         | JsSyntaxKind::JS_INITIALIZER_CLAUSE
                                         | JsSyntaxKind::JS_CONDITIONAL_EXPRESSION
                                         | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
                                         | JsSyntaxKind::JS_FUNCTION_EXPRESSION
                                         | JsSyntaxKind::JS_FUNCTION_DECLARATION
+                                        | JsSyntaxKind::JS_PROPERTY_OBJECT_MEMBER
                                 )
-                            )
-                        }
+                            })
+                            .unwrap_or(false),
                         Err(_) => false,
                     })
                     .unwrap_or(false);
 
                 let child_list = fragment.children();
 
-                if !matches_allowed_parents {
+                if !parents_where_fragments_must_be_preserved {
                     match child_list.first() {
                         Some(first) if child_list.len() == 1 => {
                             Some(NoUselessFragmentsState::Child(first))

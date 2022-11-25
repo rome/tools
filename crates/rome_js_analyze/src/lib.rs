@@ -134,6 +134,7 @@ mod tests {
     use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic, Severity};
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};
+    use std::slice;
 
     use crate::{analyze, AnalysisFilter, ControlFlow};
 
@@ -149,25 +150,21 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"function f() {
-            return (
-                <div
-                ><img /></div>
-            )
-        };
-        f();
+        const SOURCE: &str = r#"const obj = {
+  element: <>test</>
+};
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
-        let _rule_filter = RuleFilter::Rule("correctness", "flipBinExp");
+        let rule_filter = RuleFilter::Rule("correctness", "noUselessFragments");
         analyze(
             FileId::zero(),
             &parsed.tree(),
             AnalysisFilter {
-                // enabled_rules: Some(slice::from_ref(&rule_filter)),
+                enabled_rules: Some(slice::from_ref(&rule_filter)),
                 ..AnalysisFilter::default()
             },
             &options,
