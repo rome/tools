@@ -53,18 +53,6 @@ structure_whitespace_U+2060_word_joiner.json:1:2 parse ━━━━━━━━�
   > 1 │ [�]
       │  
   
-structure_whitespace_U+2060_word_joiner.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an array, an object, or a literal but instead found '�'
-  
-  > 1 │ [�]
-      │  
-  
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ [�]
-      │  
-  
 ```
 
 

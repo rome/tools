@@ -80,15 +80,6 @@ object_with_trailing_garbage.json:1:10 parse ━━━━━━━━━━━�
   > 1 │ {"a":"b"}#
       │          ^
   
-object_with_trailing_garbage.json:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × End of file expected
-  
-  > 1 │ {"a":"b"}#
-      │          ^
-  
-  i Use an array for a sequence of values: `[1, 2]`
-  
 ```
 
 

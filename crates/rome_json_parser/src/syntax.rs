@@ -141,7 +141,7 @@ enum SequenceState {
 impl Sequence {
     fn parse_item(&self, p: &mut JsonParser) -> SequenceItem {
         match self.kind {
-            SequenceKind::Array => parse_sequence_value(p),
+            SequenceKind::Array => parse_array_element(p),
             SequenceKind::Object => parse_object_member(p),
         }
     }
@@ -271,22 +271,28 @@ fn parse_object_member(p: &mut JsonParser) -> SequenceItem {
     p.expect(T![:]);
 
     match parse_sequence_value(p) {
-        SequenceItem::Parsed(value) => {
+        Ok(value) => {
             value.or_add_diagnostic(p, expected_value);
             SequenceItem::Parsed(Present(m.complete(p, JSON_MEMBER)))
         }
-        SequenceItem::Recurse(kind, None) => SequenceItem::Recurse(kind, Some(m)),
-        SequenceItem::Recurse(_, Some(_)) => unreachable!(),
+        Err(kind) => SequenceItem::Recurse(kind, Some(m)),
     }
 }
 
-fn parse_sequence_value(p: &mut JsonParser) -> SequenceItem {
+fn parse_array_element(p: &mut JsonParser) -> SequenceItem {
+    match parse_sequence_value(p) {
+        Ok(parsed) => SequenceItem::Parsed(parsed),
+        Err(kind) => SequenceItem::Recurse(kind, None),
+    }
+}
+
+fn parse_sequence_value(p: &mut JsonParser) -> Result<ParsedSyntax, SequenceKind> {
     match p.cur() {
         // Special handling for arrays and objects, suspend the current sequence and start parsing
         // the nested array or object.
-        T!['['] => SequenceItem::Recurse(SequenceKind::Array, None),
-        T!['{'] => SequenceItem::Recurse(SequenceKind::Object, None),
-        _ => SequenceItem::Parsed(parse_value(p)),
+        T!['['] => Err(SequenceKind::Array),
+        T!['{'] => Err(SequenceKind::Object),
+        _ => Ok(parse_value(p)),
     }
 }
 

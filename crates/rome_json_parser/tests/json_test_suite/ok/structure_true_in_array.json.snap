@@ -18,7 +18,7 @@ JsonRoot {
         l_brack_token: L_BRACK@0..1 "[" [] [],
         elements: JsonArrayElementList [
             JsonBoolean {
-                value: TRUE_KW@1..5 "true" [] [],
+                value_token: TRUE_KW@1..5 "true" [] [],
             },
         ],
         r_brack_token: R_BRACK@5..6 "]" [] [],

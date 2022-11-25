@@ -58,18 +58,6 @@ number_0_capital_E+.json:1:2 parse ━━━━━━━━━━━━━━━
   > 1 │ [0E+]
       │     ^
   
-number_0_capital_E+.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an array, an object, or a literal but instead found '0E+'
-  
-  > 1 │ [0E+]
-      │  ^^^
-  
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ [0E+]
-      │  ^^^
-  
 ```
 
 

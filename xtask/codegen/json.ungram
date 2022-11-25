@@ -55,7 +55,7 @@ JsonArray = '[' elements: JsonArrayElementList? ']'
 
 JsonArrayElementList = (JsonAnyValue (',' JsonAnyValue)* )
 
-JsonBoolean = value: ('true' | 'false')
+JsonBoolean = value_token: ('true' | 'false')
 
 JsonNull = value: 'null'
 

@@ -58,18 +58,6 @@ number_0e.json:1:2 parse ━━━━━━━━━━━━━━━━━━�
   > 1 │ [0e]
       │    ^
   
-number_0e.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an array, an object, or a literal but instead found '0e'
-  
-  > 1 │ [0e]
-      │  ^^
-  
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ [0e]
-      │  ^^
-  
 ```
 
 

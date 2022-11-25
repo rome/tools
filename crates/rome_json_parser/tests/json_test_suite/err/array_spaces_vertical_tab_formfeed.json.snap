@@ -50,6 +50,18 @@ JsonRoot {
 ## Diagnostics
 
 ```
+array_spaces_vertical_tab_formfeed.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected an array, an object, or a literal but instead found '"a"\f'
+  
+  > 1 │ ["␋a"\f]
+      │  ^^^^^
+  
+  i Expected an array, an object, or a literal here
+  
+  > 1 │ ["␋a"\f]
+      │  ^^^^^
+  
 array_spaces_vertical_tab_formfeed.json:1:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Control character '\u000b' is not allowed in string literals.
@@ -65,18 +77,6 @@ array_spaces_vertical_tab_formfeed.json:1:6 parse ━━━━━━━━━━
   
   > 1 │ ["␋a"\f]
       │     ^
-  
-array_spaces_vertical_tab_formfeed.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an array, an object, or a literal but instead found '"a"\f'
-  
-  > 1 │ ["␋a"\f]
-      │  ^^^^^
-  
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ ["␋a"\f]
-      │  ^^^^^
   
 ```
 

@@ -55,18 +55,6 @@ number_-NaN.json:1:2 parse ━━━━━━━━━━━━━━━━━�
   > 1 │ [-NaN]
       │  ^
   
-number_-NaN.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an array, an object, or a literal but instead found '-NaN'
-  
-  > 1 │ [-NaN]
-      │  ^^^^
-  
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ [-NaN]
-      │  ^^^^
-  
 ```
 
 

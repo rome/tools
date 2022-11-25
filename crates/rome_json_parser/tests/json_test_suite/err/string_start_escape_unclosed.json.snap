@@ -46,18 +46,6 @@ JsonRoot {
 ## Diagnostics
 
 ```
-string_start_escape_unclosed.json:1:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Expected an escape sequence following a backslash, but found none
-  
-  > 1 │ ["\
-      │   ^
-  
-  i File ends here
-  
-  > 1 │ ["\
-      │    
-  
 string_start_escape_unclosed.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an array, an object, or a literal but instead found '"\'
@@ -69,6 +57,18 @@ string_start_escape_unclosed.json:1:2 parse ━━━━━━━━━━━━
   
   > 1 │ ["\
       │  ^^
+  
+string_start_escape_unclosed.json:1:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Expected an escape sequence following a backslash, but found none
+  
+  > 1 │ ["\
+      │   ^
+  
+  i File ends here
+  
+  > 1 │ ["\
+      │    
   
 string_start_escape_unclosed.json:1:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

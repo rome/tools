@@ -75,10 +75,10 @@ impl JsonBoolean {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsonBooleanFields {
         JsonBooleanFields {
-            value: self.value(),
+            value_token: self.value_token(),
         }
     }
-    pub fn value(&self) -> SyntaxResult<SyntaxToken> {
+    pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
 }
@@ -93,7 +93,7 @@ impl Serialize for JsonBoolean {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsonBooleanFields {
-    pub value: SyntaxResult<SyntaxToken>,
+    pub value_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsonMember {
@@ -429,7 +429,10 @@ impl AstNode for JsonBoolean {
 impl std::fmt::Debug for JsonBoolean {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsonBoolean")
-            .field("value", &support::DebugSyntaxResult(self.value()))
+            .field(
+                "value_token",
+                &support::DebugSyntaxResult(self.value_token()),
+            )
             .finish()
     }
 }

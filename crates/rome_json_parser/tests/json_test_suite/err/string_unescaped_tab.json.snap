@@ -46,15 +46,6 @@ JsonRoot {
 ## Diagnostics
 
 ```
-string_unescaped_tab.json:1:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Control character '\u0009' is not allowed in string literals.
-  
-  > 1 │ ["	"]
-      │   ^^
-  
-  i Use the escape sequence '\u0009' instead.
-  
 string_unescaped_tab.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an array, an object, or a literal but instead found '"	"'
@@ -66,6 +57,15 @@ string_unescaped_tab.json:1:2 parse ━━━━━━━━━━━━━━�
   
   > 1 │ ["	"]
       │  ^^^^
+  
+string_unescaped_tab.json:1:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Control character '\u0009' is not allowed in string literals.
+  
+  > 1 │ ["	"]
+      │   ^^
+  
+  i Use the escape sequence '\u0009' instead.
   
 ```
 

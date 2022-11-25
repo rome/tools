@@ -53,18 +53,6 @@ number_with_leading_zero.json:1:2 parse ━━━━━━━━━━━━━�
   > 1 │ [012]
       │  ^
   
-number_with_leading_zero.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an array, an object, or a literal but instead found '012'
-  
-  > 1 │ [012]
-      │  ^^^
-  
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ [012]
-      │  ^^^
-  
 ```
 
 

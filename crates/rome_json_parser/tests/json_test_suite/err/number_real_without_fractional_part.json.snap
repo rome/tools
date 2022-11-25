@@ -46,15 +46,6 @@ JsonRoot {
 ## Diagnostics
 
 ```
-number_real_without_fractional_part.json:1:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Missing fraction
-  
-  > 1 │ [1.]
-      │    ^
-  
-  i Remove the `.`
-  
 number_real_without_fractional_part.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an array, an object, or a literal but instead found '1.'
@@ -66,6 +57,15 @@ number_real_without_fractional_part.json:1:2 parse ━━━━━━━━━�
   
   > 1 │ [1.]
       │  ^^
+  
+number_real_without_fractional_part.json:1:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Missing fraction
+  
+  > 1 │ [1.]
+      │    ^
+  
+  i Remove the `.`
   
 ```
 

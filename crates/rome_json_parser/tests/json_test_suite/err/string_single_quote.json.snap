@@ -55,18 +55,6 @@ string_single_quote.json:1:2 parse ━━━━━━━━━━━━━━━
   
   i Use double quotes to escape the string.
   
-string_single_quote.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an array, an object, or a literal but instead found ''single quote''
-  
-  > 1 │ ['single quote']
-      │  ^^^^^^^^^^^^^^
-  
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ ['single quote']
-      │  ^^^^^^^^^^^^^^
-  
 ```
 
 

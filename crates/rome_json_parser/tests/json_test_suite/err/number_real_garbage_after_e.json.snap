@@ -60,18 +60,6 @@ number_real_garbage_after_e.json:1:2 parse ━━━━━━━━━━━━�
   > 1 │ [1ea]
       │    ^
   
-number_real_garbage_after_e.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an array, an object, or a literal but instead found '1ea'
-  
-  > 1 │ [1ea]
-      │  ^^^
-  
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ [1ea]
-      │  ^^^
-  
 ```
 
 

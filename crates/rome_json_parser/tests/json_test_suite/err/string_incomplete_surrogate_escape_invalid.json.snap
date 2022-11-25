@@ -46,15 +46,6 @@ JsonRoot {
 ## Diagnostics
 
 ```
-string_incomplete_surrogate_escape_invalid.json:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Invalid escape sequence
-  
-  > 1 │ ["\uD800\uD800\x"]
-      │               ^^
-  
-  i Valid escape sequences are: `\\`, `\/`, `/"`, `\b\`, `\f`, `\n`, `\r`, `\t` or any unicode escape sequence `\uXXXX` where X is hexedecimal number. 
-  
 string_incomplete_surrogate_escape_invalid.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an array, an object, or a literal but instead found '"\uD800\uD800\x"'
@@ -66,6 +57,15 @@ string_incomplete_surrogate_escape_invalid.json:1:2 parse ━━━━━━━�
   
   > 1 │ ["\uD800\uD800\x"]
       │  ^^^^^^^^^^^^^^^^
+  
+string_incomplete_surrogate_escape_invalid.json:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Invalid escape sequence
+  
+  > 1 │ ["\uD800\uD800\x"]
+      │               ^^
+  
+  i Valid escape sequences are: `\\`, `\/`, `/"`, `\b\`, `\f`, `\n`, `\r`, `\t` or any unicode escape sequence `\uXXXX` where X is hexedecimal number. 
   
 ```
 

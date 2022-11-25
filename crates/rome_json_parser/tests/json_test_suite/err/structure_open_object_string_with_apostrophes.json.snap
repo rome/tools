@@ -57,18 +57,6 @@ structure_open_object_string_with_apostrophes.json:1:2 parse ━━━━━━�
   
   i Use double quotes to escape the string.
   
-structure_open_object_string_with_apostrophes.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected a property but instead found ''a''
-  
-  > 1 │ {'a'
-      │  ^^^
-  
-  i Expected a property here
-  
-  > 1 │ {'a'
-      │  ^^^
-  
 structure_open_object_string_with_apostrophes.json:1:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `}` but instead the file ends

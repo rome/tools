@@ -36,15 +36,6 @@ JsonRoot {
 ## Diagnostics
 
 ```
-string_unicode_CapitalU.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Invalid escape sequence
-  
-  > 1 │ "\UA66D"
-      │  ^^
-  
-  i Valid escape sequences are: `\\`, `\/`, `/"`, `\b\`, `\f`, `\n`, `\r`, `\t` or any unicode escape sequence `\uXXXX` where X is hexedecimal number. 
-  
 string_unicode_CapitalU.json:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an array, an object, or a literal but instead found '"\UA66D"'
@@ -56,6 +47,15 @@ string_unicode_CapitalU.json:1:1 parse ━━━━━━━━━━━━━�
   
   > 1 │ "\UA66D"
       │ ^^^^^^^^
+  
+string_unicode_CapitalU.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Invalid escape sequence
+  
+  > 1 │ "\UA66D"
+      │  ^^
+  
+  i Valid escape sequences are: `\\`, `\/`, `/"`, `\b\`, `\f`, `\n`, `\r`, `\t` or any unicode escape sequence `\uXXXX` where X is hexedecimal number. 
   
 ```
 

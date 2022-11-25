@@ -62,18 +62,6 @@ string_leading_uescaped_thinspace.json:1:2 parse ━━━━━━━━━━�
   > 1 │ [\u0020"asd"]
       │  ^
   
-string_leading_uescaped_thinspace.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an array, an object, or a literal but instead found '\u0020'
-  
-  > 1 │ [\u0020"asd"]
-      │  ^^^^^^
-  
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ [\u0020"asd"]
-      │  ^^^^^^
-  
 string_leading_uescaped_thinspace.json:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `"asd"`

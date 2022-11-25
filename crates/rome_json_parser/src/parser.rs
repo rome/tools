@@ -1,6 +1,7 @@
 use crate::token_source::JsonTokenSource;
 use rome_diagnostics::FileId;
 use rome_json_syntax::JsonSyntaxKind;
+use rome_parser::diagnostic::merge_diagnostics;
 use rome_parser::event::Event;
 use rome_parser::prelude::*;
 use rome_parser::token_source::Trivia;
@@ -26,12 +27,12 @@ impl<'source> JsonParser<'source> {
         Vec<ParseDiagnostic>,
         Vec<Trivia>,
     ) {
+        let (trivia, lexer_diagnostics) = self.source.finish();
         let (events, parse_diagnostics) = self.context.finish();
-        let (trivia, mut lexer_diagnostics) = self.source.finish();
 
-        lexer_diagnostics.extend(parse_diagnostics);
+        let diagnostics = merge_diagnostics(lexer_diagnostics, parse_diagnostics);
 
-        (events, lexer_diagnostics, trivia)
+        (events, diagnostics, trivia)
     }
 }
 

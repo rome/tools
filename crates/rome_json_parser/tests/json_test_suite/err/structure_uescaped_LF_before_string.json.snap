@@ -62,18 +62,6 @@ structure_uescaped_LF_before_string.json:1:2 parse ━━━━━━━━━�
   > 1 │ [\u000A""]
       │  ^
   
-structure_uescaped_LF_before_string.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an array, an object, or a literal but instead found '\u000A'
-  
-  > 1 │ [\u000A""]
-      │  ^^^^^^
-  
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ [\u000A""]
-      │  ^^^^^^
-  
 structure_uescaped_LF_before_string.json:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `""`

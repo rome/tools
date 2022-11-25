@@ -71,18 +71,6 @@ object_single_quote.json:1:2 parse ━━━━━━━━━━━━━━━
   
   i Use double quotes to escape the string.
   
-object_single_quote.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected a property but instead found ''a''
-  
-  > 1 │ {'a':0}
-      │  ^^^
-  
-  i Expected a property here
-  
-  > 1 │ {'a':0}
-      │  ^^^
-  
 object_single_quote.json:1:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `:`

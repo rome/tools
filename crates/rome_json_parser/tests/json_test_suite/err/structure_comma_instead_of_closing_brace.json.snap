@@ -23,7 +23,7 @@ JsonRoot {
                 },
                 colon_token: COLON@4..6 ":" [] [Whitespace(" ")],
                 value: JsonBoolean {
-                    value: TRUE_KW@6..10 "true" [] [],
+                    value_token: TRUE_KW@6..10 "true" [] [],
                 },
             },
             COMMA@10..11 "," [] [],

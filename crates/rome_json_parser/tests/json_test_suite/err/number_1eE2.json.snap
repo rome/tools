@@ -58,18 +58,6 @@ number_1eE2.json:1:2 parse ━━━━━━━━━━━━━━━━━�
   > 1 │ [1eE2]
       │    ^
   
-number_1eE2.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an array, an object, or a literal but instead found '1eE2'
-  
-  > 1 │ [1eE2]
-      │  ^^^^
-  
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ [1eE2]
-      │  ^^^^
-  
 ```
 
 

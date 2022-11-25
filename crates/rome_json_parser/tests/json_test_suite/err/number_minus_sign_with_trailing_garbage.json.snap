@@ -55,18 +55,6 @@ number_minus_sign_with_trailing_garbage.json:1:2 parse ━━━━━━━━�
   > 1 │ [-foo]
       │  ^
   
-number_minus_sign_with_trailing_garbage.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an array, an object, or a literal but instead found '-foo'
-  
-  > 1 │ [-foo]
-      │  ^^^^
-  
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ [-foo]
-      │  ^^^^
-  
 ```
 
 

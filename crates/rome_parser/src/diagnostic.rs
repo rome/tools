@@ -7,6 +7,7 @@ use rome_diagnostics::{
     Advices, Diagnostic, FileId, Location, LogCategory, MessageAndDescription, Visit,
 };
 use rome_rowan::{SyntaxKind, TextLen, TextRange};
+use std::cmp::Ordering;
 
 /// A specialized diagnostic for the parser
 ///
@@ -400,5 +401,88 @@ fn article_for(name: &str) -> &'static str {
     match name.chars().next() {
         Some('a' | 'e' | 'i' | 'o' | 'u') => "an",
         _ => "a",
+    }
+}
+
+/// Merges two lists of parser diagnostics. Only keeps the error from the first collection if two start at the same range.
+///
+/// The two lists must be so sorted by their source range in increasing order.
+pub fn merge_diagnostics(
+    first: Vec<ParseDiagnostic>,
+    second: Vec<ParseDiagnostic>,
+) -> Vec<ParseDiagnostic> {
+    if first.is_empty() {
+        return second;
+    }
+
+    if second.is_empty() {
+        return first;
+    }
+
+    let mut merged = Vec::new();
+
+    let mut first_iter = first.into_iter();
+    let mut second_iter = second.into_iter();
+
+    let mut current_first: Option<ParseDiagnostic> = first_iter.next();
+    let mut current_second: Option<ParseDiagnostic> = second_iter.next();
+
+    loop {
+        match (current_first, current_second) {
+            (Some(first_item), Some(second_item)) => {
+                debug_assert_eq!(first_item.file_id, second_item.file_id);
+
+                let (first, second) = match (
+                    first_item.diagnostic_range(),
+                    second_item.diagnostic_range(),
+                ) {
+                    (Some(first_range), Some(second_range)) => {
+                        match first_range.start().cmp(&second_range.start()) {
+                            Ordering::Less => {
+                                merged.push(first_item);
+                                (first_iter.next(), Some(second_item))
+                            }
+                            Ordering::Equal => {
+                                // Only keep one error, skip the one from the second list.
+                                (Some(first_item), second_iter.next())
+                            }
+                            Ordering::Greater => {
+                                merged.push(second_item);
+                                (Some(first_item), second_iter.next())
+                            }
+                        }
+                    }
+                    (Some(_), None) => {
+                        merged.push(second_item);
+                        (Some(first_item), second_iter.next())
+                    }
+                    (None, Some(_)) => {
+                        merged.push(first_item);
+                        (first_iter.next(), Some(second_item))
+                    }
+                    (None, None) => {
+                        merged.push(first_item);
+                        merged.push(second_item);
+
+                        (first_iter.next(), second_iter.next())
+                    }
+                };
+
+                current_first = first;
+                current_second = second;
+            }
+
+            (None, None) => return merged,
+            (Some(first_item), None) => {
+                merged.push(first_item);
+                merged.extend(first_iter);
+                return merged;
+            }
+            (None, Some(second_item)) => {
+                merged.push(second_item);
+                merged.extend(second_iter);
+                return merged;
+            }
+        }
     }
 }

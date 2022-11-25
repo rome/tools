@@ -81,18 +81,6 @@ structure_object_with_comment.json:1:6 parse ━━━━━━━━━━━�
   > 1 │ {"a":/*comment*/"b"}
       │      ^^^^^^^^^^^
   
-structure_object_with_comment.json:1:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an array, an object, or a literal but instead found '/*comment*/'
-  
-  > 1 │ {"a":/*comment*/"b"}
-      │      ^^^^^^^^^^^
-  
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ {"a":/*comment*/"b"}
-      │      ^^^^^^^^^^^
-  
 structure_object_with_comment.json:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `"b"`

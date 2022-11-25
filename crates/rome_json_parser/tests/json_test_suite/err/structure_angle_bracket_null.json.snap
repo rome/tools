@@ -69,25 +69,6 @@ structure_angle_bracket_null.json:1:2 parse ━━━━━━━━━━━━
   > 1 │ [<null>]
       │  ^
   
-structure_angle_bracket_null.json:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × unexpected character `>`
-  
-  > 1 │ [<null>]
-      │       ^
-  
-structure_angle_bracket_null.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an array, an object, or a literal but instead found '<'
-  
-  > 1 │ [<null>]
-      │  ^
-  
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ [<null>]
-      │  ^
-  
 structure_angle_bracket_null.json:1:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `null`
@@ -99,12 +80,10 @@ structure_angle_bracket_null.json:1:3 parse ━━━━━━━━━━━━
   
 structure_angle_bracket_null.json:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × expected `,` but instead found `>`
+  × unexpected character `>`
   
   > 1 │ [<null>]
       │       ^
-  
-  i Remove >
   
 ```
 

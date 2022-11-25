@@ -59,15 +59,6 @@ JsonRoot {
 ## Diagnostics
 
 ```
-object_key_with_single_quotes.json:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × JSON standard does not allow single quoted strings
-  
-  > 1 │ {key: 'value'}
-      │       ^^^^^^^
-  
-  i Use double quotes to escape the string.
-  
 object_key_with_single_quotes.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Property key must be double quoted
@@ -77,15 +68,12 @@ object_key_with_single_quotes.json:1:2 parse ━━━━━━━━━━━�
   
 object_key_with_single_quotes.json:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × expected an array, an object, or a literal but instead found ''value''
+  × JSON standard does not allow single quoted strings
   
   > 1 │ {key: 'value'}
       │       ^^^^^^^
   
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ {key: 'value'}
-      │       ^^^^^^^
+  i Use double quotes to escape the string.
   
 ```
 

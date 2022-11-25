@@ -36,10 +36,10 @@ impl JsonArrayBuilder {
         ))
     }
 }
-pub fn json_boolean(value_token: SyntaxToken) -> JsonBoolean {
+pub fn json_boolean(value_token_token: SyntaxToken) -> JsonBoolean {
     JsonBoolean::unwrap_cast(SyntaxNode::new_detached(
         JsonSyntaxKind::JSON_BOOLEAN,
-        [Some(SyntaxElement::Token(value_token))],
+        [Some(SyntaxElement::Token(value_token_token))],
     ))
 }
 pub fn json_member(key: JsonString, colon_token: SyntaxToken, value: JsonAnyValue) -> JsonMember {

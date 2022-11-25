@@ -65,18 +65,6 @@ number_invalid+-.json:1:2 parse ━━━━━━━━━━━━━━━━
   > 1 │ [0e+-1]
       │     ^
   
-number_invalid+-.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an array, an object, or a literal but instead found '0e+'
-  
-  > 1 │ [0e+-1]
-      │  ^^^
-  
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ [0e+-1]
-      │  ^^^
-  
 number_invalid+-.json:1:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `-1`

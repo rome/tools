@@ -55,18 +55,6 @@ string_no_quotes_with_bad_escape.json:1:2 parse ━━━━━━━━━━�
   > 1 │ [\n]
       │  ^
   
-string_no_quotes_with_bad_escape.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected an array, an object, or a literal but instead found '\n'
-  
-  > 1 │ [\n]
-      │  ^^
-  
-  i Expected an array, an object, or a literal here
-  
-  > 1 │ [\n]
-      │  ^^
-  
 ```
 
 

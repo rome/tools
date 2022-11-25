@@ -60,15 +60,6 @@ structure_number_with_trailing_garbage.json:1:2 parse ━━━━━━━━�
   > 1 │ 2@
       │  ^
   
-structure_number_with_trailing_garbage.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × End of file expected
-  
-  > 1 │ 2@
-      │  ^
-  
-  i Use an array for a sequence of values: `[1, 2]`
-  
 ```
 
 

@@ -22,7 +22,7 @@ JsonRoot {
             },
             missing separator,
             JsonBoolean {
-                value: TRUE_KW@3..7 "true" [] [],
+                value_token: TRUE_KW@3..7 "true" [] [],
             },
         ],
         r_brack_token: R_BRACK@7..8 "]" [] [],

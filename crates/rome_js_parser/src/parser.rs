@@ -22,6 +22,7 @@ use rome_js_syntax::{
     JsSyntaxKind::{self},
     SourceType,
 };
+use rome_parser::diagnostic::merge_diagnostics;
 use rome_parser::event::Event;
 use rome_parser::token_source::Trivia;
 use rome_parser::{ParserContext, ParserContextCheckpoint};
@@ -135,10 +136,10 @@ impl<'source> JsParser<'source> {
     }
 
     pub fn finish(self) -> (Vec<Event<JsSyntaxKind>>, Vec<Trivia>, Vec<ParseDiagnostic>) {
-        let (events, mut diagnostics) = self.context.finish();
         let (trivia, source_diagnostics) = self.source.finish();
+        let (events, parse_diagnostics) = self.context.finish();
 
-        diagnostics.extend(source_diagnostics);
+        let diagnostics = merge_diagnostics(source_diagnostics, parse_diagnostics);
 
         (events, trivia, diagnostics)
     }

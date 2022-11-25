@@ -15,7 +15,7 @@ false
 ```
 JsonRoot {
     value: JsonBoolean {
-        value: FALSE_KW@0..5 "false" [] [],
+        value_token: FALSE_KW@0..5 "false" [] [],
     },
     eof_token: EOF@5..5 "" [] [],
 }
