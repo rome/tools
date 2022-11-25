@@ -1630,9 +1630,6 @@ dependencies = [
 [[package]]
 name = "rome_flags"
 version = "0.0.0"
-dependencies = [
- "once_cell",
-]
 
 [[package]]
 name = "rome_formatter"
@@ -1929,6 +1926,7 @@ dependencies = [
  "rome_analyze",
  "rome_console",
  "rome_diagnostics",
+ "rome_flags",
  "rome_formatter",
  "rome_fs",
  "rome_js_analyze",

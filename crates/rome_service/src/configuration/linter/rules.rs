@@ -163,7 +163,7 @@ impl Rules {
         let mut enabled_rules = IndexSet::new();
         let mut disabled_rules = IndexSet::new();
         if let Some(group) = self.a11y.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(A11y::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -172,7 +172,7 @@ impl Rules {
             enabled_rules.extend(A11y::recommended_rules_as_filters());
         }
         if let Some(group) = self.complexity.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(Complexity::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -181,7 +181,7 @@ impl Rules {
             enabled_rules.extend(Complexity::recommended_rules_as_filters());
         }
         if let Some(group) = self.correctness.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(Correctness::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -190,16 +190,16 @@ impl Rules {
             enabled_rules.extend(Correctness::recommended_rules_as_filters());
         }
         if let Some(group) = self.nursery.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() && rome_flags::is_unstable() || group.is_recommended() {
                 enabled_rules.extend(Nursery::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
             disabled_rules.extend(&group.get_disabled_rules());
-        } else if self.is_recommended() {
+        } else if self.is_recommended() && rome_flags::is_unstable() {
             enabled_rules.extend(Nursery::recommended_rules_as_filters());
         }
         if let Some(group) = self.security.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(Security::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -208,7 +208,7 @@ impl Rules {
             enabled_rules.extend(Security::recommended_rules_as_filters());
         }
         if let Some(group) = self.style.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(Style::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -217,7 +217,7 @@ impl Rules {
             enabled_rules.extend(Style::recommended_rules_as_filters());
         }
         if let Some(group) = self.a11y.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(A11y::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -226,7 +226,7 @@ impl Rules {
             enabled_rules.extend(A11y::recommended_rules_as_filters());
         }
         if let Some(group) = self.complexity.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(Complexity::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -235,7 +235,7 @@ impl Rules {
             enabled_rules.extend(Complexity::recommended_rules_as_filters());
         }
         if let Some(group) = self.correctness.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(Correctness::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -244,16 +244,16 @@ impl Rules {
             enabled_rules.extend(Correctness::recommended_rules_as_filters());
         }
         if let Some(group) = self.nursery.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() && rome_flags::is_unstable() || group.is_recommended() {
                 enabled_rules.extend(Nursery::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
             disabled_rules.extend(&group.get_disabled_rules());
-        } else if self.is_recommended() {
+        } else if self.is_recommended() && rome_flags::is_unstable() {
             enabled_rules.extend(Nursery::recommended_rules_as_filters());
         }
         if let Some(group) = self.security.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(Security::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -262,7 +262,7 @@ impl Rules {
             enabled_rules.extend(Security::recommended_rules_as_filters());
         }
         if let Some(group) = self.style.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(Style::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());

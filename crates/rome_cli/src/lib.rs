@@ -10,7 +10,6 @@ use std::str::FromStr;
 
 pub use pico_args::Arguments;
 use rome_console::{ColorMode, EnvConsole};
-use rome_flags::FeatureFlags;
 use rome_fs::OsFileSystem;
 use rome_service::{App, DynRef, Workspace, WorkspaceRef};
 
@@ -95,10 +94,6 @@ impl<'app> CliSession<'app> {
         let has_metrics = self.args.contains("--show-metrics");
         if has_metrics {
             crate::metrics::init_metrics();
-        }
-
-        if self.args.contains("--unstable") {
-            rome_flags::set_unstable_flags(FeatureFlags::ALL);
         }
 
         let has_help = self.args.contains("--help");

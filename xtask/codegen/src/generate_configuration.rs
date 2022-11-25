@@ -251,14 +251,21 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         default_for_groups.push(quote! {
             #property_group_name: None
         });
+
+        let global_recommended = if group == "nursery" {
+            quote! { self.is_recommended() && rome_flags::is_unstable() }
+        } else {
+            quote! { self.is_recommended() }
+        };
+
         group_rules_union.push(quote! {
             if let Some(group) = self.#property_group_name.as_ref() {
-                if self.is_recommended() && group.is_recommended() {
+                if #global_recommended || group.is_recommended() {
                     enabled_rules.extend(#group_struct_name::recommended_rules_as_filters());
                 }
                 enabled_rules.extend(&group.get_enabled_rules());
                 disabled_rules.extend(&group.get_disabled_rules());
-            } else if self.is_recommended() {
+            } else if #global_recommended {
                 enabled_rules.extend(#group_struct_name::recommended_rules_as_filters());
             }
         });
