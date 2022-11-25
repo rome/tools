@@ -6,7 +6,7 @@ use rome_js_syntax::{JsLogicalExpression, JsSyntaxNode};
 use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsLogicalExpression;
+pub(crate) struct FormatJsLogicalExpression;
 
 impl FormatNodeRule<JsLogicalExpression> for FormatJsLogicalExpression {
     fn fmt_fields(

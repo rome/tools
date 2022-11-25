@@ -10,7 +10,7 @@ use rome_js_syntax::{
 use rome_rowan::{declare_node_union, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsReturnStatement;
+pub(crate) struct FormatJsReturnStatement;
 
 impl FormatNodeRule<JsReturnStatement> for FormatJsReturnStatement {
     fn fmt_fields(&self, node: &JsReturnStatement, f: &mut JsFormatter) -> FormatResult<()> {

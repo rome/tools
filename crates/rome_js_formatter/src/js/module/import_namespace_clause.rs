@@ -5,7 +5,7 @@ use rome_js_syntax::JsImportNamespaceClause;
 use rome_js_syntax::JsImportNamespaceClauseFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsImportNamespaceClause;
+pub(crate) struct FormatJsImportNamespaceClause;
 
 impl FormatNodeRule<JsImportNamespaceClause> for FormatJsImportNamespaceClause {
     fn fmt_fields(&self, node: &JsImportNamespaceClause, f: &mut JsFormatter) -> FormatResult<()> {

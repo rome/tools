@@ -9,7 +9,7 @@ use rome_js_syntax::{
 use rome_rowan::{declare_node_union, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsPropertyClassMember;
+pub(crate) struct FormatJsPropertyClassMember;
 
 impl FormatNodeRule<JsPropertyClassMember> for FormatJsPropertyClassMember {
     fn fmt_fields(&self, node: &JsPropertyClassMember, f: &mut JsFormatter) -> FormatResult<()> {

@@ -6,12 +6,12 @@ use rome_js_syntax::JsInitializerClause;
 use rome_js_syntax::JsInitializerClauseFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsInitializerClause {
+pub(crate) struct FormatJsInitializerClause {
     assignment_layout: Option<AssignmentLikeLayout>,
 }
 
 #[derive(Default, Debug)]
-pub struct FormatJsInitializerClauseOptions {
+pub(crate) struct FormatJsInitializerClauseOptions {
     pub(crate) assignment_layout: Option<AssignmentLikeLayout>,
 }
 

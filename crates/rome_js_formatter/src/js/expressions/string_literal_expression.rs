@@ -9,7 +9,7 @@ use rome_js_syntax::{JsStringLiteralExpression, JsSyntaxNode};
 use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsStringLiteralExpression;
+pub(crate) struct FormatJsStringLiteralExpression;
 
 impl FormatNodeRule<JsStringLiteralExpression> for FormatJsStringLiteralExpression {
     fn fmt_fields(

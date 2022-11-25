@@ -8,7 +8,7 @@ use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::{AstNode, AstNodeList, SyntaxNodeOptionExt};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsBlockStatement;
+pub(crate) struct FormatJsBlockStatement;
 
 impl FormatNodeRule<JsBlockStatement> for FormatJsBlockStatement {
     fn fmt_fields(&self, node: &JsBlockStatement, f: &mut JsFormatter) -> FormatResult<()> {

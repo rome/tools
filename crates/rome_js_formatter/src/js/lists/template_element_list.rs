@@ -12,7 +12,7 @@ use rome_rowan::{declare_node_union, AstNodeListIterator, SyntaxResult};
 use std::iter::FusedIterator;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsTemplateElementList {
+pub(crate) struct FormatJsTemplateElementList {
     options: FormatJsTemplateElementListOptions,
 }
 
@@ -38,7 +38,7 @@ impl FormatRule<JsTemplateElementList> for FormatJsTemplateElementList {
 }
 
 #[derive(Debug, Copy, Clone, Default)]
-pub struct FormatJsTemplateElementListOptions {
+pub(crate) struct FormatJsTemplateElementListOptions {
     pub(crate) is_test_each_pattern: bool,
 }
 

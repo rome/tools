@@ -9,7 +9,7 @@ use rome_js_syntax::{JsArrayExpression, JsSyntaxNode};
 use rome_rowan::SyntaxResult;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsArrayExpression {
+pub(crate) struct FormatJsArrayExpression {
     options: FormatJsArrayExpressionOptions,
 }
 
@@ -75,7 +75,7 @@ impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
 }
 
 #[derive(Debug, Copy, Clone, Default)]
-pub struct FormatJsArrayExpressionOptions {
+pub(crate) struct FormatJsArrayExpressionOptions {
     pub(crate) is_force_flat_mode: bool,
 }
 

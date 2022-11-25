@@ -6,7 +6,7 @@ use rome_js_syntax::JsCaseClauseFields;
 use rome_rowan::AstNodeList;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsCaseClause;
+pub(crate) struct FormatJsCaseClause;
 
 impl FormatNodeRule<JsCaseClause> for FormatJsCaseClause {
     fn fmt_fields(&self, node: &JsCaseClause, f: &mut JsFormatter) -> FormatResult<()> {

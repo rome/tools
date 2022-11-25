@@ -4,7 +4,7 @@ use rome_formatter::write;
 use rome_js_syntax::JsCallArgumentList;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsCallArgumentList;
+pub(crate) struct FormatJsCallArgumentList;
 
 impl FormatRule<JsCallArgumentList> for FormatJsCallArgumentList {
     type Context = JsFormatContext;

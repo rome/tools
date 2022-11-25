@@ -5,7 +5,7 @@ use rome_js_syntax::{JsSyntaxKind, JsVariableDeclaratorList};
 use rome_rowan::AstSeparatedList;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsVariableDeclaratorList;
+pub(crate) struct FormatJsVariableDeclaratorList;
 
 impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
     type Context = JsFormatContext;

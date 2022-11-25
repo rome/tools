@@ -6,7 +6,7 @@ use rome_js_syntax::JsWhileStatement;
 use rome_js_syntax::JsWhileStatementFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsWhileStatement;
+pub(crate) struct FormatJsWhileStatement;
 
 impl FormatNodeRule<JsWhileStatement> for FormatJsWhileStatement {
     fn fmt_fields(&self, node: &JsWhileStatement, f: &mut JsFormatter) -> FormatResult<()> {

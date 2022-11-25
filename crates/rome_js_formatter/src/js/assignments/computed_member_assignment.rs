@@ -5,7 +5,7 @@ use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::{JsComputedMemberAssignment, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsComputedMemberAssignment;
+pub(crate) struct FormatJsComputedMemberAssignment;
 
 impl FormatNodeRule<JsComputedMemberAssignment> for FormatJsComputedMemberAssignment {
     fn fmt_fields(

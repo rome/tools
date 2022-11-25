@@ -5,7 +5,7 @@ use rome_js_syntax::JsExportNamedFromSpecifier;
 use rome_js_syntax::JsExportNamedFromSpecifierFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsExportNamedFromSpecifier;
+pub(crate) struct FormatJsExportNamedFromSpecifier;
 
 impl FormatNodeRule<JsExportNamedFromSpecifier> for FormatJsExportNamedFromSpecifier {
     fn fmt_fields(

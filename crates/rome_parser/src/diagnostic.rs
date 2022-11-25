@@ -322,12 +322,12 @@ where
     }
 }
 
-/// Creates a diagnostic saying that the node [name] was expected at range
+/// Creates a diagnostic saying that the node `name` was expected at range
 pub fn expected_node(name: &str, range: TextRange) -> ExpectedNodeDiagnosticBuilder {
     ExpectedNodeDiagnosticBuilder::with_single_node(name, range)
 }
 
-/// Creates a diagnostic saying that any of the nodes in [names] was expected at range
+/// Creates a diagnostic saying that any of the nodes in `names` was expected at range
 pub fn expected_any(names: &[&str], range: TextRange) -> ExpectedNodeDiagnosticBuilder {
     ExpectedNodeDiagnosticBuilder::with_any(names, range)
 }
