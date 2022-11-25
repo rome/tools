@@ -10,4 +10,8 @@ some errors were emitted while running checks
 
 # Emitted Messages
 
+```block
+Checked 60 file(s) in <TIME>
+```
+
 

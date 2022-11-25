@@ -43,4 +43,8 @@ file.js:1:9 lint/complexity/useSimplifiedLogicExpression  FIXABLE  ━━━━�
 
 ```
 
+```block
+Checked 1 file(s) in <TIME>
+```
+
 
