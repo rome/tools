@@ -5,7 +5,7 @@ use rome_js_syntax::JsDefaultImportSpecifier;
 use rome_js_syntax::JsDefaultImportSpecifierFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsDefaultImportSpecifier;
+pub(crate) struct FormatJsDefaultImportSpecifier;
 
 impl FormatNodeRule<JsDefaultImportSpecifier> for FormatJsDefaultImportSpecifier {
     fn fmt_fields(&self, node: &JsDefaultImportSpecifier, f: &mut JsFormatter) -> FormatResult<()> {

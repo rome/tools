@@ -1,4 +1,4 @@
-//! Generated file, do not edit by hand, see `xtask/codegen`
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file. 
 
 pub(crate) mod external_module_declaration_body;
 pub(crate) mod index_signature_modifier;

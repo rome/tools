@@ -3,7 +3,7 @@ use crate::prelude::*;
 use rome_js_syntax::JsImportAssertionEntryList;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsImportAssertionEntryList;
+pub(crate) struct FormatJsImportAssertionEntryList;
 
 impl FormatRule<JsImportAssertionEntryList> for FormatJsImportAssertionEntryList {
     type Context = JsFormatContext;

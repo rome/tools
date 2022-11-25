@@ -7,7 +7,7 @@ use rome_js_syntax::JsExportFromClause;
 use rome_js_syntax::JsExportFromClauseFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsExportFromClause;
+pub(crate) struct FormatJsExportFromClause;
 
 impl FormatNodeRule<JsExportFromClause> for FormatJsExportFromClause {
     fn fmt_fields(&self, node: &JsExportFromClause, f: &mut JsFormatter) -> FormatResult<()> {

@@ -5,7 +5,7 @@ use rome_js_syntax::JsArrayBindingPatternRestElement;
 use rome_js_syntax::JsArrayBindingPatternRestElementFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsArrayBindingPatternRestElement;
+pub(crate) struct FormatJsArrayBindingPatternRestElement;
 
 impl FormatNodeRule<JsArrayBindingPatternRestElement> for FormatJsArrayBindingPatternRestElement {
     fn fmt_fields(

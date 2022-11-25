@@ -2,8 +2,8 @@ pub(crate) mod array;
 mod assignment_like;
 mod binary_like_expression;
 mod conditional;
-pub mod number_utils;
-pub mod string_utils;
+pub(crate) mod number_utils;
+pub(crate) mod string_utils;
 
 pub(crate) mod format_class;
 pub(crate) mod function_body;
@@ -71,7 +71,7 @@ pub(crate) fn is_long_curried_call(expression: Option<&JsCallExpression>) -> boo
 /// We can have two kind of separators: `,`, `;` or ASI.
 /// Because of how the grammar crafts the nodes, the parent will add the separator to the node.
 /// So here, we create - on purpose - an empty node.
-pub struct FormatTypeMemberSeparator<'a> {
+pub(crate) struct FormatTypeMemberSeparator<'a> {
     token: Option<&'a JsSyntaxToken>,
 }
 
@@ -92,7 +92,7 @@ impl Format<JsFormatContext> for FormatTypeMemberSeparator<'_> {
 }
 
 /// Utility function to format the node [rome_js_syntax::JsInitializerClause]
-pub struct FormatInitializerClause<'a> {
+pub(crate) struct FormatInitializerClause<'a> {
     initializer: Option<&'a JsInitializerClause>,
 }
 
@@ -112,7 +112,7 @@ impl Format<JsFormatContext> for FormatInitializerClause<'_> {
     }
 }
 
-pub struct FormatInterpreterToken<'a> {
+pub(crate) struct FormatInterpreterToken<'a> {
     token: Option<&'a JsSyntaxToken>,
 }
 
@@ -242,7 +242,7 @@ impl Format<JsFormatContext> for FormatOptionalSemicolon<'_> {
 /// Format some code followed by an optional semicolon.
 /// Performs semicolon insertion if it is missing in the input source, the [semicolons option](crate::JsFormatOptions::semicolons) is [Semicolons::Always], and the
 /// preceding element isn't an unknown node
-pub struct FormatSemicolon<'a> {
+pub(crate) struct FormatSemicolon<'a> {
     semicolon: Option<&'a JsSyntaxToken>,
 }
 

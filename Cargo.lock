@@ -1774,6 +1774,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_json_formatter"
+version = "0.1.0"
+dependencies = [
+ "insta",
+ "rome_diagnostics",
+ "rome_formatter",
+ "rome_json_parser",
+ "rome_json_syntax",
+ "rome_rowan",
+]
+
+[[package]]
 name = "rome_json_parser"
 version = "0.0.0"
 dependencies = [

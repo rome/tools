@@ -5,7 +5,7 @@ use rome_js_syntax::JsExportNamedShorthandSpecifier;
 use rome_js_syntax::JsExportNamedShorthandSpecifierFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsExportNamedShorthandSpecifier;
+pub(crate) struct FormatJsExportNamedShorthandSpecifier;
 
 impl FormatNodeRule<JsExportNamedShorthandSpecifier> for FormatJsExportNamedShorthandSpecifier {
     fn fmt_fields(

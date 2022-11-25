@@ -13,7 +13,7 @@ use rome_rowan::{AstNode, AstSeparatedList};
 pub(crate) fn write_array_node<N, I>(node: &N, f: &mut JsFormatter) -> FormatResult<()>
 where
     N: AstSeparatedList<Language = JsLanguage, Node = I>,
-    I: ArrayNodeElement + AsFormat,
+    I: ArrayNodeElement + AsFormat<JsFormatContext>,
 {
     let trailing_separator = FormatTrailingComma::ES5.trailing_separator(f.options());
 

@@ -7,7 +7,7 @@ use rome_js_syntax::{JsAnyStatement, JsForStatement, JsInExpression, JsSyntaxNod
 use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsInExpression;
+pub(crate) struct FormatJsInExpression;
 
 impl FormatNodeRule<JsInExpression> for FormatJsInExpression {
     fn fmt_fields(&self, node: &JsInExpression, formatter: &mut JsFormatter) -> FormatResult<()> {

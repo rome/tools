@@ -6,7 +6,7 @@ use rome_js_syntax::JsDirective;
 use rome_js_syntax::JsDirectiveFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsDirective;
+pub(crate) struct FormatJsDirective;
 
 impl FormatNodeRule<JsDirective> for FormatJsDirective {
     fn fmt_fields(&self, node: &JsDirective, f: &mut JsFormatter) -> FormatResult<()> {

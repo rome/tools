@@ -5,7 +5,7 @@ use quote::{format_ident, quote};
 use xtask::Result;
 
 pub fn generate_node_factory(ast: &AstSrc, language_kind: LanguageKind) -> Result<String> {
-    let syntax_crate = language_kind.syntax_crate();
+    let syntax_crate = language_kind.syntax_crate_ident();
     let syntax_kind = language_kind.syntax_kind();
     let syntax_token = language_kind.syntax_token();
     let syntax_node = language_kind.syntax_node();

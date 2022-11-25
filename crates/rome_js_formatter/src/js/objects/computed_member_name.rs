@@ -5,7 +5,7 @@ use rome_js_syntax::JsComputedMemberName;
 use rome_js_syntax::JsComputedMemberNameFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsComputedMemberName;
+pub(crate) struct FormatJsComputedMemberName;
 
 impl FormatNodeRule<JsComputedMemberName> for FormatJsComputedMemberName {
     fn fmt_fields(&self, node: &JsComputedMemberName, f: &mut JsFormatter) -> FormatResult<()> {

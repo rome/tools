@@ -11,7 +11,7 @@ use rome_js_syntax::{JsMethodClassMember, JsMethodObjectMember, JsSyntaxToken};
 use rome_rowan::{declare_node_union, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsMethodClassMember;
+pub(crate) struct FormatJsMethodClassMember;
 
 impl FormatNodeRule<JsMethodClassMember> for FormatJsMethodClassMember {
     fn fmt_fields(&self, node: &JsMethodClassMember, f: &mut JsFormatter) -> FormatResult<()> {

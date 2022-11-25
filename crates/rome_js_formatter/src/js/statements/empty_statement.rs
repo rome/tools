@@ -5,7 +5,7 @@ use rome_js_syntax::{JsEmptyStatement, JsEmptyStatementFields, JsSyntaxKind};
 use rome_rowan::{AstNode, SyntaxNodeOptionExt};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsEmptyStatement;
+pub(crate) struct FormatJsEmptyStatement;
 
 impl FormatNodeRule<JsEmptyStatement> for FormatJsEmptyStatement {
     fn fmt_fields(&self, node: &JsEmptyStatement, f: &mut JsFormatter) -> FormatResult<()> {

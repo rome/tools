@@ -9,7 +9,7 @@ use crate::parentheses::{
 use rome_js_syntax::{JsConditionalExpression, JsSyntaxKind, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsConditionalExpression {
+pub(crate) struct FormatJsConditionalExpression {
     jsx_chain: ConditionalJsxChain,
 }
 

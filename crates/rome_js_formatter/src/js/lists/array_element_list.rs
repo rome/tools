@@ -8,7 +8,7 @@ use rome_js_syntax::JsArrayElementList;
 use rome_rowan::{AstNode, AstSeparatedList};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsArrayElementList {
+pub(crate) struct FormatJsArrayElementList {
     group_id: Option<GroupId>,
 }
 

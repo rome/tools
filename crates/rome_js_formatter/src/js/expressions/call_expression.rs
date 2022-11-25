@@ -8,7 +8,7 @@ use rome_js_syntax::{
 };
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsCallExpression;
+pub(crate) struct FormatJsCallExpression;
 
 impl FormatNodeRule<JsCallExpression> for FormatJsCallExpression {
     fn fmt_fields(&self, node: &JsCallExpression, f: &mut JsFormatter) -> FormatResult<()> {

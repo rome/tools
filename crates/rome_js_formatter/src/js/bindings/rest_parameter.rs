@@ -5,7 +5,7 @@ use rome_js_syntax::JsRestParameter;
 use rome_js_syntax::JsRestParameterFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsRestParameter;
+pub(crate) struct FormatJsRestParameter;
 
 impl FormatNodeRule<JsRestParameter> for FormatJsRestParameter {
     fn fmt_fields(&self, node: &JsRestParameter, f: &mut JsFormatter) -> FormatResult<()> {

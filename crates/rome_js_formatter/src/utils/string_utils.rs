@@ -6,7 +6,7 @@ use rome_js_syntax::{JsSyntaxToken, SourceType};
 use std::borrow::Cow;
 use unicode_width::UnicodeWidthStr;
 
-pub trait ToAsciiLowercaseCow {
+pub(crate) trait ToAsciiLowercaseCow {
     /// Returns the same value as String::to_lowercase. The only difference
     /// is that this functions returns ```Cow``` and does not allocate
     /// if the string is already in lowercase.
@@ -91,7 +91,7 @@ impl<'token> FormatLiteralStringToken<'token> {
     }
 }
 
-pub struct CleanedStringLiteralText<'a> {
+pub(crate) struct CleanedStringLiteralText<'a> {
     token: &'a JsSyntaxToken,
     text: Cow<'a, str>,
     width: usize,

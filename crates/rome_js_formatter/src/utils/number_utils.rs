@@ -11,7 +11,7 @@ use rome_js_syntax::JsSyntaxToken;
 use std::borrow::Cow;
 use std::num::NonZeroUsize;
 
-pub struct CleanedNumberLiteralText<'token> {
+pub(crate) struct CleanedNumberLiteralText<'token> {
     token: &'token JsSyntaxToken,
     text: Cow<'token, str>,
 }

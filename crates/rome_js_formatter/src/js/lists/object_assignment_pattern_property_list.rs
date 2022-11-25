@@ -3,7 +3,7 @@ use crate::prelude::*;
 use rome_js_syntax::{JsAnyObjectAssignmentPatternMember, JsObjectAssignmentPatternPropertyList};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsObjectAssignmentPatternPropertyList;
+pub(crate) struct FormatJsObjectAssignmentPatternPropertyList;
 
 impl FormatRule<JsObjectAssignmentPatternPropertyList>
     for FormatJsObjectAssignmentPatternPropertyList
