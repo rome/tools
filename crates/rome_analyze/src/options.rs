@@ -1,3 +1,4 @@
+use crate::AnalyzerSignal;
 use crate::{RuleKey, TextRange, TextSize};
 use rome_diagnostics::{Diagnostic, LineIndexBuf, Resource, SourceCode};
 use serde::Deserialize;
@@ -56,8 +57,8 @@ pub struct AnalyzerOptions {
     pub configuration: AnalyzerConfiguration,
 }
 
-#[derive(Debug, Diagnostic)]
-#[diagnostic(category = "internalError/io")]
+#[derive(Debug, Clone, Diagnostic)]
+#[diagnostic(category = "lint/configuration")]
 pub struct OptionsDeserializationDiagnostic {
     #[message]
     message: String,
@@ -87,7 +88,7 @@ impl OptionsDeserializationDiagnostic {
         });
 
         let message = format!(
-            "Errors emitted while attempting run the rule {rule_name}: \n {}",
+            "Errors while reading options for rule {rule_name}: \n {}",
             error
         );
 
@@ -101,5 +102,16 @@ impl OptionsDeserializationDiagnostic {
                 line_starts: Some(line_starts),
             }),
         }
+    }
+}
+
+impl<L: Language> AnalyzerSignal<L> for OptionsDeserializationDiagnostic {
+    fn diagnostic(&self) -> Option<crate::AnalyzerDiagnostic> {
+        let err = rome_diagnostics::v2::Error::from(self.clone());
+        Some(crate::AnalyzerDiagnostic::Raw(err))
+    }
+
+    fn action(&self) -> Option<crate::AnalyzerAction<L>> {
+        None
     }
 }

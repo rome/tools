@@ -94,9 +94,14 @@ fn write_analysis_to_snapshot(
     let mut code_fixes = Vec::new();
     let mut options = AnalyzerOptions::default();
 
-    if let Ok(value) = std::env::var("ROME_TEST_RULE_OPTIONS") {
-        let v: serde_json::Value = serde_json::from_str(value.as_str())
-            .expect("ROME_TEST_RULE_OPTIONS must be a valid JSON");
+    // We allow a test file to configure its rule using a special comment like
+    // /* Options: { ... } */
+    if let Some(start) = input_code.find("/* Options:") {
+        let end = start + 11 + input_code[start + 11..].find("*/").unwrap();
+        let json = input_code[start + 11..end].trim();
+        
+        let v: serde_json::Value = serde_json::from_str(json)
+            .expect("must be a valid JSON");
         let rule_key = RuleKey::new(group, rule);
         options.configuration.rules.push_rule(rule_key, v);
     }

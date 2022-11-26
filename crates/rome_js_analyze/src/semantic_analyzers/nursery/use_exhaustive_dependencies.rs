@@ -116,17 +116,18 @@ impl Default for ReactExtensiveDependenciesOptions {
 impl DeserializableRuleOptions for ReactExtensiveDependenciesOptions {
     fn try_from(value: serde_json::Value) -> Result<Self, serde_json::Error> {
         #[derive(Debug, Deserialize)]
+        #[serde(deny_unknown_fields)]
         struct Options {
             #[serde(default)]
-            hooks_config: Vec<(String, usize, usize)>,
+            hooks: Vec<(String, usize, usize)>,
             #[serde(default)]
-            stable_config: HashSet<StableReactHookConfiguration>,
+            stables: HashSet<StableReactHookConfiguration>,
         }
 
         let options: Options = serde_json::from_value(value)?;
 
         let mut default = ReactExtensiveDependenciesOptions::default();
-        for (k, closure_index, dependencies_index) in options.hooks_config.into_iter() {
+        for (k, closure_index, dependencies_index) in options.hooks.into_iter() {
             default.hooks_config.insert(
                 k,
                 ReactHookConfiguration {
@@ -137,7 +138,7 @@ impl DeserializableRuleOptions for ReactExtensiveDependenciesOptions {
         }
         default
             .stable_config
-            .extend(options.stable_config.into_iter());
+            .extend(options.stables.into_iter());
 
         Ok(default)
     }

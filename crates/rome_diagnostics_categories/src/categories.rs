@@ -112,7 +112,8 @@ define_dategories! {
     "internalError/io",
     "internalError/fs",
     "internalError/panic",
-
+    "lint",
+    "lint/configuration",
     // parse categories
     "parse",
     "parse/noSuperWithoutExtends",

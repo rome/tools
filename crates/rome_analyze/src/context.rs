@@ -9,7 +9,7 @@ type RuleQueryResult<R> = <<R as Rule>::Query as Queryable>::Output;
 type RuleServiceBag<R> = <<R as Rule>::Query as Queryable>::Services;
 
 #[derive(Clone)]
-pub struct SericeBagRuleOptionsWrapper<R: Rule>(pub TypeId, pub R::Options);
+pub struct ServiceBagRuleOptionsWrapper<R: Rule>(pub TypeId, pub R::Options);
 
 pub struct RuleContext<'a, R>
 where
@@ -86,9 +86,9 @@ where
     /// }
     /// ```
     pub fn options(&self) -> &R::Options {
-        let SericeBagRuleOptionsWrapper(_, options) = self
+        let ServiceBagRuleOptionsWrapper(_, options) = self
             .bag
-            .get_service::<SericeBagRuleOptionsWrapper<R>>()
+            .get_service::<ServiceBagRuleOptionsWrapper<R>>()
             .unwrap();
         options
     }

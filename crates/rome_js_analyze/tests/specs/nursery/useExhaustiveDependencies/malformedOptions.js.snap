@@ -1,0 +1,20 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: malformedOptions.js
+---
+# Input
+```js
+/* Options: {"hook": [["useMyEffect", 0, 1]]} */
+```
+
+# Diagnostics
+```
+lint/configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Errors while reading options for rule useExhaustiveDependencies: 
+     unknown field `hook`, expected `hooks` or `stables`
+  
+
+```
+
+

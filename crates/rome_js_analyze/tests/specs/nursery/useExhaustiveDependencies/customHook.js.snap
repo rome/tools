@@ -1,0 +1,42 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: customHook.js
+---
+# Input
+```js
+/* Options: {"hooks": [["useMyEffect", 0, 1]]} */
+
+function MyComponent() {
+    let a = 1;
+    useMyEffect(() => {
+        console.log(a);
+    });
+}
+```
+
+# Diagnostics
+```
+customHook.js:5:5 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This hook do not specify all of its dependencies.
+  
+    3 │ function MyComponent() {
+    4 │     let a = 1;
+  > 5 │     useMyEffect(() => {
+      │     ^^^^^^^^^^^
+    6 │         console.log(a);
+    7 │     });
+  
+  i This dependency is not specified in the hook dependency list.
+  
+    4 │     let a = 1;
+    5 │     useMyEffect(() => {
+  > 6 │         console.log(a);
+      │                     ^
+    7 │     });
+    8 │ }
+  
+
+```
+
+

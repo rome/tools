@@ -53,7 +53,7 @@ pub fn metadata() -> &'static MetadataRegistry {
 pub struct RulesConfigurator<'a> {
     options: &'a AnalyzerOptions,
     services: &'a mut ServiceBag,
-    errors: Vec<OptionsDeserializationDiagnostic>,
+    diagnostics: Vec<OptionsDeserializationDiagnostic>,
 }
 
 impl<'a, L: rome_rowan::Language + Default> rome_analyze::RegistryVisitor<L>
@@ -76,7 +76,7 @@ impl<'a, L: rome_rowan::Language + Default> rome_analyze::RegistryVisitor<L>
                         value.to_string(),
                         error,
                     );
-                    self.errors.push(err);
+                    self.diagnostics.push(err);
                     <R::Options as Default>::default()
                 }
             }
@@ -86,7 +86,7 @@ impl<'a, L: rome_rowan::Language + Default> rome_analyze::RegistryVisitor<L>
 
         let id = std::any::TypeId::of::<R>();
         self.services
-            .insert_service(SericeBagRuleOptionsWrapper::<R>(id, options));
+            .insert_service(ServiceBagRuleOptionsWrapper::<R>(id, options));
     }
 }
 
@@ -149,9 +149,15 @@ where
     let mut configurator = RulesConfigurator {
         options,
         services: &mut services,
-        errors: vec![],
+        diagnostics: vec![],
     };
     visit_registry(&mut configurator);
+
+    if !configurator.diagnostics.is_empty() {
+        for diagnostic in configurator.diagnostics {
+            emit_signal(&diagnostic);
+        }
+    }
 
     let mut analyzer = Analyzer::new(
         metadata(),
