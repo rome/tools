@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::utils::jsx::{
     is_meaningful_jsx_text, is_whitespace_jsx_expression, jsx_split_children, JsxChild,
-    JsxRawSpace, JsxSpace,
+    JsxChildrenIterator, JsxRawSpace, JsxSpace,
 };
 use crate::JsFormatter;
 use rome_formatter::format_element::tag::{GroupMode, Tag};
@@ -72,7 +72,6 @@ impl FormatJsxChildList {
         let mut flat = FlatBuilder::new();
         let mut multiline = MultilineBuilder::new(multiline_layout);
 
-        let mut last: Option<JsxChild> = None;
         let mut force_multiline = layout.is_multiline();
 
         let mut children = jsx_split_children(list, f.context().comments())?;
@@ -82,7 +81,8 @@ impl FormatJsxChildList {
             children.pop();
         }
 
-        let mut children_iter = children.into_iter().peekable();
+        let mut last: Option<&JsxChild> = None;
+        let mut children_iter = JsxChildrenIterator::new(children.iter());
 
         // Trim leading new lines
         if let Some(JsxChild::Newline | JsxChild::EmptyLine) = children_iter.peek() {
@@ -166,34 +166,38 @@ impl FormatJsxChildList {
                 // A new line between some JSX text and an element
                 JsxChild::Newline => {
                     let is_soft_break = {
+                        // Here we handle the case when we have a newline between an ascii punctuation word and a jsx element
+                        // We need to use the previous and the next element
+                        // [JsxChild::Word, JsxChild::Newline, JsxChild::NonText]
+                        // ```
+                        // <div>
+                        //   <div>First</div>,
+                        //   <div>Second</div>
+                        // </div>
+                        // ```
                         if let Some(JsxChild::Word(word)) = last {
                             let is_next_element_self_closing = matches!(
                                 children_iter.peek(),
                                 Some(JsxChild::NonText(JsxAnyChild::JsxSelfClosingElement(_)))
                             );
-
-                            // Here we handle the case when we have a newline between an ascii punctuation word and a jsx element
-                            // We need to use the previous and the next element
-                            // [JsxChild::Word, JsxChild::Newline, JsxChild::NonText]
-                            // ```
-                            // <div>
-                            //   <div>First</div>,
-                            //   <div>Second</div>
-                            // </div>
-                            // ```
                             !is_next_element_self_closing && word.is_ascii_punctuation()
-                        } else if let Some(JsxChild::Word(next_word)) = children_iter.peek() {
-                            // Here we handle the case when we have an ascii punctuation word between a new line and a jsx element
-                            // Here we need to look ahead two elements
-                            // [JsxChild::Newline, JsxChild::Word, JsxChild::NonText]
-                            // ```
-                            // <div>
-                            //   <div>First</div>
-                            //   ,<div>Second</div>
-                            // </div>
-                            // ```
-                            !next_word.is_next_element_self_closing()
-                                && next_word.is_ascii_punctuation()
+                        }
+                        // Here we handle the case when we have an ascii punctuation word between a new line and a jsx element
+                        // Here we need to look ahead two elements
+                        // [JsxChild::Newline, JsxChild::Word, JsxChild::NonText]
+                        // ```
+                        // <div>
+                        //   <div>First</div>
+                        //   ,<div>Second</div>
+                        // </div>
+                        // ```
+                        else if let Some(JsxChild::Word(next_word)) = children_iter.peek() {
+                            let is_next_next_element_self_closing = matches!(
+                                children_iter.peek_next(),
+                                Some(JsxChild::NonText(JsxAnyChild::JsxSelfClosingElement(_)))
+                            );
+
+                            !is_next_next_element_self_closing && next_word.is_ascii_punctuation()
                         } else {
                             false
                         }

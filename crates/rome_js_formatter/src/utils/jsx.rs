@@ -332,12 +332,6 @@ impl JsxSplitChildrenBuilder {
                     self.buffer.push(child);
                 }
             }
-            Some(JsxChild::Word(word)) => {
-                if let JsxChild::NonText(JsxAnyChild::JsxSelfClosingElement(_)) = child {
-                    word.is_next_element_self_closing = true;
-                }
-                self.buffer.push(child)
-            }
             _ => self.buffer.push(child),
         }
     }
@@ -409,7 +403,6 @@ impl JsxChild {
 pub(crate) struct JsxWord {
     text: SyntaxTokenText,
     source_position: TextSize,
-    is_next_element_self_closing: bool,
 }
 
 impl JsxWord {
@@ -417,12 +410,7 @@ impl JsxWord {
         JsxWord {
             text,
             source_position,
-            is_next_element_self_closing: false,
         }
-    }
-
-    pub(crate) fn is_next_element_self_closing(&self) -> bool {
-        self.is_next_element_self_closing
     }
 
     pub(crate) fn is_ascii_punctuation(&self) -> bool {
@@ -506,14 +494,100 @@ impl<'a> Iterator for JsxSplitChunksIterator<'a> {
 
 impl FusedIterator for JsxSplitChunksIterator<'_> {}
 
+/// An iterator adaptor that allows a lookahead of two tokens
+///
+/// # Examples
+/// ```
+/// use rome_js_formatter::utils::jsx::JsxChildrenIterator;
+///
+/// let buffer = vec![1, 2, 3, 4];
+///
+/// let mut iter = JsxChildrenIterator::new(buffer.iter());
+///
+/// assert_eq!(iter.peek(), Some(&&1));
+/// assert_eq!(iter.peek_next(), Some(&&2));
+/// assert_eq!(iter.next(), Some(&1));
+/// assert_eq!(iter.next(), Some(&2));
+/// ```
+#[derive(Clone, Debug)]
+pub struct JsxChildrenIterator<I: Iterator> {
+    iter: I,
+
+    peeked: Option<Option<I::Item>>,
+    peeked_next: Option<Option<I::Item>>,
+}
+
+impl<I: Iterator> JsxChildrenIterator<I> {
+    pub fn new(iter: I) -> Self {
+        Self {
+            iter,
+            peeked: None,
+            peeked_next: None,
+        }
+    }
+
+    pub fn peek(&mut self) -> Option<&I::Item> {
+        let iter = &mut self.iter;
+        self.peeked.get_or_insert_with(|| iter.next()).as_ref()
+    }
+
+    pub fn peek_next(&mut self) -> Option<&I::Item> {
+        let iter = &mut self.iter;
+        let peeked = &mut self.peeked;
+
+        self.peeked_next
+            .get_or_insert_with(|| {
+                peeked.get_or_insert_with(|| iter.next());
+                iter.next()
+            })
+            .as_ref()
+    }
+}
+
+impl<I: Iterator> Iterator for JsxChildrenIterator<I> {
+    type Item = I::Item;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        match self.peeked.take() {
+            Some(peeked) => {
+                self.peeked = self.peeked_next.take();
+                peeked
+            }
+            None => self.iter.next(),
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::utils::jsx::{jsx_split_children, JsxChild, JsxSplitChunksIterator, JsxTextChunk};
+    use crate::utils::jsx::{
+        jsx_split_children, JsxChild, JsxChildrenIterator, JsxSplitChunksIterator, JsxTextChunk,
+    };
     use rome_diagnostics::location::FileId;
     use rome_formatter::comments::Comments;
     use rome_js_parser::parse;
     use rome_js_syntax::{JsxChildList, JsxText, SourceType};
     use rome_rowan::{AstNode, TextSize};
+
+    #[test]
+    fn jsx_children_iterator_test() {
+        let buffer = vec![1, 2, 3, 4];
+
+        let mut iter = JsxChildrenIterator::new(buffer.iter());
+
+        assert_eq!(iter.peek(), Some(&&1));
+        assert_eq!(iter.peek(), Some(&&1));
+        assert_eq!(iter.peek_next(), Some(&&2));
+        assert_eq!(iter.peek_next(), Some(&&2));
+
+        assert_eq!(iter.next(), Some(&1));
+        assert_eq!(iter.next(), Some(&2));
+
+        assert_eq!(iter.peek_next(), Some(&&4));
+        assert_eq!(iter.peek_next(), Some(&&4));
+        assert_eq!(iter.peek(), Some(&&3));
+        assert_eq!(iter.peek(), Some(&&3));
+    }
 
     fn assert_jsx_text_chunks(text: &str, expected_chunks: Vec<(TextSize, JsxTextChunk)>) {
         let parse = parse(
