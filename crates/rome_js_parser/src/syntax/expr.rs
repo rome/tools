@@ -609,6 +609,9 @@ fn parse_binary_or_logical_expression_recursive(
         // let not_a_satisfies_expression = undefined
         // satisfies;
         // let precedence = "hello" satisfies string + 3 satisfies number satisfies number;
+
+        // test_err ts_satisfies_expression
+        // let x = "hello" satisfies string;
         if op == T![satisfies] {
             parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
             let mut satisfies_expression = m.complete(p, TS_SATISFIES_EXPRESSION);
