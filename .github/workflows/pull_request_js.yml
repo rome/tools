@@ -24,7 +24,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Cache
         uses: Swatinem/rust-cache@v2
-        shared-key: "debug"
+        with:
+          shared-key: "debug"
 
       - name: Run Rome Format
         run: cargo rome-cli ci editors website npm/js-api
@@ -49,7 +50,8 @@ jobs:
           version: 7
       - name: Cache
         uses: Swatinem/rust-cache@v2
-        shared-key: "wasm"
+        with:
+          shared-key: "wasm"
       - name: Build WASM module for the web
         run: wasm-pack build --out-dir ../../npm/wasm-web --target web --scope rometools crates/rome_wasm
       - name: Install libraries

@@ -43,7 +43,8 @@ jobs:
           version: 7
       - name: Cache
         uses: Swatinem/rust-cache@v2
-        shared-key: "wasm"
+        with:
+          shared-key: "wasm"
       - name: Install libraries
         working-directory: npm/js-api
         run: pnpm i

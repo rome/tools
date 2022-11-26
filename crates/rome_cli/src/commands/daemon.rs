@@ -24,12 +24,14 @@ pub(crate) fn start(mut session: CliSession) -> Result<(), Termination> {
     let did_spawn = rt.block_on(ensure_daemon(false))?;
 
     if did_spawn {
-        session.app.console.log(markup! {
-            "The Rome server was successfully started"
-        });
+        if did_spawn {
+            session.app.console.log(markup! {
+                "The Rome server was successfully started"
+            });
+        }
     } else {
         session.app.console.log(markup! {
-            "The Random change server was already running"
+            "The Rome server was already running"
         });
     }
 
