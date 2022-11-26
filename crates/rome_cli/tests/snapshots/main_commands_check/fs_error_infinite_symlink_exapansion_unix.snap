@@ -11,7 +11,7 @@ no files were processed in the specified paths.
 # Emitted Messages
 
 ```block
-<TEMP_DIR>/rome_test_infinite_symlink_exapansion/prefix internalError/fs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<TEMP_DIR>/rome_test_infinite_symlink_exapansion/prefix internalError/fs ━━━━━━━━━━
 
   ! Infinite symlink expansion
   
@@ -21,7 +21,7 @@ no files were processed in the specified paths.
 ```
 
 ```block
-<TEMP_DIR>/rome_test_infinite_symlink_exapansion/prefix internalError/fs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<TEMP_DIR>/rome_test_infinite_symlink_exapansion/prefix internalError/fs ━━━━━━━━━━
 
   ! Infinite symlink expansion
   

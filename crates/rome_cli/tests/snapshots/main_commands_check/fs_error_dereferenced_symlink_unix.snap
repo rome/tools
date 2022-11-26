@@ -11,7 +11,7 @@ no files were processed in the specified paths.
 # Emitted Messages
 
 ```block
-<TEMP_DIR>/rome_test_broken_symlink/broken_symlink internalError/fs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<TEMP_DIR>/rome_test_broken_symlink/broken_symlink internalError/fs ━━━━━━━━━━
 
   ! Dereferenced symlink
   
