@@ -38,7 +38,7 @@ jobs:
       - name: Cache
         uses: Swatinem/rust-cache@v2
         with:
-          shared-key: "release"
+          shared-key: "cli-release"
 
       - name: Install hyperfine
         run: cargo install hyperfine
