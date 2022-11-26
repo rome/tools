@@ -1,0 +1,20 @@
+name: build_ci
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'ci/**'
+
+jobs:
+  publish-to-docker:
+    name: Publish to Docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Publish to Docker Hub
+        run: ./ci/publish.sh
