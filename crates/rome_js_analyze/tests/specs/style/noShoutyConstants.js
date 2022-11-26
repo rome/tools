@@ -29,10 +29,10 @@ export const e = {
 };
 
 const Empty = "";
-export const E = Empty
+export const E = Empty;
 
 const NotMatching = "DoesNotMatch";
-export const F = NotMatching
+export const F = NotMatching;
 
-const matchingLowercase = "matchingLowercase"
-export const G = matchingLowercase
+const matchingLowercase = "matchingLowercase";
+export const G = matchingLowercase;
