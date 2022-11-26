@@ -6,7 +6,7 @@ use crate::{
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_semantic::{AllReferencesExtensions, CanBeImportedExported, SemanticModel};
+use rome_js_semantic::{CanBeImportedExported, ReferencesExtensions, SemanticModel};
 use rome_js_syntax::{
     JsFormalParameter, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
     JsGetterClassMember, JsIdentifierBinding, JsLiteralMemberName, JsMethodClassMember,
@@ -82,7 +82,7 @@ fn is_non_camel_ok(binding: &JsIdentifierBinding, model: &SemanticModel) -> Opti
             }
 
             for reference in binding.all_reads(model) {
-                let greatparent = reference.node().grand_parent()?;
+                let greatparent = reference.syntax().grand_parent()?;
                 if let JS_NEW_EXPRESSION = greatparent.kind() {
                     return Some(true);
                 }
@@ -120,8 +120,9 @@ impl Rule for UseCamelCase {
                             let name = binding.name_token().ok()?;
                             let is_camel_case = check_is_camel(name.text_trimmed());
                             if is_camel_case.is_some() {
-                                let is_jsx_component = model.all_reads(binding).any(|reference| {
-                                    JsxReferenceIdentifier::can_cast(reference.node().kind())
+                                let binding = model.as_binding(binding);
+                                let is_jsx_component = binding.all_reads().any(|reference| {
+                                    JsxReferenceIdentifier::can_cast(reference.syntax().kind())
                                 });
                                 if !is_jsx_component {
                                     return is_camel_case;

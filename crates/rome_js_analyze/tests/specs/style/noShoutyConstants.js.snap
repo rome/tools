@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 73
 expression: noShoutyConstants.js
 ---
 # Input
@@ -12,60 +13,30 @@ const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
 console.log(FOO, FOO4);
 
 let foo = "foo";
+const B = "B";
+export default B;
+export const A = "A";
 
-const A = "A";
-export default A;
+const BAR = "BAR";
+
+export const bar = {
+	foo: BAR,
+	bar: BAR,
+};
+
+const C = "C";
+
+export const d = {
+	foo: C
+};
+
+const D ="D";
+export const e = {
+	D
+};
 ```
 
 # Diagnostics
-```
-noShoutyConstants.js:1:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Redundant constant declaration.
-  
-  > 1 │ const FOO = "FOO";
-      │       ^^^^^^^^^^^
-    2 │ console.log(FOO, FOO2);
-    3 │ 
-  
-  i Used here.
-  
-    1 │ const FOO = "FOO";
-  > 2 │ console.log(FOO, FOO2);
-      │             ^^^
-    3 │ 
-    4 │ const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
-  
-  i Used here.
-  
-    4 │ const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
-    5 │ 
-  > 6 │ console.log(FOO, FOO4);
-      │             ^^^
-    7 │ 
-    8 │ let foo = "foo";
-  
-  i You should avoid declaring constants with a string that's the same
-        value as the variable name. It introduces a level of unnecessary
-        indirection when it's only two additional characters to inline.
-  
-  i Suggested fix: Use the constant value directly
-  
-     1    │ - const·FOO·=·"FOO";
-     2    │ - console.log(FOO,·FOO2);
-        1 │ + 
-        2 │ + console.log("FOO",·FOO2);
-     3  3 │   
-     4  4 │   const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
-     5  5 │   
-     6    │ - console.log(FOO,·FOO4);
-        6 │ + console.log("FOO",·FOO4);
-     7  7 │   
-     8  8 │   let foo = "foo";
-  
-
-```
-
 ```
 noShoutyConstants.js:4:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -140,6 +111,84 @@ noShoutyConstants.js:4:34 lint/style/noShoutyConstants  FIXABLE  ━━━━━
         6 │ + console.log(FOO,·"FOO4");
      7  7 │   
      8  8 │   let foo = "foo";
+  
+
+```
+
+```
+noShoutyConstants.js:20:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Redundant constant declaration.
+  
+    18 │ };
+    19 │ 
+  > 20 │ const C = "C";
+       │       ^^^^^^^
+    21 │ 
+    22 │ export const d = {
+  
+  i Used here.
+  
+    22 │ export const d = {
+  > 23 │ 	foo: C
+       │ 	     ^
+    24 │ };
+    25 │ 
+  
+  i You should avoid declaring constants with a string that's the same
+        value as the variable name. It introduces a level of unnecessary
+        indirection when it's only two additional characters to inline.
+  
+  i Suggested fix: Use the constant value directly
+  
+    18 18 │   };
+    19 19 │   
+    20    │ - const·C·=·"C";
+    21    │ - 
+    22 20 │   export const d = {
+    23    │ - → foo:·C
+       21 │ + → foo:·"C"
+    24 22 │   };
+    25 23 │   
+  
+
+```
+
+```
+noShoutyConstants.js:26:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Redundant constant declaration.
+  
+    24 │ };
+    25 │ 
+  > 26 │ const D ="D";
+       │       ^^^^^^
+    27 │ export const e = {
+    28 │ 	D
+  
+  i Used here.
+  
+    26 │ const D ="D";
+    27 │ export const e = {
+  > 28 │ 	D
+       │ 	^
+    29 │ };
+  
+  i You should avoid declaring constants with a string that's the same
+        value as the variable name. It introduces a level of unnecessary
+        indirection when it's only two additional characters to inline.
+  
+  i Suggested fix: Use the constant value directly
+  
+    23 23 │   	foo: C
+    24 24 │   };
+    25    │ - 
+    26    │ - const·D·="D";
+    27 25 │   export const e = {
+    28    │ - → D
+       26 │ + → 
+       27 │ + → D:"D"
+    29 28 │   };
   
 
 ```

@@ -2,14 +2,12 @@ use crate::categories::{ActionCategory, RuleCategory};
 use crate::context::RuleContext;
 use crate::registry::{RegistryVisitor, RuleLanguage, RuleSuppressions};
 use crate::{
-    AnalyzerDiagnostic, Phase, Phases, Queryable, SuppressionCommentEmitter,
-    SuppressionCommentEmitterPayload,
+    Phase, Phases, Queryable, SuppressionCommentEmitter, SuppressionCommentEmitterPayload,
 };
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
 use rome_diagnostics::advice::CodeSuggestionAdvice;
 use rome_diagnostics::location::AsSpan;
-use rome_diagnostics::location::FileId;
 use rome_diagnostics::Applicability;
 use rome_diagnostics::{
     Advices, Category, Diagnostic, DiagnosticTags, Location, LogCategory, MessageAndDescription,
@@ -397,9 +395,7 @@ impl Advices for RuleAdvice {
                 detail.log_category,
                 &markup! { {detail.message} }.to_owned(),
             )?;
-            if let Some(location) = Location::builder().span(&detail.range).build() {
-                visitor.record_frame(location)?;
-            }
+            visitor.record_frame(Location::builder().span(&detail.range).build())?;
         }
         // we then print notes
         for (log_category, note) in &self.notes {
@@ -497,13 +493,6 @@ impl RuleDiagnostic {
 
     pub(crate) fn span(&self) -> Option<TextRange> {
         self.span
-    }
-
-    /// Convert this [`RuleDiagnostic`] into an instance of [`AnalyzerDiagnostic`] by
-    /// injecting the name of the rule that emitted it and the ID of the file
-    /// the rule was being run on
-    pub(crate) fn into_analyzer_diagnostic(self, file_id: FileId) -> AnalyzerDiagnostic {
-        AnalyzerDiagnostic::from_rule_diagnostic(file_id, self)
     }
 
     pub fn advices(&self) -> &RuleAdvice {

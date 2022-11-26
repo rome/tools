@@ -797,6 +797,28 @@
             }
           ]
         },
+        "noConstructorReturn": {
+          "description": "Disallow returning a value from a constructor",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noDistractingElements": {
+          "description": "Enforces that no distracting elements are used.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noDupeKeys": {
           "description": "Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.",
           "anyOf": [
@@ -821,6 +843,17 @@
         },
         "noExplicitAny": {
           "description": "Disallow the any type usage",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noExtraNonNullAssertion": {
+          "description": "Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -863,6 +896,17 @@
             }
           ]
         },
+        "noSetterReturn": {
+          "description": "Disallow returning a value from a setter",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noStringCaseMismatch": {
           "description": "Disallow comparison of expressions modifying the string case with non-compliant value.",
           "anyOf": [
@@ -896,6 +940,17 @@
             }
           ]
         },
+        "noVoidTypeReturn": {
+          "description": "Disallow returning a value from a function with the return type 'void'",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "recommended": {
           "description": "It enables the recommended rules for this group",
           "type": [
@@ -916,6 +971,17 @@
         },
         "useConst": {
           "description": "Require const declarations for variables that are never reassigned after declared.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useDefaultSwitchClauseLast": {
+          "description": "Enforce default clauses in switch statements to be last",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

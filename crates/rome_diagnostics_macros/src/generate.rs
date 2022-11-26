@@ -212,7 +212,7 @@ fn generate_location(input: &DeriveInput) -> TokenStream {
     let method = input.location.iter().map(|(_, method)| method);
 
     quote! {
-        fn location(&self) -> Option<rome_diagnostics::Location<'_>> {
+        fn location(&self) -> rome_diagnostics::Location<'_> {
             rome_diagnostics::Location::builder()
                 #( .#method(&self.#field) )*
                 .build()

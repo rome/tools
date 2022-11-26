@@ -5,7 +5,7 @@ use rome_js_syntax::JsTryStatement;
 use rome_js_syntax::JsTryStatementFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsTryStatement;
+pub(crate) struct FormatJsTryStatement;
 
 impl FormatNodeRule<JsTryStatement> for FormatJsTryStatement {
     fn fmt_fields(&self, node: &JsTryStatement, f: &mut JsFormatter) -> FormatResult<()> {

@@ -200,9 +200,7 @@ pub(crate) fn diagnostic_to_lsp<D: Diagnostic>(
     url: &lsp::Url,
     line_index: &LineIndex,
 ) -> Result<lsp::Diagnostic> {
-    let location = diagnostic
-        .location()
-        .context("diagnostic has no location")?;
+    let location = diagnostic.location();
 
     let span = location.span.context("diagnostic location has no span")?;
     let span = range(line_index, span).context("failed to convert diagnostic span to LSP range")?;

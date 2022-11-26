@@ -8,7 +8,7 @@ use std::{borrow::Borrow, ops::Deref};
 #[derive(Debug, Clone, Copy)]
 pub struct Location<'a> {
     /// The resource this diagnostic is associated with.
-    pub resource: Resource<&'a str>,
+    pub resource: Option<Resource<&'a str>>,
     /// An optional range of text within the resource associated with the
     /// diagnostic.
     pub span: Option<TextRange>,
@@ -326,12 +326,12 @@ impl<'a> LocationBuilder<'a> {
         self
     }
 
-    pub fn build(self) -> Option<Location<'a>> {
-        Some(Location {
-            resource: self.resource?,
+    pub fn build(self) -> Location<'a> {
+        Location {
+            resource: self.resource,
             span: self.span,
             source_code: self.source_code,
-        })
+        }
     }
 }
 

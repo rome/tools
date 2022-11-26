@@ -1,6 +1,7 @@
-use crate::{markup, parse, parse_module, test_utils::assert_errors_are_absent, Parse};
+use crate::{parse, parse_module, test_utils::assert_errors_are_absent, Parse};
 use expect_test::expect_file;
 use rome_console::fmt::{Formatter, Termcolor};
+use rome_console::markup;
 use rome_diagnostics::location::FileId;
 use rome_diagnostics::DiagnosticExt;
 use rome_diagnostics::PrintDiagnostic;
@@ -125,7 +126,7 @@ fn run_and_expect_errors(path: &str, _: &str, _: &str, _: &str) {
             .with_file_source_code(text.to_string());
         Formatter::new(&mut Termcolor(&mut write))
             .write_markup(markup! {
-                {PrintDiagnostic(&error)}
+                {PrintDiagnostic::verbose(&error)}
             })
             .expect("failed to emit diagnostic");
         write!(
@@ -378,7 +379,7 @@ fn diagnostics_print_correctly() {
 
         Formatter::new(&mut Termcolor(&mut write))
             .write_markup(markup! {
-                {PrintDiagnostic(&error)}
+                {PrintDiagnostic::verbose(&error)}
             })
             .expect("failed to emit diagnostic");
 

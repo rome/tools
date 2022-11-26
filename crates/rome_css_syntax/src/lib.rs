@@ -52,6 +52,9 @@ impl CssSyntaxKind {
 }
 
 impl rome_rowan::SyntaxKind for CssSyntaxKind {
+    const TOMBSTONE: Self = CssSyntaxKind::TOMBSTONE;
+    const EOF: Self = EOF;
+
     fn is_unknown(&self) -> bool {
         matches!(self, CSS_UNKNOWN)
     }
@@ -77,6 +80,10 @@ impl rome_rowan::SyntaxKind for CssSyntaxKind {
     #[inline]
     fn is_list(&self) -> bool {
         CssSyntaxKind::is_list(*self)
+    }
+
+    fn to_string(&self) -> Option<&'static str> {
+        CssSyntaxKind::to_string(self)
     }
 }
 

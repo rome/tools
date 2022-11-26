@@ -6,10 +6,10 @@ use rome_js_syntax::ImportMetaFields;
 use rome_js_syntax::{ImportMeta, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatImportMeta;
+pub(crate) struct FormatImportMeta;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsImportMeta;
+pub(crate) struct FormatJsImportMeta;
 
 impl FormatNodeRule<ImportMeta> for FormatImportMeta {
     fn fmt_fields(&self, node: &ImportMeta, f: &mut JsFormatter) -> FormatResult<()> {

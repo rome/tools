@@ -65,7 +65,7 @@ impl Rule for NoConstAssign {
         let node = ctx.query();
         let model = ctx.model();
 
-        let declared_binding = model.declaration(node)?;
+        let declared_binding = model.binding(node)?;
 
         if let Some(possible_declarator) = declared_binding.syntax().ancestors().find(|node| {
             !JsAnyObjectBindingPatternMember::can_cast(node.kind())

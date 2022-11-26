@@ -2,10 +2,8 @@ use crate::JsRuleAction;
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{
-    JsSyntaxToken, JsxAnyElementName, JsxAttribute, JsxOpeningElement, JsxSelfClosingElement,
-};
-use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
+use rome_js_syntax::{jsx_ext::JsxAnyElement, JsxAttribute};
+use rome_rowan::{AstNode, BatchMutationExt};
 
 declare_rule! {
     /// Avoid the `autoFocus` attribute
@@ -52,26 +50,6 @@ declare_rule! {
         version: "10.0.0",
         name: "noAutofocus",
         recommended: true,
-    }
-}
-
-declare_node_union! {
-    pub(crate) JsxAnyElement = JsxOpeningElement | JsxSelfClosingElement
-}
-
-impl JsxAnyElement {
-    fn name_value_token(&self) -> Option<JsSyntaxToken> {
-        let any_name = match self {
-            JsxAnyElement::JsxOpeningElement(element) => element.name().ok()?,
-            JsxAnyElement::JsxSelfClosingElement(element) => element.name().ok()?,
-        };
-
-        match any_name {
-            JsxAnyElementName::JsxMemberName(member) => member.member().ok()?.value_token().ok(),
-            JsxAnyElementName::JsxName(name) => name.value_token().ok(),
-            JsxAnyElementName::JsxNamespaceName(name) => name.name().ok()?.value_token().ok(),
-            JsxAnyElementName::JsxReferenceIdentifier(name) => name.value_token().ok(),
-        }
     }
 }
 

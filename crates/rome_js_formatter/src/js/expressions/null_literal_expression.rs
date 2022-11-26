@@ -6,7 +6,7 @@ use rome_js_syntax::JsNullLiteralExpressionFields;
 use rome_js_syntax::{JsNullLiteralExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsNullLiteralExpression;
+pub(crate) struct FormatJsNullLiteralExpression;
 
 impl FormatNodeRule<JsNullLiteralExpression> for FormatJsNullLiteralExpression {
     fn fmt_fields(&self, node: &JsNullLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {

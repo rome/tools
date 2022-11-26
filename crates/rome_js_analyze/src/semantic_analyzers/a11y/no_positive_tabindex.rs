@@ -4,10 +4,10 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::SemanticModel;
+use rome_js_syntax::jsx_ext::JsxAnyElement;
 use rome_js_syntax::{
     JsCallExpression, JsNumberLiteralExpression, JsPropertyObjectMember, JsStringLiteralExpression,
-    JsUnaryExpression, JsxAnyAttributeValue, JsxAttribute, JsxOpeningElement,
-    JsxSelfClosingElement, TextRange,
+    JsUnaryExpression, JsxAnyAttributeValue, JsxAttribute, TextRange,
 };
 use rome_rowan::{declare_node_union, AstNode};
 
@@ -56,7 +56,7 @@ declare_node_union! {
 }
 
 declare_node_union! {
-    pub(crate) NoPositiveTabindexQuery = JsxOpeningElement | JsxSelfClosingElement | JsCallExpression
+    pub(crate) NoPositiveTabindexQuery = JsxAnyElement | JsCallExpression
 }
 
 declare_node_union! {
@@ -74,13 +74,8 @@ declare_node_union! {
 impl NoPositiveTabindexQuery {
     fn find_tabindex_attribute(&self, model: &SemanticModel) -> Option<TabindexProp> {
         match self {
-            NoPositiveTabindexQuery::JsxOpeningElement(jsx) => jsx
+            NoPositiveTabindexQuery::JsxAnyElement(jsx) => jsx
                 .find_attribute_by_name("tabIndex")
-                .ok()?
-                .map(TabindexProp::from),
-            NoPositiveTabindexQuery::JsxSelfClosingElement(jsx) => jsx
-                .find_attribute_by_name("tabIndex")
-                .ok()?
                 .map(TabindexProp::from),
             NoPositiveTabindexQuery::JsCallExpression(expression) => {
                 let react_create_element =

@@ -8,7 +8,7 @@ use rome_js_syntax::JsImportNamedClauseFields;
 use rome_js_syntax::JsNamedImportSpecifiersFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsImportNamedClause;
+pub(crate) struct FormatJsImportNamedClause;
 
 impl FormatNodeRule<JsImportNamedClause> for FormatJsImportNamedClause {
     fn fmt_fields(&self, node: &JsImportNamedClause, f: &mut JsFormatter) -> FormatResult<()> {
@@ -62,6 +62,27 @@ impl FormatNodeRule<JsImportNamedClause> for FormatJsImportNamedClause {
                             Ok(JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(
                                 specifier,
                             )),
+                            Ok(separator),
+                        ) => {
+                            if f.comments().has_comments(specifier.syntax()) {
+                                write!(f, [named_import.format()])
+                            } else {
+                                let JsNamedImportSpecifiersFields {
+                                    l_curly_token,
+                                    specifiers: _,
+                                    r_curly_token,
+                                } = specifiers.as_fields();
+                                write!(f, [l_curly_token.format(), space(), specifier.format(),])?;
+
+                                if let Some(separator) = separator {
+                                    format_removed(separator).fmt(f)?;
+                                }
+
+                                write!(f, [space(), r_curly_token.format()])
+                            }
+                        }
+                        (
+                            Ok(JsAnyNamedImportSpecifier::JsNamedImportSpecifier(specifier)),
                             Ok(separator),
                         ) => {
                             if f.comments().has_comments(specifier.syntax()) {

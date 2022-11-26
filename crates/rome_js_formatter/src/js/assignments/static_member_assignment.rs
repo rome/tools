@@ -4,7 +4,7 @@ use crate::prelude::*;
 use rome_js_syntax::{JsStaticMemberAssignment, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsStaticMemberAssignment;
+pub(crate) struct FormatJsStaticMemberAssignment;
 
 impl FormatNodeRule<JsStaticMemberAssignment> for FormatJsStaticMemberAssignment {
     fn fmt_fields(&self, node: &JsStaticMemberAssignment, f: &mut JsFormatter) -> FormatResult<()> {

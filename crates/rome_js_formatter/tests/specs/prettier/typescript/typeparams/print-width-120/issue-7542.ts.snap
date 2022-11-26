@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: typescript/typeparams/print-width-120/issue-7542.ts
+  test_file: "typescript\\typeparams\\print-width-120\\issue-7542.ts"
 ---
 
 # Input
@@ -96,18 +96,6 @@ issue-7542.ts:2:15 parse ━━━━━━━━━━━━━━━━━━�
   
   i Remove /
   
-issue-7542.ts:6:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `>` but instead found `/`
-  
-    5 │ export const Bar = forwardRef((props: BarProps, ref: Ref<HTMLElement>): JSX.Element | null => {
-  > 6 │   return <div />;
-      │               ^
-    7 │ });
-    8 │ 
-  
-  i Remove /
-  
 issue-7542.ts:2:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × unterminated regex literal
@@ -133,6 +121,18 @@ issue-7542.ts:2:18 parse ━━━━━━━━━━━━━━━━━━�
       │               ^
     3 │ });
     4 │ 
+  
+issue-7542.ts:6:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `>` but instead found `/`
+  
+    5 │ export const Bar = forwardRef((props: BarProps, ref: Ref<HTMLElement>): JSX.Element | null => {
+  > 6 │   return <div />;
+      │               ^
+    7 │ });
+    8 │ 
+  
+  i Remove /
   
 issue-7542.ts:6:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

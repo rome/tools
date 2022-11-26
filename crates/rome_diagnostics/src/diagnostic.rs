@@ -82,8 +82,8 @@ pub trait Diagnostic: Debug {
     /// specific text range within the content of that location. Finally, it
     /// may also provide the source string for that location (this is required
     /// in order to display a code frame advice for the diagnostic).
-    fn location(&self) -> Option<Location<'_>> {
-        None
+    fn location(&self) -> Location<'_> {
+        Location::builder().build()
     }
 
     /// Tags convey additional boolean metadata about the nature of a diagnostic:

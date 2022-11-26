@@ -5,7 +5,7 @@ use rome_js_syntax::JsImportAssertion;
 use rome_js_syntax::JsImportAssertionFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsImportAssertion;
+pub(crate) struct FormatJsImportAssertion;
 
 impl FormatNodeRule<JsImportAssertion> for FormatJsImportAssertion {
     fn fmt_fields(&self, node: &JsImportAssertion, f: &mut JsFormatter) -> FormatResult<()> {

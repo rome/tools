@@ -33,11 +33,30 @@ impl<'fmt, D: AsDiagnostic + ?Sized> std::fmt::Display for PrintDescription<'fmt
 
 /// Helper struct for printing a diagnostic as markup into any formatter
 /// implementing [rome_console::fmt::Write].
-pub struct PrintDiagnostic<'fmt, D: ?Sized>(pub &'fmt D);
+pub struct PrintDiagnostic<'fmt, D: ?Sized> {
+    diag: &'fmt D,
+    verbose: bool,
+}
+
+impl<'fmt, D: AsDiagnostic + ?Sized> PrintDiagnostic<'fmt, D> {
+    pub fn simple(diag: &'fmt D) -> Self {
+        Self {
+            diag,
+            verbose: false,
+        }
+    }
+
+    pub fn verbose(diag: &'fmt D) -> Self {
+        Self {
+            diag,
+            verbose: true,
+        }
+    }
+}
 
 impl<'fmt, D: AsDiagnostic + ?Sized> fmt::Display for PrintDiagnostic<'fmt, D> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> io::Result<()> {
-        let diagnostic = self.0.as_diagnostic();
+        let diagnostic = self.diag.as_diagnostic();
 
         // Print the header for the diagnostic
         fmt.write_markup(markup! {
@@ -49,7 +68,7 @@ impl<'fmt, D: AsDiagnostic + ?Sized> fmt::Display for PrintDiagnostic<'fmt, D> {
         let mut fmt = IndentWriter::wrap(fmt, &mut slot, true, "  ");
         let mut visitor = PrintAdvices(&mut fmt);
 
-        print_advices(&mut visitor, diagnostic, true)
+        print_advices(&mut visitor, diagnostic, self.verbose)
     }
 }
 
@@ -64,30 +83,28 @@ impl<'fmt, D: Diagnostic + ?Sized> fmt::Display for PrintHeader<'fmt, D> {
         let mut slot = None;
         let mut fmt = CountWidth::wrap(f, &mut slot);
 
-        // Print the diagnostic location if it has one
-        if let Some(location) = diagnostic.location() {
-            // Print the path if it's a file
-            let file_name = match &location.resource {
-                Resource::File(file) => file.path(),
-                _ => None,
-            };
+        // Print the diagnostic location if it has a file path
+        let location = diagnostic.location();
+        let file_name = match &location.resource {
+            Some(Resource::File(file)) => file.path(),
+            _ => None,
+        };
 
-            if let Some(name) = file_name {
-                fmt.write_str(name)?;
+        if let Some(name) = file_name {
+            fmt.write_str(name)?;
 
-                // Print the line and column position if the location has a span and source code
-                // (the source code is necessary to convert a byte offset into a line + column)
-                if let (Some(span), Some(source_code)) = (location.span, location.source_code) {
-                    let file = SourceFile::new(source_code);
-                    if let Ok(location) = file.location(span.start()) {
-                        fmt.write_markup(markup! {
-                            ":"{location.line_number.get()}":"{location.column_number.get()}
-                        })?;
-                    }
+            // Print the line and column position if the location has a span and source code
+            // (the source code is necessary to convert a byte offset into a line + column)
+            if let (Some(span), Some(source_code)) = (location.span, location.source_code) {
+                let file = SourceFile::new(source_code);
+                if let Ok(location) = file.location(span.start()) {
+                    fmt.write_markup(markup! {
+                        ":"{location.line_number.get()}":"{location.column_number.get()}
+                    })?;
                 }
-
-                fmt.write_str(" ")?;
             }
+
+            fmt.write_str(" ")?;
         }
 
         // Print the category of the diagnostic, with a hyperlink if
@@ -182,18 +199,14 @@ where
 {
     // Visit the advices of the diagnostic with a lightweight visitor that
     // detects if the diagnostic has any frame or backtrace advice
-    let skip_frame = if let Some(location) = diagnostic.location() {
-        let mut frame_visitor = FrameVisitor {
-            location,
-            skip_frame: false,
-        };
-
-        diagnostic.advices(&mut frame_visitor)?;
-
-        frame_visitor.skip_frame
-    } else {
-        false
+    let mut frame_visitor = FrameVisitor {
+        location: diagnostic.location(),
+        skip_frame: false,
     };
+
+    diagnostic.advices(&mut frame_visitor)?;
+
+    let skip_frame = frame_visitor.skip_frame;
 
     // Print the message for the diagnostic as a log advice
     print_message_advice(visitor, diagnostic, skip_frame)?;
@@ -276,7 +289,8 @@ where
     // If the diagnostic has no explicit code frame or backtrace advice, print
     // a code frame advice with the location of the diagnostic
     if !skip_frame {
-        if let Some(location) = diagnostic.location().filter(|loc| loc.span.is_some()) {
+        let location = diagnostic.location();
+        if location.span.is_some() {
             visitor.record_frame(location)?;
         }
     }
@@ -624,7 +638,7 @@ mod tests {
             Ok(())
         }
 
-        fn location(&self) -> Option<Location<'_>> {
+        fn location(&self) -> Location<'_> {
             Location::builder()
                 .resource(&self.path)
                 .span(&self.span)
@@ -668,7 +682,7 @@ mod tests {
     impl Advices for FrameAdvice {
         fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
             visitor.record_frame(Location {
-                resource: Resource::File(FilePath::Path("other_path")),
+                resource: Some(Resource::File(FilePath::Path("other_path"))),
                 span: Some(TextRange::new(TextSize::from(8), TextSize::from(16))),
                 source_code: Some(SourceCode {
                     text: "context location context",
@@ -734,7 +748,7 @@ mod tests {
     fn test_header() {
         let diag = TestDiagnostic::<LogAdvices>::with_location();
 
-        let diag = markup!({ PrintDiagnostic(&diag) }).to_owned();
+        let diag = markup!({ PrintDiagnostic::verbose(&diag) }).to_owned();
 
         let expected = markup!{
             "path:1:1 internalError/io "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -758,7 +772,7 @@ mod tests {
             ..TestDiagnostic::empty()
         };
 
-        let diag = markup!({ PrintDiagnostic(&diag) }).to_owned();
+        let diag = markup!({ PrintDiagnostic::verbose(&diag) }).to_owned();
 
         let expected = markup!{
             "internalError/io "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -788,7 +802,7 @@ mod tests {
             ..TestDiagnostic::empty()
         };
 
-        let diag = markup!({ PrintDiagnostic(&diag) }).to_owned();
+        let diag = markup!({ PrintDiagnostic::verbose(&diag) }).to_owned();
 
         let expected = markup!{
             "internalError/io "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -813,7 +827,7 @@ mod tests {
             ..TestDiagnostic::empty()
         };
 
-        let diag = markup!({ PrintDiagnostic(&diag) }).to_owned();
+        let diag = markup!({ PrintDiagnostic::verbose(&diag) }).to_owned();
 
         let expected = markup!{
             "internalError/io "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -838,7 +852,7 @@ mod tests {
             ..TestDiagnostic::empty()
         };
 
-        let diag = markup!({ PrintDiagnostic(&diag) }).to_owned();
+        let diag = markup!({ PrintDiagnostic::verbose(&diag) }).to_owned();
 
         let expected = markup!{
             "internalError/io "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -863,7 +877,7 @@ mod tests {
             ..TestDiagnostic::empty()
         };
 
-        let diag = markup!({ PrintDiagnostic(&diag) }).to_owned();
+        let diag = markup!({ PrintDiagnostic::verbose(&diag) }).to_owned();
 
         let expected = markup!{
             "internalError/io "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -889,7 +903,7 @@ mod tests {
             ..TestDiagnostic::empty()
         };
 
-        let diag = markup!({ PrintDiagnostic(&diag) }).to_owned();
+        let diag = markup!({ PrintDiagnostic::verbose(&diag) }).to_owned();
 
         let expected = markup!{
             "internalError/io "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -913,7 +927,7 @@ mod tests {
             ..TestDiagnostic::empty()
         };
 
-        let diag = markup!({ PrintDiagnostic(&diag) }).to_owned();
+        let diag = markup!({ PrintDiagnostic::verbose(&diag) }).to_owned();
 
         let expected = markup!{
             "internalError/io "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"

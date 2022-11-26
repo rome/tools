@@ -31,7 +31,7 @@ const
 ```
 downlevelLetConst1.ts:1:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × expected an identifier, an array pattern, or an object pattern but instead found ''
+  × expected an identifier, an array pattern, or an object pattern but instead found the end of the file
   
   > 1 │ const
       │      

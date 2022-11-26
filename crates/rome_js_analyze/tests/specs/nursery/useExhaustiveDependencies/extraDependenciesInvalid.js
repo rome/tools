@@ -17,3 +17,13 @@ function MyComponent2() {
   useEffect(() => {}, [a]);
 }
 
+// dependency more deep than capture
+// Note: This can be a valid case, but there is
+// no way for the lint rule to know
+
+function MyComponent1() {
+  let someObj = getObj();
+  useEffect(() => {
+      console.log(someObj)
+  }, [someObj.id]);
+}

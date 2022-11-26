@@ -34,6 +34,11 @@ import { loooooooooooooooooooooooooooooooooooooooooooooooooong, } from "looooooo
 import { 
 // comment 
 loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong"
+
+import { a as b } from "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong"
+
+import a, { loooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooooonnoong"
+
 ```
 
 
@@ -90,11 +95,18 @@ import {
 	loooooooooooooooooooooooooooooooooooooooooooooooooong,
 } from "loooooooooooooooooooooooooooooooooooooooooooooong";
 
+import { a as b } from "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong";
+
+import a, {
+	loooooooooooooooooooooong,
+} from "loooooooooooooooooooooooooooooooooooooooooooooooonnoong";
+
 
 ## Lines exceeding width of 80 characters
 
    29: import { loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong";
    31: import { loooooooooooooooooooooooooooooooooooooooooooooooooong } from "loooooooooooooooooooooooooooooooooooooooooooooong";
+   38: import { a as b } from "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong";
 ```
 
 

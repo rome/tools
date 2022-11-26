@@ -55,6 +55,7 @@ pub use builders::BestFitting;
 
 use crate::builders::syntax_token_cow_slice;
 use crate::comments::{CommentStyle, Comments, SourceComment};
+use crate::trivia::{format_skipped_token_trivia, format_trimmed_token};
 pub use format_element::{normalize_newlines, FormatElement, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use rome_rowan::{
@@ -63,6 +64,7 @@ use rome_rowan::{
 };
 pub use source_map::{TransformSourceMap, TransformSourceMapBuilder};
 use std::error::Error;
+use std::marker::PhantomData;
 use std::num::ParseIntError;
 use std::str::FromStr;
 
@@ -728,6 +730,43 @@ pub trait FormatRule<T> {
     fn fmt(&self, item: &T, f: &mut Formatter<Self::Context>) -> FormatResult<()>;
 }
 
+/// Default implementation for formatting a token
+pub struct FormatToken<C> {
+    context: PhantomData<C>,
+}
+
+impl<C> Default for FormatToken<C> {
+    fn default() -> Self {
+        Self {
+            context: PhantomData,
+        }
+    }
+}
+
+impl<C> FormatRule<SyntaxToken<C::Language>> for FormatToken<C>
+where
+    C: CstFormatContext,
+    C::Language: 'static,
+{
+    type Context = C;
+
+    fn fmt(
+        &self,
+        token: &SyntaxToken<C::Language>,
+        f: &mut Formatter<Self::Context>,
+    ) -> FormatResult<()> {
+        f.state_mut().track_token(token);
+
+        crate::write!(
+            f,
+            [
+                format_skipped_token_trivia(token),
+                format_trimmed_token(token),
+            ]
+        )
+    }
+}
+
 /// Rule that supports customizing how it formats an object of type `T`.
 pub trait FormatRuleWithOptions<T>: FormatRule<T> {
     type Options;
@@ -984,9 +1023,6 @@ pub trait FormatLanguage {
     /// The type of the formatting context
     type Context: CstFormatContext<Language = Self::SyntaxLanguage>;
 
-    /// The type specifying how to format comments.
-    type CommentStyle: CommentStyle<Language = Self::SyntaxLanguage>;
-
     /// The rule type that can format a [SyntaxNode] of this language
     type FormatRule: FormatRule<SyntaxNode<Self::SyntaxLanguage>, Context = Self::Context> + Default;
 
@@ -1016,7 +1052,7 @@ pub trait FormatLanguage {
     /// Creates the [FormatContext] with the given `source map` and `comments`
     fn create_context(
         self,
-        comments: Comments<Self::SyntaxLanguage>,
+        root: &SyntaxNode<Self::SyntaxLanguage>,
         source_map: Option<TransformSourceMap>,
     ) -> Self::Context;
 }
@@ -1034,10 +1070,9 @@ pub fn format_node<L: FormatLanguage>(
             None => (root.clone(), None),
         };
 
-        let comments = Comments::from_node(&root, &L::CommentStyle::default(), source_map.as_ref());
+        let context = language.create_context(&root, source_map);
         let format_node = FormatRefWithRule::new(&root, L::FormatRule::default());
 
-        let context = language.create_context(comments, source_map);
         let mut state = FormatState::new(context);
         let mut buffer = VecBuffer::new(&mut state);
 

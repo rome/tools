@@ -120,9 +120,7 @@ where
             .source_code(&self.source_code)
             .build();
 
-        if let Some(location) = location {
-            visitor.record_frame(location)?;
-        }
+        visitor.record_frame(location)?;
 
         Ok(())
     }

@@ -4,7 +4,7 @@ use rome_js_syntax::JsObjectMemberList;
 use rome_rowan::{AstNode, AstSeparatedList};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsObjectMemberList;
+pub(crate) struct FormatJsObjectMemberList;
 
 impl FormatRule<JsObjectMemberList> for FormatJsObjectMemberList {
     type Context = JsFormatContext;

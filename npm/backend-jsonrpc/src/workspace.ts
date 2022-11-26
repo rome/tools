@@ -364,6 +364,14 @@ export interface Nursery {
 	 */
 	noConstAssign?: RuleConfiguration;
 	/**
+	 * Disallow returning a value from a constructor
+	 */
+	noConstructorReturn?: RuleConfiguration;
+	/**
+	 * Enforces that no distracting elements are used.
+	 */
+	noDistractingElements?: RuleConfiguration;
+	/**
 	 * Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
 	 */
 	noDupeKeys?: RuleConfiguration;
@@ -375,6 +383,10 @@ export interface Nursery {
 	 * Disallow the any type usage
 	 */
 	noExplicitAny?: RuleConfiguration;
+	/**
+	 * Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.
+	 */
+	noExtraNonNullAssertion?: RuleConfiguration;
 	/**
 	 * Check that the scope attribute is only used on th elements.
 	 */
@@ -388,6 +400,10 @@ export interface Nursery {
 	 */
 	noPrecisionLoss?: RuleConfiguration;
 	/**
+	 * Disallow returning a value from a setter
+	 */
+	noSetterReturn?: RuleConfiguration;
+	/**
 	 * Disallow comparison of expressions modifying the string case with non-compliant value.
 	 */
 	noStringCaseMismatch?: RuleConfiguration;
@@ -400,6 +416,10 @@ export interface Nursery {
 	 */
 	noVar?: RuleConfiguration;
 	/**
+	 * Disallow returning a value from a function with the return type 'void'
+	 */
+	noVoidTypeReturn?: RuleConfiguration;
+	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
@@ -411,6 +431,10 @@ export interface Nursery {
 	 * Require const declarations for variables that are never reassigned after declared.
 	 */
 	useConst?: RuleConfiguration;
+	/**
+	 * Enforce default clauses in switch statements to be last
+	 */
+	useDefaultSwitchClauseLast?: RuleConfiguration;
 	/**
 	 * Enforce all dependencies are correctly specified.
 	 */
@@ -562,7 +586,7 @@ export interface Diagnostic {
 	advices: Advices;
 	category?: Category;
 	description: string;
-	location?: Location;
+	location: Location;
 	message: MarkupBuf;
 	severity: Severity;
 	source?: Diagnostic;
@@ -635,17 +659,23 @@ export type Category =
 	| "lint/nursery/noBannedTypes"
 	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstAssign"
+	| "lint/nursery/noDistractingElements"
+	| "lint/nursery/noConstructorReturn"
+	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noDupeKeys"
 	| "lint/nursery/noEmptyInterface"
 	| "lint/nursery/noExplicitAny"
+	| "lint/nursery/noExtraNonNullAssertion"
 	| "lint/nursery/noHeaderScope"
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noPrecisionLoss"
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnsafeFinally"
 	| "lint/nursery/noVar"
+	| "lint/nursery/noVoidTypeReturn"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useConst"
+	| "lint/nursery/useDefaultSwitchClauseLast"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useFlatMap"
 	| "lint/nursery/useNumericLiterals"
@@ -672,7 +702,7 @@ export type Category =
 	| "flags/invalid"
 	| "semanticTests";
 export interface Location {
-	path: Resource_for_String;
+	path?: Resource_for_String;
 	source_code?: string;
 	span?: TextRange;
 }

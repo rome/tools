@@ -466,7 +466,7 @@ fn assert_lint(
     let mut write_diagnostic = |code: &str, diag: rome_diagnostics::Error| {
         let category = diag.category().map_or("", |code| code.name());
         Formatter::new(&mut write).write_markup(markup! {
-            {PrintDiagnostic(&diag)}
+            {PrintDiagnostic::verbose(&diag)}
         })?;
 
         all_diagnostics.push(diag);
@@ -479,7 +479,7 @@ fn assert_lint(
                     console.print(
                         rome_console::LogLevel::Error,
                         markup! {
-                            {PrintDiagnostic(diag)}
+                            {PrintDiagnostic::verbose(diag)}
                         },
                     );
                 }
@@ -497,7 +497,7 @@ fn assert_lint(
                 console.print(
                     rome_console::LogLevel::Error,
                     markup! {
-                        {PrintDiagnostic(diag)}
+                        {PrintDiagnostic::verbose(diag)}
                     },
                 );
             }
@@ -539,7 +539,6 @@ fn assert_lint(
                 let severity = settings.get_severity_from_rule_code(category).expect(
                     "If you see this error, it means you need to run cargo codegen-configuration",
                 );
-                diag.set_severity(severity);
 
                 for action in signal.actions() {
                     if !action.is_suppression() {
@@ -548,6 +547,7 @@ fn assert_lint(
                 }
 
                 let error = diag
+                    .with_severity(severity)
                     .with_file_path((file.clone(), FileId::zero()))
                     .with_file_source_code(code);
                 let res = write_diagnostic(code, error);

@@ -2,7 +2,7 @@ use crate::semantic_services::SemanticServices;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_semantic::{Binding, DeclarationExtensions};
+use rome_js_semantic::{Binding, BindingExtensions};
 use rome_js_syntax::{
     JsIdentifierAssignment, JsReferenceIdentifier, JsxReferenceIdentifier, TextRange,
 };
@@ -49,26 +49,32 @@ impl Rule for NoRestrictedGlobals {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let model = ctx.model();
-        ctx.query()
+
+        let unresolved_reference_nodes = model
             .all_unresolved_references()
-            .chain(model.all_globals())
-            .filter_map(|reference| {
-                let node = reference.node().clone();
+            .map(|reference| reference.syntax().clone());
+        let global_references_nodes = model
+            .all_global_references()
+            .map(|reference| reference.syntax().clone());
+
+        unresolved_reference_nodes
+            .chain(global_references_nodes)
+            .filter_map(|node| {
                 let node = AnyIdentifier::unwrap_cast(node);
-                let (token, declaration) = match node {
+                let (token, binding) = match node {
                     AnyIdentifier::JsReferenceIdentifier(node) => {
-                        (node.value_token(), node.declaration(model))
+                        (node.value_token(), node.binding(model))
                     }
                     AnyIdentifier::JsxReferenceIdentifier(node) => {
-                        (node.value_token(), node.declaration(model))
+                        (node.value_token(), node.binding(model))
                     }
                     AnyIdentifier::JsIdentifierAssignment(node) => {
-                        (node.name_token(), node.declaration(model))
+                        (node.name_token(), node.binding(model))
                     }
                 };
                 let token = token.ok()?;
                 let text = token.text_trimmed();
-                is_restricted(text, declaration).map(|text| (token.text_trimmed_range(), text))
+                is_restricted(text, binding).map(|text| (token.text_trimmed_range(), text))
             })
             .collect()
     }

@@ -15,7 +15,7 @@ impl rome_formatter::FormatRule<JsSyntaxNode> for FormatJsSyntaxNode {
     }
 }
 
-impl AsFormat for JsSyntaxNode {
+impl AsFormat<JsFormatContext> for JsSyntaxNode {
     type Format<'a> = FormatRefWithRule<'a, JsSyntaxNode, FormatJsSyntaxNode>;
 
     fn format(&self) -> Self::Format<'_> {

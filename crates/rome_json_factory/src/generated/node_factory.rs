@@ -36,16 +36,13 @@ impl JsonArrayBuilder {
         ))
     }
 }
-pub fn json_boolean(true_token: SyntaxToken, false_token: SyntaxToken) -> JsonBoolean {
+pub fn json_boolean(value_token_token: SyntaxToken) -> JsonBoolean {
     JsonBoolean::unwrap_cast(SyntaxNode::new_detached(
         JsonSyntaxKind::JSON_BOOLEAN,
-        [
-            Some(SyntaxElement::Token(true_token)),
-            Some(SyntaxElement::Token(false_token)),
-        ],
+        [Some(SyntaxElement::Token(value_token_token))],
     ))
 }
-pub fn json_member(key: JsonString, colon_token: SyntaxToken, value: JsonValue) -> JsonMember {
+pub fn json_member(key: JsonString, colon_token: SyntaxToken, value: JsonAnyValue) -> JsonMember {
     JsonMember::unwrap_cast(SyntaxNode::new_detached(
         JsonSyntaxKind::JSON_MEMBER,
         [
@@ -55,16 +52,16 @@ pub fn json_member(key: JsonString, colon_token: SyntaxToken, value: JsonValue) 
         ],
     ))
 }
-pub fn json_null(null_token: SyntaxToken) -> JsonNull {
+pub fn json_null(value_token: SyntaxToken) -> JsonNull {
     JsonNull::unwrap_cast(SyntaxNode::new_detached(
         JsonSyntaxKind::JSON_NULL,
-        [Some(SyntaxElement::Token(null_token))],
+        [Some(SyntaxElement::Token(value_token))],
     ))
 }
-pub fn json_number(json_number_literal_token: SyntaxToken) -> JsonNumber {
+pub fn json_number(value_token: SyntaxToken) -> JsonNumber {
     JsonNumber::unwrap_cast(SyntaxNode::new_detached(
         JsonSyntaxKind::JSON_NUMBER,
-        [Some(SyntaxElement::Token(json_number_literal_token))],
+        [Some(SyntaxElement::Token(value_token))],
     ))
 }
 pub fn json_object(l_curly_token: SyntaxToken, r_curly_token: SyntaxToken) -> JsonObjectBuilder {
@@ -96,21 +93,24 @@ impl JsonObjectBuilder {
         ))
     }
 }
-pub fn json_root(json_value: JsonValue) -> JsonRoot {
+pub fn json_root(value: JsonAnyValue, eof_token: SyntaxToken) -> JsonRoot {
     JsonRoot::unwrap_cast(SyntaxNode::new_detached(
         JsonSyntaxKind::JSON_ROOT,
-        [Some(SyntaxElement::Node(json_value.into_syntax()))],
+        [
+            Some(SyntaxElement::Node(value.into_syntax())),
+            Some(SyntaxElement::Token(eof_token)),
+        ],
     ))
 }
-pub fn json_string(json_string_literal_token: SyntaxToken) -> JsonString {
+pub fn json_string(value_token: SyntaxToken) -> JsonString {
     JsonString::unwrap_cast(SyntaxNode::new_detached(
         JsonSyntaxKind::JSON_STRING,
-        [Some(SyntaxElement::Token(json_string_literal_token))],
+        [Some(SyntaxElement::Token(value_token))],
     ))
 }
 pub fn json_array_element_list<I, S>(items: I, separators: S) -> JsonArrayElementList
 where
-    I: IntoIterator<Item = JsonValue>,
+    I: IntoIterator<Item = JsonAnyValue>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsonSyntaxToken>,
     S::IntoIter: ExactSizeIterator,

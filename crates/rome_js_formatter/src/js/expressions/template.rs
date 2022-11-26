@@ -10,7 +10,7 @@ use rome_js_syntax::{JsSyntaxToken, TsTypeArguments};
 use rome_rowan::{declare_node_union, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsTemplate;
+pub(crate) struct FormatJsTemplate;
 
 impl FormatNodeRule<JsTemplate> for FormatJsTemplate {
     fn fmt_fields(&self, node: &JsTemplate, f: &mut JsFormatter) -> FormatResult<()> {

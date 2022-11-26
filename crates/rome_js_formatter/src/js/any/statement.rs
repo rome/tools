@@ -1,9 +1,9 @@
-//! Generated file, do not edit by hand, see `xtask/codegen`
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
 use rome_js_syntax::JsAnyStatement;
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsAnyStatement;
+pub(crate) struct FormatJsAnyStatement;
 impl FormatRule<JsAnyStatement> for FormatJsAnyStatement {
     type Context = JsFormatContext;
     fn fmt(&self, node: &JsAnyStatement, f: &mut JsFormatter) -> FormatResult<()> {

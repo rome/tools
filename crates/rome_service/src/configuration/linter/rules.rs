@@ -737,28 +737,40 @@ struct NurserySchema {
     no_conditional_assignment: Option<RuleConfiguration>,
     #[doc = "Prevents from having const variables being re-assigned."]
     no_const_assign: Option<RuleConfiguration>,
+    #[doc = "Disallow returning a value from a constructor"]
+    no_constructor_return: Option<RuleConfiguration>,
+    #[doc = "Enforces that no distracting elements are used."]
+    no_distracting_elements: Option<RuleConfiguration>,
     #[doc = "Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake."]
     no_dupe_keys: Option<RuleConfiguration>,
     #[doc = "Disallow the declaration of empty interfaces."]
     no_empty_interface: Option<RuleConfiguration>,
     #[doc = "Disallow the any type usage"]
     no_explicit_any: Option<RuleConfiguration>,
+    #[doc = "Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files."]
+    no_extra_non_null_assertion: Option<RuleConfiguration>,
     #[doc = "Check that the scope attribute is only used on th elements."]
     no_header_scope: Option<RuleConfiguration>,
     #[doc = "Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors."]
     no_invalid_constructor_super: Option<RuleConfiguration>,
     #[doc = "Disallow literal numbers that lose precision"]
     no_precision_loss: Option<RuleConfiguration>,
+    #[doc = "Disallow returning a value from a setter"]
+    no_setter_return: Option<RuleConfiguration>,
     #[doc = "Disallow comparison of expressions modifying the string case with non-compliant value."]
     no_string_case_mismatch: Option<RuleConfiguration>,
     #[doc = "Disallow control flow statements in finally blocks."]
     no_unsafe_finally: Option<RuleConfiguration>,
     #[doc = "Disallow the use of var"]
     no_var: Option<RuleConfiguration>,
+    #[doc = "Disallow returning a value from a function with the return type 'void'"]
+    no_void_type_return: Option<RuleConfiguration>,
     #[doc = "Enforce camel case naming convention."]
     use_camel_case: Option<RuleConfiguration>,
     #[doc = "Require const declarations for variables that are never reassigned after declared."]
     use_const: Option<RuleConfiguration>,
+    #[doc = "Enforce default clauses in switch statements to be last"]
+    use_default_switch_clause_last: Option<RuleConfiguration>,
     #[doc = "Enforce all dependencies are correctly specified."]
     use_exhaustive_dependencies: Option<RuleConfiguration>,
     #[doc = "Promotes the use of .flatMap() when map().flat() are used together."]
@@ -770,22 +782,28 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 19] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 25] = [
         "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
         "noConstAssign",
+        "noConstructorReturn",
+        "noDistractingElements",
         "noDupeKeys",
         "noEmptyInterface",
         "noExplicitAny",
+        "noExtraNonNullAssertion",
         "noHeaderScope",
         "noInvalidConstructorSuper",
         "noPrecisionLoss",
+        "noSetterReturn",
         "noStringCaseMismatch",
         "noUnsafeFinally",
         "noVar",
+        "noVoidTypeReturn",
         "useCamelCase",
         "useConst",
+        "useDefaultSwitchClauseLast",
         "useExhaustiveDependencies",
         "useFlatMap",
         "useNumericLiterals",

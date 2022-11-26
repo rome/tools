@@ -1,6 +1,7 @@
 use crate::semantic_services::Semantic;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
+use rome_js_semantic::ReferencesExtensions;
 use rome_js_syntax::{
     JsDefaultImportSpecifier, JsIdentifierAssignment, JsIdentifierBinding, JsImportDefaultClause,
     JsImportNamespaceClause, JsNamedImportSpecifier, JsNamespaceImportSpecifier,
@@ -89,9 +90,9 @@ impl Rule for NoImportAssign {
             .and_then(|binding| {
                 let ident_binding = binding.as_js_identifier_binding()?;
                 let model = ctx.model();
-                for reference in model.all_writes(ident_binding) {
+                for reference in ident_binding.all_writes(model) {
                     invalid_assign_list.push((
-                        JsIdentifierAssignment::cast(reference.node().clone())?,
+                        JsIdentifierAssignment::cast(reference.syntax().clone())?,
                         ident_binding.clone(),
                     ));
                 }

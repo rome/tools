@@ -1,12 +1,13 @@
 //! Utilities for high level parsing of js code.
 
-use crate::token_source::Trivia;
 use crate::*;
 pub use rome_diagnostics::location::FileId;
 use rome_js_syntax::{
     JsAnyRoot, JsExpressionSnipped, JsLanguage, JsModule, JsScript, JsSyntaxNode, ModuleKind,
     SourceType,
 };
+use rome_parser::event::Event;
+use rome_parser::token_source::Trivia;
 use rome_rowan::AstNode;
 use std::marker::PhantomData;
 
@@ -119,8 +120,8 @@ pub fn parse_common(
     text: &str,
     file_id: FileId,
     source_type: SourceType,
-) -> (Vec<Event>, Vec<ParseDiagnostic>, Vec<Trivia>) {
-    let mut parser = crate::Parser::new(text, file_id, source_type);
+) -> (Vec<Event<JsSyntaxKind>>, Vec<ParseDiagnostic>, Vec<Trivia>) {
+    let mut parser = crate::JsParser::new(text, file_id, source_type);
     crate::syntax::program::parse(&mut parser);
 
     let (events, trivia, errors) = parser.finish();
@@ -181,8 +182,8 @@ pub fn parse_module(text: &str, file_id: FileId) -> Parse<JsModule> {
 pub fn parse(text: &str, file_id: FileId, source_type: SourceType) -> Parse<JsAnyRoot> {
     tracing::debug_span!("parse", file_id = ?file_id).in_scope(move || {
         let (events, errors, tokens) = parse_common(text, file_id, source_type);
-        let mut tree_sink = LosslessTreeSink::new(text, &tokens);
-        crate::process(&mut tree_sink, events, errors);
+        let mut tree_sink = JsLosslessTreeSink::new(text, &tokens);
+        rome_parser::event::process(&mut tree_sink, events, errors);
         let (green, parse_errors) = tree_sink.finish();
         Parse::new(green, parse_errors)
     })
@@ -191,12 +192,12 @@ pub fn parse(text: &str, file_id: FileId, source_type: SourceType) -> Parse<JsAn
 /// Losslessly Parse text into an expression [`Parse`](Parse) which can then be turned into an untyped root [`JsSyntaxNode`](JsSyntaxNode).
 /// Or turned into a typed [`JsExpressionSnipped`](JsExpressionSnipped) with [`tree`](Parse::tree).
 pub fn parse_expression(text: &str, file_id: FileId) -> Parse<JsExpressionSnipped> {
-    let mut parser = crate::Parser::new(text, file_id, SourceType::js_module());
+    let mut parser = crate::JsParser::new(text, file_id, SourceType::js_module());
     crate::syntax::expr::parse_expression_snipped(&mut parser).unwrap();
     let (events, tokens, errors) = parser.finish();
 
-    let mut tree_sink = LosslessTreeSink::new(text, &tokens);
-    crate::process(&mut tree_sink, events, errors);
+    let mut tree_sink = JsLosslessTreeSink::new(text, &tokens);
+    rome_parser::event::process(&mut tree_sink, events, errors);
     let (green, parse_errors) = tree_sink.finish();
     Parse::new_script(green, parse_errors)
 }

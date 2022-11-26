@@ -1,4 +1,4 @@
-use crate::{IndentStyle, LineWidth};
+use crate::{FormatOptions, IndentStyle, LineWidth};
 
 /// Options that affect how the [crate::Printer] prints the format tokens
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -40,6 +40,17 @@ impl From<LineWidth> for PrintWidth {
 impl From<PrintWidth> for usize {
     fn from(width: PrintWidth) -> Self {
         width.0 as usize
+    }
+}
+
+impl<'a, O> From<&'a O> for PrinterOptions
+where
+    O: FormatOptions,
+{
+    fn from(options: &'a O) -> Self {
+        PrinterOptions::default()
+            .with_indent(options.indent_style())
+            .with_print_width(options.line_width().into())
     }
 }
 

@@ -57,6 +57,8 @@ impl fmt::Display for CheckResult {
 pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<(), Termination> {
     init_thread_pool();
 
+    let verbose = session.args.contains("--verbose");
+
     // Check that at least one input file / directory was specified in the command line
     let mut inputs = vec![];
 
@@ -116,6 +118,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
                     remaining_diagnostics: &remaining_diagnostics,
                     errors: &mut errors,
                     report: &mut report,
+                    verbose,
                 });
             })
             .expect("failed to spawn console thread");
@@ -204,7 +207,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
     }
 
     // Processing emitted error diagnostics, exit with a non-zero code
-    if (count - skipped) == 0 {
+    if count.saturating_sub(skipped) == 0 {
         Err(Termination::NoFilesWereProcessed)
     } else if errors > 0 {
         Err(Termination::CheckError)
@@ -262,6 +265,8 @@ struct ProcessMessagesOptions<'ctx> {
     /// Mutable handle to a [Report] instance the console thread should write
     /// stats into
     report: &'ctx mut Report,
+    /// Whether the console thread should print diagnostics in verbose mode
+    verbose: bool,
 }
 
 #[derive(Debug, Diagnostic)]
@@ -328,6 +333,7 @@ fn process_messages(options: ProcessMessagesOptions) {
         remaining_diagnostics,
         errors,
         report,
+        verbose,
     } = options;
 
     let mut paths = HashMap::new();
@@ -368,34 +374,33 @@ fn process_messages(options: ProcessMessagesOptions) {
             }
 
             Message::Error(mut err) => {
-                if let Some(location) = err.location() {
-                    if let Resource::File(FilePath::FileId(file_id)) = location.resource {
-                        // Retrieves the file name from the file ID cache, if it's a miss
-                        // flush entries from the interner channel until it's found
-                        let file_name = match paths.get(&file_id) {
-                            Some(path) => Some(path),
-                            None => loop {
-                                match recv_files.recv() {
-                                    Ok((id, path)) => {
-                                        paths.insert(id, path.display().to_string());
-                                        if id == file_id {
-                                            break Some(&paths[&file_id]);
-                                        }
+                let location = err.location();
+                if let Some(Resource::File(FilePath::FileId(file_id))) = &location.resource {
+                    // Retrieves the file name from the file ID cache, if it's a miss
+                    // flush entries from the interner channel until it's found
+                    let file_name = match paths.get(file_id) {
+                        Some(path) => Some(path),
+                        None => loop {
+                            match recv_files.recv() {
+                                Ok((id, path)) => {
+                                    paths.insert(id, path.display().to_string());
+                                    if id == *file_id {
+                                        break Some(&paths[file_id]);
                                     }
-                                    // In case the channel disconnected without sending
-                                    // the path we need, print the error without a file
-                                    // name (normally this should never happen)
-                                    Err(_) => break None,
                                 }
-                            },
-                        };
+                                // In case the channel disconnected without sending
+                                // the path we need, print the error without a file
+                                // name (normally this should never happen)
+                                Err(_) => break None,
+                            }
+                        },
+                    };
 
-                        if let Some(path) = file_name {
-                            err = err.with_file_path(FilePath::PathAndId {
-                                path: path.as_str(),
-                                file_id,
-                            });
-                        }
+                    if let Some(path) = file_name {
+                        err = err.with_file_path(FilePath::PathAndId {
+                            path: path.as_str(),
+                            file_id: *file_id,
+                        });
                     }
                 }
 
@@ -413,22 +418,17 @@ fn process_messages(options: ProcessMessagesOptions) {
                 if mode.should_report_to_terminal() {
                     if should_print {
                         console.error(markup! {
-                            {PrintDiagnostic(&err)}
+                            {if verbose { PrintDiagnostic::verbose(&err) } else { PrintDiagnostic::simple(&err) }}
                         });
                     }
                 } else {
-                    let file_name = err
-                        .location()
-                        .and_then(|location| {
-                            let path = match &location.resource {
-                                Resource::File(file) => file,
-                                _ => return None,
-                            };
+                    let location = err.location();
+                    let path = match &location.resource {
+                        Some(Resource::File(file)) => file.path(),
+                        _ => None,
+                    };
 
-                            path.path()
-                        })
-                        .unwrap_or("<unknown>");
-
+                    let file_name = path.unwrap_or("<unknown>");
                     let title = PrintDescription(&err).to_string();
                     let code = err.category().and_then(|code| code.name().parse().ok());
 
@@ -460,7 +460,7 @@ fn process_messages(options: ProcessMessagesOptions) {
 
                         let diag = diag.with_file_path(&name).with_file_source_code(&content);
                         console.error(markup! {
-                            {PrintDiagnostic(&diag)}
+                            {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
                         });
                     }
                 } else {
@@ -486,7 +486,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                                 let diag =
                                     diag.with_file_path(&name).with_file_source_code(&content);
                                 console.error(markup! {
-                                    {PrintDiagnostic(&diag)}
+                                    {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
                                 });
                             }
                         } else {
@@ -536,7 +536,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                             };
 
                             console.error(markup! {
-                                {PrintDiagnostic(&diag)}
+                                {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
                             });
                         } else {
                             let diag = FormatDiffDiagnostic {
@@ -548,7 +548,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                             };
 
                             console.error(markup! {
-                                {PrintDiagnostic(&diag)}
+                                {if verbose { PrintDiagnostic::verbose(&diag) } else { PrintDiagnostic::simple(&diag) }}
                             });
                         }
                     }

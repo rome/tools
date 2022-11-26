@@ -5,9 +5,9 @@ use rome_rowan::AstNode;
 
 /// Formats a node using its [`AsFormat`] implementation but falls back to printing the node as
 /// it is in the source document if the formatting returns an [`FormatError`].
-pub const fn format_or_verbatim<Node>(node: &Node) -> FormatNodeOrVerbatim<Node>
+pub(crate) const fn format_or_verbatim<Node>(node: &Node) -> FormatNodeOrVerbatim<Node>
 where
-    Node: AstNode<Language = JsLanguage> + AsFormat,
+    Node: AstNode<Language = JsLanguage> + AsFormat<JsFormatContext>,
 {
     FormatNodeOrVerbatim { node }
 }
@@ -20,7 +20,7 @@ pub struct FormatNodeOrVerbatim<'a, Node> {
 
 impl<'a, Node> Format<JsFormatContext> for FormatNodeOrVerbatim<'a, Node>
 where
-    Node: AstNode<Language = JsLanguage> + AsFormat,
+    Node: AstNode<Language = JsLanguage> + AsFormat<JsFormatContext>,
 {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let snapshot = Formatter::state_snapshot(f);

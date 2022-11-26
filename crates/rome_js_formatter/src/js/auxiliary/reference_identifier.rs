@@ -5,7 +5,7 @@ use rome_js_syntax::JsReferenceIdentifier;
 use rome_js_syntax::JsReferenceIdentifierFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsReferenceIdentifier;
+pub(crate) struct FormatJsReferenceIdentifier;
 
 impl FormatNodeRule<JsReferenceIdentifier> for FormatJsReferenceIdentifier {
     fn fmt_fields(&self, node: &JsReferenceIdentifier, f: &mut JsFormatter) -> FormatResult<()> {

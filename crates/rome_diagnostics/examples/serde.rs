@@ -53,6 +53,6 @@ fn from_str(input: &str) -> Result<serde_json::Value> {
 
 pub fn main() {
     if let Err(err) = from_str("{\"syntax_error\"") {
-        EnvConsole::default().error(markup!({ PrintDiagnostic(&err) }));
+        EnvConsole::default().error(markup!({ PrintDiagnostic::verbose(&err) }));
     };
 }

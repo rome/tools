@@ -7,7 +7,7 @@ use rome_js_syntax::JsDebuggerStatement;
 use rome_js_syntax::JsDebuggerStatementFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsDebuggerStatement;
+pub(crate) struct FormatJsDebuggerStatement;
 
 impl FormatNodeRule<JsDebuggerStatement> for FormatJsDebuggerStatement {
     fn fmt_fields(&self, node: &JsDebuggerStatement, f: &mut JsFormatter) -> FormatResult<()> {

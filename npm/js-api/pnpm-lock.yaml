@@ -1,17 +1,17 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@rometools/backend-jsonrpc': ../backend-jsonrpc
+  '@rometools/wasm-bundler': ../wasm-bundler
   '@rometools/wasm-nodejs': ../wasm-nodejs
-  rome: ../rome
+  '@rometools/wasm-web': ../wasm-web
   typescript: ^4.8.2
   vite: ^3.0.8
   vitest: ^0.22.0
 
 devDependencies:
-  '@rometools/backend-jsonrpc': link:../backend-jsonrpc
+  '@rometools/wasm-bundler': link:../wasm-bundler
   '@rometools/wasm-nodejs': link:../wasm-nodejs
-  rome: link:../rome
+  '@rometools/wasm-web': link:../wasm-web
   typescript: 4.8.4
   vite: 3.1.4
   vitest: 0.22.1

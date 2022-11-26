@@ -18,7 +18,7 @@ use rome_analyze::{AnalysisFilter, RuleFilter};
 use rome_diagnostics::{serde::Diagnostic, DiagnosticExt};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
-use rome_js_parser::ParseDiagnostic;
+use rome_parser::diagnostic::ParseDiagnostic;
 use rome_rowan::{AstNode, Language as RowanLanguage, SendNode, SyntaxNode};
 use std::{any::type_name, panic::RefUnwindSafe, sync::RwLock};
 

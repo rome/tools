@@ -17,7 +17,7 @@ use rome_analyze::{
     AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Never, QueryMatch,
     RegistryVisitor, RuleCategories, RuleCategory, RuleFilter, RuleGroup,
 };
-use rome_diagnostics::{category, Applicability, Diagnostic, Severity};
+use rome_diagnostics::{category, Applicability, Diagnostic, DiagnosticExt, Severity};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::utils::rename::{RenameError, RenameSymbolExtensions};
@@ -241,22 +241,22 @@ fn lint(params: LintParams) -> LintResults {
                 .category()
                 .filter(|category| category.name().starts_with("lint/"))
                 .and_then(|category| params.rules.as_ref()?.get_severity_from_code(category))
-                .unwrap_or(Severity::Error);
+                .unwrap_or(Severity::Warning);
 
             if severity <= Severity::Error {
                 errors += 1;
             }
 
             if diagnostic_count <= params.max_diagnostics {
-                diagnostic.set_severity(severity);
-
                 for action in signal.actions() {
                     if !action.is_suppression() {
                         diagnostic = diagnostic.add_code_suggestion(action.into());
                     }
                 }
 
-                diagnostics.push(rome_diagnostics::serde::Diagnostic::new(diagnostic));
+                let error = diagnostic.with_severity(severity);
+
+                diagnostics.push(rome_diagnostics::serde::Diagnostic::new(error));
             }
         }
 

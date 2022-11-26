@@ -7,7 +7,7 @@ use rome_js_syntax::JsFormalParameterFields;
 use rome_js_syntax::{JsAnyBindingPattern, JsFormalParameter};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsFormalParameter;
+pub(crate) struct FormatJsFormalParameter;
 
 impl FormatNodeRule<JsFormalParameter> for FormatJsFormalParameter {
     fn fmt_fields(&self, node: &JsFormalParameter, f: &mut JsFormatter) -> FormatResult<()> {

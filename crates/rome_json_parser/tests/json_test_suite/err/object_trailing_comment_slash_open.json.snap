@@ -1,0 +1,85 @@
+---
+source: crates/rome_json_parser/tests/spec_test.rs
+expression: snapshot
+---
+
+## Input
+
+```json
+{"a":"b"}//
+```
+
+
+## AST
+
+```
+JsonRoot {
+    value: JsonArray {
+        l_brack_token: missing (required),
+        elements: JsonArrayElementList [
+            JsonObject {
+                l_curly_token: L_CURLY@0..1 "{" [] [],
+                json_member_list: JsonMemberList [
+                    JsonMember {
+                        key: JsonString {
+                            value_token: JSON_STRING_LITERAL@1..4 "\"a\"" [] [],
+                        },
+                        colon_token: COLON@4..5 ":" [] [],
+                        value: JsonString {
+                            value_token: JSON_STRING_LITERAL@5..8 "\"b\"" [] [],
+                        },
+                    },
+                ],
+                r_curly_token: R_CURLY@8..9 "}" [] [],
+            },
+            missing separator,
+            JsonUnknown {
+                items: [
+                    COMMENT@9..11 "//" [] [],
+                ],
+            },
+        ],
+        r_brack_token: missing (required),
+    },
+    eof_token: EOF@11..11 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..11
+  0: JSON_ARRAY@0..11
+    0: (empty)
+    1: JSON_ARRAY_ELEMENT_LIST@0..11
+      0: JSON_OBJECT@0..9
+        0: L_CURLY@0..1 "{" [] []
+        1: JSON_MEMBER_LIST@1..8
+          0: JSON_MEMBER@1..8
+            0: JSON_STRING@1..4
+              0: JSON_STRING_LITERAL@1..4 "\"a\"" [] []
+            1: COLON@4..5 ":" [] []
+            2: JSON_STRING@5..8
+              0: JSON_STRING_LITERAL@5..8 "\"b\"" [] []
+        2: R_CURLY@8..9 "}" [] []
+      1: (empty)
+      2: JSON_UNKNOWN@9..11
+        0: COMMENT@9..11 "//" [] []
+    2: (empty)
+  1: EOF@11..11 "" [] []
+
+```
+
+## Diagnostics
+
+```
+object_trailing_comment_slash_open.json:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × JSON standard does not allow comments.
+  
+  > 1 │ {"a":"b"}//
+      │          ^^
+  
+```
+
+

@@ -7,7 +7,7 @@ use rome_js_syntax::JsBreakStatement;
 use rome_js_syntax::JsBreakStatementFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsBreakStatement;
+pub(crate) struct FormatJsBreakStatement;
 
 impl FormatNodeRule<JsBreakStatement> for FormatJsBreakStatement {
     fn fmt_fields(&self, node: &JsBreakStatement, f: &mut JsFormatter) -> FormatResult<()> {

@@ -1,9 +1,7 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{
-    JsxAnyAttribute, JsxAnyElementName, JsxAttributeList, JsxOpeningElement, JsxSelfClosingElement,
-};
-use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
+use rome_js_syntax::{jsx_ext::JsxAnyElement, JsxAnyAttribute, JsxAnyElementName};
+use rome_rowan::AstNode;
 
 declare_rule! {
     /// Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, or the `onKeyPress` keyboard event.
@@ -54,26 +52,6 @@ declare_rule! {
         version: "10.0.0",
         name: "useKeyWithClickEvents",
         recommended: true,
-    }
-}
-
-declare_node_union! {
-    pub(crate) JsxAnyElement = JsxOpeningElement | JsxSelfClosingElement
-}
-
-impl JsxAnyElement {
-    fn attributes(&self) -> JsxAttributeList {
-        match self {
-            JsxAnyElement::JsxOpeningElement(element) => element.attributes(),
-            JsxAnyElement::JsxSelfClosingElement(element) => element.attributes(),
-        }
-    }
-
-    fn name(&self) -> SyntaxResult<JsxAnyElementName> {
-        match self {
-            JsxAnyElement::JsxOpeningElement(element) => element.name(),
-            JsxAnyElement::JsxSelfClosingElement(element) => element.name(),
-        }
     }
 }
 
