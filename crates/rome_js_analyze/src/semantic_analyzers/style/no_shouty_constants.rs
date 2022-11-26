@@ -66,6 +66,10 @@ fn is_id_and_string_literal_inner_text_equal(
         .as_js_string_literal_expression()?;
     let literal_text = literal.inner_string_text().ok()?;
 
+	if literal_text == "" {
+		return None;
+	}
+
     for (from_id, from_literal) in id_text.chars().zip(literal_text.chars()) {
         if from_id != from_literal {
             return None;
