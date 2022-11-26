@@ -840,7 +840,8 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         // In format mode the diagnostics have already been checked for errors
         // at this point, so they can just be dropped now since we don't want
         // to print syntax warnings for the format command
-        let result = if result.diagnostics.is_empty() || ctx.execution.is_format() {
+        let no_diagnostics = result.diagnostics.is_empty() && result.skipped_diagnostics == 0;
+        let result = if no_diagnostics || ctx.execution.is_format() {
             FileStatus::Success
         } else {
             FileStatus::Message(Message::Diagnostics {

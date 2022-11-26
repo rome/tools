@@ -557,7 +557,6 @@ fn upgrade_severity() {
 
     let messages = &console.out_buffer;
 
-    dbg!(&result);
     assert_eq!(
         messages
             .iter()
@@ -947,7 +946,8 @@ fn max_diagnostics_default() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    for i in 0..60 {
+    // Creates 40 diagnostics.
+    for i in 0..20 {
         let file_path = PathBuf::from(format!("src/file_{i}.js"));
         fs.insert(file_path, LINT_ERROR.as_bytes());
     }
@@ -981,11 +981,6 @@ fn max_diagnostics_default() {
 
     console.out_buffer = filtered_messages;
 
-    for i in 0..60 {
-        let file_path = format!("src/file_{i}.js");
-        fs.remove(Path::new(&file_path));
-    }
-
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "max_diagnostics_default",
@@ -1002,7 +997,7 @@ fn max_diagnostics() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    for i in 0..60 {
+    for i in 0..10 {
         let file_path = PathBuf::from(format!("src/file_{i}.js"));
         fs.insert(file_path, LINT_ERROR.as_bytes());
     }
@@ -1040,11 +1035,6 @@ fn max_diagnostics() {
     }
 
     console.out_buffer = filtered_messages;
-
-    for i in 0..60 {
-        let file_path = format!("src/file_{i}.js");
-        fs.remove(Path::new(&file_path));
-    }
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
