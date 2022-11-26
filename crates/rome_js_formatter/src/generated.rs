@@ -2769,7 +2769,7 @@ impl FormatRule<rome_js_syntax::TsSatisfiesExpression>
         FormatNodeRule::<rome_js_syntax::TsSatisfiesExpression>::fmt(self, node, f)
     }
 }
-impl AsFormat for rome_js_syntax::TsSatisfiesExpression {
+impl AsFormat<JsFormatContext> for rome_js_syntax::TsSatisfiesExpression {
     type Format<'a> = FormatRefWithRule<
         'a,
         rome_js_syntax::TsSatisfiesExpression,
@@ -2782,7 +2782,7 @@ impl AsFormat for rome_js_syntax::TsSatisfiesExpression {
         )
     }
 }
-impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsSatisfiesExpression {
+impl IntoFormat<JsFormatContext> for rome_js_syntax::TsSatisfiesExpression {
     type Format = FormatOwnedWithRule<
         rome_js_syntax::TsSatisfiesExpression,
         crate::ts::expressions::satisfies_expression::FormatTsSatisfiesExpression,
@@ -4838,7 +4838,7 @@ impl FormatRule<rome_js_syntax::TsSatisfiesAssignment>
         FormatNodeRule::<rome_js_syntax::TsSatisfiesAssignment>::fmt(self, node, f)
     }
 }
-impl AsFormat for rome_js_syntax::TsSatisfiesAssignment {
+impl AsFormat<JsFormatContext> for rome_js_syntax::TsSatisfiesAssignment {
     type Format<'a> = FormatRefWithRule<
         'a,
         rome_js_syntax::TsSatisfiesAssignment,
@@ -4851,7 +4851,7 @@ impl AsFormat for rome_js_syntax::TsSatisfiesAssignment {
         )
     }
 }
-impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsSatisfiesAssignment {
+impl IntoFormat<JsFormatContext> for rome_js_syntax::TsSatisfiesAssignment {
     type Format = FormatOwnedWithRule<
         rome_js_syntax::TsSatisfiesAssignment,
         crate::ts::assignments::satisfies_assignment::FormatTsSatisfiesAssignment,
