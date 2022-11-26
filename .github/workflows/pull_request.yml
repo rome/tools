@@ -65,6 +65,9 @@ jobs:
         uses: actions/checkout@v3
       - name: Install toolchain
         run: rustup show
+      - name: Install nextest
+        run: "curl -LsSf https://get.nexte.st/latest/linux | tar zxf - -C ${CARGO_HOME:-~/.cargo}/bin"
+
       - name: Cache
         uses: Swatinem/rust-cache@v2
         with:
@@ -76,10 +79,8 @@ jobs:
           args: --no-run --workspace --verbose
       - name: Run tests
         uses: actions-rs/cargo@v1
-        env:
-          RUST_TEST_THREADS: 1
         with:
-          command: test
+          command: nextest run
           args: --workspace --verbose
 
   test-node-api:
