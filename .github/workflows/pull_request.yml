@@ -72,6 +72,7 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           shared-key: "test"
+          cache-on-failure: true
       - name: Compile for tests
         uses: actions-rs/cargo@v1
         with:
@@ -80,8 +81,13 @@ jobs:
       - name: Run tests
         uses: actions-rs/cargo@v1
         with:
-          command: nextest run
-          args: --workspace --verbose
+          command: nextest
+          args: run --workspace --verbose
+      - name: Run doctests
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --doc
 
   test-node-api:
     name: Test node.js API
