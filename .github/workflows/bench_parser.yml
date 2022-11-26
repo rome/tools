@@ -36,6 +36,7 @@ jobs:
 
       - name: Cache
         uses: Swatinem/rust-cache@v2
+        shared-key: "release"
 
       - name: Install critcmp
         run: cargo install critcmp

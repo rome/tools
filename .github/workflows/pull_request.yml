@@ -27,6 +27,7 @@ jobs:
         run: rustup show
       - name: Cache
         uses: Swatinem/rust-cache@v2
+        shared-key: "debug"
       - name: Run rustfmt
         uses: actions-rs/cargo@v1
         with:
@@ -45,15 +46,16 @@ jobs:
         run: rustup show
       - name: Cache
         uses: Swatinem/rust-cache@v2
+        shared-key: "debug"
       - name: Run cargo check
         uses: actions-rs/cargo@v1
         with:
           command: check
           args: --workspace --all-targets --release
       - name: Run clippy
-        uses: actions-rs/cargo@v1
+        uses: actions-rs/clippy-check@v1
         with:
-          command: clippy
+          token: ${{ secrets.GITHUB_TOKEN }}
           args: --workspace --all-targets --verbose -- --deny warnings
 
   test:
@@ -67,6 +69,7 @@ jobs:
         run: rustup show
       - name: Cache
         uses: Swatinem/rust-cache@v2
+        shared-key: "debug"
       - name: Compile for tests
         uses: actions-rs/cargo@v1
         with:
@@ -93,6 +96,7 @@ jobs:
         run: rustup show
       - name: Cache
         uses: Swatinem/rust-cache@v2
+        shared-key: "wasm"
       - name: Build main binary
         uses: actions-rs/cargo@v1
         with:
@@ -141,6 +145,7 @@ jobs:
         run: rustup show
       - name: Cache
         uses: Swatinem/rust-cache@v2
+        shared-key: "doc"
       - name: Compile for tests
         uses: actions-rs/cargo@v1
       - name: Run doc command
@@ -159,6 +164,7 @@ jobs:
         run: rustup show
       - name: Cache
         uses: Swatinem/rust-cache@v2
+        shared-key: "debug"
       - name: Run the grammar codegen
         uses: actions-rs/cargo@v1
         with:

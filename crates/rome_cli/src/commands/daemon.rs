@@ -29,7 +29,7 @@ pub(crate) fn start(mut session: CliSession) -> Result<(), Termination> {
         });
     } else {
         session.app.console.log(markup! {
-            "The Rome server was already running"
+            "The Random change server was already running"
         });
     }
 
