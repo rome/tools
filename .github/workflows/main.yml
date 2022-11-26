@@ -71,9 +71,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Install toolchain
-        run: |
-          rustup set profile minimal
-          rustup show
+        run: rustup show
       - name: Cache
         uses: Swatinem/rust-cache@v2
         with:
@@ -133,9 +131,7 @@ jobs:
         with:
           submodules: recursive
       - name: Install toolchain
-        run: |
-          rustup set profile minimal
-          rustup show
+        run: rustup show
       - name: Cache
         uses: Swatinem/rust-cache@v2
         with:
