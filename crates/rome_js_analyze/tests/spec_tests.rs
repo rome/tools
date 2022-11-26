@@ -96,13 +96,13 @@ fn write_analysis_to_snapshot(
         let json = input_code[start + 11..end].trim();
 
         let v: serde_json::Value = serde_json::from_str(json).expect("must be a valid JSON");
-        
+
         //RuleKey needs 'static string, so we must leak them here
         let (group, rule) = parse_test_path(input_file);
         let group = Box::leak(Box::new(group.to_string()));
         let rule = Box::leak(Box::new(rule.to_string()));
         let rule_key = RuleKey::new(group, rule);
-        
+
         options.configuration.rules.push_rule(rule_key, v);
     }
 

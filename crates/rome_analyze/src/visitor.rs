@@ -6,8 +6,7 @@ use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
 use crate::{
     matcher::MatchQueryParams,
     registry::{NodeLanguage, Phases},
-    LanguageRoot, QueryMatch, QueryMatcher, ServiceBag, SignalEntry,
-    SuppressionCommentEmitter,
+    LanguageRoot, QueryMatch, QueryMatcher, ServiceBag, SignalEntry, SuppressionCommentEmitter,
 };
 
 /// Mutable context objects shared by all visitors

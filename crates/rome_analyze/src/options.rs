@@ -1,5 +1,5 @@
-use crate::AnalyzerSignal;
 use crate::signals::AnalyzerActionIter;
+use crate::AnalyzerSignal;
 use crate::{RuleKey, TextRange, TextSize};
 use rome_diagnostics::{Diagnostic, LineIndexBuf, Resource, SourceCode};
 use rome_rowan::Language;

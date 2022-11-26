@@ -1,8 +1,5 @@
 use std::{borrow, collections::BTreeSet};
 
-use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
-use rome_diagnostics::Error;
-use rustc_hash::FxHashSet;
 use crate::{
     context::RuleContext,
     matcher::{GroupKey, MatchQueryParams},
@@ -11,6 +8,9 @@ use crate::{
     AnalysisFilter, GroupCategory, QueryMatcher, Rule, RuleGroup, RuleKey, RuleMetadata,
     SignalEntry,
 };
+use rome_diagnostics::Error;
+use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
+use rustc_hash::FxHashSet;
 
 /// Defines all the phases that the [RuleRegistry] supports.
 #[repr(usize)]

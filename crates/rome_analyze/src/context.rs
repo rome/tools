@@ -1,14 +1,12 @@
-use crate::{
-    registry::RuleRoot, FromServices, Queryable, Rule, RuleKey, ServiceBag,
-};
+use crate::{registry::RuleRoot, FromServices, Queryable, Rule, RuleKey, ServiceBag};
 use rome_diagnostics::{Error, Result};
-use std::{ops::Deref, any::TypeId};
+use std::{any::TypeId, ops::Deref};
 
 type RuleQueryResult<R> = <<R as Rule>::Query as Queryable>::Output;
 type RuleServiceBag<R> = <<R as Rule>::Query as Queryable>::Services;
 
 #[derive(Clone)]
-pub struct ServiceBagRuleOptionsWrapper<R: Rule>(pub TypeId, pub R::Options);
+pub struct ServiceBagRuleOptionsWrapper<R: Rule>(pub R::Options);
 
 pub struct RuleContext<'a, R>
 where
@@ -85,7 +83,7 @@ where
     /// }
     /// ```
     pub fn options(&self) -> &R::Options {
-        let ServiceBagRuleOptionsWrapper(_, options) = self
+        let ServiceBagRuleOptionsWrapper(options) = self
             .bag
             .get_service::<ServiceBagRuleOptionsWrapper<R>>()
             .unwrap();

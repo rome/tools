@@ -4,8 +4,7 @@ use crate::{
     context::RuleContext,
     registry::{RuleLanguage, RuleRoot},
     rule::Rule,
-    AnalyzerDiagnostic, Queryable, RuleGroup, ServiceBag,
-    SuppressionCommentEmitter,
+    AnalyzerDiagnostic, Queryable, RuleGroup, ServiceBag, SuppressionCommentEmitter,
 };
 use rome_console::MarkupBuf;
 use rome_diagnostics::{
@@ -109,7 +108,9 @@ pub struct AnalyzerActionIter<L: Language> {
 
 impl<L: Language> Default for AnalyzerActionIter<L> {
     fn default() -> Self {
-        Self { analyzer_actions: vec![].into_iter() }
+        Self {
+            analyzer_actions: vec![].into_iter(),
+        }
     }
 }
 
@@ -287,8 +288,7 @@ where
     }
 
     fn actions(&self) -> AnalyzerActionIter<RuleLanguage<R>> {
-        let ctx =
-            RuleContext::new(&self.query_result, self.root, self.services).ok();
+        let ctx = RuleContext::new(&self.query_result, self.root, self.services).ok();
         if let Some(ctx) = ctx {
             let mut actions = Vec::new();
             if let Some(action) = R::action(&ctx, &self.state) {

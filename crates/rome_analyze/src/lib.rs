@@ -26,7 +26,6 @@ pub use crate::categories::{
 };
 pub use crate::diagnostics::AnalyzerDiagnostic;
 use crate::diagnostics::SuppressionDiagnostic;
-pub use rule::DeserializableRuleOptions;
 pub use crate::matcher::{InspectMatcher, MatchQueryParams, QueryMatcher, RuleKey, SignalEntry};
 pub use crate::options::{AnalyzerConfiguration, AnalyzerOptions, AnalyzerRules};
 pub use crate::query::{Ast, QueryKey, QueryMatch, Queryable};
@@ -43,6 +42,8 @@ use crate::signals::DiagnosticSignal;
 pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
 pub use crate::syntax::SyntaxVisitor;
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
+pub use rule::DeserializableRuleOptions;
+
 use rome_console::markup;
 use rome_diagnostics::{
     category, Applicability, Diagnostic, DiagnosticExt, DiagnosticTags, FileId,

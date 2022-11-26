@@ -344,9 +344,9 @@ pub trait Rule: RuleMeta + Sized {
         ctx: &RuleContext<Self>,
         text_range: &TextRange,
         apply_suppression_comment: SuppressionCommentEmitter<RuleLanguage<Self>>,
-    ) -> Option<SuppressAction<RuleLanguage<Self>>> 
-    where 
-        Self: 'static
+    ) -> Option<SuppressAction<RuleLanguage<Self>>>
+    where
+        Self: 'static,
     {
         // if the rule belongs to `Lint`, we auto generate an action to suppress the rule
         if <Self::Group as RuleGroup>::Category::CATEGORY == RuleCategory::Lint {

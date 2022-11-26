@@ -3,9 +3,9 @@ use rome_analyze::context::ServiceBagRuleOptionsWrapper;
 use rome_analyze::options::OptionsDeserializationDiagnostic;
 use rome_analyze::{
     AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal, ControlFlow,
-    InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry, Phases, RuleAction,
-    RuleRegistry, ServiceBag, SuppressionCommentEmitterPayload, SuppressionKind, SyntaxVisitor,
-    DeserializableRuleOptions
+    DeserializableRuleOptions, InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry,
+    Phases, RuleAction, RuleRegistry, ServiceBag, SuppressionCommentEmitterPayload,
+    SuppressionKind, SyntaxVisitor,
 };
 use rome_aria::{AriaProperties, AriaRoles};
 use rome_diagnostics::{category, FileId};
@@ -85,9 +85,8 @@ impl<'a, L: rome_rowan::Language + Default> rome_analyze::RegistryVisitor<L>
             <R::Options as Default>::default()
         };
 
-        let id = std::any::TypeId::of::<R>();
         self.services
-            .insert_service(ServiceBagRuleOptionsWrapper::<R>(id, options));
+            .insert_service(ServiceBagRuleOptionsWrapper::<R>(options));
     }
 }
 

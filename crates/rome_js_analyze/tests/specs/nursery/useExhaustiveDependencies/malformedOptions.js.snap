@@ -11,7 +11,7 @@ expression: malformedOptions.js
 ```
 lint/configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Errors while reading options for rule useExhaustiveDependencies: 
+  ! Errors while reading options for rule useExhaustiveDependencies: 
      unknown field `hook`, expected `hooks` or `stables`
   
 
