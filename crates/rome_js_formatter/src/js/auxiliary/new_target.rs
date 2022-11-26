@@ -6,7 +6,7 @@ use rome_js_syntax::NewTargetFields;
 use rome_js_syntax::{JsSyntaxNode, NewTarget};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatNewTarget;
+pub(crate) struct FormatNewTarget;
 
 impl FormatNodeRule<NewTarget> for FormatNewTarget {
     fn fmt_fields(&self, node: &NewTarget, f: &mut JsFormatter) -> FormatResult<()> {

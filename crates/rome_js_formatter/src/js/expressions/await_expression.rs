@@ -10,7 +10,7 @@ use rome_js_syntax::{JsAwaitExpression, JsSyntaxNode};
 use rome_js_syntax::{JsAwaitExpressionFields, JsSyntaxKind};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsAwaitExpression;
+pub(crate) struct FormatJsAwaitExpression;
 
 impl FormatNodeRule<JsAwaitExpression> for FormatJsAwaitExpression {
     fn fmt_fields(&self, node: &JsAwaitExpression, f: &mut JsFormatter) -> FormatResult<()> {

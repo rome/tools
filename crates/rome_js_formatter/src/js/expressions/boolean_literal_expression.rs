@@ -6,7 +6,7 @@ use rome_js_syntax::JsBooleanLiteralExpressionFields;
 use rome_js_syntax::{JsBooleanLiteralExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsBooleanLiteralExpression;
+pub(crate) struct FormatJsBooleanLiteralExpression;
 
 impl FormatNodeRule<JsBooleanLiteralExpression> for FormatJsBooleanLiteralExpression {
     fn fmt_fields(

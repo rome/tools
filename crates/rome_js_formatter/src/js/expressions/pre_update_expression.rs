@@ -9,7 +9,7 @@ use rome_js_syntax::{
 use rome_rowan::match_ast;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsPreUpdateExpression;
+pub(crate) struct FormatJsPreUpdateExpression;
 
 impl FormatNodeRule<JsPreUpdateExpression> for FormatJsPreUpdateExpression {
     fn fmt_fields(&self, node: &JsPreUpdateExpression, f: &mut JsFormatter) -> FormatResult<()> {

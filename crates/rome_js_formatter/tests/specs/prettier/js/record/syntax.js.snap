@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: js/record/syntax.js
+  test_file: "js\\record\\syntax.js"
 ---
 
 # Input
@@ -68,14 +68,7 @@ info:
 ```
 syntax.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × expected a statement but instead found '#'
-  
-  > 1 │ #{}
-      │ ^
-    2 │ #{ a: 1, b: 2 }
-    3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
-  
-  i Expected a statement here
+  × expected `!` following a `#`, but found none
   
   > 1 │ #{}
       │ ^
@@ -259,15 +252,6 @@ syntax.js:3:30 parse ━━━━━━━━━━━━━━━━━━━�
   > 3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
       │                              ^
     4 │ 
-  
-syntax.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `!` following a `#`, but found none
-  
-  > 1 │ #{}
-      │ ^
-    2 │ #{ a: 1, b: 2 }
-    3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
   
 
 ```

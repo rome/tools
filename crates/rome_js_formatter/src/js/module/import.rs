@@ -7,7 +7,7 @@ use rome_js_syntax::JsImport;
 use rome_js_syntax::JsImportFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsImport;
+pub(crate) struct FormatJsImport;
 
 impl FormatNodeRule<JsImport> for FormatJsImport {
     fn fmt_fields(&self, node: &JsImport, f: &mut JsFormatter) -> FormatResult<()> {

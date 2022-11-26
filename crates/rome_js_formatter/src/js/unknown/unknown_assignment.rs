@@ -3,7 +3,7 @@ use crate::FormatUnknownNodeRule;
 use rome_js_syntax::{JsSyntaxNode, JsUnknownAssignment};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsUnknownAssignment;
+pub(crate) struct FormatJsUnknownAssignment;
 
 impl FormatUnknownNodeRule<JsUnknownAssignment> for FormatJsUnknownAssignment {}
 

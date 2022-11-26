@@ -10,7 +10,7 @@ use rome_js_syntax::{
 use rome_rowan::{declare_node_union, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsComputedMemberExpression;
+pub(crate) struct FormatJsComputedMemberExpression;
 
 impl FormatNodeRule<JsComputedMemberExpression> for FormatJsComputedMemberExpression {
     fn fmt_fields(

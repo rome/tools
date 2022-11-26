@@ -12,7 +12,7 @@ use rome_js_syntax::{
 use rome_rowan::{declare_node_union, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsFunctionDeclaration;
+pub(crate) struct FormatJsFunctionDeclaration;
 
 impl FormatNodeRule<JsFunctionDeclaration> for FormatJsFunctionDeclaration {
     fn fmt_fields(&self, node: &JsFunctionDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
@@ -30,7 +30,7 @@ declare_node_union! {
 }
 
 #[derive(Copy, Clone, Debug, Default)]
-pub struct FormatFunctionOptions {
+pub(crate) struct FormatFunctionOptions {
     pub call_argument_layout: Option<GroupedCallArgumentLayout>,
     pub body_cache_mode: FunctionBodyCacheMode,
 }

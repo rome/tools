@@ -2,7 +2,7 @@ use crate::prelude::*;
 use rome_js_syntax::JsSwitchCaseList;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsSwitchCaseList;
+pub(crate) struct FormatJsSwitchCaseList;
 
 impl FormatRule<JsSwitchCaseList> for FormatJsSwitchCaseList {
     type Context = JsFormatContext;

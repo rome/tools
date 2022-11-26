@@ -5,7 +5,7 @@ use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::{JsBinaryExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsBinaryExpression;
+pub(crate) struct FormatJsBinaryExpression;
 
 impl FormatNodeRule<JsBinaryExpression> for FormatJsBinaryExpression {
     fn fmt_fields(

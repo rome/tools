@@ -1,4 +1,3 @@
-use crate::parser::expected_any;
 use crate::prelude::*;
 use crate::span::Span;
 use crate::syntax::class::parse_initializer_clause;
@@ -12,6 +11,7 @@ use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{JsParser, ParsedSyntax};
 use rome_js_syntax::{JsSyntaxKind::*, *};
+use rome_parser::diagnostic::expected_any;
 use rome_rowan::SyntaxKind as SyntaxKindTrait;
 
 pub(crate) fn parse_binding_pattern(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {

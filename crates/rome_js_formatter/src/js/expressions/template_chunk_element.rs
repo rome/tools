@@ -5,7 +5,7 @@ use rome_js_syntax::{JsSyntaxToken, JsTemplateChunkElement, TsTemplateChunkEleme
 use rome_rowan::{declare_node_union, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsTemplateChunkElement;
+pub(crate) struct FormatJsTemplateChunkElement;
 
 impl FormatNodeRule<JsTemplateChunkElement> for FormatJsTemplateChunkElement {
     fn fmt_fields(

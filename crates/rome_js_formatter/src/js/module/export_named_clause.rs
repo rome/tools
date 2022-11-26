@@ -7,7 +7,7 @@ use rome_js_syntax::JsExportNamedClause;
 use rome_js_syntax::JsExportNamedClauseFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsExportNamedClause;
+pub(crate) struct FormatJsExportNamedClause;
 
 impl FormatNodeRule<JsExportNamedClause> for FormatJsExportNamedClause {
     fn fmt_fields(&self, node: &JsExportNamedClause, f: &mut JsFormatter) -> FormatResult<()> {

@@ -21,12 +21,12 @@ use rome_js_syntax::{
 use rome_rowan::{SyntaxNodeOptionExt, SyntaxResult};
 
 #[derive(Debug, Copy, Clone, Default)]
-pub struct FormatJsArrowFunctionExpression {
+pub(crate) struct FormatJsArrowFunctionExpression {
     options: FormatJsArrowFunctionExpressionOptions,
 }
 
 #[derive(Debug, Clone, Copy, Default)]
-pub struct FormatJsArrowFunctionExpressionOptions {
+pub(crate) struct FormatJsArrowFunctionExpressionOptions {
     pub assignment_layout: Option<AssignmentLikeLayout>,
     pub call_arg_layout: Option<GroupedCallArgumentLayout>,
     pub body_cache_mode: FunctionBodyCacheMode,

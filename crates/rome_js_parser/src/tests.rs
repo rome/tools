@@ -1,6 +1,7 @@
-use crate::{markup, parse, parse_module, test_utils::assert_errors_are_absent, Parse};
+use crate::{parse, parse_module, test_utils::assert_errors_are_absent, Parse};
 use expect_test::expect_file;
 use rome_console::fmt::{Formatter, Termcolor};
+use rome_console::markup;
 use rome_diagnostics::location::FileId;
 use rome_diagnostics::DiagnosticExt;
 use rome_diagnostics::PrintDiagnostic;

@@ -6,7 +6,7 @@ use rome_js_syntax::JsWithStatement;
 use rome_js_syntax::JsWithStatementFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsWithStatement;
+pub(crate) struct FormatJsWithStatement;
 
 impl FormatNodeRule<JsWithStatement> for FormatJsWithStatement {
     fn fmt_fields(&self, node: &JsWithStatement, f: &mut JsFormatter) -> FormatResult<()> {

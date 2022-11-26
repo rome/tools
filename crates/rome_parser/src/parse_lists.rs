@@ -6,8 +6,6 @@ use rome_rowan::SyntaxKind;
 
 /// Use this trait to parse simple lists that don't have particular requirements.
 ///
-/// In order to use this trait, you need to implement the [List] trait too.
-///
 /// ```rust,ignore
 /// use rome_js_parser::{ParseSeparatedList};
 ///
@@ -75,8 +73,6 @@ pub trait ParseNodeList {
 
 /// A trait to parse lists that will be separated by a recurring element
 ///
-/// In order to use this trait, you need to implement the [List] trait too.
-///
 /// ```rust,ignore
 /// use rome_js_parser::{ParseSeparatedList};
 ///
@@ -128,7 +124,7 @@ pub trait ParseSeparatedList {
     /// Method called at each iteration of the the loop and checks if the expected
     /// separator is present.
     ///
-    /// If present, it [parses](Self::parse_separating_element) it and continues with loop.
+    /// If present, it [parses](Self::separating_element_kind) it and continues with loop.
     /// If not present, it adds a missing marker.
     fn expect_separator(&mut self, p: &mut Self::Parser<'_>) -> bool {
         p.expect(self.separating_element_kind())

@@ -5,7 +5,7 @@ use rome_js_syntax::JsTryFinallyStatement;
 use rome_js_syntax::JsTryFinallyStatementFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsTryFinallyStatement;
+pub(crate) struct FormatJsTryFinallyStatement;
 
 impl FormatNodeRule<JsTryFinallyStatement> for FormatJsTryFinallyStatement {
     fn fmt_fields(&self, node: &JsTryFinallyStatement, f: &mut JsFormatter) -> FormatResult<()> {

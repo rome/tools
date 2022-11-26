@@ -79,12 +79,15 @@ mod builder;
 mod map;
 
 use self::{builder::CommentsBuilderVisitor, map::CommentsMap};
-use crate::{TextSize, TransformSourceMap};
+use crate::formatter::Formatter;
+use crate::{buffer::Buffer, write};
+use crate::{CstFormatContext, FormatResult, FormatRule, TextSize, TransformSourceMap};
 use rome_rowan::syntax::SyntaxElementKey;
 use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTriviaPieceComments};
 use rustc_hash::FxHashSet;
 #[cfg(debug_assertions)]
 use std::cell::{Cell, RefCell};
+use std::marker::PhantomData;
 use std::rc::Rc;
 
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]
@@ -1140,5 +1143,33 @@ impl<L: Language> std::fmt::Debug for DebugComment<'_, L> {
                 .field("comment", comment)
                 .finish(),
         }
+    }
+}
+
+/// Formats a comment as it was in the source document
+pub struct FormatPlainComment<C> {
+    context: PhantomData<C>,
+}
+
+impl<C> Default for FormatPlainComment<C> {
+    fn default() -> Self {
+        FormatPlainComment {
+            context: PhantomData,
+        }
+    }
+}
+
+impl<C> FormatRule<SourceComment<C::Language>> for FormatPlainComment<C>
+where
+    C: CstFormatContext,
+{
+    type Context = C;
+
+    fn fmt(
+        &self,
+        item: &SourceComment<C::Language>,
+        f: &mut Formatter<Self::Context>,
+    ) -> FormatResult<()> {
+        write!(f, [item.piece.as_piece()])
     }
 }

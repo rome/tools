@@ -5,7 +5,7 @@ use rome_js_syntax::{JsAnyStatement, JsDefaultClauseFields};
 use rome_rowan::AstNodeList;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsDefaultClause;
+pub(crate) struct FormatJsDefaultClause;
 
 impl FormatNodeRule<JsDefaultClause> for FormatJsDefaultClause {
     fn fmt_fields(&self, node: &JsDefaultClause, f: &mut JsFormatter) -> FormatResult<()> {

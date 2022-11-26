@@ -5,7 +5,7 @@ use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::{JsInstanceofExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsInstanceofExpression;
+pub(crate) struct FormatJsInstanceofExpression;
 
 impl FormatNodeRule<JsInstanceofExpression> for FormatJsInstanceofExpression {
     fn fmt_fields(

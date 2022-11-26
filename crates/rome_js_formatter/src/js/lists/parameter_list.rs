@@ -9,7 +9,7 @@ use rome_js_syntax::{
 use rome_rowan::{declare_node_union, AstSeparatedListNodesIterator, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsParameterList;
+pub(crate) struct FormatJsParameterList;
 
 impl FormatRule<JsParameterList> for FormatJsParameterList {
     type Context = JsFormatContext;

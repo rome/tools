@@ -9,7 +9,7 @@ use rome_js_syntax::{JsUnaryExpressionFields, JsUnaryOperator};
 use rome_rowan::match_ast;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsUnaryExpression;
+pub(crate) struct FormatJsUnaryExpression;
 
 impl FormatNodeRule<JsUnaryExpression> for FormatJsUnaryExpression {
     fn fmt_fields(&self, node: &JsUnaryExpression, f: &mut JsFormatter) -> FormatResult<()> {
