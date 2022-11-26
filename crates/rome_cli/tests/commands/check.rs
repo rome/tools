@@ -728,10 +728,7 @@ fn fs_error_dereferenced_symlink() {
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
-        #[cfg(target_family = "unix")]
-        "fs_error_dereferenced_symlink_unix",
-        #[cfg(target_os = "windows")]
-        "fs_error_dereferenced_symlink_windows",
+        "fs_error_dereferenced_symlink",
         fs,
         console,
         result,
@@ -789,10 +786,7 @@ fn fs_error_infinite_symlink_exapansion() {
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
-        #[cfg(target_family = "unix")]
-        "fs_error_infinite_symlink_exapansion_unix",
-        #[cfg(target_os = "windows")]
-        "fs_error_infinite_symlink_exapansion_windows",
+        "fs_error_infinite_symlink_expansion",
         fs,
         console,
         result,

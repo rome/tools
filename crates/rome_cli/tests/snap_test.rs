@@ -128,10 +128,7 @@ fn redact_snapshot(input: &str) -> Cow<'_, str> {
         replace(&mut output, &current_exe, "rome");
     }
 
-    // Replace the path to the temporary directory with "<TEMP_DIR>"
-    let temp_dir = temp_dir().display().to_string();
-    let temp_dir = temp_dir.trim_end_matches(MAIN_SEPARATOR);
-    replace(&mut output, temp_dir, "<TEMP_DIR>");
+    output = replace_temp_dir(output);
 
     // Normalize Windows-specific path separators to "/"
     if cfg!(windows) {
@@ -171,6 +168,46 @@ fn redact_snapshot(input: &str) -> Cow<'_, str> {
     }
 
     output
+}
+
+/// Replace the path to the temporary directory with "<TEMP_DIR>"
+/// And normalizes the count of `-` at the end of the diagnostic
+fn replace_temp_dir(input: Cow<str>) -> Cow<str> {
+    let mut result = String::new();
+    let mut rest = input.as_ref();
+
+    let temp_dir = temp_dir().display().to_string();
+    let temp_dir = temp_dir.trim_end_matches(MAIN_SEPARATOR);
+
+    while let Some(index) = rest.find(temp_dir) {
+        let (before, after) = rest.split_at(index);
+
+        result.push_str(before);
+        result.push_str("<TEMP_DIR>");
+
+        let after = after.split_at(temp_dir.len()).1;
+        let header_line = after.lines().next().unwrap();
+
+        match header_line.split_once('\u{2501}') {
+            Some((between_temp_and_line, _)) => {
+                // Diagnostic header line, normalize the horizontal line
+                result.push_str(between_temp_and_line);
+                result.push_str(&"\u{2501}".repeat(20));
+                rest = after.split_at(header_line.len()).1;
+            }
+            None => {
+                // Not a header line, only replace tempdir
+                rest = after;
+            }
+        }
+    }
+
+    if result.is_empty() {
+        input
+    } else {
+        result.push_str(rest);
+        Cow::Owned(result)
+    }
 }
 
 fn replace(input: &mut Cow<str>, from: &str, to: &str) {
