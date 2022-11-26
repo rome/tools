@@ -7,7 +7,7 @@ use rome_js_syntax::JsContinueStatement;
 use rome_js_syntax::JsContinueStatementFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsContinueStatement;
+pub(crate) struct FormatJsContinueStatement;
 
 impl FormatNodeRule<JsContinueStatement> for FormatJsContinueStatement {
     fn fmt_fields(&self, node: &JsContinueStatement, f: &mut JsFormatter) -> FormatResult<()> {

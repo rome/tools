@@ -28,7 +28,7 @@ impl Token {
 
 /// An extremely fast, lookup table based, lossless ECMAScript lexer
 #[derive(Debug)]
-pub struct Lexer<'src> {
+pub(crate) struct Lexer<'src> {
     /// Source text
     source: &'src str,
 
@@ -65,7 +65,7 @@ impl<'src> Lexer<'src> {
     ///
     /// ## Return
     /// Returns its kind and any potential error.
-    fn next_token(&mut self) -> Option<Token> {
+    pub(crate) fn next_token(&mut self) -> Option<Token> {
         let start = self.text_position();
 
         match self.current_byte() {
@@ -559,14 +559,16 @@ impl<'src> Lexer<'src> {
                 // * quotation mark: (U+0022),
                 // * reverse solidus (U+005C),
                 // * and the **control characters U+0000 to U+001F** <- This
-                ERR if matches!(state, LexStringState::InString) && chr <= 0x1f => {
+                ERR | WHS if matches!(state, LexStringState::InString) && chr <= 0x1f => {
                     self.diagnostics.push(
                         ParseDiagnostic::new(
                             self.file_id,
-                            format!("Unescaped ASCII control character {chr:#x}."),
+                            format!(
+                                "Control character '\\u{chr:04x}' is not allowed in string literals."
+                            ),
                             self.text_position()..self.text_position() + TextSize::from(1),
                         )
-                        .hint("Escape the ASCII control character."),
+                        .hint(format!("Use the escape sequence '\\u{chr:04x}' instead.")),
                     );
                     state = LexStringState::InvalidEscapeSequence;
                 }
@@ -662,7 +664,6 @@ impl<'src> Lexer<'src> {
 
         let mut keyword = KeywordMatcher::from_byte(first);
 
-        let start = self.text_position();
         self.advance_byte_or_char(first);
 
         while let Some(byte) = self.current_byte() {
@@ -691,14 +692,7 @@ impl<'src> Lexer<'src> {
             KeywordMatcher::Null => NULL_KW,
             KeywordMatcher::True => TRUE_KW,
             KeywordMatcher::False => FALSE_KW,
-            _ => {
-                self.diagnostics.push(ParseDiagnostic::new(
-                    self.file_id,
-                    "The JSON standard doesn't allow identifiers",
-                    start..self.text_position(),
-                ));
-                IDENT
-            }
+            _ => IDENT,
         }
     }
 

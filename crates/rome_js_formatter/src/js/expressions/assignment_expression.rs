@@ -14,7 +14,7 @@ use rome_js_syntax::{
 use rome_rowan::{match_ast, AstNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsAssignmentExpression;
+pub(crate) struct FormatJsAssignmentExpression;
 
 impl FormatNodeRule<JsAssignmentExpression> for FormatJsAssignmentExpression {
     fn fmt_fields(&self, node: &JsAssignmentExpression, f: &mut JsFormatter) -> FormatResult<()> {

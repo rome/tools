@@ -10,27 +10,56 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonArray {
+        l_brack_token: L_BRACK@0..1 "[" [] [],
+        elements: JsonArrayElementList [
+            JsonString {
+                value_token: JSON_STRING_LITERAL@1..4 "\"x\"" [] [],
+            },
+            COMMA@4..6 "," [] [Whitespace(" ")],
+            JsonUnknown {
+                items: [
+                    IDENT@6..11 "truth" [] [],
+                ],
+            },
+        ],
+        r_brack_token: R_BRACK@11..12 "]" [] [],
+    },
+    eof_token: EOF@12..12 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..12
+  0: JSON_ARRAY@0..12
+    0: L_BRACK@0..1 "[" [] []
+    1: JSON_ARRAY_ELEMENT_LIST@1..11
+      0: JSON_STRING@1..4
+        0: JSON_STRING_LITERAL@1..4 "\"x\"" [] []
+      1: COMMA@4..6 "," [] [Whitespace(" ")]
+      2: JSON_UNKNOWN@6..11
+        0: IDENT@6..11 "truth" [] []
+    2: R_BRACK@11..12 "]" [] []
+  1: EOF@12..12 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
 object_bad_value.json:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × The JSON standard doesn't allow identifiers
+  × String values must be double quoted.
   
   > 1 │ ["x", truth]
       │       ^^^^^
   
 ```
 
-## Tokens
-
-```
-L_BRACK: `[` (0..1)
-JSON_STRING_LITERAL: `"x"` (1..4)
-COMMA: `,` (4..5)
-WHITESPACE: ` ` (5..6)
-IDENT: `truth` (6..11)
-R_BRACK: `]` (11..12)
-EOF: `` (12..12)
-```
 

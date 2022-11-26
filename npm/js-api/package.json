@@ -7,6 +7,8 @@
     "format": "cargo rome-cli-dev format ./ --write",
     "ci": "cargo rome-cli-dev ci ./src && tsc --noEmit",
     "check": "cargo rome-cli-dev check ./src && tsc --noEmit",
+    "build:wasm-bundler-dev": "wasm-pack build --out-dir ../../npm/wasm-bundler --target bundler --dev --scope rometools ../../crates/rome_wasm",
+    "build:wasm-bundler": "wasm-pack build --out-dir ../../npm/wasm-bundler --target bundler --release --scope rometools ../../crates/rome_wasm",
     "build:wasm-node-dev": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --dev --scope rometools ../../crates/rome_wasm",
     "build:wasm-node": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --release --scope rometools ../../crates/rome_wasm",
     "build:wasm-web-dev": "wasm-pack build --out-dir ../../npm/wasm-web --target web --dev --scope rometools ../../crates/rome_wasm",
@@ -40,23 +42,23 @@
     "typescript": "^4.8.2",
     "vitest": "^0.22.0",
     "vite": "^3.0.8",
+    "@rometools/wasm-bundler": "../wasm-bundler",
     "@rometools/wasm-nodejs": "../wasm-nodejs",
-    "@rometools/backend-jsonrpc": "../backend-jsonrpc",
-    "rome": "../rome"
+    "@rometools/wasm-web": "../wasm-web"
   },
   "peerDependencies": {
-    "rome": "^10.0.0",
+    "@rometools/wasm-bundler": "^10.0.0",
     "@rometools/wasm-nodejs": "^10.0.0",
-    "@rometools/backend-jsonrpc": "^10.0.0"
+    "@rometools/wasm-web": "^10.0.0"
   },
   "peerDependenciesMeta": {
-    "rome": {
-      "optional": false
+    "@rometools/wasm-bundler": {
+      "optional": true
     },
     "@rometools/wasm-nodejs": {
       "optional": true
     },
-    "@rometools/backend-jsonrpc": {
+    "@rometools/wasm-web": {
       "optional": true
     }
   }

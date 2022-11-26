@@ -2,7 +2,7 @@ use crate::prelude::*;
 use rome_js_syntax::{JsAnyModuleItem, JsAnyStatement, JsModuleItemList};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsModuleItemList;
+pub(crate) struct FormatJsModuleItemList;
 
 impl FormatRule<JsModuleItemList> for FormatJsModuleItemList {
     type Context = JsFormatContext;

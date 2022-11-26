@@ -4,7 +4,8 @@ use rome_diagnostics::display::PrintDiagnostic;
 use rome_diagnostics::termcolor;
 use rome_diagnostics::DiagnosticExt;
 use rome_diagnostics::FileId;
-use rome_json_parser::Lexer;
+use rome_json_parser::parse_json;
+use rome_rowan::SyntaxKind;
 use std::fmt::Write;
 use std::fs;
 use std::path::Path;
@@ -35,14 +36,31 @@ pub fn run(test_case: &str, _snapshot_name: &str, test_directory: &str, outcome:
     let content = fs::read_to_string(test_case_path)
         .expect("Expected test path to be a readable file in UTF8 encoding");
 
-    let mut lexer = Lexer::from_str(&content, FileId::zero());
-
-    let tokens: Vec<_> = lexer.by_ref().collect();
-    let diagnostics = lexer.finish();
+    let parsed = parse_json(&content, FileId::zero());
+    let formatted_ast = format!("{:#?}", parsed.tree());
 
     let mut snapshot = String::new();
     writeln!(snapshot, "\n## Input\n\n```json\n{content}\n```\n\n").unwrap();
 
+    writeln!(
+        snapshot,
+        r#"## AST
+
+```
+{formatted_ast}
+```
+
+## CST 
+
+```
+{:#?}
+```
+"#,
+        parsed.syntax()
+    )
+    .unwrap();
+
+    let diagnostics = parsed.diagnostics();
     if !diagnostics.is_empty() {
         let mut diagnostics_buffer = termcolor::Buffer::no_color();
 
@@ -75,21 +93,25 @@ pub fn run(test_case: &str, _snapshot_name: &str, test_directory: &str, outcome:
         writeln!(snapshot, "```\n").unwrap();
     }
 
-    writeln!(snapshot, "## Tokens").unwrap();
-    writeln!(snapshot, "\n```").unwrap();
-
-    for token in tokens {
-        writeln!(
-            snapshot,
-            "{:?}: `{}` ({:?})",
-            token.kind(),
-            &content[token.range()],
-            token.range()
-        )
-        .unwrap();
+    match outcome {
+        ExpectedOutcome::Pass => {
+            let missing_required = formatted_ast.contains("missing (required)");
+            if missing_required
+                || parsed
+                    .syntax()
+                    .descendants()
+                    .any(|node| node.kind().is_unknown())
+            {
+                panic!("Parsed tree of a 'OK' test case should not contain any missing required children or unknown nodes");
+            }
+        }
+        ExpectedOutcome::Fail => {
+            if parsed.diagnostics().is_empty() {
+                panic!("Failing test must have diagnostics");
+            }
+        }
+        _ => {}
     }
-
-    writeln!(snapshot, "```").unwrap();
 
     insta::with_settings!({
         prepend_module_to_snapshot => false,

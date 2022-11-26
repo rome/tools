@@ -10,6 +10,48 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonArray {
+        l_brack_token: L_BRACK@0..1 "[" [] [],
+        elements: JsonArrayElementList [
+            JsonUnknown {
+                items: [
+                    ERROR_TOKEN@1..2 "\\" [] [],
+                    IDENT@2..7 "u000A" [] [],
+                ],
+            },
+            missing separator,
+            JsonString {
+                value_token: JSON_STRING_LITERAL@7..9 "\"\"" [] [],
+            },
+        ],
+        r_brack_token: R_BRACK@9..10 "]" [] [],
+    },
+    eof_token: EOF@10..10 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..10
+  0: JSON_ARRAY@0..10
+    0: L_BRACK@0..1 "[" [] []
+    1: JSON_ARRAY_ELEMENT_LIST@1..9
+      0: JSON_UNKNOWN@1..7
+        0: ERROR_TOKEN@1..2 "\\" [] []
+        1: IDENT@2..7 "u000A" [] []
+      1: (empty)
+      2: JSON_STRING@7..9
+        0: JSON_STRING_LITERAL@7..9 "\"\"" [] []
+    2: R_BRACK@9..10 "]" [] []
+  1: EOF@10..10 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -20,23 +62,15 @@ structure_uescaped_LF_before_string.json:1:2 parse ━━━━━━━━━�
   > 1 │ [\u000A""]
       │  ^
   
-structure_uescaped_LF_before_string.json:1:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+structure_uescaped_LF_before_string.json:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × The JSON standard doesn't allow identifiers
+  × expected `,` but instead found `""`
   
   > 1 │ [\u000A""]
-      │   ^^^^^
+      │        ^^
+  
+  i Remove ""
   
 ```
 
-## Tokens
-
-```
-L_BRACK: `[` (0..1)
-ERROR_TOKEN: `\` (1..2)
-IDENT: `u000A` (2..7)
-JSON_STRING_LITERAL: `""` (7..9)
-R_BRACK: `]` (9..10)
-EOF: `` (10..10)
-```
 

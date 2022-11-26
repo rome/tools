@@ -6,7 +6,7 @@ use rome_js_syntax::JsLiteralExportNameFields;
 use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsLiteralExportName;
+pub(crate) struct FormatJsLiteralExportName;
 
 impl FormatNodeRule<JsLiteralExportName> for FormatJsLiteralExportName {
     fn fmt_fields(&self, node: &JsLiteralExportName, f: &mut JsFormatter) -> FormatResult<()> {

@@ -10,9 +10,54 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonArray {
+        l_brack_token: L_BRACK@0..1 "[" [] [],
+        elements: JsonArrayElementList [
+            JsonUnknown {
+                items: [
+                    ERROR_TOKEN@1..17 "\"\\uD800\\uD800\\x\"" [] [],
+                ],
+            },
+        ],
+        r_brack_token: R_BRACK@17..18 "]" [] [],
+    },
+    eof_token: EOF@18..18 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..18
+  0: JSON_ARRAY@0..18
+    0: L_BRACK@0..1 "[" [] []
+    1: JSON_ARRAY_ELEMENT_LIST@1..17
+      0: JSON_UNKNOWN@1..17
+        0: ERROR_TOKEN@1..17 "\"\\uD800\\uD800\\x\"" [] []
+    2: R_BRACK@17..18 "]" [] []
+  1: EOF@18..18 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
+string_incomplete_surrogate_escape_invalid.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected an array, an object, or a literal but instead found '"\uD800\uD800\x"'
+  
+  > 1 │ ["\uD800\uD800\x"]
+      │  ^^^^^^^^^^^^^^^^
+  
+  i Expected an array, an object, or a literal here
+  
+  > 1 │ ["\uD800\uD800\x"]
+      │  ^^^^^^^^^^^^^^^^
+  
 string_incomplete_surrogate_escape_invalid.json:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid escape sequence
@@ -24,12 +69,4 @@ string_incomplete_surrogate_escape_invalid.json:1:15 parse ━━━━━━━
   
 ```
 
-## Tokens
-
-```
-L_BRACK: `[` (0..1)
-ERROR_TOKEN: `"\uD800\uD800\x"` (1..17)
-R_BRACK: `]` (17..18)
-EOF: `` (18..18)
-```
 

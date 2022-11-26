@@ -15,7 +15,7 @@ use crate::generate_configuration::generate_rules_configuration;
 #[cfg(feature = "schema")]
 use crate::generate_schema::generate_configuration_schema;
 use xtask_codegen::{
-    generate_analyzer, generate_ast, generate_formatter, generate_parser_tests, generate_tables,
+    generate_analyzer, generate_ast, generate_formatters, generate_parser_tests, generate_tables,
 };
 
 fn main() -> Result<()> {
@@ -29,7 +29,7 @@ fn main() -> Result<()> {
             Ok(())
         }
         "formatter" => {
-            generate_formatter();
+            generate_formatters();
             Ok(())
         }
         "test" => {
@@ -63,7 +63,7 @@ fn main() -> Result<()> {
             generate_tables()?;
             generate_grammar(args);
             generate_parser_tests(Mode::Overwrite)?;
-            generate_formatter();
+            generate_formatters();
             generate_analyzer()?;
             #[cfg(feature = "configuration")]
             generate_rules_configuration(Mode::Overwrite)?;

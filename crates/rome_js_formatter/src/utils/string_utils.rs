@@ -91,7 +91,7 @@ impl<'token> FormatLiteralStringToken<'token> {
     }
 }
 
-pub struct CleanedStringLiteralText<'a> {
+pub(crate) struct CleanedStringLiteralText<'a> {
     token: &'a JsSyntaxToken,
     text: Cow<'a, str>,
     width: usize,

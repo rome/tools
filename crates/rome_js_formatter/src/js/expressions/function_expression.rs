@@ -9,7 +9,7 @@ use rome_formatter::FormatRuleWithOptions;
 use rome_js_syntax::{JsFunctionExpression, JsSyntaxNode};
 
 #[derive(Debug, Copy, Clone, Default)]
-pub struct FormatJsFunctionExpression {
+pub(crate) struct FormatJsFunctionExpression {
     options: FormatFunctionOptions,
 }
 

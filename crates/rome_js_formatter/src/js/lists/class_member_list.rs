@@ -2,7 +2,7 @@ use crate::prelude::*;
 use rome_js_syntax::JsClassMemberList;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsClassMemberList;
+pub(crate) struct FormatJsClassMemberList;
 
 impl FormatRule<JsClassMemberList> for FormatJsClassMemberList {
     type Context = JsFormatContext;

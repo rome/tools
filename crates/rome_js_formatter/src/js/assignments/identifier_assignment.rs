@@ -6,7 +6,7 @@ use rome_js_syntax::{JsForOfStatement, JsIdentifierAssignmentFields};
 use rome_js_syntax::{JsIdentifierAssignment, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsIdentifierAssignment;
+pub(crate) struct FormatJsIdentifierAssignment;
 
 impl FormatNodeRule<JsIdentifierAssignment> for FormatJsIdentifierAssignment {
     fn fmt_fields(&self, node: &JsIdentifierAssignment, f: &mut JsFormatter) -> FormatResult<()> {

@@ -1,5 +1,4 @@
 use crate::lexer::TextSize;
-use crate::parser::{expected_any, expected_node, RecoveryResult};
 use crate::prelude::*;
 use crate::state::{EnterAmbientContext, ExportDefaultItem, ExportDefaultItemKind};
 use crate::syntax::binding::{
@@ -27,7 +26,9 @@ use crate::JsSyntaxFeature::TypeScript;
 use crate::{Absent, JsParser, ParseRecovery, ParsedSyntax, Present};
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::{JsSyntaxKind, TextRange, T};
+use rome_parser::diagnostic::{expected_any, expected_node};
 use rome_parser::parse_lists::ParseSeparatedList;
+use rome_parser::parse_recovery::RecoveryResult;
 use rome_parser::ParserProgress;
 use std::collections::HashMap;
 

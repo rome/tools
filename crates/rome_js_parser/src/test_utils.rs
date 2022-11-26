@@ -1,11 +1,11 @@
+use crate::Parse;
 use rome_console::fmt::{Formatter, Termcolor};
+use rome_console::markup;
 use rome_diagnostics::DiagnosticExt;
 use rome_diagnostics::{termcolor::Buffer, PrintDiagnostic};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode};
 use rome_rowan::{AstNode, SyntaxKind, SyntaxSlot};
 use std::{fmt::Debug, path::Path};
-
-use crate::{markup, Parse};
 
 /// This check is used in the parser test to ensure it doesn't emit
 /// unknown nodes without diagnostics, and in the analyzer tests to

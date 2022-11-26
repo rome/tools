@@ -6,7 +6,7 @@ use rome_js_syntax::JsModuleSource;
 use rome_js_syntax::JsModuleSourceFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsModuleSource;
+pub(crate) struct FormatJsModuleSource;
 
 impl FormatNodeRule<JsModuleSource> for FormatJsModuleSource {
     fn fmt_fields(&self, node: &JsModuleSource, f: &mut JsFormatter) -> FormatResult<()> {

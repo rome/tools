@@ -4,7 +4,7 @@ use crate::utils::format_class::FormatClass;
 use rome_js_syntax::JsClassExportDefaultDeclaration;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsClassExportDefaultDeclaration;
+pub(crate) struct FormatJsClassExportDefaultDeclaration;
 
 impl FormatNodeRule<JsClassExportDefaultDeclaration> for FormatJsClassExportDefaultDeclaration {
     fn fmt_fields(

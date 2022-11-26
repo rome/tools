@@ -3,7 +3,7 @@ use crate::prelude::*;
 use rome_js_syntax::{JsAnyObjectBindingPatternMember, JsObjectBindingPatternPropertyList};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsObjectBindingPatternPropertyList;
+pub(crate) struct FormatJsObjectBindingPatternPropertyList;
 
 impl FormatRule<JsObjectBindingPatternPropertyList> for FormatJsObjectBindingPatternPropertyList {
     type Context = JsFormatContext;

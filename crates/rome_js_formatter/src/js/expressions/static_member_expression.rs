@@ -12,7 +12,7 @@ use rome_js_syntax::{
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsStaticMemberExpression;
+pub(crate) struct FormatJsStaticMemberExpression;
 
 impl FormatNodeRule<JsStaticMemberExpression> for FormatJsStaticMemberExpression {
     fn fmt_fields(&self, node: &JsStaticMemberExpression, f: &mut JsFormatter) -> FormatResult<()> {

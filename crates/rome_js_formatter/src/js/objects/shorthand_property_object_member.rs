@@ -5,7 +5,7 @@ use rome_js_syntax::JsShorthandPropertyObjectMember;
 use rome_js_syntax::JsShorthandPropertyObjectMemberFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsShorthandPropertyObjectMember;
+pub(crate) struct FormatJsShorthandPropertyObjectMember;
 
 impl FormatNodeRule<JsShorthandPropertyObjectMember> for FormatJsShorthandPropertyObjectMember {
     fn fmt_fields(

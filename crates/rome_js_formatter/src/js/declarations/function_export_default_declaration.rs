@@ -5,7 +5,7 @@ use crate::js::declarations::function_declaration::FormatFunction;
 use rome_js_syntax::JsFunctionExportDefaultDeclaration;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsFunctionExportDefaultDeclaration;
+pub(crate) struct FormatJsFunctionExportDefaultDeclaration;
 
 impl FormatNodeRule<JsFunctionExportDefaultDeclaration>
     for FormatJsFunctionExportDefaultDeclaration

@@ -10,22 +10,39 @@ abc
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonUnknown {
+        items: [
+            IDENT@0..3 "abc" [] [],
+        ],
+    },
+    eof_token: EOF@3..3 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..3
+  0: JSON_UNKNOWN@0..3
+    0: IDENT@0..3 "abc" [] []
+  1: EOF@3..3 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
 string_single_string_no_double_quotes.json:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × The JSON standard doesn't allow identifiers
+  × String values must be double quoted.
   
   > 1 │ abc
       │ ^^^
   
 ```
 
-## Tokens
-
-```
-IDENT: `abc` (0..3)
-EOF: `` (3..3)
-```
 

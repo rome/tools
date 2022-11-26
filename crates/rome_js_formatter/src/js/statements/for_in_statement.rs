@@ -6,7 +6,7 @@ use rome_js_syntax::JsForInStatement;
 use rome_js_syntax::JsForInStatementFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsForInStatement;
+pub(crate) struct FormatJsForInStatement;
 
 impl FormatNodeRule<JsForInStatement> for FormatJsForInStatement {
     fn fmt_fields(&self, node: &JsForInStatement, f: &mut JsFormatter) -> FormatResult<()> {

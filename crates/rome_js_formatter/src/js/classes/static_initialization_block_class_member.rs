@@ -5,7 +5,7 @@ use rome_js_syntax::JsStaticInitializationBlockClassMember;
 use rome_js_syntax::JsStaticInitializationBlockClassMemberFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsStaticInitializationBlockClassMember;
+pub(crate) struct FormatJsStaticInitializationBlockClassMember;
 
 impl FormatNodeRule<JsStaticInitializationBlockClassMember>
     for FormatJsStaticInitializationBlockClassMember

@@ -7,7 +7,7 @@ use rome_js_syntax::{
 };
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsParenthesizedExpression;
+pub(crate) struct FormatJsParenthesizedExpression;
 
 impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpression {
     fn fmt_fields(

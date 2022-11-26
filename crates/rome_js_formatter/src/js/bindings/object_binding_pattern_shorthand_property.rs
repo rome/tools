@@ -5,7 +5,7 @@ use rome_js_syntax::JsObjectBindingPatternShorthandProperty;
 use rome_js_syntax::JsObjectBindingPatternShorthandPropertyFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsObjectBindingPatternShorthandProperty;
+pub(crate) struct FormatJsObjectBindingPatternShorthandProperty;
 
 impl FormatNodeRule<JsObjectBindingPatternShorthandProperty>
     for FormatJsObjectBindingPatternShorthandProperty

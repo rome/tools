@@ -10,7 +10,7 @@ use rome_js_syntax::{JsAnyLiteralExpression, JsExpressionStatementFields};
 use rome_rowan::SyntaxNodeOptionExt;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsExpressionStatement;
+pub(crate) struct FormatJsExpressionStatement;
 
 impl FormatNodeRule<JsExpressionStatement> for FormatJsExpressionStatement {
     fn fmt_node(&self, node: &JsExpressionStatement, f: &mut JsFormatter) -> FormatResult<()> {

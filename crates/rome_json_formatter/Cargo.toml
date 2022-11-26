@@ -1,0 +1,19 @@
+[package]
+name = "rome_json_formatter"
+version = "0.0.0"
+edition = "2021"
+authors = ["Rome Tools Developers and Contributors"]
+repository = "https://github.com/rome/tools"
+license = "MIT"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rome_json_syntax = { path = "../rome_json_syntax" }
+rome_formatter = { path = "../rome_formatter" }
+rome_rowan = { path = "../rome_rowan" }
+
+[dev-dependencies]
+rome_json_parser = { path = "../rome_json_parser" }
+insta = { version="1.18.2", features = ["glob"] }
+rome_diagnostics = { path = "../rome_diagnostics" }

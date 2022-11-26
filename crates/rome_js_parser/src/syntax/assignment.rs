@@ -1,5 +1,5 @@
 use crate::parser::rewrite_parser::{RewriteMarker, RewriteParser, RewriteToken};
-use crate::parser::{expected_any, JsParserCheckpoint, ParsedSyntax};
+use crate::parser::JsParserCheckpoint;
 use crate::prelude::*;
 use crate::rewrite::{rewrite_events, RewriteParseEvents};
 use crate::syntax::class::parse_initializer_clause;
@@ -15,6 +15,7 @@ use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDef
 use crate::JsParser;
 use crate::ParsedSyntax::{Absent, Present};
 use rome_js_syntax::{JsSyntaxKind::*, *};
+use rome_parser::diagnostic::expected_any;
 use rome_rowan::AstNode;
 
 // test assignment_target

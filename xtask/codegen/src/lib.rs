@@ -15,7 +15,7 @@ mod kinds_src;
 mod parser_tests;
 mod termcolorful;
 mod unicode;
-use proc_macro2::TokenStream;
+use proc_macro2::{Ident, Span, TokenStream};
 use quote::quote;
 use std::path::Path;
 use std::str::FromStr;
@@ -23,31 +23,10 @@ use std::str::FromStr;
 use xtask::{glue::fs2, Mode, Result};
 
 pub use self::ast::generate_ast;
-pub use self::formatter::generate_formatter;
+pub use self::formatter::generate_formatters;
 pub use self::generate_analyzer::generate_analyzer;
 pub use self::parser_tests::generate_parser_tests;
 pub use self::unicode::generate_tables;
-
-const JS_SYNTAX_KINDS: &str = "crates/rome_js_syntax/src/generated/kind.rs";
-const JS_AST_NODES: &str = "crates/rome_js_syntax/src/generated/nodes.rs";
-const JS_AST_NODES_MUT: &str = "crates/rome_js_syntax/src/generated/nodes_mut.rs";
-const JS_SYNTAX_FACTORY: &str = "crates/rome_js_factory/src/generated/syntax_factory.rs";
-const JS_NODE_FACTORY: &str = "crates/rome_js_factory/src/generated/node_factory.rs";
-const JS_AST_MACROS: &str = "crates/rome_js_syntax/src/generated/macros.rs";
-
-const CSS_SYNTAX_KINDS: &str = "crates/rome_css_syntax/src/generated/kind.rs";
-const CSS_AST_NODES: &str = "crates/rome_css_syntax/src/generated/nodes.rs";
-const CSS_AST_NODES_MUT: &str = "crates/rome_css_syntax/src/generated/nodes_mut.rs";
-const CSS_SYNTAX_FACTORY: &str = "crates/rome_css_factory/src/generated/syntax_factory.rs";
-const CSS_NODE_FACTORY: &str = "crates/rome_css_factory/src/generated/node_factory.rs";
-const CSS_AST_MACROS: &str = "crates/rome_css_syntax/src/generated/macros.rs";
-
-const JSON_SYNTAX_KINDS: &str = "crates/rome_json_syntax/src/generated/kind.rs";
-const JSON_AST_NODES: &str = "crates/rome_json_syntax/src/generated/nodes.rs";
-const JSON_AST_NODES_MUT: &str = "crates/rome_json_syntax/src/generated/nodes_mut.rs";
-const JSON_SYNTAX_FACTORY: &str = "crates/rome_json_factory/src/generated/syntax_factory.rs";
-const JSON_NODE_FACTORY: &str = "crates/rome_json_factory/src/generated/node_factory.rs";
-const JSON_AST_MACROS: &str = "crates/rome_json_syntax/src/generated/macros.rs";
 
 pub enum UpdateResult {
     NotUpdated,
@@ -91,12 +70,8 @@ impl FromStr for LanguageKind {
 }
 
 impl LanguageKind {
-    pub(crate) fn syntax_crate(&self) -> TokenStream {
-        match self {
-            LanguageKind::Js => quote! { rome_js_syntax },
-            LanguageKind::Css => quote! { rome_css_syntax },
-            LanguageKind::Json => quote! { rome_json_syntax },
-        }
+    pub(crate) fn syntax_crate_ident(&self) -> Ident {
+        Ident::new(self.syntax_crate_name(), Span::call_site())
     }
 
     pub(crate) fn syntax_kind(&self) -> TokenStream {
@@ -152,6 +127,30 @@ impl LanguageKind {
             LanguageKind::Js => quote! { JsLanguage },
             LanguageKind::Css => quote! { CssLanguage },
             LanguageKind::Json => quote! { JsonLanguage },
+        }
+    }
+
+    pub fn formatter_crate_name(&self) -> &'static str {
+        match self {
+            LanguageKind::Js => "rome_js_formatter",
+            LanguageKind::Css => "rome_css_formatter",
+            LanguageKind::Json => "rome_json_formatter",
+        }
+    }
+
+    pub fn syntax_crate_name(&self) -> &'static str {
+        match self {
+            LanguageKind::Js => "rome_js_syntax",
+            LanguageKind::Css => "rome_css_syntax",
+            LanguageKind::Json => "rome_json_syntax",
+        }
+    }
+
+    pub fn factory_crate_name(&self) -> &'static str {
+        match self {
+            LanguageKind::Js => "rome_js_factory",
+            LanguageKind::Css => "rome_css_factory",
+            LanguageKind::Json => "rome_json_factory",
         }
     }
 }
