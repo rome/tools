@@ -19,6 +19,7 @@ use crate::{
     CliSession, Termination,
 };
 
+// TODO Remove again
 pub(crate) fn start(mut session: CliSession) -> Result<(), Termination> {
     let rt = Runtime::new()?;
     let did_spawn = rt.block_on(ensure_daemon(false))?;
