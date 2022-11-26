@@ -64,7 +64,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Install toolchain
-        run: rustup show
+        run: |
+          rustup set profile minimal
+          rustup show
+
       - name: Install nextest
         run: "curl -LsSf https://get.nexte.st/latest/linux | tar zxf - -C ${CARGO_HOME:-~/.cargo}/bin"
 
@@ -72,7 +75,6 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           shared-key: "test"
-          cache-on-failure: true
       - name: Compile for tests
         uses: actions-rs/cargo@v1
         with:
@@ -99,7 +101,9 @@ jobs:
         with:
           fetch-depth: 1
       - name: Install toolchain
-        run: rustup show
+        run: |
+          rustup set profile minimal
+          rustup show
       - name: Cache
         uses: Swatinem/rust-cache@v2
         with:

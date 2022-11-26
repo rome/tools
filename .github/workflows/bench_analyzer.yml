@@ -33,7 +33,9 @@ jobs:
           ref: ${{ steps.sha.outputs.result }}
 
       - name: Install toolchain
-        run: rustup show
+        run: |
+          rustup set profile minimal
+          rustup show
 
       - name: Cache
         uses: Swatinem/rust-cache@v2
