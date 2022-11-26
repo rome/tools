@@ -5,8 +5,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::{make, syntax::T};
 use rome_js_syntax::{AnyJsExpression, JsBinaryOperator, JsCallExpression, OperatorPrecedence};
-use rome_rowan::{AstNode, AstNodeList, AstSeparatedList, BatchMutationExt};
-use std::iter;
+use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
 
 declare_rule! {
     /// Disallow the use of `Math.pow` in favor of the `**` operator.
@@ -55,6 +54,45 @@ declare_rule! {
     }
 }
 
+pub struct MathPowCall {
+    base: AnyJsExpression,
+    exponent: AnyJsExpression,
+}
+
+impl MathPowCall {
+    fn get_base(&self) -> Option<AnyJsExpression> {
+        Some(if self.does_base_need_parens()? {
+            parenthesize_any_js_expression(&self.base)
+        } else {
+            self.base.clone()
+        })
+    }
+
+    fn get_exponent(&self) -> Option<AnyJsExpression> {
+        Some(if self.does_exponent_need_parens()? {
+            parenthesize_any_js_expression(&self.exponent)
+        } else {
+            self.exponent.clone()
+        })
+    }
+
+    /// Determines whether the base expression needs parens in an exponentiation binary expression.
+    fn does_base_need_parens(&self) -> Option<bool> {
+        Some(
+            // '**' is right-associative, parens are needed when Math.pow(a ** b, c) is converted to (a ** b) ** c
+            self.base.precedence().ok()? <= OperatorPrecedence::Exponential
+				// An unary operator cannot be used immediately before an exponentiation expression
+				|| self.base.as_js_unary_expression().is_some()
+				|| self.base.as_js_await_expression().is_some(),
+        )
+    }
+
+    /// Determines whether the exponent expression needs parens in an exponentiation binary expression.
+    fn does_exponent_need_parens(&self) -> Option<bool> {
+        Some(self.exponent.precedence().ok()? < OperatorPrecedence::Exponential)
+    }
+}
+
 impl Rule for UseExponentiationOperator {
     type Query = Ast<JsCallExpression>;
     type State = ();
@@ -64,7 +102,7 @@ impl Rule for UseExponentiationOperator {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
 
-        match node.callee().ok()?.omit_parentheses() {
+        let has_math_pow = match node.callee().ok()?.omit_parentheses() {
             AnyJsExpression::JsStaticMemberExpression(static_member_expr) => {
                 let has_math = static_member_expr
                     .object()
@@ -81,9 +119,7 @@ impl Rule for UseExponentiationOperator {
                     .token_text_trimmed()
                     == "pow";
 
-                if has_math && has_pow {
-                    return Some(());
-                }
+                has_math && has_pow
             }
             AnyJsExpression::JsComputedMemberExpression(computed_member_expr) => {
                 let has_math = computed_member_expr
@@ -92,36 +128,18 @@ impl Rule for UseExponentiationOperator {
                     .omit_parentheses()
                     .as_reference_identifier()?
                     .has_name("Math");
-                let member_expr = computed_member_expr.member().ok()?;
+                let has_pow = computed_member_expr
+                    .member()
+                    .ok()?
+                    .is_string_constant("pow");
 
-                let has_pow = match member_expr {
-                    AnyJsExpression::AnyJsLiteralExpression(literal_expr) => {
-                        literal_expr
-                            .as_js_string_literal_expression()?
-                            .inner_string_text()
-                            .ok()?
-                            .text()
-                            == "pow"
-                    }
-                    AnyJsExpression::JsTemplateExpression(template) => {
-                        template.elements().len() == 1
-                            && template
-                                .elements()
-                                .into_iter()
-                                .next()?
-                                .as_js_template_chunk_element()?
-                                .syntax()
-                                .text_trimmed()
-                                == "pow"
-                    }
-                    _ => false,
-                };
-
-                if has_math && has_pow {
-                    return Some(());
-                }
+                has_math && has_pow
             }
-            _ => {}
+            _ => false,
+        };
+
+        if has_math_pow {
+            return Some(());
         }
 
         None
@@ -138,33 +156,32 @@ impl Rule for UseExponentiationOperator {
     }
 
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let mut mutation = ctx.root().begin();
         let node = ctx.query();
 
         if !should_suggest_fix(node)? {
             return None;
         }
 
+        let mut mutation = ctx.root().begin();
         let [base, exponent] = node.get_arguments_by_index([0, 1]);
-        let mut base_expr = base?.as_any_js_expression()?.clone().omit_parentheses();
-        let mut exponent_expr = exponent?.as_any_js_expression()?.clone().omit_parentheses();
 
-        if does_base_need_parens(&base_expr)? {
-            base_expr = parenthesize_js_any_expression(&base_expr);
-        }
+        let math_pow_call = MathPowCall {
+            base: base?.as_js_any_expression()?.clone().omit_parentheses(),
+            exponent: exponent?.as_js_any_expression()?.clone().omit_parentheses(),
+        };
 
-        if does_exponent_need_parens(&exponent_expr)? {
-            exponent_expr = parenthesize_js_any_expression(&exponent_expr);
-        }
-
-        let new_node = make::js_binary_expression(base_expr, make::token(T![**]), exponent_expr);
+        let new_node = make::js_binary_expression(
+            math_pow_call.get_base()?,
+            make::token(T![**]),
+            math_pow_call.get_exponent()?,
+        );
 
         if let Some(parent) = does_parent_expression_need_parens(node) {
             mutation.replace_node(
                 AnyJsExpression::from(node.clone()),
-                parenthesize_js_any_expression(&AnyJsExpression::from(new_node)),
+                parenthesize_any_js_expression(&AnyJsExpression::from(new_node)),
             );
-            mutation.replace_node(parent.clone(), parenthesize_js_any_expression(&parent));
+            mutation.replace_node(parent.clone(), parenthesize_any_js_expression(&parent));
         } else {
             mutation.replace_node(
                 AnyJsExpression::from(node.clone()),
@@ -182,7 +199,7 @@ impl Rule for UseExponentiationOperator {
 }
 
 /// Verify if the autofix is safe to be applied and won't remove comments.
-/// Argument list is considered valid if its length is 2 and there's no spread arg.
+/// Argument list is considered valid if there's no spread arg and leading/trailing comments.
 fn should_suggest_fix(node: &JsCallExpression) -> Option<bool> {
     let arguments = node.arguments().ok()?;
     let args_count = arguments.args().len();
@@ -193,20 +210,16 @@ fn should_suggest_fix(node: &JsCallExpression) -> Option<bool> {
             && !arguments.l_paren_token().ok()?.has_trailing_comments()
             && !arguments.r_paren_token().ok()?.has_leading_comments()
             && !arguments.r_paren_token().ok()?.has_trailing_comments()
-            && arguments
-                .args()
-                .into_iter()
-                .filter_map(|arg| arg.ok())
-                .all(|arg| {
-                    !arg.syntax().has_leading_comments()
-                        && !arg.syntax().has_trailing_comments()
-                        && arg.as_js_spread().is_none()
-                }),
+            && arguments.args().into_iter().flatten().all(|arg| {
+                !arg.syntax().has_leading_comments()
+                    && !arg.syntax().has_trailing_comments()
+                    && arg.as_js_spread().is_none()
+            }),
     )
 }
 
 /// Wraps a [AnyJsExpression] in paretheses
-fn parenthesize_js_any_expression(expr: &AnyJsExpression) -> AnyJsExpression {
+fn parenthesize_any_js_expression(expr: &AnyJsExpression) -> AnyJsExpression {
     AnyJsExpression::from(make::js_parenthesized_expression(
         make::token(T!['(']),
         expr.clone(),
@@ -214,32 +227,13 @@ fn parenthesize_js_any_expression(expr: &AnyJsExpression) -> AnyJsExpression {
     ))
 }
 
-/// Determines whether the given node needs parens if used as the base in an exponentiation binary expression.
-fn does_base_need_parens(expr: &AnyJsExpression) -> Option<bool> {
-    Some(
-        // '**' is right-associative, parens are needed when Math.pow(a ** b, c) is converted to (a ** b) ** c
-        expr.precedence().ok()? <= OperatorPrecedence::Exponential
-			// An unary operator cannot be used immediately before an exponentiation expression
-            || expr.as_js_unary_expression().is_some()
-            || expr.as_js_await_expression().is_some(),
-    )
-}
-
-/// Determines whether the given node needs parens if used as the exponent in an exponentiation binary expression.
-fn does_exponent_need_parens(expr: &AnyJsExpression) -> Option<bool> {
-    Some(expr.precedence().ok()? < OperatorPrecedence::Exponential)
-}
-
 /// Determines whether the given parent node needs parens if used as the exponent in an exponentiation binary expression.
 fn does_parent_expression_need_parens(node: &JsCallExpression) -> Option<AnyJsExpression> {
-    // Skips already parenthesized expressions
-    if has_parenthesized_parent_expression(AnyJsExpression::from(node.clone()))? {
-        return None;
-    }
-
     let parent = node.parent::<AnyJsExpression>()?;
 
-    let needs_parentheses = match parent.clone() {
+    let needs_parentheses = match &parent {
+        // Skips already parenthesized expressions
+        AnyJsExpression::JsParenthesizedExpression(_) => return None,
         AnyJsExpression::JsBinaryExpression(bin_expr) => {
             bin_expr.operator().ok()? != JsBinaryOperator::Exponent
                 && bin_expr.right().ok()?.as_js_call_expression()? != node
@@ -283,21 +277,4 @@ fn does_parent_expression_need_parens(node: &JsCallExpression) -> Option<AnyJsEx
     }
 
     None
-}
-
-/// Traversal by parent to check if expression has a parenthesized parent.
-fn has_parenthesized_parent_expression(expression: AnyJsExpression) -> Option<bool> {
-    let mut has_parenthesized_parent = false;
-
-    iter::successors(expression.parent::<AnyJsExpression>(), |parent| {
-        if matches!(parent, AnyJsExpression::JsParenthesizedExpression(_)) {
-            has_parenthesized_parent = true;
-            parent.parent::<AnyJsExpression>()
-        } else {
-            None
-        }
-    })
-    .last();
-
-    Some(has_parenthesized_parent)
 }
