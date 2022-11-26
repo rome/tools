@@ -729,8 +729,10 @@ fn fs_error_dereferenced_symlink() {
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
-        #[cfg(target_family = "unix")]
-        "fs_error_dereferenced_symlink_unix",
+        #[cfg(target_os = "linux")]
+        "fs_error_dereferenced_symlink_linux",
+        #[cfg(target_os = "macos")]
+        "fs_error_dereferenced_symlink_macos",
         #[cfg(target_os = "windows")]
         "fs_error_dereferenced_symlink_windows",
         fs,
@@ -740,11 +742,11 @@ fn fs_error_dereferenced_symlink() {
 }
 
 #[test]
-fn fs_error_infinite_symlink_exapansion() {
+fn fs_error_infinite_symlink_expansion() {
     let fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    let root_path = temp_dir().join("rome_test_infinite_symlink_exapansion");
+    let root_path = temp_dir().join("rome_test_infinite_symlink_expansion");
     let subdir1_path = root_path.join("prefix");
     let subdir2_path = root_path.join("foo").join("bar");
 
@@ -790,10 +792,12 @@ fn fs_error_infinite_symlink_exapansion() {
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
-        #[cfg(target_family = "unix")]
-        "fs_error_infinite_symlink_exapansion_unix",
+        #[cfg(target_os = "linux")]
+        "fs_error_infinite_symlink_expansion_linux",
+        #[cfg(target_os = "macos")]
+        "fs_error_infinite_symlink_expansion_macos",
         #[cfg(target_os = "windows")]
-        "fs_error_infinite_symlink_exapansion_windows",
+        "fs_error_infinite_symlink_expansion_windows",
         fs,
         console,
         result,
