@@ -71,10 +71,7 @@ fn is_id_and_string_literal_inner_text_equal(
 	}
 
     for (from_id, from_literal) in id_text.chars().zip(literal_text.chars()) {
-        if from_id != from_literal {
-            return None;
-        }
-        if from_id.is_lowercase() || from_literal.is_lowercase() {
+        if from_id != from_literal || from_id.is_lowercase() {
             return None;
         }
     }
