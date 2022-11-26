@@ -1,6 +1,4 @@
 use crate::categories::SUPPRESSION_ACTION_CATEGORY;
-use std::sync::Arc;
-
 use crate::{
     categories::ActionCategory,
     context::RuleContext,
@@ -107,6 +105,12 @@ impl<L: Language> AnalyzerAction<L> {
 
 pub struct AnalyzerActionIter<L: Language> {
     analyzer_actions: IntoIter<AnalyzerAction<L>>,
+}
+
+impl<L: Language> Default for AnalyzerActionIter<L> {
+    fn default() -> Self {
+        Self { analyzer_actions: vec![].into_iter() }
+    }
 }
 
 impl<L: Language> From<AnalyzerAction<L>> for CodeSuggestionAdvice<MarkupBuf> {
@@ -245,7 +249,6 @@ pub(crate) struct RuleSignal<'phase, R: Rule> {
     services: &'phase ServiceBag,
     /// An optional action to suppress the rule.
     apply_suppression_comment: SuppressionCommentEmitter<RuleLanguage<R>>,
-    options: Arc<R::Options>,
 }
 
 impl<'phase, R> RuleSignal<'phase, R>
@@ -258,7 +261,6 @@ where
         query_result: <<R as Rule>::Query as Queryable>::Output,
         state: R::State,
         services: &'phase ServiceBag,
-        options: Arc<R::Options>,
         apply_suppression_comment: SuppressionCommentEmitter<
             <<R as Rule>::Query as Queryable>::Language,
         >,
@@ -269,7 +271,6 @@ where
             query_result,
             state,
             services,
-            options,
             apply_suppression_comment,
         }
     }
@@ -287,7 +288,7 @@ where
 
     fn actions(&self) -> AnalyzerActionIter<RuleLanguage<R>> {
         let ctx =
-            RuleContext::new(&self.query_result, self.root, self.services, self.options.clone()).ok();
+            RuleContext::new(&self.query_result, self.root, self.services).ok();
         if let Some(ctx) = ctx {
             let mut actions = Vec::new();
             if let Some(action) = R::action(&ctx, &self.state) {

@@ -144,7 +144,6 @@ where
                 root: &ctx.root,
                 services: &ctx.services,
                 range: ctx.range,
-                options: ctx.options,
                 apply_suppression_comment,
             };
 
@@ -225,8 +224,6 @@ struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break, Diag> {
     services: &'phase ServiceBag,
     /// Optional text range to restrict the analysis to
     range: Option<TextRange>,
-
-    options: &'phase AnalyzerOptions,
 }
 
 /// Single entry for a suppression comment in the `line_suppressions` buffer
@@ -285,7 +282,6 @@ where
                     range: self.range,
                     query_matcher: self.query_matcher,
                     signal_queue: &mut self.signal_queue,
-                    options: self.options,
                     apply_suppression_comment: self.apply_suppression_comment,
                 };
 
@@ -311,7 +307,6 @@ where
                     range: self.range,
                     query_matcher: self.query_matcher,
                     signal_queue: &mut self.signal_queue,
-                    options: self.options,
                     apply_suppression_comment: self.apply_suppression_comment,
                 };
 

@@ -2,8 +2,7 @@ use crate::{
     registry::RuleRoot, FromServices, Queryable, Rule, RuleKey, ServiceBag,
 };
 use rome_diagnostics::{Error, Result};
-use std::ops::Deref;
-use std::sync::Arc;
+use std::{ops::Deref, any::TypeId};
 
 type RuleQueryResult<R> = <<R as Rule>::Query as Queryable>::Output;
 type RuleServiceBag<R> = <<R as Rule>::Query as Queryable>::Services;

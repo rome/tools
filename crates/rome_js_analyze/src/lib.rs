@@ -1,4 +1,5 @@
 use control_flow::make_visitor;
+use rome_analyze::context::ServiceBagRuleOptionsWrapper;
 use rome_analyze::options::OptionsDeserializationDiagnostic;
 use rome_analyze::{
     AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal, ControlFlow,
@@ -145,6 +146,7 @@ where
     let mut registry = RuleRegistry::builder(&filter);
     visit_registry(&mut registry);
 
+    // Parse rule options
     let mut services = ServiceBag::default();
     let mut configurator = RulesConfigurator {
         options,
@@ -153,10 +155,12 @@ where
     };
     visit_registry(&mut configurator);
 
+    // Bail if we can't parse a rule option
     if !configurator.diagnostics.is_empty() {
         for diagnostic in configurator.diagnostics {
             emit_signal(&diagnostic);
         }
+        return None;
     }
 
     let mut analyzer = Analyzer::new(

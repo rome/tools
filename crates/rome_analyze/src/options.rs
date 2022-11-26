@@ -1,6 +1,8 @@
 use crate::AnalyzerSignal;
+use crate::signals::AnalyzerActionIter;
 use crate::{RuleKey, TextRange, TextSize};
 use rome_diagnostics::{Diagnostic, LineIndexBuf, Resource, SourceCode};
+use rome_rowan::Language;
 use serde::Deserialize;
 use serde_json::Error;
 use serde_json::Value;
@@ -107,11 +109,11 @@ impl OptionsDeserializationDiagnostic {
 
 impl<L: Language> AnalyzerSignal<L> for OptionsDeserializationDiagnostic {
     fn diagnostic(&self) -> Option<crate::AnalyzerDiagnostic> {
-        let err = rome_diagnostics::v2::Error::from(self.clone());
-        Some(crate::AnalyzerDiagnostic::Raw(err))
+        let error = rome_diagnostics::Error::from(self.clone());
+        Some(crate::AnalyzerDiagnostic::from_error(error))
     }
 
-    fn action(&self) -> Option<crate::AnalyzerAction<L>> {
-        None
+    fn actions(&self) -> AnalyzerActionIter<L> {
+        AnalyzerActionIter::default()
     }
 }
