@@ -66,9 +66,9 @@ fn is_id_and_string_literal_inner_text_equal(
         .as_js_string_literal_expression()?;
     let literal_text = literal.inner_string_text().ok()?;
 
-	if id_text.len() != usize::from(literal_text.len()) {
-		return None;
-	}
+    if id_text.len() != usize::from(literal_text.len()) {
+        return None;
+    }
 
     for (from_id, from_literal) in id_text.chars().zip(literal_text.chars()) {
         if from_id != from_literal || from_id.is_lowercase() {
