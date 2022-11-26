@@ -83,8 +83,6 @@ jobs:
           args: --no-run --workspace --verbose
       - name: Run tests on ${{ matrix.os }}
         uses: actions-rs/cargo@v1
-        env:
-          RUST_TEST_THREADS: 1
         with:
           command: test
           args: --workspace --verbose
