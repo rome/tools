@@ -204,6 +204,10 @@ assert_semantics! {
 assert_semantics! {
     ok_class_reference,
         "class A/*#A*/ {} new A/*READ A*/();",
+    ok_class_expression_1,
+        "const A/*#A*/ = class B/*#B*/ {}; console.log(A/*READ A*/, B/*?*/);",
+    ok_class_expression_2,
+        "const A/*#A1*/ = print(class A/*#A2*/ {}); console.log(A/*READ A1*/);",
 }
 
 // Typescript types
