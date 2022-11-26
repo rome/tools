@@ -106,8 +106,6 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           shared-key: doc
-      - name: Compile for tests
-        uses: actions-rs/cargo@v1
       - name: Run doc command
         uses: actions-rs/cargo@v1
         with:
