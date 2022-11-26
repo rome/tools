@@ -19,12 +19,11 @@ use crate::{
     CliSession, Termination,
 };
 
-// TODO Remove again
 pub(crate) fn start(mut session: CliSession) -> Result<(), Termination> {
     let rt = Runtime::new()?;
     let did_spawn = rt.block_on(ensure_daemon(false))?;
 
-    if did_spawn {
+    if did_spawn == true {
         session.app.console.log(markup! {
             "The Rome server was successfully started"
         });
