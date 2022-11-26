@@ -136,9 +136,7 @@ impl DeserializableRuleOptions for ReactExtensiveDependenciesOptions {
                 },
             );
         }
-        default
-            .stable_config
-            .extend(options.stables.into_iter());
+        default.stable_config.extend(options.stables.into_iter());
 
         Ok(default)
     }

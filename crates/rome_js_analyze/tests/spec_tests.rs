@@ -99,9 +99,8 @@ fn write_analysis_to_snapshot(
     if let Some(start) = input_code.find("/* Options:") {
         let end = start + 11 + input_code[start + 11..].find("*/").unwrap();
         let json = input_code[start + 11..end].trim();
-        
-        let v: serde_json::Value = serde_json::from_str(json)
-            .expect("must be a valid JSON");
+
+        let v: serde_json::Value = serde_json::from_str(json).expect("must be a valid JSON");
         let rule_key = RuleKey::new(group, rule);
         options.configuration.rules.push_rule(rule_key, v);
     }
