@@ -59,6 +59,7 @@ define_dategories! {
     "lint/nursery/noExtraLabels":"https://docs.rome.tools/lint/rules/noExtraLabels",
     "lint/nursery/noExtraNonNullAssertion":"https://docs.rome.tools/lint/rules/noExtraNonNullAssertion",
     "lint/nursery/noHeaderScope": "https://docs.rome.tools/lint/rules/noHeaderScope",
+    "lint/nursery/noInferrableTypes": "https://docs.rome.tools/lint/rules/noInferrableTypes",
     "lint/nursery/noInnerDeclarations": "https://docs.rome.tools/lint/rules/noInnerDeclarations",
     "lint/nursery/noInvalidConstructorSuper": "https://docs.rome.tools/lint/rules/noInvalidConstructorSuper",
     "lint/nursery/noConfusingLabels": "https://docs.rome.tools/lint/rules/noConfusingLabels",

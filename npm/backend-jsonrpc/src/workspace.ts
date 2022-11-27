@@ -361,6 +361,10 @@ export interface Nursery {
 	 */
 	noHeaderScope?: RuleConfiguration;
 	/**
+	 * Disallow type annotations for variables, parameters, and class properties initialized with a literal expression.
+	 */
+	noInferrableTypes?: RuleConfiguration;
+	/**
 	 * Disallow function and var declarations in nested blocks.
 	 */
 	noInnerDeclarations?: RuleConfiguration;
@@ -798,6 +802,7 @@ export type Category =
 	| "lint/nursery/noExtraLabels"
 	| "lint/nursery/noExtraNonNullAssertion"
 	| "lint/nursery/noHeaderScope"
+	| "lint/nursery/noInferrableTypes"
 	| "lint/nursery/noInnerDeclarations"
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noConfusingLabels"
