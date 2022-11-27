@@ -779,6 +779,8 @@ struct NurserySchema {
     use_camel_case: Option<RuleConfiguration>,
     #[doc = "Require const declarations for variables that are never reassigned after declared."]
     use_const: Option<RuleConfiguration>,
+    #[doc = "Enforce default function parameters and optional parameters to be last."]
+    use_default_parameter_last: Option<RuleConfiguration>,
     #[doc = "Enforce default clauses in switch statements to be last"]
     use_default_switch_clause_last: Option<RuleConfiguration>,
     #[doc = "Require that each enum member value be explicitly initialized."]
@@ -794,7 +796,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 31] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 32] = [
         "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
@@ -820,6 +822,7 @@ impl Nursery {
         "useAriaPropsForRole",
         "useCamelCase",
         "useConst",
+        "useDefaultParameterLast",
         "useDefaultSwitchClauseLast",
         "useEnumInitializers",
         "useExhaustiveDependencies",
@@ -827,7 +830,7 @@ impl Nursery {
         "useNumericLiterals",
         "useValidForDirection",
     ];
-    const RECOMMENDED_RULES: [&'static str; 26] = [
+    const RECOMMENDED_RULES: [&'static str; 27] = [
         "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
@@ -848,6 +851,7 @@ impl Nursery {
         "noVoidTypeReturn",
         "useAriaPropsForRole",
         "useConst",
+        "useDefaultParameterLast",
         "useDefaultSwitchClauseLast",
         "useEnumInitializers",
         "useExhaustiveDependencies",
@@ -855,7 +859,7 @@ impl Nursery {
         "useNumericLiterals",
         "useValidForDirection",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 26] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 27] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
@@ -882,6 +886,7 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[28]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[29]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[30]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[31]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -908,7 +913,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 26] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 27] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
