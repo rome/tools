@@ -6,7 +6,7 @@ use rome_diagnostics::Applicability;
 use rome_js_factory::{make, syntax::T};
 use rome_js_syntax::{
     AnyJsExpression, JsBinaryOperator, JsCallExpression, JsClassDeclaration, JsClassExpression,
-    JsExtendsClause, OperatorPrecedence,
+    JsExtendsClause, JsInExpression, OperatorPrecedence,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
 
@@ -169,8 +169,8 @@ impl Rule for UseExponentiationOperator {
         let [base, exponent] = node.get_arguments_by_index([0, 1]);
 
         let math_pow_call = MathPowCall {
-            base: base?.as_js_any_expression()?.clone().omit_parentheses(),
-            exponent: exponent?.as_js_any_expression()?.clone().omit_parentheses(),
+            base: base?.as_any_js_expression()?.clone().omit_parentheses(),
+            exponent: exponent?.as_any_js_expression()?.clone().omit_parentheses(),
         };
 
         let new_node = make::js_binary_expression(
@@ -268,8 +268,16 @@ fn does_expression_need_parens(
         // Skips already parenthesized expressions
         AnyJsExpression::JsParenthesizedExpression(_) => return None,
         AnyJsExpression::JsBinaryExpression(bin_expr) => {
+            if bin_expr.parent::<JsInExpression>().is_some() {
+                return Some(true);
+            }
+
+            let binding = bin_expr.right().ok()?;
+            let call_expr = binding.as_js_call_expression();
+
             bin_expr.operator().ok()? != JsBinaryOperator::Exponent
-                || bin_expr.right().ok()?.as_js_call_expression()? != node
+                || call_expr.is_none()
+                || call_expr? != node
         }
         AnyJsExpression::JsCallExpression(call_expr) => !call_expr
             .arguments()
@@ -297,8 +305,12 @@ fn does_expression_need_parens(
             })
             .any(|arg| &arg == node),
         AnyJsExpression::JsComputedMemberExpression(member_expr) => {
-            member_expr.member().ok()?.as_js_call_expression()? != node
+            let binding = member_expr.member().ok()?;
+            let call_expr = binding.as_js_call_expression();
+
+            call_expr.is_none() || call_expr? != node
         }
+        AnyJsExpression::JsInExpression(_) => return Some(true),
         AnyJsExpression::JsClassExpression(_)
         | AnyJsExpression::JsStaticMemberExpression(_)
         | AnyJsExpression::JsUnaryExpression(_)
