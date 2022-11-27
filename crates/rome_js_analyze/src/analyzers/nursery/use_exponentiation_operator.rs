@@ -236,7 +236,7 @@ fn does_parent_expression_need_parens(node: &JsCallExpression) -> Option<AnyJsEx
         AnyJsExpression::JsParenthesizedExpression(_) => return None,
         AnyJsExpression::JsBinaryExpression(bin_expr) => {
             bin_expr.operator().ok()? != JsBinaryOperator::Exponent
-                && bin_expr.right().ok()?.as_js_call_expression()? != node
+                || bin_expr.right().ok()?.as_js_call_expression()? != node
         }
         AnyJsExpression::JsCallExpression(call_expr) => !call_expr
             .arguments()

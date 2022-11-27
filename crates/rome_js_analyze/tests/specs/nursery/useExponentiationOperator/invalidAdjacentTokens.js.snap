@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 74
+assertion_line: 73
 expression: invalidAdjacentTokens.js
 ---
 # Input
@@ -229,7 +229,7 @@ invalidAdjacentTokens.js:15:1 lint/nursery/useExponentiationOperator  FIXABLE  �
     13 13 │   Math.pow(a, b) + Math.pow(c, d)
     14 14 │   Math.pow(Math.pow(a, b), Math.pow(c, d))
     15    │ - Math.pow(a,·b)**Math.pow(c,·d)
-       15 │ + a**b**Math.pow(c,·d)
+       15 │ + (a**b)**Math.pow(c,·d)
     16 16 │   
   
 
