@@ -4,7 +4,10 @@ use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::{make, syntax::T};
-use rome_js_syntax::{AnyJsExpression, JsBinaryOperator, JsCallExpression, OperatorPrecedence};
+use rome_js_syntax::{
+    AnyJsExpression, JsBinaryOperator, JsCallExpression, JsClassDeclaration, JsClassExpression,
+    JsExtendsClause, OperatorPrecedence,
+};
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
 
 declare_rule! {
@@ -176,12 +179,15 @@ impl Rule for UseExponentiationOperator {
             math_pow_call.get_exponent()?,
         );
 
-        if let Some(parent) = does_parent_expression_need_parens(node) {
+        if let Some((needs_parens, parent)) = does_exponentiation_expression_need_parens(node) {
+            if needs_parens && parent.is_some() {
+                mutation.replace_node(parent.clone()?, parenthesize_any_js_expression(&parent?));
+            }
+
             mutation.replace_node(
                 AnyJsExpression::from(node.clone()),
                 parenthesize_any_js_expression(&AnyJsExpression::from(new_node)),
             );
-            mutation.replace_node(parent.clone(), parenthesize_any_js_expression(&parent));
         } else {
             mutation.replace_node(
                 AnyJsExpression::from(node.clone()),
@@ -228,10 +234,37 @@ fn parenthesize_any_js_expression(expr: &AnyJsExpression) -> AnyJsExpression {
 }
 
 /// Determines whether the given parent node needs parens if used as the exponent in an exponentiation binary expression.
-fn does_parent_expression_need_parens(node: &JsCallExpression) -> Option<AnyJsExpression> {
-    let parent = node.parent::<AnyJsExpression>()?;
+fn does_exponentiation_expression_need_parens(
+    node: &JsCallExpression,
+) -> Option<(bool, Option<AnyJsExpression>)> {
+    if let Some(parent) = node.parent::<AnyJsExpression>() {
+        if does_expression_need_parens(node, &parent)? {
+            return Some((true, Some(parent)));
+        }
+    }
 
-    let needs_parentheses = match &parent {
+    if let Some(extends_clause) = node.parent::<JsExtendsClause>() {
+        if extends_clause.parent::<JsClassDeclaration>().is_some() {
+            return Some((true, None));
+        }
+
+        if let Some(class_expr) = extends_clause.parent::<JsClassExpression>() {
+            let class_expr = AnyJsExpression::from(class_expr);
+            if does_expression_need_parens(node, &class_expr)? {
+                return Some((true, Some(class_expr)));
+            }
+        }
+    }
+
+    None
+}
+
+/// Determines whether the given expression needs parens when used in an exponentiation binary expression.
+fn does_expression_need_parens(
+    node: &JsCallExpression,
+    expression: &AnyJsExpression,
+) -> Option<bool> {
+    let needs_parentheses = match &expression {
         // Skips already parenthesized expressions
         AnyJsExpression::JsParenthesizedExpression(_) => return None,
         AnyJsExpression::JsBinaryExpression(bin_expr) => {
@@ -266,15 +299,12 @@ fn does_parent_expression_need_parens(node: &JsCallExpression) -> Option<AnyJsEx
         AnyJsExpression::JsComputedMemberExpression(member_expr) => {
             member_expr.member().ok()?.as_js_call_expression()? != node
         }
-        AnyJsExpression::JsStaticMemberExpression(_)
+        AnyJsExpression::JsClassExpression(_)
+        | AnyJsExpression::JsStaticMemberExpression(_)
         | AnyJsExpression::JsUnaryExpression(_)
         | AnyJsExpression::JsTemplateExpression(_) => true,
         _ => false,
     };
 
-    if needs_parentheses && parent.precedence().ok()? >= OperatorPrecedence::Exponential {
-        return Some(parent);
-    }
-
-    None
+    Some(needs_parentheses && expression.precedence().ok()? >= OperatorPrecedence::Exponential)
 }

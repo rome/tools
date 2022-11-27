@@ -1,0 +1,104 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 73
+expression: invalidClass.js
+---
+# Input
+```js
+class C extends Math.pow(a, b) {}
+(class extends Math.pow(a, b) {})
+(class extends (Math.pow(a, b)) {})
+class C extends (Math.pow(a, b)) {}
+
+```
+
+# Diagnostics
+```
+invalidClass.js:1:17 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+  > 1 │ class C extends Math.pow(a, b) {}
+      │                 ^^^^^^^^^^^^^^
+    2 │ (class extends Math.pow(a, b) {})
+    3 │ (class extends (Math.pow(a, b)) {})
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    1   │ - class·C·extends·Math.pow(a,·b)·{}
+      1 │ + class·C·extends·(a**b)·{}
+    2 2 │   (class extends Math.pow(a, b) {})
+    3 3 │   (class extends (Math.pow(a, b)) {})
+  
+
+```
+
+```
+invalidClass.js:2:16 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    1 │ class C extends Math.pow(a, b) {}
+  > 2 │ (class extends Math.pow(a, b) {})
+      │                ^^^^^^^^^^^^^^
+    3 │ (class extends (Math.pow(a, b)) {})
+    4 │ class C extends (Math.pow(a, b)) {}
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    1 1 │   class C extends Math.pow(a, b) {}
+    2   │ - (class·extends·Math.pow(a,·b)·{})
+      2 │ + (class·extends·(a**b)·{})
+    3 3 │   (class extends (Math.pow(a, b)) {})
+    4 4 │   class C extends (Math.pow(a, b)) {}
+  
+
+```
+
+```
+invalidClass.js:3:17 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    1 │ class C extends Math.pow(a, b) {}
+    2 │ (class extends Math.pow(a, b) {})
+  > 3 │ (class extends (Math.pow(a, b)) {})
+      │                 ^^^^^^^^^^^^^^
+    4 │ class C extends (Math.pow(a, b)) {}
+    5 │ 
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    1 1 │   class C extends Math.pow(a, b) {}
+    2 2 │   (class extends Math.pow(a, b) {})
+    3   │ - (class·extends·(Math.pow(a,·b))·{})
+      3 │ + (class·extends·(a**b)·{})
+    4 4 │   class C extends (Math.pow(a, b)) {}
+    5 5 │   
+  
+
+```
+
+```
+invalidClass.js:4:18 lint/nursery/useExponentiationOperator  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use the '**' operator instead of 'Math.pow'.
+  
+    2 │ (class extends Math.pow(a, b) {})
+    3 │ (class extends (Math.pow(a, b)) {})
+  > 4 │ class C extends (Math.pow(a, b)) {}
+      │                  ^^^^^^^^^^^^^^
+    5 │ 
+  
+  i Suggested fix: Use the '**' operator instead of 'Math.pow'.
+  
+    2 2 │   (class extends Math.pow(a, b) {})
+    3 3 │   (class extends (Math.pow(a, b)) {})
+    4   │ - class·C·extends·(Math.pow(a,·b))·{}
+      4 │ + class·C·extends·(a**b)·{}
+    5 5 │   
+  
+
+```
+
+
