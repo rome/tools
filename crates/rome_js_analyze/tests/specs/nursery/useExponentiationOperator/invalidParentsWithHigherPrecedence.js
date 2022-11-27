@@ -6,6 +6,7 @@ void Math.pow(a, b);
 Math.pow(a, b) .toString();
 Math.pow(a, b) ();
 Math.pow(a, b) ``;
+(class extends Math.pow(a, b) {})
 
 // parents with a higher precedence, but the expression's role doesn't require parens
 f(Math.pow(a, b))
