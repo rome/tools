@@ -61,7 +61,7 @@ impl JsonParse {
     /// // Get the root value
     /// let root_value = parse.tree().value()?;
     ///
-    /// assert_eq!(root_value.syntax().kind(), JsonSyntaxKind::JSON_ARRAY);
+    /// assert_eq!(root_value.syntax().kind(), JsonSyntaxKind::JSON_ARRAY_VALUE);
     ///
     /// # Ok(())
     /// # }

@@ -15,20 +15,20 @@ line"]
 
 ```
 JsonRoot {
-    value: JsonArray {
+    value: JsonArrayValue {
         l_brack_token: L_BRACK@0..1 "[" [] [],
         elements: JsonArrayElementList [
-            JsonString {
+            JsonStringValue {
                 value_token: JSON_STRING_LITERAL@1..5 "\"new" [] [],
             },
             missing separator,
-            JsonUnknown {
+            JsonUnknownValue {
                 items: [
                     IDENT@5..10 "line" [Newline("\n")] [],
                 ],
             },
             missing separator,
-            JsonString {
+            JsonStringValue {
                 value_token: JSON_STRING_LITERAL@10..12 "\"]" [] [],
             },
         ],
@@ -42,16 +42,16 @@ JsonRoot {
 
 ```
 0: JSON_ROOT@0..12
-  0: JSON_ARRAY@0..12
+  0: JSON_ARRAY_VALUE@0..12
     0: L_BRACK@0..1 "[" [] []
     1: JSON_ARRAY_ELEMENT_LIST@1..12
-      0: JSON_STRING@1..5
+      0: JSON_STRING_VALUE@1..5
         0: JSON_STRING_LITERAL@1..5 "\"new" [] []
       1: (empty)
-      2: JSON_UNKNOWN@5..10
+      2: JSON_UNKNOWN_VALUE@5..10
         0: IDENT@5..10 "line" [Newline("\n")] []
       3: (empty)
-      4: JSON_STRING@10..12
+      4: JSON_STRING_VALUE@10..12
         0: JSON_STRING_LITERAL@10..12 "\"]" [] []
     2: (empty)
   1: EOF@12..12 "" [] []

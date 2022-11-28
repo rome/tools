@@ -727,8 +727,9 @@ fn name_to_module(kind: &NodeKind, in_name: &str, language: LanguageKind) -> Nod
                 // Default to auxiliary
                 _ => NodeConcept::Auxiliary,
             },
-            LanguageKind::Json => match dbg!(name) {
-                "Array" | "Boolean" | "Null" | "Object" | "Number" | "String" => NodeConcept::Value,
+
+            LanguageKind::Json => match name {
+                _ if name.ends_with("Value") => NodeConcept::Value,
                 _ => NodeConcept::Auxiliary,
             },
             LanguageKind::Css => NodeConcept::Auxiliary,

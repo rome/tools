@@ -16,15 +16,15 @@ expression: snapshot
 
 ```
 JsonRoot {
-    value: JsonObject {
+    value: JsonObjectValue {
         l_curly_token: L_CURLY@0..1 "{" [] [],
         json_member_list: JsonMemberList [
             JsonMember {
-                key: JsonString {
+                name: JsonMemberName {
                     value_token: JSON_STRING_LITERAL@1..5 "\"a\"" [Newline("\n")] [],
                 },
                 colon_token: COLON@5..7 ":" [] [Whitespace(" ")],
-                value: JsonString {
+                value: JsonStringValue {
                     value_token: JSON_STRING_LITERAL@7..10 "\"b\"" [] [],
                 },
             },
@@ -39,14 +39,14 @@ JsonRoot {
 
 ```
 0: JSON_ROOT@0..12
-  0: JSON_OBJECT@0..12
+  0: JSON_OBJECT_VALUE@0..12
     0: L_CURLY@0..1 "{" [] []
     1: JSON_MEMBER_LIST@1..10
       0: JSON_MEMBER@1..10
-        0: JSON_STRING@1..5
+        0: JSON_MEMBER_NAME@1..5
           0: JSON_STRING_LITERAL@1..5 "\"a\"" [Newline("\n")] []
         1: COLON@5..7 ":" [] [Whitespace(" ")]
-        2: JSON_STRING@7..10
+        2: JSON_STRING_VALUE@7..10
           0: JSON_STRING_LITERAL@7..10 "\"b\"" [] []
     2: R_CURLY@10..12 "}" [Newline("\n")] []
   1: EOF@12..12 "" [] []
