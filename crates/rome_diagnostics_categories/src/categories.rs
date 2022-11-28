@@ -42,6 +42,7 @@ define_dategories! {
     "lint/correctness/noRenderReturnValue": "https://docs.rome.tools/lint/rules/noRenderReturnValue",
     "lint/correctness/noDebugger": "https://docs.rome.tools/lint/rules/noDebugger",
 
+
     // style group
     "lint/style/noNegationElse": "https://docs.rome.tools/lint/rules/noNegationElse",
     "lint/style/noShoutyConstants": "https://docs.rome.tools/lint/rules/noShoutyConstants",
@@ -101,7 +102,8 @@ define_dategories! {
     "lint/nursery/useFlatMap": "https://docs.rome.tools/lint/rules/useFlatMap",
     "lint/nursery/useNumericLiterals": "https://docs.rome.tools/lint/rules/useNumericLiterals",
     "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
-
+    "lint/nursery/useAriaPropsForRole": "https://docs.rome.tools/lint/rules/useAriaPropsForRole",
+    "lint/nursery/useAriaPropTypes": "https://docs.rome.tools/lint/rules/useAriaPropTypes",
     ;
 
     // General categories

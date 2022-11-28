@@ -767,6 +767,10 @@ struct NurserySchema {
     no_var: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a function with the return type 'void'"]
     no_void_type_return: Option<RuleConfiguration>,
+    #[doc = "Enforce that ARIA state and property values are valid."]
+    use_aria_prop_types: Option<RuleConfiguration>,
+    #[doc = "Enforce that elements with ARIA roles must have all required attributes for that role"]
+    use_aria_props_for_role: Option<RuleConfiguration>,
     #[doc = "Enforce camel case naming convention."]
     use_camel_case: Option<RuleConfiguration>,
     #[doc = "Require const declarations for variables that are never reassigned after declared."]
@@ -784,7 +788,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 26] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 28] = [
         "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
@@ -804,6 +808,8 @@ impl Nursery {
         "noUnsafeFinally",
         "noVar",
         "noVoidTypeReturn",
+        "useAriaPropTypes",
+        "useAriaPropsForRole",
         "useCamelCase",
         "useConst",
         "useDefaultSwitchClauseLast",

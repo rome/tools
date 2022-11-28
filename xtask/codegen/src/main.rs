@@ -1,3 +1,5 @@
+#[cfg(feature = "aria")]
+mod generate_aria;
 #[cfg(feature = "schema")]
 mod generate_bindings;
 #[cfg(feature = "configuration")]
@@ -8,6 +10,8 @@ mod generate_schema;
 use pico_args::Arguments;
 use xtask::{project_root, pushd, Mode, Result};
 
+#[cfg(feature = "aria")]
+use crate::generate_aria::generate_aria;
 #[cfg(feature = "schema")]
 use crate::generate_bindings::generate_workspace_bindings;
 #[cfg(feature = "configuration")]
@@ -59,6 +63,11 @@ fn main() -> Result<()> {
             generate_workspace_bindings(Mode::Overwrite)?;
             Ok(())
         }
+        #[cfg(feature = "aria")]
+        "aria" => {
+            generate_aria(Mode::Overwrite)?;
+            Ok(())
+        }
         "all" => {
             generate_tables()?;
             generate_grammar(args);
@@ -71,6 +80,8 @@ fn main() -> Result<()> {
             generate_configuration_schema(Mode::Overwrite)?;
             #[cfg(feature = "schema")]
             generate_workspace_bindings(Mode::Overwrite)?;
+            #[cfg(feature = "aria")]
+            generate_aria(Mode::Overwrite)?;
             Ok(())
         }
         _ => {
@@ -81,8 +92,9 @@ Run codegen command.
 USAGE:
 	cargo codegen <SUBCOMMAND> [option]
 SUBCOMMANDS:
+	aria            Generate aria bindings for lint rules
 	analyzer        Generate factory functions for the analyzer and the configuration of the analyzers
-	configuration   Generate the part of the configuration that depends on some metadata
+	configuration    Generate the part of the configuration that depends on some metadata
 	schema          Generate the JSON schema for the Rome configuration file format
 	bindings        Generate TypeScript definitions for the JavaScript bindings to the Workspace API
 	grammar         Transforms ungram files into AST

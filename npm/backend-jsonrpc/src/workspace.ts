@@ -428,6 +428,14 @@ export interface Nursery {
 	 */
 	recommended?: boolean;
 	/**
+	 * Enforce that ARIA state and property values are valid.
+	 */
+	useAriaPropTypes?: RuleConfiguration;
+	/**
+	 * Enforce that elements with ARIA roles must have all required attributes for that role
+	 */
+	useAriaPropsForRole?: RuleConfiguration;
+	/**
 	 * Enforce camel case naming convention.
 	 */
 	useCamelCase?: RuleConfiguration;
@@ -685,6 +693,8 @@ export type Category =
 	| "lint/nursery/useFlatMap"
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/useValidForDirection"
+	| "lint/nursery/useAriaPropsForRole"
+	| "lint/nursery/useAriaPropTypes"
 	| "files/missingHandler"
 	| "format"
 	| "internalError/io"
