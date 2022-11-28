@@ -2,7 +2,7 @@ use std::collections::{HashMap, HashSet};
 
 use rome_js_semantic::{Capture, ClosureExtensions, SemanticModel};
 use rome_js_syntax::{
-    JsAnyExpression, JsArrayBindingPattern, JsArrayBindingPatternElementList, JsCallExpression,
+    AnyJsExpression, JsArrayBindingPattern, JsArrayBindingPatternElementList, JsCallExpression,
     JsIdentifierBinding, JsVariableDeclarator, TextRange,
 };
 use rome_rowan::AstNode;
@@ -11,8 +11,8 @@ use serde::{Deserialize, Serialize};
 /// Return result of [react_hook_with_dependency].
 pub(crate) struct ReactCallWithDependencyResult {
     pub(crate) function_name_range: TextRange,
-    pub(crate) closure_node: Option<JsAnyExpression>,
-    pub(crate) dependencies_node: Option<JsAnyExpression>,
+    pub(crate) closure_node: Option<AnyJsExpression>,
+    pub(crate) dependencies_node: Option<AnyJsExpression>,
 }
 
 impl ReactCallWithDependencyResult {
@@ -36,13 +36,13 @@ impl ReactCallWithDependencyResult {
 
     /// Returns all dependencies of a React hook.  
     /// See [react_hook_with_dependency]
-    pub fn all_dependencies(&self) -> impl Iterator<Item = JsAnyExpression> {
+    pub fn all_dependencies(&self) -> impl Iterator<Item = AnyJsExpression> {
         self.dependencies_node
             .as_ref()
             .and_then(|x| Some(x.as_js_array_expression()?.elements().into_iter()))
             .into_iter()
             .flatten()
-            .filter_map(|x| x.ok()?.as_js_any_expression().cloned())
+            .filter_map(|x| x.ok()?.as_any_js_expression().cloned())
     }
 }
 
@@ -98,8 +98,8 @@ pub(crate) fn react_hook_with_dependency(
 
     Some(ReactCallWithDependencyResult {
         function_name_range,
-        closure_node: closure_node.and_then(|x| x.as_js_any_expression().cloned()),
-        dependencies_node: dependencies_node.and_then(|x| x.as_js_any_expression().cloned()),
+        closure_node: closure_node.and_then(|x| x.as_any_js_expression().cloned()),
+        dependencies_node: dependencies_node.and_then(|x| x.as_any_js_expression().cloned()),
     })
 }
 

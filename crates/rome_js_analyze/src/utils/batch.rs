@@ -1,9 +1,9 @@
 use rome_js_factory::make::jsx_child_list;
 use rome_js_syntax::{
-    JsAnyConstructorParameter, JsAnyFormalParameter, JsAnyObjectMember, JsAnyParameter,
-    JsConstructorParameterList, JsFormalParameter, JsLanguage, JsObjectMemberList, JsParameterList,
-    JsSyntaxKind, JsSyntaxNode, JsVariableDeclaration, JsVariableDeclarator,
-    JsVariableDeclaratorList, JsVariableStatement, JsxAnyChild, JsxChildList,
+    AnyJsConstructorParameter, AnyJsFormalParameter, AnyJsObjectMember, AnyJsParameter,
+    AnyJsxChild, JsConstructorParameterList, JsFormalParameter, JsLanguage, JsObjectMemberList,
+    JsParameterList, JsSyntaxKind, JsSyntaxNode, JsVariableDeclaration, JsVariableDeclarator,
+    JsVariableDeclaratorList, JsVariableStatement, JsxChildList,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutation};
 
@@ -19,20 +19,20 @@ pub trait JsBatchMutation {
 
     /// Removes the object member, and:
     /// 1 - removes commas around the member to keep the list valid.
-    fn remove_js_object_member(&mut self, parameter: &JsAnyObjectMember) -> bool;
+    fn remove_js_object_member(&mut self, parameter: &AnyJsObjectMember) -> bool;
 
     /// It attempts to add a new element after the given element
     fn add_jsx_element_after_element(
         &mut self,
-        after_element: &JsxAnyChild,
-        new_element: &JsxAnyChild,
+        after_element: &AnyJsxChild,
+        new_element: &AnyJsxChild,
     ) -> bool;
 
     /// It attempts to add a new element before the given element
     fn add_jsx_element_before_element(
         &mut self,
-        after_element: &JsxAnyChild,
-        new_element: &JsxAnyChild,
+        after_element: &AnyJsxChild,
+        new_element: &AnyJsxChild,
     ) -> bool;
 }
 
@@ -50,7 +50,7 @@ fn remove_js_formal_parameter_from_js_parameter_list(
     for element in elements.by_ref() {
         if let Ok(node) = element.node() {
             match node {
-                JsAnyParameter::JsAnyFormalParameter(JsAnyFormalParameter::JsFormalParameter(
+                AnyJsParameter::AnyJsFormalParameter(AnyJsFormalParameter::JsFormalParameter(
                     node,
                 )) if node == parameter => {
                     batch.remove_node(node.clone());
@@ -92,8 +92,8 @@ fn remove_js_formal_parameter_from_js_constructor_parameter_list(
     for element in elements.by_ref() {
         if let Ok(node) = element.node() {
             match node {
-                JsAnyConstructorParameter::JsAnyFormalParameter(
-                    JsAnyFormalParameter::JsFormalParameter(node),
+                AnyJsConstructorParameter::AnyJsFormalParameter(
+                    AnyJsFormalParameter::JsFormalParameter(node),
                 ) if node == parameter => {
                     batch.remove_node(node.clone());
                     if let Ok(Some(comma)) = element.trailing_separator() {
@@ -189,7 +189,7 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
             .unwrap_or(false)
     }
 
-    fn remove_js_object_member(&mut self, member: &JsAnyObjectMember) -> bool {
+    fn remove_js_object_member(&mut self, member: &AnyJsObjectMember) -> bool {
         member
             .syntax()
             .parent()
@@ -211,8 +211,8 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
 
     fn add_jsx_element_after_element(
         &mut self,
-        after_element: &JsxAnyChild,
-        new_element: &JsxAnyChild,
+        after_element: &AnyJsxChild,
+        new_element: &AnyJsxChild,
     ) -> bool {
         let old_list = after_element.parent::<JsxChildList>();
         if let Some(old_list) = &old_list {
@@ -237,8 +237,8 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
 
     fn add_jsx_element_before_element(
         &mut self,
-        after_element: &JsxAnyChild,
-        new_element: &JsxAnyChild,
+        after_element: &AnyJsxChild,
+        new_element: &AnyJsxChild,
     ) -> bool {
         let old_list = after_element.syntax().parent().and_then(JsxChildList::cast);
         if let Some(old_list) = &old_list {
@@ -265,7 +265,7 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
 #[cfg(test)]
 mod tests {
     use crate::assert_remove_ok;
-    use rome_js_syntax::{JsAnyObjectMember, JsFormalParameter, JsVariableDeclarator};
+    use rome_js_syntax::{AnyJsObjectMember, JsFormalParameter, JsVariableDeclarator};
 
     // Remove JsVariableDeclarator
     assert_remove_ok! {
@@ -329,7 +329,7 @@ mod tests {
 
     // Remove JsAnyObjectMember from object expression
     assert_remove_ok! {
-        JsAnyObjectMember,
+        AnyJsObjectMember,
         ok_remove_first_member,
             "({ a: 1, b: 2 })",
             "({ b: 2 })",

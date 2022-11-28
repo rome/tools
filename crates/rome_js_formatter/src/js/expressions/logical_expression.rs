@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::{needs_binary_like_parentheses, JsAnyBinaryLikeExpression};
+use crate::utils::{needs_binary_like_parentheses, AnyJsBinaryLikeExpression};
 
 use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::{JsLogicalExpression, JsSyntaxNode};
@@ -14,7 +14,7 @@ impl FormatNodeRule<JsLogicalExpression> for FormatJsLogicalExpression {
         node: &JsLogicalExpression,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        JsAnyBinaryLikeExpression::JsLogicalExpression(node.clone()).fmt(formatter)
+        AnyJsBinaryLikeExpression::JsLogicalExpression(node.clone()).fmt(formatter)
     }
 
     fn needs_parentheses(&self, item: &JsLogicalExpression) -> bool {
@@ -27,7 +27,7 @@ impl NeedsParentheses for JsLogicalExpression {
         if let Some(parent) = JsLogicalExpression::cast(parent.clone()) {
             parent.operator() != self.operator()
         } else {
-            needs_binary_like_parentheses(&JsAnyBinaryLikeExpression::from(self.clone()), parent)
+            needs_binary_like_parentheses(&AnyJsBinaryLikeExpression::from(self.clone()), parent)
         }
     }
 }

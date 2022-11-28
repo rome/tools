@@ -10,7 +10,7 @@ use rome_analyze::{
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyImportClause, JsAnyModuleItem, JsImport, JsLanguage, JsModule};
+use rome_js_syntax::{AnyJsImportClause, AnyJsModuleItem, JsImport, JsLanguage, JsModule};
 use rome_rowan::{
     syntax::SyntaxTrivia, AstNode, AstNodeExt, AstNodeList, BatchMutationExt, SyntaxTokenText,
     SyntaxTriviaPiece,
@@ -64,8 +64,8 @@ impl Rule for OrganizeImports {
 
         for item in root.items() {
             let import = match item {
-                JsAnyModuleItem::JsImport(import) => import,
-                JsAnyModuleItem::JsAnyStatement(_) | JsAnyModuleItem::JsExport(_) => {
+                AnyJsModuleItem::JsImport(import) => import,
+                AnyJsModuleItem::AnyJsStatement(_) | AnyJsModuleItem::JsExport(_) => {
                     // If we have pending nodes and encounter a non-import node, append the nodes to a new group
                     if let Some(first_node) = first_node.take() {
                         groups.push(ImportGroup {
@@ -96,10 +96,10 @@ impl Rule for OrganizeImports {
             }
 
             let source = match import.import_clause().ok()? {
-                JsAnyImportClause::JsImportBareClause(clause) => clause.source().ok()?,
-                JsAnyImportClause::JsImportDefaultClause(clause) => clause.source().ok()?,
-                JsAnyImportClause::JsImportNamedClause(clause) => clause.source().ok()?,
-                JsAnyImportClause::JsImportNamespaceClause(clause) => clause.source().ok()?,
+                AnyJsImportClause::JsImportBareClause(clause) => clause.source().ok()?,
+                AnyJsImportClause::JsImportDefaultClause(clause) => clause.source().ok()?,
+                AnyJsImportClause::JsImportNamedClause(clause) => clause.source().ok()?,
+                AnyJsImportClause::JsImportNamespaceClause(clause) => clause.source().ok()?,
             };
 
             let key = source.inner_string_text().ok()?;
@@ -233,7 +233,7 @@ impl Rule for OrganizeImports {
                     ));
                 }
 
-                new_list.push(JsAnyModuleItem::JsImport(node));
+                new_list.push(AnyJsModuleItem::JsImport(node));
             }
 
             // Load the next group before moving on to the next item in the old

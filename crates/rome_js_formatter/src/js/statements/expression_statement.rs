@@ -1,12 +1,12 @@
-use crate::parentheses::{get_expression_left_side, JsAnyExpressionLeftSide, NeedsParentheses};
+use crate::parentheses::{get_expression_left_side, AnyJsExpressionLeftSide, NeedsParentheses};
 use crate::prelude::*;
 use crate::utils::FormatStatementSemicolon;
 use rome_formatter::{write, CstFormatContext};
 use rome_js_syntax::{
-    JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsExpressionStatement, JsSyntaxKind,
+    AnyJsAssignment, AnyJsAssignmentPattern, AnyJsExpression, JsExpressionStatement, JsSyntaxKind,
     JsUnaryOperator,
 };
-use rome_js_syntax::{JsAnyLiteralExpression, JsExpressionStatementFields};
+use rome_js_syntax::{AnyJsLiteralExpression, JsExpressionStatementFields};
 use rome_rowan::SyntaxNodeOptionExt;
 
 #[derive(Debug, Clone, Default)]
@@ -96,7 +96,7 @@ impl FormatNodeRule<JsExpressionStatement> for FormatJsExpressionStatement {
 /// * `[` or `(`
 /// * ticks: `\``
 fn needs_semicolon(node: &JsExpressionStatement) -> bool {
-    use JsAnyExpression::*;
+    use AnyJsExpression::*;
 
     if !matches!(
         node.syntax().parent().kind(),
@@ -107,14 +107,14 @@ fn needs_semicolon(node: &JsExpressionStatement) -> bool {
 
     let Ok(expression) = node.expression() else { return false };
 
-    let mut expression: Option<JsAnyExpressionLeftSide> = Some(expression.into());
+    let mut expression: Option<AnyJsExpressionLeftSide> = Some(expression.into());
 
     while let Some(current) = expression.take() {
         let needs_semi = match &current {
-            JsAnyExpressionLeftSide::JsAnyExpression(expression) => match expression {
+            AnyJsExpressionLeftSide::AnyJsExpression(expression) => match expression {
                 JsArrayExpression(_)
                 | JsParenthesizedExpression(_)
-                | JsAnyLiteralExpression(self::JsAnyLiteralExpression::JsRegexLiteralExpression(
+                | AnyJsLiteralExpression(self::AnyJsLiteralExpression::JsRegexLiteralExpression(
                     _,
                 ))
                 | TsTypeAssertionExpression(_)
@@ -129,15 +129,15 @@ fn needs_semicolon(node: &JsExpressionStatement) -> bool {
 
                 _ => false,
             },
-            JsAnyExpressionLeftSide::JsPrivateName(_) => false,
-            JsAnyExpressionLeftSide::JsAnyAssignmentPattern(assignment) => matches!(
+            AnyJsExpressionLeftSide::JsPrivateName(_) => false,
+            AnyJsExpressionLeftSide::AnyJsAssignmentPattern(assignment) => matches!(
                 assignment,
-                JsAnyAssignmentPattern::JsArrayAssignmentPattern(_)
-                    | JsAnyAssignmentPattern::JsAnyAssignment(
-                        JsAnyAssignment::JsParenthesizedAssignment(_),
+                AnyJsAssignmentPattern::JsArrayAssignmentPattern(_)
+                    | AnyJsAssignmentPattern::AnyJsAssignment(
+                        AnyJsAssignment::JsParenthesizedAssignment(_),
                     )
-                    | JsAnyAssignmentPattern::JsAnyAssignment(
-                        JsAnyAssignment::TsTypeAssertionAssignment(_),
+                    | AnyJsAssignmentPattern::AnyJsAssignment(
+                        AnyJsAssignment::TsTypeAssertionAssignment(_),
                     )
             ),
         };

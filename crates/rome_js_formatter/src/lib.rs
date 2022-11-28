@@ -189,7 +189,7 @@ use rome_formatter::{
 };
 use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
 use rome_js_syntax::{
-    JsAnyDeclaration, JsAnyStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
+    AnyJsDeclaration, AnyJsStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
 use rome_rowan::TextRange;
 use rome_rowan::{AstNode, SyntaxNode};
@@ -338,8 +338,8 @@ impl FormatLanguage for JsFormatLanguage {
             return false;
         }
 
-        JsAnyStatement::can_cast(kind)
-            || JsAnyDeclaration::can_cast(kind)
+        AnyJsStatement::can_cast(kind)
+            || AnyJsDeclaration::can_cast(kind)
             || matches!(
                 kind,
                 JsSyntaxKind::JS_DIRECTIVE | JsSyntaxKind::JS_EXPORT | JsSyntaxKind::JS_IMPORT

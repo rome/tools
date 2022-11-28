@@ -1,17 +1,17 @@
 //! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::JsAnyFunction;
+use rome_js_syntax::AnyJsFunction;
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatJsAnyFunction;
-impl FormatRule<JsAnyFunction> for FormatJsAnyFunction {
+pub(crate) struct FormatAnyJsFunction;
+impl FormatRule<AnyJsFunction> for FormatAnyJsFunction {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &JsAnyFunction, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyJsFunction, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyFunction::JsFunctionExpression(node) => node.format().fmt(f),
-            JsAnyFunction::JsFunctionDeclaration(node) => node.format().fmt(f),
-            JsAnyFunction::JsArrowFunctionExpression(node) => node.format().fmt(f),
-            JsAnyFunction::JsFunctionExportDefaultDeclaration(node) => node.format().fmt(f),
+            AnyJsFunction::JsFunctionExpression(node) => node.format().fmt(f),
+            AnyJsFunction::JsFunctionDeclaration(node) => node.format().fmt(f),
+            AnyJsFunction::JsArrowFunctionExpression(node) => node.format().fmt(f),
+            AnyJsFunction::JsFunctionExportDefaultDeclaration(node) => node.format().fmt(f),
         }
     }
 }

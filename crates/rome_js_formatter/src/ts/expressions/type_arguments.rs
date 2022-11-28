@@ -3,7 +3,7 @@ use crate::{prelude::*, utils::is_object_like_type};
 use rome_formatter::write;
 use rome_formatter::FormatError::SyntaxError;
 use rome_js_syntax::{
-    JsAnyExpression, JsSyntaxKind, JsVariableDeclarator, TsType, TsTypeArguments,
+    AnyJsExpression, AnyTsType, JsSyntaxKind, JsVariableDeclarator, TsTypeArguments,
     TsTypeArgumentsFields,
 };
 
@@ -55,7 +55,7 @@ impl FormatNodeRule<TsTypeArguments> for FormatTsTypeArguments {
                     if let Some(initializer) = initializer {
                         // we verify if we have an arrow function expression
                         let expression = initializer.expression()?;
-                        matches!(expression, JsAnyExpression::JsArrowFunctionExpression(_))
+                        matches!(expression, AnyJsExpression::JsArrowFunctionExpression(_))
                     } else {
                         false
                     }
@@ -67,7 +67,7 @@ impl FormatNodeRule<TsTypeArguments> for FormatTsTypeArguments {
 
         let first_argument_can_be_hugged_or_is_null_type = match ts_type_argument_list.first() {
             _ if ts_type_argument_list.len() != 1 => false,
-            Some(Ok(TsType::TsNullLiteralType(_))) => true,
+            Some(Ok(AnyTsType::TsNullLiteralType(_))) => true,
             Some(Ok(ty)) => should_hug_type(&ty),
             _ => false,
         };

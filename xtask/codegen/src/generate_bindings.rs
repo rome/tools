@@ -1,12 +1,12 @@
 use rome_js_factory::make;
 use rome_js_formatter::{context::JsFormatOptions, format_node};
 use rome_js_syntax::{
-    JsAnyBinding, JsAnyBindingPattern, JsAnyCallArgument, JsAnyDeclaration, JsAnyDeclarationClause,
-    JsAnyExportClause, JsAnyExpression, JsAnyFormalParameter, JsAnyImportClause,
-    JsAnyLiteralExpression, JsAnyModuleItem, JsAnyName, JsAnyNamedImport,
-    JsAnyNamedImportSpecifier, JsAnyObjectMember, JsAnyObjectMemberName, JsAnyParameter,
-    JsAnyStatement, SourceType, TriviaPieceKind, TsAnyName, TsAnyReturnType, TsAnyTypeMember,
-    TsType, T,
+    AnyJsBinding, AnyJsBindingPattern, AnyJsCallArgument, AnyJsDeclaration, AnyJsDeclarationClause,
+    AnyJsExportClause, AnyJsExpression, AnyJsFormalParameter, AnyJsImportClause,
+    AnyJsLiteralExpression, AnyJsModuleItem, AnyJsName, AnyJsNamedImport,
+    AnyJsNamedImportSpecifier, AnyJsObjectMember, AnyJsObjectMemberName, AnyJsParameter,
+    AnyJsStatement, AnyTsName, AnyTsReturnType, AnyTsType, AnyTsTypeMember, SourceType,
+    TriviaPieceKind, T,
 };
 use rome_rowan::AstNode;
 use rome_service::workspace_types::{generate_type, methods, ModuleQueue};
@@ -28,18 +28,18 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
 
         let camel_case = to_camel_case(method.name);
 
-        member_definitions.push(TsAnyTypeMember::TsMethodSignatureTypeMember(
+        member_definitions.push(AnyTsTypeMember::TsMethodSignatureTypeMember(
             make::ts_method_signature_type_member(
-                JsAnyObjectMemberName::JsLiteralMemberName(make::js_literal_member_name(
+                AnyJsObjectMemberName::JsLiteralMemberName(make::js_literal_member_name(
                     make::ident(&camel_case),
                 )),
                 make::js_parameters(
                     make::token(T!['(']),
                     make::js_parameter_list(
-                        Some(JsAnyParameter::JsAnyFormalParameter(
-                            JsAnyFormalParameter::JsFormalParameter(
-                                make::js_formal_parameter(JsAnyBindingPattern::JsAnyBinding(
-                                    JsAnyBinding::JsIdentifierBinding(make::js_identifier_binding(
+                        Some(AnyJsParameter::JsAnyFormalParameter(
+                            AnyJsFormalParameter::JsFormalParameter(
+                                make::js_formal_parameter(AnyJsBindingPattern::JsAnyBinding(
+                                    AnyJsBinding::JsIdentifierBinding(make::js_identifier_binding(
                                         make::ident("params"),
                                     )),
                                 ))
@@ -57,8 +57,8 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
             )
             .with_return_type_annotation(make::ts_return_type_annotation(
                 make::token(T![:]),
-                TsAnyReturnType::TsType(TsType::TsReferenceType(
-                    make::ts_reference_type(TsAnyName::JsReferenceIdentifier(
+                AnyTsReturnType::TsType(AnyTsType::TsReferenceType(
+                    make::ts_reference_type(AnyTsName::JsReferenceIdentifier(
                         make::js_reference_identifier(make::ident("Promise")),
                     ))
                     .with_type_arguments(make::ts_type_arguments(
@@ -72,18 +72,18 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
             .build(),
         ));
 
-        member_declarations.push(JsAnyObjectMember::JsMethodObjectMember(
+        member_declarations.push(AnyJsObjectMember::JsMethodObjectMember(
             make::js_method_object_member(
-                JsAnyObjectMemberName::JsLiteralMemberName(make::js_literal_member_name(
+                AnyJsObjectMemberName::JsLiteralMemberName(make::js_literal_member_name(
                     make::ident(&camel_case),
                 )),
                 make::js_parameters(
                     make::token(T!['(']),
                     make::js_parameter_list(
-                        Some(JsAnyParameter::JsAnyFormalParameter(
-                            JsAnyFormalParameter::JsFormalParameter(
-                                make::js_formal_parameter(JsAnyBindingPattern::JsAnyBinding(
-                                    JsAnyBinding::JsIdentifierBinding(make::js_identifier_binding(
+                        Some(AnyJsParameter::JsAnyFormalParameter(
+                            AnyJsFormalParameter::JsFormalParameter(
+                                make::js_formal_parameter(AnyJsBindingPattern::JsAnyBinding(
+                                    AnyJsBinding::JsIdentifierBinding(make::js_identifier_binding(
                                         make::ident("params"),
                                     )),
                                 ))
@@ -97,13 +97,13 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
                 make::js_function_body(
                     make::token(T!['{']),
                     make::js_directive_list(None),
-                    make::js_statement_list(Some(JsAnyStatement::JsReturnStatement(
+                    make::js_statement_list(Some(AnyJsStatement::JsReturnStatement(
                         make::js_return_statement(make::token(T![return]))
-                            .with_argument(JsAnyExpression::JsCallExpression(
+                            .with_argument(AnyJsExpression::JsCallExpression(
                                 make::js_call_expression(
-                                    JsAnyExpression::JsStaticMemberExpression(
+                                    AnyJsExpression::JsStaticMemberExpression(
                                         make::js_static_member_expression(
-                                            JsAnyExpression::JsIdentifierExpression(
+                                            AnyJsExpression::JsIdentifierExpression(
                                                 make::js_identifier_expression(
                                                     make::js_reference_identifier(make::ident(
                                                         "transport",
@@ -111,7 +111,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
                                                 ),
                                             ),
                                             make::token(T![.]),
-                                            JsAnyName::JsName(make::js_name(make::ident(
+                                            AnyJsName::JsName(make::js_name(make::ident(
                                                 "request",
                                             ))),
                                         ),
@@ -120,13 +120,13 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
                                         make::token(T!['(']),
                                         make::js_call_argument_list(
                                             [
-                                                JsAnyCallArgument::JsAnyExpression(
-                                                    JsAnyExpression::JsAnyLiteralExpression(
-                                                        JsAnyLiteralExpression::JsStringLiteralExpression(make::js_string_literal_expression(make::js_string_literal(&format!("rome/{}", method.name)))),
+                                                AnyJsCallArgument::AnyJsExpression(
+                                                    AnyJsExpression::AnyJsLiteralExpression(
+                                                        AnyJsLiteralExpression::JsStringLiteralExpression(make::js_string_literal_expression(make::js_string_literal(&format!("rome/{}", method.name)))),
                                                     ),
                                                 ),
-                                                JsAnyCallArgument::JsAnyExpression(
-                                                    JsAnyExpression::JsIdentifierExpression(
+                                                AnyJsCallArgument::AnyJsExpression(
+                                                    AnyJsExpression::JsIdentifierExpression(
                                                         make::js_identifier_expression(
                                                             make::js_reference_identifier(make::ident(
                                                                 "params",
@@ -159,17 +159,17 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
         (TriviaPieceKind::Newline, "\n"),
     ];
 
-    let mut items = vec![JsAnyModuleItem::JsImport(
+    let mut items = vec![AnyJsModuleItem::JsImport(
         make::js_import(
             make::token(T![import]).with_leading_trivia(leading_comment.into_iter()),
-            JsAnyImportClause::JsImportNamedClause(
+            AnyJsImportClause::JsImportNamedClause(
                 make::js_import_named_clause(
-                    JsAnyNamedImport::JsNamedImportSpecifiers(make::js_named_import_specifiers(
+                    AnyJsNamedImport::JsNamedImportSpecifiers(make::js_named_import_specifiers(
                         make::token(T!['{']),
                         make::js_named_import_specifier_list(
-                            Some(JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(
+                            Some(AnyJsNamedImportSpecifier::JsShorthandNamedImportSpecifier(
                                 make::js_shorthand_named_import_specifier(
-                                    JsAnyBinding::JsIdentifierBinding(make::js_identifier_binding(
+                                    AnyJsBinding::JsIdentifierBinding(make::js_identifier_binding(
                                         make::ident("Transport"),
                                     )),
                                 )
@@ -200,51 +200,51 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
             ];
             export = export.with_leading_trivia(trivia);
         }
-        JsAnyModuleItem::JsExport(make::js_export(
+        AnyJsModuleItem::JsExport(make::js_export(
             export,
-            JsAnyExportClause::JsAnyDeclarationClause(match decl {
-                JsAnyDeclaration::JsClassDeclaration(decl) => {
-                    JsAnyDeclarationClause::JsClassDeclaration(decl)
+            AnyJsExportClause::JsAnyDeclarationClause(match decl {
+                AnyJsDeclaration::JsClassDeclaration(decl) => {
+                    AnyJsDeclarationClause::JsClassDeclaration(decl)
                 }
-                JsAnyDeclaration::JsFunctionDeclaration(decl) => {
-                    JsAnyDeclarationClause::JsFunctionDeclaration(decl)
+                AnyJsDeclaration::JsFunctionDeclaration(decl) => {
+                    AnyJsDeclarationClause::JsFunctionDeclaration(decl)
                 }
-                JsAnyDeclaration::JsVariableDeclaration(decl) => {
-                    JsAnyDeclarationClause::JsVariableDeclarationClause(
+                AnyJsDeclaration::JsVariableDeclaration(decl) => {
+                    AnyJsDeclarationClause::JsVariableDeclarationClause(
                         make::js_variable_declaration_clause(decl).build(),
                     )
                 }
-                JsAnyDeclaration::TsDeclareFunctionDeclaration(decl) => {
-                    JsAnyDeclarationClause::TsDeclareFunctionDeclaration(decl)
+                AnyJsDeclaration::TsDeclareFunctionDeclaration(decl) => {
+                    AnyJsDeclarationClause::TsDeclareFunctionDeclaration(decl)
                 }
-                JsAnyDeclaration::TsEnumDeclaration(decl) => {
-                    JsAnyDeclarationClause::TsEnumDeclaration(decl)
+                AnyJsDeclaration::TsEnumDeclaration(decl) => {
+                    AnyJsDeclarationClause::TsEnumDeclaration(decl)
                 }
-                JsAnyDeclaration::TsExternalModuleDeclaration(decl) => {
-                    JsAnyDeclarationClause::TsExternalModuleDeclaration(decl)
+                AnyJsDeclaration::TsExternalModuleDeclaration(decl) => {
+                    AnyJsDeclarationClause::TsExternalModuleDeclaration(decl)
                 }
-                JsAnyDeclaration::TsGlobalDeclaration(decl) => {
-                    JsAnyDeclarationClause::TsGlobalDeclaration(decl)
+                AnyJsDeclaration::TsGlobalDeclaration(decl) => {
+                    AnyJsDeclarationClause::TsGlobalDeclaration(decl)
                 }
-                JsAnyDeclaration::TsImportEqualsDeclaration(decl) => {
-                    JsAnyDeclarationClause::TsImportEqualsDeclaration(decl)
+                AnyJsDeclaration::TsImportEqualsDeclaration(decl) => {
+                    AnyJsDeclarationClause::TsImportEqualsDeclaration(decl)
                 }
-                JsAnyDeclaration::TsInterfaceDeclaration(decl) => {
-                    JsAnyDeclarationClause::TsInterfaceDeclaration(decl)
+                AnyJsDeclaration::TsInterfaceDeclaration(decl) => {
+                    AnyJsDeclarationClause::TsInterfaceDeclaration(decl)
                 }
-                JsAnyDeclaration::TsModuleDeclaration(decl) => {
-                    JsAnyDeclarationClause::TsModuleDeclaration(decl)
+                AnyJsDeclaration::TsModuleDeclaration(decl) => {
+                    AnyJsDeclarationClause::TsModuleDeclaration(decl)
                 }
-                JsAnyDeclaration::TsTypeAliasDeclaration(decl) => {
-                    JsAnyDeclarationClause::TsTypeAliasDeclaration(decl)
+                AnyJsDeclaration::TsTypeAliasDeclaration(decl) => {
+                    AnyJsDeclarationClause::TsTypeAliasDeclaration(decl)
                 }
             }),
         ))
     }));
 
-    member_definitions.push(TsAnyTypeMember::TsMethodSignatureTypeMember(
+    member_definitions.push(AnyTsTypeMember::TsMethodSignatureTypeMember(
         make::ts_method_signature_type_member(
-            JsAnyObjectMemberName::JsLiteralMemberName(make::js_literal_member_name(make::ident(
+            AnyJsObjectMemberName::JsLiteralMemberName(make::js_literal_member_name(make::ident(
                 "destroy",
             ))),
             make::js_parameters(
@@ -255,16 +255,16 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
         )
         .with_return_type_annotation(make::ts_return_type_annotation(
             make::token(T![:]),
-            TsAnyReturnType::TsType(TsType::TsVoidType(make::ts_void_type(make::token(T![
+            AnyTsReturnType::TsType(AnyTsType::TsVoidType(make::ts_void_type(make::token(T![
                 void
             ])))),
         ))
         .build(),
     ));
 
-    member_declarations.push(JsAnyObjectMember::JsMethodObjectMember(
+    member_declarations.push(AnyJsObjectMember::JsMethodObjectMember(
         make::js_method_object_member(
-            JsAnyObjectMemberName::JsLiteralMemberName(make::js_literal_member_name(make::ident(
+            AnyJsObjectMemberName::JsLiteralMemberName(make::js_literal_member_name(make::ident(
                 "destroy",
             ))),
             make::js_parameters(
@@ -275,18 +275,18 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
             make::js_function_body(
                 make::token(T!['{']),
                 make::js_directive_list(None),
-                make::js_statement_list(Some(JsAnyStatement::JsExpressionStatement(
-                    make::js_expression_statement(JsAnyExpression::JsCallExpression(
+                make::js_statement_list(Some(AnyJsStatement::JsExpressionStatement(
+                    make::js_expression_statement(AnyJsExpression::JsCallExpression(
                         make::js_call_expression(
-                            JsAnyExpression::JsStaticMemberExpression(
+                            AnyJsExpression::JsStaticMemberExpression(
                                 make::js_static_member_expression(
-                                    JsAnyExpression::JsIdentifierExpression(
+                                    AnyJsExpression::JsIdentifierExpression(
                                         make::js_identifier_expression(
                                             make::js_reference_identifier(make::ident("transport")),
                                         ),
                                     ),
                                     make::token(T![.]),
-                                    JsAnyName::JsName(make::js_name(make::ident("destroy"))),
+                                    AnyJsName::JsName(make::js_name(make::ident("destroy"))),
                                 ),
                             ),
                             make::js_call_arguments(
@@ -305,9 +305,9 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
         .build(),
     ));
 
-    items.push(JsAnyModuleItem::JsExport(make::js_export(
+    items.push(AnyJsModuleItem::JsExport(make::js_export(
         make::token(T![export]),
-        JsAnyExportClause::JsAnyDeclarationClause(JsAnyDeclarationClause::TsInterfaceDeclaration(
+        AnyJsExportClause::JsAnyDeclarationClause(AnyJsDeclarationClause::TsInterfaceDeclaration(
             make::ts_interface_declaration(
                 make::token(T![interface]),
                 make::ts_identifier_binding(make::ident("Workspace")),
@@ -321,28 +321,28 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
 
     let member_separators = (0..member_declarations.len()).map(|_| make::token(T![,]));
 
-    items.push(JsAnyModuleItem::JsExport(make::js_export(
+    items.push(AnyJsModuleItem::JsExport(make::js_export(
         make::token(T![export]),
-        JsAnyExportClause::JsAnyDeclarationClause(JsAnyDeclarationClause::JsFunctionDeclaration(
+        AnyJsExportClause::JsAnyDeclarationClause(AnyJsDeclarationClause::JsFunctionDeclaration(
             make::js_function_declaration(
                 make::token(T![function]),
-                JsAnyBinding::JsIdentifierBinding(make::js_identifier_binding(make::ident(
+                AnyJsBinding::JsIdentifierBinding(make::js_identifier_binding(make::ident(
                     "createWorkspace",
                 ))),
                 make::js_parameters(
                     make::token(T!['(']),
                     make::js_parameter_list(
-                        Some(JsAnyParameter::JsAnyFormalParameter(
-                            JsAnyFormalParameter::JsFormalParameter(
-                                make::js_formal_parameter(JsAnyBindingPattern::JsAnyBinding(
-                                    JsAnyBinding::JsIdentifierBinding(make::js_identifier_binding(
+                        Some(AnyJsParameter::JsAnyFormalParameter(
+                            AnyJsFormalParameter::JsFormalParameter(
+                                make::js_formal_parameter(AnyJsBindingPattern::JsAnyBinding(
+                                    AnyJsBinding::JsIdentifierBinding(make::js_identifier_binding(
                                         make::ident("transport"),
                                     )),
                                 ))
                                 .with_type_annotation(make::ts_type_annotation(
                                     make::token(T![:]),
-                                    TsType::TsReferenceType(
-                                        make::ts_reference_type(TsAnyName::JsReferenceIdentifier(
+                                    AnyTsType::TsReferenceType(
+                                        make::ts_reference_type(AnyTsName::JsReferenceIdentifier(
                                             make::js_reference_identifier(make::ident("Transport")),
                                         ))
                                         .build(),
@@ -358,9 +358,9 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
                 make::js_function_body(
                     make::token(T!['{']),
                     make::js_directive_list(None),
-                    make::js_statement_list(Some(JsAnyStatement::JsReturnStatement(
+                    make::js_statement_list(Some(AnyJsStatement::JsReturnStatement(
                         make::js_return_statement(make::token(T![return]))
-                            .with_argument(JsAnyExpression::JsObjectExpression(
+                            .with_argument(AnyJsExpression::JsObjectExpression(
                                 make::js_object_expression(
                                     make::token(T!['{']),
                                     make::js_object_member_list(
@@ -377,8 +377,8 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
             )
             .with_return_type_annotation(make::ts_return_type_annotation(
                 make::token(T![:]),
-                TsAnyReturnType::TsType(TsType::TsReferenceType(
-                    make::ts_reference_type(TsAnyName::JsReferenceIdentifier(
+                AnyTsReturnType::TsType(AnyTsType::TsReferenceType(
+                    make::ts_reference_type(AnyTsName::JsReferenceIdentifier(
                         make::js_reference_identifier(make::ident("Workspace")),
                     ))
                     .build(),

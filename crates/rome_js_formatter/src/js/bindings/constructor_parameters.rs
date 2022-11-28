@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use crate::js::bindings::parameters::FormatJsAnyParameters;
+use crate::js::bindings::parameters::FormatAnyJsParameters;
 use rome_js_syntax::JsConstructorParameters;
 
 #[derive(Debug, Clone, Default)]
@@ -8,7 +8,7 @@ pub(crate) struct FormatJsConstructorParameters;
 
 impl FormatNodeRule<JsConstructorParameters> for FormatJsConstructorParameters {
     fn fmt_fields(&self, node: &JsConstructorParameters, f: &mut JsFormatter) -> FormatResult<()> {
-        FormatJsAnyParameters::from(node.clone()).fmt(f)
+        FormatAnyJsParameters::from(node.clone()).fmt(f)
     }
 
     fn fmt_dangling_comments(

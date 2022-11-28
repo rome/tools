@@ -86,7 +86,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsonAnyValue::can_cast(element.kind()) {
+                    if AnyJsonValue::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -195,7 +195,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsonAnyValue::can_cast(element.kind()) {
+                    if AnyJsonValue::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -238,7 +238,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
             JSON_ARRAY_ELEMENT_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                JsonAnyValue::can_cast,
+                AnyJsonValue::can_cast,
                 T ! [,],
                 false,
             ),

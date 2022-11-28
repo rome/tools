@@ -1,7 +1,7 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsAnyExpression, JsAssignmentOperator, JsBinaryOperator, JsForStatement,
+    AnyJsExpression, JsAssignmentOperator, JsBinaryOperator, JsForStatement,
     JsIdentifierAssignment, JsIdentifierExpression, JsPostUpdateOperator, JsUnaryOperator,
     TextRange,
 };
@@ -85,7 +85,7 @@ impl Rule for UseValidForDirection {
         }
 
         match n.update()? {
-            JsAnyExpression::JsPostUpdateExpression(update_expr) => {
+            AnyJsExpression::JsPostUpdateExpression(update_expr) => {
                 let binary_expr_left = binary_expr.left().ok()?;
                 let counter_ident = binary_expr_left.as_js_identifier_expression()?;
                 let update_expr_operand = update_expr.operand().ok()?;
@@ -105,12 +105,12 @@ impl Rule for UseValidForDirection {
                     return Some(rule_state);
                 }
             }
-            JsAnyExpression::JsAssignmentExpression(assignment_expr) => {
+            AnyJsExpression::JsAssignmentExpression(assignment_expr) => {
                 let binary_expr_left = binary_expr.left().ok()?;
                 let counter_ident = binary_expr_left.as_js_identifier_expression()?;
                 let assignment_expr_left = assignment_expr.left().ok()?;
                 let update_ident = assignment_expr_left
-                    .as_js_any_assignment()?
+                    .as_any_js_assignment()?
                     .as_js_identifier_assignment()?;
 
                 if !is_identifier_same(counter_ident, update_ident)? {

@@ -37,16 +37,16 @@
 //! The parentheses that get removed by the pre-processing step are re-inserted by the [crate::FormatNodeRule].
 //! The rule inserts parentheses for each node where [crate::FormatNodeRule::needs_parentheses] returns true.
 
-use crate::utils::{JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
+use crate::utils::{AnyJsBinaryLikeExpression, AnyJsBinaryLikeLeftExpression};
 
 use rome_js_syntax::{
-    JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyFunctionBody,
-    JsAnyLiteralExpression, JsArrowFunctionExpression, JsAssignmentExpression, JsBinaryExpression,
-    JsBinaryOperator, JsComputedMemberAssignment, JsComputedMemberExpression,
+    AnyJsAssignment, AnyJsAssignmentPattern, AnyJsExpression, AnyJsFunctionBody,
+    AnyJsLiteralExpression, AnyTsType, JsArrowFunctionExpression, JsAssignmentExpression,
+    JsBinaryExpression, JsBinaryOperator, JsComputedMemberAssignment, JsComputedMemberExpression,
     JsConditionalExpression, JsLanguage, JsParenthesizedAssignment, JsParenthesizedExpression,
     JsPrivateName, JsSequenceExpression, JsStaticMemberAssignment, JsStaticMemberExpression,
     JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, TsConditionalType, TsIndexedAccessType,
-    TsIntersectionTypeElementList, TsParenthesizedType, TsType, TsUnionTypeVariantList,
+    TsIntersectionTypeElementList, TsParenthesizedType, TsUnionTypeVariantList,
 };
 use rome_rowan::{declare_node_union, match_ast, AstNode, AstSeparatedList, SyntaxResult};
 
@@ -64,208 +64,208 @@ pub trait NeedsParentheses: AstNode<Language = JsLanguage> {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool;
 }
 
-impl NeedsParentheses for JsAnyLiteralExpression {
+impl NeedsParentheses for AnyJsLiteralExpression {
     #[inline]
     fn needs_parentheses(&self) -> bool {
         match self {
-            JsAnyLiteralExpression::JsBigIntLiteralExpression(big_int) => {
+            AnyJsLiteralExpression::JsBigIntLiteralExpression(big_int) => {
                 big_int.needs_parentheses()
             }
-            JsAnyLiteralExpression::JsBooleanLiteralExpression(boolean) => {
+            AnyJsLiteralExpression::JsBooleanLiteralExpression(boolean) => {
                 boolean.needs_parentheses()
             }
-            JsAnyLiteralExpression::JsNullLiteralExpression(null_literal) => {
+            AnyJsLiteralExpression::JsNullLiteralExpression(null_literal) => {
                 null_literal.needs_parentheses()
             }
-            JsAnyLiteralExpression::JsNumberLiteralExpression(number_literal) => {
+            AnyJsLiteralExpression::JsNumberLiteralExpression(number_literal) => {
                 number_literal.needs_parentheses()
             }
-            JsAnyLiteralExpression::JsRegexLiteralExpression(regex) => regex.needs_parentheses(),
-            JsAnyLiteralExpression::JsStringLiteralExpression(string) => string.needs_parentheses(),
+            AnyJsLiteralExpression::JsRegexLiteralExpression(regex) => regex.needs_parentheses(),
+            AnyJsLiteralExpression::JsStringLiteralExpression(string) => string.needs_parentheses(),
         }
     }
 
     #[inline]
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         match self {
-            JsAnyLiteralExpression::JsBigIntLiteralExpression(big_int) => {
+            AnyJsLiteralExpression::JsBigIntLiteralExpression(big_int) => {
                 big_int.needs_parentheses_with_parent(parent)
             }
-            JsAnyLiteralExpression::JsBooleanLiteralExpression(boolean) => {
+            AnyJsLiteralExpression::JsBooleanLiteralExpression(boolean) => {
                 boolean.needs_parentheses_with_parent(parent)
             }
-            JsAnyLiteralExpression::JsNullLiteralExpression(null_literal) => {
+            AnyJsLiteralExpression::JsNullLiteralExpression(null_literal) => {
                 null_literal.needs_parentheses_with_parent(parent)
             }
-            JsAnyLiteralExpression::JsNumberLiteralExpression(number_literal) => {
+            AnyJsLiteralExpression::JsNumberLiteralExpression(number_literal) => {
                 number_literal.needs_parentheses_with_parent(parent)
             }
-            JsAnyLiteralExpression::JsRegexLiteralExpression(regex) => {
+            AnyJsLiteralExpression::JsRegexLiteralExpression(regex) => {
                 regex.needs_parentheses_with_parent(parent)
             }
-            JsAnyLiteralExpression::JsStringLiteralExpression(string) => {
+            AnyJsLiteralExpression::JsStringLiteralExpression(string) => {
                 string.needs_parentheses_with_parent(parent)
             }
         }
     }
 }
 
-impl NeedsParentheses for JsAnyExpression {
+impl NeedsParentheses for AnyJsExpression {
     fn needs_parentheses(&self) -> bool {
         match self {
-            JsAnyExpression::JsImportMetaExpression(meta) => meta.needs_parentheses(),
-            JsAnyExpression::JsAnyLiteralExpression(literal) => literal.needs_parentheses(),
-            JsAnyExpression::JsArrayExpression(array) => array.needs_parentheses(),
-            JsAnyExpression::JsArrowFunctionExpression(arrow) => arrow.needs_parentheses(),
-            JsAnyExpression::JsAssignmentExpression(assignment) => assignment.needs_parentheses(),
-            JsAnyExpression::JsAwaitExpression(await_expression) => {
+            AnyJsExpression::JsImportMetaExpression(meta) => meta.needs_parentheses(),
+            AnyJsExpression::AnyJsLiteralExpression(literal) => literal.needs_parentheses(),
+            AnyJsExpression::JsArrayExpression(array) => array.needs_parentheses(),
+            AnyJsExpression::JsArrowFunctionExpression(arrow) => arrow.needs_parentheses(),
+            AnyJsExpression::JsAssignmentExpression(assignment) => assignment.needs_parentheses(),
+            AnyJsExpression::JsAwaitExpression(await_expression) => {
                 await_expression.needs_parentheses()
             }
-            JsAnyExpression::JsBinaryExpression(binary) => binary.needs_parentheses(),
-            JsAnyExpression::JsCallExpression(call) => call.needs_parentheses(),
-            JsAnyExpression::JsClassExpression(class) => class.needs_parentheses(),
-            JsAnyExpression::JsComputedMemberExpression(member) => member.needs_parentheses(),
-            JsAnyExpression::JsConditionalExpression(conditional) => {
+            AnyJsExpression::JsBinaryExpression(binary) => binary.needs_parentheses(),
+            AnyJsExpression::JsCallExpression(call) => call.needs_parentheses(),
+            AnyJsExpression::JsClassExpression(class) => class.needs_parentheses(),
+            AnyJsExpression::JsComputedMemberExpression(member) => member.needs_parentheses(),
+            AnyJsExpression::JsConditionalExpression(conditional) => {
                 conditional.needs_parentheses()
             }
-            JsAnyExpression::JsFunctionExpression(function) => function.needs_parentheses(),
-            JsAnyExpression::JsIdentifierExpression(identifier) => identifier.needs_parentheses(),
-            JsAnyExpression::JsImportCallExpression(import_call) => import_call.needs_parentheses(),
-            JsAnyExpression::JsInExpression(in_expression) => in_expression.needs_parentheses(),
-            JsAnyExpression::JsInstanceofExpression(instanceof) => instanceof.needs_parentheses(),
-            JsAnyExpression::JsLogicalExpression(logical) => logical.needs_parentheses(),
-            JsAnyExpression::JsNewExpression(new) => new.needs_parentheses(),
-            JsAnyExpression::JsObjectExpression(object) => object.needs_parentheses(),
-            JsAnyExpression::JsParenthesizedExpression(parenthesized) => {
+            AnyJsExpression::JsFunctionExpression(function) => function.needs_parentheses(),
+            AnyJsExpression::JsIdentifierExpression(identifier) => identifier.needs_parentheses(),
+            AnyJsExpression::JsImportCallExpression(import_call) => import_call.needs_parentheses(),
+            AnyJsExpression::JsInExpression(in_expression) => in_expression.needs_parentheses(),
+            AnyJsExpression::JsInstanceofExpression(instanceof) => instanceof.needs_parentheses(),
+            AnyJsExpression::JsLogicalExpression(logical) => logical.needs_parentheses(),
+            AnyJsExpression::JsNewExpression(new) => new.needs_parentheses(),
+            AnyJsExpression::JsObjectExpression(object) => object.needs_parentheses(),
+            AnyJsExpression::JsParenthesizedExpression(parenthesized) => {
                 parenthesized.needs_parentheses()
             }
-            JsAnyExpression::JsPostUpdateExpression(update) => update.needs_parentheses(),
-            JsAnyExpression::JsPreUpdateExpression(update) => update.needs_parentheses(),
-            JsAnyExpression::JsSequenceExpression(sequence) => sequence.needs_parentheses(),
-            JsAnyExpression::JsStaticMemberExpression(member) => member.needs_parentheses(),
-            JsAnyExpression::JsSuperExpression(sup) => sup.needs_parentheses(),
-            JsAnyExpression::JsTemplateExpression(template) => template.needs_parentheses(),
-            JsAnyExpression::JsThisExpression(this) => this.needs_parentheses(),
-            JsAnyExpression::JsUnaryExpression(unary) => unary.needs_parentheses(),
-            JsAnyExpression::JsBogusExpression(bogus) => bogus.needs_parentheses(),
-            JsAnyExpression::JsYieldExpression(yield_expression) => {
+            AnyJsExpression::JsPostUpdateExpression(update) => update.needs_parentheses(),
+            AnyJsExpression::JsPreUpdateExpression(update) => update.needs_parentheses(),
+            AnyJsExpression::JsSequenceExpression(sequence) => sequence.needs_parentheses(),
+            AnyJsExpression::JsStaticMemberExpression(member) => member.needs_parentheses(),
+            AnyJsExpression::JsSuperExpression(sup) => sup.needs_parentheses(),
+            AnyJsExpression::JsTemplateExpression(template) => template.needs_parentheses(),
+            AnyJsExpression::JsThisExpression(this) => this.needs_parentheses(),
+            AnyJsExpression::JsUnaryExpression(unary) => unary.needs_parentheses(),
+            AnyJsExpression::JsBogusExpression(bogus) => bogus.needs_parentheses(),
+            AnyJsExpression::JsYieldExpression(yield_expression) => {
                 yield_expression.needs_parentheses()
             }
-            JsAnyExpression::JsxTagExpression(jsx) => jsx.needs_parentheses(),
-            JsAnyExpression::JsNewTargetExpression(target) => target.needs_parentheses(),
-            JsAnyExpression::TsAsExpression(as_expression) => as_expression.needs_parentheses(),
-            JsAnyExpression::TsSatisfiesExpression(satisfies_expression) => {
+            AnyJsExpression::JsxTagExpression(jsx) => jsx.needs_parentheses(),
+            AnyJsExpression::JsNewTargetExpression(target) => target.needs_parentheses(),
+            AnyJsExpression::TsAsExpression(as_expression) => as_expression.needs_parentheses(),
+            AnyJsExpression::TsSatisfiesExpression(satisfies_expression) => {
                 satisfies_expression.needs_parentheses()
             }
-            JsAnyExpression::TsNonNullAssertionExpression(non_null) => non_null.needs_parentheses(),
-            JsAnyExpression::TsTypeAssertionExpression(type_assertion) => {
+            AnyJsExpression::TsNonNullAssertionExpression(non_null) => non_null.needs_parentheses(),
+            AnyJsExpression::TsTypeAssertionExpression(type_assertion) => {
                 type_assertion.needs_parentheses()
             }
-            JsAnyExpression::TsInstantiationExpression(arguments) => arguments.needs_parentheses(),
+            AnyJsExpression::TsInstantiationExpression(arguments) => arguments.needs_parentheses(),
         }
     }
 
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         match self {
-            JsAnyExpression::JsImportMetaExpression(meta) => {
+            AnyJsExpression::JsImportMetaExpression(meta) => {
                 meta.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsAnyLiteralExpression(literal) => {
+            AnyJsExpression::AnyJsLiteralExpression(literal) => {
                 literal.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsArrayExpression(array) => {
+            AnyJsExpression::JsArrayExpression(array) => {
                 array.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsArrowFunctionExpression(arrow) => {
+            AnyJsExpression::JsArrowFunctionExpression(arrow) => {
                 arrow.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsAssignmentExpression(assignment) => {
+            AnyJsExpression::JsAssignmentExpression(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsAwaitExpression(await_expression) => {
+            AnyJsExpression::JsAwaitExpression(await_expression) => {
                 await_expression.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsBinaryExpression(binary) => {
+            AnyJsExpression::JsBinaryExpression(binary) => {
                 binary.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsCallExpression(call) => call.needs_parentheses_with_parent(parent),
-            JsAnyExpression::JsClassExpression(class) => {
+            AnyJsExpression::JsCallExpression(call) => call.needs_parentheses_with_parent(parent),
+            AnyJsExpression::JsClassExpression(class) => {
                 class.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsComputedMemberExpression(member) => {
+            AnyJsExpression::JsComputedMemberExpression(member) => {
                 member.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsConditionalExpression(conditional) => {
+            AnyJsExpression::JsConditionalExpression(conditional) => {
                 conditional.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsFunctionExpression(function) => {
+            AnyJsExpression::JsFunctionExpression(function) => {
                 function.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsIdentifierExpression(identifier) => {
+            AnyJsExpression::JsIdentifierExpression(identifier) => {
                 identifier.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsImportCallExpression(import_call) => {
+            AnyJsExpression::JsImportCallExpression(import_call) => {
                 import_call.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsInExpression(in_expression) => {
+            AnyJsExpression::JsInExpression(in_expression) => {
                 in_expression.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsInstanceofExpression(instanceof) => {
+            AnyJsExpression::JsInstanceofExpression(instanceof) => {
                 instanceof.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsLogicalExpression(logical) => {
+            AnyJsExpression::JsLogicalExpression(logical) => {
                 logical.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsNewExpression(new) => new.needs_parentheses_with_parent(parent),
-            JsAnyExpression::JsObjectExpression(object) => {
+            AnyJsExpression::JsNewExpression(new) => new.needs_parentheses_with_parent(parent),
+            AnyJsExpression::JsObjectExpression(object) => {
                 object.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsParenthesizedExpression(parenthesized) => {
+            AnyJsExpression::JsParenthesizedExpression(parenthesized) => {
                 parenthesized.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsPostUpdateExpression(update) => {
+            AnyJsExpression::JsPostUpdateExpression(update) => {
                 update.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsPreUpdateExpression(update) => {
+            AnyJsExpression::JsPreUpdateExpression(update) => {
                 update.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsSequenceExpression(sequence) => {
+            AnyJsExpression::JsSequenceExpression(sequence) => {
                 sequence.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsStaticMemberExpression(member) => {
+            AnyJsExpression::JsStaticMemberExpression(member) => {
                 member.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsSuperExpression(sup) => sup.needs_parentheses_with_parent(parent),
-            JsAnyExpression::JsTemplateExpression(template) => {
+            AnyJsExpression::JsSuperExpression(sup) => sup.needs_parentheses_with_parent(parent),
+            AnyJsExpression::JsTemplateExpression(template) => {
                 template.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsThisExpression(this) => this.needs_parentheses_with_parent(parent),
-            JsAnyExpression::JsUnaryExpression(unary) => {
+            AnyJsExpression::JsThisExpression(this) => this.needs_parentheses_with_parent(parent),
+            AnyJsExpression::JsUnaryExpression(unary) => {
                 unary.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsBogusExpression(bogus) => {
+            AnyJsExpression::JsBogusExpression(bogus) => {
                 bogus.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsYieldExpression(yield_expression) => {
+            AnyJsExpression::JsYieldExpression(yield_expression) => {
                 yield_expression.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsxTagExpression(jsx) => jsx.needs_parentheses_with_parent(parent),
-            JsAnyExpression::JsNewTargetExpression(target) => {
+            AnyJsExpression::JsxTagExpression(jsx) => jsx.needs_parentheses_with_parent(parent),
+            AnyJsExpression::JsNewTargetExpression(target) => {
                 target.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::TsAsExpression(as_expression) => {
+            AnyJsExpression::TsAsExpression(as_expression) => {
                 as_expression.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::TsSatisfiesExpression(satisfies_expression) => {
+            AnyJsExpression::TsSatisfiesExpression(satisfies_expression) => {
                 satisfies_expression.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::TsNonNullAssertionExpression(non_null) => {
+            AnyJsExpression::TsNonNullAssertionExpression(non_null) => {
                 non_null.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::TsTypeAssertionExpression(type_assertion) => {
+            AnyJsExpression::TsTypeAssertionExpression(type_assertion) => {
                 type_assertion.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::TsInstantiationExpression(expr) => {
+            AnyJsExpression::TsInstantiationExpression(expr) => {
                 expr.needs_parentheses_with_parent(parent)
             }
         }
@@ -273,17 +273,17 @@ impl NeedsParentheses for JsAnyExpression {
 }
 
 declare_node_union! {
-    pub(crate) JsAnyExpressionLeftSide = JsAnyExpression | JsPrivateName | JsAnyAssignmentPattern
+    pub(crate) AnyJsExpressionLeftSide = AnyJsExpression | JsPrivateName | AnyJsAssignmentPattern
 }
 
-impl NeedsParentheses for JsAnyExpressionLeftSide {
+impl NeedsParentheses for AnyJsExpressionLeftSide {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         match self {
-            JsAnyExpressionLeftSide::JsAnyExpression(expression) => {
+            AnyJsExpressionLeftSide::AnyJsExpression(expression) => {
                 expression.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpressionLeftSide::JsPrivateName(_) => false,
-            JsAnyExpressionLeftSide::JsAnyAssignmentPattern(assignment) => {
+            AnyJsExpressionLeftSide::JsPrivateName(_) => false,
+            AnyJsExpressionLeftSide::AnyJsAssignmentPattern(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
         }
@@ -296,9 +296,9 @@ impl NeedsParentheses for JsAnyExpressionLeftSide {
 /// left hand expression of the binary expression, then resolves to the inner expression of the parenthesized
 /// expression, and finally resolves to the test condition of the conditional expression.
 pub(crate) fn resolve_left_most_expression(
-    expression: &JsAnyExpression,
-) -> JsAnyExpressionLeftSide {
-    let mut current: JsAnyExpressionLeftSide = expression.clone().into();
+    expression: &AnyJsExpression,
+) -> AnyJsExpressionLeftSide {
+    let mut current: AnyJsExpressionLeftSide = expression.clone().into();
 
     loop {
         match get_expression_left_side(&current) {
@@ -315,12 +315,12 @@ pub(crate) fn resolve_left_most_expression(
 /// Returns the left side of an expression (an expression where the first child is a `Node` or [None]
 /// if the expression has no left side.
 pub(crate) fn get_expression_left_side(
-    current: &JsAnyExpressionLeftSide,
-) -> Option<JsAnyExpressionLeftSide> {
-    use JsAnyExpression::*;
+    current: &AnyJsExpressionLeftSide,
+) -> Option<AnyJsExpressionLeftSide> {
+    use AnyJsExpression::*;
 
     match current {
-        JsAnyExpressionLeftSide::JsAnyExpression(expression) => {
+        AnyJsExpressionLeftSide::AnyJsExpression(expression) => {
             let left_expression = match expression {
                 JsSequenceExpression(sequence) => sequence.left().ok(),
                 JsStaticMemberExpression(member) => member.object().ok(),
@@ -335,23 +335,23 @@ pub(crate) fn get_expression_left_side(
                 }
                 TsNonNullAssertionExpression(non_null) => non_null.expression().ok(),
                 JsAssignmentExpression(assignment) => {
-                    return assignment.left().ok().map(JsAnyExpressionLeftSide::from)
+                    return assignment.left().ok().map(AnyJsExpressionLeftSide::from)
                 }
                 JsPostUpdateExpression(expression) => {
                     return expression.operand().ok().map(|assignment| {
-                        JsAnyExpressionLeftSide::from(JsAnyAssignmentPattern::JsAnyAssignment(
+                        AnyJsExpressionLeftSide::from(AnyJsAssignmentPattern::AnyJsAssignment(
                             assignment,
                         ))
                     })
                 }
                 expression => {
-                    return JsAnyBinaryLikeExpression::cast(expression.syntax().clone()).and_then(
+                    return AnyJsBinaryLikeExpression::cast(expression.syntax().clone()).and_then(
                         |binary_like| match binary_like.left().ok() {
-                            Some(JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression)) => {
-                                Some(JsAnyExpressionLeftSide::from(expression))
+                            Some(AnyJsBinaryLikeLeftExpression::AnyJsExpression(expression)) => {
+                                Some(AnyJsExpressionLeftSide::from(expression))
                             }
-                            Some(JsAnyBinaryLikeLeftExpression::JsPrivateName(name)) => {
-                                Some(JsAnyExpressionLeftSide::from(name))
+                            Some(AnyJsBinaryLikeLeftExpression::JsPrivateName(name)) => {
+                                Some(AnyJsExpressionLeftSide::from(name))
                             }
                             None => None,
                         },
@@ -359,18 +359,18 @@ pub(crate) fn get_expression_left_side(
                 }
             };
 
-            left_expression.map(JsAnyExpressionLeftSide::from)
+            left_expression.map(AnyJsExpressionLeftSide::from)
         }
-        JsAnyExpressionLeftSide::JsAnyAssignmentPattern(pattern) => {
-            use JsAnyAssignment::*;
+        AnyJsExpressionLeftSide::AnyJsAssignmentPattern(pattern) => {
+            use AnyJsAssignment::*;
 
             let left = match pattern {
-                JsAnyAssignmentPattern::JsAnyAssignment(assignment) => match assignment {
+                AnyJsAssignmentPattern::AnyJsAssignment(assignment) => match assignment {
                     JsComputedMemberAssignment(computed) => {
-                        return computed.object().ok().map(JsAnyExpressionLeftSide::from)
+                        return computed.object().ok().map(AnyJsExpressionLeftSide::from)
                     }
                     JsStaticMemberAssignment(member) => {
-                        return member.object().ok().map(JsAnyExpressionLeftSide::from)
+                        return member.object().ok().map(AnyJsExpressionLeftSide::from)
                     }
 
                     TsAsAssignment(parent) => parent.assignment().ok(),
@@ -381,15 +381,15 @@ pub(crate) fn get_expression_left_side(
                     | JsIdentifierAssignment(_)
                     | JsBogusAssignment(_) => None,
                 },
-                JsAnyAssignmentPattern::JsArrayAssignmentPattern(_)
-                | JsAnyAssignmentPattern::JsObjectAssignmentPattern(_) => None,
+                AnyJsAssignmentPattern::JsArrayAssignmentPattern(_)
+                | AnyJsAssignmentPattern::JsObjectAssignmentPattern(_) => None,
             };
 
             left.map(|assignment| {
-                JsAnyExpressionLeftSide::from(JsAnyAssignmentPattern::JsAnyAssignment(assignment))
+                AnyJsExpressionLeftSide::from(AnyJsAssignmentPattern::AnyJsAssignment(assignment))
             })
         }
-        JsAnyExpressionLeftSide::JsPrivateName(_) => None,
+        AnyJsExpressionLeftSide::JsPrivateName(_) => None,
     }
 }
 
@@ -492,7 +492,7 @@ pub(crate) fn is_first_in_statement(node: JsSyntaxNode, mode: FirstInStatementMo
                 let arrow = JsArrowFunctionExpression::unwrap_cast(parent);
 
                 let is_body = arrow.body().map_or(false, |body| match body {
-                    JsAnyFunctionBody::JsAnyExpression(expression) => {
+                    AnyJsFunctionBody::AnyJsExpression(expression) => {
                         expression.syntax() == &current
                     }
                     _ => false,
@@ -511,11 +511,11 @@ pub(crate) fn is_first_in_statement(node: JsSyntaxNode, mode: FirstInStatementMo
                 return true;
             }
 
-            kind if JsAnyBinaryLikeExpression::can_cast(kind) => {
-                let binary_like = JsAnyBinaryLikeExpression::unwrap_cast(parent);
+            kind if AnyJsBinaryLikeExpression::can_cast(kind) => {
+                let binary_like = AnyJsBinaryLikeExpression::unwrap_cast(parent);
 
                 let is_left = binary_like.left().map_or(false, |left| match left {
-                    JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => {
+                    AnyJsBinaryLikeLeftExpression::AnyJsExpression(expression) => {
                         expression.syntax() == &current
                     }
                     _ => false,
@@ -654,7 +654,7 @@ pub(crate) fn is_arrow_function_body(node: &JsSyntaxNode, parent: &JsSyntaxNode)
         match parent {
             JsArrowFunctionExpression(arrow) => {
                 match arrow.body() {
-                    Ok(JsAnyFunctionBody::JsAnyExpression(expression)) => {
+                    Ok(AnyJsFunctionBody::AnyJsExpression(expression)) => {
                         expression.syntax() == node
                     }
                     _ => false,
@@ -755,35 +755,35 @@ pub(crate) fn is_in_many_type_union_or_intersection_list(
 }
 
 declare_node_union! {
-    pub(crate) JsAnyParenthesized = JsParenthesizedExpression | JsParenthesizedAssignment | TsParenthesizedType
+    pub(crate) AnyJsParenthesized = JsParenthesizedExpression | JsParenthesizedAssignment | TsParenthesizedType
 }
 
-impl JsAnyParenthesized {
+impl AnyJsParenthesized {
     pub(crate) fn l_paren_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            JsAnyParenthesized::JsParenthesizedExpression(expression) => expression.l_paren_token(),
-            JsAnyParenthesized::JsParenthesizedAssignment(assignment) => assignment.l_paren_token(),
-            JsAnyParenthesized::TsParenthesizedType(ty) => ty.l_paren_token(),
+            AnyJsParenthesized::JsParenthesizedExpression(expression) => expression.l_paren_token(),
+            AnyJsParenthesized::JsParenthesizedAssignment(assignment) => assignment.l_paren_token(),
+            AnyJsParenthesized::TsParenthesizedType(ty) => ty.l_paren_token(),
         }
     }
 
     pub(crate) fn inner(&self) -> SyntaxResult<JsSyntaxNode> {
         match self {
-            JsAnyParenthesized::JsParenthesizedExpression(expression) => {
+            AnyJsParenthesized::JsParenthesizedExpression(expression) => {
                 expression.expression().map(AstNode::into_syntax)
             }
-            JsAnyParenthesized::JsParenthesizedAssignment(assignment) => {
+            AnyJsParenthesized::JsParenthesizedAssignment(assignment) => {
                 assignment.assignment().map(AstNode::into_syntax)
             }
-            JsAnyParenthesized::TsParenthesizedType(ty) => ty.ty().map(AstNode::into_syntax),
+            AnyJsParenthesized::TsParenthesizedType(ty) => ty.ty().map(AstNode::into_syntax),
         }
     }
 
     pub(crate) fn r_paren_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            JsAnyParenthesized::JsParenthesizedExpression(expression) => expression.r_paren_token(),
-            JsAnyParenthesized::JsParenthesizedAssignment(assignment) => assignment.r_paren_token(),
-            JsAnyParenthesized::TsParenthesizedType(ty) => ty.r_paren_token(),
+            AnyJsParenthesized::JsParenthesizedExpression(expression) => expression.r_paren_token(),
+            AnyJsParenthesized::JsParenthesizedAssignment(assignment) => assignment.r_paren_token(),
+            AnyJsParenthesized::TsParenthesizedType(ty) => ty.r_paren_token(),
         }
     }
 }
@@ -793,27 +793,27 @@ pub(crate) fn is_binary_like_left_or_right(node: &JsSyntaxNode, parent: &JsSynta
     debug_assert_is_expression(node);
     debug_assert_is_parent(node, parent);
 
-    JsAnyBinaryLikeExpression::can_cast(parent.kind())
+    AnyJsBinaryLikeExpression::can_cast(parent.kind())
 }
 
-impl NeedsParentheses for JsAnyAssignment {
+impl NeedsParentheses for AnyJsAssignment {
     fn needs_parentheses(&self) -> bool {
         match self {
-            JsAnyAssignment::JsComputedMemberAssignment(assignment) => {
+            AnyJsAssignment::JsComputedMemberAssignment(assignment) => {
                 assignment.needs_parentheses()
             }
-            JsAnyAssignment::JsIdentifierAssignment(assignment) => assignment.needs_parentheses(),
-            JsAnyAssignment::JsParenthesizedAssignment(assignment) => {
+            AnyJsAssignment::JsIdentifierAssignment(assignment) => assignment.needs_parentheses(),
+            AnyJsAssignment::JsParenthesizedAssignment(assignment) => {
                 assignment.needs_parentheses()
             }
-            JsAnyAssignment::JsStaticMemberAssignment(assignment) => assignment.needs_parentheses(),
-            JsAnyAssignment::JsBogusAssignment(assignment) => assignment.needs_parentheses(),
-            JsAnyAssignment::TsAsAssignment(assignment) => assignment.needs_parentheses(),
-            JsAnyAssignment::TsSatisfiesAssignment(assignment) => assignment.needs_parentheses(),
-            JsAnyAssignment::TsNonNullAssertionAssignment(assignment) => {
+            AnyJsAssignment::JsStaticMemberAssignment(assignment) => assignment.needs_parentheses(),
+            AnyJsAssignment::JsBogusAssignment(assignment) => assignment.needs_parentheses(),
+            AnyJsAssignment::TsAsAssignment(assignment) => assignment.needs_parentheses(),
+            AnyJsAssignment::TsSatisfiesAssignment(assignment) => assignment.needs_parentheses(),
+            AnyJsAssignment::TsNonNullAssertionAssignment(assignment) => {
                 assignment.needs_parentheses()
             }
-            JsAnyAssignment::TsTypeAssertionAssignment(assignment) => {
+            AnyJsAssignment::TsTypeAssertionAssignment(assignment) => {
                 assignment.needs_parentheses()
             }
         }
@@ -821,45 +821,45 @@ impl NeedsParentheses for JsAnyAssignment {
 
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         match self {
-            JsAnyAssignment::JsComputedMemberAssignment(assignment) => {
+            AnyJsAssignment::JsComputedMemberAssignment(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
-            JsAnyAssignment::JsIdentifierAssignment(assignment) => {
+            AnyJsAssignment::JsIdentifierAssignment(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
-            JsAnyAssignment::JsParenthesizedAssignment(assignment) => {
+            AnyJsAssignment::JsParenthesizedAssignment(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
-            JsAnyAssignment::JsStaticMemberAssignment(assignment) => {
+            AnyJsAssignment::JsStaticMemberAssignment(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
-            JsAnyAssignment::JsBogusAssignment(assignment) => {
+            AnyJsAssignment::JsBogusAssignment(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
-            JsAnyAssignment::TsAsAssignment(assignment) => {
+            AnyJsAssignment::TsAsAssignment(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
-            JsAnyAssignment::TsSatisfiesAssignment(assignment) => {
+            AnyJsAssignment::TsSatisfiesAssignment(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
-            JsAnyAssignment::TsNonNullAssertionAssignment(assignment) => {
+            AnyJsAssignment::TsNonNullAssertionAssignment(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
-            JsAnyAssignment::TsTypeAssertionAssignment(assignment) => {
+            AnyJsAssignment::TsTypeAssertionAssignment(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
         }
     }
 }
 
-impl NeedsParentheses for JsAnyAssignmentPattern {
+impl NeedsParentheses for AnyJsAssignmentPattern {
     fn needs_parentheses(&self) -> bool {
         match self {
-            JsAnyAssignmentPattern::JsAnyAssignment(assignment) => assignment.needs_parentheses(),
-            JsAnyAssignmentPattern::JsArrayAssignmentPattern(assignment) => {
+            AnyJsAssignmentPattern::AnyJsAssignment(assignment) => assignment.needs_parentheses(),
+            AnyJsAssignmentPattern::JsArrayAssignmentPattern(assignment) => {
                 assignment.needs_parentheses()
             }
-            JsAnyAssignmentPattern::JsObjectAssignmentPattern(assignment) => {
+            AnyJsAssignmentPattern::JsObjectAssignmentPattern(assignment) => {
                 assignment.needs_parentheses()
             }
         }
@@ -867,104 +867,104 @@ impl NeedsParentheses for JsAnyAssignmentPattern {
 
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         match self {
-            JsAnyAssignmentPattern::JsAnyAssignment(assignment) => {
+            AnyJsAssignmentPattern::AnyJsAssignment(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
-            JsAnyAssignmentPattern::JsArrayAssignmentPattern(assignment) => {
+            AnyJsAssignmentPattern::JsArrayAssignmentPattern(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
-            JsAnyAssignmentPattern::JsObjectAssignmentPattern(assignment) => {
+            AnyJsAssignmentPattern::JsObjectAssignmentPattern(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
         }
     }
 }
 
-impl NeedsParentheses for TsType {
+impl NeedsParentheses for AnyTsType {
     fn needs_parentheses(&self) -> bool {
         match self {
-            TsType::TsAnyType(ty) => ty.needs_parentheses(),
-            TsType::TsArrayType(ty) => ty.needs_parentheses(),
-            TsType::TsBigIntLiteralType(ty) => ty.needs_parentheses(),
-            TsType::TsBigintType(ty) => ty.needs_parentheses(),
-            TsType::TsBooleanLiteralType(ty) => ty.needs_parentheses(),
-            TsType::TsBooleanType(ty) => ty.needs_parentheses(),
-            TsType::TsConditionalType(ty) => ty.needs_parentheses(),
-            TsType::TsConstructorType(ty) => ty.needs_parentheses(),
-            TsType::TsFunctionType(ty) => ty.needs_parentheses(),
-            TsType::TsImportType(ty) => ty.needs_parentheses(),
-            TsType::TsIndexedAccessType(ty) => ty.needs_parentheses(),
-            TsType::TsInferType(ty) => ty.needs_parentheses(),
-            TsType::TsIntersectionType(ty) => ty.needs_parentheses(),
-            TsType::TsMappedType(ty) => ty.needs_parentheses(),
-            TsType::TsNeverType(ty) => ty.needs_parentheses(),
-            TsType::TsNonPrimitiveType(ty) => ty.needs_parentheses(),
-            TsType::TsNullLiteralType(ty) => ty.needs_parentheses(),
-            TsType::TsNumberLiteralType(ty) => ty.needs_parentheses(),
-            TsType::TsNumberType(ty) => ty.needs_parentheses(),
-            TsType::TsObjectType(ty) => ty.needs_parentheses(),
-            TsType::TsParenthesizedType(ty) => ty.needs_parentheses(),
-            TsType::TsReferenceType(ty) => ty.needs_parentheses(),
-            TsType::TsStringLiteralType(ty) => ty.needs_parentheses(),
-            TsType::TsStringType(ty) => ty.needs_parentheses(),
-            TsType::TsSymbolType(ty) => ty.needs_parentheses(),
-            TsType::TsTemplateLiteralType(ty) => ty.needs_parentheses(),
-            TsType::TsThisType(ty) => ty.needs_parentheses(),
-            TsType::TsTupleType(ty) => ty.needs_parentheses(),
-            TsType::TsTypeOperatorType(ty) => ty.needs_parentheses(),
-            TsType::TsTypeofType(ty) => ty.needs_parentheses(),
-            TsType::TsUndefinedType(ty) => ty.needs_parentheses(),
-            TsType::TsUnionType(ty) => ty.needs_parentheses(),
-            TsType::TsUnknownType(ty) => ty.needs_parentheses(),
-            TsType::TsVoidType(ty) => ty.needs_parentheses(),
-            TsType::TsBogusType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsAnyType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsArrayType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsBigIntLiteralType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsBigintType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsBooleanLiteralType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsBooleanType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsConditionalType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsConstructorType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsFunctionType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsImportType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsIndexedAccessType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsInferType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsIntersectionType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsMappedType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsNeverType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsNonPrimitiveType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsNullLiteralType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsNumberLiteralType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsNumberType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsObjectType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsParenthesizedType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsReferenceType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsStringLiteralType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsStringType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsSymbolType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsTemplateLiteralType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsThisType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsTupleType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsTypeOperatorType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsTypeofType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsUndefinedType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsUnionType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsUnknownType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsVoidType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsBogusType(ty) => ty.needs_parentheses(),
         }
     }
 
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         match self {
-            TsType::TsAnyType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsArrayType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsBigIntLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsBigintType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsBooleanLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsBooleanType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsConditionalType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsConstructorType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsFunctionType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsImportType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsIndexedAccessType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsInferType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsIntersectionType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsMappedType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsNeverType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsNonPrimitiveType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsNullLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsNumberLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsNumberType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsObjectType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsParenthesizedType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsReferenceType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsStringLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsStringType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsSymbolType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsTemplateLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsThisType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsTupleType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsTypeOperatorType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsTypeofType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsUndefinedType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsUnionType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsUnknownType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsVoidType(ty) => ty.needs_parentheses_with_parent(parent),
-            TsType::TsBogusType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsAnyType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsArrayType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsBigIntLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsBigintType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsBooleanLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsBooleanType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsConditionalType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsConstructorType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsFunctionType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsImportType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsIndexedAccessType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsInferType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsIntersectionType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsMappedType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsNeverType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsNonPrimitiveType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsNullLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsNumberLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsNumberType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsObjectType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsParenthesizedType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsReferenceType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsStringLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsStringType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsSymbolType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsTemplateLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsThisType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsTupleType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsTypeOperatorType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsTypeofType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsUndefinedType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsUnionType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsUnknownType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsVoidType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsBogusType(ty) => ty.needs_parentheses_with_parent(parent),
         }
     }
 }
 
 fn debug_assert_is_expression(node: &JsSyntaxNode) {
     debug_assert!(
-        JsAnyExpression::can_cast(node.kind()),
+        AnyJsExpression::can_cast(node.kind()),
         "Expected {node:#?} to be an expression."
     )
 }

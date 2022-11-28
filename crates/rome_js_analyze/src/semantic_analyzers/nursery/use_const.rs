@@ -261,13 +261,13 @@ impl VariableDeclaration {
 ///
 /// Traversal stops if the given function returns true.
 fn with_binding_pat_identifiers(
-    pat: JsAnyBindingPattern,
+    pat: AnyJsBindingPattern,
     f: &mut impl FnMut(JsIdentifierBinding) -> bool,
 ) -> bool {
     match pat {
-        JsAnyBindingPattern::JsAnyBinding(id) => with_binding_identifier(id, f),
-        JsAnyBindingPattern::JsArrayBindingPattern(p) => with_array_binding_pat_identifiers(p, f),
-        JsAnyBindingPattern::JsObjectBindingPattern(p) => with_object_binding_pat_identifiers(p, f),
+        AnyJsBindingPattern::AnyJsBinding(id) => with_binding_identifier(id, f),
+        AnyJsBindingPattern::JsArrayBindingPattern(p) => with_array_binding_pat_identifiers(p, f),
+        AnyJsBindingPattern::JsObjectBindingPattern(p) => with_object_binding_pat_identifiers(p, f),
     }
 }
 
@@ -279,7 +279,7 @@ fn with_object_binding_pat_identifiers(
         .into_iter()
         .filter_map(Result::ok)
         .any(|it| {
-            use JsAnyObjectBindingPatternMember as P;
+            use AnyJsObjectBindingPatternMember as P;
             match it {
                 P::JsObjectBindingPatternProperty(p) => p
                     .pattern()
@@ -300,9 +300,9 @@ fn with_array_binding_pat_identifiers(
     f: &mut impl FnMut(JsIdentifierBinding) -> bool,
 ) -> bool {
     pat.elements().into_iter().filter_map(Result::ok).any(|it| {
-        use JsAnyArrayBindingPatternElement as P;
+        use AnyJsArrayBindingPatternElement as P;
         match it {
-            P::JsAnyBindingPattern(p) => with_binding_pat_identifiers(p, f),
+            P::AnyJsBindingPattern(p) => with_binding_pat_identifiers(p, f),
             P::JsArrayBindingPatternRestElement(p) => p
                 .pattern()
                 .map_or(false, |it| with_binding_pat_identifiers(it, f)),
@@ -315,12 +315,12 @@ fn with_array_binding_pat_identifiers(
 }
 
 fn with_binding_identifier(
-    binding: JsAnyBinding,
+    binding: AnyJsBinding,
     f: &mut impl FnMut(JsIdentifierBinding) -> bool,
 ) -> bool {
     match binding {
-        JsAnyBinding::JsIdentifierBinding(id) => f(id),
-        JsAnyBinding::JsBogusBinding(_) => false,
+        AnyJsBinding::JsIdentifierBinding(id) => f(id),
+        AnyJsBinding::JsBogusBinding(_) => false,
     }
 }
 
@@ -369,7 +369,7 @@ impl DestructuringHost {
     }
 }
 
-fn has_outer_variables_in_binding_pat(pat: JsAnyBindingPattern, scope: Scope) -> bool {
+fn has_outer_variables_in_binding_pat(pat: AnyJsBindingPattern, scope: Scope) -> bool {
     with_binding_pat_identifiers(pat, &mut |it| is_outer_variable_in_binding(it, &scope))
 }
 
@@ -379,10 +379,10 @@ fn is_outer_variable_in_binding(binding: JsIdentifierBinding, scope: &Scope) -> 
         .map_or(false, |name| is_binding_in_outer_scopes(scope, name))
 }
 
-fn has_member_expr_in_assign_pat(pat: JsAnyAssignmentPattern) -> bool {
-    use JsAnyAssignmentPattern as P;
+fn has_member_expr_in_assign_pat(pat: AnyJsAssignmentPattern) -> bool {
+    use AnyJsAssignmentPattern as P;
     match pat {
-        P::JsAnyAssignment(p) => is_member_expr_assignment(p),
+        P::AnyJsAssignment(p) => is_member_expr_assignment(p),
         P::JsArrayAssignmentPattern(p) => has_member_expr_in_array_pat(p),
         P::JsObjectAssignmentPattern(p) => has_member_expr_in_object_assign_pat(p),
     }
@@ -393,7 +393,7 @@ fn has_member_expr_in_object_assign_pat(pat: JsObjectAssignmentPattern) -> bool 
         .into_iter()
         .filter_map(Result::ok)
         .any(|it| {
-            use JsAnyObjectAssignmentPatternMember as P;
+            use AnyJsObjectAssignmentPatternMember as P;
             match it {
                 P::JsObjectAssignmentPatternProperty(p) => {
                     p.pattern().map_or(false, has_member_expr_in_assign_pat)
@@ -413,8 +413,8 @@ fn has_member_expr_in_array_pat(pat: JsArrayAssignmentPattern) -> bool {
         .any(|it| it.pattern().map_or(false, has_member_expr_in_assign_pat))
 }
 
-fn is_member_expr_assignment(mut assignment: JsAnyAssignment) -> bool {
-    use JsAnyAssignment::*;
+fn is_member_expr_assignment(mut assignment: AnyJsAssignment) -> bool {
+    use AnyJsAssignment::*;
     while let JsParenthesizedAssignment(p) = assignment {
         if let Ok(p) = p.assignment() {
             assignment = p
@@ -428,10 +428,10 @@ fn is_member_expr_assignment(mut assignment: JsAnyAssignment) -> bool {
     )
 }
 
-fn has_outer_variables_in_assign_pat(pat: JsAnyAssignmentPattern, scope: &Scope) -> bool {
-    use JsAnyAssignmentPattern as P;
+fn has_outer_variables_in_assign_pat(pat: AnyJsAssignmentPattern, scope: &Scope) -> bool {
+    use AnyJsAssignmentPattern as P;
     match pat {
-        P::JsAnyAssignment(p) => is_outer_variable_in_assignment(p, scope),
+        P::AnyJsAssignment(p) => is_outer_variable_in_assignment(p, scope),
         P::JsArrayAssignmentPattern(p) => has_outer_variables_in_object_assign_pat(p, scope),
         P::JsObjectAssignmentPattern(p) => has_outer_variables_in_array_assign_pat(p, scope),
     }
@@ -442,7 +442,7 @@ fn has_outer_variables_in_array_assign_pat(pat: JsObjectAssignmentPattern, scope
         .into_iter()
         .filter_map(Result::ok)
         .any(|it| {
-            use JsAnyObjectAssignmentPatternMember as P;
+            use AnyJsObjectAssignmentPatternMember as P;
             match it {
                 P::JsObjectAssignmentPatternProperty(p) => p
                     .pattern()
@@ -465,9 +465,9 @@ fn has_outer_variables_in_object_assign_pat(pat: JsArrayAssignmentPattern, scope
     })
 }
 
-fn is_outer_variable_in_assignment(e: JsAnyAssignment, scope: &Scope) -> bool {
+fn is_outer_variable_in_assignment(e: AnyJsAssignment, scope: &Scope) -> bool {
     match e {
-        JsAnyAssignment::JsIdentifierAssignment(it) => is_outer_ident_in_assignment(it, scope),
+        AnyJsAssignment::JsIdentifierAssignment(it) => is_outer_ident_in_assignment(it, scope),
         _ => false,
     }
 }

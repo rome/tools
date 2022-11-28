@@ -5,8 +5,8 @@ use crate::parentheses::{
 };
 use crate::ts::expressions::type_assertion_expression::type_cast_like_needs_parens;
 use rome_formatter::{format_args, write};
-use rome_js_syntax::{JsAnyExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, TsAsExpression};
-use rome_js_syntax::{TsSatisfiesExpression, TsType};
+use rome_js_syntax::{AnyJsExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, TsAsExpression};
+use rome_js_syntax::{AnyTsType, TsSatisfiesExpression};
 use rome_rowan::{declare_node_union, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
@@ -33,7 +33,7 @@ declare_node_union! {
 }
 
 impl TsAsOrSatisfiesExpression {
-    fn ty(&self) -> SyntaxResult<TsType> {
+    fn ty(&self) -> SyntaxResult<AnyTsType> {
         match self {
             TsAsOrSatisfiesExpression::TsAsExpression(expression) => expression.ty(),
             TsAsOrSatisfiesExpression::TsSatisfiesExpression(expression) => expression.ty(),
@@ -49,7 +49,7 @@ impl TsAsOrSatisfiesExpression {
         }
     }
 
-    fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         match self {
             TsAsOrSatisfiesExpression::TsAsExpression(expression) => expression.expression(),
             TsAsOrSatisfiesExpression::TsSatisfiesExpression(expression) => expression.expression(),

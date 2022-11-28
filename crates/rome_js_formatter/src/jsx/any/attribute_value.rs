@@ -1,16 +1,16 @@
 //! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::JsxAnyAttributeValue;
+use rome_js_syntax::AnyJsxAttributeValue;
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatJsxAnyAttributeValue;
-impl FormatRule<JsxAnyAttributeValue> for FormatJsxAnyAttributeValue {
+pub(crate) struct FormatAnyJsxAttributeValue;
+impl FormatRule<AnyJsxAttributeValue> for FormatAnyJsxAttributeValue {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &JsxAnyAttributeValue, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyJsxAttributeValue, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsxAnyAttributeValue::JsxAnyTag(node) => node.format().fmt(f),
-            JsxAnyAttributeValue::JsxString(node) => node.format().fmt(f),
-            JsxAnyAttributeValue::JsxExpressionAttributeValue(node) => node.format().fmt(f),
+            AnyJsxAttributeValue::AnyJsxTag(node) => node.format().fmt(f),
+            AnyJsxAttributeValue::JsxString(node) => node.format().fmt(f),
+            AnyJsxAttributeValue::JsxExpressionAttributeValue(node) => node.format().fmt(f),
         }
     }
 }

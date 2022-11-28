@@ -448,22 +448,22 @@ impl IntoFormat<JsonFormatContext> for rome_json_syntax::JsonBogusValue {
         )
     }
 }
-impl AsFormat<JsonFormatContext> for rome_json_syntax::JsonAnyValue {
+impl AsFormat<JsonFormatContext> for rome_json_syntax::AnyJsonValue {
     type Format<'a> = FormatRefWithRule<
         'a,
-        rome_json_syntax::JsonAnyValue,
-        crate::json::any::value::FormatJsonAnyValue,
+        rome_json_syntax::AnyJsonValue,
+        crate::json::any::value::FormatAnyJsonValue,
     >;
     fn format(&self) -> Self::Format<'_> {
-        FormatRefWithRule::new(self, crate::json::any::value::FormatJsonAnyValue::default())
+        FormatRefWithRule::new(self, crate::json::any::value::FormatAnyJsonValue::default())
     }
 }
-impl IntoFormat<JsonFormatContext> for rome_json_syntax::JsonAnyValue {
+impl IntoFormat<JsonFormatContext> for rome_json_syntax::AnyJsonValue {
     type Format = FormatOwnedWithRule<
-        rome_json_syntax::JsonAnyValue,
-        crate::json::any::value::FormatJsonAnyValue,
+        rome_json_syntax::AnyJsonValue,
+        crate::json::any::value::FormatAnyJsonValue,
     >;
     fn into_format(self) -> Self::Format {
-        FormatOwnedWithRule::new(self, crate::json::any::value::FormatJsonAnyValue::default())
+        FormatOwnedWithRule::new(self, crate::json::any::value::FormatAnyJsonValue::default())
     }
 }

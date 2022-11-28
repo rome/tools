@@ -8,7 +8,7 @@ use rome_diagnostics::Applicability;
 use rome_js_factory::make::{
     jsx_child_list, jsx_closing_fragment, jsx_fragment, jsx_opening_fragment,
 };
-use rome_js_syntax::{JsxAnyElementName, JsxElement};
+use rome_js_syntax::{AnyJsxElementName, JsxElement};
 use rome_rowan::{AstNode, AstNodeList, BatchMutationExt};
 
 declare_rule! {
@@ -47,13 +47,13 @@ impl Rule for UseFragmentSyntax {
         let opening_element = node.opening_element().ok()?;
         let name = opening_element.name().ok()?;
         let maybe_invalid = match name {
-            JsxAnyElementName::JsxMemberName(member_name) => {
+            AnyJsxElementName::JsxMemberName(member_name) => {
                 jsx_member_name_is_react_fragment(&member_name, model)?
             }
-            JsxAnyElementName::JsxReferenceIdentifier(identifier) => {
+            AnyJsxElementName::JsxReferenceIdentifier(identifier) => {
                 jsx_reference_identifier_is_fragment(&identifier, model)?
             }
-            JsxAnyElementName::JsxName(_) | JsxAnyElementName::JsxNamespaceName(_) => false,
+            AnyJsxElementName::JsxName(_) | AnyJsxElementName::JsxNamespaceName(_) => false,
         };
 
         if maybe_invalid && opening_element.attributes().is_empty() {

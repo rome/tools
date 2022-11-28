@@ -1,5 +1,5 @@
 use super::*;
-use rome_js_syntax::JsAnyRoot;
+use rome_js_syntax::AnyJsRoot;
 
 #[derive(Copy, Clone, Debug)]
 pub(crate) struct BindingIndex(usize);
@@ -31,7 +31,7 @@ impl From<(BindingIndex, usize)> for ReferenceIndex {
 /// to outlive the [SemanticModel], and to not include lifetimes.
 #[derive(Debug)]
 pub(crate) struct SemanticModelData {
-    pub(crate) root: JsAnyRoot,
+    pub(crate) root: AnyJsRoot,
     // All scopes of this model
     pub(crate) scopes: Vec<SemanticModelScopeData>,
     pub(crate) scope_by_range: rust_lapper::Lapper<usize, usize>,
@@ -325,7 +325,7 @@ impl SemanticModel {
 
     /// Returns true or false if the expression is constant, which
     /// means it does not depend on any other variables.
-    pub fn is_constant(&self, expr: &JsAnyExpression) -> bool {
+    pub fn is_constant(&self, expr: &AnyJsExpression) -> bool {
         is_constant::is_constant(expr)
     }
 

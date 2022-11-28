@@ -2,7 +2,7 @@
 
 use std::collections::{HashSet, VecDeque};
 
-use rome_js_syntax::{JsAnyDeclaration, TsAnyTupleTypeElement};
+use rome_js_syntax::{AnyJsDeclaration, AnyTsTupleTypeElement};
 use schemars::{
     gen::{SchemaGenerator, SchemaSettings},
     schema::{InstanceType, RootSchema, Schema, SchemaObject, SingleOrVec},
@@ -13,7 +13,7 @@ use serde_json::Value;
 use crate::{workspace::*, RomeError};
 use rome_js_factory::{
     make,
-    syntax::{JsAnyObjectMemberName, TsAnyName, TsAnyTypeMember, TsType, T},
+    syntax::{AnyJsObjectMemberName, AnyTsName, AnyTsType, AnyTsTypeMember, T},
 };
 use rome_rowan::{AstSeparatedList, TriviaPieceKind};
 
@@ -50,12 +50,12 @@ fn instance_type<'a>(
     root_schema: &'a RootSchema,
     schema: &'a SchemaObject,
     ty: InstanceType,
-) -> TsType {
+) -> AnyTsType {
     match ty {
         // If the instance type is an object, generate a TS object type with the corresponding properties
         InstanceType::Object => {
             let object = schema.object.as_deref().unwrap();
-            TsType::from(make::ts_object_type(
+            AnyTsType::from(make::ts_object_type(
                 make::token(T!['{']),
                 make::ts_type_member_list(object.properties.iter().map(|(property, schema)| {
                     let (ts_type, optional, description) = schema_type(queue, root_schema, schema);
@@ -72,8 +72,8 @@ fn instance_type<'a>(
                         property = property.with_leading_trivia(trivia);
                     }
 
-                    TsAnyTypeMember::from(
-                        make::ts_property_signature_type_member(JsAnyObjectMemberName::from(
+                    AnyTsTypeMember::from(
+                        make::ts_property_signature_type_member(AnyJsObjectMemberName::from(
                             make::js_literal_member_name(property),
                         ))
                         .with_type_annotation(make::ts_type_annotation(make::token(T![:]), ts_type))
@@ -92,19 +92,19 @@ fn instance_type<'a>(
                     let (ts_type, optional, _) = schema_type(queue, root_schema, schema);
                     assert!(!optional, "optional nested types are not supported");
 
-                    TsType::from(make::ts_array_type(
+                    AnyTsType::from(make::ts_array_type(
                         ts_type,
                         make::token(T!['[']),
                         make::token(T![']']),
                     ))
                 }
-                SingleOrVec::Vec(items) => TsType::from(make::ts_tuple_type(
+                SingleOrVec::Vec(items) => AnyTsType::from(make::ts_tuple_type(
                     make::token(T!['[']),
                     make::ts_tuple_type_element_list(
                         items.iter().map(|schema| {
                             let (ts_type, optional, _) = schema_type(queue, root_schema, schema);
                             assert!(!optional, "optional nested types are not supported");
-                            TsAnyTupleTypeElement::TsType(ts_type)
+                            AnyTsTupleTypeElement::AnyTsType(ts_type)
                         }),
                         items.iter().map(|_| make::token(T![,])),
                     ),
@@ -114,26 +114,28 @@ fn instance_type<'a>(
         }
 
         // Map native types to the corresponding TS type
-        InstanceType::Null => TsType::from(make::ts_null_literal_type(make::token(T![null]))),
-        InstanceType::Boolean => TsType::from(make::ts_boolean_type(make::token(T![boolean]))),
-        InstanceType::String => TsType::from(make::ts_string_type(make::token(T![string]))),
+        InstanceType::Null => AnyTsType::from(make::ts_null_literal_type(make::token(T![null]))),
+        InstanceType::Boolean => AnyTsType::from(make::ts_boolean_type(make::token(T![boolean]))),
+        InstanceType::String => AnyTsType::from(make::ts_string_type(make::token(T![string]))),
         InstanceType::Number | InstanceType::Integer => {
-            TsType::from(make::ts_number_type(make::token(T![number])))
+            AnyTsType::from(make::ts_number_type(make::token(T![number])))
         }
     }
 }
 
 /// Generate a literal [TsType] from a `serde_json` [Value]
-fn value_type(value: &Value) -> TsType {
+fn value_type(value: &Value) -> AnyTsType {
     match value {
-        Value::Null => TsType::from(make::ts_null_literal_type(make::token(T![null]))),
-        Value::Bool(true) => TsType::from(make::ts_boolean_literal_type(make::token(T![true]))),
-        Value::Bool(false) => TsType::from(make::ts_boolean_literal_type(make::token(T![false]))),
-        Value::Number(value) => TsType::from(
+        Value::Null => AnyTsType::from(make::ts_null_literal_type(make::token(T![null]))),
+        Value::Bool(true) => AnyTsType::from(make::ts_boolean_literal_type(make::token(T![true]))),
+        Value::Bool(false) => {
+            AnyTsType::from(make::ts_boolean_literal_type(make::token(T![false])))
+        }
+        Value::Number(value) => AnyTsType::from(
             make::ts_number_literal_type(make::js_number_literal(value.as_f64().unwrap())).build(),
         ),
         Value::String(value) => {
-            TsType::from(make::ts_string_literal_type(make::js_string_literal(value)))
+            AnyTsType::from(make::ts_string_literal_type(make::js_string_literal(value)))
         }
         Value::Array(_) => unimplemented!(),
         Value::Object(_) => unimplemented!(),
@@ -142,11 +144,11 @@ fn value_type(value: &Value) -> TsType {
 
 /// Generate a union [TsType] node from a list of [TsType]s,
 /// flattening any nested union type the iterator may emit
-fn make_union_type(items: impl IntoIterator<Item = TsType>) -> TsType {
+fn make_union_type(items: impl IntoIterator<Item = AnyTsType>) -> AnyTsType {
     let mut result = Vec::new();
 
     for item in items {
-        if let TsType::TsUnionType(union_type) = item {
+        if let AnyTsType::TsUnionType(union_type) = item {
             for item in union_type.types().iter() {
                 result.push(item.unwrap());
             }
@@ -156,7 +158,9 @@ fn make_union_type(items: impl IntoIterator<Item = TsType>) -> TsType {
     }
 
     let separators = (0..result.len().saturating_sub(1)).map(|_| make::token(T![|]));
-    TsType::from(make::ts_union_type(make::ts_union_type_variant_list(result, separators)).build())
+    AnyTsType::from(
+        make::ts_union_type(make::ts_union_type_variant_list(result, separators)).build(),
+    )
 }
 
 /// Generate a [TsType] node from a [SchemaObject], returning the generated
@@ -166,7 +170,7 @@ fn schema_object_type<'a>(
     queue: &mut ModuleQueue<'a>,
     root_schema: &'a RootSchema,
     schema: &'a SchemaObject,
-) -> (TsType, bool, Option<&'a String>) {
+) -> (AnyTsType, bool, Option<&'a String>) {
     // Start by detecting enum types by inspecting the `enum_values` field, i
     // the field is set return a union type generated from the literal enum values
     let description = schema
@@ -200,8 +204,8 @@ fn schema_object_type<'a>(
                 None => panic!("definition for type {key:?} not found"),
             }
 
-            Some(TsType::from(
-                make::ts_reference_type(TsAnyName::from(make::js_reference_identifier(
+            Some(AnyTsType::from(
+                make::ts_reference_type(AnyTsName::from(make::js_reference_identifier(
                     make::ident(key),
                 )))
                 .build(),
@@ -216,7 +220,7 @@ fn schema_object_type<'a>(
                 .all_of
                 .as_deref()
                 .map(|all_of| {
-                    TsType::from(
+                    AnyTsType::from(
                         make::ts_intersection_type(make::ts_intersection_type_element_list(
                             all_of.iter().map(|ty| {
                                 let (ts_type, optional, _) = schema_type(queue, root_schema, ty);
@@ -245,7 +249,7 @@ fn schema_object_type<'a>(
         })
         .unwrap_or_else(|| {
             // this is temporary workaround to fix the `options` field, which is not used at the moment
-            TsType::from(make::ts_any_type(make::token(T![any])))
+            AnyTsType::from(make::ts_any_type(make::token(T![any])))
         });
 
     // Types are considered "optional" in the serialization protocol if they
@@ -267,19 +271,19 @@ fn schema_type<'a>(
     queue: &mut ModuleQueue<'a>,
     root_schema: &'a RootSchema,
     schema: &'a Schema,
-) -> (TsType, bool, Option<&'a String>) {
+) -> (AnyTsType, bool, Option<&'a String>) {
     match schema {
         // Types defined as `true` in the schema always pass validation,
         // map them to the `any` type
         Schema::Bool(true) => (
-            TsType::from(make::ts_any_type(make::token(T![any]))),
+            AnyTsType::from(make::ts_any_type(make::token(T![any]))),
             true,
             None,
         ),
         // Types defined as `false` in the schema never pass validation,
         // map them to the `never` type
         Schema::Bool(false) => (
-            TsType::from(make::ts_never_type(make::token(T![never]))),
+            AnyTsType::from(make::ts_never_type(make::token(T![never]))),
             false,
             None,
         ),
@@ -289,10 +293,10 @@ fn schema_type<'a>(
 
 /// Generate and emit all the types defined in `root_schema` into the `module`
 pub fn generate_type<'a>(
-    module: &mut Vec<(JsAnyDeclaration, Option<&'a String>)>,
+    module: &mut Vec<(AnyJsDeclaration, Option<&'a String>)>,
     queue: &mut ModuleQueue<'a>,
     root_schema: &'a RootSchema,
-) -> TsType {
+) -> AnyTsType {
     // Read the root type of the schema and push it to the queue
     let root_name = root_schema
         .schema
@@ -302,9 +306,11 @@ pub fn generate_type<'a>(
         .unwrap();
 
     match root_name {
-        "Null" => return TsType::TsVoidType(make::ts_void_type(make::token(T![void]))),
-        "Boolean" => return TsType::TsBooleanType(make::ts_boolean_type(make::token(T![boolean]))),
-        "String" => return TsType::TsStringType(make::ts_string_type(make::token(T![string]))),
+        "Null" => return AnyTsType::TsVoidType(make::ts_void_type(make::token(T![void]))),
+        "Boolean" => {
+            return AnyTsType::TsBooleanType(make::ts_boolean_type(make::token(T![boolean])))
+        }
+        "String" => return AnyTsType::TsStringType(make::ts_string_type(make::token(T![string]))),
         _ => {}
     }
 
@@ -346,7 +352,7 @@ pub fn generate_type<'a>(
                 }
 
                 let mut builder = make::ts_property_signature_type_member(
-                    JsAnyObjectMemberName::from(make::js_literal_member_name(property)),
+                    AnyJsObjectMemberName::from(make::js_literal_member_name(property)),
                 )
                 .with_type_annotation(make::ts_type_annotation(make::token(T![:]), ts_type));
 
@@ -354,14 +360,14 @@ pub fn generate_type<'a>(
                     builder = builder.with_optional_token(make::token(T![?]));
                 }
 
-                members.push(TsAnyTypeMember::from(builder.build()));
+                members.push(AnyTsTypeMember::from(builder.build()));
             }
 
             let description = schema
                 .metadata
                 .as_ref()
                 .and_then(|s| s.description.as_ref());
-            let current_module = JsAnyDeclaration::from(
+            let current_module = AnyJsDeclaration::from(
                 make::ts_interface_declaration(
                     make::token(T![interface]),
                     make::ts_identifier_binding(make::ident(name)),
@@ -377,7 +383,7 @@ pub fn generate_type<'a>(
             let (ts_type, optional, description) = schema_object_type(queue, root_schema, schema);
             assert!(!optional, "optional nested types are not supported");
 
-            let current_module = JsAnyDeclaration::from(
+            let current_module = AnyJsDeclaration::from(
                 make::ts_type_alias_declaration(
                     make::token(T![type]),
                     make::ts_identifier_binding(make::ident(name)),
@@ -390,8 +396,8 @@ pub fn generate_type<'a>(
         }
     }
 
-    TsType::TsReferenceType(
-        make::ts_reference_type(TsAnyName::JsReferenceIdentifier(
+    AnyTsType::TsReferenceType(
+        make::ts_reference_type(AnyTsName::JsReferenceIdentifier(
             make::js_reference_identifier(make::ident(root_name)),
         ))
         .build(),

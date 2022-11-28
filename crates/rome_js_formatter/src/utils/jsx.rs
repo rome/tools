@@ -3,8 +3,8 @@ use crate::prelude::*;
 use crate::JsCommentStyle;
 use rome_formatter::{comments::CommentStyle, format_args, write};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsComputedMemberExpression, JsStaticMemberExpression,
-    JsSyntaxKind, JsxAnyChild, JsxAnyTag, JsxChildList, JsxExpressionChild, JsxTagExpression,
+    AnyJsExpression, AnyJsLiteralExpression, AnyJsxChild, AnyJsxTag, JsComputedMemberExpression,
+    JsStaticMemberExpression, JsSyntaxKind, JsxChildList, JsxExpressionChild, JsxTagExpression,
     JsxText, TextLen,
 };
 use rome_rowan::{Direction, SyntaxResult, SyntaxTokenText, TextRange, TextSize};
@@ -55,7 +55,7 @@ pub fn is_meaningful_jsx_text(text: &str) -> bool {
 //   <div a={  some} />
 //   </div>
 /// ```
-pub(crate) fn is_jsx_suppressed(tag: &JsxAnyTag, comments: &JsComments) -> bool {
+pub(crate) fn is_jsx_suppressed(tag: &AnyJsxTag, comments: &JsComments) -> bool {
     comments.mark_suppression_checked(tag.syntax());
 
     match tag.parent::<JsxChildList>() {
@@ -193,8 +193,8 @@ pub(crate) fn is_whitespace_jsx_expression(
     comments: &JsComments,
 ) -> bool {
     match child.expression() {
-        Some(JsAnyExpression::JsAnyLiteralExpression(
-            JsAnyLiteralExpression::JsStringLiteralExpression(literal),
+        Some(AnyJsExpression::AnyJsLiteralExpression(
+            AnyJsLiteralExpression::JsStringLiteralExpression(literal),
         )) => {
             match (
                 child.l_curly_token(),
@@ -221,13 +221,13 @@ pub(crate) fn jsx_split_children<I>(
     comments: &JsComments,
 ) -> SyntaxResult<Vec<JsxChild>>
 where
-    I: IntoIterator<Item = JsxAnyChild>,
+    I: IntoIterator<Item = AnyJsxChild>,
 {
     let mut builder = JsxSplitChildrenBuilder::new();
 
     for child in children.into_iter() {
         match child {
-            JsxAnyChild::JsxText(text) => {
+            AnyJsxChild::JsxText(text) => {
                 // Split the text into words
                 // Keep track if there's any leading/trailing empty line, new line or whitespace
 
@@ -293,7 +293,7 @@ where
                 }
             }
 
-            JsxAnyChild::JsxExpressionChild(child) => {
+            AnyJsxChild::JsxExpressionChild(child) => {
                 if is_whitespace_jsx_expression(&child, comments) {
                     builder.entry(JsxChild::Whitespace)
                 } else {
@@ -389,7 +389,7 @@ pub(crate) enum JsxChild {
     EmptyLine,
 
     /// Any other content that isn't a text. Should be formatted as is.
-    NonText(JsxAnyChild),
+    NonText(AnyJsxChild),
 }
 
 impl JsxChild {

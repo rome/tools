@@ -4,7 +4,7 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsAnyFunction, JsCallArgumentList, JsCallArguments, JsCallExpression, JsFormalParameter,
+    AnyJsFunction, JsCallArgumentList, JsCallArguments, JsCallExpression, JsFormalParameter,
     JsIdentifierBinding, JsObjectExpression, JsObjectMemberList, JsParameterList, JsParameters,
     JsPropertyObjectMember, JsReferenceIdentifier, JsxAttribute,
 };
@@ -125,7 +125,7 @@ impl Rule for NoArrayIndexKey {
         let function = parameter
             .parent::<JsParameterList>()
             .and_then(|list| list.parent::<JsParameters>())
-            .and_then(|parameters| parameters.parent::<JsAnyFunction>())?;
+            .and_then(|parameters| parameters.parent::<AnyJsFunction>())?;
         let call_expression = function
             .parent::<JsCallArgumentList>()
             .and_then(|arguments| arguments.parent::<JsCallArguments>())
@@ -152,7 +152,7 @@ impl Rule for NoArrayIndexKey {
 
             if is_react_call_api(callee, model, ReactLibrary::React, "cloneElement") {
                 let binding = parameter.binding().ok()?;
-                let binding_origin = binding.as_js_any_binding()?.as_js_identifier_binding()?;
+                let binding_origin = binding.as_any_js_binding()?.as_js_identifier_binding()?;
                 Some(NoArrayIndexKeyState {
                     binding_origin: binding_origin.clone(),
                     incorrect_prop: reference,
@@ -162,7 +162,7 @@ impl Rule for NoArrayIndexKey {
             }
         } else {
             let binding = parameter.binding().ok()?;
-            let binding_origin = binding.as_js_any_binding()?.as_js_identifier_binding()?;
+            let binding_origin = binding.as_any_js_binding()?.as_js_identifier_binding()?;
             Some(NoArrayIndexKeyState {
                 binding_origin: binding_origin.clone(),
                 incorrect_prop: reference,

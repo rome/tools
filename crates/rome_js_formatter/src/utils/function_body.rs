@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use rome_formatter::write;
-use rome_js_syntax::JsAnyFunctionBody;
+use rome_js_syntax::AnyJsFunctionBody;
 
 #[derive(Copy, Clone, Debug, Default)]
 pub enum FunctionBodyCacheMode {
@@ -15,10 +15,10 @@ pub enum FunctionBodyCacheMode {
     Cache,
 }
 
-/// Formats a [function body](JsAnyFunctionBody) with additional caching depending on [`mode`](Self::mode).
+/// Formats a [function body](AnyJsFunctionBody) with additional caching depending on [`mode`](Self::mode).
 pub(crate) struct FormatMaybeCachedFunctionBody<'a> {
     /// The body to format.
-    pub body: &'a JsAnyFunctionBody,
+    pub body: &'a AnyJsFunctionBody,
 
     /// If the body should be cached or if the formatter should try to retrieve it from the cache.
     pub mode: FunctionBodyCacheMode,

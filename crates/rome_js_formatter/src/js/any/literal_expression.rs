@@ -1,19 +1,19 @@
 //! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::JsAnyLiteralExpression;
+use rome_js_syntax::AnyJsLiteralExpression;
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatJsAnyLiteralExpression;
-impl FormatRule<JsAnyLiteralExpression> for FormatJsAnyLiteralExpression {
+pub(crate) struct FormatAnyJsLiteralExpression;
+impl FormatRule<AnyJsLiteralExpression> for FormatAnyJsLiteralExpression {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &JsAnyLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyJsLiteralExpression, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyLiteralExpression::JsStringLiteralExpression(node) => node.format().fmt(f),
-            JsAnyLiteralExpression::JsNumberLiteralExpression(node) => node.format().fmt(f),
-            JsAnyLiteralExpression::JsBigIntLiteralExpression(node) => node.format().fmt(f),
-            JsAnyLiteralExpression::JsBooleanLiteralExpression(node) => node.format().fmt(f),
-            JsAnyLiteralExpression::JsNullLiteralExpression(node) => node.format().fmt(f),
-            JsAnyLiteralExpression::JsRegexLiteralExpression(node) => node.format().fmt(f),
+            AnyJsLiteralExpression::JsStringLiteralExpression(node) => node.format().fmt(f),
+            AnyJsLiteralExpression::JsNumberLiteralExpression(node) => node.format().fmt(f),
+            AnyJsLiteralExpression::JsBigIntLiteralExpression(node) => node.format().fmt(f),
+            AnyJsLiteralExpression::JsBooleanLiteralExpression(node) => node.format().fmt(f),
+            AnyJsLiteralExpression::JsNullLiteralExpression(node) => node.format().fmt(f),
+            AnyJsLiteralExpression::JsRegexLiteralExpression(node) => node.format().fmt(f),
         }
     }
 }

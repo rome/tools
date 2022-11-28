@@ -145,7 +145,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if CssAnyRule::can_cast(element.kind()) {
+                    if AnyCssRule::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -192,7 +192,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if CssAnyAtMediaQueryType::can_cast(element.kind()) {
+                    if AnyCssAtMediaQueryType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -232,7 +232,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if CssAnyAtMediaQueryType::can_cast(element.kind()) {
+                    if AnyCssAtMediaQueryType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -258,7 +258,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if CssAnyAtMediaQueryFeatureType::can_cast(element.kind()) {
+                    if AnyCssAtMediaQueryFeatureType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -317,7 +317,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if CssAnyValue::can_cast(element.kind()) {
+                    if AnyCssValue::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -350,7 +350,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if CssAnyValue::can_cast(element.kind()) {
+                    if AnyCssValue::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -369,7 +369,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if CssAnyValue::can_cast(element.kind()) {
+                    if AnyCssValue::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -390,7 +390,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if CssAnyValue::can_cast(element.kind()) {
+                    if AnyCssValue::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -713,7 +713,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if CssAnySelectorPattern::can_cast(element.kind()) {
+                    if AnyCssSelectorPattern::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -748,7 +748,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if CssAnySelectorPattern::can_cast(element.kind()) {
+                    if AnyCssSelectorPattern::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -807,7 +807,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if CssAnyValue::can_cast(element.kind()) {
+                    if AnyCssValue::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1022,7 +1022,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if CssAnyValue::can_cast(element.kind()) {
+                    if AnyCssValue::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1107,7 +1107,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if CssAnyValue::can_cast(element.kind()) {
+                    if AnyCssValue::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1367,7 +1367,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.into_node(CSS_VAR_FUNCTION_VALUE, children)
             }
             CSS_ANY_SELECTOR_PATTERN_LIST => {
-                Self::make_node_list_syntax(kind, children, CssAnySelectorPattern::can_cast)
+                Self::make_node_list_syntax(kind, children, AnyCssSelectorPattern::can_cast)
             }
             CSS_AT_KEYFRAMES_ITEM_LIST => {
                 Self::make_node_list_syntax(kind, children, CssKeyframesBlock::can_cast)
@@ -1395,7 +1395,7 @@ impl SyntaxFactory for CssSyntaxFactory {
             CSS_PARAMETER_LIST => {
                 Self::make_node_list_syntax(kind, children, CssParameter::can_cast)
             }
-            CSS_ROOT => Self::make_node_list_syntax(kind, children, CssAnyRule::can_cast),
+            CSS_ROOT => Self::make_node_list_syntax(kind, children, AnyCssRule::can_cast),
             CSS_SELECTOR_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,

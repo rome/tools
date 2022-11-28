@@ -4,7 +4,7 @@ use rome_console::markup;
 use rome_js_syntax::{JsReturnStatement, JsSetterClassMember, JsSetterObjectMember};
 use rome_rowan::{declare_node_union, AstNode};
 
-use crate::control_flow::JsAnyControlFlowRoot;
+use crate::control_flow::AnyJsControlFlowRoot;
 
 declare_rule! {
     /// Disallow returning a value from a setter
@@ -90,7 +90,7 @@ impl Rule for NoSetterReturn {
         let setter = ret
             .syntax()
             .ancestors()
-            .find(|x| JsAnyControlFlowRoot::can_cast(x.kind()))
+            .find(|x| AnyJsControlFlowRoot::can_cast(x.kind()))
             .and_then(JsSetterMember::cast);
         setter
     }

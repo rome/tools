@@ -41,22 +41,22 @@ JsonBogus = SyntaxElement*
 JsonBogusValue = SyntaxElement*
 
 JsonRoot =
-    value: JsonAnyValue
+    value: AnyJsonValue
     eof: 'EOF'
 
-JsonAnyValue =  JsonStringValue | JsonBooleanValue | JsonNullValue | JsonNumberValue | JsonArrayValue | JsonObjectValue | JsonBogusValue
+AnyJsonValue =  JsonStringValue | JsonBooleanValue | JsonNullValue | JsonNumberValue | JsonArrayValue | JsonObjectValue | JsonBogusValue
 
 JsonObjectValue = '{' JsonMemberList? '}'
 
 JsonMemberList = (JsonMember (',' JsonMember)* )
 
-JsonMember = name: JsonMemberName ':' value: JsonAnyValue
+JsonMember = name: JsonMemberName ':' value: AnyJsonValue
 
 JsonMemberName = value: 'json_string_literal'
 
 JsonArrayValue = '[' elements: JsonArrayElementList? ']'
 
-JsonArrayElementList = (JsonAnyValue (',' JsonAnyValue)* )
+JsonArrayElementList = (AnyJsonValue (',' AnyJsonValue)* )
 
 JsonBooleanValue = value_token: ('true' | 'false')
 

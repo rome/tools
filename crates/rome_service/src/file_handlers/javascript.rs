@@ -29,7 +29,7 @@ use rome_js_formatter::{context::JsFormatOptions, format_node};
 use rome_js_parser::Parse;
 use rome_js_semantic::{semantic_model, SemanticModelOptions};
 use rome_js_syntax::{
-    JsAnyRoot, JsLanguage, JsSyntaxNode, SourceType, TextRange, TextSize, TokenAtOffset,
+    AnyJsRoot, JsLanguage, JsSyntaxNode, SourceType, TextRange, TextSize, TokenAtOffset,
 };
 use rome_rowan::{AstNode, BatchMutationExt, Direction};
 use std::borrow::Cow;
@@ -148,7 +148,7 @@ where
 
 fn debug_syntax_tree(_rome_path: &RomePath, parse: AnyParse) -> GetSyntaxTreeResult {
     let syntax: JsSyntaxNode = parse.syntax();
-    let tree: JsAnyRoot = parse.tree();
+    let tree: AnyJsRoot = parse.tree();
     GetSyntaxTreeResult {
         cst: format!("{syntax:#?}"),
         ast: format!("{tree:#?}"),
@@ -365,7 +365,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
         settings,
     } = params;
 
-    let mut tree: JsAnyRoot = parse.tree();
+    let mut tree: AnyJsRoot = parse.tree();
     let mut actions = Vec::new();
 
     let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
@@ -417,7 +417,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
         match action {
             Some(action) => {
                 if let Some((range, _)) = action.mutation.as_text_edits() {
-                    tree = match JsAnyRoot::cast(action.mutation.commit()) {
+                    tree = match AnyJsRoot::cast(action.mutation.commit()) {
                         Some(tree) => tree,
                         None => {
                             return Err(RomeError::RuleError(

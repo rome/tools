@@ -1,6 +1,6 @@
 use crate::{
-    JsAnyMethodModifier, JsAnyPropertyModifier, TsAnyIndexSignatureModifier,
-    TsAnyMethodSignatureModifier, TsAnyPropertyParameterModifier, TsAnyPropertySignatureModifier,
+    AnyJsMethodModifier, AnyJsPropertyModifier, AnyTsIndexSignatureModifier,
+    AnyTsMethodSignatureModifier, AnyTsPropertyParameterModifier, AnyTsPropertySignatureModifier,
 };
 
 /// Helpful data structure to make the order modifiers predictable inside the formatter
@@ -15,66 +15,66 @@ pub enum Modifiers {
     Readonly,
 }
 
-impl From<&TsAnyIndexSignatureModifier> for Modifiers {
-    fn from(modifier: &TsAnyIndexSignatureModifier) -> Self {
+impl From<&AnyTsIndexSignatureModifier> for Modifiers {
+    fn from(modifier: &AnyTsIndexSignatureModifier) -> Self {
         match modifier {
-            TsAnyIndexSignatureModifier::JsStaticModifier(_) => Modifiers::Static,
-            TsAnyIndexSignatureModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
+            AnyTsIndexSignatureModifier::JsStaticModifier(_) => Modifiers::Static,
+            AnyTsIndexSignatureModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
         }
     }
 }
 
-impl From<&JsAnyMethodModifier> for Modifiers {
-    fn from(modifier: &JsAnyMethodModifier) -> Self {
+impl From<&AnyJsMethodModifier> for Modifiers {
+    fn from(modifier: &AnyJsMethodModifier) -> Self {
         match modifier {
-            JsAnyMethodModifier::JsStaticModifier(_) => Modifiers::Static,
-            JsAnyMethodModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
-            JsAnyMethodModifier::TsOverrideModifier(_) => Modifiers::Override,
+            AnyJsMethodModifier::JsStaticModifier(_) => Modifiers::Static,
+            AnyJsMethodModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
+            AnyJsMethodModifier::TsOverrideModifier(_) => Modifiers::Override,
         }
     }
 }
 
-impl From<&TsAnyMethodSignatureModifier> for Modifiers {
-    fn from(modifier: &TsAnyMethodSignatureModifier) -> Self {
+impl From<&AnyTsMethodSignatureModifier> for Modifiers {
+    fn from(modifier: &AnyTsMethodSignatureModifier) -> Self {
         match modifier {
-            TsAnyMethodSignatureModifier::JsStaticModifier(_) => Modifiers::Static,
-            TsAnyMethodSignatureModifier::TsAbstractModifier(_) => Modifiers::Abstract,
-            TsAnyMethodSignatureModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
-            TsAnyMethodSignatureModifier::TsOverrideModifier(_) => Modifiers::Override,
+            AnyTsMethodSignatureModifier::JsStaticModifier(_) => Modifiers::Static,
+            AnyTsMethodSignatureModifier::TsAbstractModifier(_) => Modifiers::Abstract,
+            AnyTsMethodSignatureModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
+            AnyTsMethodSignatureModifier::TsOverrideModifier(_) => Modifiers::Override,
         }
     }
 }
 
-impl From<&JsAnyPropertyModifier> for Modifiers {
-    fn from(modifier: &JsAnyPropertyModifier) -> Self {
+impl From<&AnyJsPropertyModifier> for Modifiers {
+    fn from(modifier: &AnyJsPropertyModifier) -> Self {
         match modifier {
-            JsAnyPropertyModifier::JsStaticModifier(_) => Modifiers::Static,
-            JsAnyPropertyModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
-            JsAnyPropertyModifier::TsOverrideModifier(_) => Modifiers::Override,
-            JsAnyPropertyModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
+            AnyJsPropertyModifier::JsStaticModifier(_) => Modifiers::Static,
+            AnyJsPropertyModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
+            AnyJsPropertyModifier::TsOverrideModifier(_) => Modifiers::Override,
+            AnyJsPropertyModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
         }
     }
 }
 
-impl From<&TsAnyPropertyParameterModifier> for Modifiers {
-    fn from(modifier: &TsAnyPropertyParameterModifier) -> Self {
+impl From<&AnyTsPropertyParameterModifier> for Modifiers {
+    fn from(modifier: &AnyTsPropertyParameterModifier) -> Self {
         match modifier {
-            TsAnyPropertyParameterModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
-            TsAnyPropertyParameterModifier::TsOverrideModifier(_) => Modifiers::Override,
-            TsAnyPropertyParameterModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
+            AnyTsPropertyParameterModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
+            AnyTsPropertyParameterModifier::TsOverrideModifier(_) => Modifiers::Override,
+            AnyTsPropertyParameterModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
         }
     }
 }
 
-impl From<&TsAnyPropertySignatureModifier> for Modifiers {
-    fn from(modifier: &TsAnyPropertySignatureModifier) -> Self {
+impl From<&AnyTsPropertySignatureModifier> for Modifiers {
+    fn from(modifier: &AnyTsPropertySignatureModifier) -> Self {
         match modifier {
-            TsAnyPropertySignatureModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
-            TsAnyPropertySignatureModifier::TsDeclareModifier(_) => Modifiers::Declare,
-            TsAnyPropertySignatureModifier::JsStaticModifier(_) => Modifiers::Static,
-            TsAnyPropertySignatureModifier::TsAbstractModifier(_) => Modifiers::Abstract,
-            TsAnyPropertySignatureModifier::TsOverrideModifier(_) => Modifiers::Override,
-            TsAnyPropertySignatureModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
+            AnyTsPropertySignatureModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
+            AnyTsPropertySignatureModifier::TsDeclareModifier(_) => Modifiers::Declare,
+            AnyTsPropertySignatureModifier::JsStaticModifier(_) => Modifiers::Static,
+            AnyTsPropertySignatureModifier::TsAbstractModifier(_) => Modifiers::Abstract,
+            AnyTsPropertySignatureModifier::TsOverrideModifier(_) => Modifiers::Override,
+            AnyTsPropertySignatureModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
         }
     }
 }

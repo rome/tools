@@ -1,8 +1,8 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsAnyArrayBindingPatternElement, JsAnyBinding, JsAnyBindingPattern, JsAnyFormalParameter,
-    JsAnyObjectBindingPatternMember, JsAnyParameter, JsArrowFunctionExpression,
+    AnyJsArrayBindingPatternElement, AnyJsBinding, AnyJsBindingPattern, AnyJsFormalParameter,
+    AnyJsObjectBindingPatternMember, AnyJsParameter, JsArrowFunctionExpression,
     JsFunctionDeclaration, JsFunctionExportDefaultDeclaration, JsFunctionExpression,
     JsIdentifierBinding, JsMethodClassMember, JsMethodObjectMember,
 };
@@ -41,7 +41,7 @@ declare_rule! {
 }
 
 impl Rule for NoDupeArgs {
-    type Query = Ast<JsAnyFunctionAndMethod>;
+    type Query = Ast<AnyJsFunctionAndMethod>;
     type State = JsIdentifierBinding;
     type Signals = Option<Self::State>;
     type Options = ();
@@ -49,16 +49,16 @@ impl Rule for NoDupeArgs {
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let function = ctx.query();
         let args = match function {
-            JsAnyFunctionAndMethod::JsArrowFunctionExpression(func) => {
+            AnyJsFunctionAndMethod::JsArrowFunctionExpression(func) => {
                 func.parameters().ok()?.as_js_parameters()?.clone()
             }
-            JsAnyFunctionAndMethod::JsFunctionDeclaration(func) => func.parameters().ok()?,
-            JsAnyFunctionAndMethod::JsFunctionExportDefaultDeclaration(func) => {
+            AnyJsFunctionAndMethod::JsFunctionDeclaration(func) => func.parameters().ok()?,
+            AnyJsFunctionAndMethod::JsFunctionExportDefaultDeclaration(func) => {
                 func.parameters().ok()?
             }
-            JsAnyFunctionAndMethod::JsFunctionExpression(func) => func.parameters().ok()?,
-            JsAnyFunctionAndMethod::JsMethodClassMember(member) => member.parameters().ok()?,
-            JsAnyFunctionAndMethod::JsMethodObjectMember(member) => member.parameters().ok()?,
+            AnyJsFunctionAndMethod::JsFunctionExpression(func) => func.parameters().ok()?,
+            AnyJsFunctionAndMethod::JsMethodClassMember(member) => member.parameters().ok()?,
+            AnyJsFunctionAndMethod::JsMethodObjectMember(member) => member.parameters().ok()?,
         };
         let mut set = FxHashSet::default();
         // Traversing the parameters of the function in preorder and checking for duplicates,
@@ -83,20 +83,20 @@ impl Rule for NoDupeArgs {
 /// Traverse the parameter recursively and check if it is duplicated.
 /// Return `Some(JsIdentifierBinding)` if it is duplicated.
 fn traverse_parameter(
-    parameter: JsAnyParameter,
+    parameter: AnyJsParameter,
     tracked_bindings: &mut FxHashSet<String>,
 ) -> Option<JsIdentifierBinding> {
     match parameter {
-        JsAnyParameter::JsAnyFormalParameter(p) => match p {
-            JsAnyFormalParameter::JsFormalParameter(parameter) => {
+        AnyJsParameter::AnyJsFormalParameter(p) => match p {
+            AnyJsFormalParameter::JsFormalParameter(parameter) => {
                 traverse_binding(parameter.binding().ok()?, tracked_bindings)
             }
-            JsAnyFormalParameter::JsBogusParameter(_) => None,
+            AnyJsFormalParameter::JsBogusParameter(_) => None,
         },
-        JsAnyParameter::JsRestParameter(rest_parameter) => {
+        AnyJsParameter::JsRestParameter(rest_parameter) => {
             traverse_binding(rest_parameter.binding().ok()?, tracked_bindings)
         }
-        JsAnyParameter::TsThisParameter(_) => None,
+        AnyJsParameter::TsThisParameter(_) => None,
     }
 }
 
@@ -105,33 +105,33 @@ fn traverse_parameter(
 /// If false then add the [JsIdentifierBinding] to the [tracked_bindings], mark it name as seen.
 /// If it is not a [JsIdentifierBinding] then recursively call [traverse_binding] on its children.
 fn traverse_binding(
-    binding: JsAnyBindingPattern,
+    binding: AnyJsBindingPattern,
     tracked_bindings: &mut FxHashSet<String>,
 ) -> Option<JsIdentifierBinding> {
     match binding {
-        JsAnyBindingPattern::JsAnyBinding(inner_binding) => match inner_binding {
-            JsAnyBinding::JsIdentifierBinding(id_binding) => {
+        AnyJsBindingPattern::AnyJsBinding(inner_binding) => match inner_binding {
+            AnyJsBinding::JsIdentifierBinding(id_binding) => {
                 if track_binding(&id_binding, tracked_bindings) {
                     return Some(id_binding);
                 }
             }
-            JsAnyBinding::JsBogusBinding(_) => {}
+            AnyJsBinding::JsBogusBinding(_) => {}
         },
-        JsAnyBindingPattern::JsArrayBindingPattern(inner_binding) => {
+        AnyJsBindingPattern::JsArrayBindingPattern(inner_binding) => {
             return inner_binding.elements().into_iter().find_map(|element| {
                 let element = element.ok()?;
                 match element {
-                    JsAnyArrayBindingPatternElement::JsAnyBindingPattern(pattern) => {
+                    AnyJsArrayBindingPatternElement::AnyJsBindingPattern(pattern) => {
                         traverse_binding(pattern, tracked_bindings)
                     }
-                    JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(
+                    AnyJsArrayBindingPatternElement::JsArrayBindingPatternRestElement(
                         binding_rest,
                     ) => {
                         let binding_pattern = binding_rest.pattern().ok()?;
                         traverse_binding(binding_pattern, tracked_bindings)
                     }
-                    JsAnyArrayBindingPatternElement::JsArrayHole(_) => None,
-                    JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(
+                    AnyJsArrayBindingPatternElement::JsArrayHole(_) => None,
+                    AnyJsArrayBindingPatternElement::JsBindingPatternWithDefault(
                         binding_with_default,
                     ) => {
                         let pattern = binding_with_default.pattern().ok()?;
@@ -141,32 +141,32 @@ fn traverse_binding(
             })
         }
 
-        JsAnyBindingPattern::JsObjectBindingPattern(pattern) => {
+        AnyJsBindingPattern::JsObjectBindingPattern(pattern) => {
             return pattern.properties().into_iter().find_map(|prop| {
                 let prop = prop.ok()?;
                 match prop {
-                    JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(pattern) => {
+                    AnyJsObjectBindingPatternMember::JsObjectBindingPatternProperty(pattern) => {
                         let pattern = pattern.pattern().ok()?;
                         traverse_binding(pattern, tracked_bindings)
                     }
-                    JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(rest) => {
+                    AnyJsObjectBindingPatternMember::JsObjectBindingPatternRest(rest) => {
                         let pattern = rest.binding().ok()?;
                         match pattern {
-                            JsAnyBinding::JsIdentifierBinding(binding) => {
+                            AnyJsBinding::JsIdentifierBinding(binding) => {
                                 track_binding(&binding, tracked_bindings).then_some(binding)
                             }
-                            JsAnyBinding::JsBogusBinding(_) => None,
+                            AnyJsBinding::JsBogusBinding(_) => None,
                         }
                     }
-                    JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(
+                    AnyJsObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(
                         shorthand_binding,
                     ) => match shorthand_binding.identifier().ok()? {
-                        JsAnyBinding::JsIdentifierBinding(id_binding) => {
+                        AnyJsBinding::JsIdentifierBinding(id_binding) => {
                             track_binding(&id_binding, tracked_bindings).then_some(id_binding)
                         }
-                        JsAnyBinding::JsBogusBinding(_) => None,
+                        AnyJsBinding::JsBogusBinding(_) => None,
                     },
-                    JsAnyObjectBindingPatternMember::JsBogusBinding(_) => None,
+                    AnyJsObjectBindingPatternMember::JsBogusBinding(_) => None,
                 }
             })
         }
@@ -192,5 +192,5 @@ fn track_binding(
 
 declare_node_union! {
     /// A union of all possible FunctionLike `JsAstNode` in the JS grammar.
-    pub(crate) JsAnyFunctionAndMethod = JsArrowFunctionExpression| JsFunctionDeclaration| JsFunctionExportDefaultDeclaration | JsFunctionExpression | JsMethodClassMember | JsMethodObjectMember
+    pub(crate) AnyJsFunctionAndMethod = JsArrowFunctionExpression| JsFunctionDeclaration| JsFunctionExportDefaultDeclaration | JsFunctionExpression | JsMethodClassMember | JsMethodObjectMember
 }

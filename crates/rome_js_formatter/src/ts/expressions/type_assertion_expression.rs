@@ -2,7 +2,7 @@ use crate::prelude::*;
 
 use crate::parentheses::{is_callee, is_member_object, is_spread, is_tag, NeedsParentheses};
 use rome_formatter::{format_args, write};
-use rome_js_syntax::{JsAnyExpression, JsSyntaxNode};
+use rome_js_syntax::{AnyJsExpression, JsSyntaxNode};
 use rome_js_syntax::{JsSyntaxKind, TsTypeAssertionExpression, TsTypeAssertionExpressionFields};
 
 #[derive(Debug, Clone, Default)]
@@ -25,7 +25,7 @@ impl FormatNodeRule<TsTypeAssertionExpression> for FormatTsTypeAssertionExpressi
 
         let break_after_cast = !matches!(
             expression,
-            JsAnyExpression::JsArrayExpression(_) | JsAnyExpression::JsObjectExpression(_)
+            AnyJsExpression::JsArrayExpression(_) | AnyJsExpression::JsObjectExpression(_)
         );
 
         let format_cast = format_with(|f| {

@@ -3,7 +3,7 @@ use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_syntax::{
-    JsAnyAssignment, JsAnyExpression, TsNonNullAssertionAssignment, TsNonNullAssertionExpression,
+    AnyJsAssignment, AnyJsExpression, TsNonNullAssertionAssignment, TsNonNullAssertionExpression,
 };
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 
@@ -55,11 +55,11 @@ declare_rule! {
 }
 
 declare_node_union! {
-    pub(crate) TsAnyNonNullAssertion = TsNonNullAssertionAssignment | TsNonNullAssertionExpression
+    pub(crate) AnyTsNonNullAssertion = TsNonNullAssertionAssignment | TsNonNullAssertionExpression
 }
 
 impl Rule for NoExtraNonNullAssertion {
-    type Query = Ast<TsAnyNonNullAssertion>;
+    type Query = Ast<AnyTsNonNullAssertion>;
     type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
@@ -68,17 +68,17 @@ impl Rule for NoExtraNonNullAssertion {
         let node = ctx.query();
 
         match node {
-            TsAnyNonNullAssertion::TsNonNullAssertionAssignment(_) => {
-                let parent = node.parent::<JsAnyAssignment>()?;
+            AnyTsNonNullAssertion::TsNonNullAssertionAssignment(_) => {
+                let parent = node.parent::<AnyJsAssignment>()?;
 
                 // Cases considered as invalid:
                 // - TsNonNullAssertionAssignment > TsNonNullAssertionAssignment
-                if matches!(parent, JsAnyAssignment::TsNonNullAssertionAssignment(_)) {
+                if matches!(parent, AnyJsAssignment::TsNonNullAssertionAssignment(_)) {
                     return Some(());
                 }
             }
-            TsAnyNonNullAssertion::TsNonNullAssertionExpression(_) => {
-                let parent = node.parent::<JsAnyExpression>()?;
+            AnyTsNonNullAssertion::TsNonNullAssertionExpression(_) => {
+                let parent = node.parent::<AnyJsExpression>()?;
 
                 // Cases considered as invalid:
                 // - TsNonNullAssertionAssignment > TsNonNullAssertionExpression
@@ -86,15 +86,15 @@ impl Rule for NoExtraNonNullAssertion {
                 // - JsCallExpression[optional] > TsNonNullAssertionExpression
                 // - JsStaticMemberExpression[optional] > TsNonNullAssertionExpression
                 let has_extra_non_assertion = match parent.omit_parentheses() {
-                    JsAnyExpression::JsAssignmentExpression(expr) => expr
+                    AnyJsExpression::JsAssignmentExpression(expr) => expr
                         .left()
                         .ok()?
-                        .as_js_any_assignment()?
+                        .as_any_js_assignment()?
                         .as_ts_non_null_assertion_assignment()
                         .is_some(),
-                    JsAnyExpression::TsNonNullAssertionExpression(_) => true,
-                    JsAnyExpression::JsStaticMemberExpression(expr) => expr.is_optional(),
-                    JsAnyExpression::JsCallExpression(expr) => expr.is_optional(),
+                    AnyJsExpression::TsNonNullAssertionExpression(_) => true,
+                    AnyJsExpression::JsStaticMemberExpression(expr) => expr.is_optional(),
+                    AnyJsExpression::JsCallExpression(expr) => expr.is_optional(),
                     _ => false,
                 };
 
@@ -122,10 +122,10 @@ impl Rule for NoExtraNonNullAssertion {
         let node = ctx.query();
 
         let excl_token = match node {
-            TsAnyNonNullAssertion::TsNonNullAssertionAssignment(assignment) => {
+            AnyTsNonNullAssertion::TsNonNullAssertionAssignment(assignment) => {
                 assignment.excl_token().ok()?
             }
-            TsAnyNonNullAssertion::TsNonNullAssertionExpression(expression) => {
+            AnyTsNonNullAssertion::TsNonNullAssertionExpression(expression) => {
                 expression.excl_token().ok()?
             }
         };

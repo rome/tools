@@ -2,7 +2,7 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyStatement, JsForStatement, JsForStatementFields, T};
+use rome_js_syntax::{AnyJsStatement, JsForStatement, JsForStatementFields, T};
 use rome_rowan::BatchMutationExt;
 
 use crate::JsRuleAction;
@@ -94,8 +94,8 @@ impl Rule for UseWhile {
         } = node.as_fields();
 
         mutation.replace_node(
-            JsAnyStatement::from(node.clone()),
-            JsAnyStatement::from(make::js_while_statement(
+            AnyJsStatement::from(node.clone()),
+            AnyJsStatement::from(make::js_while_statement(
                 make::token_decorated_with_space(T![while]),
                 l_paren_token.ok()?,
                 test?,

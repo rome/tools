@@ -3,7 +3,7 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_syntax::{
-    JsxAnyAttributeValue, JsxAttribute, JsxAttributeList, JsxOpeningElement, JsxSelfClosingElement,
+    AnyJsxAttributeValue, JsxAttribute, JsxAttributeList, JsxOpeningElement, JsxSelfClosingElement,
 };
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 
@@ -44,17 +44,17 @@ declare_rule! {
 }
 
 declare_node_union! {
-    pub(crate) JsxAnyElement = JsxOpeningElement | JsxSelfClosingElement
+    pub(crate) AnyJsxElement = JsxOpeningElement | JsxSelfClosingElement
 }
 
-impl JsxAnyElement {
+impl AnyJsxElement {
     /// Check if the given element is a HTML element, not a user-created React component
     fn is_html_element(&self) -> Option<bool> {
         Some(match self {
-            JsxAnyElement::JsxOpeningElement(element) => {
+            AnyJsxElement::JsxOpeningElement(element) => {
                 element.name().ok()?.as_jsx_name().is_some()
             }
-            JsxAnyElement::JsxSelfClosingElement(element) => {
+            AnyJsxElement::JsxSelfClosingElement(element) => {
                 element.name().ok()?.as_jsx_name().is_some()
             }
         })
@@ -78,7 +78,7 @@ impl Rule for NoAccessKey {
 
         let element = node
             .parent::<JsxAttributeList>()
-            .and_then(|list| list.parent::<JsxAnyElement>())?;
+            .and_then(|list| list.parent::<AnyJsxElement>())?;
 
         // We do not know if the `accessKey` prop is used for HTML elements
         // or for user-created React components
@@ -87,7 +87,7 @@ impl Rule for NoAccessKey {
         }
 
         let attribute_value = node.initializer()?.value().ok();
-        if let Some(JsxAnyAttributeValue::JsxExpressionAttributeValue(expression)) = attribute_value
+        if let Some(AnyJsxAttributeValue::JsxExpressionAttributeValue(expression)) = attribute_value
         {
             let expression = expression.expression().ok()?;
             let name = expression.as_js_identifier_expression()?.name().ok()?;

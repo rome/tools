@@ -101,17 +101,17 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
 
     fn to_bogus(&self) -> JsSyntaxKind {
         match self {
-            kind if JsAnyModuleItem::can_cast(*kind) => JS_BOGUS_STATEMENT,
-            kind if JsAnyExpression::can_cast(*kind) => JS_BOGUS_EXPRESSION,
-            kind if JsAnyBinding::can_cast(*kind) => JS_BOGUS_BINDING,
-            kind if JsAnyClassMember::can_cast(*kind) || JsAnyObjectMember::can_cast(*kind) => {
+            kind if AnyJsModuleItem::can_cast(*kind) => JS_BOGUS_STATEMENT,
+            kind if AnyJsExpression::can_cast(*kind) => JS_BOGUS_EXPRESSION,
+            kind if AnyJsBinding::can_cast(*kind) => JS_BOGUS_BINDING,
+            kind if AnyJsClassMember::can_cast(*kind) || AnyJsObjectMember::can_cast(*kind) => {
                 JS_BOGUS_MEMBER
             }
-            kind if JsAnyAssignment::can_cast(*kind) => JS_BOGUS_ASSIGNMENT,
-            kind if JsAnyNamedImportSpecifier::can_cast(*kind) => JS_BOGUS_NAMED_IMPORT_SPECIFIER,
-            kind if JsAnyImportAssertionEntry::can_cast(*kind) => JS_BOGUS_IMPORT_ASSERTION_ENTRY,
-            kind if JsAnyParameter::can_cast(*kind) => JS_BOGUS_PARAMETER,
-            kind if TsType::can_cast(*kind) => TS_BOGUS_TYPE,
+            kind if AnyJsAssignment::can_cast(*kind) => JS_BOGUS_ASSIGNMENT,
+            kind if AnyJsNamedImportSpecifier::can_cast(*kind) => JS_BOGUS_NAMED_IMPORT_SPECIFIER,
+            kind if AnyJsImportAssertionEntry::can_cast(*kind) => JS_BOGUS_IMPORT_ASSERTION_ENTRY,
+            kind if AnyJsParameter::can_cast(*kind) => JS_BOGUS_PARAMETER,
+            kind if AnyTsType::can_cast(*kind) => TS_BOGUS_TYPE,
 
             _ => JS_BOGUS,
         }
@@ -128,7 +128,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
     }
 
     fn is_root(&self) -> bool {
-        JsAnyRoot::can_cast(*self)
+        AnyJsRoot::can_cast(*self)
     }
 
     fn is_list(&self) -> bool {

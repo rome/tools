@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::utils::FormatOptionalSemicolon;
 
-use crate::js::classes::method_class_member::FormatJsAnyMethodMember;
+use crate::js::classes::method_class_member::FormatAnyJsMethodMember;
 
 use rome_formatter::write;
 use rome_js_syntax::TsMethodSignatureClassMember;
@@ -24,7 +24,7 @@ impl FormatNodeRule<TsMethodSignatureClassMember> for FormatTsMethodSignatureCla
         write!(
             f,
             [
-                FormatJsAnyMethodMember::from(node.clone()),
+                FormatAnyJsMethodMember::from(node.clone()),
                 FormatOptionalSemicolon::new(node.semicolon_token().as_ref())
             ]
         )

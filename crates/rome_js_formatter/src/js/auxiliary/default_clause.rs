@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsDefaultClause;
-use rome_js_syntax::{JsAnyStatement, JsDefaultClauseFields};
+use rome_js_syntax::{AnyJsStatement, JsDefaultClauseFields};
 use rome_rowan::AstNodeList;
 
 #[derive(Debug, Clone, Default)]
@@ -17,7 +17,7 @@ impl FormatNodeRule<JsDefaultClause> for FormatJsDefaultClause {
 
         let first_child_is_block_stmt = matches!(
             consequent.iter().next(),
-            Some(JsAnyStatement::JsBlockStatement(_))
+            Some(AnyJsStatement::JsBlockStatement(_))
         );
 
         write!(f, [default_token.format(), colon_token.format()])?;

@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use rome_formatter::{write, Buffer};
-use rome_js_syntax::{TsAnyTypeMember, TsTypeMemberList};
+use rome_js_syntax::{AnyTsTypeMember, TsTypeMemberList};
 
 use crate::context::Semicolons;
 use rome_rowan::AstNodeList;
@@ -33,7 +33,7 @@ impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {
 
 struct TsTypeMemberItem<'a> {
     last: bool,
-    member: &'a TsAnyTypeMember,
+    member: &'a AnyTsTypeMember,
 }
 
 impl Format<JsFormatContext> for TsTypeMemberItem<'_> {

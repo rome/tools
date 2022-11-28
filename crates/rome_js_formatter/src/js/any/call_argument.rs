@@ -1,15 +1,15 @@
 //! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::JsAnyCallArgument;
+use rome_js_syntax::AnyJsCallArgument;
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatJsAnyCallArgument;
-impl FormatRule<JsAnyCallArgument> for FormatJsAnyCallArgument {
+pub(crate) struct FormatAnyJsCallArgument;
+impl FormatRule<AnyJsCallArgument> for FormatAnyJsCallArgument {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &JsAnyCallArgument, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyJsCallArgument, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyCallArgument::JsAnyExpression(node) => node.format().fmt(f),
-            JsAnyCallArgument::JsSpread(node) => node.format().fmt(f),
+            AnyJsCallArgument::AnyJsExpression(node) => node.format().fmt(f),
+            AnyJsCallArgument::JsSpread(node) => node.format().fmt(f),
         }
     }
 }

@@ -1,15 +1,15 @@
 //! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::TsAnyName;
+use rome_js_syntax::AnyTsName;
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatTsAnyName;
-impl FormatRule<TsAnyName> for FormatTsAnyName {
+pub(crate) struct FormatAnyTsName;
+impl FormatRule<AnyTsName> for FormatAnyTsName {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &TsAnyName, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyTsName, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            TsAnyName::JsReferenceIdentifier(node) => node.format().fmt(f),
-            TsAnyName::TsQualifiedName(node) => node.format().fmt(f),
+            AnyTsName::JsReferenceIdentifier(node) => node.format().fmt(f),
+            AnyTsName::TsQualifiedName(node) => node.format().fmt(f),
         }
     }
 }

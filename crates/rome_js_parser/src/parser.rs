@@ -222,7 +222,7 @@ mod tests {
     fn example() {
         use crate::syntax::expr::parse_expression_snipped;
         use crate::JsParser;
-        use rome_js_syntax::{JsAnyExpression, JsExpressionSnipped};
+        use rome_js_syntax::{AnyJsExpression, JsExpressionSnipped};
 
         let source = "(void b)";
 
@@ -258,7 +258,7 @@ mod tests {
         let expression = expression_snipped.expression().unwrap();
 
         match expression {
-            JsAnyExpression::JsParenthesizedExpression(parenthesized) => {
+            AnyJsExpression::JsParenthesizedExpression(parenthesized) => {
                 assert_eq!(
                     parenthesized.expression().unwrap().syntax().text(),
                     "void b"

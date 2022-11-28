@@ -548,6 +548,19 @@ impl NodeDialect {
             NodeDialect::Json => "json",
         }
     }
+
+    fn from_str(name: &str) -> NodeDialect {
+        match name {
+            "Jsx" => NodeDialect::Jsx,
+            "Js" => NodeDialect::Js,
+            "Ts" => NodeDialect::Ts,
+            "Json" => NodeDialect::Json,
+            _ => {
+                eprintln!("missing prefix {}", name);
+                NodeDialect::Js
+            }
+        }
+    }
 }
 
 enum NodeConcept {
@@ -618,30 +631,20 @@ impl NodeModuleInformation {
 
 /// Convert an AstNode name to a path / Rust module name
 fn name_to_module(kind: &NodeKind, in_name: &str, language: LanguageKind) -> NodeModuleInformation {
-    // Detect language prefix
-    let mid_before_second_capital_letter = in_name
-        .chars()
-        .position({
-            let mut uppercases = 0;
-            move |c| {
-                uppercases += i32::from(c.is_uppercase());
-                uppercases >= 2
-            }
-        })
-        .expect("Node name malformed");
-    let (prefix, mut name) = in_name.split_at(mid_before_second_capital_letter);
+    let mut upper_case_indices = in_name.match_indices(|c: char| c.is_uppercase());
 
-    let dialect = match prefix {
-        "Jsx" => NodeDialect::Jsx,
-        "Js" => NodeDialect::Js,
-        "Ts" => NodeDialect::Ts,
-        "Json" => NodeDialect::Json,
-        _ => {
-            eprintln!("missing prefix {}", in_name);
-            name = in_name;
-            NodeDialect::Js
-        }
-    };
+    assert!(matches!(upper_case_indices.next(), Some((0, _))));
+
+    let (second_upper_start, _) = upper_case_indices.next().expect("Node name malformed");
+    let (mut dialect_prefix, mut name) = in_name.split_at(second_upper_start);
+
+    // AnyJsX
+    if dialect_prefix == "Any" {
+        let (third_upper_start, _) = upper_case_indices.next().expect("Node name malformed");
+        (dialect_prefix, name) = name.split_at(third_upper_start - dialect_prefix.len());
+    }
+
+    let dialect = NodeDialect::from_str(dialect_prefix);
 
     // Classify nodes by concept
     let concept = if matches!(kind, NodeKind::Bogus) {
@@ -649,10 +652,6 @@ fn name_to_module(kind: &NodeKind, in_name: &str, language: LanguageKind) -> Nod
     } else if matches!(kind, NodeKind::List { .. }) {
         NodeConcept::List
     } else if matches!(kind, NodeKind::Union { .. }) {
-        if name.starts_with("Any") {
-            name = &name[3..];
-        }
-
         NodeConcept::Union
     } else {
         match language {
@@ -662,8 +661,7 @@ fn name_to_module(kind: &NodeKind, in_name: &str, language: LanguageKind) -> Nod
 
                 _ if name.ends_with("Expression")
                     || name.ends_with("Argument")
-                    || name.ends_with("Arguments")
-                    || name.starts_with("Template") =>
+                    || name.ends_with("Arguments") =>
                 {
                     NodeConcept::Expression
                 }

@@ -5,7 +5,7 @@ use rome_formatter::printer::Printer;
 use rome_formatter::{
     format_args, write, CstFormatContext, FormatOptions, RemoveSoftLinesBuffer, VecBuffer,
 };
-use rome_js_syntax::{JsAnyTemplateElement, JsTemplateElementList};
+use rome_js_syntax::{AnyJsTemplateElement, JsTemplateElementList};
 use rome_text_size::{TextRange, TextSize};
 use std::cmp;
 use unicode_width::UnicodeWidthStr;
@@ -182,7 +182,7 @@ impl EachTemplateTable {
         // the table must have a header
         // e.g. a | b | expected
         let header = match iter.next() {
-            Some(JsAnyTemplateElement::JsTemplateChunkElement(header)) => header,
+            Some(AnyJsTemplateElement::JsTemplateChunkElement(header)) => header,
             // we check this case in `is_test_each_pattern` and `is_test_each_pattern_elements` functions
             _ => return Err(FormatError::SyntaxError),
         };
@@ -211,7 +211,7 @@ impl EachTemplateTable {
 
         while let Some(element) = iter.next() {
             match element {
-                JsAnyTemplateElement::JsTemplateChunkElement(element) => {
+                AnyJsTemplateElement::JsTemplateChunkElement(element) => {
                     // It's safe to mark the element as checked here because we check that node doesn't have any trivia
                     // when we call `is_test_each_pattern`
                     f.context()
@@ -231,7 +231,7 @@ impl EachTemplateTable {
                         builder.entry(EachTemplateElement::LineBreak);
                     }
                 }
-                JsAnyTemplateElement::JsTemplateElement(element) => {
+                AnyJsTemplateElement::JsTemplateElement(element) => {
                     let mut vec_buffer = VecBuffer::new(f.state_mut());
 
                     // The softline buffer replaces all softline breaks with a space or removes it entirely
