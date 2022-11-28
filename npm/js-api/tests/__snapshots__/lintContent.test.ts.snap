@@ -30,11 +30,7 @@ exports[`Rome WebAssembly lintContent > should lint content > lint diagnostics 1
         },
         {
           "Frame": {
-            "path": {
-              "File": {
-                "FileId": 0,
-              },
-            },
+            "path": null,
             "source_code": null,
             "span": [
               6,
@@ -125,10 +121,7 @@ exports[`Rome WebAssembly lintContent > should lint content > lint diagnostics 1
     "location": {
       "path": {
         "File": {
-          "PathAndId": {
-            "file_id": 0,
-            "path": "example.js",
-          },
+          "Path": "example.js",
         },
       },
       "source_code": null,
