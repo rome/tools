@@ -1,5 +1,6 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
+#![allow(clippy::enum_variant_names)]
 use std::str::FromStr;
 #[derive(Debug, Eq, PartialEq)]
 pub enum AriaPropertiesEnum {

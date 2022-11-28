@@ -1,5 +1,4 @@
 use crate::generated::AriaPropertyTypeEnum;
-use crate::is_aria_property_type_valid;
 use rustc_hash::FxHashMap;
 use std::fmt::Debug;
 use std::slice::Iter;
@@ -26,8 +25,8 @@ impl AriaProperties {
         self
     }
 
-    pub fn get_property(&self, property_name: &str) -> Option<&Box<dyn AriaPropertyDefinition>> {
-        self.0.get(property_name)
+    pub fn get_property(&self, property_name: &str) -> Option<&dyn AriaPropertyDefinition> {
+        self.0.get(property_name).map(|prop| prop.as_ref())
     }
 }
 
@@ -57,9 +56,6 @@ pub trait AriaPropertyDefinition: Debug {
     /// assert!(!aria_current.contains_correct_value("something_not_allowed"));
     /// ```
     fn contains_correct_value(&self, input_value: &str) -> bool {
-        if !is_aria_property_type_valid(input_value) {
-            return false;
-        }
         match self.property_type() {
             AriaPropertyTypeEnum::String | AriaPropertyTypeEnum::Id => {
                 input_value.parse::<f32>().is_err()
@@ -91,7 +87,7 @@ pub trait AriaPropertyDefinition: Debug {
 struct AriaCurrent;
 
 impl AriaCurrent {
-    const PROPERTY_TYPE: &'static str = "aria-current";
+    const PROPERTY_TYPE: &'static str = "token";
     const VALUES: [&'static str; 7] = ["page", "step", "location", "date", "time", "true", "false"];
 }
 

@@ -14,7 +14,9 @@ pub(crate) fn generate_aria(mode: Mode) -> Result<()> {
     let aria_properties = generate_properties();
     let aria_roles = generate_roles();
     let tokens = quote! {
+        #![allow(clippy::enum_variant_names)]
         use std::str::FromStr;
+
 
         #aria_properties
         #aria_roles
@@ -32,14 +34,12 @@ fn generate_properties() -> TokenStream {
         ARIA_PROPERTIES.len(),
         ARIA_PROPERTIES.iter(),
         "AriaPropertiesEnum",
-        "ARIA_PROPERTIES",
     );
 
     let property_types = generate_enums(
         ARIA_PROPERTY_TYPE.len(),
         ARIA_PROPERTY_TYPE.iter(),
         "AriaPropertyTypeEnum",
-        "ARIA_PROPERTY_TYPE",
     );
 
     quote! {
@@ -53,20 +53,17 @@ fn generate_roles() -> TokenStream {
         ARIA_WIDGET_ROLES.len(),
         ARIA_WIDGET_ROLES.iter(),
         "AriaWidgetRolesEnum",
-        "ARIA_WIDGET_ROLES",
     );
     let abstract_roles = generate_enums(
         ARIA_ABSTRACT_ROLES.len(),
         ARIA_ABSTRACT_ROLES.iter(),
         "AriaAbstractRolesEnum",
-        "ARIA_ABSTRACT_ROLES",
     );
 
     let document_structure_roles = generate_enums(
         ARIA_DOCUMENT_STRUCTURE_ROLES.len(),
         ARIA_DOCUMENT_STRUCTURE_ROLES.iter(),
         "AriaDocumentStructureRolesEnum",
-        "ARIA_DOCUMENT_STRUCTURE_ROLES",
     );
 
     quote! {
@@ -76,19 +73,12 @@ fn generate_roles() -> TokenStream {
     }
 }
 
-fn generate_enums<'a>(
-    len: usize,
-    array: std::slice::Iter<&str>,
-    enum_name: &str,
-    const_name: &str,
-) -> TokenStream {
+fn generate_enums<'a>(len: usize, array: std::slice::Iter<&str>, enum_name: &str) -> TokenStream {
     let enum_name = Ident::new(enum_name, Span::call_site());
-    let const_name = Ident::new(const_name, Span::call_site());
     let mut enum_metadata = Vec::with_capacity(len);
     let mut from_enum_metadata = Vec::with_capacity(len);
     let mut from_string_metadata = Vec::with_capacity(len);
-    let iter = array.enumerate();
-    for (index, property) in iter {
+    for property in array {
         let name = Ident::new(
             &property.replace("-", "_").to_camel().to_string(),
             Span::call_site(),

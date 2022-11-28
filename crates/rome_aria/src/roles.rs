@@ -174,7 +174,7 @@ impl AriaRoles {
     /// assert!(button_role.is_some());
     /// assert!(made_up_role.is_none());
     /// ```
-    pub fn get_role(&self, role: &str) -> Option<&Box<dyn AriaRoleDefinition>> {
-        self.0.get(role)
+    pub fn get_role(&self, role: &str) -> Option<&dyn AriaRoleDefinition> {
+        self.0.get(role).map(|value| value.as_ref())
     }
 }
