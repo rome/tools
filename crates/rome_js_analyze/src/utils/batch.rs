@@ -22,17 +22,17 @@ pub trait JsBatchMutation {
     fn remove_js_object_member(&mut self, parameter: &AnyJsObjectMember) -> bool;
 
     /// It attempts to add a new element after the given element
-    fn add_jsx_element_after_element(
+    fn add_jsx_elements_after_element(
         &mut self,
         after_element: &AnyJsxChild,
-        new_element: &AnyJsxChild,
+        new_element: &[AnyJsxChild],
     ) -> bool;
 
     /// It attempts to add a new element before the given element
     fn add_jsx_elements_before_element(
         &mut self,
-        after_element: &JsxAnyChild,
-        new_elements: &[JsxAnyChild],
+        after_element: &AnyJsxChild,
+        new_elements: &[AnyJsxChild],
     ) -> bool;
 }
 
@@ -209,10 +209,10 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
             .unwrap_or(false)
     }
 
-    fn add_jsx_element_after_element(
+    fn add_jsx_elements_after_element(
         &mut self,
         after_element: &AnyJsxChild,
-        new_element: &AnyJsxChild,
+        new_element: &[AnyJsxChild],
     ) -> bool {
         let old_list = after_element.parent::<JsxChildList>();
         if let Some(old_list) = &old_list {
@@ -221,7 +221,7 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
                 for element in old_list {
                     new_items.push(element.clone());
                     if element == *after_element {
-                        new_items.push(new_element.clone());
+                        new_items.extend(new_element.to_vec());
                     }
                 }
 
@@ -237,8 +237,8 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
 
     fn add_jsx_elements_before_element(
         &mut self,
-        after_element: &JsxAnyChild,
-        new_elements: &[JsxAnyChild],
+        after_element: &AnyJsxChild,
+        new_elements: &[AnyJsxChild],
     ) -> bool {
         let old_list = after_element.syntax().parent().and_then(JsxChildList::cast);
         if let Some(old_list) = &old_list {

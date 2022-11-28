@@ -308,7 +308,7 @@ where
 
 /// Chain iterator that chains two iterators over syntax trivia together.
 ///
-/// This is the same as Rust's [Chain] iterator but implements [ExactSizeIterator].
+/// This is the same as Rust's [std::iter::Chain] iterator but implements [ExactSizeIterator].
 /// Rust doesn't implement [ExactSizeIterator] because adding the sizes of both pieces may overflow.
 ///
 /// Implementing [ExactSizeIterator] in our case is safe because this may only overflow if

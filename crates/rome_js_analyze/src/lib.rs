@@ -11,12 +11,8 @@ use rome_analyze::{
 };
 use rome_aria::{AriaProperties, AriaRoles};
 use rome_diagnostics::{category, FileId};
-use rome_js_factory::make::{jsx_expression_child, token};
 use rome_js_syntax::suppression::SuppressionDiagnostic;
-use rome_js_syntax::{
-    suppression::parse_suppression_comment, AnyJsxChild, JsLanguage, JsSyntaxToken, T,
-};
-use rome_rowan::{AstNode, TokenAtOffset, TriviaPieceKind};
+use rome_js_syntax::{suppression::parse_suppression_comment, JsLanguage};
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use std::{borrow::Cow, error::Error};

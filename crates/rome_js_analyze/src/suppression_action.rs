@@ -1,9 +1,9 @@
 use crate::utils::batch::JsBatchMutation;
 use rome_analyze::SuppressionCommentEmitterPayload;
 use rome_js_factory::make::{jsx_expression_child, token};
-use rome_js_syntax::jsx_ext::JsxAnyElement;
+use rome_js_syntax::jsx_ext::AnyJsxElement;
 use rome_js_syntax::{
-    JsLanguage, JsSyntaxToken, JsxAnyChild, JsxChildList, JsxElement, JsxOpeningElement,
+    AnyJsxChild, JsLanguage, JsSyntaxToken, JsxChildList, JsxElement, JsxOpeningElement,
     JsxSelfClosingElement, JsxText, TextRange, T,
 };
 use rome_rowan::{AstNode, AstNodeExt, TokenAtOffset, TriviaPieceKind};
@@ -37,7 +37,7 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
     if let Some((first_token_with_newline, is_at_root)) = first_token_with_newline {
         // we check if the token that has the newline is inside a JSX element: JsxOpeningElement or JsxSelfClosingElement
         let current_jsx_element = first_token_with_newline.parent().and_then(|parent| {
-            if JsxAnyElement::can_cast(parent.kind()) || JsxText::can_cast(parent.kind()) {
+            if AnyJsxElement::can_cast(parent.kind()) || JsxText::can_cast(parent.kind()) {
                 Some(parent)
             } else {
                 None
@@ -66,23 +66,23 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
                     if let Some(parent) = parent {
                         mutation.add_jsx_elements_before_element(
                             &parent.into(),
-                            &[JsxAnyChild::JsxExpressionChild(jsx_comment)],
+                            &[AnyJsxChild::JsxExpressionChild(jsx_comment)],
                         );
                     }
                 } else if let Some(current_element) =
                     JsxSelfClosingElement::cast_ref(&current_jsx_element)
                 {
                     mutation.add_jsx_elements_before_element(
-                        &JsxAnyChild::JsxSelfClosingElement(current_element),
-                        &[JsxAnyChild::JsxExpressionChild(jsx_comment)],
+                        &AnyJsxChild::JsxSelfClosingElement(current_element),
+                        &[AnyJsxChild::JsxExpressionChild(jsx_comment)],
                     );
                 } else if let Some(current_element) = JsxText::cast_ref(&current_jsx_element) {
                     // We want to add an additional JsxText to keep the indentation
                     mutation.add_jsx_elements_before_element(
-                        &JsxAnyChild::JsxText(current_element.clone()),
+                        &AnyJsxChild::JsxText(current_element.clone()),
                         &[
-                            JsxAnyChild::JsxText(current_element.detach()),
-                            JsxAnyChild::JsxExpressionChild(jsx_comment),
+                            AnyJsxChild::JsxText(current_element.detach()),
+                            AnyJsxChild::JsxExpressionChild(jsx_comment),
                         ],
                     );
                 }
