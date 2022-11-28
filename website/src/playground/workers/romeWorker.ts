@@ -99,10 +99,17 @@ self.addEventListener("message", async (e) => {
 				},
 			};
 
-			if (lintRules === LintRules.All) {
-				configuration.linter = {
-					enabled: enabledLinting,
-					rules: {
+			switch (lintRules) {
+				case LintRules.Recommended: {
+					configuration.linter!.rules = {
+						nursery: {
+							recommended: false,
+						},
+					};
+					break;
+				}
+				case LintRules.All: {
+					configuration.linter!.rules = {
 						correctness: {
 							noRestrictedGlobals: "error",
 							noUndeclaredVariables: "error",
@@ -113,11 +120,12 @@ self.addEventListener("message", async (e) => {
 							useFragmentSyntax: "error",
 						},
 						nursery: {
-							noConstAssign: "error",
-							useExhaustiveDependencies: "error",
+							noConstEnum: "error",
+							useCamelCase: "error",
 						},
-					},
-				};
+					};
+					break;
+				}
 			}
 
 			workspace.updateSettings({

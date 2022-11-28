@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noVar (since v11.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow the use of `var`
 
 ECMAScript 6 allows programmers to create variables with block scope instead of function scope using the let and const keywords. Block scope is common in many other programming languages and helps programmers avoid mistakes.
@@ -21,7 +23,7 @@ var foo = 1;
 
 <pre class="language-text"><code class="language-text">nursery/noVar.js:1:1 <a href="https://docs.rome.tools/lint/rules/noVar">lint/nursery/noVar</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Use </span><span style="color: Orange;"><strong>let</strong></span><span style="color: Orange;"> or </span><span style="color: Orange;"><strong>const</strong></span><span style="color: Orange;"> instead of </span><span style="color: Orange;"><strong>var</strong></span><span style="color: Orange;">.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Use </span><span style="color: Tomato;"><strong>let</strong></span><span style="color: Tomato;"> or </span><span style="color: Tomato;"><strong>const</strong></span><span style="color: Tomato;"> instead of </span><span style="color: Tomato;"><strong>var</strong></span><span style="color: Tomato;">.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>var foo = 1;
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>

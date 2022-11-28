@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # useConst (since v11.0.0)
 
+> This rule is recommended by Rome.
+
 Require `const` declarations for variables that are never reassigned after declared.
 
 ## Examples
@@ -18,7 +20,7 @@ console.log(a);
 
 <pre class="language-text"><code class="language-text">nursery/useConst.js:1:1 <a href="https://docs.rome.tools/lint/rules/useConst">lint/nursery/useConst</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This 'let' declares a variable which is never re-assigned.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This 'let' declares a variable which is never re-assigned.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>let a = 3;
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -50,7 +52,7 @@ for (let a of [1, 2, 3]) {
 
 <pre class="language-text"><code class="language-text">nursery/useConst.js:2:6 <a href="https://docs.rome.tools/lint/rules/useConst">lint/nursery/useConst</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This 'let' declares a variable which is never re-assigned.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This 'let' declares a variable which is never re-assigned.</span>
   
     <strong>1 │ </strong>// `a` is redefined (not reassigned) on each loop step.
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>for (let a of [1, 2, 3]) {
@@ -85,7 +87,7 @@ for (let a in [1, 2, 3]) {
 
 <pre class="language-text"><code class="language-text">nursery/useConst.js:2:6 <a href="https://docs.rome.tools/lint/rules/useConst">lint/nursery/useConst</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This 'let' declares a variable which is never re-assigned.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This 'let' declares a variable which is never re-assigned.</span>
   
     <strong>1 │ </strong>// `a` is redefined (not reassigned) on each loop step.
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>for (let a in [1, 2, 3]) {
@@ -121,7 +123,7 @@ let a = 3;
 
 <pre class="language-text"><code class="language-text">nursery/useConst.js:1:1 <a href="https://docs.rome.tools/lint/rules/useConst">lint/nursery/useConst</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This 'let' declares a variable which is never re-assigned.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This 'let' declares a variable which is never re-assigned.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>let a = 3;
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -151,7 +153,7 @@ b = 3;
 
 <pre class="language-text"><code class="language-text">nursery/useConst.js:1:1 <a href="https://docs.rome.tools/lint/rules/useConst">lint/nursery/useConst</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This 'let' declares a variable which is never re-assigned.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This 'let' declares a variable which is never re-assigned.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>let a = 1, b = 2;
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>

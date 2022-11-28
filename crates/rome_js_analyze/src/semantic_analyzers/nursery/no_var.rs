@@ -33,7 +33,7 @@ declare_rule! {
     pub(crate) NoVar {
         version: "11.0.0",
         name: "noVar",
-        recommended: false,
+        recommended: true,
     }
 }
 

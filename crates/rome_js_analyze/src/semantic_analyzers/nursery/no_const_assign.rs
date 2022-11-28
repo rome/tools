@@ -51,7 +51,7 @@ declare_rule! {
     pub(crate) NoConstAssign {
         version: "10.0.0",
         name: "noConstAssign",
-        recommended: false,
+        recommended: true,
     }
 }
 
