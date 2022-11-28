@@ -241,7 +241,7 @@ impl From<SnapshotPayload<'_>> for CliSnapshot {
         } = payload;
         let mut cli_snapshot = CliSnapshot::from_result(result);
         let config_path = PathBuf::from("rome.json");
-        let configuration = fs.read(&config_path).ok();
+        let configuration = fs.open(&config_path).ok();
         if let Some(mut configuration) = configuration {
             let mut buffer = String::new();
             if configuration.read_to_string(&mut buffer).is_ok() {

@@ -1,3 +1,4 @@
+use std::collections::hash_map::Entry;
 use std::collections::{hash_map::IntoIter, HashMap};
 use std::io;
 use std::panic::AssertUnwindSafe;
@@ -8,7 +9,7 @@ use std::sync::Arc;
 use parking_lot::{lock_api::ArcMutexGuard, Mutex, RawMutex, RwLock};
 use rome_diagnostics::Error;
 
-use crate::fs::{FileSystemExt, OpenOptions};
+use crate::fs::OpenOptions;
 use crate::{FileSystem, RomePath, TraversalContext, TraversalScope};
 
 use super::{BoxedTraversal, ErrorKind, File, FileSystemDiagnostic};
@@ -71,15 +72,54 @@ impl MemoryFileSystem {
 
 impl FileSystem for MemoryFileSystem {
     fn open_with_options(&self, path: &Path, options: OpenOptions) -> io::Result<Box<dyn File>> {
-        if options.read && options.write {
-            self.open(path)
-        } else if options.create_new || options.write {
-            self.create(path)
-        } else if options.read {
-            self.read(path)
+        let mut inner = if options.create || options.create_new {
+            // Acquire write access to the files map if the file may need to be created
+            let mut files = self.files.0.write();
+            match files.entry(PathBuf::from(path)) {
+                Entry::Vacant(entry) => {
+                    // we create an empty file
+                    let file: FileEntry = Arc::new(Mutex::new(vec![]));
+                    let entry = entry.insert(file);
+                    entry.lock_arc()
+                }
+                Entry::Occupied(entry) => {
+                    if options.create {
+                        // If `create` is true, truncate the file
+                        let entry = entry.into_mut();
+                        *entry = Arc::new(Mutex::new(vec![]));
+                        entry.lock_arc()
+                    } else {
+                        // This branch can only be reached if `create_new` was true,
+                        // we should return an error if the file already exists
+                        return Err(io::Error::new(
+                            io::ErrorKind::AlreadyExists,
+                            format!("path {path:?} already exists in memory filesystem"),
+                        ));
+                    }
+                }
+            }
         } else {
-            unimplemented!("the set of open options provided don't match any case")
+            let files = self.files.0.read();
+            let entry = files.get(path).ok_or_else(|| {
+                io::Error::new(
+                    io::ErrorKind::NotFound,
+                    format!("path {path:?} does not exists in memory filesystem"),
+                )
+            })?;
+
+            entry.lock_arc()
+        };
+
+        if options.truncate {
+            // Clear the buffer if the file was open with `truncate`
+            inner.clear();
         }
+
+        Ok(Box::new(MemoryFile {
+            inner,
+            can_read: options.read,
+            can_write: options.write,
+        }))
     }
 
     fn traversal<'scope>(&'scope self, func: BoxedTraversal<'_, 'scope>) {
@@ -87,52 +127,21 @@ impl FileSystem for MemoryFileSystem {
     }
 }
 
-impl FileSystemExt for MemoryFileSystem {
-    fn create(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        let files = &mut self.files.0.write();
-        // we create an empty file
-        let file: FileEntry = Arc::new(Mutex::new(vec![]));
-        let path = PathBuf::from(path);
-        files.insert(path, file.clone());
-        let inner = file.lock_arc();
-        Ok(Box::new(MemoryFile { inner }))
-    }
-
-    fn open(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        let files = &self.files.0.read();
-        let entry = files.get(path).ok_or_else(|| {
-            io::Error::new(
-                io::ErrorKind::NotFound,
-                format!("path {path:?} does not exists in memory filesystem"),
-            )
-        })?;
-
-        let lock = entry.lock_arc();
-
-        Ok(Box::new(MemoryFile { inner: lock }))
-    }
-
-    fn read(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        let files = &self.files.0.read();
-        let entry = files.get(path).ok_or_else(|| {
-            io::Error::new(
-                io::ErrorKind::NotFound,
-                format!("path {path:?} does not exists in memory filesystem"),
-            )
-        })?;
-
-        let lock = entry.lock_arc();
-
-        Ok(Box::new(MemoryFile { inner: lock }))
-    }
-}
-
 struct MemoryFile {
     inner: ArcMutexGuard<RawMutex, Vec<u8>>,
+    can_read: bool,
+    can_write: bool,
 }
 
 impl File for MemoryFile {
     fn read_to_string(&mut self, buffer: &mut String) -> io::Result<()> {
+        if !self.can_read {
+            return Err(io::Error::new(
+                io::ErrorKind::PermissionDenied,
+                "this file wasn't open with read access",
+            ));
+        }
+
         // Verify the stored byte content is valid UTF-8
         let content = str::from_utf8(&self.inner)
             .map_err(|err| io::Error::new(io::ErrorKind::InvalidData, err))?;
@@ -142,6 +151,13 @@ impl File for MemoryFile {
     }
 
     fn set_content(&mut self, content: &[u8]) -> io::Result<()> {
+        if !self.can_write {
+            return Err(io::Error::new(
+                io::ErrorKind::PermissionDenied,
+                "this file wasn't open with write access",
+            ));
+        }
+
         // Resize the memory buffer to fit the new content
         self.inner.resize(content.len(), 0);
         // Copy the new content into the memory buffer
@@ -211,7 +227,7 @@ mod tests {
     use parking_lot::Mutex;
     use rome_diagnostics::Error;
 
-    use crate::fs::FileSystemExt;
+    use crate::{fs::FileSystemExt, OpenOptions};
     use crate::{FileSystem, MemoryFileSystem, PathInterner, RomePath, TraversalContext};
     use rome_diagnostics::location::FileId;
 
@@ -226,7 +242,7 @@ mod tests {
         fs.insert(path.into(), content_1.as_bytes());
 
         let mut file = fs
-            .open(path)
+            .open_with_options(path, OpenOptions::default().read(true).write(true))
             .expect("the file should exist in the memory file system");
 
         let mut buffer = String::new();
@@ -243,6 +259,82 @@ mod tests {
             .expect("the file should be read without error");
 
         assert_eq!(buffer, content_2);
+    }
+
+    #[test]
+    fn file_create() {
+        let fs = MemoryFileSystem::default();
+
+        let path = Path::new("file.js");
+        let mut file = fs.create(path).expect("the file should not fail to open");
+
+        file.set_content(b"content".as_slice())
+            .expect("the file should be written without error");
+    }
+
+    #[test]
+    fn file_create_truncate() {
+        let mut fs = MemoryFileSystem::default();
+
+        let path = Path::new("file.js");
+        fs.insert(path.into(), b"content".as_slice());
+
+        let file = fs.create(path).expect("the file should not fail to create");
+
+        drop(file);
+
+        let mut file = fs.open(path).expect("the file should not fail to open");
+
+        let mut buffer = String::new();
+        file.read_to_string(&mut buffer)
+            .expect("the file should be read without error");
+
+        assert!(
+            buffer.is_empty(),
+            "fs.create() should truncate the file content"
+        );
+    }
+
+    #[test]
+    fn file_create_new() {
+        let fs = MemoryFileSystem::default();
+
+        let path = Path::new("file.js");
+        let content = "content";
+
+        let mut file = fs
+            .create_new(path)
+            .expect("the file should not fail to create");
+
+        file.set_content(content.as_bytes())
+            .expect("the file should be written without error");
+
+        drop(file);
+
+        let mut file = fs.open(path).expect("the file should not fail to open");
+
+        let mut buffer = String::new();
+        file.read_to_string(&mut buffer)
+            .expect("the file should be read without error");
+
+        assert_eq!(buffer, content);
+    }
+
+    #[test]
+    fn file_create_new_exists() {
+        let mut fs = MemoryFileSystem::default();
+
+        let path = Path::new("file.js");
+        fs.insert(path.into(), b"content".as_slice());
+
+        let result = fs.create_new(path);
+
+        match result {
+            Ok(_) => panic!("fs.create_new() for an existing file should return an error"),
+            Err(error) => {
+                assert_eq!(error.kind(), io::ErrorKind::AlreadyExists);
+            }
+        }
     }
 
     #[test]
