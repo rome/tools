@@ -7,7 +7,7 @@ use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyMemberExpression, JsCallExpression, JsSyntaxToken,
+    AnyJsExpression, AnyJsLiteralExpression, AnyJsMemberExpression, JsCallExpression, JsSyntaxToken,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
 
@@ -88,9 +88,9 @@ impl Rule for UseNumericLiterals {
         let number = ast_utils::token_with_source_trivia(number, node);
 
         mutation.replace_node_discard_trivia(
-            JsAnyExpression::JsCallExpression(node.clone()),
-            JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsNumberLiteralExpression(
+            AnyJsExpression::JsCallExpression(node.clone()),
+            AnyJsExpression::AnyJsLiteralExpression(
+                AnyJsLiteralExpression::JsNumberLiteralExpression(
                     make::js_number_literal_expression(number),
                 ),
             ),
@@ -115,13 +115,13 @@ impl CallInfo {
         let text = args
             .next()?
             .ok()?
-            .as_js_any_expression()?
+            .as_any_js_expression()?
             .as_string_constant()?;
         let radix = args
             .next()?
             .ok()?
-            .as_js_any_expression()?
-            .as_js_any_literal_expression()?
+            .as_any_js_expression()?
+            .as_any_js_literal_expression()?
             .as_js_number_literal_expression()?
             .as_number()?;
         let callee = get_callee(expr, model)?;
@@ -149,7 +149,7 @@ fn get_callee(expr: &JsCallExpression, model: &SemanticModel) -> Option<&'static
         }
     }
 
-    let callee = JsAnyMemberExpression::cast_ref(callee.syntax())?;
+    let callee = AnyJsMemberExpression::cast_ref(callee.syntax())?;
     let object = callee.get_object_reference_identifier()?;
     if object.has_name("Number")
         && model.binding(&object).is_none()

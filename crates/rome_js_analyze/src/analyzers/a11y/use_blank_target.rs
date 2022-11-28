@@ -8,7 +8,7 @@ use rome_js_factory::make::{
     jsx_string, token,
 };
 use rome_js_syntax::{
-    JsxAnyAttribute, JsxAnyAttributeName, JsxAnyAttributeValue, JsxAttribute, JsxAttributeList,
+    AnyJsxAttribute, AnyJsxAttributeName, AnyJsxAttributeValue, JsxAttribute, JsxAttributeList,
     JsxElement, JsxSelfClosingElement, T,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList, BatchMutationExt, TriviaPieceKind};
@@ -63,7 +63,7 @@ declare_node_union! {
 impl UseBlankTargetQuery {
     fn has_trailing_spread_attribute(
         &self,
-        current_attribute: impl Into<JsxAnyAttribute>,
+        current_attribute: impl Into<AnyJsxAttribute>,
     ) -> Option<bool> {
         Some(match self {
             UseBlankTargetQuery::JsxElement(element) => element
@@ -179,16 +179,16 @@ impl Rule for UseBlankTarget {
                 .ancestors()
                 .find_map(JsxAttributeList::cast)?;
             let mut new_attribute_list: Vec<_> = old_attribute_list.iter().collect();
-            let new_attribute = jsx_attribute(JsxAnyAttributeName::JsxName(jsx_name(
+            let new_attribute = jsx_attribute(AnyJsxAttributeName::JsxName(jsx_name(
                 jsx_ident("rel").with_leading_trivia([(TriviaPieceKind::Whitespace, " ")]),
             )))
             .with_initializer(jsx_attribute_initializer_clause(
                 token(T![=]),
-                JsxAnyAttributeValue::JsxString(jsx_string(jsx_ident("\"noreferrer\""))),
+                AnyJsxAttributeValue::JsxString(jsx_string(jsx_ident("\"noreferrer\""))),
             ))
             .build();
 
-            new_attribute_list.push(JsxAnyAttribute::JsxAttribute(new_attribute));
+            new_attribute_list.push(AnyJsxAttribute::JsxAttribute(new_attribute));
 
             mutation.replace_node(old_attribute_list, jsx_attribute_list(new_attribute_list));
 

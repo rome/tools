@@ -4,7 +4,7 @@ use rome_console::markup;
 use rome_js_syntax::{JsConstructorClassMember, JsReturnStatement};
 use rome_rowan::AstNode;
 
-use crate::control_flow::JsAnyControlFlowRoot;
+use crate::control_flow::AnyJsControlFlowRoot;
 
 declare_rule! {
     /// Disallow returning a value from a constructor
@@ -62,7 +62,7 @@ impl Rule for NoConstructorReturn {
         let constructor = ret
             .syntax()
             .ancestors()
-            .find(|x| JsAnyControlFlowRoot::can_cast(x.kind()))
+            .find(|x| AnyJsControlFlowRoot::can_cast(x.kind()))
             .and_then(JsConstructorClassMember::cast);
         constructor
     }

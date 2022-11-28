@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 
 use crate::{
-    JsSyntaxToken, JsxAnyAttribute, JsxAnyElementName, JsxAttribute, JsxAttributeList, JsxName,
+    AnyJsxAttribute, AnyJsxElementName, JsSyntaxToken, JsxAttribute, JsxAttributeList, JsxName,
     JsxOpeningElement, JsxSelfClosingElement, JsxString, TextSize,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList, SyntaxResult, SyntaxTokenText};
@@ -47,16 +47,16 @@ impl JsxOpeningElement {
     ///
     /// use rome_js_factory::make;
     /// use rome_js_factory::make::{ident, jsx_attribute, jsx_name, jsx_opening_element, token, jsx_attribute_list};
-    /// use rome_js_syntax::{JsxAnyAttribute, JsxAnyAttributeName, JsxAnyElementName, T};
+    /// use rome_js_syntax::{AnyJsxAttribute, AnyJsxAttributeName, AnyJsxElementName, T};
     ///
-    /// let div = JsxAnyAttribute::JsxAttribute(jsx_attribute(
-    ///     JsxAnyAttributeName::JsxName(
+    /// let div = AnyJsxAttribute::JsxAttribute(jsx_attribute(
+    ///     AnyJsxAttributeName::JsxName(
     ///         jsx_name(ident("div"))
     ///     )
     /// ).build());
     ///
-    /// let img = JsxAnyAttribute::JsxAttribute(jsx_attribute(
-    ///     JsxAnyAttributeName::JsxName(
+    /// let img = AnyJsxAttribute::JsxAttribute(jsx_attribute(
+    ///     AnyJsxAttributeName::JsxName(
     ///         jsx_name(ident("img"))
     ///     )
     /// ).build());
@@ -68,7 +68,7 @@ impl JsxOpeningElement {
     ///
     /// let opening_element = jsx_opening_element(
     ///     token(T![<]),
-    ///     JsxAnyElementName::JsxName(
+    ///     AnyJsxElementName::JsxName(
     ///         jsx_name(ident("Test"))
     ///     ),
     ///     attributes,
@@ -94,18 +94,18 @@ impl JsxOpeningElement {
     /// ```
     /// use rome_js_factory::make;
     /// use rome_js_factory::make::{ident, jsx_attribute, jsx_name, jsx_opening_element, token, jsx_attribute_list, jsx_self_closing_element, jsx_spread_attribute, jsx_ident, js_identifier_expression, js_reference_identifier};
-    /// use rome_js_syntax::{JsAnyExpression, JsxAnyAttribute, JsxAnyAttributeName, JsxAnyElementName, T};
+    /// use rome_js_syntax::{AnyJsExpression, AnyJsxAttribute, AnyJsxAttributeName, AnyJsxElementName, T};
     ///
-    /// let div = JsxAnyAttribute::JsxAttribute(jsx_attribute(
-    ///     JsxAnyAttributeName::JsxName(
+    /// let div = AnyJsxAttribute::JsxAttribute(jsx_attribute(
+    ///     AnyJsxAttributeName::JsxName(
     ///         jsx_name(ident("div"))
     ///     )
     /// ).build());
     ///
-    /// let spread = JsxAnyAttribute::JsxSpreadAttribute(jsx_spread_attribute(
+    /// let spread = AnyJsxAttribute::JsxSpreadAttribute(jsx_spread_attribute(
     ///     token(T!['{']),
     ///     token(T![...]),
-    ///     JsAnyExpression::JsIdentifierExpression(js_identifier_expression(
+    ///     AnyJsExpression::JsIdentifierExpression(js_identifier_expression(
     ///         js_reference_identifier(ident("spread"))
     ///     )),
     ///     token(T!['}']),
@@ -120,7 +120,7 @@ impl JsxOpeningElement {
     ///
     /// let opening_element = jsx_opening_element(
     ///     token(T![<]),
-    ///     JsxAnyElementName::JsxName(
+    ///     AnyJsxElementName::JsxName(
     ///         jsx_name(ident("Test"))
     ///     ),
     ///     attributes,
@@ -130,7 +130,7 @@ impl JsxOpeningElement {
     /// let div = opening_element.find_attribute_by_name("div").unwrap().unwrap();
     /// assert!(opening_element.has_trailing_spread_prop(div.clone()));
     /// ```
-    pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<JsxAnyAttribute>) -> bool {
+    pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<AnyJsxAttribute>) -> bool {
         self.attributes()
             .has_trailing_spread_prop(current_attribute)
     }
@@ -145,16 +145,16 @@ impl JsxSelfClosingElement {
     ///
     /// use rome_js_factory::make;
     /// use rome_js_factory::make::{ident, jsx_attribute, jsx_name, jsx_opening_element, token, jsx_attribute_list, jsx_self_closing_element};
-    /// use rome_js_syntax::{JsxAnyAttribute, JsxAnyAttributeName, JsxAnyElementName, T};
+    /// use rome_js_syntax::{AnyJsxAttribute, AnyJsxAttributeName, AnyJsxElementName, T};
     ///
-    /// let div = JsxAnyAttribute::JsxAttribute(jsx_attribute(
-    ///     JsxAnyAttributeName::JsxName(
+    /// let div = AnyJsxAttribute::JsxAttribute(jsx_attribute(
+    ///     AnyJsxAttributeName::JsxName(
     ///         jsx_name(ident("div"))
     ///     )
     /// ).build());
     ///
-    /// let img = JsxAnyAttribute::JsxAttribute(jsx_attribute(
-    ///     JsxAnyAttributeName::JsxName(
+    /// let img = AnyJsxAttribute::JsxAttribute(jsx_attribute(
+    ///     AnyJsxAttributeName::JsxName(
     ///         jsx_name(ident("img"))
     ///     )
     /// ).build());
@@ -166,7 +166,7 @@ impl JsxSelfClosingElement {
     ///
     /// let opening_element = jsx_self_closing_element(
     ///     token(T![<]),
-    ///     JsxAnyElementName::JsxName(
+    ///     AnyJsxElementName::JsxName(
     ///         jsx_name(ident("Test"))
     ///     ),
     ///     attributes,
@@ -193,18 +193,18 @@ impl JsxSelfClosingElement {
     /// ```
     /// use rome_js_factory::make;
     /// use rome_js_factory::make::{ident, jsx_attribute, jsx_name, jsx_opening_element, token, jsx_attribute_list, jsx_self_closing_element, jsx_spread_attribute, jsx_ident, js_identifier_expression, js_reference_identifier};
-    /// use rome_js_syntax::{JsAnyExpression, JsxAnyAttribute, JsxAnyAttributeName, JsxAnyElementName, T};
+    /// use rome_js_syntax::{AnyJsExpression, AnyJsxAttribute, AnyJsxAttributeName, AnyJsxElementName, T};
     ///
-    /// let div = JsxAnyAttribute::JsxAttribute(jsx_attribute(
-    ///     JsxAnyAttributeName::JsxName(
+    /// let div = AnyJsxAttribute::JsxAttribute(jsx_attribute(
+    ///     AnyJsxAttributeName::JsxName(
     ///         jsx_name(ident("div"))
     ///     )
     /// ).build());
     ///
-    /// let spread = JsxAnyAttribute::JsxSpreadAttribute(jsx_spread_attribute(
+    /// let spread = AnyJsxAttribute::JsxSpreadAttribute(jsx_spread_attribute(
     ///     token(T!['{']),
     ///     token(T![...]),
-    ///     JsAnyExpression::JsIdentifierExpression(js_identifier_expression(
+    ///     AnyJsExpression::JsIdentifierExpression(js_identifier_expression(
     ///         js_reference_identifier(ident("spread"))
     ///     )),
     ///     token(T!['}']),
@@ -219,7 +219,7 @@ impl JsxSelfClosingElement {
     ///
     /// let opening_element = jsx_self_closing_element(
     ///     token(T![<]),
-    ///     JsxAnyElementName::JsxName(
+    ///     AnyJsxElementName::JsxName(
     ///         jsx_name(ident("Test"))
     ///     ),
     ///     attributes,
@@ -230,7 +230,7 @@ impl JsxSelfClosingElement {
     /// let div = opening_element.find_attribute_by_name("div").unwrap().unwrap();
     /// assert!(opening_element.has_trailing_spread_prop(div.clone()));
     /// ```
-    pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<JsxAnyAttribute>) -> bool {
+    pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<AnyJsxAttribute>) -> bool {
         self.attributes()
             .has_trailing_spread_prop(current_attribute)
     }
@@ -300,7 +300,7 @@ impl JsxAttributeList {
         Ok(attribute)
     }
 
-    pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<JsxAnyAttribute>) -> bool {
+    pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<AnyJsxAttribute>) -> bool {
         let mut current_attribute_found = false;
         let current_attribute = current_attribute.into();
         for attribute in self {
@@ -317,30 +317,30 @@ impl JsxAttributeList {
 }
 
 declare_node_union! {
-    pub JsxAnyElement = JsxOpeningElement | JsxSelfClosingElement
+    pub AnyJsxElement = JsxOpeningElement | JsxSelfClosingElement
 }
 
-impl JsxAnyElement {
+impl AnyJsxElement {
     pub fn name_value_token(&self) -> Option<JsSyntaxToken> {
         match self.name().ok()? {
-            JsxAnyElementName::JsxMemberName(member) => member.member().ok()?.value_token().ok(),
-            JsxAnyElementName::JsxName(name) => name.value_token().ok(),
-            JsxAnyElementName::JsxNamespaceName(name) => name.name().ok()?.value_token().ok(),
-            JsxAnyElementName::JsxReferenceIdentifier(name) => name.value_token().ok(),
+            AnyJsxElementName::JsxMemberName(member) => member.member().ok()?.value_token().ok(),
+            AnyJsxElementName::JsxName(name) => name.value_token().ok(),
+            AnyJsxElementName::JsxNamespaceName(name) => name.name().ok()?.value_token().ok(),
+            AnyJsxElementName::JsxReferenceIdentifier(name) => name.value_token().ok(),
         }
     }
 
     pub fn attributes(&self) -> JsxAttributeList {
         match self {
-            JsxAnyElement::JsxOpeningElement(element) => element.attributes(),
-            JsxAnyElement::JsxSelfClosingElement(element) => element.attributes(),
+            AnyJsxElement::JsxOpeningElement(element) => element.attributes(),
+            AnyJsxElement::JsxSelfClosingElement(element) => element.attributes(),
         }
     }
 
-    pub fn name(&self) -> SyntaxResult<JsxAnyElementName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsxElementName> {
         match self {
-            JsxAnyElement::JsxOpeningElement(element) => element.name(),
-            JsxAnyElement::JsxSelfClosingElement(element) => element.name(),
+            AnyJsxElement::JsxOpeningElement(element) => element.name(),
+            AnyJsxElement::JsxSelfClosingElement(element) => element.name(),
         }
     }
 
@@ -348,12 +348,12 @@ impl JsxAnyElement {
         self.name().map_or(false, |it| it.as_jsx_name().is_some())
     }
 
-    pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<JsxAnyAttribute>) -> bool {
+    pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<AnyJsxAttribute>) -> bool {
         match self {
-            JsxAnyElement::JsxSelfClosingElement(element) => {
+            AnyJsxElement::JsxSelfClosingElement(element) => {
                 element.has_trailing_spread_prop(current_attribute)
             }
-            JsxAnyElement::JsxOpeningElement(element) => {
+            AnyJsxElement::JsxOpeningElement(element) => {
                 element.has_trailing_spread_prop(current_attribute)
             }
         }
@@ -361,10 +361,10 @@ impl JsxAnyElement {
 
     pub fn find_attribute_by_name(&self, name_to_lookup: &str) -> Option<JsxAttribute> {
         match self {
-            JsxAnyElement::JsxSelfClosingElement(element) => {
+            AnyJsxElement::JsxSelfClosingElement(element) => {
                 element.find_attribute_by_name(name_to_lookup).ok()?
             }
-            JsxAnyElement::JsxOpeningElement(element) => {
+            AnyJsxElement::JsxOpeningElement(element) => {
                 element.find_attribute_by_name(name_to_lookup).ok()?
             }
         }
@@ -389,7 +389,7 @@ impl JsxAttribute {
                 }
 
                 expression
-                    .as_js_any_literal_expression()?
+                    .as_any_js_literal_expression()?
                     .as_js_null_literal_expression()?;
 
                 Some(true)

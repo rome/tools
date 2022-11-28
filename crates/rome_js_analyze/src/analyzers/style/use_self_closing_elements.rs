@@ -2,7 +2,7 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsSyntaxToken, JsxAnyTag, JsxElement, JsxOpeningElementFields, T};
+use rome_js_syntax::{AnyJsxTag, JsSyntaxToken, JsxElement, JsxOpeningElementFields, T};
 use rome_rowan::{AstNode, AstNodeList, BatchMutationExt, TriviaPiece};
 
 use crate::JsRuleAction;
@@ -132,8 +132,8 @@ impl Rule for UseSelfClosingElements {
         }
         let self_closing_element = self_closing_element_builder.build();
         mutation.replace_node(
-            JsxAnyTag::JsxElement(ctx.query().clone()),
-            JsxAnyTag::JsxSelfClosingElement(self_closing_element),
+            AnyJsxTag::JsxElement(ctx.query().clone()),
+            AnyJsxTag::JsxSelfClosingElement(self_closing_element),
         );
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,

@@ -1524,7 +1524,7 @@ fn is_at_class_member_name(p: &mut JsParser, offset: usize) -> bool {
     matches!(p.nth(offset), T![#] | T!['[']) || is_at_literal_member_name(p, offset)
 }
 
-/// Parses a `JsAnyClassMemberName` and returns its completion marker
+/// Parses a `AnyJsClassMemberName` and returns its completion marker
 fn parse_class_member_name(p: &mut JsParser, modifiers: &mut ClassMemberModifiers) -> ParsedSyntax {
     modifiers.set_private_member_name(p.at(T![#]));
     match p.cur() {

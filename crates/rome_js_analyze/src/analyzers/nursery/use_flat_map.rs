@@ -4,7 +4,7 @@ use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make::{ident, js_name};
-use rome_js_syntax::{JsAnyExpression, JsAnyName, JsCallExpression};
+use rome_js_syntax::{AnyJsExpression, AnyJsName, JsCallExpression};
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
 
 declare_rule! {
@@ -55,8 +55,8 @@ impl Rule for UseFlatMap {
         if let Some(first_argument) = arguments.first() {
             let first_argument = first_argument.ok()?;
             let first_argument = first_argument
-                .as_js_any_expression()?
-                .as_js_any_literal_expression()?
+                .as_any_js_expression()?
+                .as_any_js_literal_expression()?
                 .as_js_number_literal_expression()?;
 
             if first_argument.value_token().ok()?.text_trimmed() != "1" {
@@ -123,9 +123,9 @@ impl Rule for UseFlatMap {
 
         let flat_map_member_expression = old_static_member_expression
             .clone()
-            .with_member(JsAnyName::JsName(member));
+            .with_member(AnyJsName::JsName(member));
 
-        let flat_map_call = flat_call.with_callee(JsAnyExpression::JsStaticMemberExpression(
+        let flat_map_call = flat_call.with_callee(AnyJsExpression::JsStaticMemberExpression(
             flat_map_member_expression,
         ));
 

@@ -2,7 +2,7 @@ use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::{markup, MarkupBuf};
-use rome_js_syntax::jsx_ext::JsxAnyElement;
+use rome_js_syntax::jsx_ext::AnyJsxElement;
 use rome_rowan::AstNode;
 
 declare_rule! {
@@ -68,7 +68,7 @@ impl UseKeyWithMouseEventsState {
 }
 
 impl Rule for UseKeyWithMouseEvents {
-    type Query = Semantic<JsxAnyElement>;
+    type Query = Semantic<AnyJsxElement>;
     type State = UseKeyWithMouseEventsState;
     type Signals = Option<Self::State>;
     type Options = ();
@@ -104,7 +104,7 @@ impl Rule for UseKeyWithMouseEvents {
     }
 }
 
-fn has_valid_focus_attributes(elem: &JsxAnyElement) -> bool {
+fn has_valid_focus_attributes(elem: &AnyJsxElement) -> bool {
     if let Some(on_mouse_over_attribute) = elem.find_attribute_by_name("onMouseOver") {
         if !elem.has_trailing_spread_prop(on_mouse_over_attribute) {
             return elem
@@ -115,7 +115,7 @@ fn has_valid_focus_attributes(elem: &JsxAnyElement) -> bool {
     true
 }
 
-fn has_valid_blur_attributes(elem: &JsxAnyElement) -> bool {
+fn has_valid_blur_attributes(elem: &AnyJsxElement) -> bool {
     if let Some(on_mouse_attribute) = elem.find_attribute_by_name("onMouseOut") {
         if !elem.has_trailing_spread_prop(on_mouse_attribute) {
             return elem

@@ -3,7 +3,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyLiteralExpression, JsSyntaxKind, JsxAnyAttributeValue, JsxAttribute, JsxAttributeFields, T,
+    AnyJsLiteralExpression, AnyJsxAttributeValue, JsSyntaxKind, JsxAttribute, JsxAttributeFields, T,
 };
 use rome_rowan::{AstNode, AstNodeExt, BatchMutationExt};
 
@@ -104,8 +104,8 @@ impl Rule for NoImplicitBoolean {
         )?;
         let attr_value = make::jsx_expression_attribute_value(
             make::token(JsSyntaxKind::L_CURLY),
-            rome_js_syntax::JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsBooleanLiteralExpression(
+            rome_js_syntax::AnyJsExpression::AnyJsLiteralExpression(
+                AnyJsLiteralExpression::JsBooleanLiteralExpression(
                     make::js_boolean_literal_expression(make::token(T![true])),
                 ),
             ),
@@ -114,7 +114,7 @@ impl Rule for NoImplicitBoolean {
         let next_attr = make::jsx_attribute(next_name).with_initializer(
             make::jsx_attribute_initializer_clause(
                 make::token(T![=]),
-                JsxAnyAttributeValue::JsxExpressionAttributeValue(attr_value),
+                AnyJsxAttributeValue::JsxExpressionAttributeValue(attr_value),
             ),
         );
         let next_attr = next_attr.build();

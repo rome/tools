@@ -1,17 +1,17 @@
 //! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::TsAnyMethodSignatureModifier;
+use rome_js_syntax::AnyTsMethodSignatureModifier;
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatTsAnyMethodSignatureModifier;
-impl FormatRule<TsAnyMethodSignatureModifier> for FormatTsAnyMethodSignatureModifier {
+pub(crate) struct FormatAnyTsMethodSignatureModifier;
+impl FormatRule<AnyTsMethodSignatureModifier> for FormatAnyTsMethodSignatureModifier {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &TsAnyMethodSignatureModifier, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyTsMethodSignatureModifier, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            TsAnyMethodSignatureModifier::TsAccessibilityModifier(node) => node.format().fmt(f),
-            TsAnyMethodSignatureModifier::JsStaticModifier(node) => node.format().fmt(f),
-            TsAnyMethodSignatureModifier::TsOverrideModifier(node) => node.format().fmt(f),
-            TsAnyMethodSignatureModifier::TsAbstractModifier(node) => node.format().fmt(f),
+            AnyTsMethodSignatureModifier::TsAccessibilityModifier(node) => node.format().fmt(f),
+            AnyTsMethodSignatureModifier::JsStaticModifier(node) => node.format().fmt(f),
+            AnyTsMethodSignatureModifier::TsOverrideModifier(node) => node.format().fmt(f),
+            AnyTsMethodSignatureModifier::TsAbstractModifier(node) => node.format().fmt(f),
         }
     }
 }

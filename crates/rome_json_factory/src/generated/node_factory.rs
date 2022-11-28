@@ -48,7 +48,7 @@ pub fn json_boolean_value(value_token_token: SyntaxToken) -> JsonBooleanValue {
 pub fn json_member(
     name: JsonMemberName,
     colon_token: SyntaxToken,
-    value: JsonAnyValue,
+    value: AnyJsonValue,
 ) -> JsonMember {
     JsonMember::unwrap_cast(SyntaxNode::new_detached(
         JsonSyntaxKind::JSON_MEMBER,
@@ -109,7 +109,7 @@ impl JsonObjectValueBuilder {
         ))
     }
 }
-pub fn json_root(value: JsonAnyValue, eof_token: SyntaxToken) -> JsonRoot {
+pub fn json_root(value: AnyJsonValue, eof_token: SyntaxToken) -> JsonRoot {
     JsonRoot::unwrap_cast(SyntaxNode::new_detached(
         JsonSyntaxKind::JSON_ROOT,
         [
@@ -126,7 +126,7 @@ pub fn json_string_value(value_token: SyntaxToken) -> JsonStringValue {
 }
 pub fn json_array_element_list<I, S>(items: I, separators: S) -> JsonArrayElementList
 where
-    I: IntoIterator<Item = JsonAnyValue>,
+    I: IntoIterator<Item = AnyJsonValue>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsonSyntaxToken>,
     S::IntoIter: ExactSizeIterator,

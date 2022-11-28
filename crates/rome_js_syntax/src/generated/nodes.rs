@@ -84,7 +84,7 @@ impl JsArrayAssignmentPatternRestElement {
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn pattern(&self) -> SyntaxResult<JsAnyAssignmentPattern> {
+    pub fn pattern(&self) -> SyntaxResult<AnyJsAssignmentPattern> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -100,7 +100,7 @@ impl Serialize for JsArrayAssignmentPatternRestElement {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsArrayAssignmentPatternRestElementFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
-    pub pattern: SyntaxResult<JsAnyAssignmentPattern>,
+    pub pattern: SyntaxResult<AnyJsAssignmentPattern>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsArrayBindingPattern {
@@ -167,7 +167,7 @@ impl JsArrayBindingPatternRestElement {
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn pattern(&self) -> SyntaxResult<JsAnyBindingPattern> {
+    pub fn pattern(&self) -> SyntaxResult<AnyJsBindingPattern> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -183,7 +183,7 @@ impl Serialize for JsArrayBindingPatternRestElement {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsArrayBindingPatternRestElementFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
-    pub pattern: SyntaxResult<JsAnyBindingPattern>,
+    pub pattern: SyntaxResult<AnyJsBindingPattern>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsArrayExpression {
@@ -278,7 +278,7 @@ impl JsArrowFunctionExpression {
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 1usize)
     }
-    pub fn parameters(&self) -> SyntaxResult<JsAnyArrowFunctionParameters> {
+    pub fn parameters(&self) -> SyntaxResult<AnyJsArrowFunctionParameters> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
@@ -287,7 +287,7 @@ impl JsArrowFunctionExpression {
     pub fn fat_arrow_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 4usize)
     }
-    pub fn body(&self) -> SyntaxResult<JsAnyFunctionBody> {
+    pub fn body(&self) -> SyntaxResult<AnyJsFunctionBody> {
         support::required_node(&self.syntax, 5usize)
     }
 }
@@ -304,10 +304,10 @@ impl Serialize for JsArrowFunctionExpression {
 pub struct JsArrowFunctionExpressionFields {
     pub async_token: Option<SyntaxToken>,
     pub type_parameters: Option<TsTypeParameters>,
-    pub parameters: SyntaxResult<JsAnyArrowFunctionParameters>,
+    pub parameters: SyntaxResult<AnyJsArrowFunctionParameters>,
     pub return_type_annotation: Option<TsReturnTypeAnnotation>,
     pub fat_arrow_token: SyntaxResult<SyntaxToken>,
-    pub body: SyntaxResult<JsAnyFunctionBody>,
+    pub body: SyntaxResult<AnyJsFunctionBody>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsAssignmentExpression {
@@ -328,13 +328,13 @@ impl JsAssignmentExpression {
             right: self.right(),
         }
     }
-    pub fn left(&self) -> SyntaxResult<JsAnyAssignmentPattern> {
+    pub fn left(&self) -> SyntaxResult<AnyJsAssignmentPattern> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn right(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
 }
@@ -349,9 +349,9 @@ impl Serialize for JsAssignmentExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsAssignmentExpressionFields {
-    pub left: SyntaxResult<JsAnyAssignmentPattern>,
+    pub left: SyntaxResult<AnyJsAssignmentPattern>,
     pub operator_token: SyntaxResult<SyntaxToken>,
-    pub right: SyntaxResult<JsAnyExpression>,
+    pub right: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsAssignmentWithDefault {
@@ -372,13 +372,13 @@ impl JsAssignmentWithDefault {
             default: self.default(),
         }
     }
-    pub fn pattern(&self) -> SyntaxResult<JsAnyAssignmentPattern> {
+    pub fn pattern(&self) -> SyntaxResult<AnyJsAssignmentPattern> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn default(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn default(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
 }
@@ -393,9 +393,9 @@ impl Serialize for JsAssignmentWithDefault {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsAssignmentWithDefaultFields {
-    pub pattern: SyntaxResult<JsAnyAssignmentPattern>,
+    pub pattern: SyntaxResult<AnyJsAssignmentPattern>,
     pub eq_token: SyntaxResult<SyntaxToken>,
-    pub default: SyntaxResult<JsAnyExpression>,
+    pub default: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsAwaitExpression {
@@ -418,7 +418,7 @@ impl JsAwaitExpression {
     pub fn await_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn argument(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -434,7 +434,7 @@ impl Serialize for JsAwaitExpression {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsAwaitExpressionFields {
     pub await_token: SyntaxResult<SyntaxToken>,
-    pub argument: SyntaxResult<JsAnyExpression>,
+    pub argument: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsBigIntLiteralExpression {
@@ -489,13 +489,13 @@ impl JsBinaryExpression {
             right: self.right(),
         }
     }
-    pub fn left(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn left(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn right(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
 }
@@ -510,9 +510,9 @@ impl Serialize for JsBinaryExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsBinaryExpressionFields {
-    pub left: SyntaxResult<JsAnyExpression>,
+    pub left: SyntaxResult<AnyJsExpression>,
     pub operator_token: SyntaxResult<SyntaxToken>,
-    pub right: SyntaxResult<JsAnyExpression>,
+    pub right: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsBindingPatternWithDefault {
@@ -533,13 +533,13 @@ impl JsBindingPatternWithDefault {
             default: self.default(),
         }
     }
-    pub fn pattern(&self) -> SyntaxResult<JsAnyBindingPattern> {
+    pub fn pattern(&self) -> SyntaxResult<AnyJsBindingPattern> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn default(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn default(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
 }
@@ -554,9 +554,9 @@ impl Serialize for JsBindingPatternWithDefault {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsBindingPatternWithDefaultFields {
-    pub pattern: SyntaxResult<JsAnyBindingPattern>,
+    pub pattern: SyntaxResult<AnyJsBindingPattern>,
     pub eq_token: SyntaxResult<SyntaxToken>,
-    pub default: SyntaxResult<JsAnyExpression>,
+    pub default: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsBlockStatement {
@@ -736,7 +736,7 @@ impl JsCallExpression {
             arguments: self.arguments(),
         }
     }
-    pub fn callee(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn callee(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn optional_chain_token(&self) -> Option<SyntaxToken> {
@@ -758,7 +758,7 @@ impl Serialize for JsCallExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsCallExpressionFields {
-    pub callee: SyntaxResult<JsAnyExpression>,
+    pub callee: SyntaxResult<AnyJsExpression>,
     pub optional_chain_token: Option<SyntaxToken>,
     pub type_arguments: Option<TsTypeArguments>,
     pub arguments: SyntaxResult<JsCallArguments>,
@@ -786,7 +786,7 @@ impl JsCaseClause {
     pub fn case_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn test(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn test(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -806,7 +806,7 @@ impl Serialize for JsCaseClause {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsCaseClauseFields {
     pub case_token: SyntaxResult<SyntaxToken>,
-    pub test: SyntaxResult<JsAnyExpression>,
+    pub test: SyntaxResult<AnyJsExpression>,
     pub colon_token: SyntaxResult<SyntaxToken>,
     pub consequent: JsStatementList,
 }
@@ -875,7 +875,7 @@ impl JsCatchDeclaration {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn binding(&self) -> SyntaxResult<JsAnyBindingPattern> {
+    pub fn binding(&self) -> SyntaxResult<AnyJsBindingPattern> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
@@ -897,7 +897,7 @@ impl Serialize for JsCatchDeclaration {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsCatchDeclarationFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
-    pub binding: SyntaxResult<JsAnyBindingPattern>,
+    pub binding: SyntaxResult<AnyJsBindingPattern>,
     pub type_annotation: Option<TsTypeAnnotation>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
 }
@@ -930,7 +930,7 @@ impl JsClassDeclaration {
     pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 2usize) }
+    pub fn id(&self) -> SyntaxResult<AnyJsBinding> { support::required_node(&self.syntax, 2usize) }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 3usize)
     }
@@ -959,7 +959,7 @@ impl Serialize for JsClassDeclaration {
 pub struct JsClassDeclarationFields {
     pub abstract_token: Option<SyntaxToken>,
     pub class_token: SyntaxResult<SyntaxToken>,
-    pub id: SyntaxResult<JsAnyBinding>,
+    pub id: SyntaxResult<AnyJsBinding>,
     pub type_parameters: Option<TsTypeParameters>,
     pub extends_clause: Option<JsExtendsClause>,
     pub implements_clause: Option<TsImplementsClause>,
@@ -996,7 +996,7 @@ impl JsClassExportDefaultDeclaration {
     pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 2usize) }
+    pub fn id(&self) -> Option<AnyJsBinding> { support::node(&self.syntax, 2usize) }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 3usize)
     }
@@ -1025,7 +1025,7 @@ impl Serialize for JsClassExportDefaultDeclaration {
 pub struct JsClassExportDefaultDeclarationFields {
     pub abstract_token: Option<SyntaxToken>,
     pub class_token: SyntaxResult<SyntaxToken>,
-    pub id: Option<JsAnyBinding>,
+    pub id: Option<AnyJsBinding>,
     pub type_parameters: Option<TsTypeParameters>,
     pub extends_clause: Option<JsExtendsClause>,
     pub implements_clause: Option<TsImplementsClause>,
@@ -1060,7 +1060,7 @@ impl JsClassExpression {
     pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 1usize) }
+    pub fn id(&self) -> Option<AnyJsBinding> { support::node(&self.syntax, 1usize) }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 2usize)
     }
@@ -1088,7 +1088,7 @@ impl Serialize for JsClassExpression {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsClassExpressionFields {
     pub class_token: SyntaxResult<SyntaxToken>,
-    pub id: Option<JsAnyBinding>,
+    pub id: Option<AnyJsBinding>,
     pub type_parameters: Option<TsTypeParameters>,
     pub extends_clause: Option<JsExtendsClause>,
     pub implements_clause: Option<TsImplementsClause>,
@@ -1116,13 +1116,13 @@ impl JsComputedMemberAssignment {
             r_brack_token: self.r_brack_token(),
         }
     }
-    pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn object(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn member(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn member(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -1140,9 +1140,9 @@ impl Serialize for JsComputedMemberAssignment {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsComputedMemberAssignmentFields {
-    pub object: SyntaxResult<JsAnyExpression>,
+    pub object: SyntaxResult<AnyJsExpression>,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
-    pub member: SyntaxResult<JsAnyExpression>,
+    pub member: SyntaxResult<AnyJsExpression>,
     pub r_brack_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1166,7 +1166,7 @@ impl JsComputedMemberExpression {
             r_brack_token: self.r_brack_token(),
         }
     }
-    pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn object(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn optional_chain_token(&self) -> Option<SyntaxToken> {
@@ -1175,7 +1175,7 @@ impl JsComputedMemberExpression {
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn member(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn member(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 3usize)
     }
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -1193,10 +1193,10 @@ impl Serialize for JsComputedMemberExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsComputedMemberExpressionFields {
-    pub object: SyntaxResult<JsAnyExpression>,
+    pub object: SyntaxResult<AnyJsExpression>,
     pub optional_chain_token: Option<SyntaxToken>,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
-    pub member: SyntaxResult<JsAnyExpression>,
+    pub member: SyntaxResult<AnyJsExpression>,
     pub r_brack_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1221,7 +1221,7 @@ impl JsComputedMemberName {
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -1240,7 +1240,7 @@ impl Serialize for JsComputedMemberName {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsComputedMemberNameFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
     pub r_brack_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1264,19 +1264,19 @@ impl JsConditionalExpression {
             alternate: self.alternate(),
         }
     }
-    pub fn test(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn test(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn consequent(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn consequent(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn alternate(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn alternate(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 4usize)
     }
 }
@@ -1291,11 +1291,11 @@ impl Serialize for JsConditionalExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsConditionalExpressionFields {
-    pub test: SyntaxResult<JsAnyExpression>,
+    pub test: SyntaxResult<AnyJsExpression>,
     pub question_mark_token: SyntaxResult<SyntaxToken>,
-    pub consequent: SyntaxResult<JsAnyExpression>,
+    pub consequent: SyntaxResult<AnyJsExpression>,
     pub colon_token: SyntaxResult<SyntaxToken>,
-    pub alternate: SyntaxResult<JsAnyExpression>,
+    pub alternate: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsConstructorClassMember {
@@ -1523,7 +1523,7 @@ impl JsDefaultImportSpecifier {
             trailing_comma_token: self.trailing_comma_token(),
         }
     }
-    pub fn local_name(&self) -> SyntaxResult<JsAnyBinding> {
+    pub fn local_name(&self) -> SyntaxResult<AnyJsBinding> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn trailing_comma_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -1541,7 +1541,7 @@ impl Serialize for JsDefaultImportSpecifier {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsDefaultImportSpecifierFields {
-    pub local_name: SyntaxResult<JsAnyBinding>,
+    pub local_name: SyntaxResult<AnyJsBinding>,
     pub trailing_comma_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1607,7 +1607,7 @@ impl JsDoWhileStatement {
     pub fn do_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn body(&self) -> SyntaxResult<JsAnyStatement> {
+    pub fn body(&self) -> SyntaxResult<AnyJsStatement> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn while_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -1616,7 +1616,7 @@ impl JsDoWhileStatement {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn test(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn test(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 4usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -1636,10 +1636,10 @@ impl Serialize for JsDoWhileStatement {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsDoWhileStatementFields {
     pub do_token: SyntaxResult<SyntaxToken>,
-    pub body: SyntaxResult<JsAnyStatement>,
+    pub body: SyntaxResult<AnyJsStatement>,
     pub while_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
-    pub test: SyntaxResult<JsAnyExpression>,
+    pub test: SyntaxResult<AnyJsExpression>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
     pub semicolon_token: Option<SyntaxToken>,
 }
@@ -1664,7 +1664,7 @@ impl JsElseClause {
     pub fn else_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn alternate(&self) -> SyntaxResult<JsAnyStatement> {
+    pub fn alternate(&self) -> SyntaxResult<AnyJsStatement> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -1680,7 +1680,7 @@ impl Serialize for JsElseClause {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsElseClauseFields {
     pub else_token: SyntaxResult<SyntaxToken>,
-    pub alternate: SyntaxResult<JsAnyStatement>,
+    pub alternate: SyntaxResult<AnyJsStatement>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsEmptyClassMember {
@@ -1771,7 +1771,7 @@ impl JsExport {
     pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn export_clause(&self) -> SyntaxResult<JsAnyExportClause> {
+    pub fn export_clause(&self) -> SyntaxResult<AnyJsExportClause> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -1787,7 +1787,7 @@ impl Serialize for JsExport {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExportFields {
     pub export_token: SyntaxResult<SyntaxToken>,
-    pub export_clause: SyntaxResult<JsAnyExportClause>,
+    pub export_clause: SyntaxResult<AnyJsExportClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsExportAsClause {
@@ -1850,7 +1850,7 @@ impl JsExportDefaultDeclarationClause {
     pub fn default_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn declaration(&self) -> SyntaxResult<JsAnyExportDefaultDeclaration> {
+    pub fn declaration(&self) -> SyntaxResult<AnyJsExportDefaultDeclaration> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
@@ -1867,7 +1867,7 @@ impl Serialize for JsExportDefaultDeclarationClause {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExportDefaultDeclarationClauseFields {
     pub default_token: SyntaxResult<SyntaxToken>,
-    pub declaration: SyntaxResult<JsAnyExportDefaultDeclaration>,
+    pub declaration: SyntaxResult<AnyJsExportDefaultDeclaration>,
     pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -1892,7 +1892,7 @@ impl JsExportDefaultExpressionClause {
     pub fn default_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
@@ -1909,7 +1909,7 @@ impl Serialize for JsExportDefaultExpressionClause {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExportDefaultExpressionClauseFields {
     pub default_token: SyntaxResult<SyntaxToken>,
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
     pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -2218,7 +2218,7 @@ impl JsExpressionSnipped {
             eof_token: self.eof_token(),
         }
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn eof_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -2236,7 +2236,7 @@ impl Serialize for JsExpressionSnipped {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExpressionSnippedFields {
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
     pub eof_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -2257,7 +2257,7 @@ impl JsExpressionStatement {
             semicolon_token: self.semicolon_token(),
         }
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
@@ -2273,7 +2273,7 @@ impl Serialize for JsExpressionStatement {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExpressionStatementFields {
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
     pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -2298,7 +2298,7 @@ impl JsExtendsClause {
     pub fn extends_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn super_class(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn super_class(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
@@ -2315,7 +2315,7 @@ impl Serialize for JsExtendsClause {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExtendsClauseFields {
     pub extends_token: SyntaxResult<SyntaxToken>,
-    pub super_class: SyntaxResult<JsAnyExpression>,
+    pub super_class: SyntaxResult<AnyJsExpression>,
     pub type_arguments: Option<TsTypeArguments>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -2386,19 +2386,19 @@ impl JsForInStatement {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn initializer(&self) -> SyntaxResult<JsAnyForInOrOfInitializer> {
+    pub fn initializer(&self) -> SyntaxResult<AnyJsForInOrOfInitializer> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn in_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 4usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 5usize)
     }
-    pub fn body(&self) -> SyntaxResult<JsAnyStatement> {
+    pub fn body(&self) -> SyntaxResult<AnyJsStatement> {
         support::required_node(&self.syntax, 6usize)
     }
 }
@@ -2415,11 +2415,11 @@ impl Serialize for JsForInStatement {
 pub struct JsForInStatementFields {
     pub for_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
-    pub initializer: SyntaxResult<JsAnyForInOrOfInitializer>,
+    pub initializer: SyntaxResult<AnyJsForInOrOfInitializer>,
     pub in_token: SyntaxResult<SyntaxToken>,
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
-    pub body: SyntaxResult<JsAnyStatement>,
+    pub body: SyntaxResult<AnyJsStatement>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsForOfStatement {
@@ -2452,19 +2452,19 @@ impl JsForOfStatement {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn initializer(&self) -> SyntaxResult<JsAnyForInOrOfInitializer> {
+    pub fn initializer(&self) -> SyntaxResult<AnyJsForInOrOfInitializer> {
         support::required_node(&self.syntax, 3usize)
     }
     pub fn of_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 4usize)
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 5usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 6usize)
     }
-    pub fn body(&self) -> SyntaxResult<JsAnyStatement> {
+    pub fn body(&self) -> SyntaxResult<AnyJsStatement> {
         support::required_node(&self.syntax, 7usize)
     }
 }
@@ -2482,11 +2482,11 @@ pub struct JsForOfStatementFields {
     pub for_token: SyntaxResult<SyntaxToken>,
     pub await_token: Option<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
-    pub initializer: SyntaxResult<JsAnyForInOrOfInitializer>,
+    pub initializer: SyntaxResult<AnyJsForInOrOfInitializer>,
     pub of_token: SyntaxResult<SyntaxToken>,
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
-    pub body: SyntaxResult<JsAnyStatement>,
+    pub body: SyntaxResult<AnyJsStatement>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsForStatement {
@@ -2519,19 +2519,19 @@ impl JsForStatement {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn initializer(&self) -> Option<JsAnyForInitializer> { support::node(&self.syntax, 2usize) }
+    pub fn initializer(&self) -> Option<AnyJsForInitializer> { support::node(&self.syntax, 2usize) }
     pub fn first_semi_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn test(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 4usize) }
+    pub fn test(&self) -> Option<AnyJsExpression> { support::node(&self.syntax, 4usize) }
     pub fn second_semi_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 5usize)
     }
-    pub fn update(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 6usize) }
+    pub fn update(&self) -> Option<AnyJsExpression> { support::node(&self.syntax, 6usize) }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 7usize)
     }
-    pub fn body(&self) -> SyntaxResult<JsAnyStatement> {
+    pub fn body(&self) -> SyntaxResult<AnyJsStatement> {
         support::required_node(&self.syntax, 8usize)
     }
 }
@@ -2548,13 +2548,13 @@ impl Serialize for JsForStatement {
 pub struct JsForStatementFields {
     pub for_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
-    pub initializer: Option<JsAnyForInitializer>,
+    pub initializer: Option<AnyJsForInitializer>,
     pub first_semi_token: SyntaxResult<SyntaxToken>,
-    pub test: Option<JsAnyExpression>,
+    pub test: Option<AnyJsExpression>,
     pub second_semi_token: SyntaxResult<SyntaxToken>,
-    pub update: Option<JsAnyExpression>,
+    pub update: Option<AnyJsExpression>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
-    pub body: SyntaxResult<JsAnyStatement>,
+    pub body: SyntaxResult<AnyJsStatement>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsForVariableDeclaration {
@@ -2615,7 +2615,7 @@ impl JsFormalParameter {
             initializer: self.initializer(),
         }
     }
-    pub fn binding(&self) -> SyntaxResult<JsAnyBindingPattern> {
+    pub fn binding(&self) -> SyntaxResult<AnyJsBindingPattern> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn question_mark_token(&self) -> Option<SyntaxToken> {
@@ -2637,7 +2637,7 @@ impl Serialize for JsFormalParameter {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsFormalParameterFields {
-    pub binding: SyntaxResult<JsAnyBindingPattern>,
+    pub binding: SyntaxResult<AnyJsBindingPattern>,
     pub question_mark_token: Option<SyntaxToken>,
     pub type_annotation: Option<TsTypeAnnotation>,
     pub initializer: Option<JsInitializerClause>,
@@ -2716,7 +2716,7 @@ impl JsFunctionDeclaration {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
-    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 3usize) }
+    pub fn id(&self) -> SyntaxResult<AnyJsBinding> { support::required_node(&self.syntax, 3usize) }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 4usize)
     }
@@ -2744,7 +2744,7 @@ pub struct JsFunctionDeclarationFields {
     pub async_token: Option<SyntaxToken>,
     pub function_token: SyntaxResult<SyntaxToken>,
     pub star_token: Option<SyntaxToken>,
-    pub id: SyntaxResult<JsAnyBinding>,
+    pub id: SyntaxResult<AnyJsBinding>,
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
     pub return_type_annotation: Option<TsReturnTypeAnnotation>,
@@ -2779,7 +2779,7 @@ impl JsFunctionExportDefaultDeclaration {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
-    pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 3usize) }
+    pub fn id(&self) -> Option<AnyJsBinding> { support::node(&self.syntax, 3usize) }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 4usize)
     }
@@ -2807,7 +2807,7 @@ pub struct JsFunctionExportDefaultDeclarationFields {
     pub async_token: Option<SyntaxToken>,
     pub function_token: SyntaxResult<SyntaxToken>,
     pub star_token: Option<SyntaxToken>,
-    pub id: Option<JsAnyBinding>,
+    pub id: Option<AnyJsBinding>,
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
     pub return_type_annotation: Option<TsReturnTypeAnnotation>,
@@ -2842,7 +2842,7 @@ impl JsFunctionExpression {
         support::required_token(&self.syntax, 1usize)
     }
     pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
-    pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 3usize) }
+    pub fn id(&self) -> Option<AnyJsBinding> { support::node(&self.syntax, 3usize) }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 4usize)
     }
@@ -2870,7 +2870,7 @@ pub struct JsFunctionExpressionFields {
     pub async_token: Option<SyntaxToken>,
     pub function_token: SyntaxResult<SyntaxToken>,
     pub star_token: Option<SyntaxToken>,
-    pub id: Option<JsAnyBinding>,
+    pub id: Option<AnyJsBinding>,
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
     pub return_type_annotation: Option<TsReturnTypeAnnotation>,
@@ -2903,7 +2903,7 @@ impl JsGetterClassMember {
     pub fn get_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsClassMemberName> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -2930,7 +2930,7 @@ impl Serialize for JsGetterClassMember {
 pub struct JsGetterClassMemberFields {
     pub modifiers: JsMethodModifierList,
     pub get_token: SyntaxResult<SyntaxToken>,
-    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub name: SyntaxResult<AnyJsClassMemberName>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
     pub return_type: Option<TsTypeAnnotation>,
@@ -2961,7 +2961,7 @@ impl JsGetterObjectMember {
     pub fn get_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsObjectMemberName> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -2987,7 +2987,7 @@ impl Serialize for JsGetterObjectMember {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsGetterObjectMemberFields {
     pub get_token: SyntaxResult<SyntaxToken>,
-    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub name: SyntaxResult<AnyJsObjectMemberName>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
     pub return_type: Option<TsTypeAnnotation>,
@@ -3121,13 +3121,13 @@ impl JsIfStatement {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn test(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn test(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn consequent(&self) -> SyntaxResult<JsAnyStatement> {
+    pub fn consequent(&self) -> SyntaxResult<AnyJsStatement> {
         support::required_node(&self.syntax, 4usize)
     }
     pub fn else_clause(&self) -> Option<JsElseClause> { support::node(&self.syntax, 5usize) }
@@ -3145,9 +3145,9 @@ impl Serialize for JsIfStatement {
 pub struct JsIfStatementFields {
     pub if_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
-    pub test: SyntaxResult<JsAnyExpression>,
+    pub test: SyntaxResult<AnyJsExpression>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
-    pub consequent: SyntaxResult<JsAnyStatement>,
+    pub consequent: SyntaxResult<AnyJsStatement>,
     pub else_clause: Option<JsElseClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -3172,7 +3172,7 @@ impl JsImport {
     pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn import_clause(&self) -> SyntaxResult<JsAnyImportClause> {
+    pub fn import_clause(&self) -> SyntaxResult<AnyJsImportClause> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
@@ -3189,7 +3189,7 @@ impl Serialize for JsImport {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsImportFields {
     pub import_token: SyntaxResult<SyntaxToken>,
-    pub import_clause: SyntaxResult<JsAnyImportClause>,
+    pub import_clause: SyntaxResult<AnyJsImportClause>,
     pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -3379,7 +3379,7 @@ impl JsImportDefaultClause {
         }
     }
     pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn local_name(&self) -> SyntaxResult<JsAnyBinding> {
+    pub fn local_name(&self) -> SyntaxResult<AnyJsBinding> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -3402,7 +3402,7 @@ impl Serialize for JsImportDefaultClause {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsImportDefaultClauseFields {
     pub type_token: Option<SyntaxToken>,
-    pub local_name: SyntaxResult<JsAnyBinding>,
+    pub local_name: SyntaxResult<AnyJsBinding>,
     pub from_token: SyntaxResult<SyntaxToken>,
     pub source: SyntaxResult<JsModuleSource>,
     pub assertion: Option<JsImportAssertion>,
@@ -3477,7 +3477,7 @@ impl JsImportNamedClause {
     pub fn default_specifier(&self) -> Option<JsDefaultImportSpecifier> {
         support::node(&self.syntax, 1usize)
     }
-    pub fn named_import(&self) -> SyntaxResult<JsAnyNamedImport> {
+    pub fn named_import(&self) -> SyntaxResult<AnyJsNamedImport> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -3501,7 +3501,7 @@ impl Serialize for JsImportNamedClause {
 pub struct JsImportNamedClauseFields {
     pub type_token: Option<SyntaxToken>,
     pub default_specifier: Option<JsDefaultImportSpecifier>,
-    pub named_import: SyntaxResult<JsAnyNamedImport>,
+    pub named_import: SyntaxResult<AnyJsNamedImport>,
     pub from_token: SyntaxResult<SyntaxToken>,
     pub source: SyntaxResult<JsModuleSource>,
     pub assertion: Option<JsImportAssertion>,
@@ -3536,7 +3536,7 @@ impl JsImportNamespaceClause {
     pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn local_name(&self) -> SyntaxResult<JsAnyBinding> {
+    pub fn local_name(&self) -> SyntaxResult<AnyJsBinding> {
         support::required_node(&self.syntax, 3usize)
     }
     pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -3561,7 +3561,7 @@ pub struct JsImportNamespaceClauseFields {
     pub type_token: Option<SyntaxToken>,
     pub star_token: SyntaxResult<SyntaxToken>,
     pub as_token: SyntaxResult<SyntaxToken>,
-    pub local_name: SyntaxResult<JsAnyBinding>,
+    pub local_name: SyntaxResult<AnyJsBinding>,
     pub from_token: SyntaxResult<SyntaxToken>,
     pub source: SyntaxResult<JsModuleSource>,
     pub assertion: Option<JsImportAssertion>,
@@ -3585,13 +3585,13 @@ impl JsInExpression {
             object: self.object(),
         }
     }
-    pub fn property(&self) -> SyntaxResult<JsAnyInProperty> {
+    pub fn property(&self) -> SyntaxResult<AnyJsInProperty> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn in_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn object(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
 }
@@ -3606,9 +3606,9 @@ impl Serialize for JsInExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsInExpressionFields {
-    pub property: SyntaxResult<JsAnyInProperty>,
+    pub property: SyntaxResult<AnyJsInProperty>,
     pub in_token: SyntaxResult<SyntaxToken>,
-    pub object: SyntaxResult<JsAnyExpression>,
+    pub object: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsInitializerClause {
@@ -3631,7 +3631,7 @@ impl JsInitializerClause {
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -3647,7 +3647,7 @@ impl Serialize for JsInitializerClause {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsInitializerClauseFields {
     pub eq_token: SyntaxResult<SyntaxToken>,
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsInstanceofExpression {
@@ -3668,13 +3668,13 @@ impl JsInstanceofExpression {
             right: self.right(),
         }
     }
-    pub fn left(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn left(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn instanceof_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn right(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
 }
@@ -3689,9 +3689,9 @@ impl Serialize for JsInstanceofExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsInstanceofExpressionFields {
-    pub left: SyntaxResult<JsAnyExpression>,
+    pub left: SyntaxResult<AnyJsExpression>,
     pub instanceof_token: SyntaxResult<SyntaxToken>,
-    pub right: SyntaxResult<JsAnyExpression>,
+    pub right: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsLabeledStatement {
@@ -3718,7 +3718,7 @@ impl JsLabeledStatement {
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn body(&self) -> SyntaxResult<JsAnyStatement> {
+    pub fn body(&self) -> SyntaxResult<AnyJsStatement> {
         support::required_node(&self.syntax, 2usize)
     }
 }
@@ -3735,7 +3735,7 @@ impl Serialize for JsLabeledStatement {
 pub struct JsLabeledStatementFields {
     pub label_token: SyntaxResult<SyntaxToken>,
     pub colon_token: SyntaxResult<SyntaxToken>,
-    pub body: SyntaxResult<JsAnyStatement>,
+    pub body: SyntaxResult<AnyJsStatement>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsLiteralExportName {
@@ -3824,13 +3824,13 @@ impl JsLogicalExpression {
             right: self.right(),
         }
     }
-    pub fn left(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn left(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn right(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
 }
@@ -3845,9 +3845,9 @@ impl Serialize for JsLogicalExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsLogicalExpressionFields {
-    pub left: SyntaxResult<JsAnyExpression>,
+    pub left: SyntaxResult<AnyJsExpression>,
     pub operator_token: SyntaxResult<SyntaxToken>,
-    pub right: SyntaxResult<JsAnyExpression>,
+    pub right: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsMethodClassMember {
@@ -3877,7 +3877,7 @@ impl JsMethodClassMember {
     pub fn modifiers(&self) -> JsMethodModifierList { support::list(&self.syntax, 0usize) }
     pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
-    pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsClassMemberName> {
         support::required_node(&self.syntax, 3usize)
     }
     pub fn question_mark_token(&self) -> Option<SyntaxToken> {
@@ -3910,7 +3910,7 @@ pub struct JsMethodClassMemberFields {
     pub modifiers: JsMethodModifierList,
     pub async_token: Option<SyntaxToken>,
     pub star_token: Option<SyntaxToken>,
-    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub name: SyntaxResult<AnyJsClassMemberName>,
     pub question_mark_token: Option<SyntaxToken>,
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
@@ -3942,7 +3942,7 @@ impl JsMethodObjectMember {
     }
     pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsObjectMemberName> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
@@ -3971,7 +3971,7 @@ impl Serialize for JsMethodObjectMember {
 pub struct JsMethodObjectMemberFields {
     pub async_token: Option<SyntaxToken>,
     pub star_token: Option<SyntaxToken>,
-    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub name: SyntaxResult<AnyJsObjectMemberName>,
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
     pub return_type_annotation: Option<TsReturnTypeAnnotation>,
@@ -4115,7 +4115,7 @@ impl JsNamedImportSpecifier {
     pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn local_name(&self) -> SyntaxResult<JsAnyBinding> {
+    pub fn local_name(&self) -> SyntaxResult<AnyJsBinding> {
         support::required_node(&self.syntax, 3usize)
     }
 }
@@ -4133,7 +4133,7 @@ pub struct JsNamedImportSpecifierFields {
     pub type_token: Option<SyntaxToken>,
     pub name: SyntaxResult<JsLiteralExportName>,
     pub as_token: SyntaxResult<SyntaxToken>,
-    pub local_name: SyntaxResult<JsAnyBinding>,
+    pub local_name: SyntaxResult<AnyJsBinding>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsNamedImportSpecifiers {
@@ -4202,7 +4202,7 @@ impl JsNamespaceImportSpecifier {
     pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn local_name(&self) -> SyntaxResult<JsAnyBinding> {
+    pub fn local_name(&self) -> SyntaxResult<AnyJsBinding> {
         support::required_node(&self.syntax, 2usize)
     }
 }
@@ -4219,7 +4219,7 @@ impl Serialize for JsNamespaceImportSpecifier {
 pub struct JsNamespaceImportSpecifierFields {
     pub star_token: SyntaxResult<SyntaxToken>,
     pub as_token: SyntaxResult<SyntaxToken>,
-    pub local_name: SyntaxResult<JsAnyBinding>,
+    pub local_name: SyntaxResult<AnyJsBinding>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsNewExpression {
@@ -4244,7 +4244,7 @@ impl JsNewExpression {
     pub fn new_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn callee(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn callee(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
@@ -4262,7 +4262,7 @@ impl Serialize for JsNewExpression {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsNewExpressionFields {
     pub new_token: SyntaxResult<SyntaxToken>,
-    pub callee: SyntaxResult<JsAnyExpression>,
+    pub callee: SyntaxResult<AnyJsExpression>,
     pub type_arguments: Option<TsTypeArguments>,
     pub arguments: Option<JsCallArguments>,
 }
@@ -4442,13 +4442,13 @@ impl JsObjectAssignmentPatternProperty {
             init: self.init(),
         }
     }
-    pub fn member(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+    pub fn member(&self) -> SyntaxResult<AnyJsObjectMemberName> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn pattern(&self) -> SyntaxResult<JsAnyAssignmentPattern> {
+    pub fn pattern(&self) -> SyntaxResult<AnyJsAssignmentPattern> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
@@ -4464,9 +4464,9 @@ impl Serialize for JsObjectAssignmentPatternProperty {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsObjectAssignmentPatternPropertyFields {
-    pub member: SyntaxResult<JsAnyObjectMemberName>,
+    pub member: SyntaxResult<AnyJsObjectMemberName>,
     pub colon_token: SyntaxResult<SyntaxToken>,
-    pub pattern: SyntaxResult<JsAnyAssignmentPattern>,
+    pub pattern: SyntaxResult<AnyJsAssignmentPattern>,
     pub init: Option<JsInitializerClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -4490,7 +4490,7 @@ impl JsObjectAssignmentPatternRest {
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn target(&self) -> SyntaxResult<JsAnyAssignment> {
+    pub fn target(&self) -> SyntaxResult<AnyJsAssignment> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -4506,7 +4506,7 @@ impl Serialize for JsObjectAssignmentPatternRest {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsObjectAssignmentPatternRestFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
-    pub target: SyntaxResult<JsAnyAssignment>,
+    pub target: SyntaxResult<AnyJsAssignment>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectAssignmentPatternShorthandProperty {
@@ -4609,13 +4609,13 @@ impl JsObjectBindingPatternProperty {
             init: self.init(),
         }
     }
-    pub fn member(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+    pub fn member(&self) -> SyntaxResult<AnyJsObjectMemberName> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn pattern(&self) -> SyntaxResult<JsAnyBindingPattern> {
+    pub fn pattern(&self) -> SyntaxResult<AnyJsBindingPattern> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
@@ -4631,9 +4631,9 @@ impl Serialize for JsObjectBindingPatternProperty {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsObjectBindingPatternPropertyFields {
-    pub member: SyntaxResult<JsAnyObjectMemberName>,
+    pub member: SyntaxResult<AnyJsObjectMemberName>,
     pub colon_token: SyntaxResult<SyntaxToken>,
-    pub pattern: SyntaxResult<JsAnyBindingPattern>,
+    pub pattern: SyntaxResult<AnyJsBindingPattern>,
     pub init: Option<JsInitializerClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -4657,7 +4657,7 @@ impl JsObjectBindingPatternRest {
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn binding(&self) -> SyntaxResult<JsAnyBinding> {
+    pub fn binding(&self) -> SyntaxResult<AnyJsBinding> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -4673,7 +4673,7 @@ impl Serialize for JsObjectBindingPatternRest {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsObjectBindingPatternRestFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
-    pub binding: SyntaxResult<JsAnyBinding>,
+    pub binding: SyntaxResult<AnyJsBinding>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectBindingPatternShorthandProperty {
@@ -4693,7 +4693,7 @@ impl JsObjectBindingPatternShorthandProperty {
             init: self.init(),
         }
     }
-    pub fn identifier(&self) -> SyntaxResult<JsAnyBinding> {
+    pub fn identifier(&self) -> SyntaxResult<AnyJsBinding> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn init(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 1usize) }
@@ -4709,7 +4709,7 @@ impl Serialize for JsObjectBindingPatternShorthandProperty {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsObjectBindingPatternShorthandPropertyFields {
-    pub identifier: SyntaxResult<JsAnyBinding>,
+    pub identifier: SyntaxResult<AnyJsBinding>,
     pub init: Option<JsInitializerClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -4818,7 +4818,7 @@ impl JsParenthesizedAssignment {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn assignment(&self) -> SyntaxResult<JsAnyAssignment> {
+    pub fn assignment(&self) -> SyntaxResult<AnyJsAssignment> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -4837,7 +4837,7 @@ impl Serialize for JsParenthesizedAssignment {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsParenthesizedAssignmentFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
-    pub assignment: SyntaxResult<JsAnyAssignment>,
+    pub assignment: SyntaxResult<AnyJsAssignment>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -4862,7 +4862,7 @@ impl JsParenthesizedExpression {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -4881,7 +4881,7 @@ impl Serialize for JsParenthesizedExpression {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsParenthesizedExpressionFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -4902,7 +4902,7 @@ impl JsPostUpdateExpression {
             operator_token: self.operator_token(),
         }
     }
-    pub fn operand(&self) -> SyntaxResult<JsAnyAssignment> {
+    pub fn operand(&self) -> SyntaxResult<AnyJsAssignment> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -4920,7 +4920,7 @@ impl Serialize for JsPostUpdateExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsPostUpdateExpressionFields {
-    pub operand: SyntaxResult<JsAnyAssignment>,
+    pub operand: SyntaxResult<AnyJsAssignment>,
     pub operator_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -4944,7 +4944,7 @@ impl JsPreUpdateExpression {
     pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn operand(&self) -> SyntaxResult<JsAnyAssignment> {
+    pub fn operand(&self) -> SyntaxResult<AnyJsAssignment> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -4960,7 +4960,7 @@ impl Serialize for JsPreUpdateExpression {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsPreUpdateExpressionFields {
     pub operator_token: SyntaxResult<SyntaxToken>,
-    pub operand: SyntaxResult<JsAnyAssignment>,
+    pub operand: SyntaxResult<AnyJsAssignment>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsPrivateClassMemberName {
@@ -5062,10 +5062,10 @@ impl JsPropertyClassMember {
         }
     }
     pub fn modifiers(&self) -> JsPropertyModifierList { support::list(&self.syntax, 0usize) }
-    pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsClassMemberName> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn property_annotation(&self) -> Option<TsAnyPropertyAnnotation> {
+    pub fn property_annotation(&self) -> Option<AnyTsPropertyAnnotation> {
         support::node(&self.syntax, 2usize)
     }
     pub fn value(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 3usize) }
@@ -5083,8 +5083,8 @@ impl Serialize for JsPropertyClassMember {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsPropertyClassMemberFields {
     pub modifiers: JsPropertyModifierList,
-    pub name: SyntaxResult<JsAnyClassMemberName>,
-    pub property_annotation: Option<TsAnyPropertyAnnotation>,
+    pub name: SyntaxResult<AnyJsClassMemberName>,
+    pub property_annotation: Option<AnyTsPropertyAnnotation>,
     pub value: Option<JsInitializerClause>,
     pub semicolon_token: Option<SyntaxToken>,
 }
@@ -5107,13 +5107,13 @@ impl JsPropertyObjectMember {
             value: self.value(),
         }
     }
-    pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsObjectMemberName> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn value(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
 }
@@ -5128,9 +5128,9 @@ impl Serialize for JsPropertyObjectMember {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsPropertyObjectMemberFields {
-    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub name: SyntaxResult<AnyJsObjectMemberName>,
     pub colon_token: SyntaxResult<SyntaxToken>,
-    pub value: SyntaxResult<JsAnyExpression>,
+    pub value: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsReferenceIdentifier {
@@ -5222,7 +5222,7 @@ impl JsRestParameter {
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn binding(&self) -> SyntaxResult<JsAnyBindingPattern> {
+    pub fn binding(&self) -> SyntaxResult<AnyJsBindingPattern> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn type_annotation(&self) -> Option<TsTypeAnnotation> {
@@ -5241,7 +5241,7 @@ impl Serialize for JsRestParameter {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsRestParameterFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
-    pub binding: SyntaxResult<JsAnyBindingPattern>,
+    pub binding: SyntaxResult<AnyJsBindingPattern>,
     pub type_annotation: Option<TsTypeAnnotation>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -5266,7 +5266,7 @@ impl JsReturnStatement {
     pub fn return_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn argument(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 1usize) }
+    pub fn argument(&self) -> Option<AnyJsExpression> { support::node(&self.syntax, 1usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
 }
 #[cfg(feature = "serde")]
@@ -5281,7 +5281,7 @@ impl Serialize for JsReturnStatement {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsReturnStatementFields {
     pub return_token: SyntaxResult<SyntaxToken>,
-    pub argument: Option<JsAnyExpression>,
+    pub argument: Option<AnyJsExpression>,
     pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -5346,13 +5346,13 @@ impl JsSequenceExpression {
             right: self.right(),
         }
     }
-    pub fn left(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn left(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn comma_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn right(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
 }
@@ -5367,9 +5367,9 @@ impl Serialize for JsSequenceExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsSequenceExpressionFields {
-    pub left: SyntaxResult<JsAnyExpression>,
+    pub left: SyntaxResult<AnyJsExpression>,
     pub comma_token: SyntaxResult<SyntaxToken>,
-    pub right: SyntaxResult<JsAnyExpression>,
+    pub right: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsSetterClassMember {
@@ -5398,13 +5398,13 @@ impl JsSetterClassMember {
     pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsClassMemberName> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
+    pub fn parameter(&self) -> SyntaxResult<AnyJsFormalParameter> {
         support::required_node(&self.syntax, 4usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -5427,9 +5427,9 @@ impl Serialize for JsSetterClassMember {
 pub struct JsSetterClassMemberFields {
     pub modifiers: JsMethodModifierList,
     pub set_token: SyntaxResult<SyntaxToken>,
-    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub name: SyntaxResult<AnyJsClassMemberName>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
-    pub parameter: SyntaxResult<JsAnyFormalParameter>,
+    pub parameter: SyntaxResult<AnyJsFormalParameter>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
     pub body: SyntaxResult<JsFunctionBody>,
 }
@@ -5458,13 +5458,13 @@ impl JsSetterObjectMember {
     pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsObjectMemberName> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
+    pub fn parameter(&self) -> SyntaxResult<AnyJsFormalParameter> {
         support::required_node(&self.syntax, 3usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -5486,9 +5486,9 @@ impl Serialize for JsSetterObjectMember {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsSetterObjectMemberFields {
     pub set_token: SyntaxResult<SyntaxToken>,
-    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub name: SyntaxResult<AnyJsObjectMemberName>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
-    pub parameter: SyntaxResult<JsAnyFormalParameter>,
+    pub parameter: SyntaxResult<AnyJsFormalParameter>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
     pub body: SyntaxResult<JsFunctionBody>,
 }
@@ -5511,7 +5511,7 @@ impl JsShorthandNamedImportSpecifier {
         }
     }
     pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn local_name(&self) -> SyntaxResult<JsAnyBinding> {
+    pub fn local_name(&self) -> SyntaxResult<AnyJsBinding> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -5527,7 +5527,7 @@ impl Serialize for JsShorthandNamedImportSpecifier {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsShorthandNamedImportSpecifierFields {
     pub type_token: Option<SyntaxToken>,
-    pub local_name: SyntaxResult<JsAnyBinding>,
+    pub local_name: SyntaxResult<AnyJsBinding>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsShorthandPropertyObjectMember {
@@ -5582,7 +5582,7 @@ impl JsSpread {
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn argument(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -5598,7 +5598,7 @@ impl Serialize for JsSpread {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsSpreadFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
-    pub argument: SyntaxResult<JsAnyExpression>,
+    pub argument: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsStaticInitializationBlockClassMember {
@@ -5666,13 +5666,13 @@ impl JsStaticMemberAssignment {
             member: self.member(),
         }
     }
-    pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn object(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn member(&self) -> SyntaxResult<JsAnyName> { support::required_node(&self.syntax, 2usize) }
+    pub fn member(&self) -> SyntaxResult<AnyJsName> { support::required_node(&self.syntax, 2usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for JsStaticMemberAssignment {
@@ -5685,9 +5685,9 @@ impl Serialize for JsStaticMemberAssignment {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsStaticMemberAssignmentFields {
-    pub object: SyntaxResult<JsAnyExpression>,
+    pub object: SyntaxResult<AnyJsExpression>,
     pub dot_token: SyntaxResult<SyntaxToken>,
-    pub member: SyntaxResult<JsAnyName>,
+    pub member: SyntaxResult<AnyJsName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsStaticMemberExpression {
@@ -5708,13 +5708,13 @@ impl JsStaticMemberExpression {
             member: self.member(),
         }
     }
-    pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn object(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn member(&self) -> SyntaxResult<JsAnyName> { support::required_node(&self.syntax, 2usize) }
+    pub fn member(&self) -> SyntaxResult<AnyJsName> { support::required_node(&self.syntax, 2usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for JsStaticMemberExpression {
@@ -5727,9 +5727,9 @@ impl Serialize for JsStaticMemberExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsStaticMemberExpressionFields {
-    pub object: SyntaxResult<JsAnyExpression>,
+    pub object: SyntaxResult<AnyJsExpression>,
     pub operator_token: SyntaxResult<SyntaxToken>,
-    pub member: SyntaxResult<JsAnyName>,
+    pub member: SyntaxResult<AnyJsName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsStaticModifier {
@@ -5862,7 +5862,7 @@ impl JsSwitchStatement {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn discriminant(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn discriminant(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -5889,7 +5889,7 @@ impl Serialize for JsSwitchStatement {
 pub struct JsSwitchStatementFields {
     pub switch_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
-    pub discriminant: SyntaxResult<JsAnyExpression>,
+    pub discriminant: SyntaxResult<AnyJsExpression>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub cases: JsSwitchCaseList,
@@ -5951,7 +5951,7 @@ impl JsTemplateElement {
     pub fn dollar_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -5970,7 +5970,7 @@ impl Serialize for JsTemplateElement {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsTemplateElementFields {
     pub dollar_curly_token: SyntaxResult<SyntaxToken>,
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
     pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -5994,7 +5994,7 @@ impl JsTemplateExpression {
             r_tick_token: self.r_tick_token(),
         }
     }
-    pub fn tag(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 0usize) }
+    pub fn tag(&self) -> Option<AnyJsExpression> { support::node(&self.syntax, 0usize) }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 1usize) }
     pub fn l_tick_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
@@ -6015,7 +6015,7 @@ impl Serialize for JsTemplateExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsTemplateExpressionFields {
-    pub tag: Option<JsAnyExpression>,
+    pub tag: Option<AnyJsExpression>,
     pub type_arguments: Option<TsTypeArguments>,
     pub l_tick_token: SyntaxResult<SyntaxToken>,
     pub elements: JsTemplateElementList,
@@ -6077,7 +6077,7 @@ impl JsThrowStatement {
     pub fn throw_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn argument(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
@@ -6094,7 +6094,7 @@ impl Serialize for JsThrowStatement {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsThrowStatementFields {
     pub throw_token: SyntaxResult<SyntaxToken>,
-    pub argument: SyntaxResult<JsAnyExpression>,
+    pub argument: SyntaxResult<AnyJsExpression>,
     pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -6209,7 +6209,7 @@ impl JsUnaryExpression {
     pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn argument(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -6225,7 +6225,7 @@ impl Serialize for JsUnaryExpression {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsUnaryExpressionFields {
     pub operator_token: SyntaxResult<SyntaxToken>,
-    pub argument: SyntaxResult<JsAnyExpression>,
+    pub argument: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableDeclaration {
@@ -6320,10 +6320,10 @@ impl JsVariableDeclarator {
             initializer: self.initializer(),
         }
     }
-    pub fn id(&self) -> SyntaxResult<JsAnyBindingPattern> {
+    pub fn id(&self) -> SyntaxResult<AnyJsBindingPattern> {
         support::required_node(&self.syntax, 0usize)
     }
-    pub fn variable_annotation(&self) -> Option<TsAnyVariableAnnotation> {
+    pub fn variable_annotation(&self) -> Option<AnyTsVariableAnnotation> {
         support::node(&self.syntax, 1usize)
     }
     pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 2usize) }
@@ -6339,8 +6339,8 @@ impl Serialize for JsVariableDeclarator {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsVariableDeclaratorFields {
-    pub id: SyntaxResult<JsAnyBindingPattern>,
-    pub variable_annotation: Option<TsAnyVariableAnnotation>,
+    pub id: SyntaxResult<AnyJsBindingPattern>,
+    pub variable_annotation: Option<AnyTsVariableAnnotation>,
     pub initializer: Option<JsInitializerClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -6407,13 +6407,13 @@ impl JsWhileStatement {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn test(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn test(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn body(&self) -> SyntaxResult<JsAnyStatement> {
+    pub fn body(&self) -> SyntaxResult<AnyJsStatement> {
         support::required_node(&self.syntax, 4usize)
     }
 }
@@ -6430,9 +6430,9 @@ impl Serialize for JsWhileStatement {
 pub struct JsWhileStatementFields {
     pub while_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
-    pub test: SyntaxResult<JsAnyExpression>,
+    pub test: SyntaxResult<AnyJsExpression>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
-    pub body: SyntaxResult<JsAnyStatement>,
+    pub body: SyntaxResult<AnyJsStatement>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsWithStatement {
@@ -6461,13 +6461,13 @@ impl JsWithStatement {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn object(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn body(&self) -> SyntaxResult<JsAnyStatement> {
+    pub fn body(&self) -> SyntaxResult<AnyJsStatement> {
         support::required_node(&self.syntax, 4usize)
     }
 }
@@ -6484,9 +6484,9 @@ impl Serialize for JsWithStatement {
 pub struct JsWithStatementFields {
     pub with_token: SyntaxResult<SyntaxToken>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
-    pub object: SyntaxResult<JsAnyExpression>,
+    pub object: SyntaxResult<AnyJsExpression>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
-    pub body: SyntaxResult<JsAnyStatement>,
+    pub body: SyntaxResult<AnyJsStatement>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsYieldArgument {
@@ -6507,7 +6507,7 @@ impl JsYieldArgument {
         }
     }
     pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -6523,7 +6523,7 @@ impl Serialize for JsYieldArgument {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsYieldArgumentFields {
     pub star_token: Option<SyntaxToken>,
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsYieldExpression {
@@ -6580,7 +6580,7 @@ impl JsxAttribute {
             initializer: self.initializer(),
         }
     }
-    pub fn name(&self) -> SyntaxResult<JsxAnyAttributeName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsxAttributeName> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn initializer(&self) -> Option<JsxAttributeInitializerClause> {
@@ -6598,7 +6598,7 @@ impl Serialize for JsxAttribute {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxAttributeFields {
-    pub name: SyntaxResult<JsxAnyAttributeName>,
+    pub name: SyntaxResult<AnyJsxAttributeName>,
     pub initializer: Option<JsxAttributeInitializerClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -6622,7 +6622,7 @@ impl JsxAttributeInitializerClause {
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn value(&self) -> SyntaxResult<JsxAnyAttributeValue> {
+    pub fn value(&self) -> SyntaxResult<AnyJsxAttributeValue> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -6638,7 +6638,7 @@ impl Serialize for JsxAttributeInitializerClause {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxAttributeInitializerClauseFields {
     pub eq_token: SyntaxResult<SyntaxToken>,
-    pub value: SyntaxResult<JsxAnyAttributeValue>,
+    pub value: SyntaxResult<AnyJsxAttributeValue>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsxClosingElement {
@@ -6666,7 +6666,7 @@ impl JsxClosingElement {
     pub fn slash_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn name(&self) -> SyntaxResult<JsxAnyElementName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsxElementName> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -6686,7 +6686,7 @@ impl Serialize for JsxClosingElement {
 pub struct JsxClosingElementFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
     pub slash_token: SyntaxResult<SyntaxToken>,
-    pub name: SyntaxResult<JsxAnyElementName>,
+    pub name: SyntaxResult<AnyJsxElementName>,
     pub r_angle_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -6797,7 +6797,7 @@ impl JsxExpressionAttributeValue {
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -6816,7 +6816,7 @@ impl Serialize for JsxExpressionAttributeValue {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxExpressionAttributeValueFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
     pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -6841,7 +6841,7 @@ impl JsxExpressionChild {
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn expression(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 1usize) }
+    pub fn expression(&self) -> Option<AnyJsExpression> { support::node(&self.syntax, 1usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -6858,7 +6858,7 @@ impl Serialize for JsxExpressionChild {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxExpressionChildFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
-    pub expression: Option<JsAnyExpression>,
+    pub expression: Option<AnyJsExpression>,
     pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -6922,7 +6922,7 @@ impl JsxMemberName {
             member: self.member(),
         }
     }
-    pub fn object(&self) -> SyntaxResult<JsxAnyObjectName> {
+    pub fn object(&self) -> SyntaxResult<AnyJsxObjectName> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -6941,7 +6941,7 @@ impl Serialize for JsxMemberName {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxMemberNameFields {
-    pub object: SyntaxResult<JsxAnyObjectName>,
+    pub object: SyntaxResult<AnyJsxObjectName>,
     pub dot_token: SyntaxResult<SyntaxToken>,
     pub member: SyntaxResult<JsName>,
 }
@@ -7045,7 +7045,7 @@ impl JsxOpeningElement {
     pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn name(&self) -> SyntaxResult<JsxAnyElementName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsxElementName> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
@@ -7066,7 +7066,7 @@ impl Serialize for JsxOpeningElement {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxOpeningElementFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
-    pub name: SyntaxResult<JsxAnyElementName>,
+    pub name: SyntaxResult<AnyJsxElementName>,
     pub type_arguments: Option<TsTypeArguments>,
     pub attributes: JsxAttributeList,
     pub r_angle_token: SyntaxResult<SyntaxToken>,
@@ -7169,7 +7169,7 @@ impl JsxSelfClosingElement {
     pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn name(&self) -> SyntaxResult<JsxAnyElementName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsxElementName> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
@@ -7193,7 +7193,7 @@ impl Serialize for JsxSelfClosingElement {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxSelfClosingElementFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
-    pub name: SyntaxResult<JsxAnyElementName>,
+    pub name: SyntaxResult<AnyJsxElementName>,
     pub type_arguments: Option<TsTypeArguments>,
     pub attributes: JsxAttributeList,
     pub slash_token: SyntaxResult<SyntaxToken>,
@@ -7225,7 +7225,7 @@ impl JsxSpreadAttribute {
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn argument(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -7245,7 +7245,7 @@ impl Serialize for JsxSpreadAttribute {
 pub struct JsxSpreadAttributeFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
-    pub argument: SyntaxResult<JsAnyExpression>,
+    pub argument: SyntaxResult<AnyJsExpression>,
     pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -7274,7 +7274,7 @@ impl JsxSpreadChild {
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -7294,7 +7294,7 @@ impl Serialize for JsxSpreadChild {
 pub struct JsxSpreadChildFields {
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
     pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -7344,7 +7344,7 @@ impl JsxTagExpression {
     #[inline]
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsxTagExpressionFields { JsxTagExpressionFields { tag: self.tag() } }
-    pub fn tag(&self) -> SyntaxResult<JsxAnyTag> { support::required_node(&self.syntax, 0usize) }
+    pub fn tag(&self) -> SyntaxResult<AnyJsxTag> { support::required_node(&self.syntax, 0usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for JsxTagExpression {
@@ -7357,7 +7357,7 @@ impl Serialize for JsxTagExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxTagExpressionFields {
-    pub tag: SyntaxResult<JsxAnyTag>,
+    pub tag: SyntaxResult<AnyJsxTag>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsxText {
@@ -7514,7 +7514,7 @@ impl TsArrayType {
             r_brack_token: self.r_brack_token(),
         }
     }
-    pub fn element_type(&self) -> SyntaxResult<TsType> {
+    pub fn element_type(&self) -> SyntaxResult<AnyTsType> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -7535,7 +7535,7 @@ impl Serialize for TsArrayType {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsArrayTypeFields {
-    pub element_type: SyntaxResult<TsType>,
+    pub element_type: SyntaxResult<AnyTsType>,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub r_brack_token: SyntaxResult<SyntaxToken>,
 }
@@ -7558,13 +7558,13 @@ impl TsAsAssignment {
             ty: self.ty(),
         }
     }
-    pub fn assignment(&self) -> SyntaxResult<JsAnyAssignment> {
+    pub fn assignment(&self) -> SyntaxResult<AnyJsAssignment> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 2usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 2usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsAsAssignment {
@@ -7577,9 +7577,9 @@ impl Serialize for TsAsAssignment {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsAsAssignmentFields {
-    pub assignment: SyntaxResult<JsAnyAssignment>,
+    pub assignment: SyntaxResult<AnyJsAssignment>,
     pub as_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsAsExpression {
@@ -7600,13 +7600,13 @@ impl TsAsExpression {
             ty: self.ty(),
         }
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 2usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 2usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsAsExpression {
@@ -7619,9 +7619,9 @@ impl Serialize for TsAsExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsAsExpressionFields {
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
     pub as_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsAssertsCondition {
@@ -7644,7 +7644,7 @@ impl TsAssertsCondition {
     pub fn is_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 1usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsAssertsCondition {
@@ -7658,7 +7658,7 @@ impl Serialize for TsAssertsCondition {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsAssertsConditionFields {
     pub is_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsAssertsReturnType {
@@ -7682,7 +7682,7 @@ impl TsAssertsReturnType {
     pub fn asserts_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn parameter_name(&self) -> SyntaxResult<TsAnyTypePredicateParameterName> {
+    pub fn parameter_name(&self) -> SyntaxResult<AnyTsTypePredicateParameterName> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn predicate(&self) -> Option<TsAssertsCondition> { support::node(&self.syntax, 2usize) }
@@ -7699,7 +7699,7 @@ impl Serialize for TsAssertsReturnType {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsAssertsReturnTypeFields {
     pub asserts_token: SyntaxResult<SyntaxToken>,
-    pub parameter_name: SyntaxResult<TsAnyTypePredicateParameterName>,
+    pub parameter_name: SyntaxResult<AnyTsTypePredicateParameterName>,
     pub predicate: Option<TsAssertsCondition>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -7911,23 +7911,25 @@ impl TsConditionalType {
             false_type: self.false_type(),
         }
     }
-    pub fn check_type(&self) -> SyntaxResult<TsType> {
+    pub fn check_type(&self) -> SyntaxResult<AnyTsType> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn extends_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn extends_type(&self) -> SyntaxResult<TsType> {
+    pub fn extends_type(&self) -> SyntaxResult<AnyTsType> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn true_type(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 4usize) }
+    pub fn true_type(&self) -> SyntaxResult<AnyTsType> {
+        support::required_node(&self.syntax, 4usize)
+    }
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 5usize)
     }
-    pub fn false_type(&self) -> SyntaxResult<TsType> {
+    pub fn false_type(&self) -> SyntaxResult<AnyTsType> {
         support::required_node(&self.syntax, 6usize)
     }
 }
@@ -7942,13 +7944,13 @@ impl Serialize for TsConditionalType {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsConditionalTypeFields {
-    pub check_type: SyntaxResult<TsType>,
+    pub check_type: SyntaxResult<AnyTsType>,
     pub extends_token: SyntaxResult<SyntaxToken>,
-    pub extends_type: SyntaxResult<TsType>,
+    pub extends_type: SyntaxResult<AnyTsType>,
     pub question_mark_token: SyntaxResult<SyntaxToken>,
-    pub true_type: SyntaxResult<TsType>,
+    pub true_type: SyntaxResult<AnyTsType>,
     pub colon_token: SyntaxResult<SyntaxToken>,
-    pub false_type: SyntaxResult<TsType>,
+    pub false_type: SyntaxResult<AnyTsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsConstructSignatureTypeMember {
@@ -8082,7 +8084,7 @@ impl TsConstructorType {
     pub fn fat_arrow_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 4usize)
     }
-    pub fn return_type(&self) -> SyntaxResult<TsType> {
+    pub fn return_type(&self) -> SyntaxResult<AnyTsType> {
         support::required_node(&self.syntax, 5usize)
     }
 }
@@ -8102,7 +8104,7 @@ pub struct TsConstructorTypeFields {
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
     pub fat_arrow_token: SyntaxResult<SyntaxToken>,
-    pub return_type: SyntaxResult<TsType>,
+    pub return_type: SyntaxResult<AnyTsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsDeclareFunctionDeclaration {
@@ -8131,7 +8133,7 @@ impl TsDeclareFunctionDeclaration {
     pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 2usize) }
+    pub fn id(&self) -> SyntaxResult<AnyJsBinding> { support::required_node(&self.syntax, 2usize) }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 3usize)
     }
@@ -8156,7 +8158,7 @@ impl Serialize for TsDeclareFunctionDeclaration {
 pub struct TsDeclareFunctionDeclarationFields {
     pub async_token: Option<SyntaxToken>,
     pub function_token: SyntaxResult<SyntaxToken>,
-    pub id: SyntaxResult<JsAnyBinding>,
+    pub id: SyntaxResult<AnyJsBinding>,
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
     pub return_type_annotation: Option<TsReturnTypeAnnotation>,
@@ -8189,7 +8191,7 @@ impl TsDeclareFunctionExportDefaultDeclaration {
     pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn id(&self) -> Option<JsAnyBinding> { support::node(&self.syntax, 2usize) }
+    pub fn id(&self) -> Option<AnyJsBinding> { support::node(&self.syntax, 2usize) }
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         support::node(&self.syntax, 3usize)
     }
@@ -8214,7 +8216,7 @@ impl Serialize for TsDeclareFunctionExportDefaultDeclaration {
 pub struct TsDeclareFunctionExportDefaultDeclarationFields {
     pub async_token: Option<SyntaxToken>,
     pub function_token: SyntaxResult<SyntaxToken>,
-    pub id: Option<JsAnyBinding>,
+    pub id: Option<AnyJsBinding>,
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
     pub return_type_annotation: Option<TsReturnTypeAnnotation>,
@@ -8275,7 +8277,7 @@ impl TsDeclareStatement {
     pub fn declare_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn declaration(&self) -> SyntaxResult<JsAnyDeclarationClause> {
+    pub fn declaration(&self) -> SyntaxResult<AnyJsDeclarationClause> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -8291,7 +8293,7 @@ impl Serialize for TsDeclareStatement {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsDeclareStatementFields {
     pub declare_token: SyntaxResult<SyntaxToken>,
-    pub declaration: SyntaxResult<JsAnyDeclarationClause>,
+    pub declaration: SyntaxResult<AnyJsDeclarationClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsDefaultTypeClause {
@@ -8314,7 +8316,7 @@ impl TsDefaultTypeClause {
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 1usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsDefaultTypeClause {
@@ -8328,7 +8330,7 @@ impl Serialize for TsDefaultTypeClause {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsDefaultTypeClauseFields {
     pub eq_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsDefinitePropertyAnnotation {
@@ -8468,7 +8470,7 @@ impl TsEnumDeclaration {
     pub fn enum_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 2usize) }
+    pub fn id(&self) -> SyntaxResult<AnyJsBinding> { support::required_node(&self.syntax, 2usize) }
     pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
@@ -8490,7 +8492,7 @@ impl Serialize for TsEnumDeclaration {
 pub struct TsEnumDeclarationFields {
     pub const_token: Option<SyntaxToken>,
     pub enum_token: SyntaxResult<SyntaxToken>,
-    pub id: SyntaxResult<JsAnyBinding>,
+    pub id: SyntaxResult<AnyJsBinding>,
     pub l_curly_token: SyntaxResult<SyntaxToken>,
     pub members: TsEnumMemberList,
     pub r_curly_token: SyntaxResult<SyntaxToken>,
@@ -8513,7 +8515,7 @@ impl TsEnumMember {
             initializer: self.initializer(),
         }
     }
-    pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsObjectMemberName> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn initializer(&self) -> Option<JsInitializerClause> { support::node(&self.syntax, 1usize) }
@@ -8529,7 +8531,7 @@ impl Serialize for TsEnumMember {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsEnumMemberFields {
-    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub name: SyntaxResult<AnyJsObjectMemberName>,
     pub initializer: Option<JsInitializerClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -8599,7 +8601,7 @@ impl TsExportAssignmentClause {
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
@@ -8616,7 +8618,7 @@ impl Serialize for TsExportAssignmentClause {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsExportAssignmentClauseFields {
     pub eq_token: SyntaxResult<SyntaxToken>,
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
     pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -8640,7 +8642,7 @@ impl TsExportDeclareClause {
     pub fn declare_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn declaration(&self) -> SyntaxResult<JsAnyDeclarationClause> {
+    pub fn declaration(&self) -> SyntaxResult<AnyJsDeclarationClause> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -8656,7 +8658,7 @@ impl Serialize for TsExportDeclareClause {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsExportDeclareClauseFields {
     pub declare_token: SyntaxResult<SyntaxToken>,
-    pub declaration: SyntaxResult<JsAnyDeclarationClause>,
+    pub declaration: SyntaxResult<AnyJsDeclarationClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExtendsClause {
@@ -8720,7 +8722,7 @@ impl TsExternalModuleDeclaration {
     pub fn source(&self) -> SyntaxResult<JsModuleSource> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn body(&self) -> Option<TsAnyExternalModuleDeclarationBody> {
+    pub fn body(&self) -> Option<AnyTsExternalModuleDeclarationBody> {
         support::node(&self.syntax, 2usize)
     }
 }
@@ -8737,7 +8739,7 @@ impl Serialize for TsExternalModuleDeclaration {
 pub struct TsExternalModuleDeclarationFields {
     pub module_token: SyntaxResult<SyntaxToken>,
     pub source: SyntaxResult<JsModuleSource>,
-    pub body: Option<TsAnyExternalModuleDeclarationBody>,
+    pub body: Option<AnyTsExternalModuleDeclarationBody>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExternalModuleReference {
@@ -8817,7 +8819,7 @@ impl TsFunctionType {
     pub fn fat_arrow_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn return_type(&self) -> SyntaxResult<TsAnyReturnType> {
+    pub fn return_type(&self) -> SyntaxResult<AnyTsReturnType> {
         support::required_node(&self.syntax, 3usize)
     }
 }
@@ -8835,7 +8837,7 @@ pub struct TsFunctionTypeFields {
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
     pub fat_arrow_token: SyntaxResult<SyntaxToken>,
-    pub return_type: SyntaxResult<TsAnyReturnType>,
+    pub return_type: SyntaxResult<AnyTsReturnType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsGetterSignatureClassMember {
@@ -8864,7 +8866,7 @@ impl TsGetterSignatureClassMember {
     pub fn get_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsClassMemberName> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -8889,7 +8891,7 @@ impl Serialize for TsGetterSignatureClassMember {
 pub struct TsGetterSignatureClassMemberFields {
     pub modifiers: TsMethodSignatureModifierList,
     pub get_token: SyntaxResult<SyntaxToken>,
-    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub name: SyntaxResult<AnyJsClassMemberName>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
     pub return_type: Option<TsTypeAnnotation>,
@@ -8920,7 +8922,7 @@ impl TsGetterSignatureTypeMember {
     pub fn get_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsObjectMemberName> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -8946,7 +8948,7 @@ impl Serialize for TsGetterSignatureTypeMember {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsGetterSignatureTypeMemberFields {
     pub get_token: SyntaxResult<SyntaxToken>,
-    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub name: SyntaxResult<AnyJsObjectMemberName>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
     pub type_annotation: Option<TsTypeAnnotation>,
@@ -9088,11 +9090,11 @@ impl TsImportEqualsDeclaration {
         support::required_token(&self.syntax, 0usize)
     }
     pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn id(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax, 2usize) }
+    pub fn id(&self) -> SyntaxResult<AnyJsBinding> { support::required_node(&self.syntax, 2usize) }
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn module_reference(&self) -> SyntaxResult<TsAnyModuleReference> {
+    pub fn module_reference(&self) -> SyntaxResult<AnyTsModuleReference> {
         support::required_node(&self.syntax, 4usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
@@ -9110,9 +9112,9 @@ impl Serialize for TsImportEqualsDeclaration {
 pub struct TsImportEqualsDeclarationFields {
     pub import_token: SyntaxResult<SyntaxToken>,
     pub type_token: Option<SyntaxToken>,
-    pub id: SyntaxResult<JsAnyBinding>,
+    pub id: SyntaxResult<AnyJsBinding>,
     pub eq_token: SyntaxResult<SyntaxToken>,
-    pub module_reference: SyntaxResult<TsAnyModuleReference>,
+    pub module_reference: SyntaxResult<AnyTsModuleReference>,
     pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -9196,7 +9198,7 @@ impl TsImportTypeQualifier {
     pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn right(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 1usize) }
+    pub fn right(&self) -> SyntaxResult<AnyTsName> { support::required_node(&self.syntax, 1usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsImportTypeQualifier {
@@ -9210,7 +9212,7 @@ impl Serialize for TsImportTypeQualifier {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsImportTypeQualifierFields {
     pub dot_token: SyntaxResult<SyntaxToken>,
-    pub right: SyntaxResult<TsAnyName>,
+    pub right: SyntaxResult<AnyTsName>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsIndexSignatureClassMember {
@@ -9381,13 +9383,13 @@ impl TsIndexedAccessType {
             r_brack_token: self.r_brack_token(),
         }
     }
-    pub fn object_type(&self) -> SyntaxResult<TsType> {
+    pub fn object_type(&self) -> SyntaxResult<AnyTsType> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn index_type(&self) -> SyntaxResult<TsType> {
+    pub fn index_type(&self) -> SyntaxResult<AnyTsType> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -9405,9 +9407,9 @@ impl Serialize for TsIndexedAccessType {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsIndexedAccessTypeFields {
-    pub object_type: SyntaxResult<TsType>,
+    pub object_type: SyntaxResult<AnyTsType>,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
-    pub index_type: SyntaxResult<TsType>,
+    pub index_type: SyntaxResult<AnyTsType>,
     pub r_brack_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -9467,7 +9469,7 @@ impl TsInstantiationExpression {
             arguments: self.arguments(),
         }
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn arguments(&self) -> SyntaxResult<TsTypeArguments> {
@@ -9485,7 +9487,7 @@ impl Serialize for TsInstantiationExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsInstantiationExpressionFields {
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
     pub arguments: SyntaxResult<TsTypeArguments>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -9628,7 +9630,9 @@ impl TsMappedType {
     pub fn in_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 4usize)
     }
-    pub fn keys_type(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 5usize) }
+    pub fn keys_type(&self) -> SyntaxResult<AnyTsType> {
+        support::required_node(&self.syntax, 5usize)
+    }
     pub fn as_clause(&self) -> Option<TsMappedTypeAsClause> { support::node(&self.syntax, 6usize) }
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 7usize)
@@ -9658,7 +9662,7 @@ pub struct TsMappedTypeFields {
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub property_name: SyntaxResult<TsTypeParameterName>,
     pub in_token: SyntaxResult<SyntaxToken>,
-    pub keys_type: SyntaxResult<TsType>,
+    pub keys_type: SyntaxResult<AnyTsType>,
     pub as_clause: Option<TsMappedTypeAsClause>,
     pub r_brack_token: SyntaxResult<SyntaxToken>,
     pub optional_modifier: Option<TsMappedTypeOptionalModifierClause>,
@@ -9687,7 +9691,7 @@ impl TsMappedTypeAsClause {
     pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 1usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsMappedTypeAsClause {
@@ -9701,7 +9705,7 @@ impl Serialize for TsMappedTypeAsClause {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsMappedTypeAsClauseFields {
     pub as_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsMappedTypeOptionalModifierClause {
@@ -9803,7 +9807,7 @@ impl TsMethodSignatureClassMember {
     }
     pub fn modifiers(&self) -> TsMethodSignatureModifierList { support::list(&self.syntax, 0usize) }
     pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
-    pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsClassMemberName> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn question_mark_token(&self) -> Option<SyntaxToken> {
@@ -9833,7 +9837,7 @@ impl Serialize for TsMethodSignatureClassMember {
 pub struct TsMethodSignatureClassMemberFields {
     pub modifiers: TsMethodSignatureModifierList,
     pub async_token: Option<SyntaxToken>,
-    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub name: SyntaxResult<AnyJsClassMemberName>,
     pub question_mark_token: Option<SyntaxToken>,
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
@@ -9862,7 +9866,7 @@ impl TsMethodSignatureTypeMember {
             separator_token: self.separator_token(),
         }
     }
-    pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsObjectMemberName> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn optional_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
@@ -9888,7 +9892,7 @@ impl Serialize for TsMethodSignatureTypeMember {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsMethodSignatureTypeMemberFields {
-    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub name: SyntaxResult<AnyJsObjectMemberName>,
     pub optional_token: Option<SyntaxToken>,
     pub type_parameters: Option<TsTypeParameters>,
     pub parameters: SyntaxResult<JsParameters>,
@@ -9959,7 +9963,7 @@ impl TsModuleDeclaration {
     pub fn module_or_namespace(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn name(&self) -> SyntaxResult<TsAnyModuleName> {
+    pub fn name(&self) -> SyntaxResult<AnyTsModuleName> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn body(&self) -> SyntaxResult<TsModuleBlock> {
@@ -9978,7 +9982,7 @@ impl Serialize for TsModuleDeclaration {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsModuleDeclarationFields {
     pub module_or_namespace: SyntaxResult<SyntaxToken>,
-    pub name: SyntaxResult<TsAnyModuleName>,
+    pub name: SyntaxResult<AnyTsModuleName>,
     pub body: SyntaxResult<TsModuleBlock>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -9999,7 +10003,7 @@ impl TsNameWithTypeArguments {
             type_arguments: self.type_arguments(),
         }
     }
-    pub fn name(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 0usize) }
+    pub fn name(&self) -> SyntaxResult<AnyTsName> { support::required_node(&self.syntax, 0usize) }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 1usize) }
 }
 #[cfg(feature = "serde")]
@@ -10013,7 +10017,7 @@ impl Serialize for TsNameWithTypeArguments {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsNameWithTypeArgumentsFields {
-    pub name: SyntaxResult<TsAnyName>,
+    pub name: SyntaxResult<AnyTsName>,
     pub type_arguments: Option<TsTypeArguments>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -10045,7 +10049,7 @@ impl TsNamedTupleTypeElement {
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 4usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 4usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsNamedTupleTypeElement {
@@ -10062,7 +10066,7 @@ pub struct TsNamedTupleTypeElementFields {
     pub name: SyntaxResult<JsName>,
     pub question_mark_token: Option<SyntaxToken>,
     pub colon_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsNeverType {
@@ -10116,7 +10120,7 @@ impl TsNonNullAssertionAssignment {
             excl_token: self.excl_token(),
         }
     }
-    pub fn assignment(&self) -> SyntaxResult<JsAnyAssignment> {
+    pub fn assignment(&self) -> SyntaxResult<AnyJsAssignment> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn excl_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -10134,7 +10138,7 @@ impl Serialize for TsNonNullAssertionAssignment {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsNonNullAssertionAssignmentFields {
-    pub assignment: SyntaxResult<JsAnyAssignment>,
+    pub assignment: SyntaxResult<AnyJsAssignment>,
     pub excl_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -10155,7 +10159,7 @@ impl TsNonNullAssertionExpression {
             excl_token: self.excl_token(),
         }
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn excl_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -10173,7 +10177,7 @@ impl Serialize for TsNonNullAssertionExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsNonNullAssertionExpressionFields {
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
     pub excl_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -10414,7 +10418,7 @@ impl TsOptionalTupleTypeElement {
             question_mark_token: self.question_mark_token(),
         }
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 0usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 0usize) }
     pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
@@ -10430,7 +10434,7 @@ impl Serialize for TsOptionalTupleTypeElement {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsOptionalTupleTypeElementFields {
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
     pub question_mark_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -10489,7 +10493,7 @@ impl TsParenthesizedType {
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 1usize) }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -10506,7 +10510,7 @@ impl Serialize for TsParenthesizedType {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsParenthesizedTypeFields {
     pub l_paren_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -10528,13 +10532,13 @@ impl TsPredicateReturnType {
             ty: self.ty(),
         }
     }
-    pub fn parameter_name(&self) -> SyntaxResult<TsAnyTypePredicateParameterName> {
+    pub fn parameter_name(&self) -> SyntaxResult<AnyTsTypePredicateParameterName> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn is_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 2usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 2usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsPredicateReturnType {
@@ -10547,9 +10551,9 @@ impl Serialize for TsPredicateReturnType {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsPredicateReturnTypeFields {
-    pub parameter_name: SyntaxResult<TsAnyTypePredicateParameterName>,
+    pub parameter_name: SyntaxResult<AnyTsTypePredicateParameterName>,
     pub is_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsPropertyParameter {
@@ -10572,7 +10576,7 @@ impl TsPropertyParameter {
     pub fn modifiers(&self) -> TsPropertyParameterModifierList {
         support::list(&self.syntax, 0usize)
     }
-    pub fn formal_parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
+    pub fn formal_parameter(&self) -> SyntaxResult<AnyJsFormalParameter> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -10588,7 +10592,7 @@ impl Serialize for TsPropertyParameter {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsPropertyParameterFields {
     pub modifiers: TsPropertyParameterModifierList,
-    pub formal_parameter: SyntaxResult<JsAnyFormalParameter>,
+    pub formal_parameter: SyntaxResult<AnyJsFormalParameter>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsPropertySignatureClassMember {
@@ -10613,10 +10617,10 @@ impl TsPropertySignatureClassMember {
     pub fn modifiers(&self) -> TsPropertySignatureModifierList {
         support::list(&self.syntax, 0usize)
     }
-    pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsClassMemberName> {
         support::required_node(&self.syntax, 1usize)
     }
-    pub fn property_annotation(&self) -> Option<TsAnyPropertySignatureAnnotation> {
+    pub fn property_annotation(&self) -> Option<AnyTsPropertySignatureAnnotation> {
         support::node(&self.syntax, 2usize)
     }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 3usize) }
@@ -10633,8 +10637,8 @@ impl Serialize for TsPropertySignatureClassMember {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsPropertySignatureClassMemberFields {
     pub modifiers: TsPropertySignatureModifierList,
-    pub name: SyntaxResult<JsAnyClassMemberName>,
-    pub property_annotation: Option<TsAnyPropertySignatureAnnotation>,
+    pub name: SyntaxResult<AnyJsClassMemberName>,
+    pub property_annotation: Option<AnyTsPropertySignatureAnnotation>,
     pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -10659,7 +10663,7 @@ impl TsPropertySignatureTypeMember {
         }
     }
     pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
-    pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsObjectMemberName> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn optional_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 2usize) }
@@ -10680,7 +10684,7 @@ impl Serialize for TsPropertySignatureTypeMember {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsPropertySignatureTypeMemberFields {
     pub readonly_token: Option<SyntaxToken>,
-    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub name: SyntaxResult<AnyJsObjectMemberName>,
     pub optional_token: Option<SyntaxToken>,
     pub type_annotation: Option<TsTypeAnnotation>,
     pub separator_token: Option<SyntaxToken>,
@@ -10704,7 +10708,7 @@ impl TsQualifiedModuleName {
             right: self.right(),
         }
     }
-    pub fn left(&self) -> SyntaxResult<TsAnyModuleName> {
+    pub fn left(&self) -> SyntaxResult<AnyTsModuleName> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -10723,7 +10727,7 @@ impl Serialize for TsQualifiedModuleName {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsQualifiedModuleNameFields {
-    pub left: SyntaxResult<TsAnyModuleName>,
+    pub left: SyntaxResult<AnyTsModuleName>,
     pub dot_token: SyntaxResult<SyntaxToken>,
     pub right: SyntaxResult<JsName>,
 }
@@ -10746,7 +10750,7 @@ impl TsQualifiedName {
             right: self.right(),
         }
     }
-    pub fn left(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 0usize) }
+    pub fn left(&self) -> SyntaxResult<AnyTsName> { support::required_node(&self.syntax, 0usize) }
     pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
@@ -10763,7 +10767,7 @@ impl Serialize for TsQualifiedName {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsQualifiedNameFields {
-    pub left: SyntaxResult<TsAnyName>,
+    pub left: SyntaxResult<AnyTsName>,
     pub dot_token: SyntaxResult<SyntaxToken>,
     pub right: SyntaxResult<JsName>,
 }
@@ -10819,7 +10823,7 @@ impl TsReferenceType {
             type_arguments: self.type_arguments(),
         }
     }
-    pub fn name(&self) -> SyntaxResult<TsAnyName> { support::required_node(&self.syntax, 0usize) }
+    pub fn name(&self) -> SyntaxResult<AnyTsName> { support::required_node(&self.syntax, 0usize) }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 1usize) }
 }
 #[cfg(feature = "serde")]
@@ -10833,7 +10837,7 @@ impl Serialize for TsReferenceType {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsReferenceTypeFields {
-    pub name: SyntaxResult<TsAnyName>,
+    pub name: SyntaxResult<AnyTsName>,
     pub type_arguments: Option<TsTypeArguments>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -10857,7 +10861,7 @@ impl TsRestTupleTypeElement {
     pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 1usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsRestTupleTypeElement {
@@ -10871,7 +10875,7 @@ impl Serialize for TsRestTupleTypeElement {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsRestTupleTypeElementFields {
     pub dotdotdot_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsReturnTypeAnnotation {
@@ -10894,7 +10898,7 @@ impl TsReturnTypeAnnotation {
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsAnyReturnType> {
+    pub fn ty(&self) -> SyntaxResult<AnyTsReturnType> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -10910,7 +10914,7 @@ impl Serialize for TsReturnTypeAnnotation {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsReturnTypeAnnotationFields {
     pub colon_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsAnyReturnType>,
+    pub ty: SyntaxResult<AnyTsReturnType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsSatisfiesAssignment {
@@ -10931,13 +10935,13 @@ impl TsSatisfiesAssignment {
             ty: self.ty(),
         }
     }
-    pub fn assignment(&self) -> SyntaxResult<JsAnyAssignment> {
+    pub fn assignment(&self) -> SyntaxResult<AnyJsAssignment> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn satisfies_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 2usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 2usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsSatisfiesAssignment {
@@ -10950,9 +10954,9 @@ impl Serialize for TsSatisfiesAssignment {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsSatisfiesAssignmentFields {
-    pub assignment: SyntaxResult<JsAnyAssignment>,
+    pub assignment: SyntaxResult<AnyJsAssignment>,
     pub satisfies_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsSatisfiesExpression {
@@ -10973,13 +10977,13 @@ impl TsSatisfiesExpression {
             ty: self.ty(),
         }
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn satisfies_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 2usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 2usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsSatisfiesExpression {
@@ -10992,9 +10996,9 @@ impl Serialize for TsSatisfiesExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsSatisfiesExpressionFields {
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
     pub satisfies_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsSetterSignatureClassMember {
@@ -11023,13 +11027,13 @@ impl TsSetterSignatureClassMember {
     pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 1usize)
     }
-    pub fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsClassMemberName> {
         support::required_node(&self.syntax, 2usize)
     }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
+    pub fn parameter(&self) -> SyntaxResult<AnyJsFormalParameter> {
         support::required_node(&self.syntax, 4usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -11050,9 +11054,9 @@ impl Serialize for TsSetterSignatureClassMember {
 pub struct TsSetterSignatureClassMemberFields {
     pub modifiers: TsMethodSignatureModifierList,
     pub set_token: SyntaxResult<SyntaxToken>,
-    pub name: SyntaxResult<JsAnyClassMemberName>,
+    pub name: SyntaxResult<AnyJsClassMemberName>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
-    pub parameter: SyntaxResult<JsAnyFormalParameter>,
+    pub parameter: SyntaxResult<AnyJsFormalParameter>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
     pub semicolon_token: Option<SyntaxToken>,
 }
@@ -11081,13 +11085,13 @@ impl TsSetterSignatureTypeMember {
     pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+    pub fn name(&self) -> SyntaxResult<AnyJsObjectMemberName> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn parameter(&self) -> SyntaxResult<JsAnyFormalParameter> {
+    pub fn parameter(&self) -> SyntaxResult<AnyJsFormalParameter> {
         support::required_node(&self.syntax, 3usize)
     }
     pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -11107,9 +11111,9 @@ impl Serialize for TsSetterSignatureTypeMember {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsSetterSignatureTypeMemberFields {
     pub set_token: SyntaxResult<SyntaxToken>,
-    pub name: SyntaxResult<JsAnyObjectMemberName>,
+    pub name: SyntaxResult<AnyJsObjectMemberName>,
     pub l_paren_token: SyntaxResult<SyntaxToken>,
-    pub parameter: SyntaxResult<JsAnyFormalParameter>,
+    pub parameter: SyntaxResult<AnyJsFormalParameter>,
     pub r_paren_token: SyntaxResult<SyntaxToken>,
     pub separator_token: Option<SyntaxToken>,
 }
@@ -11271,7 +11275,7 @@ impl TsTemplateElement {
     pub fn dollar_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 1usize) }
     pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
@@ -11288,7 +11292,7 @@ impl Serialize for TsTemplateElement {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTemplateElementFields {
     pub dollar_curly_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
     pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -11482,7 +11486,7 @@ impl TsTypeAliasDeclaration {
     pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 3usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 4usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 4usize) }
     pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
 }
 #[cfg(feature = "serde")]
@@ -11500,7 +11504,7 @@ pub struct TsTypeAliasDeclarationFields {
     pub binding_identifier: SyntaxResult<TsIdentifierBinding>,
     pub type_parameters: Option<TsTypeParameters>,
     pub eq_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
     pub semicolon_token: Option<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -11524,7 +11528,7 @@ impl TsTypeAnnotation {
     pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 1usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsTypeAnnotation {
@@ -11538,7 +11542,7 @@ impl Serialize for TsTypeAnnotation {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeAnnotationFields {
     pub colon_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeArguments {
@@ -11607,11 +11611,11 @@ impl TsTypeAssertionAssignment {
     pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 1usize) }
     pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn assignment(&self) -> SyntaxResult<JsAnyAssignment> {
+    pub fn assignment(&self) -> SyntaxResult<AnyJsAssignment> {
         support::required_node(&self.syntax, 3usize)
     }
 }
@@ -11627,9 +11631,9 @@ impl Serialize for TsTypeAssertionAssignment {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeAssertionAssignmentFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
     pub r_angle_token: SyntaxResult<SyntaxToken>,
-    pub assignment: SyntaxResult<JsAnyAssignment>,
+    pub assignment: SyntaxResult<AnyJsAssignment>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeAssertionExpression {
@@ -11654,11 +11658,11 @@ impl TsTypeAssertionExpression {
     pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 1usize) }
     pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 2usize)
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<AnyJsExpression> {
         support::required_node(&self.syntax, 3usize)
     }
 }
@@ -11674,9 +11678,9 @@ impl Serialize for TsTypeAssertionExpression {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeAssertionExpressionFields {
     pub l_angle_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
     pub r_angle_token: SyntaxResult<SyntaxToken>,
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<AnyJsExpression>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeConstraintClause {
@@ -11699,7 +11703,7 @@ impl TsTypeConstraintClause {
     pub fn extends_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 1usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsTypeConstraintClause {
@@ -11713,7 +11717,7 @@ impl Serialize for TsTypeConstraintClause {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeConstraintClauseFields {
     pub extends_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeOperatorType {
@@ -11736,7 +11740,7 @@ impl TsTypeOperatorType {
     pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax, 1usize) }
+    pub fn ty(&self) -> SyntaxResult<AnyTsType> { support::required_node(&self.syntax, 1usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsTypeOperatorType {
@@ -11750,7 +11754,7 @@ impl Serialize for TsTypeOperatorType {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeOperatorTypeFields {
     pub operator_token: SyntaxResult<SyntaxToken>,
-    pub ty: SyntaxResult<TsType>,
+    pub ty: SyntaxResult<AnyTsType>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeParameter {
@@ -11892,7 +11896,7 @@ impl TsTypeofType {
     pub fn typeof_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn expression_name(&self) -> SyntaxResult<TsAnyName> {
+    pub fn expression_name(&self) -> SyntaxResult<AnyTsName> {
         support::required_node(&self.syntax, 1usize)
     }
     pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
@@ -11909,7 +11913,7 @@ impl Serialize for TsTypeofType {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeofTypeFields {
     pub typeof_token: SyntaxResult<SyntaxToken>,
-    pub expression_name: SyntaxResult<TsAnyName>,
+    pub expression_name: SyntaxResult<AnyTsName>,
     pub type_arguments: Option<TsTypeArguments>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -12053,16 +12057,16 @@ pub struct TsVoidTypeFields {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyArrayAssignmentPatternElement {
-    JsAnyAssignmentPattern(JsAnyAssignmentPattern),
+pub enum AnyJsArrayAssignmentPatternElement {
+    AnyJsAssignmentPattern(AnyJsAssignmentPattern),
     JsArrayAssignmentPatternRestElement(JsArrayAssignmentPatternRestElement),
     JsArrayHole(JsArrayHole),
     JsAssignmentWithDefault(JsAssignmentWithDefault),
 }
-impl JsAnyArrayAssignmentPatternElement {
-    pub fn as_js_any_assignment_pattern(&self) -> Option<&JsAnyAssignmentPattern> {
+impl AnyJsArrayAssignmentPatternElement {
+    pub fn as_any_js_assignment_pattern(&self) -> Option<&AnyJsAssignmentPattern> {
         match &self {
-            JsAnyArrayAssignmentPatternElement::JsAnyAssignmentPattern(item) => Some(item),
+            AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(item) => Some(item),
             _ => None,
         }
     }
@@ -12070,7 +12074,7 @@ impl JsAnyArrayAssignmentPatternElement {
         &self,
     ) -> Option<&JsArrayAssignmentPatternRestElement> {
         match &self {
-            JsAnyArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(item) => {
+            AnyJsArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(item) => {
                 Some(item)
             }
             _ => None,
@@ -12078,29 +12082,29 @@ impl JsAnyArrayAssignmentPatternElement {
     }
     pub fn as_js_array_hole(&self) -> Option<&JsArrayHole> {
         match &self {
-            JsAnyArrayAssignmentPatternElement::JsArrayHole(item) => Some(item),
+            AnyJsArrayAssignmentPatternElement::JsArrayHole(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_assignment_with_default(&self) -> Option<&JsAssignmentWithDefault> {
         match &self {
-            JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(item) => Some(item),
+            AnyJsArrayAssignmentPatternElement::JsAssignmentWithDefault(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyArrayBindingPatternElement {
-    JsAnyBindingPattern(JsAnyBindingPattern),
+pub enum AnyJsArrayBindingPatternElement {
+    AnyJsBindingPattern(AnyJsBindingPattern),
     JsArrayBindingPatternRestElement(JsArrayBindingPatternRestElement),
     JsArrayHole(JsArrayHole),
     JsBindingPatternWithDefault(JsBindingPatternWithDefault),
 }
-impl JsAnyArrayBindingPatternElement {
-    pub fn as_js_any_binding_pattern(&self) -> Option<&JsAnyBindingPattern> {
+impl AnyJsArrayBindingPatternElement {
+    pub fn as_any_js_binding_pattern(&self) -> Option<&AnyJsBindingPattern> {
         match &self {
-            JsAnyArrayBindingPatternElement::JsAnyBindingPattern(item) => Some(item),
+            AnyJsArrayBindingPatternElement::AnyJsBindingPattern(item) => Some(item),
             _ => None,
         }
     }
@@ -12108,73 +12112,73 @@ impl JsAnyArrayBindingPatternElement {
         &self,
     ) -> Option<&JsArrayBindingPatternRestElement> {
         match &self {
-            JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(item) => Some(item),
+            AnyJsArrayBindingPatternElement::JsArrayBindingPatternRestElement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_array_hole(&self) -> Option<&JsArrayHole> {
         match &self {
-            JsAnyArrayBindingPatternElement::JsArrayHole(item) => Some(item),
+            AnyJsArrayBindingPatternElement::JsArrayHole(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_binding_pattern_with_default(&self) -> Option<&JsBindingPatternWithDefault> {
         match &self {
-            JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(item) => Some(item),
+            AnyJsArrayBindingPatternElement::JsBindingPatternWithDefault(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyArrayElement {
-    JsAnyExpression(JsAnyExpression),
+pub enum AnyJsArrayElement {
+    AnyJsExpression(AnyJsExpression),
     JsArrayHole(JsArrayHole),
     JsSpread(JsSpread),
 }
-impl JsAnyArrayElement {
-    pub fn as_js_any_expression(&self) -> Option<&JsAnyExpression> {
+impl AnyJsArrayElement {
+    pub fn as_any_js_expression(&self) -> Option<&AnyJsExpression> {
         match &self {
-            JsAnyArrayElement::JsAnyExpression(item) => Some(item),
+            AnyJsArrayElement::AnyJsExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_array_hole(&self) -> Option<&JsArrayHole> {
         match &self {
-            JsAnyArrayElement::JsArrayHole(item) => Some(item),
+            AnyJsArrayElement::JsArrayHole(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_spread(&self) -> Option<&JsSpread> {
         match &self {
-            JsAnyArrayElement::JsSpread(item) => Some(item),
+            AnyJsArrayElement::JsSpread(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyArrowFunctionParameters {
-    JsAnyBinding(JsAnyBinding),
+pub enum AnyJsArrowFunctionParameters {
+    AnyJsBinding(AnyJsBinding),
     JsParameters(JsParameters),
 }
-impl JsAnyArrowFunctionParameters {
-    pub fn as_js_any_binding(&self) -> Option<&JsAnyBinding> {
+impl AnyJsArrowFunctionParameters {
+    pub fn as_any_js_binding(&self) -> Option<&AnyJsBinding> {
         match &self {
-            JsAnyArrowFunctionParameters::JsAnyBinding(item) => Some(item),
+            AnyJsArrowFunctionParameters::AnyJsBinding(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_parameters(&self) -> Option<&JsParameters> {
         match &self {
-            JsAnyArrowFunctionParameters::JsParameters(item) => Some(item),
+            AnyJsArrowFunctionParameters::JsParameters(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyAssignment {
+pub enum AnyJsAssignment {
     JsBogusAssignment(JsBogusAssignment),
     JsComputedMemberAssignment(JsComputedMemberAssignment),
     JsIdentifierAssignment(JsIdentifierAssignment),
@@ -12185,167 +12189,167 @@ pub enum JsAnyAssignment {
     TsSatisfiesAssignment(TsSatisfiesAssignment),
     TsTypeAssertionAssignment(TsTypeAssertionAssignment),
 }
-impl JsAnyAssignment {
+impl AnyJsAssignment {
     pub fn as_js_bogus_assignment(&self) -> Option<&JsBogusAssignment> {
         match &self {
-            JsAnyAssignment::JsBogusAssignment(item) => Some(item),
+            AnyJsAssignment::JsBogusAssignment(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_computed_member_assignment(&self) -> Option<&JsComputedMemberAssignment> {
         match &self {
-            JsAnyAssignment::JsComputedMemberAssignment(item) => Some(item),
+            AnyJsAssignment::JsComputedMemberAssignment(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_identifier_assignment(&self) -> Option<&JsIdentifierAssignment> {
         match &self {
-            JsAnyAssignment::JsIdentifierAssignment(item) => Some(item),
+            AnyJsAssignment::JsIdentifierAssignment(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_parenthesized_assignment(&self) -> Option<&JsParenthesizedAssignment> {
         match &self {
-            JsAnyAssignment::JsParenthesizedAssignment(item) => Some(item),
+            AnyJsAssignment::JsParenthesizedAssignment(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_static_member_assignment(&self) -> Option<&JsStaticMemberAssignment> {
         match &self {
-            JsAnyAssignment::JsStaticMemberAssignment(item) => Some(item),
+            AnyJsAssignment::JsStaticMemberAssignment(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_as_assignment(&self) -> Option<&TsAsAssignment> {
         match &self {
-            JsAnyAssignment::TsAsAssignment(item) => Some(item),
+            AnyJsAssignment::TsAsAssignment(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_non_null_assertion_assignment(&self) -> Option<&TsNonNullAssertionAssignment> {
         match &self {
-            JsAnyAssignment::TsNonNullAssertionAssignment(item) => Some(item),
+            AnyJsAssignment::TsNonNullAssertionAssignment(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_satisfies_assignment(&self) -> Option<&TsSatisfiesAssignment> {
         match &self {
-            JsAnyAssignment::TsSatisfiesAssignment(item) => Some(item),
+            AnyJsAssignment::TsSatisfiesAssignment(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_type_assertion_assignment(&self) -> Option<&TsTypeAssertionAssignment> {
         match &self {
-            JsAnyAssignment::TsTypeAssertionAssignment(item) => Some(item),
+            AnyJsAssignment::TsTypeAssertionAssignment(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyAssignmentPattern {
-    JsAnyAssignment(JsAnyAssignment),
+pub enum AnyJsAssignmentPattern {
+    AnyJsAssignment(AnyJsAssignment),
     JsArrayAssignmentPattern(JsArrayAssignmentPattern),
     JsObjectAssignmentPattern(JsObjectAssignmentPattern),
 }
-impl JsAnyAssignmentPattern {
-    pub fn as_js_any_assignment(&self) -> Option<&JsAnyAssignment> {
+impl AnyJsAssignmentPattern {
+    pub fn as_any_js_assignment(&self) -> Option<&AnyJsAssignment> {
         match &self {
-            JsAnyAssignmentPattern::JsAnyAssignment(item) => Some(item),
+            AnyJsAssignmentPattern::AnyJsAssignment(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_array_assignment_pattern(&self) -> Option<&JsArrayAssignmentPattern> {
         match &self {
-            JsAnyAssignmentPattern::JsArrayAssignmentPattern(item) => Some(item),
+            AnyJsAssignmentPattern::JsArrayAssignmentPattern(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_object_assignment_pattern(&self) -> Option<&JsObjectAssignmentPattern> {
         match &self {
-            JsAnyAssignmentPattern::JsObjectAssignmentPattern(item) => Some(item),
+            AnyJsAssignmentPattern::JsObjectAssignmentPattern(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyBinding {
+pub enum AnyJsBinding {
     JsBogusBinding(JsBogusBinding),
     JsIdentifierBinding(JsIdentifierBinding),
 }
-impl JsAnyBinding {
+impl AnyJsBinding {
     pub fn as_js_bogus_binding(&self) -> Option<&JsBogusBinding> {
         match &self {
-            JsAnyBinding::JsBogusBinding(item) => Some(item),
+            AnyJsBinding::JsBogusBinding(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_identifier_binding(&self) -> Option<&JsIdentifierBinding> {
         match &self {
-            JsAnyBinding::JsIdentifierBinding(item) => Some(item),
+            AnyJsBinding::JsIdentifierBinding(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyBindingPattern {
-    JsAnyBinding(JsAnyBinding),
+pub enum AnyJsBindingPattern {
+    AnyJsBinding(AnyJsBinding),
     JsArrayBindingPattern(JsArrayBindingPattern),
     JsObjectBindingPattern(JsObjectBindingPattern),
 }
-impl JsAnyBindingPattern {
-    pub fn as_js_any_binding(&self) -> Option<&JsAnyBinding> {
+impl AnyJsBindingPattern {
+    pub fn as_any_js_binding(&self) -> Option<&AnyJsBinding> {
         match &self {
-            JsAnyBindingPattern::JsAnyBinding(item) => Some(item),
+            AnyJsBindingPattern::AnyJsBinding(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_array_binding_pattern(&self) -> Option<&JsArrayBindingPattern> {
         match &self {
-            JsAnyBindingPattern::JsArrayBindingPattern(item) => Some(item),
+            AnyJsBindingPattern::JsArrayBindingPattern(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_object_binding_pattern(&self) -> Option<&JsObjectBindingPattern> {
         match &self {
-            JsAnyBindingPattern::JsObjectBindingPattern(item) => Some(item),
+            AnyJsBindingPattern::JsObjectBindingPattern(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyCallArgument {
-    JsAnyExpression(JsAnyExpression),
+pub enum AnyJsCallArgument {
+    AnyJsExpression(AnyJsExpression),
     JsSpread(JsSpread),
 }
-impl JsAnyCallArgument {
-    pub fn as_js_any_expression(&self) -> Option<&JsAnyExpression> {
+impl AnyJsCallArgument {
+    pub fn as_any_js_expression(&self) -> Option<&AnyJsExpression> {
         match &self {
-            JsAnyCallArgument::JsAnyExpression(item) => Some(item),
+            AnyJsCallArgument::AnyJsExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_spread(&self) -> Option<&JsSpread> {
         match &self {
-            JsAnyCallArgument::JsSpread(item) => Some(item),
+            AnyJsCallArgument::JsSpread(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyClass {
+pub enum AnyJsClass {
     JsClassDeclaration(JsClassDeclaration),
     JsClassExportDefaultDeclaration(JsClassExportDefaultDeclaration),
     JsClassExpression(JsClassExpression),
 }
-impl JsAnyClass {
+impl AnyJsClass {
     pub fn as_js_class_declaration(&self) -> Option<&JsClassDeclaration> {
         match &self {
-            JsAnyClass::JsClassDeclaration(item) => Some(item),
+            AnyJsClass::JsClassDeclaration(item) => Some(item),
             _ => None,
         }
     }
@@ -12353,20 +12357,20 @@ impl JsAnyClass {
         &self,
     ) -> Option<&JsClassExportDefaultDeclaration> {
         match &self {
-            JsAnyClass::JsClassExportDefaultDeclaration(item) => Some(item),
+            AnyJsClass::JsClassExportDefaultDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_class_expression(&self) -> Option<&JsClassExpression> {
         match &self {
-            JsAnyClass::JsClassExpression(item) => Some(item),
+            AnyJsClass::JsClassExpression(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyClassMember {
+pub enum AnyJsClassMember {
     JsBogusMember(JsBogusMember),
     JsConstructorClassMember(JsConstructorClassMember),
     JsEmptyClassMember(JsEmptyClassMember),
@@ -12382,46 +12386,46 @@ pub enum JsAnyClassMember {
     TsPropertySignatureClassMember(TsPropertySignatureClassMember),
     TsSetterSignatureClassMember(TsSetterSignatureClassMember),
 }
-impl JsAnyClassMember {
+impl AnyJsClassMember {
     pub fn as_js_bogus_member(&self) -> Option<&JsBogusMember> {
         match &self {
-            JsAnyClassMember::JsBogusMember(item) => Some(item),
+            AnyJsClassMember::JsBogusMember(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_constructor_class_member(&self) -> Option<&JsConstructorClassMember> {
         match &self {
-            JsAnyClassMember::JsConstructorClassMember(item) => Some(item),
+            AnyJsClassMember::JsConstructorClassMember(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_empty_class_member(&self) -> Option<&JsEmptyClassMember> {
         match &self {
-            JsAnyClassMember::JsEmptyClassMember(item) => Some(item),
+            AnyJsClassMember::JsEmptyClassMember(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_getter_class_member(&self) -> Option<&JsGetterClassMember> {
         match &self {
-            JsAnyClassMember::JsGetterClassMember(item) => Some(item),
+            AnyJsClassMember::JsGetterClassMember(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_method_class_member(&self) -> Option<&JsMethodClassMember> {
         match &self {
-            JsAnyClassMember::JsMethodClassMember(item) => Some(item),
+            AnyJsClassMember::JsMethodClassMember(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_property_class_member(&self) -> Option<&JsPropertyClassMember> {
         match &self {
-            JsAnyClassMember::JsPropertyClassMember(item) => Some(item),
+            AnyJsClassMember::JsPropertyClassMember(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_setter_class_member(&self) -> Option<&JsSetterClassMember> {
         match &self {
-            JsAnyClassMember::JsSetterClassMember(item) => Some(item),
+            AnyJsClassMember::JsSetterClassMember(item) => Some(item),
             _ => None,
         }
     }
@@ -12429,7 +12433,7 @@ impl JsAnyClassMember {
         &self,
     ) -> Option<&JsStaticInitializationBlockClassMember> {
         match &self {
-            JsAnyClassMember::JsStaticInitializationBlockClassMember(item) => Some(item),
+            AnyJsClassMember::JsStaticInitializationBlockClassMember(item) => Some(item),
             _ => None,
         }
     }
@@ -12437,98 +12441,98 @@ impl JsAnyClassMember {
         &self,
     ) -> Option<&TsConstructorSignatureClassMember> {
         match &self {
-            JsAnyClassMember::TsConstructorSignatureClassMember(item) => Some(item),
+            AnyJsClassMember::TsConstructorSignatureClassMember(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_getter_signature_class_member(&self) -> Option<&TsGetterSignatureClassMember> {
         match &self {
-            JsAnyClassMember::TsGetterSignatureClassMember(item) => Some(item),
+            AnyJsClassMember::TsGetterSignatureClassMember(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_index_signature_class_member(&self) -> Option<&TsIndexSignatureClassMember> {
         match &self {
-            JsAnyClassMember::TsIndexSignatureClassMember(item) => Some(item),
+            AnyJsClassMember::TsIndexSignatureClassMember(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_method_signature_class_member(&self) -> Option<&TsMethodSignatureClassMember> {
         match &self {
-            JsAnyClassMember::TsMethodSignatureClassMember(item) => Some(item),
+            AnyJsClassMember::TsMethodSignatureClassMember(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_property_signature_class_member(&self) -> Option<&TsPropertySignatureClassMember> {
         match &self {
-            JsAnyClassMember::TsPropertySignatureClassMember(item) => Some(item),
+            AnyJsClassMember::TsPropertySignatureClassMember(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_setter_signature_class_member(&self) -> Option<&TsSetterSignatureClassMember> {
         match &self {
-            JsAnyClassMember::TsSetterSignatureClassMember(item) => Some(item),
+            AnyJsClassMember::TsSetterSignatureClassMember(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyClassMemberName {
+pub enum AnyJsClassMemberName {
     JsComputedMemberName(JsComputedMemberName),
     JsLiteralMemberName(JsLiteralMemberName),
     JsPrivateClassMemberName(JsPrivateClassMemberName),
 }
-impl JsAnyClassMemberName {
+impl AnyJsClassMemberName {
     pub fn as_js_computed_member_name(&self) -> Option<&JsComputedMemberName> {
         match &self {
-            JsAnyClassMemberName::JsComputedMemberName(item) => Some(item),
+            AnyJsClassMemberName::JsComputedMemberName(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_literal_member_name(&self) -> Option<&JsLiteralMemberName> {
         match &self {
-            JsAnyClassMemberName::JsLiteralMemberName(item) => Some(item),
+            AnyJsClassMemberName::JsLiteralMemberName(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_private_class_member_name(&self) -> Option<&JsPrivateClassMemberName> {
         match &self {
-            JsAnyClassMemberName::JsPrivateClassMemberName(item) => Some(item),
+            AnyJsClassMemberName::JsPrivateClassMemberName(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyConstructorParameter {
-    JsAnyFormalParameter(JsAnyFormalParameter),
+pub enum AnyJsConstructorParameter {
+    AnyJsFormalParameter(AnyJsFormalParameter),
     JsRestParameter(JsRestParameter),
     TsPropertyParameter(TsPropertyParameter),
 }
-impl JsAnyConstructorParameter {
-    pub fn as_js_any_formal_parameter(&self) -> Option<&JsAnyFormalParameter> {
+impl AnyJsConstructorParameter {
+    pub fn as_any_js_formal_parameter(&self) -> Option<&AnyJsFormalParameter> {
         match &self {
-            JsAnyConstructorParameter::JsAnyFormalParameter(item) => Some(item),
+            AnyJsConstructorParameter::AnyJsFormalParameter(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_rest_parameter(&self) -> Option<&JsRestParameter> {
         match &self {
-            JsAnyConstructorParameter::JsRestParameter(item) => Some(item),
+            AnyJsConstructorParameter::JsRestParameter(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_property_parameter(&self) -> Option<&TsPropertyParameter> {
         match &self {
-            JsAnyConstructorParameter::TsPropertyParameter(item) => Some(item),
+            AnyJsConstructorParameter::TsPropertyParameter(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyDeclaration {
+pub enum AnyJsDeclaration {
     JsClassDeclaration(JsClassDeclaration),
     JsFunctionDeclaration(JsFunctionDeclaration),
     JsVariableDeclaration(JsVariableDeclaration),
@@ -12541,77 +12545,77 @@ pub enum JsAnyDeclaration {
     TsModuleDeclaration(TsModuleDeclaration),
     TsTypeAliasDeclaration(TsTypeAliasDeclaration),
 }
-impl JsAnyDeclaration {
+impl AnyJsDeclaration {
     pub fn as_js_class_declaration(&self) -> Option<&JsClassDeclaration> {
         match &self {
-            JsAnyDeclaration::JsClassDeclaration(item) => Some(item),
+            AnyJsDeclaration::JsClassDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_function_declaration(&self) -> Option<&JsFunctionDeclaration> {
         match &self {
-            JsAnyDeclaration::JsFunctionDeclaration(item) => Some(item),
+            AnyJsDeclaration::JsFunctionDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_variable_declaration(&self) -> Option<&JsVariableDeclaration> {
         match &self {
-            JsAnyDeclaration::JsVariableDeclaration(item) => Some(item),
+            AnyJsDeclaration::JsVariableDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_declare_function_declaration(&self) -> Option<&TsDeclareFunctionDeclaration> {
         match &self {
-            JsAnyDeclaration::TsDeclareFunctionDeclaration(item) => Some(item),
+            AnyJsDeclaration::TsDeclareFunctionDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_enum_declaration(&self) -> Option<&TsEnumDeclaration> {
         match &self {
-            JsAnyDeclaration::TsEnumDeclaration(item) => Some(item),
+            AnyJsDeclaration::TsEnumDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_external_module_declaration(&self) -> Option<&TsExternalModuleDeclaration> {
         match &self {
-            JsAnyDeclaration::TsExternalModuleDeclaration(item) => Some(item),
+            AnyJsDeclaration::TsExternalModuleDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_global_declaration(&self) -> Option<&TsGlobalDeclaration> {
         match &self {
-            JsAnyDeclaration::TsGlobalDeclaration(item) => Some(item),
+            AnyJsDeclaration::TsGlobalDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_import_equals_declaration(&self) -> Option<&TsImportEqualsDeclaration> {
         match &self {
-            JsAnyDeclaration::TsImportEqualsDeclaration(item) => Some(item),
+            AnyJsDeclaration::TsImportEqualsDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_interface_declaration(&self) -> Option<&TsInterfaceDeclaration> {
         match &self {
-            JsAnyDeclaration::TsInterfaceDeclaration(item) => Some(item),
+            AnyJsDeclaration::TsInterfaceDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_module_declaration(&self) -> Option<&TsModuleDeclaration> {
         match &self {
-            JsAnyDeclaration::TsModuleDeclaration(item) => Some(item),
+            AnyJsDeclaration::TsModuleDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_type_alias_declaration(&self) -> Option<&TsTypeAliasDeclaration> {
         match &self {
-            JsAnyDeclaration::TsTypeAliasDeclaration(item) => Some(item),
+            AnyJsDeclaration::TsTypeAliasDeclaration(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyDeclarationClause {
+pub enum AnyJsDeclarationClause {
     JsClassDeclaration(JsClassDeclaration),
     JsFunctionDeclaration(JsFunctionDeclaration),
     JsVariableDeclarationClause(JsVariableDeclarationClause),
@@ -12624,78 +12628,78 @@ pub enum JsAnyDeclarationClause {
     TsModuleDeclaration(TsModuleDeclaration),
     TsTypeAliasDeclaration(TsTypeAliasDeclaration),
 }
-impl JsAnyDeclarationClause {
+impl AnyJsDeclarationClause {
     pub fn as_js_class_declaration(&self) -> Option<&JsClassDeclaration> {
         match &self {
-            JsAnyDeclarationClause::JsClassDeclaration(item) => Some(item),
+            AnyJsDeclarationClause::JsClassDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_function_declaration(&self) -> Option<&JsFunctionDeclaration> {
         match &self {
-            JsAnyDeclarationClause::JsFunctionDeclaration(item) => Some(item),
+            AnyJsDeclarationClause::JsFunctionDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_variable_declaration_clause(&self) -> Option<&JsVariableDeclarationClause> {
         match &self {
-            JsAnyDeclarationClause::JsVariableDeclarationClause(item) => Some(item),
+            AnyJsDeclarationClause::JsVariableDeclarationClause(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_declare_function_declaration(&self) -> Option<&TsDeclareFunctionDeclaration> {
         match &self {
-            JsAnyDeclarationClause::TsDeclareFunctionDeclaration(item) => Some(item),
+            AnyJsDeclarationClause::TsDeclareFunctionDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_enum_declaration(&self) -> Option<&TsEnumDeclaration> {
         match &self {
-            JsAnyDeclarationClause::TsEnumDeclaration(item) => Some(item),
+            AnyJsDeclarationClause::TsEnumDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_external_module_declaration(&self) -> Option<&TsExternalModuleDeclaration> {
         match &self {
-            JsAnyDeclarationClause::TsExternalModuleDeclaration(item) => Some(item),
+            AnyJsDeclarationClause::TsExternalModuleDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_global_declaration(&self) -> Option<&TsGlobalDeclaration> {
         match &self {
-            JsAnyDeclarationClause::TsGlobalDeclaration(item) => Some(item),
+            AnyJsDeclarationClause::TsGlobalDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_import_equals_declaration(&self) -> Option<&TsImportEqualsDeclaration> {
         match &self {
-            JsAnyDeclarationClause::TsImportEqualsDeclaration(item) => Some(item),
+            AnyJsDeclarationClause::TsImportEqualsDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_interface_declaration(&self) -> Option<&TsInterfaceDeclaration> {
         match &self {
-            JsAnyDeclarationClause::TsInterfaceDeclaration(item) => Some(item),
+            AnyJsDeclarationClause::TsInterfaceDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_module_declaration(&self) -> Option<&TsModuleDeclaration> {
         match &self {
-            JsAnyDeclarationClause::TsModuleDeclaration(item) => Some(item),
+            AnyJsDeclarationClause::TsModuleDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_type_alias_declaration(&self) -> Option<&TsTypeAliasDeclaration> {
         match &self {
-            JsAnyDeclarationClause::TsTypeAliasDeclaration(item) => Some(item),
+            AnyJsDeclarationClause::TsTypeAliasDeclaration(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyExportClause {
-    JsAnyDeclarationClause(JsAnyDeclarationClause),
+pub enum AnyJsExportClause {
+    AnyJsDeclarationClause(AnyJsDeclarationClause),
     JsExportDefaultDeclarationClause(JsExportDefaultDeclarationClause),
     JsExportDefaultExpressionClause(JsExportDefaultExpressionClause),
     JsExportFromClause(JsExportFromClause),
@@ -12705,10 +12709,10 @@ pub enum JsAnyExportClause {
     TsExportAssignmentClause(TsExportAssignmentClause),
     TsExportDeclareClause(TsExportDeclareClause),
 }
-impl JsAnyExportClause {
-    pub fn as_js_any_declaration_clause(&self) -> Option<&JsAnyDeclarationClause> {
+impl AnyJsExportClause {
+    pub fn as_any_js_declaration_clause(&self) -> Option<&AnyJsDeclarationClause> {
         match &self {
-            JsAnyExportClause::JsAnyDeclarationClause(item) => Some(item),
+            AnyJsExportClause::AnyJsDeclarationClause(item) => Some(item),
             _ => None,
         }
     }
@@ -12716,7 +12720,7 @@ impl JsAnyExportClause {
         &self,
     ) -> Option<&JsExportDefaultDeclarationClause> {
         match &self {
-            JsAnyExportClause::JsExportDefaultDeclarationClause(item) => Some(item),
+            AnyJsExportClause::JsExportDefaultDeclarationClause(item) => Some(item),
             _ => None,
         }
     }
@@ -12724,61 +12728,61 @@ impl JsAnyExportClause {
         &self,
     ) -> Option<&JsExportDefaultExpressionClause> {
         match &self {
-            JsAnyExportClause::JsExportDefaultExpressionClause(item) => Some(item),
+            AnyJsExportClause::JsExportDefaultExpressionClause(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_export_from_clause(&self) -> Option<&JsExportFromClause> {
         match &self {
-            JsAnyExportClause::JsExportFromClause(item) => Some(item),
+            AnyJsExportClause::JsExportFromClause(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_export_named_clause(&self) -> Option<&JsExportNamedClause> {
         match &self {
-            JsAnyExportClause::JsExportNamedClause(item) => Some(item),
+            AnyJsExportClause::JsExportNamedClause(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_export_named_from_clause(&self) -> Option<&JsExportNamedFromClause> {
         match &self {
-            JsAnyExportClause::JsExportNamedFromClause(item) => Some(item),
+            AnyJsExportClause::JsExportNamedFromClause(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_export_as_namespace_clause(&self) -> Option<&TsExportAsNamespaceClause> {
         match &self {
-            JsAnyExportClause::TsExportAsNamespaceClause(item) => Some(item),
+            AnyJsExportClause::TsExportAsNamespaceClause(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_export_assignment_clause(&self) -> Option<&TsExportAssignmentClause> {
         match &self {
-            JsAnyExportClause::TsExportAssignmentClause(item) => Some(item),
+            AnyJsExportClause::TsExportAssignmentClause(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_export_declare_clause(&self) -> Option<&TsExportDeclareClause> {
         match &self {
-            JsAnyExportClause::TsExportDeclareClause(item) => Some(item),
+            AnyJsExportClause::TsExportDeclareClause(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyExportDefaultDeclaration {
+pub enum AnyJsExportDefaultDeclaration {
     JsClassExportDefaultDeclaration(JsClassExportDefaultDeclaration),
     JsFunctionExportDefaultDeclaration(JsFunctionExportDefaultDeclaration),
     TsDeclareFunctionExportDefaultDeclaration(TsDeclareFunctionExportDefaultDeclaration),
     TsInterfaceDeclaration(TsInterfaceDeclaration),
 }
-impl JsAnyExportDefaultDeclaration {
+impl AnyJsExportDefaultDeclaration {
     pub fn as_js_class_export_default_declaration(
         &self,
     ) -> Option<&JsClassExportDefaultDeclaration> {
         match &self {
-            JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(item) => Some(item),
+            AnyJsExportDefaultDeclaration::JsClassExportDefaultDeclaration(item) => Some(item),
             _ => None,
         }
     }
@@ -12786,7 +12790,7 @@ impl JsAnyExportDefaultDeclaration {
         &self,
     ) -> Option<&JsFunctionExportDefaultDeclaration> {
         match &self {
-            JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(item) => Some(item),
+            AnyJsExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(item) => Some(item),
             _ => None,
         }
     }
@@ -12794,7 +12798,7 @@ impl JsAnyExportDefaultDeclaration {
         &self,
     ) -> Option<&TsDeclareFunctionExportDefaultDeclaration> {
         match &self {
-            JsAnyExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(item) => {
+            AnyJsExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(item) => {
                 Some(item)
             }
             _ => None,
@@ -12802,37 +12806,37 @@ impl JsAnyExportDefaultDeclaration {
     }
     pub fn as_ts_interface_declaration(&self) -> Option<&TsInterfaceDeclaration> {
         match &self {
-            JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(item) => Some(item),
+            AnyJsExportDefaultDeclaration::TsInterfaceDeclaration(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyExportNamedSpecifier {
+pub enum AnyJsExportNamedSpecifier {
     JsExportNamedShorthandSpecifier(JsExportNamedShorthandSpecifier),
     JsExportNamedSpecifier(JsExportNamedSpecifier),
 }
-impl JsAnyExportNamedSpecifier {
+impl AnyJsExportNamedSpecifier {
     pub fn as_js_export_named_shorthand_specifier(
         &self,
     ) -> Option<&JsExportNamedShorthandSpecifier> {
         match &self {
-            JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(item) => Some(item),
+            AnyJsExportNamedSpecifier::JsExportNamedShorthandSpecifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_export_named_specifier(&self) -> Option<&JsExportNamedSpecifier> {
         match &self {
-            JsAnyExportNamedSpecifier::JsExportNamedSpecifier(item) => Some(item),
+            AnyJsExportNamedSpecifier::JsExportNamedSpecifier(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyExpression {
-    JsAnyLiteralExpression(JsAnyLiteralExpression),
+pub enum AnyJsExpression {
+    AnyJsLiteralExpression(AnyJsLiteralExpression),
     JsArrayExpression(JsArrayExpression),
     JsArrowFunctionExpression(JsArrowFunctionExpression),
     JsAssignmentExpression(JsAssignmentExpression),
@@ -12870,308 +12874,308 @@ pub enum JsAnyExpression {
     TsSatisfiesExpression(TsSatisfiesExpression),
     TsTypeAssertionExpression(TsTypeAssertionExpression),
 }
-impl JsAnyExpression {
-    pub fn as_js_any_literal_expression(&self) -> Option<&JsAnyLiteralExpression> {
+impl AnyJsExpression {
+    pub fn as_any_js_literal_expression(&self) -> Option<&AnyJsLiteralExpression> {
         match &self {
-            JsAnyExpression::JsAnyLiteralExpression(item) => Some(item),
+            AnyJsExpression::AnyJsLiteralExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_array_expression(&self) -> Option<&JsArrayExpression> {
         match &self {
-            JsAnyExpression::JsArrayExpression(item) => Some(item),
+            AnyJsExpression::JsArrayExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_arrow_function_expression(&self) -> Option<&JsArrowFunctionExpression> {
         match &self {
-            JsAnyExpression::JsArrowFunctionExpression(item) => Some(item),
+            AnyJsExpression::JsArrowFunctionExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_assignment_expression(&self) -> Option<&JsAssignmentExpression> {
         match &self {
-            JsAnyExpression::JsAssignmentExpression(item) => Some(item),
+            AnyJsExpression::JsAssignmentExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_await_expression(&self) -> Option<&JsAwaitExpression> {
         match &self {
-            JsAnyExpression::JsAwaitExpression(item) => Some(item),
+            AnyJsExpression::JsAwaitExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_binary_expression(&self) -> Option<&JsBinaryExpression> {
         match &self {
-            JsAnyExpression::JsBinaryExpression(item) => Some(item),
+            AnyJsExpression::JsBinaryExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_bogus_expression(&self) -> Option<&JsBogusExpression> {
         match &self {
-            JsAnyExpression::JsBogusExpression(item) => Some(item),
+            AnyJsExpression::JsBogusExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_call_expression(&self) -> Option<&JsCallExpression> {
         match &self {
-            JsAnyExpression::JsCallExpression(item) => Some(item),
+            AnyJsExpression::JsCallExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_class_expression(&self) -> Option<&JsClassExpression> {
         match &self {
-            JsAnyExpression::JsClassExpression(item) => Some(item),
+            AnyJsExpression::JsClassExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_computed_member_expression(&self) -> Option<&JsComputedMemberExpression> {
         match &self {
-            JsAnyExpression::JsComputedMemberExpression(item) => Some(item),
+            AnyJsExpression::JsComputedMemberExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_conditional_expression(&self) -> Option<&JsConditionalExpression> {
         match &self {
-            JsAnyExpression::JsConditionalExpression(item) => Some(item),
+            AnyJsExpression::JsConditionalExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_function_expression(&self) -> Option<&JsFunctionExpression> {
         match &self {
-            JsAnyExpression::JsFunctionExpression(item) => Some(item),
+            AnyJsExpression::JsFunctionExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_identifier_expression(&self) -> Option<&JsIdentifierExpression> {
         match &self {
-            JsAnyExpression::JsIdentifierExpression(item) => Some(item),
+            AnyJsExpression::JsIdentifierExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_import_call_expression(&self) -> Option<&JsImportCallExpression> {
         match &self {
-            JsAnyExpression::JsImportCallExpression(item) => Some(item),
+            AnyJsExpression::JsImportCallExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_import_meta_expression(&self) -> Option<&JsImportMetaExpression> {
         match &self {
-            JsAnyExpression::JsImportMetaExpression(item) => Some(item),
+            AnyJsExpression::JsImportMetaExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_in_expression(&self) -> Option<&JsInExpression> {
         match &self {
-            JsAnyExpression::JsInExpression(item) => Some(item),
+            AnyJsExpression::JsInExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_instanceof_expression(&self) -> Option<&JsInstanceofExpression> {
         match &self {
-            JsAnyExpression::JsInstanceofExpression(item) => Some(item),
+            AnyJsExpression::JsInstanceofExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_logical_expression(&self) -> Option<&JsLogicalExpression> {
         match &self {
-            JsAnyExpression::JsLogicalExpression(item) => Some(item),
+            AnyJsExpression::JsLogicalExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_new_expression(&self) -> Option<&JsNewExpression> {
         match &self {
-            JsAnyExpression::JsNewExpression(item) => Some(item),
+            AnyJsExpression::JsNewExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_new_target_expression(&self) -> Option<&JsNewTargetExpression> {
         match &self {
-            JsAnyExpression::JsNewTargetExpression(item) => Some(item),
+            AnyJsExpression::JsNewTargetExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_object_expression(&self) -> Option<&JsObjectExpression> {
         match &self {
-            JsAnyExpression::JsObjectExpression(item) => Some(item),
+            AnyJsExpression::JsObjectExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_parenthesized_expression(&self) -> Option<&JsParenthesizedExpression> {
         match &self {
-            JsAnyExpression::JsParenthesizedExpression(item) => Some(item),
+            AnyJsExpression::JsParenthesizedExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_post_update_expression(&self) -> Option<&JsPostUpdateExpression> {
         match &self {
-            JsAnyExpression::JsPostUpdateExpression(item) => Some(item),
+            AnyJsExpression::JsPostUpdateExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_pre_update_expression(&self) -> Option<&JsPreUpdateExpression> {
         match &self {
-            JsAnyExpression::JsPreUpdateExpression(item) => Some(item),
+            AnyJsExpression::JsPreUpdateExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_sequence_expression(&self) -> Option<&JsSequenceExpression> {
         match &self {
-            JsAnyExpression::JsSequenceExpression(item) => Some(item),
+            AnyJsExpression::JsSequenceExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_static_member_expression(&self) -> Option<&JsStaticMemberExpression> {
         match &self {
-            JsAnyExpression::JsStaticMemberExpression(item) => Some(item),
+            AnyJsExpression::JsStaticMemberExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_super_expression(&self) -> Option<&JsSuperExpression> {
         match &self {
-            JsAnyExpression::JsSuperExpression(item) => Some(item),
+            AnyJsExpression::JsSuperExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_template_expression(&self) -> Option<&JsTemplateExpression> {
         match &self {
-            JsAnyExpression::JsTemplateExpression(item) => Some(item),
+            AnyJsExpression::JsTemplateExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_this_expression(&self) -> Option<&JsThisExpression> {
         match &self {
-            JsAnyExpression::JsThisExpression(item) => Some(item),
+            AnyJsExpression::JsThisExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_unary_expression(&self) -> Option<&JsUnaryExpression> {
         match &self {
-            JsAnyExpression::JsUnaryExpression(item) => Some(item),
+            AnyJsExpression::JsUnaryExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_yield_expression(&self) -> Option<&JsYieldExpression> {
         match &self {
-            JsAnyExpression::JsYieldExpression(item) => Some(item),
+            AnyJsExpression::JsYieldExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_tag_expression(&self) -> Option<&JsxTagExpression> {
         match &self {
-            JsAnyExpression::JsxTagExpression(item) => Some(item),
+            AnyJsExpression::JsxTagExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_as_expression(&self) -> Option<&TsAsExpression> {
         match &self {
-            JsAnyExpression::TsAsExpression(item) => Some(item),
+            AnyJsExpression::TsAsExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_instantiation_expression(&self) -> Option<&TsInstantiationExpression> {
         match &self {
-            JsAnyExpression::TsInstantiationExpression(item) => Some(item),
+            AnyJsExpression::TsInstantiationExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_non_null_assertion_expression(&self) -> Option<&TsNonNullAssertionExpression> {
         match &self {
-            JsAnyExpression::TsNonNullAssertionExpression(item) => Some(item),
+            AnyJsExpression::TsNonNullAssertionExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_satisfies_expression(&self) -> Option<&TsSatisfiesExpression> {
         match &self {
-            JsAnyExpression::TsSatisfiesExpression(item) => Some(item),
+            AnyJsExpression::TsSatisfiesExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_type_assertion_expression(&self) -> Option<&TsTypeAssertionExpression> {
         match &self {
-            JsAnyExpression::TsTypeAssertionExpression(item) => Some(item),
+            AnyJsExpression::TsTypeAssertionExpression(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyForInOrOfInitializer {
-    JsAnyAssignmentPattern(JsAnyAssignmentPattern),
+pub enum AnyJsForInOrOfInitializer {
+    AnyJsAssignmentPattern(AnyJsAssignmentPattern),
     JsForVariableDeclaration(JsForVariableDeclaration),
 }
-impl JsAnyForInOrOfInitializer {
-    pub fn as_js_any_assignment_pattern(&self) -> Option<&JsAnyAssignmentPattern> {
+impl AnyJsForInOrOfInitializer {
+    pub fn as_any_js_assignment_pattern(&self) -> Option<&AnyJsAssignmentPattern> {
         match &self {
-            JsAnyForInOrOfInitializer::JsAnyAssignmentPattern(item) => Some(item),
+            AnyJsForInOrOfInitializer::AnyJsAssignmentPattern(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_for_variable_declaration(&self) -> Option<&JsForVariableDeclaration> {
         match &self {
-            JsAnyForInOrOfInitializer::JsForVariableDeclaration(item) => Some(item),
+            AnyJsForInOrOfInitializer::JsForVariableDeclaration(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyForInitializer {
-    JsAnyExpression(JsAnyExpression),
+pub enum AnyJsForInitializer {
+    AnyJsExpression(AnyJsExpression),
     JsVariableDeclaration(JsVariableDeclaration),
 }
-impl JsAnyForInitializer {
-    pub fn as_js_any_expression(&self) -> Option<&JsAnyExpression> {
+impl AnyJsForInitializer {
+    pub fn as_any_js_expression(&self) -> Option<&AnyJsExpression> {
         match &self {
-            JsAnyForInitializer::JsAnyExpression(item) => Some(item),
+            AnyJsForInitializer::AnyJsExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_variable_declaration(&self) -> Option<&JsVariableDeclaration> {
         match &self {
-            JsAnyForInitializer::JsVariableDeclaration(item) => Some(item),
+            AnyJsForInitializer::JsVariableDeclaration(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyFormalParameter {
+pub enum AnyJsFormalParameter {
     JsBogusParameter(JsBogusParameter),
     JsFormalParameter(JsFormalParameter),
 }
-impl JsAnyFormalParameter {
+impl AnyJsFormalParameter {
     pub fn as_js_bogus_parameter(&self) -> Option<&JsBogusParameter> {
         match &self {
-            JsAnyFormalParameter::JsBogusParameter(item) => Some(item),
+            AnyJsFormalParameter::JsBogusParameter(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_formal_parameter(&self) -> Option<&JsFormalParameter> {
         match &self {
-            JsAnyFormalParameter::JsFormalParameter(item) => Some(item),
+            AnyJsFormalParameter::JsFormalParameter(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyFunction {
+pub enum AnyJsFunction {
     JsArrowFunctionExpression(JsArrowFunctionExpression),
     JsFunctionDeclaration(JsFunctionDeclaration),
     JsFunctionExportDefaultDeclaration(JsFunctionExportDefaultDeclaration),
     JsFunctionExpression(JsFunctionExpression),
 }
-impl JsAnyFunction {
+impl AnyJsFunction {
     pub fn as_js_arrow_function_expression(&self) -> Option<&JsArrowFunctionExpression> {
         match &self {
-            JsAnyFunction::JsArrowFunctionExpression(item) => Some(item),
+            AnyJsFunction::JsArrowFunctionExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_function_declaration(&self) -> Option<&JsFunctionDeclaration> {
         match &self {
-            JsAnyFunction::JsFunctionDeclaration(item) => Some(item),
+            AnyJsFunction::JsFunctionDeclaration(item) => Some(item),
             _ => None,
         }
     }
@@ -13179,114 +13183,114 @@ impl JsAnyFunction {
         &self,
     ) -> Option<&JsFunctionExportDefaultDeclaration> {
         match &self {
-            JsAnyFunction::JsFunctionExportDefaultDeclaration(item) => Some(item),
+            AnyJsFunction::JsFunctionExportDefaultDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_function_expression(&self) -> Option<&JsFunctionExpression> {
         match &self {
-            JsAnyFunction::JsFunctionExpression(item) => Some(item),
+            AnyJsFunction::JsFunctionExpression(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyFunctionBody {
-    JsAnyExpression(JsAnyExpression),
+pub enum AnyJsFunctionBody {
+    AnyJsExpression(AnyJsExpression),
     JsFunctionBody(JsFunctionBody),
 }
-impl JsAnyFunctionBody {
-    pub fn as_js_any_expression(&self) -> Option<&JsAnyExpression> {
+impl AnyJsFunctionBody {
+    pub fn as_any_js_expression(&self) -> Option<&AnyJsExpression> {
         match &self {
-            JsAnyFunctionBody::JsAnyExpression(item) => Some(item),
+            AnyJsFunctionBody::AnyJsExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_function_body(&self) -> Option<&JsFunctionBody> {
         match &self {
-            JsAnyFunctionBody::JsFunctionBody(item) => Some(item),
+            AnyJsFunctionBody::JsFunctionBody(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyImportAssertionEntry {
+pub enum AnyJsImportAssertionEntry {
     JsBogusImportAssertionEntry(JsBogusImportAssertionEntry),
     JsImportAssertionEntry(JsImportAssertionEntry),
 }
-impl JsAnyImportAssertionEntry {
+impl AnyJsImportAssertionEntry {
     pub fn as_js_bogus_import_assertion_entry(&self) -> Option<&JsBogusImportAssertionEntry> {
         match &self {
-            JsAnyImportAssertionEntry::JsBogusImportAssertionEntry(item) => Some(item),
+            AnyJsImportAssertionEntry::JsBogusImportAssertionEntry(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_import_assertion_entry(&self) -> Option<&JsImportAssertionEntry> {
         match &self {
-            JsAnyImportAssertionEntry::JsImportAssertionEntry(item) => Some(item),
+            AnyJsImportAssertionEntry::JsImportAssertionEntry(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyImportClause {
+pub enum AnyJsImportClause {
     JsImportBareClause(JsImportBareClause),
     JsImportDefaultClause(JsImportDefaultClause),
     JsImportNamedClause(JsImportNamedClause),
     JsImportNamespaceClause(JsImportNamespaceClause),
 }
-impl JsAnyImportClause {
+impl AnyJsImportClause {
     pub fn as_js_import_bare_clause(&self) -> Option<&JsImportBareClause> {
         match &self {
-            JsAnyImportClause::JsImportBareClause(item) => Some(item),
+            AnyJsImportClause::JsImportBareClause(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_import_default_clause(&self) -> Option<&JsImportDefaultClause> {
         match &self {
-            JsAnyImportClause::JsImportDefaultClause(item) => Some(item),
+            AnyJsImportClause::JsImportDefaultClause(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_import_named_clause(&self) -> Option<&JsImportNamedClause> {
         match &self {
-            JsAnyImportClause::JsImportNamedClause(item) => Some(item),
+            AnyJsImportClause::JsImportNamedClause(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_import_namespace_clause(&self) -> Option<&JsImportNamespaceClause> {
         match &self {
-            JsAnyImportClause::JsImportNamespaceClause(item) => Some(item),
+            AnyJsImportClause::JsImportNamespaceClause(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyInProperty {
-    JsAnyExpression(JsAnyExpression),
+pub enum AnyJsInProperty {
+    AnyJsExpression(AnyJsExpression),
     JsPrivateName(JsPrivateName),
 }
-impl JsAnyInProperty {
-    pub fn as_js_any_expression(&self) -> Option<&JsAnyExpression> {
+impl AnyJsInProperty {
+    pub fn as_any_js_expression(&self) -> Option<&AnyJsExpression> {
         match &self {
-            JsAnyInProperty::JsAnyExpression(item) => Some(item),
+            AnyJsInProperty::AnyJsExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_private_name(&self) -> Option<&JsPrivateName> {
         match &self {
-            JsAnyInProperty::JsPrivateName(item) => Some(item),
+            AnyJsInProperty::JsPrivateName(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyLiteralExpression {
+pub enum AnyJsLiteralExpression {
     JsBigIntLiteralExpression(JsBigIntLiteralExpression),
     JsBooleanLiteralExpression(JsBooleanLiteralExpression),
     JsNullLiteralExpression(JsNullLiteralExpression),
@@ -13294,155 +13298,155 @@ pub enum JsAnyLiteralExpression {
     JsRegexLiteralExpression(JsRegexLiteralExpression),
     JsStringLiteralExpression(JsStringLiteralExpression),
 }
-impl JsAnyLiteralExpression {
+impl AnyJsLiteralExpression {
     pub fn as_js_big_int_literal_expression(&self) -> Option<&JsBigIntLiteralExpression> {
         match &self {
-            JsAnyLiteralExpression::JsBigIntLiteralExpression(item) => Some(item),
+            AnyJsLiteralExpression::JsBigIntLiteralExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_boolean_literal_expression(&self) -> Option<&JsBooleanLiteralExpression> {
         match &self {
-            JsAnyLiteralExpression::JsBooleanLiteralExpression(item) => Some(item),
+            AnyJsLiteralExpression::JsBooleanLiteralExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_null_literal_expression(&self) -> Option<&JsNullLiteralExpression> {
         match &self {
-            JsAnyLiteralExpression::JsNullLiteralExpression(item) => Some(item),
+            AnyJsLiteralExpression::JsNullLiteralExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_number_literal_expression(&self) -> Option<&JsNumberLiteralExpression> {
         match &self {
-            JsAnyLiteralExpression::JsNumberLiteralExpression(item) => Some(item),
+            AnyJsLiteralExpression::JsNumberLiteralExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_regex_literal_expression(&self) -> Option<&JsRegexLiteralExpression> {
         match &self {
-            JsAnyLiteralExpression::JsRegexLiteralExpression(item) => Some(item),
+            AnyJsLiteralExpression::JsRegexLiteralExpression(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_string_literal_expression(&self) -> Option<&JsStringLiteralExpression> {
         match &self {
-            JsAnyLiteralExpression::JsStringLiteralExpression(item) => Some(item),
+            AnyJsLiteralExpression::JsStringLiteralExpression(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyMethodModifier {
+pub enum AnyJsMethodModifier {
     JsStaticModifier(JsStaticModifier),
     TsAccessibilityModifier(TsAccessibilityModifier),
     TsOverrideModifier(TsOverrideModifier),
 }
-impl JsAnyMethodModifier {
+impl AnyJsMethodModifier {
     pub fn as_js_static_modifier(&self) -> Option<&JsStaticModifier> {
         match &self {
-            JsAnyMethodModifier::JsStaticModifier(item) => Some(item),
+            AnyJsMethodModifier::JsStaticModifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_accessibility_modifier(&self) -> Option<&TsAccessibilityModifier> {
         match &self {
-            JsAnyMethodModifier::TsAccessibilityModifier(item) => Some(item),
+            AnyJsMethodModifier::TsAccessibilityModifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_override_modifier(&self) -> Option<&TsOverrideModifier> {
         match &self {
-            JsAnyMethodModifier::TsOverrideModifier(item) => Some(item),
+            AnyJsMethodModifier::TsOverrideModifier(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyModuleItem {
-    JsAnyStatement(JsAnyStatement),
+pub enum AnyJsModuleItem {
+    AnyJsStatement(AnyJsStatement),
     JsExport(JsExport),
     JsImport(JsImport),
 }
-impl JsAnyModuleItem {
-    pub fn as_js_any_statement(&self) -> Option<&JsAnyStatement> {
+impl AnyJsModuleItem {
+    pub fn as_any_js_statement(&self) -> Option<&AnyJsStatement> {
         match &self {
-            JsAnyModuleItem::JsAnyStatement(item) => Some(item),
+            AnyJsModuleItem::AnyJsStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_export(&self) -> Option<&JsExport> {
         match &self {
-            JsAnyModuleItem::JsExport(item) => Some(item),
+            AnyJsModuleItem::JsExport(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_import(&self) -> Option<&JsImport> {
         match &self {
-            JsAnyModuleItem::JsImport(item) => Some(item),
+            AnyJsModuleItem::JsImport(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyName {
+pub enum AnyJsName {
     JsName(JsName),
     JsPrivateName(JsPrivateName),
 }
-impl JsAnyName {
+impl AnyJsName {
     pub fn as_js_name(&self) -> Option<&JsName> {
         match &self {
-            JsAnyName::JsName(item) => Some(item),
+            AnyJsName::JsName(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_private_name(&self) -> Option<&JsPrivateName> {
         match &self {
-            JsAnyName::JsPrivateName(item) => Some(item),
+            AnyJsName::JsPrivateName(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyNamedImport {
+pub enum AnyJsNamedImport {
     JsNamedImportSpecifiers(JsNamedImportSpecifiers),
     JsNamespaceImportSpecifier(JsNamespaceImportSpecifier),
 }
-impl JsAnyNamedImport {
+impl AnyJsNamedImport {
     pub fn as_js_named_import_specifiers(&self) -> Option<&JsNamedImportSpecifiers> {
         match &self {
-            JsAnyNamedImport::JsNamedImportSpecifiers(item) => Some(item),
+            AnyJsNamedImport::JsNamedImportSpecifiers(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_namespace_import_specifier(&self) -> Option<&JsNamespaceImportSpecifier> {
         match &self {
-            JsAnyNamedImport::JsNamespaceImportSpecifier(item) => Some(item),
+            AnyJsNamedImport::JsNamespaceImportSpecifier(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyNamedImportSpecifier {
+pub enum AnyJsNamedImportSpecifier {
     JsBogusNamedImportSpecifier(JsBogusNamedImportSpecifier),
     JsNamedImportSpecifier(JsNamedImportSpecifier),
     JsShorthandNamedImportSpecifier(JsShorthandNamedImportSpecifier),
 }
-impl JsAnyNamedImportSpecifier {
+impl AnyJsNamedImportSpecifier {
     pub fn as_js_bogus_named_import_specifier(&self) -> Option<&JsBogusNamedImportSpecifier> {
         match &self {
-            JsAnyNamedImportSpecifier::JsBogusNamedImportSpecifier(item) => Some(item),
+            AnyJsNamedImportSpecifier::JsBogusNamedImportSpecifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_named_import_specifier(&self) -> Option<&JsNamedImportSpecifier> {
         match &self {
-            JsAnyNamedImportSpecifier::JsNamedImportSpecifier(item) => Some(item),
+            AnyJsNamedImportSpecifier::JsNamedImportSpecifier(item) => Some(item),
             _ => None,
         }
     }
@@ -13450,23 +13454,23 @@ impl JsAnyNamedImportSpecifier {
         &self,
     ) -> Option<&JsShorthandNamedImportSpecifier> {
         match &self {
-            JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(item) => Some(item),
+            AnyJsNamedImportSpecifier::JsShorthandNamedImportSpecifier(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyObjectAssignmentPatternMember {
+pub enum AnyJsObjectAssignmentPatternMember {
     JsBogusAssignment(JsBogusAssignment),
     JsObjectAssignmentPatternProperty(JsObjectAssignmentPatternProperty),
     JsObjectAssignmentPatternRest(JsObjectAssignmentPatternRest),
     JsObjectAssignmentPatternShorthandProperty(JsObjectAssignmentPatternShorthandProperty),
 }
-impl JsAnyObjectAssignmentPatternMember {
+impl AnyJsObjectAssignmentPatternMember {
     pub fn as_js_bogus_assignment(&self) -> Option<&JsBogusAssignment> {
         match &self {
-            JsAnyObjectAssignmentPatternMember::JsBogusAssignment(item) => Some(item),
+            AnyJsObjectAssignmentPatternMember::JsBogusAssignment(item) => Some(item),
             _ => None,
         }
     }
@@ -13474,7 +13478,7 @@ impl JsAnyObjectAssignmentPatternMember {
         &self,
     ) -> Option<&JsObjectAssignmentPatternProperty> {
         match &self {
-            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(item) => {
+            AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(item) => {
                 Some(item)
             }
             _ => None,
@@ -13482,7 +13486,7 @@ impl JsAnyObjectAssignmentPatternMember {
     }
     pub fn as_js_object_assignment_pattern_rest(&self) -> Option<&JsObjectAssignmentPatternRest> {
         match &self {
-            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(item) => Some(item),
+            AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(item) => Some(item),
             _ => None,
         }
     }
@@ -13490,7 +13494,7 @@ impl JsAnyObjectAssignmentPatternMember {
         &self,
     ) -> Option<&JsObjectAssignmentPatternShorthandProperty> {
         match &self {
-            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(
+            AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(
                 item,
             ) => Some(item),
             _ => None,
@@ -13499,28 +13503,28 @@ impl JsAnyObjectAssignmentPatternMember {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyObjectBindingPatternMember {
+pub enum AnyJsObjectBindingPatternMember {
     JsBogusBinding(JsBogusBinding),
     JsObjectBindingPatternProperty(JsObjectBindingPatternProperty),
     JsObjectBindingPatternRest(JsObjectBindingPatternRest),
     JsObjectBindingPatternShorthandProperty(JsObjectBindingPatternShorthandProperty),
 }
-impl JsAnyObjectBindingPatternMember {
+impl AnyJsObjectBindingPatternMember {
     pub fn as_js_bogus_binding(&self) -> Option<&JsBogusBinding> {
         match &self {
-            JsAnyObjectBindingPatternMember::JsBogusBinding(item) => Some(item),
+            AnyJsObjectBindingPatternMember::JsBogusBinding(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_object_binding_pattern_property(&self) -> Option<&JsObjectBindingPatternProperty> {
         match &self {
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(item) => Some(item),
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternProperty(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_object_binding_pattern_rest(&self) -> Option<&JsObjectBindingPatternRest> {
         match &self {
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(item) => Some(item),
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternRest(item) => Some(item),
             _ => None,
         }
     }
@@ -13528,7 +13532,7 @@ impl JsAnyObjectBindingPatternMember {
         &self,
     ) -> Option<&JsObjectBindingPatternShorthandProperty> {
         match &self {
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(item) => {
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(item) => {
                 Some(item)
             }
             _ => None,
@@ -13537,7 +13541,7 @@ impl JsAnyObjectBindingPatternMember {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyObjectMember {
+pub enum AnyJsObjectMember {
     JsBogusMember(JsBogusMember),
     JsGetterObjectMember(JsGetterObjectMember),
     JsMethodObjectMember(JsMethodObjectMember),
@@ -13546,34 +13550,34 @@ pub enum JsAnyObjectMember {
     JsShorthandPropertyObjectMember(JsShorthandPropertyObjectMember),
     JsSpread(JsSpread),
 }
-impl JsAnyObjectMember {
+impl AnyJsObjectMember {
     pub fn as_js_bogus_member(&self) -> Option<&JsBogusMember> {
         match &self {
-            JsAnyObjectMember::JsBogusMember(item) => Some(item),
+            AnyJsObjectMember::JsBogusMember(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_getter_object_member(&self) -> Option<&JsGetterObjectMember> {
         match &self {
-            JsAnyObjectMember::JsGetterObjectMember(item) => Some(item),
+            AnyJsObjectMember::JsGetterObjectMember(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_method_object_member(&self) -> Option<&JsMethodObjectMember> {
         match &self {
-            JsAnyObjectMember::JsMethodObjectMember(item) => Some(item),
+            AnyJsObjectMember::JsMethodObjectMember(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_property_object_member(&self) -> Option<&JsPropertyObjectMember> {
         match &self {
-            JsAnyObjectMember::JsPropertyObjectMember(item) => Some(item),
+            AnyJsObjectMember::JsPropertyObjectMember(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_setter_object_member(&self) -> Option<&JsSetterObjectMember> {
         match &self {
-            JsAnyObjectMember::JsSetterObjectMember(item) => Some(item),
+            AnyJsObjectMember::JsSetterObjectMember(item) => Some(item),
             _ => None,
         }
     }
@@ -13581,128 +13585,128 @@ impl JsAnyObjectMember {
         &self,
     ) -> Option<&JsShorthandPropertyObjectMember> {
         match &self {
-            JsAnyObjectMember::JsShorthandPropertyObjectMember(item) => Some(item),
+            AnyJsObjectMember::JsShorthandPropertyObjectMember(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_spread(&self) -> Option<&JsSpread> {
         match &self {
-            JsAnyObjectMember::JsSpread(item) => Some(item),
+            AnyJsObjectMember::JsSpread(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyObjectMemberName {
+pub enum AnyJsObjectMemberName {
     JsComputedMemberName(JsComputedMemberName),
     JsLiteralMemberName(JsLiteralMemberName),
 }
-impl JsAnyObjectMemberName {
+impl AnyJsObjectMemberName {
     pub fn as_js_computed_member_name(&self) -> Option<&JsComputedMemberName> {
         match &self {
-            JsAnyObjectMemberName::JsComputedMemberName(item) => Some(item),
+            AnyJsObjectMemberName::JsComputedMemberName(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_literal_member_name(&self) -> Option<&JsLiteralMemberName> {
         match &self {
-            JsAnyObjectMemberName::JsLiteralMemberName(item) => Some(item),
+            AnyJsObjectMemberName::JsLiteralMemberName(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyParameter {
-    JsAnyFormalParameter(JsAnyFormalParameter),
+pub enum AnyJsParameter {
+    AnyJsFormalParameter(AnyJsFormalParameter),
     JsRestParameter(JsRestParameter),
     TsThisParameter(TsThisParameter),
 }
-impl JsAnyParameter {
-    pub fn as_js_any_formal_parameter(&self) -> Option<&JsAnyFormalParameter> {
+impl AnyJsParameter {
+    pub fn as_any_js_formal_parameter(&self) -> Option<&AnyJsFormalParameter> {
         match &self {
-            JsAnyParameter::JsAnyFormalParameter(item) => Some(item),
+            AnyJsParameter::AnyJsFormalParameter(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_rest_parameter(&self) -> Option<&JsRestParameter> {
         match &self {
-            JsAnyParameter::JsRestParameter(item) => Some(item),
+            AnyJsParameter::JsRestParameter(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_this_parameter(&self) -> Option<&TsThisParameter> {
         match &self {
-            JsAnyParameter::TsThisParameter(item) => Some(item),
+            AnyJsParameter::TsThisParameter(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyPropertyModifier {
+pub enum AnyJsPropertyModifier {
     JsStaticModifier(JsStaticModifier),
     TsAccessibilityModifier(TsAccessibilityModifier),
     TsOverrideModifier(TsOverrideModifier),
     TsReadonlyModifier(TsReadonlyModifier),
 }
-impl JsAnyPropertyModifier {
+impl AnyJsPropertyModifier {
     pub fn as_js_static_modifier(&self) -> Option<&JsStaticModifier> {
         match &self {
-            JsAnyPropertyModifier::JsStaticModifier(item) => Some(item),
+            AnyJsPropertyModifier::JsStaticModifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_accessibility_modifier(&self) -> Option<&TsAccessibilityModifier> {
         match &self {
-            JsAnyPropertyModifier::TsAccessibilityModifier(item) => Some(item),
+            AnyJsPropertyModifier::TsAccessibilityModifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_override_modifier(&self) -> Option<&TsOverrideModifier> {
         match &self {
-            JsAnyPropertyModifier::TsOverrideModifier(item) => Some(item),
+            AnyJsPropertyModifier::TsOverrideModifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_readonly_modifier(&self) -> Option<&TsReadonlyModifier> {
         match &self {
-            JsAnyPropertyModifier::TsReadonlyModifier(item) => Some(item),
+            AnyJsPropertyModifier::TsReadonlyModifier(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyRoot {
+pub enum AnyJsRoot {
     JsExpressionSnipped(JsExpressionSnipped),
     JsModule(JsModule),
     JsScript(JsScript),
 }
-impl JsAnyRoot {
+impl AnyJsRoot {
     pub fn as_js_expression_snipped(&self) -> Option<&JsExpressionSnipped> {
         match &self {
-            JsAnyRoot::JsExpressionSnipped(item) => Some(item),
+            AnyJsRoot::JsExpressionSnipped(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_module(&self) -> Option<&JsModule> {
         match &self {
-            JsAnyRoot::JsModule(item) => Some(item),
+            AnyJsRoot::JsModule(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_script(&self) -> Option<&JsScript> {
         match &self {
-            JsAnyRoot::JsScript(item) => Some(item),
+            AnyJsRoot::JsScript(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyStatement {
+pub enum AnyJsStatement {
     JsBlockStatement(JsBlockStatement),
     JsBogusStatement(JsBogusStatement),
     JsBreakStatement(JsBreakStatement),
@@ -13736,310 +13740,310 @@ pub enum JsAnyStatement {
     TsModuleDeclaration(TsModuleDeclaration),
     TsTypeAliasDeclaration(TsTypeAliasDeclaration),
 }
-impl JsAnyStatement {
+impl AnyJsStatement {
     pub fn as_js_block_statement(&self) -> Option<&JsBlockStatement> {
         match &self {
-            JsAnyStatement::JsBlockStatement(item) => Some(item),
+            AnyJsStatement::JsBlockStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_bogus_statement(&self) -> Option<&JsBogusStatement> {
         match &self {
-            JsAnyStatement::JsBogusStatement(item) => Some(item),
+            AnyJsStatement::JsBogusStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_break_statement(&self) -> Option<&JsBreakStatement> {
         match &self {
-            JsAnyStatement::JsBreakStatement(item) => Some(item),
+            AnyJsStatement::JsBreakStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_class_declaration(&self) -> Option<&JsClassDeclaration> {
         match &self {
-            JsAnyStatement::JsClassDeclaration(item) => Some(item),
+            AnyJsStatement::JsClassDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_continue_statement(&self) -> Option<&JsContinueStatement> {
         match &self {
-            JsAnyStatement::JsContinueStatement(item) => Some(item),
+            AnyJsStatement::JsContinueStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_debugger_statement(&self) -> Option<&JsDebuggerStatement> {
         match &self {
-            JsAnyStatement::JsDebuggerStatement(item) => Some(item),
+            AnyJsStatement::JsDebuggerStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_do_while_statement(&self) -> Option<&JsDoWhileStatement> {
         match &self {
-            JsAnyStatement::JsDoWhileStatement(item) => Some(item),
+            AnyJsStatement::JsDoWhileStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_empty_statement(&self) -> Option<&JsEmptyStatement> {
         match &self {
-            JsAnyStatement::JsEmptyStatement(item) => Some(item),
+            AnyJsStatement::JsEmptyStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_expression_statement(&self) -> Option<&JsExpressionStatement> {
         match &self {
-            JsAnyStatement::JsExpressionStatement(item) => Some(item),
+            AnyJsStatement::JsExpressionStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_for_in_statement(&self) -> Option<&JsForInStatement> {
         match &self {
-            JsAnyStatement::JsForInStatement(item) => Some(item),
+            AnyJsStatement::JsForInStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_for_of_statement(&self) -> Option<&JsForOfStatement> {
         match &self {
-            JsAnyStatement::JsForOfStatement(item) => Some(item),
+            AnyJsStatement::JsForOfStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_for_statement(&self) -> Option<&JsForStatement> {
         match &self {
-            JsAnyStatement::JsForStatement(item) => Some(item),
+            AnyJsStatement::JsForStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_function_declaration(&self) -> Option<&JsFunctionDeclaration> {
         match &self {
-            JsAnyStatement::JsFunctionDeclaration(item) => Some(item),
+            AnyJsStatement::JsFunctionDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_if_statement(&self) -> Option<&JsIfStatement> {
         match &self {
-            JsAnyStatement::JsIfStatement(item) => Some(item),
+            AnyJsStatement::JsIfStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_labeled_statement(&self) -> Option<&JsLabeledStatement> {
         match &self {
-            JsAnyStatement::JsLabeledStatement(item) => Some(item),
+            AnyJsStatement::JsLabeledStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_return_statement(&self) -> Option<&JsReturnStatement> {
         match &self {
-            JsAnyStatement::JsReturnStatement(item) => Some(item),
+            AnyJsStatement::JsReturnStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_switch_statement(&self) -> Option<&JsSwitchStatement> {
         match &self {
-            JsAnyStatement::JsSwitchStatement(item) => Some(item),
+            AnyJsStatement::JsSwitchStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_throw_statement(&self) -> Option<&JsThrowStatement> {
         match &self {
-            JsAnyStatement::JsThrowStatement(item) => Some(item),
+            AnyJsStatement::JsThrowStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_try_finally_statement(&self) -> Option<&JsTryFinallyStatement> {
         match &self {
-            JsAnyStatement::JsTryFinallyStatement(item) => Some(item),
+            AnyJsStatement::JsTryFinallyStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_try_statement(&self) -> Option<&JsTryStatement> {
         match &self {
-            JsAnyStatement::JsTryStatement(item) => Some(item),
+            AnyJsStatement::JsTryStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_variable_statement(&self) -> Option<&JsVariableStatement> {
         match &self {
-            JsAnyStatement::JsVariableStatement(item) => Some(item),
+            AnyJsStatement::JsVariableStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_while_statement(&self) -> Option<&JsWhileStatement> {
         match &self {
-            JsAnyStatement::JsWhileStatement(item) => Some(item),
+            AnyJsStatement::JsWhileStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_with_statement(&self) -> Option<&JsWithStatement> {
         match &self {
-            JsAnyStatement::JsWithStatement(item) => Some(item),
+            AnyJsStatement::JsWithStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_declare_function_declaration(&self) -> Option<&TsDeclareFunctionDeclaration> {
         match &self {
-            JsAnyStatement::TsDeclareFunctionDeclaration(item) => Some(item),
+            AnyJsStatement::TsDeclareFunctionDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_declare_statement(&self) -> Option<&TsDeclareStatement> {
         match &self {
-            JsAnyStatement::TsDeclareStatement(item) => Some(item),
+            AnyJsStatement::TsDeclareStatement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_enum_declaration(&self) -> Option<&TsEnumDeclaration> {
         match &self {
-            JsAnyStatement::TsEnumDeclaration(item) => Some(item),
+            AnyJsStatement::TsEnumDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_external_module_declaration(&self) -> Option<&TsExternalModuleDeclaration> {
         match &self {
-            JsAnyStatement::TsExternalModuleDeclaration(item) => Some(item),
+            AnyJsStatement::TsExternalModuleDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_global_declaration(&self) -> Option<&TsGlobalDeclaration> {
         match &self {
-            JsAnyStatement::TsGlobalDeclaration(item) => Some(item),
+            AnyJsStatement::TsGlobalDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_import_equals_declaration(&self) -> Option<&TsImportEqualsDeclaration> {
         match &self {
-            JsAnyStatement::TsImportEqualsDeclaration(item) => Some(item),
+            AnyJsStatement::TsImportEqualsDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_interface_declaration(&self) -> Option<&TsInterfaceDeclaration> {
         match &self {
-            JsAnyStatement::TsInterfaceDeclaration(item) => Some(item),
+            AnyJsStatement::TsInterfaceDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_module_declaration(&self) -> Option<&TsModuleDeclaration> {
         match &self {
-            JsAnyStatement::TsModuleDeclaration(item) => Some(item),
+            AnyJsStatement::TsModuleDeclaration(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_type_alias_declaration(&self) -> Option<&TsTypeAliasDeclaration> {
         match &self {
-            JsAnyStatement::TsTypeAliasDeclaration(item) => Some(item),
+            AnyJsStatement::TsTypeAliasDeclaration(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnySwitchClause {
+pub enum AnyJsSwitchClause {
     JsCaseClause(JsCaseClause),
     JsDefaultClause(JsDefaultClause),
 }
-impl JsAnySwitchClause {
+impl AnyJsSwitchClause {
     pub fn as_js_case_clause(&self) -> Option<&JsCaseClause> {
         match &self {
-            JsAnySwitchClause::JsCaseClause(item) => Some(item),
+            AnyJsSwitchClause::JsCaseClause(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_default_clause(&self) -> Option<&JsDefaultClause> {
         match &self {
-            JsAnySwitchClause::JsDefaultClause(item) => Some(item),
+            AnyJsSwitchClause::JsDefaultClause(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsAnyTemplateElement {
+pub enum AnyJsTemplateElement {
     JsTemplateChunkElement(JsTemplateChunkElement),
     JsTemplateElement(JsTemplateElement),
 }
-impl JsAnyTemplateElement {
+impl AnyJsTemplateElement {
     pub fn as_js_template_chunk_element(&self) -> Option<&JsTemplateChunkElement> {
         match &self {
-            JsAnyTemplateElement::JsTemplateChunkElement(item) => Some(item),
+            AnyJsTemplateElement::JsTemplateChunkElement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_js_template_element(&self) -> Option<&JsTemplateElement> {
         match &self {
-            JsAnyTemplateElement::JsTemplateElement(item) => Some(item),
+            AnyJsTemplateElement::JsTemplateElement(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsxAnyAttribute {
+pub enum AnyJsxAttribute {
     JsxAttribute(JsxAttribute),
     JsxSpreadAttribute(JsxSpreadAttribute),
 }
-impl JsxAnyAttribute {
+impl AnyJsxAttribute {
     pub fn as_jsx_attribute(&self) -> Option<&JsxAttribute> {
         match &self {
-            JsxAnyAttribute::JsxAttribute(item) => Some(item),
+            AnyJsxAttribute::JsxAttribute(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_spread_attribute(&self) -> Option<&JsxSpreadAttribute> {
         match &self {
-            JsxAnyAttribute::JsxSpreadAttribute(item) => Some(item),
+            AnyJsxAttribute::JsxSpreadAttribute(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsxAnyAttributeName {
+pub enum AnyJsxAttributeName {
     JsxName(JsxName),
     JsxNamespaceName(JsxNamespaceName),
 }
-impl JsxAnyAttributeName {
+impl AnyJsxAttributeName {
     pub fn as_jsx_name(&self) -> Option<&JsxName> {
         match &self {
-            JsxAnyAttributeName::JsxName(item) => Some(item),
+            AnyJsxAttributeName::JsxName(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_namespace_name(&self) -> Option<&JsxNamespaceName> {
         match &self {
-            JsxAnyAttributeName::JsxNamespaceName(item) => Some(item),
+            AnyJsxAttributeName::JsxNamespaceName(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsxAnyAttributeValue {
-    JsxAnyTag(JsxAnyTag),
+pub enum AnyJsxAttributeValue {
+    AnyJsxTag(AnyJsxTag),
     JsxExpressionAttributeValue(JsxExpressionAttributeValue),
     JsxString(JsxString),
 }
-impl JsxAnyAttributeValue {
-    pub fn as_jsx_any_tag(&self) -> Option<&JsxAnyTag> {
+impl AnyJsxAttributeValue {
+    pub fn as_any_jsx_tag(&self) -> Option<&AnyJsxTag> {
         match &self {
-            JsxAnyAttributeValue::JsxAnyTag(item) => Some(item),
+            AnyJsxAttributeValue::AnyJsxTag(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_expression_attribute_value(&self) -> Option<&JsxExpressionAttributeValue> {
         match &self {
-            JsxAnyAttributeValue::JsxExpressionAttributeValue(item) => Some(item),
+            AnyJsxAttributeValue::JsxExpressionAttributeValue(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_string(&self) -> Option<&JsxString> {
         match &self {
-            JsxAnyAttributeValue::JsxString(item) => Some(item),
+            AnyJsxAttributeValue::JsxString(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsxAnyChild {
+pub enum AnyJsxChild {
     JsxElement(JsxElement),
     JsxExpressionChild(JsxExpressionChild),
     JsxFragment(JsxFragment),
@@ -14047,164 +14051,164 @@ pub enum JsxAnyChild {
     JsxSpreadChild(JsxSpreadChild),
     JsxText(JsxText),
 }
-impl JsxAnyChild {
+impl AnyJsxChild {
     pub fn as_jsx_element(&self) -> Option<&JsxElement> {
         match &self {
-            JsxAnyChild::JsxElement(item) => Some(item),
+            AnyJsxChild::JsxElement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_expression_child(&self) -> Option<&JsxExpressionChild> {
         match &self {
-            JsxAnyChild::JsxExpressionChild(item) => Some(item),
+            AnyJsxChild::JsxExpressionChild(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_fragment(&self) -> Option<&JsxFragment> {
         match &self {
-            JsxAnyChild::JsxFragment(item) => Some(item),
+            AnyJsxChild::JsxFragment(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_self_closing_element(&self) -> Option<&JsxSelfClosingElement> {
         match &self {
-            JsxAnyChild::JsxSelfClosingElement(item) => Some(item),
+            AnyJsxChild::JsxSelfClosingElement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_spread_child(&self) -> Option<&JsxSpreadChild> {
         match &self {
-            JsxAnyChild::JsxSpreadChild(item) => Some(item),
+            AnyJsxChild::JsxSpreadChild(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_text(&self) -> Option<&JsxText> {
         match &self {
-            JsxAnyChild::JsxText(item) => Some(item),
+            AnyJsxChild::JsxText(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsxAnyElementName {
+pub enum AnyJsxElementName {
     JsxMemberName(JsxMemberName),
     JsxName(JsxName),
     JsxNamespaceName(JsxNamespaceName),
     JsxReferenceIdentifier(JsxReferenceIdentifier),
 }
-impl JsxAnyElementName {
+impl AnyJsxElementName {
     pub fn as_jsx_member_name(&self) -> Option<&JsxMemberName> {
         match &self {
-            JsxAnyElementName::JsxMemberName(item) => Some(item),
+            AnyJsxElementName::JsxMemberName(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_name(&self) -> Option<&JsxName> {
         match &self {
-            JsxAnyElementName::JsxName(item) => Some(item),
+            AnyJsxElementName::JsxName(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_namespace_name(&self) -> Option<&JsxNamespaceName> {
         match &self {
-            JsxAnyElementName::JsxNamespaceName(item) => Some(item),
+            AnyJsxElementName::JsxNamespaceName(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_reference_identifier(&self) -> Option<&JsxReferenceIdentifier> {
         match &self {
-            JsxAnyElementName::JsxReferenceIdentifier(item) => Some(item),
+            AnyJsxElementName::JsxReferenceIdentifier(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsxAnyName {
+pub enum AnyJsxName {
     JsxName(JsxName),
     JsxNamespaceName(JsxNamespaceName),
 }
-impl JsxAnyName {
+impl AnyJsxName {
     pub fn as_jsx_name(&self) -> Option<&JsxName> {
         match &self {
-            JsxAnyName::JsxName(item) => Some(item),
+            AnyJsxName::JsxName(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_namespace_name(&self) -> Option<&JsxNamespaceName> {
         match &self {
-            JsxAnyName::JsxNamespaceName(item) => Some(item),
+            AnyJsxName::JsxNamespaceName(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsxAnyObjectName {
+pub enum AnyJsxObjectName {
     JsxMemberName(JsxMemberName),
     JsxNamespaceName(JsxNamespaceName),
     JsxReferenceIdentifier(JsxReferenceIdentifier),
 }
-impl JsxAnyObjectName {
+impl AnyJsxObjectName {
     pub fn as_jsx_member_name(&self) -> Option<&JsxMemberName> {
         match &self {
-            JsxAnyObjectName::JsxMemberName(item) => Some(item),
+            AnyJsxObjectName::JsxMemberName(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_namespace_name(&self) -> Option<&JsxNamespaceName> {
         match &self {
-            JsxAnyObjectName::JsxNamespaceName(item) => Some(item),
+            AnyJsxObjectName::JsxNamespaceName(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_reference_identifier(&self) -> Option<&JsxReferenceIdentifier> {
         match &self {
-            JsxAnyObjectName::JsxReferenceIdentifier(item) => Some(item),
+            AnyJsxObjectName::JsxReferenceIdentifier(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum JsxAnyTag {
+pub enum AnyJsxTag {
     JsxElement(JsxElement),
     JsxFragment(JsxFragment),
     JsxSelfClosingElement(JsxSelfClosingElement),
 }
-impl JsxAnyTag {
+impl AnyJsxTag {
     pub fn as_jsx_element(&self) -> Option<&JsxElement> {
         match &self {
-            JsxAnyTag::JsxElement(item) => Some(item),
+            AnyJsxTag::JsxElement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_fragment(&self) -> Option<&JsxFragment> {
         match &self {
-            JsxAnyTag::JsxFragment(item) => Some(item),
+            AnyJsxTag::JsxFragment(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_jsx_self_closing_element(&self) -> Option<&JsxSelfClosingElement> {
         match &self {
-            JsxAnyTag::JsxSelfClosingElement(item) => Some(item),
+            AnyJsxTag::JsxSelfClosingElement(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsAnyExternalModuleDeclarationBody {
+pub enum AnyTsExternalModuleDeclarationBody {
     TsEmptyExternalModuleDeclarationBody(TsEmptyExternalModuleDeclarationBody),
     TsModuleBlock(TsModuleBlock),
 }
-impl TsAnyExternalModuleDeclarationBody {
+impl AnyTsExternalModuleDeclarationBody {
     pub fn as_ts_empty_external_module_declaration_body(
         &self,
     ) -> Option<&TsEmptyExternalModuleDeclarationBody> {
         match &self {
-            TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(item) => {
+            AnyTsExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(item) => {
                 Some(item)
             }
             _ => None,
@@ -14212,202 +14216,202 @@ impl TsAnyExternalModuleDeclarationBody {
     }
     pub fn as_ts_module_block(&self) -> Option<&TsModuleBlock> {
         match &self {
-            TsAnyExternalModuleDeclarationBody::TsModuleBlock(item) => Some(item),
+            AnyTsExternalModuleDeclarationBody::TsModuleBlock(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsAnyIndexSignatureModifier {
+pub enum AnyTsIndexSignatureModifier {
     JsStaticModifier(JsStaticModifier),
     TsReadonlyModifier(TsReadonlyModifier),
 }
-impl TsAnyIndexSignatureModifier {
+impl AnyTsIndexSignatureModifier {
     pub fn as_js_static_modifier(&self) -> Option<&JsStaticModifier> {
         match &self {
-            TsAnyIndexSignatureModifier::JsStaticModifier(item) => Some(item),
+            AnyTsIndexSignatureModifier::JsStaticModifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_readonly_modifier(&self) -> Option<&TsReadonlyModifier> {
         match &self {
-            TsAnyIndexSignatureModifier::TsReadonlyModifier(item) => Some(item),
+            AnyTsIndexSignatureModifier::TsReadonlyModifier(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsAnyMethodSignatureModifier {
+pub enum AnyTsMethodSignatureModifier {
     JsStaticModifier(JsStaticModifier),
     TsAbstractModifier(TsAbstractModifier),
     TsAccessibilityModifier(TsAccessibilityModifier),
     TsOverrideModifier(TsOverrideModifier),
 }
-impl TsAnyMethodSignatureModifier {
+impl AnyTsMethodSignatureModifier {
     pub fn as_js_static_modifier(&self) -> Option<&JsStaticModifier> {
         match &self {
-            TsAnyMethodSignatureModifier::JsStaticModifier(item) => Some(item),
+            AnyTsMethodSignatureModifier::JsStaticModifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_abstract_modifier(&self) -> Option<&TsAbstractModifier> {
         match &self {
-            TsAnyMethodSignatureModifier::TsAbstractModifier(item) => Some(item),
+            AnyTsMethodSignatureModifier::TsAbstractModifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_accessibility_modifier(&self) -> Option<&TsAccessibilityModifier> {
         match &self {
-            TsAnyMethodSignatureModifier::TsAccessibilityModifier(item) => Some(item),
+            AnyTsMethodSignatureModifier::TsAccessibilityModifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_override_modifier(&self) -> Option<&TsOverrideModifier> {
         match &self {
-            TsAnyMethodSignatureModifier::TsOverrideModifier(item) => Some(item),
+            AnyTsMethodSignatureModifier::TsOverrideModifier(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsAnyModuleName {
+pub enum AnyTsModuleName {
     TsIdentifierBinding(TsIdentifierBinding),
     TsQualifiedModuleName(TsQualifiedModuleName),
 }
-impl TsAnyModuleName {
+impl AnyTsModuleName {
     pub fn as_ts_identifier_binding(&self) -> Option<&TsIdentifierBinding> {
         match &self {
-            TsAnyModuleName::TsIdentifierBinding(item) => Some(item),
+            AnyTsModuleName::TsIdentifierBinding(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_qualified_module_name(&self) -> Option<&TsQualifiedModuleName> {
         match &self {
-            TsAnyModuleName::TsQualifiedModuleName(item) => Some(item),
+            AnyTsModuleName::TsQualifiedModuleName(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsAnyModuleReference {
-    TsAnyName(TsAnyName),
+pub enum AnyTsModuleReference {
+    AnyTsName(AnyTsName),
     TsExternalModuleReference(TsExternalModuleReference),
 }
-impl TsAnyModuleReference {
-    pub fn as_ts_any_name(&self) -> Option<&TsAnyName> {
+impl AnyTsModuleReference {
+    pub fn as_any_ts_name(&self) -> Option<&AnyTsName> {
         match &self {
-            TsAnyModuleReference::TsAnyName(item) => Some(item),
+            AnyTsModuleReference::AnyTsName(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_external_module_reference(&self) -> Option<&TsExternalModuleReference> {
         match &self {
-            TsAnyModuleReference::TsExternalModuleReference(item) => Some(item),
+            AnyTsModuleReference::TsExternalModuleReference(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsAnyName {
+pub enum AnyTsName {
     JsReferenceIdentifier(JsReferenceIdentifier),
     TsQualifiedName(TsQualifiedName),
 }
-impl TsAnyName {
+impl AnyTsName {
     pub fn as_js_reference_identifier(&self) -> Option<&JsReferenceIdentifier> {
         match &self {
-            TsAnyName::JsReferenceIdentifier(item) => Some(item),
+            AnyTsName::JsReferenceIdentifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_qualified_name(&self) -> Option<&TsQualifiedName> {
         match &self {
-            TsAnyName::TsQualifiedName(item) => Some(item),
+            AnyTsName::TsQualifiedName(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsAnyPropertyAnnotation {
+pub enum AnyTsPropertyAnnotation {
     TsDefinitePropertyAnnotation(TsDefinitePropertyAnnotation),
     TsOptionalPropertyAnnotation(TsOptionalPropertyAnnotation),
     TsTypeAnnotation(TsTypeAnnotation),
 }
-impl TsAnyPropertyAnnotation {
+impl AnyTsPropertyAnnotation {
     pub fn as_ts_definite_property_annotation(&self) -> Option<&TsDefinitePropertyAnnotation> {
         match &self {
-            TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(item) => Some(item),
+            AnyTsPropertyAnnotation::TsDefinitePropertyAnnotation(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_optional_property_annotation(&self) -> Option<&TsOptionalPropertyAnnotation> {
         match &self {
-            TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(item) => Some(item),
+            AnyTsPropertyAnnotation::TsOptionalPropertyAnnotation(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_type_annotation(&self) -> Option<&TsTypeAnnotation> {
         match &self {
-            TsAnyPropertyAnnotation::TsTypeAnnotation(item) => Some(item),
+            AnyTsPropertyAnnotation::TsTypeAnnotation(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsAnyPropertyParameterModifier {
+pub enum AnyTsPropertyParameterModifier {
     TsAccessibilityModifier(TsAccessibilityModifier),
     TsOverrideModifier(TsOverrideModifier),
     TsReadonlyModifier(TsReadonlyModifier),
 }
-impl TsAnyPropertyParameterModifier {
+impl AnyTsPropertyParameterModifier {
     pub fn as_ts_accessibility_modifier(&self) -> Option<&TsAccessibilityModifier> {
         match &self {
-            TsAnyPropertyParameterModifier::TsAccessibilityModifier(item) => Some(item),
+            AnyTsPropertyParameterModifier::TsAccessibilityModifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_override_modifier(&self) -> Option<&TsOverrideModifier> {
         match &self {
-            TsAnyPropertyParameterModifier::TsOverrideModifier(item) => Some(item),
+            AnyTsPropertyParameterModifier::TsOverrideModifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_readonly_modifier(&self) -> Option<&TsReadonlyModifier> {
         match &self {
-            TsAnyPropertyParameterModifier::TsReadonlyModifier(item) => Some(item),
+            AnyTsPropertyParameterModifier::TsReadonlyModifier(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsAnyPropertySignatureAnnotation {
+pub enum AnyTsPropertySignatureAnnotation {
     TsOptionalPropertyAnnotation(TsOptionalPropertyAnnotation),
     TsTypeAnnotation(TsTypeAnnotation),
 }
-impl TsAnyPropertySignatureAnnotation {
+impl AnyTsPropertySignatureAnnotation {
     pub fn as_ts_optional_property_annotation(&self) -> Option<&TsOptionalPropertyAnnotation> {
         match &self {
-            TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(item) => Some(item),
+            AnyTsPropertySignatureAnnotation::TsOptionalPropertyAnnotation(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_type_annotation(&self) -> Option<&TsTypeAnnotation> {
         match &self {
-            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(item) => Some(item),
+            AnyTsPropertySignatureAnnotation::TsTypeAnnotation(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsAnyPropertySignatureModifier {
+pub enum AnyTsPropertySignatureModifier {
     JsStaticModifier(JsStaticModifier),
     TsAbstractModifier(TsAbstractModifier),
     TsAccessibilityModifier(TsAccessibilityModifier),
@@ -14415,230 +14419,128 @@ pub enum TsAnyPropertySignatureModifier {
     TsOverrideModifier(TsOverrideModifier),
     TsReadonlyModifier(TsReadonlyModifier),
 }
-impl TsAnyPropertySignatureModifier {
+impl AnyTsPropertySignatureModifier {
     pub fn as_js_static_modifier(&self) -> Option<&JsStaticModifier> {
         match &self {
-            TsAnyPropertySignatureModifier::JsStaticModifier(item) => Some(item),
+            AnyTsPropertySignatureModifier::JsStaticModifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_abstract_modifier(&self) -> Option<&TsAbstractModifier> {
         match &self {
-            TsAnyPropertySignatureModifier::TsAbstractModifier(item) => Some(item),
+            AnyTsPropertySignatureModifier::TsAbstractModifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_accessibility_modifier(&self) -> Option<&TsAccessibilityModifier> {
         match &self {
-            TsAnyPropertySignatureModifier::TsAccessibilityModifier(item) => Some(item),
+            AnyTsPropertySignatureModifier::TsAccessibilityModifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_declare_modifier(&self) -> Option<&TsDeclareModifier> {
         match &self {
-            TsAnyPropertySignatureModifier::TsDeclareModifier(item) => Some(item),
+            AnyTsPropertySignatureModifier::TsDeclareModifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_override_modifier(&self) -> Option<&TsOverrideModifier> {
         match &self {
-            TsAnyPropertySignatureModifier::TsOverrideModifier(item) => Some(item),
+            AnyTsPropertySignatureModifier::TsOverrideModifier(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_readonly_modifier(&self) -> Option<&TsReadonlyModifier> {
         match &self {
-            TsAnyPropertySignatureModifier::TsReadonlyModifier(item) => Some(item),
+            AnyTsPropertySignatureModifier::TsReadonlyModifier(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsAnyReturnType {
+pub enum AnyTsReturnType {
+    AnyTsType(AnyTsType),
     TsAssertsReturnType(TsAssertsReturnType),
     TsPredicateReturnType(TsPredicateReturnType),
-    TsType(TsType),
 }
-impl TsAnyReturnType {
+impl AnyTsReturnType {
+    pub fn as_any_ts_type(&self) -> Option<&AnyTsType> {
+        match &self {
+            AnyTsReturnType::AnyTsType(item) => Some(item),
+            _ => None,
+        }
+    }
     pub fn as_ts_asserts_return_type(&self) -> Option<&TsAssertsReturnType> {
         match &self {
-            TsAnyReturnType::TsAssertsReturnType(item) => Some(item),
+            AnyTsReturnType::TsAssertsReturnType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_predicate_return_type(&self) -> Option<&TsPredicateReturnType> {
         match &self {
-            TsAnyReturnType::TsPredicateReturnType(item) => Some(item),
-            _ => None,
-        }
-    }
-    pub fn as_ts_type(&self) -> Option<&TsType> {
-        match &self {
-            TsAnyReturnType::TsType(item) => Some(item),
+            AnyTsReturnType::TsPredicateReturnType(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsAnyTemplateElement {
+pub enum AnyTsTemplateElement {
     TsTemplateChunkElement(TsTemplateChunkElement),
     TsTemplateElement(TsTemplateElement),
 }
-impl TsAnyTemplateElement {
+impl AnyTsTemplateElement {
     pub fn as_ts_template_chunk_element(&self) -> Option<&TsTemplateChunkElement> {
         match &self {
-            TsAnyTemplateElement::TsTemplateChunkElement(item) => Some(item),
+            AnyTsTemplateElement::TsTemplateChunkElement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_template_element(&self) -> Option<&TsTemplateElement> {
         match &self {
-            TsAnyTemplateElement::TsTemplateElement(item) => Some(item),
+            AnyTsTemplateElement::TsTemplateElement(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsAnyTupleTypeElement {
+pub enum AnyTsTupleTypeElement {
+    AnyTsType(AnyTsType),
     TsNamedTupleTypeElement(TsNamedTupleTypeElement),
     TsOptionalTupleTypeElement(TsOptionalTupleTypeElement),
     TsRestTupleTypeElement(TsRestTupleTypeElement),
-    TsType(TsType),
 }
-impl TsAnyTupleTypeElement {
+impl AnyTsTupleTypeElement {
+    pub fn as_any_ts_type(&self) -> Option<&AnyTsType> {
+        match &self {
+            AnyTsTupleTypeElement::AnyTsType(item) => Some(item),
+            _ => None,
+        }
+    }
     pub fn as_ts_named_tuple_type_element(&self) -> Option<&TsNamedTupleTypeElement> {
         match &self {
-            TsAnyTupleTypeElement::TsNamedTupleTypeElement(item) => Some(item),
+            AnyTsTupleTypeElement::TsNamedTupleTypeElement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_optional_tuple_type_element(&self) -> Option<&TsOptionalTupleTypeElement> {
         match &self {
-            TsAnyTupleTypeElement::TsOptionalTupleTypeElement(item) => Some(item),
+            AnyTsTupleTypeElement::TsOptionalTupleTypeElement(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_rest_tuple_type_element(&self) -> Option<&TsRestTupleTypeElement> {
         match &self {
-            TsAnyTupleTypeElement::TsRestTupleTypeElement(item) => Some(item),
-            _ => None,
-        }
-    }
-    pub fn as_ts_type(&self) -> Option<&TsType> {
-        match &self {
-            TsAnyTupleTypeElement::TsType(item) => Some(item),
+            AnyTsTupleTypeElement::TsRestTupleTypeElement(item) => Some(item),
             _ => None,
         }
     }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsAnyTypeMember {
-    JsBogusMember(JsBogusMember),
-    TsCallSignatureTypeMember(TsCallSignatureTypeMember),
-    TsConstructSignatureTypeMember(TsConstructSignatureTypeMember),
-    TsGetterSignatureTypeMember(TsGetterSignatureTypeMember),
-    TsIndexSignatureTypeMember(TsIndexSignatureTypeMember),
-    TsMethodSignatureTypeMember(TsMethodSignatureTypeMember),
-    TsPropertySignatureTypeMember(TsPropertySignatureTypeMember),
-    TsSetterSignatureTypeMember(TsSetterSignatureTypeMember),
-}
-impl TsAnyTypeMember {
-    pub fn as_js_bogus_member(&self) -> Option<&JsBogusMember> {
-        match &self {
-            TsAnyTypeMember::JsBogusMember(item) => Some(item),
-            _ => None,
-        }
-    }
-    pub fn as_ts_call_signature_type_member(&self) -> Option<&TsCallSignatureTypeMember> {
-        match &self {
-            TsAnyTypeMember::TsCallSignatureTypeMember(item) => Some(item),
-            _ => None,
-        }
-    }
-    pub fn as_ts_construct_signature_type_member(&self) -> Option<&TsConstructSignatureTypeMember> {
-        match &self {
-            TsAnyTypeMember::TsConstructSignatureTypeMember(item) => Some(item),
-            _ => None,
-        }
-    }
-    pub fn as_ts_getter_signature_type_member(&self) -> Option<&TsGetterSignatureTypeMember> {
-        match &self {
-            TsAnyTypeMember::TsGetterSignatureTypeMember(item) => Some(item),
-            _ => None,
-        }
-    }
-    pub fn as_ts_index_signature_type_member(&self) -> Option<&TsIndexSignatureTypeMember> {
-        match &self {
-            TsAnyTypeMember::TsIndexSignatureTypeMember(item) => Some(item),
-            _ => None,
-        }
-    }
-    pub fn as_ts_method_signature_type_member(&self) -> Option<&TsMethodSignatureTypeMember> {
-        match &self {
-            TsAnyTypeMember::TsMethodSignatureTypeMember(item) => Some(item),
-            _ => None,
-        }
-    }
-    pub fn as_ts_property_signature_type_member(&self) -> Option<&TsPropertySignatureTypeMember> {
-        match &self {
-            TsAnyTypeMember::TsPropertySignatureTypeMember(item) => Some(item),
-            _ => None,
-        }
-    }
-    pub fn as_ts_setter_signature_type_member(&self) -> Option<&TsSetterSignatureTypeMember> {
-        match &self {
-            TsAnyTypeMember::TsSetterSignatureTypeMember(item) => Some(item),
-            _ => None,
-        }
-    }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsAnyTypePredicateParameterName {
-    JsReferenceIdentifier(JsReferenceIdentifier),
-    TsThisType(TsThisType),
-}
-impl TsAnyTypePredicateParameterName {
-    pub fn as_js_reference_identifier(&self) -> Option<&JsReferenceIdentifier> {
-        match &self {
-            TsAnyTypePredicateParameterName::JsReferenceIdentifier(item) => Some(item),
-            _ => None,
-        }
-    }
-    pub fn as_ts_this_type(&self) -> Option<&TsThisType> {
-        match &self {
-            TsAnyTypePredicateParameterName::TsThisType(item) => Some(item),
-            _ => None,
-        }
-    }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsAnyVariableAnnotation {
-    TsDefiniteVariableAnnotation(TsDefiniteVariableAnnotation),
-    TsTypeAnnotation(TsTypeAnnotation),
-}
-impl TsAnyVariableAnnotation {
-    pub fn as_ts_definite_variable_annotation(&self) -> Option<&TsDefiniteVariableAnnotation> {
-        match &self {
-            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(item) => Some(item),
-            _ => None,
-        }
-    }
-    pub fn as_ts_type_annotation(&self) -> Option<&TsTypeAnnotation> {
-        match &self {
-            TsAnyVariableAnnotation::TsTypeAnnotation(item) => Some(item),
-            _ => None,
-        }
-    }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "serde", derive(Serialize))]
-pub enum TsType {
+pub enum AnyTsType {
     TsAnyType(TsAnyType),
     TsArrayType(TsArrayType),
     TsBigIntLiteralType(TsBigIntLiteralType),
@@ -14675,214 +14577,316 @@ pub enum TsType {
     TsUnknownType(TsUnknownType),
     TsVoidType(TsVoidType),
 }
-impl TsType {
+impl AnyTsType {
     pub fn as_ts_any_type(&self) -> Option<&TsAnyType> {
         match &self {
-            TsType::TsAnyType(item) => Some(item),
+            AnyTsType::TsAnyType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_array_type(&self) -> Option<&TsArrayType> {
         match &self {
-            TsType::TsArrayType(item) => Some(item),
+            AnyTsType::TsArrayType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_big_int_literal_type(&self) -> Option<&TsBigIntLiteralType> {
         match &self {
-            TsType::TsBigIntLiteralType(item) => Some(item),
+            AnyTsType::TsBigIntLiteralType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_bigint_type(&self) -> Option<&TsBigintType> {
         match &self {
-            TsType::TsBigintType(item) => Some(item),
+            AnyTsType::TsBigintType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_bogus_type(&self) -> Option<&TsBogusType> {
         match &self {
-            TsType::TsBogusType(item) => Some(item),
+            AnyTsType::TsBogusType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_boolean_literal_type(&self) -> Option<&TsBooleanLiteralType> {
         match &self {
-            TsType::TsBooleanLiteralType(item) => Some(item),
+            AnyTsType::TsBooleanLiteralType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_boolean_type(&self) -> Option<&TsBooleanType> {
         match &self {
-            TsType::TsBooleanType(item) => Some(item),
+            AnyTsType::TsBooleanType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_conditional_type(&self) -> Option<&TsConditionalType> {
         match &self {
-            TsType::TsConditionalType(item) => Some(item),
+            AnyTsType::TsConditionalType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_constructor_type(&self) -> Option<&TsConstructorType> {
         match &self {
-            TsType::TsConstructorType(item) => Some(item),
+            AnyTsType::TsConstructorType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_function_type(&self) -> Option<&TsFunctionType> {
         match &self {
-            TsType::TsFunctionType(item) => Some(item),
+            AnyTsType::TsFunctionType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_import_type(&self) -> Option<&TsImportType> {
         match &self {
-            TsType::TsImportType(item) => Some(item),
+            AnyTsType::TsImportType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_indexed_access_type(&self) -> Option<&TsIndexedAccessType> {
         match &self {
-            TsType::TsIndexedAccessType(item) => Some(item),
+            AnyTsType::TsIndexedAccessType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_infer_type(&self) -> Option<&TsInferType> {
         match &self {
-            TsType::TsInferType(item) => Some(item),
+            AnyTsType::TsInferType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_intersection_type(&self) -> Option<&TsIntersectionType> {
         match &self {
-            TsType::TsIntersectionType(item) => Some(item),
+            AnyTsType::TsIntersectionType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_mapped_type(&self) -> Option<&TsMappedType> {
         match &self {
-            TsType::TsMappedType(item) => Some(item),
+            AnyTsType::TsMappedType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_never_type(&self) -> Option<&TsNeverType> {
         match &self {
-            TsType::TsNeverType(item) => Some(item),
+            AnyTsType::TsNeverType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_non_primitive_type(&self) -> Option<&TsNonPrimitiveType> {
         match &self {
-            TsType::TsNonPrimitiveType(item) => Some(item),
+            AnyTsType::TsNonPrimitiveType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_null_literal_type(&self) -> Option<&TsNullLiteralType> {
         match &self {
-            TsType::TsNullLiteralType(item) => Some(item),
+            AnyTsType::TsNullLiteralType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_number_literal_type(&self) -> Option<&TsNumberLiteralType> {
         match &self {
-            TsType::TsNumberLiteralType(item) => Some(item),
+            AnyTsType::TsNumberLiteralType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_number_type(&self) -> Option<&TsNumberType> {
         match &self {
-            TsType::TsNumberType(item) => Some(item),
+            AnyTsType::TsNumberType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_object_type(&self) -> Option<&TsObjectType> {
         match &self {
-            TsType::TsObjectType(item) => Some(item),
+            AnyTsType::TsObjectType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_parenthesized_type(&self) -> Option<&TsParenthesizedType> {
         match &self {
-            TsType::TsParenthesizedType(item) => Some(item),
+            AnyTsType::TsParenthesizedType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_reference_type(&self) -> Option<&TsReferenceType> {
         match &self {
-            TsType::TsReferenceType(item) => Some(item),
+            AnyTsType::TsReferenceType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_string_literal_type(&self) -> Option<&TsStringLiteralType> {
         match &self {
-            TsType::TsStringLiteralType(item) => Some(item),
+            AnyTsType::TsStringLiteralType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_string_type(&self) -> Option<&TsStringType> {
         match &self {
-            TsType::TsStringType(item) => Some(item),
+            AnyTsType::TsStringType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_symbol_type(&self) -> Option<&TsSymbolType> {
         match &self {
-            TsType::TsSymbolType(item) => Some(item),
+            AnyTsType::TsSymbolType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_template_literal_type(&self) -> Option<&TsTemplateLiteralType> {
         match &self {
-            TsType::TsTemplateLiteralType(item) => Some(item),
+            AnyTsType::TsTemplateLiteralType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_this_type(&self) -> Option<&TsThisType> {
         match &self {
-            TsType::TsThisType(item) => Some(item),
+            AnyTsType::TsThisType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_tuple_type(&self) -> Option<&TsTupleType> {
         match &self {
-            TsType::TsTupleType(item) => Some(item),
+            AnyTsType::TsTupleType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_type_operator_type(&self) -> Option<&TsTypeOperatorType> {
         match &self {
-            TsType::TsTypeOperatorType(item) => Some(item),
+            AnyTsType::TsTypeOperatorType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_typeof_type(&self) -> Option<&TsTypeofType> {
         match &self {
-            TsType::TsTypeofType(item) => Some(item),
+            AnyTsType::TsTypeofType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_undefined_type(&self) -> Option<&TsUndefinedType> {
         match &self {
-            TsType::TsUndefinedType(item) => Some(item),
+            AnyTsType::TsUndefinedType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_union_type(&self) -> Option<&TsUnionType> {
         match &self {
-            TsType::TsUnionType(item) => Some(item),
+            AnyTsType::TsUnionType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_unknown_type(&self) -> Option<&TsUnknownType> {
         match &self {
-            TsType::TsUnknownType(item) => Some(item),
+            AnyTsType::TsUnknownType(item) => Some(item),
             _ => None,
         }
     }
     pub fn as_ts_void_type(&self) -> Option<&TsVoidType> {
         match &self {
-            TsType::TsVoidType(item) => Some(item),
+            AnyTsType::TsVoidType(item) => Some(item),
+            _ => None,
+        }
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub enum AnyTsTypeMember {
+    JsBogusMember(JsBogusMember),
+    TsCallSignatureTypeMember(TsCallSignatureTypeMember),
+    TsConstructSignatureTypeMember(TsConstructSignatureTypeMember),
+    TsGetterSignatureTypeMember(TsGetterSignatureTypeMember),
+    TsIndexSignatureTypeMember(TsIndexSignatureTypeMember),
+    TsMethodSignatureTypeMember(TsMethodSignatureTypeMember),
+    TsPropertySignatureTypeMember(TsPropertySignatureTypeMember),
+    TsSetterSignatureTypeMember(TsSetterSignatureTypeMember),
+}
+impl AnyTsTypeMember {
+    pub fn as_js_bogus_member(&self) -> Option<&JsBogusMember> {
+        match &self {
+            AnyTsTypeMember::JsBogusMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_call_signature_type_member(&self) -> Option<&TsCallSignatureTypeMember> {
+        match &self {
+            AnyTsTypeMember::TsCallSignatureTypeMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_construct_signature_type_member(&self) -> Option<&TsConstructSignatureTypeMember> {
+        match &self {
+            AnyTsTypeMember::TsConstructSignatureTypeMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_getter_signature_type_member(&self) -> Option<&TsGetterSignatureTypeMember> {
+        match &self {
+            AnyTsTypeMember::TsGetterSignatureTypeMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_index_signature_type_member(&self) -> Option<&TsIndexSignatureTypeMember> {
+        match &self {
+            AnyTsTypeMember::TsIndexSignatureTypeMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_method_signature_type_member(&self) -> Option<&TsMethodSignatureTypeMember> {
+        match &self {
+            AnyTsTypeMember::TsMethodSignatureTypeMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_property_signature_type_member(&self) -> Option<&TsPropertySignatureTypeMember> {
+        match &self {
+            AnyTsTypeMember::TsPropertySignatureTypeMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_setter_signature_type_member(&self) -> Option<&TsSetterSignatureTypeMember> {
+        match &self {
+            AnyTsTypeMember::TsSetterSignatureTypeMember(item) => Some(item),
+            _ => None,
+        }
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub enum AnyTsTypePredicateParameterName {
+    JsReferenceIdentifier(JsReferenceIdentifier),
+    TsThisType(TsThisType),
+}
+impl AnyTsTypePredicateParameterName {
+    pub fn as_js_reference_identifier(&self) -> Option<&JsReferenceIdentifier> {
+        match &self {
+            AnyTsTypePredicateParameterName::JsReferenceIdentifier(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_this_type(&self) -> Option<&TsThisType> {
+        match &self {
+            AnyTsTypePredicateParameterName::TsThisType(item) => Some(item),
+            _ => None,
+        }
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub enum AnyTsVariableAnnotation {
+    TsDefiniteVariableAnnotation(TsDefiniteVariableAnnotation),
+    TsTypeAnnotation(TsTypeAnnotation),
+}
+impl AnyTsVariableAnnotation {
+    pub fn as_ts_definite_variable_annotation(&self) -> Option<&TsDefiniteVariableAnnotation> {
+        match &self {
+            AnyTsVariableAnnotation::TsDefiniteVariableAnnotation(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_type_annotation(&self) -> Option<&TsTypeAnnotation> {
+        match &self {
+            AnyTsVariableAnnotation::TsTypeAnnotation(item) => Some(item),
             _ => None,
         }
     }
@@ -24797,24 +24801,24 @@ impl From<TsVoidType> for SyntaxNode {
 impl From<TsVoidType> for SyntaxElement {
     fn from(n: TsVoidType) -> SyntaxElement { n.syntax.into() }
 }
-impl From<JsArrayAssignmentPatternRestElement> for JsAnyArrayAssignmentPatternElement {
-    fn from(node: JsArrayAssignmentPatternRestElement) -> JsAnyArrayAssignmentPatternElement {
-        JsAnyArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(node)
+impl From<JsArrayAssignmentPatternRestElement> for AnyJsArrayAssignmentPatternElement {
+    fn from(node: JsArrayAssignmentPatternRestElement) -> AnyJsArrayAssignmentPatternElement {
+        AnyJsArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(node)
     }
 }
-impl From<JsArrayHole> for JsAnyArrayAssignmentPatternElement {
-    fn from(node: JsArrayHole) -> JsAnyArrayAssignmentPatternElement {
-        JsAnyArrayAssignmentPatternElement::JsArrayHole(node)
+impl From<JsArrayHole> for AnyJsArrayAssignmentPatternElement {
+    fn from(node: JsArrayHole) -> AnyJsArrayAssignmentPatternElement {
+        AnyJsArrayAssignmentPatternElement::JsArrayHole(node)
     }
 }
-impl From<JsAssignmentWithDefault> for JsAnyArrayAssignmentPatternElement {
-    fn from(node: JsAssignmentWithDefault) -> JsAnyArrayAssignmentPatternElement {
-        JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(node)
+impl From<JsAssignmentWithDefault> for AnyJsArrayAssignmentPatternElement {
+    fn from(node: JsAssignmentWithDefault) -> AnyJsArrayAssignmentPatternElement {
+        AnyJsArrayAssignmentPatternElement::JsAssignmentWithDefault(node)
     }
 }
-impl AstNode for JsAnyArrayAssignmentPatternElement {
+impl AstNode for AnyJsArrayAssignmentPatternElement {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsAnyAssignmentPattern::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = AnyJsAssignmentPattern::KIND_SET
         .union(JsArrayAssignmentPatternRestElement::KIND_SET)
         .union(JsArrayHole::KIND_SET)
         .union(JsAssignmentWithDefault::KIND_SET);
@@ -24823,29 +24827,29 @@ impl AstNode for JsAnyArrayAssignmentPatternElement {
             JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT
             | JS_ARRAY_HOLE
             | JS_ASSIGNMENT_WITH_DEFAULT => true,
-            k if JsAnyAssignmentPattern::can_cast(k) => true,
+            k if AnyJsAssignmentPattern::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT => {
-                JsAnyArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(
+                AnyJsArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(
                     JsArrayAssignmentPatternRestElement { syntax },
                 )
             }
             JS_ARRAY_HOLE => {
-                JsAnyArrayAssignmentPatternElement::JsArrayHole(JsArrayHole { syntax })
+                AnyJsArrayAssignmentPatternElement::JsArrayHole(JsArrayHole { syntax })
             }
             JS_ASSIGNMENT_WITH_DEFAULT => {
-                JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(
+                AnyJsArrayAssignmentPatternElement::JsAssignmentWithDefault(
                     JsAssignmentWithDefault { syntax },
                 )
             }
             _ => {
-                if let Some(js_any_assignment_pattern) = JsAnyAssignmentPattern::cast(syntax) {
-                    return Some(JsAnyArrayAssignmentPatternElement::JsAnyAssignmentPattern(
-                        js_any_assignment_pattern,
+                if let Some(any_js_assignment_pattern) = AnyJsAssignmentPattern::cast(syntax) {
+                    return Some(AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(
+                        any_js_assignment_pattern,
                     ));
                 }
                 return None;
@@ -24855,77 +24859,77 @@ impl AstNode for JsAnyArrayAssignmentPatternElement {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(it) => {
+            AnyJsArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(it) => {
                 &it.syntax
             }
-            JsAnyArrayAssignmentPatternElement::JsArrayHole(it) => &it.syntax,
-            JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(it) => &it.syntax,
-            JsAnyArrayAssignmentPatternElement::JsAnyAssignmentPattern(it) => it.syntax(),
+            AnyJsArrayAssignmentPatternElement::JsArrayHole(it) => &it.syntax,
+            AnyJsArrayAssignmentPatternElement::JsAssignmentWithDefault(it) => &it.syntax,
+            AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(it) => {
+            AnyJsArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(it) => {
                 it.syntax
             }
-            JsAnyArrayAssignmentPatternElement::JsArrayHole(it) => it.syntax,
-            JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(it) => it.syntax,
-            JsAnyArrayAssignmentPatternElement::JsAnyAssignmentPattern(it) => it.into_syntax(),
+            AnyJsArrayAssignmentPatternElement::JsArrayHole(it) => it.syntax,
+            AnyJsArrayAssignmentPatternElement::JsAssignmentWithDefault(it) => it.syntax,
+            AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsAnyArrayAssignmentPatternElement {
+impl std::fmt::Debug for AnyJsArrayAssignmentPatternElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyArrayAssignmentPatternElement::JsAnyAssignmentPattern(it) => {
+            AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(it) => {
+            AnyJsArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyArrayAssignmentPatternElement::JsArrayHole(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(it) => {
+            AnyJsArrayAssignmentPatternElement::JsArrayHole(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsArrayAssignmentPatternElement::JsAssignmentWithDefault(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
         }
     }
 }
-impl From<JsAnyArrayAssignmentPatternElement> for SyntaxNode {
-    fn from(n: JsAnyArrayAssignmentPatternElement) -> SyntaxNode {
+impl From<AnyJsArrayAssignmentPatternElement> for SyntaxNode {
+    fn from(n: AnyJsArrayAssignmentPatternElement) -> SyntaxNode {
         match n {
-            JsAnyArrayAssignmentPatternElement::JsAnyAssignmentPattern(it) => it.into(),
-            JsAnyArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(it) => {
+            AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(it) => it.into(),
+            AnyJsArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(it) => {
                 it.into()
             }
-            JsAnyArrayAssignmentPatternElement::JsArrayHole(it) => it.into(),
-            JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(it) => it.into(),
+            AnyJsArrayAssignmentPatternElement::JsArrayHole(it) => it.into(),
+            AnyJsArrayAssignmentPatternElement::JsAssignmentWithDefault(it) => it.into(),
         }
     }
 }
-impl From<JsAnyArrayAssignmentPatternElement> for SyntaxElement {
-    fn from(n: JsAnyArrayAssignmentPatternElement) -> SyntaxElement {
+impl From<AnyJsArrayAssignmentPatternElement> for SyntaxElement {
+    fn from(n: AnyJsArrayAssignmentPatternElement) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsArrayBindingPatternRestElement> for JsAnyArrayBindingPatternElement {
-    fn from(node: JsArrayBindingPatternRestElement) -> JsAnyArrayBindingPatternElement {
-        JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(node)
+impl From<JsArrayBindingPatternRestElement> for AnyJsArrayBindingPatternElement {
+    fn from(node: JsArrayBindingPatternRestElement) -> AnyJsArrayBindingPatternElement {
+        AnyJsArrayBindingPatternElement::JsArrayBindingPatternRestElement(node)
     }
 }
-impl From<JsArrayHole> for JsAnyArrayBindingPatternElement {
-    fn from(node: JsArrayHole) -> JsAnyArrayBindingPatternElement {
-        JsAnyArrayBindingPatternElement::JsArrayHole(node)
+impl From<JsArrayHole> for AnyJsArrayBindingPatternElement {
+    fn from(node: JsArrayHole) -> AnyJsArrayBindingPatternElement {
+        AnyJsArrayBindingPatternElement::JsArrayHole(node)
     }
 }
-impl From<JsBindingPatternWithDefault> for JsAnyArrayBindingPatternElement {
-    fn from(node: JsBindingPatternWithDefault) -> JsAnyArrayBindingPatternElement {
-        JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(node)
+impl From<JsBindingPatternWithDefault> for AnyJsArrayBindingPatternElement {
+    fn from(node: JsBindingPatternWithDefault) -> AnyJsArrayBindingPatternElement {
+        AnyJsArrayBindingPatternElement::JsBindingPatternWithDefault(node)
     }
 }
-impl AstNode for JsAnyArrayBindingPatternElement {
+impl AstNode for AnyJsArrayBindingPatternElement {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsAnyBindingPattern::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = AnyJsBindingPattern::KIND_SET
         .union(JsArrayBindingPatternRestElement::KIND_SET)
         .union(JsArrayHole::KIND_SET)
         .union(JsBindingPatternWithDefault::KIND_SET);
@@ -24934,27 +24938,27 @@ impl AstNode for JsAnyArrayBindingPatternElement {
             JS_ARRAY_BINDING_PATTERN_REST_ELEMENT
             | JS_ARRAY_HOLE
             | JS_BINDING_PATTERN_WITH_DEFAULT => true,
-            k if JsAnyBindingPattern::can_cast(k) => true,
+            k if AnyJsBindingPattern::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_ARRAY_BINDING_PATTERN_REST_ELEMENT => {
-                JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(
+                AnyJsArrayBindingPatternElement::JsArrayBindingPatternRestElement(
                     JsArrayBindingPatternRestElement { syntax },
                 )
             }
-            JS_ARRAY_HOLE => JsAnyArrayBindingPatternElement::JsArrayHole(JsArrayHole { syntax }),
+            JS_ARRAY_HOLE => AnyJsArrayBindingPatternElement::JsArrayHole(JsArrayHole { syntax }),
             JS_BINDING_PATTERN_WITH_DEFAULT => {
-                JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(
+                AnyJsArrayBindingPatternElement::JsBindingPatternWithDefault(
                     JsBindingPatternWithDefault { syntax },
                 )
             }
             _ => {
-                if let Some(js_any_binding_pattern) = JsAnyBindingPattern::cast(syntax) {
-                    return Some(JsAnyArrayBindingPatternElement::JsAnyBindingPattern(
-                        js_any_binding_pattern,
+                if let Some(any_js_binding_pattern) = AnyJsBindingPattern::cast(syntax) {
+                    return Some(AnyJsArrayBindingPatternElement::AnyJsBindingPattern(
+                        any_js_binding_pattern,
                     ));
                 }
                 return None;
@@ -24964,76 +24968,76 @@ impl AstNode for JsAnyArrayBindingPatternElement {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(it) => &it.syntax,
-            JsAnyArrayBindingPatternElement::JsArrayHole(it) => &it.syntax,
-            JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(it) => &it.syntax,
-            JsAnyArrayBindingPatternElement::JsAnyBindingPattern(it) => it.syntax(),
+            AnyJsArrayBindingPatternElement::JsArrayBindingPatternRestElement(it) => &it.syntax,
+            AnyJsArrayBindingPatternElement::JsArrayHole(it) => &it.syntax,
+            AnyJsArrayBindingPatternElement::JsBindingPatternWithDefault(it) => &it.syntax,
+            AnyJsArrayBindingPatternElement::AnyJsBindingPattern(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(it) => it.syntax,
-            JsAnyArrayBindingPatternElement::JsArrayHole(it) => it.syntax,
-            JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(it) => it.syntax,
-            JsAnyArrayBindingPatternElement::JsAnyBindingPattern(it) => it.into_syntax(),
+            AnyJsArrayBindingPatternElement::JsArrayBindingPatternRestElement(it) => it.syntax,
+            AnyJsArrayBindingPatternElement::JsArrayHole(it) => it.syntax,
+            AnyJsArrayBindingPatternElement::JsBindingPatternWithDefault(it) => it.syntax,
+            AnyJsArrayBindingPatternElement::AnyJsBindingPattern(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsAnyArrayBindingPatternElement {
+impl std::fmt::Debug for AnyJsArrayBindingPatternElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyArrayBindingPatternElement::JsAnyBindingPattern(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(it) => {
+            AnyJsArrayBindingPatternElement::AnyJsBindingPattern(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsArrayBindingPatternElement::JsArrayBindingPatternRestElement(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyArrayBindingPatternElement::JsArrayHole(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(it) => {
+            AnyJsArrayBindingPatternElement::JsArrayHole(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsArrayBindingPatternElement::JsBindingPatternWithDefault(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
         }
     }
 }
-impl From<JsAnyArrayBindingPatternElement> for SyntaxNode {
-    fn from(n: JsAnyArrayBindingPatternElement) -> SyntaxNode {
+impl From<AnyJsArrayBindingPatternElement> for SyntaxNode {
+    fn from(n: AnyJsArrayBindingPatternElement) -> SyntaxNode {
         match n {
-            JsAnyArrayBindingPatternElement::JsAnyBindingPattern(it) => it.into(),
-            JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(it) => it.into(),
-            JsAnyArrayBindingPatternElement::JsArrayHole(it) => it.into(),
-            JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(it) => it.into(),
+            AnyJsArrayBindingPatternElement::AnyJsBindingPattern(it) => it.into(),
+            AnyJsArrayBindingPatternElement::JsArrayBindingPatternRestElement(it) => it.into(),
+            AnyJsArrayBindingPatternElement::JsArrayHole(it) => it.into(),
+            AnyJsArrayBindingPatternElement::JsBindingPatternWithDefault(it) => it.into(),
         }
     }
 }
-impl From<JsAnyArrayBindingPatternElement> for SyntaxElement {
-    fn from(n: JsAnyArrayBindingPatternElement) -> SyntaxElement {
+impl From<AnyJsArrayBindingPatternElement> for SyntaxElement {
+    fn from(n: AnyJsArrayBindingPatternElement) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsArrayHole> for JsAnyArrayElement {
-    fn from(node: JsArrayHole) -> JsAnyArrayElement { JsAnyArrayElement::JsArrayHole(node) }
+impl From<JsArrayHole> for AnyJsArrayElement {
+    fn from(node: JsArrayHole) -> AnyJsArrayElement { AnyJsArrayElement::JsArrayHole(node) }
 }
-impl From<JsSpread> for JsAnyArrayElement {
-    fn from(node: JsSpread) -> JsAnyArrayElement { JsAnyArrayElement::JsSpread(node) }
+impl From<JsSpread> for AnyJsArrayElement {
+    fn from(node: JsSpread) -> AnyJsArrayElement { AnyJsArrayElement::JsSpread(node) }
 }
-impl AstNode for JsAnyArrayElement {
+impl AstNode for AnyJsArrayElement {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsAnyExpression::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = AnyJsExpression::KIND_SET
         .union(JsArrayHole::KIND_SET)
         .union(JsSpread::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_ARRAY_HOLE | JS_SPREAD => true,
-            k if JsAnyExpression::can_cast(k) => true,
+            k if AnyJsExpression::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_ARRAY_HOLE => JsAnyArrayElement::JsArrayHole(JsArrayHole { syntax }),
-            JS_SPREAD => JsAnyArrayElement::JsSpread(JsSpread { syntax }),
+            JS_ARRAY_HOLE => AnyJsArrayElement::JsArrayHole(JsArrayHole { syntax }),
+            JS_SPREAD => AnyJsArrayElement::JsSpread(JsSpread { syntax }),
             _ => {
-                if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
-                    return Some(JsAnyArrayElement::JsAnyExpression(js_any_expression));
+                if let Some(any_js_expression) = AnyJsExpression::cast(syntax) {
+                    return Some(AnyJsArrayElement::AnyJsExpression(any_js_expression));
                 }
                 return None;
             }
@@ -25042,64 +25046,64 @@ impl AstNode for JsAnyArrayElement {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyArrayElement::JsArrayHole(it) => &it.syntax,
-            JsAnyArrayElement::JsSpread(it) => &it.syntax,
-            JsAnyArrayElement::JsAnyExpression(it) => it.syntax(),
+            AnyJsArrayElement::JsArrayHole(it) => &it.syntax,
+            AnyJsArrayElement::JsSpread(it) => &it.syntax,
+            AnyJsArrayElement::AnyJsExpression(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyArrayElement::JsArrayHole(it) => it.syntax,
-            JsAnyArrayElement::JsSpread(it) => it.syntax,
-            JsAnyArrayElement::JsAnyExpression(it) => it.into_syntax(),
+            AnyJsArrayElement::JsArrayHole(it) => it.syntax,
+            AnyJsArrayElement::JsSpread(it) => it.syntax,
+            AnyJsArrayElement::AnyJsExpression(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsAnyArrayElement {
+impl std::fmt::Debug for AnyJsArrayElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyArrayElement::JsAnyExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyArrayElement::JsArrayHole(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyArrayElement::JsSpread(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsArrayElement::AnyJsExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsArrayElement::JsArrayHole(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsArrayElement::JsSpread(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyArrayElement> for SyntaxNode {
-    fn from(n: JsAnyArrayElement) -> SyntaxNode {
+impl From<AnyJsArrayElement> for SyntaxNode {
+    fn from(n: AnyJsArrayElement) -> SyntaxNode {
         match n {
-            JsAnyArrayElement::JsAnyExpression(it) => it.into(),
-            JsAnyArrayElement::JsArrayHole(it) => it.into(),
-            JsAnyArrayElement::JsSpread(it) => it.into(),
+            AnyJsArrayElement::AnyJsExpression(it) => it.into(),
+            AnyJsArrayElement::JsArrayHole(it) => it.into(),
+            AnyJsArrayElement::JsSpread(it) => it.into(),
         }
     }
 }
-impl From<JsAnyArrayElement> for SyntaxElement {
-    fn from(n: JsAnyArrayElement) -> SyntaxElement {
+impl From<AnyJsArrayElement> for SyntaxElement {
+    fn from(n: AnyJsArrayElement) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsParameters> for JsAnyArrowFunctionParameters {
-    fn from(node: JsParameters) -> JsAnyArrowFunctionParameters {
-        JsAnyArrowFunctionParameters::JsParameters(node)
+impl From<JsParameters> for AnyJsArrowFunctionParameters {
+    fn from(node: JsParameters) -> AnyJsArrowFunctionParameters {
+        AnyJsArrowFunctionParameters::JsParameters(node)
     }
 }
-impl AstNode for JsAnyArrowFunctionParameters {
+impl AstNode for AnyJsArrowFunctionParameters {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsAnyBinding::KIND_SET.union(JsParameters::KIND_SET);
+    const KIND_SET: SyntaxKindSet<Language> = AnyJsBinding::KIND_SET.union(JsParameters::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_PARAMETERS => true,
-            k if JsAnyBinding::can_cast(k) => true,
+            k if AnyJsBinding::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_PARAMETERS => JsAnyArrowFunctionParameters::JsParameters(JsParameters { syntax }),
+            JS_PARAMETERS => AnyJsArrowFunctionParameters::JsParameters(JsParameters { syntax }),
             _ => {
-                if let Some(js_any_binding) = JsAnyBinding::cast(syntax) {
-                    return Some(JsAnyArrowFunctionParameters::JsAnyBinding(js_any_binding));
+                if let Some(any_js_binding) = AnyJsBinding::cast(syntax) {
+                    return Some(AnyJsArrowFunctionParameters::AnyJsBinding(any_js_binding));
                 }
                 return None;
             }
@@ -25108,81 +25112,81 @@ impl AstNode for JsAnyArrowFunctionParameters {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyArrowFunctionParameters::JsParameters(it) => &it.syntax,
-            JsAnyArrowFunctionParameters::JsAnyBinding(it) => it.syntax(),
+            AnyJsArrowFunctionParameters::JsParameters(it) => &it.syntax,
+            AnyJsArrowFunctionParameters::AnyJsBinding(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyArrowFunctionParameters::JsParameters(it) => it.syntax,
-            JsAnyArrowFunctionParameters::JsAnyBinding(it) => it.into_syntax(),
+            AnyJsArrowFunctionParameters::JsParameters(it) => it.syntax,
+            AnyJsArrowFunctionParameters::AnyJsBinding(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsAnyArrowFunctionParameters {
+impl std::fmt::Debug for AnyJsArrowFunctionParameters {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyArrowFunctionParameters::JsAnyBinding(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyArrowFunctionParameters::JsParameters(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsArrowFunctionParameters::AnyJsBinding(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsArrowFunctionParameters::JsParameters(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyArrowFunctionParameters> for SyntaxNode {
-    fn from(n: JsAnyArrowFunctionParameters) -> SyntaxNode {
+impl From<AnyJsArrowFunctionParameters> for SyntaxNode {
+    fn from(n: AnyJsArrowFunctionParameters) -> SyntaxNode {
         match n {
-            JsAnyArrowFunctionParameters::JsAnyBinding(it) => it.into(),
-            JsAnyArrowFunctionParameters::JsParameters(it) => it.into(),
+            AnyJsArrowFunctionParameters::AnyJsBinding(it) => it.into(),
+            AnyJsArrowFunctionParameters::JsParameters(it) => it.into(),
         }
     }
 }
-impl From<JsAnyArrowFunctionParameters> for SyntaxElement {
-    fn from(n: JsAnyArrowFunctionParameters) -> SyntaxElement {
+impl From<AnyJsArrowFunctionParameters> for SyntaxElement {
+    fn from(n: AnyJsArrowFunctionParameters) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsBogusAssignment> for JsAnyAssignment {
-    fn from(node: JsBogusAssignment) -> JsAnyAssignment { JsAnyAssignment::JsBogusAssignment(node) }
+impl From<JsBogusAssignment> for AnyJsAssignment {
+    fn from(node: JsBogusAssignment) -> AnyJsAssignment { AnyJsAssignment::JsBogusAssignment(node) }
 }
-impl From<JsComputedMemberAssignment> for JsAnyAssignment {
-    fn from(node: JsComputedMemberAssignment) -> JsAnyAssignment {
-        JsAnyAssignment::JsComputedMemberAssignment(node)
+impl From<JsComputedMemberAssignment> for AnyJsAssignment {
+    fn from(node: JsComputedMemberAssignment) -> AnyJsAssignment {
+        AnyJsAssignment::JsComputedMemberAssignment(node)
     }
 }
-impl From<JsIdentifierAssignment> for JsAnyAssignment {
-    fn from(node: JsIdentifierAssignment) -> JsAnyAssignment {
-        JsAnyAssignment::JsIdentifierAssignment(node)
+impl From<JsIdentifierAssignment> for AnyJsAssignment {
+    fn from(node: JsIdentifierAssignment) -> AnyJsAssignment {
+        AnyJsAssignment::JsIdentifierAssignment(node)
     }
 }
-impl From<JsParenthesizedAssignment> for JsAnyAssignment {
-    fn from(node: JsParenthesizedAssignment) -> JsAnyAssignment {
-        JsAnyAssignment::JsParenthesizedAssignment(node)
+impl From<JsParenthesizedAssignment> for AnyJsAssignment {
+    fn from(node: JsParenthesizedAssignment) -> AnyJsAssignment {
+        AnyJsAssignment::JsParenthesizedAssignment(node)
     }
 }
-impl From<JsStaticMemberAssignment> for JsAnyAssignment {
-    fn from(node: JsStaticMemberAssignment) -> JsAnyAssignment {
-        JsAnyAssignment::JsStaticMemberAssignment(node)
+impl From<JsStaticMemberAssignment> for AnyJsAssignment {
+    fn from(node: JsStaticMemberAssignment) -> AnyJsAssignment {
+        AnyJsAssignment::JsStaticMemberAssignment(node)
     }
 }
-impl From<TsAsAssignment> for JsAnyAssignment {
-    fn from(node: TsAsAssignment) -> JsAnyAssignment { JsAnyAssignment::TsAsAssignment(node) }
+impl From<TsAsAssignment> for AnyJsAssignment {
+    fn from(node: TsAsAssignment) -> AnyJsAssignment { AnyJsAssignment::TsAsAssignment(node) }
 }
-impl From<TsNonNullAssertionAssignment> for JsAnyAssignment {
-    fn from(node: TsNonNullAssertionAssignment) -> JsAnyAssignment {
-        JsAnyAssignment::TsNonNullAssertionAssignment(node)
+impl From<TsNonNullAssertionAssignment> for AnyJsAssignment {
+    fn from(node: TsNonNullAssertionAssignment) -> AnyJsAssignment {
+        AnyJsAssignment::TsNonNullAssertionAssignment(node)
     }
 }
-impl From<TsSatisfiesAssignment> for JsAnyAssignment {
-    fn from(node: TsSatisfiesAssignment) -> JsAnyAssignment {
-        JsAnyAssignment::TsSatisfiesAssignment(node)
+impl From<TsSatisfiesAssignment> for AnyJsAssignment {
+    fn from(node: TsSatisfiesAssignment) -> AnyJsAssignment {
+        AnyJsAssignment::TsSatisfiesAssignment(node)
     }
 }
-impl From<TsTypeAssertionAssignment> for JsAnyAssignment {
-    fn from(node: TsTypeAssertionAssignment) -> JsAnyAssignment {
-        JsAnyAssignment::TsTypeAssertionAssignment(node)
+impl From<TsTypeAssertionAssignment> for AnyJsAssignment {
+    fn from(node: TsTypeAssertionAssignment) -> AnyJsAssignment {
+        AnyJsAssignment::TsTypeAssertionAssignment(node)
     }
 }
-impl AstNode for JsAnyAssignment {
+impl AstNode for AnyJsAssignment {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsBogusAssignment::KIND_SET
         .union(JsComputedMemberAssignment::KIND_SET)
@@ -25209,30 +25213,30 @@ impl AstNode for JsAnyAssignment {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_BOGUS_ASSIGNMENT => JsAnyAssignment::JsBogusAssignment(JsBogusAssignment { syntax }),
+            JS_BOGUS_ASSIGNMENT => AnyJsAssignment::JsBogusAssignment(JsBogusAssignment { syntax }),
             JS_COMPUTED_MEMBER_ASSIGNMENT => {
-                JsAnyAssignment::JsComputedMemberAssignment(JsComputedMemberAssignment { syntax })
+                AnyJsAssignment::JsComputedMemberAssignment(JsComputedMemberAssignment { syntax })
             }
             JS_IDENTIFIER_ASSIGNMENT => {
-                JsAnyAssignment::JsIdentifierAssignment(JsIdentifierAssignment { syntax })
+                AnyJsAssignment::JsIdentifierAssignment(JsIdentifierAssignment { syntax })
             }
             JS_PARENTHESIZED_ASSIGNMENT => {
-                JsAnyAssignment::JsParenthesizedAssignment(JsParenthesizedAssignment { syntax })
+                AnyJsAssignment::JsParenthesizedAssignment(JsParenthesizedAssignment { syntax })
             }
             JS_STATIC_MEMBER_ASSIGNMENT => {
-                JsAnyAssignment::JsStaticMemberAssignment(JsStaticMemberAssignment { syntax })
+                AnyJsAssignment::JsStaticMemberAssignment(JsStaticMemberAssignment { syntax })
             }
-            TS_AS_ASSIGNMENT => JsAnyAssignment::TsAsAssignment(TsAsAssignment { syntax }),
+            TS_AS_ASSIGNMENT => AnyJsAssignment::TsAsAssignment(TsAsAssignment { syntax }),
             TS_NON_NULL_ASSERTION_ASSIGNMENT => {
-                JsAnyAssignment::TsNonNullAssertionAssignment(TsNonNullAssertionAssignment {
+                AnyJsAssignment::TsNonNullAssertionAssignment(TsNonNullAssertionAssignment {
                     syntax,
                 })
             }
             TS_SATISFIES_ASSIGNMENT => {
-                JsAnyAssignment::TsSatisfiesAssignment(TsSatisfiesAssignment { syntax })
+                AnyJsAssignment::TsSatisfiesAssignment(TsSatisfiesAssignment { syntax })
             }
             TS_TYPE_ASSERTION_ASSIGNMENT => {
-                JsAnyAssignment::TsTypeAssertionAssignment(TsTypeAssertionAssignment { syntax })
+                AnyJsAssignment::TsTypeAssertionAssignment(TsTypeAssertionAssignment { syntax })
             }
             _ => return None,
         };
@@ -25240,104 +25244,104 @@ impl AstNode for JsAnyAssignment {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyAssignment::JsBogusAssignment(it) => &it.syntax,
-            JsAnyAssignment::JsComputedMemberAssignment(it) => &it.syntax,
-            JsAnyAssignment::JsIdentifierAssignment(it) => &it.syntax,
-            JsAnyAssignment::JsParenthesizedAssignment(it) => &it.syntax,
-            JsAnyAssignment::JsStaticMemberAssignment(it) => &it.syntax,
-            JsAnyAssignment::TsAsAssignment(it) => &it.syntax,
-            JsAnyAssignment::TsNonNullAssertionAssignment(it) => &it.syntax,
-            JsAnyAssignment::TsSatisfiesAssignment(it) => &it.syntax,
-            JsAnyAssignment::TsTypeAssertionAssignment(it) => &it.syntax,
+            AnyJsAssignment::JsBogusAssignment(it) => &it.syntax,
+            AnyJsAssignment::JsComputedMemberAssignment(it) => &it.syntax,
+            AnyJsAssignment::JsIdentifierAssignment(it) => &it.syntax,
+            AnyJsAssignment::JsParenthesizedAssignment(it) => &it.syntax,
+            AnyJsAssignment::JsStaticMemberAssignment(it) => &it.syntax,
+            AnyJsAssignment::TsAsAssignment(it) => &it.syntax,
+            AnyJsAssignment::TsNonNullAssertionAssignment(it) => &it.syntax,
+            AnyJsAssignment::TsSatisfiesAssignment(it) => &it.syntax,
+            AnyJsAssignment::TsTypeAssertionAssignment(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyAssignment::JsBogusAssignment(it) => it.syntax,
-            JsAnyAssignment::JsComputedMemberAssignment(it) => it.syntax,
-            JsAnyAssignment::JsIdentifierAssignment(it) => it.syntax,
-            JsAnyAssignment::JsParenthesizedAssignment(it) => it.syntax,
-            JsAnyAssignment::JsStaticMemberAssignment(it) => it.syntax,
-            JsAnyAssignment::TsAsAssignment(it) => it.syntax,
-            JsAnyAssignment::TsNonNullAssertionAssignment(it) => it.syntax,
-            JsAnyAssignment::TsSatisfiesAssignment(it) => it.syntax,
-            JsAnyAssignment::TsTypeAssertionAssignment(it) => it.syntax,
+            AnyJsAssignment::JsBogusAssignment(it) => it.syntax,
+            AnyJsAssignment::JsComputedMemberAssignment(it) => it.syntax,
+            AnyJsAssignment::JsIdentifierAssignment(it) => it.syntax,
+            AnyJsAssignment::JsParenthesizedAssignment(it) => it.syntax,
+            AnyJsAssignment::JsStaticMemberAssignment(it) => it.syntax,
+            AnyJsAssignment::TsAsAssignment(it) => it.syntax,
+            AnyJsAssignment::TsNonNullAssertionAssignment(it) => it.syntax,
+            AnyJsAssignment::TsSatisfiesAssignment(it) => it.syntax,
+            AnyJsAssignment::TsTypeAssertionAssignment(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyAssignment {
+impl std::fmt::Debug for AnyJsAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyAssignment::JsBogusAssignment(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyAssignment::JsComputedMemberAssignment(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyAssignment::JsIdentifierAssignment(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyAssignment::JsParenthesizedAssignment(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyAssignment::JsStaticMemberAssignment(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyAssignment::TsAsAssignment(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyAssignment::TsNonNullAssertionAssignment(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyAssignment::TsSatisfiesAssignment(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyAssignment::TsTypeAssertionAssignment(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsAssignment::JsBogusAssignment(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsAssignment::JsComputedMemberAssignment(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsAssignment::JsIdentifierAssignment(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsAssignment::JsParenthesizedAssignment(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsAssignment::JsStaticMemberAssignment(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsAssignment::TsAsAssignment(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsAssignment::TsNonNullAssertionAssignment(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsAssignment::TsSatisfiesAssignment(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsAssignment::TsTypeAssertionAssignment(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyAssignment> for SyntaxNode {
-    fn from(n: JsAnyAssignment) -> SyntaxNode {
+impl From<AnyJsAssignment> for SyntaxNode {
+    fn from(n: AnyJsAssignment) -> SyntaxNode {
         match n {
-            JsAnyAssignment::JsBogusAssignment(it) => it.into(),
-            JsAnyAssignment::JsComputedMemberAssignment(it) => it.into(),
-            JsAnyAssignment::JsIdentifierAssignment(it) => it.into(),
-            JsAnyAssignment::JsParenthesizedAssignment(it) => it.into(),
-            JsAnyAssignment::JsStaticMemberAssignment(it) => it.into(),
-            JsAnyAssignment::TsAsAssignment(it) => it.into(),
-            JsAnyAssignment::TsNonNullAssertionAssignment(it) => it.into(),
-            JsAnyAssignment::TsSatisfiesAssignment(it) => it.into(),
-            JsAnyAssignment::TsTypeAssertionAssignment(it) => it.into(),
+            AnyJsAssignment::JsBogusAssignment(it) => it.into(),
+            AnyJsAssignment::JsComputedMemberAssignment(it) => it.into(),
+            AnyJsAssignment::JsIdentifierAssignment(it) => it.into(),
+            AnyJsAssignment::JsParenthesizedAssignment(it) => it.into(),
+            AnyJsAssignment::JsStaticMemberAssignment(it) => it.into(),
+            AnyJsAssignment::TsAsAssignment(it) => it.into(),
+            AnyJsAssignment::TsNonNullAssertionAssignment(it) => it.into(),
+            AnyJsAssignment::TsSatisfiesAssignment(it) => it.into(),
+            AnyJsAssignment::TsTypeAssertionAssignment(it) => it.into(),
         }
     }
 }
-impl From<JsAnyAssignment> for SyntaxElement {
-    fn from(n: JsAnyAssignment) -> SyntaxElement {
+impl From<AnyJsAssignment> for SyntaxElement {
+    fn from(n: AnyJsAssignment) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsArrayAssignmentPattern> for JsAnyAssignmentPattern {
-    fn from(node: JsArrayAssignmentPattern) -> JsAnyAssignmentPattern {
-        JsAnyAssignmentPattern::JsArrayAssignmentPattern(node)
+impl From<JsArrayAssignmentPattern> for AnyJsAssignmentPattern {
+    fn from(node: JsArrayAssignmentPattern) -> AnyJsAssignmentPattern {
+        AnyJsAssignmentPattern::JsArrayAssignmentPattern(node)
     }
 }
-impl From<JsObjectAssignmentPattern> for JsAnyAssignmentPattern {
-    fn from(node: JsObjectAssignmentPattern) -> JsAnyAssignmentPattern {
-        JsAnyAssignmentPattern::JsObjectAssignmentPattern(node)
+impl From<JsObjectAssignmentPattern> for AnyJsAssignmentPattern {
+    fn from(node: JsObjectAssignmentPattern) -> AnyJsAssignmentPattern {
+        AnyJsAssignmentPattern::JsObjectAssignmentPattern(node)
     }
 }
-impl AstNode for JsAnyAssignmentPattern {
+impl AstNode for AnyJsAssignmentPattern {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsAnyAssignment::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = AnyJsAssignment::KIND_SET
         .union(JsArrayAssignmentPattern::KIND_SET)
         .union(JsObjectAssignmentPattern::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_ARRAY_ASSIGNMENT_PATTERN | JS_OBJECT_ASSIGNMENT_PATTERN => true,
-            k if JsAnyAssignment::can_cast(k) => true,
+            k if AnyJsAssignment::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_ARRAY_ASSIGNMENT_PATTERN => {
-                JsAnyAssignmentPattern::JsArrayAssignmentPattern(JsArrayAssignmentPattern {
+                AnyJsAssignmentPattern::JsArrayAssignmentPattern(JsArrayAssignmentPattern {
                     syntax,
                 })
             }
             JS_OBJECT_ASSIGNMENT_PATTERN => {
-                JsAnyAssignmentPattern::JsObjectAssignmentPattern(JsObjectAssignmentPattern {
+                AnyJsAssignmentPattern::JsObjectAssignmentPattern(JsObjectAssignmentPattern {
                     syntax,
                 })
             }
             _ => {
-                if let Some(js_any_assignment) = JsAnyAssignment::cast(syntax) {
-                    return Some(JsAnyAssignmentPattern::JsAnyAssignment(js_any_assignment));
+                if let Some(any_js_assignment) = AnyJsAssignment::cast(syntax) {
+                    return Some(AnyJsAssignmentPattern::AnyJsAssignment(any_js_assignment));
                 }
                 return None;
             }
@@ -25346,50 +25350,50 @@ impl AstNode for JsAnyAssignmentPattern {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyAssignmentPattern::JsArrayAssignmentPattern(it) => &it.syntax,
-            JsAnyAssignmentPattern::JsObjectAssignmentPattern(it) => &it.syntax,
-            JsAnyAssignmentPattern::JsAnyAssignment(it) => it.syntax(),
+            AnyJsAssignmentPattern::JsArrayAssignmentPattern(it) => &it.syntax,
+            AnyJsAssignmentPattern::JsObjectAssignmentPattern(it) => &it.syntax,
+            AnyJsAssignmentPattern::AnyJsAssignment(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyAssignmentPattern::JsArrayAssignmentPattern(it) => it.syntax,
-            JsAnyAssignmentPattern::JsObjectAssignmentPattern(it) => it.syntax,
-            JsAnyAssignmentPattern::JsAnyAssignment(it) => it.into_syntax(),
+            AnyJsAssignmentPattern::JsArrayAssignmentPattern(it) => it.syntax,
+            AnyJsAssignmentPattern::JsObjectAssignmentPattern(it) => it.syntax,
+            AnyJsAssignmentPattern::AnyJsAssignment(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsAnyAssignmentPattern {
+impl std::fmt::Debug for AnyJsAssignmentPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyAssignmentPattern::JsAnyAssignment(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyAssignmentPattern::JsArrayAssignmentPattern(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyAssignmentPattern::JsObjectAssignmentPattern(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsAssignmentPattern::AnyJsAssignment(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsAssignmentPattern::JsArrayAssignmentPattern(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsAssignmentPattern::JsObjectAssignmentPattern(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyAssignmentPattern> for SyntaxNode {
-    fn from(n: JsAnyAssignmentPattern) -> SyntaxNode {
+impl From<AnyJsAssignmentPattern> for SyntaxNode {
+    fn from(n: AnyJsAssignmentPattern) -> SyntaxNode {
         match n {
-            JsAnyAssignmentPattern::JsAnyAssignment(it) => it.into(),
-            JsAnyAssignmentPattern::JsArrayAssignmentPattern(it) => it.into(),
-            JsAnyAssignmentPattern::JsObjectAssignmentPattern(it) => it.into(),
+            AnyJsAssignmentPattern::AnyJsAssignment(it) => it.into(),
+            AnyJsAssignmentPattern::JsArrayAssignmentPattern(it) => it.into(),
+            AnyJsAssignmentPattern::JsObjectAssignmentPattern(it) => it.into(),
         }
     }
 }
-impl From<JsAnyAssignmentPattern> for SyntaxElement {
-    fn from(n: JsAnyAssignmentPattern) -> SyntaxElement {
+impl From<AnyJsAssignmentPattern> for SyntaxElement {
+    fn from(n: AnyJsAssignmentPattern) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsBogusBinding> for JsAnyBinding {
-    fn from(node: JsBogusBinding) -> JsAnyBinding { JsAnyBinding::JsBogusBinding(node) }
+impl From<JsBogusBinding> for AnyJsBinding {
+    fn from(node: JsBogusBinding) -> AnyJsBinding { AnyJsBinding::JsBogusBinding(node) }
 }
-impl From<JsIdentifierBinding> for JsAnyBinding {
-    fn from(node: JsIdentifierBinding) -> JsAnyBinding { JsAnyBinding::JsIdentifierBinding(node) }
+impl From<JsIdentifierBinding> for AnyJsBinding {
+    fn from(node: JsIdentifierBinding) -> AnyJsBinding { AnyJsBinding::JsIdentifierBinding(node) }
 }
-impl AstNode for JsAnyBinding {
+impl AstNode for AnyJsBinding {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
         JsBogusBinding::KIND_SET.union(JsIdentifierBinding::KIND_SET);
@@ -25398,9 +25402,9 @@ impl AstNode for JsAnyBinding {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_BOGUS_BINDING => JsAnyBinding::JsBogusBinding(JsBogusBinding { syntax }),
+            JS_BOGUS_BINDING => AnyJsBinding::JsBogusBinding(JsBogusBinding { syntax }),
             JS_IDENTIFIER_BINDING => {
-                JsAnyBinding::JsIdentifierBinding(JsIdentifierBinding { syntax })
+                AnyJsBinding::JsIdentifierBinding(JsIdentifierBinding { syntax })
             }
             _ => return None,
         };
@@ -25408,72 +25412,72 @@ impl AstNode for JsAnyBinding {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyBinding::JsBogusBinding(it) => &it.syntax,
-            JsAnyBinding::JsIdentifierBinding(it) => &it.syntax,
+            AnyJsBinding::JsBogusBinding(it) => &it.syntax,
+            AnyJsBinding::JsIdentifierBinding(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyBinding::JsBogusBinding(it) => it.syntax,
-            JsAnyBinding::JsIdentifierBinding(it) => it.syntax,
+            AnyJsBinding::JsBogusBinding(it) => it.syntax,
+            AnyJsBinding::JsIdentifierBinding(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyBinding {
+impl std::fmt::Debug for AnyJsBinding {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyBinding::JsBogusBinding(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyBinding::JsIdentifierBinding(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsBinding::JsBogusBinding(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsBinding::JsIdentifierBinding(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyBinding> for SyntaxNode {
-    fn from(n: JsAnyBinding) -> SyntaxNode {
+impl From<AnyJsBinding> for SyntaxNode {
+    fn from(n: AnyJsBinding) -> SyntaxNode {
         match n {
-            JsAnyBinding::JsBogusBinding(it) => it.into(),
-            JsAnyBinding::JsIdentifierBinding(it) => it.into(),
+            AnyJsBinding::JsBogusBinding(it) => it.into(),
+            AnyJsBinding::JsIdentifierBinding(it) => it.into(),
         }
     }
 }
-impl From<JsAnyBinding> for SyntaxElement {
-    fn from(n: JsAnyBinding) -> SyntaxElement {
+impl From<AnyJsBinding> for SyntaxElement {
+    fn from(n: AnyJsBinding) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsArrayBindingPattern> for JsAnyBindingPattern {
-    fn from(node: JsArrayBindingPattern) -> JsAnyBindingPattern {
-        JsAnyBindingPattern::JsArrayBindingPattern(node)
+impl From<JsArrayBindingPattern> for AnyJsBindingPattern {
+    fn from(node: JsArrayBindingPattern) -> AnyJsBindingPattern {
+        AnyJsBindingPattern::JsArrayBindingPattern(node)
     }
 }
-impl From<JsObjectBindingPattern> for JsAnyBindingPattern {
-    fn from(node: JsObjectBindingPattern) -> JsAnyBindingPattern {
-        JsAnyBindingPattern::JsObjectBindingPattern(node)
+impl From<JsObjectBindingPattern> for AnyJsBindingPattern {
+    fn from(node: JsObjectBindingPattern) -> AnyJsBindingPattern {
+        AnyJsBindingPattern::JsObjectBindingPattern(node)
     }
 }
-impl AstNode for JsAnyBindingPattern {
+impl AstNode for AnyJsBindingPattern {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsAnyBinding::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = AnyJsBinding::KIND_SET
         .union(JsArrayBindingPattern::KIND_SET)
         .union(JsObjectBindingPattern::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_ARRAY_BINDING_PATTERN | JS_OBJECT_BINDING_PATTERN => true,
-            k if JsAnyBinding::can_cast(k) => true,
+            k if AnyJsBinding::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_ARRAY_BINDING_PATTERN => {
-                JsAnyBindingPattern::JsArrayBindingPattern(JsArrayBindingPattern { syntax })
+                AnyJsBindingPattern::JsArrayBindingPattern(JsArrayBindingPattern { syntax })
             }
             JS_OBJECT_BINDING_PATTERN => {
-                JsAnyBindingPattern::JsObjectBindingPattern(JsObjectBindingPattern { syntax })
+                AnyJsBindingPattern::JsObjectBindingPattern(JsObjectBindingPattern { syntax })
             }
             _ => {
-                if let Some(js_any_binding) = JsAnyBinding::cast(syntax) {
-                    return Some(JsAnyBindingPattern::JsAnyBinding(js_any_binding));
+                if let Some(any_js_binding) = AnyJsBinding::cast(syntax) {
+                    return Some(AnyJsBindingPattern::AnyJsBinding(any_js_binding));
                 }
                 return None;
             }
@@ -25482,62 +25486,62 @@ impl AstNode for JsAnyBindingPattern {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyBindingPattern::JsArrayBindingPattern(it) => &it.syntax,
-            JsAnyBindingPattern::JsObjectBindingPattern(it) => &it.syntax,
-            JsAnyBindingPattern::JsAnyBinding(it) => it.syntax(),
+            AnyJsBindingPattern::JsArrayBindingPattern(it) => &it.syntax,
+            AnyJsBindingPattern::JsObjectBindingPattern(it) => &it.syntax,
+            AnyJsBindingPattern::AnyJsBinding(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyBindingPattern::JsArrayBindingPattern(it) => it.syntax,
-            JsAnyBindingPattern::JsObjectBindingPattern(it) => it.syntax,
-            JsAnyBindingPattern::JsAnyBinding(it) => it.into_syntax(),
+            AnyJsBindingPattern::JsArrayBindingPattern(it) => it.syntax,
+            AnyJsBindingPattern::JsObjectBindingPattern(it) => it.syntax,
+            AnyJsBindingPattern::AnyJsBinding(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsAnyBindingPattern {
+impl std::fmt::Debug for AnyJsBindingPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyBindingPattern::JsAnyBinding(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyBindingPattern::JsArrayBindingPattern(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyBindingPattern::JsObjectBindingPattern(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsBindingPattern::AnyJsBinding(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsBindingPattern::JsArrayBindingPattern(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsBindingPattern::JsObjectBindingPattern(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyBindingPattern> for SyntaxNode {
-    fn from(n: JsAnyBindingPattern) -> SyntaxNode {
+impl From<AnyJsBindingPattern> for SyntaxNode {
+    fn from(n: AnyJsBindingPattern) -> SyntaxNode {
         match n {
-            JsAnyBindingPattern::JsAnyBinding(it) => it.into(),
-            JsAnyBindingPattern::JsArrayBindingPattern(it) => it.into(),
-            JsAnyBindingPattern::JsObjectBindingPattern(it) => it.into(),
+            AnyJsBindingPattern::AnyJsBinding(it) => it.into(),
+            AnyJsBindingPattern::JsArrayBindingPattern(it) => it.into(),
+            AnyJsBindingPattern::JsObjectBindingPattern(it) => it.into(),
         }
     }
 }
-impl From<JsAnyBindingPattern> for SyntaxElement {
-    fn from(n: JsAnyBindingPattern) -> SyntaxElement {
+impl From<AnyJsBindingPattern> for SyntaxElement {
+    fn from(n: AnyJsBindingPattern) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsSpread> for JsAnyCallArgument {
-    fn from(node: JsSpread) -> JsAnyCallArgument { JsAnyCallArgument::JsSpread(node) }
+impl From<JsSpread> for AnyJsCallArgument {
+    fn from(node: JsSpread) -> AnyJsCallArgument { AnyJsCallArgument::JsSpread(node) }
 }
-impl AstNode for JsAnyCallArgument {
+impl AstNode for AnyJsCallArgument {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsAnyExpression::KIND_SET.union(JsSpread::KIND_SET);
+    const KIND_SET: SyntaxKindSet<Language> = AnyJsExpression::KIND_SET.union(JsSpread::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_SPREAD => true,
-            k if JsAnyExpression::can_cast(k) => true,
+            k if AnyJsExpression::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_SPREAD => JsAnyCallArgument::JsSpread(JsSpread { syntax }),
+            JS_SPREAD => AnyJsCallArgument::JsSpread(JsSpread { syntax }),
             _ => {
-                if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
-                    return Some(JsAnyCallArgument::JsAnyExpression(js_any_expression));
+                if let Some(any_js_expression) = AnyJsExpression::cast(syntax) {
+                    return Some(AnyJsCallArgument::AnyJsExpression(any_js_expression));
                 }
                 return None;
             }
@@ -25546,51 +25550,51 @@ impl AstNode for JsAnyCallArgument {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyCallArgument::JsSpread(it) => &it.syntax,
-            JsAnyCallArgument::JsAnyExpression(it) => it.syntax(),
+            AnyJsCallArgument::JsSpread(it) => &it.syntax,
+            AnyJsCallArgument::AnyJsExpression(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyCallArgument::JsSpread(it) => it.syntax,
-            JsAnyCallArgument::JsAnyExpression(it) => it.into_syntax(),
+            AnyJsCallArgument::JsSpread(it) => it.syntax,
+            AnyJsCallArgument::AnyJsExpression(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsAnyCallArgument {
+impl std::fmt::Debug for AnyJsCallArgument {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyCallArgument::JsAnyExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyCallArgument::JsSpread(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsCallArgument::AnyJsExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsCallArgument::JsSpread(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyCallArgument> for SyntaxNode {
-    fn from(n: JsAnyCallArgument) -> SyntaxNode {
+impl From<AnyJsCallArgument> for SyntaxNode {
+    fn from(n: AnyJsCallArgument) -> SyntaxNode {
         match n {
-            JsAnyCallArgument::JsAnyExpression(it) => it.into(),
-            JsAnyCallArgument::JsSpread(it) => it.into(),
+            AnyJsCallArgument::AnyJsExpression(it) => it.into(),
+            AnyJsCallArgument::JsSpread(it) => it.into(),
         }
     }
 }
-impl From<JsAnyCallArgument> for SyntaxElement {
-    fn from(n: JsAnyCallArgument) -> SyntaxElement {
+impl From<AnyJsCallArgument> for SyntaxElement {
+    fn from(n: AnyJsCallArgument) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsClassDeclaration> for JsAnyClass {
-    fn from(node: JsClassDeclaration) -> JsAnyClass { JsAnyClass::JsClassDeclaration(node) }
+impl From<JsClassDeclaration> for AnyJsClass {
+    fn from(node: JsClassDeclaration) -> AnyJsClass { AnyJsClass::JsClassDeclaration(node) }
 }
-impl From<JsClassExportDefaultDeclaration> for JsAnyClass {
-    fn from(node: JsClassExportDefaultDeclaration) -> JsAnyClass {
-        JsAnyClass::JsClassExportDefaultDeclaration(node)
+impl From<JsClassExportDefaultDeclaration> for AnyJsClass {
+    fn from(node: JsClassExportDefaultDeclaration) -> AnyJsClass {
+        AnyJsClass::JsClassExportDefaultDeclaration(node)
     }
 }
-impl From<JsClassExpression> for JsAnyClass {
-    fn from(node: JsClassExpression) -> JsAnyClass { JsAnyClass::JsClassExpression(node) }
+impl From<JsClassExpression> for AnyJsClass {
+    fn from(node: JsClassExpression) -> AnyJsClass { AnyJsClass::JsClassExpression(node) }
 }
-impl AstNode for JsAnyClass {
+impl AstNode for AnyJsClass {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsClassDeclaration::KIND_SET
         .union(JsClassExportDefaultDeclaration::KIND_SET)
@@ -25603,125 +25607,125 @@ impl AstNode for JsAnyClass {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_CLASS_DECLARATION => JsAnyClass::JsClassDeclaration(JsClassDeclaration { syntax }),
+            JS_CLASS_DECLARATION => AnyJsClass::JsClassDeclaration(JsClassDeclaration { syntax }),
             JS_CLASS_EXPORT_DEFAULT_DECLARATION => {
-                JsAnyClass::JsClassExportDefaultDeclaration(JsClassExportDefaultDeclaration {
+                AnyJsClass::JsClassExportDefaultDeclaration(JsClassExportDefaultDeclaration {
                     syntax,
                 })
             }
-            JS_CLASS_EXPRESSION => JsAnyClass::JsClassExpression(JsClassExpression { syntax }),
+            JS_CLASS_EXPRESSION => AnyJsClass::JsClassExpression(JsClassExpression { syntax }),
             _ => return None,
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyClass::JsClassDeclaration(it) => &it.syntax,
-            JsAnyClass::JsClassExportDefaultDeclaration(it) => &it.syntax,
-            JsAnyClass::JsClassExpression(it) => &it.syntax,
+            AnyJsClass::JsClassDeclaration(it) => &it.syntax,
+            AnyJsClass::JsClassExportDefaultDeclaration(it) => &it.syntax,
+            AnyJsClass::JsClassExpression(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyClass::JsClassDeclaration(it) => it.syntax,
-            JsAnyClass::JsClassExportDefaultDeclaration(it) => it.syntax,
-            JsAnyClass::JsClassExpression(it) => it.syntax,
+            AnyJsClass::JsClassDeclaration(it) => it.syntax,
+            AnyJsClass::JsClassExportDefaultDeclaration(it) => it.syntax,
+            AnyJsClass::JsClassExpression(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyClass {
+impl std::fmt::Debug for AnyJsClass {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyClass::JsClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClass::JsClassExportDefaultDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClass::JsClassExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClass::JsClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClass::JsClassExportDefaultDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClass::JsClassExpression(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyClass> for SyntaxNode {
-    fn from(n: JsAnyClass) -> SyntaxNode {
+impl From<AnyJsClass> for SyntaxNode {
+    fn from(n: AnyJsClass) -> SyntaxNode {
         match n {
-            JsAnyClass::JsClassDeclaration(it) => it.into(),
-            JsAnyClass::JsClassExportDefaultDeclaration(it) => it.into(),
-            JsAnyClass::JsClassExpression(it) => it.into(),
+            AnyJsClass::JsClassDeclaration(it) => it.into(),
+            AnyJsClass::JsClassExportDefaultDeclaration(it) => it.into(),
+            AnyJsClass::JsClassExpression(it) => it.into(),
         }
     }
 }
-impl From<JsAnyClass> for SyntaxElement {
-    fn from(n: JsAnyClass) -> SyntaxElement {
+impl From<AnyJsClass> for SyntaxElement {
+    fn from(n: AnyJsClass) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsBogusMember> for JsAnyClassMember {
-    fn from(node: JsBogusMember) -> JsAnyClassMember { JsAnyClassMember::JsBogusMember(node) }
+impl From<JsBogusMember> for AnyJsClassMember {
+    fn from(node: JsBogusMember) -> AnyJsClassMember { AnyJsClassMember::JsBogusMember(node) }
 }
-impl From<JsConstructorClassMember> for JsAnyClassMember {
-    fn from(node: JsConstructorClassMember) -> JsAnyClassMember {
-        JsAnyClassMember::JsConstructorClassMember(node)
+impl From<JsConstructorClassMember> for AnyJsClassMember {
+    fn from(node: JsConstructorClassMember) -> AnyJsClassMember {
+        AnyJsClassMember::JsConstructorClassMember(node)
     }
 }
-impl From<JsEmptyClassMember> for JsAnyClassMember {
-    fn from(node: JsEmptyClassMember) -> JsAnyClassMember {
-        JsAnyClassMember::JsEmptyClassMember(node)
+impl From<JsEmptyClassMember> for AnyJsClassMember {
+    fn from(node: JsEmptyClassMember) -> AnyJsClassMember {
+        AnyJsClassMember::JsEmptyClassMember(node)
     }
 }
-impl From<JsGetterClassMember> for JsAnyClassMember {
-    fn from(node: JsGetterClassMember) -> JsAnyClassMember {
-        JsAnyClassMember::JsGetterClassMember(node)
+impl From<JsGetterClassMember> for AnyJsClassMember {
+    fn from(node: JsGetterClassMember) -> AnyJsClassMember {
+        AnyJsClassMember::JsGetterClassMember(node)
     }
 }
-impl From<JsMethodClassMember> for JsAnyClassMember {
-    fn from(node: JsMethodClassMember) -> JsAnyClassMember {
-        JsAnyClassMember::JsMethodClassMember(node)
+impl From<JsMethodClassMember> for AnyJsClassMember {
+    fn from(node: JsMethodClassMember) -> AnyJsClassMember {
+        AnyJsClassMember::JsMethodClassMember(node)
     }
 }
-impl From<JsPropertyClassMember> for JsAnyClassMember {
-    fn from(node: JsPropertyClassMember) -> JsAnyClassMember {
-        JsAnyClassMember::JsPropertyClassMember(node)
+impl From<JsPropertyClassMember> for AnyJsClassMember {
+    fn from(node: JsPropertyClassMember) -> AnyJsClassMember {
+        AnyJsClassMember::JsPropertyClassMember(node)
     }
 }
-impl From<JsSetterClassMember> for JsAnyClassMember {
-    fn from(node: JsSetterClassMember) -> JsAnyClassMember {
-        JsAnyClassMember::JsSetterClassMember(node)
+impl From<JsSetterClassMember> for AnyJsClassMember {
+    fn from(node: JsSetterClassMember) -> AnyJsClassMember {
+        AnyJsClassMember::JsSetterClassMember(node)
     }
 }
-impl From<JsStaticInitializationBlockClassMember> for JsAnyClassMember {
-    fn from(node: JsStaticInitializationBlockClassMember) -> JsAnyClassMember {
-        JsAnyClassMember::JsStaticInitializationBlockClassMember(node)
+impl From<JsStaticInitializationBlockClassMember> for AnyJsClassMember {
+    fn from(node: JsStaticInitializationBlockClassMember) -> AnyJsClassMember {
+        AnyJsClassMember::JsStaticInitializationBlockClassMember(node)
     }
 }
-impl From<TsConstructorSignatureClassMember> for JsAnyClassMember {
-    fn from(node: TsConstructorSignatureClassMember) -> JsAnyClassMember {
-        JsAnyClassMember::TsConstructorSignatureClassMember(node)
+impl From<TsConstructorSignatureClassMember> for AnyJsClassMember {
+    fn from(node: TsConstructorSignatureClassMember) -> AnyJsClassMember {
+        AnyJsClassMember::TsConstructorSignatureClassMember(node)
     }
 }
-impl From<TsGetterSignatureClassMember> for JsAnyClassMember {
-    fn from(node: TsGetterSignatureClassMember) -> JsAnyClassMember {
-        JsAnyClassMember::TsGetterSignatureClassMember(node)
+impl From<TsGetterSignatureClassMember> for AnyJsClassMember {
+    fn from(node: TsGetterSignatureClassMember) -> AnyJsClassMember {
+        AnyJsClassMember::TsGetterSignatureClassMember(node)
     }
 }
-impl From<TsIndexSignatureClassMember> for JsAnyClassMember {
-    fn from(node: TsIndexSignatureClassMember) -> JsAnyClassMember {
-        JsAnyClassMember::TsIndexSignatureClassMember(node)
+impl From<TsIndexSignatureClassMember> for AnyJsClassMember {
+    fn from(node: TsIndexSignatureClassMember) -> AnyJsClassMember {
+        AnyJsClassMember::TsIndexSignatureClassMember(node)
     }
 }
-impl From<TsMethodSignatureClassMember> for JsAnyClassMember {
-    fn from(node: TsMethodSignatureClassMember) -> JsAnyClassMember {
-        JsAnyClassMember::TsMethodSignatureClassMember(node)
+impl From<TsMethodSignatureClassMember> for AnyJsClassMember {
+    fn from(node: TsMethodSignatureClassMember) -> AnyJsClassMember {
+        AnyJsClassMember::TsMethodSignatureClassMember(node)
     }
 }
-impl From<TsPropertySignatureClassMember> for JsAnyClassMember {
-    fn from(node: TsPropertySignatureClassMember) -> JsAnyClassMember {
-        JsAnyClassMember::TsPropertySignatureClassMember(node)
+impl From<TsPropertySignatureClassMember> for AnyJsClassMember {
+    fn from(node: TsPropertySignatureClassMember) -> AnyJsClassMember {
+        AnyJsClassMember::TsPropertySignatureClassMember(node)
     }
 }
-impl From<TsSetterSignatureClassMember> for JsAnyClassMember {
-    fn from(node: TsSetterSignatureClassMember) -> JsAnyClassMember {
-        JsAnyClassMember::TsSetterSignatureClassMember(node)
+impl From<TsSetterSignatureClassMember> for AnyJsClassMember {
+    fn from(node: TsSetterSignatureClassMember) -> AnyJsClassMember {
+        AnyJsClassMember::TsSetterSignatureClassMember(node)
     }
 }
-impl AstNode for JsAnyClassMember {
+impl AstNode for AnyJsClassMember {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsBogusMember::KIND_SET
         .union(JsConstructorClassMember::KIND_SET)
@@ -25758,57 +25762,57 @@ impl AstNode for JsAnyClassMember {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_BOGUS_MEMBER => JsAnyClassMember::JsBogusMember(JsBogusMember { syntax }),
+            JS_BOGUS_MEMBER => AnyJsClassMember::JsBogusMember(JsBogusMember { syntax }),
             JS_CONSTRUCTOR_CLASS_MEMBER => {
-                JsAnyClassMember::JsConstructorClassMember(JsConstructorClassMember { syntax })
+                AnyJsClassMember::JsConstructorClassMember(JsConstructorClassMember { syntax })
             }
             JS_EMPTY_CLASS_MEMBER => {
-                JsAnyClassMember::JsEmptyClassMember(JsEmptyClassMember { syntax })
+                AnyJsClassMember::JsEmptyClassMember(JsEmptyClassMember { syntax })
             }
             JS_GETTER_CLASS_MEMBER => {
-                JsAnyClassMember::JsGetterClassMember(JsGetterClassMember { syntax })
+                AnyJsClassMember::JsGetterClassMember(JsGetterClassMember { syntax })
             }
             JS_METHOD_CLASS_MEMBER => {
-                JsAnyClassMember::JsMethodClassMember(JsMethodClassMember { syntax })
+                AnyJsClassMember::JsMethodClassMember(JsMethodClassMember { syntax })
             }
             JS_PROPERTY_CLASS_MEMBER => {
-                JsAnyClassMember::JsPropertyClassMember(JsPropertyClassMember { syntax })
+                AnyJsClassMember::JsPropertyClassMember(JsPropertyClassMember { syntax })
             }
             JS_SETTER_CLASS_MEMBER => {
-                JsAnyClassMember::JsSetterClassMember(JsSetterClassMember { syntax })
+                AnyJsClassMember::JsSetterClassMember(JsSetterClassMember { syntax })
             }
             JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER => {
-                JsAnyClassMember::JsStaticInitializationBlockClassMember(
+                AnyJsClassMember::JsStaticInitializationBlockClassMember(
                     JsStaticInitializationBlockClassMember { syntax },
                 )
             }
             TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER => {
-                JsAnyClassMember::TsConstructorSignatureClassMember(
+                AnyJsClassMember::TsConstructorSignatureClassMember(
                     TsConstructorSignatureClassMember { syntax },
                 )
             }
             TS_GETTER_SIGNATURE_CLASS_MEMBER => {
-                JsAnyClassMember::TsGetterSignatureClassMember(TsGetterSignatureClassMember {
+                AnyJsClassMember::TsGetterSignatureClassMember(TsGetterSignatureClassMember {
                     syntax,
                 })
             }
             TS_INDEX_SIGNATURE_CLASS_MEMBER => {
-                JsAnyClassMember::TsIndexSignatureClassMember(TsIndexSignatureClassMember {
+                AnyJsClassMember::TsIndexSignatureClassMember(TsIndexSignatureClassMember {
                     syntax,
                 })
             }
             TS_METHOD_SIGNATURE_CLASS_MEMBER => {
-                JsAnyClassMember::TsMethodSignatureClassMember(TsMethodSignatureClassMember {
+                AnyJsClassMember::TsMethodSignatureClassMember(TsMethodSignatureClassMember {
                     syntax,
                 })
             }
             TS_PROPERTY_SIGNATURE_CLASS_MEMBER => {
-                JsAnyClassMember::TsPropertySignatureClassMember(TsPropertySignatureClassMember {
+                AnyJsClassMember::TsPropertySignatureClassMember(TsPropertySignatureClassMember {
                     syntax,
                 })
             }
             TS_SETTER_SIGNATURE_CLASS_MEMBER => {
-                JsAnyClassMember::TsSetterSignatureClassMember(TsSetterSignatureClassMember {
+                AnyJsClassMember::TsSetterSignatureClassMember(TsSetterSignatureClassMember {
                     syntax,
                 })
             }
@@ -25818,105 +25822,105 @@ impl AstNode for JsAnyClassMember {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyClassMember::JsBogusMember(it) => &it.syntax,
-            JsAnyClassMember::JsConstructorClassMember(it) => &it.syntax,
-            JsAnyClassMember::JsEmptyClassMember(it) => &it.syntax,
-            JsAnyClassMember::JsGetterClassMember(it) => &it.syntax,
-            JsAnyClassMember::JsMethodClassMember(it) => &it.syntax,
-            JsAnyClassMember::JsPropertyClassMember(it) => &it.syntax,
-            JsAnyClassMember::JsSetterClassMember(it) => &it.syntax,
-            JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => &it.syntax,
-            JsAnyClassMember::TsConstructorSignatureClassMember(it) => &it.syntax,
-            JsAnyClassMember::TsGetterSignatureClassMember(it) => &it.syntax,
-            JsAnyClassMember::TsIndexSignatureClassMember(it) => &it.syntax,
-            JsAnyClassMember::TsMethodSignatureClassMember(it) => &it.syntax,
-            JsAnyClassMember::TsPropertySignatureClassMember(it) => &it.syntax,
-            JsAnyClassMember::TsSetterSignatureClassMember(it) => &it.syntax,
+            AnyJsClassMember::JsBogusMember(it) => &it.syntax,
+            AnyJsClassMember::JsConstructorClassMember(it) => &it.syntax,
+            AnyJsClassMember::JsEmptyClassMember(it) => &it.syntax,
+            AnyJsClassMember::JsGetterClassMember(it) => &it.syntax,
+            AnyJsClassMember::JsMethodClassMember(it) => &it.syntax,
+            AnyJsClassMember::JsPropertyClassMember(it) => &it.syntax,
+            AnyJsClassMember::JsSetterClassMember(it) => &it.syntax,
+            AnyJsClassMember::JsStaticInitializationBlockClassMember(it) => &it.syntax,
+            AnyJsClassMember::TsConstructorSignatureClassMember(it) => &it.syntax,
+            AnyJsClassMember::TsGetterSignatureClassMember(it) => &it.syntax,
+            AnyJsClassMember::TsIndexSignatureClassMember(it) => &it.syntax,
+            AnyJsClassMember::TsMethodSignatureClassMember(it) => &it.syntax,
+            AnyJsClassMember::TsPropertySignatureClassMember(it) => &it.syntax,
+            AnyJsClassMember::TsSetterSignatureClassMember(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyClassMember::JsBogusMember(it) => it.syntax,
-            JsAnyClassMember::JsConstructorClassMember(it) => it.syntax,
-            JsAnyClassMember::JsEmptyClassMember(it) => it.syntax,
-            JsAnyClassMember::JsGetterClassMember(it) => it.syntax,
-            JsAnyClassMember::JsMethodClassMember(it) => it.syntax,
-            JsAnyClassMember::JsPropertyClassMember(it) => it.syntax,
-            JsAnyClassMember::JsSetterClassMember(it) => it.syntax,
-            JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => it.syntax,
-            JsAnyClassMember::TsConstructorSignatureClassMember(it) => it.syntax,
-            JsAnyClassMember::TsGetterSignatureClassMember(it) => it.syntax,
-            JsAnyClassMember::TsIndexSignatureClassMember(it) => it.syntax,
-            JsAnyClassMember::TsMethodSignatureClassMember(it) => it.syntax,
-            JsAnyClassMember::TsPropertySignatureClassMember(it) => it.syntax,
-            JsAnyClassMember::TsSetterSignatureClassMember(it) => it.syntax,
+            AnyJsClassMember::JsBogusMember(it) => it.syntax,
+            AnyJsClassMember::JsConstructorClassMember(it) => it.syntax,
+            AnyJsClassMember::JsEmptyClassMember(it) => it.syntax,
+            AnyJsClassMember::JsGetterClassMember(it) => it.syntax,
+            AnyJsClassMember::JsMethodClassMember(it) => it.syntax,
+            AnyJsClassMember::JsPropertyClassMember(it) => it.syntax,
+            AnyJsClassMember::JsSetterClassMember(it) => it.syntax,
+            AnyJsClassMember::JsStaticInitializationBlockClassMember(it) => it.syntax,
+            AnyJsClassMember::TsConstructorSignatureClassMember(it) => it.syntax,
+            AnyJsClassMember::TsGetterSignatureClassMember(it) => it.syntax,
+            AnyJsClassMember::TsIndexSignatureClassMember(it) => it.syntax,
+            AnyJsClassMember::TsMethodSignatureClassMember(it) => it.syntax,
+            AnyJsClassMember::TsPropertySignatureClassMember(it) => it.syntax,
+            AnyJsClassMember::TsSetterSignatureClassMember(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyClassMember {
+impl std::fmt::Debug for AnyJsClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyClassMember::JsBogusMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClassMember::JsConstructorClassMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClassMember::JsEmptyClassMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClassMember::JsGetterClassMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClassMember::JsMethodClassMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClassMember::JsPropertyClassMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClassMember::JsSetterClassMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => {
+            AnyJsClassMember::JsBogusMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMember::JsConstructorClassMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMember::JsEmptyClassMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMember::JsGetterClassMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMember::JsMethodClassMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMember::JsPropertyClassMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMember::JsSetterClassMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMember::JsStaticInitializationBlockClassMember(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyClassMember::TsConstructorSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClassMember::TsGetterSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClassMember::TsIndexSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClassMember::TsMethodSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClassMember::TsPropertySignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClassMember::TsSetterSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMember::TsConstructorSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMember::TsGetterSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMember::TsIndexSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMember::TsMethodSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMember::TsPropertySignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMember::TsSetterSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyClassMember> for SyntaxNode {
-    fn from(n: JsAnyClassMember) -> SyntaxNode {
+impl From<AnyJsClassMember> for SyntaxNode {
+    fn from(n: AnyJsClassMember) -> SyntaxNode {
         match n {
-            JsAnyClassMember::JsBogusMember(it) => it.into(),
-            JsAnyClassMember::JsConstructorClassMember(it) => it.into(),
-            JsAnyClassMember::JsEmptyClassMember(it) => it.into(),
-            JsAnyClassMember::JsGetterClassMember(it) => it.into(),
-            JsAnyClassMember::JsMethodClassMember(it) => it.into(),
-            JsAnyClassMember::JsPropertyClassMember(it) => it.into(),
-            JsAnyClassMember::JsSetterClassMember(it) => it.into(),
-            JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => it.into(),
-            JsAnyClassMember::TsConstructorSignatureClassMember(it) => it.into(),
-            JsAnyClassMember::TsGetterSignatureClassMember(it) => it.into(),
-            JsAnyClassMember::TsIndexSignatureClassMember(it) => it.into(),
-            JsAnyClassMember::TsMethodSignatureClassMember(it) => it.into(),
-            JsAnyClassMember::TsPropertySignatureClassMember(it) => it.into(),
-            JsAnyClassMember::TsSetterSignatureClassMember(it) => it.into(),
+            AnyJsClassMember::JsBogusMember(it) => it.into(),
+            AnyJsClassMember::JsConstructorClassMember(it) => it.into(),
+            AnyJsClassMember::JsEmptyClassMember(it) => it.into(),
+            AnyJsClassMember::JsGetterClassMember(it) => it.into(),
+            AnyJsClassMember::JsMethodClassMember(it) => it.into(),
+            AnyJsClassMember::JsPropertyClassMember(it) => it.into(),
+            AnyJsClassMember::JsSetterClassMember(it) => it.into(),
+            AnyJsClassMember::JsStaticInitializationBlockClassMember(it) => it.into(),
+            AnyJsClassMember::TsConstructorSignatureClassMember(it) => it.into(),
+            AnyJsClassMember::TsGetterSignatureClassMember(it) => it.into(),
+            AnyJsClassMember::TsIndexSignatureClassMember(it) => it.into(),
+            AnyJsClassMember::TsMethodSignatureClassMember(it) => it.into(),
+            AnyJsClassMember::TsPropertySignatureClassMember(it) => it.into(),
+            AnyJsClassMember::TsSetterSignatureClassMember(it) => it.into(),
         }
     }
 }
-impl From<JsAnyClassMember> for SyntaxElement {
-    fn from(n: JsAnyClassMember) -> SyntaxElement {
+impl From<AnyJsClassMember> for SyntaxElement {
+    fn from(n: AnyJsClassMember) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsComputedMemberName> for JsAnyClassMemberName {
-    fn from(node: JsComputedMemberName) -> JsAnyClassMemberName {
-        JsAnyClassMemberName::JsComputedMemberName(node)
+impl From<JsComputedMemberName> for AnyJsClassMemberName {
+    fn from(node: JsComputedMemberName) -> AnyJsClassMemberName {
+        AnyJsClassMemberName::JsComputedMemberName(node)
     }
 }
-impl From<JsLiteralMemberName> for JsAnyClassMemberName {
-    fn from(node: JsLiteralMemberName) -> JsAnyClassMemberName {
-        JsAnyClassMemberName::JsLiteralMemberName(node)
+impl From<JsLiteralMemberName> for AnyJsClassMemberName {
+    fn from(node: JsLiteralMemberName) -> AnyJsClassMemberName {
+        AnyJsClassMemberName::JsLiteralMemberName(node)
     }
 }
-impl From<JsPrivateClassMemberName> for JsAnyClassMemberName {
-    fn from(node: JsPrivateClassMemberName) -> JsAnyClassMemberName {
-        JsAnyClassMemberName::JsPrivateClassMemberName(node)
+impl From<JsPrivateClassMemberName> for AnyJsClassMemberName {
+    fn from(node: JsPrivateClassMemberName) -> AnyJsClassMemberName {
+        AnyJsClassMemberName::JsPrivateClassMemberName(node)
     }
 }
-impl AstNode for JsAnyClassMemberName {
+impl AstNode for AnyJsClassMemberName {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsComputedMemberName::KIND_SET
         .union(JsLiteralMemberName::KIND_SET)
@@ -25930,13 +25934,13 @@ impl AstNode for JsAnyClassMemberName {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_COMPUTED_MEMBER_NAME => {
-                JsAnyClassMemberName::JsComputedMemberName(JsComputedMemberName { syntax })
+                AnyJsClassMemberName::JsComputedMemberName(JsComputedMemberName { syntax })
             }
             JS_LITERAL_MEMBER_NAME => {
-                JsAnyClassMemberName::JsLiteralMemberName(JsLiteralMemberName { syntax })
+                AnyJsClassMemberName::JsLiteralMemberName(JsLiteralMemberName { syntax })
             }
             JS_PRIVATE_CLASS_MEMBER_NAME => {
-                JsAnyClassMemberName::JsPrivateClassMemberName(JsPrivateClassMemberName { syntax })
+                AnyJsClassMemberName::JsPrivateClassMemberName(JsPrivateClassMemberName { syntax })
             }
             _ => return None,
         };
@@ -25944,77 +25948,77 @@ impl AstNode for JsAnyClassMemberName {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyClassMemberName::JsComputedMemberName(it) => &it.syntax,
-            JsAnyClassMemberName::JsLiteralMemberName(it) => &it.syntax,
-            JsAnyClassMemberName::JsPrivateClassMemberName(it) => &it.syntax,
+            AnyJsClassMemberName::JsComputedMemberName(it) => &it.syntax,
+            AnyJsClassMemberName::JsLiteralMemberName(it) => &it.syntax,
+            AnyJsClassMemberName::JsPrivateClassMemberName(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyClassMemberName::JsComputedMemberName(it) => it.syntax,
-            JsAnyClassMemberName::JsLiteralMemberName(it) => it.syntax,
-            JsAnyClassMemberName::JsPrivateClassMemberName(it) => it.syntax,
+            AnyJsClassMemberName::JsComputedMemberName(it) => it.syntax,
+            AnyJsClassMemberName::JsLiteralMemberName(it) => it.syntax,
+            AnyJsClassMemberName::JsPrivateClassMemberName(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyClassMemberName {
+impl std::fmt::Debug for AnyJsClassMemberName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyClassMemberName::JsComputedMemberName(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClassMemberName::JsLiteralMemberName(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyClassMemberName::JsPrivateClassMemberName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMemberName::JsComputedMemberName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMemberName::JsLiteralMemberName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMemberName::JsPrivateClassMemberName(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyClassMemberName> for SyntaxNode {
-    fn from(n: JsAnyClassMemberName) -> SyntaxNode {
+impl From<AnyJsClassMemberName> for SyntaxNode {
+    fn from(n: AnyJsClassMemberName) -> SyntaxNode {
         match n {
-            JsAnyClassMemberName::JsComputedMemberName(it) => it.into(),
-            JsAnyClassMemberName::JsLiteralMemberName(it) => it.into(),
-            JsAnyClassMemberName::JsPrivateClassMemberName(it) => it.into(),
+            AnyJsClassMemberName::JsComputedMemberName(it) => it.into(),
+            AnyJsClassMemberName::JsLiteralMemberName(it) => it.into(),
+            AnyJsClassMemberName::JsPrivateClassMemberName(it) => it.into(),
         }
     }
 }
-impl From<JsAnyClassMemberName> for SyntaxElement {
-    fn from(n: JsAnyClassMemberName) -> SyntaxElement {
+impl From<AnyJsClassMemberName> for SyntaxElement {
+    fn from(n: AnyJsClassMemberName) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsRestParameter> for JsAnyConstructorParameter {
-    fn from(node: JsRestParameter) -> JsAnyConstructorParameter {
-        JsAnyConstructorParameter::JsRestParameter(node)
+impl From<JsRestParameter> for AnyJsConstructorParameter {
+    fn from(node: JsRestParameter) -> AnyJsConstructorParameter {
+        AnyJsConstructorParameter::JsRestParameter(node)
     }
 }
-impl From<TsPropertyParameter> for JsAnyConstructorParameter {
-    fn from(node: TsPropertyParameter) -> JsAnyConstructorParameter {
-        JsAnyConstructorParameter::TsPropertyParameter(node)
+impl From<TsPropertyParameter> for AnyJsConstructorParameter {
+    fn from(node: TsPropertyParameter) -> AnyJsConstructorParameter {
+        AnyJsConstructorParameter::TsPropertyParameter(node)
     }
 }
-impl AstNode for JsAnyConstructorParameter {
+impl AstNode for AnyJsConstructorParameter {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsAnyFormalParameter::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = AnyJsFormalParameter::KIND_SET
         .union(JsRestParameter::KIND_SET)
         .union(TsPropertyParameter::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_REST_PARAMETER | TS_PROPERTY_PARAMETER => true,
-            k if JsAnyFormalParameter::can_cast(k) => true,
+            k if AnyJsFormalParameter::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_REST_PARAMETER => {
-                JsAnyConstructorParameter::JsRestParameter(JsRestParameter { syntax })
+                AnyJsConstructorParameter::JsRestParameter(JsRestParameter { syntax })
             }
             TS_PROPERTY_PARAMETER => {
-                JsAnyConstructorParameter::TsPropertyParameter(TsPropertyParameter { syntax })
+                AnyJsConstructorParameter::TsPropertyParameter(TsPropertyParameter { syntax })
             }
             _ => {
-                if let Some(js_any_formal_parameter) = JsAnyFormalParameter::cast(syntax) {
-                    return Some(JsAnyConstructorParameter::JsAnyFormalParameter(
-                        js_any_formal_parameter,
+                if let Some(any_js_formal_parameter) = AnyJsFormalParameter::cast(syntax) {
+                    return Some(AnyJsConstructorParameter::AnyJsFormalParameter(
+                        any_js_formal_parameter,
                     ));
                 }
                 return None;
@@ -26024,99 +26028,99 @@ impl AstNode for JsAnyConstructorParameter {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyConstructorParameter::JsRestParameter(it) => &it.syntax,
-            JsAnyConstructorParameter::TsPropertyParameter(it) => &it.syntax,
-            JsAnyConstructorParameter::JsAnyFormalParameter(it) => it.syntax(),
+            AnyJsConstructorParameter::JsRestParameter(it) => &it.syntax,
+            AnyJsConstructorParameter::TsPropertyParameter(it) => &it.syntax,
+            AnyJsConstructorParameter::AnyJsFormalParameter(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyConstructorParameter::JsRestParameter(it) => it.syntax,
-            JsAnyConstructorParameter::TsPropertyParameter(it) => it.syntax,
-            JsAnyConstructorParameter::JsAnyFormalParameter(it) => it.into_syntax(),
+            AnyJsConstructorParameter::JsRestParameter(it) => it.syntax,
+            AnyJsConstructorParameter::TsPropertyParameter(it) => it.syntax,
+            AnyJsConstructorParameter::AnyJsFormalParameter(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsAnyConstructorParameter {
+impl std::fmt::Debug for AnyJsConstructorParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyConstructorParameter::JsAnyFormalParameter(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyConstructorParameter::JsRestParameter(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyConstructorParameter::TsPropertyParameter(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsConstructorParameter::AnyJsFormalParameter(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsConstructorParameter::JsRestParameter(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsConstructorParameter::TsPropertyParameter(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyConstructorParameter> for SyntaxNode {
-    fn from(n: JsAnyConstructorParameter) -> SyntaxNode {
+impl From<AnyJsConstructorParameter> for SyntaxNode {
+    fn from(n: AnyJsConstructorParameter) -> SyntaxNode {
         match n {
-            JsAnyConstructorParameter::JsAnyFormalParameter(it) => it.into(),
-            JsAnyConstructorParameter::JsRestParameter(it) => it.into(),
-            JsAnyConstructorParameter::TsPropertyParameter(it) => it.into(),
+            AnyJsConstructorParameter::AnyJsFormalParameter(it) => it.into(),
+            AnyJsConstructorParameter::JsRestParameter(it) => it.into(),
+            AnyJsConstructorParameter::TsPropertyParameter(it) => it.into(),
         }
     }
 }
-impl From<JsAnyConstructorParameter> for SyntaxElement {
-    fn from(n: JsAnyConstructorParameter) -> SyntaxElement {
+impl From<AnyJsConstructorParameter> for SyntaxElement {
+    fn from(n: AnyJsConstructorParameter) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsClassDeclaration> for JsAnyDeclaration {
-    fn from(node: JsClassDeclaration) -> JsAnyDeclaration {
-        JsAnyDeclaration::JsClassDeclaration(node)
+impl From<JsClassDeclaration> for AnyJsDeclaration {
+    fn from(node: JsClassDeclaration) -> AnyJsDeclaration {
+        AnyJsDeclaration::JsClassDeclaration(node)
     }
 }
-impl From<JsFunctionDeclaration> for JsAnyDeclaration {
-    fn from(node: JsFunctionDeclaration) -> JsAnyDeclaration {
-        JsAnyDeclaration::JsFunctionDeclaration(node)
+impl From<JsFunctionDeclaration> for AnyJsDeclaration {
+    fn from(node: JsFunctionDeclaration) -> AnyJsDeclaration {
+        AnyJsDeclaration::JsFunctionDeclaration(node)
     }
 }
-impl From<JsVariableDeclaration> for JsAnyDeclaration {
-    fn from(node: JsVariableDeclaration) -> JsAnyDeclaration {
-        JsAnyDeclaration::JsVariableDeclaration(node)
+impl From<JsVariableDeclaration> for AnyJsDeclaration {
+    fn from(node: JsVariableDeclaration) -> AnyJsDeclaration {
+        AnyJsDeclaration::JsVariableDeclaration(node)
     }
 }
-impl From<TsDeclareFunctionDeclaration> for JsAnyDeclaration {
-    fn from(node: TsDeclareFunctionDeclaration) -> JsAnyDeclaration {
-        JsAnyDeclaration::TsDeclareFunctionDeclaration(node)
+impl From<TsDeclareFunctionDeclaration> for AnyJsDeclaration {
+    fn from(node: TsDeclareFunctionDeclaration) -> AnyJsDeclaration {
+        AnyJsDeclaration::TsDeclareFunctionDeclaration(node)
     }
 }
-impl From<TsEnumDeclaration> for JsAnyDeclaration {
-    fn from(node: TsEnumDeclaration) -> JsAnyDeclaration {
-        JsAnyDeclaration::TsEnumDeclaration(node)
+impl From<TsEnumDeclaration> for AnyJsDeclaration {
+    fn from(node: TsEnumDeclaration) -> AnyJsDeclaration {
+        AnyJsDeclaration::TsEnumDeclaration(node)
     }
 }
-impl From<TsExternalModuleDeclaration> for JsAnyDeclaration {
-    fn from(node: TsExternalModuleDeclaration) -> JsAnyDeclaration {
-        JsAnyDeclaration::TsExternalModuleDeclaration(node)
+impl From<TsExternalModuleDeclaration> for AnyJsDeclaration {
+    fn from(node: TsExternalModuleDeclaration) -> AnyJsDeclaration {
+        AnyJsDeclaration::TsExternalModuleDeclaration(node)
     }
 }
-impl From<TsGlobalDeclaration> for JsAnyDeclaration {
-    fn from(node: TsGlobalDeclaration) -> JsAnyDeclaration {
-        JsAnyDeclaration::TsGlobalDeclaration(node)
+impl From<TsGlobalDeclaration> for AnyJsDeclaration {
+    fn from(node: TsGlobalDeclaration) -> AnyJsDeclaration {
+        AnyJsDeclaration::TsGlobalDeclaration(node)
     }
 }
-impl From<TsImportEqualsDeclaration> for JsAnyDeclaration {
-    fn from(node: TsImportEqualsDeclaration) -> JsAnyDeclaration {
-        JsAnyDeclaration::TsImportEqualsDeclaration(node)
+impl From<TsImportEqualsDeclaration> for AnyJsDeclaration {
+    fn from(node: TsImportEqualsDeclaration) -> AnyJsDeclaration {
+        AnyJsDeclaration::TsImportEqualsDeclaration(node)
     }
 }
-impl From<TsInterfaceDeclaration> for JsAnyDeclaration {
-    fn from(node: TsInterfaceDeclaration) -> JsAnyDeclaration {
-        JsAnyDeclaration::TsInterfaceDeclaration(node)
+impl From<TsInterfaceDeclaration> for AnyJsDeclaration {
+    fn from(node: TsInterfaceDeclaration) -> AnyJsDeclaration {
+        AnyJsDeclaration::TsInterfaceDeclaration(node)
     }
 }
-impl From<TsModuleDeclaration> for JsAnyDeclaration {
-    fn from(node: TsModuleDeclaration) -> JsAnyDeclaration {
-        JsAnyDeclaration::TsModuleDeclaration(node)
+impl From<TsModuleDeclaration> for AnyJsDeclaration {
+    fn from(node: TsModuleDeclaration) -> AnyJsDeclaration {
+        AnyJsDeclaration::TsModuleDeclaration(node)
     }
 }
-impl From<TsTypeAliasDeclaration> for JsAnyDeclaration {
-    fn from(node: TsTypeAliasDeclaration) -> JsAnyDeclaration {
-        JsAnyDeclaration::TsTypeAliasDeclaration(node)
+impl From<TsTypeAliasDeclaration> for AnyJsDeclaration {
+    fn from(node: TsTypeAliasDeclaration) -> AnyJsDeclaration {
+        AnyJsDeclaration::TsTypeAliasDeclaration(node)
     }
 }
-impl AstNode for JsAnyDeclaration {
+impl AstNode for AnyJsDeclaration {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsClassDeclaration::KIND_SET
         .union(JsFunctionDeclaration::KIND_SET)
@@ -26148,41 +26152,41 @@ impl AstNode for JsAnyDeclaration {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_CLASS_DECLARATION => {
-                JsAnyDeclaration::JsClassDeclaration(JsClassDeclaration { syntax })
+                AnyJsDeclaration::JsClassDeclaration(JsClassDeclaration { syntax })
             }
             JS_FUNCTION_DECLARATION => {
-                JsAnyDeclaration::JsFunctionDeclaration(JsFunctionDeclaration { syntax })
+                AnyJsDeclaration::JsFunctionDeclaration(JsFunctionDeclaration { syntax })
             }
             JS_VARIABLE_DECLARATION => {
-                JsAnyDeclaration::JsVariableDeclaration(JsVariableDeclaration { syntax })
+                AnyJsDeclaration::JsVariableDeclaration(JsVariableDeclaration { syntax })
             }
             TS_DECLARE_FUNCTION_DECLARATION => {
-                JsAnyDeclaration::TsDeclareFunctionDeclaration(TsDeclareFunctionDeclaration {
+                AnyJsDeclaration::TsDeclareFunctionDeclaration(TsDeclareFunctionDeclaration {
                     syntax,
                 })
             }
             TS_ENUM_DECLARATION => {
-                JsAnyDeclaration::TsEnumDeclaration(TsEnumDeclaration { syntax })
+                AnyJsDeclaration::TsEnumDeclaration(TsEnumDeclaration { syntax })
             }
             TS_EXTERNAL_MODULE_DECLARATION => {
-                JsAnyDeclaration::TsExternalModuleDeclaration(TsExternalModuleDeclaration {
+                AnyJsDeclaration::TsExternalModuleDeclaration(TsExternalModuleDeclaration {
                     syntax,
                 })
             }
             TS_GLOBAL_DECLARATION => {
-                JsAnyDeclaration::TsGlobalDeclaration(TsGlobalDeclaration { syntax })
+                AnyJsDeclaration::TsGlobalDeclaration(TsGlobalDeclaration { syntax })
             }
             TS_IMPORT_EQUALS_DECLARATION => {
-                JsAnyDeclaration::TsImportEqualsDeclaration(TsImportEqualsDeclaration { syntax })
+                AnyJsDeclaration::TsImportEqualsDeclaration(TsImportEqualsDeclaration { syntax })
             }
             TS_INTERFACE_DECLARATION => {
-                JsAnyDeclaration::TsInterfaceDeclaration(TsInterfaceDeclaration { syntax })
+                AnyJsDeclaration::TsInterfaceDeclaration(TsInterfaceDeclaration { syntax })
             }
             TS_MODULE_DECLARATION => {
-                JsAnyDeclaration::TsModuleDeclaration(TsModuleDeclaration { syntax })
+                AnyJsDeclaration::TsModuleDeclaration(TsModuleDeclaration { syntax })
             }
             TS_TYPE_ALIAS_DECLARATION => {
-                JsAnyDeclaration::TsTypeAliasDeclaration(TsTypeAliasDeclaration { syntax })
+                AnyJsDeclaration::TsTypeAliasDeclaration(TsTypeAliasDeclaration { syntax })
             }
             _ => return None,
         };
@@ -26190,131 +26194,131 @@ impl AstNode for JsAnyDeclaration {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyDeclaration::JsClassDeclaration(it) => &it.syntax,
-            JsAnyDeclaration::JsFunctionDeclaration(it) => &it.syntax,
-            JsAnyDeclaration::JsVariableDeclaration(it) => &it.syntax,
-            JsAnyDeclaration::TsDeclareFunctionDeclaration(it) => &it.syntax,
-            JsAnyDeclaration::TsEnumDeclaration(it) => &it.syntax,
-            JsAnyDeclaration::TsExternalModuleDeclaration(it) => &it.syntax,
-            JsAnyDeclaration::TsGlobalDeclaration(it) => &it.syntax,
-            JsAnyDeclaration::TsImportEqualsDeclaration(it) => &it.syntax,
-            JsAnyDeclaration::TsInterfaceDeclaration(it) => &it.syntax,
-            JsAnyDeclaration::TsModuleDeclaration(it) => &it.syntax,
-            JsAnyDeclaration::TsTypeAliasDeclaration(it) => &it.syntax,
+            AnyJsDeclaration::JsClassDeclaration(it) => &it.syntax,
+            AnyJsDeclaration::JsFunctionDeclaration(it) => &it.syntax,
+            AnyJsDeclaration::JsVariableDeclaration(it) => &it.syntax,
+            AnyJsDeclaration::TsDeclareFunctionDeclaration(it) => &it.syntax,
+            AnyJsDeclaration::TsEnumDeclaration(it) => &it.syntax,
+            AnyJsDeclaration::TsExternalModuleDeclaration(it) => &it.syntax,
+            AnyJsDeclaration::TsGlobalDeclaration(it) => &it.syntax,
+            AnyJsDeclaration::TsImportEqualsDeclaration(it) => &it.syntax,
+            AnyJsDeclaration::TsInterfaceDeclaration(it) => &it.syntax,
+            AnyJsDeclaration::TsModuleDeclaration(it) => &it.syntax,
+            AnyJsDeclaration::TsTypeAliasDeclaration(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyDeclaration::JsClassDeclaration(it) => it.syntax,
-            JsAnyDeclaration::JsFunctionDeclaration(it) => it.syntax,
-            JsAnyDeclaration::JsVariableDeclaration(it) => it.syntax,
-            JsAnyDeclaration::TsDeclareFunctionDeclaration(it) => it.syntax,
-            JsAnyDeclaration::TsEnumDeclaration(it) => it.syntax,
-            JsAnyDeclaration::TsExternalModuleDeclaration(it) => it.syntax,
-            JsAnyDeclaration::TsGlobalDeclaration(it) => it.syntax,
-            JsAnyDeclaration::TsImportEqualsDeclaration(it) => it.syntax,
-            JsAnyDeclaration::TsInterfaceDeclaration(it) => it.syntax,
-            JsAnyDeclaration::TsModuleDeclaration(it) => it.syntax,
-            JsAnyDeclaration::TsTypeAliasDeclaration(it) => it.syntax,
+            AnyJsDeclaration::JsClassDeclaration(it) => it.syntax,
+            AnyJsDeclaration::JsFunctionDeclaration(it) => it.syntax,
+            AnyJsDeclaration::JsVariableDeclaration(it) => it.syntax,
+            AnyJsDeclaration::TsDeclareFunctionDeclaration(it) => it.syntax,
+            AnyJsDeclaration::TsEnumDeclaration(it) => it.syntax,
+            AnyJsDeclaration::TsExternalModuleDeclaration(it) => it.syntax,
+            AnyJsDeclaration::TsGlobalDeclaration(it) => it.syntax,
+            AnyJsDeclaration::TsImportEqualsDeclaration(it) => it.syntax,
+            AnyJsDeclaration::TsInterfaceDeclaration(it) => it.syntax,
+            AnyJsDeclaration::TsModuleDeclaration(it) => it.syntax,
+            AnyJsDeclaration::TsTypeAliasDeclaration(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyDeclaration {
+impl std::fmt::Debug for AnyJsDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyDeclaration::JsClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclaration::JsFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclaration::JsVariableDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclaration::TsDeclareFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclaration::TsEnumDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclaration::TsExternalModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclaration::TsGlobalDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclaration::TsImportEqualsDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclaration::TsInterfaceDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclaration::TsModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclaration::TsTypeAliasDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclaration::JsClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclaration::JsFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclaration::JsVariableDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclaration::TsDeclareFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclaration::TsEnumDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclaration::TsExternalModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclaration::TsGlobalDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclaration::TsImportEqualsDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclaration::TsInterfaceDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclaration::TsModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclaration::TsTypeAliasDeclaration(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyDeclaration> for SyntaxNode {
-    fn from(n: JsAnyDeclaration) -> SyntaxNode {
+impl From<AnyJsDeclaration> for SyntaxNode {
+    fn from(n: AnyJsDeclaration) -> SyntaxNode {
         match n {
-            JsAnyDeclaration::JsClassDeclaration(it) => it.into(),
-            JsAnyDeclaration::JsFunctionDeclaration(it) => it.into(),
-            JsAnyDeclaration::JsVariableDeclaration(it) => it.into(),
-            JsAnyDeclaration::TsDeclareFunctionDeclaration(it) => it.into(),
-            JsAnyDeclaration::TsEnumDeclaration(it) => it.into(),
-            JsAnyDeclaration::TsExternalModuleDeclaration(it) => it.into(),
-            JsAnyDeclaration::TsGlobalDeclaration(it) => it.into(),
-            JsAnyDeclaration::TsImportEqualsDeclaration(it) => it.into(),
-            JsAnyDeclaration::TsInterfaceDeclaration(it) => it.into(),
-            JsAnyDeclaration::TsModuleDeclaration(it) => it.into(),
-            JsAnyDeclaration::TsTypeAliasDeclaration(it) => it.into(),
+            AnyJsDeclaration::JsClassDeclaration(it) => it.into(),
+            AnyJsDeclaration::JsFunctionDeclaration(it) => it.into(),
+            AnyJsDeclaration::JsVariableDeclaration(it) => it.into(),
+            AnyJsDeclaration::TsDeclareFunctionDeclaration(it) => it.into(),
+            AnyJsDeclaration::TsEnumDeclaration(it) => it.into(),
+            AnyJsDeclaration::TsExternalModuleDeclaration(it) => it.into(),
+            AnyJsDeclaration::TsGlobalDeclaration(it) => it.into(),
+            AnyJsDeclaration::TsImportEqualsDeclaration(it) => it.into(),
+            AnyJsDeclaration::TsInterfaceDeclaration(it) => it.into(),
+            AnyJsDeclaration::TsModuleDeclaration(it) => it.into(),
+            AnyJsDeclaration::TsTypeAliasDeclaration(it) => it.into(),
         }
     }
 }
-impl From<JsAnyDeclaration> for SyntaxElement {
-    fn from(n: JsAnyDeclaration) -> SyntaxElement {
+impl From<AnyJsDeclaration> for SyntaxElement {
+    fn from(n: AnyJsDeclaration) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsClassDeclaration> for JsAnyDeclarationClause {
-    fn from(node: JsClassDeclaration) -> JsAnyDeclarationClause {
-        JsAnyDeclarationClause::JsClassDeclaration(node)
+impl From<JsClassDeclaration> for AnyJsDeclarationClause {
+    fn from(node: JsClassDeclaration) -> AnyJsDeclarationClause {
+        AnyJsDeclarationClause::JsClassDeclaration(node)
     }
 }
-impl From<JsFunctionDeclaration> for JsAnyDeclarationClause {
-    fn from(node: JsFunctionDeclaration) -> JsAnyDeclarationClause {
-        JsAnyDeclarationClause::JsFunctionDeclaration(node)
+impl From<JsFunctionDeclaration> for AnyJsDeclarationClause {
+    fn from(node: JsFunctionDeclaration) -> AnyJsDeclarationClause {
+        AnyJsDeclarationClause::JsFunctionDeclaration(node)
     }
 }
-impl From<JsVariableDeclarationClause> for JsAnyDeclarationClause {
-    fn from(node: JsVariableDeclarationClause) -> JsAnyDeclarationClause {
-        JsAnyDeclarationClause::JsVariableDeclarationClause(node)
+impl From<JsVariableDeclarationClause> for AnyJsDeclarationClause {
+    fn from(node: JsVariableDeclarationClause) -> AnyJsDeclarationClause {
+        AnyJsDeclarationClause::JsVariableDeclarationClause(node)
     }
 }
-impl From<TsDeclareFunctionDeclaration> for JsAnyDeclarationClause {
-    fn from(node: TsDeclareFunctionDeclaration) -> JsAnyDeclarationClause {
-        JsAnyDeclarationClause::TsDeclareFunctionDeclaration(node)
+impl From<TsDeclareFunctionDeclaration> for AnyJsDeclarationClause {
+    fn from(node: TsDeclareFunctionDeclaration) -> AnyJsDeclarationClause {
+        AnyJsDeclarationClause::TsDeclareFunctionDeclaration(node)
     }
 }
-impl From<TsEnumDeclaration> for JsAnyDeclarationClause {
-    fn from(node: TsEnumDeclaration) -> JsAnyDeclarationClause {
-        JsAnyDeclarationClause::TsEnumDeclaration(node)
+impl From<TsEnumDeclaration> for AnyJsDeclarationClause {
+    fn from(node: TsEnumDeclaration) -> AnyJsDeclarationClause {
+        AnyJsDeclarationClause::TsEnumDeclaration(node)
     }
 }
-impl From<TsExternalModuleDeclaration> for JsAnyDeclarationClause {
-    fn from(node: TsExternalModuleDeclaration) -> JsAnyDeclarationClause {
-        JsAnyDeclarationClause::TsExternalModuleDeclaration(node)
+impl From<TsExternalModuleDeclaration> for AnyJsDeclarationClause {
+    fn from(node: TsExternalModuleDeclaration) -> AnyJsDeclarationClause {
+        AnyJsDeclarationClause::TsExternalModuleDeclaration(node)
     }
 }
-impl From<TsGlobalDeclaration> for JsAnyDeclarationClause {
-    fn from(node: TsGlobalDeclaration) -> JsAnyDeclarationClause {
-        JsAnyDeclarationClause::TsGlobalDeclaration(node)
+impl From<TsGlobalDeclaration> for AnyJsDeclarationClause {
+    fn from(node: TsGlobalDeclaration) -> AnyJsDeclarationClause {
+        AnyJsDeclarationClause::TsGlobalDeclaration(node)
     }
 }
-impl From<TsImportEqualsDeclaration> for JsAnyDeclarationClause {
-    fn from(node: TsImportEqualsDeclaration) -> JsAnyDeclarationClause {
-        JsAnyDeclarationClause::TsImportEqualsDeclaration(node)
+impl From<TsImportEqualsDeclaration> for AnyJsDeclarationClause {
+    fn from(node: TsImportEqualsDeclaration) -> AnyJsDeclarationClause {
+        AnyJsDeclarationClause::TsImportEqualsDeclaration(node)
     }
 }
-impl From<TsInterfaceDeclaration> for JsAnyDeclarationClause {
-    fn from(node: TsInterfaceDeclaration) -> JsAnyDeclarationClause {
-        JsAnyDeclarationClause::TsInterfaceDeclaration(node)
+impl From<TsInterfaceDeclaration> for AnyJsDeclarationClause {
+    fn from(node: TsInterfaceDeclaration) -> AnyJsDeclarationClause {
+        AnyJsDeclarationClause::TsInterfaceDeclaration(node)
     }
 }
-impl From<TsModuleDeclaration> for JsAnyDeclarationClause {
-    fn from(node: TsModuleDeclaration) -> JsAnyDeclarationClause {
-        JsAnyDeclarationClause::TsModuleDeclaration(node)
+impl From<TsModuleDeclaration> for AnyJsDeclarationClause {
+    fn from(node: TsModuleDeclaration) -> AnyJsDeclarationClause {
+        AnyJsDeclarationClause::TsModuleDeclaration(node)
     }
 }
-impl From<TsTypeAliasDeclaration> for JsAnyDeclarationClause {
-    fn from(node: TsTypeAliasDeclaration) -> JsAnyDeclarationClause {
-        JsAnyDeclarationClause::TsTypeAliasDeclaration(node)
+impl From<TsTypeAliasDeclaration> for AnyJsDeclarationClause {
+    fn from(node: TsTypeAliasDeclaration) -> AnyJsDeclarationClause {
+        AnyJsDeclarationClause::TsTypeAliasDeclaration(node)
     }
 }
-impl AstNode for JsAnyDeclarationClause {
+impl AstNode for AnyJsDeclarationClause {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsClassDeclaration::KIND_SET
         .union(JsFunctionDeclaration::KIND_SET)
@@ -26346,45 +26350,45 @@ impl AstNode for JsAnyDeclarationClause {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_CLASS_DECLARATION => {
-                JsAnyDeclarationClause::JsClassDeclaration(JsClassDeclaration { syntax })
+                AnyJsDeclarationClause::JsClassDeclaration(JsClassDeclaration { syntax })
             }
             JS_FUNCTION_DECLARATION => {
-                JsAnyDeclarationClause::JsFunctionDeclaration(JsFunctionDeclaration { syntax })
+                AnyJsDeclarationClause::JsFunctionDeclaration(JsFunctionDeclaration { syntax })
             }
             JS_VARIABLE_DECLARATION_CLAUSE => {
-                JsAnyDeclarationClause::JsVariableDeclarationClause(JsVariableDeclarationClause {
+                AnyJsDeclarationClause::JsVariableDeclarationClause(JsVariableDeclarationClause {
                     syntax,
                 })
             }
             TS_DECLARE_FUNCTION_DECLARATION => {
-                JsAnyDeclarationClause::TsDeclareFunctionDeclaration(TsDeclareFunctionDeclaration {
+                AnyJsDeclarationClause::TsDeclareFunctionDeclaration(TsDeclareFunctionDeclaration {
                     syntax,
                 })
             }
             TS_ENUM_DECLARATION => {
-                JsAnyDeclarationClause::TsEnumDeclaration(TsEnumDeclaration { syntax })
+                AnyJsDeclarationClause::TsEnumDeclaration(TsEnumDeclaration { syntax })
             }
             TS_EXTERNAL_MODULE_DECLARATION => {
-                JsAnyDeclarationClause::TsExternalModuleDeclaration(TsExternalModuleDeclaration {
+                AnyJsDeclarationClause::TsExternalModuleDeclaration(TsExternalModuleDeclaration {
                     syntax,
                 })
             }
             TS_GLOBAL_DECLARATION => {
-                JsAnyDeclarationClause::TsGlobalDeclaration(TsGlobalDeclaration { syntax })
+                AnyJsDeclarationClause::TsGlobalDeclaration(TsGlobalDeclaration { syntax })
             }
             TS_IMPORT_EQUALS_DECLARATION => {
-                JsAnyDeclarationClause::TsImportEqualsDeclaration(TsImportEqualsDeclaration {
+                AnyJsDeclarationClause::TsImportEqualsDeclaration(TsImportEqualsDeclaration {
                     syntax,
                 })
             }
             TS_INTERFACE_DECLARATION => {
-                JsAnyDeclarationClause::TsInterfaceDeclaration(TsInterfaceDeclaration { syntax })
+                AnyJsDeclarationClause::TsInterfaceDeclaration(TsInterfaceDeclaration { syntax })
             }
             TS_MODULE_DECLARATION => {
-                JsAnyDeclarationClause::TsModuleDeclaration(TsModuleDeclaration { syntax })
+                AnyJsDeclarationClause::TsModuleDeclaration(TsModuleDeclaration { syntax })
             }
             TS_TYPE_ALIAS_DECLARATION => {
-                JsAnyDeclarationClause::TsTypeAliasDeclaration(TsTypeAliasDeclaration { syntax })
+                AnyJsDeclarationClause::TsTypeAliasDeclaration(TsTypeAliasDeclaration { syntax })
             }
             _ => return None,
         };
@@ -26392,118 +26396,118 @@ impl AstNode for JsAnyDeclarationClause {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyDeclarationClause::JsClassDeclaration(it) => &it.syntax,
-            JsAnyDeclarationClause::JsFunctionDeclaration(it) => &it.syntax,
-            JsAnyDeclarationClause::JsVariableDeclarationClause(it) => &it.syntax,
-            JsAnyDeclarationClause::TsDeclareFunctionDeclaration(it) => &it.syntax,
-            JsAnyDeclarationClause::TsEnumDeclaration(it) => &it.syntax,
-            JsAnyDeclarationClause::TsExternalModuleDeclaration(it) => &it.syntax,
-            JsAnyDeclarationClause::TsGlobalDeclaration(it) => &it.syntax,
-            JsAnyDeclarationClause::TsImportEqualsDeclaration(it) => &it.syntax,
-            JsAnyDeclarationClause::TsInterfaceDeclaration(it) => &it.syntax,
-            JsAnyDeclarationClause::TsModuleDeclaration(it) => &it.syntax,
-            JsAnyDeclarationClause::TsTypeAliasDeclaration(it) => &it.syntax,
+            AnyJsDeclarationClause::JsClassDeclaration(it) => &it.syntax,
+            AnyJsDeclarationClause::JsFunctionDeclaration(it) => &it.syntax,
+            AnyJsDeclarationClause::JsVariableDeclarationClause(it) => &it.syntax,
+            AnyJsDeclarationClause::TsDeclareFunctionDeclaration(it) => &it.syntax,
+            AnyJsDeclarationClause::TsEnumDeclaration(it) => &it.syntax,
+            AnyJsDeclarationClause::TsExternalModuleDeclaration(it) => &it.syntax,
+            AnyJsDeclarationClause::TsGlobalDeclaration(it) => &it.syntax,
+            AnyJsDeclarationClause::TsImportEqualsDeclaration(it) => &it.syntax,
+            AnyJsDeclarationClause::TsInterfaceDeclaration(it) => &it.syntax,
+            AnyJsDeclarationClause::TsModuleDeclaration(it) => &it.syntax,
+            AnyJsDeclarationClause::TsTypeAliasDeclaration(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyDeclarationClause::JsClassDeclaration(it) => it.syntax,
-            JsAnyDeclarationClause::JsFunctionDeclaration(it) => it.syntax,
-            JsAnyDeclarationClause::JsVariableDeclarationClause(it) => it.syntax,
-            JsAnyDeclarationClause::TsDeclareFunctionDeclaration(it) => it.syntax,
-            JsAnyDeclarationClause::TsEnumDeclaration(it) => it.syntax,
-            JsAnyDeclarationClause::TsExternalModuleDeclaration(it) => it.syntax,
-            JsAnyDeclarationClause::TsGlobalDeclaration(it) => it.syntax,
-            JsAnyDeclarationClause::TsImportEqualsDeclaration(it) => it.syntax,
-            JsAnyDeclarationClause::TsInterfaceDeclaration(it) => it.syntax,
-            JsAnyDeclarationClause::TsModuleDeclaration(it) => it.syntax,
-            JsAnyDeclarationClause::TsTypeAliasDeclaration(it) => it.syntax,
+            AnyJsDeclarationClause::JsClassDeclaration(it) => it.syntax,
+            AnyJsDeclarationClause::JsFunctionDeclaration(it) => it.syntax,
+            AnyJsDeclarationClause::JsVariableDeclarationClause(it) => it.syntax,
+            AnyJsDeclarationClause::TsDeclareFunctionDeclaration(it) => it.syntax,
+            AnyJsDeclarationClause::TsEnumDeclaration(it) => it.syntax,
+            AnyJsDeclarationClause::TsExternalModuleDeclaration(it) => it.syntax,
+            AnyJsDeclarationClause::TsGlobalDeclaration(it) => it.syntax,
+            AnyJsDeclarationClause::TsImportEqualsDeclaration(it) => it.syntax,
+            AnyJsDeclarationClause::TsInterfaceDeclaration(it) => it.syntax,
+            AnyJsDeclarationClause::TsModuleDeclaration(it) => it.syntax,
+            AnyJsDeclarationClause::TsTypeAliasDeclaration(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyDeclarationClause {
+impl std::fmt::Debug for AnyJsDeclarationClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyDeclarationClause::JsClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclarationClause::JsFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclarationClause::JsVariableDeclarationClause(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclarationClause::TsDeclareFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclarationClause::TsEnumDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclarationClause::TsExternalModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclarationClause::TsGlobalDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclarationClause::TsImportEqualsDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclarationClause::TsInterfaceDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclarationClause::TsModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyDeclarationClause::TsTypeAliasDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclarationClause::JsClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclarationClause::JsFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclarationClause::JsVariableDeclarationClause(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclarationClause::TsDeclareFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclarationClause::TsEnumDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclarationClause::TsExternalModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclarationClause::TsGlobalDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclarationClause::TsImportEqualsDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclarationClause::TsInterfaceDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclarationClause::TsModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsDeclarationClause::TsTypeAliasDeclaration(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyDeclarationClause> for SyntaxNode {
-    fn from(n: JsAnyDeclarationClause) -> SyntaxNode {
+impl From<AnyJsDeclarationClause> for SyntaxNode {
+    fn from(n: AnyJsDeclarationClause) -> SyntaxNode {
         match n {
-            JsAnyDeclarationClause::JsClassDeclaration(it) => it.into(),
-            JsAnyDeclarationClause::JsFunctionDeclaration(it) => it.into(),
-            JsAnyDeclarationClause::JsVariableDeclarationClause(it) => it.into(),
-            JsAnyDeclarationClause::TsDeclareFunctionDeclaration(it) => it.into(),
-            JsAnyDeclarationClause::TsEnumDeclaration(it) => it.into(),
-            JsAnyDeclarationClause::TsExternalModuleDeclaration(it) => it.into(),
-            JsAnyDeclarationClause::TsGlobalDeclaration(it) => it.into(),
-            JsAnyDeclarationClause::TsImportEqualsDeclaration(it) => it.into(),
-            JsAnyDeclarationClause::TsInterfaceDeclaration(it) => it.into(),
-            JsAnyDeclarationClause::TsModuleDeclaration(it) => it.into(),
-            JsAnyDeclarationClause::TsTypeAliasDeclaration(it) => it.into(),
+            AnyJsDeclarationClause::JsClassDeclaration(it) => it.into(),
+            AnyJsDeclarationClause::JsFunctionDeclaration(it) => it.into(),
+            AnyJsDeclarationClause::JsVariableDeclarationClause(it) => it.into(),
+            AnyJsDeclarationClause::TsDeclareFunctionDeclaration(it) => it.into(),
+            AnyJsDeclarationClause::TsEnumDeclaration(it) => it.into(),
+            AnyJsDeclarationClause::TsExternalModuleDeclaration(it) => it.into(),
+            AnyJsDeclarationClause::TsGlobalDeclaration(it) => it.into(),
+            AnyJsDeclarationClause::TsImportEqualsDeclaration(it) => it.into(),
+            AnyJsDeclarationClause::TsInterfaceDeclaration(it) => it.into(),
+            AnyJsDeclarationClause::TsModuleDeclaration(it) => it.into(),
+            AnyJsDeclarationClause::TsTypeAliasDeclaration(it) => it.into(),
         }
     }
 }
-impl From<JsAnyDeclarationClause> for SyntaxElement {
-    fn from(n: JsAnyDeclarationClause) -> SyntaxElement {
+impl From<AnyJsDeclarationClause> for SyntaxElement {
+    fn from(n: AnyJsDeclarationClause) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsExportDefaultDeclarationClause> for JsAnyExportClause {
-    fn from(node: JsExportDefaultDeclarationClause) -> JsAnyExportClause {
-        JsAnyExportClause::JsExportDefaultDeclarationClause(node)
+impl From<JsExportDefaultDeclarationClause> for AnyJsExportClause {
+    fn from(node: JsExportDefaultDeclarationClause) -> AnyJsExportClause {
+        AnyJsExportClause::JsExportDefaultDeclarationClause(node)
     }
 }
-impl From<JsExportDefaultExpressionClause> for JsAnyExportClause {
-    fn from(node: JsExportDefaultExpressionClause) -> JsAnyExportClause {
-        JsAnyExportClause::JsExportDefaultExpressionClause(node)
+impl From<JsExportDefaultExpressionClause> for AnyJsExportClause {
+    fn from(node: JsExportDefaultExpressionClause) -> AnyJsExportClause {
+        AnyJsExportClause::JsExportDefaultExpressionClause(node)
     }
 }
-impl From<JsExportFromClause> for JsAnyExportClause {
-    fn from(node: JsExportFromClause) -> JsAnyExportClause {
-        JsAnyExportClause::JsExportFromClause(node)
+impl From<JsExportFromClause> for AnyJsExportClause {
+    fn from(node: JsExportFromClause) -> AnyJsExportClause {
+        AnyJsExportClause::JsExportFromClause(node)
     }
 }
-impl From<JsExportNamedClause> for JsAnyExportClause {
-    fn from(node: JsExportNamedClause) -> JsAnyExportClause {
-        JsAnyExportClause::JsExportNamedClause(node)
+impl From<JsExportNamedClause> for AnyJsExportClause {
+    fn from(node: JsExportNamedClause) -> AnyJsExportClause {
+        AnyJsExportClause::JsExportNamedClause(node)
     }
 }
-impl From<JsExportNamedFromClause> for JsAnyExportClause {
-    fn from(node: JsExportNamedFromClause) -> JsAnyExportClause {
-        JsAnyExportClause::JsExportNamedFromClause(node)
+impl From<JsExportNamedFromClause> for AnyJsExportClause {
+    fn from(node: JsExportNamedFromClause) -> AnyJsExportClause {
+        AnyJsExportClause::JsExportNamedFromClause(node)
     }
 }
-impl From<TsExportAsNamespaceClause> for JsAnyExportClause {
-    fn from(node: TsExportAsNamespaceClause) -> JsAnyExportClause {
-        JsAnyExportClause::TsExportAsNamespaceClause(node)
+impl From<TsExportAsNamespaceClause> for AnyJsExportClause {
+    fn from(node: TsExportAsNamespaceClause) -> AnyJsExportClause {
+        AnyJsExportClause::TsExportAsNamespaceClause(node)
     }
 }
-impl From<TsExportAssignmentClause> for JsAnyExportClause {
-    fn from(node: TsExportAssignmentClause) -> JsAnyExportClause {
-        JsAnyExportClause::TsExportAssignmentClause(node)
+impl From<TsExportAssignmentClause> for AnyJsExportClause {
+    fn from(node: TsExportAssignmentClause) -> AnyJsExportClause {
+        AnyJsExportClause::TsExportAssignmentClause(node)
     }
 }
-impl From<TsExportDeclareClause> for JsAnyExportClause {
-    fn from(node: TsExportDeclareClause) -> JsAnyExportClause {
-        JsAnyExportClause::TsExportDeclareClause(node)
+impl From<TsExportDeclareClause> for AnyJsExportClause {
+    fn from(node: TsExportDeclareClause) -> AnyJsExportClause {
+        AnyJsExportClause::TsExportDeclareClause(node)
     }
 }
-impl AstNode for JsAnyExportClause {
+impl AstNode for AnyJsExportClause {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsAnyDeclarationClause::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = AnyJsDeclarationClause::KIND_SET
         .union(JsExportDefaultDeclarationClause::KIND_SET)
         .union(JsExportDefaultExpressionClause::KIND_SET)
         .union(JsExportFromClause::KIND_SET)
@@ -26522,44 +26526,44 @@ impl AstNode for JsAnyExportClause {
             | TS_EXPORT_AS_NAMESPACE_CLAUSE
             | TS_EXPORT_ASSIGNMENT_CLAUSE
             | TS_EXPORT_DECLARE_CLAUSE => true,
-            k if JsAnyDeclarationClause::can_cast(k) => true,
+            k if AnyJsDeclarationClause::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_EXPORT_DEFAULT_DECLARATION_CLAUSE => {
-                JsAnyExportClause::JsExportDefaultDeclarationClause(
+                AnyJsExportClause::JsExportDefaultDeclarationClause(
                     JsExportDefaultDeclarationClause { syntax },
                 )
             }
             JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE => {
-                JsAnyExportClause::JsExportDefaultExpressionClause(
+                AnyJsExportClause::JsExportDefaultExpressionClause(
                     JsExportDefaultExpressionClause { syntax },
                 )
             }
             JS_EXPORT_FROM_CLAUSE => {
-                JsAnyExportClause::JsExportFromClause(JsExportFromClause { syntax })
+                AnyJsExportClause::JsExportFromClause(JsExportFromClause { syntax })
             }
             JS_EXPORT_NAMED_CLAUSE => {
-                JsAnyExportClause::JsExportNamedClause(JsExportNamedClause { syntax })
+                AnyJsExportClause::JsExportNamedClause(JsExportNamedClause { syntax })
             }
             JS_EXPORT_NAMED_FROM_CLAUSE => {
-                JsAnyExportClause::JsExportNamedFromClause(JsExportNamedFromClause { syntax })
+                AnyJsExportClause::JsExportNamedFromClause(JsExportNamedFromClause { syntax })
             }
             TS_EXPORT_AS_NAMESPACE_CLAUSE => {
-                JsAnyExportClause::TsExportAsNamespaceClause(TsExportAsNamespaceClause { syntax })
+                AnyJsExportClause::TsExportAsNamespaceClause(TsExportAsNamespaceClause { syntax })
             }
             TS_EXPORT_ASSIGNMENT_CLAUSE => {
-                JsAnyExportClause::TsExportAssignmentClause(TsExportAssignmentClause { syntax })
+                AnyJsExportClause::TsExportAssignmentClause(TsExportAssignmentClause { syntax })
             }
             TS_EXPORT_DECLARE_CLAUSE => {
-                JsAnyExportClause::TsExportDeclareClause(TsExportDeclareClause { syntax })
+                AnyJsExportClause::TsExportDeclareClause(TsExportDeclareClause { syntax })
             }
             _ => {
-                if let Some(js_any_declaration_clause) = JsAnyDeclarationClause::cast(syntax) {
-                    return Some(JsAnyExportClause::JsAnyDeclarationClause(
-                        js_any_declaration_clause,
+                if let Some(any_js_declaration_clause) = AnyJsDeclarationClause::cast(syntax) {
+                    return Some(AnyJsExportClause::AnyJsDeclarationClause(
+                        any_js_declaration_clause,
                     ));
                 }
                 return None;
@@ -26569,88 +26573,88 @@ impl AstNode for JsAnyExportClause {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyExportClause::JsExportDefaultDeclarationClause(it) => &it.syntax,
-            JsAnyExportClause::JsExportDefaultExpressionClause(it) => &it.syntax,
-            JsAnyExportClause::JsExportFromClause(it) => &it.syntax,
-            JsAnyExportClause::JsExportNamedClause(it) => &it.syntax,
-            JsAnyExportClause::JsExportNamedFromClause(it) => &it.syntax,
-            JsAnyExportClause::TsExportAsNamespaceClause(it) => &it.syntax,
-            JsAnyExportClause::TsExportAssignmentClause(it) => &it.syntax,
-            JsAnyExportClause::TsExportDeclareClause(it) => &it.syntax,
-            JsAnyExportClause::JsAnyDeclarationClause(it) => it.syntax(),
+            AnyJsExportClause::JsExportDefaultDeclarationClause(it) => &it.syntax,
+            AnyJsExportClause::JsExportDefaultExpressionClause(it) => &it.syntax,
+            AnyJsExportClause::JsExportFromClause(it) => &it.syntax,
+            AnyJsExportClause::JsExportNamedClause(it) => &it.syntax,
+            AnyJsExportClause::JsExportNamedFromClause(it) => &it.syntax,
+            AnyJsExportClause::TsExportAsNamespaceClause(it) => &it.syntax,
+            AnyJsExportClause::TsExportAssignmentClause(it) => &it.syntax,
+            AnyJsExportClause::TsExportDeclareClause(it) => &it.syntax,
+            AnyJsExportClause::AnyJsDeclarationClause(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyExportClause::JsExportDefaultDeclarationClause(it) => it.syntax,
-            JsAnyExportClause::JsExportDefaultExpressionClause(it) => it.syntax,
-            JsAnyExportClause::JsExportFromClause(it) => it.syntax,
-            JsAnyExportClause::JsExportNamedClause(it) => it.syntax,
-            JsAnyExportClause::JsExportNamedFromClause(it) => it.syntax,
-            JsAnyExportClause::TsExportAsNamespaceClause(it) => it.syntax,
-            JsAnyExportClause::TsExportAssignmentClause(it) => it.syntax,
-            JsAnyExportClause::TsExportDeclareClause(it) => it.syntax,
-            JsAnyExportClause::JsAnyDeclarationClause(it) => it.into_syntax(),
+            AnyJsExportClause::JsExportDefaultDeclarationClause(it) => it.syntax,
+            AnyJsExportClause::JsExportDefaultExpressionClause(it) => it.syntax,
+            AnyJsExportClause::JsExportFromClause(it) => it.syntax,
+            AnyJsExportClause::JsExportNamedClause(it) => it.syntax,
+            AnyJsExportClause::JsExportNamedFromClause(it) => it.syntax,
+            AnyJsExportClause::TsExportAsNamespaceClause(it) => it.syntax,
+            AnyJsExportClause::TsExportAssignmentClause(it) => it.syntax,
+            AnyJsExportClause::TsExportDeclareClause(it) => it.syntax,
+            AnyJsExportClause::AnyJsDeclarationClause(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsAnyExportClause {
+impl std::fmt::Debug for AnyJsExportClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyExportClause::JsAnyDeclarationClause(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExportClause::JsExportDefaultDeclarationClause(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExportClause::JsExportDefaultExpressionClause(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExportClause::JsExportFromClause(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExportClause::JsExportNamedClause(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExportClause::JsExportNamedFromClause(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExportClause::TsExportAsNamespaceClause(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExportClause::TsExportAssignmentClause(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExportClause::TsExportDeclareClause(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExportClause::AnyJsDeclarationClause(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExportClause::JsExportDefaultDeclarationClause(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExportClause::JsExportDefaultExpressionClause(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExportClause::JsExportFromClause(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExportClause::JsExportNamedClause(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExportClause::JsExportNamedFromClause(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExportClause::TsExportAsNamespaceClause(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExportClause::TsExportAssignmentClause(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExportClause::TsExportDeclareClause(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyExportClause> for SyntaxNode {
-    fn from(n: JsAnyExportClause) -> SyntaxNode {
+impl From<AnyJsExportClause> for SyntaxNode {
+    fn from(n: AnyJsExportClause) -> SyntaxNode {
         match n {
-            JsAnyExportClause::JsAnyDeclarationClause(it) => it.into(),
-            JsAnyExportClause::JsExportDefaultDeclarationClause(it) => it.into(),
-            JsAnyExportClause::JsExportDefaultExpressionClause(it) => it.into(),
-            JsAnyExportClause::JsExportFromClause(it) => it.into(),
-            JsAnyExportClause::JsExportNamedClause(it) => it.into(),
-            JsAnyExportClause::JsExportNamedFromClause(it) => it.into(),
-            JsAnyExportClause::TsExportAsNamespaceClause(it) => it.into(),
-            JsAnyExportClause::TsExportAssignmentClause(it) => it.into(),
-            JsAnyExportClause::TsExportDeclareClause(it) => it.into(),
+            AnyJsExportClause::AnyJsDeclarationClause(it) => it.into(),
+            AnyJsExportClause::JsExportDefaultDeclarationClause(it) => it.into(),
+            AnyJsExportClause::JsExportDefaultExpressionClause(it) => it.into(),
+            AnyJsExportClause::JsExportFromClause(it) => it.into(),
+            AnyJsExportClause::JsExportNamedClause(it) => it.into(),
+            AnyJsExportClause::JsExportNamedFromClause(it) => it.into(),
+            AnyJsExportClause::TsExportAsNamespaceClause(it) => it.into(),
+            AnyJsExportClause::TsExportAssignmentClause(it) => it.into(),
+            AnyJsExportClause::TsExportDeclareClause(it) => it.into(),
         }
     }
 }
-impl From<JsAnyExportClause> for SyntaxElement {
-    fn from(n: JsAnyExportClause) -> SyntaxElement {
+impl From<AnyJsExportClause> for SyntaxElement {
+    fn from(n: AnyJsExportClause) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsClassExportDefaultDeclaration> for JsAnyExportDefaultDeclaration {
-    fn from(node: JsClassExportDefaultDeclaration) -> JsAnyExportDefaultDeclaration {
-        JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(node)
+impl From<JsClassExportDefaultDeclaration> for AnyJsExportDefaultDeclaration {
+    fn from(node: JsClassExportDefaultDeclaration) -> AnyJsExportDefaultDeclaration {
+        AnyJsExportDefaultDeclaration::JsClassExportDefaultDeclaration(node)
     }
 }
-impl From<JsFunctionExportDefaultDeclaration> for JsAnyExportDefaultDeclaration {
-    fn from(node: JsFunctionExportDefaultDeclaration) -> JsAnyExportDefaultDeclaration {
-        JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(node)
+impl From<JsFunctionExportDefaultDeclaration> for AnyJsExportDefaultDeclaration {
+    fn from(node: JsFunctionExportDefaultDeclaration) -> AnyJsExportDefaultDeclaration {
+        AnyJsExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(node)
     }
 }
-impl From<TsDeclareFunctionExportDefaultDeclaration> for JsAnyExportDefaultDeclaration {
-    fn from(node: TsDeclareFunctionExportDefaultDeclaration) -> JsAnyExportDefaultDeclaration {
-        JsAnyExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(node)
+impl From<TsDeclareFunctionExportDefaultDeclaration> for AnyJsExportDefaultDeclaration {
+    fn from(node: TsDeclareFunctionExportDefaultDeclaration) -> AnyJsExportDefaultDeclaration {
+        AnyJsExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(node)
     }
 }
-impl From<TsInterfaceDeclaration> for JsAnyExportDefaultDeclaration {
-    fn from(node: TsInterfaceDeclaration) -> JsAnyExportDefaultDeclaration {
-        JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(node)
+impl From<TsInterfaceDeclaration> for AnyJsExportDefaultDeclaration {
+    fn from(node: TsInterfaceDeclaration) -> AnyJsExportDefaultDeclaration {
+        AnyJsExportDefaultDeclaration::TsInterfaceDeclaration(node)
     }
 }
-impl AstNode for JsAnyExportDefaultDeclaration {
+impl AstNode for AnyJsExportDefaultDeclaration {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsClassExportDefaultDeclaration::KIND_SET
         .union(JsFunctionExportDefaultDeclaration::KIND_SET)
@@ -26668,22 +26672,22 @@ impl AstNode for JsAnyExportDefaultDeclaration {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_CLASS_EXPORT_DEFAULT_DECLARATION => {
-                JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(
+                AnyJsExportDefaultDeclaration::JsClassExportDefaultDeclaration(
                     JsClassExportDefaultDeclaration { syntax },
                 )
             }
             JS_FUNCTION_EXPORT_DEFAULT_DECLARATION => {
-                JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(
+                AnyJsExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(
                     JsFunctionExportDefaultDeclaration { syntax },
                 )
             }
             TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION => {
-                JsAnyExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(
+                AnyJsExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(
                     TsDeclareFunctionExportDefaultDeclaration { syntax },
                 )
             }
             TS_INTERFACE_DECLARATION => {
-                JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(TsInterfaceDeclaration {
+                AnyJsExportDefaultDeclaration::TsInterfaceDeclaration(TsInterfaceDeclaration {
                     syntax,
                 })
             }
@@ -26693,72 +26697,72 @@ impl AstNode for JsAnyExportDefaultDeclaration {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(it) => &it.syntax,
-            JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(it) => &it.syntax,
-            JsAnyExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(it) => {
+            AnyJsExportDefaultDeclaration::JsClassExportDefaultDeclaration(it) => &it.syntax,
+            AnyJsExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(it) => &it.syntax,
+            AnyJsExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(it) => {
                 &it.syntax
             }
-            JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(it) => &it.syntax,
+            AnyJsExportDefaultDeclaration::TsInterfaceDeclaration(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(it) => it.syntax,
-            JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(it) => it.syntax,
-            JsAnyExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(it) => {
+            AnyJsExportDefaultDeclaration::JsClassExportDefaultDeclaration(it) => it.syntax,
+            AnyJsExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(it) => it.syntax,
+            AnyJsExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(it) => {
                 it.syntax
             }
-            JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(it) => it.syntax,
+            AnyJsExportDefaultDeclaration::TsInterfaceDeclaration(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyExportDefaultDeclaration {
+impl std::fmt::Debug for AnyJsExportDefaultDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(it) => {
+            AnyJsExportDefaultDeclaration::JsClassExportDefaultDeclaration(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(it) => {
+            AnyJsExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(it) => {
+            AnyJsExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(it) => {
+            AnyJsExportDefaultDeclaration::TsInterfaceDeclaration(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
         }
     }
 }
-impl From<JsAnyExportDefaultDeclaration> for SyntaxNode {
-    fn from(n: JsAnyExportDefaultDeclaration) -> SyntaxNode {
+impl From<AnyJsExportDefaultDeclaration> for SyntaxNode {
+    fn from(n: AnyJsExportDefaultDeclaration) -> SyntaxNode {
         match n {
-            JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(it) => it.into(),
-            JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(it) => it.into(),
-            JsAnyExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(it) => {
+            AnyJsExportDefaultDeclaration::JsClassExportDefaultDeclaration(it) => it.into(),
+            AnyJsExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(it) => it.into(),
+            AnyJsExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(it) => {
                 it.into()
             }
-            JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(it) => it.into(),
+            AnyJsExportDefaultDeclaration::TsInterfaceDeclaration(it) => it.into(),
         }
     }
 }
-impl From<JsAnyExportDefaultDeclaration> for SyntaxElement {
-    fn from(n: JsAnyExportDefaultDeclaration) -> SyntaxElement {
+impl From<AnyJsExportDefaultDeclaration> for SyntaxElement {
+    fn from(n: AnyJsExportDefaultDeclaration) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsExportNamedShorthandSpecifier> for JsAnyExportNamedSpecifier {
-    fn from(node: JsExportNamedShorthandSpecifier) -> JsAnyExportNamedSpecifier {
-        JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(node)
+impl From<JsExportNamedShorthandSpecifier> for AnyJsExportNamedSpecifier {
+    fn from(node: JsExportNamedShorthandSpecifier) -> AnyJsExportNamedSpecifier {
+        AnyJsExportNamedSpecifier::JsExportNamedShorthandSpecifier(node)
     }
 }
-impl From<JsExportNamedSpecifier> for JsAnyExportNamedSpecifier {
-    fn from(node: JsExportNamedSpecifier) -> JsAnyExportNamedSpecifier {
-        JsAnyExportNamedSpecifier::JsExportNamedSpecifier(node)
+impl From<JsExportNamedSpecifier> for AnyJsExportNamedSpecifier {
+    fn from(node: JsExportNamedSpecifier) -> AnyJsExportNamedSpecifier {
+        AnyJsExportNamedSpecifier::JsExportNamedSpecifier(node)
     }
 }
-impl AstNode for JsAnyExportNamedSpecifier {
+impl AstNode for AnyJsExportNamedSpecifier {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
         JsExportNamedShorthandSpecifier::KIND_SET.union(JsExportNamedSpecifier::KIND_SET);
@@ -26771,12 +26775,12 @@ impl AstNode for JsAnyExportNamedSpecifier {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_EXPORT_NAMED_SHORTHAND_SPECIFIER => {
-                JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(
+                AnyJsExportNamedSpecifier::JsExportNamedShorthandSpecifier(
                     JsExportNamedShorthandSpecifier { syntax },
                 )
             }
             JS_EXPORT_NAMED_SPECIFIER => {
-                JsAnyExportNamedSpecifier::JsExportNamedSpecifier(JsExportNamedSpecifier { syntax })
+                AnyJsExportNamedSpecifier::JsExportNamedSpecifier(JsExportNamedSpecifier { syntax })
             }
             _ => return None,
         };
@@ -26784,198 +26788,198 @@ impl AstNode for JsAnyExportNamedSpecifier {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(it) => &it.syntax,
-            JsAnyExportNamedSpecifier::JsExportNamedSpecifier(it) => &it.syntax,
+            AnyJsExportNamedSpecifier::JsExportNamedShorthandSpecifier(it) => &it.syntax,
+            AnyJsExportNamedSpecifier::JsExportNamedSpecifier(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(it) => it.syntax,
-            JsAnyExportNamedSpecifier::JsExportNamedSpecifier(it) => it.syntax,
+            AnyJsExportNamedSpecifier::JsExportNamedShorthandSpecifier(it) => it.syntax,
+            AnyJsExportNamedSpecifier::JsExportNamedSpecifier(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyExportNamedSpecifier {
+impl std::fmt::Debug for AnyJsExportNamedSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(it) => {
+            AnyJsExportNamedSpecifier::JsExportNamedShorthandSpecifier(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyExportNamedSpecifier::JsExportNamedSpecifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExportNamedSpecifier::JsExportNamedSpecifier(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyExportNamedSpecifier> for SyntaxNode {
-    fn from(n: JsAnyExportNamedSpecifier) -> SyntaxNode {
+impl From<AnyJsExportNamedSpecifier> for SyntaxNode {
+    fn from(n: AnyJsExportNamedSpecifier) -> SyntaxNode {
         match n {
-            JsAnyExportNamedSpecifier::JsExportNamedShorthandSpecifier(it) => it.into(),
-            JsAnyExportNamedSpecifier::JsExportNamedSpecifier(it) => it.into(),
+            AnyJsExportNamedSpecifier::JsExportNamedShorthandSpecifier(it) => it.into(),
+            AnyJsExportNamedSpecifier::JsExportNamedSpecifier(it) => it.into(),
         }
     }
 }
-impl From<JsAnyExportNamedSpecifier> for SyntaxElement {
-    fn from(n: JsAnyExportNamedSpecifier) -> SyntaxElement {
+impl From<AnyJsExportNamedSpecifier> for SyntaxElement {
+    fn from(n: AnyJsExportNamedSpecifier) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsArrayExpression> for JsAnyExpression {
-    fn from(node: JsArrayExpression) -> JsAnyExpression { JsAnyExpression::JsArrayExpression(node) }
+impl From<JsArrayExpression> for AnyJsExpression {
+    fn from(node: JsArrayExpression) -> AnyJsExpression { AnyJsExpression::JsArrayExpression(node) }
 }
-impl From<JsArrowFunctionExpression> for JsAnyExpression {
-    fn from(node: JsArrowFunctionExpression) -> JsAnyExpression {
-        JsAnyExpression::JsArrowFunctionExpression(node)
+impl From<JsArrowFunctionExpression> for AnyJsExpression {
+    fn from(node: JsArrowFunctionExpression) -> AnyJsExpression {
+        AnyJsExpression::JsArrowFunctionExpression(node)
     }
 }
-impl From<JsAssignmentExpression> for JsAnyExpression {
-    fn from(node: JsAssignmentExpression) -> JsAnyExpression {
-        JsAnyExpression::JsAssignmentExpression(node)
+impl From<JsAssignmentExpression> for AnyJsExpression {
+    fn from(node: JsAssignmentExpression) -> AnyJsExpression {
+        AnyJsExpression::JsAssignmentExpression(node)
     }
 }
-impl From<JsAwaitExpression> for JsAnyExpression {
-    fn from(node: JsAwaitExpression) -> JsAnyExpression { JsAnyExpression::JsAwaitExpression(node) }
+impl From<JsAwaitExpression> for AnyJsExpression {
+    fn from(node: JsAwaitExpression) -> AnyJsExpression { AnyJsExpression::JsAwaitExpression(node) }
 }
-impl From<JsBinaryExpression> for JsAnyExpression {
-    fn from(node: JsBinaryExpression) -> JsAnyExpression {
-        JsAnyExpression::JsBinaryExpression(node)
+impl From<JsBinaryExpression> for AnyJsExpression {
+    fn from(node: JsBinaryExpression) -> AnyJsExpression {
+        AnyJsExpression::JsBinaryExpression(node)
     }
 }
-impl From<JsBogusExpression> for JsAnyExpression {
-    fn from(node: JsBogusExpression) -> JsAnyExpression { JsAnyExpression::JsBogusExpression(node) }
+impl From<JsBogusExpression> for AnyJsExpression {
+    fn from(node: JsBogusExpression) -> AnyJsExpression { AnyJsExpression::JsBogusExpression(node) }
 }
-impl From<JsCallExpression> for JsAnyExpression {
-    fn from(node: JsCallExpression) -> JsAnyExpression { JsAnyExpression::JsCallExpression(node) }
+impl From<JsCallExpression> for AnyJsExpression {
+    fn from(node: JsCallExpression) -> AnyJsExpression { AnyJsExpression::JsCallExpression(node) }
 }
-impl From<JsClassExpression> for JsAnyExpression {
-    fn from(node: JsClassExpression) -> JsAnyExpression { JsAnyExpression::JsClassExpression(node) }
+impl From<JsClassExpression> for AnyJsExpression {
+    fn from(node: JsClassExpression) -> AnyJsExpression { AnyJsExpression::JsClassExpression(node) }
 }
-impl From<JsComputedMemberExpression> for JsAnyExpression {
-    fn from(node: JsComputedMemberExpression) -> JsAnyExpression {
-        JsAnyExpression::JsComputedMemberExpression(node)
+impl From<JsComputedMemberExpression> for AnyJsExpression {
+    fn from(node: JsComputedMemberExpression) -> AnyJsExpression {
+        AnyJsExpression::JsComputedMemberExpression(node)
     }
 }
-impl From<JsConditionalExpression> for JsAnyExpression {
-    fn from(node: JsConditionalExpression) -> JsAnyExpression {
-        JsAnyExpression::JsConditionalExpression(node)
+impl From<JsConditionalExpression> for AnyJsExpression {
+    fn from(node: JsConditionalExpression) -> AnyJsExpression {
+        AnyJsExpression::JsConditionalExpression(node)
     }
 }
-impl From<JsFunctionExpression> for JsAnyExpression {
-    fn from(node: JsFunctionExpression) -> JsAnyExpression {
-        JsAnyExpression::JsFunctionExpression(node)
+impl From<JsFunctionExpression> for AnyJsExpression {
+    fn from(node: JsFunctionExpression) -> AnyJsExpression {
+        AnyJsExpression::JsFunctionExpression(node)
     }
 }
-impl From<JsIdentifierExpression> for JsAnyExpression {
-    fn from(node: JsIdentifierExpression) -> JsAnyExpression {
-        JsAnyExpression::JsIdentifierExpression(node)
+impl From<JsIdentifierExpression> for AnyJsExpression {
+    fn from(node: JsIdentifierExpression) -> AnyJsExpression {
+        AnyJsExpression::JsIdentifierExpression(node)
     }
 }
-impl From<JsImportCallExpression> for JsAnyExpression {
-    fn from(node: JsImportCallExpression) -> JsAnyExpression {
-        JsAnyExpression::JsImportCallExpression(node)
+impl From<JsImportCallExpression> for AnyJsExpression {
+    fn from(node: JsImportCallExpression) -> AnyJsExpression {
+        AnyJsExpression::JsImportCallExpression(node)
     }
 }
-impl From<JsImportMetaExpression> for JsAnyExpression {
-    fn from(node: JsImportMetaExpression) -> JsAnyExpression {
-        JsAnyExpression::JsImportMetaExpression(node)
+impl From<JsImportMetaExpression> for AnyJsExpression {
+    fn from(node: JsImportMetaExpression) -> AnyJsExpression {
+        AnyJsExpression::JsImportMetaExpression(node)
     }
 }
-impl From<JsInExpression> for JsAnyExpression {
-    fn from(node: JsInExpression) -> JsAnyExpression { JsAnyExpression::JsInExpression(node) }
+impl From<JsInExpression> for AnyJsExpression {
+    fn from(node: JsInExpression) -> AnyJsExpression { AnyJsExpression::JsInExpression(node) }
 }
-impl From<JsInstanceofExpression> for JsAnyExpression {
-    fn from(node: JsInstanceofExpression) -> JsAnyExpression {
-        JsAnyExpression::JsInstanceofExpression(node)
+impl From<JsInstanceofExpression> for AnyJsExpression {
+    fn from(node: JsInstanceofExpression) -> AnyJsExpression {
+        AnyJsExpression::JsInstanceofExpression(node)
     }
 }
-impl From<JsLogicalExpression> for JsAnyExpression {
-    fn from(node: JsLogicalExpression) -> JsAnyExpression {
-        JsAnyExpression::JsLogicalExpression(node)
+impl From<JsLogicalExpression> for AnyJsExpression {
+    fn from(node: JsLogicalExpression) -> AnyJsExpression {
+        AnyJsExpression::JsLogicalExpression(node)
     }
 }
-impl From<JsNewExpression> for JsAnyExpression {
-    fn from(node: JsNewExpression) -> JsAnyExpression { JsAnyExpression::JsNewExpression(node) }
+impl From<JsNewExpression> for AnyJsExpression {
+    fn from(node: JsNewExpression) -> AnyJsExpression { AnyJsExpression::JsNewExpression(node) }
 }
-impl From<JsNewTargetExpression> for JsAnyExpression {
-    fn from(node: JsNewTargetExpression) -> JsAnyExpression {
-        JsAnyExpression::JsNewTargetExpression(node)
+impl From<JsNewTargetExpression> for AnyJsExpression {
+    fn from(node: JsNewTargetExpression) -> AnyJsExpression {
+        AnyJsExpression::JsNewTargetExpression(node)
     }
 }
-impl From<JsObjectExpression> for JsAnyExpression {
-    fn from(node: JsObjectExpression) -> JsAnyExpression {
-        JsAnyExpression::JsObjectExpression(node)
+impl From<JsObjectExpression> for AnyJsExpression {
+    fn from(node: JsObjectExpression) -> AnyJsExpression {
+        AnyJsExpression::JsObjectExpression(node)
     }
 }
-impl From<JsParenthesizedExpression> for JsAnyExpression {
-    fn from(node: JsParenthesizedExpression) -> JsAnyExpression {
-        JsAnyExpression::JsParenthesizedExpression(node)
+impl From<JsParenthesizedExpression> for AnyJsExpression {
+    fn from(node: JsParenthesizedExpression) -> AnyJsExpression {
+        AnyJsExpression::JsParenthesizedExpression(node)
     }
 }
-impl From<JsPostUpdateExpression> for JsAnyExpression {
-    fn from(node: JsPostUpdateExpression) -> JsAnyExpression {
-        JsAnyExpression::JsPostUpdateExpression(node)
+impl From<JsPostUpdateExpression> for AnyJsExpression {
+    fn from(node: JsPostUpdateExpression) -> AnyJsExpression {
+        AnyJsExpression::JsPostUpdateExpression(node)
     }
 }
-impl From<JsPreUpdateExpression> for JsAnyExpression {
-    fn from(node: JsPreUpdateExpression) -> JsAnyExpression {
-        JsAnyExpression::JsPreUpdateExpression(node)
+impl From<JsPreUpdateExpression> for AnyJsExpression {
+    fn from(node: JsPreUpdateExpression) -> AnyJsExpression {
+        AnyJsExpression::JsPreUpdateExpression(node)
     }
 }
-impl From<JsSequenceExpression> for JsAnyExpression {
-    fn from(node: JsSequenceExpression) -> JsAnyExpression {
-        JsAnyExpression::JsSequenceExpression(node)
+impl From<JsSequenceExpression> for AnyJsExpression {
+    fn from(node: JsSequenceExpression) -> AnyJsExpression {
+        AnyJsExpression::JsSequenceExpression(node)
     }
 }
-impl From<JsStaticMemberExpression> for JsAnyExpression {
-    fn from(node: JsStaticMemberExpression) -> JsAnyExpression {
-        JsAnyExpression::JsStaticMemberExpression(node)
+impl From<JsStaticMemberExpression> for AnyJsExpression {
+    fn from(node: JsStaticMemberExpression) -> AnyJsExpression {
+        AnyJsExpression::JsStaticMemberExpression(node)
     }
 }
-impl From<JsSuperExpression> for JsAnyExpression {
-    fn from(node: JsSuperExpression) -> JsAnyExpression { JsAnyExpression::JsSuperExpression(node) }
+impl From<JsSuperExpression> for AnyJsExpression {
+    fn from(node: JsSuperExpression) -> AnyJsExpression { AnyJsExpression::JsSuperExpression(node) }
 }
-impl From<JsTemplateExpression> for JsAnyExpression {
-    fn from(node: JsTemplateExpression) -> JsAnyExpression {
-        JsAnyExpression::JsTemplateExpression(node)
+impl From<JsTemplateExpression> for AnyJsExpression {
+    fn from(node: JsTemplateExpression) -> AnyJsExpression {
+        AnyJsExpression::JsTemplateExpression(node)
     }
 }
-impl From<JsThisExpression> for JsAnyExpression {
-    fn from(node: JsThisExpression) -> JsAnyExpression { JsAnyExpression::JsThisExpression(node) }
+impl From<JsThisExpression> for AnyJsExpression {
+    fn from(node: JsThisExpression) -> AnyJsExpression { AnyJsExpression::JsThisExpression(node) }
 }
-impl From<JsUnaryExpression> for JsAnyExpression {
-    fn from(node: JsUnaryExpression) -> JsAnyExpression { JsAnyExpression::JsUnaryExpression(node) }
+impl From<JsUnaryExpression> for AnyJsExpression {
+    fn from(node: JsUnaryExpression) -> AnyJsExpression { AnyJsExpression::JsUnaryExpression(node) }
 }
-impl From<JsYieldExpression> for JsAnyExpression {
-    fn from(node: JsYieldExpression) -> JsAnyExpression { JsAnyExpression::JsYieldExpression(node) }
+impl From<JsYieldExpression> for AnyJsExpression {
+    fn from(node: JsYieldExpression) -> AnyJsExpression { AnyJsExpression::JsYieldExpression(node) }
 }
-impl From<JsxTagExpression> for JsAnyExpression {
-    fn from(node: JsxTagExpression) -> JsAnyExpression { JsAnyExpression::JsxTagExpression(node) }
+impl From<JsxTagExpression> for AnyJsExpression {
+    fn from(node: JsxTagExpression) -> AnyJsExpression { AnyJsExpression::JsxTagExpression(node) }
 }
-impl From<TsAsExpression> for JsAnyExpression {
-    fn from(node: TsAsExpression) -> JsAnyExpression { JsAnyExpression::TsAsExpression(node) }
+impl From<TsAsExpression> for AnyJsExpression {
+    fn from(node: TsAsExpression) -> AnyJsExpression { AnyJsExpression::TsAsExpression(node) }
 }
-impl From<TsInstantiationExpression> for JsAnyExpression {
-    fn from(node: TsInstantiationExpression) -> JsAnyExpression {
-        JsAnyExpression::TsInstantiationExpression(node)
+impl From<TsInstantiationExpression> for AnyJsExpression {
+    fn from(node: TsInstantiationExpression) -> AnyJsExpression {
+        AnyJsExpression::TsInstantiationExpression(node)
     }
 }
-impl From<TsNonNullAssertionExpression> for JsAnyExpression {
-    fn from(node: TsNonNullAssertionExpression) -> JsAnyExpression {
-        JsAnyExpression::TsNonNullAssertionExpression(node)
+impl From<TsNonNullAssertionExpression> for AnyJsExpression {
+    fn from(node: TsNonNullAssertionExpression) -> AnyJsExpression {
+        AnyJsExpression::TsNonNullAssertionExpression(node)
     }
 }
-impl From<TsSatisfiesExpression> for JsAnyExpression {
-    fn from(node: TsSatisfiesExpression) -> JsAnyExpression {
-        JsAnyExpression::TsSatisfiesExpression(node)
+impl From<TsSatisfiesExpression> for AnyJsExpression {
+    fn from(node: TsSatisfiesExpression) -> AnyJsExpression {
+        AnyJsExpression::TsSatisfiesExpression(node)
     }
 }
-impl From<TsTypeAssertionExpression> for JsAnyExpression {
-    fn from(node: TsTypeAssertionExpression) -> JsAnyExpression {
-        JsAnyExpression::TsTypeAssertionExpression(node)
+impl From<TsTypeAssertionExpression> for AnyJsExpression {
+    fn from(node: TsTypeAssertionExpression) -> AnyJsExpression {
+        AnyJsExpression::TsTypeAssertionExpression(node)
     }
 }
-impl AstNode for JsAnyExpression {
+impl AstNode for AnyJsExpression {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsAnyLiteralExpression::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = AnyJsLiteralExpression::KIND_SET
         .union(JsArrayExpression::KIND_SET)
         .union(JsArrowFunctionExpression::KIND_SET)
         .union(JsAssignmentExpression::KIND_SET)
@@ -27050,100 +27054,100 @@ impl AstNode for JsAnyExpression {
             | TS_NON_NULL_ASSERTION_EXPRESSION
             | TS_SATISFIES_EXPRESSION
             | TS_TYPE_ASSERTION_EXPRESSION => true,
-            k if JsAnyLiteralExpression::can_cast(k) => true,
+            k if AnyJsLiteralExpression::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_ARRAY_EXPRESSION => JsAnyExpression::JsArrayExpression(JsArrayExpression { syntax }),
+            JS_ARRAY_EXPRESSION => AnyJsExpression::JsArrayExpression(JsArrayExpression { syntax }),
             JS_ARROW_FUNCTION_EXPRESSION => {
-                JsAnyExpression::JsArrowFunctionExpression(JsArrowFunctionExpression { syntax })
+                AnyJsExpression::JsArrowFunctionExpression(JsArrowFunctionExpression { syntax })
             }
             JS_ASSIGNMENT_EXPRESSION => {
-                JsAnyExpression::JsAssignmentExpression(JsAssignmentExpression { syntax })
+                AnyJsExpression::JsAssignmentExpression(JsAssignmentExpression { syntax })
             }
-            JS_AWAIT_EXPRESSION => JsAnyExpression::JsAwaitExpression(JsAwaitExpression { syntax }),
+            JS_AWAIT_EXPRESSION => AnyJsExpression::JsAwaitExpression(JsAwaitExpression { syntax }),
             JS_BINARY_EXPRESSION => {
-                JsAnyExpression::JsBinaryExpression(JsBinaryExpression { syntax })
+                AnyJsExpression::JsBinaryExpression(JsBinaryExpression { syntax })
             }
-            JS_BOGUS_EXPRESSION => JsAnyExpression::JsBogusExpression(JsBogusExpression { syntax }),
-            JS_CALL_EXPRESSION => JsAnyExpression::JsCallExpression(JsCallExpression { syntax }),
-            JS_CLASS_EXPRESSION => JsAnyExpression::JsClassExpression(JsClassExpression { syntax }),
+            JS_BOGUS_EXPRESSION => AnyJsExpression::JsBogusExpression(JsBogusExpression { syntax }),
+            JS_CALL_EXPRESSION => AnyJsExpression::JsCallExpression(JsCallExpression { syntax }),
+            JS_CLASS_EXPRESSION => AnyJsExpression::JsClassExpression(JsClassExpression { syntax }),
             JS_COMPUTED_MEMBER_EXPRESSION => {
-                JsAnyExpression::JsComputedMemberExpression(JsComputedMemberExpression { syntax })
+                AnyJsExpression::JsComputedMemberExpression(JsComputedMemberExpression { syntax })
             }
             JS_CONDITIONAL_EXPRESSION => {
-                JsAnyExpression::JsConditionalExpression(JsConditionalExpression { syntax })
+                AnyJsExpression::JsConditionalExpression(JsConditionalExpression { syntax })
             }
             JS_FUNCTION_EXPRESSION => {
-                JsAnyExpression::JsFunctionExpression(JsFunctionExpression { syntax })
+                AnyJsExpression::JsFunctionExpression(JsFunctionExpression { syntax })
             }
             JS_IDENTIFIER_EXPRESSION => {
-                JsAnyExpression::JsIdentifierExpression(JsIdentifierExpression { syntax })
+                AnyJsExpression::JsIdentifierExpression(JsIdentifierExpression { syntax })
             }
             JS_IMPORT_CALL_EXPRESSION => {
-                JsAnyExpression::JsImportCallExpression(JsImportCallExpression { syntax })
+                AnyJsExpression::JsImportCallExpression(JsImportCallExpression { syntax })
             }
             JS_IMPORT_META_EXPRESSION => {
-                JsAnyExpression::JsImportMetaExpression(JsImportMetaExpression { syntax })
+                AnyJsExpression::JsImportMetaExpression(JsImportMetaExpression { syntax })
             }
-            JS_IN_EXPRESSION => JsAnyExpression::JsInExpression(JsInExpression { syntax }),
+            JS_IN_EXPRESSION => AnyJsExpression::JsInExpression(JsInExpression { syntax }),
             JS_INSTANCEOF_EXPRESSION => {
-                JsAnyExpression::JsInstanceofExpression(JsInstanceofExpression { syntax })
+                AnyJsExpression::JsInstanceofExpression(JsInstanceofExpression { syntax })
             }
             JS_LOGICAL_EXPRESSION => {
-                JsAnyExpression::JsLogicalExpression(JsLogicalExpression { syntax })
+                AnyJsExpression::JsLogicalExpression(JsLogicalExpression { syntax })
             }
-            JS_NEW_EXPRESSION => JsAnyExpression::JsNewExpression(JsNewExpression { syntax }),
+            JS_NEW_EXPRESSION => AnyJsExpression::JsNewExpression(JsNewExpression { syntax }),
             JS_NEW_TARGET_EXPRESSION => {
-                JsAnyExpression::JsNewTargetExpression(JsNewTargetExpression { syntax })
+                AnyJsExpression::JsNewTargetExpression(JsNewTargetExpression { syntax })
             }
             JS_OBJECT_EXPRESSION => {
-                JsAnyExpression::JsObjectExpression(JsObjectExpression { syntax })
+                AnyJsExpression::JsObjectExpression(JsObjectExpression { syntax })
             }
             JS_PARENTHESIZED_EXPRESSION => {
-                JsAnyExpression::JsParenthesizedExpression(JsParenthesizedExpression { syntax })
+                AnyJsExpression::JsParenthesizedExpression(JsParenthesizedExpression { syntax })
             }
             JS_POST_UPDATE_EXPRESSION => {
-                JsAnyExpression::JsPostUpdateExpression(JsPostUpdateExpression { syntax })
+                AnyJsExpression::JsPostUpdateExpression(JsPostUpdateExpression { syntax })
             }
             JS_PRE_UPDATE_EXPRESSION => {
-                JsAnyExpression::JsPreUpdateExpression(JsPreUpdateExpression { syntax })
+                AnyJsExpression::JsPreUpdateExpression(JsPreUpdateExpression { syntax })
             }
             JS_SEQUENCE_EXPRESSION => {
-                JsAnyExpression::JsSequenceExpression(JsSequenceExpression { syntax })
+                AnyJsExpression::JsSequenceExpression(JsSequenceExpression { syntax })
             }
             JS_STATIC_MEMBER_EXPRESSION => {
-                JsAnyExpression::JsStaticMemberExpression(JsStaticMemberExpression { syntax })
+                AnyJsExpression::JsStaticMemberExpression(JsStaticMemberExpression { syntax })
             }
-            JS_SUPER_EXPRESSION => JsAnyExpression::JsSuperExpression(JsSuperExpression { syntax }),
+            JS_SUPER_EXPRESSION => AnyJsExpression::JsSuperExpression(JsSuperExpression { syntax }),
             JS_TEMPLATE_EXPRESSION => {
-                JsAnyExpression::JsTemplateExpression(JsTemplateExpression { syntax })
+                AnyJsExpression::JsTemplateExpression(JsTemplateExpression { syntax })
             }
-            JS_THIS_EXPRESSION => JsAnyExpression::JsThisExpression(JsThisExpression { syntax }),
-            JS_UNARY_EXPRESSION => JsAnyExpression::JsUnaryExpression(JsUnaryExpression { syntax }),
-            JS_YIELD_EXPRESSION => JsAnyExpression::JsYieldExpression(JsYieldExpression { syntax }),
-            JSX_TAG_EXPRESSION => JsAnyExpression::JsxTagExpression(JsxTagExpression { syntax }),
-            TS_AS_EXPRESSION => JsAnyExpression::TsAsExpression(TsAsExpression { syntax }),
+            JS_THIS_EXPRESSION => AnyJsExpression::JsThisExpression(JsThisExpression { syntax }),
+            JS_UNARY_EXPRESSION => AnyJsExpression::JsUnaryExpression(JsUnaryExpression { syntax }),
+            JS_YIELD_EXPRESSION => AnyJsExpression::JsYieldExpression(JsYieldExpression { syntax }),
+            JSX_TAG_EXPRESSION => AnyJsExpression::JsxTagExpression(JsxTagExpression { syntax }),
+            TS_AS_EXPRESSION => AnyJsExpression::TsAsExpression(TsAsExpression { syntax }),
             TS_INSTANTIATION_EXPRESSION => {
-                JsAnyExpression::TsInstantiationExpression(TsInstantiationExpression { syntax })
+                AnyJsExpression::TsInstantiationExpression(TsInstantiationExpression { syntax })
             }
             TS_NON_NULL_ASSERTION_EXPRESSION => {
-                JsAnyExpression::TsNonNullAssertionExpression(TsNonNullAssertionExpression {
+                AnyJsExpression::TsNonNullAssertionExpression(TsNonNullAssertionExpression {
                     syntax,
                 })
             }
             TS_SATISFIES_EXPRESSION => {
-                JsAnyExpression::TsSatisfiesExpression(TsSatisfiesExpression { syntax })
+                AnyJsExpression::TsSatisfiesExpression(TsSatisfiesExpression { syntax })
             }
             TS_TYPE_ASSERTION_EXPRESSION => {
-                JsAnyExpression::TsTypeAssertionExpression(TsTypeAssertionExpression { syntax })
+                AnyJsExpression::TsTypeAssertionExpression(TsTypeAssertionExpression { syntax })
             }
             _ => {
-                if let Some(js_any_literal_expression) = JsAnyLiteralExpression::cast(syntax) {
-                    return Some(JsAnyExpression::JsAnyLiteralExpression(
-                        js_any_literal_expression,
+                if let Some(any_js_literal_expression) = AnyJsLiteralExpression::cast(syntax) {
+                    return Some(AnyJsExpression::AnyJsLiteralExpression(
+                        any_js_literal_expression,
                     ));
                 }
                 return None;
@@ -27153,206 +27157,206 @@ impl AstNode for JsAnyExpression {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyExpression::JsArrayExpression(it) => &it.syntax,
-            JsAnyExpression::JsArrowFunctionExpression(it) => &it.syntax,
-            JsAnyExpression::JsAssignmentExpression(it) => &it.syntax,
-            JsAnyExpression::JsAwaitExpression(it) => &it.syntax,
-            JsAnyExpression::JsBinaryExpression(it) => &it.syntax,
-            JsAnyExpression::JsBogusExpression(it) => &it.syntax,
-            JsAnyExpression::JsCallExpression(it) => &it.syntax,
-            JsAnyExpression::JsClassExpression(it) => &it.syntax,
-            JsAnyExpression::JsComputedMemberExpression(it) => &it.syntax,
-            JsAnyExpression::JsConditionalExpression(it) => &it.syntax,
-            JsAnyExpression::JsFunctionExpression(it) => &it.syntax,
-            JsAnyExpression::JsIdentifierExpression(it) => &it.syntax,
-            JsAnyExpression::JsImportCallExpression(it) => &it.syntax,
-            JsAnyExpression::JsImportMetaExpression(it) => &it.syntax,
-            JsAnyExpression::JsInExpression(it) => &it.syntax,
-            JsAnyExpression::JsInstanceofExpression(it) => &it.syntax,
-            JsAnyExpression::JsLogicalExpression(it) => &it.syntax,
-            JsAnyExpression::JsNewExpression(it) => &it.syntax,
-            JsAnyExpression::JsNewTargetExpression(it) => &it.syntax,
-            JsAnyExpression::JsObjectExpression(it) => &it.syntax,
-            JsAnyExpression::JsParenthesizedExpression(it) => &it.syntax,
-            JsAnyExpression::JsPostUpdateExpression(it) => &it.syntax,
-            JsAnyExpression::JsPreUpdateExpression(it) => &it.syntax,
-            JsAnyExpression::JsSequenceExpression(it) => &it.syntax,
-            JsAnyExpression::JsStaticMemberExpression(it) => &it.syntax,
-            JsAnyExpression::JsSuperExpression(it) => &it.syntax,
-            JsAnyExpression::JsTemplateExpression(it) => &it.syntax,
-            JsAnyExpression::JsThisExpression(it) => &it.syntax,
-            JsAnyExpression::JsUnaryExpression(it) => &it.syntax,
-            JsAnyExpression::JsYieldExpression(it) => &it.syntax,
-            JsAnyExpression::JsxTagExpression(it) => &it.syntax,
-            JsAnyExpression::TsAsExpression(it) => &it.syntax,
-            JsAnyExpression::TsInstantiationExpression(it) => &it.syntax,
-            JsAnyExpression::TsNonNullAssertionExpression(it) => &it.syntax,
-            JsAnyExpression::TsSatisfiesExpression(it) => &it.syntax,
-            JsAnyExpression::TsTypeAssertionExpression(it) => &it.syntax,
-            JsAnyExpression::JsAnyLiteralExpression(it) => it.syntax(),
+            AnyJsExpression::JsArrayExpression(it) => &it.syntax,
+            AnyJsExpression::JsArrowFunctionExpression(it) => &it.syntax,
+            AnyJsExpression::JsAssignmentExpression(it) => &it.syntax,
+            AnyJsExpression::JsAwaitExpression(it) => &it.syntax,
+            AnyJsExpression::JsBinaryExpression(it) => &it.syntax,
+            AnyJsExpression::JsBogusExpression(it) => &it.syntax,
+            AnyJsExpression::JsCallExpression(it) => &it.syntax,
+            AnyJsExpression::JsClassExpression(it) => &it.syntax,
+            AnyJsExpression::JsComputedMemberExpression(it) => &it.syntax,
+            AnyJsExpression::JsConditionalExpression(it) => &it.syntax,
+            AnyJsExpression::JsFunctionExpression(it) => &it.syntax,
+            AnyJsExpression::JsIdentifierExpression(it) => &it.syntax,
+            AnyJsExpression::JsImportCallExpression(it) => &it.syntax,
+            AnyJsExpression::JsImportMetaExpression(it) => &it.syntax,
+            AnyJsExpression::JsInExpression(it) => &it.syntax,
+            AnyJsExpression::JsInstanceofExpression(it) => &it.syntax,
+            AnyJsExpression::JsLogicalExpression(it) => &it.syntax,
+            AnyJsExpression::JsNewExpression(it) => &it.syntax,
+            AnyJsExpression::JsNewTargetExpression(it) => &it.syntax,
+            AnyJsExpression::JsObjectExpression(it) => &it.syntax,
+            AnyJsExpression::JsParenthesizedExpression(it) => &it.syntax,
+            AnyJsExpression::JsPostUpdateExpression(it) => &it.syntax,
+            AnyJsExpression::JsPreUpdateExpression(it) => &it.syntax,
+            AnyJsExpression::JsSequenceExpression(it) => &it.syntax,
+            AnyJsExpression::JsStaticMemberExpression(it) => &it.syntax,
+            AnyJsExpression::JsSuperExpression(it) => &it.syntax,
+            AnyJsExpression::JsTemplateExpression(it) => &it.syntax,
+            AnyJsExpression::JsThisExpression(it) => &it.syntax,
+            AnyJsExpression::JsUnaryExpression(it) => &it.syntax,
+            AnyJsExpression::JsYieldExpression(it) => &it.syntax,
+            AnyJsExpression::JsxTagExpression(it) => &it.syntax,
+            AnyJsExpression::TsAsExpression(it) => &it.syntax,
+            AnyJsExpression::TsInstantiationExpression(it) => &it.syntax,
+            AnyJsExpression::TsNonNullAssertionExpression(it) => &it.syntax,
+            AnyJsExpression::TsSatisfiesExpression(it) => &it.syntax,
+            AnyJsExpression::TsTypeAssertionExpression(it) => &it.syntax,
+            AnyJsExpression::AnyJsLiteralExpression(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyExpression::JsArrayExpression(it) => it.syntax,
-            JsAnyExpression::JsArrowFunctionExpression(it) => it.syntax,
-            JsAnyExpression::JsAssignmentExpression(it) => it.syntax,
-            JsAnyExpression::JsAwaitExpression(it) => it.syntax,
-            JsAnyExpression::JsBinaryExpression(it) => it.syntax,
-            JsAnyExpression::JsBogusExpression(it) => it.syntax,
-            JsAnyExpression::JsCallExpression(it) => it.syntax,
-            JsAnyExpression::JsClassExpression(it) => it.syntax,
-            JsAnyExpression::JsComputedMemberExpression(it) => it.syntax,
-            JsAnyExpression::JsConditionalExpression(it) => it.syntax,
-            JsAnyExpression::JsFunctionExpression(it) => it.syntax,
-            JsAnyExpression::JsIdentifierExpression(it) => it.syntax,
-            JsAnyExpression::JsImportCallExpression(it) => it.syntax,
-            JsAnyExpression::JsImportMetaExpression(it) => it.syntax,
-            JsAnyExpression::JsInExpression(it) => it.syntax,
-            JsAnyExpression::JsInstanceofExpression(it) => it.syntax,
-            JsAnyExpression::JsLogicalExpression(it) => it.syntax,
-            JsAnyExpression::JsNewExpression(it) => it.syntax,
-            JsAnyExpression::JsNewTargetExpression(it) => it.syntax,
-            JsAnyExpression::JsObjectExpression(it) => it.syntax,
-            JsAnyExpression::JsParenthesizedExpression(it) => it.syntax,
-            JsAnyExpression::JsPostUpdateExpression(it) => it.syntax,
-            JsAnyExpression::JsPreUpdateExpression(it) => it.syntax,
-            JsAnyExpression::JsSequenceExpression(it) => it.syntax,
-            JsAnyExpression::JsStaticMemberExpression(it) => it.syntax,
-            JsAnyExpression::JsSuperExpression(it) => it.syntax,
-            JsAnyExpression::JsTemplateExpression(it) => it.syntax,
-            JsAnyExpression::JsThisExpression(it) => it.syntax,
-            JsAnyExpression::JsUnaryExpression(it) => it.syntax,
-            JsAnyExpression::JsYieldExpression(it) => it.syntax,
-            JsAnyExpression::JsxTagExpression(it) => it.syntax,
-            JsAnyExpression::TsAsExpression(it) => it.syntax,
-            JsAnyExpression::TsInstantiationExpression(it) => it.syntax,
-            JsAnyExpression::TsNonNullAssertionExpression(it) => it.syntax,
-            JsAnyExpression::TsSatisfiesExpression(it) => it.syntax,
-            JsAnyExpression::TsTypeAssertionExpression(it) => it.syntax,
-            JsAnyExpression::JsAnyLiteralExpression(it) => it.into_syntax(),
+            AnyJsExpression::JsArrayExpression(it) => it.syntax,
+            AnyJsExpression::JsArrowFunctionExpression(it) => it.syntax,
+            AnyJsExpression::JsAssignmentExpression(it) => it.syntax,
+            AnyJsExpression::JsAwaitExpression(it) => it.syntax,
+            AnyJsExpression::JsBinaryExpression(it) => it.syntax,
+            AnyJsExpression::JsBogusExpression(it) => it.syntax,
+            AnyJsExpression::JsCallExpression(it) => it.syntax,
+            AnyJsExpression::JsClassExpression(it) => it.syntax,
+            AnyJsExpression::JsComputedMemberExpression(it) => it.syntax,
+            AnyJsExpression::JsConditionalExpression(it) => it.syntax,
+            AnyJsExpression::JsFunctionExpression(it) => it.syntax,
+            AnyJsExpression::JsIdentifierExpression(it) => it.syntax,
+            AnyJsExpression::JsImportCallExpression(it) => it.syntax,
+            AnyJsExpression::JsImportMetaExpression(it) => it.syntax,
+            AnyJsExpression::JsInExpression(it) => it.syntax,
+            AnyJsExpression::JsInstanceofExpression(it) => it.syntax,
+            AnyJsExpression::JsLogicalExpression(it) => it.syntax,
+            AnyJsExpression::JsNewExpression(it) => it.syntax,
+            AnyJsExpression::JsNewTargetExpression(it) => it.syntax,
+            AnyJsExpression::JsObjectExpression(it) => it.syntax,
+            AnyJsExpression::JsParenthesizedExpression(it) => it.syntax,
+            AnyJsExpression::JsPostUpdateExpression(it) => it.syntax,
+            AnyJsExpression::JsPreUpdateExpression(it) => it.syntax,
+            AnyJsExpression::JsSequenceExpression(it) => it.syntax,
+            AnyJsExpression::JsStaticMemberExpression(it) => it.syntax,
+            AnyJsExpression::JsSuperExpression(it) => it.syntax,
+            AnyJsExpression::JsTemplateExpression(it) => it.syntax,
+            AnyJsExpression::JsThisExpression(it) => it.syntax,
+            AnyJsExpression::JsUnaryExpression(it) => it.syntax,
+            AnyJsExpression::JsYieldExpression(it) => it.syntax,
+            AnyJsExpression::JsxTagExpression(it) => it.syntax,
+            AnyJsExpression::TsAsExpression(it) => it.syntax,
+            AnyJsExpression::TsInstantiationExpression(it) => it.syntax,
+            AnyJsExpression::TsNonNullAssertionExpression(it) => it.syntax,
+            AnyJsExpression::TsSatisfiesExpression(it) => it.syntax,
+            AnyJsExpression::TsTypeAssertionExpression(it) => it.syntax,
+            AnyJsExpression::AnyJsLiteralExpression(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsAnyExpression {
+impl std::fmt::Debug for AnyJsExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyExpression::JsAnyLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsArrayExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsArrowFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsAssignmentExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsAwaitExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsBinaryExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsBogusExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsCallExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsClassExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsComputedMemberExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsConditionalExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsIdentifierExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsImportCallExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsImportMetaExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsInExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsInstanceofExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsLogicalExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsNewExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsNewTargetExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsObjectExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsParenthesizedExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsPostUpdateExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsPreUpdateExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsSequenceExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsStaticMemberExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsSuperExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsTemplateExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsThisExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsUnaryExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsYieldExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsxTagExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::TsAsExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::TsInstantiationExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::TsNonNullAssertionExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::TsSatisfiesExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::TsTypeAssertionExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::AnyJsLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsArrayExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsArrowFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsAssignmentExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsAwaitExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsBinaryExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsBogusExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsCallExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsClassExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsComputedMemberExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsConditionalExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsIdentifierExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsImportCallExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsImportMetaExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsInExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsInstanceofExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsLogicalExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsNewExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsNewTargetExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsObjectExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsParenthesizedExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsPostUpdateExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsPreUpdateExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsSequenceExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsStaticMemberExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsSuperExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsTemplateExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsThisExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsUnaryExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsYieldExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::JsxTagExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::TsAsExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::TsInstantiationExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::TsNonNullAssertionExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::TsSatisfiesExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsExpression::TsTypeAssertionExpression(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyExpression> for SyntaxNode {
-    fn from(n: JsAnyExpression) -> SyntaxNode {
+impl From<AnyJsExpression> for SyntaxNode {
+    fn from(n: AnyJsExpression) -> SyntaxNode {
         match n {
-            JsAnyExpression::JsAnyLiteralExpression(it) => it.into(),
-            JsAnyExpression::JsArrayExpression(it) => it.into(),
-            JsAnyExpression::JsArrowFunctionExpression(it) => it.into(),
-            JsAnyExpression::JsAssignmentExpression(it) => it.into(),
-            JsAnyExpression::JsAwaitExpression(it) => it.into(),
-            JsAnyExpression::JsBinaryExpression(it) => it.into(),
-            JsAnyExpression::JsBogusExpression(it) => it.into(),
-            JsAnyExpression::JsCallExpression(it) => it.into(),
-            JsAnyExpression::JsClassExpression(it) => it.into(),
-            JsAnyExpression::JsComputedMemberExpression(it) => it.into(),
-            JsAnyExpression::JsConditionalExpression(it) => it.into(),
-            JsAnyExpression::JsFunctionExpression(it) => it.into(),
-            JsAnyExpression::JsIdentifierExpression(it) => it.into(),
-            JsAnyExpression::JsImportCallExpression(it) => it.into(),
-            JsAnyExpression::JsImportMetaExpression(it) => it.into(),
-            JsAnyExpression::JsInExpression(it) => it.into(),
-            JsAnyExpression::JsInstanceofExpression(it) => it.into(),
-            JsAnyExpression::JsLogicalExpression(it) => it.into(),
-            JsAnyExpression::JsNewExpression(it) => it.into(),
-            JsAnyExpression::JsNewTargetExpression(it) => it.into(),
-            JsAnyExpression::JsObjectExpression(it) => it.into(),
-            JsAnyExpression::JsParenthesizedExpression(it) => it.into(),
-            JsAnyExpression::JsPostUpdateExpression(it) => it.into(),
-            JsAnyExpression::JsPreUpdateExpression(it) => it.into(),
-            JsAnyExpression::JsSequenceExpression(it) => it.into(),
-            JsAnyExpression::JsStaticMemberExpression(it) => it.into(),
-            JsAnyExpression::JsSuperExpression(it) => it.into(),
-            JsAnyExpression::JsTemplateExpression(it) => it.into(),
-            JsAnyExpression::JsThisExpression(it) => it.into(),
-            JsAnyExpression::JsUnaryExpression(it) => it.into(),
-            JsAnyExpression::JsYieldExpression(it) => it.into(),
-            JsAnyExpression::JsxTagExpression(it) => it.into(),
-            JsAnyExpression::TsAsExpression(it) => it.into(),
-            JsAnyExpression::TsInstantiationExpression(it) => it.into(),
-            JsAnyExpression::TsNonNullAssertionExpression(it) => it.into(),
-            JsAnyExpression::TsSatisfiesExpression(it) => it.into(),
-            JsAnyExpression::TsTypeAssertionExpression(it) => it.into(),
+            AnyJsExpression::AnyJsLiteralExpression(it) => it.into(),
+            AnyJsExpression::JsArrayExpression(it) => it.into(),
+            AnyJsExpression::JsArrowFunctionExpression(it) => it.into(),
+            AnyJsExpression::JsAssignmentExpression(it) => it.into(),
+            AnyJsExpression::JsAwaitExpression(it) => it.into(),
+            AnyJsExpression::JsBinaryExpression(it) => it.into(),
+            AnyJsExpression::JsBogusExpression(it) => it.into(),
+            AnyJsExpression::JsCallExpression(it) => it.into(),
+            AnyJsExpression::JsClassExpression(it) => it.into(),
+            AnyJsExpression::JsComputedMemberExpression(it) => it.into(),
+            AnyJsExpression::JsConditionalExpression(it) => it.into(),
+            AnyJsExpression::JsFunctionExpression(it) => it.into(),
+            AnyJsExpression::JsIdentifierExpression(it) => it.into(),
+            AnyJsExpression::JsImportCallExpression(it) => it.into(),
+            AnyJsExpression::JsImportMetaExpression(it) => it.into(),
+            AnyJsExpression::JsInExpression(it) => it.into(),
+            AnyJsExpression::JsInstanceofExpression(it) => it.into(),
+            AnyJsExpression::JsLogicalExpression(it) => it.into(),
+            AnyJsExpression::JsNewExpression(it) => it.into(),
+            AnyJsExpression::JsNewTargetExpression(it) => it.into(),
+            AnyJsExpression::JsObjectExpression(it) => it.into(),
+            AnyJsExpression::JsParenthesizedExpression(it) => it.into(),
+            AnyJsExpression::JsPostUpdateExpression(it) => it.into(),
+            AnyJsExpression::JsPreUpdateExpression(it) => it.into(),
+            AnyJsExpression::JsSequenceExpression(it) => it.into(),
+            AnyJsExpression::JsStaticMemberExpression(it) => it.into(),
+            AnyJsExpression::JsSuperExpression(it) => it.into(),
+            AnyJsExpression::JsTemplateExpression(it) => it.into(),
+            AnyJsExpression::JsThisExpression(it) => it.into(),
+            AnyJsExpression::JsUnaryExpression(it) => it.into(),
+            AnyJsExpression::JsYieldExpression(it) => it.into(),
+            AnyJsExpression::JsxTagExpression(it) => it.into(),
+            AnyJsExpression::TsAsExpression(it) => it.into(),
+            AnyJsExpression::TsInstantiationExpression(it) => it.into(),
+            AnyJsExpression::TsNonNullAssertionExpression(it) => it.into(),
+            AnyJsExpression::TsSatisfiesExpression(it) => it.into(),
+            AnyJsExpression::TsTypeAssertionExpression(it) => it.into(),
         }
     }
 }
-impl From<JsAnyExpression> for SyntaxElement {
-    fn from(n: JsAnyExpression) -> SyntaxElement {
+impl From<AnyJsExpression> for SyntaxElement {
+    fn from(n: AnyJsExpression) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsForVariableDeclaration> for JsAnyForInOrOfInitializer {
-    fn from(node: JsForVariableDeclaration) -> JsAnyForInOrOfInitializer {
-        JsAnyForInOrOfInitializer::JsForVariableDeclaration(node)
+impl From<JsForVariableDeclaration> for AnyJsForInOrOfInitializer {
+    fn from(node: JsForVariableDeclaration) -> AnyJsForInOrOfInitializer {
+        AnyJsForInOrOfInitializer::JsForVariableDeclaration(node)
     }
 }
-impl AstNode for JsAnyForInOrOfInitializer {
+impl AstNode for AnyJsForInOrOfInitializer {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        JsAnyAssignmentPattern::KIND_SET.union(JsForVariableDeclaration::KIND_SET);
+        AnyJsAssignmentPattern::KIND_SET.union(JsForVariableDeclaration::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_FOR_VARIABLE_DECLARATION => true,
-            k if JsAnyAssignmentPattern::can_cast(k) => true,
+            k if AnyJsAssignmentPattern::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_FOR_VARIABLE_DECLARATION => {
-                JsAnyForInOrOfInitializer::JsForVariableDeclaration(JsForVariableDeclaration {
+                AnyJsForInOrOfInitializer::JsForVariableDeclaration(JsForVariableDeclaration {
                     syntax,
                 })
             }
             _ => {
-                if let Some(js_any_assignment_pattern) = JsAnyAssignmentPattern::cast(syntax) {
-                    return Some(JsAnyForInOrOfInitializer::JsAnyAssignmentPattern(
-                        js_any_assignment_pattern,
+                if let Some(any_js_assignment_pattern) = AnyJsAssignmentPattern::cast(syntax) {
+                    return Some(AnyJsForInOrOfInitializer::AnyJsAssignmentPattern(
+                        any_js_assignment_pattern,
                     ));
                 }
                 return None;
@@ -27362,63 +27366,63 @@ impl AstNode for JsAnyForInOrOfInitializer {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyForInOrOfInitializer::JsForVariableDeclaration(it) => &it.syntax,
-            JsAnyForInOrOfInitializer::JsAnyAssignmentPattern(it) => it.syntax(),
+            AnyJsForInOrOfInitializer::JsForVariableDeclaration(it) => &it.syntax,
+            AnyJsForInOrOfInitializer::AnyJsAssignmentPattern(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyForInOrOfInitializer::JsForVariableDeclaration(it) => it.syntax,
-            JsAnyForInOrOfInitializer::JsAnyAssignmentPattern(it) => it.into_syntax(),
+            AnyJsForInOrOfInitializer::JsForVariableDeclaration(it) => it.syntax,
+            AnyJsForInOrOfInitializer::AnyJsAssignmentPattern(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsAnyForInOrOfInitializer {
+impl std::fmt::Debug for AnyJsForInOrOfInitializer {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyForInOrOfInitializer::JsAnyAssignmentPattern(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyForInOrOfInitializer::JsForVariableDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsForInOrOfInitializer::AnyJsAssignmentPattern(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsForInOrOfInitializer::JsForVariableDeclaration(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyForInOrOfInitializer> for SyntaxNode {
-    fn from(n: JsAnyForInOrOfInitializer) -> SyntaxNode {
+impl From<AnyJsForInOrOfInitializer> for SyntaxNode {
+    fn from(n: AnyJsForInOrOfInitializer) -> SyntaxNode {
         match n {
-            JsAnyForInOrOfInitializer::JsAnyAssignmentPattern(it) => it.into(),
-            JsAnyForInOrOfInitializer::JsForVariableDeclaration(it) => it.into(),
+            AnyJsForInOrOfInitializer::AnyJsAssignmentPattern(it) => it.into(),
+            AnyJsForInOrOfInitializer::JsForVariableDeclaration(it) => it.into(),
         }
     }
 }
-impl From<JsAnyForInOrOfInitializer> for SyntaxElement {
-    fn from(n: JsAnyForInOrOfInitializer) -> SyntaxElement {
+impl From<AnyJsForInOrOfInitializer> for SyntaxElement {
+    fn from(n: AnyJsForInOrOfInitializer) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsVariableDeclaration> for JsAnyForInitializer {
-    fn from(node: JsVariableDeclaration) -> JsAnyForInitializer {
-        JsAnyForInitializer::JsVariableDeclaration(node)
+impl From<JsVariableDeclaration> for AnyJsForInitializer {
+    fn from(node: JsVariableDeclaration) -> AnyJsForInitializer {
+        AnyJsForInitializer::JsVariableDeclaration(node)
     }
 }
-impl AstNode for JsAnyForInitializer {
+impl AstNode for AnyJsForInitializer {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        JsAnyExpression::KIND_SET.union(JsVariableDeclaration::KIND_SET);
+        AnyJsExpression::KIND_SET.union(JsVariableDeclaration::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_VARIABLE_DECLARATION => true,
-            k if JsAnyExpression::can_cast(k) => true,
+            k if AnyJsExpression::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_VARIABLE_DECLARATION => {
-                JsAnyForInitializer::JsVariableDeclaration(JsVariableDeclaration { syntax })
+                AnyJsForInitializer::JsVariableDeclaration(JsVariableDeclaration { syntax })
             }
             _ => {
-                if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
-                    return Some(JsAnyForInitializer::JsAnyExpression(js_any_expression));
+                if let Some(any_js_expression) = AnyJsExpression::cast(syntax) {
+                    return Some(AnyJsForInitializer::AnyJsExpression(any_js_expression));
                 }
                 return None;
             }
@@ -27427,50 +27431,50 @@ impl AstNode for JsAnyForInitializer {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyForInitializer::JsVariableDeclaration(it) => &it.syntax,
-            JsAnyForInitializer::JsAnyExpression(it) => it.syntax(),
+            AnyJsForInitializer::JsVariableDeclaration(it) => &it.syntax,
+            AnyJsForInitializer::AnyJsExpression(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyForInitializer::JsVariableDeclaration(it) => it.syntax,
-            JsAnyForInitializer::JsAnyExpression(it) => it.into_syntax(),
+            AnyJsForInitializer::JsVariableDeclaration(it) => it.syntax,
+            AnyJsForInitializer::AnyJsExpression(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsAnyForInitializer {
+impl std::fmt::Debug for AnyJsForInitializer {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyForInitializer::JsAnyExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyForInitializer::JsVariableDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsForInitializer::AnyJsExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsForInitializer::JsVariableDeclaration(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyForInitializer> for SyntaxNode {
-    fn from(n: JsAnyForInitializer) -> SyntaxNode {
+impl From<AnyJsForInitializer> for SyntaxNode {
+    fn from(n: AnyJsForInitializer) -> SyntaxNode {
         match n {
-            JsAnyForInitializer::JsAnyExpression(it) => it.into(),
-            JsAnyForInitializer::JsVariableDeclaration(it) => it.into(),
+            AnyJsForInitializer::AnyJsExpression(it) => it.into(),
+            AnyJsForInitializer::JsVariableDeclaration(it) => it.into(),
         }
     }
 }
-impl From<JsAnyForInitializer> for SyntaxElement {
-    fn from(n: JsAnyForInitializer) -> SyntaxElement {
+impl From<AnyJsForInitializer> for SyntaxElement {
+    fn from(n: AnyJsForInitializer) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsBogusParameter> for JsAnyFormalParameter {
-    fn from(node: JsBogusParameter) -> JsAnyFormalParameter {
-        JsAnyFormalParameter::JsBogusParameter(node)
+impl From<JsBogusParameter> for AnyJsFormalParameter {
+    fn from(node: JsBogusParameter) -> AnyJsFormalParameter {
+        AnyJsFormalParameter::JsBogusParameter(node)
     }
 }
-impl From<JsFormalParameter> for JsAnyFormalParameter {
-    fn from(node: JsFormalParameter) -> JsAnyFormalParameter {
-        JsAnyFormalParameter::JsFormalParameter(node)
+impl From<JsFormalParameter> for AnyJsFormalParameter {
+    fn from(node: JsFormalParameter) -> AnyJsFormalParameter {
+        AnyJsFormalParameter::JsFormalParameter(node)
     }
 }
-impl AstNode for JsAnyFormalParameter {
+impl AstNode for AnyJsFormalParameter {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
         JsBogusParameter::KIND_SET.union(JsFormalParameter::KIND_SET);
@@ -27480,10 +27484,10 @@ impl AstNode for JsAnyFormalParameter {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_BOGUS_PARAMETER => {
-                JsAnyFormalParameter::JsBogusParameter(JsBogusParameter { syntax })
+                AnyJsFormalParameter::JsBogusParameter(JsBogusParameter { syntax })
             }
             JS_FORMAL_PARAMETER => {
-                JsAnyFormalParameter::JsFormalParameter(JsFormalParameter { syntax })
+                AnyJsFormalParameter::JsFormalParameter(JsFormalParameter { syntax })
             }
             _ => return None,
         };
@@ -27491,60 +27495,60 @@ impl AstNode for JsAnyFormalParameter {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyFormalParameter::JsBogusParameter(it) => &it.syntax,
-            JsAnyFormalParameter::JsFormalParameter(it) => &it.syntax,
+            AnyJsFormalParameter::JsBogusParameter(it) => &it.syntax,
+            AnyJsFormalParameter::JsFormalParameter(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyFormalParameter::JsBogusParameter(it) => it.syntax,
-            JsAnyFormalParameter::JsFormalParameter(it) => it.syntax,
+            AnyJsFormalParameter::JsBogusParameter(it) => it.syntax,
+            AnyJsFormalParameter::JsFormalParameter(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyFormalParameter {
+impl std::fmt::Debug for AnyJsFormalParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyFormalParameter::JsBogusParameter(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyFormalParameter::JsFormalParameter(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsFormalParameter::JsBogusParameter(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsFormalParameter::JsFormalParameter(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyFormalParameter> for SyntaxNode {
-    fn from(n: JsAnyFormalParameter) -> SyntaxNode {
+impl From<AnyJsFormalParameter> for SyntaxNode {
+    fn from(n: AnyJsFormalParameter) -> SyntaxNode {
         match n {
-            JsAnyFormalParameter::JsBogusParameter(it) => it.into(),
-            JsAnyFormalParameter::JsFormalParameter(it) => it.into(),
+            AnyJsFormalParameter::JsBogusParameter(it) => it.into(),
+            AnyJsFormalParameter::JsFormalParameter(it) => it.into(),
         }
     }
 }
-impl From<JsAnyFormalParameter> for SyntaxElement {
-    fn from(n: JsAnyFormalParameter) -> SyntaxElement {
+impl From<AnyJsFormalParameter> for SyntaxElement {
+    fn from(n: AnyJsFormalParameter) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsArrowFunctionExpression> for JsAnyFunction {
-    fn from(node: JsArrowFunctionExpression) -> JsAnyFunction {
-        JsAnyFunction::JsArrowFunctionExpression(node)
+impl From<JsArrowFunctionExpression> for AnyJsFunction {
+    fn from(node: JsArrowFunctionExpression) -> AnyJsFunction {
+        AnyJsFunction::JsArrowFunctionExpression(node)
     }
 }
-impl From<JsFunctionDeclaration> for JsAnyFunction {
-    fn from(node: JsFunctionDeclaration) -> JsAnyFunction {
-        JsAnyFunction::JsFunctionDeclaration(node)
+impl From<JsFunctionDeclaration> for AnyJsFunction {
+    fn from(node: JsFunctionDeclaration) -> AnyJsFunction {
+        AnyJsFunction::JsFunctionDeclaration(node)
     }
 }
-impl From<JsFunctionExportDefaultDeclaration> for JsAnyFunction {
-    fn from(node: JsFunctionExportDefaultDeclaration) -> JsAnyFunction {
-        JsAnyFunction::JsFunctionExportDefaultDeclaration(node)
+impl From<JsFunctionExportDefaultDeclaration> for AnyJsFunction {
+    fn from(node: JsFunctionExportDefaultDeclaration) -> AnyJsFunction {
+        AnyJsFunction::JsFunctionExportDefaultDeclaration(node)
     }
 }
-impl From<JsFunctionExpression> for JsAnyFunction {
-    fn from(node: JsFunctionExpression) -> JsAnyFunction {
-        JsAnyFunction::JsFunctionExpression(node)
+impl From<JsFunctionExpression> for AnyJsFunction {
+    fn from(node: JsFunctionExpression) -> AnyJsFunction {
+        AnyJsFunction::JsFunctionExpression(node)
     }
 }
-impl AstNode for JsAnyFunction {
+impl AstNode for AnyJsFunction {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsArrowFunctionExpression::KIND_SET
         .union(JsFunctionDeclaration::KIND_SET)
@@ -27562,18 +27566,18 @@ impl AstNode for JsAnyFunction {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_ARROW_FUNCTION_EXPRESSION => {
-                JsAnyFunction::JsArrowFunctionExpression(JsArrowFunctionExpression { syntax })
+                AnyJsFunction::JsArrowFunctionExpression(JsArrowFunctionExpression { syntax })
             }
             JS_FUNCTION_DECLARATION => {
-                JsAnyFunction::JsFunctionDeclaration(JsFunctionDeclaration { syntax })
+                AnyJsFunction::JsFunctionDeclaration(JsFunctionDeclaration { syntax })
             }
             JS_FUNCTION_EXPORT_DEFAULT_DECLARATION => {
-                JsAnyFunction::JsFunctionExportDefaultDeclaration(
+                AnyJsFunction::JsFunctionExportDefaultDeclaration(
                     JsFunctionExportDefaultDeclaration { syntax },
                 )
             }
             JS_FUNCTION_EXPRESSION => {
-                JsAnyFunction::JsFunctionExpression(JsFunctionExpression { syntax })
+                AnyJsFunction::JsFunctionExpression(JsFunctionExpression { syntax })
             }
             _ => return None,
         };
@@ -27581,67 +27585,67 @@ impl AstNode for JsAnyFunction {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyFunction::JsArrowFunctionExpression(it) => &it.syntax,
-            JsAnyFunction::JsFunctionDeclaration(it) => &it.syntax,
-            JsAnyFunction::JsFunctionExportDefaultDeclaration(it) => &it.syntax,
-            JsAnyFunction::JsFunctionExpression(it) => &it.syntax,
+            AnyJsFunction::JsArrowFunctionExpression(it) => &it.syntax,
+            AnyJsFunction::JsFunctionDeclaration(it) => &it.syntax,
+            AnyJsFunction::JsFunctionExportDefaultDeclaration(it) => &it.syntax,
+            AnyJsFunction::JsFunctionExpression(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyFunction::JsArrowFunctionExpression(it) => it.syntax,
-            JsAnyFunction::JsFunctionDeclaration(it) => it.syntax,
-            JsAnyFunction::JsFunctionExportDefaultDeclaration(it) => it.syntax,
-            JsAnyFunction::JsFunctionExpression(it) => it.syntax,
+            AnyJsFunction::JsArrowFunctionExpression(it) => it.syntax,
+            AnyJsFunction::JsFunctionDeclaration(it) => it.syntax,
+            AnyJsFunction::JsFunctionExportDefaultDeclaration(it) => it.syntax,
+            AnyJsFunction::JsFunctionExpression(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyFunction {
+impl std::fmt::Debug for AnyJsFunction {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyFunction::JsArrowFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyFunction::JsFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyFunction::JsFunctionExportDefaultDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyFunction::JsFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsFunction::JsArrowFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsFunction::JsFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsFunction::JsFunctionExportDefaultDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsFunction::JsFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyFunction> for SyntaxNode {
-    fn from(n: JsAnyFunction) -> SyntaxNode {
+impl From<AnyJsFunction> for SyntaxNode {
+    fn from(n: AnyJsFunction) -> SyntaxNode {
         match n {
-            JsAnyFunction::JsArrowFunctionExpression(it) => it.into(),
-            JsAnyFunction::JsFunctionDeclaration(it) => it.into(),
-            JsAnyFunction::JsFunctionExportDefaultDeclaration(it) => it.into(),
-            JsAnyFunction::JsFunctionExpression(it) => it.into(),
+            AnyJsFunction::JsArrowFunctionExpression(it) => it.into(),
+            AnyJsFunction::JsFunctionDeclaration(it) => it.into(),
+            AnyJsFunction::JsFunctionExportDefaultDeclaration(it) => it.into(),
+            AnyJsFunction::JsFunctionExpression(it) => it.into(),
         }
     }
 }
-impl From<JsAnyFunction> for SyntaxElement {
-    fn from(n: JsAnyFunction) -> SyntaxElement {
+impl From<AnyJsFunction> for SyntaxElement {
+    fn from(n: AnyJsFunction) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsFunctionBody> for JsAnyFunctionBody {
-    fn from(node: JsFunctionBody) -> JsAnyFunctionBody { JsAnyFunctionBody::JsFunctionBody(node) }
+impl From<JsFunctionBody> for AnyJsFunctionBody {
+    fn from(node: JsFunctionBody) -> AnyJsFunctionBody { AnyJsFunctionBody::JsFunctionBody(node) }
 }
-impl AstNode for JsAnyFunctionBody {
+impl AstNode for AnyJsFunctionBody {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        JsAnyExpression::KIND_SET.union(JsFunctionBody::KIND_SET);
+        AnyJsExpression::KIND_SET.union(JsFunctionBody::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_FUNCTION_BODY => true,
-            k if JsAnyExpression::can_cast(k) => true,
+            k if AnyJsExpression::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_FUNCTION_BODY => JsAnyFunctionBody::JsFunctionBody(JsFunctionBody { syntax }),
+            JS_FUNCTION_BODY => AnyJsFunctionBody::JsFunctionBody(JsFunctionBody { syntax }),
             _ => {
-                if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
-                    return Some(JsAnyFunctionBody::JsAnyExpression(js_any_expression));
+                if let Some(any_js_expression) = AnyJsExpression::cast(syntax) {
+                    return Some(AnyJsFunctionBody::AnyJsExpression(any_js_expression));
                 }
                 return None;
             }
@@ -27650,50 +27654,50 @@ impl AstNode for JsAnyFunctionBody {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyFunctionBody::JsFunctionBody(it) => &it.syntax,
-            JsAnyFunctionBody::JsAnyExpression(it) => it.syntax(),
+            AnyJsFunctionBody::JsFunctionBody(it) => &it.syntax,
+            AnyJsFunctionBody::AnyJsExpression(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyFunctionBody::JsFunctionBody(it) => it.syntax,
-            JsAnyFunctionBody::JsAnyExpression(it) => it.into_syntax(),
+            AnyJsFunctionBody::JsFunctionBody(it) => it.syntax,
+            AnyJsFunctionBody::AnyJsExpression(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsAnyFunctionBody {
+impl std::fmt::Debug for AnyJsFunctionBody {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyFunctionBody::JsAnyExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyFunctionBody::JsFunctionBody(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsFunctionBody::AnyJsExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsFunctionBody::JsFunctionBody(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyFunctionBody> for SyntaxNode {
-    fn from(n: JsAnyFunctionBody) -> SyntaxNode {
+impl From<AnyJsFunctionBody> for SyntaxNode {
+    fn from(n: AnyJsFunctionBody) -> SyntaxNode {
         match n {
-            JsAnyFunctionBody::JsAnyExpression(it) => it.into(),
-            JsAnyFunctionBody::JsFunctionBody(it) => it.into(),
+            AnyJsFunctionBody::AnyJsExpression(it) => it.into(),
+            AnyJsFunctionBody::JsFunctionBody(it) => it.into(),
         }
     }
 }
-impl From<JsAnyFunctionBody> for SyntaxElement {
-    fn from(n: JsAnyFunctionBody) -> SyntaxElement {
+impl From<AnyJsFunctionBody> for SyntaxElement {
+    fn from(n: AnyJsFunctionBody) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsBogusImportAssertionEntry> for JsAnyImportAssertionEntry {
-    fn from(node: JsBogusImportAssertionEntry) -> JsAnyImportAssertionEntry {
-        JsAnyImportAssertionEntry::JsBogusImportAssertionEntry(node)
+impl From<JsBogusImportAssertionEntry> for AnyJsImportAssertionEntry {
+    fn from(node: JsBogusImportAssertionEntry) -> AnyJsImportAssertionEntry {
+        AnyJsImportAssertionEntry::JsBogusImportAssertionEntry(node)
     }
 }
-impl From<JsImportAssertionEntry> for JsAnyImportAssertionEntry {
-    fn from(node: JsImportAssertionEntry) -> JsAnyImportAssertionEntry {
-        JsAnyImportAssertionEntry::JsImportAssertionEntry(node)
+impl From<JsImportAssertionEntry> for AnyJsImportAssertionEntry {
+    fn from(node: JsImportAssertionEntry) -> AnyJsImportAssertionEntry {
+        AnyJsImportAssertionEntry::JsImportAssertionEntry(node)
     }
 }
-impl AstNode for JsAnyImportAssertionEntry {
+impl AstNode for AnyJsImportAssertionEntry {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
         JsBogusImportAssertionEntry::KIND_SET.union(JsImportAssertionEntry::KIND_SET);
@@ -27706,12 +27710,12 @@ impl AstNode for JsAnyImportAssertionEntry {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_BOGUS_IMPORT_ASSERTION_ENTRY => {
-                JsAnyImportAssertionEntry::JsBogusImportAssertionEntry(
+                AnyJsImportAssertionEntry::JsBogusImportAssertionEntry(
                     JsBogusImportAssertionEntry { syntax },
                 )
             }
             JS_IMPORT_ASSERTION_ENTRY => {
-                JsAnyImportAssertionEntry::JsImportAssertionEntry(JsImportAssertionEntry { syntax })
+                AnyJsImportAssertionEntry::JsImportAssertionEntry(JsImportAssertionEntry { syntax })
             }
             _ => return None,
         };
@@ -27719,62 +27723,62 @@ impl AstNode for JsAnyImportAssertionEntry {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyImportAssertionEntry::JsBogusImportAssertionEntry(it) => &it.syntax,
-            JsAnyImportAssertionEntry::JsImportAssertionEntry(it) => &it.syntax,
+            AnyJsImportAssertionEntry::JsBogusImportAssertionEntry(it) => &it.syntax,
+            AnyJsImportAssertionEntry::JsImportAssertionEntry(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyImportAssertionEntry::JsBogusImportAssertionEntry(it) => it.syntax,
-            JsAnyImportAssertionEntry::JsImportAssertionEntry(it) => it.syntax,
+            AnyJsImportAssertionEntry::JsBogusImportAssertionEntry(it) => it.syntax,
+            AnyJsImportAssertionEntry::JsImportAssertionEntry(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyImportAssertionEntry {
+impl std::fmt::Debug for AnyJsImportAssertionEntry {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyImportAssertionEntry::JsBogusImportAssertionEntry(it) => {
+            AnyJsImportAssertionEntry::JsBogusImportAssertionEntry(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyImportAssertionEntry::JsImportAssertionEntry(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsImportAssertionEntry::JsImportAssertionEntry(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyImportAssertionEntry> for SyntaxNode {
-    fn from(n: JsAnyImportAssertionEntry) -> SyntaxNode {
+impl From<AnyJsImportAssertionEntry> for SyntaxNode {
+    fn from(n: AnyJsImportAssertionEntry) -> SyntaxNode {
         match n {
-            JsAnyImportAssertionEntry::JsBogusImportAssertionEntry(it) => it.into(),
-            JsAnyImportAssertionEntry::JsImportAssertionEntry(it) => it.into(),
+            AnyJsImportAssertionEntry::JsBogusImportAssertionEntry(it) => it.into(),
+            AnyJsImportAssertionEntry::JsImportAssertionEntry(it) => it.into(),
         }
     }
 }
-impl From<JsAnyImportAssertionEntry> for SyntaxElement {
-    fn from(n: JsAnyImportAssertionEntry) -> SyntaxElement {
+impl From<AnyJsImportAssertionEntry> for SyntaxElement {
+    fn from(n: AnyJsImportAssertionEntry) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsImportBareClause> for JsAnyImportClause {
-    fn from(node: JsImportBareClause) -> JsAnyImportClause {
-        JsAnyImportClause::JsImportBareClause(node)
+impl From<JsImportBareClause> for AnyJsImportClause {
+    fn from(node: JsImportBareClause) -> AnyJsImportClause {
+        AnyJsImportClause::JsImportBareClause(node)
     }
 }
-impl From<JsImportDefaultClause> for JsAnyImportClause {
-    fn from(node: JsImportDefaultClause) -> JsAnyImportClause {
-        JsAnyImportClause::JsImportDefaultClause(node)
+impl From<JsImportDefaultClause> for AnyJsImportClause {
+    fn from(node: JsImportDefaultClause) -> AnyJsImportClause {
+        AnyJsImportClause::JsImportDefaultClause(node)
     }
 }
-impl From<JsImportNamedClause> for JsAnyImportClause {
-    fn from(node: JsImportNamedClause) -> JsAnyImportClause {
-        JsAnyImportClause::JsImportNamedClause(node)
+impl From<JsImportNamedClause> for AnyJsImportClause {
+    fn from(node: JsImportNamedClause) -> AnyJsImportClause {
+        AnyJsImportClause::JsImportNamedClause(node)
     }
 }
-impl From<JsImportNamespaceClause> for JsAnyImportClause {
-    fn from(node: JsImportNamespaceClause) -> JsAnyImportClause {
-        JsAnyImportClause::JsImportNamespaceClause(node)
+impl From<JsImportNamespaceClause> for AnyJsImportClause {
+    fn from(node: JsImportNamespaceClause) -> AnyJsImportClause {
+        AnyJsImportClause::JsImportNamespaceClause(node)
     }
 }
-impl AstNode for JsAnyImportClause {
+impl AstNode for AnyJsImportClause {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsImportBareClause::KIND_SET
         .union(JsImportDefaultClause::KIND_SET)
@@ -27792,16 +27796,16 @@ impl AstNode for JsAnyImportClause {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_IMPORT_BARE_CLAUSE => {
-                JsAnyImportClause::JsImportBareClause(JsImportBareClause { syntax })
+                AnyJsImportClause::JsImportBareClause(JsImportBareClause { syntax })
             }
             JS_IMPORT_DEFAULT_CLAUSE => {
-                JsAnyImportClause::JsImportDefaultClause(JsImportDefaultClause { syntax })
+                AnyJsImportClause::JsImportDefaultClause(JsImportDefaultClause { syntax })
             }
             JS_IMPORT_NAMED_CLAUSE => {
-                JsAnyImportClause::JsImportNamedClause(JsImportNamedClause { syntax })
+                AnyJsImportClause::JsImportNamedClause(JsImportNamedClause { syntax })
             }
             JS_IMPORT_NAMESPACE_CLAUSE => {
-                JsAnyImportClause::JsImportNamespaceClause(JsImportNamespaceClause { syntax })
+                AnyJsImportClause::JsImportNamespaceClause(JsImportNamespaceClause { syntax })
             }
             _ => return None,
         };
@@ -27809,67 +27813,67 @@ impl AstNode for JsAnyImportClause {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyImportClause::JsImportBareClause(it) => &it.syntax,
-            JsAnyImportClause::JsImportDefaultClause(it) => &it.syntax,
-            JsAnyImportClause::JsImportNamedClause(it) => &it.syntax,
-            JsAnyImportClause::JsImportNamespaceClause(it) => &it.syntax,
+            AnyJsImportClause::JsImportBareClause(it) => &it.syntax,
+            AnyJsImportClause::JsImportDefaultClause(it) => &it.syntax,
+            AnyJsImportClause::JsImportNamedClause(it) => &it.syntax,
+            AnyJsImportClause::JsImportNamespaceClause(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyImportClause::JsImportBareClause(it) => it.syntax,
-            JsAnyImportClause::JsImportDefaultClause(it) => it.syntax,
-            JsAnyImportClause::JsImportNamedClause(it) => it.syntax,
-            JsAnyImportClause::JsImportNamespaceClause(it) => it.syntax,
+            AnyJsImportClause::JsImportBareClause(it) => it.syntax,
+            AnyJsImportClause::JsImportDefaultClause(it) => it.syntax,
+            AnyJsImportClause::JsImportNamedClause(it) => it.syntax,
+            AnyJsImportClause::JsImportNamespaceClause(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyImportClause {
+impl std::fmt::Debug for AnyJsImportClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyImportClause::JsImportBareClause(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyImportClause::JsImportDefaultClause(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyImportClause::JsImportNamedClause(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyImportClause::JsImportNamespaceClause(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsImportClause::JsImportBareClause(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsImportClause::JsImportDefaultClause(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsImportClause::JsImportNamedClause(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsImportClause::JsImportNamespaceClause(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyImportClause> for SyntaxNode {
-    fn from(n: JsAnyImportClause) -> SyntaxNode {
+impl From<AnyJsImportClause> for SyntaxNode {
+    fn from(n: AnyJsImportClause) -> SyntaxNode {
         match n {
-            JsAnyImportClause::JsImportBareClause(it) => it.into(),
-            JsAnyImportClause::JsImportDefaultClause(it) => it.into(),
-            JsAnyImportClause::JsImportNamedClause(it) => it.into(),
-            JsAnyImportClause::JsImportNamespaceClause(it) => it.into(),
+            AnyJsImportClause::JsImportBareClause(it) => it.into(),
+            AnyJsImportClause::JsImportDefaultClause(it) => it.into(),
+            AnyJsImportClause::JsImportNamedClause(it) => it.into(),
+            AnyJsImportClause::JsImportNamespaceClause(it) => it.into(),
         }
     }
 }
-impl From<JsAnyImportClause> for SyntaxElement {
-    fn from(n: JsAnyImportClause) -> SyntaxElement {
+impl From<AnyJsImportClause> for SyntaxElement {
+    fn from(n: AnyJsImportClause) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsPrivateName> for JsAnyInProperty {
-    fn from(node: JsPrivateName) -> JsAnyInProperty { JsAnyInProperty::JsPrivateName(node) }
+impl From<JsPrivateName> for AnyJsInProperty {
+    fn from(node: JsPrivateName) -> AnyJsInProperty { AnyJsInProperty::JsPrivateName(node) }
 }
-impl AstNode for JsAnyInProperty {
+impl AstNode for AnyJsInProperty {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        JsAnyExpression::KIND_SET.union(JsPrivateName::KIND_SET);
+        AnyJsExpression::KIND_SET.union(JsPrivateName::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_PRIVATE_NAME => true,
-            k if JsAnyExpression::can_cast(k) => true,
+            k if AnyJsExpression::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_PRIVATE_NAME => JsAnyInProperty::JsPrivateName(JsPrivateName { syntax }),
+            JS_PRIVATE_NAME => AnyJsInProperty::JsPrivateName(JsPrivateName { syntax }),
             _ => {
-                if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
-                    return Some(JsAnyInProperty::JsAnyExpression(js_any_expression));
+                if let Some(any_js_expression) = AnyJsExpression::cast(syntax) {
+                    return Some(AnyJsInProperty::AnyJsExpression(any_js_expression));
                 }
                 return None;
             }
@@ -27878,70 +27882,70 @@ impl AstNode for JsAnyInProperty {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyInProperty::JsPrivateName(it) => &it.syntax,
-            JsAnyInProperty::JsAnyExpression(it) => it.syntax(),
+            AnyJsInProperty::JsPrivateName(it) => &it.syntax,
+            AnyJsInProperty::AnyJsExpression(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyInProperty::JsPrivateName(it) => it.syntax,
-            JsAnyInProperty::JsAnyExpression(it) => it.into_syntax(),
+            AnyJsInProperty::JsPrivateName(it) => it.syntax,
+            AnyJsInProperty::AnyJsExpression(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsAnyInProperty {
+impl std::fmt::Debug for AnyJsInProperty {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyInProperty::JsAnyExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyInProperty::JsPrivateName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsInProperty::AnyJsExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsInProperty::JsPrivateName(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyInProperty> for SyntaxNode {
-    fn from(n: JsAnyInProperty) -> SyntaxNode {
+impl From<AnyJsInProperty> for SyntaxNode {
+    fn from(n: AnyJsInProperty) -> SyntaxNode {
         match n {
-            JsAnyInProperty::JsAnyExpression(it) => it.into(),
-            JsAnyInProperty::JsPrivateName(it) => it.into(),
+            AnyJsInProperty::AnyJsExpression(it) => it.into(),
+            AnyJsInProperty::JsPrivateName(it) => it.into(),
         }
     }
 }
-impl From<JsAnyInProperty> for SyntaxElement {
-    fn from(n: JsAnyInProperty) -> SyntaxElement {
+impl From<AnyJsInProperty> for SyntaxElement {
+    fn from(n: AnyJsInProperty) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsBigIntLiteralExpression> for JsAnyLiteralExpression {
-    fn from(node: JsBigIntLiteralExpression) -> JsAnyLiteralExpression {
-        JsAnyLiteralExpression::JsBigIntLiteralExpression(node)
+impl From<JsBigIntLiteralExpression> for AnyJsLiteralExpression {
+    fn from(node: JsBigIntLiteralExpression) -> AnyJsLiteralExpression {
+        AnyJsLiteralExpression::JsBigIntLiteralExpression(node)
     }
 }
-impl From<JsBooleanLiteralExpression> for JsAnyLiteralExpression {
-    fn from(node: JsBooleanLiteralExpression) -> JsAnyLiteralExpression {
-        JsAnyLiteralExpression::JsBooleanLiteralExpression(node)
+impl From<JsBooleanLiteralExpression> for AnyJsLiteralExpression {
+    fn from(node: JsBooleanLiteralExpression) -> AnyJsLiteralExpression {
+        AnyJsLiteralExpression::JsBooleanLiteralExpression(node)
     }
 }
-impl From<JsNullLiteralExpression> for JsAnyLiteralExpression {
-    fn from(node: JsNullLiteralExpression) -> JsAnyLiteralExpression {
-        JsAnyLiteralExpression::JsNullLiteralExpression(node)
+impl From<JsNullLiteralExpression> for AnyJsLiteralExpression {
+    fn from(node: JsNullLiteralExpression) -> AnyJsLiteralExpression {
+        AnyJsLiteralExpression::JsNullLiteralExpression(node)
     }
 }
-impl From<JsNumberLiteralExpression> for JsAnyLiteralExpression {
-    fn from(node: JsNumberLiteralExpression) -> JsAnyLiteralExpression {
-        JsAnyLiteralExpression::JsNumberLiteralExpression(node)
+impl From<JsNumberLiteralExpression> for AnyJsLiteralExpression {
+    fn from(node: JsNumberLiteralExpression) -> AnyJsLiteralExpression {
+        AnyJsLiteralExpression::JsNumberLiteralExpression(node)
     }
 }
-impl From<JsRegexLiteralExpression> for JsAnyLiteralExpression {
-    fn from(node: JsRegexLiteralExpression) -> JsAnyLiteralExpression {
-        JsAnyLiteralExpression::JsRegexLiteralExpression(node)
+impl From<JsRegexLiteralExpression> for AnyJsLiteralExpression {
+    fn from(node: JsRegexLiteralExpression) -> AnyJsLiteralExpression {
+        AnyJsLiteralExpression::JsRegexLiteralExpression(node)
     }
 }
-impl From<JsStringLiteralExpression> for JsAnyLiteralExpression {
-    fn from(node: JsStringLiteralExpression) -> JsAnyLiteralExpression {
-        JsAnyLiteralExpression::JsStringLiteralExpression(node)
+impl From<JsStringLiteralExpression> for AnyJsLiteralExpression {
+    fn from(node: JsStringLiteralExpression) -> AnyJsLiteralExpression {
+        AnyJsLiteralExpression::JsStringLiteralExpression(node)
     }
 }
-impl AstNode for JsAnyLiteralExpression {
+impl AstNode for AnyJsLiteralExpression {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsBigIntLiteralExpression::KIND_SET
         .union(JsBooleanLiteralExpression::KIND_SET)
@@ -27963,30 +27967,30 @@ impl AstNode for JsAnyLiteralExpression {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_BIG_INT_LITERAL_EXPRESSION => {
-                JsAnyLiteralExpression::JsBigIntLiteralExpression(JsBigIntLiteralExpression {
+                AnyJsLiteralExpression::JsBigIntLiteralExpression(JsBigIntLiteralExpression {
                     syntax,
                 })
             }
             JS_BOOLEAN_LITERAL_EXPRESSION => {
-                JsAnyLiteralExpression::JsBooleanLiteralExpression(JsBooleanLiteralExpression {
+                AnyJsLiteralExpression::JsBooleanLiteralExpression(JsBooleanLiteralExpression {
                     syntax,
                 })
             }
             JS_NULL_LITERAL_EXPRESSION => {
-                JsAnyLiteralExpression::JsNullLiteralExpression(JsNullLiteralExpression { syntax })
+                AnyJsLiteralExpression::JsNullLiteralExpression(JsNullLiteralExpression { syntax })
             }
             JS_NUMBER_LITERAL_EXPRESSION => {
-                JsAnyLiteralExpression::JsNumberLiteralExpression(JsNumberLiteralExpression {
+                AnyJsLiteralExpression::JsNumberLiteralExpression(JsNumberLiteralExpression {
                     syntax,
                 })
             }
             JS_REGEX_LITERAL_EXPRESSION => {
-                JsAnyLiteralExpression::JsRegexLiteralExpression(JsRegexLiteralExpression {
+                AnyJsLiteralExpression::JsRegexLiteralExpression(JsRegexLiteralExpression {
                     syntax,
                 })
             }
             JS_STRING_LITERAL_EXPRESSION => {
-                JsAnyLiteralExpression::JsStringLiteralExpression(JsStringLiteralExpression {
+                AnyJsLiteralExpression::JsStringLiteralExpression(JsStringLiteralExpression {
                     syntax,
                 })
             }
@@ -27996,71 +28000,71 @@ impl AstNode for JsAnyLiteralExpression {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyLiteralExpression::JsBigIntLiteralExpression(it) => &it.syntax,
-            JsAnyLiteralExpression::JsBooleanLiteralExpression(it) => &it.syntax,
-            JsAnyLiteralExpression::JsNullLiteralExpression(it) => &it.syntax,
-            JsAnyLiteralExpression::JsNumberLiteralExpression(it) => &it.syntax,
-            JsAnyLiteralExpression::JsRegexLiteralExpression(it) => &it.syntax,
-            JsAnyLiteralExpression::JsStringLiteralExpression(it) => &it.syntax,
+            AnyJsLiteralExpression::JsBigIntLiteralExpression(it) => &it.syntax,
+            AnyJsLiteralExpression::JsBooleanLiteralExpression(it) => &it.syntax,
+            AnyJsLiteralExpression::JsNullLiteralExpression(it) => &it.syntax,
+            AnyJsLiteralExpression::JsNumberLiteralExpression(it) => &it.syntax,
+            AnyJsLiteralExpression::JsRegexLiteralExpression(it) => &it.syntax,
+            AnyJsLiteralExpression::JsStringLiteralExpression(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyLiteralExpression::JsBigIntLiteralExpression(it) => it.syntax,
-            JsAnyLiteralExpression::JsBooleanLiteralExpression(it) => it.syntax,
-            JsAnyLiteralExpression::JsNullLiteralExpression(it) => it.syntax,
-            JsAnyLiteralExpression::JsNumberLiteralExpression(it) => it.syntax,
-            JsAnyLiteralExpression::JsRegexLiteralExpression(it) => it.syntax,
-            JsAnyLiteralExpression::JsStringLiteralExpression(it) => it.syntax,
+            AnyJsLiteralExpression::JsBigIntLiteralExpression(it) => it.syntax,
+            AnyJsLiteralExpression::JsBooleanLiteralExpression(it) => it.syntax,
+            AnyJsLiteralExpression::JsNullLiteralExpression(it) => it.syntax,
+            AnyJsLiteralExpression::JsNumberLiteralExpression(it) => it.syntax,
+            AnyJsLiteralExpression::JsRegexLiteralExpression(it) => it.syntax,
+            AnyJsLiteralExpression::JsStringLiteralExpression(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyLiteralExpression {
+impl std::fmt::Debug for AnyJsLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyLiteralExpression::JsBigIntLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyLiteralExpression::JsBooleanLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyLiteralExpression::JsNullLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyLiteralExpression::JsNumberLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyLiteralExpression::JsRegexLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyLiteralExpression::JsStringLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsLiteralExpression::JsBigIntLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsLiteralExpression::JsBooleanLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsLiteralExpression::JsNullLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsLiteralExpression::JsNumberLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsLiteralExpression::JsRegexLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsLiteralExpression::JsStringLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyLiteralExpression> for SyntaxNode {
-    fn from(n: JsAnyLiteralExpression) -> SyntaxNode {
+impl From<AnyJsLiteralExpression> for SyntaxNode {
+    fn from(n: AnyJsLiteralExpression) -> SyntaxNode {
         match n {
-            JsAnyLiteralExpression::JsBigIntLiteralExpression(it) => it.into(),
-            JsAnyLiteralExpression::JsBooleanLiteralExpression(it) => it.into(),
-            JsAnyLiteralExpression::JsNullLiteralExpression(it) => it.into(),
-            JsAnyLiteralExpression::JsNumberLiteralExpression(it) => it.into(),
-            JsAnyLiteralExpression::JsRegexLiteralExpression(it) => it.into(),
-            JsAnyLiteralExpression::JsStringLiteralExpression(it) => it.into(),
+            AnyJsLiteralExpression::JsBigIntLiteralExpression(it) => it.into(),
+            AnyJsLiteralExpression::JsBooleanLiteralExpression(it) => it.into(),
+            AnyJsLiteralExpression::JsNullLiteralExpression(it) => it.into(),
+            AnyJsLiteralExpression::JsNumberLiteralExpression(it) => it.into(),
+            AnyJsLiteralExpression::JsRegexLiteralExpression(it) => it.into(),
+            AnyJsLiteralExpression::JsStringLiteralExpression(it) => it.into(),
         }
     }
 }
-impl From<JsAnyLiteralExpression> for SyntaxElement {
-    fn from(n: JsAnyLiteralExpression) -> SyntaxElement {
+impl From<AnyJsLiteralExpression> for SyntaxElement {
+    fn from(n: AnyJsLiteralExpression) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsStaticModifier> for JsAnyMethodModifier {
-    fn from(node: JsStaticModifier) -> JsAnyMethodModifier {
-        JsAnyMethodModifier::JsStaticModifier(node)
+impl From<JsStaticModifier> for AnyJsMethodModifier {
+    fn from(node: JsStaticModifier) -> AnyJsMethodModifier {
+        AnyJsMethodModifier::JsStaticModifier(node)
     }
 }
-impl From<TsAccessibilityModifier> for JsAnyMethodModifier {
-    fn from(node: TsAccessibilityModifier) -> JsAnyMethodModifier {
-        JsAnyMethodModifier::TsAccessibilityModifier(node)
+impl From<TsAccessibilityModifier> for AnyJsMethodModifier {
+    fn from(node: TsAccessibilityModifier) -> AnyJsMethodModifier {
+        AnyJsMethodModifier::TsAccessibilityModifier(node)
     }
 }
-impl From<TsOverrideModifier> for JsAnyMethodModifier {
-    fn from(node: TsOverrideModifier) -> JsAnyMethodModifier {
-        JsAnyMethodModifier::TsOverrideModifier(node)
+impl From<TsOverrideModifier> for AnyJsMethodModifier {
+    fn from(node: TsOverrideModifier) -> AnyJsMethodModifier {
+        AnyJsMethodModifier::TsOverrideModifier(node)
     }
 }
-impl AstNode for JsAnyMethodModifier {
+impl AstNode for AnyJsMethodModifier {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsStaticModifier::KIND_SET
         .union(TsAccessibilityModifier::KIND_SET)
@@ -28074,13 +28078,13 @@ impl AstNode for JsAnyMethodModifier {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_STATIC_MODIFIER => {
-                JsAnyMethodModifier::JsStaticModifier(JsStaticModifier { syntax })
+                AnyJsMethodModifier::JsStaticModifier(JsStaticModifier { syntax })
             }
             TS_ACCESSIBILITY_MODIFIER => {
-                JsAnyMethodModifier::TsAccessibilityModifier(TsAccessibilityModifier { syntax })
+                AnyJsMethodModifier::TsAccessibilityModifier(TsAccessibilityModifier { syntax })
             }
             TS_OVERRIDE_MODIFIER => {
-                JsAnyMethodModifier::TsOverrideModifier(TsOverrideModifier { syntax })
+                AnyJsMethodModifier::TsOverrideModifier(TsOverrideModifier { syntax })
             }
             _ => return None,
         };
@@ -28088,68 +28092,68 @@ impl AstNode for JsAnyMethodModifier {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyMethodModifier::JsStaticModifier(it) => &it.syntax,
-            JsAnyMethodModifier::TsAccessibilityModifier(it) => &it.syntax,
-            JsAnyMethodModifier::TsOverrideModifier(it) => &it.syntax,
+            AnyJsMethodModifier::JsStaticModifier(it) => &it.syntax,
+            AnyJsMethodModifier::TsAccessibilityModifier(it) => &it.syntax,
+            AnyJsMethodModifier::TsOverrideModifier(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyMethodModifier::JsStaticModifier(it) => it.syntax,
-            JsAnyMethodModifier::TsAccessibilityModifier(it) => it.syntax,
-            JsAnyMethodModifier::TsOverrideModifier(it) => it.syntax,
+            AnyJsMethodModifier::JsStaticModifier(it) => it.syntax,
+            AnyJsMethodModifier::TsAccessibilityModifier(it) => it.syntax,
+            AnyJsMethodModifier::TsOverrideModifier(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyMethodModifier {
+impl std::fmt::Debug for AnyJsMethodModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyMethodModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyMethodModifier::TsAccessibilityModifier(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyMethodModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsMethodModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsMethodModifier::TsAccessibilityModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsMethodModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyMethodModifier> for SyntaxNode {
-    fn from(n: JsAnyMethodModifier) -> SyntaxNode {
+impl From<AnyJsMethodModifier> for SyntaxNode {
+    fn from(n: AnyJsMethodModifier) -> SyntaxNode {
         match n {
-            JsAnyMethodModifier::JsStaticModifier(it) => it.into(),
-            JsAnyMethodModifier::TsAccessibilityModifier(it) => it.into(),
-            JsAnyMethodModifier::TsOverrideModifier(it) => it.into(),
+            AnyJsMethodModifier::JsStaticModifier(it) => it.into(),
+            AnyJsMethodModifier::TsAccessibilityModifier(it) => it.into(),
+            AnyJsMethodModifier::TsOverrideModifier(it) => it.into(),
         }
     }
 }
-impl From<JsAnyMethodModifier> for SyntaxElement {
-    fn from(n: JsAnyMethodModifier) -> SyntaxElement {
+impl From<AnyJsMethodModifier> for SyntaxElement {
+    fn from(n: AnyJsMethodModifier) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsExport> for JsAnyModuleItem {
-    fn from(node: JsExport) -> JsAnyModuleItem { JsAnyModuleItem::JsExport(node) }
+impl From<JsExport> for AnyJsModuleItem {
+    fn from(node: JsExport) -> AnyJsModuleItem { AnyJsModuleItem::JsExport(node) }
 }
-impl From<JsImport> for JsAnyModuleItem {
-    fn from(node: JsImport) -> JsAnyModuleItem { JsAnyModuleItem::JsImport(node) }
+impl From<JsImport> for AnyJsModuleItem {
+    fn from(node: JsImport) -> AnyJsModuleItem { AnyJsModuleItem::JsImport(node) }
 }
-impl AstNode for JsAnyModuleItem {
+impl AstNode for AnyJsModuleItem {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsAnyStatement::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = AnyJsStatement::KIND_SET
         .union(JsExport::KIND_SET)
         .union(JsImport::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_EXPORT | JS_IMPORT => true,
-            k if JsAnyStatement::can_cast(k) => true,
+            k if AnyJsStatement::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_EXPORT => JsAnyModuleItem::JsExport(JsExport { syntax }),
-            JS_IMPORT => JsAnyModuleItem::JsImport(JsImport { syntax }),
+            JS_EXPORT => AnyJsModuleItem::JsExport(JsExport { syntax }),
+            JS_IMPORT => AnyJsModuleItem::JsImport(JsImport { syntax }),
             _ => {
-                if let Some(js_any_statement) = JsAnyStatement::cast(syntax) {
-                    return Some(JsAnyModuleItem::JsAnyStatement(js_any_statement));
+                if let Some(any_js_statement) = AnyJsStatement::cast(syntax) {
+                    return Some(AnyJsModuleItem::AnyJsStatement(any_js_statement));
                 }
                 return None;
             }
@@ -28158,107 +28162,107 @@ impl AstNode for JsAnyModuleItem {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyModuleItem::JsExport(it) => &it.syntax,
-            JsAnyModuleItem::JsImport(it) => &it.syntax,
-            JsAnyModuleItem::JsAnyStatement(it) => it.syntax(),
+            AnyJsModuleItem::JsExport(it) => &it.syntax,
+            AnyJsModuleItem::JsImport(it) => &it.syntax,
+            AnyJsModuleItem::AnyJsStatement(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyModuleItem::JsExport(it) => it.syntax,
-            JsAnyModuleItem::JsImport(it) => it.syntax,
-            JsAnyModuleItem::JsAnyStatement(it) => it.into_syntax(),
+            AnyJsModuleItem::JsExport(it) => it.syntax,
+            AnyJsModuleItem::JsImport(it) => it.syntax,
+            AnyJsModuleItem::AnyJsStatement(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsAnyModuleItem {
+impl std::fmt::Debug for AnyJsModuleItem {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyModuleItem::JsAnyStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyModuleItem::JsExport(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyModuleItem::JsImport(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsModuleItem::AnyJsStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsModuleItem::JsExport(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsModuleItem::JsImport(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyModuleItem> for SyntaxNode {
-    fn from(n: JsAnyModuleItem) -> SyntaxNode {
+impl From<AnyJsModuleItem> for SyntaxNode {
+    fn from(n: AnyJsModuleItem) -> SyntaxNode {
         match n {
-            JsAnyModuleItem::JsAnyStatement(it) => it.into(),
-            JsAnyModuleItem::JsExport(it) => it.into(),
-            JsAnyModuleItem::JsImport(it) => it.into(),
+            AnyJsModuleItem::AnyJsStatement(it) => it.into(),
+            AnyJsModuleItem::JsExport(it) => it.into(),
+            AnyJsModuleItem::JsImport(it) => it.into(),
         }
     }
 }
-impl From<JsAnyModuleItem> for SyntaxElement {
-    fn from(n: JsAnyModuleItem) -> SyntaxElement {
+impl From<AnyJsModuleItem> for SyntaxElement {
+    fn from(n: AnyJsModuleItem) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsName> for JsAnyName {
-    fn from(node: JsName) -> JsAnyName { JsAnyName::JsName(node) }
+impl From<JsName> for AnyJsName {
+    fn from(node: JsName) -> AnyJsName { AnyJsName::JsName(node) }
 }
-impl From<JsPrivateName> for JsAnyName {
-    fn from(node: JsPrivateName) -> JsAnyName { JsAnyName::JsPrivateName(node) }
+impl From<JsPrivateName> for AnyJsName {
+    fn from(node: JsPrivateName) -> AnyJsName { AnyJsName::JsPrivateName(node) }
 }
-impl AstNode for JsAnyName {
+impl AstNode for AnyJsName {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsName::KIND_SET.union(JsPrivateName::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_NAME | JS_PRIVATE_NAME) }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_NAME => JsAnyName::JsName(JsName { syntax }),
-            JS_PRIVATE_NAME => JsAnyName::JsPrivateName(JsPrivateName { syntax }),
+            JS_NAME => AnyJsName::JsName(JsName { syntax }),
+            JS_PRIVATE_NAME => AnyJsName::JsPrivateName(JsPrivateName { syntax }),
             _ => return None,
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyName::JsName(it) => &it.syntax,
-            JsAnyName::JsPrivateName(it) => &it.syntax,
+            AnyJsName::JsName(it) => &it.syntax,
+            AnyJsName::JsPrivateName(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyName::JsName(it) => it.syntax,
-            JsAnyName::JsPrivateName(it) => it.syntax,
+            AnyJsName::JsName(it) => it.syntax,
+            AnyJsName::JsPrivateName(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyName {
+impl std::fmt::Debug for AnyJsName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyName::JsName(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyName::JsPrivateName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsName::JsName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsName::JsPrivateName(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyName> for SyntaxNode {
-    fn from(n: JsAnyName) -> SyntaxNode {
+impl From<AnyJsName> for SyntaxNode {
+    fn from(n: AnyJsName) -> SyntaxNode {
         match n {
-            JsAnyName::JsName(it) => it.into(),
-            JsAnyName::JsPrivateName(it) => it.into(),
+            AnyJsName::JsName(it) => it.into(),
+            AnyJsName::JsPrivateName(it) => it.into(),
         }
     }
 }
-impl From<JsAnyName> for SyntaxElement {
-    fn from(n: JsAnyName) -> SyntaxElement {
+impl From<AnyJsName> for SyntaxElement {
+    fn from(n: AnyJsName) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsNamedImportSpecifiers> for JsAnyNamedImport {
-    fn from(node: JsNamedImportSpecifiers) -> JsAnyNamedImport {
-        JsAnyNamedImport::JsNamedImportSpecifiers(node)
+impl From<JsNamedImportSpecifiers> for AnyJsNamedImport {
+    fn from(node: JsNamedImportSpecifiers) -> AnyJsNamedImport {
+        AnyJsNamedImport::JsNamedImportSpecifiers(node)
     }
 }
-impl From<JsNamespaceImportSpecifier> for JsAnyNamedImport {
-    fn from(node: JsNamespaceImportSpecifier) -> JsAnyNamedImport {
-        JsAnyNamedImport::JsNamespaceImportSpecifier(node)
+impl From<JsNamespaceImportSpecifier> for AnyJsNamedImport {
+    fn from(node: JsNamespaceImportSpecifier) -> AnyJsNamedImport {
+        AnyJsNamedImport::JsNamespaceImportSpecifier(node)
     }
 }
-impl AstNode for JsAnyNamedImport {
+impl AstNode for AnyJsNamedImport {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
         JsNamedImportSpecifiers::KIND_SET.union(JsNamespaceImportSpecifier::KIND_SET);
@@ -28271,10 +28275,10 @@ impl AstNode for JsAnyNamedImport {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_NAMED_IMPORT_SPECIFIERS => {
-                JsAnyNamedImport::JsNamedImportSpecifiers(JsNamedImportSpecifiers { syntax })
+                AnyJsNamedImport::JsNamedImportSpecifiers(JsNamedImportSpecifiers { syntax })
             }
             JS_NAMESPACE_IMPORT_SPECIFIER => {
-                JsAnyNamedImport::JsNamespaceImportSpecifier(JsNamespaceImportSpecifier { syntax })
+                AnyJsNamedImport::JsNamespaceImportSpecifier(JsNamespaceImportSpecifier { syntax })
             }
             _ => return None,
         };
@@ -28282,55 +28286,55 @@ impl AstNode for JsAnyNamedImport {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyNamedImport::JsNamedImportSpecifiers(it) => &it.syntax,
-            JsAnyNamedImport::JsNamespaceImportSpecifier(it) => &it.syntax,
+            AnyJsNamedImport::JsNamedImportSpecifiers(it) => &it.syntax,
+            AnyJsNamedImport::JsNamespaceImportSpecifier(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyNamedImport::JsNamedImportSpecifiers(it) => it.syntax,
-            JsAnyNamedImport::JsNamespaceImportSpecifier(it) => it.syntax,
+            AnyJsNamedImport::JsNamedImportSpecifiers(it) => it.syntax,
+            AnyJsNamedImport::JsNamespaceImportSpecifier(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyNamedImport {
+impl std::fmt::Debug for AnyJsNamedImport {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyNamedImport::JsNamedImportSpecifiers(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyNamedImport::JsNamespaceImportSpecifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsNamedImport::JsNamedImportSpecifiers(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsNamedImport::JsNamespaceImportSpecifier(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyNamedImport> for SyntaxNode {
-    fn from(n: JsAnyNamedImport) -> SyntaxNode {
+impl From<AnyJsNamedImport> for SyntaxNode {
+    fn from(n: AnyJsNamedImport) -> SyntaxNode {
         match n {
-            JsAnyNamedImport::JsNamedImportSpecifiers(it) => it.into(),
-            JsAnyNamedImport::JsNamespaceImportSpecifier(it) => it.into(),
+            AnyJsNamedImport::JsNamedImportSpecifiers(it) => it.into(),
+            AnyJsNamedImport::JsNamespaceImportSpecifier(it) => it.into(),
         }
     }
 }
-impl From<JsAnyNamedImport> for SyntaxElement {
-    fn from(n: JsAnyNamedImport) -> SyntaxElement {
+impl From<AnyJsNamedImport> for SyntaxElement {
+    fn from(n: AnyJsNamedImport) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsBogusNamedImportSpecifier> for JsAnyNamedImportSpecifier {
-    fn from(node: JsBogusNamedImportSpecifier) -> JsAnyNamedImportSpecifier {
-        JsAnyNamedImportSpecifier::JsBogusNamedImportSpecifier(node)
+impl From<JsBogusNamedImportSpecifier> for AnyJsNamedImportSpecifier {
+    fn from(node: JsBogusNamedImportSpecifier) -> AnyJsNamedImportSpecifier {
+        AnyJsNamedImportSpecifier::JsBogusNamedImportSpecifier(node)
     }
 }
-impl From<JsNamedImportSpecifier> for JsAnyNamedImportSpecifier {
-    fn from(node: JsNamedImportSpecifier) -> JsAnyNamedImportSpecifier {
-        JsAnyNamedImportSpecifier::JsNamedImportSpecifier(node)
+impl From<JsNamedImportSpecifier> for AnyJsNamedImportSpecifier {
+    fn from(node: JsNamedImportSpecifier) -> AnyJsNamedImportSpecifier {
+        AnyJsNamedImportSpecifier::JsNamedImportSpecifier(node)
     }
 }
-impl From<JsShorthandNamedImportSpecifier> for JsAnyNamedImportSpecifier {
-    fn from(node: JsShorthandNamedImportSpecifier) -> JsAnyNamedImportSpecifier {
-        JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(node)
+impl From<JsShorthandNamedImportSpecifier> for AnyJsNamedImportSpecifier {
+    fn from(node: JsShorthandNamedImportSpecifier) -> AnyJsNamedImportSpecifier {
+        AnyJsNamedImportSpecifier::JsShorthandNamedImportSpecifier(node)
     }
 }
-impl AstNode for JsAnyNamedImportSpecifier {
+impl AstNode for AnyJsNamedImportSpecifier {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsBogusNamedImportSpecifier::KIND_SET
         .union(JsNamedImportSpecifier::KIND_SET)
@@ -28346,15 +28350,15 @@ impl AstNode for JsAnyNamedImportSpecifier {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_BOGUS_NAMED_IMPORT_SPECIFIER => {
-                JsAnyNamedImportSpecifier::JsBogusNamedImportSpecifier(
+                AnyJsNamedImportSpecifier::JsBogusNamedImportSpecifier(
                     JsBogusNamedImportSpecifier { syntax },
                 )
             }
             JS_NAMED_IMPORT_SPECIFIER => {
-                JsAnyNamedImportSpecifier::JsNamedImportSpecifier(JsNamedImportSpecifier { syntax })
+                AnyJsNamedImportSpecifier::JsNamedImportSpecifier(JsNamedImportSpecifier { syntax })
             }
             JS_SHORTHAND_NAMED_IMPORT_SPECIFIER => {
-                JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(
+                AnyJsNamedImportSpecifier::JsShorthandNamedImportSpecifier(
                     JsShorthandNamedImportSpecifier { syntax },
                 )
             }
@@ -28364,70 +28368,70 @@ impl AstNode for JsAnyNamedImportSpecifier {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyNamedImportSpecifier::JsBogusNamedImportSpecifier(it) => &it.syntax,
-            JsAnyNamedImportSpecifier::JsNamedImportSpecifier(it) => &it.syntax,
-            JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(it) => &it.syntax,
+            AnyJsNamedImportSpecifier::JsBogusNamedImportSpecifier(it) => &it.syntax,
+            AnyJsNamedImportSpecifier::JsNamedImportSpecifier(it) => &it.syntax,
+            AnyJsNamedImportSpecifier::JsShorthandNamedImportSpecifier(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyNamedImportSpecifier::JsBogusNamedImportSpecifier(it) => it.syntax,
-            JsAnyNamedImportSpecifier::JsNamedImportSpecifier(it) => it.syntax,
-            JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(it) => it.syntax,
+            AnyJsNamedImportSpecifier::JsBogusNamedImportSpecifier(it) => it.syntax,
+            AnyJsNamedImportSpecifier::JsNamedImportSpecifier(it) => it.syntax,
+            AnyJsNamedImportSpecifier::JsShorthandNamedImportSpecifier(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyNamedImportSpecifier {
+impl std::fmt::Debug for AnyJsNamedImportSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyNamedImportSpecifier::JsBogusNamedImportSpecifier(it) => {
+            AnyJsNamedImportSpecifier::JsBogusNamedImportSpecifier(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyNamedImportSpecifier::JsNamedImportSpecifier(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(it) => {
+            AnyJsNamedImportSpecifier::JsNamedImportSpecifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsNamedImportSpecifier::JsShorthandNamedImportSpecifier(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
         }
     }
 }
-impl From<JsAnyNamedImportSpecifier> for SyntaxNode {
-    fn from(n: JsAnyNamedImportSpecifier) -> SyntaxNode {
+impl From<AnyJsNamedImportSpecifier> for SyntaxNode {
+    fn from(n: AnyJsNamedImportSpecifier) -> SyntaxNode {
         match n {
-            JsAnyNamedImportSpecifier::JsBogusNamedImportSpecifier(it) => it.into(),
-            JsAnyNamedImportSpecifier::JsNamedImportSpecifier(it) => it.into(),
-            JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(it) => it.into(),
+            AnyJsNamedImportSpecifier::JsBogusNamedImportSpecifier(it) => it.into(),
+            AnyJsNamedImportSpecifier::JsNamedImportSpecifier(it) => it.into(),
+            AnyJsNamedImportSpecifier::JsShorthandNamedImportSpecifier(it) => it.into(),
         }
     }
 }
-impl From<JsAnyNamedImportSpecifier> for SyntaxElement {
-    fn from(n: JsAnyNamedImportSpecifier) -> SyntaxElement {
+impl From<AnyJsNamedImportSpecifier> for SyntaxElement {
+    fn from(n: AnyJsNamedImportSpecifier) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsBogusAssignment> for JsAnyObjectAssignmentPatternMember {
-    fn from(node: JsBogusAssignment) -> JsAnyObjectAssignmentPatternMember {
-        JsAnyObjectAssignmentPatternMember::JsBogusAssignment(node)
+impl From<JsBogusAssignment> for AnyJsObjectAssignmentPatternMember {
+    fn from(node: JsBogusAssignment) -> AnyJsObjectAssignmentPatternMember {
+        AnyJsObjectAssignmentPatternMember::JsBogusAssignment(node)
     }
 }
-impl From<JsObjectAssignmentPatternProperty> for JsAnyObjectAssignmentPatternMember {
-    fn from(node: JsObjectAssignmentPatternProperty) -> JsAnyObjectAssignmentPatternMember {
-        JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(node)
+impl From<JsObjectAssignmentPatternProperty> for AnyJsObjectAssignmentPatternMember {
+    fn from(node: JsObjectAssignmentPatternProperty) -> AnyJsObjectAssignmentPatternMember {
+        AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(node)
     }
 }
-impl From<JsObjectAssignmentPatternRest> for JsAnyObjectAssignmentPatternMember {
-    fn from(node: JsObjectAssignmentPatternRest) -> JsAnyObjectAssignmentPatternMember {
-        JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(node)
+impl From<JsObjectAssignmentPatternRest> for AnyJsObjectAssignmentPatternMember {
+    fn from(node: JsObjectAssignmentPatternRest) -> AnyJsObjectAssignmentPatternMember {
+        AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(node)
     }
 }
-impl From<JsObjectAssignmentPatternShorthandProperty> for JsAnyObjectAssignmentPatternMember {
+impl From<JsObjectAssignmentPatternShorthandProperty> for AnyJsObjectAssignmentPatternMember {
     fn from(
         node: JsObjectAssignmentPatternShorthandProperty,
-    ) -> JsAnyObjectAssignmentPatternMember {
-        JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(node)
+    ) -> AnyJsObjectAssignmentPatternMember {
+        AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(node)
     }
 }
-impl AstNode for JsAnyObjectAssignmentPatternMember {
+impl AstNode for AnyJsObjectAssignmentPatternMember {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsBogusAssignment::KIND_SET
         .union(JsObjectAssignmentPatternProperty::KIND_SET)
@@ -28445,20 +28449,20 @@ impl AstNode for JsAnyObjectAssignmentPatternMember {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_BOGUS_ASSIGNMENT => {
-                JsAnyObjectAssignmentPatternMember::JsBogusAssignment(JsBogusAssignment { syntax })
+                AnyJsObjectAssignmentPatternMember::JsBogusAssignment(JsBogusAssignment { syntax })
             }
             JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY => {
-                JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(
+                AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(
                     JsObjectAssignmentPatternProperty { syntax },
                 )
             }
             JS_OBJECT_ASSIGNMENT_PATTERN_REST => {
-                JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(
+                AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(
                     JsObjectAssignmentPatternRest { syntax },
                 )
             }
             JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY => {
-                JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(
+                AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(
                     JsObjectAssignmentPatternShorthandProperty { syntax },
                 )
             }
@@ -28468,82 +28472,82 @@ impl AstNode for JsAnyObjectAssignmentPatternMember {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyObjectAssignmentPatternMember::JsBogusAssignment(it) => &it.syntax,
-            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(it) => &it.syntax,
-            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(it) => &it.syntax,
-            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(it) => {
+            AnyJsObjectAssignmentPatternMember::JsBogusAssignment(it) => &it.syntax,
+            AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(it) => &it.syntax,
+            AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(it) => &it.syntax,
+            AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(it) => {
                 &it.syntax
             }
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyObjectAssignmentPatternMember::JsBogusAssignment(it) => it.syntax,
-            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(it) => it.syntax,
-            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(it) => it.syntax,
-            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(it) => {
+            AnyJsObjectAssignmentPatternMember::JsBogusAssignment(it) => it.syntax,
+            AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(it) => it.syntax,
+            AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(it) => it.syntax,
+            AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(it) => {
                 it.syntax
             }
         }
     }
 }
-impl std::fmt::Debug for JsAnyObjectAssignmentPatternMember {
+impl std::fmt::Debug for AnyJsObjectAssignmentPatternMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyObjectAssignmentPatternMember::JsBogusAssignment(it) => {
+            AnyJsObjectAssignmentPatternMember::JsBogusAssignment(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(it) => {
+            AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(it) => {
+            AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(it) => {
+            AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
         }
     }
 }
-impl From<JsAnyObjectAssignmentPatternMember> for SyntaxNode {
-    fn from(n: JsAnyObjectAssignmentPatternMember) -> SyntaxNode {
+impl From<AnyJsObjectAssignmentPatternMember> for SyntaxNode {
+    fn from(n: AnyJsObjectAssignmentPatternMember) -> SyntaxNode {
         match n {
-            JsAnyObjectAssignmentPatternMember::JsBogusAssignment(it) => it.into(),
-            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(it) => it.into(),
-            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(it) => it.into(),
-            JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(it) => {
+            AnyJsObjectAssignmentPatternMember::JsBogusAssignment(it) => it.into(),
+            AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(it) => it.into(),
+            AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(it) => it.into(),
+            AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(it) => {
                 it.into()
             }
         }
     }
 }
-impl From<JsAnyObjectAssignmentPatternMember> for SyntaxElement {
-    fn from(n: JsAnyObjectAssignmentPatternMember) -> SyntaxElement {
+impl From<AnyJsObjectAssignmentPatternMember> for SyntaxElement {
+    fn from(n: AnyJsObjectAssignmentPatternMember) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsBogusBinding> for JsAnyObjectBindingPatternMember {
-    fn from(node: JsBogusBinding) -> JsAnyObjectBindingPatternMember {
-        JsAnyObjectBindingPatternMember::JsBogusBinding(node)
+impl From<JsBogusBinding> for AnyJsObjectBindingPatternMember {
+    fn from(node: JsBogusBinding) -> AnyJsObjectBindingPatternMember {
+        AnyJsObjectBindingPatternMember::JsBogusBinding(node)
     }
 }
-impl From<JsObjectBindingPatternProperty> for JsAnyObjectBindingPatternMember {
-    fn from(node: JsObjectBindingPatternProperty) -> JsAnyObjectBindingPatternMember {
-        JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(node)
+impl From<JsObjectBindingPatternProperty> for AnyJsObjectBindingPatternMember {
+    fn from(node: JsObjectBindingPatternProperty) -> AnyJsObjectBindingPatternMember {
+        AnyJsObjectBindingPatternMember::JsObjectBindingPatternProperty(node)
     }
 }
-impl From<JsObjectBindingPatternRest> for JsAnyObjectBindingPatternMember {
-    fn from(node: JsObjectBindingPatternRest) -> JsAnyObjectBindingPatternMember {
-        JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(node)
+impl From<JsObjectBindingPatternRest> for AnyJsObjectBindingPatternMember {
+    fn from(node: JsObjectBindingPatternRest) -> AnyJsObjectBindingPatternMember {
+        AnyJsObjectBindingPatternMember::JsObjectBindingPatternRest(node)
     }
 }
-impl From<JsObjectBindingPatternShorthandProperty> for JsAnyObjectBindingPatternMember {
-    fn from(node: JsObjectBindingPatternShorthandProperty) -> JsAnyObjectBindingPatternMember {
-        JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(node)
+impl From<JsObjectBindingPatternShorthandProperty> for AnyJsObjectBindingPatternMember {
+    fn from(node: JsObjectBindingPatternShorthandProperty) -> AnyJsObjectBindingPatternMember {
+        AnyJsObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(node)
     }
 }
-impl AstNode for JsAnyObjectBindingPatternMember {
+impl AstNode for AnyJsObjectBindingPatternMember {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsBogusBinding::KIND_SET
         .union(JsObjectBindingPatternProperty::KIND_SET)
@@ -28561,20 +28565,20 @@ impl AstNode for JsAnyObjectBindingPatternMember {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_BOGUS_BINDING => {
-                JsAnyObjectBindingPatternMember::JsBogusBinding(JsBogusBinding { syntax })
+                AnyJsObjectBindingPatternMember::JsBogusBinding(JsBogusBinding { syntax })
             }
             JS_OBJECT_BINDING_PATTERN_PROPERTY => {
-                JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(
+                AnyJsObjectBindingPatternMember::JsObjectBindingPatternProperty(
                     JsObjectBindingPatternProperty { syntax },
                 )
             }
             JS_OBJECT_BINDING_PATTERN_REST => {
-                JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(
+                AnyJsObjectBindingPatternMember::JsObjectBindingPatternRest(
                     JsObjectBindingPatternRest { syntax },
                 )
             }
             JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY => {
-                JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(
+                AnyJsObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(
                     JsObjectBindingPatternShorthandProperty { syntax },
                 )
             }
@@ -28584,91 +28588,91 @@ impl AstNode for JsAnyObjectBindingPatternMember {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyObjectBindingPatternMember::JsBogusBinding(it) => &it.syntax,
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => &it.syntax,
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(it) => &it.syntax,
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(it) => {
+            AnyJsObjectBindingPatternMember::JsBogusBinding(it) => &it.syntax,
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => &it.syntax,
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternRest(it) => &it.syntax,
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(it) => {
                 &it.syntax
             }
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyObjectBindingPatternMember::JsBogusBinding(it) => it.syntax,
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => it.syntax,
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(it) => it.syntax,
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(it) => {
+            AnyJsObjectBindingPatternMember::JsBogusBinding(it) => it.syntax,
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => it.syntax,
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternRest(it) => it.syntax,
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(it) => {
                 it.syntax
             }
         }
     }
 }
-impl std::fmt::Debug for JsAnyObjectBindingPatternMember {
+impl std::fmt::Debug for AnyJsObjectBindingPatternMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyObjectBindingPatternMember::JsBogusBinding(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => {
+            AnyJsObjectBindingPatternMember::JsBogusBinding(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(it) => {
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternRest(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(it) => {
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
         }
     }
 }
-impl From<JsAnyObjectBindingPatternMember> for SyntaxNode {
-    fn from(n: JsAnyObjectBindingPatternMember) -> SyntaxNode {
+impl From<AnyJsObjectBindingPatternMember> for SyntaxNode {
+    fn from(n: AnyJsObjectBindingPatternMember) -> SyntaxNode {
         match n {
-            JsAnyObjectBindingPatternMember::JsBogusBinding(it) => it.into(),
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => it.into(),
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(it) => it.into(),
-            JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(it) => {
+            AnyJsObjectBindingPatternMember::JsBogusBinding(it) => it.into(),
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => it.into(),
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternRest(it) => it.into(),
+            AnyJsObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(it) => {
                 it.into()
             }
         }
     }
 }
-impl From<JsAnyObjectBindingPatternMember> for SyntaxElement {
-    fn from(n: JsAnyObjectBindingPatternMember) -> SyntaxElement {
+impl From<AnyJsObjectBindingPatternMember> for SyntaxElement {
+    fn from(n: AnyJsObjectBindingPatternMember) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsBogusMember> for JsAnyObjectMember {
-    fn from(node: JsBogusMember) -> JsAnyObjectMember { JsAnyObjectMember::JsBogusMember(node) }
+impl From<JsBogusMember> for AnyJsObjectMember {
+    fn from(node: JsBogusMember) -> AnyJsObjectMember { AnyJsObjectMember::JsBogusMember(node) }
 }
-impl From<JsGetterObjectMember> for JsAnyObjectMember {
-    fn from(node: JsGetterObjectMember) -> JsAnyObjectMember {
-        JsAnyObjectMember::JsGetterObjectMember(node)
+impl From<JsGetterObjectMember> for AnyJsObjectMember {
+    fn from(node: JsGetterObjectMember) -> AnyJsObjectMember {
+        AnyJsObjectMember::JsGetterObjectMember(node)
     }
 }
-impl From<JsMethodObjectMember> for JsAnyObjectMember {
-    fn from(node: JsMethodObjectMember) -> JsAnyObjectMember {
-        JsAnyObjectMember::JsMethodObjectMember(node)
+impl From<JsMethodObjectMember> for AnyJsObjectMember {
+    fn from(node: JsMethodObjectMember) -> AnyJsObjectMember {
+        AnyJsObjectMember::JsMethodObjectMember(node)
     }
 }
-impl From<JsPropertyObjectMember> for JsAnyObjectMember {
-    fn from(node: JsPropertyObjectMember) -> JsAnyObjectMember {
-        JsAnyObjectMember::JsPropertyObjectMember(node)
+impl From<JsPropertyObjectMember> for AnyJsObjectMember {
+    fn from(node: JsPropertyObjectMember) -> AnyJsObjectMember {
+        AnyJsObjectMember::JsPropertyObjectMember(node)
     }
 }
-impl From<JsSetterObjectMember> for JsAnyObjectMember {
-    fn from(node: JsSetterObjectMember) -> JsAnyObjectMember {
-        JsAnyObjectMember::JsSetterObjectMember(node)
+impl From<JsSetterObjectMember> for AnyJsObjectMember {
+    fn from(node: JsSetterObjectMember) -> AnyJsObjectMember {
+        AnyJsObjectMember::JsSetterObjectMember(node)
     }
 }
-impl From<JsShorthandPropertyObjectMember> for JsAnyObjectMember {
-    fn from(node: JsShorthandPropertyObjectMember) -> JsAnyObjectMember {
-        JsAnyObjectMember::JsShorthandPropertyObjectMember(node)
+impl From<JsShorthandPropertyObjectMember> for AnyJsObjectMember {
+    fn from(node: JsShorthandPropertyObjectMember) -> AnyJsObjectMember {
+        AnyJsObjectMember::JsShorthandPropertyObjectMember(node)
     }
 }
-impl From<JsSpread> for JsAnyObjectMember {
-    fn from(node: JsSpread) -> JsAnyObjectMember { JsAnyObjectMember::JsSpread(node) }
+impl From<JsSpread> for AnyJsObjectMember {
+    fn from(node: JsSpread) -> AnyJsObjectMember { AnyJsObjectMember::JsSpread(node) }
 }
-impl AstNode for JsAnyObjectMember {
+impl AstNode for AnyJsObjectMember {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsBogusMember::KIND_SET
         .union(JsGetterObjectMember::KIND_SET)
@@ -28691,95 +28695,95 @@ impl AstNode for JsAnyObjectMember {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_BOGUS_MEMBER => JsAnyObjectMember::JsBogusMember(JsBogusMember { syntax }),
+            JS_BOGUS_MEMBER => AnyJsObjectMember::JsBogusMember(JsBogusMember { syntax }),
             JS_GETTER_OBJECT_MEMBER => {
-                JsAnyObjectMember::JsGetterObjectMember(JsGetterObjectMember { syntax })
+                AnyJsObjectMember::JsGetterObjectMember(JsGetterObjectMember { syntax })
             }
             JS_METHOD_OBJECT_MEMBER => {
-                JsAnyObjectMember::JsMethodObjectMember(JsMethodObjectMember { syntax })
+                AnyJsObjectMember::JsMethodObjectMember(JsMethodObjectMember { syntax })
             }
             JS_PROPERTY_OBJECT_MEMBER => {
-                JsAnyObjectMember::JsPropertyObjectMember(JsPropertyObjectMember { syntax })
+                AnyJsObjectMember::JsPropertyObjectMember(JsPropertyObjectMember { syntax })
             }
             JS_SETTER_OBJECT_MEMBER => {
-                JsAnyObjectMember::JsSetterObjectMember(JsSetterObjectMember { syntax })
+                AnyJsObjectMember::JsSetterObjectMember(JsSetterObjectMember { syntax })
             }
             JS_SHORTHAND_PROPERTY_OBJECT_MEMBER => {
-                JsAnyObjectMember::JsShorthandPropertyObjectMember(
+                AnyJsObjectMember::JsShorthandPropertyObjectMember(
                     JsShorthandPropertyObjectMember { syntax },
                 )
             }
-            JS_SPREAD => JsAnyObjectMember::JsSpread(JsSpread { syntax }),
+            JS_SPREAD => AnyJsObjectMember::JsSpread(JsSpread { syntax }),
             _ => return None,
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyObjectMember::JsBogusMember(it) => &it.syntax,
-            JsAnyObjectMember::JsGetterObjectMember(it) => &it.syntax,
-            JsAnyObjectMember::JsMethodObjectMember(it) => &it.syntax,
-            JsAnyObjectMember::JsPropertyObjectMember(it) => &it.syntax,
-            JsAnyObjectMember::JsSetterObjectMember(it) => &it.syntax,
-            JsAnyObjectMember::JsShorthandPropertyObjectMember(it) => &it.syntax,
-            JsAnyObjectMember::JsSpread(it) => &it.syntax,
+            AnyJsObjectMember::JsBogusMember(it) => &it.syntax,
+            AnyJsObjectMember::JsGetterObjectMember(it) => &it.syntax,
+            AnyJsObjectMember::JsMethodObjectMember(it) => &it.syntax,
+            AnyJsObjectMember::JsPropertyObjectMember(it) => &it.syntax,
+            AnyJsObjectMember::JsSetterObjectMember(it) => &it.syntax,
+            AnyJsObjectMember::JsShorthandPropertyObjectMember(it) => &it.syntax,
+            AnyJsObjectMember::JsSpread(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyObjectMember::JsBogusMember(it) => it.syntax,
-            JsAnyObjectMember::JsGetterObjectMember(it) => it.syntax,
-            JsAnyObjectMember::JsMethodObjectMember(it) => it.syntax,
-            JsAnyObjectMember::JsPropertyObjectMember(it) => it.syntax,
-            JsAnyObjectMember::JsSetterObjectMember(it) => it.syntax,
-            JsAnyObjectMember::JsShorthandPropertyObjectMember(it) => it.syntax,
-            JsAnyObjectMember::JsSpread(it) => it.syntax,
+            AnyJsObjectMember::JsBogusMember(it) => it.syntax,
+            AnyJsObjectMember::JsGetterObjectMember(it) => it.syntax,
+            AnyJsObjectMember::JsMethodObjectMember(it) => it.syntax,
+            AnyJsObjectMember::JsPropertyObjectMember(it) => it.syntax,
+            AnyJsObjectMember::JsSetterObjectMember(it) => it.syntax,
+            AnyJsObjectMember::JsShorthandPropertyObjectMember(it) => it.syntax,
+            AnyJsObjectMember::JsSpread(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyObjectMember {
+impl std::fmt::Debug for AnyJsObjectMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyObjectMember::JsBogusMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyObjectMember::JsGetterObjectMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyObjectMember::JsMethodObjectMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyObjectMember::JsPropertyObjectMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyObjectMember::JsSetterObjectMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyObjectMember::JsShorthandPropertyObjectMember(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyObjectMember::JsSpread(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsObjectMember::JsBogusMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsObjectMember::JsGetterObjectMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsObjectMember::JsMethodObjectMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsObjectMember::JsPropertyObjectMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsObjectMember::JsSetterObjectMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsObjectMember::JsShorthandPropertyObjectMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsObjectMember::JsSpread(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyObjectMember> for SyntaxNode {
-    fn from(n: JsAnyObjectMember) -> SyntaxNode {
+impl From<AnyJsObjectMember> for SyntaxNode {
+    fn from(n: AnyJsObjectMember) -> SyntaxNode {
         match n {
-            JsAnyObjectMember::JsBogusMember(it) => it.into(),
-            JsAnyObjectMember::JsGetterObjectMember(it) => it.into(),
-            JsAnyObjectMember::JsMethodObjectMember(it) => it.into(),
-            JsAnyObjectMember::JsPropertyObjectMember(it) => it.into(),
-            JsAnyObjectMember::JsSetterObjectMember(it) => it.into(),
-            JsAnyObjectMember::JsShorthandPropertyObjectMember(it) => it.into(),
-            JsAnyObjectMember::JsSpread(it) => it.into(),
+            AnyJsObjectMember::JsBogusMember(it) => it.into(),
+            AnyJsObjectMember::JsGetterObjectMember(it) => it.into(),
+            AnyJsObjectMember::JsMethodObjectMember(it) => it.into(),
+            AnyJsObjectMember::JsPropertyObjectMember(it) => it.into(),
+            AnyJsObjectMember::JsSetterObjectMember(it) => it.into(),
+            AnyJsObjectMember::JsShorthandPropertyObjectMember(it) => it.into(),
+            AnyJsObjectMember::JsSpread(it) => it.into(),
         }
     }
 }
-impl From<JsAnyObjectMember> for SyntaxElement {
-    fn from(n: JsAnyObjectMember) -> SyntaxElement {
+impl From<AnyJsObjectMember> for SyntaxElement {
+    fn from(n: AnyJsObjectMember) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsComputedMemberName> for JsAnyObjectMemberName {
-    fn from(node: JsComputedMemberName) -> JsAnyObjectMemberName {
-        JsAnyObjectMemberName::JsComputedMemberName(node)
+impl From<JsComputedMemberName> for AnyJsObjectMemberName {
+    fn from(node: JsComputedMemberName) -> AnyJsObjectMemberName {
+        AnyJsObjectMemberName::JsComputedMemberName(node)
     }
 }
-impl From<JsLiteralMemberName> for JsAnyObjectMemberName {
-    fn from(node: JsLiteralMemberName) -> JsAnyObjectMemberName {
-        JsAnyObjectMemberName::JsLiteralMemberName(node)
+impl From<JsLiteralMemberName> for AnyJsObjectMemberName {
+    fn from(node: JsLiteralMemberName) -> AnyJsObjectMemberName {
+        AnyJsObjectMemberName::JsLiteralMemberName(node)
     }
 }
-impl AstNode for JsAnyObjectMemberName {
+impl AstNode for AnyJsObjectMemberName {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
         JsComputedMemberName::KIND_SET.union(JsLiteralMemberName::KIND_SET);
@@ -28789,10 +28793,10 @@ impl AstNode for JsAnyObjectMemberName {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_COMPUTED_MEMBER_NAME => {
-                JsAnyObjectMemberName::JsComputedMemberName(JsComputedMemberName { syntax })
+                AnyJsObjectMemberName::JsComputedMemberName(JsComputedMemberName { syntax })
             }
             JS_LITERAL_MEMBER_NAME => {
-                JsAnyObjectMemberName::JsLiteralMemberName(JsLiteralMemberName { syntax })
+                AnyJsObjectMemberName::JsLiteralMemberName(JsLiteralMemberName { syntax })
             }
             _ => return None,
         };
@@ -28800,65 +28804,65 @@ impl AstNode for JsAnyObjectMemberName {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyObjectMemberName::JsComputedMemberName(it) => &it.syntax,
-            JsAnyObjectMemberName::JsLiteralMemberName(it) => &it.syntax,
+            AnyJsObjectMemberName::JsComputedMemberName(it) => &it.syntax,
+            AnyJsObjectMemberName::JsLiteralMemberName(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyObjectMemberName::JsComputedMemberName(it) => it.syntax,
-            JsAnyObjectMemberName::JsLiteralMemberName(it) => it.syntax,
+            AnyJsObjectMemberName::JsComputedMemberName(it) => it.syntax,
+            AnyJsObjectMemberName::JsLiteralMemberName(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyObjectMemberName {
+impl std::fmt::Debug for AnyJsObjectMemberName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyObjectMemberName::JsComputedMemberName(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyObjectMemberName::JsLiteralMemberName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsObjectMemberName::JsComputedMemberName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsObjectMemberName::JsLiteralMemberName(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyObjectMemberName> for SyntaxNode {
-    fn from(n: JsAnyObjectMemberName) -> SyntaxNode {
+impl From<AnyJsObjectMemberName> for SyntaxNode {
+    fn from(n: AnyJsObjectMemberName) -> SyntaxNode {
         match n {
-            JsAnyObjectMemberName::JsComputedMemberName(it) => it.into(),
-            JsAnyObjectMemberName::JsLiteralMemberName(it) => it.into(),
+            AnyJsObjectMemberName::JsComputedMemberName(it) => it.into(),
+            AnyJsObjectMemberName::JsLiteralMemberName(it) => it.into(),
         }
     }
 }
-impl From<JsAnyObjectMemberName> for SyntaxElement {
-    fn from(n: JsAnyObjectMemberName) -> SyntaxElement {
+impl From<AnyJsObjectMemberName> for SyntaxElement {
+    fn from(n: AnyJsObjectMemberName) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsRestParameter> for JsAnyParameter {
-    fn from(node: JsRestParameter) -> JsAnyParameter { JsAnyParameter::JsRestParameter(node) }
+impl From<JsRestParameter> for AnyJsParameter {
+    fn from(node: JsRestParameter) -> AnyJsParameter { AnyJsParameter::JsRestParameter(node) }
 }
-impl From<TsThisParameter> for JsAnyParameter {
-    fn from(node: TsThisParameter) -> JsAnyParameter { JsAnyParameter::TsThisParameter(node) }
+impl From<TsThisParameter> for AnyJsParameter {
+    fn from(node: TsThisParameter) -> AnyJsParameter { AnyJsParameter::TsThisParameter(node) }
 }
-impl AstNode for JsAnyParameter {
+impl AstNode for AnyJsParameter {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsAnyFormalParameter::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = AnyJsFormalParameter::KIND_SET
         .union(JsRestParameter::KIND_SET)
         .union(TsThisParameter::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JS_REST_PARAMETER | TS_THIS_PARAMETER => true,
-            k if JsAnyFormalParameter::can_cast(k) => true,
+            k if AnyJsFormalParameter::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_REST_PARAMETER => JsAnyParameter::JsRestParameter(JsRestParameter { syntax }),
-            TS_THIS_PARAMETER => JsAnyParameter::TsThisParameter(TsThisParameter { syntax }),
+            JS_REST_PARAMETER => AnyJsParameter::JsRestParameter(JsRestParameter { syntax }),
+            TS_THIS_PARAMETER => AnyJsParameter::TsThisParameter(TsThisParameter { syntax }),
             _ => {
-                if let Some(js_any_formal_parameter) = JsAnyFormalParameter::cast(syntax) {
-                    return Some(JsAnyParameter::JsAnyFormalParameter(
-                        js_any_formal_parameter,
+                if let Some(any_js_formal_parameter) = AnyJsFormalParameter::cast(syntax) {
+                    return Some(AnyJsParameter::AnyJsFormalParameter(
+                        any_js_formal_parameter,
                     ));
                 }
                 return None;
@@ -28868,64 +28872,64 @@ impl AstNode for JsAnyParameter {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyParameter::JsRestParameter(it) => &it.syntax,
-            JsAnyParameter::TsThisParameter(it) => &it.syntax,
-            JsAnyParameter::JsAnyFormalParameter(it) => it.syntax(),
+            AnyJsParameter::JsRestParameter(it) => &it.syntax,
+            AnyJsParameter::TsThisParameter(it) => &it.syntax,
+            AnyJsParameter::AnyJsFormalParameter(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyParameter::JsRestParameter(it) => it.syntax,
-            JsAnyParameter::TsThisParameter(it) => it.syntax,
-            JsAnyParameter::JsAnyFormalParameter(it) => it.into_syntax(),
+            AnyJsParameter::JsRestParameter(it) => it.syntax,
+            AnyJsParameter::TsThisParameter(it) => it.syntax,
+            AnyJsParameter::AnyJsFormalParameter(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsAnyParameter {
+impl std::fmt::Debug for AnyJsParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyParameter::JsAnyFormalParameter(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyParameter::JsRestParameter(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyParameter::TsThisParameter(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsParameter::AnyJsFormalParameter(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsParameter::JsRestParameter(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsParameter::TsThisParameter(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyParameter> for SyntaxNode {
-    fn from(n: JsAnyParameter) -> SyntaxNode {
+impl From<AnyJsParameter> for SyntaxNode {
+    fn from(n: AnyJsParameter) -> SyntaxNode {
         match n {
-            JsAnyParameter::JsAnyFormalParameter(it) => it.into(),
-            JsAnyParameter::JsRestParameter(it) => it.into(),
-            JsAnyParameter::TsThisParameter(it) => it.into(),
+            AnyJsParameter::AnyJsFormalParameter(it) => it.into(),
+            AnyJsParameter::JsRestParameter(it) => it.into(),
+            AnyJsParameter::TsThisParameter(it) => it.into(),
         }
     }
 }
-impl From<JsAnyParameter> for SyntaxElement {
-    fn from(n: JsAnyParameter) -> SyntaxElement {
+impl From<AnyJsParameter> for SyntaxElement {
+    fn from(n: AnyJsParameter) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsStaticModifier> for JsAnyPropertyModifier {
-    fn from(node: JsStaticModifier) -> JsAnyPropertyModifier {
-        JsAnyPropertyModifier::JsStaticModifier(node)
+impl From<JsStaticModifier> for AnyJsPropertyModifier {
+    fn from(node: JsStaticModifier) -> AnyJsPropertyModifier {
+        AnyJsPropertyModifier::JsStaticModifier(node)
     }
 }
-impl From<TsAccessibilityModifier> for JsAnyPropertyModifier {
-    fn from(node: TsAccessibilityModifier) -> JsAnyPropertyModifier {
-        JsAnyPropertyModifier::TsAccessibilityModifier(node)
+impl From<TsAccessibilityModifier> for AnyJsPropertyModifier {
+    fn from(node: TsAccessibilityModifier) -> AnyJsPropertyModifier {
+        AnyJsPropertyModifier::TsAccessibilityModifier(node)
     }
 }
-impl From<TsOverrideModifier> for JsAnyPropertyModifier {
-    fn from(node: TsOverrideModifier) -> JsAnyPropertyModifier {
-        JsAnyPropertyModifier::TsOverrideModifier(node)
+impl From<TsOverrideModifier> for AnyJsPropertyModifier {
+    fn from(node: TsOverrideModifier) -> AnyJsPropertyModifier {
+        AnyJsPropertyModifier::TsOverrideModifier(node)
     }
 }
-impl From<TsReadonlyModifier> for JsAnyPropertyModifier {
-    fn from(node: TsReadonlyModifier) -> JsAnyPropertyModifier {
-        JsAnyPropertyModifier::TsReadonlyModifier(node)
+impl From<TsReadonlyModifier> for AnyJsPropertyModifier {
+    fn from(node: TsReadonlyModifier) -> AnyJsPropertyModifier {
+        AnyJsPropertyModifier::TsReadonlyModifier(node)
     }
 }
-impl AstNode for JsAnyPropertyModifier {
+impl AstNode for AnyJsPropertyModifier {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsStaticModifier::KIND_SET
         .union(TsAccessibilityModifier::KIND_SET)
@@ -28943,16 +28947,16 @@ impl AstNode for JsAnyPropertyModifier {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_STATIC_MODIFIER => {
-                JsAnyPropertyModifier::JsStaticModifier(JsStaticModifier { syntax })
+                AnyJsPropertyModifier::JsStaticModifier(JsStaticModifier { syntax })
             }
             TS_ACCESSIBILITY_MODIFIER => {
-                JsAnyPropertyModifier::TsAccessibilityModifier(TsAccessibilityModifier { syntax })
+                AnyJsPropertyModifier::TsAccessibilityModifier(TsAccessibilityModifier { syntax })
             }
             TS_OVERRIDE_MODIFIER => {
-                JsAnyPropertyModifier::TsOverrideModifier(TsOverrideModifier { syntax })
+                AnyJsPropertyModifier::TsOverrideModifier(TsOverrideModifier { syntax })
             }
             TS_READONLY_MODIFIER => {
-                JsAnyPropertyModifier::TsReadonlyModifier(TsReadonlyModifier { syntax })
+                AnyJsPropertyModifier::TsReadonlyModifier(TsReadonlyModifier { syntax })
             }
             _ => return None,
         };
@@ -28960,57 +28964,57 @@ impl AstNode for JsAnyPropertyModifier {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyPropertyModifier::JsStaticModifier(it) => &it.syntax,
-            JsAnyPropertyModifier::TsAccessibilityModifier(it) => &it.syntax,
-            JsAnyPropertyModifier::TsOverrideModifier(it) => &it.syntax,
-            JsAnyPropertyModifier::TsReadonlyModifier(it) => &it.syntax,
+            AnyJsPropertyModifier::JsStaticModifier(it) => &it.syntax,
+            AnyJsPropertyModifier::TsAccessibilityModifier(it) => &it.syntax,
+            AnyJsPropertyModifier::TsOverrideModifier(it) => &it.syntax,
+            AnyJsPropertyModifier::TsReadonlyModifier(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyPropertyModifier::JsStaticModifier(it) => it.syntax,
-            JsAnyPropertyModifier::TsAccessibilityModifier(it) => it.syntax,
-            JsAnyPropertyModifier::TsOverrideModifier(it) => it.syntax,
-            JsAnyPropertyModifier::TsReadonlyModifier(it) => it.syntax,
+            AnyJsPropertyModifier::JsStaticModifier(it) => it.syntax,
+            AnyJsPropertyModifier::TsAccessibilityModifier(it) => it.syntax,
+            AnyJsPropertyModifier::TsOverrideModifier(it) => it.syntax,
+            AnyJsPropertyModifier::TsReadonlyModifier(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyPropertyModifier {
+impl std::fmt::Debug for AnyJsPropertyModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyPropertyModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyPropertyModifier::TsAccessibilityModifier(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyPropertyModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyPropertyModifier::TsReadonlyModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsPropertyModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsPropertyModifier::TsAccessibilityModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsPropertyModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsPropertyModifier::TsReadonlyModifier(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyPropertyModifier> for SyntaxNode {
-    fn from(n: JsAnyPropertyModifier) -> SyntaxNode {
+impl From<AnyJsPropertyModifier> for SyntaxNode {
+    fn from(n: AnyJsPropertyModifier) -> SyntaxNode {
         match n {
-            JsAnyPropertyModifier::JsStaticModifier(it) => it.into(),
-            JsAnyPropertyModifier::TsAccessibilityModifier(it) => it.into(),
-            JsAnyPropertyModifier::TsOverrideModifier(it) => it.into(),
-            JsAnyPropertyModifier::TsReadonlyModifier(it) => it.into(),
+            AnyJsPropertyModifier::JsStaticModifier(it) => it.into(),
+            AnyJsPropertyModifier::TsAccessibilityModifier(it) => it.into(),
+            AnyJsPropertyModifier::TsOverrideModifier(it) => it.into(),
+            AnyJsPropertyModifier::TsReadonlyModifier(it) => it.into(),
         }
     }
 }
-impl From<JsAnyPropertyModifier> for SyntaxElement {
-    fn from(n: JsAnyPropertyModifier) -> SyntaxElement {
+impl From<AnyJsPropertyModifier> for SyntaxElement {
+    fn from(n: AnyJsPropertyModifier) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsExpressionSnipped> for JsAnyRoot {
-    fn from(node: JsExpressionSnipped) -> JsAnyRoot { JsAnyRoot::JsExpressionSnipped(node) }
+impl From<JsExpressionSnipped> for AnyJsRoot {
+    fn from(node: JsExpressionSnipped) -> AnyJsRoot { AnyJsRoot::JsExpressionSnipped(node) }
 }
-impl From<JsModule> for JsAnyRoot {
-    fn from(node: JsModule) -> JsAnyRoot { JsAnyRoot::JsModule(node) }
+impl From<JsModule> for AnyJsRoot {
+    fn from(node: JsModule) -> AnyJsRoot { AnyJsRoot::JsModule(node) }
 }
-impl From<JsScript> for JsAnyRoot {
-    fn from(node: JsScript) -> JsAnyRoot { JsAnyRoot::JsScript(node) }
+impl From<JsScript> for AnyJsRoot {
+    fn from(node: JsScript) -> AnyJsRoot { AnyJsRoot::JsScript(node) }
 }
-impl AstNode for JsAnyRoot {
+impl AstNode for AnyJsRoot {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsExpressionSnipped::KIND_SET
         .union(JsModule::KIND_SET)
@@ -29020,175 +29024,175 @@ impl AstNode for JsAnyRoot {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_EXPRESSION_SNIPPED => JsAnyRoot::JsExpressionSnipped(JsExpressionSnipped { syntax }),
-            JS_MODULE => JsAnyRoot::JsModule(JsModule { syntax }),
-            JS_SCRIPT => JsAnyRoot::JsScript(JsScript { syntax }),
+            JS_EXPRESSION_SNIPPED => AnyJsRoot::JsExpressionSnipped(JsExpressionSnipped { syntax }),
+            JS_MODULE => AnyJsRoot::JsModule(JsModule { syntax }),
+            JS_SCRIPT => AnyJsRoot::JsScript(JsScript { syntax }),
             _ => return None,
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyRoot::JsExpressionSnipped(it) => &it.syntax,
-            JsAnyRoot::JsModule(it) => &it.syntax,
-            JsAnyRoot::JsScript(it) => &it.syntax,
+            AnyJsRoot::JsExpressionSnipped(it) => &it.syntax,
+            AnyJsRoot::JsModule(it) => &it.syntax,
+            AnyJsRoot::JsScript(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyRoot::JsExpressionSnipped(it) => it.syntax,
-            JsAnyRoot::JsModule(it) => it.syntax,
-            JsAnyRoot::JsScript(it) => it.syntax,
+            AnyJsRoot::JsExpressionSnipped(it) => it.syntax,
+            AnyJsRoot::JsModule(it) => it.syntax,
+            AnyJsRoot::JsScript(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyRoot {
+impl std::fmt::Debug for AnyJsRoot {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyRoot::JsExpressionSnipped(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyRoot::JsModule(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyRoot::JsScript(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsRoot::JsExpressionSnipped(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsRoot::JsModule(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsRoot::JsScript(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyRoot> for SyntaxNode {
-    fn from(n: JsAnyRoot) -> SyntaxNode {
+impl From<AnyJsRoot> for SyntaxNode {
+    fn from(n: AnyJsRoot) -> SyntaxNode {
         match n {
-            JsAnyRoot::JsExpressionSnipped(it) => it.into(),
-            JsAnyRoot::JsModule(it) => it.into(),
-            JsAnyRoot::JsScript(it) => it.into(),
+            AnyJsRoot::JsExpressionSnipped(it) => it.into(),
+            AnyJsRoot::JsModule(it) => it.into(),
+            AnyJsRoot::JsScript(it) => it.into(),
         }
     }
 }
-impl From<JsAnyRoot> for SyntaxElement {
-    fn from(n: JsAnyRoot) -> SyntaxElement {
+impl From<AnyJsRoot> for SyntaxElement {
+    fn from(n: AnyJsRoot) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsBlockStatement> for JsAnyStatement {
-    fn from(node: JsBlockStatement) -> JsAnyStatement { JsAnyStatement::JsBlockStatement(node) }
+impl From<JsBlockStatement> for AnyJsStatement {
+    fn from(node: JsBlockStatement) -> AnyJsStatement { AnyJsStatement::JsBlockStatement(node) }
 }
-impl From<JsBogusStatement> for JsAnyStatement {
-    fn from(node: JsBogusStatement) -> JsAnyStatement { JsAnyStatement::JsBogusStatement(node) }
+impl From<JsBogusStatement> for AnyJsStatement {
+    fn from(node: JsBogusStatement) -> AnyJsStatement { AnyJsStatement::JsBogusStatement(node) }
 }
-impl From<JsBreakStatement> for JsAnyStatement {
-    fn from(node: JsBreakStatement) -> JsAnyStatement { JsAnyStatement::JsBreakStatement(node) }
+impl From<JsBreakStatement> for AnyJsStatement {
+    fn from(node: JsBreakStatement) -> AnyJsStatement { AnyJsStatement::JsBreakStatement(node) }
 }
-impl From<JsClassDeclaration> for JsAnyStatement {
-    fn from(node: JsClassDeclaration) -> JsAnyStatement { JsAnyStatement::JsClassDeclaration(node) }
+impl From<JsClassDeclaration> for AnyJsStatement {
+    fn from(node: JsClassDeclaration) -> AnyJsStatement { AnyJsStatement::JsClassDeclaration(node) }
 }
-impl From<JsContinueStatement> for JsAnyStatement {
-    fn from(node: JsContinueStatement) -> JsAnyStatement {
-        JsAnyStatement::JsContinueStatement(node)
+impl From<JsContinueStatement> for AnyJsStatement {
+    fn from(node: JsContinueStatement) -> AnyJsStatement {
+        AnyJsStatement::JsContinueStatement(node)
     }
 }
-impl From<JsDebuggerStatement> for JsAnyStatement {
-    fn from(node: JsDebuggerStatement) -> JsAnyStatement {
-        JsAnyStatement::JsDebuggerStatement(node)
+impl From<JsDebuggerStatement> for AnyJsStatement {
+    fn from(node: JsDebuggerStatement) -> AnyJsStatement {
+        AnyJsStatement::JsDebuggerStatement(node)
     }
 }
-impl From<JsDoWhileStatement> for JsAnyStatement {
-    fn from(node: JsDoWhileStatement) -> JsAnyStatement { JsAnyStatement::JsDoWhileStatement(node) }
+impl From<JsDoWhileStatement> for AnyJsStatement {
+    fn from(node: JsDoWhileStatement) -> AnyJsStatement { AnyJsStatement::JsDoWhileStatement(node) }
 }
-impl From<JsEmptyStatement> for JsAnyStatement {
-    fn from(node: JsEmptyStatement) -> JsAnyStatement { JsAnyStatement::JsEmptyStatement(node) }
+impl From<JsEmptyStatement> for AnyJsStatement {
+    fn from(node: JsEmptyStatement) -> AnyJsStatement { AnyJsStatement::JsEmptyStatement(node) }
 }
-impl From<JsExpressionStatement> for JsAnyStatement {
-    fn from(node: JsExpressionStatement) -> JsAnyStatement {
-        JsAnyStatement::JsExpressionStatement(node)
+impl From<JsExpressionStatement> for AnyJsStatement {
+    fn from(node: JsExpressionStatement) -> AnyJsStatement {
+        AnyJsStatement::JsExpressionStatement(node)
     }
 }
-impl From<JsForInStatement> for JsAnyStatement {
-    fn from(node: JsForInStatement) -> JsAnyStatement { JsAnyStatement::JsForInStatement(node) }
+impl From<JsForInStatement> for AnyJsStatement {
+    fn from(node: JsForInStatement) -> AnyJsStatement { AnyJsStatement::JsForInStatement(node) }
 }
-impl From<JsForOfStatement> for JsAnyStatement {
-    fn from(node: JsForOfStatement) -> JsAnyStatement { JsAnyStatement::JsForOfStatement(node) }
+impl From<JsForOfStatement> for AnyJsStatement {
+    fn from(node: JsForOfStatement) -> AnyJsStatement { AnyJsStatement::JsForOfStatement(node) }
 }
-impl From<JsForStatement> for JsAnyStatement {
-    fn from(node: JsForStatement) -> JsAnyStatement { JsAnyStatement::JsForStatement(node) }
+impl From<JsForStatement> for AnyJsStatement {
+    fn from(node: JsForStatement) -> AnyJsStatement { AnyJsStatement::JsForStatement(node) }
 }
-impl From<JsFunctionDeclaration> for JsAnyStatement {
-    fn from(node: JsFunctionDeclaration) -> JsAnyStatement {
-        JsAnyStatement::JsFunctionDeclaration(node)
+impl From<JsFunctionDeclaration> for AnyJsStatement {
+    fn from(node: JsFunctionDeclaration) -> AnyJsStatement {
+        AnyJsStatement::JsFunctionDeclaration(node)
     }
 }
-impl From<JsIfStatement> for JsAnyStatement {
-    fn from(node: JsIfStatement) -> JsAnyStatement { JsAnyStatement::JsIfStatement(node) }
+impl From<JsIfStatement> for AnyJsStatement {
+    fn from(node: JsIfStatement) -> AnyJsStatement { AnyJsStatement::JsIfStatement(node) }
 }
-impl From<JsLabeledStatement> for JsAnyStatement {
-    fn from(node: JsLabeledStatement) -> JsAnyStatement { JsAnyStatement::JsLabeledStatement(node) }
+impl From<JsLabeledStatement> for AnyJsStatement {
+    fn from(node: JsLabeledStatement) -> AnyJsStatement { AnyJsStatement::JsLabeledStatement(node) }
 }
-impl From<JsReturnStatement> for JsAnyStatement {
-    fn from(node: JsReturnStatement) -> JsAnyStatement { JsAnyStatement::JsReturnStatement(node) }
+impl From<JsReturnStatement> for AnyJsStatement {
+    fn from(node: JsReturnStatement) -> AnyJsStatement { AnyJsStatement::JsReturnStatement(node) }
 }
-impl From<JsSwitchStatement> for JsAnyStatement {
-    fn from(node: JsSwitchStatement) -> JsAnyStatement { JsAnyStatement::JsSwitchStatement(node) }
+impl From<JsSwitchStatement> for AnyJsStatement {
+    fn from(node: JsSwitchStatement) -> AnyJsStatement { AnyJsStatement::JsSwitchStatement(node) }
 }
-impl From<JsThrowStatement> for JsAnyStatement {
-    fn from(node: JsThrowStatement) -> JsAnyStatement { JsAnyStatement::JsThrowStatement(node) }
+impl From<JsThrowStatement> for AnyJsStatement {
+    fn from(node: JsThrowStatement) -> AnyJsStatement { AnyJsStatement::JsThrowStatement(node) }
 }
-impl From<JsTryFinallyStatement> for JsAnyStatement {
-    fn from(node: JsTryFinallyStatement) -> JsAnyStatement {
-        JsAnyStatement::JsTryFinallyStatement(node)
+impl From<JsTryFinallyStatement> for AnyJsStatement {
+    fn from(node: JsTryFinallyStatement) -> AnyJsStatement {
+        AnyJsStatement::JsTryFinallyStatement(node)
     }
 }
-impl From<JsTryStatement> for JsAnyStatement {
-    fn from(node: JsTryStatement) -> JsAnyStatement { JsAnyStatement::JsTryStatement(node) }
+impl From<JsTryStatement> for AnyJsStatement {
+    fn from(node: JsTryStatement) -> AnyJsStatement { AnyJsStatement::JsTryStatement(node) }
 }
-impl From<JsVariableStatement> for JsAnyStatement {
-    fn from(node: JsVariableStatement) -> JsAnyStatement {
-        JsAnyStatement::JsVariableStatement(node)
+impl From<JsVariableStatement> for AnyJsStatement {
+    fn from(node: JsVariableStatement) -> AnyJsStatement {
+        AnyJsStatement::JsVariableStatement(node)
     }
 }
-impl From<JsWhileStatement> for JsAnyStatement {
-    fn from(node: JsWhileStatement) -> JsAnyStatement { JsAnyStatement::JsWhileStatement(node) }
+impl From<JsWhileStatement> for AnyJsStatement {
+    fn from(node: JsWhileStatement) -> AnyJsStatement { AnyJsStatement::JsWhileStatement(node) }
 }
-impl From<JsWithStatement> for JsAnyStatement {
-    fn from(node: JsWithStatement) -> JsAnyStatement { JsAnyStatement::JsWithStatement(node) }
+impl From<JsWithStatement> for AnyJsStatement {
+    fn from(node: JsWithStatement) -> AnyJsStatement { AnyJsStatement::JsWithStatement(node) }
 }
-impl From<TsDeclareFunctionDeclaration> for JsAnyStatement {
-    fn from(node: TsDeclareFunctionDeclaration) -> JsAnyStatement {
-        JsAnyStatement::TsDeclareFunctionDeclaration(node)
+impl From<TsDeclareFunctionDeclaration> for AnyJsStatement {
+    fn from(node: TsDeclareFunctionDeclaration) -> AnyJsStatement {
+        AnyJsStatement::TsDeclareFunctionDeclaration(node)
     }
 }
-impl From<TsDeclareStatement> for JsAnyStatement {
-    fn from(node: TsDeclareStatement) -> JsAnyStatement { JsAnyStatement::TsDeclareStatement(node) }
+impl From<TsDeclareStatement> for AnyJsStatement {
+    fn from(node: TsDeclareStatement) -> AnyJsStatement { AnyJsStatement::TsDeclareStatement(node) }
 }
-impl From<TsEnumDeclaration> for JsAnyStatement {
-    fn from(node: TsEnumDeclaration) -> JsAnyStatement { JsAnyStatement::TsEnumDeclaration(node) }
+impl From<TsEnumDeclaration> for AnyJsStatement {
+    fn from(node: TsEnumDeclaration) -> AnyJsStatement { AnyJsStatement::TsEnumDeclaration(node) }
 }
-impl From<TsExternalModuleDeclaration> for JsAnyStatement {
-    fn from(node: TsExternalModuleDeclaration) -> JsAnyStatement {
-        JsAnyStatement::TsExternalModuleDeclaration(node)
+impl From<TsExternalModuleDeclaration> for AnyJsStatement {
+    fn from(node: TsExternalModuleDeclaration) -> AnyJsStatement {
+        AnyJsStatement::TsExternalModuleDeclaration(node)
     }
 }
-impl From<TsGlobalDeclaration> for JsAnyStatement {
-    fn from(node: TsGlobalDeclaration) -> JsAnyStatement {
-        JsAnyStatement::TsGlobalDeclaration(node)
+impl From<TsGlobalDeclaration> for AnyJsStatement {
+    fn from(node: TsGlobalDeclaration) -> AnyJsStatement {
+        AnyJsStatement::TsGlobalDeclaration(node)
     }
 }
-impl From<TsImportEqualsDeclaration> for JsAnyStatement {
-    fn from(node: TsImportEqualsDeclaration) -> JsAnyStatement {
-        JsAnyStatement::TsImportEqualsDeclaration(node)
+impl From<TsImportEqualsDeclaration> for AnyJsStatement {
+    fn from(node: TsImportEqualsDeclaration) -> AnyJsStatement {
+        AnyJsStatement::TsImportEqualsDeclaration(node)
     }
 }
-impl From<TsInterfaceDeclaration> for JsAnyStatement {
-    fn from(node: TsInterfaceDeclaration) -> JsAnyStatement {
-        JsAnyStatement::TsInterfaceDeclaration(node)
+impl From<TsInterfaceDeclaration> for AnyJsStatement {
+    fn from(node: TsInterfaceDeclaration) -> AnyJsStatement {
+        AnyJsStatement::TsInterfaceDeclaration(node)
     }
 }
-impl From<TsModuleDeclaration> for JsAnyStatement {
-    fn from(node: TsModuleDeclaration) -> JsAnyStatement {
-        JsAnyStatement::TsModuleDeclaration(node)
+impl From<TsModuleDeclaration> for AnyJsStatement {
+    fn from(node: TsModuleDeclaration) -> AnyJsStatement {
+        AnyJsStatement::TsModuleDeclaration(node)
     }
 }
-impl From<TsTypeAliasDeclaration> for JsAnyStatement {
-    fn from(node: TsTypeAliasDeclaration) -> JsAnyStatement {
-        JsAnyStatement::TsTypeAliasDeclaration(node)
+impl From<TsTypeAliasDeclaration> for AnyJsStatement {
+    fn from(node: TsTypeAliasDeclaration) -> AnyJsStatement {
+        AnyJsStatement::TsTypeAliasDeclaration(node)
     }
 }
-impl AstNode for JsAnyStatement {
+impl AstNode for AnyJsStatement {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsBlockStatement::KIND_SET
         .union(JsBogusStatement::KIND_SET)
@@ -29261,73 +29265,73 @@ impl AstNode for JsAnyStatement {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_BLOCK_STATEMENT => JsAnyStatement::JsBlockStatement(JsBlockStatement { syntax }),
-            JS_BOGUS_STATEMENT => JsAnyStatement::JsBogusStatement(JsBogusStatement { syntax }),
-            JS_BREAK_STATEMENT => JsAnyStatement::JsBreakStatement(JsBreakStatement { syntax }),
+            JS_BLOCK_STATEMENT => AnyJsStatement::JsBlockStatement(JsBlockStatement { syntax }),
+            JS_BOGUS_STATEMENT => AnyJsStatement::JsBogusStatement(JsBogusStatement { syntax }),
+            JS_BREAK_STATEMENT => AnyJsStatement::JsBreakStatement(JsBreakStatement { syntax }),
             JS_CLASS_DECLARATION => {
-                JsAnyStatement::JsClassDeclaration(JsClassDeclaration { syntax })
+                AnyJsStatement::JsClassDeclaration(JsClassDeclaration { syntax })
             }
             JS_CONTINUE_STATEMENT => {
-                JsAnyStatement::JsContinueStatement(JsContinueStatement { syntax })
+                AnyJsStatement::JsContinueStatement(JsContinueStatement { syntax })
             }
             JS_DEBUGGER_STATEMENT => {
-                JsAnyStatement::JsDebuggerStatement(JsDebuggerStatement { syntax })
+                AnyJsStatement::JsDebuggerStatement(JsDebuggerStatement { syntax })
             }
             JS_DO_WHILE_STATEMENT => {
-                JsAnyStatement::JsDoWhileStatement(JsDoWhileStatement { syntax })
+                AnyJsStatement::JsDoWhileStatement(JsDoWhileStatement { syntax })
             }
-            JS_EMPTY_STATEMENT => JsAnyStatement::JsEmptyStatement(JsEmptyStatement { syntax }),
+            JS_EMPTY_STATEMENT => AnyJsStatement::JsEmptyStatement(JsEmptyStatement { syntax }),
             JS_EXPRESSION_STATEMENT => {
-                JsAnyStatement::JsExpressionStatement(JsExpressionStatement { syntax })
+                AnyJsStatement::JsExpressionStatement(JsExpressionStatement { syntax })
             }
-            JS_FOR_IN_STATEMENT => JsAnyStatement::JsForInStatement(JsForInStatement { syntax }),
-            JS_FOR_OF_STATEMENT => JsAnyStatement::JsForOfStatement(JsForOfStatement { syntax }),
-            JS_FOR_STATEMENT => JsAnyStatement::JsForStatement(JsForStatement { syntax }),
+            JS_FOR_IN_STATEMENT => AnyJsStatement::JsForInStatement(JsForInStatement { syntax }),
+            JS_FOR_OF_STATEMENT => AnyJsStatement::JsForOfStatement(JsForOfStatement { syntax }),
+            JS_FOR_STATEMENT => AnyJsStatement::JsForStatement(JsForStatement { syntax }),
             JS_FUNCTION_DECLARATION => {
-                JsAnyStatement::JsFunctionDeclaration(JsFunctionDeclaration { syntax })
+                AnyJsStatement::JsFunctionDeclaration(JsFunctionDeclaration { syntax })
             }
-            JS_IF_STATEMENT => JsAnyStatement::JsIfStatement(JsIfStatement { syntax }),
+            JS_IF_STATEMENT => AnyJsStatement::JsIfStatement(JsIfStatement { syntax }),
             JS_LABELED_STATEMENT => {
-                JsAnyStatement::JsLabeledStatement(JsLabeledStatement { syntax })
+                AnyJsStatement::JsLabeledStatement(JsLabeledStatement { syntax })
             }
-            JS_RETURN_STATEMENT => JsAnyStatement::JsReturnStatement(JsReturnStatement { syntax }),
-            JS_SWITCH_STATEMENT => JsAnyStatement::JsSwitchStatement(JsSwitchStatement { syntax }),
-            JS_THROW_STATEMENT => JsAnyStatement::JsThrowStatement(JsThrowStatement { syntax }),
+            JS_RETURN_STATEMENT => AnyJsStatement::JsReturnStatement(JsReturnStatement { syntax }),
+            JS_SWITCH_STATEMENT => AnyJsStatement::JsSwitchStatement(JsSwitchStatement { syntax }),
+            JS_THROW_STATEMENT => AnyJsStatement::JsThrowStatement(JsThrowStatement { syntax }),
             JS_TRY_FINALLY_STATEMENT => {
-                JsAnyStatement::JsTryFinallyStatement(JsTryFinallyStatement { syntax })
+                AnyJsStatement::JsTryFinallyStatement(JsTryFinallyStatement { syntax })
             }
-            JS_TRY_STATEMENT => JsAnyStatement::JsTryStatement(JsTryStatement { syntax }),
+            JS_TRY_STATEMENT => AnyJsStatement::JsTryStatement(JsTryStatement { syntax }),
             JS_VARIABLE_STATEMENT => {
-                JsAnyStatement::JsVariableStatement(JsVariableStatement { syntax })
+                AnyJsStatement::JsVariableStatement(JsVariableStatement { syntax })
             }
-            JS_WHILE_STATEMENT => JsAnyStatement::JsWhileStatement(JsWhileStatement { syntax }),
-            JS_WITH_STATEMENT => JsAnyStatement::JsWithStatement(JsWithStatement { syntax }),
+            JS_WHILE_STATEMENT => AnyJsStatement::JsWhileStatement(JsWhileStatement { syntax }),
+            JS_WITH_STATEMENT => AnyJsStatement::JsWithStatement(JsWithStatement { syntax }),
             TS_DECLARE_FUNCTION_DECLARATION => {
-                JsAnyStatement::TsDeclareFunctionDeclaration(TsDeclareFunctionDeclaration {
+                AnyJsStatement::TsDeclareFunctionDeclaration(TsDeclareFunctionDeclaration {
                     syntax,
                 })
             }
             TS_DECLARE_STATEMENT => {
-                JsAnyStatement::TsDeclareStatement(TsDeclareStatement { syntax })
+                AnyJsStatement::TsDeclareStatement(TsDeclareStatement { syntax })
             }
-            TS_ENUM_DECLARATION => JsAnyStatement::TsEnumDeclaration(TsEnumDeclaration { syntax }),
+            TS_ENUM_DECLARATION => AnyJsStatement::TsEnumDeclaration(TsEnumDeclaration { syntax }),
             TS_EXTERNAL_MODULE_DECLARATION => {
-                JsAnyStatement::TsExternalModuleDeclaration(TsExternalModuleDeclaration { syntax })
+                AnyJsStatement::TsExternalModuleDeclaration(TsExternalModuleDeclaration { syntax })
             }
             TS_GLOBAL_DECLARATION => {
-                JsAnyStatement::TsGlobalDeclaration(TsGlobalDeclaration { syntax })
+                AnyJsStatement::TsGlobalDeclaration(TsGlobalDeclaration { syntax })
             }
             TS_IMPORT_EQUALS_DECLARATION => {
-                JsAnyStatement::TsImportEqualsDeclaration(TsImportEqualsDeclaration { syntax })
+                AnyJsStatement::TsImportEqualsDeclaration(TsImportEqualsDeclaration { syntax })
             }
             TS_INTERFACE_DECLARATION => {
-                JsAnyStatement::TsInterfaceDeclaration(TsInterfaceDeclaration { syntax })
+                AnyJsStatement::TsInterfaceDeclaration(TsInterfaceDeclaration { syntax })
             }
             TS_MODULE_DECLARATION => {
-                JsAnyStatement::TsModuleDeclaration(TsModuleDeclaration { syntax })
+                AnyJsStatement::TsModuleDeclaration(TsModuleDeclaration { syntax })
             }
             TS_TYPE_ALIAS_DECLARATION => {
-                JsAnyStatement::TsTypeAliasDeclaration(TsTypeAliasDeclaration { syntax })
+                AnyJsStatement::TsTypeAliasDeclaration(TsTypeAliasDeclaration { syntax })
             }
             _ => return None,
         };
@@ -29335,224 +29339,224 @@ impl AstNode for JsAnyStatement {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyStatement::JsBlockStatement(it) => &it.syntax,
-            JsAnyStatement::JsBogusStatement(it) => &it.syntax,
-            JsAnyStatement::JsBreakStatement(it) => &it.syntax,
-            JsAnyStatement::JsClassDeclaration(it) => &it.syntax,
-            JsAnyStatement::JsContinueStatement(it) => &it.syntax,
-            JsAnyStatement::JsDebuggerStatement(it) => &it.syntax,
-            JsAnyStatement::JsDoWhileStatement(it) => &it.syntax,
-            JsAnyStatement::JsEmptyStatement(it) => &it.syntax,
-            JsAnyStatement::JsExpressionStatement(it) => &it.syntax,
-            JsAnyStatement::JsForInStatement(it) => &it.syntax,
-            JsAnyStatement::JsForOfStatement(it) => &it.syntax,
-            JsAnyStatement::JsForStatement(it) => &it.syntax,
-            JsAnyStatement::JsFunctionDeclaration(it) => &it.syntax,
-            JsAnyStatement::JsIfStatement(it) => &it.syntax,
-            JsAnyStatement::JsLabeledStatement(it) => &it.syntax,
-            JsAnyStatement::JsReturnStatement(it) => &it.syntax,
-            JsAnyStatement::JsSwitchStatement(it) => &it.syntax,
-            JsAnyStatement::JsThrowStatement(it) => &it.syntax,
-            JsAnyStatement::JsTryFinallyStatement(it) => &it.syntax,
-            JsAnyStatement::JsTryStatement(it) => &it.syntax,
-            JsAnyStatement::JsVariableStatement(it) => &it.syntax,
-            JsAnyStatement::JsWhileStatement(it) => &it.syntax,
-            JsAnyStatement::JsWithStatement(it) => &it.syntax,
-            JsAnyStatement::TsDeclareFunctionDeclaration(it) => &it.syntax,
-            JsAnyStatement::TsDeclareStatement(it) => &it.syntax,
-            JsAnyStatement::TsEnumDeclaration(it) => &it.syntax,
-            JsAnyStatement::TsExternalModuleDeclaration(it) => &it.syntax,
-            JsAnyStatement::TsGlobalDeclaration(it) => &it.syntax,
-            JsAnyStatement::TsImportEqualsDeclaration(it) => &it.syntax,
-            JsAnyStatement::TsInterfaceDeclaration(it) => &it.syntax,
-            JsAnyStatement::TsModuleDeclaration(it) => &it.syntax,
-            JsAnyStatement::TsTypeAliasDeclaration(it) => &it.syntax,
+            AnyJsStatement::JsBlockStatement(it) => &it.syntax,
+            AnyJsStatement::JsBogusStatement(it) => &it.syntax,
+            AnyJsStatement::JsBreakStatement(it) => &it.syntax,
+            AnyJsStatement::JsClassDeclaration(it) => &it.syntax,
+            AnyJsStatement::JsContinueStatement(it) => &it.syntax,
+            AnyJsStatement::JsDebuggerStatement(it) => &it.syntax,
+            AnyJsStatement::JsDoWhileStatement(it) => &it.syntax,
+            AnyJsStatement::JsEmptyStatement(it) => &it.syntax,
+            AnyJsStatement::JsExpressionStatement(it) => &it.syntax,
+            AnyJsStatement::JsForInStatement(it) => &it.syntax,
+            AnyJsStatement::JsForOfStatement(it) => &it.syntax,
+            AnyJsStatement::JsForStatement(it) => &it.syntax,
+            AnyJsStatement::JsFunctionDeclaration(it) => &it.syntax,
+            AnyJsStatement::JsIfStatement(it) => &it.syntax,
+            AnyJsStatement::JsLabeledStatement(it) => &it.syntax,
+            AnyJsStatement::JsReturnStatement(it) => &it.syntax,
+            AnyJsStatement::JsSwitchStatement(it) => &it.syntax,
+            AnyJsStatement::JsThrowStatement(it) => &it.syntax,
+            AnyJsStatement::JsTryFinallyStatement(it) => &it.syntax,
+            AnyJsStatement::JsTryStatement(it) => &it.syntax,
+            AnyJsStatement::JsVariableStatement(it) => &it.syntax,
+            AnyJsStatement::JsWhileStatement(it) => &it.syntax,
+            AnyJsStatement::JsWithStatement(it) => &it.syntax,
+            AnyJsStatement::TsDeclareFunctionDeclaration(it) => &it.syntax,
+            AnyJsStatement::TsDeclareStatement(it) => &it.syntax,
+            AnyJsStatement::TsEnumDeclaration(it) => &it.syntax,
+            AnyJsStatement::TsExternalModuleDeclaration(it) => &it.syntax,
+            AnyJsStatement::TsGlobalDeclaration(it) => &it.syntax,
+            AnyJsStatement::TsImportEqualsDeclaration(it) => &it.syntax,
+            AnyJsStatement::TsInterfaceDeclaration(it) => &it.syntax,
+            AnyJsStatement::TsModuleDeclaration(it) => &it.syntax,
+            AnyJsStatement::TsTypeAliasDeclaration(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyStatement::JsBlockStatement(it) => it.syntax,
-            JsAnyStatement::JsBogusStatement(it) => it.syntax,
-            JsAnyStatement::JsBreakStatement(it) => it.syntax,
-            JsAnyStatement::JsClassDeclaration(it) => it.syntax,
-            JsAnyStatement::JsContinueStatement(it) => it.syntax,
-            JsAnyStatement::JsDebuggerStatement(it) => it.syntax,
-            JsAnyStatement::JsDoWhileStatement(it) => it.syntax,
-            JsAnyStatement::JsEmptyStatement(it) => it.syntax,
-            JsAnyStatement::JsExpressionStatement(it) => it.syntax,
-            JsAnyStatement::JsForInStatement(it) => it.syntax,
-            JsAnyStatement::JsForOfStatement(it) => it.syntax,
-            JsAnyStatement::JsForStatement(it) => it.syntax,
-            JsAnyStatement::JsFunctionDeclaration(it) => it.syntax,
-            JsAnyStatement::JsIfStatement(it) => it.syntax,
-            JsAnyStatement::JsLabeledStatement(it) => it.syntax,
-            JsAnyStatement::JsReturnStatement(it) => it.syntax,
-            JsAnyStatement::JsSwitchStatement(it) => it.syntax,
-            JsAnyStatement::JsThrowStatement(it) => it.syntax,
-            JsAnyStatement::JsTryFinallyStatement(it) => it.syntax,
-            JsAnyStatement::JsTryStatement(it) => it.syntax,
-            JsAnyStatement::JsVariableStatement(it) => it.syntax,
-            JsAnyStatement::JsWhileStatement(it) => it.syntax,
-            JsAnyStatement::JsWithStatement(it) => it.syntax,
-            JsAnyStatement::TsDeclareFunctionDeclaration(it) => it.syntax,
-            JsAnyStatement::TsDeclareStatement(it) => it.syntax,
-            JsAnyStatement::TsEnumDeclaration(it) => it.syntax,
-            JsAnyStatement::TsExternalModuleDeclaration(it) => it.syntax,
-            JsAnyStatement::TsGlobalDeclaration(it) => it.syntax,
-            JsAnyStatement::TsImportEqualsDeclaration(it) => it.syntax,
-            JsAnyStatement::TsInterfaceDeclaration(it) => it.syntax,
-            JsAnyStatement::TsModuleDeclaration(it) => it.syntax,
-            JsAnyStatement::TsTypeAliasDeclaration(it) => it.syntax,
+            AnyJsStatement::JsBlockStatement(it) => it.syntax,
+            AnyJsStatement::JsBogusStatement(it) => it.syntax,
+            AnyJsStatement::JsBreakStatement(it) => it.syntax,
+            AnyJsStatement::JsClassDeclaration(it) => it.syntax,
+            AnyJsStatement::JsContinueStatement(it) => it.syntax,
+            AnyJsStatement::JsDebuggerStatement(it) => it.syntax,
+            AnyJsStatement::JsDoWhileStatement(it) => it.syntax,
+            AnyJsStatement::JsEmptyStatement(it) => it.syntax,
+            AnyJsStatement::JsExpressionStatement(it) => it.syntax,
+            AnyJsStatement::JsForInStatement(it) => it.syntax,
+            AnyJsStatement::JsForOfStatement(it) => it.syntax,
+            AnyJsStatement::JsForStatement(it) => it.syntax,
+            AnyJsStatement::JsFunctionDeclaration(it) => it.syntax,
+            AnyJsStatement::JsIfStatement(it) => it.syntax,
+            AnyJsStatement::JsLabeledStatement(it) => it.syntax,
+            AnyJsStatement::JsReturnStatement(it) => it.syntax,
+            AnyJsStatement::JsSwitchStatement(it) => it.syntax,
+            AnyJsStatement::JsThrowStatement(it) => it.syntax,
+            AnyJsStatement::JsTryFinallyStatement(it) => it.syntax,
+            AnyJsStatement::JsTryStatement(it) => it.syntax,
+            AnyJsStatement::JsVariableStatement(it) => it.syntax,
+            AnyJsStatement::JsWhileStatement(it) => it.syntax,
+            AnyJsStatement::JsWithStatement(it) => it.syntax,
+            AnyJsStatement::TsDeclareFunctionDeclaration(it) => it.syntax,
+            AnyJsStatement::TsDeclareStatement(it) => it.syntax,
+            AnyJsStatement::TsEnumDeclaration(it) => it.syntax,
+            AnyJsStatement::TsExternalModuleDeclaration(it) => it.syntax,
+            AnyJsStatement::TsGlobalDeclaration(it) => it.syntax,
+            AnyJsStatement::TsImportEqualsDeclaration(it) => it.syntax,
+            AnyJsStatement::TsInterfaceDeclaration(it) => it.syntax,
+            AnyJsStatement::TsModuleDeclaration(it) => it.syntax,
+            AnyJsStatement::TsTypeAliasDeclaration(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyStatement {
+impl std::fmt::Debug for AnyJsStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyStatement::JsBlockStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsBogusStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsBreakStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsContinueStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsDebuggerStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsDoWhileStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsEmptyStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsExpressionStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsForInStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsForOfStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsForStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsIfStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsLabeledStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsReturnStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsSwitchStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsThrowStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsTryFinallyStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsTryStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsVariableStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsWhileStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsWithStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::TsDeclareFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::TsDeclareStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::TsEnumDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::TsExternalModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::TsGlobalDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::TsImportEqualsDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::TsInterfaceDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::TsModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::TsTypeAliasDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsBlockStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsBogusStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsBreakStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsContinueStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsDebuggerStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsDoWhileStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsEmptyStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsExpressionStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsForInStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsForOfStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsForStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsIfStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsLabeledStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsReturnStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsSwitchStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsThrowStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsTryFinallyStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsTryStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsVariableStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsWhileStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::JsWithStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::TsDeclareFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::TsDeclareStatement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::TsEnumDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::TsExternalModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::TsGlobalDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::TsImportEqualsDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::TsInterfaceDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::TsModuleDeclaration(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsStatement::TsTypeAliasDeclaration(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyStatement> for SyntaxNode {
-    fn from(n: JsAnyStatement) -> SyntaxNode {
+impl From<AnyJsStatement> for SyntaxNode {
+    fn from(n: AnyJsStatement) -> SyntaxNode {
         match n {
-            JsAnyStatement::JsBlockStatement(it) => it.into(),
-            JsAnyStatement::JsBogusStatement(it) => it.into(),
-            JsAnyStatement::JsBreakStatement(it) => it.into(),
-            JsAnyStatement::JsClassDeclaration(it) => it.into(),
-            JsAnyStatement::JsContinueStatement(it) => it.into(),
-            JsAnyStatement::JsDebuggerStatement(it) => it.into(),
-            JsAnyStatement::JsDoWhileStatement(it) => it.into(),
-            JsAnyStatement::JsEmptyStatement(it) => it.into(),
-            JsAnyStatement::JsExpressionStatement(it) => it.into(),
-            JsAnyStatement::JsForInStatement(it) => it.into(),
-            JsAnyStatement::JsForOfStatement(it) => it.into(),
-            JsAnyStatement::JsForStatement(it) => it.into(),
-            JsAnyStatement::JsFunctionDeclaration(it) => it.into(),
-            JsAnyStatement::JsIfStatement(it) => it.into(),
-            JsAnyStatement::JsLabeledStatement(it) => it.into(),
-            JsAnyStatement::JsReturnStatement(it) => it.into(),
-            JsAnyStatement::JsSwitchStatement(it) => it.into(),
-            JsAnyStatement::JsThrowStatement(it) => it.into(),
-            JsAnyStatement::JsTryFinallyStatement(it) => it.into(),
-            JsAnyStatement::JsTryStatement(it) => it.into(),
-            JsAnyStatement::JsVariableStatement(it) => it.into(),
-            JsAnyStatement::JsWhileStatement(it) => it.into(),
-            JsAnyStatement::JsWithStatement(it) => it.into(),
-            JsAnyStatement::TsDeclareFunctionDeclaration(it) => it.into(),
-            JsAnyStatement::TsDeclareStatement(it) => it.into(),
-            JsAnyStatement::TsEnumDeclaration(it) => it.into(),
-            JsAnyStatement::TsExternalModuleDeclaration(it) => it.into(),
-            JsAnyStatement::TsGlobalDeclaration(it) => it.into(),
-            JsAnyStatement::TsImportEqualsDeclaration(it) => it.into(),
-            JsAnyStatement::TsInterfaceDeclaration(it) => it.into(),
-            JsAnyStatement::TsModuleDeclaration(it) => it.into(),
-            JsAnyStatement::TsTypeAliasDeclaration(it) => it.into(),
+            AnyJsStatement::JsBlockStatement(it) => it.into(),
+            AnyJsStatement::JsBogusStatement(it) => it.into(),
+            AnyJsStatement::JsBreakStatement(it) => it.into(),
+            AnyJsStatement::JsClassDeclaration(it) => it.into(),
+            AnyJsStatement::JsContinueStatement(it) => it.into(),
+            AnyJsStatement::JsDebuggerStatement(it) => it.into(),
+            AnyJsStatement::JsDoWhileStatement(it) => it.into(),
+            AnyJsStatement::JsEmptyStatement(it) => it.into(),
+            AnyJsStatement::JsExpressionStatement(it) => it.into(),
+            AnyJsStatement::JsForInStatement(it) => it.into(),
+            AnyJsStatement::JsForOfStatement(it) => it.into(),
+            AnyJsStatement::JsForStatement(it) => it.into(),
+            AnyJsStatement::JsFunctionDeclaration(it) => it.into(),
+            AnyJsStatement::JsIfStatement(it) => it.into(),
+            AnyJsStatement::JsLabeledStatement(it) => it.into(),
+            AnyJsStatement::JsReturnStatement(it) => it.into(),
+            AnyJsStatement::JsSwitchStatement(it) => it.into(),
+            AnyJsStatement::JsThrowStatement(it) => it.into(),
+            AnyJsStatement::JsTryFinallyStatement(it) => it.into(),
+            AnyJsStatement::JsTryStatement(it) => it.into(),
+            AnyJsStatement::JsVariableStatement(it) => it.into(),
+            AnyJsStatement::JsWhileStatement(it) => it.into(),
+            AnyJsStatement::JsWithStatement(it) => it.into(),
+            AnyJsStatement::TsDeclareFunctionDeclaration(it) => it.into(),
+            AnyJsStatement::TsDeclareStatement(it) => it.into(),
+            AnyJsStatement::TsEnumDeclaration(it) => it.into(),
+            AnyJsStatement::TsExternalModuleDeclaration(it) => it.into(),
+            AnyJsStatement::TsGlobalDeclaration(it) => it.into(),
+            AnyJsStatement::TsImportEqualsDeclaration(it) => it.into(),
+            AnyJsStatement::TsInterfaceDeclaration(it) => it.into(),
+            AnyJsStatement::TsModuleDeclaration(it) => it.into(),
+            AnyJsStatement::TsTypeAliasDeclaration(it) => it.into(),
         }
     }
 }
-impl From<JsAnyStatement> for SyntaxElement {
-    fn from(n: JsAnyStatement) -> SyntaxElement {
+impl From<AnyJsStatement> for SyntaxElement {
+    fn from(n: AnyJsStatement) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsCaseClause> for JsAnySwitchClause {
-    fn from(node: JsCaseClause) -> JsAnySwitchClause { JsAnySwitchClause::JsCaseClause(node) }
+impl From<JsCaseClause> for AnyJsSwitchClause {
+    fn from(node: JsCaseClause) -> AnyJsSwitchClause { AnyJsSwitchClause::JsCaseClause(node) }
 }
-impl From<JsDefaultClause> for JsAnySwitchClause {
-    fn from(node: JsDefaultClause) -> JsAnySwitchClause { JsAnySwitchClause::JsDefaultClause(node) }
+impl From<JsDefaultClause> for AnyJsSwitchClause {
+    fn from(node: JsDefaultClause) -> AnyJsSwitchClause { AnyJsSwitchClause::JsDefaultClause(node) }
 }
-impl AstNode for JsAnySwitchClause {
+impl AstNode for AnyJsSwitchClause {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
         JsCaseClause::KIND_SET.union(JsDefaultClause::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_CASE_CLAUSE | JS_DEFAULT_CLAUSE) }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_CASE_CLAUSE => JsAnySwitchClause::JsCaseClause(JsCaseClause { syntax }),
-            JS_DEFAULT_CLAUSE => JsAnySwitchClause::JsDefaultClause(JsDefaultClause { syntax }),
+            JS_CASE_CLAUSE => AnyJsSwitchClause::JsCaseClause(JsCaseClause { syntax }),
+            JS_DEFAULT_CLAUSE => AnyJsSwitchClause::JsDefaultClause(JsDefaultClause { syntax }),
             _ => return None,
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnySwitchClause::JsCaseClause(it) => &it.syntax,
-            JsAnySwitchClause::JsDefaultClause(it) => &it.syntax,
+            AnyJsSwitchClause::JsCaseClause(it) => &it.syntax,
+            AnyJsSwitchClause::JsDefaultClause(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnySwitchClause::JsCaseClause(it) => it.syntax,
-            JsAnySwitchClause::JsDefaultClause(it) => it.syntax,
+            AnyJsSwitchClause::JsCaseClause(it) => it.syntax,
+            AnyJsSwitchClause::JsDefaultClause(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnySwitchClause {
+impl std::fmt::Debug for AnyJsSwitchClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnySwitchClause::JsCaseClause(it) => std::fmt::Debug::fmt(it, f),
-            JsAnySwitchClause::JsDefaultClause(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsSwitchClause::JsCaseClause(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsSwitchClause::JsDefaultClause(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnySwitchClause> for SyntaxNode {
-    fn from(n: JsAnySwitchClause) -> SyntaxNode {
+impl From<AnyJsSwitchClause> for SyntaxNode {
+    fn from(n: AnyJsSwitchClause) -> SyntaxNode {
         match n {
-            JsAnySwitchClause::JsCaseClause(it) => it.into(),
-            JsAnySwitchClause::JsDefaultClause(it) => it.into(),
+            AnyJsSwitchClause::JsCaseClause(it) => it.into(),
+            AnyJsSwitchClause::JsDefaultClause(it) => it.into(),
         }
     }
 }
-impl From<JsAnySwitchClause> for SyntaxElement {
-    fn from(n: JsAnySwitchClause) -> SyntaxElement {
+impl From<AnyJsSwitchClause> for SyntaxElement {
+    fn from(n: AnyJsSwitchClause) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsTemplateChunkElement> for JsAnyTemplateElement {
-    fn from(node: JsTemplateChunkElement) -> JsAnyTemplateElement {
-        JsAnyTemplateElement::JsTemplateChunkElement(node)
+impl From<JsTemplateChunkElement> for AnyJsTemplateElement {
+    fn from(node: JsTemplateChunkElement) -> AnyJsTemplateElement {
+        AnyJsTemplateElement::JsTemplateChunkElement(node)
     }
 }
-impl From<JsTemplateElement> for JsAnyTemplateElement {
-    fn from(node: JsTemplateElement) -> JsAnyTemplateElement {
-        JsAnyTemplateElement::JsTemplateElement(node)
+impl From<JsTemplateElement> for AnyJsTemplateElement {
+    fn from(node: JsTemplateElement) -> AnyJsTemplateElement {
+        AnyJsTemplateElement::JsTemplateElement(node)
     }
 }
-impl AstNode for JsAnyTemplateElement {
+impl AstNode for AnyJsTemplateElement {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
         JsTemplateChunkElement::KIND_SET.union(JsTemplateElement::KIND_SET);
@@ -29562,10 +29566,10 @@ impl AstNode for JsAnyTemplateElement {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_TEMPLATE_CHUNK_ELEMENT => {
-                JsAnyTemplateElement::JsTemplateChunkElement(JsTemplateChunkElement { syntax })
+                AnyJsTemplateElement::JsTemplateChunkElement(JsTemplateChunkElement { syntax })
             }
             JS_TEMPLATE_ELEMENT => {
-                JsAnyTemplateElement::JsTemplateElement(JsTemplateElement { syntax })
+                AnyJsTemplateElement::JsTemplateElement(JsTemplateElement { syntax })
             }
             _ => return None,
         };
@@ -29573,57 +29577,57 @@ impl AstNode for JsAnyTemplateElement {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyTemplateElement::JsTemplateChunkElement(it) => &it.syntax,
-            JsAnyTemplateElement::JsTemplateElement(it) => &it.syntax,
+            AnyJsTemplateElement::JsTemplateChunkElement(it) => &it.syntax,
+            AnyJsTemplateElement::JsTemplateElement(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyTemplateElement::JsTemplateChunkElement(it) => it.syntax,
-            JsAnyTemplateElement::JsTemplateElement(it) => it.syntax,
+            AnyJsTemplateElement::JsTemplateChunkElement(it) => it.syntax,
+            AnyJsTemplateElement::JsTemplateElement(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsAnyTemplateElement {
+impl std::fmt::Debug for AnyJsTemplateElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyTemplateElement::JsTemplateChunkElement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyTemplateElement::JsTemplateElement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsTemplateElement::JsTemplateChunkElement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsTemplateElement::JsTemplateElement(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsAnyTemplateElement> for SyntaxNode {
-    fn from(n: JsAnyTemplateElement) -> SyntaxNode {
+impl From<AnyJsTemplateElement> for SyntaxNode {
+    fn from(n: AnyJsTemplateElement) -> SyntaxNode {
         match n {
-            JsAnyTemplateElement::JsTemplateChunkElement(it) => it.into(),
-            JsAnyTemplateElement::JsTemplateElement(it) => it.into(),
+            AnyJsTemplateElement::JsTemplateChunkElement(it) => it.into(),
+            AnyJsTemplateElement::JsTemplateElement(it) => it.into(),
         }
     }
 }
-impl From<JsAnyTemplateElement> for SyntaxElement {
-    fn from(n: JsAnyTemplateElement) -> SyntaxElement {
+impl From<AnyJsTemplateElement> for SyntaxElement {
+    fn from(n: AnyJsTemplateElement) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsxAttribute> for JsxAnyAttribute {
-    fn from(node: JsxAttribute) -> JsxAnyAttribute { JsxAnyAttribute::JsxAttribute(node) }
+impl From<JsxAttribute> for AnyJsxAttribute {
+    fn from(node: JsxAttribute) -> AnyJsxAttribute { AnyJsxAttribute::JsxAttribute(node) }
 }
-impl From<JsxSpreadAttribute> for JsxAnyAttribute {
-    fn from(node: JsxSpreadAttribute) -> JsxAnyAttribute {
-        JsxAnyAttribute::JsxSpreadAttribute(node)
+impl From<JsxSpreadAttribute> for AnyJsxAttribute {
+    fn from(node: JsxSpreadAttribute) -> AnyJsxAttribute {
+        AnyJsxAttribute::JsxSpreadAttribute(node)
     }
 }
-impl AstNode for JsxAnyAttribute {
+impl AstNode for AnyJsxAttribute {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
         JsxAttribute::KIND_SET.union(JsxSpreadAttribute::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JSX_ATTRIBUTE | JSX_SPREAD_ATTRIBUTE) }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JSX_ATTRIBUTE => JsxAnyAttribute::JsxAttribute(JsxAttribute { syntax }),
+            JSX_ATTRIBUTE => AnyJsxAttribute::JsxAttribute(JsxAttribute { syntax }),
             JSX_SPREAD_ATTRIBUTE => {
-                JsxAnyAttribute::JsxSpreadAttribute(JsxSpreadAttribute { syntax })
+                AnyJsxAttribute::JsxSpreadAttribute(JsxSpreadAttribute { syntax })
             }
             _ => return None,
         };
@@ -29631,56 +29635,56 @@ impl AstNode for JsxAnyAttribute {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsxAnyAttribute::JsxAttribute(it) => &it.syntax,
-            JsxAnyAttribute::JsxSpreadAttribute(it) => &it.syntax,
+            AnyJsxAttribute::JsxAttribute(it) => &it.syntax,
+            AnyJsxAttribute::JsxSpreadAttribute(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsxAnyAttribute::JsxAttribute(it) => it.syntax,
-            JsxAnyAttribute::JsxSpreadAttribute(it) => it.syntax,
+            AnyJsxAttribute::JsxAttribute(it) => it.syntax,
+            AnyJsxAttribute::JsxSpreadAttribute(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsxAnyAttribute {
+impl std::fmt::Debug for AnyJsxAttribute {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsxAnyAttribute::JsxAttribute(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyAttribute::JsxSpreadAttribute(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxAttribute::JsxAttribute(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxAttribute::JsxSpreadAttribute(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsxAnyAttribute> for SyntaxNode {
-    fn from(n: JsxAnyAttribute) -> SyntaxNode {
+impl From<AnyJsxAttribute> for SyntaxNode {
+    fn from(n: AnyJsxAttribute) -> SyntaxNode {
         match n {
-            JsxAnyAttribute::JsxAttribute(it) => it.into(),
-            JsxAnyAttribute::JsxSpreadAttribute(it) => it.into(),
+            AnyJsxAttribute::JsxAttribute(it) => it.into(),
+            AnyJsxAttribute::JsxSpreadAttribute(it) => it.into(),
         }
     }
 }
-impl From<JsxAnyAttribute> for SyntaxElement {
-    fn from(n: JsxAnyAttribute) -> SyntaxElement {
+impl From<AnyJsxAttribute> for SyntaxElement {
+    fn from(n: AnyJsxAttribute) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsxName> for JsxAnyAttributeName {
-    fn from(node: JsxName) -> JsxAnyAttributeName { JsxAnyAttributeName::JsxName(node) }
+impl From<JsxName> for AnyJsxAttributeName {
+    fn from(node: JsxName) -> AnyJsxAttributeName { AnyJsxAttributeName::JsxName(node) }
 }
-impl From<JsxNamespaceName> for JsxAnyAttributeName {
-    fn from(node: JsxNamespaceName) -> JsxAnyAttributeName {
-        JsxAnyAttributeName::JsxNamespaceName(node)
+impl From<JsxNamespaceName> for AnyJsxAttributeName {
+    fn from(node: JsxNamespaceName) -> AnyJsxAttributeName {
+        AnyJsxAttributeName::JsxNamespaceName(node)
     }
 }
-impl AstNode for JsxAnyAttributeName {
+impl AstNode for AnyJsxAttributeName {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsxName::KIND_SET.union(JsxNamespaceName::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JSX_NAME | JSX_NAMESPACE_NAME) }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JSX_NAME => JsxAnyAttributeName::JsxName(JsxName { syntax }),
+            JSX_NAME => AnyJsxAttributeName::JsxName(JsxName { syntax }),
             JSX_NAMESPACE_NAME => {
-                JsxAnyAttributeName::JsxNamespaceName(JsxNamespaceName { syntax })
+                AnyJsxAttributeName::JsxNamespaceName(JsxNamespaceName { syntax })
             }
             _ => return None,
         };
@@ -29688,70 +29692,70 @@ impl AstNode for JsxAnyAttributeName {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsxAnyAttributeName::JsxName(it) => &it.syntax,
-            JsxAnyAttributeName::JsxNamespaceName(it) => &it.syntax,
+            AnyJsxAttributeName::JsxName(it) => &it.syntax,
+            AnyJsxAttributeName::JsxNamespaceName(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsxAnyAttributeName::JsxName(it) => it.syntax,
-            JsxAnyAttributeName::JsxNamespaceName(it) => it.syntax,
+            AnyJsxAttributeName::JsxName(it) => it.syntax,
+            AnyJsxAttributeName::JsxNamespaceName(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsxAnyAttributeName {
+impl std::fmt::Debug for AnyJsxAttributeName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsxAnyAttributeName::JsxName(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyAttributeName::JsxNamespaceName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxAttributeName::JsxName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxAttributeName::JsxNamespaceName(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsxAnyAttributeName> for SyntaxNode {
-    fn from(n: JsxAnyAttributeName) -> SyntaxNode {
+impl From<AnyJsxAttributeName> for SyntaxNode {
+    fn from(n: AnyJsxAttributeName) -> SyntaxNode {
         match n {
-            JsxAnyAttributeName::JsxName(it) => it.into(),
-            JsxAnyAttributeName::JsxNamespaceName(it) => it.into(),
+            AnyJsxAttributeName::JsxName(it) => it.into(),
+            AnyJsxAttributeName::JsxNamespaceName(it) => it.into(),
         }
     }
 }
-impl From<JsxAnyAttributeName> for SyntaxElement {
-    fn from(n: JsxAnyAttributeName) -> SyntaxElement {
+impl From<AnyJsxAttributeName> for SyntaxElement {
+    fn from(n: AnyJsxAttributeName) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsxExpressionAttributeValue> for JsxAnyAttributeValue {
-    fn from(node: JsxExpressionAttributeValue) -> JsxAnyAttributeValue {
-        JsxAnyAttributeValue::JsxExpressionAttributeValue(node)
+impl From<JsxExpressionAttributeValue> for AnyJsxAttributeValue {
+    fn from(node: JsxExpressionAttributeValue) -> AnyJsxAttributeValue {
+        AnyJsxAttributeValue::JsxExpressionAttributeValue(node)
     }
 }
-impl From<JsxString> for JsxAnyAttributeValue {
-    fn from(node: JsxString) -> JsxAnyAttributeValue { JsxAnyAttributeValue::JsxString(node) }
+impl From<JsxString> for AnyJsxAttributeValue {
+    fn from(node: JsxString) -> AnyJsxAttributeValue { AnyJsxAttributeValue::JsxString(node) }
 }
-impl AstNode for JsxAnyAttributeValue {
+impl AstNode for AnyJsxAttributeValue {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsxAnyTag::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = AnyJsxTag::KIND_SET
         .union(JsxExpressionAttributeValue::KIND_SET)
         .union(JsxString::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             JSX_EXPRESSION_ATTRIBUTE_VALUE | JSX_STRING => true,
-            k if JsxAnyTag::can_cast(k) => true,
+            k if AnyJsxTag::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JSX_EXPRESSION_ATTRIBUTE_VALUE => {
-                JsxAnyAttributeValue::JsxExpressionAttributeValue(JsxExpressionAttributeValue {
+                AnyJsxAttributeValue::JsxExpressionAttributeValue(JsxExpressionAttributeValue {
                     syntax,
                 })
             }
-            JSX_STRING => JsxAnyAttributeValue::JsxString(JsxString { syntax }),
+            JSX_STRING => AnyJsxAttributeValue::JsxString(JsxString { syntax }),
             _ => {
-                if let Some(jsx_any_tag) = JsxAnyTag::cast(syntax) {
-                    return Some(JsxAnyAttributeValue::JsxAnyTag(jsx_any_tag));
+                if let Some(any_jsx_tag) = AnyJsxTag::cast(syntax) {
+                    return Some(AnyJsxAttributeValue::AnyJsxTag(any_jsx_tag));
                 }
                 return None;
             }
@@ -29760,62 +29764,62 @@ impl AstNode for JsxAnyAttributeValue {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsxAnyAttributeValue::JsxExpressionAttributeValue(it) => &it.syntax,
-            JsxAnyAttributeValue::JsxString(it) => &it.syntax,
-            JsxAnyAttributeValue::JsxAnyTag(it) => it.syntax(),
+            AnyJsxAttributeValue::JsxExpressionAttributeValue(it) => &it.syntax,
+            AnyJsxAttributeValue::JsxString(it) => &it.syntax,
+            AnyJsxAttributeValue::AnyJsxTag(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsxAnyAttributeValue::JsxExpressionAttributeValue(it) => it.syntax,
-            JsxAnyAttributeValue::JsxString(it) => it.syntax,
-            JsxAnyAttributeValue::JsxAnyTag(it) => it.into_syntax(),
+            AnyJsxAttributeValue::JsxExpressionAttributeValue(it) => it.syntax,
+            AnyJsxAttributeValue::JsxString(it) => it.syntax,
+            AnyJsxAttributeValue::AnyJsxTag(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for JsxAnyAttributeValue {
+impl std::fmt::Debug for AnyJsxAttributeValue {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsxAnyAttributeValue::JsxAnyTag(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyAttributeValue::JsxExpressionAttributeValue(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyAttributeValue::JsxString(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxAttributeValue::AnyJsxTag(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxAttributeValue::JsxExpressionAttributeValue(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxAttributeValue::JsxString(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsxAnyAttributeValue> for SyntaxNode {
-    fn from(n: JsxAnyAttributeValue) -> SyntaxNode {
+impl From<AnyJsxAttributeValue> for SyntaxNode {
+    fn from(n: AnyJsxAttributeValue) -> SyntaxNode {
         match n {
-            JsxAnyAttributeValue::JsxAnyTag(it) => it.into(),
-            JsxAnyAttributeValue::JsxExpressionAttributeValue(it) => it.into(),
-            JsxAnyAttributeValue::JsxString(it) => it.into(),
+            AnyJsxAttributeValue::AnyJsxTag(it) => it.into(),
+            AnyJsxAttributeValue::JsxExpressionAttributeValue(it) => it.into(),
+            AnyJsxAttributeValue::JsxString(it) => it.into(),
         }
     }
 }
-impl From<JsxAnyAttributeValue> for SyntaxElement {
-    fn from(n: JsxAnyAttributeValue) -> SyntaxElement {
+impl From<AnyJsxAttributeValue> for SyntaxElement {
+    fn from(n: AnyJsxAttributeValue) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsxElement> for JsxAnyChild {
-    fn from(node: JsxElement) -> JsxAnyChild { JsxAnyChild::JsxElement(node) }
+impl From<JsxElement> for AnyJsxChild {
+    fn from(node: JsxElement) -> AnyJsxChild { AnyJsxChild::JsxElement(node) }
 }
-impl From<JsxExpressionChild> for JsxAnyChild {
-    fn from(node: JsxExpressionChild) -> JsxAnyChild { JsxAnyChild::JsxExpressionChild(node) }
+impl From<JsxExpressionChild> for AnyJsxChild {
+    fn from(node: JsxExpressionChild) -> AnyJsxChild { AnyJsxChild::JsxExpressionChild(node) }
 }
-impl From<JsxFragment> for JsxAnyChild {
-    fn from(node: JsxFragment) -> JsxAnyChild { JsxAnyChild::JsxFragment(node) }
+impl From<JsxFragment> for AnyJsxChild {
+    fn from(node: JsxFragment) -> AnyJsxChild { AnyJsxChild::JsxFragment(node) }
 }
-impl From<JsxSelfClosingElement> for JsxAnyChild {
-    fn from(node: JsxSelfClosingElement) -> JsxAnyChild { JsxAnyChild::JsxSelfClosingElement(node) }
+impl From<JsxSelfClosingElement> for AnyJsxChild {
+    fn from(node: JsxSelfClosingElement) -> AnyJsxChild { AnyJsxChild::JsxSelfClosingElement(node) }
 }
-impl From<JsxSpreadChild> for JsxAnyChild {
-    fn from(node: JsxSpreadChild) -> JsxAnyChild { JsxAnyChild::JsxSpreadChild(node) }
+impl From<JsxSpreadChild> for AnyJsxChild {
+    fn from(node: JsxSpreadChild) -> AnyJsxChild { AnyJsxChild::JsxSpreadChild(node) }
 }
-impl From<JsxText> for JsxAnyChild {
-    fn from(node: JsxText) -> JsxAnyChild { JsxAnyChild::JsxText(node) }
+impl From<JsxText> for AnyJsxChild {
+    fn from(node: JsxText) -> AnyJsxChild { AnyJsxChild::JsxText(node) }
 }
-impl AstNode for JsxAnyChild {
+impl AstNode for AnyJsxChild {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsxElement::KIND_SET
         .union(JsxExpressionChild::KIND_SET)
@@ -29836,86 +29840,86 @@ impl AstNode for JsxAnyChild {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JSX_ELEMENT => JsxAnyChild::JsxElement(JsxElement { syntax }),
-            JSX_EXPRESSION_CHILD => JsxAnyChild::JsxExpressionChild(JsxExpressionChild { syntax }),
-            JSX_FRAGMENT => JsxAnyChild::JsxFragment(JsxFragment { syntax }),
+            JSX_ELEMENT => AnyJsxChild::JsxElement(JsxElement { syntax }),
+            JSX_EXPRESSION_CHILD => AnyJsxChild::JsxExpressionChild(JsxExpressionChild { syntax }),
+            JSX_FRAGMENT => AnyJsxChild::JsxFragment(JsxFragment { syntax }),
             JSX_SELF_CLOSING_ELEMENT => {
-                JsxAnyChild::JsxSelfClosingElement(JsxSelfClosingElement { syntax })
+                AnyJsxChild::JsxSelfClosingElement(JsxSelfClosingElement { syntax })
             }
-            JSX_SPREAD_CHILD => JsxAnyChild::JsxSpreadChild(JsxSpreadChild { syntax }),
-            JSX_TEXT => JsxAnyChild::JsxText(JsxText { syntax }),
+            JSX_SPREAD_CHILD => AnyJsxChild::JsxSpreadChild(JsxSpreadChild { syntax }),
+            JSX_TEXT => AnyJsxChild::JsxText(JsxText { syntax }),
             _ => return None,
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsxAnyChild::JsxElement(it) => &it.syntax,
-            JsxAnyChild::JsxExpressionChild(it) => &it.syntax,
-            JsxAnyChild::JsxFragment(it) => &it.syntax,
-            JsxAnyChild::JsxSelfClosingElement(it) => &it.syntax,
-            JsxAnyChild::JsxSpreadChild(it) => &it.syntax,
-            JsxAnyChild::JsxText(it) => &it.syntax,
+            AnyJsxChild::JsxElement(it) => &it.syntax,
+            AnyJsxChild::JsxExpressionChild(it) => &it.syntax,
+            AnyJsxChild::JsxFragment(it) => &it.syntax,
+            AnyJsxChild::JsxSelfClosingElement(it) => &it.syntax,
+            AnyJsxChild::JsxSpreadChild(it) => &it.syntax,
+            AnyJsxChild::JsxText(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsxAnyChild::JsxElement(it) => it.syntax,
-            JsxAnyChild::JsxExpressionChild(it) => it.syntax,
-            JsxAnyChild::JsxFragment(it) => it.syntax,
-            JsxAnyChild::JsxSelfClosingElement(it) => it.syntax,
-            JsxAnyChild::JsxSpreadChild(it) => it.syntax,
-            JsxAnyChild::JsxText(it) => it.syntax,
+            AnyJsxChild::JsxElement(it) => it.syntax,
+            AnyJsxChild::JsxExpressionChild(it) => it.syntax,
+            AnyJsxChild::JsxFragment(it) => it.syntax,
+            AnyJsxChild::JsxSelfClosingElement(it) => it.syntax,
+            AnyJsxChild::JsxSpreadChild(it) => it.syntax,
+            AnyJsxChild::JsxText(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsxAnyChild {
+impl std::fmt::Debug for AnyJsxChild {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsxAnyChild::JsxElement(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChild::JsxExpressionChild(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChild::JsxFragment(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChild::JsxSelfClosingElement(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChild::JsxSpreadChild(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyChild::JsxText(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxChild::JsxElement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxChild::JsxExpressionChild(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxChild::JsxFragment(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxChild::JsxSelfClosingElement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxChild::JsxSpreadChild(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxChild::JsxText(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsxAnyChild> for SyntaxNode {
-    fn from(n: JsxAnyChild) -> SyntaxNode {
+impl From<AnyJsxChild> for SyntaxNode {
+    fn from(n: AnyJsxChild) -> SyntaxNode {
         match n {
-            JsxAnyChild::JsxElement(it) => it.into(),
-            JsxAnyChild::JsxExpressionChild(it) => it.into(),
-            JsxAnyChild::JsxFragment(it) => it.into(),
-            JsxAnyChild::JsxSelfClosingElement(it) => it.into(),
-            JsxAnyChild::JsxSpreadChild(it) => it.into(),
-            JsxAnyChild::JsxText(it) => it.into(),
+            AnyJsxChild::JsxElement(it) => it.into(),
+            AnyJsxChild::JsxExpressionChild(it) => it.into(),
+            AnyJsxChild::JsxFragment(it) => it.into(),
+            AnyJsxChild::JsxSelfClosingElement(it) => it.into(),
+            AnyJsxChild::JsxSpreadChild(it) => it.into(),
+            AnyJsxChild::JsxText(it) => it.into(),
         }
     }
 }
-impl From<JsxAnyChild> for SyntaxElement {
-    fn from(n: JsxAnyChild) -> SyntaxElement {
+impl From<AnyJsxChild> for SyntaxElement {
+    fn from(n: AnyJsxChild) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsxMemberName> for JsxAnyElementName {
-    fn from(node: JsxMemberName) -> JsxAnyElementName { JsxAnyElementName::JsxMemberName(node) }
+impl From<JsxMemberName> for AnyJsxElementName {
+    fn from(node: JsxMemberName) -> AnyJsxElementName { AnyJsxElementName::JsxMemberName(node) }
 }
-impl From<JsxName> for JsxAnyElementName {
-    fn from(node: JsxName) -> JsxAnyElementName { JsxAnyElementName::JsxName(node) }
+impl From<JsxName> for AnyJsxElementName {
+    fn from(node: JsxName) -> AnyJsxElementName { AnyJsxElementName::JsxName(node) }
 }
-impl From<JsxNamespaceName> for JsxAnyElementName {
-    fn from(node: JsxNamespaceName) -> JsxAnyElementName {
-        JsxAnyElementName::JsxNamespaceName(node)
+impl From<JsxNamespaceName> for AnyJsxElementName {
+    fn from(node: JsxNamespaceName) -> AnyJsxElementName {
+        AnyJsxElementName::JsxNamespaceName(node)
     }
 }
-impl From<JsxReferenceIdentifier> for JsxAnyElementName {
-    fn from(node: JsxReferenceIdentifier) -> JsxAnyElementName {
-        JsxAnyElementName::JsxReferenceIdentifier(node)
+impl From<JsxReferenceIdentifier> for AnyJsxElementName {
+    fn from(node: JsxReferenceIdentifier) -> AnyJsxElementName {
+        AnyJsxElementName::JsxReferenceIdentifier(node)
     }
 }
-impl AstNode for JsxAnyElementName {
+impl AstNode for AnyJsxElementName {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsxMemberName::KIND_SET
         .union(JsxName::KIND_SET)
@@ -29929,11 +29933,11 @@ impl AstNode for JsxAnyElementName {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JSX_MEMBER_NAME => JsxAnyElementName::JsxMemberName(JsxMemberName { syntax }),
-            JSX_NAME => JsxAnyElementName::JsxName(JsxName { syntax }),
-            JSX_NAMESPACE_NAME => JsxAnyElementName::JsxNamespaceName(JsxNamespaceName { syntax }),
+            JSX_MEMBER_NAME => AnyJsxElementName::JsxMemberName(JsxMemberName { syntax }),
+            JSX_NAME => AnyJsxElementName::JsxName(JsxName { syntax }),
+            JSX_NAMESPACE_NAME => AnyJsxElementName::JsxNamespaceName(JsxNamespaceName { syntax }),
             JSX_REFERENCE_IDENTIFIER => {
-                JsxAnyElementName::JsxReferenceIdentifier(JsxReferenceIdentifier { syntax })
+                AnyJsxElementName::JsxReferenceIdentifier(JsxReferenceIdentifier { syntax })
             }
             _ => return None,
         };
@@ -29941,112 +29945,112 @@ impl AstNode for JsxAnyElementName {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsxAnyElementName::JsxMemberName(it) => &it.syntax,
-            JsxAnyElementName::JsxName(it) => &it.syntax,
-            JsxAnyElementName::JsxNamespaceName(it) => &it.syntax,
-            JsxAnyElementName::JsxReferenceIdentifier(it) => &it.syntax,
+            AnyJsxElementName::JsxMemberName(it) => &it.syntax,
+            AnyJsxElementName::JsxName(it) => &it.syntax,
+            AnyJsxElementName::JsxNamespaceName(it) => &it.syntax,
+            AnyJsxElementName::JsxReferenceIdentifier(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsxAnyElementName::JsxMemberName(it) => it.syntax,
-            JsxAnyElementName::JsxName(it) => it.syntax,
-            JsxAnyElementName::JsxNamespaceName(it) => it.syntax,
-            JsxAnyElementName::JsxReferenceIdentifier(it) => it.syntax,
+            AnyJsxElementName::JsxMemberName(it) => it.syntax,
+            AnyJsxElementName::JsxName(it) => it.syntax,
+            AnyJsxElementName::JsxNamespaceName(it) => it.syntax,
+            AnyJsxElementName::JsxReferenceIdentifier(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsxAnyElementName {
+impl std::fmt::Debug for AnyJsxElementName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsxAnyElementName::JsxMemberName(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyElementName::JsxName(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyElementName::JsxNamespaceName(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyElementName::JsxReferenceIdentifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxElementName::JsxMemberName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxElementName::JsxName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxElementName::JsxNamespaceName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxElementName::JsxReferenceIdentifier(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsxAnyElementName> for SyntaxNode {
-    fn from(n: JsxAnyElementName) -> SyntaxNode {
+impl From<AnyJsxElementName> for SyntaxNode {
+    fn from(n: AnyJsxElementName) -> SyntaxNode {
         match n {
-            JsxAnyElementName::JsxMemberName(it) => it.into(),
-            JsxAnyElementName::JsxName(it) => it.into(),
-            JsxAnyElementName::JsxNamespaceName(it) => it.into(),
-            JsxAnyElementName::JsxReferenceIdentifier(it) => it.into(),
+            AnyJsxElementName::JsxMemberName(it) => it.into(),
+            AnyJsxElementName::JsxName(it) => it.into(),
+            AnyJsxElementName::JsxNamespaceName(it) => it.into(),
+            AnyJsxElementName::JsxReferenceIdentifier(it) => it.into(),
         }
     }
 }
-impl From<JsxAnyElementName> for SyntaxElement {
-    fn from(n: JsxAnyElementName) -> SyntaxElement {
+impl From<AnyJsxElementName> for SyntaxElement {
+    fn from(n: AnyJsxElementName) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsxName> for JsxAnyName {
-    fn from(node: JsxName) -> JsxAnyName { JsxAnyName::JsxName(node) }
+impl From<JsxName> for AnyJsxName {
+    fn from(node: JsxName) -> AnyJsxName { AnyJsxName::JsxName(node) }
 }
-impl From<JsxNamespaceName> for JsxAnyName {
-    fn from(node: JsxNamespaceName) -> JsxAnyName { JsxAnyName::JsxNamespaceName(node) }
+impl From<JsxNamespaceName> for AnyJsxName {
+    fn from(node: JsxNamespaceName) -> AnyJsxName { AnyJsxName::JsxNamespaceName(node) }
 }
-impl AstNode for JsxAnyName {
+impl AstNode for AnyJsxName {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsxName::KIND_SET.union(JsxNamespaceName::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JSX_NAME | JSX_NAMESPACE_NAME) }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JSX_NAME => JsxAnyName::JsxName(JsxName { syntax }),
-            JSX_NAMESPACE_NAME => JsxAnyName::JsxNamespaceName(JsxNamespaceName { syntax }),
+            JSX_NAME => AnyJsxName::JsxName(JsxName { syntax }),
+            JSX_NAMESPACE_NAME => AnyJsxName::JsxNamespaceName(JsxNamespaceName { syntax }),
             _ => return None,
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsxAnyName::JsxName(it) => &it.syntax,
-            JsxAnyName::JsxNamespaceName(it) => &it.syntax,
+            AnyJsxName::JsxName(it) => &it.syntax,
+            AnyJsxName::JsxNamespaceName(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsxAnyName::JsxName(it) => it.syntax,
-            JsxAnyName::JsxNamespaceName(it) => it.syntax,
+            AnyJsxName::JsxName(it) => it.syntax,
+            AnyJsxName::JsxNamespaceName(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsxAnyName {
+impl std::fmt::Debug for AnyJsxName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsxAnyName::JsxName(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyName::JsxNamespaceName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxName::JsxName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxName::JsxNamespaceName(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsxAnyName> for SyntaxNode {
-    fn from(n: JsxAnyName) -> SyntaxNode {
+impl From<AnyJsxName> for SyntaxNode {
+    fn from(n: AnyJsxName) -> SyntaxNode {
         match n {
-            JsxAnyName::JsxName(it) => it.into(),
-            JsxAnyName::JsxNamespaceName(it) => it.into(),
+            AnyJsxName::JsxName(it) => it.into(),
+            AnyJsxName::JsxNamespaceName(it) => it.into(),
         }
     }
 }
-impl From<JsxAnyName> for SyntaxElement {
-    fn from(n: JsxAnyName) -> SyntaxElement {
+impl From<AnyJsxName> for SyntaxElement {
+    fn from(n: AnyJsxName) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsxMemberName> for JsxAnyObjectName {
-    fn from(node: JsxMemberName) -> JsxAnyObjectName { JsxAnyObjectName::JsxMemberName(node) }
+impl From<JsxMemberName> for AnyJsxObjectName {
+    fn from(node: JsxMemberName) -> AnyJsxObjectName { AnyJsxObjectName::JsxMemberName(node) }
 }
-impl From<JsxNamespaceName> for JsxAnyObjectName {
-    fn from(node: JsxNamespaceName) -> JsxAnyObjectName { JsxAnyObjectName::JsxNamespaceName(node) }
+impl From<JsxNamespaceName> for AnyJsxObjectName {
+    fn from(node: JsxNamespaceName) -> AnyJsxObjectName { AnyJsxObjectName::JsxNamespaceName(node) }
 }
-impl From<JsxReferenceIdentifier> for JsxAnyObjectName {
-    fn from(node: JsxReferenceIdentifier) -> JsxAnyObjectName {
-        JsxAnyObjectName::JsxReferenceIdentifier(node)
+impl From<JsxReferenceIdentifier> for AnyJsxObjectName {
+    fn from(node: JsxReferenceIdentifier) -> AnyJsxObjectName {
+        AnyJsxObjectName::JsxReferenceIdentifier(node)
     }
 }
-impl AstNode for JsxAnyObjectName {
+impl AstNode for AnyJsxObjectName {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsxMemberName::KIND_SET
         .union(JsxNamespaceName::KIND_SET)
@@ -30059,10 +30063,10 @@ impl AstNode for JsxAnyObjectName {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JSX_MEMBER_NAME => JsxAnyObjectName::JsxMemberName(JsxMemberName { syntax }),
-            JSX_NAMESPACE_NAME => JsxAnyObjectName::JsxNamespaceName(JsxNamespaceName { syntax }),
+            JSX_MEMBER_NAME => AnyJsxObjectName::JsxMemberName(JsxMemberName { syntax }),
+            JSX_NAMESPACE_NAME => AnyJsxObjectName::JsxNamespaceName(JsxNamespaceName { syntax }),
             JSX_REFERENCE_IDENTIFIER => {
-                JsxAnyObjectName::JsxReferenceIdentifier(JsxReferenceIdentifier { syntax })
+                AnyJsxObjectName::JsxReferenceIdentifier(JsxReferenceIdentifier { syntax })
             }
             _ => return None,
         };
@@ -30070,53 +30074,53 @@ impl AstNode for JsxAnyObjectName {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsxAnyObjectName::JsxMemberName(it) => &it.syntax,
-            JsxAnyObjectName::JsxNamespaceName(it) => &it.syntax,
-            JsxAnyObjectName::JsxReferenceIdentifier(it) => &it.syntax,
+            AnyJsxObjectName::JsxMemberName(it) => &it.syntax,
+            AnyJsxObjectName::JsxNamespaceName(it) => &it.syntax,
+            AnyJsxObjectName::JsxReferenceIdentifier(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsxAnyObjectName::JsxMemberName(it) => it.syntax,
-            JsxAnyObjectName::JsxNamespaceName(it) => it.syntax,
-            JsxAnyObjectName::JsxReferenceIdentifier(it) => it.syntax,
+            AnyJsxObjectName::JsxMemberName(it) => it.syntax,
+            AnyJsxObjectName::JsxNamespaceName(it) => it.syntax,
+            AnyJsxObjectName::JsxReferenceIdentifier(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsxAnyObjectName {
+impl std::fmt::Debug for AnyJsxObjectName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsxAnyObjectName::JsxMemberName(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyObjectName::JsxNamespaceName(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyObjectName::JsxReferenceIdentifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxObjectName::JsxMemberName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxObjectName::JsxNamespaceName(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxObjectName::JsxReferenceIdentifier(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsxAnyObjectName> for SyntaxNode {
-    fn from(n: JsxAnyObjectName) -> SyntaxNode {
+impl From<AnyJsxObjectName> for SyntaxNode {
+    fn from(n: AnyJsxObjectName) -> SyntaxNode {
         match n {
-            JsxAnyObjectName::JsxMemberName(it) => it.into(),
-            JsxAnyObjectName::JsxNamespaceName(it) => it.into(),
-            JsxAnyObjectName::JsxReferenceIdentifier(it) => it.into(),
+            AnyJsxObjectName::JsxMemberName(it) => it.into(),
+            AnyJsxObjectName::JsxNamespaceName(it) => it.into(),
+            AnyJsxObjectName::JsxReferenceIdentifier(it) => it.into(),
         }
     }
 }
-impl From<JsxAnyObjectName> for SyntaxElement {
-    fn from(n: JsxAnyObjectName) -> SyntaxElement {
+impl From<AnyJsxObjectName> for SyntaxElement {
+    fn from(n: AnyJsxObjectName) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsxElement> for JsxAnyTag {
-    fn from(node: JsxElement) -> JsxAnyTag { JsxAnyTag::JsxElement(node) }
+impl From<JsxElement> for AnyJsxTag {
+    fn from(node: JsxElement) -> AnyJsxTag { AnyJsxTag::JsxElement(node) }
 }
-impl From<JsxFragment> for JsxAnyTag {
-    fn from(node: JsxFragment) -> JsxAnyTag { JsxAnyTag::JsxFragment(node) }
+impl From<JsxFragment> for AnyJsxTag {
+    fn from(node: JsxFragment) -> AnyJsxTag { AnyJsxTag::JsxFragment(node) }
 }
-impl From<JsxSelfClosingElement> for JsxAnyTag {
-    fn from(node: JsxSelfClosingElement) -> JsxAnyTag { JsxAnyTag::JsxSelfClosingElement(node) }
+impl From<JsxSelfClosingElement> for AnyJsxTag {
+    fn from(node: JsxSelfClosingElement) -> AnyJsxTag { AnyJsxTag::JsxSelfClosingElement(node) }
 }
-impl AstNode for JsxAnyTag {
+impl AstNode for AnyJsxTag {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsxElement::KIND_SET
         .union(JsxFragment::KIND_SET)
@@ -30126,10 +30130,10 @@ impl AstNode for JsxAnyTag {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JSX_ELEMENT => JsxAnyTag::JsxElement(JsxElement { syntax }),
-            JSX_FRAGMENT => JsxAnyTag::JsxFragment(JsxFragment { syntax }),
+            JSX_ELEMENT => AnyJsxTag::JsxElement(JsxElement { syntax }),
+            JSX_FRAGMENT => AnyJsxTag::JsxFragment(JsxFragment { syntax }),
             JSX_SELF_CLOSING_ELEMENT => {
-                JsxAnyTag::JsxSelfClosingElement(JsxSelfClosingElement { syntax })
+                AnyJsxTag::JsxSelfClosingElement(JsxSelfClosingElement { syntax })
             }
             _ => return None,
         };
@@ -30137,54 +30141,54 @@ impl AstNode for JsxAnyTag {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsxAnyTag::JsxElement(it) => &it.syntax,
-            JsxAnyTag::JsxFragment(it) => &it.syntax,
-            JsxAnyTag::JsxSelfClosingElement(it) => &it.syntax,
+            AnyJsxTag::JsxElement(it) => &it.syntax,
+            AnyJsxTag::JsxFragment(it) => &it.syntax,
+            AnyJsxTag::JsxSelfClosingElement(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsxAnyTag::JsxElement(it) => it.syntax,
-            JsxAnyTag::JsxFragment(it) => it.syntax,
-            JsxAnyTag::JsxSelfClosingElement(it) => it.syntax,
+            AnyJsxTag::JsxElement(it) => it.syntax,
+            AnyJsxTag::JsxFragment(it) => it.syntax,
+            AnyJsxTag::JsxSelfClosingElement(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for JsxAnyTag {
+impl std::fmt::Debug for AnyJsxTag {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsxAnyTag::JsxElement(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyTag::JsxFragment(it) => std::fmt::Debug::fmt(it, f),
-            JsxAnyTag::JsxSelfClosingElement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxTag::JsxElement(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxTag::JsxFragment(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsxTag::JsxSelfClosingElement(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<JsxAnyTag> for SyntaxNode {
-    fn from(n: JsxAnyTag) -> SyntaxNode {
+impl From<AnyJsxTag> for SyntaxNode {
+    fn from(n: AnyJsxTag) -> SyntaxNode {
         match n {
-            JsxAnyTag::JsxElement(it) => it.into(),
-            JsxAnyTag::JsxFragment(it) => it.into(),
-            JsxAnyTag::JsxSelfClosingElement(it) => it.into(),
+            AnyJsxTag::JsxElement(it) => it.into(),
+            AnyJsxTag::JsxFragment(it) => it.into(),
+            AnyJsxTag::JsxSelfClosingElement(it) => it.into(),
         }
     }
 }
-impl From<JsxAnyTag> for SyntaxElement {
-    fn from(n: JsxAnyTag) -> SyntaxElement {
+impl From<AnyJsxTag> for SyntaxElement {
+    fn from(n: AnyJsxTag) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<TsEmptyExternalModuleDeclarationBody> for TsAnyExternalModuleDeclarationBody {
-    fn from(node: TsEmptyExternalModuleDeclarationBody) -> TsAnyExternalModuleDeclarationBody {
-        TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(node)
+impl From<TsEmptyExternalModuleDeclarationBody> for AnyTsExternalModuleDeclarationBody {
+    fn from(node: TsEmptyExternalModuleDeclarationBody) -> AnyTsExternalModuleDeclarationBody {
+        AnyTsExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(node)
     }
 }
-impl From<TsModuleBlock> for TsAnyExternalModuleDeclarationBody {
-    fn from(node: TsModuleBlock) -> TsAnyExternalModuleDeclarationBody {
-        TsAnyExternalModuleDeclarationBody::TsModuleBlock(node)
+impl From<TsModuleBlock> for AnyTsExternalModuleDeclarationBody {
+    fn from(node: TsModuleBlock) -> AnyTsExternalModuleDeclarationBody {
+        AnyTsExternalModuleDeclarationBody::TsModuleBlock(node)
     }
 }
-impl AstNode for TsAnyExternalModuleDeclarationBody {
+impl AstNode for AnyTsExternalModuleDeclarationBody {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
         TsEmptyExternalModuleDeclarationBody::KIND_SET.union(TsModuleBlock::KIND_SET);
@@ -30197,12 +30201,12 @@ impl AstNode for TsAnyExternalModuleDeclarationBody {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             TS_EMPTY_EXTERNAL_MODULE_DECLARATION_BODY => {
-                TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(
+                AnyTsExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(
                     TsEmptyExternalModuleDeclarationBody { syntax },
                 )
             }
             TS_MODULE_BLOCK => {
-                TsAnyExternalModuleDeclarationBody::TsModuleBlock(TsModuleBlock { syntax })
+                AnyTsExternalModuleDeclarationBody::TsModuleBlock(TsModuleBlock { syntax })
             }
             _ => return None,
         };
@@ -30210,58 +30214,58 @@ impl AstNode for TsAnyExternalModuleDeclarationBody {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(it) => {
+            AnyTsExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(it) => {
                 &it.syntax
             }
-            TsAnyExternalModuleDeclarationBody::TsModuleBlock(it) => &it.syntax,
+            AnyTsExternalModuleDeclarationBody::TsModuleBlock(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(it) => {
+            AnyTsExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(it) => {
                 it.syntax
             }
-            TsAnyExternalModuleDeclarationBody::TsModuleBlock(it) => it.syntax,
+            AnyTsExternalModuleDeclarationBody::TsModuleBlock(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for TsAnyExternalModuleDeclarationBody {
+impl std::fmt::Debug for AnyTsExternalModuleDeclarationBody {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(it) => {
+            AnyTsExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            TsAnyExternalModuleDeclarationBody::TsModuleBlock(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsExternalModuleDeclarationBody::TsModuleBlock(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<TsAnyExternalModuleDeclarationBody> for SyntaxNode {
-    fn from(n: TsAnyExternalModuleDeclarationBody) -> SyntaxNode {
+impl From<AnyTsExternalModuleDeclarationBody> for SyntaxNode {
+    fn from(n: AnyTsExternalModuleDeclarationBody) -> SyntaxNode {
         match n {
-            TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(it) => {
+            AnyTsExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(it) => {
                 it.into()
             }
-            TsAnyExternalModuleDeclarationBody::TsModuleBlock(it) => it.into(),
+            AnyTsExternalModuleDeclarationBody::TsModuleBlock(it) => it.into(),
         }
     }
 }
-impl From<TsAnyExternalModuleDeclarationBody> for SyntaxElement {
-    fn from(n: TsAnyExternalModuleDeclarationBody) -> SyntaxElement {
+impl From<AnyTsExternalModuleDeclarationBody> for SyntaxElement {
+    fn from(n: AnyTsExternalModuleDeclarationBody) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsStaticModifier> for TsAnyIndexSignatureModifier {
-    fn from(node: JsStaticModifier) -> TsAnyIndexSignatureModifier {
-        TsAnyIndexSignatureModifier::JsStaticModifier(node)
+impl From<JsStaticModifier> for AnyTsIndexSignatureModifier {
+    fn from(node: JsStaticModifier) -> AnyTsIndexSignatureModifier {
+        AnyTsIndexSignatureModifier::JsStaticModifier(node)
     }
 }
-impl From<TsReadonlyModifier> for TsAnyIndexSignatureModifier {
-    fn from(node: TsReadonlyModifier) -> TsAnyIndexSignatureModifier {
-        TsAnyIndexSignatureModifier::TsReadonlyModifier(node)
+impl From<TsReadonlyModifier> for AnyTsIndexSignatureModifier {
+    fn from(node: TsReadonlyModifier) -> AnyTsIndexSignatureModifier {
+        AnyTsIndexSignatureModifier::TsReadonlyModifier(node)
     }
 }
-impl AstNode for TsAnyIndexSignatureModifier {
+impl AstNode for AnyTsIndexSignatureModifier {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
         JsStaticModifier::KIND_SET.union(TsReadonlyModifier::KIND_SET);
@@ -30271,10 +30275,10 @@ impl AstNode for TsAnyIndexSignatureModifier {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_STATIC_MODIFIER => {
-                TsAnyIndexSignatureModifier::JsStaticModifier(JsStaticModifier { syntax })
+                AnyTsIndexSignatureModifier::JsStaticModifier(JsStaticModifier { syntax })
             }
             TS_READONLY_MODIFIER => {
-                TsAnyIndexSignatureModifier::TsReadonlyModifier(TsReadonlyModifier { syntax })
+                AnyTsIndexSignatureModifier::TsReadonlyModifier(TsReadonlyModifier { syntax })
             }
             _ => return None,
         };
@@ -30282,60 +30286,60 @@ impl AstNode for TsAnyIndexSignatureModifier {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsAnyIndexSignatureModifier::JsStaticModifier(it) => &it.syntax,
-            TsAnyIndexSignatureModifier::TsReadonlyModifier(it) => &it.syntax,
+            AnyTsIndexSignatureModifier::JsStaticModifier(it) => &it.syntax,
+            AnyTsIndexSignatureModifier::TsReadonlyModifier(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            TsAnyIndexSignatureModifier::JsStaticModifier(it) => it.syntax,
-            TsAnyIndexSignatureModifier::TsReadonlyModifier(it) => it.syntax,
+            AnyTsIndexSignatureModifier::JsStaticModifier(it) => it.syntax,
+            AnyTsIndexSignatureModifier::TsReadonlyModifier(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for TsAnyIndexSignatureModifier {
+impl std::fmt::Debug for AnyTsIndexSignatureModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TsAnyIndexSignatureModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyIndexSignatureModifier::TsReadonlyModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsIndexSignatureModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsIndexSignatureModifier::TsReadonlyModifier(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<TsAnyIndexSignatureModifier> for SyntaxNode {
-    fn from(n: TsAnyIndexSignatureModifier) -> SyntaxNode {
+impl From<AnyTsIndexSignatureModifier> for SyntaxNode {
+    fn from(n: AnyTsIndexSignatureModifier) -> SyntaxNode {
         match n {
-            TsAnyIndexSignatureModifier::JsStaticModifier(it) => it.into(),
-            TsAnyIndexSignatureModifier::TsReadonlyModifier(it) => it.into(),
+            AnyTsIndexSignatureModifier::JsStaticModifier(it) => it.into(),
+            AnyTsIndexSignatureModifier::TsReadonlyModifier(it) => it.into(),
         }
     }
 }
-impl From<TsAnyIndexSignatureModifier> for SyntaxElement {
-    fn from(n: TsAnyIndexSignatureModifier) -> SyntaxElement {
+impl From<AnyTsIndexSignatureModifier> for SyntaxElement {
+    fn from(n: AnyTsIndexSignatureModifier) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsStaticModifier> for TsAnyMethodSignatureModifier {
-    fn from(node: JsStaticModifier) -> TsAnyMethodSignatureModifier {
-        TsAnyMethodSignatureModifier::JsStaticModifier(node)
+impl From<JsStaticModifier> for AnyTsMethodSignatureModifier {
+    fn from(node: JsStaticModifier) -> AnyTsMethodSignatureModifier {
+        AnyTsMethodSignatureModifier::JsStaticModifier(node)
     }
 }
-impl From<TsAbstractModifier> for TsAnyMethodSignatureModifier {
-    fn from(node: TsAbstractModifier) -> TsAnyMethodSignatureModifier {
-        TsAnyMethodSignatureModifier::TsAbstractModifier(node)
+impl From<TsAbstractModifier> for AnyTsMethodSignatureModifier {
+    fn from(node: TsAbstractModifier) -> AnyTsMethodSignatureModifier {
+        AnyTsMethodSignatureModifier::TsAbstractModifier(node)
     }
 }
-impl From<TsAccessibilityModifier> for TsAnyMethodSignatureModifier {
-    fn from(node: TsAccessibilityModifier) -> TsAnyMethodSignatureModifier {
-        TsAnyMethodSignatureModifier::TsAccessibilityModifier(node)
+impl From<TsAccessibilityModifier> for AnyTsMethodSignatureModifier {
+    fn from(node: TsAccessibilityModifier) -> AnyTsMethodSignatureModifier {
+        AnyTsMethodSignatureModifier::TsAccessibilityModifier(node)
     }
 }
-impl From<TsOverrideModifier> for TsAnyMethodSignatureModifier {
-    fn from(node: TsOverrideModifier) -> TsAnyMethodSignatureModifier {
-        TsAnyMethodSignatureModifier::TsOverrideModifier(node)
+impl From<TsOverrideModifier> for AnyTsMethodSignatureModifier {
+    fn from(node: TsOverrideModifier) -> AnyTsMethodSignatureModifier {
+        AnyTsMethodSignatureModifier::TsOverrideModifier(node)
     }
 }
-impl AstNode for TsAnyMethodSignatureModifier {
+impl AstNode for AnyTsMethodSignatureModifier {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsStaticModifier::KIND_SET
         .union(TsAbstractModifier::KIND_SET)
@@ -30353,18 +30357,18 @@ impl AstNode for TsAnyMethodSignatureModifier {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_STATIC_MODIFIER => {
-                TsAnyMethodSignatureModifier::JsStaticModifier(JsStaticModifier { syntax })
+                AnyTsMethodSignatureModifier::JsStaticModifier(JsStaticModifier { syntax })
             }
             TS_ABSTRACT_MODIFIER => {
-                TsAnyMethodSignatureModifier::TsAbstractModifier(TsAbstractModifier { syntax })
+                AnyTsMethodSignatureModifier::TsAbstractModifier(TsAbstractModifier { syntax })
             }
             TS_ACCESSIBILITY_MODIFIER => {
-                TsAnyMethodSignatureModifier::TsAccessibilityModifier(TsAccessibilityModifier {
+                AnyTsMethodSignatureModifier::TsAccessibilityModifier(TsAccessibilityModifier {
                     syntax,
                 })
             }
             TS_OVERRIDE_MODIFIER => {
-                TsAnyMethodSignatureModifier::TsOverrideModifier(TsOverrideModifier { syntax })
+                AnyTsMethodSignatureModifier::TsOverrideModifier(TsOverrideModifier { syntax })
             }
             _ => return None,
         };
@@ -30372,60 +30376,60 @@ impl AstNode for TsAnyMethodSignatureModifier {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsAnyMethodSignatureModifier::JsStaticModifier(it) => &it.syntax,
-            TsAnyMethodSignatureModifier::TsAbstractModifier(it) => &it.syntax,
-            TsAnyMethodSignatureModifier::TsAccessibilityModifier(it) => &it.syntax,
-            TsAnyMethodSignatureModifier::TsOverrideModifier(it) => &it.syntax,
+            AnyTsMethodSignatureModifier::JsStaticModifier(it) => &it.syntax,
+            AnyTsMethodSignatureModifier::TsAbstractModifier(it) => &it.syntax,
+            AnyTsMethodSignatureModifier::TsAccessibilityModifier(it) => &it.syntax,
+            AnyTsMethodSignatureModifier::TsOverrideModifier(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            TsAnyMethodSignatureModifier::JsStaticModifier(it) => it.syntax,
-            TsAnyMethodSignatureModifier::TsAbstractModifier(it) => it.syntax,
-            TsAnyMethodSignatureModifier::TsAccessibilityModifier(it) => it.syntax,
-            TsAnyMethodSignatureModifier::TsOverrideModifier(it) => it.syntax,
+            AnyTsMethodSignatureModifier::JsStaticModifier(it) => it.syntax,
+            AnyTsMethodSignatureModifier::TsAbstractModifier(it) => it.syntax,
+            AnyTsMethodSignatureModifier::TsAccessibilityModifier(it) => it.syntax,
+            AnyTsMethodSignatureModifier::TsOverrideModifier(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for TsAnyMethodSignatureModifier {
+impl std::fmt::Debug for AnyTsMethodSignatureModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TsAnyMethodSignatureModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyMethodSignatureModifier::TsAbstractModifier(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyMethodSignatureModifier::TsAccessibilityModifier(it) => {
+            AnyTsMethodSignatureModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsMethodSignatureModifier::TsAbstractModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsMethodSignatureModifier::TsAccessibilityModifier(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            TsAnyMethodSignatureModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsMethodSignatureModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<TsAnyMethodSignatureModifier> for SyntaxNode {
-    fn from(n: TsAnyMethodSignatureModifier) -> SyntaxNode {
+impl From<AnyTsMethodSignatureModifier> for SyntaxNode {
+    fn from(n: AnyTsMethodSignatureModifier) -> SyntaxNode {
         match n {
-            TsAnyMethodSignatureModifier::JsStaticModifier(it) => it.into(),
-            TsAnyMethodSignatureModifier::TsAbstractModifier(it) => it.into(),
-            TsAnyMethodSignatureModifier::TsAccessibilityModifier(it) => it.into(),
-            TsAnyMethodSignatureModifier::TsOverrideModifier(it) => it.into(),
+            AnyTsMethodSignatureModifier::JsStaticModifier(it) => it.into(),
+            AnyTsMethodSignatureModifier::TsAbstractModifier(it) => it.into(),
+            AnyTsMethodSignatureModifier::TsAccessibilityModifier(it) => it.into(),
+            AnyTsMethodSignatureModifier::TsOverrideModifier(it) => it.into(),
         }
     }
 }
-impl From<TsAnyMethodSignatureModifier> for SyntaxElement {
-    fn from(n: TsAnyMethodSignatureModifier) -> SyntaxElement {
+impl From<AnyTsMethodSignatureModifier> for SyntaxElement {
+    fn from(n: AnyTsMethodSignatureModifier) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<TsIdentifierBinding> for TsAnyModuleName {
-    fn from(node: TsIdentifierBinding) -> TsAnyModuleName {
-        TsAnyModuleName::TsIdentifierBinding(node)
+impl From<TsIdentifierBinding> for AnyTsModuleName {
+    fn from(node: TsIdentifierBinding) -> AnyTsModuleName {
+        AnyTsModuleName::TsIdentifierBinding(node)
     }
 }
-impl From<TsQualifiedModuleName> for TsAnyModuleName {
-    fn from(node: TsQualifiedModuleName) -> TsAnyModuleName {
-        TsAnyModuleName::TsQualifiedModuleName(node)
+impl From<TsQualifiedModuleName> for AnyTsModuleName {
+    fn from(node: TsQualifiedModuleName) -> AnyTsModuleName {
+        AnyTsModuleName::TsQualifiedModuleName(node)
     }
 }
-impl AstNode for TsAnyModuleName {
+impl AstNode for AnyTsModuleName {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
         TsIdentifierBinding::KIND_SET.union(TsQualifiedModuleName::KIND_SET);
@@ -30435,10 +30439,10 @@ impl AstNode for TsAnyModuleName {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             TS_IDENTIFIER_BINDING => {
-                TsAnyModuleName::TsIdentifierBinding(TsIdentifierBinding { syntax })
+                AnyTsModuleName::TsIdentifierBinding(TsIdentifierBinding { syntax })
             }
             TS_QUALIFIED_MODULE_NAME => {
-                TsAnyModuleName::TsQualifiedModuleName(TsQualifiedModuleName { syntax })
+                AnyTsModuleName::TsQualifiedModuleName(TsQualifiedModuleName { syntax })
             }
             _ => return None,
         };
@@ -30446,65 +30450,65 @@ impl AstNode for TsAnyModuleName {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsAnyModuleName::TsIdentifierBinding(it) => &it.syntax,
-            TsAnyModuleName::TsQualifiedModuleName(it) => &it.syntax,
+            AnyTsModuleName::TsIdentifierBinding(it) => &it.syntax,
+            AnyTsModuleName::TsQualifiedModuleName(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            TsAnyModuleName::TsIdentifierBinding(it) => it.syntax,
-            TsAnyModuleName::TsQualifiedModuleName(it) => it.syntax,
+            AnyTsModuleName::TsIdentifierBinding(it) => it.syntax,
+            AnyTsModuleName::TsQualifiedModuleName(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for TsAnyModuleName {
+impl std::fmt::Debug for AnyTsModuleName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TsAnyModuleName::TsIdentifierBinding(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyModuleName::TsQualifiedModuleName(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsModuleName::TsIdentifierBinding(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsModuleName::TsQualifiedModuleName(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<TsAnyModuleName> for SyntaxNode {
-    fn from(n: TsAnyModuleName) -> SyntaxNode {
+impl From<AnyTsModuleName> for SyntaxNode {
+    fn from(n: AnyTsModuleName) -> SyntaxNode {
         match n {
-            TsAnyModuleName::TsIdentifierBinding(it) => it.into(),
-            TsAnyModuleName::TsQualifiedModuleName(it) => it.into(),
+            AnyTsModuleName::TsIdentifierBinding(it) => it.into(),
+            AnyTsModuleName::TsQualifiedModuleName(it) => it.into(),
         }
     }
 }
-impl From<TsAnyModuleName> for SyntaxElement {
-    fn from(n: TsAnyModuleName) -> SyntaxElement {
+impl From<AnyTsModuleName> for SyntaxElement {
+    fn from(n: AnyTsModuleName) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<TsExternalModuleReference> for TsAnyModuleReference {
-    fn from(node: TsExternalModuleReference) -> TsAnyModuleReference {
-        TsAnyModuleReference::TsExternalModuleReference(node)
+impl From<TsExternalModuleReference> for AnyTsModuleReference {
+    fn from(node: TsExternalModuleReference) -> AnyTsModuleReference {
+        AnyTsModuleReference::TsExternalModuleReference(node)
     }
 }
-impl AstNode for TsAnyModuleReference {
+impl AstNode for AnyTsModuleReference {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        TsAnyName::KIND_SET.union(TsExternalModuleReference::KIND_SET);
+        AnyTsName::KIND_SET.union(TsExternalModuleReference::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             TS_EXTERNAL_MODULE_REFERENCE => true,
-            k if TsAnyName::can_cast(k) => true,
+            k if AnyTsName::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             TS_EXTERNAL_MODULE_REFERENCE => {
-                TsAnyModuleReference::TsExternalModuleReference(TsExternalModuleReference {
+                AnyTsModuleReference::TsExternalModuleReference(TsExternalModuleReference {
                     syntax,
                 })
             }
             _ => {
-                if let Some(ts_any_name) = TsAnyName::cast(syntax) {
-                    return Some(TsAnyModuleReference::TsAnyName(ts_any_name));
+                if let Some(any_ts_name) = AnyTsName::cast(syntax) {
+                    return Some(AnyTsModuleReference::AnyTsName(any_ts_name));
                 }
                 return None;
             }
@@ -30513,46 +30517,46 @@ impl AstNode for TsAnyModuleReference {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsAnyModuleReference::TsExternalModuleReference(it) => &it.syntax,
-            TsAnyModuleReference::TsAnyName(it) => it.syntax(),
+            AnyTsModuleReference::TsExternalModuleReference(it) => &it.syntax,
+            AnyTsModuleReference::AnyTsName(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            TsAnyModuleReference::TsExternalModuleReference(it) => it.syntax,
-            TsAnyModuleReference::TsAnyName(it) => it.into_syntax(),
+            AnyTsModuleReference::TsExternalModuleReference(it) => it.syntax,
+            AnyTsModuleReference::AnyTsName(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for TsAnyModuleReference {
+impl std::fmt::Debug for AnyTsModuleReference {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TsAnyModuleReference::TsAnyName(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyModuleReference::TsExternalModuleReference(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsModuleReference::AnyTsName(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsModuleReference::TsExternalModuleReference(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<TsAnyModuleReference> for SyntaxNode {
-    fn from(n: TsAnyModuleReference) -> SyntaxNode {
+impl From<AnyTsModuleReference> for SyntaxNode {
+    fn from(n: AnyTsModuleReference) -> SyntaxNode {
         match n {
-            TsAnyModuleReference::TsAnyName(it) => it.into(),
-            TsAnyModuleReference::TsExternalModuleReference(it) => it.into(),
+            AnyTsModuleReference::AnyTsName(it) => it.into(),
+            AnyTsModuleReference::TsExternalModuleReference(it) => it.into(),
         }
     }
 }
-impl From<TsAnyModuleReference> for SyntaxElement {
-    fn from(n: TsAnyModuleReference) -> SyntaxElement {
+impl From<AnyTsModuleReference> for SyntaxElement {
+    fn from(n: AnyTsModuleReference) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsReferenceIdentifier> for TsAnyName {
-    fn from(node: JsReferenceIdentifier) -> TsAnyName { TsAnyName::JsReferenceIdentifier(node) }
+impl From<JsReferenceIdentifier> for AnyTsName {
+    fn from(node: JsReferenceIdentifier) -> AnyTsName { AnyTsName::JsReferenceIdentifier(node) }
 }
-impl From<TsQualifiedName> for TsAnyName {
-    fn from(node: TsQualifiedName) -> TsAnyName { TsAnyName::TsQualifiedName(node) }
+impl From<TsQualifiedName> for AnyTsName {
+    fn from(node: TsQualifiedName) -> AnyTsName { AnyTsName::TsQualifiedName(node) }
 }
-impl AstNode for TsAnyName {
+impl AstNode for AnyTsName {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
         JsReferenceIdentifier::KIND_SET.union(TsQualifiedName::KIND_SET);
@@ -30562,64 +30566,64 @@ impl AstNode for TsAnyName {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_REFERENCE_IDENTIFIER => {
-                TsAnyName::JsReferenceIdentifier(JsReferenceIdentifier { syntax })
+                AnyTsName::JsReferenceIdentifier(JsReferenceIdentifier { syntax })
             }
-            TS_QUALIFIED_NAME => TsAnyName::TsQualifiedName(TsQualifiedName { syntax }),
+            TS_QUALIFIED_NAME => AnyTsName::TsQualifiedName(TsQualifiedName { syntax }),
             _ => return None,
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsAnyName::JsReferenceIdentifier(it) => &it.syntax,
-            TsAnyName::TsQualifiedName(it) => &it.syntax,
+            AnyTsName::JsReferenceIdentifier(it) => &it.syntax,
+            AnyTsName::TsQualifiedName(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            TsAnyName::JsReferenceIdentifier(it) => it.syntax,
-            TsAnyName::TsQualifiedName(it) => it.syntax,
+            AnyTsName::JsReferenceIdentifier(it) => it.syntax,
+            AnyTsName::TsQualifiedName(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for TsAnyName {
+impl std::fmt::Debug for AnyTsName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TsAnyName::JsReferenceIdentifier(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyName::TsQualifiedName(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsName::JsReferenceIdentifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsName::TsQualifiedName(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<TsAnyName> for SyntaxNode {
-    fn from(n: TsAnyName) -> SyntaxNode {
+impl From<AnyTsName> for SyntaxNode {
+    fn from(n: AnyTsName) -> SyntaxNode {
         match n {
-            TsAnyName::JsReferenceIdentifier(it) => it.into(),
-            TsAnyName::TsQualifiedName(it) => it.into(),
+            AnyTsName::JsReferenceIdentifier(it) => it.into(),
+            AnyTsName::TsQualifiedName(it) => it.into(),
         }
     }
 }
-impl From<TsAnyName> for SyntaxElement {
-    fn from(n: TsAnyName) -> SyntaxElement {
+impl From<AnyTsName> for SyntaxElement {
+    fn from(n: AnyTsName) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<TsDefinitePropertyAnnotation> for TsAnyPropertyAnnotation {
-    fn from(node: TsDefinitePropertyAnnotation) -> TsAnyPropertyAnnotation {
-        TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(node)
+impl From<TsDefinitePropertyAnnotation> for AnyTsPropertyAnnotation {
+    fn from(node: TsDefinitePropertyAnnotation) -> AnyTsPropertyAnnotation {
+        AnyTsPropertyAnnotation::TsDefinitePropertyAnnotation(node)
     }
 }
-impl From<TsOptionalPropertyAnnotation> for TsAnyPropertyAnnotation {
-    fn from(node: TsOptionalPropertyAnnotation) -> TsAnyPropertyAnnotation {
-        TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(node)
+impl From<TsOptionalPropertyAnnotation> for AnyTsPropertyAnnotation {
+    fn from(node: TsOptionalPropertyAnnotation) -> AnyTsPropertyAnnotation {
+        AnyTsPropertyAnnotation::TsOptionalPropertyAnnotation(node)
     }
 }
-impl From<TsTypeAnnotation> for TsAnyPropertyAnnotation {
-    fn from(node: TsTypeAnnotation) -> TsAnyPropertyAnnotation {
-        TsAnyPropertyAnnotation::TsTypeAnnotation(node)
+impl From<TsTypeAnnotation> for AnyTsPropertyAnnotation {
+    fn from(node: TsTypeAnnotation) -> AnyTsPropertyAnnotation {
+        AnyTsPropertyAnnotation::TsTypeAnnotation(node)
     }
 }
-impl AstNode for TsAnyPropertyAnnotation {
+impl AstNode for AnyTsPropertyAnnotation {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = TsDefinitePropertyAnnotation::KIND_SET
         .union(TsOptionalPropertyAnnotation::KIND_SET)
@@ -30633,17 +30637,17 @@ impl AstNode for TsAnyPropertyAnnotation {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             TS_DEFINITE_PROPERTY_ANNOTATION => {
-                TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(
+                AnyTsPropertyAnnotation::TsDefinitePropertyAnnotation(
                     TsDefinitePropertyAnnotation { syntax },
                 )
             }
             TS_OPTIONAL_PROPERTY_ANNOTATION => {
-                TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(
+                AnyTsPropertyAnnotation::TsOptionalPropertyAnnotation(
                     TsOptionalPropertyAnnotation { syntax },
                 )
             }
             TS_TYPE_ANNOTATION => {
-                TsAnyPropertyAnnotation::TsTypeAnnotation(TsTypeAnnotation { syntax })
+                AnyTsPropertyAnnotation::TsTypeAnnotation(TsTypeAnnotation { syntax })
             }
             _ => return None,
         };
@@ -30651,63 +30655,63 @@ impl AstNode for TsAnyPropertyAnnotation {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(it) => &it.syntax,
-            TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(it) => &it.syntax,
-            TsAnyPropertyAnnotation::TsTypeAnnotation(it) => &it.syntax,
+            AnyTsPropertyAnnotation::TsDefinitePropertyAnnotation(it) => &it.syntax,
+            AnyTsPropertyAnnotation::TsOptionalPropertyAnnotation(it) => &it.syntax,
+            AnyTsPropertyAnnotation::TsTypeAnnotation(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(it) => it.syntax,
-            TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(it) => it.syntax,
-            TsAnyPropertyAnnotation::TsTypeAnnotation(it) => it.syntax,
+            AnyTsPropertyAnnotation::TsDefinitePropertyAnnotation(it) => it.syntax,
+            AnyTsPropertyAnnotation::TsOptionalPropertyAnnotation(it) => it.syntax,
+            AnyTsPropertyAnnotation::TsTypeAnnotation(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for TsAnyPropertyAnnotation {
+impl std::fmt::Debug for AnyTsPropertyAnnotation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(it) => {
+            AnyTsPropertyAnnotation::TsDefinitePropertyAnnotation(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(it) => {
+            AnyTsPropertyAnnotation::TsOptionalPropertyAnnotation(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            TsAnyPropertyAnnotation::TsTypeAnnotation(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsPropertyAnnotation::TsTypeAnnotation(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<TsAnyPropertyAnnotation> for SyntaxNode {
-    fn from(n: TsAnyPropertyAnnotation) -> SyntaxNode {
+impl From<AnyTsPropertyAnnotation> for SyntaxNode {
+    fn from(n: AnyTsPropertyAnnotation) -> SyntaxNode {
         match n {
-            TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(it) => it.into(),
-            TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(it) => it.into(),
-            TsAnyPropertyAnnotation::TsTypeAnnotation(it) => it.into(),
+            AnyTsPropertyAnnotation::TsDefinitePropertyAnnotation(it) => it.into(),
+            AnyTsPropertyAnnotation::TsOptionalPropertyAnnotation(it) => it.into(),
+            AnyTsPropertyAnnotation::TsTypeAnnotation(it) => it.into(),
         }
     }
 }
-impl From<TsAnyPropertyAnnotation> for SyntaxElement {
-    fn from(n: TsAnyPropertyAnnotation) -> SyntaxElement {
+impl From<AnyTsPropertyAnnotation> for SyntaxElement {
+    fn from(n: AnyTsPropertyAnnotation) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<TsAccessibilityModifier> for TsAnyPropertyParameterModifier {
-    fn from(node: TsAccessibilityModifier) -> TsAnyPropertyParameterModifier {
-        TsAnyPropertyParameterModifier::TsAccessibilityModifier(node)
+impl From<TsAccessibilityModifier> for AnyTsPropertyParameterModifier {
+    fn from(node: TsAccessibilityModifier) -> AnyTsPropertyParameterModifier {
+        AnyTsPropertyParameterModifier::TsAccessibilityModifier(node)
     }
 }
-impl From<TsOverrideModifier> for TsAnyPropertyParameterModifier {
-    fn from(node: TsOverrideModifier) -> TsAnyPropertyParameterModifier {
-        TsAnyPropertyParameterModifier::TsOverrideModifier(node)
+impl From<TsOverrideModifier> for AnyTsPropertyParameterModifier {
+    fn from(node: TsOverrideModifier) -> AnyTsPropertyParameterModifier {
+        AnyTsPropertyParameterModifier::TsOverrideModifier(node)
     }
 }
-impl From<TsReadonlyModifier> for TsAnyPropertyParameterModifier {
-    fn from(node: TsReadonlyModifier) -> TsAnyPropertyParameterModifier {
-        TsAnyPropertyParameterModifier::TsReadonlyModifier(node)
+impl From<TsReadonlyModifier> for AnyTsPropertyParameterModifier {
+    fn from(node: TsReadonlyModifier) -> AnyTsPropertyParameterModifier {
+        AnyTsPropertyParameterModifier::TsReadonlyModifier(node)
     }
 }
-impl AstNode for TsAnyPropertyParameterModifier {
+impl AstNode for AnyTsPropertyParameterModifier {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = TsAccessibilityModifier::KIND_SET
         .union(TsOverrideModifier::KIND_SET)
@@ -30721,15 +30725,15 @@ impl AstNode for TsAnyPropertyParameterModifier {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             TS_ACCESSIBILITY_MODIFIER => {
-                TsAnyPropertyParameterModifier::TsAccessibilityModifier(TsAccessibilityModifier {
+                AnyTsPropertyParameterModifier::TsAccessibilityModifier(TsAccessibilityModifier {
                     syntax,
                 })
             }
             TS_OVERRIDE_MODIFIER => {
-                TsAnyPropertyParameterModifier::TsOverrideModifier(TsOverrideModifier { syntax })
+                AnyTsPropertyParameterModifier::TsOverrideModifier(TsOverrideModifier { syntax })
             }
             TS_READONLY_MODIFIER => {
-                TsAnyPropertyParameterModifier::TsReadonlyModifier(TsReadonlyModifier { syntax })
+                AnyTsPropertyParameterModifier::TsReadonlyModifier(TsReadonlyModifier { syntax })
             }
             _ => return None,
         };
@@ -30737,56 +30741,56 @@ impl AstNode for TsAnyPropertyParameterModifier {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsAnyPropertyParameterModifier::TsAccessibilityModifier(it) => &it.syntax,
-            TsAnyPropertyParameterModifier::TsOverrideModifier(it) => &it.syntax,
-            TsAnyPropertyParameterModifier::TsReadonlyModifier(it) => &it.syntax,
+            AnyTsPropertyParameterModifier::TsAccessibilityModifier(it) => &it.syntax,
+            AnyTsPropertyParameterModifier::TsOverrideModifier(it) => &it.syntax,
+            AnyTsPropertyParameterModifier::TsReadonlyModifier(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            TsAnyPropertyParameterModifier::TsAccessibilityModifier(it) => it.syntax,
-            TsAnyPropertyParameterModifier::TsOverrideModifier(it) => it.syntax,
-            TsAnyPropertyParameterModifier::TsReadonlyModifier(it) => it.syntax,
+            AnyTsPropertyParameterModifier::TsAccessibilityModifier(it) => it.syntax,
+            AnyTsPropertyParameterModifier::TsOverrideModifier(it) => it.syntax,
+            AnyTsPropertyParameterModifier::TsReadonlyModifier(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for TsAnyPropertyParameterModifier {
+impl std::fmt::Debug for AnyTsPropertyParameterModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TsAnyPropertyParameterModifier::TsAccessibilityModifier(it) => {
+            AnyTsPropertyParameterModifier::TsAccessibilityModifier(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            TsAnyPropertyParameterModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyPropertyParameterModifier::TsReadonlyModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsPropertyParameterModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsPropertyParameterModifier::TsReadonlyModifier(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<TsAnyPropertyParameterModifier> for SyntaxNode {
-    fn from(n: TsAnyPropertyParameterModifier) -> SyntaxNode {
+impl From<AnyTsPropertyParameterModifier> for SyntaxNode {
+    fn from(n: AnyTsPropertyParameterModifier) -> SyntaxNode {
         match n {
-            TsAnyPropertyParameterModifier::TsAccessibilityModifier(it) => it.into(),
-            TsAnyPropertyParameterModifier::TsOverrideModifier(it) => it.into(),
-            TsAnyPropertyParameterModifier::TsReadonlyModifier(it) => it.into(),
+            AnyTsPropertyParameterModifier::TsAccessibilityModifier(it) => it.into(),
+            AnyTsPropertyParameterModifier::TsOverrideModifier(it) => it.into(),
+            AnyTsPropertyParameterModifier::TsReadonlyModifier(it) => it.into(),
         }
     }
 }
-impl From<TsAnyPropertyParameterModifier> for SyntaxElement {
-    fn from(n: TsAnyPropertyParameterModifier) -> SyntaxElement {
+impl From<AnyTsPropertyParameterModifier> for SyntaxElement {
+    fn from(n: AnyTsPropertyParameterModifier) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<TsOptionalPropertyAnnotation> for TsAnyPropertySignatureAnnotation {
-    fn from(node: TsOptionalPropertyAnnotation) -> TsAnyPropertySignatureAnnotation {
-        TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(node)
+impl From<TsOptionalPropertyAnnotation> for AnyTsPropertySignatureAnnotation {
+    fn from(node: TsOptionalPropertyAnnotation) -> AnyTsPropertySignatureAnnotation {
+        AnyTsPropertySignatureAnnotation::TsOptionalPropertyAnnotation(node)
     }
 }
-impl From<TsTypeAnnotation> for TsAnyPropertySignatureAnnotation {
-    fn from(node: TsTypeAnnotation) -> TsAnyPropertySignatureAnnotation {
-        TsAnyPropertySignatureAnnotation::TsTypeAnnotation(node)
+impl From<TsTypeAnnotation> for AnyTsPropertySignatureAnnotation {
+    fn from(node: TsTypeAnnotation) -> AnyTsPropertySignatureAnnotation {
+        AnyTsPropertySignatureAnnotation::TsTypeAnnotation(node)
     }
 }
-impl AstNode for TsAnyPropertySignatureAnnotation {
+impl AstNode for AnyTsPropertySignatureAnnotation {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
         TsOptionalPropertyAnnotation::KIND_SET.union(TsTypeAnnotation::KIND_SET);
@@ -30796,12 +30800,12 @@ impl AstNode for TsAnyPropertySignatureAnnotation {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             TS_OPTIONAL_PROPERTY_ANNOTATION => {
-                TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(
+                AnyTsPropertySignatureAnnotation::TsOptionalPropertyAnnotation(
                     TsOptionalPropertyAnnotation { syntax },
                 )
             }
             TS_TYPE_ANNOTATION => {
-                TsAnyPropertySignatureAnnotation::TsTypeAnnotation(TsTypeAnnotation { syntax })
+                AnyTsPropertySignatureAnnotation::TsTypeAnnotation(TsTypeAnnotation { syntax })
             }
             _ => return None,
         };
@@ -30809,72 +30813,72 @@ impl AstNode for TsAnyPropertySignatureAnnotation {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(it) => &it.syntax,
-            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(it) => &it.syntax,
+            AnyTsPropertySignatureAnnotation::TsOptionalPropertyAnnotation(it) => &it.syntax,
+            AnyTsPropertySignatureAnnotation::TsTypeAnnotation(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(it) => it.syntax,
-            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(it) => it.syntax,
+            AnyTsPropertySignatureAnnotation::TsOptionalPropertyAnnotation(it) => it.syntax,
+            AnyTsPropertySignatureAnnotation::TsTypeAnnotation(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for TsAnyPropertySignatureAnnotation {
+impl std::fmt::Debug for AnyTsPropertySignatureAnnotation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(it) => {
+            AnyTsPropertySignatureAnnotation::TsOptionalPropertyAnnotation(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsPropertySignatureAnnotation::TsTypeAnnotation(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<TsAnyPropertySignatureAnnotation> for SyntaxNode {
-    fn from(n: TsAnyPropertySignatureAnnotation) -> SyntaxNode {
+impl From<AnyTsPropertySignatureAnnotation> for SyntaxNode {
+    fn from(n: AnyTsPropertySignatureAnnotation) -> SyntaxNode {
         match n {
-            TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(it) => it.into(),
-            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(it) => it.into(),
+            AnyTsPropertySignatureAnnotation::TsOptionalPropertyAnnotation(it) => it.into(),
+            AnyTsPropertySignatureAnnotation::TsTypeAnnotation(it) => it.into(),
         }
     }
 }
-impl From<TsAnyPropertySignatureAnnotation> for SyntaxElement {
-    fn from(n: TsAnyPropertySignatureAnnotation) -> SyntaxElement {
+impl From<AnyTsPropertySignatureAnnotation> for SyntaxElement {
+    fn from(n: AnyTsPropertySignatureAnnotation) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsStaticModifier> for TsAnyPropertySignatureModifier {
-    fn from(node: JsStaticModifier) -> TsAnyPropertySignatureModifier {
-        TsAnyPropertySignatureModifier::JsStaticModifier(node)
+impl From<JsStaticModifier> for AnyTsPropertySignatureModifier {
+    fn from(node: JsStaticModifier) -> AnyTsPropertySignatureModifier {
+        AnyTsPropertySignatureModifier::JsStaticModifier(node)
     }
 }
-impl From<TsAbstractModifier> for TsAnyPropertySignatureModifier {
-    fn from(node: TsAbstractModifier) -> TsAnyPropertySignatureModifier {
-        TsAnyPropertySignatureModifier::TsAbstractModifier(node)
+impl From<TsAbstractModifier> for AnyTsPropertySignatureModifier {
+    fn from(node: TsAbstractModifier) -> AnyTsPropertySignatureModifier {
+        AnyTsPropertySignatureModifier::TsAbstractModifier(node)
     }
 }
-impl From<TsAccessibilityModifier> for TsAnyPropertySignatureModifier {
-    fn from(node: TsAccessibilityModifier) -> TsAnyPropertySignatureModifier {
-        TsAnyPropertySignatureModifier::TsAccessibilityModifier(node)
+impl From<TsAccessibilityModifier> for AnyTsPropertySignatureModifier {
+    fn from(node: TsAccessibilityModifier) -> AnyTsPropertySignatureModifier {
+        AnyTsPropertySignatureModifier::TsAccessibilityModifier(node)
     }
 }
-impl From<TsDeclareModifier> for TsAnyPropertySignatureModifier {
-    fn from(node: TsDeclareModifier) -> TsAnyPropertySignatureModifier {
-        TsAnyPropertySignatureModifier::TsDeclareModifier(node)
+impl From<TsDeclareModifier> for AnyTsPropertySignatureModifier {
+    fn from(node: TsDeclareModifier) -> AnyTsPropertySignatureModifier {
+        AnyTsPropertySignatureModifier::TsDeclareModifier(node)
     }
 }
-impl From<TsOverrideModifier> for TsAnyPropertySignatureModifier {
-    fn from(node: TsOverrideModifier) -> TsAnyPropertySignatureModifier {
-        TsAnyPropertySignatureModifier::TsOverrideModifier(node)
+impl From<TsOverrideModifier> for AnyTsPropertySignatureModifier {
+    fn from(node: TsOverrideModifier) -> AnyTsPropertySignatureModifier {
+        AnyTsPropertySignatureModifier::TsOverrideModifier(node)
     }
 }
-impl From<TsReadonlyModifier> for TsAnyPropertySignatureModifier {
-    fn from(node: TsReadonlyModifier) -> TsAnyPropertySignatureModifier {
-        TsAnyPropertySignatureModifier::TsReadonlyModifier(node)
+impl From<TsReadonlyModifier> for AnyTsPropertySignatureModifier {
+    fn from(node: TsReadonlyModifier) -> AnyTsPropertySignatureModifier {
+        AnyTsPropertySignatureModifier::TsReadonlyModifier(node)
     }
 }
-impl AstNode for TsAnyPropertySignatureModifier {
+impl AstNode for AnyTsPropertySignatureModifier {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsStaticModifier::KIND_SET
         .union(TsAbstractModifier::KIND_SET)
@@ -30896,24 +30900,24 @@ impl AstNode for TsAnyPropertySignatureModifier {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_STATIC_MODIFIER => {
-                TsAnyPropertySignatureModifier::JsStaticModifier(JsStaticModifier { syntax })
+                AnyTsPropertySignatureModifier::JsStaticModifier(JsStaticModifier { syntax })
             }
             TS_ABSTRACT_MODIFIER => {
-                TsAnyPropertySignatureModifier::TsAbstractModifier(TsAbstractModifier { syntax })
+                AnyTsPropertySignatureModifier::TsAbstractModifier(TsAbstractModifier { syntax })
             }
             TS_ACCESSIBILITY_MODIFIER => {
-                TsAnyPropertySignatureModifier::TsAccessibilityModifier(TsAccessibilityModifier {
+                AnyTsPropertySignatureModifier::TsAccessibilityModifier(TsAccessibilityModifier {
                     syntax,
                 })
             }
             TS_DECLARE_MODIFIER => {
-                TsAnyPropertySignatureModifier::TsDeclareModifier(TsDeclareModifier { syntax })
+                AnyTsPropertySignatureModifier::TsDeclareModifier(TsDeclareModifier { syntax })
             }
             TS_OVERRIDE_MODIFIER => {
-                TsAnyPropertySignatureModifier::TsOverrideModifier(TsOverrideModifier { syntax })
+                AnyTsPropertySignatureModifier::TsOverrideModifier(TsOverrideModifier { syntax })
             }
             TS_READONLY_MODIFIER => {
-                TsAnyPropertySignatureModifier::TsReadonlyModifier(TsReadonlyModifier { syntax })
+                AnyTsPropertySignatureModifier::TsReadonlyModifier(TsReadonlyModifier { syntax })
             }
             _ => return None,
         };
@@ -30921,90 +30925,90 @@ impl AstNode for TsAnyPropertySignatureModifier {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsAnyPropertySignatureModifier::JsStaticModifier(it) => &it.syntax,
-            TsAnyPropertySignatureModifier::TsAbstractModifier(it) => &it.syntax,
-            TsAnyPropertySignatureModifier::TsAccessibilityModifier(it) => &it.syntax,
-            TsAnyPropertySignatureModifier::TsDeclareModifier(it) => &it.syntax,
-            TsAnyPropertySignatureModifier::TsOverrideModifier(it) => &it.syntax,
-            TsAnyPropertySignatureModifier::TsReadonlyModifier(it) => &it.syntax,
+            AnyTsPropertySignatureModifier::JsStaticModifier(it) => &it.syntax,
+            AnyTsPropertySignatureModifier::TsAbstractModifier(it) => &it.syntax,
+            AnyTsPropertySignatureModifier::TsAccessibilityModifier(it) => &it.syntax,
+            AnyTsPropertySignatureModifier::TsDeclareModifier(it) => &it.syntax,
+            AnyTsPropertySignatureModifier::TsOverrideModifier(it) => &it.syntax,
+            AnyTsPropertySignatureModifier::TsReadonlyModifier(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            TsAnyPropertySignatureModifier::JsStaticModifier(it) => it.syntax,
-            TsAnyPropertySignatureModifier::TsAbstractModifier(it) => it.syntax,
-            TsAnyPropertySignatureModifier::TsAccessibilityModifier(it) => it.syntax,
-            TsAnyPropertySignatureModifier::TsDeclareModifier(it) => it.syntax,
-            TsAnyPropertySignatureModifier::TsOverrideModifier(it) => it.syntax,
-            TsAnyPropertySignatureModifier::TsReadonlyModifier(it) => it.syntax,
+            AnyTsPropertySignatureModifier::JsStaticModifier(it) => it.syntax,
+            AnyTsPropertySignatureModifier::TsAbstractModifier(it) => it.syntax,
+            AnyTsPropertySignatureModifier::TsAccessibilityModifier(it) => it.syntax,
+            AnyTsPropertySignatureModifier::TsDeclareModifier(it) => it.syntax,
+            AnyTsPropertySignatureModifier::TsOverrideModifier(it) => it.syntax,
+            AnyTsPropertySignatureModifier::TsReadonlyModifier(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for TsAnyPropertySignatureModifier {
+impl std::fmt::Debug for AnyTsPropertySignatureModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TsAnyPropertySignatureModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyPropertySignatureModifier::TsAbstractModifier(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyPropertySignatureModifier::TsAccessibilityModifier(it) => {
+            AnyTsPropertySignatureModifier::JsStaticModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsPropertySignatureModifier::TsAbstractModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsPropertySignatureModifier::TsAccessibilityModifier(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            TsAnyPropertySignatureModifier::TsDeclareModifier(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyPropertySignatureModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyPropertySignatureModifier::TsReadonlyModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsPropertySignatureModifier::TsDeclareModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsPropertySignatureModifier::TsOverrideModifier(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsPropertySignatureModifier::TsReadonlyModifier(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<TsAnyPropertySignatureModifier> for SyntaxNode {
-    fn from(n: TsAnyPropertySignatureModifier) -> SyntaxNode {
+impl From<AnyTsPropertySignatureModifier> for SyntaxNode {
+    fn from(n: AnyTsPropertySignatureModifier) -> SyntaxNode {
         match n {
-            TsAnyPropertySignatureModifier::JsStaticModifier(it) => it.into(),
-            TsAnyPropertySignatureModifier::TsAbstractModifier(it) => it.into(),
-            TsAnyPropertySignatureModifier::TsAccessibilityModifier(it) => it.into(),
-            TsAnyPropertySignatureModifier::TsDeclareModifier(it) => it.into(),
-            TsAnyPropertySignatureModifier::TsOverrideModifier(it) => it.into(),
-            TsAnyPropertySignatureModifier::TsReadonlyModifier(it) => it.into(),
+            AnyTsPropertySignatureModifier::JsStaticModifier(it) => it.into(),
+            AnyTsPropertySignatureModifier::TsAbstractModifier(it) => it.into(),
+            AnyTsPropertySignatureModifier::TsAccessibilityModifier(it) => it.into(),
+            AnyTsPropertySignatureModifier::TsDeclareModifier(it) => it.into(),
+            AnyTsPropertySignatureModifier::TsOverrideModifier(it) => it.into(),
+            AnyTsPropertySignatureModifier::TsReadonlyModifier(it) => it.into(),
         }
     }
 }
-impl From<TsAnyPropertySignatureModifier> for SyntaxElement {
-    fn from(n: TsAnyPropertySignatureModifier) -> SyntaxElement {
+impl From<AnyTsPropertySignatureModifier> for SyntaxElement {
+    fn from(n: AnyTsPropertySignatureModifier) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<TsAssertsReturnType> for TsAnyReturnType {
-    fn from(node: TsAssertsReturnType) -> TsAnyReturnType {
-        TsAnyReturnType::TsAssertsReturnType(node)
+impl From<TsAssertsReturnType> for AnyTsReturnType {
+    fn from(node: TsAssertsReturnType) -> AnyTsReturnType {
+        AnyTsReturnType::TsAssertsReturnType(node)
     }
 }
-impl From<TsPredicateReturnType> for TsAnyReturnType {
-    fn from(node: TsPredicateReturnType) -> TsAnyReturnType {
-        TsAnyReturnType::TsPredicateReturnType(node)
+impl From<TsPredicateReturnType> for AnyTsReturnType {
+    fn from(node: TsPredicateReturnType) -> AnyTsReturnType {
+        AnyTsReturnType::TsPredicateReturnType(node)
     }
 }
-impl AstNode for TsAnyReturnType {
+impl AstNode for AnyTsReturnType {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = TsAssertsReturnType::KIND_SET
-        .union(TsPredicateReturnType::KIND_SET)
-        .union(TsType::KIND_SET);
+    const KIND_SET: SyntaxKindSet<Language> = AnyTsType::KIND_SET
+        .union(TsAssertsReturnType::KIND_SET)
+        .union(TsPredicateReturnType::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             TS_ASSERTS_RETURN_TYPE | TS_PREDICATE_RETURN_TYPE => true,
-            k if TsType::can_cast(k) => true,
+            k if AnyTsType::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             TS_ASSERTS_RETURN_TYPE => {
-                TsAnyReturnType::TsAssertsReturnType(TsAssertsReturnType { syntax })
+                AnyTsReturnType::TsAssertsReturnType(TsAssertsReturnType { syntax })
             }
             TS_PREDICATE_RETURN_TYPE => {
-                TsAnyReturnType::TsPredicateReturnType(TsPredicateReturnType { syntax })
+                AnyTsReturnType::TsPredicateReturnType(TsPredicateReturnType { syntax })
             }
             _ => {
-                if let Some(ts_type) = TsType::cast(syntax) {
-                    return Some(TsAnyReturnType::TsType(ts_type));
+                if let Some(any_ts_type) = AnyTsType::cast(syntax) {
+                    return Some(AnyTsReturnType::AnyTsType(any_ts_type));
                 }
                 return None;
             }
@@ -31013,54 +31017,54 @@ impl AstNode for TsAnyReturnType {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsAnyReturnType::TsAssertsReturnType(it) => &it.syntax,
-            TsAnyReturnType::TsPredicateReturnType(it) => &it.syntax,
-            TsAnyReturnType::TsType(it) => it.syntax(),
+            AnyTsReturnType::TsAssertsReturnType(it) => &it.syntax,
+            AnyTsReturnType::TsPredicateReturnType(it) => &it.syntax,
+            AnyTsReturnType::AnyTsType(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            TsAnyReturnType::TsAssertsReturnType(it) => it.syntax,
-            TsAnyReturnType::TsPredicateReturnType(it) => it.syntax,
-            TsAnyReturnType::TsType(it) => it.into_syntax(),
+            AnyTsReturnType::TsAssertsReturnType(it) => it.syntax,
+            AnyTsReturnType::TsPredicateReturnType(it) => it.syntax,
+            AnyTsReturnType::AnyTsType(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for TsAnyReturnType {
+impl std::fmt::Debug for AnyTsReturnType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TsAnyReturnType::TsAssertsReturnType(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyReturnType::TsPredicateReturnType(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyReturnType::TsType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsReturnType::AnyTsType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsReturnType::TsAssertsReturnType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsReturnType::TsPredicateReturnType(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<TsAnyReturnType> for SyntaxNode {
-    fn from(n: TsAnyReturnType) -> SyntaxNode {
+impl From<AnyTsReturnType> for SyntaxNode {
+    fn from(n: AnyTsReturnType) -> SyntaxNode {
         match n {
-            TsAnyReturnType::TsAssertsReturnType(it) => it.into(),
-            TsAnyReturnType::TsPredicateReturnType(it) => it.into(),
-            TsAnyReturnType::TsType(it) => it.into(),
+            AnyTsReturnType::AnyTsType(it) => it.into(),
+            AnyTsReturnType::TsAssertsReturnType(it) => it.into(),
+            AnyTsReturnType::TsPredicateReturnType(it) => it.into(),
         }
     }
 }
-impl From<TsAnyReturnType> for SyntaxElement {
-    fn from(n: TsAnyReturnType) -> SyntaxElement {
+impl From<AnyTsReturnType> for SyntaxElement {
+    fn from(n: AnyTsReturnType) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<TsTemplateChunkElement> for TsAnyTemplateElement {
-    fn from(node: TsTemplateChunkElement) -> TsAnyTemplateElement {
-        TsAnyTemplateElement::TsTemplateChunkElement(node)
+impl From<TsTemplateChunkElement> for AnyTsTemplateElement {
+    fn from(node: TsTemplateChunkElement) -> AnyTsTemplateElement {
+        AnyTsTemplateElement::TsTemplateChunkElement(node)
     }
 }
-impl From<TsTemplateElement> for TsAnyTemplateElement {
-    fn from(node: TsTemplateElement) -> TsAnyTemplateElement {
-        TsAnyTemplateElement::TsTemplateElement(node)
+impl From<TsTemplateElement> for AnyTsTemplateElement {
+    fn from(node: TsTemplateElement) -> AnyTsTemplateElement {
+        AnyTsTemplateElement::TsTemplateElement(node)
     }
 }
-impl AstNode for TsAnyTemplateElement {
+impl AstNode for AnyTsTemplateElement {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
         TsTemplateChunkElement::KIND_SET.union(TsTemplateElement::KIND_SET);
@@ -31070,10 +31074,10 @@ impl AstNode for TsAnyTemplateElement {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             TS_TEMPLATE_CHUNK_ELEMENT => {
-                TsAnyTemplateElement::TsTemplateChunkElement(TsTemplateChunkElement { syntax })
+                AnyTsTemplateElement::TsTemplateChunkElement(TsTemplateChunkElement { syntax })
             }
             TS_TEMPLATE_ELEMENT => {
-                TsAnyTemplateElement::TsTemplateElement(TsTemplateElement { syntax })
+                AnyTsTemplateElement::TsTemplateElement(TsTemplateElement { syntax })
             }
             _ => return None,
         };
@@ -31081,85 +31085,85 @@ impl AstNode for TsAnyTemplateElement {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsAnyTemplateElement::TsTemplateChunkElement(it) => &it.syntax,
-            TsAnyTemplateElement::TsTemplateElement(it) => &it.syntax,
+            AnyTsTemplateElement::TsTemplateChunkElement(it) => &it.syntax,
+            AnyTsTemplateElement::TsTemplateElement(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            TsAnyTemplateElement::TsTemplateChunkElement(it) => it.syntax,
-            TsAnyTemplateElement::TsTemplateElement(it) => it.syntax,
+            AnyTsTemplateElement::TsTemplateChunkElement(it) => it.syntax,
+            AnyTsTemplateElement::TsTemplateElement(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for TsAnyTemplateElement {
+impl std::fmt::Debug for AnyTsTemplateElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TsAnyTemplateElement::TsTemplateChunkElement(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyTemplateElement::TsTemplateElement(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsTemplateElement::TsTemplateChunkElement(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsTemplateElement::TsTemplateElement(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<TsAnyTemplateElement> for SyntaxNode {
-    fn from(n: TsAnyTemplateElement) -> SyntaxNode {
+impl From<AnyTsTemplateElement> for SyntaxNode {
+    fn from(n: AnyTsTemplateElement) -> SyntaxNode {
         match n {
-            TsAnyTemplateElement::TsTemplateChunkElement(it) => it.into(),
-            TsAnyTemplateElement::TsTemplateElement(it) => it.into(),
+            AnyTsTemplateElement::TsTemplateChunkElement(it) => it.into(),
+            AnyTsTemplateElement::TsTemplateElement(it) => it.into(),
         }
     }
 }
-impl From<TsAnyTemplateElement> for SyntaxElement {
-    fn from(n: TsAnyTemplateElement) -> SyntaxElement {
+impl From<AnyTsTemplateElement> for SyntaxElement {
+    fn from(n: AnyTsTemplateElement) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<TsNamedTupleTypeElement> for TsAnyTupleTypeElement {
-    fn from(node: TsNamedTupleTypeElement) -> TsAnyTupleTypeElement {
-        TsAnyTupleTypeElement::TsNamedTupleTypeElement(node)
+impl From<TsNamedTupleTypeElement> for AnyTsTupleTypeElement {
+    fn from(node: TsNamedTupleTypeElement) -> AnyTsTupleTypeElement {
+        AnyTsTupleTypeElement::TsNamedTupleTypeElement(node)
     }
 }
-impl From<TsOptionalTupleTypeElement> for TsAnyTupleTypeElement {
-    fn from(node: TsOptionalTupleTypeElement) -> TsAnyTupleTypeElement {
-        TsAnyTupleTypeElement::TsOptionalTupleTypeElement(node)
+impl From<TsOptionalTupleTypeElement> for AnyTsTupleTypeElement {
+    fn from(node: TsOptionalTupleTypeElement) -> AnyTsTupleTypeElement {
+        AnyTsTupleTypeElement::TsOptionalTupleTypeElement(node)
     }
 }
-impl From<TsRestTupleTypeElement> for TsAnyTupleTypeElement {
-    fn from(node: TsRestTupleTypeElement) -> TsAnyTupleTypeElement {
-        TsAnyTupleTypeElement::TsRestTupleTypeElement(node)
+impl From<TsRestTupleTypeElement> for AnyTsTupleTypeElement {
+    fn from(node: TsRestTupleTypeElement) -> AnyTsTupleTypeElement {
+        AnyTsTupleTypeElement::TsRestTupleTypeElement(node)
     }
 }
-impl AstNode for TsAnyTupleTypeElement {
+impl AstNode for AnyTsTupleTypeElement {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = TsNamedTupleTypeElement::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = AnyTsType::KIND_SET
+        .union(TsNamedTupleTypeElement::KIND_SET)
         .union(TsOptionalTupleTypeElement::KIND_SET)
-        .union(TsRestTupleTypeElement::KIND_SET)
-        .union(TsType::KIND_SET);
+        .union(TsRestTupleTypeElement::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
             TS_NAMED_TUPLE_TYPE_ELEMENT
             | TS_OPTIONAL_TUPLE_TYPE_ELEMENT
             | TS_REST_TUPLE_TYPE_ELEMENT => true,
-            k if TsType::can_cast(k) => true,
+            k if AnyTsType::can_cast(k) => true,
             _ => false,
         }
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             TS_NAMED_TUPLE_TYPE_ELEMENT => {
-                TsAnyTupleTypeElement::TsNamedTupleTypeElement(TsNamedTupleTypeElement { syntax })
+                AnyTsTupleTypeElement::TsNamedTupleTypeElement(TsNamedTupleTypeElement { syntax })
             }
             TS_OPTIONAL_TUPLE_TYPE_ELEMENT => {
-                TsAnyTupleTypeElement::TsOptionalTupleTypeElement(TsOptionalTupleTypeElement {
+                AnyTsTupleTypeElement::TsOptionalTupleTypeElement(TsOptionalTupleTypeElement {
                     syntax,
                 })
             }
             TS_REST_TUPLE_TYPE_ELEMENT => {
-                TsAnyTupleTypeElement::TsRestTupleTypeElement(TsRestTupleTypeElement { syntax })
+                AnyTsTupleTypeElement::TsRestTupleTypeElement(TsRestTupleTypeElement { syntax })
             }
             _ => {
-                if let Some(ts_type) = TsType::cast(syntax) {
-                    return Some(TsAnyTupleTypeElement::TsType(ts_type));
+                if let Some(any_ts_type) = AnyTsType::cast(syntax) {
+                    return Some(AnyTsTupleTypeElement::AnyTsType(any_ts_type));
                 }
                 return None;
             }
@@ -31168,437 +31172,153 @@ impl AstNode for TsAnyTupleTypeElement {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsAnyTupleTypeElement::TsNamedTupleTypeElement(it) => &it.syntax,
-            TsAnyTupleTypeElement::TsOptionalTupleTypeElement(it) => &it.syntax,
-            TsAnyTupleTypeElement::TsRestTupleTypeElement(it) => &it.syntax,
-            TsAnyTupleTypeElement::TsType(it) => it.syntax(),
+            AnyTsTupleTypeElement::TsNamedTupleTypeElement(it) => &it.syntax,
+            AnyTsTupleTypeElement::TsOptionalTupleTypeElement(it) => &it.syntax,
+            AnyTsTupleTypeElement::TsRestTupleTypeElement(it) => &it.syntax,
+            AnyTsTupleTypeElement::AnyTsType(it) => it.syntax(),
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            TsAnyTupleTypeElement::TsNamedTupleTypeElement(it) => it.syntax,
-            TsAnyTupleTypeElement::TsOptionalTupleTypeElement(it) => it.syntax,
-            TsAnyTupleTypeElement::TsRestTupleTypeElement(it) => it.syntax,
-            TsAnyTupleTypeElement::TsType(it) => it.into_syntax(),
+            AnyTsTupleTypeElement::TsNamedTupleTypeElement(it) => it.syntax,
+            AnyTsTupleTypeElement::TsOptionalTupleTypeElement(it) => it.syntax,
+            AnyTsTupleTypeElement::TsRestTupleTypeElement(it) => it.syntax,
+            AnyTsTupleTypeElement::AnyTsType(it) => it.into_syntax(),
         }
     }
 }
-impl std::fmt::Debug for TsAnyTupleTypeElement {
+impl std::fmt::Debug for AnyTsTupleTypeElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TsAnyTupleTypeElement::TsNamedTupleTypeElement(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyTupleTypeElement::TsOptionalTupleTypeElement(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyTupleTypeElement::TsRestTupleTypeElement(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyTupleTypeElement::TsType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsTupleTypeElement::AnyTsType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsTupleTypeElement::TsNamedTupleTypeElement(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsTupleTypeElement::TsOptionalTupleTypeElement(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsTupleTypeElement::TsRestTupleTypeElement(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<TsAnyTupleTypeElement> for SyntaxNode {
-    fn from(n: TsAnyTupleTypeElement) -> SyntaxNode {
+impl From<AnyTsTupleTypeElement> for SyntaxNode {
+    fn from(n: AnyTsTupleTypeElement) -> SyntaxNode {
         match n {
-            TsAnyTupleTypeElement::TsNamedTupleTypeElement(it) => it.into(),
-            TsAnyTupleTypeElement::TsOptionalTupleTypeElement(it) => it.into(),
-            TsAnyTupleTypeElement::TsRestTupleTypeElement(it) => it.into(),
-            TsAnyTupleTypeElement::TsType(it) => it.into(),
+            AnyTsTupleTypeElement::AnyTsType(it) => it.into(),
+            AnyTsTupleTypeElement::TsNamedTupleTypeElement(it) => it.into(),
+            AnyTsTupleTypeElement::TsOptionalTupleTypeElement(it) => it.into(),
+            AnyTsTupleTypeElement::TsRestTupleTypeElement(it) => it.into(),
         }
     }
 }
-impl From<TsAnyTupleTypeElement> for SyntaxElement {
-    fn from(n: TsAnyTupleTypeElement) -> SyntaxElement {
+impl From<AnyTsTupleTypeElement> for SyntaxElement {
+    fn from(n: AnyTsTupleTypeElement) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl From<JsBogusMember> for TsAnyTypeMember {
-    fn from(node: JsBogusMember) -> TsAnyTypeMember { TsAnyTypeMember::JsBogusMember(node) }
+impl From<TsAnyType> for AnyTsType {
+    fn from(node: TsAnyType) -> AnyTsType { AnyTsType::TsAnyType(node) }
 }
-impl From<TsCallSignatureTypeMember> for TsAnyTypeMember {
-    fn from(node: TsCallSignatureTypeMember) -> TsAnyTypeMember {
-        TsAnyTypeMember::TsCallSignatureTypeMember(node)
-    }
+impl From<TsArrayType> for AnyTsType {
+    fn from(node: TsArrayType) -> AnyTsType { AnyTsType::TsArrayType(node) }
 }
-impl From<TsConstructSignatureTypeMember> for TsAnyTypeMember {
-    fn from(node: TsConstructSignatureTypeMember) -> TsAnyTypeMember {
-        TsAnyTypeMember::TsConstructSignatureTypeMember(node)
-    }
+impl From<TsBigIntLiteralType> for AnyTsType {
+    fn from(node: TsBigIntLiteralType) -> AnyTsType { AnyTsType::TsBigIntLiteralType(node) }
 }
-impl From<TsGetterSignatureTypeMember> for TsAnyTypeMember {
-    fn from(node: TsGetterSignatureTypeMember) -> TsAnyTypeMember {
-        TsAnyTypeMember::TsGetterSignatureTypeMember(node)
-    }
+impl From<TsBigintType> for AnyTsType {
+    fn from(node: TsBigintType) -> AnyTsType { AnyTsType::TsBigintType(node) }
 }
-impl From<TsIndexSignatureTypeMember> for TsAnyTypeMember {
-    fn from(node: TsIndexSignatureTypeMember) -> TsAnyTypeMember {
-        TsAnyTypeMember::TsIndexSignatureTypeMember(node)
-    }
+impl From<TsBogusType> for AnyTsType {
+    fn from(node: TsBogusType) -> AnyTsType { AnyTsType::TsBogusType(node) }
 }
-impl From<TsMethodSignatureTypeMember> for TsAnyTypeMember {
-    fn from(node: TsMethodSignatureTypeMember) -> TsAnyTypeMember {
-        TsAnyTypeMember::TsMethodSignatureTypeMember(node)
-    }
+impl From<TsBooleanLiteralType> for AnyTsType {
+    fn from(node: TsBooleanLiteralType) -> AnyTsType { AnyTsType::TsBooleanLiteralType(node) }
 }
-impl From<TsPropertySignatureTypeMember> for TsAnyTypeMember {
-    fn from(node: TsPropertySignatureTypeMember) -> TsAnyTypeMember {
-        TsAnyTypeMember::TsPropertySignatureTypeMember(node)
-    }
+impl From<TsBooleanType> for AnyTsType {
+    fn from(node: TsBooleanType) -> AnyTsType { AnyTsType::TsBooleanType(node) }
 }
-impl From<TsSetterSignatureTypeMember> for TsAnyTypeMember {
-    fn from(node: TsSetterSignatureTypeMember) -> TsAnyTypeMember {
-        TsAnyTypeMember::TsSetterSignatureTypeMember(node)
-    }
+impl From<TsConditionalType> for AnyTsType {
+    fn from(node: TsConditionalType) -> AnyTsType { AnyTsType::TsConditionalType(node) }
 }
-impl AstNode for TsAnyTypeMember {
-    type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsBogusMember::KIND_SET
-        .union(TsCallSignatureTypeMember::KIND_SET)
-        .union(TsConstructSignatureTypeMember::KIND_SET)
-        .union(TsGetterSignatureTypeMember::KIND_SET)
-        .union(TsIndexSignatureTypeMember::KIND_SET)
-        .union(TsMethodSignatureTypeMember::KIND_SET)
-        .union(TsPropertySignatureTypeMember::KIND_SET)
-        .union(TsSetterSignatureTypeMember::KIND_SET);
-    fn can_cast(kind: SyntaxKind) -> bool {
-        matches!(
-            kind,
-            JS_BOGUS_MEMBER
-                | TS_CALL_SIGNATURE_TYPE_MEMBER
-                | TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER
-                | TS_GETTER_SIGNATURE_TYPE_MEMBER
-                | TS_INDEX_SIGNATURE_TYPE_MEMBER
-                | TS_METHOD_SIGNATURE_TYPE_MEMBER
-                | TS_PROPERTY_SIGNATURE_TYPE_MEMBER
-                | TS_SETTER_SIGNATURE_TYPE_MEMBER
-        )
-    }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        let res = match syntax.kind() {
-            JS_BOGUS_MEMBER => TsAnyTypeMember::JsBogusMember(JsBogusMember { syntax }),
-            TS_CALL_SIGNATURE_TYPE_MEMBER => {
-                TsAnyTypeMember::TsCallSignatureTypeMember(TsCallSignatureTypeMember { syntax })
-            }
-            TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER => {
-                TsAnyTypeMember::TsConstructSignatureTypeMember(TsConstructSignatureTypeMember {
-                    syntax,
-                })
-            }
-            TS_GETTER_SIGNATURE_TYPE_MEMBER => {
-                TsAnyTypeMember::TsGetterSignatureTypeMember(TsGetterSignatureTypeMember { syntax })
-            }
-            TS_INDEX_SIGNATURE_TYPE_MEMBER => {
-                TsAnyTypeMember::TsIndexSignatureTypeMember(TsIndexSignatureTypeMember { syntax })
-            }
-            TS_METHOD_SIGNATURE_TYPE_MEMBER => {
-                TsAnyTypeMember::TsMethodSignatureTypeMember(TsMethodSignatureTypeMember { syntax })
-            }
-            TS_PROPERTY_SIGNATURE_TYPE_MEMBER => {
-                TsAnyTypeMember::TsPropertySignatureTypeMember(TsPropertySignatureTypeMember {
-                    syntax,
-                })
-            }
-            TS_SETTER_SIGNATURE_TYPE_MEMBER => {
-                TsAnyTypeMember::TsSetterSignatureTypeMember(TsSetterSignatureTypeMember { syntax })
-            }
-            _ => return None,
-        };
-        Some(res)
-    }
-    fn syntax(&self) -> &SyntaxNode {
-        match self {
-            TsAnyTypeMember::JsBogusMember(it) => &it.syntax,
-            TsAnyTypeMember::TsCallSignatureTypeMember(it) => &it.syntax,
-            TsAnyTypeMember::TsConstructSignatureTypeMember(it) => &it.syntax,
-            TsAnyTypeMember::TsGetterSignatureTypeMember(it) => &it.syntax,
-            TsAnyTypeMember::TsIndexSignatureTypeMember(it) => &it.syntax,
-            TsAnyTypeMember::TsMethodSignatureTypeMember(it) => &it.syntax,
-            TsAnyTypeMember::TsPropertySignatureTypeMember(it) => &it.syntax,
-            TsAnyTypeMember::TsSetterSignatureTypeMember(it) => &it.syntax,
-        }
-    }
-    fn into_syntax(self) -> SyntaxNode {
-        match self {
-            TsAnyTypeMember::JsBogusMember(it) => it.syntax,
-            TsAnyTypeMember::TsCallSignatureTypeMember(it) => it.syntax,
-            TsAnyTypeMember::TsConstructSignatureTypeMember(it) => it.syntax,
-            TsAnyTypeMember::TsGetterSignatureTypeMember(it) => it.syntax,
-            TsAnyTypeMember::TsIndexSignatureTypeMember(it) => it.syntax,
-            TsAnyTypeMember::TsMethodSignatureTypeMember(it) => it.syntax,
-            TsAnyTypeMember::TsPropertySignatureTypeMember(it) => it.syntax,
-            TsAnyTypeMember::TsSetterSignatureTypeMember(it) => it.syntax,
-        }
-    }
+impl From<TsConstructorType> for AnyTsType {
+    fn from(node: TsConstructorType) -> AnyTsType { AnyTsType::TsConstructorType(node) }
 }
-impl std::fmt::Debug for TsAnyTypeMember {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            TsAnyTypeMember::JsBogusMember(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyTypeMember::TsCallSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyTypeMember::TsConstructSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyTypeMember::TsGetterSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyTypeMember::TsIndexSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyTypeMember::TsMethodSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyTypeMember::TsPropertySignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
-            TsAnyTypeMember::TsSetterSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
-        }
-    }
+impl From<TsFunctionType> for AnyTsType {
+    fn from(node: TsFunctionType) -> AnyTsType { AnyTsType::TsFunctionType(node) }
 }
-impl From<TsAnyTypeMember> for SyntaxNode {
-    fn from(n: TsAnyTypeMember) -> SyntaxNode {
-        match n {
-            TsAnyTypeMember::JsBogusMember(it) => it.into(),
-            TsAnyTypeMember::TsCallSignatureTypeMember(it) => it.into(),
-            TsAnyTypeMember::TsConstructSignatureTypeMember(it) => it.into(),
-            TsAnyTypeMember::TsGetterSignatureTypeMember(it) => it.into(),
-            TsAnyTypeMember::TsIndexSignatureTypeMember(it) => it.into(),
-            TsAnyTypeMember::TsMethodSignatureTypeMember(it) => it.into(),
-            TsAnyTypeMember::TsPropertySignatureTypeMember(it) => it.into(),
-            TsAnyTypeMember::TsSetterSignatureTypeMember(it) => it.into(),
-        }
-    }
+impl From<TsImportType> for AnyTsType {
+    fn from(node: TsImportType) -> AnyTsType { AnyTsType::TsImportType(node) }
 }
-impl From<TsAnyTypeMember> for SyntaxElement {
-    fn from(n: TsAnyTypeMember) -> SyntaxElement {
-        let node: SyntaxNode = n.into();
-        node.into()
-    }
+impl From<TsIndexedAccessType> for AnyTsType {
+    fn from(node: TsIndexedAccessType) -> AnyTsType { AnyTsType::TsIndexedAccessType(node) }
 }
-impl From<JsReferenceIdentifier> for TsAnyTypePredicateParameterName {
-    fn from(node: JsReferenceIdentifier) -> TsAnyTypePredicateParameterName {
-        TsAnyTypePredicateParameterName::JsReferenceIdentifier(node)
-    }
+impl From<TsInferType> for AnyTsType {
+    fn from(node: TsInferType) -> AnyTsType { AnyTsType::TsInferType(node) }
 }
-impl From<TsThisType> for TsAnyTypePredicateParameterName {
-    fn from(node: TsThisType) -> TsAnyTypePredicateParameterName {
-        TsAnyTypePredicateParameterName::TsThisType(node)
-    }
+impl From<TsIntersectionType> for AnyTsType {
+    fn from(node: TsIntersectionType) -> AnyTsType { AnyTsType::TsIntersectionType(node) }
 }
-impl AstNode for TsAnyTypePredicateParameterName {
-    type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> =
-        JsReferenceIdentifier::KIND_SET.union(TsThisType::KIND_SET);
-    fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_REFERENCE_IDENTIFIER | TS_THIS_TYPE) }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        let res = match syntax.kind() {
-            JS_REFERENCE_IDENTIFIER => {
-                TsAnyTypePredicateParameterName::JsReferenceIdentifier(JsReferenceIdentifier {
-                    syntax,
-                })
-            }
-            TS_THIS_TYPE => TsAnyTypePredicateParameterName::TsThisType(TsThisType { syntax }),
-            _ => return None,
-        };
-        Some(res)
-    }
-    fn syntax(&self) -> &SyntaxNode {
-        match self {
-            TsAnyTypePredicateParameterName::JsReferenceIdentifier(it) => &it.syntax,
-            TsAnyTypePredicateParameterName::TsThisType(it) => &it.syntax,
-        }
-    }
-    fn into_syntax(self) -> SyntaxNode {
-        match self {
-            TsAnyTypePredicateParameterName::JsReferenceIdentifier(it) => it.syntax,
-            TsAnyTypePredicateParameterName::TsThisType(it) => it.syntax,
-        }
-    }
+impl From<TsMappedType> for AnyTsType {
+    fn from(node: TsMappedType) -> AnyTsType { AnyTsType::TsMappedType(node) }
 }
-impl std::fmt::Debug for TsAnyTypePredicateParameterName {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            TsAnyTypePredicateParameterName::JsReferenceIdentifier(it) => {
-                std::fmt::Debug::fmt(it, f)
-            }
-            TsAnyTypePredicateParameterName::TsThisType(it) => std::fmt::Debug::fmt(it, f),
-        }
-    }
+impl From<TsNeverType> for AnyTsType {
+    fn from(node: TsNeverType) -> AnyTsType { AnyTsType::TsNeverType(node) }
 }
-impl From<TsAnyTypePredicateParameterName> for SyntaxNode {
-    fn from(n: TsAnyTypePredicateParameterName) -> SyntaxNode {
-        match n {
-            TsAnyTypePredicateParameterName::JsReferenceIdentifier(it) => it.into(),
-            TsAnyTypePredicateParameterName::TsThisType(it) => it.into(),
-        }
-    }
+impl From<TsNonPrimitiveType> for AnyTsType {
+    fn from(node: TsNonPrimitiveType) -> AnyTsType { AnyTsType::TsNonPrimitiveType(node) }
 }
-impl From<TsAnyTypePredicateParameterName> for SyntaxElement {
-    fn from(n: TsAnyTypePredicateParameterName) -> SyntaxElement {
-        let node: SyntaxNode = n.into();
-        node.into()
-    }
+impl From<TsNullLiteralType> for AnyTsType {
+    fn from(node: TsNullLiteralType) -> AnyTsType { AnyTsType::TsNullLiteralType(node) }
 }
-impl From<TsDefiniteVariableAnnotation> for TsAnyVariableAnnotation {
-    fn from(node: TsDefiniteVariableAnnotation) -> TsAnyVariableAnnotation {
-        TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(node)
-    }
+impl From<TsNumberLiteralType> for AnyTsType {
+    fn from(node: TsNumberLiteralType) -> AnyTsType { AnyTsType::TsNumberLiteralType(node) }
 }
-impl From<TsTypeAnnotation> for TsAnyVariableAnnotation {
-    fn from(node: TsTypeAnnotation) -> TsAnyVariableAnnotation {
-        TsAnyVariableAnnotation::TsTypeAnnotation(node)
-    }
+impl From<TsNumberType> for AnyTsType {
+    fn from(node: TsNumberType) -> AnyTsType { AnyTsType::TsNumberType(node) }
 }
-impl AstNode for TsAnyVariableAnnotation {
-    type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> =
-        TsDefiniteVariableAnnotation::KIND_SET.union(TsTypeAnnotation::KIND_SET);
-    fn can_cast(kind: SyntaxKind) -> bool {
-        matches!(kind, TS_DEFINITE_VARIABLE_ANNOTATION | TS_TYPE_ANNOTATION)
-    }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        let res = match syntax.kind() {
-            TS_DEFINITE_VARIABLE_ANNOTATION => {
-                TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(
-                    TsDefiniteVariableAnnotation { syntax },
-                )
-            }
-            TS_TYPE_ANNOTATION => {
-                TsAnyVariableAnnotation::TsTypeAnnotation(TsTypeAnnotation { syntax })
-            }
-            _ => return None,
-        };
-        Some(res)
-    }
-    fn syntax(&self) -> &SyntaxNode {
-        match self {
-            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(it) => &it.syntax,
-            TsAnyVariableAnnotation::TsTypeAnnotation(it) => &it.syntax,
-        }
-    }
-    fn into_syntax(self) -> SyntaxNode {
-        match self {
-            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(it) => it.syntax,
-            TsAnyVariableAnnotation::TsTypeAnnotation(it) => it.syntax,
-        }
-    }
+impl From<TsObjectType> for AnyTsType {
+    fn from(node: TsObjectType) -> AnyTsType { AnyTsType::TsObjectType(node) }
 }
-impl std::fmt::Debug for TsAnyVariableAnnotation {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(it) => {
-                std::fmt::Debug::fmt(it, f)
-            }
-            TsAnyVariableAnnotation::TsTypeAnnotation(it) => std::fmt::Debug::fmt(it, f),
-        }
-    }
+impl From<TsParenthesizedType> for AnyTsType {
+    fn from(node: TsParenthesizedType) -> AnyTsType { AnyTsType::TsParenthesizedType(node) }
 }
-impl From<TsAnyVariableAnnotation> for SyntaxNode {
-    fn from(n: TsAnyVariableAnnotation) -> SyntaxNode {
-        match n {
-            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(it) => it.into(),
-            TsAnyVariableAnnotation::TsTypeAnnotation(it) => it.into(),
-        }
-    }
+impl From<TsReferenceType> for AnyTsType {
+    fn from(node: TsReferenceType) -> AnyTsType { AnyTsType::TsReferenceType(node) }
 }
-impl From<TsAnyVariableAnnotation> for SyntaxElement {
-    fn from(n: TsAnyVariableAnnotation) -> SyntaxElement {
-        let node: SyntaxNode = n.into();
-        node.into()
-    }
+impl From<TsStringLiteralType> for AnyTsType {
+    fn from(node: TsStringLiteralType) -> AnyTsType { AnyTsType::TsStringLiteralType(node) }
 }
-impl From<TsAnyType> for TsType {
-    fn from(node: TsAnyType) -> TsType { TsType::TsAnyType(node) }
+impl From<TsStringType> for AnyTsType {
+    fn from(node: TsStringType) -> AnyTsType { AnyTsType::TsStringType(node) }
 }
-impl From<TsArrayType> for TsType {
-    fn from(node: TsArrayType) -> TsType { TsType::TsArrayType(node) }
+impl From<TsSymbolType> for AnyTsType {
+    fn from(node: TsSymbolType) -> AnyTsType { AnyTsType::TsSymbolType(node) }
 }
-impl From<TsBigIntLiteralType> for TsType {
-    fn from(node: TsBigIntLiteralType) -> TsType { TsType::TsBigIntLiteralType(node) }
+impl From<TsTemplateLiteralType> for AnyTsType {
+    fn from(node: TsTemplateLiteralType) -> AnyTsType { AnyTsType::TsTemplateLiteralType(node) }
 }
-impl From<TsBigintType> for TsType {
-    fn from(node: TsBigintType) -> TsType { TsType::TsBigintType(node) }
+impl From<TsThisType> for AnyTsType {
+    fn from(node: TsThisType) -> AnyTsType { AnyTsType::TsThisType(node) }
 }
-impl From<TsBogusType> for TsType {
-    fn from(node: TsBogusType) -> TsType { TsType::TsBogusType(node) }
+impl From<TsTupleType> for AnyTsType {
+    fn from(node: TsTupleType) -> AnyTsType { AnyTsType::TsTupleType(node) }
 }
-impl From<TsBooleanLiteralType> for TsType {
-    fn from(node: TsBooleanLiteralType) -> TsType { TsType::TsBooleanLiteralType(node) }
+impl From<TsTypeOperatorType> for AnyTsType {
+    fn from(node: TsTypeOperatorType) -> AnyTsType { AnyTsType::TsTypeOperatorType(node) }
 }
-impl From<TsBooleanType> for TsType {
-    fn from(node: TsBooleanType) -> TsType { TsType::TsBooleanType(node) }
+impl From<TsTypeofType> for AnyTsType {
+    fn from(node: TsTypeofType) -> AnyTsType { AnyTsType::TsTypeofType(node) }
 }
-impl From<TsConditionalType> for TsType {
-    fn from(node: TsConditionalType) -> TsType { TsType::TsConditionalType(node) }
+impl From<TsUndefinedType> for AnyTsType {
+    fn from(node: TsUndefinedType) -> AnyTsType { AnyTsType::TsUndefinedType(node) }
 }
-impl From<TsConstructorType> for TsType {
-    fn from(node: TsConstructorType) -> TsType { TsType::TsConstructorType(node) }
+impl From<TsUnionType> for AnyTsType {
+    fn from(node: TsUnionType) -> AnyTsType { AnyTsType::TsUnionType(node) }
 }
-impl From<TsFunctionType> for TsType {
-    fn from(node: TsFunctionType) -> TsType { TsType::TsFunctionType(node) }
+impl From<TsUnknownType> for AnyTsType {
+    fn from(node: TsUnknownType) -> AnyTsType { AnyTsType::TsUnknownType(node) }
 }
-impl From<TsImportType> for TsType {
-    fn from(node: TsImportType) -> TsType { TsType::TsImportType(node) }
+impl From<TsVoidType> for AnyTsType {
+    fn from(node: TsVoidType) -> AnyTsType { AnyTsType::TsVoidType(node) }
 }
-impl From<TsIndexedAccessType> for TsType {
-    fn from(node: TsIndexedAccessType) -> TsType { TsType::TsIndexedAccessType(node) }
-}
-impl From<TsInferType> for TsType {
-    fn from(node: TsInferType) -> TsType { TsType::TsInferType(node) }
-}
-impl From<TsIntersectionType> for TsType {
-    fn from(node: TsIntersectionType) -> TsType { TsType::TsIntersectionType(node) }
-}
-impl From<TsMappedType> for TsType {
-    fn from(node: TsMappedType) -> TsType { TsType::TsMappedType(node) }
-}
-impl From<TsNeverType> for TsType {
-    fn from(node: TsNeverType) -> TsType { TsType::TsNeverType(node) }
-}
-impl From<TsNonPrimitiveType> for TsType {
-    fn from(node: TsNonPrimitiveType) -> TsType { TsType::TsNonPrimitiveType(node) }
-}
-impl From<TsNullLiteralType> for TsType {
-    fn from(node: TsNullLiteralType) -> TsType { TsType::TsNullLiteralType(node) }
-}
-impl From<TsNumberLiteralType> for TsType {
-    fn from(node: TsNumberLiteralType) -> TsType { TsType::TsNumberLiteralType(node) }
-}
-impl From<TsNumberType> for TsType {
-    fn from(node: TsNumberType) -> TsType { TsType::TsNumberType(node) }
-}
-impl From<TsObjectType> for TsType {
-    fn from(node: TsObjectType) -> TsType { TsType::TsObjectType(node) }
-}
-impl From<TsParenthesizedType> for TsType {
-    fn from(node: TsParenthesizedType) -> TsType { TsType::TsParenthesizedType(node) }
-}
-impl From<TsReferenceType> for TsType {
-    fn from(node: TsReferenceType) -> TsType { TsType::TsReferenceType(node) }
-}
-impl From<TsStringLiteralType> for TsType {
-    fn from(node: TsStringLiteralType) -> TsType { TsType::TsStringLiteralType(node) }
-}
-impl From<TsStringType> for TsType {
-    fn from(node: TsStringType) -> TsType { TsType::TsStringType(node) }
-}
-impl From<TsSymbolType> for TsType {
-    fn from(node: TsSymbolType) -> TsType { TsType::TsSymbolType(node) }
-}
-impl From<TsTemplateLiteralType> for TsType {
-    fn from(node: TsTemplateLiteralType) -> TsType { TsType::TsTemplateLiteralType(node) }
-}
-impl From<TsThisType> for TsType {
-    fn from(node: TsThisType) -> TsType { TsType::TsThisType(node) }
-}
-impl From<TsTupleType> for TsType {
-    fn from(node: TsTupleType) -> TsType { TsType::TsTupleType(node) }
-}
-impl From<TsTypeOperatorType> for TsType {
-    fn from(node: TsTypeOperatorType) -> TsType { TsType::TsTypeOperatorType(node) }
-}
-impl From<TsTypeofType> for TsType {
-    fn from(node: TsTypeofType) -> TsType { TsType::TsTypeofType(node) }
-}
-impl From<TsUndefinedType> for TsType {
-    fn from(node: TsUndefinedType) -> TsType { TsType::TsUndefinedType(node) }
-}
-impl From<TsUnionType> for TsType {
-    fn from(node: TsUnionType) -> TsType { TsType::TsUnionType(node) }
-}
-impl From<TsUnknownType> for TsType {
-    fn from(node: TsUnknownType) -> TsType { TsType::TsUnknownType(node) }
-}
-impl From<TsVoidType> for TsType {
-    fn from(node: TsVoidType) -> TsType { TsType::TsVoidType(node) }
-}
-impl AstNode for TsType {
+impl AstNode for AnyTsType {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = TsAnyType::KIND_SET
         .union(TsArrayType::KIND_SET)
@@ -31677,552 +31397,844 @@ impl AstNode for TsType {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            TS_ANY_TYPE => TsType::TsAnyType(TsAnyType { syntax }),
-            TS_ARRAY_TYPE => TsType::TsArrayType(TsArrayType { syntax }),
-            TS_BIG_INT_LITERAL_TYPE => TsType::TsBigIntLiteralType(TsBigIntLiteralType { syntax }),
-            TS_BIGINT_TYPE => TsType::TsBigintType(TsBigintType { syntax }),
-            TS_BOGUS_TYPE => TsType::TsBogusType(TsBogusType { syntax }),
+            TS_ANY_TYPE => AnyTsType::TsAnyType(TsAnyType { syntax }),
+            TS_ARRAY_TYPE => AnyTsType::TsArrayType(TsArrayType { syntax }),
+            TS_BIG_INT_LITERAL_TYPE => {
+                AnyTsType::TsBigIntLiteralType(TsBigIntLiteralType { syntax })
+            }
+            TS_BIGINT_TYPE => AnyTsType::TsBigintType(TsBigintType { syntax }),
+            TS_BOGUS_TYPE => AnyTsType::TsBogusType(TsBogusType { syntax }),
             TS_BOOLEAN_LITERAL_TYPE => {
-                TsType::TsBooleanLiteralType(TsBooleanLiteralType { syntax })
+                AnyTsType::TsBooleanLiteralType(TsBooleanLiteralType { syntax })
             }
-            TS_BOOLEAN_TYPE => TsType::TsBooleanType(TsBooleanType { syntax }),
-            TS_CONDITIONAL_TYPE => TsType::TsConditionalType(TsConditionalType { syntax }),
-            TS_CONSTRUCTOR_TYPE => TsType::TsConstructorType(TsConstructorType { syntax }),
-            TS_FUNCTION_TYPE => TsType::TsFunctionType(TsFunctionType { syntax }),
-            TS_IMPORT_TYPE => TsType::TsImportType(TsImportType { syntax }),
-            TS_INDEXED_ACCESS_TYPE => TsType::TsIndexedAccessType(TsIndexedAccessType { syntax }),
-            TS_INFER_TYPE => TsType::TsInferType(TsInferType { syntax }),
-            TS_INTERSECTION_TYPE => TsType::TsIntersectionType(TsIntersectionType { syntax }),
-            TS_MAPPED_TYPE => TsType::TsMappedType(TsMappedType { syntax }),
-            TS_NEVER_TYPE => TsType::TsNeverType(TsNeverType { syntax }),
-            TS_NON_PRIMITIVE_TYPE => TsType::TsNonPrimitiveType(TsNonPrimitiveType { syntax }),
-            TS_NULL_LITERAL_TYPE => TsType::TsNullLiteralType(TsNullLiteralType { syntax }),
-            TS_NUMBER_LITERAL_TYPE => TsType::TsNumberLiteralType(TsNumberLiteralType { syntax }),
-            TS_NUMBER_TYPE => TsType::TsNumberType(TsNumberType { syntax }),
-            TS_OBJECT_TYPE => TsType::TsObjectType(TsObjectType { syntax }),
-            TS_PARENTHESIZED_TYPE => TsType::TsParenthesizedType(TsParenthesizedType { syntax }),
-            TS_REFERENCE_TYPE => TsType::TsReferenceType(TsReferenceType { syntax }),
-            TS_STRING_LITERAL_TYPE => TsType::TsStringLiteralType(TsStringLiteralType { syntax }),
-            TS_STRING_TYPE => TsType::TsStringType(TsStringType { syntax }),
-            TS_SYMBOL_TYPE => TsType::TsSymbolType(TsSymbolType { syntax }),
+            TS_BOOLEAN_TYPE => AnyTsType::TsBooleanType(TsBooleanType { syntax }),
+            TS_CONDITIONAL_TYPE => AnyTsType::TsConditionalType(TsConditionalType { syntax }),
+            TS_CONSTRUCTOR_TYPE => AnyTsType::TsConstructorType(TsConstructorType { syntax }),
+            TS_FUNCTION_TYPE => AnyTsType::TsFunctionType(TsFunctionType { syntax }),
+            TS_IMPORT_TYPE => AnyTsType::TsImportType(TsImportType { syntax }),
+            TS_INDEXED_ACCESS_TYPE => {
+                AnyTsType::TsIndexedAccessType(TsIndexedAccessType { syntax })
+            }
+            TS_INFER_TYPE => AnyTsType::TsInferType(TsInferType { syntax }),
+            TS_INTERSECTION_TYPE => AnyTsType::TsIntersectionType(TsIntersectionType { syntax }),
+            TS_MAPPED_TYPE => AnyTsType::TsMappedType(TsMappedType { syntax }),
+            TS_NEVER_TYPE => AnyTsType::TsNeverType(TsNeverType { syntax }),
+            TS_NON_PRIMITIVE_TYPE => AnyTsType::TsNonPrimitiveType(TsNonPrimitiveType { syntax }),
+            TS_NULL_LITERAL_TYPE => AnyTsType::TsNullLiteralType(TsNullLiteralType { syntax }),
+            TS_NUMBER_LITERAL_TYPE => {
+                AnyTsType::TsNumberLiteralType(TsNumberLiteralType { syntax })
+            }
+            TS_NUMBER_TYPE => AnyTsType::TsNumberType(TsNumberType { syntax }),
+            TS_OBJECT_TYPE => AnyTsType::TsObjectType(TsObjectType { syntax }),
+            TS_PARENTHESIZED_TYPE => AnyTsType::TsParenthesizedType(TsParenthesizedType { syntax }),
+            TS_REFERENCE_TYPE => AnyTsType::TsReferenceType(TsReferenceType { syntax }),
+            TS_STRING_LITERAL_TYPE => {
+                AnyTsType::TsStringLiteralType(TsStringLiteralType { syntax })
+            }
+            TS_STRING_TYPE => AnyTsType::TsStringType(TsStringType { syntax }),
+            TS_SYMBOL_TYPE => AnyTsType::TsSymbolType(TsSymbolType { syntax }),
             TS_TEMPLATE_LITERAL_TYPE => {
-                TsType::TsTemplateLiteralType(TsTemplateLiteralType { syntax })
+                AnyTsType::TsTemplateLiteralType(TsTemplateLiteralType { syntax })
             }
-            TS_THIS_TYPE => TsType::TsThisType(TsThisType { syntax }),
-            TS_TUPLE_TYPE => TsType::TsTupleType(TsTupleType { syntax }),
-            TS_TYPE_OPERATOR_TYPE => TsType::TsTypeOperatorType(TsTypeOperatorType { syntax }),
-            TS_TYPEOF_TYPE => TsType::TsTypeofType(TsTypeofType { syntax }),
-            TS_UNDEFINED_TYPE => TsType::TsUndefinedType(TsUndefinedType { syntax }),
-            TS_UNION_TYPE => TsType::TsUnionType(TsUnionType { syntax }),
-            TS_UNKNOWN_TYPE => TsType::TsUnknownType(TsUnknownType { syntax }),
-            TS_VOID_TYPE => TsType::TsVoidType(TsVoidType { syntax }),
+            TS_THIS_TYPE => AnyTsType::TsThisType(TsThisType { syntax }),
+            TS_TUPLE_TYPE => AnyTsType::TsTupleType(TsTupleType { syntax }),
+            TS_TYPE_OPERATOR_TYPE => AnyTsType::TsTypeOperatorType(TsTypeOperatorType { syntax }),
+            TS_TYPEOF_TYPE => AnyTsType::TsTypeofType(TsTypeofType { syntax }),
+            TS_UNDEFINED_TYPE => AnyTsType::TsUndefinedType(TsUndefinedType { syntax }),
+            TS_UNION_TYPE => AnyTsType::TsUnionType(TsUnionType { syntax }),
+            TS_UNKNOWN_TYPE => AnyTsType::TsUnknownType(TsUnknownType { syntax }),
+            TS_VOID_TYPE => AnyTsType::TsVoidType(TsVoidType { syntax }),
             _ => return None,
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsType::TsAnyType(it) => &it.syntax,
-            TsType::TsArrayType(it) => &it.syntax,
-            TsType::TsBigIntLiteralType(it) => &it.syntax,
-            TsType::TsBigintType(it) => &it.syntax,
-            TsType::TsBogusType(it) => &it.syntax,
-            TsType::TsBooleanLiteralType(it) => &it.syntax,
-            TsType::TsBooleanType(it) => &it.syntax,
-            TsType::TsConditionalType(it) => &it.syntax,
-            TsType::TsConstructorType(it) => &it.syntax,
-            TsType::TsFunctionType(it) => &it.syntax,
-            TsType::TsImportType(it) => &it.syntax,
-            TsType::TsIndexedAccessType(it) => &it.syntax,
-            TsType::TsInferType(it) => &it.syntax,
-            TsType::TsIntersectionType(it) => &it.syntax,
-            TsType::TsMappedType(it) => &it.syntax,
-            TsType::TsNeverType(it) => &it.syntax,
-            TsType::TsNonPrimitiveType(it) => &it.syntax,
-            TsType::TsNullLiteralType(it) => &it.syntax,
-            TsType::TsNumberLiteralType(it) => &it.syntax,
-            TsType::TsNumberType(it) => &it.syntax,
-            TsType::TsObjectType(it) => &it.syntax,
-            TsType::TsParenthesizedType(it) => &it.syntax,
-            TsType::TsReferenceType(it) => &it.syntax,
-            TsType::TsStringLiteralType(it) => &it.syntax,
-            TsType::TsStringType(it) => &it.syntax,
-            TsType::TsSymbolType(it) => &it.syntax,
-            TsType::TsTemplateLiteralType(it) => &it.syntax,
-            TsType::TsThisType(it) => &it.syntax,
-            TsType::TsTupleType(it) => &it.syntax,
-            TsType::TsTypeOperatorType(it) => &it.syntax,
-            TsType::TsTypeofType(it) => &it.syntax,
-            TsType::TsUndefinedType(it) => &it.syntax,
-            TsType::TsUnionType(it) => &it.syntax,
-            TsType::TsUnknownType(it) => &it.syntax,
-            TsType::TsVoidType(it) => &it.syntax,
+            AnyTsType::TsAnyType(it) => &it.syntax,
+            AnyTsType::TsArrayType(it) => &it.syntax,
+            AnyTsType::TsBigIntLiteralType(it) => &it.syntax,
+            AnyTsType::TsBigintType(it) => &it.syntax,
+            AnyTsType::TsBogusType(it) => &it.syntax,
+            AnyTsType::TsBooleanLiteralType(it) => &it.syntax,
+            AnyTsType::TsBooleanType(it) => &it.syntax,
+            AnyTsType::TsConditionalType(it) => &it.syntax,
+            AnyTsType::TsConstructorType(it) => &it.syntax,
+            AnyTsType::TsFunctionType(it) => &it.syntax,
+            AnyTsType::TsImportType(it) => &it.syntax,
+            AnyTsType::TsIndexedAccessType(it) => &it.syntax,
+            AnyTsType::TsInferType(it) => &it.syntax,
+            AnyTsType::TsIntersectionType(it) => &it.syntax,
+            AnyTsType::TsMappedType(it) => &it.syntax,
+            AnyTsType::TsNeverType(it) => &it.syntax,
+            AnyTsType::TsNonPrimitiveType(it) => &it.syntax,
+            AnyTsType::TsNullLiteralType(it) => &it.syntax,
+            AnyTsType::TsNumberLiteralType(it) => &it.syntax,
+            AnyTsType::TsNumberType(it) => &it.syntax,
+            AnyTsType::TsObjectType(it) => &it.syntax,
+            AnyTsType::TsParenthesizedType(it) => &it.syntax,
+            AnyTsType::TsReferenceType(it) => &it.syntax,
+            AnyTsType::TsStringLiteralType(it) => &it.syntax,
+            AnyTsType::TsStringType(it) => &it.syntax,
+            AnyTsType::TsSymbolType(it) => &it.syntax,
+            AnyTsType::TsTemplateLiteralType(it) => &it.syntax,
+            AnyTsType::TsThisType(it) => &it.syntax,
+            AnyTsType::TsTupleType(it) => &it.syntax,
+            AnyTsType::TsTypeOperatorType(it) => &it.syntax,
+            AnyTsType::TsTypeofType(it) => &it.syntax,
+            AnyTsType::TsUndefinedType(it) => &it.syntax,
+            AnyTsType::TsUnionType(it) => &it.syntax,
+            AnyTsType::TsUnknownType(it) => &it.syntax,
+            AnyTsType::TsVoidType(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            TsType::TsAnyType(it) => it.syntax,
-            TsType::TsArrayType(it) => it.syntax,
-            TsType::TsBigIntLiteralType(it) => it.syntax,
-            TsType::TsBigintType(it) => it.syntax,
-            TsType::TsBogusType(it) => it.syntax,
-            TsType::TsBooleanLiteralType(it) => it.syntax,
-            TsType::TsBooleanType(it) => it.syntax,
-            TsType::TsConditionalType(it) => it.syntax,
-            TsType::TsConstructorType(it) => it.syntax,
-            TsType::TsFunctionType(it) => it.syntax,
-            TsType::TsImportType(it) => it.syntax,
-            TsType::TsIndexedAccessType(it) => it.syntax,
-            TsType::TsInferType(it) => it.syntax,
-            TsType::TsIntersectionType(it) => it.syntax,
-            TsType::TsMappedType(it) => it.syntax,
-            TsType::TsNeverType(it) => it.syntax,
-            TsType::TsNonPrimitiveType(it) => it.syntax,
-            TsType::TsNullLiteralType(it) => it.syntax,
-            TsType::TsNumberLiteralType(it) => it.syntax,
-            TsType::TsNumberType(it) => it.syntax,
-            TsType::TsObjectType(it) => it.syntax,
-            TsType::TsParenthesizedType(it) => it.syntax,
-            TsType::TsReferenceType(it) => it.syntax,
-            TsType::TsStringLiteralType(it) => it.syntax,
-            TsType::TsStringType(it) => it.syntax,
-            TsType::TsSymbolType(it) => it.syntax,
-            TsType::TsTemplateLiteralType(it) => it.syntax,
-            TsType::TsThisType(it) => it.syntax,
-            TsType::TsTupleType(it) => it.syntax,
-            TsType::TsTypeOperatorType(it) => it.syntax,
-            TsType::TsTypeofType(it) => it.syntax,
-            TsType::TsUndefinedType(it) => it.syntax,
-            TsType::TsUnionType(it) => it.syntax,
-            TsType::TsUnknownType(it) => it.syntax,
-            TsType::TsVoidType(it) => it.syntax,
+            AnyTsType::TsAnyType(it) => it.syntax,
+            AnyTsType::TsArrayType(it) => it.syntax,
+            AnyTsType::TsBigIntLiteralType(it) => it.syntax,
+            AnyTsType::TsBigintType(it) => it.syntax,
+            AnyTsType::TsBogusType(it) => it.syntax,
+            AnyTsType::TsBooleanLiteralType(it) => it.syntax,
+            AnyTsType::TsBooleanType(it) => it.syntax,
+            AnyTsType::TsConditionalType(it) => it.syntax,
+            AnyTsType::TsConstructorType(it) => it.syntax,
+            AnyTsType::TsFunctionType(it) => it.syntax,
+            AnyTsType::TsImportType(it) => it.syntax,
+            AnyTsType::TsIndexedAccessType(it) => it.syntax,
+            AnyTsType::TsInferType(it) => it.syntax,
+            AnyTsType::TsIntersectionType(it) => it.syntax,
+            AnyTsType::TsMappedType(it) => it.syntax,
+            AnyTsType::TsNeverType(it) => it.syntax,
+            AnyTsType::TsNonPrimitiveType(it) => it.syntax,
+            AnyTsType::TsNullLiteralType(it) => it.syntax,
+            AnyTsType::TsNumberLiteralType(it) => it.syntax,
+            AnyTsType::TsNumberType(it) => it.syntax,
+            AnyTsType::TsObjectType(it) => it.syntax,
+            AnyTsType::TsParenthesizedType(it) => it.syntax,
+            AnyTsType::TsReferenceType(it) => it.syntax,
+            AnyTsType::TsStringLiteralType(it) => it.syntax,
+            AnyTsType::TsStringType(it) => it.syntax,
+            AnyTsType::TsSymbolType(it) => it.syntax,
+            AnyTsType::TsTemplateLiteralType(it) => it.syntax,
+            AnyTsType::TsThisType(it) => it.syntax,
+            AnyTsType::TsTupleType(it) => it.syntax,
+            AnyTsType::TsTypeOperatorType(it) => it.syntax,
+            AnyTsType::TsTypeofType(it) => it.syntax,
+            AnyTsType::TsUndefinedType(it) => it.syntax,
+            AnyTsType::TsUnionType(it) => it.syntax,
+            AnyTsType::TsUnknownType(it) => it.syntax,
+            AnyTsType::TsVoidType(it) => it.syntax,
         }
     }
 }
-impl std::fmt::Debug for TsType {
+impl std::fmt::Debug for AnyTsType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TsType::TsAnyType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsArrayType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsBigIntLiteralType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsBigintType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsBogusType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsBooleanLiteralType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsBooleanType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsConditionalType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsConstructorType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsFunctionType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsImportType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsIndexedAccessType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsInferType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsIntersectionType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsMappedType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsNeverType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsNonPrimitiveType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsNullLiteralType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsNumberLiteralType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsNumberType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsObjectType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsParenthesizedType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsReferenceType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsStringLiteralType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsStringType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsSymbolType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsTemplateLiteralType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsThisType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsTupleType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsTypeOperatorType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsTypeofType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsUndefinedType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsUnionType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsUnknownType(it) => std::fmt::Debug::fmt(it, f),
-            TsType::TsVoidType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsAnyType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsArrayType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsBigIntLiteralType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsBigintType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsBogusType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsBooleanLiteralType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsBooleanType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsConditionalType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsConstructorType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsFunctionType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsImportType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsIndexedAccessType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsInferType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsIntersectionType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsMappedType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsNeverType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsNonPrimitiveType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsNullLiteralType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsNumberLiteralType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsNumberType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsObjectType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsParenthesizedType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsReferenceType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsStringLiteralType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsStringType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsSymbolType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsTemplateLiteralType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsThisType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsTupleType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsTypeOperatorType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsTypeofType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsUndefinedType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsUnionType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsUnknownType(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsType::TsVoidType(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
-impl From<TsType> for SyntaxNode {
-    fn from(n: TsType) -> SyntaxNode {
+impl From<AnyTsType> for SyntaxNode {
+    fn from(n: AnyTsType) -> SyntaxNode {
         match n {
-            TsType::TsAnyType(it) => it.into(),
-            TsType::TsArrayType(it) => it.into(),
-            TsType::TsBigIntLiteralType(it) => it.into(),
-            TsType::TsBigintType(it) => it.into(),
-            TsType::TsBogusType(it) => it.into(),
-            TsType::TsBooleanLiteralType(it) => it.into(),
-            TsType::TsBooleanType(it) => it.into(),
-            TsType::TsConditionalType(it) => it.into(),
-            TsType::TsConstructorType(it) => it.into(),
-            TsType::TsFunctionType(it) => it.into(),
-            TsType::TsImportType(it) => it.into(),
-            TsType::TsIndexedAccessType(it) => it.into(),
-            TsType::TsInferType(it) => it.into(),
-            TsType::TsIntersectionType(it) => it.into(),
-            TsType::TsMappedType(it) => it.into(),
-            TsType::TsNeverType(it) => it.into(),
-            TsType::TsNonPrimitiveType(it) => it.into(),
-            TsType::TsNullLiteralType(it) => it.into(),
-            TsType::TsNumberLiteralType(it) => it.into(),
-            TsType::TsNumberType(it) => it.into(),
-            TsType::TsObjectType(it) => it.into(),
-            TsType::TsParenthesizedType(it) => it.into(),
-            TsType::TsReferenceType(it) => it.into(),
-            TsType::TsStringLiteralType(it) => it.into(),
-            TsType::TsStringType(it) => it.into(),
-            TsType::TsSymbolType(it) => it.into(),
-            TsType::TsTemplateLiteralType(it) => it.into(),
-            TsType::TsThisType(it) => it.into(),
-            TsType::TsTupleType(it) => it.into(),
-            TsType::TsTypeOperatorType(it) => it.into(),
-            TsType::TsTypeofType(it) => it.into(),
-            TsType::TsUndefinedType(it) => it.into(),
-            TsType::TsUnionType(it) => it.into(),
-            TsType::TsUnknownType(it) => it.into(),
-            TsType::TsVoidType(it) => it.into(),
+            AnyTsType::TsAnyType(it) => it.into(),
+            AnyTsType::TsArrayType(it) => it.into(),
+            AnyTsType::TsBigIntLiteralType(it) => it.into(),
+            AnyTsType::TsBigintType(it) => it.into(),
+            AnyTsType::TsBogusType(it) => it.into(),
+            AnyTsType::TsBooleanLiteralType(it) => it.into(),
+            AnyTsType::TsBooleanType(it) => it.into(),
+            AnyTsType::TsConditionalType(it) => it.into(),
+            AnyTsType::TsConstructorType(it) => it.into(),
+            AnyTsType::TsFunctionType(it) => it.into(),
+            AnyTsType::TsImportType(it) => it.into(),
+            AnyTsType::TsIndexedAccessType(it) => it.into(),
+            AnyTsType::TsInferType(it) => it.into(),
+            AnyTsType::TsIntersectionType(it) => it.into(),
+            AnyTsType::TsMappedType(it) => it.into(),
+            AnyTsType::TsNeverType(it) => it.into(),
+            AnyTsType::TsNonPrimitiveType(it) => it.into(),
+            AnyTsType::TsNullLiteralType(it) => it.into(),
+            AnyTsType::TsNumberLiteralType(it) => it.into(),
+            AnyTsType::TsNumberType(it) => it.into(),
+            AnyTsType::TsObjectType(it) => it.into(),
+            AnyTsType::TsParenthesizedType(it) => it.into(),
+            AnyTsType::TsReferenceType(it) => it.into(),
+            AnyTsType::TsStringLiteralType(it) => it.into(),
+            AnyTsType::TsStringType(it) => it.into(),
+            AnyTsType::TsSymbolType(it) => it.into(),
+            AnyTsType::TsTemplateLiteralType(it) => it.into(),
+            AnyTsType::TsThisType(it) => it.into(),
+            AnyTsType::TsTupleType(it) => it.into(),
+            AnyTsType::TsTypeOperatorType(it) => it.into(),
+            AnyTsType::TsTypeofType(it) => it.into(),
+            AnyTsType::TsUndefinedType(it) => it.into(),
+            AnyTsType::TsUnionType(it) => it.into(),
+            AnyTsType::TsUnknownType(it) => it.into(),
+            AnyTsType::TsVoidType(it) => it.into(),
         }
     }
 }
-impl From<TsType> for SyntaxElement {
-    fn from(n: TsType) -> SyntaxElement {
+impl From<AnyTsType> for SyntaxElement {
+    fn from(n: AnyTsType) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
 }
-impl std::fmt::Display for JsAnyArrayAssignmentPatternElement {
+impl From<JsBogusMember> for AnyTsTypeMember {
+    fn from(node: JsBogusMember) -> AnyTsTypeMember { AnyTsTypeMember::JsBogusMember(node) }
+}
+impl From<TsCallSignatureTypeMember> for AnyTsTypeMember {
+    fn from(node: TsCallSignatureTypeMember) -> AnyTsTypeMember {
+        AnyTsTypeMember::TsCallSignatureTypeMember(node)
+    }
+}
+impl From<TsConstructSignatureTypeMember> for AnyTsTypeMember {
+    fn from(node: TsConstructSignatureTypeMember) -> AnyTsTypeMember {
+        AnyTsTypeMember::TsConstructSignatureTypeMember(node)
+    }
+}
+impl From<TsGetterSignatureTypeMember> for AnyTsTypeMember {
+    fn from(node: TsGetterSignatureTypeMember) -> AnyTsTypeMember {
+        AnyTsTypeMember::TsGetterSignatureTypeMember(node)
+    }
+}
+impl From<TsIndexSignatureTypeMember> for AnyTsTypeMember {
+    fn from(node: TsIndexSignatureTypeMember) -> AnyTsTypeMember {
+        AnyTsTypeMember::TsIndexSignatureTypeMember(node)
+    }
+}
+impl From<TsMethodSignatureTypeMember> for AnyTsTypeMember {
+    fn from(node: TsMethodSignatureTypeMember) -> AnyTsTypeMember {
+        AnyTsTypeMember::TsMethodSignatureTypeMember(node)
+    }
+}
+impl From<TsPropertySignatureTypeMember> for AnyTsTypeMember {
+    fn from(node: TsPropertySignatureTypeMember) -> AnyTsTypeMember {
+        AnyTsTypeMember::TsPropertySignatureTypeMember(node)
+    }
+}
+impl From<TsSetterSignatureTypeMember> for AnyTsTypeMember {
+    fn from(node: TsSetterSignatureTypeMember) -> AnyTsTypeMember {
+        AnyTsTypeMember::TsSetterSignatureTypeMember(node)
+    }
+}
+impl AstNode for AnyTsTypeMember {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> = JsBogusMember::KIND_SET
+        .union(TsCallSignatureTypeMember::KIND_SET)
+        .union(TsConstructSignatureTypeMember::KIND_SET)
+        .union(TsGetterSignatureTypeMember::KIND_SET)
+        .union(TsIndexSignatureTypeMember::KIND_SET)
+        .union(TsMethodSignatureTypeMember::KIND_SET)
+        .union(TsPropertySignatureTypeMember::KIND_SET)
+        .union(TsSetterSignatureTypeMember::KIND_SET);
+    fn can_cast(kind: SyntaxKind) -> bool {
+        matches!(
+            kind,
+            JS_BOGUS_MEMBER
+                | TS_CALL_SIGNATURE_TYPE_MEMBER
+                | TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER
+                | TS_GETTER_SIGNATURE_TYPE_MEMBER
+                | TS_INDEX_SIGNATURE_TYPE_MEMBER
+                | TS_METHOD_SIGNATURE_TYPE_MEMBER
+                | TS_PROPERTY_SIGNATURE_TYPE_MEMBER
+                | TS_SETTER_SIGNATURE_TYPE_MEMBER
+        )
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JS_BOGUS_MEMBER => AnyTsTypeMember::JsBogusMember(JsBogusMember { syntax }),
+            TS_CALL_SIGNATURE_TYPE_MEMBER => {
+                AnyTsTypeMember::TsCallSignatureTypeMember(TsCallSignatureTypeMember { syntax })
+            }
+            TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER => {
+                AnyTsTypeMember::TsConstructSignatureTypeMember(TsConstructSignatureTypeMember {
+                    syntax,
+                })
+            }
+            TS_GETTER_SIGNATURE_TYPE_MEMBER => {
+                AnyTsTypeMember::TsGetterSignatureTypeMember(TsGetterSignatureTypeMember { syntax })
+            }
+            TS_INDEX_SIGNATURE_TYPE_MEMBER => {
+                AnyTsTypeMember::TsIndexSignatureTypeMember(TsIndexSignatureTypeMember { syntax })
+            }
+            TS_METHOD_SIGNATURE_TYPE_MEMBER => {
+                AnyTsTypeMember::TsMethodSignatureTypeMember(TsMethodSignatureTypeMember { syntax })
+            }
+            TS_PROPERTY_SIGNATURE_TYPE_MEMBER => {
+                AnyTsTypeMember::TsPropertySignatureTypeMember(TsPropertySignatureTypeMember {
+                    syntax,
+                })
+            }
+            TS_SETTER_SIGNATURE_TYPE_MEMBER => {
+                AnyTsTypeMember::TsSetterSignatureTypeMember(TsSetterSignatureTypeMember { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            AnyTsTypeMember::JsBogusMember(it) => &it.syntax,
+            AnyTsTypeMember::TsCallSignatureTypeMember(it) => &it.syntax,
+            AnyTsTypeMember::TsConstructSignatureTypeMember(it) => &it.syntax,
+            AnyTsTypeMember::TsGetterSignatureTypeMember(it) => &it.syntax,
+            AnyTsTypeMember::TsIndexSignatureTypeMember(it) => &it.syntax,
+            AnyTsTypeMember::TsMethodSignatureTypeMember(it) => &it.syntax,
+            AnyTsTypeMember::TsPropertySignatureTypeMember(it) => &it.syntax,
+            AnyTsTypeMember::TsSetterSignatureTypeMember(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            AnyTsTypeMember::JsBogusMember(it) => it.syntax,
+            AnyTsTypeMember::TsCallSignatureTypeMember(it) => it.syntax,
+            AnyTsTypeMember::TsConstructSignatureTypeMember(it) => it.syntax,
+            AnyTsTypeMember::TsGetterSignatureTypeMember(it) => it.syntax,
+            AnyTsTypeMember::TsIndexSignatureTypeMember(it) => it.syntax,
+            AnyTsTypeMember::TsMethodSignatureTypeMember(it) => it.syntax,
+            AnyTsTypeMember::TsPropertySignatureTypeMember(it) => it.syntax,
+            AnyTsTypeMember::TsSetterSignatureTypeMember(it) => it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for AnyTsTypeMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AnyTsTypeMember::JsBogusMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsTypeMember::TsCallSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsTypeMember::TsConstructSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsTypeMember::TsGetterSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsTypeMember::TsIndexSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsTypeMember::TsMethodSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsTypeMember::TsPropertySignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyTsTypeMember::TsSetterSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<AnyTsTypeMember> for SyntaxNode {
+    fn from(n: AnyTsTypeMember) -> SyntaxNode {
+        match n {
+            AnyTsTypeMember::JsBogusMember(it) => it.into(),
+            AnyTsTypeMember::TsCallSignatureTypeMember(it) => it.into(),
+            AnyTsTypeMember::TsConstructSignatureTypeMember(it) => it.into(),
+            AnyTsTypeMember::TsGetterSignatureTypeMember(it) => it.into(),
+            AnyTsTypeMember::TsIndexSignatureTypeMember(it) => it.into(),
+            AnyTsTypeMember::TsMethodSignatureTypeMember(it) => it.into(),
+            AnyTsTypeMember::TsPropertySignatureTypeMember(it) => it.into(),
+            AnyTsTypeMember::TsSetterSignatureTypeMember(it) => it.into(),
+        }
+    }
+}
+impl From<AnyTsTypeMember> for SyntaxElement {
+    fn from(n: AnyTsTypeMember) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+impl From<JsReferenceIdentifier> for AnyTsTypePredicateParameterName {
+    fn from(node: JsReferenceIdentifier) -> AnyTsTypePredicateParameterName {
+        AnyTsTypePredicateParameterName::JsReferenceIdentifier(node)
+    }
+}
+impl From<TsThisType> for AnyTsTypePredicateParameterName {
+    fn from(node: TsThisType) -> AnyTsTypePredicateParameterName {
+        AnyTsTypePredicateParameterName::TsThisType(node)
+    }
+}
+impl AstNode for AnyTsTypePredicateParameterName {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        JsReferenceIdentifier::KIND_SET.union(TsThisType::KIND_SET);
+    fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_REFERENCE_IDENTIFIER | TS_THIS_TYPE) }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JS_REFERENCE_IDENTIFIER => {
+                AnyTsTypePredicateParameterName::JsReferenceIdentifier(JsReferenceIdentifier {
+                    syntax,
+                })
+            }
+            TS_THIS_TYPE => AnyTsTypePredicateParameterName::TsThisType(TsThisType { syntax }),
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            AnyTsTypePredicateParameterName::JsReferenceIdentifier(it) => &it.syntax,
+            AnyTsTypePredicateParameterName::TsThisType(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            AnyTsTypePredicateParameterName::JsReferenceIdentifier(it) => it.syntax,
+            AnyTsTypePredicateParameterName::TsThisType(it) => it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for AnyTsTypePredicateParameterName {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AnyTsTypePredicateParameterName::JsReferenceIdentifier(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
+            AnyTsTypePredicateParameterName::TsThisType(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<AnyTsTypePredicateParameterName> for SyntaxNode {
+    fn from(n: AnyTsTypePredicateParameterName) -> SyntaxNode {
+        match n {
+            AnyTsTypePredicateParameterName::JsReferenceIdentifier(it) => it.into(),
+            AnyTsTypePredicateParameterName::TsThisType(it) => it.into(),
+        }
+    }
+}
+impl From<AnyTsTypePredicateParameterName> for SyntaxElement {
+    fn from(n: AnyTsTypePredicateParameterName) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+impl From<TsDefiniteVariableAnnotation> for AnyTsVariableAnnotation {
+    fn from(node: TsDefiniteVariableAnnotation) -> AnyTsVariableAnnotation {
+        AnyTsVariableAnnotation::TsDefiniteVariableAnnotation(node)
+    }
+}
+impl From<TsTypeAnnotation> for AnyTsVariableAnnotation {
+    fn from(node: TsTypeAnnotation) -> AnyTsVariableAnnotation {
+        AnyTsVariableAnnotation::TsTypeAnnotation(node)
+    }
+}
+impl AstNode for AnyTsVariableAnnotation {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        TsDefiniteVariableAnnotation::KIND_SET.union(TsTypeAnnotation::KIND_SET);
+    fn can_cast(kind: SyntaxKind) -> bool {
+        matches!(kind, TS_DEFINITE_VARIABLE_ANNOTATION | TS_TYPE_ANNOTATION)
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            TS_DEFINITE_VARIABLE_ANNOTATION => {
+                AnyTsVariableAnnotation::TsDefiniteVariableAnnotation(
+                    TsDefiniteVariableAnnotation { syntax },
+                )
+            }
+            TS_TYPE_ANNOTATION => {
+                AnyTsVariableAnnotation::TsTypeAnnotation(TsTypeAnnotation { syntax })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            AnyTsVariableAnnotation::TsDefiniteVariableAnnotation(it) => &it.syntax,
+            AnyTsVariableAnnotation::TsTypeAnnotation(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            AnyTsVariableAnnotation::TsDefiniteVariableAnnotation(it) => it.syntax,
+            AnyTsVariableAnnotation::TsTypeAnnotation(it) => it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for AnyTsVariableAnnotation {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AnyTsVariableAnnotation::TsDefiniteVariableAnnotation(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
+            AnyTsVariableAnnotation::TsTypeAnnotation(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<AnyTsVariableAnnotation> for SyntaxNode {
+    fn from(n: AnyTsVariableAnnotation) -> SyntaxNode {
+        match n {
+            AnyTsVariableAnnotation::TsDefiniteVariableAnnotation(it) => it.into(),
+            AnyTsVariableAnnotation::TsTypeAnnotation(it) => it.into(),
+        }
+    }
+}
+impl From<AnyTsVariableAnnotation> for SyntaxElement {
+    fn from(n: AnyTsVariableAnnotation) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
+impl std::fmt::Display for AnyJsArrayAssignmentPatternElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyArrayBindingPatternElement {
+impl std::fmt::Display for AnyJsArrayBindingPatternElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyArrayElement {
+impl std::fmt::Display for AnyJsArrayElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyArrowFunctionParameters {
+impl std::fmt::Display for AnyJsArrowFunctionParameters {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyAssignment {
+impl std::fmt::Display for AnyJsAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyAssignmentPattern {
+impl std::fmt::Display for AnyJsAssignmentPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyBinding {
+impl std::fmt::Display for AnyJsBinding {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyBindingPattern {
+impl std::fmt::Display for AnyJsBindingPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyCallArgument {
+impl std::fmt::Display for AnyJsCallArgument {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyClass {
+impl std::fmt::Display for AnyJsClass {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyClassMember {
+impl std::fmt::Display for AnyJsClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyClassMemberName {
+impl std::fmt::Display for AnyJsClassMemberName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyConstructorParameter {
+impl std::fmt::Display for AnyJsConstructorParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyDeclaration {
+impl std::fmt::Display for AnyJsDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyDeclarationClause {
+impl std::fmt::Display for AnyJsDeclarationClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyExportClause {
+impl std::fmt::Display for AnyJsExportClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyExportDefaultDeclaration {
+impl std::fmt::Display for AnyJsExportDefaultDeclaration {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyExportNamedSpecifier {
+impl std::fmt::Display for AnyJsExportNamedSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyExpression {
+impl std::fmt::Display for AnyJsExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyForInOrOfInitializer {
+impl std::fmt::Display for AnyJsForInOrOfInitializer {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyForInitializer {
+impl std::fmt::Display for AnyJsForInitializer {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyFormalParameter {
+impl std::fmt::Display for AnyJsFormalParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyFunction {
+impl std::fmt::Display for AnyJsFunction {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyFunctionBody {
+impl std::fmt::Display for AnyJsFunctionBody {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyImportAssertionEntry {
+impl std::fmt::Display for AnyJsImportAssertionEntry {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyImportClause {
+impl std::fmt::Display for AnyJsImportClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyInProperty {
+impl std::fmt::Display for AnyJsInProperty {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyLiteralExpression {
+impl std::fmt::Display for AnyJsLiteralExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyMethodModifier {
+impl std::fmt::Display for AnyJsMethodModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyModuleItem {
+impl std::fmt::Display for AnyJsModuleItem {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyName {
+impl std::fmt::Display for AnyJsName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyNamedImport {
+impl std::fmt::Display for AnyJsNamedImport {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyNamedImportSpecifier {
+impl std::fmt::Display for AnyJsNamedImportSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyObjectAssignmentPatternMember {
+impl std::fmt::Display for AnyJsObjectAssignmentPatternMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyObjectBindingPatternMember {
+impl std::fmt::Display for AnyJsObjectBindingPatternMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyObjectMember {
+impl std::fmt::Display for AnyJsObjectMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyObjectMemberName {
+impl std::fmt::Display for AnyJsObjectMemberName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyParameter {
+impl std::fmt::Display for AnyJsParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyPropertyModifier {
+impl std::fmt::Display for AnyJsPropertyModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyRoot {
+impl std::fmt::Display for AnyJsRoot {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyStatement {
+impl std::fmt::Display for AnyJsStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnySwitchClause {
+impl std::fmt::Display for AnyJsSwitchClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsAnyTemplateElement {
+impl std::fmt::Display for AnyJsTemplateElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsxAnyAttribute {
+impl std::fmt::Display for AnyJsxAttribute {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsxAnyAttributeName {
+impl std::fmt::Display for AnyJsxAttributeName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsxAnyAttributeValue {
+impl std::fmt::Display for AnyJsxAttributeValue {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsxAnyChild {
+impl std::fmt::Display for AnyJsxChild {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsxAnyElementName {
+impl std::fmt::Display for AnyJsxElementName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsxAnyName {
+impl std::fmt::Display for AnyJsxName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsxAnyObjectName {
+impl std::fmt::Display for AnyJsxObjectName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsxAnyTag {
+impl std::fmt::Display for AnyJsxTag {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyExternalModuleDeclarationBody {
+impl std::fmt::Display for AnyTsExternalModuleDeclarationBody {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyIndexSignatureModifier {
+impl std::fmt::Display for AnyTsIndexSignatureModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyMethodSignatureModifier {
+impl std::fmt::Display for AnyTsMethodSignatureModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyModuleName {
+impl std::fmt::Display for AnyTsModuleName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyModuleReference {
+impl std::fmt::Display for AnyTsModuleReference {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyName {
+impl std::fmt::Display for AnyTsName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyPropertyAnnotation {
+impl std::fmt::Display for AnyTsPropertyAnnotation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyPropertyParameterModifier {
+impl std::fmt::Display for AnyTsPropertyParameterModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyPropertySignatureAnnotation {
+impl std::fmt::Display for AnyTsPropertySignatureAnnotation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyPropertySignatureModifier {
+impl std::fmt::Display for AnyTsPropertySignatureModifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyReturnType {
+impl std::fmt::Display for AnyTsReturnType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyTemplateElement {
+impl std::fmt::Display for AnyTsTemplateElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyTupleTypeElement {
+impl std::fmt::Display for AnyTsTupleTypeElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyTypeMember {
+impl std::fmt::Display for AnyTsType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyTypePredicateParameterName {
+impl std::fmt::Display for AnyTsTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsAnyVariableAnnotation {
+impl std::fmt::Display for AnyTsTypePredicateParameterName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsType {
+impl std::fmt::Display for AnyTsVariableAnnotation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -34097,7 +34109,7 @@ impl Serialize for JsArrayAssignmentPatternElementList {
 }
 impl AstSeparatedList for JsArrayAssignmentPatternElementList {
     type Language = Language;
-    type Node = JsAnyArrayAssignmentPatternElement;
+    type Node = AnyJsArrayAssignmentPatternElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -34108,13 +34120,13 @@ impl Debug for JsArrayAssignmentPatternElementList {
     }
 }
 impl IntoIterator for JsArrayAssignmentPatternElementList {
-    type Item = SyntaxResult<JsAnyArrayAssignmentPatternElement>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyArrayAssignmentPatternElement>;
+    type Item = SyntaxResult<AnyJsArrayAssignmentPatternElement>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsArrayAssignmentPatternElement>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &JsArrayAssignmentPatternElementList {
-    type Item = SyntaxResult<JsAnyArrayAssignmentPatternElement>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyArrayAssignmentPatternElement>;
+    type Item = SyntaxResult<AnyJsArrayAssignmentPatternElement>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsArrayAssignmentPatternElement>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -34166,7 +34178,7 @@ impl Serialize for JsArrayBindingPatternElementList {
 }
 impl AstSeparatedList for JsArrayBindingPatternElementList {
     type Language = Language;
-    type Node = JsAnyArrayBindingPatternElement;
+    type Node = AnyJsArrayBindingPatternElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -34177,13 +34189,13 @@ impl Debug for JsArrayBindingPatternElementList {
     }
 }
 impl IntoIterator for JsArrayBindingPatternElementList {
-    type Item = SyntaxResult<JsAnyArrayBindingPatternElement>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyArrayBindingPatternElement>;
+    type Item = SyntaxResult<AnyJsArrayBindingPatternElement>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsArrayBindingPatternElement>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &JsArrayBindingPatternElementList {
-    type Item = SyntaxResult<JsAnyArrayBindingPatternElement>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyArrayBindingPatternElement>;
+    type Item = SyntaxResult<AnyJsArrayBindingPatternElement>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsArrayBindingPatternElement>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -34235,7 +34247,7 @@ impl Serialize for JsArrayElementList {
 }
 impl AstSeparatedList for JsArrayElementList {
     type Language = Language;
-    type Node = JsAnyArrayElement;
+    type Node = AnyJsArrayElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -34246,13 +34258,13 @@ impl Debug for JsArrayElementList {
     }
 }
 impl IntoIterator for JsArrayElementList {
-    type Item = SyntaxResult<JsAnyArrayElement>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyArrayElement>;
+    type Item = SyntaxResult<AnyJsArrayElement>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsArrayElement>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &JsArrayElementList {
-    type Item = SyntaxResult<JsAnyArrayElement>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyArrayElement>;
+    type Item = SyntaxResult<AnyJsArrayElement>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsArrayElement>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -34304,7 +34316,7 @@ impl Serialize for JsCallArgumentList {
 }
 impl AstSeparatedList for JsCallArgumentList {
     type Language = Language;
-    type Node = JsAnyCallArgument;
+    type Node = AnyJsCallArgument;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -34315,13 +34327,13 @@ impl Debug for JsCallArgumentList {
     }
 }
 impl IntoIterator for JsCallArgumentList {
-    type Item = SyntaxResult<JsAnyCallArgument>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyCallArgument>;
+    type Item = SyntaxResult<AnyJsCallArgument>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsCallArgument>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &JsCallArgumentList {
-    type Item = SyntaxResult<JsAnyCallArgument>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyCallArgument>;
+    type Item = SyntaxResult<AnyJsCallArgument>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsCallArgument>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -34373,7 +34385,7 @@ impl Serialize for JsClassMemberList {
 }
 impl AstNodeList for JsClassMemberList {
     type Language = Language;
-    type Node = JsAnyClassMember;
+    type Node = AnyJsClassMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -34384,13 +34396,13 @@ impl Debug for JsClassMemberList {
     }
 }
 impl IntoIterator for &JsClassMemberList {
-    type Item = JsAnyClassMember;
-    type IntoIter = AstNodeListIterator<Language, JsAnyClassMember>;
+    type Item = AnyJsClassMember;
+    type IntoIter = AstNodeListIterator<Language, AnyJsClassMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for JsClassMemberList {
-    type Item = JsAnyClassMember;
-    type IntoIter = AstNodeListIterator<Language, JsAnyClassMember>;
+    type Item = AnyJsClassMember;
+    type IntoIter = AstNodeListIterator<Language, AnyJsClassMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -34511,7 +34523,7 @@ impl Serialize for JsConstructorParameterList {
 }
 impl AstSeparatedList for JsConstructorParameterList {
     type Language = Language;
-    type Node = JsAnyConstructorParameter;
+    type Node = AnyJsConstructorParameter;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -34522,13 +34534,13 @@ impl Debug for JsConstructorParameterList {
     }
 }
 impl IntoIterator for JsConstructorParameterList {
-    type Item = SyntaxResult<JsAnyConstructorParameter>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyConstructorParameter>;
+    type Item = SyntaxResult<AnyJsConstructorParameter>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsConstructorParameter>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &JsConstructorParameterList {
-    type Item = SyntaxResult<JsAnyConstructorParameter>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyConstructorParameter>;
+    type Item = SyntaxResult<AnyJsConstructorParameter>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsConstructorParameter>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -34718,7 +34730,7 @@ impl Serialize for JsExportNamedSpecifierList {
 }
 impl AstSeparatedList for JsExportNamedSpecifierList {
     type Language = Language;
-    type Node = JsAnyExportNamedSpecifier;
+    type Node = AnyJsExportNamedSpecifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -34729,13 +34741,13 @@ impl Debug for JsExportNamedSpecifierList {
     }
 }
 impl IntoIterator for JsExportNamedSpecifierList {
-    type Item = SyntaxResult<JsAnyExportNamedSpecifier>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyExportNamedSpecifier>;
+    type Item = SyntaxResult<AnyJsExportNamedSpecifier>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsExportNamedSpecifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &JsExportNamedSpecifierList {
-    type Item = SyntaxResult<JsAnyExportNamedSpecifier>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyExportNamedSpecifier>;
+    type Item = SyntaxResult<AnyJsExportNamedSpecifier>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsExportNamedSpecifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -34787,7 +34799,7 @@ impl Serialize for JsImportAssertionEntryList {
 }
 impl AstSeparatedList for JsImportAssertionEntryList {
     type Language = Language;
-    type Node = JsAnyImportAssertionEntry;
+    type Node = AnyJsImportAssertionEntry;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -34798,13 +34810,13 @@ impl Debug for JsImportAssertionEntryList {
     }
 }
 impl IntoIterator for JsImportAssertionEntryList {
-    type Item = SyntaxResult<JsAnyImportAssertionEntry>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyImportAssertionEntry>;
+    type Item = SyntaxResult<AnyJsImportAssertionEntry>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsImportAssertionEntry>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &JsImportAssertionEntryList {
-    type Item = SyntaxResult<JsAnyImportAssertionEntry>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyImportAssertionEntry>;
+    type Item = SyntaxResult<AnyJsImportAssertionEntry>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsImportAssertionEntry>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -34856,7 +34868,7 @@ impl Serialize for JsMethodModifierList {
 }
 impl AstNodeList for JsMethodModifierList {
     type Language = Language;
-    type Node = JsAnyMethodModifier;
+    type Node = AnyJsMethodModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -34867,13 +34879,13 @@ impl Debug for JsMethodModifierList {
     }
 }
 impl IntoIterator for &JsMethodModifierList {
-    type Item = JsAnyMethodModifier;
-    type IntoIter = AstNodeListIterator<Language, JsAnyMethodModifier>;
+    type Item = AnyJsMethodModifier;
+    type IntoIter = AstNodeListIterator<Language, AnyJsMethodModifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for JsMethodModifierList {
-    type Item = JsAnyMethodModifier;
-    type IntoIter = AstNodeListIterator<Language, JsAnyMethodModifier>;
+    type Item = AnyJsMethodModifier;
+    type IntoIter = AstNodeListIterator<Language, AnyJsMethodModifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -34925,7 +34937,7 @@ impl Serialize for JsModuleItemList {
 }
 impl AstNodeList for JsModuleItemList {
     type Language = Language;
-    type Node = JsAnyModuleItem;
+    type Node = AnyJsModuleItem;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -34936,13 +34948,13 @@ impl Debug for JsModuleItemList {
     }
 }
 impl IntoIterator for &JsModuleItemList {
-    type Item = JsAnyModuleItem;
-    type IntoIter = AstNodeListIterator<Language, JsAnyModuleItem>;
+    type Item = AnyJsModuleItem;
+    type IntoIter = AstNodeListIterator<Language, AnyJsModuleItem>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for JsModuleItemList {
-    type Item = JsAnyModuleItem;
-    type IntoIter = AstNodeListIterator<Language, JsAnyModuleItem>;
+    type Item = AnyJsModuleItem;
+    type IntoIter = AstNodeListIterator<Language, AnyJsModuleItem>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -34994,7 +35006,7 @@ impl Serialize for JsNamedImportSpecifierList {
 }
 impl AstSeparatedList for JsNamedImportSpecifierList {
     type Language = Language;
-    type Node = JsAnyNamedImportSpecifier;
+    type Node = AnyJsNamedImportSpecifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -35005,13 +35017,13 @@ impl Debug for JsNamedImportSpecifierList {
     }
 }
 impl IntoIterator for JsNamedImportSpecifierList {
-    type Item = SyntaxResult<JsAnyNamedImportSpecifier>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyNamedImportSpecifier>;
+    type Item = SyntaxResult<AnyJsNamedImportSpecifier>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsNamedImportSpecifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &JsNamedImportSpecifierList {
-    type Item = SyntaxResult<JsAnyNamedImportSpecifier>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyNamedImportSpecifier>;
+    type Item = SyntaxResult<AnyJsNamedImportSpecifier>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsNamedImportSpecifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -35064,7 +35076,7 @@ impl Serialize for JsObjectAssignmentPatternPropertyList {
 }
 impl AstSeparatedList for JsObjectAssignmentPatternPropertyList {
     type Language = Language;
-    type Node = JsAnyObjectAssignmentPatternMember;
+    type Node = AnyJsObjectAssignmentPatternMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -35075,13 +35087,13 @@ impl Debug for JsObjectAssignmentPatternPropertyList {
     }
 }
 impl IntoIterator for JsObjectAssignmentPatternPropertyList {
-    type Item = SyntaxResult<JsAnyObjectAssignmentPatternMember>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyObjectAssignmentPatternMember>;
+    type Item = SyntaxResult<AnyJsObjectAssignmentPatternMember>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsObjectAssignmentPatternMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &JsObjectAssignmentPatternPropertyList {
-    type Item = SyntaxResult<JsAnyObjectAssignmentPatternMember>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyObjectAssignmentPatternMember>;
+    type Item = SyntaxResult<AnyJsObjectAssignmentPatternMember>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsObjectAssignmentPatternMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -35134,7 +35146,7 @@ impl Serialize for JsObjectBindingPatternPropertyList {
 }
 impl AstSeparatedList for JsObjectBindingPatternPropertyList {
     type Language = Language;
-    type Node = JsAnyObjectBindingPatternMember;
+    type Node = AnyJsObjectBindingPatternMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -35145,13 +35157,13 @@ impl Debug for JsObjectBindingPatternPropertyList {
     }
 }
 impl IntoIterator for JsObjectBindingPatternPropertyList {
-    type Item = SyntaxResult<JsAnyObjectBindingPatternMember>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyObjectBindingPatternMember>;
+    type Item = SyntaxResult<AnyJsObjectBindingPatternMember>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsObjectBindingPatternMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &JsObjectBindingPatternPropertyList {
-    type Item = SyntaxResult<JsAnyObjectBindingPatternMember>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyObjectBindingPatternMember>;
+    type Item = SyntaxResult<AnyJsObjectBindingPatternMember>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsObjectBindingPatternMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -35203,7 +35215,7 @@ impl Serialize for JsObjectMemberList {
 }
 impl AstSeparatedList for JsObjectMemberList {
     type Language = Language;
-    type Node = JsAnyObjectMember;
+    type Node = AnyJsObjectMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -35214,13 +35226,13 @@ impl Debug for JsObjectMemberList {
     }
 }
 impl IntoIterator for JsObjectMemberList {
-    type Item = SyntaxResult<JsAnyObjectMember>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyObjectMember>;
+    type Item = SyntaxResult<AnyJsObjectMember>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsObjectMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &JsObjectMemberList {
-    type Item = SyntaxResult<JsAnyObjectMember>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyObjectMember>;
+    type Item = SyntaxResult<AnyJsObjectMember>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsObjectMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -35272,7 +35284,7 @@ impl Serialize for JsParameterList {
 }
 impl AstSeparatedList for JsParameterList {
     type Language = Language;
-    type Node = JsAnyParameter;
+    type Node = AnyJsParameter;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -35283,13 +35295,13 @@ impl Debug for JsParameterList {
     }
 }
 impl IntoIterator for JsParameterList {
-    type Item = SyntaxResult<JsAnyParameter>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyParameter>;
+    type Item = SyntaxResult<AnyJsParameter>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsParameter>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &JsParameterList {
-    type Item = SyntaxResult<JsAnyParameter>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, JsAnyParameter>;
+    type Item = SyntaxResult<AnyJsParameter>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyJsParameter>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -35341,7 +35353,7 @@ impl Serialize for JsPropertyModifierList {
 }
 impl AstNodeList for JsPropertyModifierList {
     type Language = Language;
-    type Node = JsAnyPropertyModifier;
+    type Node = AnyJsPropertyModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -35352,13 +35364,13 @@ impl Debug for JsPropertyModifierList {
     }
 }
 impl IntoIterator for &JsPropertyModifierList {
-    type Item = JsAnyPropertyModifier;
-    type IntoIter = AstNodeListIterator<Language, JsAnyPropertyModifier>;
+    type Item = AnyJsPropertyModifier;
+    type IntoIter = AstNodeListIterator<Language, AnyJsPropertyModifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for JsPropertyModifierList {
-    type Item = JsAnyPropertyModifier;
-    type IntoIter = AstNodeListIterator<Language, JsAnyPropertyModifier>;
+    type Item = AnyJsPropertyModifier;
+    type IntoIter = AstNodeListIterator<Language, AnyJsPropertyModifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -35410,7 +35422,7 @@ impl Serialize for JsStatementList {
 }
 impl AstNodeList for JsStatementList {
     type Language = Language;
-    type Node = JsAnyStatement;
+    type Node = AnyJsStatement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -35421,13 +35433,13 @@ impl Debug for JsStatementList {
     }
 }
 impl IntoIterator for &JsStatementList {
-    type Item = JsAnyStatement;
-    type IntoIter = AstNodeListIterator<Language, JsAnyStatement>;
+    type Item = AnyJsStatement;
+    type IntoIter = AstNodeListIterator<Language, AnyJsStatement>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for JsStatementList {
-    type Item = JsAnyStatement;
-    type IntoIter = AstNodeListIterator<Language, JsAnyStatement>;
+    type Item = AnyJsStatement;
+    type IntoIter = AstNodeListIterator<Language, AnyJsStatement>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -35479,7 +35491,7 @@ impl Serialize for JsSwitchCaseList {
 }
 impl AstNodeList for JsSwitchCaseList {
     type Language = Language;
-    type Node = JsAnySwitchClause;
+    type Node = AnyJsSwitchClause;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -35490,13 +35502,13 @@ impl Debug for JsSwitchCaseList {
     }
 }
 impl IntoIterator for &JsSwitchCaseList {
-    type Item = JsAnySwitchClause;
-    type IntoIter = AstNodeListIterator<Language, JsAnySwitchClause>;
+    type Item = AnyJsSwitchClause;
+    type IntoIter = AstNodeListIterator<Language, AnyJsSwitchClause>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for JsSwitchCaseList {
-    type Item = JsAnySwitchClause;
-    type IntoIter = AstNodeListIterator<Language, JsAnySwitchClause>;
+    type Item = AnyJsSwitchClause;
+    type IntoIter = AstNodeListIterator<Language, AnyJsSwitchClause>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -35548,7 +35560,7 @@ impl Serialize for JsTemplateElementList {
 }
 impl AstNodeList for JsTemplateElementList {
     type Language = Language;
-    type Node = JsAnyTemplateElement;
+    type Node = AnyJsTemplateElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -35559,13 +35571,13 @@ impl Debug for JsTemplateElementList {
     }
 }
 impl IntoIterator for &JsTemplateElementList {
-    type Item = JsAnyTemplateElement;
-    type IntoIter = AstNodeListIterator<Language, JsAnyTemplateElement>;
+    type Item = AnyJsTemplateElement;
+    type IntoIter = AstNodeListIterator<Language, AnyJsTemplateElement>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for JsTemplateElementList {
-    type Item = JsAnyTemplateElement;
-    type IntoIter = AstNodeListIterator<Language, JsAnyTemplateElement>;
+    type Item = AnyJsTemplateElement;
+    type IntoIter = AstNodeListIterator<Language, AnyJsTemplateElement>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -35686,7 +35698,7 @@ impl Serialize for JsxAttributeList {
 }
 impl AstNodeList for JsxAttributeList {
     type Language = Language;
-    type Node = JsxAnyAttribute;
+    type Node = AnyJsxAttribute;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -35697,13 +35709,13 @@ impl Debug for JsxAttributeList {
     }
 }
 impl IntoIterator for &JsxAttributeList {
-    type Item = JsxAnyAttribute;
-    type IntoIter = AstNodeListIterator<Language, JsxAnyAttribute>;
+    type Item = AnyJsxAttribute;
+    type IntoIter = AstNodeListIterator<Language, AnyJsxAttribute>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for JsxAttributeList {
-    type Item = JsxAnyAttribute;
-    type IntoIter = AstNodeListIterator<Language, JsxAnyAttribute>;
+    type Item = AnyJsxAttribute;
+    type IntoIter = AstNodeListIterator<Language, AnyJsxAttribute>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -35755,7 +35767,7 @@ impl Serialize for JsxChildList {
 }
 impl AstNodeList for JsxChildList {
     type Language = Language;
-    type Node = JsxAnyChild;
+    type Node = AnyJsxChild;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -35766,13 +35778,13 @@ impl Debug for JsxChildList {
     }
 }
 impl IntoIterator for &JsxChildList {
-    type Item = JsxAnyChild;
-    type IntoIter = AstNodeListIterator<Language, JsxAnyChild>;
+    type Item = AnyJsxChild;
+    type IntoIter = AstNodeListIterator<Language, AnyJsxChild>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for JsxChildList {
-    type Item = JsxAnyChild;
-    type IntoIter = AstNodeListIterator<Language, JsxAnyChild>;
+    type Item = AnyJsxChild;
+    type IntoIter = AstNodeListIterator<Language, AnyJsxChild>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -35893,7 +35905,7 @@ impl Serialize for TsIndexSignatureModifierList {
 }
 impl AstNodeList for TsIndexSignatureModifierList {
     type Language = Language;
-    type Node = TsAnyIndexSignatureModifier;
+    type Node = AnyTsIndexSignatureModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -35904,13 +35916,13 @@ impl Debug for TsIndexSignatureModifierList {
     }
 }
 impl IntoIterator for &TsIndexSignatureModifierList {
-    type Item = TsAnyIndexSignatureModifier;
-    type IntoIter = AstNodeListIterator<Language, TsAnyIndexSignatureModifier>;
+    type Item = AnyTsIndexSignatureModifier;
+    type IntoIter = AstNodeListIterator<Language, AnyTsIndexSignatureModifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for TsIndexSignatureModifierList {
-    type Item = TsAnyIndexSignatureModifier;
-    type IntoIter = AstNodeListIterator<Language, TsAnyIndexSignatureModifier>;
+    type Item = AnyTsIndexSignatureModifier;
+    type IntoIter = AstNodeListIterator<Language, AnyTsIndexSignatureModifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -35962,7 +35974,7 @@ impl Serialize for TsIntersectionTypeElementList {
 }
 impl AstSeparatedList for TsIntersectionTypeElementList {
     type Language = Language;
-    type Node = TsType;
+    type Node = AnyTsType;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -35973,13 +35985,13 @@ impl Debug for TsIntersectionTypeElementList {
     }
 }
 impl IntoIterator for TsIntersectionTypeElementList {
-    type Item = SyntaxResult<TsType>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, TsType>;
+    type Item = SyntaxResult<AnyTsType>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyTsType>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &TsIntersectionTypeElementList {
-    type Item = SyntaxResult<TsType>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, TsType>;
+    type Item = SyntaxResult<AnyTsType>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyTsType>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -36031,7 +36043,7 @@ impl Serialize for TsMethodSignatureModifierList {
 }
 impl AstNodeList for TsMethodSignatureModifierList {
     type Language = Language;
-    type Node = TsAnyMethodSignatureModifier;
+    type Node = AnyTsMethodSignatureModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -36042,13 +36054,13 @@ impl Debug for TsMethodSignatureModifierList {
     }
 }
 impl IntoIterator for &TsMethodSignatureModifierList {
-    type Item = TsAnyMethodSignatureModifier;
-    type IntoIter = AstNodeListIterator<Language, TsAnyMethodSignatureModifier>;
+    type Item = AnyTsMethodSignatureModifier;
+    type IntoIter = AstNodeListIterator<Language, AnyTsMethodSignatureModifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for TsMethodSignatureModifierList {
-    type Item = TsAnyMethodSignatureModifier;
-    type IntoIter = AstNodeListIterator<Language, TsAnyMethodSignatureModifier>;
+    type Item = AnyTsMethodSignatureModifier;
+    type IntoIter = AstNodeListIterator<Language, AnyTsMethodSignatureModifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -36100,7 +36112,7 @@ impl Serialize for TsPropertyParameterModifierList {
 }
 impl AstNodeList for TsPropertyParameterModifierList {
     type Language = Language;
-    type Node = TsAnyPropertyParameterModifier;
+    type Node = AnyTsPropertyParameterModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -36111,13 +36123,13 @@ impl Debug for TsPropertyParameterModifierList {
     }
 }
 impl IntoIterator for &TsPropertyParameterModifierList {
-    type Item = TsAnyPropertyParameterModifier;
-    type IntoIter = AstNodeListIterator<Language, TsAnyPropertyParameterModifier>;
+    type Item = AnyTsPropertyParameterModifier;
+    type IntoIter = AstNodeListIterator<Language, AnyTsPropertyParameterModifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for TsPropertyParameterModifierList {
-    type Item = TsAnyPropertyParameterModifier;
-    type IntoIter = AstNodeListIterator<Language, TsAnyPropertyParameterModifier>;
+    type Item = AnyTsPropertyParameterModifier;
+    type IntoIter = AstNodeListIterator<Language, AnyTsPropertyParameterModifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -36169,7 +36181,7 @@ impl Serialize for TsPropertySignatureModifierList {
 }
 impl AstNodeList for TsPropertySignatureModifierList {
     type Language = Language;
-    type Node = TsAnyPropertySignatureModifier;
+    type Node = AnyTsPropertySignatureModifier;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -36180,13 +36192,13 @@ impl Debug for TsPropertySignatureModifierList {
     }
 }
 impl IntoIterator for &TsPropertySignatureModifierList {
-    type Item = TsAnyPropertySignatureModifier;
-    type IntoIter = AstNodeListIterator<Language, TsAnyPropertySignatureModifier>;
+    type Item = AnyTsPropertySignatureModifier;
+    type IntoIter = AstNodeListIterator<Language, AnyTsPropertySignatureModifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for TsPropertySignatureModifierList {
-    type Item = TsAnyPropertySignatureModifier;
-    type IntoIter = AstNodeListIterator<Language, TsAnyPropertySignatureModifier>;
+    type Item = AnyTsPropertySignatureModifier;
+    type IntoIter = AstNodeListIterator<Language, AnyTsPropertySignatureModifier>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -36238,7 +36250,7 @@ impl Serialize for TsTemplateElementList {
 }
 impl AstNodeList for TsTemplateElementList {
     type Language = Language;
-    type Node = TsAnyTemplateElement;
+    type Node = AnyTsTemplateElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -36249,13 +36261,13 @@ impl Debug for TsTemplateElementList {
     }
 }
 impl IntoIterator for &TsTemplateElementList {
-    type Item = TsAnyTemplateElement;
-    type IntoIter = AstNodeListIterator<Language, TsAnyTemplateElement>;
+    type Item = AnyTsTemplateElement;
+    type IntoIter = AstNodeListIterator<Language, AnyTsTemplateElement>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for TsTemplateElementList {
-    type Item = TsAnyTemplateElement;
-    type IntoIter = AstNodeListIterator<Language, TsAnyTemplateElement>;
+    type Item = AnyTsTemplateElement;
+    type IntoIter = AstNodeListIterator<Language, AnyTsTemplateElement>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -36307,7 +36319,7 @@ impl Serialize for TsTupleTypeElementList {
 }
 impl AstSeparatedList for TsTupleTypeElementList {
     type Language = Language;
-    type Node = TsAnyTupleTypeElement;
+    type Node = AnyTsTupleTypeElement;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -36318,13 +36330,13 @@ impl Debug for TsTupleTypeElementList {
     }
 }
 impl IntoIterator for TsTupleTypeElementList {
-    type Item = SyntaxResult<TsAnyTupleTypeElement>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, TsAnyTupleTypeElement>;
+    type Item = SyntaxResult<AnyTsTupleTypeElement>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyTsTupleTypeElement>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &TsTupleTypeElementList {
-    type Item = SyntaxResult<TsAnyTupleTypeElement>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, TsAnyTupleTypeElement>;
+    type Item = SyntaxResult<AnyTsTupleTypeElement>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyTsTupleTypeElement>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -36376,7 +36388,7 @@ impl Serialize for TsTypeArgumentList {
 }
 impl AstSeparatedList for TsTypeArgumentList {
     type Language = Language;
-    type Node = TsType;
+    type Node = AnyTsType;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -36387,13 +36399,13 @@ impl Debug for TsTypeArgumentList {
     }
 }
 impl IntoIterator for TsTypeArgumentList {
-    type Item = SyntaxResult<TsType>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, TsType>;
+    type Item = SyntaxResult<AnyTsType>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyTsType>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &TsTypeArgumentList {
-    type Item = SyntaxResult<TsType>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, TsType>;
+    type Item = SyntaxResult<AnyTsType>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyTsType>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -36514,7 +36526,7 @@ impl Serialize for TsTypeMemberList {
 }
 impl AstNodeList for TsTypeMemberList {
     type Language = Language;
-    type Node = TsAnyTypeMember;
+    type Node = AnyTsTypeMember;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -36525,13 +36537,13 @@ impl Debug for TsTypeMemberList {
     }
 }
 impl IntoIterator for &TsTypeMemberList {
-    type Item = TsAnyTypeMember;
-    type IntoIter = AstNodeListIterator<Language, TsAnyTypeMember>;
+    type Item = AnyTsTypeMember;
+    type IntoIter = AstNodeListIterator<Language, AnyTsTypeMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for TsTypeMemberList {
-    type Item = TsAnyTypeMember;
-    type IntoIter = AstNodeListIterator<Language, TsAnyTypeMember>;
+    type Item = AnyTsTypeMember;
+    type IntoIter = AstNodeListIterator<Language, AnyTsTypeMember>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -36652,7 +36664,7 @@ impl Serialize for TsUnionTypeVariantList {
 }
 impl AstSeparatedList for TsUnionTypeVariantList {
     type Language = Language;
-    type Node = TsType;
+    type Node = AnyTsType;
     fn syntax_list(&self) -> &SyntaxList { &self.syntax_list }
     fn into_syntax_list(self) -> SyntaxList { self.syntax_list }
 }
@@ -36663,13 +36675,13 @@ impl Debug for TsUnionTypeVariantList {
     }
 }
 impl IntoIterator for TsUnionTypeVariantList {
-    type Item = SyntaxResult<TsType>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, TsType>;
+    type Item = SyntaxResult<AnyTsType>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyTsType>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 impl IntoIterator for &TsUnionTypeVariantList {
-    type Item = SyntaxResult<TsType>;
-    type IntoIter = AstSeparatedListNodesIterator<Language, TsType>;
+    type Item = SyntaxResult<AnyTsType>;
+    type IntoIter = AstSeparatedListNodesIterator<Language, AnyTsType>;
     fn into_iter(self) -> Self::IntoIter { self.iter() }
 }
 #[derive(Clone)]

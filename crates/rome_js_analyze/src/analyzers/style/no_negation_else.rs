@@ -3,7 +3,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyStatement, JsConditionalExpression, JsIfStatement, JsUnaryExpression,
+    AnyJsExpression, AnyJsStatement, JsConditionalExpression, JsIfStatement, JsUnaryExpression,
     JsUnaryOperator,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeExt, BatchMutationExt};
@@ -42,7 +42,7 @@ declare_rule! {
 }
 
 impl Rule for NoNegationElse {
-    type Query = Ast<JsAnyCondition>;
+    type Query = Ast<AnyJsCondition>;
     type State = JsUnaryExpression;
     type Signals = Option<Self::State>;
     type Options = ();
@@ -51,18 +51,18 @@ impl Rule for NoNegationElse {
         let n = ctx.query();
 
         match n {
-            JsAnyCondition::JsConditionalExpression(expr) => {
+            AnyJsCondition::JsConditionalExpression(expr) => {
                 if is_negation(&expr.test().ok()?).unwrap_or(false) {
                     Some(expr.test().ok()?.as_js_unary_expression().unwrap().clone())
                 } else {
                     None
                 }
             }
-            JsAnyCondition::JsIfStatement(stmt) => {
+            AnyJsCondition::JsIfStatement(stmt) => {
                 if is_negation(&stmt.test().ok()?).unwrap_or(false)
                     && !matches!(
                         stmt.else_clause()?.alternate().ok()?,
-                        JsAnyStatement::JsIfStatement(_)
+                        AnyJsStatement::JsIfStatement(_)
                     )
                 {
                     Some(stmt.test().ok()?.as_js_unary_expression().unwrap().clone())
@@ -90,7 +90,7 @@ impl Rule for NoNegationElse {
         let mut mutation = ctx.root().begin();
 
         match node {
-            JsAnyCondition::JsConditionalExpression(expr) => {
+            AnyJsCondition::JsConditionalExpression(expr) => {
                 let mut next_expr = expr
                     .clone()
                     .replace_node(expr.test().ok()?, state.argument().ok()?)?;
@@ -102,10 +102,10 @@ impl Rule for NoNegationElse {
                     .replace_node(next_expr.consequent().ok()?, expr.alternate().ok()?)?;
                 mutation.replace_node(
                     node.clone(),
-                    JsAnyCondition::JsConditionalExpression(next_expr),
+                    AnyJsCondition::JsConditionalExpression(next_expr),
                 );
             }
-            JsAnyCondition::JsIfStatement(stmt) => {
+            AnyJsCondition::JsIfStatement(stmt) => {
                 let next_stmt = stmt
                     .clone()
                     .replace_node(stmt.test().ok()?, state.argument().ok()?)?;
@@ -120,7 +120,7 @@ impl Rule for NoNegationElse {
                     next_stmt.consequent().ok()?,
                     stmt.else_clause()?.alternate().ok()?,
                 )?;
-                mutation.replace_node(node.clone(), JsAnyCondition::JsIfStatement(next_stmt));
+                mutation.replace_node(node.clone(), AnyJsCondition::JsIfStatement(next_stmt));
             }
         }
 
@@ -133,13 +133,13 @@ impl Rule for NoNegationElse {
     }
 }
 
-fn is_negation(node: &JsAnyExpression) -> Option<bool> {
+fn is_negation(node: &AnyJsExpression) -> Option<bool> {
     match node {
-        JsAnyExpression::JsUnaryExpression(expr) => {
+        AnyJsExpression::JsUnaryExpression(expr) => {
             match (expr.operator().ok(), expr.argument().ok()) {
                 (
                     Some(JsUnaryOperator::LogicalNot),
-                    Some(JsAnyExpression::JsUnaryExpression(inner_unary)),
+                    Some(AnyJsExpression::JsUnaryExpression(inner_unary)),
                 ) => Some(inner_unary.operator().ok()? != JsUnaryOperator::LogicalNot),
                 _ => Some(true),
             }
@@ -150,5 +150,5 @@ fn is_negation(node: &JsAnyExpression) -> Option<bool> {
 }
 
 declare_node_union! {
-    pub JsAnyCondition = JsConditionalExpression | JsIfStatement
+    pub AnyJsCondition = JsConditionalExpression | JsIfStatement
 }

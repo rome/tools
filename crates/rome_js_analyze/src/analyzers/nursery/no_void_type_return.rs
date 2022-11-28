@@ -2,13 +2,13 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsArrowFunctionExpression, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
-    JsFunctionExpression, JsGetterClassMember, JsGetterObjectMember, JsMethodClassMember,
-    JsMethodObjectMember, JsReturnStatement, TsAnyReturnType,
+    AnyTsReturnType, JsArrowFunctionExpression, JsFunctionDeclaration,
+    JsFunctionExportDefaultDeclaration, JsFunctionExpression, JsGetterClassMember,
+    JsGetterObjectMember, JsMethodClassMember, JsMethodObjectMember, JsReturnStatement,
 };
 use rome_rowan::{declare_node_union, AstNode};
 
-use crate::control_flow::JsAnyControlFlowRoot;
+use crate::control_flow::AnyJsControlFlowRoot;
 
 declare_rule! {
     /// Disallow returning a value from a function with the return type 'void'
@@ -96,7 +96,7 @@ declare_node_union! {
     pub(crate) JsFunctionMethod = JsArrowFunctionExpression | JsFunctionDeclaration | JsFunctionExportDefaultDeclaration | JsFunctionExpression | JsGetterClassMember | JsGetterObjectMember | JsMethodClassMember | JsMethodObjectMember
 }
 
-pub(crate) fn return_type(func: &JsFunctionMethod) -> Option<TsAnyReturnType> {
+pub(crate) fn return_type(func: &JsFunctionMethod) -> Option<AnyTsReturnType> {
     match func {
         JsFunctionMethod::JsArrowFunctionExpression(func) => {
             func.return_type_annotation()?.ty().ok()
@@ -107,10 +107,10 @@ pub(crate) fn return_type(func: &JsFunctionMethod) -> Option<TsAnyReturnType> {
         }
         JsFunctionMethod::JsFunctionExpression(func) => func.return_type_annotation()?.ty().ok(),
         JsFunctionMethod::JsGetterClassMember(func) => {
-            Some(TsAnyReturnType::TsType(func.return_type()?.ty().ok()?))
+            Some(AnyTsReturnType::AnyTsType(func.return_type()?.ty().ok()?))
         }
         JsFunctionMethod::JsGetterObjectMember(func) => {
-            Some(TsAnyReturnType::TsType(func.return_type()?.ty().ok()?))
+            Some(AnyTsReturnType::AnyTsType(func.return_type()?.ty().ok()?))
         }
         JsFunctionMethod::JsMethodClassMember(func) => func.return_type_annotation()?.ty().ok(),
         JsFunctionMethod::JsMethodObjectMember(func) => func.return_type_annotation()?.ty().ok(),
@@ -130,10 +130,10 @@ impl Rule for NoVoidTypeReturn {
         let func = ret
             .syntax()
             .ancestors()
-            .find(|x| JsAnyControlFlowRoot::can_cast(x.kind()))
+            .find(|x| AnyJsControlFlowRoot::can_cast(x.kind()))
             .and_then(JsFunctionMethod::cast)?;
         let ret_type = return_type(&func)?;
-        ret_type.as_ts_type()?.as_ts_void_type().and(Some(func))
+        ret_type.as_any_ts_type()?.as_ts_void_type().and(Some(func))
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, func: &Self::State) -> Option<RuleDiagnostic> {

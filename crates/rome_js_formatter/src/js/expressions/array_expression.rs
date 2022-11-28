@@ -3,7 +3,7 @@ use crate::prelude::*;
 use crate::parentheses::NeedsParentheses;
 use rome_formatter::{write, FormatRuleWithOptions};
 use rome_js_syntax::{
-    JsAnyArrayElement, JsAnyExpression, JsArrayElementList, JsArrayExpressionFields,
+    AnyJsArrayElement, AnyJsExpression, JsArrayElementList, JsArrayExpressionFields,
 };
 use rome_js_syntax::{JsArrayExpression, JsSyntaxNode};
 use rome_rowan::SyntaxResult;
@@ -90,22 +90,22 @@ fn should_break(elements: &JsArrayElementList) -> SyntaxResult<bool> {
 
         while let Some(element) = elements.next() {
             match element? {
-                JsAnyArrayElement::JsAnyExpression(JsAnyExpression::JsArrayExpression(array)) => {
+                AnyJsArrayElement::AnyJsExpression(AnyJsExpression::JsArrayExpression(array)) => {
                     let next_is_array_or_end = matches!(
                         elements.peek(),
-                        None | Some(Ok(JsAnyArrayElement::JsAnyExpression(
-                            JsAnyExpression::JsArrayExpression(_)
+                        None | Some(Ok(AnyJsArrayElement::AnyJsExpression(
+                            AnyJsExpression::JsArrayExpression(_)
                         )))
                     );
                     if array.elements().len() < 2 || !next_is_array_or_end {
                         return Ok(false);
                     }
                 }
-                JsAnyArrayElement::JsAnyExpression(JsAnyExpression::JsObjectExpression(object)) => {
+                AnyJsArrayElement::AnyJsExpression(AnyJsExpression::JsObjectExpression(object)) => {
                     let next_is_object_or_empty = matches!(
                         elements.peek(),
-                        None | Some(Ok(JsAnyArrayElement::JsAnyExpression(
-                            JsAnyExpression::JsObjectExpression(_)
+                        None | Some(Ok(AnyJsArrayElement::AnyJsExpression(
+                            AnyJsExpression::JsObjectExpression(_)
                         )))
                     );
 

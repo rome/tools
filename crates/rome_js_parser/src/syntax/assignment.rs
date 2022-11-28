@@ -437,7 +437,7 @@ impl RewriteParseEvents for ReparseAssignment {
             }
             _ => {
                 self.inside_assignment = false;
-                if TsType::can_cast(kind)
+                if AnyTsType::can_cast(kind)
                     && matches!(
                         self.parents.last(),
                         Some((
@@ -496,7 +496,7 @@ impl RewriteParseEvents for ReparseAssignment {
             self.result = Some(completed.into());
         }
 
-        if TsType::can_cast(kind)
+        if AnyTsType::can_cast(kind)
             && matches!(
                 self.parents.last(),
                 Some((

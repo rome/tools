@@ -1,11 +1,11 @@
 use crate::prelude::*;
 
-use crate::js::expressions::computed_member_expression::JsAnyComputedMemberLike;
+use crate::js::expressions::computed_member_expression::AnyJsComputedMemberLike;
 use crate::parentheses::NeedsParentheses;
 use crate::utils::member_chain::MemberChainLabel;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
-    JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyName, JsAssignmentExpression,
+    AnyJsAssignment, AnyJsAssignmentPattern, AnyJsExpression, AnyJsName, JsAssignmentExpression,
     JsInitializerClause, JsStaticMemberAssignment, JsStaticMemberExpression, JsSyntaxKind,
     JsSyntaxNode, JsSyntaxToken,
 };
@@ -16,7 +16,7 @@ pub(crate) struct FormatJsStaticMemberExpression;
 
 impl FormatNodeRule<JsStaticMemberExpression> for FormatJsStaticMemberExpression {
     fn fmt_fields(&self, node: &JsStaticMemberExpression, f: &mut JsFormatter) -> FormatResult<()> {
-        JsAnyStaticMemberLike::from(node.clone()).fmt(f)
+        AnyJsStaticMemberLike::from(node.clone()).fmt(f)
     }
 
     fn needs_parentheses(&self, item: &JsStaticMemberExpression) -> bool {
@@ -34,10 +34,10 @@ enum StaticMemberLikeLayout {
 }
 
 declare_node_union! {
-    pub(crate) JsAnyStaticMemberLike = JsStaticMemberExpression | JsStaticMemberAssignment
+    pub(crate) AnyJsStaticMemberLike = JsStaticMemberExpression | JsStaticMemberAssignment
 }
 
-impl Format<JsFormatContext> for JsAnyStaticMemberLike {
+impl Format<JsFormatContext> for AnyJsStaticMemberLike {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let is_member_chain = {
             let mut recording = f.start_recording();
@@ -82,27 +82,27 @@ impl Format<JsFormatContext> for JsAnyStaticMemberLike {
     }
 }
 
-impl JsAnyStaticMemberLike {
-    fn object(&self) -> SyntaxResult<JsAnyExpression> {
+impl AnyJsStaticMemberLike {
+    fn object(&self) -> SyntaxResult<AnyJsExpression> {
         match self {
-            JsAnyStaticMemberLike::JsStaticMemberExpression(expression) => expression.object(),
-            JsAnyStaticMemberLike::JsStaticMemberAssignment(assignment) => assignment.object(),
+            AnyJsStaticMemberLike::JsStaticMemberExpression(expression) => expression.object(),
+            AnyJsStaticMemberLike::JsStaticMemberAssignment(assignment) => assignment.object(),
         }
     }
 
     fn operator_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            JsAnyStaticMemberLike::JsStaticMemberExpression(expression) => {
+            AnyJsStaticMemberLike::JsStaticMemberExpression(expression) => {
                 expression.operator_token()
             }
-            JsAnyStaticMemberLike::JsStaticMemberAssignment(assignment) => assignment.dot_token(),
+            AnyJsStaticMemberLike::JsStaticMemberAssignment(assignment) => assignment.dot_token(),
         }
     }
 
-    fn member(&self) -> SyntaxResult<JsAnyName> {
+    fn member(&self) -> SyntaxResult<AnyJsName> {
         match self {
-            JsAnyStaticMemberLike::JsStaticMemberExpression(expression) => expression.member(),
-            JsAnyStaticMemberLike::JsStaticMemberAssignment(assignment) => assignment.member(),
+            AnyJsStaticMemberLike::JsStaticMemberExpression(expression) => expression.member(),
+            AnyJsStaticMemberLike::JsStaticMemberAssignment(assignment) => assignment.member(),
         }
     }
 
@@ -116,12 +116,12 @@ impl JsAnyStaticMemberLike {
                     || JsInitializerClause::can_cast(parent.kind())
                 {
                     let no_break = match &object {
-                        JsAnyExpression::JsCallExpression(call_expression) => {
+                        AnyJsExpression::JsCallExpression(call_expression) => {
                             !call_expression.arguments()?.args().is_empty()
                         }
-                        JsAnyExpression::TsNonNullAssertionExpression(non_null_assertion) => {
+                        AnyJsExpression::TsNonNullAssertionExpression(non_null_assertion) => {
                             match non_null_assertion.expression()? {
-                                JsAnyExpression::JsCallExpression(call_expression) => {
+                                AnyJsExpression::JsCallExpression(call_expression) => {
                                     !call_expression.arguments()?.args().is_empty()
                                 }
                                 _ => false,
@@ -135,28 +135,28 @@ impl JsAnyStaticMemberLike {
                     }
                 }
 
-                JsAnyStaticMemberLike::can_cast(parent.kind())
-                    || JsAnyComputedMemberLike::can_cast(parent.kind())
+                AnyJsStaticMemberLike::can_cast(parent.kind())
+                    || AnyJsComputedMemberLike::can_cast(parent.kind())
             }
             None => false,
         };
 
-        if !is_nested && matches!(&object, JsAnyExpression::JsIdentifierExpression(_)) {
+        if !is_nested && matches!(&object, AnyJsExpression::JsIdentifierExpression(_)) {
             return Ok(StaticMemberLikeLayout::NoBreak);
         }
 
         let first_non_static_member_ancestor = self.syntax().ancestors().find(|parent| {
-            !(JsAnyStaticMemberLike::can_cast(parent.kind())
-                || JsAnyComputedMemberLike::can_cast(parent.kind()))
+            !(AnyJsStaticMemberLike::can_cast(parent.kind())
+                || AnyJsComputedMemberLike::can_cast(parent.kind()))
         });
 
-        let layout = match first_non_static_member_ancestor.and_then(JsAnyExpression::cast) {
-            Some(JsAnyExpression::JsNewExpression(_)) => StaticMemberLikeLayout::NoBreak,
-            Some(JsAnyExpression::JsAssignmentExpression(assignment)) => {
+        let layout = match first_non_static_member_ancestor.and_then(AnyJsExpression::cast) {
+            Some(AnyJsExpression::JsNewExpression(_)) => StaticMemberLikeLayout::NoBreak,
+            Some(AnyJsExpression::JsAssignmentExpression(assignment)) => {
                 if matches!(
                     assignment.left()?,
-                    JsAnyAssignmentPattern::JsAnyAssignment(
-                        JsAnyAssignment::JsIdentifierAssignment(_)
+                    AnyJsAssignmentPattern::AnyJsAssignment(
+                        AnyJsAssignment::JsIdentifierAssignment(_)
                     )
                 ) {
                     StaticMemberLikeLayout::BreakAfterObject
@@ -182,10 +182,10 @@ impl NeedsParentheses for JsStaticMemberExpression {
 }
 
 pub(crate) fn member_chain_callee_needs_parens(
-    node: JsAnyExpression,
+    node: AnyJsExpression,
     parent: &JsSyntaxNode,
 ) -> bool {
-    use JsAnyExpression::*;
+    use AnyJsExpression::*;
 
     match parent.kind() {
         // `new (test().a)

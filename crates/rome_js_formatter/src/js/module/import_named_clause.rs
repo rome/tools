@@ -1,8 +1,8 @@
 use crate::prelude::*;
 
 use rome_formatter::{write, CstFormatContext};
-use rome_js_syntax::JsAnyNamedImport;
-use rome_js_syntax::JsAnyNamedImportSpecifier;
+use rome_js_syntax::AnyJsNamedImport;
+use rome_js_syntax::AnyJsNamedImportSpecifier;
 use rome_js_syntax::JsImportNamedClause;
 use rome_js_syntax::JsImportNamedClauseFields;
 use rome_js_syntax::JsNamedImportSpecifiersFields;
@@ -51,7 +51,7 @@ impl FormatNodeRule<JsImportNamedClause> for FormatJsImportNamedClause {
             write![f, [named_import.format()]]
         } else {
             match named_import {
-                JsAnyNamedImport::JsNamedImportSpecifiers(ref specifiers)
+                AnyJsNamedImport::JsNamedImportSpecifiers(ref specifiers)
                     if specifiers.specifiers().len() == 1
                         && !f.context().comments().is_suppressed(specifiers.syntax()) =>
                 {
@@ -59,7 +59,7 @@ impl FormatNodeRule<JsImportNamedClause> for FormatJsImportNamedClause {
                     let first_specifier = specifiers.specifiers().elements().next().unwrap();
                     match (first_specifier.node(), first_specifier.trailing_separator()) {
                         (
-                            Ok(JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(
+                            Ok(AnyJsNamedImportSpecifier::JsShorthandNamedImportSpecifier(
                                 specifier,
                             )),
                             Ok(separator),
@@ -82,7 +82,7 @@ impl FormatNodeRule<JsImportNamedClause> for FormatJsImportNamedClause {
                             }
                         }
                         (
-                            Ok(JsAnyNamedImportSpecifier::JsNamedImportSpecifier(specifier)),
+                            Ok(AnyJsNamedImportSpecifier::JsNamedImportSpecifier(specifier)),
                             Ok(separator),
                         ) => {
                             if f.comments().has_comments(specifier.syntax()) {

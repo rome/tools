@@ -1,7 +1,7 @@
 use crate::utils::is_call_like_expression;
 use rome_js_syntax::{
-    JsAnyArrayElement, JsAnyCallArgument, JsAnyExpression, JsAnyName, JsAnyObjectMember,
-    JsAnyObjectMemberName, JsAnyTemplateElement, JsSpread, JsStaticMemberExpressionFields,
+    AnyJsArrayElement, AnyJsCallArgument, AnyJsExpression, AnyJsName, AnyJsObjectMember,
+    AnyJsObjectMemberName, AnyJsTemplateElement, JsSpread, JsStaticMemberExpressionFields,
     JsTemplateExpression, JsUnaryOperator,
 };
 use rome_rowan::{AstSeparatedList, SyntaxResult};
@@ -36,16 +36,16 @@ use rome_rowan::{AstSeparatedList, SyntaxResult};
 /// [Prettier]: https://github.com/prettier/prettier/blob/a9de2a128cc8eea84ddd90efdc210378a894ab6b/src/language-js/utils/index.js#L802-L886
 #[derive(Debug)]
 pub(crate) enum SimpleArgument {
-    Expression(JsAnyExpression),
-    Name(JsAnyName),
+    Expression(AnyJsExpression),
+    Name(AnyJsName),
     Spread,
 }
 
 impl SimpleArgument {
-    pub fn new(node: JsAnyCallArgument) -> Self {
+    pub fn new(node: AnyJsCallArgument) -> Self {
         match node {
-            JsAnyCallArgument::JsAnyExpression(expr) => Self::Expression(expr),
-            JsAnyCallArgument::JsSpread(_) => Self::Spread,
+            AnyJsCallArgument::AnyJsExpression(expr) => Self::Expression(expr),
+            AnyJsCallArgument::JsSpread(_) => Self::Spread,
         }
     }
 
@@ -81,17 +81,17 @@ impl SimpleArgument {
                 let mut is_import_call_expression = false;
                 let mut is_simple_callee = false;
                 let arguments = match any_expression {
-                    JsAnyExpression::JsNewExpression(expr) => {
+                    AnyJsExpression::JsNewExpression(expr) => {
                         let callee = expr.callee()?;
                         is_simple_callee = SimpleArgument::from(callee).is_simple_impl(depth);
                         expr.arguments()
                     }
-                    JsAnyExpression::JsCallExpression(expr) => {
+                    AnyJsExpression::JsCallExpression(expr) => {
                         let callee = expr.callee()?;
                         is_simple_callee = SimpleArgument::from(callee).is_simple_impl(depth);
                         expr.arguments().ok()
                     }
-                    JsAnyExpression::JsImportCallExpression(expr) => {
+                    AnyJsExpression::JsImportCallExpression(expr) => {
                         is_import_call_expression = true;
                         expr.arguments().ok()
                     }
@@ -120,7 +120,7 @@ impl SimpleArgument {
     }
 
     fn is_simple_static_member_expression(&self, depth: u8) -> SyntaxResult<bool> {
-        if let SimpleArgument::Expression(JsAnyExpression::JsStaticMemberExpression(
+        if let SimpleArgument::Expression(AnyJsExpression::JsStaticMemberExpression(
             static_expression,
         )) = self
         {
@@ -134,7 +134,7 @@ impl SimpleArgument {
     }
 
     fn is_simple_non_null_assertion_expression(&self, depth: u8) -> SyntaxResult<bool> {
-        if let SimpleArgument::Expression(JsAnyExpression::TsNonNullAssertionExpression(
+        if let SimpleArgument::Expression(AnyJsExpression::TsNonNullAssertionExpression(
             assertion,
         )) = self
         {
@@ -145,7 +145,7 @@ impl SimpleArgument {
     }
 
     fn is_simple_unary_expression(&self, depth: u8) -> SyntaxResult<bool> {
-        if let SimpleArgument::Expression(JsAnyExpression::JsUnaryExpression(unary_expression)) =
+        if let SimpleArgument::Expression(AnyJsExpression::JsUnaryExpression(unary_expression)) =
             self
         {
             if matches!(
@@ -162,7 +162,7 @@ impl SimpleArgument {
     }
 
     fn is_simple_array_expression(&self, depth: u8) -> bool {
-        if let SimpleArgument::Expression(JsAnyExpression::JsArrayExpression(array_expression)) =
+        if let SimpleArgument::Expression(AnyJsExpression::JsArrayExpression(array_expression)) =
             self
         {
             array_expression
@@ -170,7 +170,7 @@ impl SimpleArgument {
                 .iter()
                 .filter_map(|element| element.ok())
                 .all(|element| match element {
-                    JsAnyArrayElement::JsAnyExpression(expression) => {
+                    AnyJsArrayElement::AnyJsExpression(expression) => {
                         SimpleArgument::from(expression).is_simple_impl(depth + 1)
                     }
                     _ => false,
@@ -181,7 +181,7 @@ impl SimpleArgument {
     }
 
     fn is_simple_template(&self, depth: u8) -> bool {
-        if let SimpleArgument::Expression(JsAnyExpression::JsTemplateExpression(template)) = self {
+        if let SimpleArgument::Expression(AnyJsExpression::JsTemplateExpression(template)) = self {
             is_simple_template_literal(template, depth + 1).unwrap_or(false)
         } else {
             false
@@ -189,23 +189,23 @@ impl SimpleArgument {
     }
 
     const fn is_simple_literal(&self) -> bool {
-        if let SimpleArgument::Name(JsAnyName::JsPrivateName(_)) = self {
+        if let SimpleArgument::Name(AnyJsName::JsPrivateName(_)) = self {
             return true;
         }
 
         matches!(
             self,
             SimpleArgument::Expression(
-                JsAnyExpression::JsAnyLiteralExpression(_)
-                    | JsAnyExpression::JsThisExpression(_)
-                    | JsAnyExpression::JsIdentifierExpression(_)
-                    | JsAnyExpression::JsSuperExpression(_),
+                AnyJsExpression::AnyJsLiteralExpression(_)
+                    | AnyJsExpression::JsThisExpression(_)
+                    | AnyJsExpression::JsIdentifierExpression(_)
+                    | AnyJsExpression::JsSuperExpression(_),
             )
         )
     }
 
     fn is_simple_object_expression(&self, depth: u8) -> bool {
-        if let SimpleArgument::Expression(JsAnyExpression::JsObjectExpression(object_expression)) =
+        if let SimpleArgument::Expression(AnyJsExpression::JsObjectExpression(object_expression)) =
             self
         {
             object_expression
@@ -213,14 +213,14 @@ impl SimpleArgument {
                 .iter()
                 .filter_map(|member| member.ok())
                 .all(|member| {
-                    use JsAnyObjectMember::*;
+                    use AnyJsObjectMember::*;
 
                     match member {
                         JsShorthandPropertyObjectMember(_) => true,
                         JsPropertyObjectMember(property) => {
                             let is_computed = matches!(
                                 property.name(),
-                                Ok(JsAnyObjectMemberName::JsComputedMemberName(_))
+                                Ok(AnyJsObjectMemberName::JsComputedMemberName(_))
                             );
 
                             let is_simple = property.value().map_or(false, |value| {
@@ -238,14 +238,14 @@ impl SimpleArgument {
     }
 }
 
-impl From<JsAnyExpression> for SimpleArgument {
-    fn from(expr: JsAnyExpression) -> Self {
+impl From<AnyJsExpression> for SimpleArgument {
+    fn from(expr: AnyJsExpression) -> Self {
         Self::Expression(expr)
     }
 }
 
-impl From<JsAnyName> for SimpleArgument {
-    fn from(name: JsAnyName) -> Self {
+impl From<AnyJsName> for SimpleArgument {
+    fn from(name: AnyJsName) -> Self {
         Self::Name(name)
     }
 }
@@ -256,11 +256,11 @@ impl From<JsSpread> for SimpleArgument {
     }
 }
 
-impl From<JsAnyCallArgument> for SimpleArgument {
-    fn from(call_argument: JsAnyCallArgument) -> Self {
+impl From<AnyJsCallArgument> for SimpleArgument {
+    fn from(call_argument: AnyJsCallArgument) -> Self {
         match call_argument {
-            JsAnyCallArgument::JsAnyExpression(expr) => SimpleArgument::from(expr),
-            JsAnyCallArgument::JsSpread(spread) => SimpleArgument::from(spread),
+            AnyJsCallArgument::AnyJsExpression(expr) => SimpleArgument::from(expr),
+            AnyJsCallArgument::JsSpread(spread) => SimpleArgument::from(spread),
         }
     }
 }
@@ -276,12 +276,12 @@ pub fn is_simple_template_literal(
 ) -> SyntaxResult<bool> {
     for element in template.elements() {
         match element {
-            JsAnyTemplateElement::JsTemplateChunkElement(chunk) => {
+            AnyJsTemplateElement::JsTemplateChunkElement(chunk) => {
                 if chunk.template_chunk_token()?.text_trimmed().contains('\n') {
                     return Ok(false);
                 }
             }
-            JsAnyTemplateElement::JsTemplateElement(element) => {
+            AnyJsTemplateElement::JsTemplateElement(element) => {
                 let expression = element.expression()?;
                 if !(SimpleArgument::from(expression).is_simple_impl(depth)) {
                     return Ok(false);

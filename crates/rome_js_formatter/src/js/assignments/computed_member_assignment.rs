@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use crate::js::expressions::computed_member_expression::JsAnyComputedMemberLike;
+use crate::js::expressions::computed_member_expression::AnyJsComputedMemberLike;
 use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::{JsComputedMemberAssignment, JsSyntaxNode};
 
@@ -13,7 +13,7 @@ impl FormatNodeRule<JsComputedMemberAssignment> for FormatJsComputedMemberAssign
         node: &JsComputedMemberAssignment,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        JsAnyComputedMemberLike::from(node.clone()).fmt(f)
+        AnyJsComputedMemberLike::from(node.clone()).fmt(f)
     }
 
     fn needs_parentheses(&self, item: &JsComputedMemberAssignment) -> bool {

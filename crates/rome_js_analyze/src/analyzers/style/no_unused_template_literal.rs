@@ -5,7 +5,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsTemplateExpression,
+    AnyJsExpression, AnyJsLiteralExpression, AnyJsTemplateElement, JsTemplateExpression,
 };
 use rome_rowan::{AstNode, AstNodeList, BatchMutationExt};
 
@@ -80,13 +80,13 @@ impl Rule for NoUnusedTemplateLiteral {
             .iter()
             .fold(String::from(""), |mut acc, cur| {
                 match cur {
-                    JsAnyTemplateElement::JsTemplateChunkElement(ele) => {
+                    AnyJsTemplateElement::JsTemplateChunkElement(ele) => {
                         // Safety: if `ele.template_chunk_token()` is `Err` variant, [can_convert_to_string_lit] should return false,
                         // thus `run` will return None
                         acc += ele.template_chunk_token().unwrap().text();
                         acc
                     }
-                    JsAnyTemplateElement::JsTemplateElement(_) => {
+                    AnyJsTemplateElement::JsTemplateElement(_) => {
                         // Because we know if TemplateLit has any `JsTemplateElement` will return `None` in `run` function
                         unreachable!()
                     }
@@ -94,9 +94,9 @@ impl Rule for NoUnusedTemplateLiteral {
             });
 
         mutation.replace_node(
-            JsAnyExpression::JsTemplateExpression(node.clone()),
-            JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsStringLiteralExpression(
+            AnyJsExpression::JsTemplateExpression(node.clone()),
+            AnyJsExpression::AnyJsLiteralExpression(
+                AnyJsLiteralExpression::JsStringLiteralExpression(
                     make::js_string_literal_expression(make::js_string_literal(&inner_content)),
                 ),
             ),
@@ -117,8 +117,8 @@ fn can_convert_to_string_literal(node: &JsTemplateExpression) -> bool {
         // 1. Variant of element is `JsTemplateElement`
         // 2. Content of `ChunkElement` has any special characters, any of `\n`, `'`, `"`
         match element {
-            JsAnyTemplateElement::JsTemplateElement(_) => true,
-            JsAnyTemplateElement::JsTemplateChunkElement(chunk) => {
+            AnyJsTemplateElement::JsTemplateElement(_) => true,
+            AnyJsTemplateElement::JsTemplateChunkElement(chunk) => {
                 match chunk.template_chunk_token() {
                     Ok(token) => {
                         // if token text has any special character

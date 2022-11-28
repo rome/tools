@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use crate::js::expressions::template_chunk_element::AnyTemplateChunkElement;
+use crate::js::auxiliary::template_chunk_element::AnyTemplateChunkElement;
 use rome_js_syntax::TsTemplateChunkElement;
 
 #[derive(Debug, Clone, Default)]

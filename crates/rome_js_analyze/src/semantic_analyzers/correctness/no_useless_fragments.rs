@@ -9,7 +9,7 @@ use rome_js_factory::make::{
     ident, js_expression_statement, js_string_literal_expression, jsx_tag_expression,
 };
 use rome_js_syntax::{
-    JsLanguage, JsParenthesizedExpression, JsSyntaxKind, JsxAnyChild, JsxAnyElementName, JsxAnyTag,
+    AnyJsxChild, AnyJsxElementName, AnyJsxTag, JsLanguage, JsParenthesizedExpression, JsSyntaxKind,
     JsxChildList, JsxElement, JsxFragment, JsxTagExpression,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList, BatchMutation, BatchMutationExt};
@@ -53,7 +53,7 @@ declare_rule! {
 #[derive(Debug)]
 pub(crate) enum NoUselessFragmentsState {
     Empty,
-    Child(JsxAnyChild),
+    Child(AnyJsxChild),
 }
 
 declare_node_union! {
@@ -61,14 +61,14 @@ declare_node_union! {
 }
 
 impl NoUselessFragmentsQuery {
-    fn replace_node(&self, mutation: &mut BatchMutation<JsLanguage>, new_node: JsxAnyChild) {
+    fn replace_node(&self, mutation: &mut BatchMutation<JsLanguage>, new_node: AnyJsxChild) {
         match self {
             NoUselessFragmentsQuery::JsxFragment(fragment) => {
-                let old_node = JsxAnyChild::JsxFragment(fragment.clone());
+                let old_node = AnyJsxChild::JsxFragment(fragment.clone());
                 mutation.replace_node(old_node, new_node);
             }
             NoUselessFragmentsQuery::JsxElement(element) => {
-                let old_node = JsxAnyChild::JsxElement(element.clone());
+                let old_node = AnyJsxChild::JsxElement(element.clone());
                 mutation.replace_node(old_node, new_node);
             }
         }
@@ -77,11 +77,11 @@ impl NoUselessFragmentsQuery {
     fn remove_node_from_list(&self, mutation: &mut BatchMutation<JsLanguage>) {
         match self {
             NoUselessFragmentsQuery::JsxFragment(fragment) => {
-                let old_node = JsxAnyChild::JsxFragment(fragment.clone());
+                let old_node = AnyJsxChild::JsxFragment(fragment.clone());
                 mutation.remove_node(old_node);
             }
             NoUselessFragmentsQuery::JsxElement(element) => {
-                let old_node = JsxAnyChild::JsxElement(element.clone());
+                let old_node = AnyJsxChild::JsxElement(element.clone());
                 mutation.remove_node(old_node);
             }
         }
@@ -158,13 +158,13 @@ impl Rule for NoUselessFragments {
                 let name = opening_element.name().ok()?;
 
                 let is_valid_react_fragment = match name {
-                    JsxAnyElementName::JsxMemberName(member_name) => {
+                    AnyJsxElementName::JsxMemberName(member_name) => {
                         jsx_member_name_is_react_fragment(&member_name, model)?
                     }
-                    JsxAnyElementName::JsxReferenceIdentifier(identifier) => {
+                    AnyJsxElementName::JsxReferenceIdentifier(identifier) => {
                         jsx_reference_identifier_is_fragment(&identifier, model)?
                     }
-                    JsxAnyElementName::JsxName(_) | JsxAnyElementName::JsxNamespaceName(_) => false,
+                    AnyJsxElementName::JsxName(_) | AnyJsxElementName::JsxNamespaceName(_) => false,
                 };
 
                 if is_valid_react_fragment {
@@ -226,22 +226,22 @@ impl Rule for NoUselessFragments {
             let child = node.children().first();
             if let Some(child) = child {
                 let new_node = match child {
-                    JsxAnyChild::JsxElement(node) => Some(
-                        jsx_tag_expression(JsxAnyTag::JsxElement(node))
+                    AnyJsxChild::JsxElement(node) => Some(
+                        jsx_tag_expression(AnyJsxTag::JsxElement(node))
                             .syntax()
                             .clone(),
                     ),
-                    JsxAnyChild::JsxFragment(node) => Some(
-                        jsx_tag_expression(JsxAnyTag::JsxFragment(node))
+                    AnyJsxChild::JsxFragment(node) => Some(
+                        jsx_tag_expression(AnyJsxTag::JsxFragment(node))
                             .syntax()
                             .clone(),
                     ),
-                    JsxAnyChild::JsxSelfClosingElement(node) => Some(
-                        jsx_tag_expression(JsxAnyTag::JsxSelfClosingElement(node))
+                    AnyJsxChild::JsxSelfClosingElement(node) => Some(
+                        jsx_tag_expression(AnyJsxTag::JsxSelfClosingElement(node))
                             .syntax()
                             .clone(),
                     ),
-                    JsxAnyChild::JsxText(text) => {
+                    AnyJsxChild::JsxText(text) => {
                         let new_value = format!("\"{}\"", text.value_token().ok()?);
                         Some(
                             js_string_literal_expression(ident(&new_value))
@@ -249,7 +249,7 @@ impl Rule for NoUselessFragments {
                                 .clone(),
                         )
                     }
-                    JsxAnyChild::JsxExpressionChild(child) => {
+                    AnyJsxChild::JsxExpressionChild(child) => {
                         child.expression().map(|expression| {
                             js_expression_statement(expression).build().syntax().clone()
                         })
@@ -258,7 +258,7 @@ impl Rule for NoUselessFragments {
                     // can't apply a code action because it will create invalid syntax
                     // for example `<>{...foo}</>` would become `{...foo}` which would produce
                     // a syntax error
-                    JsxAnyChild::JsxSpreadChild(_) => return None,
+                    AnyJsxChild::JsxSpreadChild(_) => return None,
                 };
                 if let Some(new_node) = new_node {
                     mutation.replace_element(parent.into(), new_node.into());

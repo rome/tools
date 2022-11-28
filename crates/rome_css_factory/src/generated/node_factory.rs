@@ -50,7 +50,7 @@ pub fn css_at_media(
     media_token: SyntaxToken,
     query_list: CssAtMediaQueryList,
     l_curly_token: SyntaxToken,
-    body: CssAnyRule,
+    body: AnyCssRule,
     r_curly_token: SyntaxToken,
 ) -> CssAtMedia {
     CssAtMedia::unwrap_cast(SyntaxNode::new_detached(
@@ -68,7 +68,7 @@ pub fn css_at_media(
 pub fn css_at_media_query(
     condition_token: SyntaxToken,
     or_token: SyntaxToken,
-    ty: CssAnyAtMediaQueryType,
+    ty: AnyCssAtMediaQueryType,
 ) -> CssAtMediaQueryBuilder {
     CssAtMediaQueryBuilder {
         condition_token,
@@ -81,7 +81,7 @@ pub fn css_at_media_query(
 pub struct CssAtMediaQueryBuilder {
     condition_token: SyntaxToken,
     or_token: SyntaxToken,
-    ty: CssAnyAtMediaQueryType,
+    ty: AnyCssAtMediaQueryType,
     only_token: Option<SyntaxToken>,
     consequent: Option<CssAtMediaQueryConsequent>,
 }
@@ -110,7 +110,7 @@ impl CssAtMediaQueryBuilder {
 }
 pub fn css_at_media_query_consequent(
     and_token: SyntaxToken,
-    ty: CssAnyAtMediaQueryType,
+    ty: AnyCssAtMediaQueryType,
 ) -> CssAtMediaQueryConsequentBuilder {
     CssAtMediaQueryConsequentBuilder {
         and_token,
@@ -120,7 +120,7 @@ pub fn css_at_media_query_consequent(
 }
 pub struct CssAtMediaQueryConsequentBuilder {
     and_token: SyntaxToken,
-    ty: CssAnyAtMediaQueryType,
+    ty: AnyCssAtMediaQueryType,
     condition_token: Option<SyntaxToken>,
 }
 impl CssAtMediaQueryConsequentBuilder {
@@ -142,7 +142,7 @@ impl CssAtMediaQueryConsequentBuilder {
 }
 pub fn css_at_media_query_feature(
     l_paren_token: SyntaxToken,
-    feature: CssAnyAtMediaQueryFeatureType,
+    feature: AnyCssAtMediaQueryFeatureType,
     r_paren_token: SyntaxToken,
 ) -> CssAtMediaQueryFeature {
     CssAtMediaQueryFeature::unwrap_cast(SyntaxNode::new_detached(
@@ -165,7 +165,7 @@ pub fn css_at_media_query_feature_boolean(
 pub fn css_at_media_query_feature_compare(
     name: CssIdentifier,
     range: CssAtMediaQueryRange,
-    value: CssAnyValue,
+    value: AnyCssValue,
 ) -> CssAtMediaQueryFeatureCompare {
     CssAtMediaQueryFeatureCompare::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_AT_MEDIA_QUERY_FEATURE_COMPARE,
@@ -179,7 +179,7 @@ pub fn css_at_media_query_feature_compare(
 pub fn css_at_media_query_feature_plain(
     name: CssIdentifier,
     colon_token: SyntaxToken,
-    value: CssAnyValue,
+    value: AnyCssValue,
 ) -> CssAtMediaQueryFeaturePlain {
     CssAtMediaQueryFeaturePlain::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_AT_MEDIA_QUERY_FEATURE_PLAIN,
@@ -191,10 +191,10 @@ pub fn css_at_media_query_feature_plain(
     ))
 }
 pub fn css_at_media_query_feature_range(
-    first_value: CssAnyValue,
+    first_value: AnyCssValue,
     first_range: CssAtMediaQueryRange,
     name: CssIdentifier,
-    second_value: CssAnyValue,
+    second_value: AnyCssValue,
     second_range: CssAtMediaQueryRange,
 ) -> CssAtMediaQueryFeatureRange {
     CssAtMediaQueryFeatureRange::unwrap_cast(SyntaxNode::new_detached(
@@ -366,12 +366,12 @@ pub fn css_class_selector_pattern(
     ))
 }
 pub fn css_combinator_selector_pattern(
-    left: CssAnySelectorPattern,
+    left: AnyCssSelectorPattern,
     combinator_token: SyntaxToken,
     plus_token: SyntaxToken,
     bitwise_not_token: SyntaxToken,
     css_space_literal_token: SyntaxToken,
-    right: CssAnySelectorPattern,
+    right: AnyCssSelectorPattern,
 ) -> CssCombinatorSelectorPattern {
     CssCombinatorSelectorPattern::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_COMBINATOR_SELECTOR_PATTERN,
@@ -395,7 +395,7 @@ pub fn css_declaration(
     name: CssIdentifier,
     css_custom_property: CssCustomProperty,
     colon_token: SyntaxToken,
-    value: CssAnyValue,
+    value: AnyCssValue,
 ) -> CssDeclarationBuilder {
     CssDeclarationBuilder {
         name,
@@ -409,7 +409,7 @@ pub struct CssDeclarationBuilder {
     name: CssIdentifier,
     css_custom_property: CssCustomProperty,
     colon_token: SyntaxToken,
-    value: CssAnyValue,
+    value: AnyCssValue,
     important: Option<CssDeclarationImportant>,
 }
 impl CssDeclarationBuilder {
@@ -506,10 +506,10 @@ pub fn css_number(value_token: SyntaxToken) -> CssNumber {
         [Some(SyntaxElement::Token(value_token))],
     ))
 }
-pub fn css_parameter(css_any_value: CssAnyValue) -> CssParameter {
+pub fn css_parameter(any_css_value: AnyCssValue) -> CssParameter {
     CssParameter::unwrap_cast(SyntaxNode::new_detached(
         CssSyntaxKind::CSS_PARAMETER,
-        [Some(SyntaxElement::Node(css_any_value.into_syntax()))],
+        [Some(SyntaxElement::Node(any_css_value.into_syntax()))],
     ))
 }
 pub fn css_percentage(value: CssNumber, reminder_token: SyntaxToken) -> CssPercentage {
@@ -555,7 +555,7 @@ impl CssPseudoClassSelectorPatternBuilder {
 }
 pub fn css_pseudo_class_selector_pattern_parameters(
     l_paren_token: SyntaxToken,
-    parameter: CssAnyValue,
+    parameter: AnyCssValue,
     r_paren_token: SyntaxToken,
 ) -> CssPseudoClassSelectorPatternParameters {
     CssPseudoClassSelectorPatternParameters::unwrap_cast(SyntaxNode::new_detached(
@@ -679,7 +679,7 @@ pub fn css_var_function_value(
 }
 pub fn css_any_selector_pattern_list<I>(items: I) -> CssAnySelectorPatternList
 where
-    I: IntoIterator<Item = CssAnySelectorPattern>,
+    I: IntoIterator<Item = AnyCssSelectorPattern>,
     I::IntoIter: ExactSizeIterator,
 {
     CssAnySelectorPatternList::unwrap_cast(SyntaxNode::new_detached(
@@ -781,7 +781,7 @@ where
 }
 pub fn css_root<I>(items: I) -> CssRoot
 where
-    I: IntoIterator<Item = CssAnyRule>,
+    I: IntoIterator<Item = AnyCssRule>,
     I::IntoIter: ExactSizeIterator,
 {
     CssRoot::unwrap_cast(SyntaxNode::new_detached(

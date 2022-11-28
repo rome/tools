@@ -17,5 +17,7 @@ pub(crate) mod reference_identifier;
 pub(crate) mod script;
 pub(crate) mod spread;
 pub(crate) mod static_modifier;
+pub(crate) mod template_chunk_element;
+pub(crate) mod template_element;
 pub(crate) mod variable_declaration_clause;
 pub(crate) mod variable_declarator;

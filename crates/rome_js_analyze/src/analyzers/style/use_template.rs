@@ -3,9 +3,9 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::JsAnyTemplateElement::{self, JsTemplateElement};
+use rome_js_syntax::AnyJsTemplateElement::{self, JsTemplateElement};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsBinaryOperator, JsLanguage,
+    AnyJsExpression, AnyJsLiteralExpression, JsBinaryExpression, JsBinaryOperator, JsLanguage,
     JsSyntaxKind, JsSyntaxToken, JsTemplateElementList, JsTemplateExpression, WalkEvent, T,
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, BatchMutationExt, SyntaxToken, TriviaPiece};
@@ -54,7 +54,7 @@ declare_rule! {
 
 impl Rule for UseTemplate {
     type Query = Ast<JsBinaryExpression>;
-    type State = Vec<JsAnyExpression>;
+    type State = Vec<AnyJsExpression>;
     type Signals = Option<Self::State>;
     type Options = ();
 
@@ -72,8 +72,8 @@ impl Rule for UseTemplate {
             .any(|expr| {
                 !matches!(
                     expr,
-                    JsAnyExpression::JsAnyLiteralExpression(
-                        rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(_)
+                    AnyJsExpression::AnyJsLiteralExpression(
+                        rome_js_syntax::AnyJsLiteralExpression::JsStringLiteralExpression(_)
                     )
                 )
             })
@@ -115,8 +115,8 @@ impl Rule for UseTemplate {
 
         let template = convert_expressions_to_js_template(state)?;
         mutation.replace_node(
-            JsAnyExpression::JsBinaryExpression(node.clone()),
-            JsAnyExpression::JsTemplateExpression(template),
+            AnyJsExpression::JsBinaryExpression(node.clone()),
+            AnyJsExpression::JsTemplateExpression(template),
         );
 
         Some(JsRuleAction {
@@ -130,17 +130,17 @@ impl Rule for UseTemplate {
 
 /// Merge `Vec<JsAnyExpression>` into a `JsTemplate`
 fn convert_expressions_to_js_template(
-    exprs: &Vec<JsAnyExpression>,
+    exprs: &Vec<AnyJsExpression>,
 ) -> Option<JsTemplateExpression> {
     let mut reduced_exprs = Vec::with_capacity(exprs.len());
     for expr in exprs.iter() {
         match expr {
-            JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsStringLiteralExpression(string),
+            AnyJsExpression::AnyJsLiteralExpression(
+                AnyJsLiteralExpression::JsStringLiteralExpression(string),
             ) => {
                 let trimmed_string = string.syntax().text_trimmed().to_string();
                 let string_without_quotes = &trimmed_string[1..trimmed_string.len() - 1];
-                let chunk_element = JsAnyTemplateElement::JsTemplateChunkElement(
+                let chunk_element = AnyJsTemplateElement::JsTemplateChunkElement(
                     make::js_template_chunk_element(JsSyntaxToken::new_detached(
                         JsSyntaxKind::TEMPLATE_CHUNK,
                         &escape(string_without_quotes, &["${", "`"], '\\'),
@@ -150,7 +150,7 @@ fn convert_expressions_to_js_template(
                 );
                 reduced_exprs.push(chunk_element);
             }
-            JsAnyExpression::JsTemplateExpression(template) => {
+            AnyJsExpression::JsTemplateExpression(template) => {
                 reduced_exprs.extend(flatten_template_element_list(template.elements())?);
             }
             _ => {
@@ -214,7 +214,7 @@ fn convert_expressions_to_js_template(
                 let expr_next =
                     expr_next.replace_token_discard_trivia(last_token.clone(), next_last_token)?;
                 let template_element =
-                    JsAnyTemplateElement::JsTemplateElement(make::js_template_element(
+                    AnyJsTemplateElement::JsTemplateElement(make::js_template_element(
                         SyntaxToken::new_detached(JsSyntaxKind::DOLLAR_CURLY, "${", [], []),
                         expr_next,
                         SyntaxToken::new_detached(JsSyntaxKind::DOLLAR_CURLY, "}", [], []),
@@ -241,15 +241,15 @@ fn convert_expressions_to_js_template(
 /// ```
 /// into
 /// `[1, 2, a, "test", "bar"]`
-fn flatten_template_element_list(list: JsTemplateElementList) -> Option<Vec<JsAnyTemplateElement>> {
+fn flatten_template_element_list(list: JsTemplateElementList) -> Option<Vec<AnyJsTemplateElement>> {
     let mut ret = Vec::with_capacity(list.len());
     for element in list {
         match element {
-            JsAnyTemplateElement::JsTemplateChunkElement(_) => ret.push(element),
+            AnyJsTemplateElement::JsTemplateChunkElement(_) => ret.push(element),
             JsTemplateElement(ref ele) => {
                 let expr = ele.expression().ok()?;
                 match expr {
-                    JsAnyExpression::JsTemplateExpression(template) => {
+                    AnyJsExpression::JsTemplateExpression(template) => {
                         ret.extend(flatten_template_element_list(template.elements())?);
                     }
                     _ => {
@@ -267,14 +267,14 @@ fn is_unnecessary_string_concat_expression(node: &JsBinaryExpression) -> Option<
         return None;
     }
     match node.left().ok()? {
-        rome_js_syntax::JsAnyExpression::JsBinaryExpression(binary) => {
+        rome_js_syntax::AnyJsExpression::JsBinaryExpression(binary) => {
             if is_unnecessary_string_concat_expression(&binary) == Some(true) {
                 return Some(true);
             }
         }
-        rome_js_syntax::JsAnyExpression::JsTemplateExpression(_) => return Some(true),
-        rome_js_syntax::JsAnyExpression::JsAnyLiteralExpression(
-            rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
+        rome_js_syntax::AnyJsExpression::JsTemplateExpression(_) => return Some(true),
+        rome_js_syntax::AnyJsExpression::AnyJsLiteralExpression(
+            rome_js_syntax::AnyJsLiteralExpression::JsStringLiteralExpression(string_literal),
         ) => {
             if has_new_line_or_tick(string_literal).is_none() {
                 return Some(true);
@@ -283,14 +283,14 @@ fn is_unnecessary_string_concat_expression(node: &JsBinaryExpression) -> Option<
         _ => (),
     }
     match node.right().ok()? {
-        rome_js_syntax::JsAnyExpression::JsBinaryExpression(binary) => {
+        rome_js_syntax::AnyJsExpression::JsBinaryExpression(binary) => {
             if is_unnecessary_string_concat_expression(&binary) == Some(true) {
                 return Some(true);
             }
         }
-        rome_js_syntax::JsAnyExpression::JsTemplateExpression(_) => return Some(true),
-        rome_js_syntax::JsAnyExpression::JsAnyLiteralExpression(
-            rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
+        rome_js_syntax::AnyJsExpression::JsTemplateExpression(_) => return Some(true),
+        rome_js_syntax::AnyJsExpression::AnyJsLiteralExpression(
+            rome_js_syntax::AnyJsLiteralExpression::JsStringLiteralExpression(string_literal),
         ) => {
             if has_new_line_or_tick(string_literal).is_none() {
                 return Some(true);
@@ -314,10 +314,10 @@ fn has_new_line_or_tick(
 /// ## Example
 /// - from: `1 + 2 + 3 + (1 * 2)`
 /// - to: `[1, 2, 3, (1 * 2)]`
-fn collect_binary_add_expression(node: &JsBinaryExpression) -> Option<Vec<JsAnyExpression>> {
+fn collect_binary_add_expression(node: &JsBinaryExpression) -> Option<Vec<AnyJsExpression>> {
     let mut result = vec![];
     match node.left().ok()? {
-        JsAnyExpression::JsBinaryExpression(left)
+        AnyJsExpression::JsBinaryExpression(left)
             if matches!(left.operator().ok()?, JsBinaryOperator::Plus) =>
         {
             result.append(&mut collect_binary_add_expression(&left)?);
@@ -327,7 +327,7 @@ fn collect_binary_add_expression(node: &JsBinaryExpression) -> Option<Vec<JsAnyE
         }
     };
     match node.right().ok()? {
-        JsAnyExpression::JsBinaryExpression(right)
+        AnyJsExpression::JsBinaryExpression(right)
             if matches!(right.operator().ok()?, JsBinaryOperator::Plus) =>
         {
             result.append(&mut collect_binary_add_expression(&right)?);

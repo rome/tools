@@ -5,7 +5,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyStatement, JsCaseClause, JsCaseClauseFields, JsSyntaxToken, TriviaPieceKind, T,
+    AnyJsStatement, JsCaseClause, JsCaseClauseFields, JsSyntaxToken, TriviaPieceKind, T,
 };
 use rome_rowan::{AstNode, AstNodeList, BatchMutationExt, TriviaPiece};
 
@@ -121,7 +121,7 @@ impl Rule for UseSingleCaseStatement {
         let node = n
             .clone()
             .with_consequent(make::js_statement_list(iter::once(
-                JsAnyStatement::JsBlockStatement(make::js_block_statement(
+                AnyJsStatement::JsBlockStatement(make::js_block_statement(
                     JsSyntaxToken::new_detached(
                         T!['{'],
                         &opening_token,

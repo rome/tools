@@ -3,7 +3,7 @@
 use crate::*;
 pub use rome_diagnostics::location::FileId;
 use rome_js_syntax::{
-    JsAnyRoot, JsExpressionSnipped, JsLanguage, JsModule, JsScript, JsSyntaxNode, ModuleKind,
+    AnyJsRoot, JsExpressionSnipped, JsLanguage, JsModule, JsScript, JsSyntaxNode, ModuleKind,
     SourceType,
 };
 use rome_parser::event::Event;
@@ -179,7 +179,7 @@ pub fn parse_module(text: &str, file_id: FileId) -> Parse<JsModule> {
 }
 
 /// Parses the provided string as a EcmaScript program using the provided syntax features.
-pub fn parse(text: &str, file_id: FileId, source_type: SourceType) -> Parse<JsAnyRoot> {
+pub fn parse(text: &str, file_id: FileId, source_type: SourceType) -> Parse<AnyJsRoot> {
     tracing::debug_span!("parse", file_id = ?file_id).in_scope(move || {
         let (events, errors, tokens) = parse_common(text, file_id, source_type);
         let mut tree_sink = JsLosslessTreeSink::new(text, &tokens);

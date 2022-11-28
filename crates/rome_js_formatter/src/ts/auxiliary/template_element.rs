@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use rome_formatter::FormatRuleWithOptions;
 
-use crate::js::expressions::template_element::{
+use crate::js::auxiliary::template_element::{
     AnyTemplateElement, FormatTemplateElement, TemplateElementOptions,
 };
 use rome_js_syntax::TsTemplateElement;

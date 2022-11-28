@@ -10,7 +10,7 @@ pub(crate) struct FormatJsIfStatement;
 
 impl FormatNodeRule<JsIfStatement> for FormatJsIfStatement {
     fn fmt_fields(&self, node: &JsIfStatement, f: &mut JsFormatter) -> FormatResult<()> {
-        use rome_js_syntax::JsAnyStatement::*;
+        use rome_js_syntax::AnyJsStatement::*;
 
         let JsIfStatementFields {
             if_token,

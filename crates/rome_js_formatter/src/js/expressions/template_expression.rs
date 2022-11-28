@@ -5,7 +5,7 @@ use crate::js::expressions::static_member_expression::member_chain_callee_needs_
 use crate::js::lists::template_element_list::FormatJsTemplateElementListOptions;
 use crate::parentheses::NeedsParentheses;
 use crate::utils::test_call::is_test_each_pattern;
-use rome_js_syntax::{JsAnyExpression, JsSyntaxNode, JsTemplateExpression, TsTemplateLiteralType};
+use rome_js_syntax::{AnyJsExpression, JsSyntaxNode, JsTemplateExpression, TsTemplateLiteralType};
 use rome_js_syntax::{JsSyntaxToken, TsTypeArguments};
 use rome_rowan::{declare_node_union, SyntaxResult};
 
@@ -14,7 +14,7 @@ pub(crate) struct FormatJsTemplateExpression;
 
 impl FormatNodeRule<JsTemplateExpression> for FormatJsTemplateExpression {
     fn fmt_fields(&self, node: &JsTemplateExpression, f: &mut JsFormatter) -> FormatResult<()> {
-        JsAnyTemplate::from(node.clone()).fmt(f)
+        AnyJsTemplate::from(node.clone()).fmt(f)
     }
 
     fn needs_parentheses(&self, item: &JsTemplateExpression) -> bool {
@@ -23,10 +23,10 @@ impl FormatNodeRule<JsTemplateExpression> for FormatJsTemplateExpression {
 }
 
 declare_node_union! {
-    JsAnyTemplate = JsTemplateExpression | TsTemplateLiteralType
+    AnyJsTemplate = JsTemplateExpression | TsTemplateLiteralType
 }
 
-impl Format<JsFormatContext> for JsAnyTemplate {
+impl Format<JsFormatContext> for AnyJsTemplate {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         write!(
             f,
@@ -44,31 +44,31 @@ impl Format<JsFormatContext> for JsAnyTemplate {
     }
 }
 
-impl JsAnyTemplate {
-    fn tag(&self) -> Option<JsAnyExpression> {
+impl AnyJsTemplate {
+    fn tag(&self) -> Option<AnyJsExpression> {
         match self {
-            JsAnyTemplate::JsTemplateExpression(template) => template.tag(),
-            JsAnyTemplate::TsTemplateLiteralType(_) => None,
+            AnyJsTemplate::JsTemplateExpression(template) => template.tag(),
+            AnyJsTemplate::TsTemplateLiteralType(_) => None,
         }
     }
 
     fn type_arguments(&self) -> Option<TsTypeArguments> {
         match self {
-            JsAnyTemplate::JsTemplateExpression(template) => template.type_arguments(),
-            JsAnyTemplate::TsTemplateLiteralType(_) => None,
+            AnyJsTemplate::JsTemplateExpression(template) => template.type_arguments(),
+            AnyJsTemplate::TsTemplateLiteralType(_) => None,
         }
     }
 
     fn l_tick_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            JsAnyTemplate::JsTemplateExpression(template) => template.l_tick_token(),
-            JsAnyTemplate::TsTemplateLiteralType(template) => template.l_tick_token(),
+            AnyJsTemplate::JsTemplateExpression(template) => template.l_tick_token(),
+            AnyJsTemplate::TsTemplateLiteralType(template) => template.l_tick_token(),
         }
     }
 
     fn write_elements(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
-            JsAnyTemplate::JsTemplateExpression(template) => {
+            AnyJsTemplate::JsTemplateExpression(template) => {
                 let is_test_each_pattern = is_test_each_pattern(template);
                 let options = FormatJsTemplateElementListOptions {
                     is_test_each_pattern,
@@ -76,7 +76,7 @@ impl JsAnyTemplate {
 
                 write!(f, [template.elements().format().with_options(options)])
             }
-            JsAnyTemplate::TsTemplateLiteralType(template) => {
+            AnyJsTemplate::TsTemplateLiteralType(template) => {
                 write!(f, [template.elements().format()])
             }
         }
@@ -84,8 +84,8 @@ impl JsAnyTemplate {
 
     fn r_tick_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            JsAnyTemplate::JsTemplateExpression(template) => template.r_tick_token(),
-            JsAnyTemplate::TsTemplateLiteralType(template) => template.r_tick_token(),
+            AnyJsTemplate::JsTemplateExpression(template) => template.r_tick_token(),
+            AnyJsTemplate::TsTemplateLiteralType(template) => template.r_tick_token(),
         }
     }
 }

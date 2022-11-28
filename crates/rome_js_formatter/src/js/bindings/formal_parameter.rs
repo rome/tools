@@ -4,7 +4,7 @@ use rome_formatter::write;
 use crate::utils::FormatInitializerClause;
 
 use rome_js_syntax::JsFormalParameterFields;
-use rome_js_syntax::{JsAnyBindingPattern, JsFormalParameter};
+use rome_js_syntax::{AnyJsBindingPattern, JsFormalParameter};
 
 #[derive(Debug, Clone, Default)]
 pub(crate) struct FormatJsFormalParameter;
@@ -29,7 +29,7 @@ impl FormatNodeRule<JsFormalParameter> for FormatJsFormalParameter {
             ]
         });
 
-        if let JsAnyBindingPattern::JsObjectBindingPattern(_) = node.binding()? {
+        if let AnyJsBindingPattern::JsObjectBindingPattern(_) = node.binding()? {
             write![f, [group(&content)]]?;
         } else {
             write![f, [content]]?;

@@ -1,7 +1,7 @@
 //! Extensions for things which are not easily generated in ast expr nodes
 use crate::numbers::parse_js_number;
 use crate::{
-    JsAnyCallArgument, JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement,
+    AnyJsCallArgument, AnyJsExpression, AnyJsLiteralExpression, AnyJsTemplateElement,
     JsArrayExpression, JsArrayHole, JsAssignmentExpression, JsBinaryExpression, JsCallExpression,
     JsComputedMemberExpression, JsIdentifierExpression, JsLiteralMemberName, JsLogicalExpression,
     JsNewExpression, JsNumberLiteralExpression, JsObjectExpression, JsPostUpdateExpression,
@@ -247,7 +247,7 @@ impl JsBinaryExpression {
             let right = self.right()?;
 
             let is_right_null_expression = right
-                .as_js_any_literal_expression()
+                .as_any_js_literal_expression()
                 .map_or(false, |expression| {
                     expression.as_js_null_literal_expression().is_some()
                 });
@@ -364,8 +364,8 @@ impl JsUnaryExpression {
 
         let is_numeric_literal = matches!(
             argument,
-            JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsNumberLiteralExpression(_)
+            AnyJsExpression::AnyJsLiteralExpression(
+                AnyJsLiteralExpression::JsNumberLiteralExpression(_)
             )
         );
 
@@ -555,7 +555,7 @@ impl JsTemplateExpression {
 
         let mut elements = self.elements().into_iter();
         match (elements.next(), elements.next()) {
-            (Some(JsAnyTemplateElement::JsTemplateChunkElement(chunk)), None) => {
+            (Some(AnyJsTemplateElement::JsTemplateChunkElement(chunk)), None) => {
                 chunk.template_chunk_token().ok()
             }
             _ => None,
@@ -575,9 +575,9 @@ impl JsRegexLiteralExpression {
     }
 }
 
-impl JsAnyExpression {
+impl AnyJsExpression {
     /// Try to extract non `JsParenthesizedExpression` from `JsAnyExpression`
-    pub fn omit_parentheses(self) -> JsAnyExpression {
+    pub fn omit_parentheses(self) -> AnyJsExpression {
         let first = self
             .as_js_parenthesized_expression()
             .and_then(|expression| expression.expression().ok());
@@ -592,50 +592,50 @@ impl JsAnyExpression {
 
     pub fn precedence(&self) -> SyntaxResult<OperatorPrecedence> {
         let precedence = match self {
-            JsAnyExpression::JsSequenceExpression(_) => OperatorPrecedence::Comma,
-            JsAnyExpression::JsYieldExpression(_) => OperatorPrecedence::Yield,
-            JsAnyExpression::JsConditionalExpression(_) => OperatorPrecedence::Conditional,
-            JsAnyExpression::JsAssignmentExpression(_) => OperatorPrecedence::Assignment,
-            JsAnyExpression::JsInExpression(_)
-            | JsAnyExpression::JsInstanceofExpression(_)
-            | JsAnyExpression::TsAsExpression(_)
-            | JsAnyExpression::TsSatisfiesExpression(_) => OperatorPrecedence::Relational,
-            JsAnyExpression::JsLogicalExpression(expression) => expression.operator()?.precedence(),
-            JsAnyExpression::JsBinaryExpression(expression) => expression.operator()?.precedence(),
-            JsAnyExpression::TsTypeAssertionExpression(_)
-            | JsAnyExpression::TsNonNullAssertionExpression(_)
-            | JsAnyExpression::JsUnaryExpression(_)
-            | JsAnyExpression::JsAwaitExpression(_) => OperatorPrecedence::Unary,
-            JsAnyExpression::JsPostUpdateExpression(_)
-            | JsAnyExpression::JsPreUpdateExpression(_) => OperatorPrecedence::Update,
-            JsAnyExpression::JsCallExpression(_)
-            | JsAnyExpression::JsImportCallExpression(_)
-            | JsAnyExpression::JsSuperExpression(_) => OperatorPrecedence::LeftHandSide,
+            AnyJsExpression::JsSequenceExpression(_) => OperatorPrecedence::Comma,
+            AnyJsExpression::JsYieldExpression(_) => OperatorPrecedence::Yield,
+            AnyJsExpression::JsConditionalExpression(_) => OperatorPrecedence::Conditional,
+            AnyJsExpression::JsAssignmentExpression(_) => OperatorPrecedence::Assignment,
+            AnyJsExpression::JsInExpression(_)
+            | AnyJsExpression::JsInstanceofExpression(_)
+            | AnyJsExpression::TsAsExpression(_)
+            | AnyJsExpression::TsSatisfiesExpression(_) => OperatorPrecedence::Relational,
+            AnyJsExpression::JsLogicalExpression(expression) => expression.operator()?.precedence(),
+            AnyJsExpression::JsBinaryExpression(expression) => expression.operator()?.precedence(),
+            AnyJsExpression::TsTypeAssertionExpression(_)
+            | AnyJsExpression::TsNonNullAssertionExpression(_)
+            | AnyJsExpression::JsUnaryExpression(_)
+            | AnyJsExpression::JsAwaitExpression(_) => OperatorPrecedence::Unary,
+            AnyJsExpression::JsPostUpdateExpression(_)
+            | AnyJsExpression::JsPreUpdateExpression(_) => OperatorPrecedence::Update,
+            AnyJsExpression::JsCallExpression(_)
+            | AnyJsExpression::JsImportCallExpression(_)
+            | AnyJsExpression::JsSuperExpression(_) => OperatorPrecedence::LeftHandSide,
 
-            JsAnyExpression::JsNewExpression(expression) => {
+            AnyJsExpression::JsNewExpression(expression) => {
                 if expression.arguments().is_none() {
                     OperatorPrecedence::NewWithoutArguments
                 } else {
                     OperatorPrecedence::LeftHandSide
                 }
             }
-            JsAnyExpression::JsComputedMemberExpression(_)
-            | JsAnyExpression::JsStaticMemberExpression(_)
-            | JsAnyExpression::JsImportMetaExpression(_)
-            | JsAnyExpression::TsInstantiationExpression(_)
-            | JsAnyExpression::JsNewTargetExpression(_) => OperatorPrecedence::Member,
+            AnyJsExpression::JsComputedMemberExpression(_)
+            | AnyJsExpression::JsStaticMemberExpression(_)
+            | AnyJsExpression::JsImportMetaExpression(_)
+            | AnyJsExpression::TsInstantiationExpression(_)
+            | AnyJsExpression::JsNewTargetExpression(_) => OperatorPrecedence::Member,
 
-            JsAnyExpression::JsThisExpression(_)
-            | JsAnyExpression::JsAnyLiteralExpression(_)
-            | JsAnyExpression::JsArrayExpression(_)
-            | JsAnyExpression::JsArrowFunctionExpression(_)
-            | JsAnyExpression::JsClassExpression(_)
-            | JsAnyExpression::JsFunctionExpression(_)
-            | JsAnyExpression::JsIdentifierExpression(_)
-            | JsAnyExpression::JsObjectExpression(_)
-            | JsAnyExpression::JsxTagExpression(_) => OperatorPrecedence::Primary,
+            AnyJsExpression::JsThisExpression(_)
+            | AnyJsExpression::AnyJsLiteralExpression(_)
+            | AnyJsExpression::JsArrayExpression(_)
+            | AnyJsExpression::JsArrowFunctionExpression(_)
+            | AnyJsExpression::JsClassExpression(_)
+            | AnyJsExpression::JsFunctionExpression(_)
+            | AnyJsExpression::JsIdentifierExpression(_)
+            | AnyJsExpression::JsObjectExpression(_)
+            | AnyJsExpression::JsxTagExpression(_) => OperatorPrecedence::Primary,
 
-            JsAnyExpression::JsTemplateExpression(template) => {
+            AnyJsExpression::JsTemplateExpression(template) => {
                 if template.tag().is_some() {
                     OperatorPrecedence::Member
                 } else {
@@ -643,8 +643,8 @@ impl JsAnyExpression {
                 }
             }
 
-            JsAnyExpression::JsBogusExpression(_) => OperatorPrecedence::lowest(),
-            JsAnyExpression::JsParenthesizedExpression(_) => OperatorPrecedence::highest(),
+            AnyJsExpression::JsBogusExpression(_) => OperatorPrecedence::lowest(),
+            AnyJsExpression::JsParenthesizedExpression(_) => OperatorPrecedence::highest(),
         };
 
         Ok(precedence)
@@ -676,7 +676,7 @@ impl JsAnyExpression {
     fn with_string_constant<R>(&self, f: impl FnOnce(&str) -> R) -> Option<R> {
         match self {
             Self::JsTemplateExpression(t) => t.as_string_constant().map(|it| f(it.text_trimmed())),
-            Self::JsAnyLiteralExpression(JsAnyLiteralExpression::JsStringLiteralExpression(s)) => {
+            Self::AnyJsLiteralExpression(AnyJsLiteralExpression::JsStringLiteralExpression(s)) => {
                 s.inner_string_text().ok().map(|it| f(&it))
             }
             _ => None,
@@ -690,23 +690,23 @@ impl JsIdentifierExpression {
     }
 }
 
-impl JsAnyLiteralExpression {
+impl AnyJsLiteralExpression {
     pub fn value_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            JsAnyLiteralExpression::JsBigIntLiteralExpression(expression) => {
+            AnyJsLiteralExpression::JsBigIntLiteralExpression(expression) => {
                 expression.value_token()
             }
-            JsAnyLiteralExpression::JsBooleanLiteralExpression(expression) => {
+            AnyJsLiteralExpression::JsBooleanLiteralExpression(expression) => {
                 expression.value_token()
             }
-            JsAnyLiteralExpression::JsNullLiteralExpression(expression) => expression.value_token(),
-            JsAnyLiteralExpression::JsNumberLiteralExpression(expression) => {
+            AnyJsLiteralExpression::JsNullLiteralExpression(expression) => expression.value_token(),
+            AnyJsLiteralExpression::JsNumberLiteralExpression(expression) => {
                 expression.value_token()
             }
-            JsAnyLiteralExpression::JsRegexLiteralExpression(expression) => {
+            AnyJsLiteralExpression::JsRegexLiteralExpression(expression) => {
                 expression.value_token()
             }
-            JsAnyLiteralExpression::JsStringLiteralExpression(expression) => {
+            AnyJsLiteralExpression::JsStringLiteralExpression(expression) => {
                 expression.value_token()
             }
         }
@@ -763,10 +763,10 @@ impl JsComputedMemberExpression {
 }
 
 declare_node_union! {
-    pub JsAnyMemberExpression = JsStaticMemberExpression | JsComputedMemberExpression
+    pub AnyJsMemberExpression = JsStaticMemberExpression | JsComputedMemberExpression
 }
 
-impl JsAnyMemberExpression {
+impl AnyJsMemberExpression {
     /// Check if the given expression is a static or computed member expression
     /// and returns the object reference identifier.
     pub fn get_object_reference_identifier(&self) -> Option<JsReferenceIdentifier> {
@@ -833,7 +833,7 @@ impl JsCallExpression {
     pub fn get_arguments_by_index<const N: usize>(
         &self,
         indices: [usize; N],
-    ) -> [Option<JsAnyCallArgument>; N] {
+    ) -> [Option<AnyJsCallArgument>; N] {
         // assert there are no duplicates
         debug_assert!(HashSet::<_>::from_iter(indices).len() == N);
         debug_assert!({
@@ -844,7 +844,7 @@ impl JsCallExpression {
         });
         debug_assert!(N <= 16);
 
-        const INIT: Option<JsAnyCallArgument> = None;
+        const INIT: Option<AnyJsCallArgument> = None;
         let mut results = [INIT; N];
 
         let mut next = 0;
@@ -883,30 +883,30 @@ impl JsNewExpression {
     }
 }
 
-fn is_optional_chain(start: JsAnyExpression) -> bool {
+fn is_optional_chain(start: AnyJsExpression) -> bool {
     let mut current = Some(start);
 
     while let Some(node) = current {
         current = match node {
-            JsAnyExpression::JsParenthesizedExpression(parenthesized) => {
+            AnyJsExpression::JsParenthesizedExpression(parenthesized) => {
                 parenthesized.expression().ok()
             }
 
-            JsAnyExpression::JsCallExpression(call) => {
+            AnyJsExpression::JsCallExpression(call) => {
                 if call.is_optional() {
                     return true;
                 }
                 call.callee().ok()
             }
 
-            JsAnyExpression::JsStaticMemberExpression(member) => {
+            AnyJsExpression::JsStaticMemberExpression(member) => {
                 if member.is_optional() {
                     return true;
                 }
                 member.object().ok()
             }
 
-            JsAnyExpression::JsComputedMemberExpression(member) => {
+            AnyJsExpression::JsComputedMemberExpression(member) => {
                 if member.is_optional() {
                     return true;
                 }

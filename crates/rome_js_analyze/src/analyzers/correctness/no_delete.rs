@@ -3,7 +3,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsComputedMemberExpression,
+    AnyJsAssignment, AnyJsAssignmentPattern, AnyJsExpression, JsComputedMemberExpression,
     JsComputedMemberExpressionFields, JsStaticMemberExpression, JsStaticMemberExpressionFields,
     JsUnaryExpression, JsUnaryOperator, T,
 };
@@ -75,11 +75,11 @@ impl Rule for NoDelete {
 
         let mut mutation = ctx.root().begin();
         mutation.replace_node(
-            JsAnyExpression::from(node.clone()),
-            JsAnyExpression::from(make::js_assignment_expression(
+            AnyJsExpression::from(node.clone()),
+            AnyJsExpression::from(make::js_assignment_expression(
                 state.clone().try_into().ok()?,
                 make::token_decorated_with_space(T![=]),
-                JsAnyExpression::from(make::js_identifier_expression(
+                AnyJsExpression::from(make::js_identifier_expression(
                     make::js_reference_identifier(make::ident("undefined")),
                 )),
             )),
@@ -101,12 +101,12 @@ pub(crate) enum MemberExpression {
     JsComputedMemberExpression(JsComputedMemberExpression),
 }
 
-impl TryFrom<JsAnyExpression> for MemberExpression {
+impl TryFrom<AnyJsExpression> for MemberExpression {
     type Error = ();
 
-    fn try_from(value: JsAnyExpression) -> Result<Self, Self::Error> {
+    fn try_from(value: AnyJsExpression) -> Result<Self, Self::Error> {
         match value {
-            JsAnyExpression::JsStaticMemberExpression(expr) => {
+            AnyJsExpression::JsStaticMemberExpression(expr) => {
                 let JsStaticMemberExpressionFields {
                     object,
                     operator_token,
@@ -131,7 +131,7 @@ impl TryFrom<JsAnyExpression> for MemberExpression {
 
                 Ok(Self::JsStaticMemberExpression(expr))
             }
-            JsAnyExpression::JsComputedMemberExpression(expr) => {
+            AnyJsExpression::JsComputedMemberExpression(expr) => {
                 let JsComputedMemberExpressionFields {
                     object,
                     optional_chain_token,
@@ -161,7 +161,7 @@ impl TryFrom<JsAnyExpression> for MemberExpression {
     }
 }
 
-impl TryFrom<MemberExpression> for JsAnyAssignmentPattern {
+impl TryFrom<MemberExpression> for AnyJsAssignmentPattern {
     type Error = ();
 
     fn try_from(expr: MemberExpression) -> Result<Self, Self::Error> {
@@ -173,7 +173,7 @@ impl TryFrom<MemberExpression> for JsAnyAssignmentPattern {
                     member,
                 } = expr.as_fields();
 
-                Ok(Self::JsAnyAssignment(JsAnyAssignment::from(
+                Ok(Self::AnyJsAssignment(AnyJsAssignment::from(
                     make::js_static_member_assignment(
                         object.map_err(drop)?,
                         operator_token.map_err(drop)?,
@@ -190,7 +190,7 @@ impl TryFrom<MemberExpression> for JsAnyAssignmentPattern {
                     r_brack_token,
                 } = expr.as_fields();
 
-                Ok(Self::JsAnyAssignment(JsAnyAssignment::from(
+                Ok(Self::AnyJsAssignment(AnyJsAssignment::from(
                     make::js_computed_member_assignment(
                         object.map_err(drop)?,
                         l_brack_token.map_err(drop)?,
@@ -203,9 +203,9 @@ impl TryFrom<MemberExpression> for JsAnyAssignmentPattern {
     }
 }
 
-fn has_optional(expr: &JsAnyExpression) -> Result<bool, ()> {
+fn has_optional(expr: &AnyJsExpression) -> Result<bool, ()> {
     match expr {
-        JsAnyExpression::JsStaticMemberExpression(expr) => match expr.operator_token() {
+        AnyJsExpression::JsStaticMemberExpression(expr) => match expr.operator_token() {
             Ok(token) if token.kind() == T![?.] => Ok(true),
             Err(_) => Err(()),
             _ => match expr.object() {
@@ -213,7 +213,7 @@ fn has_optional(expr: &JsAnyExpression) -> Result<bool, ()> {
                 Err(_) => Err(()),
             },
         },
-        JsAnyExpression::JsComputedMemberExpression(expr) => match expr.optional_chain_token() {
+        AnyJsExpression::JsComputedMemberExpression(expr) => match expr.optional_chain_token() {
             Some(_) => Ok(true),
             None => match expr.object() {
                 Ok(expr) => has_optional(&expr),

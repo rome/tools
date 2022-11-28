@@ -2,7 +2,7 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::jsx_ext::JsxAnyElement;
+use rome_js_syntax::jsx_ext::AnyJsxElement;
 use rome_js_syntax::{JsxAttribute, JsxAttributeList};
 use rome_rowan::{AstNode, BatchMutationExt};
 
@@ -56,7 +56,7 @@ impl Rule for NoHeaderScope {
 
         let jsx_element = attr
             .parent::<JsxAttributeList>()?
-            .parent::<JsxAnyElement>()?;
+            .parent::<AnyJsxElement>()?;
 
         if jsx_element.name_value_token()?.text_trimmed() != "th" {
             return Some(());

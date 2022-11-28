@@ -6,7 +6,7 @@ use crate::utils::batch::JsBatchMutation;
 use rome_diagnostics::location::FileId;
 use rome_js_semantic::{semantic_model, SemanticModelOptions};
 use rome_js_syntax::{
-    JsAnyObjectMember, JsFormalParameter, JsIdentifierBinding, JsLanguage, JsVariableDeclarator,
+    AnyJsObjectMember, JsFormalParameter, JsIdentifierBinding, JsLanguage, JsVariableDeclarator,
     SourceType,
 };
 use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
@@ -88,7 +88,7 @@ pub fn assert_remove_identifier_a_ok<Anc: AstNode<Language = JsLanguage> + Debug
             .cast::<JsVariableDeclarator>()
         {
             batch.remove_js_variable_declarator(&declarator)
-        } else if let Some(member) = node_to_remove.syntax().clone().cast::<JsAnyObjectMember>() {
+        } else if let Some(member) = node_to_remove.syntax().clone().cast::<AnyJsObjectMember>() {
             batch.remove_js_object_member(&member)
         } else {
             panic!("Don't know how to remove this node: {:?}", node_to_remove);

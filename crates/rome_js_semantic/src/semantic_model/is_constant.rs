@@ -1,7 +1,7 @@
-use rome_js_syntax::{JsAnyExpression, JsSyntaxKind};
+use rome_js_syntax::{AnyJsExpression, JsSyntaxKind};
 use rome_rowan::AstNode;
 
-pub fn is_constant(expr: &JsAnyExpression) -> bool {
+pub fn is_constant(expr: &AnyJsExpression) -> bool {
     for node in expr.syntax().descendants() {
         if matches!(node.kind(), JsSyntaxKind::JS_REFERENCE_IDENTIFIER) {
             return false;

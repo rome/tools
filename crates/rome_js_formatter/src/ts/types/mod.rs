@@ -26,6 +26,7 @@ pub(crate) mod reference_type;
 pub(crate) mod string_literal_type;
 pub(crate) mod string_type;
 pub(crate) mod symbol_type;
+pub(crate) mod template_literal_type;
 pub(crate) mod this_type;
 pub(crate) mod tuple_type;
 pub(crate) mod type_operator_type;

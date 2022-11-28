@@ -67,7 +67,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyAssignmentPattern::can_cast(element.kind()) {
+                    if AnyJsAssignmentPattern::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -126,7 +126,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBindingPattern::can_cast(element.kind()) {
+                    if AnyJsBindingPattern::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -204,7 +204,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyArrowFunctionParameters::can_cast(element.kind()) {
+                    if AnyJsArrowFunctionParameters::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -225,7 +225,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyFunctionBody::can_cast(element.kind()) {
+                    if AnyJsFunctionBody::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -244,7 +244,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyAssignmentPattern::can_cast(element.kind()) {
+                    if AnyJsAssignmentPattern::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -276,7 +276,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -295,7 +295,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyAssignmentPattern::can_cast(element.kind()) {
+                    if AnyJsAssignmentPattern::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -309,7 +309,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -335,7 +335,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -373,7 +373,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -409,7 +409,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -428,7 +428,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyBindingPattern::can_cast(element.kind()) {
+                    if AnyJsBindingPattern::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -442,7 +442,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -579,7 +579,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -626,7 +626,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -699,7 +699,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBindingPattern::can_cast(element.kind()) {
+                    if AnyJsBindingPattern::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -746,7 +746,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -821,7 +821,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -889,7 +889,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -950,7 +950,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -964,7 +964,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -990,7 +990,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1011,7 +1011,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1044,7 +1044,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1070,7 +1070,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1084,7 +1084,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1098,7 +1098,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1282,7 +1282,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1341,7 +1341,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyStatement::can_cast(element.kind()) {
+                    if AnyJsStatement::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1362,7 +1362,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1402,7 +1402,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyStatement::can_cast(element.kind()) {
+                    if AnyJsStatement::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1466,7 +1466,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExportClause::can_cast(element.kind()) {
+                    if AnyJsExportClause::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1518,7 +1518,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExportDefaultDeclaration::can_cast(element.kind()) {
+                    if AnyJsExportDefaultDeclaration::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1551,7 +1551,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1845,7 +1845,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1871,7 +1871,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1904,7 +1904,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1970,7 +1970,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyForInOrOfInitializer::can_cast(element.kind()) {
+                    if AnyJsForInOrOfInitializer::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1984,7 +1984,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -1998,7 +1998,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyStatement::can_cast(element.kind()) {
+                    if AnyJsStatement::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2038,7 +2038,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyForInOrOfInitializer::can_cast(element.kind()) {
+                    if AnyJsForInOrOfInitializer::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2052,7 +2052,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2066,7 +2066,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyStatement::can_cast(element.kind()) {
+                    if AnyJsStatement::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2099,7 +2099,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyForInitializer::can_cast(element.kind()) {
+                    if AnyJsForInitializer::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2113,7 +2113,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2127,7 +2127,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2141,7 +2141,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyStatement::can_cast(element.kind()) {
+                    if AnyJsStatement::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2186,7 +2186,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyBindingPattern::can_cast(element.kind()) {
+                    if AnyJsBindingPattern::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2287,7 +2287,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2355,7 +2355,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2423,7 +2423,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2484,7 +2484,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyClassMemberName::can_cast(element.kind()) {
+                    if AnyJsClassMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2538,7 +2538,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyObjectMemberName::can_cast(element.kind()) {
+                    if AnyJsObjectMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2656,7 +2656,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2670,7 +2670,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyStatement::can_cast(element.kind()) {
+                    if AnyJsStatement::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2703,7 +2703,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyImportClause::can_cast(element.kind()) {
+                    if AnyJsImportClause::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2861,7 +2861,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -2948,7 +2948,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyNamedImport::can_cast(element.kind()) {
+                    if AnyJsNamedImport::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3009,7 +3009,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3049,7 +3049,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyInProperty::can_cast(element.kind()) {
+                    if AnyJsInProperty::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3063,7 +3063,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3089,7 +3089,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3108,7 +3108,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3122,7 +3122,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3155,7 +3155,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyStatement::can_cast(element.kind()) {
+                    if AnyJsStatement::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3215,7 +3215,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3229,7 +3229,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3269,7 +3269,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyClassMemberName::can_cast(element.kind()) {
+                    if AnyJsClassMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3337,7 +3337,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyObjectMemberName::can_cast(element.kind()) {
+                    if AnyJsObjectMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3480,7 +3480,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3546,7 +3546,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3572,7 +3572,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3709,7 +3709,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyObjectMemberName::can_cast(element.kind()) {
+                    if AnyJsObjectMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3723,7 +3723,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyAssignmentPattern::can_cast(element.kind()) {
+                    if AnyJsAssignmentPattern::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3756,7 +3756,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyAssignment::can_cast(element.kind()) {
+                    if AnyJsAssignment::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3834,7 +3834,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyObjectMemberName::can_cast(element.kind()) {
+                    if AnyJsObjectMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3848,7 +3848,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBindingPattern::can_cast(element.kind()) {
+                    if AnyJsBindingPattern::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3881,7 +3881,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3900,7 +3900,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -3999,7 +3999,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyAssignment::can_cast(element.kind()) {
+                    if AnyJsAssignment::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4032,7 +4032,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4058,7 +4058,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyAssignment::can_cast(element.kind()) {
+                    if AnyJsAssignment::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4091,7 +4091,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyAssignment::can_cast(element.kind()) {
+                    if AnyJsAssignment::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4169,14 +4169,14 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyClassMemberName::can_cast(element.kind()) {
+                    if AnyJsClassMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsAnyPropertyAnnotation::can_cast(element.kind()) {
+                    if AnyTsPropertyAnnotation::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4209,7 +4209,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyObjectMemberName::can_cast(element.kind()) {
+                    if AnyJsObjectMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4223,7 +4223,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4287,7 +4287,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBindingPattern::can_cast(element.kind()) {
+                    if AnyJsBindingPattern::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4320,7 +4320,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4386,7 +4386,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4400,7 +4400,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4433,7 +4433,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyClassMemberName::can_cast(element.kind()) {
+                    if AnyJsClassMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4447,7 +4447,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyFormalParameter::can_cast(element.kind()) {
+                    if AnyJsFormalParameter::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4487,7 +4487,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyObjectMemberName::can_cast(element.kind()) {
+                    if AnyJsObjectMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4501,7 +4501,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyFormalParameter::can_cast(element.kind()) {
+                    if AnyJsFormalParameter::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4541,7 +4541,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4586,7 +4586,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4645,7 +4645,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4659,7 +4659,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyName::can_cast(element.kind()) {
+                    if AnyJsName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4678,7 +4678,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4692,7 +4692,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyName::can_cast(element.kind()) {
+                    if AnyJsName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4782,7 +4782,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4855,7 +4855,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4881,7 +4881,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -4954,7 +4954,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5063,7 +5063,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5134,14 +5134,14 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyBindingPattern::can_cast(element.kind()) {
+                    if AnyJsBindingPattern::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsAnyVariableAnnotation::can_cast(element.kind()) {
+                    if AnyTsVariableAnnotation::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5207,7 +5207,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5221,7 +5221,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyStatement::can_cast(element.kind()) {
+                    if AnyJsStatement::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5254,7 +5254,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5268,7 +5268,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyStatement::can_cast(element.kind()) {
+                    if AnyJsStatement::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5294,7 +5294,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5339,7 +5339,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsxAnyAttributeName::can_cast(element.kind()) {
+                    if AnyJsxAttributeName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5372,7 +5372,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsxAnyAttributeValue::can_cast(element.kind()) {
+                    if AnyJsxAttributeValue::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5405,7 +5405,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsxAnyElementName::can_cast(element.kind()) {
+                    if AnyJsxElementName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5504,7 +5504,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5537,7 +5537,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5596,7 +5596,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsxAnyObjectName::can_cast(element.kind()) {
+                    if AnyJsxObjectName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5685,7 +5685,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsxAnyElementName::can_cast(element.kind()) {
+                    if AnyJsxElementName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5777,7 +5777,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsxAnyElementName::can_cast(element.kind()) {
+                    if AnyJsxElementName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5838,7 +5838,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5878,7 +5878,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -5923,7 +5923,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsxAnyTag::can_cast(element.kind()) {
+                    if AnyJsxTag::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6015,7 +6015,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6048,7 +6048,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyAssignment::can_cast(element.kind()) {
+                    if AnyJsAssignment::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6062,7 +6062,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6081,7 +6081,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6095,7 +6095,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6121,7 +6121,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6147,7 +6147,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsAnyTypePredicateParameterName::can_cast(element.kind()) {
+                    if AnyTsTypePredicateParameterName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6296,7 +6296,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<7usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6310,7 +6310,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6324,7 +6324,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6338,7 +6338,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6479,7 +6479,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6512,7 +6512,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6573,7 +6573,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6646,7 +6646,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyDeclarationClause::can_cast(element.kind()) {
+                    if AnyJsDeclarationClause::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6672,7 +6672,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6776,7 +6776,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6816,7 +6816,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyObjectMemberName::can_cast(element.kind()) {
+                    if AnyJsObjectMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6889,7 +6889,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6922,7 +6922,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyDeclarationClause::can_cast(element.kind()) {
+                    if AnyJsDeclarationClause::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -6981,7 +6981,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsAnyExternalModuleDeclarationBody::can_cast(element.kind()) {
+                    if AnyTsExternalModuleDeclarationBody::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -7061,7 +7061,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsAnyReturnType::can_cast(element.kind()) {
+                    if AnyTsReturnType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -7094,7 +7094,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyClassMemberName::can_cast(element.kind()) {
+                    if AnyJsClassMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -7148,7 +7148,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyObjectMemberName::can_cast(element.kind()) {
+                    if AnyJsObjectMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -7280,7 +7280,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyBinding::can_cast(element.kind()) {
+                    if AnyJsBinding::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -7294,7 +7294,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsAnyModuleReference::can_cast(element.kind()) {
+                    if AnyTsModuleReference::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -7388,7 +7388,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsAnyName::can_cast(element.kind()) {
+                    if AnyTsName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -7541,7 +7541,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -7555,7 +7555,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -7607,7 +7607,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -7755,7 +7755,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -7823,7 +7823,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -7908,7 +7908,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyClassMemberName::can_cast(element.kind()) {
+                    if AnyJsClassMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -7962,7 +7962,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyObjectMemberName::can_cast(element.kind()) {
+                    if AnyJsObjectMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8056,7 +8056,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsAnyModuleName::can_cast(element.kind()) {
+                    if AnyTsModuleName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8082,7 +8082,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if TsAnyName::can_cast(element.kind()) {
+                    if AnyTsName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8136,7 +8136,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8174,7 +8174,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyAssignment::can_cast(element.kind()) {
+                    if AnyJsAssignment::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8200,7 +8200,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8368,7 +8368,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8420,7 +8420,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8446,7 +8446,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if TsAnyTypePredicateParameterName::can_cast(element.kind()) {
+                    if AnyTsTypePredicateParameterName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8460,7 +8460,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8486,7 +8486,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyFormalParameter::can_cast(element.kind()) {
+                    if AnyJsFormalParameter::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8512,14 +8512,14 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyClassMemberName::can_cast(element.kind()) {
+                    if AnyJsClassMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsAnyPropertySignatureAnnotation::can_cast(element.kind()) {
+                    if AnyTsPropertySignatureAnnotation::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8552,7 +8552,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyObjectMemberName::can_cast(element.kind()) {
+                    if AnyJsObjectMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8592,7 +8592,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if TsAnyModuleName::can_cast(element.kind()) {
+                    if AnyTsModuleName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8625,7 +8625,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if TsAnyName::can_cast(element.kind()) {
+                    if AnyTsName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8677,7 +8677,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if TsAnyName::can_cast(element.kind()) {
+                    if AnyTsName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8710,7 +8710,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8736,7 +8736,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsAnyReturnType::can_cast(element.kind()) {
+                    if AnyTsReturnType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8755,7 +8755,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyAssignment::can_cast(element.kind()) {
+                    if AnyJsAssignment::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8769,7 +8769,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8788,7 +8788,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8802,7 +8802,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8835,7 +8835,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyClassMemberName::can_cast(element.kind()) {
+                    if AnyJsClassMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8849,7 +8849,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyFormalParameter::can_cast(element.kind()) {
+                    if AnyJsFormalParameter::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8889,7 +8889,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyObjectMemberName::can_cast(element.kind()) {
+                    if AnyJsObjectMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -8903,7 +8903,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyFormalParameter::can_cast(element.kind()) {
+                    if AnyJsFormalParameter::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -9019,7 +9019,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -9184,7 +9184,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -9217,7 +9217,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -9276,7 +9276,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -9290,7 +9290,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyAssignment::can_cast(element.kind()) {
+                    if AnyJsAssignment::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -9316,7 +9316,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -9330,7 +9330,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsAnyExpression::can_cast(element.kind()) {
+                    if AnyJsExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -9356,7 +9356,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -9382,7 +9382,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsType::can_cast(element.kind()) {
+                    if AnyTsType::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -9493,7 +9493,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if TsAnyName::can_cast(element.kind()) {
+                    if AnyTsName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -9600,33 +9600,33 @@ impl SyntaxFactory for JsSyntaxFactory {
             JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                JsAnyArrayAssignmentPatternElement::can_cast,
+                AnyJsArrayAssignmentPatternElement::can_cast,
                 T ! [,],
                 true,
             ),
             JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                JsAnyArrayBindingPatternElement::can_cast,
+                AnyJsArrayBindingPatternElement::can_cast,
                 T ! [,],
                 true,
             ),
             JS_ARRAY_ELEMENT_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                JsAnyArrayElement::can_cast,
+                AnyJsArrayElement::can_cast,
                 T ! [,],
                 true,
             ),
             JS_CALL_ARGUMENT_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                JsAnyCallArgument::can_cast,
+                AnyJsCallArgument::can_cast,
                 T ! [,],
                 true,
             ),
             JS_CLASS_MEMBER_LIST => {
-                Self::make_node_list_syntax(kind, children, JsAnyClassMember::can_cast)
+                Self::make_node_list_syntax(kind, children, AnyJsClassMember::can_cast)
             }
             JS_CONSTRUCTOR_MODIFIER_LIST => {
                 Self::make_node_list_syntax(kind, children, TsAccessibilityModifier::can_cast)
@@ -9634,7 +9634,7 @@ impl SyntaxFactory for JsSyntaxFactory {
             JS_CONSTRUCTOR_PARAMETER_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                JsAnyConstructorParameter::can_cast,
+                AnyJsConstructorParameter::can_cast,
                 T ! [,],
                 true,
             ),
@@ -9649,69 +9649,69 @@ impl SyntaxFactory for JsSyntaxFactory {
             JS_EXPORT_NAMED_SPECIFIER_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                JsAnyExportNamedSpecifier::can_cast,
+                AnyJsExportNamedSpecifier::can_cast,
                 T ! [,],
                 true,
             ),
             JS_IMPORT_ASSERTION_ENTRY_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                JsAnyImportAssertionEntry::can_cast,
+                AnyJsImportAssertionEntry::can_cast,
                 T ! [,],
                 true,
             ),
             JS_METHOD_MODIFIER_LIST => {
-                Self::make_node_list_syntax(kind, children, JsAnyMethodModifier::can_cast)
+                Self::make_node_list_syntax(kind, children, AnyJsMethodModifier::can_cast)
             }
             JS_MODULE_ITEM_LIST => {
-                Self::make_node_list_syntax(kind, children, JsAnyModuleItem::can_cast)
+                Self::make_node_list_syntax(kind, children, AnyJsModuleItem::can_cast)
             }
             JS_NAMED_IMPORT_SPECIFIER_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                JsAnyNamedImportSpecifier::can_cast,
+                AnyJsNamedImportSpecifier::can_cast,
                 T ! [,],
                 true,
             ),
             JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                JsAnyObjectAssignmentPatternMember::can_cast,
+                AnyJsObjectAssignmentPatternMember::can_cast,
                 T ! [,],
                 true,
             ),
             JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                JsAnyObjectBindingPatternMember::can_cast,
+                AnyJsObjectBindingPatternMember::can_cast,
                 T ! [,],
                 true,
             ),
             JS_OBJECT_MEMBER_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                JsAnyObjectMember::can_cast,
+                AnyJsObjectMember::can_cast,
                 T ! [,],
                 true,
             ),
             JS_PARAMETER_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                JsAnyParameter::can_cast,
+                AnyJsParameter::can_cast,
                 T ! [,],
                 true,
             ),
             JS_PROPERTY_MODIFIER_LIST => {
-                Self::make_node_list_syntax(kind, children, JsAnyPropertyModifier::can_cast)
+                Self::make_node_list_syntax(kind, children, AnyJsPropertyModifier::can_cast)
             }
             JS_STATEMENT_LIST => {
-                Self::make_node_list_syntax(kind, children, JsAnyStatement::can_cast)
+                Self::make_node_list_syntax(kind, children, AnyJsStatement::can_cast)
             }
             JS_SWITCH_CASE_LIST => {
-                Self::make_node_list_syntax(kind, children, JsAnySwitchClause::can_cast)
+                Self::make_node_list_syntax(kind, children, AnyJsSwitchClause::can_cast)
             }
             JS_TEMPLATE_ELEMENT_LIST => {
-                Self::make_node_list_syntax(kind, children, JsAnyTemplateElement::can_cast)
+                Self::make_node_list_syntax(kind, children, AnyJsTemplateElement::can_cast)
             }
             JS_VARIABLE_DECLARATOR_LIST => Self::make_separated_list_syntax(
                 kind,
@@ -9721,9 +9721,9 @@ impl SyntaxFactory for JsSyntaxFactory {
                 false,
             ),
             JSX_ATTRIBUTE_LIST => {
-                Self::make_node_list_syntax(kind, children, JsxAnyAttribute::can_cast)
+                Self::make_node_list_syntax(kind, children, AnyJsxAttribute::can_cast)
             }
-            JSX_CHILD_LIST => Self::make_node_list_syntax(kind, children, JsxAnyChild::can_cast),
+            JSX_CHILD_LIST => Self::make_node_list_syntax(kind, children, AnyJsxChild::can_cast),
             TS_ENUM_MEMBER_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
@@ -9732,37 +9732,45 @@ impl SyntaxFactory for JsSyntaxFactory {
                 true,
             ),
             TS_INDEX_SIGNATURE_MODIFIER_LIST => {
-                Self::make_node_list_syntax(kind, children, TsAnyIndexSignatureModifier::can_cast)
+                Self::make_node_list_syntax(kind, children, AnyTsIndexSignatureModifier::can_cast)
             }
-            TS_INTERSECTION_TYPE_ELEMENT_LIST => {
-                Self::make_separated_list_syntax(kind, children, TsType::can_cast, T ! [&], false)
-            }
+            TS_INTERSECTION_TYPE_ELEMENT_LIST => Self::make_separated_list_syntax(
+                kind,
+                children,
+                AnyTsType::can_cast,
+                T ! [&],
+                false,
+            ),
             TS_METHOD_SIGNATURE_MODIFIER_LIST => {
-                Self::make_node_list_syntax(kind, children, TsAnyMethodSignatureModifier::can_cast)
+                Self::make_node_list_syntax(kind, children, AnyTsMethodSignatureModifier::can_cast)
             }
             TS_PROPERTY_PARAMETER_MODIFIER_LIST => Self::make_node_list_syntax(
                 kind,
                 children,
-                TsAnyPropertyParameterModifier::can_cast,
+                AnyTsPropertyParameterModifier::can_cast,
             ),
             TS_PROPERTY_SIGNATURE_MODIFIER_LIST => Self::make_node_list_syntax(
                 kind,
                 children,
-                TsAnyPropertySignatureModifier::can_cast,
+                AnyTsPropertySignatureModifier::can_cast,
             ),
             TS_TEMPLATE_ELEMENT_LIST => {
-                Self::make_node_list_syntax(kind, children, TsAnyTemplateElement::can_cast)
+                Self::make_node_list_syntax(kind, children, AnyTsTemplateElement::can_cast)
             }
             TS_TUPLE_TYPE_ELEMENT_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                TsAnyTupleTypeElement::can_cast,
+                AnyTsTupleTypeElement::can_cast,
                 T ! [,],
                 true,
             ),
-            TS_TYPE_ARGUMENT_LIST => {
-                Self::make_separated_list_syntax(kind, children, TsType::can_cast, T ! [,], false)
-            }
+            TS_TYPE_ARGUMENT_LIST => Self::make_separated_list_syntax(
+                kind,
+                children,
+                AnyTsType::can_cast,
+                T ! [,],
+                false,
+            ),
             TS_TYPE_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
@@ -9771,7 +9779,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 false,
             ),
             TS_TYPE_MEMBER_LIST => {
-                Self::make_node_list_syntax(kind, children, TsAnyTypeMember::can_cast)
+                Self::make_node_list_syntax(kind, children, AnyTsTypeMember::can_cast)
             }
             TS_TYPE_PARAMETER_LIST => Self::make_separated_list_syntax(
                 kind,
@@ -9780,9 +9788,13 @@ impl SyntaxFactory for JsSyntaxFactory {
                 T ! [,],
                 true,
             ),
-            TS_UNION_TYPE_VARIANT_LIST => {
-                Self::make_separated_list_syntax(kind, children, TsType::can_cast, T ! [|], false)
-            }
+            TS_UNION_TYPE_VARIANT_LIST => Self::make_separated_list_syntax(
+                kind,
+                children,
+                AnyTsType::can_cast,
+                T ! [|],
+                false,
+            ),
             _ => unreachable!("Is {:?} a token?", kind),
         }
     }

@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::JsAnyAssignmentLike;
+use crate::utils::AnyJsAssignmentLike;
 use rome_formatter::write;
 use rome_js_syntax::JsObjectAssignmentPatternProperty;
 
@@ -12,6 +12,6 @@ impl FormatNodeRule<JsObjectAssignmentPatternProperty> for FormatJsObjectAssignm
         node: &JsObjectAssignmentPatternProperty,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        write!(f, [JsAnyAssignmentLike::from(node.clone())])
+        write!(f, [AnyJsAssignmentLike::from(node.clone())])
     }
 }

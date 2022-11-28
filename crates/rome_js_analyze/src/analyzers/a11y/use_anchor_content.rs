@@ -2,8 +2,8 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsxAnyAttributeValue,
-    JsxAnyChild, JsxAttribute, JsxElement, JsxReferenceIdentifier, JsxSelfClosingElement,
+    AnyJsExpression, AnyJsLiteralExpression, AnyJsTemplateElement, AnyJsxAttributeValue,
+    AnyJsxChild, JsxAttribute, JsxElement, JsxReferenceIdentifier, JsxSelfClosingElement,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList};
 
@@ -161,13 +161,13 @@ impl Rule for UseAnchorContent {
 
 /// Check if the element is a text content for screen readers,
 /// or it is not hidden using the `aria-hidden` attribute
-fn is_accessible_to_screen_reader(element: JsxAnyChild) -> Option<bool> {
+fn is_accessible_to_screen_reader(element: AnyJsxChild) -> Option<bool> {
     Some(match element {
-        JsxAnyChild::JsxText(text) => {
+        AnyJsxChild::JsxText(text) => {
             let value_token = text.value_token().ok()?;
             value_token.text_trimmed().trim() != ""
         }
-        JsxAnyChild::JsxElement(element) => {
+        AnyJsxChild::JsxElement(element) => {
             let opening_element = element.opening_element().ok()?;
 
             // We don't check if a component (e.g. <Text aria-hidden />) is using the `aria-hidden` property,
@@ -182,7 +182,7 @@ fn is_accessible_to_screen_reader(element: JsxAnyChild) -> Option<bool> {
                 .ok()??;
             !is_aria_hidden_truthy(aria_hidden_attribute)?
         }
-        JsxAnyChild::JsxSelfClosingElement(element) => {
+        AnyJsxChild::JsxSelfClosingElement(element) => {
             // We don't check if a component (e.g. <Text aria-hidden />) is using the `aria-hidden` property,
             // since we don't have enough information about how the property is used.
             let element_name = element.name().ok()?;
@@ -193,13 +193,13 @@ fn is_accessible_to_screen_reader(element: JsxAnyChild) -> Option<bool> {
             let aria_hidden_attribute = element.find_attribute_by_name("aria-hidden").ok()??;
             !is_aria_hidden_truthy(aria_hidden_attribute)?
         }
-        JsxAnyChild::JsxExpressionChild(expression) => {
+        AnyJsxChild::JsxExpressionChild(expression) => {
             let expression = expression.expression()?;
             match expression {
-                JsAnyExpression::JsAnyLiteralExpression(
-                    JsAnyLiteralExpression::JsNullLiteralExpression(_),
+                AnyJsExpression::AnyJsLiteralExpression(
+                    AnyJsLiteralExpression::JsNullLiteralExpression(_),
                 ) => false,
-                JsAnyExpression::JsIdentifierExpression(identifier) => {
+                AnyJsExpression::JsIdentifierExpression(identifier) => {
                     let text = identifier.name().ok()?.value_token().ok()?;
                     return Some(text.text_trimmed() != "undefined");
                 }
@@ -218,12 +218,12 @@ fn is_aria_hidden_truthy(aria_hidden_attribute: JsxAttribute) -> Option<bool> {
     }
     let attribute_value = initializer?.value().ok()?;
     Some(match attribute_value {
-        JsxAnyAttributeValue::JsxExpressionAttributeValue(attribute_value) => {
+        AnyJsxAttributeValue::JsxExpressionAttributeValue(attribute_value) => {
             let expression = attribute_value.expression().ok()?;
             is_expression_truthy(expression)?
         }
-        JsxAnyAttributeValue::JsxAnyTag(_) => false,
-        JsxAnyAttributeValue::JsxString(aria_hidden_string) => {
+        AnyJsxAttributeValue::AnyJsxTag(_) => false,
+        AnyJsxAttributeValue::JsxString(aria_hidden_string) => {
             let aria_hidden_value = aria_hidden_string.inner_string_text().ok()?;
             aria_hidden_value == "true"
         }
@@ -232,15 +232,15 @@ fn is_aria_hidden_truthy(aria_hidden_attribute: JsxAttribute) -> Option<bool> {
 
 /// Check if the expression contains only one boolean literal `true`
 /// or one string literal `"true"`
-fn is_expression_truthy(expression: JsAnyExpression) -> Option<bool> {
+fn is_expression_truthy(expression: AnyJsExpression) -> Option<bool> {
     Some(match expression {
-        JsAnyExpression::JsAnyLiteralExpression(literal_expression) => {
-            if let JsAnyLiteralExpression::JsBooleanLiteralExpression(boolean_literal) =
+        AnyJsExpression::AnyJsLiteralExpression(literal_expression) => {
+            if let AnyJsLiteralExpression::JsBooleanLiteralExpression(boolean_literal) =
                 literal_expression
             {
                 let text = boolean_literal.value_token().ok()?;
                 text.text_trimmed() == "true"
-            } else if let JsAnyLiteralExpression::JsStringLiteralExpression(string_literal) =
+            } else if let AnyJsLiteralExpression::JsStringLiteralExpression(string_literal) =
                 literal_expression
             {
                 let text = string_literal.inner_string_text().ok()?;
@@ -249,17 +249,17 @@ fn is_expression_truthy(expression: JsAnyExpression) -> Option<bool> {
                 false
             }
         }
-        JsAnyExpression::JsTemplateExpression(template) => {
+        AnyJsExpression::JsTemplateExpression(template) => {
             let mut iter = template.elements().iter();
             if iter.len() != 1 {
                 return None;
             }
             match iter.next() {
-                Some(JsAnyTemplateElement::JsTemplateChunkElement(element)) => {
+                Some(AnyJsTemplateElement::JsTemplateChunkElement(element)) => {
                     let template_token = element.template_chunk_token().ok()?;
                     template_token.text_trimmed() == "true"
                 }
-                Some(JsAnyTemplateElement::JsTemplateElement(element)) => {
+                Some(AnyJsTemplateElement::JsTemplateElement(element)) => {
                     let expression = element.expression().ok()?;
                     is_expression_truthy(expression)?
                 }

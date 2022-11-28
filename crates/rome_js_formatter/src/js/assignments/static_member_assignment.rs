@@ -1,4 +1,4 @@
-use crate::js::expressions::static_member_expression::JsAnyStaticMemberLike;
+use crate::js::expressions::static_member_expression::AnyJsStaticMemberLike;
 use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
 use rome_js_syntax::{JsStaticMemberAssignment, JsSyntaxNode};
@@ -8,7 +8,7 @@ pub(crate) struct FormatJsStaticMemberAssignment;
 
 impl FormatNodeRule<JsStaticMemberAssignment> for FormatJsStaticMemberAssignment {
     fn fmt_fields(&self, node: &JsStaticMemberAssignment, f: &mut JsFormatter) -> FormatResult<()> {
-        JsAnyStaticMemberLike::from(node.clone()).fmt(f)
+        AnyJsStaticMemberLike::from(node.clone()).fmt(f)
     }
 
     fn needs_parentheses(&self, item: &JsStaticMemberAssignment) -> bool {

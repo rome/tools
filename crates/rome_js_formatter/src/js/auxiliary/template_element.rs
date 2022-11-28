@@ -8,7 +8,7 @@ use crate::context::TabWidth;
 use crate::js::expressions::array_expression::FormatJsArrayExpressionOptions;
 use crate::js::lists::template_element_list::{TemplateElementIndention, TemplateElementLayout};
 use rome_js_syntax::{
-    JsAnyExpression, JsSyntaxNode, JsSyntaxToken, JsTemplateElement, TsTemplateElement,
+    AnyJsExpression, JsSyntaxNode, JsSyntaxToken, JsTemplateElement, TsTemplateElement,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
@@ -68,7 +68,7 @@ impl Format<JsFormatContext> for FormatTemplateElement {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let format_expression = format_with(|f| match &self.element {
             AnyTemplateElement::JsTemplateElement(template) => match template.expression()? {
-                JsAnyExpression::JsArrayExpression(expression) => {
+                AnyJsExpression::JsArrayExpression(expression) => {
                     let option = FormatJsArrayExpressionOptions {
                         is_force_flat_mode: true,
                     };
@@ -88,7 +88,7 @@ impl Format<JsFormatContext> for FormatTemplateElement {
                 write!(buffer, [format_expression])
             }
             TemplateElementLayout::Fit => {
-                use JsAnyExpression::*;
+                use AnyJsExpression::*;
 
                 let expression = self.element.expression();
 
@@ -166,7 +166,7 @@ impl AnyTemplateElement {
         }
     }
 
-    fn expression(&self) -> Option<JsAnyExpression> {
+    fn expression(&self) -> Option<AnyJsExpression> {
         match self {
             AnyTemplateElement::JsTemplateElement(template) => template.expression().ok(),
             AnyTemplateElement::TsTemplateElement(_) => None,

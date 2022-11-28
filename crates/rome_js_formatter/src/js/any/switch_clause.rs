@@ -1,15 +1,15 @@
 //! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::JsAnySwitchClause;
+use rome_js_syntax::AnyJsSwitchClause;
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatJsAnySwitchClause;
-impl FormatRule<JsAnySwitchClause> for FormatJsAnySwitchClause {
+pub(crate) struct FormatAnyJsSwitchClause;
+impl FormatRule<AnyJsSwitchClause> for FormatAnyJsSwitchClause {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &JsAnySwitchClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyJsSwitchClause, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnySwitchClause::JsCaseClause(node) => node.format().fmt(f),
-            JsAnySwitchClause::JsDefaultClause(node) => node.format().fmt(f),
+            AnyJsSwitchClause::JsCaseClause(node) => node.format().fmt(f),
+            AnyJsSwitchClause::JsDefaultClause(node) => node.format().fmt(f),
         }
     }
 }

@@ -7,7 +7,7 @@ use rome_analyze::{
 use rome_diagnostics::{category, FileId};
 use rome_js_factory::make::{jsx_expression_child, token};
 use rome_js_syntax::{
-    suppression::parse_suppression_comment, JsLanguage, JsSyntaxToken, JsxAnyChild, T,
+    suppression::parse_suppression_comment, AnyJsxChild, JsLanguage, JsSyntaxToken, T,
 };
 use rome_rowan::{AstNode, TokenAtOffset, TriviaPieceKind};
 use serde::{Deserialize, Serialize};
@@ -387,7 +387,7 @@ fn apply_suppression_comment(payload: SuppressionCommentEmitterPayload<JsLanguag
         }
     };
     if let Some(current_token) = current_token {
-        if let Some(element) = current_token.ancestors().find_map(JsxAnyChild::cast) {
+        if let Some(element) = current_token.ancestors().find_map(AnyJsxChild::cast) {
             let jsx_comment = jsx_expression_child(
                 token(T!['{']).with_trailing_trivia([(
                     TriviaPieceKind::SingleLineComment,
@@ -397,7 +397,7 @@ fn apply_suppression_comment(payload: SuppressionCommentEmitterPayload<JsLanguag
             );
             mutation.add_jsx_element_before_element(
                 &element,
-                &JsxAnyChild::JsxExpressionChild(jsx_comment.build()),
+                &AnyJsxChild::JsxExpressionChild(jsx_comment.build()),
             );
         } else {
             let new_token = current_token.with_leading_trivia([

@@ -6,7 +6,7 @@ use rome_diagnostics::termcolor::Buffer;
 use rome_diagnostics::PrintDiagnostic;
 use rome_diagnostics::{Error, FileId};
 use rome_js_parser::{parse, Parse};
-use rome_js_syntax::{JsAnyRoot, JsSyntaxNode, SourceType};
+use rome_js_syntax::{AnyJsRoot, JsSyntaxNode, SourceType};
 use rome_rowan::SyntaxKind;
 use std::fmt::Debug;
 use std::panic::RefUnwindSafe;
@@ -83,7 +83,7 @@ pub(crate) struct TestCaseFile {
 }
 
 impl TestCaseFile {
-    pub(crate) fn parse(&self) -> Parse<JsAnyRoot> {
+    pub(crate) fn parse(&self) -> Parse<AnyJsRoot> {
         parse(&self.code, self.id, self.source_type)
     }
 

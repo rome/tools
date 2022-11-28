@@ -4,7 +4,7 @@ use rustc_hash::FxHashMap;
 use std::collections::{HashMap, VecDeque};
 
 use rome_js_syntax::{
-    JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAssignmentExpression,
+    AnyJsAssignment, AnyJsAssignmentPattern, AnyJsExpression, JsAssignmentExpression,
     JsCallExpression, JsForVariableDeclaration, JsIdentifierAssignment, JsIdentifierBinding,
     JsLanguage, JsParenthesizedExpression, JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode,
     JsSyntaxToken, JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList,
@@ -213,17 +213,17 @@ struct Scope {
 }
 
 /// Returns the node that defines the result of the expression
-fn result_of(expr: &JsParenthesizedExpression) -> Option<JsAnyExpression> {
-    let mut expr = Some(JsAnyExpression::JsParenthesizedExpression(expr.clone()));
+fn result_of(expr: &JsParenthesizedExpression) -> Option<AnyJsExpression> {
+    let mut expr = Some(AnyJsExpression::JsParenthesizedExpression(expr.clone()));
     loop {
         match expr {
-            Some(JsAnyExpression::JsParenthesizedExpression(e)) => {
+            Some(AnyJsExpression::JsParenthesizedExpression(e)) => {
                 expr = e.expression().ok();
             }
-            Some(JsAnyExpression::JsSequenceExpression(e)) => {
+            Some(AnyJsExpression::JsSequenceExpression(e)) => {
                 expr = e.right().ok();
             }
-            Some(JsAnyExpression::JsAssignmentExpression(e)) => {
+            Some(AnyJsExpression::JsAssignmentExpression(e)) => {
                 expr = e.right().ok();
             }
             Some(expr) => return Some(expr),
@@ -504,7 +504,7 @@ impl SemanticEventExtractor {
         if let JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION = callee.syntax().kind() {
             let expr = callee.as_js_parenthesized_expression()?;
             let range = expr.syntax().text_range();
-            if let Some(JsAnyExpression::JsFunctionExpression(expr)) = result_of(expr) {
+            if let Some(AnyJsExpression::JsFunctionExpression(expr)) = result_of(expr) {
                 let id = expr.id()?;
                 self.stash.push_back(SemanticEvent::Read {
                     range,
@@ -942,8 +942,8 @@ impl SemanticEventExtractor {
             JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION => {
                 let expr = node.clone().cast::<JsAssignmentExpression>();
                 match expr.and_then(|x| x.left().ok()) {
-                    Some(JsAnyAssignmentPattern::JsAnyAssignment(
-                        JsAnyAssignment::JsStaticMemberAssignment(a),
+                    Some(AnyJsAssignmentPattern::AnyJsAssignment(
+                        AnyJsAssignment::JsStaticMemberAssignment(a),
                     )) => {
                         let first = a
                             .object()
@@ -970,8 +970,8 @@ impl SemanticEventExtractor {
                         }
                     }
                     // exports = ...
-                    Some(JsAnyAssignmentPattern::JsAnyAssignment(
-                        JsAnyAssignment::JsIdentifierAssignment(ident),
+                    Some(AnyJsAssignmentPattern::AnyJsAssignment(
+                        AnyJsAssignment::JsIdentifierAssignment(ident),
                     )) => ident.syntax().text_trimmed() == "exports",
                     _ => false,
                 }

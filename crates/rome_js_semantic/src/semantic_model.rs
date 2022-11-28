@@ -14,7 +14,7 @@ mod tests;
 use crate::{SemanticEvent, SemanticEventExtractor};
 pub use closure::*;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage,
+    AnyJsExpression, AnyJsRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage,
     JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode, JsxReferenceIdentifier, TextRange, TextSize,
     TsIdentifierBinding,
 };
@@ -46,7 +46,7 @@ pub struct SemanticModelOptions {
 
 /// Build the complete [SemanticModel] of a parsed file.
 /// For a push based model to build the [SemanticModel], see [SemanticModelBuilder].
-pub fn semantic_model(root: &JsAnyRoot, options: SemanticModelOptions) -> SemanticModel {
+pub fn semantic_model(root: &AnyJsRoot, options: SemanticModelOptions) -> SemanticModel {
     let mut extractor = SemanticEventExtractor::default();
     let mut builder = SemanticModelBuilder::new(root.clone());
 

@@ -24,17 +24,17 @@ use crate::parentheses::is_callee;
 pub(crate) use crate::parentheses::resolve_left_most_expression;
 use crate::prelude::*;
 pub(crate) use assignment_like::{
-    with_assignment_layout, AssignmentLikeLayout, JsAnyAssignmentLike,
+    with_assignment_layout, AnyJsAssignmentLike, AssignmentLikeLayout,
 };
 pub(crate) use binary_like_expression::{
-    needs_binary_like_parentheses, JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression,
+    needs_binary_like_parentheses, AnyJsBinaryLikeExpression, AnyJsBinaryLikeLeftExpression,
 };
-pub(crate) use conditional::{ConditionalJsxChain, JsAnyConditional};
+pub(crate) use conditional::{AnyJsConditional, ConditionalJsxChain};
 pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;
 use rome_formatter::{format_args, write, Buffer};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyStatement, JsCallExpression, JsInitializerClause, JsLanguage, Modifiers,
+    AnyJsExpression, AnyJsStatement, JsCallExpression, JsInitializerClause, JsLanguage, Modifiers,
 };
 use rome_js_syntax::{JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
@@ -157,12 +157,12 @@ pub(crate) fn node_has_leading_newline(node: &JsSyntaxNode) -> bool {
 /// Formats the body of a statement where it can either be a single statement, an empty statement,
 /// or a block statement.
 pub(crate) struct FormatStatementBody<'a> {
-    body: &'a JsAnyStatement,
+    body: &'a AnyJsStatement,
     force_space: bool,
 }
 
 impl<'a> FormatStatementBody<'a> {
-    pub fn new(body: &'a JsAnyStatement) -> Self {
+    pub fn new(body: &'a AnyJsStatement) -> Self {
         Self {
             body,
             force_space: false,
@@ -179,7 +179,7 @@ impl<'a> FormatStatementBody<'a> {
 
 impl Format<JsFormatContext> for FormatStatementBody<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        use JsAnyStatement::*;
+        use AnyJsStatement::*;
 
         if let JsEmptyStatement(empty) = &self.body {
             write!(f, [empty.format()])
@@ -280,12 +280,12 @@ impl Format<JsFormatContext> for FormatSemicolon<'_> {
 /// - [JsNewExpression]
 /// - [JsImportCallExpression]
 /// - [JsCallExpression]
-pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
+pub(crate) fn is_call_like_expression(expression: &AnyJsExpression) -> bool {
     matches!(
         expression,
-        JsAnyExpression::JsNewExpression(_)
-            | JsAnyExpression::JsImportCallExpression(_)
-            | JsAnyExpression::JsCallExpression(_)
+        AnyJsExpression::JsNewExpression(_)
+            | AnyJsExpression::JsImportCallExpression(_)
+            | AnyJsExpression::JsCallExpression(_)
     )
 }
 
