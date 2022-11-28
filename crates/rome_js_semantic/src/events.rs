@@ -160,6 +160,8 @@ pub struct SemanticEventExtractor {
     stash: VecDeque<SemanticEvent>,
     scopes: Vec<Scope>,
     next_scope_id: usize,
+    /// At any point this is the set of available bindings and
+    /// the range of its declaration
     bindings: FxHashMap<SyntaxTokenText, TextRange>,
 }
 
@@ -199,7 +201,8 @@ struct Scope {
     started_at: TextSize,
     /// All bindings declared inside this scope
     bindings: Vec<Binding>,
-    /// References that still needs to be bound
+    /// References that still needs to be bound and
+    /// will be solved at the end of the scope
     references: HashMap<SyntaxTokenText, Vec<Reference>>,
     /// All bindings that where shadowed and will be
     /// restored after this scope ends.
@@ -388,8 +391,7 @@ impl SemanticEventExtractor {
                 self.export_declaration(node, &parent);
             }
             JS_CLASS_EXPRESSION => {
-                let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
-                self.push_binding_into_scope(hoisted_scope_id, &name_token);
+                self.push_binding_into_scope(None, &name_token);
                 self.export_class_expression(node, &parent);
             }
             JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
@@ -447,7 +449,8 @@ impl SemanticEventExtractor {
 
         let (name, is_exported) = match node.kind() {
             JsSyntaxKind::JS_REFERENCE_IDENTIFIER => {
-                let reference = node.clone().cast::<JsReferenceIdentifier>()?;
+                // SAFETY: kind check above
+                let reference = JsReferenceIdentifier::unwrap_cast(node.clone());
                 let name_token = reference.value_token().ok()?;
                 (
                     name_token.token_text_trimmed(),
@@ -455,7 +458,8 @@ impl SemanticEventExtractor {
                 )
             }
             JsSyntaxKind::JSX_REFERENCE_IDENTIFIER => {
-                let reference = node.clone().cast::<JsxReferenceIdentifier>()?;
+                // SAFETY: kind check above
+                let reference = JsxReferenceIdentifier::unwrap_cast(node.clone());
                 let name_token = reference.value_token().ok()?;
                 (name_token.token_text_trimmed(), false)
             }
@@ -645,6 +649,7 @@ impl SemanticEventExtractor {
             }
 
             // Remove all bindings declared in this scope
+
             for binding in scope.bindings {
                 self.bindings.remove(&binding.name);
             }
