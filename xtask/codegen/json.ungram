@@ -38,27 +38,30 @@
 SyntaxElement = SyntaxElement
 
 JsonUnknown = SyntaxElement*
+JsonUnknownValue = SyntaxElement*
 
 JsonRoot =
     value: JsonAnyValue
     eof: 'EOF'
 
-JsonAnyValue =  JsonString | JsonBoolean | JsonNull | JsonNumber | JsonArray | JsonObject | JsonUnknown
+JsonAnyValue =  JsonStringValue | JsonBooleanValue | JsonNullValue | JsonNumberValue | JsonArrayValue | JsonObjectValue | JsonUnknownValue
 
-JsonObject = '{' JsonMemberList? '}'
+JsonObjectValue = '{' JsonMemberList? '}'
 
 JsonMemberList = (JsonMember (',' JsonMember)* )
 
-JsonMember = key: JsonString ':' value: JsonAnyValue
+JsonMember = name: JsonMemberName ':' value: JsonAnyValue
 
-JsonArray = '[' elements: JsonArrayElementList? ']'
+JsonMemberName = value: 'json_string_literal'
+
+JsonArrayValue = '[' elements: JsonArrayElementList? ']'
 
 JsonArrayElementList = (JsonAnyValue (',' JsonAnyValue)* )
 
-JsonBoolean = value_token: ('true' | 'false')
+JsonBooleanValue = value_token: ('true' | 'false')
 
-JsonNull = value: 'null'
+JsonNullValue = value: 'null'
 
-JsonString = value: 'json_string_literal'
+JsonStringValue = value: 'json_string_literal'
 
-JsonNumber = value: 'json_number_literal'
+JsonNumberValue = value: 'json_number_literal'

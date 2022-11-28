@@ -14,7 +14,7 @@ expression: snapshot
 
 ```
 JsonRoot {
-    value: JsonNumber {
+    value: JsonNumberValue {
         value_token: JSON_NUMBER_LITERAL@0..4 "-0.1" [] [],
     },
     eof_token: EOF@4..4 "" [] [],
@@ -25,7 +25,7 @@ JsonRoot {
 
 ```
 0: JSON_ROOT@0..4
-  0: JSON_NUMBER@0..4
+  0: JSON_NUMBER_VALUE@0..4
     0: JSON_NUMBER_LITERAL@0..4 "-0.1" [] []
   1: EOF@4..4 "" [] []
 

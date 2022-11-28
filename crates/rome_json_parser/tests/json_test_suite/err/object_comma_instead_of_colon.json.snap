@@ -14,11 +14,11 @@ expression: snapshot
 
 ```
 JsonRoot {
-    value: JsonObject {
+    value: JsonObjectValue {
         l_curly_token: L_CURLY@0..1 "{" [] [],
         json_member_list: JsonMemberList [
             JsonMember {
-                key: JsonString {
+                name: JsonMemberName {
                     value_token: JSON_STRING_LITERAL@1..4 "\"x\"" [] [],
                 },
                 colon_token: missing (required),
@@ -26,9 +26,9 @@ JsonRoot {
             },
             COMMA@4..6 "," [] [Whitespace(" ")],
             JsonMember {
-                key: missing (required),
+                name: missing (required),
                 colon_token: missing (required),
-                value: JsonNull {
+                value: JsonNullValue {
                     value_token: NULL_KW@6..10 "null" [] [],
                 },
             },
@@ -43,11 +43,11 @@ JsonRoot {
 
 ```
 0: JSON_ROOT@0..11
-  0: JSON_OBJECT@0..11
+  0: JSON_OBJECT_VALUE@0..11
     0: L_CURLY@0..1 "{" [] []
     1: JSON_MEMBER_LIST@1..10
       0: JSON_MEMBER@1..4
-        0: JSON_STRING@1..4
+        0: JSON_MEMBER_NAME@1..4
           0: JSON_STRING_LITERAL@1..4 "\"x\"" [] []
         1: (empty)
         2: (empty)
@@ -55,7 +55,7 @@ JsonRoot {
       2: JSON_MEMBER@6..10
         0: (empty)
         1: (empty)
-        2: JSON_NULL@6..10
+        2: JSON_NULL_VALUE@6..10
           0: NULL_KW@6..10 "null" [] []
     2: R_CURLY@10..11 "}" [] []
   1: EOF@11..11 "" [] []

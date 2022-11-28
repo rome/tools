@@ -14,33 +14,33 @@ expression: snapshot
 
 ```
 JsonRoot {
-    value: JsonArray {
+    value: JsonArrayValue {
         l_brack_token: L_BRACK@0..1 "[" [] [],
         elements: JsonArrayElementList [
-            JsonUnknown {
+            JsonUnknownValue {
                 items: [
                     ERROR_TOKEN@1..6 "\"\\{[\"" [] [],
                     ERROR_TOKEN@6..7 "\\" [] [],
                 ],
             },
             missing separator,
-            JsonObject {
+            JsonObjectValue {
                 l_curly_token: L_CURLY@7..8 "{" [] [],
                 json_member_list: JsonMemberList [
                     JsonMember {
-                        key: missing (required),
+                        name: missing (required),
                         colon_token: missing (required),
-                        value: JsonArray {
+                        value: JsonArrayValue {
                             l_brack_token: L_BRACK@8..9 "[" [] [],
                             elements: JsonArrayElementList [
-                                JsonUnknown {
+                                JsonUnknownValue {
                                     items: [
                                         ERROR_TOKEN@9..14 "\"\\{[\"" [] [],
                                         ERROR_TOKEN@14..15 "\\" [] [],
                                     ],
                                 },
                                 missing separator,
-                                JsonObject {
+                                JsonObjectValue {
                                     l_curly_token: L_CURLY@15..16 "{" [] [],
                                     json_member_list: JsonMemberList [],
                                     r_curly_token: missing (required),
@@ -63,27 +63,27 @@ JsonRoot {
 
 ```
 0: JSON_ROOT@0..16
-  0: JSON_ARRAY@0..16
+  0: JSON_ARRAY_VALUE@0..16
     0: L_BRACK@0..1 "[" [] []
     1: JSON_ARRAY_ELEMENT_LIST@1..16
-      0: JSON_UNKNOWN@1..7
+      0: JSON_UNKNOWN_VALUE@1..7
         0: ERROR_TOKEN@1..6 "\"\\{[\"" [] []
         1: ERROR_TOKEN@6..7 "\\" [] []
       1: (empty)
-      2: JSON_OBJECT@7..16
+      2: JSON_OBJECT_VALUE@7..16
         0: L_CURLY@7..8 "{" [] []
         1: JSON_MEMBER_LIST@8..16
           0: JSON_MEMBER@8..16
             0: (empty)
             1: (empty)
-            2: JSON_ARRAY@8..16
+            2: JSON_ARRAY_VALUE@8..16
               0: L_BRACK@8..9 "[" [] []
               1: JSON_ARRAY_ELEMENT_LIST@9..16
-                0: JSON_UNKNOWN@9..15
+                0: JSON_UNKNOWN_VALUE@9..15
                   0: ERROR_TOKEN@9..14 "\"\\{[\"" [] []
                   1: ERROR_TOKEN@14..15 "\\" [] []
                 1: (empty)
-                2: JSON_OBJECT@15..16
+                2: JSON_OBJECT_VALUE@15..16
                   0: L_CURLY@15..16 "{" [] []
                   1: JSON_MEMBER_LIST@16..16
                   2: (empty)

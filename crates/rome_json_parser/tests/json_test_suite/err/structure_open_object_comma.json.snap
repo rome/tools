@@ -14,7 +14,7 @@ expression: snapshot
 
 ```
 JsonRoot {
-    value: JsonObject {
+    value: JsonObjectValue {
         l_curly_token: L_CURLY@0..1 "{" [] [],
         json_member_list: JsonMemberList [
             missing element,
@@ -31,7 +31,7 @@ JsonRoot {
 
 ```
 0: JSON_ROOT@0..2
-  0: JSON_OBJECT@0..2
+  0: JSON_OBJECT_VALUE@0..2
     0: L_CURLY@0..1 "{" [] []
     1: JSON_MEMBER_LIST@1..2
       0: (empty)

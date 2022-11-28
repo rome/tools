@@ -14,15 +14,15 @@ expression: snapshot
 
 ```
 JsonRoot {
-    value: JsonObject {
+    value: JsonObjectValue {
         l_curly_token: L_CURLY@0..1 "{" [] [],
         json_member_list: JsonMemberList [
             JsonMember {
-                key: JsonString {
+                name: JsonMemberName {
                     value_token: JSON_STRING_LITERAL@1..4 "\"a\"" [] [],
                 },
                 colon_token: COLON@4..5 ":" [] [],
-                value: JsonString {
+                value: JsonStringValue {
                     value_token: JSON_STRING_LITERAL@5..8 "\"b\"" [] [],
                 },
             },
@@ -30,11 +30,11 @@ JsonRoot {
             missing element,
             COMMA@9..10 "," [] [],
             JsonMember {
-                key: JsonString {
+                name: JsonMemberName {
                     value_token: JSON_STRING_LITERAL@10..13 "\"c\"" [] [],
                 },
                 colon_token: COLON@13..14 ":" [] [],
-                value: JsonString {
+                value: JsonStringValue {
                     value_token: JSON_STRING_LITERAL@14..17 "\"d\"" [] [],
                 },
             },
@@ -49,23 +49,23 @@ JsonRoot {
 
 ```
 0: JSON_ROOT@0..18
-  0: JSON_OBJECT@0..18
+  0: JSON_OBJECT_VALUE@0..18
     0: L_CURLY@0..1 "{" [] []
     1: JSON_MEMBER_LIST@1..17
       0: JSON_MEMBER@1..8
-        0: JSON_STRING@1..4
+        0: JSON_MEMBER_NAME@1..4
           0: JSON_STRING_LITERAL@1..4 "\"a\"" [] []
         1: COLON@4..5 ":" [] []
-        2: JSON_STRING@5..8
+        2: JSON_STRING_VALUE@5..8
           0: JSON_STRING_LITERAL@5..8 "\"b\"" [] []
       1: COMMA@8..9 "," [] []
       2: (empty)
       3: COMMA@9..10 "," [] []
       4: JSON_MEMBER@10..17
-        0: JSON_STRING@10..13
+        0: JSON_MEMBER_NAME@10..13
           0: JSON_STRING_LITERAL@10..13 "\"c\"" [] []
         1: COLON@13..14 ":" [] []
-        2: JSON_STRING@14..17
+        2: JSON_STRING_VALUE@14..17
           0: JSON_STRING_LITERAL@14..17 "\"d\"" [] []
     2: R_CURLY@17..18 "}" [] []
   1: EOF@18..18 "" [] []

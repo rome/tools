@@ -41,7 +41,16 @@ impl rome_rowan::SyntaxKind for JsonSyntaxKind {
     }
 
     fn to_unknown(&self) -> Self {
-        JsonSyntaxKind::JSON_UNKNOWN
+        match self {
+            JsonSyntaxKind::JSON_NUMBER_VALUE
+            | JsonSyntaxKind::JSON_STRING_VALUE
+            | JsonSyntaxKind::JSON_BOOLEAN_VALUE
+            | JsonSyntaxKind::JSON_NULL_VALUE
+            | JsonSyntaxKind::JSON_ARRAY_VALUE
+            | JsonSyntaxKind::JSON_OBJECT_VALUE
+            | JsonSyntaxKind::JSON_UNKNOWN_VALUE => JsonSyntaxKind::JSON_UNKNOWN_VALUE,
+            _ => JsonSyntaxKind::JSON_UNKNOWN,
+        }
     }
 
     #[inline]

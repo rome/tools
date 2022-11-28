@@ -14,37 +14,37 @@ expression: snapshot
 
 ```
 JsonRoot {
-    value: JsonObject {
+    value: JsonObjectValue {
         l_curly_token: L_CURLY@0..1 "{" [] [],
         json_member_list: JsonMemberList [
             JsonMember {
-                key: missing (required),
+                name: missing (required),
                 colon_token: missing (required),
-                value: JsonNull {
+                value: JsonNullValue {
                     value_token: NULL_KW@1..5 "null" [] [],
                 },
             },
             missing separator,
             JsonMember {
-                key: missing (required),
+                name: missing (required),
                 colon_token: COLON@5..6 ":" [] [],
-                value: JsonNull {
+                value: JsonNullValue {
                     value_token: NULL_KW@6..10 "null" [] [],
                 },
             },
             COMMA@10..11 "," [] [],
             JsonMember {
-                key: missing (required),
+                name: missing (required),
                 colon_token: missing (required),
-                value: JsonNull {
+                value: JsonNullValue {
                     value_token: NULL_KW@11..15 "null" [] [],
                 },
             },
             missing separator,
             JsonMember {
-                key: missing (required),
+                name: missing (required),
                 colon_token: COLON@15..16 ":" [] [],
-                value: JsonNull {
+                value: JsonNullValue {
                     value_token: NULL_KW@16..20 "null" [] [],
                 },
             },
@@ -59,31 +59,31 @@ JsonRoot {
 
 ```
 0: JSON_ROOT@0..21
-  0: JSON_OBJECT@0..21
+  0: JSON_OBJECT_VALUE@0..21
     0: L_CURLY@0..1 "{" [] []
     1: JSON_MEMBER_LIST@1..20
       0: JSON_MEMBER@1..5
         0: (empty)
         1: (empty)
-        2: JSON_NULL@1..5
+        2: JSON_NULL_VALUE@1..5
           0: NULL_KW@1..5 "null" [] []
       1: (empty)
       2: JSON_MEMBER@5..10
         0: (empty)
         1: COLON@5..6 ":" [] []
-        2: JSON_NULL@6..10
+        2: JSON_NULL_VALUE@6..10
           0: NULL_KW@6..10 "null" [] []
       3: COMMA@10..11 "," [] []
       4: JSON_MEMBER@11..15
         0: (empty)
         1: (empty)
-        2: JSON_NULL@11..15
+        2: JSON_NULL_VALUE@11..15
           0: NULL_KW@11..15 "null" [] []
       5: (empty)
       6: JSON_MEMBER@15..20
         0: (empty)
         1: COLON@15..16 ":" [] []
-        2: JSON_NULL@16..20
+        2: JSON_NULL_VALUE@16..20
           0: NULL_KW@16..20 "null" [] []
     2: R_CURLY@20..21 "}" [] []
   1: EOF@21..21 "" [] []

@@ -14,10 +14,10 @@ expression: snapshot
 
 ```
 JsonRoot {
-    value: JsonArray {
+    value: JsonArrayValue {
         l_brack_token: L_BRACK@0..1 "[" [] [],
         elements: JsonArrayElementList [
-            JsonNumber {
+            JsonNumberValue {
                 value_token: JSON_NUMBER_LITERAL@1..2 "1" [] [],
             },
         ],
@@ -31,10 +31,10 @@ JsonRoot {
 
 ```
 0: JSON_ROOT@0..2
-  0: JSON_ARRAY@0..2
+  0: JSON_ARRAY_VALUE@0..2
     0: L_BRACK@0..1 "[" [] []
     1: JSON_ARRAY_ELEMENT_LIST@1..2
-      0: JSON_NUMBER@1..2
+      0: JSON_NUMBER_VALUE@1..2
         0: JSON_NUMBER_LITERAL@1..2 "1" [] []
     2: (empty)
   1: EOF@2..2 "" [] []

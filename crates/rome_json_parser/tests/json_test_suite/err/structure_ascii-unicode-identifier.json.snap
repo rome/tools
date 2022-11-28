@@ -14,7 +14,7 @@ aå
 
 ```
 JsonRoot {
-    value: JsonUnknown {
+    value: JsonUnknownValue {
         items: [
             IDENT@0..3 "aå" [] [],
         ],
@@ -27,7 +27,7 @@ JsonRoot {
 
 ```
 0: JSON_ROOT@0..3
-  0: JSON_UNKNOWN@0..3
+  0: JSON_UNKNOWN_VALUE@0..3
     0: IDENT@0..3 "aå" [] []
   1: EOF@3..3 "" [] []
 

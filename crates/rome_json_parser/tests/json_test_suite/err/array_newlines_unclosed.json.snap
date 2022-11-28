@@ -16,18 +16,18 @@ expression: snapshot
 
 ```
 JsonRoot {
-    value: JsonArray {
+    value: JsonArrayValue {
         l_brack_token: L_BRACK@0..1 "[" [] [],
         elements: JsonArrayElementList [
-            JsonString {
+            JsonStringValue {
                 value_token: JSON_STRING_LITERAL@1..4 "\"a\"" [] [],
             },
             COMMA@4..5 "," [] [],
-            JsonNumber {
+            JsonNumberValue {
                 value_token: JSON_NUMBER_LITERAL@5..7 "4" [Newline("\n")] [],
             },
             COMMA@7..9 "," [Newline("\n")] [],
-            JsonNumber {
+            JsonNumberValue {
                 value_token: JSON_NUMBER_LITERAL@9..10 "1" [] [],
             },
             COMMA@10..11 "," [] [],
@@ -43,16 +43,16 @@ JsonRoot {
 
 ```
 0: JSON_ROOT@0..11
-  0: JSON_ARRAY@0..11
+  0: JSON_ARRAY_VALUE@0..11
     0: L_BRACK@0..1 "[" [] []
     1: JSON_ARRAY_ELEMENT_LIST@1..11
-      0: JSON_STRING@1..4
+      0: JSON_STRING_VALUE@1..4
         0: JSON_STRING_LITERAL@1..4 "\"a\"" [] []
       1: COMMA@4..5 "," [] []
-      2: JSON_NUMBER@5..7
+      2: JSON_NUMBER_VALUE@5..7
         0: JSON_NUMBER_LITERAL@5..7 "4" [Newline("\n")] []
       3: COMMA@7..9 "," [Newline("\n")] []
-      4: JSON_NUMBER@9..10
+      4: JSON_NUMBER_VALUE@9..10
         0: JSON_NUMBER_LITERAL@9..10 "1" [] []
       5: COMMA@10..11 "," [] []
       6: (empty)

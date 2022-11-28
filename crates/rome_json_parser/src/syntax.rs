@@ -28,7 +28,7 @@ pub(crate) fn parse_root(p: &mut JsonParser) {
         Present(value) => Present(value),
         Absent => {
             p.error(expected_value(p, p.cur_range()));
-            match ParseRecovery::new(JSON_UNKNOWN, VALUE_START).recover(p) {
+            match ParseRecovery::new(JSON_UNKNOWN_VALUE, VALUE_START).recover(p) {
                 Ok(value) => Present(value),
                 Err(_) => Absent,
             }
@@ -48,21 +48,25 @@ fn parse_value(p: &mut JsonParser) -> ParsedSyntax {
         T![null] => {
             let m = p.start();
             p.bump(T![null]);
-            Present(m.complete(p, JSON_NULL))
+            Present(m.complete(p, JSON_NULL_VALUE))
         }
 
-        JSON_STRING_LITERAL => parse_string(p),
+        JSON_STRING_LITERAL => {
+            let m = p.start();
+            p.bump(JSON_STRING_LITERAL);
+            Present(m.complete(p, JSON_STRING_VALUE))
+        }
 
         TRUE_KW | FALSE_KW => {
             let m = p.start();
             p.bump(p.cur());
-            Present(m.complete(p, JSON_BOOLEAN))
+            Present(m.complete(p, JSON_BOOLEAN_VALUE))
         }
 
         JSON_NUMBER_LITERAL => {
             let m = p.start();
             p.bump(JSON_NUMBER_LITERAL);
-            Present(m.complete(p, JSON_NUMBER))
+            Present(m.complete(p, JSON_NUMBER_VALUE))
         }
 
         T!['{'] => parse_sequence(p, SequenceKind::Object),
@@ -72,20 +76,10 @@ fn parse_value(p: &mut JsonParser) -> ParsedSyntax {
             let m = p.start();
             p.error(p.err_builder("String values must be double quoted.", p.cur_range()));
             p.bump(IDENT);
-            Present(m.complete(p, JSON_UNKNOWN))
+            Present(m.complete(p, JSON_UNKNOWN_VALUE))
         }
 
         _ => Absent,
-    }
-}
-
-fn parse_string(p: &mut JsonParser) -> ParsedSyntax {
-    if p.at(JSON_STRING_LITERAL) {
-        let m = p.start();
-        p.bump(JSON_STRING_LITERAL);
-        Present(m.complete(p, JSON_STRING))
-    } else {
-        Absent
     }
 }
 
@@ -98,8 +92,8 @@ enum SequenceKind {
 impl SequenceKind {
     const fn node_kind(&self) -> JsonSyntaxKind {
         match self {
-            SequenceKind::Array => JSON_ARRAY,
-            SequenceKind::Object => JSON_OBJECT,
+            SequenceKind::Array => JSON_ARRAY_VALUE,
+            SequenceKind::Object => JSON_OBJECT_VALUE,
         }
     }
 
@@ -190,7 +184,7 @@ fn parse_sequence(p: &mut JsonParser, root_kind: SequenceKind) -> ParsedSyntax {
                     let range = if p.at(T![,]) {
                         p.cur_range()
                     } else {
-                        match ParseRecovery::new(JSON_UNKNOWN, current.recovery_set())
+                        match ParseRecovery::new(JSON_UNKNOWN_VALUE, current.recovery_set())
                             .enable_recovery_on_line_break()
                             .recover(p)
                         {
@@ -254,17 +248,12 @@ enum SequenceItem {
 fn parse_object_member(p: &mut JsonParser) -> SequenceItem {
     let m = p.start();
 
-    if parse_string(p).is_absent() {
-        if p.at(IDENT) {
-            p.error(p.err_builder("Property key must be double quoted", p.cur_range()));
-            p.bump(IDENT);
-        } else {
-            p.error(expected_property(p, p.cur_range()));
+    if parse_member_name(p).is_absent() {
+        p.error(expected_property(p, p.cur_range()));
 
-            if !p.at(T![:]) && !p.at_ts(VALUE_START) {
-                m.abandon(p);
-                return SequenceItem::Parsed(Absent);
-            }
+        if !p.at(T![:]) && !p.at_ts(VALUE_START) {
+            m.abandon(p);
+            return SequenceItem::Parsed(Absent);
         }
     }
 
@@ -276,6 +265,23 @@ fn parse_object_member(p: &mut JsonParser) -> SequenceItem {
             SequenceItem::Parsed(Present(m.complete(p, JSON_MEMBER)))
         }
         Err(kind) => SequenceItem::Recurse(kind, Some(m)),
+    }
+}
+
+fn parse_member_name(p: &mut JsonParser) -> ParsedSyntax {
+    match p.cur() {
+        JSON_STRING_LITERAL => {
+            let m = p.start();
+            p.bump(JSON_STRING_LITERAL);
+            Present(m.complete(p, JSON_MEMBER_NAME))
+        }
+        IDENT => {
+            let m = p.start();
+            p.error(p.err_builder("Property key must be double quoted", p.cur_range()));
+            p.bump(IDENT);
+            Present(m.complete(p, JSON_MEMBER_NAME))
+        }
+        _ => Absent,
     }
 }
 
@@ -304,7 +310,7 @@ fn parse_rest(p: &mut JsonParser, value: ParsedSyntax) {
     while !p.at(EOF) {
         let range = match parse_value(p) {
             Present(value) => value.range(p),
-            Absent => ParseRecovery::new(JSON_UNKNOWN, VALUE_START)
+            Absent => ParseRecovery::new(JSON_UNKNOWN_VALUE, VALUE_START)
                 .enable_recovery_on_line_break()
                 .recover(p)
                 .expect("Expect recovery to succeed because parser isn't at EOF nor at a value.")
@@ -319,7 +325,7 @@ fn parse_rest(p: &mut JsonParser, value: ParsedSyntax) {
 
     list.complete(p, JSON_ARRAY_ELEMENT_LIST)
         .precede(p)
-        .complete(p, JSON_ARRAY);
+        .complete(p, JSON_ARRAY_VALUE);
 }
 
 fn expected_value(p: &JsonParser, range: TextRange) -> ParseDiagnostic {
