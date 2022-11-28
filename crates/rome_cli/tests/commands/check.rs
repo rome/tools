@@ -13,7 +13,7 @@ use crate::configs::{
     CONFIG_FILE_SIZE_LIMIT, CONFIG_LINTER_AND_FILES_IGNORE, CONFIG_LINTER_DISABLED,
     CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC, CONFIG_LINTER_IGNORED_FILES,
     CONFIG_LINTER_SUPPRESSED_GROUP, CONFIG_LINTER_SUPPRESSED_RULE,
-    CONFIG_LINTER_UPGRADE_DIAGNOSTIC,
+    CONFIG_LINTER_UPGRADE_DIAGNOSTIC, CONFIG_RECOMMENDED_GROUP,
 };
 use crate::snap_test::SnapshotPayload;
 use crate::{assert_cli_snapshot, run_cli, FORMATTED, LINT_ERROR, PARSE_ERROR};
@@ -1226,6 +1226,38 @@ fn suppression_syntax_error() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "suppression_syntax_error",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn config_recommended_group() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("rome.json");
+    fs.insert(file_path.into(), CONFIG_RECOMMENDED_GROUP.as_bytes());
+
+    let file_path = Path::new("check.js");
+    fs.insert(file_path.into(), NO_DEBUGGER.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+    );
+
+    match result {
+        Ok(()) => {}
+        Err(Termination::CheckError) => {}
+        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "config_recommended_group",
         fs,
         console,
         result,
