@@ -12,7 +12,6 @@ pub(crate) mod function_body;
 pub(crate) mod initializer_clause;
 pub(crate) mod module;
 pub(crate) mod name;
-pub(crate) mod new_target;
 pub(crate) mod private_name;
 pub(crate) mod reference_identifier;
 pub(crate) mod script;

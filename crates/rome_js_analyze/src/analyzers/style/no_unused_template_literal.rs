@@ -4,7 +4,9 @@ use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsTemplate};
+use rome_js_syntax::{
+    JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsTemplateExpression,
+};
 use rome_rowan::{AstNode, AstNodeList, BatchMutationExt};
 
 declare_rule! {
@@ -44,7 +46,7 @@ declare_rule! {
 }
 
 impl Rule for NoUnusedTemplateLiteral {
-    type Query = Ast<JsTemplate>;
+    type Query = Ast<JsTemplateExpression>;
     type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
@@ -92,7 +94,7 @@ impl Rule for NoUnusedTemplateLiteral {
             });
 
         mutation.replace_node(
-            JsAnyExpression::JsTemplate(node.clone()),
+            JsAnyExpression::JsTemplateExpression(node.clone()),
             JsAnyExpression::JsAnyLiteralExpression(
                 JsAnyLiteralExpression::JsStringLiteralExpression(
                     make::js_string_literal_expression(make::js_string_literal(&inner_content)),
@@ -109,7 +111,7 @@ impl Rule for NoUnusedTemplateLiteral {
     }
 }
 
-fn can_convert_to_string_literal(node: &JsTemplate) -> bool {
+fn can_convert_to_string_literal(node: &JsTemplateExpression) -> bool {
     !node.elements().iter().any(|element| {
         // We want to test if any templateElement has violated rule that can convert to string literal, rules are listed below
         // 1. Variant of element is `JsTemplateElement`

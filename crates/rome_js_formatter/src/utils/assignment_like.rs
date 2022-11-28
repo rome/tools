@@ -676,7 +676,7 @@ impl JsAnyAssignmentLike {
             right_expression,
             Some(
                 JsAnyExpression::JsClassExpression(_)
-                    | JsAnyExpression::JsTemplate(_)
+                    | JsAnyExpression::JsTemplateExpression(_)
                     | JsAnyExpression::JsAnyLiteralExpression(
                         JsAnyLiteralExpression::JsBooleanLiteralExpression(_),
                     )
@@ -1129,7 +1129,7 @@ fn is_short_argument(
                 }
                 _ => true,
             },
-            JsAnyExpression::JsTemplate(template) => {
+            JsAnyExpression::JsTemplateExpression(template) => {
                 let elements = template.elements();
 
                 // Besides checking length exceed we also need to check that the template doesn't have any expressions.

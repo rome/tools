@@ -20,50 +20,6 @@ use serde::ser::SerializeSeq;
 use serde::{Serialize, Serializer};
 use std::fmt::{Debug, Formatter};
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct ImportMeta {
-    pub(crate) syntax: SyntaxNode,
-}
-impl ImportMeta {
-    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
-    #[doc = r" or a match on [SyntaxNode::kind]"]
-    #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn as_fields(&self) -> ImportMetaFields {
-        ImportMetaFields {
-            import_token: self.import_token(),
-            dot_token: self.dot_token(),
-            meta_token: self.meta_token(),
-        }
-    }
-    pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
-    }
-    pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
-    }
-    pub fn meta_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
-    }
-}
-#[cfg(feature = "serde")]
-impl Serialize for ImportMeta {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        self.as_fields().serialize(serializer)
-    }
-}
-#[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct ImportMetaFields {
-    pub import_token: SyntaxResult<SyntaxToken>,
-    pub dot_token: SyntaxResult<SyntaxToken>,
-    pub meta_token: SyntaxResult<SyntaxToken>,
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsArrayAssignmentPattern {
     pub(crate) syntax: SyntaxNode,
 }
@@ -3452,6 +3408,50 @@ pub struct JsImportDefaultClauseFields {
     pub assertion: Option<JsImportAssertion>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsImportMetaExpression {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsImportMetaExpression {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsImportMetaExpressionFields {
+        JsImportMetaExpressionFields {
+            import_token: self.import_token(),
+            dot_token: self.dot_token(),
+            meta_token: self.meta_token(),
+        }
+    }
+    pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn meta_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsImportMetaExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub struct JsImportMetaExpressionFields {
+    pub import_token: SyntaxResult<SyntaxToken>,
+    pub dot_token: SyntaxResult<SyntaxToken>,
+    pub meta_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsImportNamedClause {
     pub(crate) syntax: SyntaxNode,
 }
@@ -4265,6 +4265,50 @@ pub struct JsNewExpressionFields {
     pub callee: SyntaxResult<JsAnyExpression>,
     pub type_arguments: Option<TsTypeArguments>,
     pub arguments: Option<JsCallArguments>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsNewTargetExpression {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsNewTargetExpression {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsNewTargetExpressionFields {
+        JsNewTargetExpressionFields {
+            new_token: self.new_token(),
+            dot_token: self.dot_token(),
+            target_token: self.target_token(),
+        }
+    }
+    pub fn new_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 0usize)
+    }
+    pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 1usize)
+    }
+    pub fn target_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsNewTargetExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub struct JsNewTargetExpressionFields {
+    pub new_token: SyntaxResult<SyntaxToken>,
+    pub dot_token: SyntaxResult<SyntaxToken>,
+    pub target_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsNullLiteralExpression {
@@ -5852,54 +5896,6 @@ pub struct JsSwitchStatementFields {
     pub r_curly_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct JsTemplate {
-    pub(crate) syntax: SyntaxNode,
-}
-impl JsTemplate {
-    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
-    #[doc = r" or a match on [SyntaxNode::kind]"]
-    #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn as_fields(&self) -> JsTemplateFields {
-        JsTemplateFields {
-            tag: self.tag(),
-            type_arguments: self.type_arguments(),
-            l_tick_token: self.l_tick_token(),
-            elements: self.elements(),
-            r_tick_token: self.r_tick_token(),
-        }
-    }
-    pub fn tag(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 0usize) }
-    pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 1usize) }
-    pub fn l_tick_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
-    }
-    pub fn elements(&self) -> JsTemplateElementList { support::list(&self.syntax, 3usize) }
-    pub fn r_tick_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 4usize)
-    }
-}
-#[cfg(feature = "serde")]
-impl Serialize for JsTemplate {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        self.as_fields().serialize(serializer)
-    }
-}
-#[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct JsTemplateFields {
-    pub tag: Option<JsAnyExpression>,
-    pub type_arguments: Option<TsTypeArguments>,
-    pub l_tick_token: SyntaxResult<SyntaxToken>,
-    pub elements: JsTemplateElementList,
-    pub r_tick_token: SyntaxResult<SyntaxToken>,
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsTemplateChunkElement {
     pub(crate) syntax: SyntaxNode,
 }
@@ -5976,6 +5972,54 @@ pub struct JsTemplateElementFields {
     pub dollar_curly_token: SyntaxResult<SyntaxToken>,
     pub expression: SyntaxResult<JsAnyExpression>,
     pub r_curly_token: SyntaxResult<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsTemplateExpression {
+    pub(crate) syntax: SyntaxNode,
+}
+impl JsTemplateExpression {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> JsTemplateExpressionFields {
+        JsTemplateExpressionFields {
+            tag: self.tag(),
+            type_arguments: self.type_arguments(),
+            l_tick_token: self.l_tick_token(),
+            elements: self.elements(),
+            r_tick_token: self.r_tick_token(),
+        }
+    }
+    pub fn tag(&self) -> Option<JsAnyExpression> { support::node(&self.syntax, 0usize) }
+    pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 1usize) }
+    pub fn l_tick_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 2usize)
+    }
+    pub fn elements(&self) -> JsTemplateElementList { support::list(&self.syntax, 3usize) }
+    pub fn r_tick_token(&self) -> SyntaxResult<SyntaxToken> {
+        support::required_token(&self.syntax, 4usize)
+    }
+}
+#[cfg(feature = "serde")]
+impl Serialize for JsTemplateExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub struct JsTemplateExpressionFields {
+    pub tag: Option<JsAnyExpression>,
+    pub type_arguments: Option<TsTypeArguments>,
+    pub l_tick_token: SyntaxResult<SyntaxToken>,
+    pub elements: JsTemplateElementList,
+    pub r_tick_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsThisExpression {
@@ -7348,50 +7392,6 @@ impl Serialize for JsxText {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsxTextFields {
     pub value_token: SyntaxResult<SyntaxToken>,
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct NewTarget {
-    pub(crate) syntax: SyntaxNode,
-}
-impl NewTarget {
-    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
-    #[doc = r" or a match on [SyntaxNode::kind]"]
-    #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn as_fields(&self) -> NewTargetFields {
-        NewTargetFields {
-            new_token: self.new_token(),
-            dot_token: self.dot_token(),
-            target_token: self.target_token(),
-        }
-    }
-    pub fn new_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
-    }
-    pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
-    }
-    pub fn target_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
-    }
-}
-#[cfg(feature = "serde")]
-impl Serialize for NewTarget {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        self.as_fields().serialize(serializer)
-    }
-}
-#[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct NewTargetFields {
-    pub new_token: SyntaxResult<SyntaxToken>,
-    pub dot_token: SyntaxResult<SyntaxToken>,
-    pub target_token: SyntaxResult<SyntaxToken>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsAbstractModifier {
@@ -12832,7 +12832,6 @@ impl JsAnyExportNamedSpecifier {
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum JsAnyExpression {
-    ImportMeta(ImportMeta),
     JsAnyLiteralExpression(JsAnyLiteralExpression),
     JsArrayExpression(JsArrayExpression),
     JsArrowFunctionExpression(JsArrowFunctionExpression),
@@ -12846,10 +12845,12 @@ pub enum JsAnyExpression {
     JsFunctionExpression(JsFunctionExpression),
     JsIdentifierExpression(JsIdentifierExpression),
     JsImportCallExpression(JsImportCallExpression),
+    JsImportMetaExpression(JsImportMetaExpression),
     JsInExpression(JsInExpression),
     JsInstanceofExpression(JsInstanceofExpression),
     JsLogicalExpression(JsLogicalExpression),
     JsNewExpression(JsNewExpression),
+    JsNewTargetExpression(JsNewTargetExpression),
     JsObjectExpression(JsObjectExpression),
     JsParenthesizedExpression(JsParenthesizedExpression),
     JsPostUpdateExpression(JsPostUpdateExpression),
@@ -12857,13 +12858,12 @@ pub enum JsAnyExpression {
     JsSequenceExpression(JsSequenceExpression),
     JsStaticMemberExpression(JsStaticMemberExpression),
     JsSuperExpression(JsSuperExpression),
-    JsTemplate(JsTemplate),
+    JsTemplateExpression(JsTemplateExpression),
     JsThisExpression(JsThisExpression),
     JsUnaryExpression(JsUnaryExpression),
     JsUnknownExpression(JsUnknownExpression),
     JsYieldExpression(JsYieldExpression),
     JsxTagExpression(JsxTagExpression),
-    NewTarget(NewTarget),
     TsAsExpression(TsAsExpression),
     TsInstantiationExpression(TsInstantiationExpression),
     TsNonNullAssertionExpression(TsNonNullAssertionExpression),
@@ -12871,12 +12871,6 @@ pub enum JsAnyExpression {
     TsTypeAssertionExpression(TsTypeAssertionExpression),
 }
 impl JsAnyExpression {
-    pub fn as_import_meta(&self) -> Option<&ImportMeta> {
-        match &self {
-            JsAnyExpression::ImportMeta(item) => Some(item),
-            _ => None,
-        }
-    }
     pub fn as_js_any_literal_expression(&self) -> Option<&JsAnyLiteralExpression> {
         match &self {
             JsAnyExpression::JsAnyLiteralExpression(item) => Some(item),
@@ -12955,6 +12949,12 @@ impl JsAnyExpression {
             _ => None,
         }
     }
+    pub fn as_js_import_meta_expression(&self) -> Option<&JsImportMetaExpression> {
+        match &self {
+            JsAnyExpression::JsImportMetaExpression(item) => Some(item),
+            _ => None,
+        }
+    }
     pub fn as_js_in_expression(&self) -> Option<&JsInExpression> {
         match &self {
             JsAnyExpression::JsInExpression(item) => Some(item),
@@ -12976,6 +12976,12 @@ impl JsAnyExpression {
     pub fn as_js_new_expression(&self) -> Option<&JsNewExpression> {
         match &self {
             JsAnyExpression::JsNewExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_new_target_expression(&self) -> Option<&JsNewTargetExpression> {
+        match &self {
+            JsAnyExpression::JsNewTargetExpression(item) => Some(item),
             _ => None,
         }
     }
@@ -13021,9 +13027,9 @@ impl JsAnyExpression {
             _ => None,
         }
     }
-    pub fn as_js_template(&self) -> Option<&JsTemplate> {
+    pub fn as_js_template_expression(&self) -> Option<&JsTemplateExpression> {
         match &self {
-            JsAnyExpression::JsTemplate(item) => Some(item),
+            JsAnyExpression::JsTemplateExpression(item) => Some(item),
             _ => None,
         }
     }
@@ -13054,12 +13060,6 @@ impl JsAnyExpression {
     pub fn as_jsx_tag_expression(&self) -> Option<&JsxTagExpression> {
         match &self {
             JsAnyExpression::JsxTagExpression(item) => Some(item),
-            _ => None,
-        }
-    }
-    pub fn as_new_target(&self) -> Option<&NewTarget> {
-        match &self {
-            JsAnyExpression::NewTarget(item) => Some(item),
             _ => None,
         }
     }
@@ -14879,39 +14879,6 @@ impl TsType {
             _ => None,
         }
     }
-}
-impl AstNode for ImportMeta {
-    type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(IMPORT_META as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == IMPORT_META }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-    fn into_syntax(self) -> SyntaxNode { self.syntax }
-}
-impl std::fmt::Debug for ImportMeta {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("ImportMeta")
-            .field(
-                "import_token",
-                &support::DebugSyntaxResult(self.import_token()),
-            )
-            .field("dot_token", &support::DebugSyntaxResult(self.dot_token()))
-            .field("meta_token", &support::DebugSyntaxResult(self.meta_token()))
-            .finish()
-    }
-}
-impl From<ImportMeta> for SyntaxNode {
-    fn from(n: ImportMeta) -> SyntaxNode { n.syntax }
-}
-impl From<ImportMeta> for SyntaxElement {
-    fn from(n: ImportMeta) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for JsArrayAssignmentPattern {
     type Language = Language;
@@ -17678,6 +17645,39 @@ impl From<JsImportDefaultClause> for SyntaxNode {
 impl From<JsImportDefaultClause> for SyntaxElement {
     fn from(n: JsImportDefaultClause) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for JsImportMetaExpression {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(JS_IMPORT_META_EXPRESSION as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_META_EXPRESSION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
+}
+impl std::fmt::Debug for JsImportMetaExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsImportMetaExpression")
+            .field(
+                "import_token",
+                &support::DebugSyntaxResult(self.import_token()),
+            )
+            .field("dot_token", &support::DebugSyntaxResult(self.dot_token()))
+            .field("meta_token", &support::DebugSyntaxResult(self.meta_token()))
+            .finish()
+    }
+}
+impl From<JsImportMetaExpression> for SyntaxNode {
+    fn from(n: JsImportMetaExpression) -> SyntaxNode { n.syntax }
+}
+impl From<JsImportMetaExpression> for SyntaxElement {
+    fn from(n: JsImportMetaExpression) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for JsImportNamedClause {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
@@ -18309,6 +18309,39 @@ impl From<JsNewExpression> for SyntaxNode {
 }
 impl From<JsNewExpression> for SyntaxElement {
     fn from(n: JsNewExpression) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsNewTargetExpression {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(JS_NEW_TARGET_EXPRESSION as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NEW_TARGET_EXPRESSION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
+}
+impl std::fmt::Debug for JsNewTargetExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsNewTargetExpression")
+            .field("new_token", &support::DebugSyntaxResult(self.new_token()))
+            .field("dot_token", &support::DebugSyntaxResult(self.dot_token()))
+            .field(
+                "target_token",
+                &support::DebugSyntaxResult(self.target_token()),
+            )
+            .finish()
+    }
+}
+impl From<JsNewTargetExpression> for SyntaxNode {
+    fn from(n: JsNewTargetExpression) -> SyntaxNode { n.syntax }
+}
+impl From<JsNewTargetExpression> for SyntaxElement {
+    fn from(n: JsNewTargetExpression) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for JsNullLiteralExpression {
     type Language = Language;
@@ -19599,47 +19632,6 @@ impl From<JsSwitchStatement> for SyntaxNode {
 impl From<JsSwitchStatement> for SyntaxElement {
     fn from(n: JsSwitchStatement) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for JsTemplate {
-    type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(JS_TEMPLATE as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_TEMPLATE }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-    fn into_syntax(self) -> SyntaxNode { self.syntax }
-}
-impl std::fmt::Debug for JsTemplate {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("JsTemplate")
-            .field("tag", &support::DebugOptionalElement(self.tag()))
-            .field(
-                "type_arguments",
-                &support::DebugOptionalElement(self.type_arguments()),
-            )
-            .field(
-                "l_tick_token",
-                &support::DebugSyntaxResult(self.l_tick_token()),
-            )
-            .field("elements", &self.elements())
-            .field(
-                "r_tick_token",
-                &support::DebugSyntaxResult(self.r_tick_token()),
-            )
-            .finish()
-    }
-}
-impl From<JsTemplate> for SyntaxNode {
-    fn from(n: JsTemplate) -> SyntaxNode { n.syntax }
-}
-impl From<JsTemplate> for SyntaxElement {
-    fn from(n: JsTemplate) -> SyntaxElement { n.syntax.into() }
-}
 impl AstNode for JsTemplateChunkElement {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
@@ -19706,6 +19698,47 @@ impl From<JsTemplateElement> for SyntaxNode {
 }
 impl From<JsTemplateElement> for SyntaxElement {
     fn from(n: JsTemplateElement) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for JsTemplateExpression {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(JS_TEMPLATE_EXPRESSION as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_TEMPLATE_EXPRESSION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
+}
+impl std::fmt::Debug for JsTemplateExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("JsTemplateExpression")
+            .field("tag", &support::DebugOptionalElement(self.tag()))
+            .field(
+                "type_arguments",
+                &support::DebugOptionalElement(self.type_arguments()),
+            )
+            .field(
+                "l_tick_token",
+                &support::DebugSyntaxResult(self.l_tick_token()),
+            )
+            .field("elements", &self.elements())
+            .field(
+                "r_tick_token",
+                &support::DebugSyntaxResult(self.r_tick_token()),
+            )
+            .finish()
+    }
+}
+impl From<JsTemplateExpression> for SyntaxNode {
+    fn from(n: JsTemplateExpression) -> SyntaxNode { n.syntax }
+}
+impl From<JsTemplateExpression> for SyntaxElement {
+    fn from(n: JsTemplateExpression) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for JsThisExpression {
     type Language = Language;
@@ -20853,39 +20886,6 @@ impl From<JsxText> for SyntaxNode {
 }
 impl From<JsxText> for SyntaxElement {
     fn from(n: JsxText) -> SyntaxElement { n.syntax.into() }
-}
-impl AstNode for NewTarget {
-    type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(NEW_TARGET as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == NEW_TARGET }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-    fn into_syntax(self) -> SyntaxNode { self.syntax }
-}
-impl std::fmt::Debug for NewTarget {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("NewTarget")
-            .field("new_token", &support::DebugSyntaxResult(self.new_token()))
-            .field("dot_token", &support::DebugSyntaxResult(self.dot_token()))
-            .field(
-                "target_token",
-                &support::DebugSyntaxResult(self.target_token()),
-            )
-            .finish()
-    }
-}
-impl From<NewTarget> for SyntaxNode {
-    fn from(n: NewTarget) -> SyntaxNode { n.syntax }
-}
-impl From<NewTarget> for SyntaxElement {
-    fn from(n: NewTarget) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsAbstractModifier {
     type Language = Language;
@@ -26816,9 +26816,6 @@ impl From<JsAnyExportNamedSpecifier> for SyntaxElement {
         node.into()
     }
 }
-impl From<ImportMeta> for JsAnyExpression {
-    fn from(node: ImportMeta) -> JsAnyExpression { JsAnyExpression::ImportMeta(node) }
-}
 impl From<JsArrayExpression> for JsAnyExpression {
     fn from(node: JsArrayExpression) -> JsAnyExpression { JsAnyExpression::JsArrayExpression(node) }
 }
@@ -26871,6 +26868,11 @@ impl From<JsImportCallExpression> for JsAnyExpression {
         JsAnyExpression::JsImportCallExpression(node)
     }
 }
+impl From<JsImportMetaExpression> for JsAnyExpression {
+    fn from(node: JsImportMetaExpression) -> JsAnyExpression {
+        JsAnyExpression::JsImportMetaExpression(node)
+    }
+}
 impl From<JsInExpression> for JsAnyExpression {
     fn from(node: JsInExpression) -> JsAnyExpression { JsAnyExpression::JsInExpression(node) }
 }
@@ -26886,6 +26888,11 @@ impl From<JsLogicalExpression> for JsAnyExpression {
 }
 impl From<JsNewExpression> for JsAnyExpression {
     fn from(node: JsNewExpression) -> JsAnyExpression { JsAnyExpression::JsNewExpression(node) }
+}
+impl From<JsNewTargetExpression> for JsAnyExpression {
+    fn from(node: JsNewTargetExpression) -> JsAnyExpression {
+        JsAnyExpression::JsNewTargetExpression(node)
+    }
 }
 impl From<JsObjectExpression> for JsAnyExpression {
     fn from(node: JsObjectExpression) -> JsAnyExpression {
@@ -26920,8 +26927,10 @@ impl From<JsStaticMemberExpression> for JsAnyExpression {
 impl From<JsSuperExpression> for JsAnyExpression {
     fn from(node: JsSuperExpression) -> JsAnyExpression { JsAnyExpression::JsSuperExpression(node) }
 }
-impl From<JsTemplate> for JsAnyExpression {
-    fn from(node: JsTemplate) -> JsAnyExpression { JsAnyExpression::JsTemplate(node) }
+impl From<JsTemplateExpression> for JsAnyExpression {
+    fn from(node: JsTemplateExpression) -> JsAnyExpression {
+        JsAnyExpression::JsTemplateExpression(node)
+    }
 }
 impl From<JsThisExpression> for JsAnyExpression {
     fn from(node: JsThisExpression) -> JsAnyExpression { JsAnyExpression::JsThisExpression(node) }
@@ -26939,9 +26948,6 @@ impl From<JsYieldExpression> for JsAnyExpression {
 }
 impl From<JsxTagExpression> for JsAnyExpression {
     fn from(node: JsxTagExpression) -> JsAnyExpression { JsAnyExpression::JsxTagExpression(node) }
-}
-impl From<NewTarget> for JsAnyExpression {
-    fn from(node: NewTarget) -> JsAnyExpression { JsAnyExpression::NewTarget(node) }
 }
 impl From<TsAsExpression> for JsAnyExpression {
     fn from(node: TsAsExpression) -> JsAnyExpression { JsAnyExpression::TsAsExpression(node) }
@@ -26968,8 +26974,7 @@ impl From<TsTypeAssertionExpression> for JsAnyExpression {
 }
 impl AstNode for JsAnyExpression {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = ImportMeta::KIND_SET
-        .union(JsAnyLiteralExpression::KIND_SET)
+    const KIND_SET: SyntaxKindSet<Language> = JsAnyLiteralExpression::KIND_SET
         .union(JsArrayExpression::KIND_SET)
         .union(JsArrowFunctionExpression::KIND_SET)
         .union(JsAssignmentExpression::KIND_SET)
@@ -26982,10 +26987,12 @@ impl AstNode for JsAnyExpression {
         .union(JsFunctionExpression::KIND_SET)
         .union(JsIdentifierExpression::KIND_SET)
         .union(JsImportCallExpression::KIND_SET)
+        .union(JsImportMetaExpression::KIND_SET)
         .union(JsInExpression::KIND_SET)
         .union(JsInstanceofExpression::KIND_SET)
         .union(JsLogicalExpression::KIND_SET)
         .union(JsNewExpression::KIND_SET)
+        .union(JsNewTargetExpression::KIND_SET)
         .union(JsObjectExpression::KIND_SET)
         .union(JsParenthesizedExpression::KIND_SET)
         .union(JsPostUpdateExpression::KIND_SET)
@@ -26993,13 +27000,12 @@ impl AstNode for JsAnyExpression {
         .union(JsSequenceExpression::KIND_SET)
         .union(JsStaticMemberExpression::KIND_SET)
         .union(JsSuperExpression::KIND_SET)
-        .union(JsTemplate::KIND_SET)
+        .union(JsTemplateExpression::KIND_SET)
         .union(JsThisExpression::KIND_SET)
         .union(JsUnaryExpression::KIND_SET)
         .union(JsUnknownExpression::KIND_SET)
         .union(JsYieldExpression::KIND_SET)
         .union(JsxTagExpression::KIND_SET)
-        .union(NewTarget::KIND_SET)
         .union(TsAsExpression::KIND_SET)
         .union(TsInstantiationExpression::KIND_SET)
         .union(TsNonNullAssertionExpression::KIND_SET)
@@ -27007,8 +27013,7 @@ impl AstNode for JsAnyExpression {
         .union(TsTypeAssertionExpression::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         match kind {
-            IMPORT_META
-            | JS_ARRAY_EXPRESSION
+            JS_ARRAY_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
             | JS_ASSIGNMENT_EXPRESSION
             | JS_AWAIT_EXPRESSION
@@ -27020,10 +27025,12 @@ impl AstNode for JsAnyExpression {
             | JS_FUNCTION_EXPRESSION
             | JS_IDENTIFIER_EXPRESSION
             | JS_IMPORT_CALL_EXPRESSION
+            | JS_IMPORT_META_EXPRESSION
             | JS_IN_EXPRESSION
             | JS_INSTANCEOF_EXPRESSION
             | JS_LOGICAL_EXPRESSION
             | JS_NEW_EXPRESSION
+            | JS_NEW_TARGET_EXPRESSION
             | JS_OBJECT_EXPRESSION
             | JS_PARENTHESIZED_EXPRESSION
             | JS_POST_UPDATE_EXPRESSION
@@ -27031,13 +27038,12 @@ impl AstNode for JsAnyExpression {
             | JS_SEQUENCE_EXPRESSION
             | JS_STATIC_MEMBER_EXPRESSION
             | JS_SUPER_EXPRESSION
-            | JS_TEMPLATE
+            | JS_TEMPLATE_EXPRESSION
             | JS_THIS_EXPRESSION
             | JS_UNARY_EXPRESSION
             | JS_UNKNOWN_EXPRESSION
             | JS_YIELD_EXPRESSION
             | JSX_TAG_EXPRESSION
-            | NEW_TARGET
             | TS_AS_EXPRESSION
             | TS_INSTANTIATION_EXPRESSION
             | TS_NON_NULL_ASSERTION_EXPRESSION
@@ -27049,7 +27055,6 @@ impl AstNode for JsAnyExpression {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            IMPORT_META => JsAnyExpression::ImportMeta(ImportMeta { syntax }),
             JS_ARRAY_EXPRESSION => JsAnyExpression::JsArrayExpression(JsArrayExpression { syntax }),
             JS_ARROW_FUNCTION_EXPRESSION => {
                 JsAnyExpression::JsArrowFunctionExpression(JsArrowFunctionExpression { syntax })
@@ -27078,6 +27083,9 @@ impl AstNode for JsAnyExpression {
             JS_IMPORT_CALL_EXPRESSION => {
                 JsAnyExpression::JsImportCallExpression(JsImportCallExpression { syntax })
             }
+            JS_IMPORT_META_EXPRESSION => {
+                JsAnyExpression::JsImportMetaExpression(JsImportMetaExpression { syntax })
+            }
             JS_IN_EXPRESSION => JsAnyExpression::JsInExpression(JsInExpression { syntax }),
             JS_INSTANCEOF_EXPRESSION => {
                 JsAnyExpression::JsInstanceofExpression(JsInstanceofExpression { syntax })
@@ -27086,6 +27094,9 @@ impl AstNode for JsAnyExpression {
                 JsAnyExpression::JsLogicalExpression(JsLogicalExpression { syntax })
             }
             JS_NEW_EXPRESSION => JsAnyExpression::JsNewExpression(JsNewExpression { syntax }),
+            JS_NEW_TARGET_EXPRESSION => {
+                JsAnyExpression::JsNewTargetExpression(JsNewTargetExpression { syntax })
+            }
             JS_OBJECT_EXPRESSION => {
                 JsAnyExpression::JsObjectExpression(JsObjectExpression { syntax })
             }
@@ -27105,7 +27116,9 @@ impl AstNode for JsAnyExpression {
                 JsAnyExpression::JsStaticMemberExpression(JsStaticMemberExpression { syntax })
             }
             JS_SUPER_EXPRESSION => JsAnyExpression::JsSuperExpression(JsSuperExpression { syntax }),
-            JS_TEMPLATE => JsAnyExpression::JsTemplate(JsTemplate { syntax }),
+            JS_TEMPLATE_EXPRESSION => {
+                JsAnyExpression::JsTemplateExpression(JsTemplateExpression { syntax })
+            }
             JS_THIS_EXPRESSION => JsAnyExpression::JsThisExpression(JsThisExpression { syntax }),
             JS_UNARY_EXPRESSION => JsAnyExpression::JsUnaryExpression(JsUnaryExpression { syntax }),
             JS_UNKNOWN_EXPRESSION => {
@@ -27113,7 +27126,6 @@ impl AstNode for JsAnyExpression {
             }
             JS_YIELD_EXPRESSION => JsAnyExpression::JsYieldExpression(JsYieldExpression { syntax }),
             JSX_TAG_EXPRESSION => JsAnyExpression::JsxTagExpression(JsxTagExpression { syntax }),
-            NEW_TARGET => JsAnyExpression::NewTarget(NewTarget { syntax }),
             TS_AS_EXPRESSION => JsAnyExpression::TsAsExpression(TsAsExpression { syntax }),
             TS_INSTANTIATION_EXPRESSION => {
                 JsAnyExpression::TsInstantiationExpression(TsInstantiationExpression { syntax })
@@ -27142,7 +27154,6 @@ impl AstNode for JsAnyExpression {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyExpression::ImportMeta(it) => &it.syntax,
             JsAnyExpression::JsArrayExpression(it) => &it.syntax,
             JsAnyExpression::JsArrowFunctionExpression(it) => &it.syntax,
             JsAnyExpression::JsAssignmentExpression(it) => &it.syntax,
@@ -27155,10 +27166,12 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::JsFunctionExpression(it) => &it.syntax,
             JsAnyExpression::JsIdentifierExpression(it) => &it.syntax,
             JsAnyExpression::JsImportCallExpression(it) => &it.syntax,
+            JsAnyExpression::JsImportMetaExpression(it) => &it.syntax,
             JsAnyExpression::JsInExpression(it) => &it.syntax,
             JsAnyExpression::JsInstanceofExpression(it) => &it.syntax,
             JsAnyExpression::JsLogicalExpression(it) => &it.syntax,
             JsAnyExpression::JsNewExpression(it) => &it.syntax,
+            JsAnyExpression::JsNewTargetExpression(it) => &it.syntax,
             JsAnyExpression::JsObjectExpression(it) => &it.syntax,
             JsAnyExpression::JsParenthesizedExpression(it) => &it.syntax,
             JsAnyExpression::JsPostUpdateExpression(it) => &it.syntax,
@@ -27166,13 +27179,12 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::JsSequenceExpression(it) => &it.syntax,
             JsAnyExpression::JsStaticMemberExpression(it) => &it.syntax,
             JsAnyExpression::JsSuperExpression(it) => &it.syntax,
-            JsAnyExpression::JsTemplate(it) => &it.syntax,
+            JsAnyExpression::JsTemplateExpression(it) => &it.syntax,
             JsAnyExpression::JsThisExpression(it) => &it.syntax,
             JsAnyExpression::JsUnaryExpression(it) => &it.syntax,
             JsAnyExpression::JsUnknownExpression(it) => &it.syntax,
             JsAnyExpression::JsYieldExpression(it) => &it.syntax,
             JsAnyExpression::JsxTagExpression(it) => &it.syntax,
-            JsAnyExpression::NewTarget(it) => &it.syntax,
             JsAnyExpression::TsAsExpression(it) => &it.syntax,
             JsAnyExpression::TsInstantiationExpression(it) => &it.syntax,
             JsAnyExpression::TsNonNullAssertionExpression(it) => &it.syntax,
@@ -27183,7 +27195,6 @@ impl AstNode for JsAnyExpression {
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyExpression::ImportMeta(it) => it.syntax,
             JsAnyExpression::JsArrayExpression(it) => it.syntax,
             JsAnyExpression::JsArrowFunctionExpression(it) => it.syntax,
             JsAnyExpression::JsAssignmentExpression(it) => it.syntax,
@@ -27196,10 +27207,12 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::JsFunctionExpression(it) => it.syntax,
             JsAnyExpression::JsIdentifierExpression(it) => it.syntax,
             JsAnyExpression::JsImportCallExpression(it) => it.syntax,
+            JsAnyExpression::JsImportMetaExpression(it) => it.syntax,
             JsAnyExpression::JsInExpression(it) => it.syntax,
             JsAnyExpression::JsInstanceofExpression(it) => it.syntax,
             JsAnyExpression::JsLogicalExpression(it) => it.syntax,
             JsAnyExpression::JsNewExpression(it) => it.syntax,
+            JsAnyExpression::JsNewTargetExpression(it) => it.syntax,
             JsAnyExpression::JsObjectExpression(it) => it.syntax,
             JsAnyExpression::JsParenthesizedExpression(it) => it.syntax,
             JsAnyExpression::JsPostUpdateExpression(it) => it.syntax,
@@ -27207,13 +27220,12 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::JsSequenceExpression(it) => it.syntax,
             JsAnyExpression::JsStaticMemberExpression(it) => it.syntax,
             JsAnyExpression::JsSuperExpression(it) => it.syntax,
-            JsAnyExpression::JsTemplate(it) => it.syntax,
+            JsAnyExpression::JsTemplateExpression(it) => it.syntax,
             JsAnyExpression::JsThisExpression(it) => it.syntax,
             JsAnyExpression::JsUnaryExpression(it) => it.syntax,
             JsAnyExpression::JsUnknownExpression(it) => it.syntax,
             JsAnyExpression::JsYieldExpression(it) => it.syntax,
             JsAnyExpression::JsxTagExpression(it) => it.syntax,
-            JsAnyExpression::NewTarget(it) => it.syntax,
             JsAnyExpression::TsAsExpression(it) => it.syntax,
             JsAnyExpression::TsInstantiationExpression(it) => it.syntax,
             JsAnyExpression::TsNonNullAssertionExpression(it) => it.syntax,
@@ -27226,7 +27238,6 @@ impl AstNode for JsAnyExpression {
 impl std::fmt::Debug for JsAnyExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyExpression::ImportMeta(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsAnyLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsArrayExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsArrowFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
@@ -27240,10 +27251,12 @@ impl std::fmt::Debug for JsAnyExpression {
             JsAnyExpression::JsFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsIdentifierExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsImportCallExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyExpression::JsImportMetaExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsInExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsInstanceofExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsLogicalExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsNewExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyExpression::JsNewTargetExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsObjectExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsParenthesizedExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsPostUpdateExpression(it) => std::fmt::Debug::fmt(it, f),
@@ -27251,13 +27264,12 @@ impl std::fmt::Debug for JsAnyExpression {
             JsAnyExpression::JsSequenceExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsStaticMemberExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsSuperExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsTemplate(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyExpression::JsTemplateExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsThisExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsUnaryExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsUnknownExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsYieldExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsxTagExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::NewTarget(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsAsExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsInstantiationExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsNonNullAssertionExpression(it) => std::fmt::Debug::fmt(it, f),
@@ -27269,7 +27281,6 @@ impl std::fmt::Debug for JsAnyExpression {
 impl From<JsAnyExpression> for SyntaxNode {
     fn from(n: JsAnyExpression) -> SyntaxNode {
         match n {
-            JsAnyExpression::ImportMeta(it) => it.into(),
             JsAnyExpression::JsAnyLiteralExpression(it) => it.into(),
             JsAnyExpression::JsArrayExpression(it) => it.into(),
             JsAnyExpression::JsArrowFunctionExpression(it) => it.into(),
@@ -27283,10 +27294,12 @@ impl From<JsAnyExpression> for SyntaxNode {
             JsAnyExpression::JsFunctionExpression(it) => it.into(),
             JsAnyExpression::JsIdentifierExpression(it) => it.into(),
             JsAnyExpression::JsImportCallExpression(it) => it.into(),
+            JsAnyExpression::JsImportMetaExpression(it) => it.into(),
             JsAnyExpression::JsInExpression(it) => it.into(),
             JsAnyExpression::JsInstanceofExpression(it) => it.into(),
             JsAnyExpression::JsLogicalExpression(it) => it.into(),
             JsAnyExpression::JsNewExpression(it) => it.into(),
+            JsAnyExpression::JsNewTargetExpression(it) => it.into(),
             JsAnyExpression::JsObjectExpression(it) => it.into(),
             JsAnyExpression::JsParenthesizedExpression(it) => it.into(),
             JsAnyExpression::JsPostUpdateExpression(it) => it.into(),
@@ -27294,13 +27307,12 @@ impl From<JsAnyExpression> for SyntaxNode {
             JsAnyExpression::JsSequenceExpression(it) => it.into(),
             JsAnyExpression::JsStaticMemberExpression(it) => it.into(),
             JsAnyExpression::JsSuperExpression(it) => it.into(),
-            JsAnyExpression::JsTemplate(it) => it.into(),
+            JsAnyExpression::JsTemplateExpression(it) => it.into(),
             JsAnyExpression::JsThisExpression(it) => it.into(),
             JsAnyExpression::JsUnaryExpression(it) => it.into(),
             JsAnyExpression::JsUnknownExpression(it) => it.into(),
             JsAnyExpression::JsYieldExpression(it) => it.into(),
             JsAnyExpression::JsxTagExpression(it) => it.into(),
-            JsAnyExpression::NewTarget(it) => it.into(),
             JsAnyExpression::TsAsExpression(it) => it.into(),
             JsAnyExpression::TsInstantiationExpression(it) => it.into(),
             JsAnyExpression::TsNonNullAssertionExpression(it) => it.into(),
@@ -32210,11 +32222,6 @@ impl std::fmt::Display for TsType {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for ImportMeta {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
 impl std::fmt::Display for JsArrayAssignmentPattern {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -32585,6 +32592,11 @@ impl std::fmt::Display for JsImportDefaultClause {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
+impl std::fmt::Display for JsImportMetaExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
 impl std::fmt::Display for JsImportNamedClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -32671,6 +32683,11 @@ impl std::fmt::Display for JsNamespaceImportSpecifier {
     }
 }
 impl std::fmt::Display for JsNewExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsNewTargetExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -32865,17 +32882,17 @@ impl std::fmt::Display for JsSwitchStatement {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for JsTemplate {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
 impl std::fmt::Display for JsTemplateChunkElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
 impl std::fmt::Display for JsTemplateElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsTemplateExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }
@@ -33041,11 +33058,6 @@ impl std::fmt::Display for JsxTagExpression {
     }
 }
 impl std::fmt::Display for JsxText {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
-impl std::fmt::Display for NewTarget {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }

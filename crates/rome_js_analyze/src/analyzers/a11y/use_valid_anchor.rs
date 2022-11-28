@@ -297,7 +297,7 @@ fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorSt
                         ));
                     }
                 }
-                JsAnyExpression::JsTemplate(template) => {
+                JsAnyExpression::JsTemplateExpression(template) => {
                     let mut iter = template.elements().iter();
                     if let Some(JsAnyTemplateElement::JsTemplateChunkElement(element)) = iter.next()
                     {
@@ -310,14 +310,14 @@ fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorSt
                         }
                     }
                 }
-                JsAnyExpression::ImportMeta(_)
+                JsAnyExpression::JsImportMetaExpression(_)
                 | JsAnyExpression::JsClassExpression(_)
                 | JsAnyExpression::JsImportCallExpression(_)
                 | JsAnyExpression::JsObjectExpression(_)
                 | JsAnyExpression::JsSuperExpression(_)
                 | JsAnyExpression::JsUnaryExpression(_)
                 | JsAnyExpression::JsxTagExpression(_)
-                | JsAnyExpression::NewTarget(_) => {
+                | JsAnyExpression::JsNewTargetExpression(_) => {
                     return Some(UseValidAnchorState::IncorrectHref(
                         expression.syntax().text_trimmed_range(),
                     ));

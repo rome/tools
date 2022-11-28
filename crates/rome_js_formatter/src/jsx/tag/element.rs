@@ -169,7 +169,7 @@ impl JsxAnyTagWithChildren {
                         }
                     }
                     JsxExpressionChild(expression) => match expression.expression() {
-                        Some(JsTemplate(_)) => ElementLayout::Template(expression),
+                        Some(JsTemplateExpression(_)) => ElementLayout::Template(expression),
                         _ => ElementLayout::Default,
                     },
                     _ => ElementLayout::Default,

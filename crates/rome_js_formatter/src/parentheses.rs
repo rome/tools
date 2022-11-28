@@ -113,7 +113,7 @@ impl NeedsParentheses for JsAnyLiteralExpression {
 impl NeedsParentheses for JsAnyExpression {
     fn needs_parentheses(&self) -> bool {
         match self {
-            JsAnyExpression::ImportMeta(meta) => meta.needs_parentheses(),
+            JsAnyExpression::JsImportMetaExpression(meta) => meta.needs_parentheses(),
             JsAnyExpression::JsAnyLiteralExpression(literal) => literal.needs_parentheses(),
             JsAnyExpression::JsArrayExpression(array) => array.needs_parentheses(),
             JsAnyExpression::JsArrowFunctionExpression(arrow) => arrow.needs_parentheses(),
@@ -144,7 +144,7 @@ impl NeedsParentheses for JsAnyExpression {
             JsAnyExpression::JsSequenceExpression(sequence) => sequence.needs_parentheses(),
             JsAnyExpression::JsStaticMemberExpression(member) => member.needs_parentheses(),
             JsAnyExpression::JsSuperExpression(sup) => sup.needs_parentheses(),
-            JsAnyExpression::JsTemplate(template) => template.needs_parentheses(),
+            JsAnyExpression::JsTemplateExpression(template) => template.needs_parentheses(),
             JsAnyExpression::JsThisExpression(this) => this.needs_parentheses(),
             JsAnyExpression::JsUnaryExpression(unary) => unary.needs_parentheses(),
             JsAnyExpression::JsUnknownExpression(unknown) => unknown.needs_parentheses(),
@@ -152,7 +152,7 @@ impl NeedsParentheses for JsAnyExpression {
                 yield_expression.needs_parentheses()
             }
             JsAnyExpression::JsxTagExpression(jsx) => jsx.needs_parentheses(),
-            JsAnyExpression::NewTarget(target) => target.needs_parentheses(),
+            JsAnyExpression::JsNewTargetExpression(target) => target.needs_parentheses(),
             JsAnyExpression::TsAsExpression(as_expression) => as_expression.needs_parentheses(),
             JsAnyExpression::TsSatisfiesExpression(satisfies_expression) => {
                 satisfies_expression.needs_parentheses()
@@ -167,7 +167,9 @@ impl NeedsParentheses for JsAnyExpression {
 
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         match self {
-            JsAnyExpression::ImportMeta(meta) => meta.needs_parentheses_with_parent(parent),
+            JsAnyExpression::JsImportMetaExpression(meta) => {
+                meta.needs_parentheses_with_parent(parent)
+            }
             JsAnyExpression::JsAnyLiteralExpression(literal) => {
                 literal.needs_parentheses_with_parent(parent)
             }
@@ -234,7 +236,9 @@ impl NeedsParentheses for JsAnyExpression {
                 member.needs_parentheses_with_parent(parent)
             }
             JsAnyExpression::JsSuperExpression(sup) => sup.needs_parentheses_with_parent(parent),
-            JsAnyExpression::JsTemplate(template) => template.needs_parentheses_with_parent(parent),
+            JsAnyExpression::JsTemplateExpression(template) => {
+                template.needs_parentheses_with_parent(parent)
+            }
             JsAnyExpression::JsThisExpression(this) => this.needs_parentheses_with_parent(parent),
             JsAnyExpression::JsUnaryExpression(unary) => {
                 unary.needs_parentheses_with_parent(parent)
@@ -246,7 +250,9 @@ impl NeedsParentheses for JsAnyExpression {
                 yield_expression.needs_parentheses_with_parent(parent)
             }
             JsAnyExpression::JsxTagExpression(jsx) => jsx.needs_parentheses_with_parent(parent),
-            JsAnyExpression::NewTarget(target) => target.needs_parentheses_with_parent(parent),
+            JsAnyExpression::JsNewTargetExpression(target) => {
+                target.needs_parentheses_with_parent(parent)
+            }
             JsAnyExpression::TsAsExpression(as_expression) => {
                 as_expression.needs_parentheses_with_parent(parent)
             }
@@ -319,7 +325,7 @@ pub(crate) fn get_expression_left_side(
                 JsSequenceExpression(sequence) => sequence.left().ok(),
                 JsStaticMemberExpression(member) => member.object().ok(),
                 JsComputedMemberExpression(member) => member.object().ok(),
-                JsTemplate(template) => template.tag(),
+                JsTemplateExpression(template) => template.tag(),
                 JsNewExpression(new) => new.callee().ok(),
                 JsCallExpression(call) => call.callee().ok(),
                 JsConditionalExpression(conditional) => conditional.test().ok(),
@@ -411,7 +417,7 @@ pub(crate) fn is_first_in_statement(node: JsSyntaxNode, mode: FirstInStatementMo
 
             JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
             | JsSyntaxKind::JS_STATIC_MEMBER_ASSIGNMENT
-            | JsSyntaxKind::JS_TEMPLATE
+            | JsSyntaxKind::JS_TEMPLATE_EXPRESSION
             | JsSyntaxKind::JS_CALL_EXPRESSION
             | JsSyntaxKind::JS_NEW_EXPRESSION
             | JsSyntaxKind::TS_AS_EXPRESSION
@@ -664,7 +670,7 @@ pub(crate) fn is_tag(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
     debug_assert_is_expression(node);
     debug_assert_is_parent(node, parent);
 
-    matches!(parent.kind(), JsSyntaxKind::JS_TEMPLATE)
+    matches!(parent.kind(), JsSyntaxKind::JS_TEMPLATE_EXPRESSION)
 }
 
 /// Returns `true` if `node` is a spread `...node`

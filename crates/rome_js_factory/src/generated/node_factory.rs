@@ -6,20 +6,6 @@ use rome_js_syntax::{
     JsSyntaxElement as SyntaxElement, JsSyntaxNode as SyntaxNode, JsSyntaxToken as SyntaxToken, *,
 };
 use rome_rowan::AstNode;
-pub fn import_meta(
-    import_token: SyntaxToken,
-    dot_token: SyntaxToken,
-    meta_token: SyntaxToken,
-) -> ImportMeta {
-    ImportMeta::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::IMPORT_META,
-        [
-            Some(SyntaxElement::Token(import_token)),
-            Some(SyntaxElement::Token(dot_token)),
-            Some(SyntaxElement::Token(meta_token)),
-        ],
-    ))
-}
 pub fn js_array_assignment_pattern(
     l_brack_token: SyntaxToken,
     elements: JsArrayAssignmentPatternElementList,
@@ -2024,6 +2010,20 @@ impl JsImportDefaultClauseBuilder {
         ))
     }
 }
+pub fn js_import_meta_expression(
+    import_token: SyntaxToken,
+    dot_token: SyntaxToken,
+    meta_token: SyntaxToken,
+) -> JsImportMetaExpression {
+    JsImportMetaExpression::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_IMPORT_META_EXPRESSION,
+        [
+            Some(SyntaxElement::Token(import_token)),
+            Some(SyntaxElement::Token(dot_token)),
+            Some(SyntaxElement::Token(meta_token)),
+        ],
+    ))
+}
 pub fn js_import_named_clause(
     named_import: JsAnyNamedImport,
     from_token: SyntaxToken,
@@ -2490,6 +2490,20 @@ impl JsNewExpressionBuilder {
             ],
         ))
     }
+}
+pub fn js_new_target_expression(
+    new_token: SyntaxToken,
+    dot_token: SyntaxToken,
+    target_token: SyntaxToken,
+) -> JsNewTargetExpression {
+    JsNewTargetExpression::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_NEW_TARGET_EXPRESSION,
+        [
+            Some(SyntaxElement::Token(new_token)),
+            Some(SyntaxElement::Token(dot_token)),
+            Some(SyntaxElement::Token(target_token)),
+        ],
+    ))
 }
 pub fn js_null_literal_expression(value_token: SyntaxToken) -> JsNullLiteralExpression {
     JsNullLiteralExpression::unwrap_cast(SyntaxNode::new_detached(
@@ -3147,50 +3161,6 @@ pub fn js_switch_statement(
         ],
     ))
 }
-pub fn js_template(
-    l_tick_token: SyntaxToken,
-    elements: JsTemplateElementList,
-    r_tick_token: SyntaxToken,
-) -> JsTemplateBuilder {
-    JsTemplateBuilder {
-        l_tick_token,
-        elements,
-        r_tick_token,
-        tag: None,
-        type_arguments: None,
-    }
-}
-pub struct JsTemplateBuilder {
-    l_tick_token: SyntaxToken,
-    elements: JsTemplateElementList,
-    r_tick_token: SyntaxToken,
-    tag: Option<JsAnyExpression>,
-    type_arguments: Option<TsTypeArguments>,
-}
-impl JsTemplateBuilder {
-    pub fn with_tag(mut self, tag: JsAnyExpression) -> Self {
-        self.tag = Some(tag);
-        self
-    }
-    pub fn with_type_arguments(mut self, type_arguments: TsTypeArguments) -> Self {
-        self.type_arguments = Some(type_arguments);
-        self
-    }
-    pub fn build(self) -> JsTemplate {
-        JsTemplate::unwrap_cast(SyntaxNode::new_detached(
-            JsSyntaxKind::JS_TEMPLATE,
-            [
-                self.tag
-                    .map(|token| SyntaxElement::Node(token.into_syntax())),
-                self.type_arguments
-                    .map(|token| SyntaxElement::Node(token.into_syntax())),
-                Some(SyntaxElement::Token(self.l_tick_token)),
-                Some(SyntaxElement::Node(self.elements.into_syntax())),
-                Some(SyntaxElement::Token(self.r_tick_token)),
-            ],
-        ))
-    }
-}
 pub fn js_template_chunk_element(template_chunk_token: SyntaxToken) -> JsTemplateChunkElement {
     JsTemplateChunkElement::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_TEMPLATE_CHUNK_ELEMENT,
@@ -3210,6 +3180,50 @@ pub fn js_template_element(
             Some(SyntaxElement::Token(r_curly_token)),
         ],
     ))
+}
+pub fn js_template_expression(
+    l_tick_token: SyntaxToken,
+    elements: JsTemplateElementList,
+    r_tick_token: SyntaxToken,
+) -> JsTemplateExpressionBuilder {
+    JsTemplateExpressionBuilder {
+        l_tick_token,
+        elements,
+        r_tick_token,
+        tag: None,
+        type_arguments: None,
+    }
+}
+pub struct JsTemplateExpressionBuilder {
+    l_tick_token: SyntaxToken,
+    elements: JsTemplateElementList,
+    r_tick_token: SyntaxToken,
+    tag: Option<JsAnyExpression>,
+    type_arguments: Option<TsTypeArguments>,
+}
+impl JsTemplateExpressionBuilder {
+    pub fn with_tag(mut self, tag: JsAnyExpression) -> Self {
+        self.tag = Some(tag);
+        self
+    }
+    pub fn with_type_arguments(mut self, type_arguments: TsTypeArguments) -> Self {
+        self.type_arguments = Some(type_arguments);
+        self
+    }
+    pub fn build(self) -> JsTemplateExpression {
+        JsTemplateExpression::unwrap_cast(SyntaxNode::new_detached(
+            JsSyntaxKind::JS_TEMPLATE_EXPRESSION,
+            [
+                self.tag
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                self.type_arguments
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+                Some(SyntaxElement::Token(self.l_tick_token)),
+                Some(SyntaxElement::Node(self.elements.into_syntax())),
+                Some(SyntaxElement::Token(self.r_tick_token)),
+            ],
+        ))
+    }
 }
 pub fn js_this_expression(this_token: SyntaxToken) -> JsThisExpression {
     JsThisExpression::unwrap_cast(SyntaxNode::new_detached(
@@ -3827,20 +3841,6 @@ pub fn jsx_text(value_token: SyntaxToken) -> JsxText {
     JsxText::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JSX_TEXT,
         [Some(SyntaxElement::Token(value_token))],
-    ))
-}
-pub fn new_target(
-    new_token: SyntaxToken,
-    dot_token: SyntaxToken,
-    target_token: SyntaxToken,
-) -> NewTarget {
-    NewTarget::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::NEW_TARGET,
-        [
-            Some(SyntaxElement::Token(new_token)),
-            Some(SyntaxElement::Token(dot_token)),
-            Some(SyntaxElement::Token(target_token)),
-        ],
     ))
 }
 pub fn ts_abstract_modifier(modifier_token: SyntaxToken) -> TsAbstractModifier {

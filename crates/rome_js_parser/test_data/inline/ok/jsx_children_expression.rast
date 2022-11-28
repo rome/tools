@@ -756,7 +756,7 @@ JsModule {
                         },
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@482..483 "{" [] [],
-                            expression: JsTemplate {
+                            expression: JsTemplateExpression {
                                 tag: missing (optional),
                                 type_arguments: missing (optional),
                                 l_tick_token: BACKTICK@483..484 "`" [] [],
@@ -1408,7 +1408,7 @@ JsModule {
               0: JSX_TEXT_LITERAL@479..482 "\n  " [] []
             77: JSX_EXPRESSION_CHILD@482..486
               0: L_CURLY@482..483 "{" [] []
-              1: JS_TEMPLATE@483..485
+              1: JS_TEMPLATE_EXPRESSION@483..485
                 0: (empty)
                 1: (empty)
                 2: BACKTICK@483..484 "`" [] []

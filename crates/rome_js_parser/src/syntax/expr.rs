@@ -820,7 +820,7 @@ fn parse_new_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax 
             p.error(expected_identifier(p, p.cur_range()));
         }
 
-        return Present(m.complete(p, NEW_TARGET));
+        return Present(m.complete(p, JS_NEW_TARGET_EXPRESSION));
     }
 
     if let Some(lhs) = parse_primary_expression(p, context.and_ts_type_assertion_allowed(false))
@@ -1300,7 +1300,7 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
                 // import.metaa
                 if p.at(T![ident]) && p.text(p.cur_range()) == "meta" {
                     p.bump_remap(META);
-                    m.complete(p, IMPORT_META)
+                    m.complete(p, JS_IMPORT_META_EXPRESSION)
                 } else if p.at(T![ident]) {
                     let err = p.err_builder(
                         format!(
@@ -1311,7 +1311,7 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
                     );
 
                     p.err_and_bump(err, JS_UNKNOWN);
-                    m.complete(p, IMPORT_META)
+                    m.complete(p, JS_IMPORT_META_EXPRESSION)
                 } else {
                     let err = p.err_builder(
                         "Expected `meta` following an import keyword, but found none",
@@ -1574,7 +1574,7 @@ fn parse_template_literal(
 
     // The lexer emits an error for unterminated template literals
     p.eat(BACKTICK);
-    let mut completed = marker.complete(p, JS_TEMPLATE);
+    let mut completed = marker.complete(p, JS_TEMPLATE_EXPRESSION);
 
     // test_err template_after_optional_chain
     // obj.val?.prop`template`

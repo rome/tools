@@ -16,7 +16,7 @@ use crate::utils::{resolve_left_most_expression, AssignmentLikeLayout};
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyBindingPattern, JsAnyExpression, JsAnyFormalParameter,
     JsAnyFunctionBody, JsAnyParameter, JsAnyTemplateElement, JsArrowFunctionExpression,
-    JsSyntaxKind, JsSyntaxNode, JsTemplate,
+    JsSyntaxKind, JsSyntaxNode, JsTemplateExpression,
 };
 use rome_rowan::{SyntaxNodeOptionExt, SyntaxResult};
 
@@ -99,7 +99,7 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                         JsArrowFunctionExpression(_) | JsArrayExpression(_) | JsObjectExpression(_),
                     ) => !f.comments().has_leading_own_line_comment(body.syntax()),
                     JsAnyExpression(JsxTagExpression(_)) => true,
-                    JsAnyExpression(JsTemplate(template)) => {
+                    JsAnyExpression(JsTemplateExpression(template)) => {
                         is_multiline_template_starting_on_same_line(template)
                     }
                     JsAnyExpression(JsSequenceExpression(_)) => {
@@ -588,7 +588,7 @@ impl NeedsParentheses for JsArrowFunctionExpression {
 }
 
 /// Returns `true` if the template contains any new lines inside of its text chunks.
-fn template_literal_contains_new_line(template: &JsTemplate) -> bool {
+fn template_literal_contains_new_line(template: &JsTemplateExpression) -> bool {
     template.elements().iter().any(|element| match element {
         JsAnyTemplateElement::JsTemplateChunkElement(chunk) => chunk
             .template_chunk_token()
@@ -623,7 +623,7 @@ fn template_literal_contains_new_line(template: &JsTemplate) -> bool {
 /// ```
 ///
 /// Returns `false` because the template isn't on the same line as the '+' token.
-pub(crate) fn is_multiline_template_starting_on_same_line(template: &JsTemplate) -> bool {
+pub(crate) fn is_multiline_template_starting_on_same_line(template: &JsTemplateExpression) -> bool {
     let contains_new_line = template_literal_contains_new_line(template);
 
     let starts_on_same_line = template.syntax().first_token().map_or(false, |token| {

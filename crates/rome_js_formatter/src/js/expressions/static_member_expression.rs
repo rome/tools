@@ -194,7 +194,7 @@ pub(crate) fn member_chain_callee_needs_parens(
                 std::iter::successors(Some(node), |expression| match expression {
                     JsStaticMemberExpression(member) => member.object().ok(),
                     JsComputedMemberExpression(member) => member.object().ok(),
-                    JsTemplate(template) => template.tag(),
+                    JsTemplateExpression(template) => template.tag(),
                     TsNonNullAssertionExpression(assertion) => assertion.expression().ok(),
                     _ => None,
                 });

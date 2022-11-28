@@ -2,7 +2,7 @@ use crate::utils::is_call_like_expression;
 use rome_js_syntax::{
     JsAnyArrayElement, JsAnyCallArgument, JsAnyExpression, JsAnyName, JsAnyObjectMember,
     JsAnyObjectMemberName, JsAnyTemplateElement, JsSpread, JsStaticMemberExpressionFields,
-    JsTemplate, JsUnaryOperator,
+    JsTemplateExpression, JsUnaryOperator,
 };
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 
@@ -181,7 +181,7 @@ impl SimpleArgument {
     }
 
     fn is_simple_template(&self, depth: u8) -> bool {
-        if let SimpleArgument::Expression(JsAnyExpression::JsTemplate(template)) = self {
+        if let SimpleArgument::Expression(JsAnyExpression::JsTemplateExpression(template)) = self {
             is_simple_template_literal(template, depth + 1).unwrap_or(false)
         } else {
             false
@@ -270,7 +270,10 @@ impl From<JsAnyCallArgument> for SimpleArgument {
 /// - all strings dont contain newlines
 /// - the expressions contained in the template are considered as `is_simple_call_argument`. Check
 /// [is_simple_call_argument].
-pub fn is_simple_template_literal(template: &JsTemplate, depth: u8) -> SyntaxResult<bool> {
+pub fn is_simple_template_literal(
+    template: &JsTemplateExpression,
+    depth: u8,
+) -> SyntaxResult<bool> {
     for element in template.elements() {
         match element {
             JsAnyTemplateElement::JsTemplateChunkElement(chunk) => {

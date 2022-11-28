@@ -2,8 +2,8 @@ use crate::prelude::*;
 
 use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::ImportMetaFields;
-use rome_js_syntax::{ImportMeta, JsSyntaxNode};
+use rome_js_syntax::JsImportMetaExpressionFields;
+use rome_js_syntax::{JsImportMetaExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub(crate) struct FormatImportMeta;
@@ -11,9 +11,9 @@ pub(crate) struct FormatImportMeta;
 #[derive(Debug, Clone, Default)]
 pub(crate) struct FormatJsImportMeta;
 
-impl FormatNodeRule<ImportMeta> for FormatImportMeta {
-    fn fmt_fields(&self, node: &ImportMeta, f: &mut JsFormatter) -> FormatResult<()> {
-        let ImportMetaFields {
+impl FormatNodeRule<JsImportMetaExpression> for FormatImportMeta {
+    fn fmt_fields(&self, node: &JsImportMetaExpression, f: &mut JsFormatter) -> FormatResult<()> {
+        let JsImportMetaExpressionFields {
             import_token,
             dot_token,
             meta_token,
@@ -29,12 +29,12 @@ impl FormatNodeRule<ImportMeta> for FormatImportMeta {
         ]
     }
 
-    fn needs_parentheses(&self, item: &ImportMeta) -> bool {
+    fn needs_parentheses(&self, item: &JsImportMetaExpression) -> bool {
         item.needs_parentheses()
     }
 }
 
-impl NeedsParentheses for ImportMeta {
+impl NeedsParentheses for JsImportMetaExpression {
     fn needs_parentheses(&self) -> bool {
         false
     }

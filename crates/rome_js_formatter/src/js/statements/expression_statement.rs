@@ -121,7 +121,7 @@ fn needs_semicolon(node: &JsExpressionStatement) -> bool {
                 | JsArrowFunctionExpression(_)
                 | JsxTagExpression(_) => true,
 
-                JsTemplate(template) => template.tag().is_none(),
+                JsTemplateExpression(template) => template.tag().is_none(),
                 JsUnaryExpression(unary) => matches!(
                     unary.operator(),
                     Ok(JsUnaryOperator::Plus | JsUnaryOperator::Minus)

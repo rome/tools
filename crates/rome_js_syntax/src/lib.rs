@@ -134,7 +134,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | TS_IMPORT_EQUALS_DECLARATION
             | JS_UNKNOWN_STATEMENT => JS_UNKNOWN_STATEMENT,
 
-            IMPORT_META
+            JS_IMPORT_META_EXPRESSION
             | JS_ARRAY_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
             | JS_ASSIGNMENT_EXPRESSION
@@ -165,8 +165,8 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_THIS_EXPRESSION
             | JS_UNARY_EXPRESSION
             | JS_YIELD_EXPRESSION
-            | NEW_TARGET
-            | JS_TEMPLATE
+            | JS_NEW_TARGET_EXPRESSION
+            | JS_TEMPLATE_EXPRESSION
             | TS_AS_EXPRESSION
             | TS_SATISFIES_EXPRESSION
             | TS_TYPE_ASSERTION_EXPRESSION

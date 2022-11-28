@@ -6,7 +6,7 @@ use rome_js_factory::make;
 use rome_js_syntax::JsAnyTemplateElement::{self, JsTemplateElement};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsBinaryOperator, JsLanguage,
-    JsSyntaxKind, JsSyntaxToken, JsTemplate, JsTemplateElementList, WalkEvent, T,
+    JsSyntaxKind, JsSyntaxToken, JsTemplateElementList, JsTemplateExpression, WalkEvent, T,
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, BatchMutationExt, SyntaxToken, TriviaPiece};
 
@@ -116,7 +116,7 @@ impl Rule for UseTemplate {
         let template = convert_expressions_to_js_template(state)?;
         mutation.replace_node(
             JsAnyExpression::JsBinaryExpression(node.clone()),
-            JsAnyExpression::JsTemplate(template),
+            JsAnyExpression::JsTemplateExpression(template),
         );
 
         Some(JsRuleAction {
@@ -129,7 +129,9 @@ impl Rule for UseTemplate {
 }
 
 /// Merge `Vec<JsAnyExpression>` into a `JsTemplate`
-fn convert_expressions_to_js_template(exprs: &Vec<JsAnyExpression>) -> Option<JsTemplate> {
+fn convert_expressions_to_js_template(
+    exprs: &Vec<JsAnyExpression>,
+) -> Option<JsTemplateExpression> {
     let mut reduced_exprs = Vec::with_capacity(exprs.len());
     for expr in exprs.iter() {
         match expr {
@@ -148,7 +150,7 @@ fn convert_expressions_to_js_template(exprs: &Vec<JsAnyExpression>) -> Option<Js
                 );
                 reduced_exprs.push(chunk_element);
             }
-            JsAnyExpression::JsTemplate(template) => {
+            JsAnyExpression::JsTemplateExpression(template) => {
                 reduced_exprs.extend(flatten_template_element_list(template.elements())?);
             }
             _ => {
@@ -222,7 +224,7 @@ fn convert_expressions_to_js_template(exprs: &Vec<JsAnyExpression>) -> Option<Js
         }
     }
     Some(
-        make::js_template(
+        make::js_template_expression(
             make::token(T!['`']),
             make::js_template_element_list(reduced_exprs),
             make::token(T!['`']),
@@ -247,7 +249,7 @@ fn flatten_template_element_list(list: JsTemplateElementList) -> Option<Vec<JsAn
             JsTemplateElement(ref ele) => {
                 let expr = ele.expression().ok()?;
                 match expr {
-                    JsAnyExpression::JsTemplate(template) => {
+                    JsAnyExpression::JsTemplateExpression(template) => {
                         ret.extend(flatten_template_element_list(template.elements())?);
                     }
                     _ => {
@@ -270,7 +272,7 @@ fn is_unnecessary_string_concat_expression(node: &JsBinaryExpression) -> Option<
                 return Some(true);
             }
         }
-        rome_js_syntax::JsAnyExpression::JsTemplate(_) => return Some(true),
+        rome_js_syntax::JsAnyExpression::JsTemplateExpression(_) => return Some(true),
         rome_js_syntax::JsAnyExpression::JsAnyLiteralExpression(
             rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
         ) => {
@@ -286,7 +288,7 @@ fn is_unnecessary_string_concat_expression(node: &JsBinaryExpression) -> Option<
                 return Some(true);
             }
         }
-        rome_js_syntax::JsAnyExpression::JsTemplate(_) => return Some(true),
+        rome_js_syntax::JsAnyExpression::JsTemplateExpression(_) => return Some(true),
         rome_js_syntax::JsAnyExpression::JsAnyLiteralExpression(
             rome_js_syntax::JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
         ) => {

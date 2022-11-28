@@ -6,8 +6,8 @@ use crate::{
     JsComputedMemberExpression, JsIdentifierExpression, JsLiteralMemberName, JsLogicalExpression,
     JsNewExpression, JsNumberLiteralExpression, JsObjectExpression, JsPostUpdateExpression,
     JsReferenceIdentifier, JsRegexLiteralExpression, JsStaticMemberExpression,
-    JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken, JsTemplate, JsUnaryExpression,
-    OperatorPrecedence, T,
+    JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken, JsTemplateExpression,
+    JsUnaryExpression, OperatorPrecedence, T,
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use core::iter;
@@ -524,7 +524,7 @@ impl JsStringLiteralExpression {
     }
 }
 
-impl JsTemplate {
+impl JsTemplateExpression {
     /// The string chunks of the template. aka:
     /// `foo ${bar} foo` breaks down into:
     /// `QUASIS ELEMENT{EXPR} QUASIS`
@@ -621,9 +621,9 @@ impl JsAnyExpression {
             }
             JsAnyExpression::JsComputedMemberExpression(_)
             | JsAnyExpression::JsStaticMemberExpression(_)
-            | JsAnyExpression::ImportMeta(_)
+            | JsAnyExpression::JsImportMetaExpression(_)
             | JsAnyExpression::TsInstantiationExpression(_)
-            | JsAnyExpression::NewTarget(_) => OperatorPrecedence::Member,
+            | JsAnyExpression::JsNewTargetExpression(_) => OperatorPrecedence::Member,
 
             JsAnyExpression::JsThisExpression(_)
             | JsAnyExpression::JsAnyLiteralExpression(_)
@@ -635,7 +635,7 @@ impl JsAnyExpression {
             | JsAnyExpression::JsObjectExpression(_)
             | JsAnyExpression::JsxTagExpression(_) => OperatorPrecedence::Primary,
 
-            JsAnyExpression::JsTemplate(template) => {
+            JsAnyExpression::JsTemplateExpression(template) => {
                 if template.tag().is_some() {
                     OperatorPrecedence::Member
                 } else {
@@ -675,7 +675,7 @@ impl JsAnyExpression {
     /// 2. A template literal with no substitutions
     fn with_string_constant<R>(&self, f: impl FnOnce(&str) -> R) -> Option<R> {
         match self {
-            Self::JsTemplate(t) => t.as_string_constant().map(|it| f(it.text_trimmed())),
+            Self::JsTemplateExpression(t) => t.as_string_constant().map(|it| f(it.text_trimmed())),
             Self::JsAnyLiteralExpression(JsAnyLiteralExpression::JsStringLiteralExpression(s)) => {
                 s.inner_string_text().ok().map(|it| f(&it))
             }

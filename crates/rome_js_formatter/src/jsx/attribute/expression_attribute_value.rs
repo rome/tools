@@ -90,9 +90,9 @@ pub(crate) fn should_inline_jsx_expression(
         | JsArrowFunctionExpression(_)
         | JsCallExpression(_)
         | JsImportCallExpression(_)
-        | ImportMeta(_)
+        | JsImportMetaExpression(_)
         | JsFunctionExpression(_)
-        | JsTemplate(_) => true,
+        | JsTemplateExpression(_) => true,
         JsAwaitExpression(await_expression) => match await_expression.argument() {
             Ok(JsxTagExpression(argument)) => {
                 matches!(argument.tag(), Ok(JsxAnyTag::JsxElement(_)))

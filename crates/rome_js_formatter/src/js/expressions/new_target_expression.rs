@@ -2,15 +2,15 @@ use crate::prelude::*;
 
 use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::NewTargetFields;
-use rome_js_syntax::{JsSyntaxNode, NewTarget};
+use rome_js_syntax::JsNewTargetExpressionFields;
+use rome_js_syntax::{JsNewTargetExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub(crate) struct FormatNewTarget;
 
-impl FormatNodeRule<NewTarget> for FormatNewTarget {
-    fn fmt_fields(&self, node: &NewTarget, f: &mut JsFormatter) -> FormatResult<()> {
-        let NewTargetFields {
+impl FormatNodeRule<JsNewTargetExpression> for FormatNewTarget {
+    fn fmt_fields(&self, node: &JsNewTargetExpression, f: &mut JsFormatter) -> FormatResult<()> {
+        let JsNewTargetExpressionFields {
             new_token,
             dot_token,
             target_token,
@@ -26,12 +26,12 @@ impl FormatNodeRule<NewTarget> for FormatNewTarget {
         ]
     }
 
-    fn needs_parentheses(&self, item: &NewTarget) -> bool {
+    fn needs_parentheses(&self, item: &JsNewTargetExpression) -> bool {
         item.needs_parentheses()
     }
 }
 
-impl NeedsParentheses for NewTarget {
+impl NeedsParentheses for JsNewTargetExpression {
     fn needs_parentheses(&self) -> bool {
         false
     }

@@ -16,10 +16,6 @@ macro_rules! map_syntax_node {
     ($ node : expr , $ pattern : pat => $ body : expr) => {
         match $node {
             node => match $crate::JsSyntaxNode::kind(&node) {
-                $crate::JsSyntaxKind::IMPORT_META => {
-                    let $pattern = unsafe { $crate::ImportMeta::new_unchecked(node) };
-                    $body
-                }
                 $crate::JsSyntaxKind::JS_ARRAY_ASSIGNMENT_PATTERN => {
                     let $pattern = unsafe { $crate::JsArrayAssignmentPattern::new_unchecked(node) };
                     $body
@@ -330,6 +326,10 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::JsImportDefaultClause::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::JS_IMPORT_META_EXPRESSION => {
+                    let $pattern = unsafe { $crate::JsImportMetaExpression::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::JS_IMPORT_NAMED_CLAUSE => {
                     let $pattern = unsafe { $crate::JsImportNamedClause::new_unchecked(node) };
                     $body
@@ -401,6 +401,10 @@ macro_rules! map_syntax_node {
                 }
                 $crate::JsSyntaxKind::JS_NEW_EXPRESSION => {
                     let $pattern = unsafe { $crate::JsNewExpression::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JS_NEW_TARGET_EXPRESSION => {
+                    let $pattern = unsafe { $crate::JsNewTargetExpression::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JS_NULL_LITERAL_EXPRESSION => {
@@ -572,16 +576,16 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::JsSwitchStatement::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::JS_TEMPLATE => {
-                    let $pattern = unsafe { $crate::JsTemplate::new_unchecked(node) };
-                    $body
-                }
                 $crate::JsSyntaxKind::JS_TEMPLATE_CHUNK_ELEMENT => {
                     let $pattern = unsafe { $crate::JsTemplateChunkElement::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JS_TEMPLATE_ELEMENT => {
                     let $pattern = unsafe { $crate::JsTemplateElement::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::JS_TEMPLATE_EXPRESSION => {
+                    let $pattern = unsafe { $crate::JsTemplateExpression::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JS_THIS_EXPRESSION => {
@@ -717,10 +721,6 @@ macro_rules! map_syntax_node {
                 }
                 $crate::JsSyntaxKind::JSX_TEXT => {
                     let $pattern = unsafe { $crate::JsxText::new_unchecked(node) };
-                    $body
-                }
-                $crate::JsSyntaxKind::NEW_TARGET => {
-                    let $pattern = unsafe { $crate::NewTarget::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_ABSTRACT_MODIFIER => {
