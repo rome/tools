@@ -160,4 +160,5 @@ impl SyntaxFeature for JsSyntaxFeature {
     }
 }
 
-pub type JsLosslessTreeSink<'source> = LosslessTreeSink<'source, JsLanguage, JsSyntaxFactory>;
+pub(crate) type JsLosslessTreeSink<'source> =
+    LosslessTreeSink<'source, JsLanguage, JsSyntaxFactory>;
