@@ -23,6 +23,15 @@ Inside the folders, we will have folders for each group that Rome supports.
 When implementing **new rules**, they have to be implemented under the group `nursery`. New rules should
 always be considered unstable/not exhaustive.
 
+In addition to selecting a group, rules may be flagged as `recommended` if they
+should be part of the set of rules that are run in the default configuration of the
+Rome linter. As a general principle, rules should be recommended if they catch actual
+programming errors (for instance detecting a coding pattern that will throw an
+exception at runtime), while the more pedantic rules that check for certain unwanted
+patterns but may have high false positive rates (for instance style-related rules)
+are left off from the recommended set, and the final user should enable them
+explicitly in their configuration.
+
 ## Lint rules
 
 This gives to the project time to test the rule, find edge cases, etc.
