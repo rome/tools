@@ -7,12 +7,15 @@ use crate::settings::{
 use crate::workspace::server::AnyParse;
 use crate::workspace::GetSyntaxTreeResult;
 use crate::RomeError;
-use rome_formatter::{FormatError, Printed};
+#[cfg(debug_assertions)]
+use rome_formatter::FormatError;
+use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
 use rome_json_parser::JsonParse;
 use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
+#[cfg(debug_assertions)]
 use rome_rowan::{TextRange, TextSize, TokenAtOffset};
 use tracing::debug;
 
@@ -135,6 +138,7 @@ fn format(
     }
 }
 
+#[cfg(debug_assertions)]
 fn format_range(
     rome_path: &RomePath,
     parse: AnyParse,
@@ -148,6 +152,7 @@ fn format_range(
     Ok(printed)
 }
 
+#[cfg(debug_assertions)]
 fn format_on_type(
     rome_path: &RomePath,
     parse: AnyParse,
