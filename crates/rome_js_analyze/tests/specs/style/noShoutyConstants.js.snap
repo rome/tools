@@ -34,6 +34,22 @@ const D ="D";
 export const e = {
 	D
 };
+
+const Empty = "";
+export const E = Empty;
+
+const NotMatching = "DoesNotMatch";
+export const F = NotMatching;
+
+const matchingLowercase = "matchingLowercase";
+export const G = matchingLowercase;
+
+const AL = "ALPHA";
+export const H = AL;
+
+const ALPHA = "AL";
+export const I = ALPHA;
+
 ```
 
 # Diagnostics
@@ -173,6 +189,7 @@ noShoutyConstants.js:26:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━
   > 28 │ 	D
        │ 	^
     29 │ };
+    30 │ 
   
   i You should avoid declaring constants with a string that's the same
         value as the variable name. It introduces a level of unnecessary
@@ -189,6 +206,7 @@ noShoutyConstants.js:26:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━
        26 │ + → 
        27 │ + → D:"D"
     29 28 │   };
+    30 29 │   
   
 
 ```
