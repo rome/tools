@@ -1,12 +1,12 @@
-use crate::options::OptionsDeserializationDiagnostic;
-use crate::{
-    registry::RuleRoot, AnalyzerOptions, FromServices, Queryable, Rule, RuleKey, ServiceBag,
-};
+use crate::{registry::RuleRoot, FromServices, Queryable, Rule, RuleKey, ServiceBag};
 use rome_diagnostics::{Error, Result};
 use std::ops::Deref;
 
 type RuleQueryResult<R> = <<R as Rule>::Query as Queryable>::Output;
 type RuleServiceBag<R> = <<R as Rule>::Query as Queryable>::Services;
+
+#[derive(Clone)]
+pub struct ServiceBagRuleOptionsWrapper<R: Rule>(pub R::Options);
 
 pub struct RuleContext<'a, R>
 where
@@ -14,41 +14,25 @@ where
 {
     query_result: &'a RuleQueryResult<R>,
     root: &'a RuleRoot<R>,
+    bag: &'a ServiceBag,
     services: RuleServiceBag<R>,
-    options: Option<R::Options>,
 }
 
 impl<'a, R> RuleContext<'a, R>
 where
-    R: Rule + Sized,
+    R: Rule + Sized + 'static,
 {
     pub fn new(
         query_result: &'a RuleQueryResult<R>,
         root: &'a RuleRoot<R>,
-        services: &ServiceBag,
-        options: &'a AnalyzerOptions,
+        services: &'a ServiceBag,
     ) -> Result<Self, Error> {
         let rule_key = RuleKey::rule::<R>();
-        let options = options.configuration.rules.get_rule(&rule_key);
-        let options = if let Some(options) = options {
-            let value = options.value();
-            let result = serde_json::from_value::<R::Options>(value.clone()).map_err(|error| {
-                OptionsDeserializationDiagnostic::new(
-                    rule_key.rule_name(),
-                    value.to_string(),
-                    error,
-                )
-            })?;
-            Some(result)
-        } else {
-            None
-        };
-
         Ok(Self {
             query_result,
             root,
+            bag: services,
             services: FromServices::from_services(&rule_key, services)?,
-            options,
         })
     }
 
@@ -98,8 +82,12 @@ where
     ///     }
     /// }
     /// ```
-    pub fn options(&self) -> Option<&R::Options> {
-        self.options.as_ref()
+    pub fn options(&self) -> &R::Options {
+        let ServiceBagRuleOptionsWrapper(options) = self
+            .bag
+            .get_service::<ServiceBagRuleOptionsWrapper<R>>()
+            .unwrap();
+        options
     }
 }
 

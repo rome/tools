@@ -46,10 +46,10 @@ impl ReactCallWithDependencyResult {
     }
 }
 
-#[derive(Copy, Clone, Serialize, Deserialize)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub struct ReactHookConfiguration {
-    closure_index: usize,
-    dependencies_index: usize,
+    pub closure_index: usize,
+    pub dependencies_index: usize,
 }
 
 impl From<(usize, usize)> for ReactHookConfiguration {
@@ -105,7 +105,7 @@ pub(crate) fn react_hook_with_dependency(
 
 /// Specifies which, if any, of the returns of a React hook are stable.    
 /// See [is_binding_react_stable].
-#[derive(Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct StableReactHookConfiguration {
     /// Name of the React hook
     hook_name: String,

@@ -112,11 +112,10 @@ define_dategories! {
     "internalError/io",
     "internalError/fs",
     "internalError/panic",
-
     // parse categories
     "parse",
     "parse/noSuperWithoutExtends",
-
+    
     // Lint groups
     "lint",
     "lint/correctness",
@@ -125,7 +124,8 @@ define_dategories! {
     "lint/a11y",
     "lint/security",
     "lint/nursery",
-
+    "lint/configuration",
+    
     // Suppression comments
     "suppressions/parse",
     "suppressions/unknownGroup",
