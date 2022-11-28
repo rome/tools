@@ -2,7 +2,7 @@ use crate::prelude::*;
 use rome_formatter::{write, CstFormatContext};
 
 use crate::js::lists::parameter_list::{
-    AnyParameter, FormatJsAnyParameterList, AnyJsParameterList,
+    AnyJsParameterList, AnyParameter, FormatJsAnyParameterList,
 };
 
 use crate::utils::test_call::is_test_call_argument;

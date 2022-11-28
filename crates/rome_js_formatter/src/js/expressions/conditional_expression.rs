@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::{ConditionalJsxChain, AnyJsConditional};
+use crate::utils::{AnyJsConditional, ConditionalJsxChain};
 use rome_formatter::FormatRuleWithOptions;
 
 use crate::parentheses::{

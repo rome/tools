@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::{FormatOptionalSemicolon, FormatStatementSemicolon, AnyJsBinaryLikeExpression};
+use crate::utils::{AnyJsBinaryLikeExpression, FormatOptionalSemicolon, FormatStatementSemicolon};
 
 use rome_formatter::{format_args, write, CstFormatContext};
 

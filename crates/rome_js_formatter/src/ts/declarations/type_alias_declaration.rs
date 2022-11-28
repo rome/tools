@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::{FormatStatementSemicolon, AnyJsAssignmentLike};
+use crate::utils::{AnyJsAssignmentLike, FormatStatementSemicolon};
 use rome_formatter::write;
 use rome_js_syntax::TsTypeAliasDeclaration;
 
