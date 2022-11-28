@@ -89,22 +89,11 @@ export interface PrintDiagnosticsOptions {
 	verbose?: boolean;
 }
 
-// If `FinalizationRegistry` is supported, use it as a safety measure to ensure
-// Workspace instances get deallocated in case `shutdown` isn't called
-let registry: FinalizationRegistry<Workspace> | null = null;
-if (typeof FinalizationRegistry === "function") {
-	registry = new FinalizationRegistry((workspace) => {
-		workspace.free();
-	});
-}
-
 export class Rome {
 	private constructor(
 		private readonly module: WasmModule,
 		private readonly workspace: Workspace,
-	) {
-		registry?.register(this, workspace);
-	}
+	) {}
 
 	/**
 	 * It creates a new instance of the class {Rome}.
@@ -122,7 +111,6 @@ export class Rome {
 	 * unusable as calling any method on it will fail
 	 */
 	public shutdown() {
-		registry?.unregister(this);
 		this.workspace.free();
 	}
 

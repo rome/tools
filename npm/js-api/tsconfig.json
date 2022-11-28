@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "es2020",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "lib": ["ES2020", "ESNext.WeakRef"],
     "module": "commonjs",                                /* Specify what module code is generated. */
     "declaration": true,                              /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
     "declarationMap": true,                           /* Create sourcemaps for d.ts files. */
