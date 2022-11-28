@@ -100,8 +100,6 @@ where
     analyzer.add_visitor(Phases::Semantic, SemanticModelVisitor);
     analyzer.add_visitor(Phases::Semantic, SyntaxVisitor::default());
 
-    analyzer.add_visitor(Phases::Accessibility, SyntaxVisitor::default());
-
     analyzer.run(AnalyzerContext {
         file_id,
         root: root.clone(),

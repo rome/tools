@@ -37,7 +37,7 @@ impl FromServices for AriaServices {
 
 impl Phase for AriaServices {
     fn phase() -> Phases {
-        Phases::Accessibility
+        Phases::Syntax
     }
 }
 

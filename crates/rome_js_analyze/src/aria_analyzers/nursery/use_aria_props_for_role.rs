@@ -54,7 +54,7 @@ impl UseAriaPropsForRoleState {
                 },
             )
             .description(description)
-            .note_list(markup! { "Missing aria props" }, &self.missing_aria_props)
+            .footer_list(markup! { "Missing aria props" }, &self.missing_aria_props)
         })
     }
 }
@@ -89,9 +89,8 @@ impl Rule for UseAriaPropsForRole {
         let mut missing_aria_props = vec![];
         if let Some(role) = role {
             let properties = role.properties();
-            for role_property in properties {
-                if role_property.required {
-                    let property_name = role_property.property.as_str();
+            for (property_name, required) in properties {
+                if *required {
                     let attribute = node.find_by_name(property_name);
                     if attribute.is_none() {
                         missing_aria_props.push(property_name.to_string());

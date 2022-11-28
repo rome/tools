@@ -17,7 +17,6 @@ use std::{borrow, collections::BTreeSet};
 pub enum Phases {
     Syntax = 0,
     Semantic = 1,
-    Accessibility = 2,
 }
 
 /// Defines which phase a rule will run. This will be defined

@@ -41,7 +41,10 @@ impl Rule for UseAriaPropTypes {
             if !aria_property.contains_correct_value(attribute_text.text()) {
                 return Some(UseAriaProptypesState {
                     attribute_value_range: attribute_value.range(),
-                    allowed_values: aria_property.get_allowed_values().clone(),
+                    allowed_values: aria_property
+                        .values()
+                        .map(|value| value.to_string())
+                        .collect::<Vec<_>>(),
                     attribute_name,
                 });
             }
@@ -59,7 +62,7 @@ impl Rule for UseAriaPropTypes {
                 markup! {
                 "The value of the ARIA attribute "<Emphasis>{attribute_name}</Emphasis>" is not correct."
             },
-            ).note_list(
+            ).footer_list(
         markup!{
                     "The supported values for the "<Emphasis>{attribute_name}</Emphasis>" attribute are:"
                 },

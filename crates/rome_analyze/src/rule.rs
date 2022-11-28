@@ -507,8 +507,9 @@ impl RuleDiagnostic {
         self.footer(LogCategory::Info, msg)
     }
 
-    ///
-    pub fn note_list(mut self, message: impl Display, list: &[impl Display]) -> Self {
+    /// It creates a new footer note which contains a message and a list of possible suggestions.
+    /// Useful when there's need to suggest a list of things inside a diagnostic.
+    pub fn footer_list(mut self, message: impl Display, list: &[impl Display]) -> Self {
         if !list.is_empty() {
             self.rule_advice.suggestion_list = Some(SuggestionList {
                 message: markup! { {message} }.to_owned(),

@@ -2,9 +2,6 @@
 //! - ARIA properties
 //! - ARIA property types
 //! - ARIA roles
-//!
-//! **Note**: the crate relies on `binary_search`, which means that the
-//! entries of all these constants must be ordered!
 
 pub const ARIA_PROPERTIES: [&str; 48] = [
     "aria-activedescendant",

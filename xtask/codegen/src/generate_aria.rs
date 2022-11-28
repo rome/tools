@@ -14,7 +14,7 @@ pub(crate) fn generate_aria(mode: Mode) -> Result<()> {
     let aria_properties = generate_properties();
     let aria_roles = generate_roles();
     let tokens = quote! {
-        use crate::constants::{ARIA_PROPERTIES, ARIA_PROPERTY_TYPE, ARIA_WIDGET_ROLES, ARIA_ABSTRACT_ROLES, ARIA_DOCUMENT_STRUCTURE_ROLES};
+        use std::str::FromStr;
 
         #aria_properties
         #aria_roles
@@ -93,20 +93,20 @@ fn generate_enums<'a>(
             &property.replace("-", "_").to_camel().to_string(),
             Span::call_site(),
         );
-        let index = Literal::u16_unsuffixed(index as u16);
+        let property = Literal::string(property);
         enum_metadata.push(quote! {
             #name
         });
         from_enum_metadata.push(quote! {
-            #enum_name::#name => #const_name[#index]
+            #enum_name::#name => #property
         });
         from_string_metadata.push(quote! {
-            #index => #enum_name::#name
+            #property => Ok(#enum_name::#name)
         })
     }
 
     from_string_metadata.push(quote! {
-        _ => panic!("aria property not implemented")
+        _ => Err("aria property not implemented".to_string())
     });
 
     quote! {
@@ -124,12 +124,10 @@ fn generate_enums<'a>(
             }
         }
 
-        impl From<&str> for #enum_name {
-            fn from(s: &str) -> Self {
-                let index = #const_name
-                    .binary_search(&s)
-                    .unwrap_or_else(|_| panic!("aria property not implemented {s:?}"));
-                match index {
+        impl FromStr for #enum_name {
+            type Err = String;
+            fn from_str(s: &str) -> Result<Self, Self::Err> {
+                match s {
                     #( #from_string_metadata ),*
                 }
             }
