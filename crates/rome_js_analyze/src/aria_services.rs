@@ -28,13 +28,13 @@ impl FromServices for AriaServices {
         rule_key: &RuleKey,
         services: &ServiceBag,
     ) -> Result<Self, MissingServicesDiagnostic> {
-        let roles = services
+        let roles: &Arc<AriaRoles> = services
             .get_service()
             .ok_or_else(|| MissingServicesDiagnostic::new(rule_key.rule_name(), &["AriaRoles"]))?;
-        let properties = services.get_service().ok_or_else(|| {
+        let properties: &Arc<AriaProperties> = services.get_service().ok_or_else(|| {
             MissingServicesDiagnostic::new(rule_key.rule_name(), &["AriaProperties"])
         })?;
-        Ok(Self { roles, properties })
+        Ok(Self { roles: roles.clone(), properties: properties.clone() })
     }
 }
 

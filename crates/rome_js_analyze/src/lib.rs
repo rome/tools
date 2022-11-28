@@ -16,6 +16,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, TokenAtOffset, TriviaPieceKind};
 use serde::{Deserialize, Serialize};
+use std::sync::Arc;
 use std::{borrow::Cow, error::Error};
 
 mod analyzers;
