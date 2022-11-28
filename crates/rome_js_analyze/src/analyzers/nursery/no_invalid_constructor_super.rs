@@ -168,10 +168,10 @@ fn is_valid_constructor(expression: JsAnyExpression) -> Option<bool> {
         | JsAnyExpression::JsFunctionExpression(_)
         | JsAnyExpression::JsCallExpression(_)
         | JsAnyExpression::JsImportCallExpression(_)
-        | JsAnyExpression::ImportMeta(_)
+        | JsAnyExpression::JsImportMetaExpression(_)
         | JsAnyExpression::JsYieldExpression(_)
         | JsAnyExpression::JsNewExpression(_)
-        | JsAnyExpression::NewTarget(_)
+        | JsAnyExpression::JsNewTargetExpression(_)
         | JsAnyExpression::JsClassExpression(_) => Some(true),
         JsAnyExpression::JsIdentifierExpression(identifier) => {
             let name = identifier.name().ok()?;

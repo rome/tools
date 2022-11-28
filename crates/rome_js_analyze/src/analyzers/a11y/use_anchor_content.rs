@@ -249,7 +249,7 @@ fn is_expression_truthy(expression: JsAnyExpression) -> Option<bool> {
                 false
             }
         }
-        JsAnyExpression::JsTemplate(template) => {
+        JsAnyExpression::JsTemplateExpression(template) => {
             let mut iter = template.elements().iter();
             if iter.len() != 1 {
                 return None;

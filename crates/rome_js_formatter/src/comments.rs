@@ -924,7 +924,7 @@ fn handle_variable_declarator_comment(
             value.kind(),
             JsSyntaxKind::JS_OBJECT_EXPRESSION
                 | JsSyntaxKind::JS_ARRAY_EXPRESSION
-                | JsSyntaxKind::JS_TEMPLATE
+                | JsSyntaxKind::JS_TEMPLATE_EXPRESSION
                 | JsSyntaxKind::TS_OBJECT_TYPE
                 | JsSyntaxKind::TS_UNION_TYPE
         )

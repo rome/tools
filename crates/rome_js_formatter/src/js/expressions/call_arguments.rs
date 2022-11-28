@@ -1007,11 +1007,9 @@ fn is_multiline_template_only_args(arguments: &JsCallArguments) -> bool {
     let args = arguments.args();
 
     match args.first() {
-        Some(Ok(JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsTemplate(template))))
-            if args.len() == 1 =>
-        {
-            is_multiline_template_starting_on_same_line(&template)
-        }
+        Some(Ok(JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsTemplateExpression(
+            template,
+        )))) if args.len() == 1 => is_multiline_template_starting_on_same_line(&template),
         _ => false,
     }
 }

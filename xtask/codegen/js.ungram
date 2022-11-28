@@ -282,7 +282,7 @@ TsDeclareStatement =
 // Expression
 JsAnyExpression =
 	JsAnyLiteralExpression
-	| ImportMeta
+	| JsImportMetaExpression
 	| JsArrayExpression
 	| JsArrowFunctionExpression
 	| JsAssignmentExpression
@@ -310,8 +310,8 @@ JsAnyExpression =
 	| JsUnaryExpression
 	| JsUnknownExpression
 	| JsYieldExpression
-	| NewTarget
-	| JsTemplate
+	| JsNewTargetExpression
+	| JsTemplateExpression
 	// Typescript
 	| TsTypeAssertionExpression
 	| TsAsExpression
@@ -321,7 +321,7 @@ JsAnyExpression =
 	// JSX
 	| JsxTagExpression
 
-JsTemplate =
+JsTemplateExpression =
 	tag: JsAnyExpression?
 	type_arguments: TsTypeArguments?
 	l_tick: '`'
@@ -378,7 +378,7 @@ JsImportCallExpression =
 	arguments: JsCallArguments
 
 // new target expression
-NewTarget = 'new' '.' 'target'
+JsNewTargetExpression = 'new' '.' 'target'
 
 
 JsConditionalExpression =
@@ -389,7 +389,7 @@ JsConditionalExpression =
 	alternate: JsAnyExpression
 
 // import meta expression
-ImportMeta = 'import' '.' 'meta'
+JsImportMetaExpression = 'import' '.' 'meta'
 
 JsFunctionExpression =
 	'async'?

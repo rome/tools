@@ -704,8 +704,8 @@ fn parse_jsx_assignment_expression(p: &mut JsParser, is_spread: bool) -> ParsedS
         };
 
         let err = match expr.kind(p) {
-            JsSyntaxKind::IMPORT_META
-            | JsSyntaxKind::NEW_TARGET
+            JsSyntaxKind::JS_IMPORT_META_EXPRESSION
+            | JsSyntaxKind::JS_NEW_TARGET_EXPRESSION
             | JsSyntaxKind::JS_CLASS_EXPRESSION => Some(p.err_builder(msg, expr.range(p))),
             JsSyntaxKind::JS_SEQUENCE_EXPRESSION if is_spread => {
                 Some(p.err_builder(msg, expr.range(p)))

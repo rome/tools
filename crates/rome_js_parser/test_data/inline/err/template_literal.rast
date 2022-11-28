@@ -13,7 +13,7 @@ JsModule {
                         variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
-                            expression: JsTemplate {
+                            expression: JsTemplateExpression {
                                 tag: missing (optional),
                                 type_arguments: missing (optional),
                                 l_tick_token: BACKTICK@8..9 "`" [] [],
@@ -96,7 +96,7 @@ JsModule {
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@6..17
               0: EQ@6..8 "=" [] [Whitespace(" ")]
-              1: JS_TEMPLATE@8..17
+              1: JS_TEMPLATE_EXPRESSION@8..17
                 0: (empty)
                 1: (empty)
                 2: BACKTICK@8..9 "`" [] []

@@ -33,7 +33,7 @@ JsModule {
             semicolon_token: SEMICOLON@17..18 ";" [] [],
         },
         JsExpressionStatement {
-            expression: NewTarget {
+            expression: JsNewTargetExpression {
                 new_token: NEW_KW@18..22 "new" [Newline("\n")] [],
                 dot_token: DOT@22..23 "." [] [],
                 target_token: TARGET@23..29 "target" [] [],
@@ -204,7 +204,7 @@ JsModule {
         3: (empty)
       1: SEMICOLON@17..18 ";" [] []
     2: JS_EXPRESSION_STATEMENT@18..29
-      0: NEW_TARGET@18..29
+      0: JS_NEW_TARGET_EXPRESSION@18..29
         0: NEW_KW@18..22 "new" [Newline("\n")] []
         1: DOT@22..23 "." [] []
         2: TARGET@23..29 "target" [] []

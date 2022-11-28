@@ -9,7 +9,7 @@ impl FormatRule<JsAnyExpression> for FormatJsAnyExpression {
     fn fmt(&self, node: &JsAnyExpression, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyExpression::JsAnyLiteralExpression(node) => node.format().fmt(f),
-            JsAnyExpression::ImportMeta(node) => node.format().fmt(f),
+            JsAnyExpression::JsImportMetaExpression(node) => node.format().fmt(f),
             JsAnyExpression::JsArrayExpression(node) => node.format().fmt(f),
             JsAnyExpression::JsArrowFunctionExpression(node) => node.format().fmt(f),
             JsAnyExpression::JsAssignmentExpression(node) => node.format().fmt(f),
@@ -37,8 +37,8 @@ impl FormatRule<JsAnyExpression> for FormatJsAnyExpression {
             JsAnyExpression::JsUnaryExpression(node) => node.format().fmt(f),
             JsAnyExpression::JsUnknownExpression(node) => node.format().fmt(f),
             JsAnyExpression::JsYieldExpression(node) => node.format().fmt(f),
-            JsAnyExpression::NewTarget(node) => node.format().fmt(f),
-            JsAnyExpression::JsTemplate(node) => node.format().fmt(f),
+            JsAnyExpression::JsNewTargetExpression(node) => node.format().fmt(f),
+            JsAnyExpression::JsTemplateExpression(node) => node.format().fmt(f),
             JsAnyExpression::TsTypeAssertionExpression(node) => node.format().fmt(f),
             JsAnyExpression::TsAsExpression(node) => node.format().fmt(f),
             JsAnyExpression::TsSatisfiesExpression(node) => node.format().fmt(f),

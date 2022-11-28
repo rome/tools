@@ -2,7 +2,7 @@ use crate::prelude::*;
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody,
     JsAnyLiteralExpression, JsAnyName, JsAnyTemplateElement, JsCallArgumentList, JsCallArguments,
-    JsCallExpression, JsSyntaxNode, JsTemplate,
+    JsCallExpression, JsSyntaxNode, JsTemplateExpression,
 };
 use rome_rowan::{SyntaxResult, SyntaxTokenText};
 
@@ -75,7 +75,7 @@ pub(crate) fn is_test_call_expression(call_expression: &JsCallExpression) -> Syn
         // it("description", ..)
         (
             Some(Ok(JsAnyCallArgument::JsAnyExpression(
-                JsTemplate(_)
+                JsTemplateExpression(_)
                 | JsAnyLiteralExpression(self::JsAnyLiteralExpression::JsStringLiteralExpression(_)),
             ))),
             Some(Ok(second)),
@@ -167,11 +167,11 @@ fn is_unit_test_set_up_callee(callee: &JsAnyExpression) -> bool {
     }
 }
 
-pub(crate) fn is_test_each_pattern(template: &JsTemplate) -> bool {
+pub(crate) fn is_test_each_pattern(template: &JsTemplateExpression) -> bool {
     is_test_each_pattern_callee(template) && is_test_each_pattern_elements(template)
 }
 
-fn is_test_each_pattern_elements(template: &JsTemplate) -> bool {
+fn is_test_each_pattern_elements(template: &JsTemplateExpression) -> bool {
     let mut iter = template.elements().into_iter();
 
     // the table must have a header as JsTemplateChunkElement
@@ -256,7 +256,7 @@ fn is_test_each_pattern_elements(template: &JsTemplate) -> bool {
 /// Based on this [article]
 ///
 /// [article]: https://craftinginterpreters.com/scanning-on-demand.html#tries-and-state-machines
-fn is_test_each_pattern_callee(template: &JsTemplate) -> bool {
+fn is_test_each_pattern_callee(template: &JsTemplateExpression) -> bool {
     if let Some(tag) = template.tag() {
         let mut members = CalleeNamesIterator::new(tag);
 
@@ -431,7 +431,7 @@ mod test {
     use super::{contains_a_test_pattern, is_test_each_pattern_callee};
     use rome_diagnostics::location::FileId;
     use rome_js_parser::parse;
-    use rome_js_syntax::{JsCallExpression, JsTemplate, SourceType};
+    use rome_js_syntax::{JsCallExpression, JsTemplateExpression, SourceType};
     use rome_rowan::AstNodeList;
 
     fn extract_call_expression(src: &str) -> JsCallExpression {
@@ -457,7 +457,7 @@ mod test {
             .clone()
     }
 
-    fn extract_template(src: &str) -> JsTemplate {
+    fn extract_template(src: &str) -> JsTemplateExpression {
         let source_type = SourceType::js_module();
         let result = parse(src, FileId::zero(), source_type);
         let module = result
@@ -475,7 +475,7 @@ mod test {
             .unwrap()
             .expression()
             .unwrap()
-            .as_js_template()
+            .as_js_template_expression()
             .unwrap()
             .clone()
     }

@@ -1636,35 +1636,41 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTypeAnnotation {
         )
     }
 }
-impl FormatRule<rome_js_syntax::ImportMeta> for crate::js::module::import_meta::FormatImportMeta {
+impl FormatRule<rome_js_syntax::JsImportMetaExpression>
+    for crate::js::expressions::import_meta_expression::FormatImportMeta
+{
     type Context = JsFormatContext;
     #[inline(always)]
-    fn fmt(&self, node: &rome_js_syntax::ImportMeta, f: &mut JsFormatter) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::ImportMeta>::fmt(self, node, f)
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsImportMetaExpression,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsImportMetaExpression>::fmt(self, node, f)
     }
 }
-impl AsFormat<JsFormatContext> for rome_js_syntax::ImportMeta {
+impl AsFormat<JsFormatContext> for rome_js_syntax::JsImportMetaExpression {
     type Format<'a> = FormatRefWithRule<
         'a,
-        rome_js_syntax::ImportMeta,
-        crate::js::module::import_meta::FormatImportMeta,
+        rome_js_syntax::JsImportMetaExpression,
+        crate::js::expressions::import_meta_expression::FormatImportMeta,
     >;
     fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
-            crate::js::module::import_meta::FormatImportMeta::default(),
+            crate::js::expressions::import_meta_expression::FormatImportMeta::default(),
         )
     }
 }
-impl IntoFormat<JsFormatContext> for rome_js_syntax::ImportMeta {
+impl IntoFormat<JsFormatContext> for rome_js_syntax::JsImportMetaExpression {
     type Format = FormatOwnedWithRule<
-        rome_js_syntax::ImportMeta,
-        crate::js::module::import_meta::FormatImportMeta,
+        rome_js_syntax::JsImportMetaExpression,
+        crate::js::expressions::import_meta_expression::FormatImportMeta,
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule::new(
             self,
-            crate::js::module::import_meta::FormatImportMeta::default(),
+            crate::js::expressions::import_meta_expression::FormatImportMeta::default(),
         )
     }
 }
@@ -2626,67 +2632,79 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::JsYieldExpression {
         )
     }
 }
-impl FormatRule<rome_js_syntax::NewTarget> for crate::js::auxiliary::new_target::FormatNewTarget {
+impl FormatRule<rome_js_syntax::JsNewTargetExpression>
+    for crate::js::expressions::new_target_expression::FormatNewTarget
+{
     type Context = JsFormatContext;
     #[inline(always)]
-    fn fmt(&self, node: &rome_js_syntax::NewTarget, f: &mut JsFormatter) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::NewTarget>::fmt(self, node, f)
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsNewTargetExpression,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsNewTargetExpression>::fmt(self, node, f)
     }
 }
-impl AsFormat<JsFormatContext> for rome_js_syntax::NewTarget {
+impl AsFormat<JsFormatContext> for rome_js_syntax::JsNewTargetExpression {
     type Format<'a> = FormatRefWithRule<
         'a,
-        rome_js_syntax::NewTarget,
-        crate::js::auxiliary::new_target::FormatNewTarget,
+        rome_js_syntax::JsNewTargetExpression,
+        crate::js::expressions::new_target_expression::FormatNewTarget,
     >;
     fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
-            crate::js::auxiliary::new_target::FormatNewTarget::default(),
+            crate::js::expressions::new_target_expression::FormatNewTarget::default(),
         )
     }
 }
-impl IntoFormat<JsFormatContext> for rome_js_syntax::NewTarget {
+impl IntoFormat<JsFormatContext> for rome_js_syntax::JsNewTargetExpression {
     type Format = FormatOwnedWithRule<
-        rome_js_syntax::NewTarget,
-        crate::js::auxiliary::new_target::FormatNewTarget,
+        rome_js_syntax::JsNewTargetExpression,
+        crate::js::expressions::new_target_expression::FormatNewTarget,
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule::new(
             self,
-            crate::js::auxiliary::new_target::FormatNewTarget::default(),
+            crate::js::expressions::new_target_expression::FormatNewTarget::default(),
         )
     }
 }
-impl FormatRule<rome_js_syntax::JsTemplate> for crate::js::expressions::template::FormatJsTemplate {
+impl FormatRule<rome_js_syntax::JsTemplateExpression>
+    for crate::js::expressions::template_expression::FormatJsTemplate
+{
     type Context = JsFormatContext;
     #[inline(always)]
-    fn fmt(&self, node: &rome_js_syntax::JsTemplate, f: &mut JsFormatter) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::JsTemplate>::fmt(self, node, f)
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsTemplateExpression,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsTemplateExpression>::fmt(self, node, f)
     }
 }
-impl AsFormat<JsFormatContext> for rome_js_syntax::JsTemplate {
+impl AsFormat<JsFormatContext> for rome_js_syntax::JsTemplateExpression {
     type Format<'a> = FormatRefWithRule<
         'a,
-        rome_js_syntax::JsTemplate,
-        crate::js::expressions::template::FormatJsTemplate,
+        rome_js_syntax::JsTemplateExpression,
+        crate::js::expressions::template_expression::FormatJsTemplate,
     >;
     fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
-            crate::js::expressions::template::FormatJsTemplate::default(),
+            crate::js::expressions::template_expression::FormatJsTemplate::default(),
         )
     }
 }
-impl IntoFormat<JsFormatContext> for rome_js_syntax::JsTemplate {
+impl IntoFormat<JsFormatContext> for rome_js_syntax::JsTemplateExpression {
     type Format = FormatOwnedWithRule<
-        rome_js_syntax::JsTemplate,
-        crate::js::expressions::template::FormatJsTemplate,
+        rome_js_syntax::JsTemplateExpression,
+        crate::js::expressions::template_expression::FormatJsTemplate,
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule::new(
             self,
-            crate::js::expressions::template::FormatJsTemplate::default(),
+            crate::js::expressions::template_expression::FormatJsTemplate::default(),
         )
     }
 }
