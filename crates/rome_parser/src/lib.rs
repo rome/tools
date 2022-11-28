@@ -145,7 +145,7 @@
 //!     ) -> parser::RecoveryResult {
 //!         parsed_element.or_recover(
 //!             p,
-//!             &ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
+//!             &ParseRecovery::new(JS_BOGUS_STATEMENT, STMT_RECOVERY_SET),
 //!             js_parse_error::expected_case,
 //!         )
 //!     }
@@ -157,7 +157,7 @@
 //! ```rust, ignore
 //! parsed_element.or_recover(
 //!     p,
-//!     &ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
+//!     &ParseRecovery::new(JS_BOGUS_STATEMENT, STMT_RECOVERY_SET),
 //!     js_parse_error::expected_case,
 //! )
 //! ```
@@ -168,8 +168,8 @@
 //! The recovery eats all tokens until it finds one of the tokens specified in the `token_set`,
 //! a line break (if you called `enable_recovery_on_line_break`) or the end of the file.
 //!
-//! The recovery doesn't throw the tokens away but instead wraps them inside a `UNKNOWN_JS_EXPRESSION` node (first parameter).
-//! There exist multiple `UNKNOWN_*` nodes. You must consult the grammar to understand which `UNKNOWN*` node is supported in your case.
+//! The recovery doesn't throw the tokens away but instead wraps them inside a `JS_BOGUS_EXPRESSION` node (first parameter).
+//! There exist multiple `BOGUS_*` nodes. You must consult the grammar to understand which `BOGUS*` node is supported in your case.
 //!
 //! > You usually want to include the terminal token ending your list, the element separator token, and the token terminating a statement in your recovery set.
 //!
@@ -224,11 +224,11 @@
 //! });
 //! ```
 //!
-//! The `StrictMode.excluding_syntax` converts the parsed syntax to an unknown node and uses the diagnostic builder to create a diagnostic if the feature is not supported.
+//! The `StrictMode.excluding_syntax` converts the parsed syntax to a bogus node and uses the diagnostic builder to create a diagnostic if the feature is not supported.
 //!
-//! You can convert the `ConditionalParsedSyntax` to a regular `ParsedSyntax` by calling `or_invalid_to_unknown`, which wraps the whole parsed `with` statement in an `UNKNOWN` node if the parser is in strict mode and otherwise returns the unchanged `with` statement.
+//! You can convert the `ConditionalParsedSyntax` to a regular `ParsedSyntax` by calling `or_invalid_to_bogus`, which wraps the whole parsed `with` statement in an `BOGUS` node if the parser is in strict mode and otherwise returns the unchanged `with` statement.
 //!
-//! What if there's no `UNKNOWN` node matching the node of your parse rule? You must then return the `ConditionalParsedSyntax` without making the `or_invalid_to_unknown` recovery. It's then up to the caller to recover the potentially invalid syntax.
+//! What if there's no `BOGUS` node matching the node of your parse rule? You must then return the `ConditionalParsedSyntax` without making the `or_invalid_to_bogus` recovery. It's then up to the caller to recover the potentially invalid syntax.
 //!
 //!
 //! ## Summary
@@ -238,7 +238,7 @@
 //! * The rule must return `Present` if it consumes any token and, therefore, can parse the node with at least some of its children.
 //! * It returns `Absent` otherwise and must not progress parsing nor add any errors.
 //! * Lists must perform error recovery to avoid infinite loops.
-//! * Consult the grammar to identify the `UNKNOWN` node that is valid in the context of your rule.
+//! * Consult the grammar to identify the `BOGUS` node that is valid in the context of your rule.
 //!
 
 use crate::diagnostic::{expected_token, ParseDiagnostic, ToDiagnostic};
@@ -691,7 +691,7 @@ pub trait SyntaxFeature: Sized {
         !self.is_supported(p)
     }
 
-    /// Adds a diagnostic and changes the kind of the node to [SyntaxKind::to_unknown] if this feature isn't
+    /// Adds a diagnostic and changes the kind of the node to [SyntaxKind::to_bogus] if this feature isn't
     /// supported.
     ///
     /// Returns the parsed syntax.
@@ -710,7 +710,7 @@ pub trait SyntaxFeature: Sized {
             if self.is_unsupported(p) {
                 let error = error_builder(p, &syntax);
                 p.error(error);
-                syntax.change_to_unknown(p);
+                syntax.change_to_bogus(p);
                 syntax
             } else {
                 syntax
@@ -718,7 +718,7 @@ pub trait SyntaxFeature: Sized {
         })
     }
 
-    /// Parses a syntax and adds a diagnostic and changes the kind of the node to [SyntaxKind::to_unknown] if this feature isn't
+    /// Parses a syntax and adds a diagnostic and changes the kind of the node to [SyntaxKind::to_bogus] if this feature isn't
     /// supported.
     ///
     /// Returns the parsed syntax.
@@ -743,7 +743,7 @@ pub trait SyntaxFeature: Sized {
                 Present(mut syntax) => {
                     let diagnostic = error_builder(p, &syntax);
                     p.error(diagnostic);
-                    syntax.change_to_unknown(p);
+                    syntax.change_to_bogus(p);
                     Present(syntax)
                 }
                 _ => Absent,
@@ -751,7 +751,7 @@ pub trait SyntaxFeature: Sized {
         }
     }
 
-    /// Adds a diagnostic and changes the kind of the node to [SyntaxKind::to_unknown] if this feature is
+    /// Adds a diagnostic and changes the kind of the node to [SyntaxKind::to_bogus] if this feature is
     /// supported.
     ///
     /// Returns the parsed syntax.
@@ -771,7 +771,7 @@ pub trait SyntaxFeature: Sized {
             } else {
                 let error = error_builder(p, &syntax);
                 p.error(error);
-                syntax.change_to_unknown(p);
+                syntax.change_to_bogus(p);
                 syntax
             }
         })

@@ -4,7 +4,7 @@ JsModule {
     items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsUnknownAssignment {
+                left: JsBogusAssignment {
                     items: [
                         JS_REGEX_LITERAL@0..8 "/=0*_:m/" [] [],
                     ],
@@ -24,7 +24,7 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..15
     0: JS_EXPRESSION_STATEMENT@0..15
       0: JS_ASSIGNMENT_EXPRESSION@0..15
-        0: JS_UNKNOWN_ASSIGNMENT@0..8
+        0: JS_BOGUS_ASSIGNMENT@0..8
           0: JS_REGEX_LITERAL@0..8 "/=0*_:m/" [] []
         1: EQ@8..15 "=" [] [Comments("/*_:|\n")]
         2: (empty)

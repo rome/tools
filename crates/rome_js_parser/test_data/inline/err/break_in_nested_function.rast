@@ -30,7 +30,7 @@ JsModule {
                             l_curly_token: L_CURLY@35..36 "{" [] [],
                             directives: JsDirectiveList [],
                             statements: JsStatementList [
-                                JsUnknownStatement {
+                                JsBogusStatement {
                                     items: [
                                         BREAK_KW@36..46 "break" [Newline("\n"), Whitespace("    ")] [],
                                         SEMICOLON@46..47 ";" [] [],
@@ -77,7 +77,7 @@ JsModule {
               0: L_CURLY@35..36 "{" [] []
               1: JS_DIRECTIVE_LIST@36..36
               2: JS_STATEMENT_LIST@36..47
-                0: JS_UNKNOWN_STATEMENT@36..47
+                0: JS_BOGUS_STATEMENT@36..47
                   0: BREAK_KW@36..46 "break" [Newline("\n"), Whitespace("    ")] []
                   1: SEMICOLON@46..47 ";" [] []
               3: R_CURLY@47..51 "}" [Newline("\n"), Whitespace("  ")] []

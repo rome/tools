@@ -1,7 +1,7 @@
 //! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::{
-    AsFormat, FormatNodeRule, FormatUnknownNodeRule, IntoFormat, JsonFormatContext, JsonFormatter,
+    AsFormat, FormatBogusNodeRule, FormatNodeRule, IntoFormat, JsonFormatContext, JsonFormatter,
 };
 use rome_formatter::{FormatOwnedWithRule, FormatRefWithRule, FormatResult, FormatRule};
 impl FormatRule<rome_json_syntax::JsonRoot> for crate::json::auxiliary::root::FormatJsonRoot {
@@ -384,75 +384,67 @@ impl IntoFormat<JsonFormatContext> for rome_json_syntax::JsonMemberList {
         )
     }
 }
-impl FormatRule<rome_json_syntax::JsonUnknown>
-    for crate::json::unknown::unknown::FormatJsonUnknown
-{
+impl FormatRule<rome_json_syntax::JsonBogus> for crate::json::bogus::bogus::FormatJsonBogus {
     type Context = JsonFormatContext;
     #[inline(always)]
-    fn fmt(&self, node: &rome_json_syntax::JsonUnknown, f: &mut JsonFormatter) -> FormatResult<()> {
-        FormatUnknownNodeRule::<rome_json_syntax::JsonUnknown>::fmt(self, node, f)
+    fn fmt(&self, node: &rome_json_syntax::JsonBogus, f: &mut JsonFormatter) -> FormatResult<()> {
+        FormatBogusNodeRule::<rome_json_syntax::JsonBogus>::fmt(self, node, f)
     }
 }
-impl AsFormat<JsonFormatContext> for rome_json_syntax::JsonUnknown {
+impl AsFormat<JsonFormatContext> for rome_json_syntax::JsonBogus {
     type Format<'a> = FormatRefWithRule<
         'a,
-        rome_json_syntax::JsonUnknown,
-        crate::json::unknown::unknown::FormatJsonUnknown,
+        rome_json_syntax::JsonBogus,
+        crate::json::bogus::bogus::FormatJsonBogus,
     >;
     fn format(&self) -> Self::Format<'_> {
-        FormatRefWithRule::new(
-            self,
-            crate::json::unknown::unknown::FormatJsonUnknown::default(),
-        )
+        FormatRefWithRule::new(self, crate::json::bogus::bogus::FormatJsonBogus::default())
     }
 }
-impl IntoFormat<JsonFormatContext> for rome_json_syntax::JsonUnknown {
+impl IntoFormat<JsonFormatContext> for rome_json_syntax::JsonBogus {
     type Format = FormatOwnedWithRule<
-        rome_json_syntax::JsonUnknown,
-        crate::json::unknown::unknown::FormatJsonUnknown,
+        rome_json_syntax::JsonBogus,
+        crate::json::bogus::bogus::FormatJsonBogus,
     >;
     fn into_format(self) -> Self::Format {
-        FormatOwnedWithRule::new(
-            self,
-            crate::json::unknown::unknown::FormatJsonUnknown::default(),
-        )
+        FormatOwnedWithRule::new(self, crate::json::bogus::bogus::FormatJsonBogus::default())
     }
 }
-impl FormatRule<rome_json_syntax::JsonUnknownValue>
-    for crate::json::unknown::unknown_value::FormatJsonUnknownValue
+impl FormatRule<rome_json_syntax::JsonBogusValue>
+    for crate::json::bogus::bogus_value::FormatJsonBogusValue
 {
     type Context = JsonFormatContext;
     #[inline(always)]
     fn fmt(
         &self,
-        node: &rome_json_syntax::JsonUnknownValue,
+        node: &rome_json_syntax::JsonBogusValue,
         f: &mut JsonFormatter,
     ) -> FormatResult<()> {
-        FormatUnknownNodeRule::<rome_json_syntax::JsonUnknownValue>::fmt(self, node, f)
+        FormatBogusNodeRule::<rome_json_syntax::JsonBogusValue>::fmt(self, node, f)
     }
 }
-impl AsFormat<JsonFormatContext> for rome_json_syntax::JsonUnknownValue {
+impl AsFormat<JsonFormatContext> for rome_json_syntax::JsonBogusValue {
     type Format<'a> = FormatRefWithRule<
         'a,
-        rome_json_syntax::JsonUnknownValue,
-        crate::json::unknown::unknown_value::FormatJsonUnknownValue,
+        rome_json_syntax::JsonBogusValue,
+        crate::json::bogus::bogus_value::FormatJsonBogusValue,
     >;
     fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
-            crate::json::unknown::unknown_value::FormatJsonUnknownValue::default(),
+            crate::json::bogus::bogus_value::FormatJsonBogusValue::default(),
         )
     }
 }
-impl IntoFormat<JsonFormatContext> for rome_json_syntax::JsonUnknownValue {
+impl IntoFormat<JsonFormatContext> for rome_json_syntax::JsonBogusValue {
     type Format = FormatOwnedWithRule<
-        rome_json_syntax::JsonUnknownValue,
-        crate::json::unknown::unknown_value::FormatJsonUnknownValue,
+        rome_json_syntax::JsonBogusValue,
+        crate::json::bogus::bogus_value::FormatJsonBogusValue,
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule::new(
             self,
-            crate::json::unknown::unknown_value::FormatJsonUnknownValue::default(),
+            crate::json::bogus::bogus_value::FormatJsonBogusValue::default(),
         )
     }
 }

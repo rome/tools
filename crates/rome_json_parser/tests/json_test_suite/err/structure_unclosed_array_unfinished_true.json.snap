@@ -21,7 +21,7 @@ JsonRoot {
                 value_token: FALSE_KW@2..7 "false" [] [],
             },
             COMMA@7..9 "," [] [Whitespace(" ")],
-            JsonUnknownValue {
+            JsonBogusValue {
                 items: [
                     IDENT@9..12 "tru" [] [],
                 ],
@@ -43,7 +43,7 @@ JsonRoot {
       0: JSON_BOOLEAN_VALUE@2..7
         0: FALSE_KW@2..7 "false" [] []
       1: COMMA@7..9 "," [] [Whitespace(" ")]
-      2: JSON_UNKNOWN_VALUE@9..12
+      2: JSON_BOGUS_VALUE@9..12
         0: IDENT@9..12 "tru" [] []
     2: (empty)
   1: EOF@12..12 "" [] []

@@ -21,7 +21,7 @@ JsonRoot {
                 value_token: JSON_STRING_LITERAL@1..4 "\"x\"" [] [],
             },
             COMMA@4..6 "," [] [Whitespace(" ")],
-            JsonUnknownValue {
+            JsonBogusValue {
                 items: [
                     IDENT@6..11 "truth" [] [],
                 ],
@@ -43,7 +43,7 @@ JsonRoot {
       0: JSON_STRING_VALUE@1..4
         0: JSON_STRING_LITERAL@1..4 "\"x\"" [] []
       1: COMMA@4..6 "," [] [Whitespace(" ")]
-      2: JSON_UNKNOWN_VALUE@6..11
+      2: JSON_BOGUS_VALUE@6..11
         0: IDENT@6..11 "truth" [] []
     2: R_BRACK@11..12 "]" [] []
   1: EOF@12..12 "" [] []

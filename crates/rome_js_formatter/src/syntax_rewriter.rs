@@ -46,8 +46,8 @@ struct JsFormatSyntaxRewriter {
 impl JsFormatSyntaxRewriter {
     /// Replaces parenthesized expression that:
     /// * have no syntax error: has no missing required child or no skipped token trivia attached to the left or right paren
-    /// * inner expression isn't an unknown node
-    /// * no closure or type cast type cast comment
+    /// * inner expression isn't an bogus node
+    /// * no closure or type cast comment
     ///
     /// with the inner expression.
     ///
@@ -133,7 +133,7 @@ impl JsFormatSyntaxRewriter {
                 let prev_token = l_paren.prev_token();
 
                 // Keep parentheses around unknown expressions. Rome can't know the precedence.
-                if inner.kind().is_unknown()
+                if inner.kind().is_bogus()
                     // Don't remove parentheses if they have skipped trivia. We don't know for certain what the intended syntax is.
                     // Nor if there's a leading type cast comment
                     || has_type_cast_comment_or_skipped(&l_paren.leading_trivia())

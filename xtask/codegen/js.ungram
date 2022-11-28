@@ -21,31 +21,32 @@
 // NOTES
 //
 // - SyntaxNode, SyntaxToken and SyntaxElement will be stripped from the codegen
-// - Unknown nodes are special nodes used to keep track of broken code; they are
+// - Bogus nodes are special nodes used to keep track of broken code; they are
 //   not part of the grammar but they will appear inside the green tree
 //
 
 
 ///////////////
-// UNKNOWN NODES
+// Bogus NODES
 ///////////////
 // SyntaxElement is a generic data structure that is meant to track nodes and tokens
 // in cases where we care about both types
 //
-// As Unknown* node will need to yield both tokens and nodes without discrimination,
+// As Bogus* node will need to yield both tokens and nodes without discrimination,
 // and their children will need to yield nodes and tokens as well.
 // For this reason, SyntaxElement = SyntaxElement
 SyntaxElement = SyntaxElement
 
-JsUnknown = SyntaxElement*
-JsUnknownStatement = SyntaxElement*
-JsUnknownExpression = SyntaxElement*
-JsUnknownMember = SyntaxElement*
-JsUnknownBinding = SyntaxElement*
-JsUnknownAssignment = SyntaxElement*
-JsUnknownParameter = SyntaxElement*
-JsUnknownImportAssertionEntry = SyntaxElement*
-JsUnknownNamedImportSpecifier = SyntaxElement*
+JsBogus = SyntaxElement*
+JsBogusStatement = SyntaxElement*
+JsBogusExpression = SyntaxElement*
+JsBogusMember = SyntaxElement*
+JsBogusBinding = SyntaxElement*
+JsBogusAssignment = SyntaxElement*
+JsBogusParameter = SyntaxElement*
+JsBogusImportAssertionEntry = SyntaxElement*
+JsBogusNamedImportSpecifier = SyntaxElement*
+TsBogusType = SyntaxElement*
 
 JsAnyRoot =
 	JsScript | JsModule | JsExpressionSnipped
@@ -96,7 +97,7 @@ JsAnyStatement =
 	| JsThrowStatement
 	| JsTryFinallyStatement
 	| JsTryStatement
-	| JsUnknownStatement
+	| JsBogusStatement
 	| JsVariableStatement
 	| JsWhileStatement
 	| JsWithStatement
@@ -308,7 +309,7 @@ JsAnyExpression =
 	| JsSuperExpression
 	| JsThisExpression
 	| JsUnaryExpression
-	| JsUnknownExpression
+	| JsBogusExpression
 	| JsYieldExpression
 	| JsNewTargetExpression
 	| JsTemplateExpression
@@ -528,7 +529,7 @@ JsAnyObjectMember =
 	| JsSetterObjectMember
 	| JsShorthandPropertyObjectMember
 	| JsSpread
-	| JsUnknownMember
+	| JsBogusMember
 
 
 // { a: 5, b: () => {} }
@@ -638,7 +639,7 @@ JsAnyClassMember =
 	| TsSetterSignatureClassMember
 	| TsIndexSignatureClassMember
 	| JsEmptyClassMember
-	| JsUnknownMember
+	| JsBogusMember
 
 JsStaticModifier = modifier: 'static'
 TsDeclareModifier = modifier: 'declare'
@@ -855,7 +856,7 @@ JsAnyAssignment =
 	| TsAsAssignment
 	| TsSatisfiesAssignment
 	| TsTypeAssertionAssignment
-	| JsUnknownAssignment
+	| JsBogusAssignment
 
 
 JsAssignmentWithDefault =
@@ -956,7 +957,7 @@ JsAnyObjectAssignmentPatternMember =
 	JsObjectAssignmentPatternShorthandProperty
 	| JsObjectAssignmentPatternProperty
 	| JsObjectAssignmentPatternRest
-	| JsUnknownAssignment
+	| JsBogusAssignment
 
 // ({ x } = b) or ({ x = "test" } = b)
 //    ^              ^^^^^^^^^^
@@ -984,7 +985,7 @@ JsObjectAssignmentPatternRest =
 
 JsAnyBinding =
 	JsIdentifierBinding
-	| JsUnknownBinding
+	| JsBogusBinding
 
 // Binds a value to an identifier.
 // let x = OR function(test) {}
@@ -1036,7 +1037,7 @@ JsAnyObjectBindingPatternMember =
 	JsObjectBindingPatternProperty
 	| JsObjectBindingPatternRest
 	| JsObjectBindingPatternShorthandProperty
-	| JsUnknownBinding
+	| JsBogusBinding
 
 // let { a: b.m } = {}
 //       ^^^^^^
@@ -1276,7 +1277,7 @@ JsNamedImportSpecifierList = (JsAnyNamedImportSpecifier (',' JsAnyNamedImportSpe
 JsAnyNamedImportSpecifier =
     JsShorthandNamedImportSpecifier
     | JsNamedImportSpecifier
-    | JsUnknownNamedImportSpecifier
+    | JsBogusNamedImportSpecifier
 
 // import { foo as test } from "mod";
 //          ^^^^^^^^^^^
@@ -1306,7 +1307,7 @@ JsImportAssertionEntryList = (JsAnyImportAssertionEntry (',' JsAnyImportAssertio
 
 JsAnyImportAssertionEntry =
 	JsImportAssertionEntry
-	| JsUnknownImportAssertionEntry
+	| JsBogusImportAssertionEntry
 
 // import a from "mod" assert { type: "json" }
 //                              ^^^^^^^^^^^^
@@ -1562,7 +1563,7 @@ JsParameterList = (JsAnyParameter (',' JsAnyParameter)* ','?)
 
 JsAnyFormalParameter =
 	JsFormalParameter
-	| JsUnknownParameter
+	| JsBogusParameter
 
 JsAnyParameter =
 	JsAnyFormalParameter
@@ -1659,6 +1660,7 @@ TsType =
 	| TsFunctionType
 	| TsConstructorType
 	| TsConditionalType
+	| TsBogusType
 
 // Predefined types
 TsAnyType = 'any'
@@ -1946,7 +1948,7 @@ TsAnyTypeMember =
 	| TsGetterSignatureTypeMember
 	| TsSetterSignatureTypeMember
 	| TsIndexSignatureTypeMember
-	| JsUnknownMember
+	| JsBogusMember
 
 // { <A>(a: A): number }
 //   ^^^^^^^^^^^^^^^^^

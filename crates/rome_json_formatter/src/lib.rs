@@ -32,13 +32,13 @@ where
     fn fmt_fields(&self, node: &N, f: &mut JsonFormatter) -> FormatResult<()>;
 }
 
-/// Rule for formatting an unknown node.
-pub(crate) trait FormatUnknownNodeRule<N>
+/// Rule for formatting an bogus nodes.
+pub(crate) trait FormatBogusNodeRule<N>
 where
     N: AstNode<Language = JsonLanguage>,
 {
     fn fmt(&self, node: &N, f: &mut JsonFormatter) -> FormatResult<()> {
-        format_unknown_node(node.syntax()).fmt(f)
+        format_bogus_node(node.syntax()).fmt(f)
     }
 }
 

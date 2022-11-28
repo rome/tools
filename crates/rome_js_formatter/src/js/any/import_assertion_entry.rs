@@ -9,7 +9,7 @@ impl FormatRule<JsAnyImportAssertionEntry> for FormatJsAnyImportAssertionEntry {
     fn fmt(&self, node: &JsAnyImportAssertionEntry, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyImportAssertionEntry::JsImportAssertionEntry(node) => node.format().fmt(f),
-            JsAnyImportAssertionEntry::JsUnknownImportAssertionEntry(node) => node.format().fmt(f),
+            JsAnyImportAssertionEntry::JsBogusImportAssertionEntry(node) => node.format().fmt(f),
         }
     }
 }

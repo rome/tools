@@ -44,8 +44,8 @@ pub(crate) trait ParseWithDefaultPattern {
 
 /// Trait for parsing an array like pattern of the form `[a, b = "c", { }]`
 pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
-    /// The kind of an unknown pattern. Used in case the pattern contains elements that aren't valid patterns
-    fn unknown_pattern_kind() -> JsSyntaxKind;
+    /// The kind of a bogus pattern. Used in case the pattern contains elements that aren't valid patterns
+    fn bogus_pattern_kind() -> JsSyntaxKind;
     /// The kind of the array like pattern (array assignment or array binding)
     fn array_pattern_kind() -> JsSyntaxKind;
     /// The kind of the rest pattern
@@ -74,7 +74,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
                 progress.assert_progressing(p);
 
                 let recovery = ParseRecovery::new(
-                    Self::unknown_pattern_kind(),
+                    Self::bogus_pattern_kind(),
                     token_set!(EOF, T![,], T![']'], T![=], T![;], T![...], T![')']),
                 )
                 .enable_recovery_on_line_break();
@@ -141,7 +141,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 /// Trait for parsing an object pattern like node of the form `{ a, b: c}`
 pub(crate) trait ParseObjectPattern {
     /// Kind used when recovering from invalid properties.
-    fn unknown_pattern_kind() -> JsSyntaxKind;
+    fn bogus_pattern_kind() -> JsSyntaxKind;
     /// The kind of the pattern like node this trait parses
     fn object_pattern_kind() -> JsSyntaxKind;
     /// The kind of the property list
@@ -171,7 +171,7 @@ pub(crate) trait ParseObjectPattern {
                 continue;
             }
             let recovery_set = ParseRecovery::new(
-                Self::unknown_pattern_kind(),
+                Self::bogus_pattern_kind(),
                 token_set!(EOF, T![,], T!['}'], T![...], T![;], T![')'], T![=]),
             )
             .enable_recovery_on_line_break();
@@ -218,7 +218,7 @@ pub(crate) trait ParseObjectPattern {
 }
 
 /// Validates if the parsed completed rest marker is a valid rest element inside of a
-/// array or object assignment target and converts it to an unknown assignment target if not.
+/// array or object assignment target and converts it to an bogus assignment target if not.
 /// A rest element must be:
 ///
 /// * the last element
@@ -257,7 +257,7 @@ fn validate_rest_pattern(
         );
 
         let mut invalid = rest_marker.complete(p, kind);
-        invalid.change_to_unknown(p);
+        invalid.change_to_bogus(p);
         invalid
     } else if p.at(T![,]) && p.nth_at(1, end_token) {
         p.error(
@@ -265,7 +265,7 @@ fn validate_rest_pattern(
                 .detail(p.cur_range(), "Remove the trailing comma here")
                 .detail(rest.range(p), "Rest element"),
         );
-        rest.change_to_unknown(p);
+        rest.change_to_bogus(p);
         rest
     } else {
         p.error(
@@ -277,7 +277,7 @@ fn validate_rest_pattern(
                     ),
                 ),
         );
-        rest.change_to_unknown(p);
+        rest.change_to_bogus(p);
         rest
     }
 }

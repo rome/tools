@@ -91,7 +91,7 @@ fn traverse_parameter(
             JsAnyFormalParameter::JsFormalParameter(parameter) => {
                 traverse_binding(parameter.binding().ok()?, tracked_bindings)
             }
-            JsAnyFormalParameter::JsUnknownParameter(_) => None,
+            JsAnyFormalParameter::JsBogusParameter(_) => None,
         },
         JsAnyParameter::JsRestParameter(rest_parameter) => {
             traverse_binding(rest_parameter.binding().ok()?, tracked_bindings)
@@ -115,7 +115,7 @@ fn traverse_binding(
                     return Some(id_binding);
                 }
             }
-            JsAnyBinding::JsUnknownBinding(_) => {}
+            JsAnyBinding::JsBogusBinding(_) => {}
         },
         JsAnyBindingPattern::JsArrayBindingPattern(inner_binding) => {
             return inner_binding.elements().into_iter().find_map(|element| {
@@ -155,7 +155,7 @@ fn traverse_binding(
                             JsAnyBinding::JsIdentifierBinding(binding) => {
                                 track_binding(&binding, tracked_bindings).then_some(binding)
                             }
-                            JsAnyBinding::JsUnknownBinding(_) => None,
+                            JsAnyBinding::JsBogusBinding(_) => None,
                         }
                     }
                     JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(
@@ -164,9 +164,9 @@ fn traverse_binding(
                         JsAnyBinding::JsIdentifierBinding(id_binding) => {
                             track_binding(&id_binding, tracked_bindings).then_some(id_binding)
                         }
-                        JsAnyBinding::JsUnknownBinding(_) => None,
+                        JsAnyBinding::JsBogusBinding(_) => None,
                     },
-                    JsAnyObjectBindingPatternMember::JsUnknownBinding(_) => None,
+                    JsAnyObjectBindingPatternMember::JsBogusBinding(_) => None,
                 }
             })
         }

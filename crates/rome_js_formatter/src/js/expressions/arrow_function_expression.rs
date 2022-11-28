@@ -310,9 +310,9 @@ fn should_break_chain(arrow: &JsArrowFunctionExpression) -> SyntaxResult<bool> {
                             | JsAnyBindingPattern::JsObjectBindingPattern(_))
                     )
                 }
-                JsAnyParameter::JsAnyFormalParameter(JsAnyFormalParameter::JsUnknownParameter(
-                    _,
-                )) => false,
+                JsAnyParameter::JsAnyFormalParameter(JsAnyFormalParameter::JsBogusParameter(_)) => {
+                    false
+                }
                 JsAnyParameter::TsThisParameter(_) => false,
                 JsAnyParameter::JsRestParameter(_) => true,
             }),

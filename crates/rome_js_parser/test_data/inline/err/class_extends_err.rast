@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 CLASS_KW@0..6 "class" [] [Whitespace(" ")],
                 JsIdentifierBinding {
@@ -31,13 +31,13 @@ JsModule {
                 R_CURLY@33..34 "}" [] [],
             ],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 CLASS_KW@34..41 "class" [Newline("\n")] [Whitespace(" ")],
                 JsIdentifierBinding {
                     name_token: IDENT@41..43 "B" [] [Whitespace(" ")],
                 },
-                JsUnknown {
+                JsBogus {
                     items: [
                         EXTENDS_KW@43..51 "extends" [] [Whitespace(" ")],
                         JsIdentifierExpression {
@@ -46,7 +46,7 @@ JsModule {
                             },
                         },
                         COMMA@54..56 "," [] [Whitespace(" ")],
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
@@ -62,13 +62,13 @@ JsModule {
                 R_CURLY@61..62 "}" [] [],
             ],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 CLASS_KW@62..69 "class" [Newline("\n")] [Whitespace(" ")],
                 JsIdentifierBinding {
                     name_token: IDENT@69..71 "C" [] [Whitespace(" ")],
                 },
-                JsUnknown {
+                JsBogus {
                     items: [
                         IMPLEMENTS_KW@71..82 "implements" [] [Whitespace(" ")],
                         TsTypeList [
@@ -94,7 +94,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..86
-    0: JS_UNKNOWN_STATEMENT@0..34
+    0: JS_BOGUS_STATEMENT@0..34
       0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@6..8
         0: IDENT@6..8 "A" [] [Whitespace(" ")]
@@ -113,28 +113,28 @@ JsModule {
       4: L_CURLY@32..33 "{" [] []
       5: JS_CLASS_MEMBER_LIST@33..33
       6: R_CURLY@33..34 "}" [] []
-    1: JS_UNKNOWN_STATEMENT@34..62
+    1: JS_BOGUS_STATEMENT@34..62
       0: CLASS_KW@34..41 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@41..43
         0: IDENT@41..43 "B" [] [Whitespace(" ")]
-      2: JS_UNKNOWN@43..60
+      2: JS_BOGUS@43..60
         0: EXTENDS_KW@43..51 "extends" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@51..54
           0: JS_REFERENCE_IDENTIFIER@51..54
             0: IDENT@51..54 "bar" [] []
         2: COMMA@54..56 "," [] [Whitespace(" ")]
-        3: JS_UNKNOWN@56..60
+        3: JS_BOGUS@56..60
           0: JS_IDENTIFIER_EXPRESSION@56..60
             0: JS_REFERENCE_IDENTIFIER@56..60
               0: IDENT@56..60 "foo" [] [Whitespace(" ")]
       3: L_CURLY@60..61 "{" [] []
       4: JS_CLASS_MEMBER_LIST@61..61
       5: R_CURLY@61..62 "}" [] []
-    2: JS_UNKNOWN_STATEMENT@62..86
+    2: JS_BOGUS_STATEMENT@62..86
       0: CLASS_KW@62..69 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@69..71
         0: IDENT@69..71 "C" [] [Whitespace(" ")]
-      2: JS_UNKNOWN@71..84
+      2: JS_BOGUS@71..84
         0: IMPLEMENTS_KW@71..82 "implements" [] [Whitespace(" ")]
         1: TS_TYPE_LIST@82..84
           0: TS_NAME_WITH_TYPE_ARGUMENTS@82..84

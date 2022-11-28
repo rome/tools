@@ -100,17 +100,17 @@ impl TestCaseFile {
     }
 }
 
-pub(crate) fn create_unknown_node_in_tree_diagnostic(
+pub(crate) fn create_bogus_node_in_tree_diagnostic(
     file_id: FileId,
     node: JsSyntaxNode,
 ) -> ParseDiagnostic {
-    assert!(node.kind().is_unknown());
+    assert!(node.kind().is_bogus());
     ParseDiagnostic::new(
         file_id,
-        "There are no parse errors but the parsed tree contains unknown nodes.",
+        "There are no parse errors but the parsed tree contains bogus nodes.",
         node.text_trimmed_range()
     )
-    .hint( "This unknown node is present in the parsed tree but the parser didn't emit a diagnostic for it. Change the parser to either emit a diagnostic, fix the grammar, or the parsing.")
+    .hint( "This bogus node is present in the parsed tree but the parser didn't emit a diagnostic for it. Change the parser to either emit a diagnostic, fix the grammar, or the parsing.")
 }
 
 #[derive(Clone, Debug)]

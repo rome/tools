@@ -14,7 +14,7 @@ expression: snapshot
 
 ```
 JsonRoot {
-    value: JsonUnknownValue {
+    value: JsonBogusValue {
         items: [
             R_BRACK@0..1 "]" [] [],
         ],
@@ -27,7 +27,7 @@ JsonRoot {
 
 ```
 0: JSON_ROOT@0..1
-  0: JSON_UNKNOWN_VALUE@0..1
+  0: JSON_BOGUS_VALUE@0..1
     0: R_BRACK@0..1 "]" [] []
   1: EOF@1..1 "" [] []
 

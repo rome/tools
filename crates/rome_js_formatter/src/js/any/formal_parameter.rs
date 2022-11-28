@@ -9,7 +9,7 @@ impl FormatRule<JsAnyFormalParameter> for FormatJsAnyFormalParameter {
     fn fmt(&self, node: &JsAnyFormalParameter, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyFormalParameter::JsFormalParameter(node) => node.format().fmt(f),
-            JsAnyFormalParameter::JsUnknownParameter(node) => node.format().fmt(f),
+            JsAnyFormalParameter::JsBogusParameter(node) => node.format().fmt(f),
         }
     }
 }

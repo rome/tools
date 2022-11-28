@@ -147,7 +147,7 @@ fn needs_semicolon(property: &JsAnyPropertyClassMember) -> SyntaxResult<bool> {
         }
 
         // Keep it, just to be safe
-        JsAnyClassMember::JsUnknownMember(_) => true,
+        JsAnyClassMember::JsBogusMember(_) => true,
 
         JsAnyClassMember::TsIndexSignatureClassMember(_) => true,
     })
@@ -165,7 +165,7 @@ fn has_modifiers(member: &JsAnyClassMember) -> bool {
         JsAnyClassMember::JsPropertyClassMember(property) => property.modifiers().is_empty(),
         JsAnyClassMember::JsSetterClassMember(setter) => setter.modifiers().is_empty(),
         JsAnyClassMember::JsStaticInitializationBlockClassMember(_) => true,
-        JsAnyClassMember::JsUnknownMember(_) => true,
+        JsAnyClassMember::JsBogusMember(_) => true,
         JsAnyClassMember::TsConstructorSignatureClassMember(constructor) => {
             constructor.modifiers().is_empty()
         }

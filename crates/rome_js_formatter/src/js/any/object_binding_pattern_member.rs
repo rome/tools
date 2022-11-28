@@ -17,7 +17,7 @@ impl FormatRule<JsAnyObjectBindingPatternMember> for FormatJsAnyObjectBindingPat
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(node) => {
                 node.format().fmt(f)
             }
-            JsAnyObjectBindingPatternMember::JsUnknownBinding(node) => node.format().fmt(f),
+            JsAnyObjectBindingPatternMember::JsBogusBinding(node) => node.format().fmt(f),
         }
     }
 }

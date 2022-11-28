@@ -13,7 +13,7 @@ JsModule {
                         variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
-                            expression: JsUnknownExpression {
+                            expression: JsBogusExpression {
                                 items: [
                                     JsStringLiteralExpression {
                                         value_token: JS_STRING_LITERAL@8..16 "\"hello\"" [] [Whitespace(" ")],
@@ -48,7 +48,7 @@ JsModule {
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@6..32
               0: EQ@6..8 "=" [] [Whitespace(" ")]
-              1: JS_UNKNOWN_EXPRESSION@8..32
+              1: JS_BOGUS_EXPRESSION@8..32
                 0: JS_STRING_LITERAL_EXPRESSION@8..16
                   0: JS_STRING_LITERAL@8..16 "\"hello\"" [] [Whitespace(" ")]
                 1: SATISFIES_KW@16..26 "satisfies" [] [Whitespace(" ")]

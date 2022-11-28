@@ -12,7 +12,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
         children: ParsedChildren<Self::Kind>,
     ) -> RawSyntaxNode<Self::Kind> {
         match kind {
-            JSON_UNKNOWN | JSON_UNKNOWN_VALUE => {
+            JSON_BOGUS | JSON_BOGUS_VALUE => {
                 RawSyntaxNode::new(kind, children.into_iter().map(Some))
             }
             JSON_ARRAY_VALUE => {
@@ -42,7 +42,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_ARRAY_VALUE.to_unknown(),
+                        JSON_ARRAY_VALUE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -61,7 +61,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_BOOLEAN_VALUE.to_unknown(),
+                        JSON_BOOLEAN_VALUE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -94,7 +94,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_MEMBER.to_unknown(),
+                        JSON_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -113,7 +113,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_MEMBER_NAME.to_unknown(),
+                        JSON_MEMBER_NAME.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -132,7 +132,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_NULL_VALUE.to_unknown(),
+                        JSON_NULL_VALUE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -151,7 +151,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_NUMBER_VALUE.to_unknown(),
+                        JSON_NUMBER_VALUE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -184,7 +184,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_OBJECT_VALUE.to_unknown(),
+                        JSON_OBJECT_VALUE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -210,7 +210,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_ROOT.to_unknown(),
+                        JSON_ROOT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -229,7 +229,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_STRING_VALUE.to_unknown(),
+                        JSON_STRING_VALUE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }

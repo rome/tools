@@ -45,7 +45,7 @@ JsModule {
                 left: JsParenthesizedAssignment {
                     l_paren_token: L_PAREN@42..44 "(" [Newline("\n")] [],
                     assignment: TsSatisfiesAssignment {
-                        assignment: JsUnknownAssignment {
+                        assignment: JsBogusAssignment {
                             items: [
                                 JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
@@ -111,7 +111,7 @@ JsModule {
         0: JS_PARENTHESIZED_ASSIGNMENT@42..66
           0: L_PAREN@42..44 "(" [Newline("\n")] []
           1: TS_SATISFIES_ASSIGNMENT@44..64
-            0: JS_UNKNOWN_ASSIGNMENT@44..48
+            0: JS_BOGUS_ASSIGNMENT@44..48
               0: JS_IDENTIFIER_EXPRESSION@44..45
                 0: JS_REFERENCE_IDENTIFIER@44..45
                   0: IDENT@44..45 "a" [] []

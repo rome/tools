@@ -166,23 +166,20 @@ where
         }),
     ))
 }
-pub fn json_unknown<I>(slots: I) -> JsonUnknown
+pub fn json_bogus<I>(slots: I) -> JsonBogus
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsonUnknown::unwrap_cast(SyntaxNode::new_detached(
-        JsonSyntaxKind::JSON_UNKNOWN,
-        slots,
-    ))
+    JsonBogus::unwrap_cast(SyntaxNode::new_detached(JsonSyntaxKind::JSON_BOGUS, slots))
 }
-pub fn json_unknown_value<I>(slots: I) -> JsonUnknownValue
+pub fn json_bogus_value<I>(slots: I) -> JsonBogusValue
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsonUnknownValue::unwrap_cast(SyntaxNode::new_detached(
-        JsonSyntaxKind::JSON_UNKNOWN_VALUE,
+    JsonBogusValue::unwrap_cast(SyntaxNode::new_detached(
+        JsonSyntaxKind::JSON_BOGUS_VALUE,
         slots,
     ))
 }

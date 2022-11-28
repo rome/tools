@@ -3,11 +3,11 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
                     IMPORT_KW@0..6 "import" [] [],
                     DOT@6..7 "." [] [],
-                    JsUnknown {
+                    JsBogus {
                         items: [
                             IDENT@7..10 "foo" [] [],
                         ],
@@ -17,11 +17,11 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
                     IMPORT_KW@10..17 "import" [Newline("\n")] [],
                     DOT@17..18 "." [] [],
-                    JsUnknown {
+                    JsBogus {
                         items: [
                             IDENT@18..23 "metaa" [] [],
                         ],
@@ -39,17 +39,17 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..23
     0: JS_EXPRESSION_STATEMENT@0..10
-      0: JS_UNKNOWN_EXPRESSION@0..10
+      0: JS_BOGUS_EXPRESSION@0..10
         0: IMPORT_KW@0..6 "import" [] []
         1: DOT@6..7 "." [] []
-        2: JS_UNKNOWN@7..10
+        2: JS_BOGUS@7..10
           0: IDENT@7..10 "foo" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@10..23
-      0: JS_UNKNOWN_EXPRESSION@10..23
+      0: JS_BOGUS_EXPRESSION@10..23
         0: IMPORT_KW@10..17 "import" [Newline("\n")] []
         1: DOT@17..18 "." [] []
-        2: JS_UNKNOWN@18..23
+        2: JS_BOGUS@18..23
           0: IDENT@18..23 "metaa" [] []
       1: (empty)
   3: EOF@23..24 "" [Newline("\n")] []

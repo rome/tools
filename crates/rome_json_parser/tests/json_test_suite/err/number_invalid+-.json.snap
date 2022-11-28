@@ -17,7 +17,7 @@ JsonRoot {
     value: JsonArrayValue {
         l_brack_token: L_BRACK@0..1 "[" [] [],
         elements: JsonArrayElementList [
-            JsonUnknownValue {
+            JsonBogusValue {
                 items: [
                     ERROR_TOKEN@1..4 "0e+" [] [],
                 ],
@@ -40,7 +40,7 @@ JsonRoot {
   0: JSON_ARRAY_VALUE@0..7
     0: L_BRACK@0..1 "[" [] []
     1: JSON_ARRAY_ELEMENT_LIST@1..6
-      0: JSON_UNKNOWN_VALUE@1..4
+      0: JSON_BOGUS_VALUE@1..4
         0: ERROR_TOKEN@1..4 "0e+" [] []
       1: (empty)
       2: JSON_NUMBER_VALUE@4..6

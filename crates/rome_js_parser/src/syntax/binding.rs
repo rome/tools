@@ -64,7 +64,7 @@ pub(crate) fn parse_identifier_binding(p: &mut JsParser) -> ParsedSyntax {
     let parsed = parse_identifier(p, JS_IDENTIFIER_BINDING);
 
     parsed.map(|mut identifier| {
-        if identifier.kind(p).is_unknown() {
+        if identifier.kind(p).is_bogus() {
             return identifier;
         }
 
@@ -80,7 +80,7 @@ pub(crate) fn parse_identifier_binding(p: &mut JsParser) -> ParsedSyntax {
             );
             p.error(err);
 
-            identifier.change_to_unknown(p);
+            identifier.change_to_bogus(p);
             return identifier;
         }
 
@@ -98,7 +98,7 @@ pub(crate) fn parse_identifier_binding(p: &mut JsParser) -> ParsedSyntax {
                     .hint("Rename the let identifier here");
 
                 p.error(err);
-                identifier.change_to_unknown(p);
+                identifier.change_to_bogus(p);
                 return identifier;
             }
 
@@ -123,7 +123,7 @@ pub(crate) fn parse_identifier_binding(p: &mut JsParser) -> ParsedSyntax {
                         format!("`{}` is first declared here", identifier_name),
                     );
                 p.error(err);
-                identifier.change_to_unknown(p);
+                identifier.change_to_bogus(p);
                 return identifier;
             }
 
@@ -184,8 +184,8 @@ struct ArrayBindingPattern;
 // let [ ...rest, other_assignment ] = a;
 impl ParseArrayPattern<BindingPatternWithDefault> for ArrayBindingPattern {
     #[inline]
-    fn unknown_pattern_kind() -> JsSyntaxKind {
-        JS_UNKNOWN_BINDING
+    fn bogus_pattern_kind() -> JsSyntaxKind {
+        JS_BOGUS_BINDING
     }
 
     #[inline]
@@ -231,8 +231,8 @@ struct ObjectBindingPattern;
 
 impl ParseObjectPattern for ObjectBindingPattern {
     #[inline]
-    fn unknown_pattern_kind() -> JsSyntaxKind {
-        JS_UNKNOWN_BINDING
+    fn bogus_pattern_kind() -> JsSyntaxKind {
+        JS_BOGUS_BINDING
     }
 
     #[inline]
@@ -319,11 +319,11 @@ impl ParseObjectPattern for ObjectBindingPattern {
                 if inner.kind(p) != JS_IDENTIFIER_BINDING {
                     let inner_range = inner.range(p);
                     // Don't add multiple errors
-                    if inner.kind(p) != JS_UNKNOWN_BINDING {
+                    if inner.kind(p) != JS_BOGUS_BINDING {
                         p.error(p.err_builder("Expected identifier binding", inner_range,).hint( "Object rest patterns must bind to an identifier, other patterns are not allowed."));
                     }
 
-                    inner.change_kind(p, JS_UNKNOWN_BINDING);
+                    inner.change_kind(p, JS_BOGUS_BINDING);
                 }
             }
 

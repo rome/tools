@@ -27,7 +27,7 @@
 //! The JavaScript formatter [pre-processes](crate:JsFormatSyntaxRewriter] the input CST and removes all parenthesized expressions, assignments, and types except if:
 //! * The parenthesized node has a syntax error (skipped token trivia, missing inner expression)
 //! * The node has a directly preceding closure type cast comment
-//! * The inner expression is an unknown node
+//! * The inner expression is a bogus node
 //!
 //! Removing the parenthesized nodes has the benefit that a input tree with parentheses and an input tree
 //! without parentheses have the same structure for as far as the formatter is concerned and thus,
@@ -147,7 +147,7 @@ impl NeedsParentheses for JsAnyExpression {
             JsAnyExpression::JsTemplateExpression(template) => template.needs_parentheses(),
             JsAnyExpression::JsThisExpression(this) => this.needs_parentheses(),
             JsAnyExpression::JsUnaryExpression(unary) => unary.needs_parentheses(),
-            JsAnyExpression::JsUnknownExpression(unknown) => unknown.needs_parentheses(),
+            JsAnyExpression::JsBogusExpression(bogus) => bogus.needs_parentheses(),
             JsAnyExpression::JsYieldExpression(yield_expression) => {
                 yield_expression.needs_parentheses()
             }
@@ -243,8 +243,8 @@ impl NeedsParentheses for JsAnyExpression {
             JsAnyExpression::JsUnaryExpression(unary) => {
                 unary.needs_parentheses_with_parent(parent)
             }
-            JsAnyExpression::JsUnknownExpression(unknown) => {
-                unknown.needs_parentheses_with_parent(parent)
+            JsAnyExpression::JsBogusExpression(bogus) => {
+                bogus.needs_parentheses_with_parent(parent)
             }
             JsAnyExpression::JsYieldExpression(yield_expression) => {
                 yield_expression.needs_parentheses_with_parent(parent)
@@ -379,7 +379,7 @@ pub(crate) fn get_expression_left_side(
                     TsTypeAssertionAssignment(parent) => parent.assignment().ok(),
                     JsParenthesizedAssignment(_)
                     | JsIdentifierAssignment(_)
-                    | JsUnknownAssignment(_) => None,
+                    | JsBogusAssignment(_) => None,
                 },
                 JsAnyAssignmentPattern::JsArrayAssignmentPattern(_)
                 | JsAnyAssignmentPattern::JsObjectAssignmentPattern(_) => None,
@@ -807,7 +807,7 @@ impl NeedsParentheses for JsAnyAssignment {
                 assignment.needs_parentheses()
             }
             JsAnyAssignment::JsStaticMemberAssignment(assignment) => assignment.needs_parentheses(),
-            JsAnyAssignment::JsUnknownAssignment(assignment) => assignment.needs_parentheses(),
+            JsAnyAssignment::JsBogusAssignment(assignment) => assignment.needs_parentheses(),
             JsAnyAssignment::TsAsAssignment(assignment) => assignment.needs_parentheses(),
             JsAnyAssignment::TsSatisfiesAssignment(assignment) => assignment.needs_parentheses(),
             JsAnyAssignment::TsNonNullAssertionAssignment(assignment) => {
@@ -833,7 +833,7 @@ impl NeedsParentheses for JsAnyAssignment {
             JsAnyAssignment::JsStaticMemberAssignment(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
-            JsAnyAssignment::JsUnknownAssignment(assignment) => {
+            JsAnyAssignment::JsBogusAssignment(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
             JsAnyAssignment::TsAsAssignment(assignment) => {
@@ -917,6 +917,7 @@ impl NeedsParentheses for TsType {
             TsType::TsUnionType(ty) => ty.needs_parentheses(),
             TsType::TsUnknownType(ty) => ty.needs_parentheses(),
             TsType::TsVoidType(ty) => ty.needs_parentheses(),
+            TsType::TsBogusType(ty) => ty.needs_parentheses(),
         }
     }
 
@@ -956,6 +957,7 @@ impl NeedsParentheses for TsType {
             TsType::TsUnionType(ty) => ty.needs_parentheses_with_parent(parent),
             TsType::TsUnknownType(ty) => ty.needs_parentheses_with_parent(parent),
             TsType::TsVoidType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsBogusType(ty) => ty.needs_parentheses_with_parent(parent),
         }
     }
 }

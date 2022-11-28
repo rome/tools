@@ -22,7 +22,7 @@ JsModule {
                                 kind: LET_KW@14..18 "let" [] [Whitespace(" ")],
                                 declarators: JsVariableDeclaratorList [
                                     JsVariableDeclarator {
-                                        id: JsUnknownBinding {
+                                        id: JsBogusBinding {
                                             items: [
                                                 IDENT@18..24 "await" [] [Whitespace(" ")],
                                             ],
@@ -68,7 +68,7 @@ JsModule {
                             kind: LET_KW@48..56 "let" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")],
                             declarators: JsVariableDeclaratorList [
                                 JsVariableDeclarator {
-                                    id: JsUnknownBinding {
+                                    id: JsBogusBinding {
                                         items: [
                                             IDENT@56..62 "yield" [] [Whitespace(" ")],
                                         ],
@@ -94,7 +94,7 @@ JsModule {
                 kind: LET_KW@68..73 "let" [Newline("\n")] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
                     JsVariableDeclarator {
-                        id: JsUnknownBinding {
+                        id: JsBogusBinding {
                             items: [
                                 IDENT@73..78 "eval" [] [Whitespace(" ")],
                             ],
@@ -116,7 +116,7 @@ JsModule {
                 kind: LET_KW@82..87 "let" [Newline("\n")] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
                     JsVariableDeclarator {
-                        id: JsUnknownBinding {
+                        id: JsBogusBinding {
                             items: [
                                 IDENT@87..91 "let" [] [Whitespace(" ")],
                             ],
@@ -138,7 +138,7 @@ JsModule {
                 kind: CONST_KW@95..102 "const" [Newline("\n")] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
                     JsVariableDeclarator {
-                        id: JsUnknownBinding {
+                        id: JsBogusBinding {
                             items: [
                                 IDENT@102..106 "let" [] [Whitespace(" ")],
                             ],
@@ -168,7 +168,7 @@ JsModule {
                     },
                     COMMA@116..118 "," [] [Whitespace(" ")],
                     JsVariableDeclarator {
-                        id: JsUnknownBinding {
+                        id: JsBogusBinding {
                             items: [
                                 IDENT@118..119 "a" [] [],
                             ],
@@ -207,7 +207,7 @@ JsModule {
                 0: LET_KW@14..18 "let" [] [Whitespace(" ")]
                 1: JS_VARIABLE_DECLARATOR_LIST@18..27
                   0: JS_VARIABLE_DECLARATOR@18..27
-                    0: JS_UNKNOWN_BINDING@18..24
+                    0: JS_BOGUS_BINDING@18..24
                       0: IDENT@18..24 "await" [] [Whitespace(" ")]
                     1: (empty)
                     2: JS_INITIALIZER_CLAUSE@24..27
@@ -238,7 +238,7 @@ JsModule {
               0: LET_KW@48..56 "let" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]
               1: JS_VARIABLE_DECLARATOR_LIST@56..65
                 0: JS_VARIABLE_DECLARATOR@56..65
-                  0: JS_UNKNOWN_BINDING@56..62
+                  0: JS_BOGUS_BINDING@56..62
                     0: IDENT@56..62 "yield" [] [Whitespace(" ")]
                   1: (empty)
                   2: JS_INITIALIZER_CLAUSE@62..65
@@ -252,7 +252,7 @@ JsModule {
         0: LET_KW@68..73 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@73..81
           0: JS_VARIABLE_DECLARATOR@73..81
-            0: JS_UNKNOWN_BINDING@73..78
+            0: JS_BOGUS_BINDING@73..78
               0: IDENT@73..78 "eval" [] [Whitespace(" ")]
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@78..81
@@ -265,7 +265,7 @@ JsModule {
         0: LET_KW@82..87 "let" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@87..94
           0: JS_VARIABLE_DECLARATOR@87..94
-            0: JS_UNKNOWN_BINDING@87..91
+            0: JS_BOGUS_BINDING@87..91
               0: IDENT@87..91 "let" [] [Whitespace(" ")]
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@91..94
@@ -278,7 +278,7 @@ JsModule {
         0: CONST_KW@95..102 "const" [Newline("\n")] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@102..109
           0: JS_VARIABLE_DECLARATOR@102..109
-            0: JS_UNKNOWN_BINDING@102..106
+            0: JS_BOGUS_BINDING@102..106
               0: IDENT@102..106 "let" [] [Whitespace(" ")]
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@106..109
@@ -297,7 +297,7 @@ JsModule {
             2: (empty)
           1: COMMA@116..118 "," [] [Whitespace(" ")]
           2: JS_VARIABLE_DECLARATOR@118..119
-            0: JS_UNKNOWN_BINDING@118..119
+            0: JS_BOGUS_BINDING@118..119
               0: IDENT@118..119 "a" [] []
             1: (empty)
             2: (empty)

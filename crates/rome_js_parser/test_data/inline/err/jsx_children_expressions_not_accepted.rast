@@ -20,7 +20,7 @@ JsModule {
                         },
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@8..9 "{" [] [],
-                            expression: JsUnknownExpression {
+                            expression: JsBogusExpression {
                                 items: [
                                     IMPORT_KW@9..15 "import" [] [],
                                     DOT@15..16 "." [] [],
@@ -34,7 +34,7 @@ JsModule {
                         },
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@24..25 "{" [] [],
-                            expression: JsUnknownExpression {
+                            expression: JsBogusExpression {
                                 items: [
                                     CLASS_KW@25..31 "class" [] [Whitespace(" ")],
                                     JsIdentifierBinding {
@@ -53,7 +53,7 @@ JsModule {
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@38..39 "{" [] [],
                             expression: JsCallExpression {
-                                callee: JsUnknownExpression {
+                                callee: JsBogusExpression {
                                     items: [
                                         SUPER_KW@39..44 "super" [] [],
                                     ],
@@ -73,7 +73,7 @@ JsModule {
                         },
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@50..51 "{" [] [],
-                            expression: JsUnknownExpression {
+                            expression: JsBogusExpression {
                                 items: [
                                     NEW_KW@51..54 "new" [] [],
                                     DOT@54..55 "." [] [],
@@ -121,7 +121,7 @@ JsModule {
               0: JSX_TEXT_LITERAL@5..8 "\n  " [] []
             1: JSX_EXPRESSION_CHILD@8..21
               0: L_CURLY@8..9 "{" [] []
-              1: JS_UNKNOWN_EXPRESSION@9..20
+              1: JS_BOGUS_EXPRESSION@9..20
                 0: IMPORT_KW@9..15 "import" [] []
                 1: DOT@15..16 "." [] []
                 2: META@16..20 "meta" [] []
@@ -130,7 +130,7 @@ JsModule {
               0: JSX_TEXT_LITERAL@21..24 "\n  " [] []
             3: JSX_EXPRESSION_CHILD@24..35
               0: L_CURLY@24..25 "{" [] []
-              1: JS_UNKNOWN_EXPRESSION@25..34
+              1: JS_BOGUS_EXPRESSION@25..34
                 0: CLASS_KW@25..31 "class" [] [Whitespace(" ")]
                 1: JS_IDENTIFIER_BINDING@31..32
                   0: IDENT@31..32 "A" [] []
@@ -143,7 +143,7 @@ JsModule {
             5: JSX_EXPRESSION_CHILD@38..47
               0: L_CURLY@38..39 "{" [] []
               1: JS_CALL_EXPRESSION@39..46
-                0: JS_UNKNOWN_EXPRESSION@39..44
+                0: JS_BOGUS_EXPRESSION@39..44
                   0: SUPER_KW@39..44 "super" [] []
                 1: (empty)
                 2: (empty)
@@ -156,7 +156,7 @@ JsModule {
               0: JSX_TEXT_LITERAL@47..50 "\n  " [] []
             7: JSX_EXPRESSION_CHILD@50..62
               0: L_CURLY@50..51 "{" [] []
-              1: JS_UNKNOWN_EXPRESSION@51..61
+              1: JS_BOGUS_EXPRESSION@51..61
                 0: NEW_KW@51..54 "new" [] []
                 1: DOT@54..55 "." [] []
                 2: TARGET@55..61 "target" [] []

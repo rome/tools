@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use crate::ts::bogus::bogus_type::FormatTsBogusType;
 use crate::ts::expressions::template_literal_type::FormatTsTemplateLiteralType;
 use crate::ts::module::import_type::FormatTsImportType;
 use crate::ts::types::any_type::FormatTsAnyType;
@@ -154,6 +155,7 @@ impl Format<JsFormatContext> for FormatTypeVariant<'_> {
                     TsType::TsUnionType(ty) => FormatTsUnionType::default().fmt_node(ty, f),
                     TsType::TsUnknownType(ty) => FormatTsUnknownType::default().fmt_node(ty, f),
                     TsType::TsVoidType(ty) => FormatTsVoidType::default().fmt_node(ty, f),
+                    TsType::TsBogusType(ty) => FormatTsBogusType::default().fmt(ty, f),
                 }
             }
         });

@@ -17,7 +17,7 @@ JsonRoot {
     value: JsonArrayValue {
         l_brack_token: L_BRACK@0..1 "[" [] [],
         elements: JsonArrayElementList [
-            JsonUnknownValue {
+            JsonBogusValue {
                 items: [
                     ERROR_TOKEN@1..2 "<" [] [],
                 ],
@@ -27,7 +27,7 @@ JsonRoot {
                 value_token: NULL_KW@2..6 "null" [] [],
             },
             missing separator,
-            JsonUnknownValue {
+            JsonBogusValue {
                 items: [
                     ERROR_TOKEN@6..7 ">" [] [],
                 ],
@@ -46,13 +46,13 @@ JsonRoot {
   0: JSON_ARRAY_VALUE@0..8
     0: L_BRACK@0..1 "[" [] []
     1: JSON_ARRAY_ELEMENT_LIST@1..7
-      0: JSON_UNKNOWN_VALUE@1..2
+      0: JSON_BOGUS_VALUE@1..2
         0: ERROR_TOKEN@1..2 "<" [] []
       1: (empty)
       2: JSON_NULL_VALUE@2..6
         0: NULL_KW@2..6 "null" [] []
       3: (empty)
-      4: JSON_UNKNOWN_VALUE@6..7
+      4: JSON_BOGUS_VALUE@6..7
         0: ERROR_TOKEN@6..7 ">" [] []
     2: R_BRACK@7..8 "]" [] []
   1: EOF@8..8 "" [] []

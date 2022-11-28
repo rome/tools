@@ -7,7 +7,7 @@ JsModule {
                 kind: LET_KW@0..4 "let" [] [Whitespace(" ")],
                 declarators: JsVariableDeclaratorList [
                     JsVariableDeclarator {
-                        id: JsUnknownBinding {
+                        id: JsBogusBinding {
                             items: [
                                 IDENT@4..10 "await" [] [Whitespace(" ")],
                             ],
@@ -65,7 +65,7 @@ JsModule {
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR_LIST@4..14
           0: JS_VARIABLE_DECLARATOR@4..14
-            0: JS_UNKNOWN_BINDING@4..10
+            0: JS_BOGUS_BINDING@4..10
               0: IDENT@4..10 "await" [] [Whitespace(" ")]
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@10..14

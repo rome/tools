@@ -1,13 +1,13 @@
 use crate::parentheses::NeedsParentheses;
-use crate::FormatUnknownNodeRule;
-use rome_js_syntax::{JsSyntaxNode, JsUnknownExpression};
+use crate::FormatBogusNodeRule;
+use rome_js_syntax::{JsBogusExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatJsUnknownExpression;
+pub(crate) struct FormatJsBogusExpression;
 
-impl FormatUnknownNodeRule<JsUnknownExpression> for FormatJsUnknownExpression {}
+impl FormatBogusNodeRule<JsBogusExpression> for FormatJsBogusExpression {}
 
-impl NeedsParentheses for JsUnknownExpression {
+impl NeedsParentheses for JsBogusExpression {
     #[inline]
     fn needs_parentheses(&self) -> bool {
         false

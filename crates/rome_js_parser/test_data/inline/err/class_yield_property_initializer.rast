@@ -39,9 +39,9 @@ JsScript {
                                 property_annotation: missing (optional),
                                 value: JsInitializerClause {
                                     eq_token: EQ@56..58 "=" [] [Whitespace(" ")],
-                                    expression: JsUnknownExpression {
+                                    expression: JsBogusExpression {
                                         items: [
-                                            JsUnknown {
+                                            JsBogus {
                                                 items: [
                                                     IDENT@58..63 "yield" [] [],
                                                 ],
@@ -99,8 +99,8 @@ JsScript {
                 2: (empty)
                 3: JS_INITIALIZER_CLAUSE@56..63
                   0: EQ@56..58 "=" [] [Whitespace(" ")]
-                  1: JS_UNKNOWN_EXPRESSION@58..63
-                    0: JS_UNKNOWN@58..63
+                  1: JS_BOGUS_EXPRESSION@58..63
+                    0: JS_BOGUS@58..63
                       0: IDENT@58..63 "yield" [] []
                 4: SEMICOLON@63..64 ";" [] []
             8: R_CURLY@64..68 "}" [Newline("\n"), Whitespace("  ")] []

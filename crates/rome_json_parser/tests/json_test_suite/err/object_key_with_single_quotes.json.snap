@@ -14,14 +14,14 @@ expression: snapshot
 
 ```
 JsonRoot {
-    value: JsonUnknownValue {
+    value: JsonBogusValue {
         items: [
             L_CURLY@0..1 "{" [] [],
-            JsonUnknown {
+            JsonBogus {
                 items: [
-                    JsonUnknown {
+                    JsonBogus {
                         items: [
-                            JsonUnknown {
+                            JsonBogus {
                                 items: [
                                     IDENT@1..4 "key" [] [],
                                 ],
@@ -29,7 +29,7 @@ JsonRoot {
                             COLON@4..6 ":" [] [Whitespace(" ")],
                         ],
                     },
-                    JsonUnknownValue {
+                    JsonBogusValue {
                         items: [
                             ERROR_TOKEN@6..13 "'value'" [] [],
                         ],
@@ -47,14 +47,14 @@ JsonRoot {
 
 ```
 0: JSON_ROOT@0..14
-  0: JSON_UNKNOWN_VALUE@0..14
+  0: JSON_BOGUS_VALUE@0..14
     0: L_CURLY@0..1 "{" [] []
-    1: JSON_UNKNOWN@1..13
-      0: JSON_UNKNOWN@1..6
-        0: JSON_UNKNOWN@1..4
+    1: JSON_BOGUS@1..13
+      0: JSON_BOGUS@1..6
+        0: JSON_BOGUS@1..4
           0: IDENT@1..4 "key" [] []
         1: COLON@4..6 ":" [] [Whitespace(" ")]
-      1: JSON_UNKNOWN_VALUE@6..13
+      1: JSON_BOGUS_VALUE@6..13
         0: ERROR_TOKEN@6..13 "'value'" [] []
     2: R_CURLY@13..14 "}" [] []
   1: EOF@14..14 "" [] []

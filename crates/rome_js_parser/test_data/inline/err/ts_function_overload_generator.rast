@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 FUNCTION_KW@0..8 "function" [] [],
                 STAR@8..10 "*" [] [Whitespace(" ")],
@@ -74,7 +74,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..55
-    0: JS_UNKNOWN_STATEMENT@0..26
+    0: JS_BOGUS_STATEMENT@0..26
       0: FUNCTION_KW@0..8 "function" [] []
       1: STAR@8..10 "*" [] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@10..14

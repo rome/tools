@@ -45,7 +45,7 @@ JsModule {
                                 initializer: missing (optional),
                             },
                             missing separator,
-                            JsUnknownParameter {
+                            JsBogusParameter {
                                 items: [
                                     R_CURLY@19..20 "}" [] [],
                                 ],
@@ -104,7 +104,7 @@ JsModule {
                 2: (empty)
                 3: (empty)
               3: (empty)
-              4: JS_UNKNOWN_PARAMETER@19..20
+              4: JS_BOGUS_PARAMETER@19..20
                 0: R_CURLY@19..20 "}" [] []
             2: (empty)
           7: (empty)

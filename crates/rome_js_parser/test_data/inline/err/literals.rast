@@ -50,7 +50,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 ERROR_TOKEN@70..76 "\"test" [Newline("\n")] [],
                 IDENT@76..86 "continues" [Newline("\n")] [],
@@ -97,7 +97,7 @@ JsModule {
         2: JS_NUMBER_LITERAL_EXPRESSION@50..70
           0: JS_NUMBER_LITERAL@50..70 "01.2" [] [Whitespace(" "), Comments("// lexer errors")]
       1: (empty)
-    2: JS_UNKNOWN_STATEMENT@70..118
+    2: JS_BOGUS_STATEMENT@70..118
       0: ERROR_TOKEN@70..76 "\"test" [Newline("\n")] []
       1: IDENT@76..86 "continues" [Newline("\n")] []
       2: ERROR_TOKEN@86..118 "\" // unterminated string literal" [] []

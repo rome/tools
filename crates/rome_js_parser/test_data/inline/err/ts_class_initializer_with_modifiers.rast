@@ -13,7 +13,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..9 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsAccessibilityModifier {
                             modifier_token: PUBLIC_KW@9..19 "public" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
@@ -45,7 +45,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@8..9 "{" [] []
       7: JS_CLASS_MEMBER_LIST@9..29
-        0: JS_UNKNOWN_MEMBER@9..29
+        0: JS_BOGUS_MEMBER@9..29
           0: TS_ACCESSIBILITY_MODIFIER@9..19
             0: PUBLIC_KW@9..19 "public" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           1: STATIC_KW@19..26 "static" [] [Whitespace(" ")]

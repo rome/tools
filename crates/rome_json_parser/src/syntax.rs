@@ -28,7 +28,7 @@ pub(crate) fn parse_root(p: &mut JsonParser) {
         Present(value) => Present(value),
         Absent => {
             p.error(expected_value(p, p.cur_range()));
-            match ParseRecovery::new(JSON_UNKNOWN_VALUE, VALUE_START).recover(p) {
+            match ParseRecovery::new(JSON_BOGUS_VALUE, VALUE_START).recover(p) {
                 Ok(value) => Present(value),
                 Err(_) => Absent,
             }
@@ -76,7 +76,7 @@ fn parse_value(p: &mut JsonParser) -> ParsedSyntax {
             let m = p.start();
             p.error(p.err_builder("String values must be double quoted.", p.cur_range()));
             p.bump(IDENT);
-            Present(m.complete(p, JSON_UNKNOWN_VALUE))
+            Present(m.complete(p, JSON_BOGUS_VALUE))
         }
 
         _ => Absent,
@@ -184,7 +184,7 @@ fn parse_sequence(p: &mut JsonParser, root_kind: SequenceKind) -> ParsedSyntax {
                     let range = if p.at(T![,]) {
                         p.cur_range()
                     } else {
-                        match ParseRecovery::new(JSON_UNKNOWN_VALUE, current.recovery_set())
+                        match ParseRecovery::new(JSON_BOGUS_VALUE, current.recovery_set())
                             .enable_recovery_on_line_break()
                             .recover(p)
                         {
@@ -310,7 +310,7 @@ fn parse_rest(p: &mut JsonParser, value: ParsedSyntax) {
     while !p.at(EOF) {
         let range = match parse_value(p) {
             Present(value) => value.range(p),
-            Absent => ParseRecovery::new(JSON_UNKNOWN_VALUE, VALUE_START)
+            Absent => ParseRecovery::new(JSON_BOGUS_VALUE, VALUE_START)
                 .enable_recovery_on_line_break()
                 .recover(p)
                 .expect("Expect recovery to succeed because parser isn't at EOF nor at a value.")

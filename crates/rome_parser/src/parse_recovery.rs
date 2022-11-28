@@ -48,7 +48,7 @@ impl Display for RecoveryError {
 pub type RecoveryResult = Result<CompletedMarker, RecoveryError>;
 
 /// Recovers the parser by finding a token/point (depending on the configuration) from where
-/// the caller knows how to proceed parsing. The recovery wraps all the skipped tokens inside of an `Unknown` node.
+/// the caller knows how to proceed parsing. The recovery wraps all the skipped tokens inside a `Bogus` node.
 /// A safe recovery point for an array element could by finding the next `,` or `]`.
 pub struct ParseRecovery<K: SyntaxKind> {
     node_kind: K,
@@ -75,9 +75,9 @@ impl<K: SyntaxKind> ParseRecovery<K> {
     // TODO: Add a `recover_until` which recovers until the parser reached a token inside of the recovery set
     // or the passed in `parse_*` rule was able to successfully parse an element.
 
-    /// Tries to recover by parsing all tokens into an `Unknown*` node until the parser finds any token
+    /// Tries to recover by parsing all tokens into an `Bogus*` node until the parser finds any token
     /// specified in the recovery set, the EOF, or a line break (depending on configuration).
-    /// Returns `Ok(unknown_node)` if recovery was successful, and `Err(RecoveryError::Eof)` if the parser
+    /// Returns `Ok(bogus_node)` if recovery was successful, and `Err(RecoveryError::Eof)` if the parser
     /// is at the end of the file (before starting recovery).
     pub fn recover<P>(&self, p: &mut P) -> RecoveryResult
     where

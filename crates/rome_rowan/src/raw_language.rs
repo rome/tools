@@ -26,7 +26,7 @@ pub enum RawLanguageKind {
     STRING_TOKEN = 4,
     NUMBER_TOKEN = 5,
     LITERAL_EXPRESSION = 6,
-    UNKNOWN = 7,
+    BOGUS = 7,
     FOR_KW = 8,
     L_PAREN_TOKEN = 9,
     SEMICOLON_TOKEN = 10,
@@ -45,12 +45,12 @@ impl SyntaxKind for RawLanguageKind {
     const TOMBSTONE: Self = RawLanguageKind::TOMBSTONE;
     const EOF: Self = RawLanguageKind::EOF;
 
-    fn is_unknown(&self) -> bool {
-        self == &RawLanguageKind::UNKNOWN
+    fn is_bogus(&self) -> bool {
+        self == &RawLanguageKind::BOGUS
     }
 
-    fn to_unknown(&self) -> Self {
-        RawLanguageKind::UNKNOWN
+    fn to_bogus(&self) -> Self {
+        RawLanguageKind::BOGUS
     }
 
     fn to_raw(&self) -> RawSyntaxKind {
@@ -199,7 +199,7 @@ impl SyntaxFactory for RawLanguageSyntaxFactory {
         children: ParsedChildren<Self::Kind>,
     ) -> RawSyntaxNode<Self::Kind> {
         match kind {
-            RawLanguageKind::UNKNOWN | RawLanguageKind::ROOT => {
+            RawLanguageKind::BOGUS | RawLanguageKind::ROOT => {
                 RawSyntaxNode::new(kind, children.into_iter().map(Some))
             }
             RawLanguageKind::EXPRESSION_LIST => {
@@ -216,7 +216,7 @@ impl SyntaxFactory for RawLanguageSyntaxFactory {
                 let actual_len = children.len();
 
                 if actual_len > 1 {
-                    return RawSyntaxNode::new(kind.to_unknown(), children.into_iter().map(Some));
+                    return RawSyntaxNode::new(kind.to_bogus(), children.into_iter().map(Some));
                 }
 
                 let mut elements = children.into_iter();
@@ -228,7 +228,7 @@ impl SyntaxFactory for RawLanguageSyntaxFactory {
                         RawLanguageKind::STRING_TOKEN | RawLanguageKind::NUMBER_TOKEN
                     ) {
                         return RawSyntaxNode::new(
-                            kind.to_unknown(),
+                            kind.to_bogus(),
                             std::iter::once(current_element),
                         );
                     }
@@ -270,7 +270,7 @@ impl SyntaxFactory for RawLanguageSyntaxFactory {
                 slots.next_slot();
 
                 if current_element.is_some() {
-                    return RawSyntaxNode::new(kind.to_unknown(), children.into_iter().map(Some));
+                    return RawSyntaxNode::new(kind.to_bogus(), children.into_iter().map(Some));
                 }
 
                 slots.into_node(kind, children)

@@ -13,7 +13,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@11..12 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsMethodModifierList [],
                         GET_KW@12..18 "get" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
@@ -52,7 +52,7 @@ JsModule {
                         },
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsMethodModifierList [],
                         SET_KW@30..36 "set" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
@@ -119,7 +119,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@11..12 "{" [] []
       7: JS_CLASS_MEMBER_LIST@12..53
-        0: JS_UNKNOWN_MEMBER@12..30
+        0: JS_BOGUS_MEMBER@12..30
           0: JS_METHOD_MODIFIER_LIST@12..12
           1: GET_KW@12..18 "get" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
           2: JS_LITERAL_MEMBER_NAME@18..19
@@ -146,7 +146,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@29..29
             2: JS_STATEMENT_LIST@29..29
             3: R_CURLY@29..30 "}" [] []
-        1: JS_UNKNOWN_MEMBER@30..53
+        1: JS_BOGUS_MEMBER@30..53
           0: JS_METHOD_MODIFIER_LIST@30..30
           1: SET_KW@30..36 "set" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
           2: JS_LITERAL_MEMBER_NAME@36..37

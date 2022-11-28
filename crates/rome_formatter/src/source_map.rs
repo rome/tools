@@ -623,23 +623,23 @@ mod tests {
         let mut cst_builder = RawSyntaxTreeBuilder::new();
         cst_builder.start_node(RawLanguageKind::ROOT);
 
-        cst_builder.start_node(RawLanguageKind::UNKNOWN);
+        cst_builder.start_node(RawLanguageKind::BOGUS);
         cst_builder.token(RawLanguageKind::STRING_TOKEN, "(");
 
-        cst_builder.start_node(RawLanguageKind::UNKNOWN);
-        cst_builder.token(RawLanguageKind::UNKNOWN, "(");
+        cst_builder.start_node(RawLanguageKind::BOGUS);
+        cst_builder.token(RawLanguageKind::BOGUS, "(");
 
         cst_builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
         cst_builder.token(RawLanguageKind::STRING_TOKEN, "a");
         cst_builder.finish_node();
 
-        cst_builder.token(RawLanguageKind::UNKNOWN, ")");
+        cst_builder.token(RawLanguageKind::BOGUS, ")");
         cst_builder.finish_node();
 
-        cst_builder.token(RawLanguageKind::UNKNOWN, ")");
+        cst_builder.token(RawLanguageKind::BOGUS, ")");
         cst_builder.finish_node();
 
-        cst_builder.token(RawLanguageKind::UNKNOWN, ";");
+        cst_builder.token(RawLanguageKind::BOGUS, ";");
 
         cst_builder.finish_node();
 
@@ -647,15 +647,15 @@ mod tests {
 
         assert_eq!(&root.text(), "((a));");
 
-        let mut unknowns = root
+        let mut bogus = root
             .descendants()
-            .filter(|node| node.kind() == RawLanguageKind::UNKNOWN);
+            .filter(|node| node.kind() == RawLanguageKind::BOGUS);
 
         // `((a))`
-        let outer = unknowns.next().unwrap();
+        let outer = bogus.next().unwrap();
 
         // `(a)`
-        let inner = unknowns.next().unwrap();
+        let inner = bogus.next().unwrap();
 
         // `a`
         let expression = root

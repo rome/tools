@@ -13,7 +13,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsPropertySignatureModifierList [
                             TsAbstractModifier {
@@ -47,7 +47,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@10..24
-        0: JS_UNKNOWN_MEMBER@10..24
+        0: JS_BOGUS_MEMBER@10..24
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@10..19
             0: TS_ABSTRACT_MODIFIER@10..19
               0: ABSTRACT_KW@10..19 "abstract" [] [Whitespace(" ")]

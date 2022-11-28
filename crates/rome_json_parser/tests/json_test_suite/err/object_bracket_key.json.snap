@@ -24,7 +24,7 @@ JsonRoot {
                 value: JsonArrayValue {
                     l_brack_token: L_BRACK@1..2 "[" [] [],
                     elements: JsonArrayElementList [
-                        JsonUnknownValue {
+                        JsonBogusValue {
                             items: [
                                 COLON@2..4 ":" [] [Whitespace(" ")],
                             ],
@@ -57,7 +57,7 @@ JsonRoot {
         2: JSON_ARRAY_VALUE@1..7
           0: L_BRACK@1..2 "[" [] []
           1: JSON_ARRAY_ELEMENT_LIST@2..7
-            0: JSON_UNKNOWN_VALUE@2..4
+            0: JSON_BOGUS_VALUE@2..4
               0: COLON@2..4 ":" [] [Whitespace(" ")]
             1: (empty)
             2: JSON_STRING_VALUE@4..7

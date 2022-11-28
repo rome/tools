@@ -12,7 +12,7 @@ use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{DiagnosticExt, Error, PrintDiagnostic, Severity};
 use rome_js_parser::{
     parse,
-    test_utils::{assert_errors_are_absent, has_unknown_nodes_or_empty_slots},
+    test_utils::{assert_errors_are_absent, has_bogus_nodes_or_empty_slots},
 };
 use rome_js_syntax::{JsLanguage, SourceType};
 use similar::TextDiff;
@@ -194,8 +194,8 @@ fn check_code_action(
     // returns the same code as printing the modified syntax tree
     assert_eq!(new_tree.to_string(), output);
 
-    if has_unknown_nodes_or_empty_slots(&new_tree) {
-        panic!("modified tree has unknown nodes or empty slots:\n{new_tree:#?}")
+    if has_bogus_nodes_or_empty_slots(&new_tree) {
+        panic!("modified tree has bogus nodes or empty slots:\n{new_tree:#?}")
     }
 
     // Checks the returned tree contains no missing children node

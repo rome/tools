@@ -14,7 +14,7 @@ JsModule {
                 semicolon_token: missing (optional),
             },
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 COMMA@16..18 "," [] [Whitespace(" ")],
                 IDENT@18..19 "b" [] [],
@@ -39,7 +39,7 @@ JsModule {
           0: JS_REFERENCE_IDENTIFIER@15..16
             0: IDENT@15..16 "a" [] []
         2: (empty)
-    1: JS_UNKNOWN_STATEMENT@16..19
+    1: JS_BOGUS_STATEMENT@16..19
       0: COMMA@16..18 "," [] [Whitespace(" ")]
       1: IDENT@18..19 "b" [] []
     2: JS_EMPTY_STATEMENT@19..20

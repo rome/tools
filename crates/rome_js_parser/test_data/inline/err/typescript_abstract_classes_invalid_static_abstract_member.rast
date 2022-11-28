@@ -13,7 +13,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@17..19 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             TsAbstractModifier {
@@ -48,7 +48,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@61..63 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             JsStaticModifier {
@@ -90,7 +90,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@17..19 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@19..42
-        0: JS_UNKNOWN_MEMBER@19..42
+        0: JS_BOGUS_MEMBER@19..42
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@19..35
             0: TS_ABSTRACT_MODIFIER@19..28
               0: ABSTRACT_KW@19..28 "abstract" [] [Whitespace(" ")]
@@ -114,7 +114,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@61..63 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@63..86
-        0: JS_UNKNOWN_MEMBER@63..86
+        0: JS_BOGUS_MEMBER@63..86
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@63..79
             0: JS_STATIC_MODIFIER@63..70
               0: STATIC_KW@63..70 "static" [] [Whitespace(" ")]

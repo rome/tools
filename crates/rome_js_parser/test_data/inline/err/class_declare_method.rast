@@ -13,9 +13,9 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 TsDeclareModifier {
                                     modifier_token: DECLARE_KW@10..18 "declare" [] [Whitespace(" ")],
@@ -59,8 +59,8 @@ JsModule {
       5: (empty)
       6: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@10..26
-        0: JS_UNKNOWN_MEMBER@10..26
-          0: JS_UNKNOWN@10..18
+        0: JS_BOGUS_MEMBER@10..26
+          0: JS_BOGUS@10..18
             0: TS_DECLARE_MODIFIER@10..18
               0: DECLARE_KW@10..18 "declare" [] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@18..20

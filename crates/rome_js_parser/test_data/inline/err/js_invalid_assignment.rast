@@ -8,7 +8,7 @@ JsModule {
                 expression: JsArrayExpression {
                     l_brack_token: L_BRACK@1..2 "[" [] [],
                     elements: JsArrayElementList [
-                        JsUnknownExpression {
+                        JsBogusExpression {
                             items: [
                                 EQ@2..3 "=" [] [],
                             ],
@@ -57,7 +57,7 @@ JsModule {
                                                 expression: JsArrayExpression {
                                                     l_brack_token: L_BRACK@15..16 "[" [] [],
                                                     elements: JsArrayElementList [
-                                                        JsUnknownExpression {
+                                                        JsBogusExpression {
                                                             items: [
                                                                 EQ@16..17 "=" [] [],
                                                             ],
@@ -130,7 +130,7 @@ JsModule {
         1: JS_ARRAY_EXPRESSION@1..24
           0: L_BRACK@1..2 "[" [] []
           1: JS_ARRAY_ELEMENT_LIST@2..24
-            0: JS_UNKNOWN_EXPRESSION@2..3
+            0: JS_BOGUS_EXPRESSION@2..3
               0: EQ@2..3 "=" [] []
             1: (empty)
             2: JS_ARRAY_EXPRESSION@3..24
@@ -167,7 +167,7 @@ JsModule {
                         1: JS_ARRAY_EXPRESSION@15..24
                           0: L_BRACK@15..16 "[" [] []
                           1: JS_ARRAY_ELEMENT_LIST@16..24
-                            0: JS_UNKNOWN_EXPRESSION@16..17
+                            0: JS_BOGUS_EXPRESSION@16..17
                               0: EQ@16..17 "=" [] []
                             1: (empty)
                             2: JS_ARRAY_EXPRESSION@17..24

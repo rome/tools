@@ -21,7 +21,7 @@ JsModule {
                         type_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@22..24 "=" [] [Whitespace(" ")],
-                            expression: JsUnknownExpression {
+                            expression: JsBogusExpression {
                                 items: [
                                     AWAIT_KW@24..30 "await" [] [Whitespace(" ")],
                                     JsCallExpression {
@@ -72,7 +72,7 @@ JsModule {
                         type_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@55..57 "=" [] [Whitespace(" ")],
-                            expression: JsUnknownExpression {
+                            expression: JsBogusExpression {
                                 items: [
                                     AWAIT_KW@57..63 "await" [] [Whitespace(" ")],
                                     JsCallExpression {
@@ -129,7 +129,7 @@ JsModule {
             2: (empty)
             3: JS_INITIALIZER_CLAUSE@22..33
               0: EQ@22..24 "=" [] [Whitespace(" ")]
-              1: JS_UNKNOWN_EXPRESSION@24..33
+              1: JS_BOGUS_EXPRESSION@24..33
                 0: AWAIT_KW@24..30 "await" [] [Whitespace(" ")]
                 1: JS_CALL_EXPRESSION@30..33
                   0: JS_IDENTIFIER_EXPRESSION@30..31
@@ -165,7 +165,7 @@ JsModule {
             2: (empty)
             3: JS_INITIALIZER_CLAUSE@55..66
               0: EQ@55..57 "=" [] [Whitespace(" ")]
-              1: JS_UNKNOWN_EXPRESSION@57..66
+              1: JS_BOGUS_EXPRESSION@57..66
                 0: AWAIT_KW@57..63 "await" [] [Whitespace(" ")]
                 1: JS_CALL_EXPRESSION@63..66
                   0: JS_IDENTIFIER_EXPRESSION@63..64

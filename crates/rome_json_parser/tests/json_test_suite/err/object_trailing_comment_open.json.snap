@@ -33,7 +33,7 @@ JsonRoot {
                 r_curly_token: R_CURLY@8..9 "}" [] [],
             },
             missing separator,
-            JsonUnknownValue {
+            JsonBogusValue {
                 items: [
                     COMMENT@9..13 "/**/" [] [],
                     ERROR_TOKEN@13..14 "/" [] [],
@@ -64,7 +64,7 @@ JsonRoot {
               0: JSON_STRING_LITERAL@5..8 "\"b\"" [] []
         2: R_CURLY@8..9 "}" [] []
       1: (empty)
-      2: JSON_UNKNOWN_VALUE@9..14
+      2: JSON_BOGUS_VALUE@9..14
         0: COMMENT@9..13 "/**/" [] []
         1: ERROR_TOKEN@13..14 "/" [] []
     2: (empty)

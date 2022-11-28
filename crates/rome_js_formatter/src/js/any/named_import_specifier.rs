@@ -12,7 +12,7 @@ impl FormatRule<JsAnyNamedImportSpecifier> for FormatJsAnyNamedImportSpecifier {
                 node.format().fmt(f)
             }
             JsAnyNamedImportSpecifier::JsNamedImportSpecifier(node) => node.format().fmt(f),
-            JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(node) => node.format().fmt(f),
+            JsAnyNamedImportSpecifier::JsBogusNamedImportSpecifier(node) => node.format().fmt(f),
         }
     }
 }

@@ -53,7 +53,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@62..63 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             TsOverrideModifier {
@@ -69,7 +69,7 @@ JsModule {
                         SEMICOLON@91..92 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsPropertySignatureModifierList [
                             TsDeclareModifier {
@@ -85,7 +85,7 @@ JsModule {
                         SEMICOLON@114..115 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             TsAccessibilityModifier {
@@ -104,7 +104,7 @@ JsModule {
                         SEMICOLON@146..147 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             TsAccessibilityModifier {
@@ -120,7 +120,7 @@ JsModule {
                         SEMICOLON@169..170 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             TsAccessibilityModifier {
@@ -136,7 +136,7 @@ JsModule {
                         SEMICOLON@196..197 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             TsAccessibilityModifier {
@@ -152,7 +152,7 @@ JsModule {
                         SEMICOLON@217..218 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsPropertySignatureModifierList [
                             TsAbstractModifier {
@@ -168,7 +168,7 @@ JsModule {
                         SEMICOLON@242..243 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             JsStaticModifier {
@@ -184,7 +184,7 @@ JsModule {
                         SEMICOLON@263..264 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             TsReadonlyModifier {
@@ -200,7 +200,7 @@ JsModule {
                         SEMICOLON@288..289 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsPropertySignatureModifierList [
                             TsOverrideModifier {
@@ -216,7 +216,7 @@ JsModule {
                         SEMICOLON@316..317 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsPropertySignatureModifierList [
                             TsAccessibilityModifier {
@@ -232,7 +232,7 @@ JsModule {
                         SEMICOLON@340..341 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsPropertySignatureModifierList [
                             TsAbstractModifier {
@@ -246,7 +246,7 @@ JsModule {
                         SEMICOLON@357..358 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsPropertySignatureModifierList [
                             TsAbstractModifier {
@@ -262,7 +262,7 @@ JsModule {
                         SEMICOLON@380..381 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsAbstractModifier {
                             modifier_token: ABSTRACT_KW@381..395 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
@@ -279,9 +279,9 @@ JsModule {
                         SEMICOLON@404..405 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 TsDeclareModifier {
                                     modifier_token: DECLARE_KW@405..418 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
@@ -300,7 +300,7 @@ JsModule {
                         SEMICOLON@427..428 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsPropertySignatureModifierList [
                             TsDeclareModifier {
@@ -365,7 +365,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@62..63 "{" [] []
       7: JS_CLASS_MEMBER_LIST@63..444
-        0: JS_UNKNOWN_MEMBER@63..92
+        0: JS_BOGUS_MEMBER@63..92
           0: JS_PROPERTY_MODIFIER_LIST@63..86
             0: TS_OVERRIDE_MODIFIER@63..77
               0: OVERRIDE_KW@63..77 "override" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -374,7 +374,7 @@ JsModule {
           1: JS_LITERAL_MEMBER_NAME@86..91
             0: IDENT@86..91 "base1" [] []
           2: SEMICOLON@91..92 ";" [] []
-        1: JS_UNKNOWN_MEMBER@92..115
+        1: JS_BOGUS_MEMBER@92..115
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@92..113
             0: TS_DECLARE_MODIFIER@92..105
               0: DECLARE_KW@92..105 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -383,7 +383,7 @@ JsModule {
           1: JS_LITERAL_MEMBER_NAME@113..114
             0: IDENT@113..114 "a" [] []
           2: SEMICOLON@114..115 ";" [] []
-        2: JS_UNKNOWN_MEMBER@115..147
+        2: JS_BOGUS_MEMBER@115..147
           0: JS_PROPERTY_MODIFIER_LIST@115..145
             0: TS_ACCESSIBILITY_MODIFIER@115..128
               0: PRIVATE_KW@115..128 "private" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -394,7 +394,7 @@ JsModule {
           1: JS_LITERAL_MEMBER_NAME@145..146
             0: IDENT@145..146 "c" [] []
           2: SEMICOLON@146..147 ";" [] []
-        3: JS_UNKNOWN_MEMBER@147..170
+        3: JS_BOGUS_MEMBER@147..170
           0: JS_PROPERTY_MODIFIER_LIST@147..168
             0: TS_ACCESSIBILITY_MODIFIER@147..160
               0: PRIVATE_KW@147..160 "private" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -403,7 +403,7 @@ JsModule {
           1: JS_LITERAL_MEMBER_NAME@168..169
             0: IDENT@168..169 "d" [] []
           2: SEMICOLON@169..170 ";" [] []
-        4: JS_UNKNOWN_MEMBER@170..197
+        4: JS_BOGUS_MEMBER@170..197
           0: JS_PROPERTY_MODIFIER_LIST@170..195
             0: TS_ACCESSIBILITY_MODIFIER@170..185
               0: PROTECTED_KW@170..185 "protected" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -412,7 +412,7 @@ JsModule {
           1: JS_LITERAL_MEMBER_NAME@195..196
             0: IDENT@195..196 "e" [] []
           2: SEMICOLON@196..197 ";" [] []
-        5: JS_UNKNOWN_MEMBER@197..218
+        5: JS_BOGUS_MEMBER@197..218
           0: JS_PROPERTY_MODIFIER_LIST@197..216
             0: TS_ACCESSIBILITY_MODIFIER@197..209
               0: PUBLIC_KW@197..209 "public" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -421,7 +421,7 @@ JsModule {
           1: JS_LITERAL_MEMBER_NAME@216..217
             0: IDENT@216..217 "f" [] []
           2: SEMICOLON@217..218 ";" [] []
-        6: JS_UNKNOWN_MEMBER@218..243
+        6: JS_BOGUS_MEMBER@218..243
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@218..241
             0: TS_ABSTRACT_MODIFIER@218..232
               0: ABSTRACT_KW@218..232 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -430,7 +430,7 @@ JsModule {
           1: JS_LITERAL_MEMBER_NAME@241..242
             0: IDENT@241..242 "g" [] []
           2: SEMICOLON@242..243 ";" [] []
-        7: JS_UNKNOWN_MEMBER@243..264
+        7: JS_BOGUS_MEMBER@243..264
           0: JS_PROPERTY_MODIFIER_LIST@243..262
             0: JS_STATIC_MODIFIER@243..255
               0: STATIC_KW@243..255 "static" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -439,7 +439,7 @@ JsModule {
           1: JS_LITERAL_MEMBER_NAME@262..263
             0: IDENT@262..263 "h" [] []
           2: SEMICOLON@263..264 ";" [] []
-        8: JS_UNKNOWN_MEMBER@264..289
+        8: JS_BOGUS_MEMBER@264..289
           0: JS_PROPERTY_MODIFIER_LIST@264..287
             0: TS_READONLY_MODIFIER@264..278
               0: READONLY_KW@264..278 "readonly" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -448,7 +448,7 @@ JsModule {
           1: JS_LITERAL_MEMBER_NAME@287..288
             0: IDENT@287..288 "i" [] []
           2: SEMICOLON@288..289 ";" [] []
-        9: JS_UNKNOWN_MEMBER@289..317
+        9: JS_BOGUS_MEMBER@289..317
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@289..311
             0: TS_OVERRIDE_MODIFIER@289..303
               0: OVERRIDE_KW@289..303 "override" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -457,7 +457,7 @@ JsModule {
           1: JS_LITERAL_MEMBER_NAME@311..316
             0: IDENT@311..316 "base2" [] []
           2: SEMICOLON@316..317 ";" [] []
-        10: JS_UNKNOWN_MEMBER@317..341
+        10: JS_BOGUS_MEMBER@317..341
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@317..339
             0: TS_ACCESSIBILITY_MODIFIER@317..330
               0: PRIVATE_KW@317..330 "private" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -466,7 +466,7 @@ JsModule {
           1: JS_LITERAL_MEMBER_NAME@339..340
             0: IDENT@339..340 "j" [] []
           2: SEMICOLON@340..341 ";" [] []
-        11: JS_UNKNOWN_MEMBER@341..358
+        11: JS_BOGUS_MEMBER@341..358
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@341..355
             0: TS_ABSTRACT_MODIFIER@341..355
               0: ABSTRACT_KW@341..355 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -474,7 +474,7 @@ JsModule {
             0: HASH@355..356 "#" [] []
             1: IDENT@356..357 "j" [] []
           2: SEMICOLON@357..358 ";" [] []
-        12: JS_UNKNOWN_MEMBER@358..381
+        12: JS_BOGUS_MEMBER@358..381
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@358..379
             0: TS_ABSTRACT_MODIFIER@358..372
               0: ABSTRACT_KW@358..372 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -483,7 +483,7 @@ JsModule {
           1: JS_LITERAL_MEMBER_NAME@379..380
             0: IDENT@379..380 "k" [] []
           2: SEMICOLON@380..381 ";" [] []
-        13: JS_UNKNOWN_MEMBER@381..405
+        13: JS_BOGUS_MEMBER@381..405
           0: TS_ABSTRACT_MODIFIER@381..395
             0: ABSTRACT_KW@381..395 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: ASYNC_KW@395..401 "async" [] [Whitespace(" ")]
@@ -494,8 +494,8 @@ JsModule {
             1: JS_PARAMETER_LIST@403..403
             2: R_PAREN@403..404 ")" [] []
           4: SEMICOLON@404..405 ";" [] []
-        14: JS_UNKNOWN_MEMBER@405..428
-          0: JS_UNKNOWN@405..418
+        14: JS_BOGUS_MEMBER@405..428
+          0: JS_BOGUS@405..418
             0: TS_DECLARE_MODIFIER@405..418
               0: DECLARE_KW@405..418 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: ASYNC_KW@418..424 "async" [] [Whitespace(" ")]
@@ -506,7 +506,7 @@ JsModule {
             1: JS_PARAMETER_LIST@426..426
             2: R_PAREN@426..427 ")" [] []
           4: SEMICOLON@427..428 ";" [] []
-        15: JS_UNKNOWN_MEMBER@428..444
+        15: JS_BOGUS_MEMBER@428..444
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@428..441
             0: TS_DECLARE_MODIFIER@428..441
               0: DECLARE_KW@428..441 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]

@@ -12175,17 +12175,23 @@ impl JsAnyArrowFunctionParameters {
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum JsAnyAssignment {
+    JsBogusAssignment(JsBogusAssignment),
     JsComputedMemberAssignment(JsComputedMemberAssignment),
     JsIdentifierAssignment(JsIdentifierAssignment),
     JsParenthesizedAssignment(JsParenthesizedAssignment),
     JsStaticMemberAssignment(JsStaticMemberAssignment),
-    JsUnknownAssignment(JsUnknownAssignment),
     TsAsAssignment(TsAsAssignment),
     TsNonNullAssertionAssignment(TsNonNullAssertionAssignment),
     TsSatisfiesAssignment(TsSatisfiesAssignment),
     TsTypeAssertionAssignment(TsTypeAssertionAssignment),
 }
 impl JsAnyAssignment {
+    pub fn as_js_bogus_assignment(&self) -> Option<&JsBogusAssignment> {
+        match &self {
+            JsAnyAssignment::JsBogusAssignment(item) => Some(item),
+            _ => None,
+        }
+    }
     pub fn as_js_computed_member_assignment(&self) -> Option<&JsComputedMemberAssignment> {
         match &self {
             JsAnyAssignment::JsComputedMemberAssignment(item) => Some(item),
@@ -12207,12 +12213,6 @@ impl JsAnyAssignment {
     pub fn as_js_static_member_assignment(&self) -> Option<&JsStaticMemberAssignment> {
         match &self {
             JsAnyAssignment::JsStaticMemberAssignment(item) => Some(item),
-            _ => None,
-        }
-    }
-    pub fn as_js_unknown_assignment(&self) -> Option<&JsUnknownAssignment> {
-        match &self {
-            JsAnyAssignment::JsUnknownAssignment(item) => Some(item),
             _ => None,
         }
     }
@@ -12271,19 +12271,19 @@ impl JsAnyAssignmentPattern {
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum JsAnyBinding {
+    JsBogusBinding(JsBogusBinding),
     JsIdentifierBinding(JsIdentifierBinding),
-    JsUnknownBinding(JsUnknownBinding),
 }
 impl JsAnyBinding {
-    pub fn as_js_identifier_binding(&self) -> Option<&JsIdentifierBinding> {
+    pub fn as_js_bogus_binding(&self) -> Option<&JsBogusBinding> {
         match &self {
-            JsAnyBinding::JsIdentifierBinding(item) => Some(item),
+            JsAnyBinding::JsBogusBinding(item) => Some(item),
             _ => None,
         }
     }
-    pub fn as_js_unknown_binding(&self) -> Option<&JsUnknownBinding> {
+    pub fn as_js_identifier_binding(&self) -> Option<&JsIdentifierBinding> {
         match &self {
-            JsAnyBinding::JsUnknownBinding(item) => Some(item),
+            JsAnyBinding::JsIdentifierBinding(item) => Some(item),
             _ => None,
         }
     }
@@ -12367,6 +12367,7 @@ impl JsAnyClass {
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum JsAnyClassMember {
+    JsBogusMember(JsBogusMember),
     JsConstructorClassMember(JsConstructorClassMember),
     JsEmptyClassMember(JsEmptyClassMember),
     JsGetterClassMember(JsGetterClassMember),
@@ -12374,7 +12375,6 @@ pub enum JsAnyClassMember {
     JsPropertyClassMember(JsPropertyClassMember),
     JsSetterClassMember(JsSetterClassMember),
     JsStaticInitializationBlockClassMember(JsStaticInitializationBlockClassMember),
-    JsUnknownMember(JsUnknownMember),
     TsConstructorSignatureClassMember(TsConstructorSignatureClassMember),
     TsGetterSignatureClassMember(TsGetterSignatureClassMember),
     TsIndexSignatureClassMember(TsIndexSignatureClassMember),
@@ -12383,6 +12383,12 @@ pub enum JsAnyClassMember {
     TsSetterSignatureClassMember(TsSetterSignatureClassMember),
 }
 impl JsAnyClassMember {
+    pub fn as_js_bogus_member(&self) -> Option<&JsBogusMember> {
+        match &self {
+            JsAnyClassMember::JsBogusMember(item) => Some(item),
+            _ => None,
+        }
+    }
     pub fn as_js_constructor_class_member(&self) -> Option<&JsConstructorClassMember> {
         match &self {
             JsAnyClassMember::JsConstructorClassMember(item) => Some(item),
@@ -12424,12 +12430,6 @@ impl JsAnyClassMember {
     ) -> Option<&JsStaticInitializationBlockClassMember> {
         match &self {
             JsAnyClassMember::JsStaticInitializationBlockClassMember(item) => Some(item),
-            _ => None,
-        }
-    }
-    pub fn as_js_unknown_member(&self) -> Option<&JsUnknownMember> {
-        match &self {
-            JsAnyClassMember::JsUnknownMember(item) => Some(item),
             _ => None,
         }
     }
@@ -12838,6 +12838,7 @@ pub enum JsAnyExpression {
     JsAssignmentExpression(JsAssignmentExpression),
     JsAwaitExpression(JsAwaitExpression),
     JsBinaryExpression(JsBinaryExpression),
+    JsBogusExpression(JsBogusExpression),
     JsCallExpression(JsCallExpression),
     JsClassExpression(JsClassExpression),
     JsComputedMemberExpression(JsComputedMemberExpression),
@@ -12861,7 +12862,6 @@ pub enum JsAnyExpression {
     JsTemplateExpression(JsTemplateExpression),
     JsThisExpression(JsThisExpression),
     JsUnaryExpression(JsUnaryExpression),
-    JsUnknownExpression(JsUnknownExpression),
     JsYieldExpression(JsYieldExpression),
     JsxTagExpression(JsxTagExpression),
     TsAsExpression(TsAsExpression),
@@ -12904,6 +12904,12 @@ impl JsAnyExpression {
     pub fn as_js_binary_expression(&self) -> Option<&JsBinaryExpression> {
         match &self {
             JsAnyExpression::JsBinaryExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_bogus_expression(&self) -> Option<&JsBogusExpression> {
+        match &self {
+            JsAnyExpression::JsBogusExpression(item) => Some(item),
             _ => None,
         }
     }
@@ -13045,12 +13051,6 @@ impl JsAnyExpression {
             _ => None,
         }
     }
-    pub fn as_js_unknown_expression(&self) -> Option<&JsUnknownExpression> {
-        match &self {
-            JsAnyExpression::JsUnknownExpression(item) => Some(item),
-            _ => None,
-        }
-    }
     pub fn as_js_yield_expression(&self) -> Option<&JsYieldExpression> {
         match &self {
             JsAnyExpression::JsYieldExpression(item) => Some(item),
@@ -13137,19 +13137,19 @@ impl JsAnyForInitializer {
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum JsAnyFormalParameter {
+    JsBogusParameter(JsBogusParameter),
     JsFormalParameter(JsFormalParameter),
-    JsUnknownParameter(JsUnknownParameter),
 }
 impl JsAnyFormalParameter {
-    pub fn as_js_formal_parameter(&self) -> Option<&JsFormalParameter> {
+    pub fn as_js_bogus_parameter(&self) -> Option<&JsBogusParameter> {
         match &self {
-            JsAnyFormalParameter::JsFormalParameter(item) => Some(item),
+            JsAnyFormalParameter::JsBogusParameter(item) => Some(item),
             _ => None,
         }
     }
-    pub fn as_js_unknown_parameter(&self) -> Option<&JsUnknownParameter> {
+    pub fn as_js_formal_parameter(&self) -> Option<&JsFormalParameter> {
         match &self {
-            JsAnyFormalParameter::JsUnknownParameter(item) => Some(item),
+            JsAnyFormalParameter::JsFormalParameter(item) => Some(item),
             _ => None,
         }
     }
@@ -13213,19 +13213,19 @@ impl JsAnyFunctionBody {
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum JsAnyImportAssertionEntry {
+    JsBogusImportAssertionEntry(JsBogusImportAssertionEntry),
     JsImportAssertionEntry(JsImportAssertionEntry),
-    JsUnknownImportAssertionEntry(JsUnknownImportAssertionEntry),
 }
 impl JsAnyImportAssertionEntry {
-    pub fn as_js_import_assertion_entry(&self) -> Option<&JsImportAssertionEntry> {
+    pub fn as_js_bogus_import_assertion_entry(&self) -> Option<&JsBogusImportAssertionEntry> {
         match &self {
-            JsAnyImportAssertionEntry::JsImportAssertionEntry(item) => Some(item),
+            JsAnyImportAssertionEntry::JsBogusImportAssertionEntry(item) => Some(item),
             _ => None,
         }
     }
-    pub fn as_js_unknown_import_assertion_entry(&self) -> Option<&JsUnknownImportAssertionEntry> {
+    pub fn as_js_import_assertion_entry(&self) -> Option<&JsImportAssertionEntry> {
         match &self {
-            JsAnyImportAssertionEntry::JsUnknownImportAssertionEntry(item) => Some(item),
+            JsAnyImportAssertionEntry::JsImportAssertionEntry(item) => Some(item),
             _ => None,
         }
     }
@@ -13429,11 +13429,17 @@ impl JsAnyNamedImport {
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum JsAnyNamedImportSpecifier {
+    JsBogusNamedImportSpecifier(JsBogusNamedImportSpecifier),
     JsNamedImportSpecifier(JsNamedImportSpecifier),
     JsShorthandNamedImportSpecifier(JsShorthandNamedImportSpecifier),
-    JsUnknownNamedImportSpecifier(JsUnknownNamedImportSpecifier),
 }
 impl JsAnyNamedImportSpecifier {
+    pub fn as_js_bogus_named_import_specifier(&self) -> Option<&JsBogusNamedImportSpecifier> {
+        match &self {
+            JsAnyNamedImportSpecifier::JsBogusNamedImportSpecifier(item) => Some(item),
+            _ => None,
+        }
+    }
     pub fn as_js_named_import_specifier(&self) -> Option<&JsNamedImportSpecifier> {
         match &self {
             JsAnyNamedImportSpecifier::JsNamedImportSpecifier(item) => Some(item),
@@ -13448,22 +13454,22 @@ impl JsAnyNamedImportSpecifier {
             _ => None,
         }
     }
-    pub fn as_js_unknown_named_import_specifier(&self) -> Option<&JsUnknownNamedImportSpecifier> {
-        match &self {
-            JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(item) => Some(item),
-            _ => None,
-        }
-    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum JsAnyObjectAssignmentPatternMember {
+    JsBogusAssignment(JsBogusAssignment),
     JsObjectAssignmentPatternProperty(JsObjectAssignmentPatternProperty),
     JsObjectAssignmentPatternRest(JsObjectAssignmentPatternRest),
     JsObjectAssignmentPatternShorthandProperty(JsObjectAssignmentPatternShorthandProperty),
-    JsUnknownAssignment(JsUnknownAssignment),
 }
 impl JsAnyObjectAssignmentPatternMember {
+    pub fn as_js_bogus_assignment(&self) -> Option<&JsBogusAssignment> {
+        match &self {
+            JsAnyObjectAssignmentPatternMember::JsBogusAssignment(item) => Some(item),
+            _ => None,
+        }
+    }
     pub fn as_js_object_assignment_pattern_property(
         &self,
     ) -> Option<&JsObjectAssignmentPatternProperty> {
@@ -13490,22 +13496,22 @@ impl JsAnyObjectAssignmentPatternMember {
             _ => None,
         }
     }
-    pub fn as_js_unknown_assignment(&self) -> Option<&JsUnknownAssignment> {
-        match &self {
-            JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(item) => Some(item),
-            _ => None,
-        }
-    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum JsAnyObjectBindingPatternMember {
+    JsBogusBinding(JsBogusBinding),
     JsObjectBindingPatternProperty(JsObjectBindingPatternProperty),
     JsObjectBindingPatternRest(JsObjectBindingPatternRest),
     JsObjectBindingPatternShorthandProperty(JsObjectBindingPatternShorthandProperty),
-    JsUnknownBinding(JsUnknownBinding),
 }
 impl JsAnyObjectBindingPatternMember {
+    pub fn as_js_bogus_binding(&self) -> Option<&JsBogusBinding> {
+        match &self {
+            JsAnyObjectBindingPatternMember::JsBogusBinding(item) => Some(item),
+            _ => None,
+        }
+    }
     pub fn as_js_object_binding_pattern_property(&self) -> Option<&JsObjectBindingPatternProperty> {
         match &self {
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(item) => Some(item),
@@ -13528,25 +13534,25 @@ impl JsAnyObjectBindingPatternMember {
             _ => None,
         }
     }
-    pub fn as_js_unknown_binding(&self) -> Option<&JsUnknownBinding> {
-        match &self {
-            JsAnyObjectBindingPatternMember::JsUnknownBinding(item) => Some(item),
-            _ => None,
-        }
-    }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum JsAnyObjectMember {
+    JsBogusMember(JsBogusMember),
     JsGetterObjectMember(JsGetterObjectMember),
     JsMethodObjectMember(JsMethodObjectMember),
     JsPropertyObjectMember(JsPropertyObjectMember),
     JsSetterObjectMember(JsSetterObjectMember),
     JsShorthandPropertyObjectMember(JsShorthandPropertyObjectMember),
     JsSpread(JsSpread),
-    JsUnknownMember(JsUnknownMember),
 }
 impl JsAnyObjectMember {
+    pub fn as_js_bogus_member(&self) -> Option<&JsBogusMember> {
+        match &self {
+            JsAnyObjectMember::JsBogusMember(item) => Some(item),
+            _ => None,
+        }
+    }
     pub fn as_js_getter_object_member(&self) -> Option<&JsGetterObjectMember> {
         match &self {
             JsAnyObjectMember::JsGetterObjectMember(item) => Some(item),
@@ -13582,12 +13588,6 @@ impl JsAnyObjectMember {
     pub fn as_js_spread(&self) -> Option<&JsSpread> {
         match &self {
             JsAnyObjectMember::JsSpread(item) => Some(item),
-            _ => None,
-        }
-    }
-    pub fn as_js_unknown_member(&self) -> Option<&JsUnknownMember> {
-        match &self {
-            JsAnyObjectMember::JsUnknownMember(item) => Some(item),
             _ => None,
         }
     }
@@ -13704,6 +13704,7 @@ impl JsAnyRoot {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum JsAnyStatement {
     JsBlockStatement(JsBlockStatement),
+    JsBogusStatement(JsBogusStatement),
     JsBreakStatement(JsBreakStatement),
     JsClassDeclaration(JsClassDeclaration),
     JsContinueStatement(JsContinueStatement),
@@ -13722,7 +13723,6 @@ pub enum JsAnyStatement {
     JsThrowStatement(JsThrowStatement),
     JsTryFinallyStatement(JsTryFinallyStatement),
     JsTryStatement(JsTryStatement),
-    JsUnknownStatement(JsUnknownStatement),
     JsVariableStatement(JsVariableStatement),
     JsWhileStatement(JsWhileStatement),
     JsWithStatement(JsWithStatement),
@@ -13740,6 +13740,12 @@ impl JsAnyStatement {
     pub fn as_js_block_statement(&self) -> Option<&JsBlockStatement> {
         match &self {
             JsAnyStatement::JsBlockStatement(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_bogus_statement(&self) -> Option<&JsBogusStatement> {
+        match &self {
+            JsAnyStatement::JsBogusStatement(item) => Some(item),
             _ => None,
         }
     }
@@ -13848,12 +13854,6 @@ impl JsAnyStatement {
     pub fn as_js_try_statement(&self) -> Option<&JsTryStatement> {
         match &self {
             JsAnyStatement::JsTryStatement(item) => Some(item),
-            _ => None,
-        }
-    }
-    pub fn as_js_unknown_statement(&self) -> Option<&JsUnknownStatement> {
-        match &self {
-            JsAnyStatement::JsUnknownStatement(item) => Some(item),
             _ => None,
         }
     }
@@ -14537,7 +14537,7 @@ impl TsAnyTupleTypeElement {
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum TsAnyTypeMember {
-    JsUnknownMember(JsUnknownMember),
+    JsBogusMember(JsBogusMember),
     TsCallSignatureTypeMember(TsCallSignatureTypeMember),
     TsConstructSignatureTypeMember(TsConstructSignatureTypeMember),
     TsGetterSignatureTypeMember(TsGetterSignatureTypeMember),
@@ -14547,9 +14547,9 @@ pub enum TsAnyTypeMember {
     TsSetterSignatureTypeMember(TsSetterSignatureTypeMember),
 }
 impl TsAnyTypeMember {
-    pub fn as_js_unknown_member(&self) -> Option<&JsUnknownMember> {
+    pub fn as_js_bogus_member(&self) -> Option<&JsBogusMember> {
         match &self {
-            TsAnyTypeMember::JsUnknownMember(item) => Some(item),
+            TsAnyTypeMember::JsBogusMember(item) => Some(item),
             _ => None,
         }
     }
@@ -14643,6 +14643,7 @@ pub enum TsType {
     TsArrayType(TsArrayType),
     TsBigIntLiteralType(TsBigIntLiteralType),
     TsBigintType(TsBigintType),
+    TsBogusType(TsBogusType),
     TsBooleanLiteralType(TsBooleanLiteralType),
     TsBooleanType(TsBooleanType),
     TsConditionalType(TsConditionalType),
@@ -14696,6 +14697,12 @@ impl TsType {
     pub fn as_ts_bigint_type(&self) -> Option<&TsBigintType> {
         match &self {
             TsType::TsBigintType(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_bogus_type(&self) -> Option<&TsBogusType> {
+        match &self {
+            TsType::TsBogusType(item) => Some(item),
             _ => None,
         }
     }
@@ -25134,6 +25141,9 @@ impl From<JsAnyArrowFunctionParameters> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsBogusAssignment> for JsAnyAssignment {
+    fn from(node: JsBogusAssignment) -> JsAnyAssignment { JsAnyAssignment::JsBogusAssignment(node) }
+}
 impl From<JsComputedMemberAssignment> for JsAnyAssignment {
     fn from(node: JsComputedMemberAssignment) -> JsAnyAssignment {
         JsAnyAssignment::JsComputedMemberAssignment(node)
@@ -25152,11 +25162,6 @@ impl From<JsParenthesizedAssignment> for JsAnyAssignment {
 impl From<JsStaticMemberAssignment> for JsAnyAssignment {
     fn from(node: JsStaticMemberAssignment) -> JsAnyAssignment {
         JsAnyAssignment::JsStaticMemberAssignment(node)
-    }
-}
-impl From<JsUnknownAssignment> for JsAnyAssignment {
-    fn from(node: JsUnknownAssignment) -> JsAnyAssignment {
-        JsAnyAssignment::JsUnknownAssignment(node)
     }
 }
 impl From<TsAsAssignment> for JsAnyAssignment {
@@ -25179,11 +25184,11 @@ impl From<TsTypeAssertionAssignment> for JsAnyAssignment {
 }
 impl AstNode for JsAnyAssignment {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsComputedMemberAssignment::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = JsBogusAssignment::KIND_SET
+        .union(JsComputedMemberAssignment::KIND_SET)
         .union(JsIdentifierAssignment::KIND_SET)
         .union(JsParenthesizedAssignment::KIND_SET)
         .union(JsStaticMemberAssignment::KIND_SET)
-        .union(JsUnknownAssignment::KIND_SET)
         .union(TsAsAssignment::KIND_SET)
         .union(TsNonNullAssertionAssignment::KIND_SET)
         .union(TsSatisfiesAssignment::KIND_SET)
@@ -25191,11 +25196,11 @@ impl AstNode for JsAnyAssignment {
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
-            JS_COMPUTED_MEMBER_ASSIGNMENT
+            JS_BOGUS_ASSIGNMENT
+                | JS_COMPUTED_MEMBER_ASSIGNMENT
                 | JS_IDENTIFIER_ASSIGNMENT
                 | JS_PARENTHESIZED_ASSIGNMENT
                 | JS_STATIC_MEMBER_ASSIGNMENT
-                | JS_UNKNOWN_ASSIGNMENT
                 | TS_AS_ASSIGNMENT
                 | TS_NON_NULL_ASSERTION_ASSIGNMENT
                 | TS_SATISFIES_ASSIGNMENT
@@ -25204,6 +25209,7 @@ impl AstNode for JsAnyAssignment {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
+            JS_BOGUS_ASSIGNMENT => JsAnyAssignment::JsBogusAssignment(JsBogusAssignment { syntax }),
             JS_COMPUTED_MEMBER_ASSIGNMENT => {
                 JsAnyAssignment::JsComputedMemberAssignment(JsComputedMemberAssignment { syntax })
             }
@@ -25215,9 +25221,6 @@ impl AstNode for JsAnyAssignment {
             }
             JS_STATIC_MEMBER_ASSIGNMENT => {
                 JsAnyAssignment::JsStaticMemberAssignment(JsStaticMemberAssignment { syntax })
-            }
-            JS_UNKNOWN_ASSIGNMENT => {
-                JsAnyAssignment::JsUnknownAssignment(JsUnknownAssignment { syntax })
             }
             TS_AS_ASSIGNMENT => JsAnyAssignment::TsAsAssignment(TsAsAssignment { syntax }),
             TS_NON_NULL_ASSERTION_ASSIGNMENT => {
@@ -25237,11 +25240,11 @@ impl AstNode for JsAnyAssignment {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
+            JsAnyAssignment::JsBogusAssignment(it) => &it.syntax,
             JsAnyAssignment::JsComputedMemberAssignment(it) => &it.syntax,
             JsAnyAssignment::JsIdentifierAssignment(it) => &it.syntax,
             JsAnyAssignment::JsParenthesizedAssignment(it) => &it.syntax,
             JsAnyAssignment::JsStaticMemberAssignment(it) => &it.syntax,
-            JsAnyAssignment::JsUnknownAssignment(it) => &it.syntax,
             JsAnyAssignment::TsAsAssignment(it) => &it.syntax,
             JsAnyAssignment::TsNonNullAssertionAssignment(it) => &it.syntax,
             JsAnyAssignment::TsSatisfiesAssignment(it) => &it.syntax,
@@ -25250,11 +25253,11 @@ impl AstNode for JsAnyAssignment {
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
+            JsAnyAssignment::JsBogusAssignment(it) => it.syntax,
             JsAnyAssignment::JsComputedMemberAssignment(it) => it.syntax,
             JsAnyAssignment::JsIdentifierAssignment(it) => it.syntax,
             JsAnyAssignment::JsParenthesizedAssignment(it) => it.syntax,
             JsAnyAssignment::JsStaticMemberAssignment(it) => it.syntax,
-            JsAnyAssignment::JsUnknownAssignment(it) => it.syntax,
             JsAnyAssignment::TsAsAssignment(it) => it.syntax,
             JsAnyAssignment::TsNonNullAssertionAssignment(it) => it.syntax,
             JsAnyAssignment::TsSatisfiesAssignment(it) => it.syntax,
@@ -25265,11 +25268,11 @@ impl AstNode for JsAnyAssignment {
 impl std::fmt::Debug for JsAnyAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            JsAnyAssignment::JsBogusAssignment(it) => std::fmt::Debug::fmt(it, f),
             JsAnyAssignment::JsComputedMemberAssignment(it) => std::fmt::Debug::fmt(it, f),
             JsAnyAssignment::JsIdentifierAssignment(it) => std::fmt::Debug::fmt(it, f),
             JsAnyAssignment::JsParenthesizedAssignment(it) => std::fmt::Debug::fmt(it, f),
             JsAnyAssignment::JsStaticMemberAssignment(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyAssignment::JsUnknownAssignment(it) => std::fmt::Debug::fmt(it, f),
             JsAnyAssignment::TsAsAssignment(it) => std::fmt::Debug::fmt(it, f),
             JsAnyAssignment::TsNonNullAssertionAssignment(it) => std::fmt::Debug::fmt(it, f),
             JsAnyAssignment::TsSatisfiesAssignment(it) => std::fmt::Debug::fmt(it, f),
@@ -25280,11 +25283,11 @@ impl std::fmt::Debug for JsAnyAssignment {
 impl From<JsAnyAssignment> for SyntaxNode {
     fn from(n: JsAnyAssignment) -> SyntaxNode {
         match n {
+            JsAnyAssignment::JsBogusAssignment(it) => it.into(),
             JsAnyAssignment::JsComputedMemberAssignment(it) => it.into(),
             JsAnyAssignment::JsIdentifierAssignment(it) => it.into(),
             JsAnyAssignment::JsParenthesizedAssignment(it) => it.into(),
             JsAnyAssignment::JsStaticMemberAssignment(it) => it.into(),
-            JsAnyAssignment::JsUnknownAssignment(it) => it.into(),
             JsAnyAssignment::TsAsAssignment(it) => it.into(),
             JsAnyAssignment::TsNonNullAssertionAssignment(it) => it.into(),
             JsAnyAssignment::TsSatisfiesAssignment(it) => it.into(),
@@ -25380,55 +25383,55 @@ impl From<JsAnyAssignmentPattern> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsBogusBinding> for JsAnyBinding {
+    fn from(node: JsBogusBinding) -> JsAnyBinding { JsAnyBinding::JsBogusBinding(node) }
+}
 impl From<JsIdentifierBinding> for JsAnyBinding {
     fn from(node: JsIdentifierBinding) -> JsAnyBinding { JsAnyBinding::JsIdentifierBinding(node) }
-}
-impl From<JsUnknownBinding> for JsAnyBinding {
-    fn from(node: JsUnknownBinding) -> JsAnyBinding { JsAnyBinding::JsUnknownBinding(node) }
 }
 impl AstNode for JsAnyBinding {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        JsIdentifierBinding::KIND_SET.union(JsUnknownBinding::KIND_SET);
+        JsBogusBinding::KIND_SET.union(JsIdentifierBinding::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
-        matches!(kind, JS_IDENTIFIER_BINDING | JS_UNKNOWN_BINDING)
+        matches!(kind, JS_BOGUS_BINDING | JS_IDENTIFIER_BINDING)
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
+            JS_BOGUS_BINDING => JsAnyBinding::JsBogusBinding(JsBogusBinding { syntax }),
             JS_IDENTIFIER_BINDING => {
                 JsAnyBinding::JsIdentifierBinding(JsIdentifierBinding { syntax })
             }
-            JS_UNKNOWN_BINDING => JsAnyBinding::JsUnknownBinding(JsUnknownBinding { syntax }),
             _ => return None,
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
+            JsAnyBinding::JsBogusBinding(it) => &it.syntax,
             JsAnyBinding::JsIdentifierBinding(it) => &it.syntax,
-            JsAnyBinding::JsUnknownBinding(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
+            JsAnyBinding::JsBogusBinding(it) => it.syntax,
             JsAnyBinding::JsIdentifierBinding(it) => it.syntax,
-            JsAnyBinding::JsUnknownBinding(it) => it.syntax,
         }
     }
 }
 impl std::fmt::Debug for JsAnyBinding {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            JsAnyBinding::JsBogusBinding(it) => std::fmt::Debug::fmt(it, f),
             JsAnyBinding::JsIdentifierBinding(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyBinding::JsUnknownBinding(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
 impl From<JsAnyBinding> for SyntaxNode {
     fn from(n: JsAnyBinding) -> SyntaxNode {
         match n {
+            JsAnyBinding::JsBogusBinding(it) => it.into(),
             JsAnyBinding::JsIdentifierBinding(it) => it.into(),
-            JsAnyBinding::JsUnknownBinding(it) => it.into(),
         }
     }
 }
@@ -25650,6 +25653,9 @@ impl From<JsAnyClass> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsBogusMember> for JsAnyClassMember {
+    fn from(node: JsBogusMember) -> JsAnyClassMember { JsAnyClassMember::JsBogusMember(node) }
+}
 impl From<JsConstructorClassMember> for JsAnyClassMember {
     fn from(node: JsConstructorClassMember) -> JsAnyClassMember {
         JsAnyClassMember::JsConstructorClassMember(node)
@@ -25685,9 +25691,6 @@ impl From<JsStaticInitializationBlockClassMember> for JsAnyClassMember {
         JsAnyClassMember::JsStaticInitializationBlockClassMember(node)
     }
 }
-impl From<JsUnknownMember> for JsAnyClassMember {
-    fn from(node: JsUnknownMember) -> JsAnyClassMember { JsAnyClassMember::JsUnknownMember(node) }
-}
 impl From<TsConstructorSignatureClassMember> for JsAnyClassMember {
     fn from(node: TsConstructorSignatureClassMember) -> JsAnyClassMember {
         JsAnyClassMember::TsConstructorSignatureClassMember(node)
@@ -25720,14 +25723,14 @@ impl From<TsSetterSignatureClassMember> for JsAnyClassMember {
 }
 impl AstNode for JsAnyClassMember {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsConstructorClassMember::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = JsBogusMember::KIND_SET
+        .union(JsConstructorClassMember::KIND_SET)
         .union(JsEmptyClassMember::KIND_SET)
         .union(JsGetterClassMember::KIND_SET)
         .union(JsMethodClassMember::KIND_SET)
         .union(JsPropertyClassMember::KIND_SET)
         .union(JsSetterClassMember::KIND_SET)
         .union(JsStaticInitializationBlockClassMember::KIND_SET)
-        .union(JsUnknownMember::KIND_SET)
         .union(TsConstructorSignatureClassMember::KIND_SET)
         .union(TsGetterSignatureClassMember::KIND_SET)
         .union(TsIndexSignatureClassMember::KIND_SET)
@@ -25737,14 +25740,14 @@ impl AstNode for JsAnyClassMember {
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
-            JS_CONSTRUCTOR_CLASS_MEMBER
+            JS_BOGUS_MEMBER
+                | JS_CONSTRUCTOR_CLASS_MEMBER
                 | JS_EMPTY_CLASS_MEMBER
                 | JS_GETTER_CLASS_MEMBER
                 | JS_METHOD_CLASS_MEMBER
                 | JS_PROPERTY_CLASS_MEMBER
                 | JS_SETTER_CLASS_MEMBER
                 | JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER
-                | JS_UNKNOWN_MEMBER
                 | TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER
                 | TS_GETTER_SIGNATURE_CLASS_MEMBER
                 | TS_INDEX_SIGNATURE_CLASS_MEMBER
@@ -25755,6 +25758,7 @@ impl AstNode for JsAnyClassMember {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
+            JS_BOGUS_MEMBER => JsAnyClassMember::JsBogusMember(JsBogusMember { syntax }),
             JS_CONSTRUCTOR_CLASS_MEMBER => {
                 JsAnyClassMember::JsConstructorClassMember(JsConstructorClassMember { syntax })
             }
@@ -25778,7 +25782,6 @@ impl AstNode for JsAnyClassMember {
                     JsStaticInitializationBlockClassMember { syntax },
                 )
             }
-            JS_UNKNOWN_MEMBER => JsAnyClassMember::JsUnknownMember(JsUnknownMember { syntax }),
             TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER => {
                 JsAnyClassMember::TsConstructorSignatureClassMember(
                     TsConstructorSignatureClassMember { syntax },
@@ -25815,6 +25818,7 @@ impl AstNode for JsAnyClassMember {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
+            JsAnyClassMember::JsBogusMember(it) => &it.syntax,
             JsAnyClassMember::JsConstructorClassMember(it) => &it.syntax,
             JsAnyClassMember::JsEmptyClassMember(it) => &it.syntax,
             JsAnyClassMember::JsGetterClassMember(it) => &it.syntax,
@@ -25822,7 +25826,6 @@ impl AstNode for JsAnyClassMember {
             JsAnyClassMember::JsPropertyClassMember(it) => &it.syntax,
             JsAnyClassMember::JsSetterClassMember(it) => &it.syntax,
             JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => &it.syntax,
-            JsAnyClassMember::JsUnknownMember(it) => &it.syntax,
             JsAnyClassMember::TsConstructorSignatureClassMember(it) => &it.syntax,
             JsAnyClassMember::TsGetterSignatureClassMember(it) => &it.syntax,
             JsAnyClassMember::TsIndexSignatureClassMember(it) => &it.syntax,
@@ -25833,6 +25836,7 @@ impl AstNode for JsAnyClassMember {
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
+            JsAnyClassMember::JsBogusMember(it) => it.syntax,
             JsAnyClassMember::JsConstructorClassMember(it) => it.syntax,
             JsAnyClassMember::JsEmptyClassMember(it) => it.syntax,
             JsAnyClassMember::JsGetterClassMember(it) => it.syntax,
@@ -25840,7 +25844,6 @@ impl AstNode for JsAnyClassMember {
             JsAnyClassMember::JsPropertyClassMember(it) => it.syntax,
             JsAnyClassMember::JsSetterClassMember(it) => it.syntax,
             JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => it.syntax,
-            JsAnyClassMember::JsUnknownMember(it) => it.syntax,
             JsAnyClassMember::TsConstructorSignatureClassMember(it) => it.syntax,
             JsAnyClassMember::TsGetterSignatureClassMember(it) => it.syntax,
             JsAnyClassMember::TsIndexSignatureClassMember(it) => it.syntax,
@@ -25853,6 +25856,7 @@ impl AstNode for JsAnyClassMember {
 impl std::fmt::Debug for JsAnyClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            JsAnyClassMember::JsBogusMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyClassMember::JsConstructorClassMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyClassMember::JsEmptyClassMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyClassMember::JsGetterClassMember(it) => std::fmt::Debug::fmt(it, f),
@@ -25862,7 +25866,6 @@ impl std::fmt::Debug for JsAnyClassMember {
             JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyClassMember::JsUnknownMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyClassMember::TsConstructorSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyClassMember::TsGetterSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyClassMember::TsIndexSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
@@ -25875,6 +25878,7 @@ impl std::fmt::Debug for JsAnyClassMember {
 impl From<JsAnyClassMember> for SyntaxNode {
     fn from(n: JsAnyClassMember) -> SyntaxNode {
         match n {
+            JsAnyClassMember::JsBogusMember(it) => it.into(),
             JsAnyClassMember::JsConstructorClassMember(it) => it.into(),
             JsAnyClassMember::JsEmptyClassMember(it) => it.into(),
             JsAnyClassMember::JsGetterClassMember(it) => it.into(),
@@ -25882,7 +25886,6 @@ impl From<JsAnyClassMember> for SyntaxNode {
             JsAnyClassMember::JsPropertyClassMember(it) => it.into(),
             JsAnyClassMember::JsSetterClassMember(it) => it.into(),
             JsAnyClassMember::JsStaticInitializationBlockClassMember(it) => it.into(),
-            JsAnyClassMember::JsUnknownMember(it) => it.into(),
             JsAnyClassMember::TsConstructorSignatureClassMember(it) => it.into(),
             JsAnyClassMember::TsGetterSignatureClassMember(it) => it.into(),
             JsAnyClassMember::TsIndexSignatureClassMember(it) => it.into(),
@@ -26837,6 +26840,9 @@ impl From<JsBinaryExpression> for JsAnyExpression {
         JsAnyExpression::JsBinaryExpression(node)
     }
 }
+impl From<JsBogusExpression> for JsAnyExpression {
+    fn from(node: JsBogusExpression) -> JsAnyExpression { JsAnyExpression::JsBogusExpression(node) }
+}
 impl From<JsCallExpression> for JsAnyExpression {
     fn from(node: JsCallExpression) -> JsAnyExpression { JsAnyExpression::JsCallExpression(node) }
 }
@@ -26938,11 +26944,6 @@ impl From<JsThisExpression> for JsAnyExpression {
 impl From<JsUnaryExpression> for JsAnyExpression {
     fn from(node: JsUnaryExpression) -> JsAnyExpression { JsAnyExpression::JsUnaryExpression(node) }
 }
-impl From<JsUnknownExpression> for JsAnyExpression {
-    fn from(node: JsUnknownExpression) -> JsAnyExpression {
-        JsAnyExpression::JsUnknownExpression(node)
-    }
-}
 impl From<JsYieldExpression> for JsAnyExpression {
     fn from(node: JsYieldExpression) -> JsAnyExpression { JsAnyExpression::JsYieldExpression(node) }
 }
@@ -26980,6 +26981,7 @@ impl AstNode for JsAnyExpression {
         .union(JsAssignmentExpression::KIND_SET)
         .union(JsAwaitExpression::KIND_SET)
         .union(JsBinaryExpression::KIND_SET)
+        .union(JsBogusExpression::KIND_SET)
         .union(JsCallExpression::KIND_SET)
         .union(JsClassExpression::KIND_SET)
         .union(JsComputedMemberExpression::KIND_SET)
@@ -27003,7 +27005,6 @@ impl AstNode for JsAnyExpression {
         .union(JsTemplateExpression::KIND_SET)
         .union(JsThisExpression::KIND_SET)
         .union(JsUnaryExpression::KIND_SET)
-        .union(JsUnknownExpression::KIND_SET)
         .union(JsYieldExpression::KIND_SET)
         .union(JsxTagExpression::KIND_SET)
         .union(TsAsExpression::KIND_SET)
@@ -27018,6 +27019,7 @@ impl AstNode for JsAnyExpression {
             | JS_ASSIGNMENT_EXPRESSION
             | JS_AWAIT_EXPRESSION
             | JS_BINARY_EXPRESSION
+            | JS_BOGUS_EXPRESSION
             | JS_CALL_EXPRESSION
             | JS_CLASS_EXPRESSION
             | JS_COMPUTED_MEMBER_EXPRESSION
@@ -27041,7 +27043,6 @@ impl AstNode for JsAnyExpression {
             | JS_TEMPLATE_EXPRESSION
             | JS_THIS_EXPRESSION
             | JS_UNARY_EXPRESSION
-            | JS_UNKNOWN_EXPRESSION
             | JS_YIELD_EXPRESSION
             | JSX_TAG_EXPRESSION
             | TS_AS_EXPRESSION
@@ -27066,6 +27067,7 @@ impl AstNode for JsAnyExpression {
             JS_BINARY_EXPRESSION => {
                 JsAnyExpression::JsBinaryExpression(JsBinaryExpression { syntax })
             }
+            JS_BOGUS_EXPRESSION => JsAnyExpression::JsBogusExpression(JsBogusExpression { syntax }),
             JS_CALL_EXPRESSION => JsAnyExpression::JsCallExpression(JsCallExpression { syntax }),
             JS_CLASS_EXPRESSION => JsAnyExpression::JsClassExpression(JsClassExpression { syntax }),
             JS_COMPUTED_MEMBER_EXPRESSION => {
@@ -27121,9 +27123,6 @@ impl AstNode for JsAnyExpression {
             }
             JS_THIS_EXPRESSION => JsAnyExpression::JsThisExpression(JsThisExpression { syntax }),
             JS_UNARY_EXPRESSION => JsAnyExpression::JsUnaryExpression(JsUnaryExpression { syntax }),
-            JS_UNKNOWN_EXPRESSION => {
-                JsAnyExpression::JsUnknownExpression(JsUnknownExpression { syntax })
-            }
             JS_YIELD_EXPRESSION => JsAnyExpression::JsYieldExpression(JsYieldExpression { syntax }),
             JSX_TAG_EXPRESSION => JsAnyExpression::JsxTagExpression(JsxTagExpression { syntax }),
             TS_AS_EXPRESSION => JsAnyExpression::TsAsExpression(TsAsExpression { syntax }),
@@ -27159,6 +27158,7 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::JsAssignmentExpression(it) => &it.syntax,
             JsAnyExpression::JsAwaitExpression(it) => &it.syntax,
             JsAnyExpression::JsBinaryExpression(it) => &it.syntax,
+            JsAnyExpression::JsBogusExpression(it) => &it.syntax,
             JsAnyExpression::JsCallExpression(it) => &it.syntax,
             JsAnyExpression::JsClassExpression(it) => &it.syntax,
             JsAnyExpression::JsComputedMemberExpression(it) => &it.syntax,
@@ -27182,7 +27182,6 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::JsTemplateExpression(it) => &it.syntax,
             JsAnyExpression::JsThisExpression(it) => &it.syntax,
             JsAnyExpression::JsUnaryExpression(it) => &it.syntax,
-            JsAnyExpression::JsUnknownExpression(it) => &it.syntax,
             JsAnyExpression::JsYieldExpression(it) => &it.syntax,
             JsAnyExpression::JsxTagExpression(it) => &it.syntax,
             JsAnyExpression::TsAsExpression(it) => &it.syntax,
@@ -27200,6 +27199,7 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::JsAssignmentExpression(it) => it.syntax,
             JsAnyExpression::JsAwaitExpression(it) => it.syntax,
             JsAnyExpression::JsBinaryExpression(it) => it.syntax,
+            JsAnyExpression::JsBogusExpression(it) => it.syntax,
             JsAnyExpression::JsCallExpression(it) => it.syntax,
             JsAnyExpression::JsClassExpression(it) => it.syntax,
             JsAnyExpression::JsComputedMemberExpression(it) => it.syntax,
@@ -27223,7 +27223,6 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::JsTemplateExpression(it) => it.syntax,
             JsAnyExpression::JsThisExpression(it) => it.syntax,
             JsAnyExpression::JsUnaryExpression(it) => it.syntax,
-            JsAnyExpression::JsUnknownExpression(it) => it.syntax,
             JsAnyExpression::JsYieldExpression(it) => it.syntax,
             JsAnyExpression::JsxTagExpression(it) => it.syntax,
             JsAnyExpression::TsAsExpression(it) => it.syntax,
@@ -27244,6 +27243,7 @@ impl std::fmt::Debug for JsAnyExpression {
             JsAnyExpression::JsAssignmentExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsAwaitExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsBinaryExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyExpression::JsBogusExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsCallExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsClassExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsComputedMemberExpression(it) => std::fmt::Debug::fmt(it, f),
@@ -27267,7 +27267,6 @@ impl std::fmt::Debug for JsAnyExpression {
             JsAnyExpression::JsTemplateExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsThisExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsUnaryExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::JsUnknownExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsYieldExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::JsxTagExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsAsExpression(it) => std::fmt::Debug::fmt(it, f),
@@ -27287,6 +27286,7 @@ impl From<JsAnyExpression> for SyntaxNode {
             JsAnyExpression::JsAssignmentExpression(it) => it.into(),
             JsAnyExpression::JsAwaitExpression(it) => it.into(),
             JsAnyExpression::JsBinaryExpression(it) => it.into(),
+            JsAnyExpression::JsBogusExpression(it) => it.into(),
             JsAnyExpression::JsCallExpression(it) => it.into(),
             JsAnyExpression::JsClassExpression(it) => it.into(),
             JsAnyExpression::JsComputedMemberExpression(it) => it.into(),
@@ -27310,7 +27310,6 @@ impl From<JsAnyExpression> for SyntaxNode {
             JsAnyExpression::JsTemplateExpression(it) => it.into(),
             JsAnyExpression::JsThisExpression(it) => it.into(),
             JsAnyExpression::JsUnaryExpression(it) => it.into(),
-            JsAnyExpression::JsUnknownExpression(it) => it.into(),
             JsAnyExpression::JsYieldExpression(it) => it.into(),
             JsAnyExpression::JsxTagExpression(it) => it.into(),
             JsAnyExpression::TsAsExpression(it) => it.into(),
@@ -27461,30 +27460,30 @@ impl From<JsAnyForInitializer> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsBogusParameter> for JsAnyFormalParameter {
+    fn from(node: JsBogusParameter) -> JsAnyFormalParameter {
+        JsAnyFormalParameter::JsBogusParameter(node)
+    }
+}
 impl From<JsFormalParameter> for JsAnyFormalParameter {
     fn from(node: JsFormalParameter) -> JsAnyFormalParameter {
         JsAnyFormalParameter::JsFormalParameter(node)
     }
 }
-impl From<JsUnknownParameter> for JsAnyFormalParameter {
-    fn from(node: JsUnknownParameter) -> JsAnyFormalParameter {
-        JsAnyFormalParameter::JsUnknownParameter(node)
-    }
-}
 impl AstNode for JsAnyFormalParameter {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        JsFormalParameter::KIND_SET.union(JsUnknownParameter::KIND_SET);
+        JsBogusParameter::KIND_SET.union(JsFormalParameter::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
-        matches!(kind, JS_FORMAL_PARAMETER | JS_UNKNOWN_PARAMETER)
+        matches!(kind, JS_BOGUS_PARAMETER | JS_FORMAL_PARAMETER)
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
+            JS_BOGUS_PARAMETER => {
+                JsAnyFormalParameter::JsBogusParameter(JsBogusParameter { syntax })
+            }
             JS_FORMAL_PARAMETER => {
                 JsAnyFormalParameter::JsFormalParameter(JsFormalParameter { syntax })
-            }
-            JS_UNKNOWN_PARAMETER => {
-                JsAnyFormalParameter::JsUnknownParameter(JsUnknownParameter { syntax })
             }
             _ => return None,
         };
@@ -27492,30 +27491,30 @@ impl AstNode for JsAnyFormalParameter {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
+            JsAnyFormalParameter::JsBogusParameter(it) => &it.syntax,
             JsAnyFormalParameter::JsFormalParameter(it) => &it.syntax,
-            JsAnyFormalParameter::JsUnknownParameter(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
+            JsAnyFormalParameter::JsBogusParameter(it) => it.syntax,
             JsAnyFormalParameter::JsFormalParameter(it) => it.syntax,
-            JsAnyFormalParameter::JsUnknownParameter(it) => it.syntax,
         }
     }
 }
 impl std::fmt::Debug for JsAnyFormalParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            JsAnyFormalParameter::JsBogusParameter(it) => std::fmt::Debug::fmt(it, f),
             JsAnyFormalParameter::JsFormalParameter(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyFormalParameter::JsUnknownParameter(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
 impl From<JsAnyFormalParameter> for SyntaxNode {
     fn from(n: JsAnyFormalParameter) -> SyntaxNode {
         match n {
+            JsAnyFormalParameter::JsBogusParameter(it) => it.into(),
             JsAnyFormalParameter::JsFormalParameter(it) => it.into(),
-            JsAnyFormalParameter::JsUnknownParameter(it) => it.into(),
         }
     }
 }
@@ -27684,35 +27683,35 @@ impl From<JsAnyFunctionBody> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsBogusImportAssertionEntry> for JsAnyImportAssertionEntry {
+    fn from(node: JsBogusImportAssertionEntry) -> JsAnyImportAssertionEntry {
+        JsAnyImportAssertionEntry::JsBogusImportAssertionEntry(node)
+    }
+}
 impl From<JsImportAssertionEntry> for JsAnyImportAssertionEntry {
     fn from(node: JsImportAssertionEntry) -> JsAnyImportAssertionEntry {
         JsAnyImportAssertionEntry::JsImportAssertionEntry(node)
     }
 }
-impl From<JsUnknownImportAssertionEntry> for JsAnyImportAssertionEntry {
-    fn from(node: JsUnknownImportAssertionEntry) -> JsAnyImportAssertionEntry {
-        JsAnyImportAssertionEntry::JsUnknownImportAssertionEntry(node)
-    }
-}
 impl AstNode for JsAnyImportAssertionEntry {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        JsImportAssertionEntry::KIND_SET.union(JsUnknownImportAssertionEntry::KIND_SET);
+        JsBogusImportAssertionEntry::KIND_SET.union(JsImportAssertionEntry::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
-            JS_IMPORT_ASSERTION_ENTRY | JS_UNKNOWN_IMPORT_ASSERTION_ENTRY
+            JS_BOGUS_IMPORT_ASSERTION_ENTRY | JS_IMPORT_ASSERTION_ENTRY
         )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
+            JS_BOGUS_IMPORT_ASSERTION_ENTRY => {
+                JsAnyImportAssertionEntry::JsBogusImportAssertionEntry(
+                    JsBogusImportAssertionEntry { syntax },
+                )
+            }
             JS_IMPORT_ASSERTION_ENTRY => {
                 JsAnyImportAssertionEntry::JsImportAssertionEntry(JsImportAssertionEntry { syntax })
-            }
-            JS_UNKNOWN_IMPORT_ASSERTION_ENTRY => {
-                JsAnyImportAssertionEntry::JsUnknownImportAssertionEntry(
-                    JsUnknownImportAssertionEntry { syntax },
-                )
             }
             _ => return None,
         };
@@ -27720,32 +27719,32 @@ impl AstNode for JsAnyImportAssertionEntry {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
+            JsAnyImportAssertionEntry::JsBogusImportAssertionEntry(it) => &it.syntax,
             JsAnyImportAssertionEntry::JsImportAssertionEntry(it) => &it.syntax,
-            JsAnyImportAssertionEntry::JsUnknownImportAssertionEntry(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
+            JsAnyImportAssertionEntry::JsBogusImportAssertionEntry(it) => it.syntax,
             JsAnyImportAssertionEntry::JsImportAssertionEntry(it) => it.syntax,
-            JsAnyImportAssertionEntry::JsUnknownImportAssertionEntry(it) => it.syntax,
         }
     }
 }
 impl std::fmt::Debug for JsAnyImportAssertionEntry {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyImportAssertionEntry::JsImportAssertionEntry(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyImportAssertionEntry::JsUnknownImportAssertionEntry(it) => {
+            JsAnyImportAssertionEntry::JsBogusImportAssertionEntry(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
+            JsAnyImportAssertionEntry::JsImportAssertionEntry(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
 impl From<JsAnyImportAssertionEntry> for SyntaxNode {
     fn from(n: JsAnyImportAssertionEntry) -> SyntaxNode {
         match n {
+            JsAnyImportAssertionEntry::JsBogusImportAssertionEntry(it) => it.into(),
             JsAnyImportAssertionEntry::JsImportAssertionEntry(it) => it.into(),
-            JsAnyImportAssertionEntry::JsUnknownImportAssertionEntry(it) => it.into(),
         }
     }
 }
@@ -28316,6 +28315,11 @@ impl From<JsAnyNamedImport> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsBogusNamedImportSpecifier> for JsAnyNamedImportSpecifier {
+    fn from(node: JsBogusNamedImportSpecifier) -> JsAnyNamedImportSpecifier {
+        JsAnyNamedImportSpecifier::JsBogusNamedImportSpecifier(node)
+    }
+}
 impl From<JsNamedImportSpecifier> for JsAnyNamedImportSpecifier {
     fn from(node: JsNamedImportSpecifier) -> JsAnyNamedImportSpecifier {
         JsAnyNamedImportSpecifier::JsNamedImportSpecifier(node)
@@ -28326,26 +28330,26 @@ impl From<JsShorthandNamedImportSpecifier> for JsAnyNamedImportSpecifier {
         JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(node)
     }
 }
-impl From<JsUnknownNamedImportSpecifier> for JsAnyNamedImportSpecifier {
-    fn from(node: JsUnknownNamedImportSpecifier) -> JsAnyNamedImportSpecifier {
-        JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(node)
-    }
-}
 impl AstNode for JsAnyNamedImportSpecifier {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsNamedImportSpecifier::KIND_SET
-        .union(JsShorthandNamedImportSpecifier::KIND_SET)
-        .union(JsUnknownNamedImportSpecifier::KIND_SET);
+    const KIND_SET: SyntaxKindSet<Language> = JsBogusNamedImportSpecifier::KIND_SET
+        .union(JsNamedImportSpecifier::KIND_SET)
+        .union(JsShorthandNamedImportSpecifier::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
-            JS_NAMED_IMPORT_SPECIFIER
+            JS_BOGUS_NAMED_IMPORT_SPECIFIER
+                | JS_NAMED_IMPORT_SPECIFIER
                 | JS_SHORTHAND_NAMED_IMPORT_SPECIFIER
-                | JS_UNKNOWN_NAMED_IMPORT_SPECIFIER
         )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
+            JS_BOGUS_NAMED_IMPORT_SPECIFIER => {
+                JsAnyNamedImportSpecifier::JsBogusNamedImportSpecifier(
+                    JsBogusNamedImportSpecifier { syntax },
+                )
+            }
             JS_NAMED_IMPORT_SPECIFIER => {
                 JsAnyNamedImportSpecifier::JsNamedImportSpecifier(JsNamedImportSpecifier { syntax })
             }
@@ -28354,38 +28358,33 @@ impl AstNode for JsAnyNamedImportSpecifier {
                     JsShorthandNamedImportSpecifier { syntax },
                 )
             }
-            JS_UNKNOWN_NAMED_IMPORT_SPECIFIER => {
-                JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(
-                    JsUnknownNamedImportSpecifier { syntax },
-                )
-            }
             _ => return None,
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
+            JsAnyNamedImportSpecifier::JsBogusNamedImportSpecifier(it) => &it.syntax,
             JsAnyNamedImportSpecifier::JsNamedImportSpecifier(it) => &it.syntax,
             JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(it) => &it.syntax,
-            JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
+            JsAnyNamedImportSpecifier::JsBogusNamedImportSpecifier(it) => it.syntax,
             JsAnyNamedImportSpecifier::JsNamedImportSpecifier(it) => it.syntax,
             JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(it) => it.syntax,
-            JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(it) => it.syntax,
         }
     }
 }
 impl std::fmt::Debug for JsAnyNamedImportSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyNamedImportSpecifier::JsNamedImportSpecifier(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(it) => {
+            JsAnyNamedImportSpecifier::JsBogusNamedImportSpecifier(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(it) => {
+            JsAnyNamedImportSpecifier::JsNamedImportSpecifier(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
         }
@@ -28394,9 +28393,9 @@ impl std::fmt::Debug for JsAnyNamedImportSpecifier {
 impl From<JsAnyNamedImportSpecifier> for SyntaxNode {
     fn from(n: JsAnyNamedImportSpecifier) -> SyntaxNode {
         match n {
+            JsAnyNamedImportSpecifier::JsBogusNamedImportSpecifier(it) => it.into(),
             JsAnyNamedImportSpecifier::JsNamedImportSpecifier(it) => it.into(),
             JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(it) => it.into(),
-            JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(it) => it.into(),
         }
     }
 }
@@ -28404,6 +28403,11 @@ impl From<JsAnyNamedImportSpecifier> for SyntaxElement {
     fn from(n: JsAnyNamedImportSpecifier) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
+    }
+}
+impl From<JsBogusAssignment> for JsAnyObjectAssignmentPatternMember {
+    fn from(node: JsBogusAssignment) -> JsAnyObjectAssignmentPatternMember {
+        JsAnyObjectAssignmentPatternMember::JsBogusAssignment(node)
     }
 }
 impl From<JsObjectAssignmentPatternProperty> for JsAnyObjectAssignmentPatternMember {
@@ -28423,28 +28427,26 @@ impl From<JsObjectAssignmentPatternShorthandProperty> for JsAnyObjectAssignmentP
         JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(node)
     }
 }
-impl From<JsUnknownAssignment> for JsAnyObjectAssignmentPatternMember {
-    fn from(node: JsUnknownAssignment) -> JsAnyObjectAssignmentPatternMember {
-        JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(node)
-    }
-}
 impl AstNode for JsAnyObjectAssignmentPatternMember {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsObjectAssignmentPatternProperty::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = JsBogusAssignment::KIND_SET
+        .union(JsObjectAssignmentPatternProperty::KIND_SET)
         .union(JsObjectAssignmentPatternRest::KIND_SET)
-        .union(JsObjectAssignmentPatternShorthandProperty::KIND_SET)
-        .union(JsUnknownAssignment::KIND_SET);
+        .union(JsObjectAssignmentPatternShorthandProperty::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
-            JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY
+            JS_BOGUS_ASSIGNMENT
+                | JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY
                 | JS_OBJECT_ASSIGNMENT_PATTERN_REST
                 | JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY
-                | JS_UNKNOWN_ASSIGNMENT
         )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
+            JS_BOGUS_ASSIGNMENT => {
+                JsAnyObjectAssignmentPatternMember::JsBogusAssignment(JsBogusAssignment { syntax })
+            }
             JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY => {
                 JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(
                     JsObjectAssignmentPatternProperty { syntax },
@@ -28460,39 +28462,37 @@ impl AstNode for JsAnyObjectAssignmentPatternMember {
                     JsObjectAssignmentPatternShorthandProperty { syntax },
                 )
             }
-            JS_UNKNOWN_ASSIGNMENT => {
-                JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(JsUnknownAssignment {
-                    syntax,
-                })
-            }
             _ => return None,
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
+            JsAnyObjectAssignmentPatternMember::JsBogusAssignment(it) => &it.syntax,
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(it) => &it.syntax,
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(it) => &it.syntax,
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(it) => {
                 &it.syntax
             }
-            JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
+            JsAnyObjectAssignmentPatternMember::JsBogusAssignment(it) => it.syntax,
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(it) => it.syntax,
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(it) => it.syntax,
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(it) => {
                 it.syntax
             }
-            JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(it) => it.syntax,
         }
     }
 }
 impl std::fmt::Debug for JsAnyObjectAssignmentPatternMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            JsAnyObjectAssignmentPatternMember::JsBogusAssignment(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
@@ -28502,21 +28502,18 @@ impl std::fmt::Debug for JsAnyObjectAssignmentPatternMember {
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(it) => {
-                std::fmt::Debug::fmt(it, f)
-            }
         }
     }
 }
 impl From<JsAnyObjectAssignmentPatternMember> for SyntaxNode {
     fn from(n: JsAnyObjectAssignmentPatternMember) -> SyntaxNode {
         match n {
+            JsAnyObjectAssignmentPatternMember::JsBogusAssignment(it) => it.into(),
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(it) => it.into(),
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(it) => it.into(),
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(it) => {
                 it.into()
             }
-            JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(it) => it.into(),
         }
     }
 }
@@ -28524,6 +28521,11 @@ impl From<JsAnyObjectAssignmentPatternMember> for SyntaxElement {
     fn from(n: JsAnyObjectAssignmentPatternMember) -> SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
+    }
+}
+impl From<JsBogusBinding> for JsAnyObjectBindingPatternMember {
+    fn from(node: JsBogusBinding) -> JsAnyObjectBindingPatternMember {
+        JsAnyObjectBindingPatternMember::JsBogusBinding(node)
     }
 }
 impl From<JsObjectBindingPatternProperty> for JsAnyObjectBindingPatternMember {
@@ -28541,28 +28543,26 @@ impl From<JsObjectBindingPatternShorthandProperty> for JsAnyObjectBindingPattern
         JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(node)
     }
 }
-impl From<JsUnknownBinding> for JsAnyObjectBindingPatternMember {
-    fn from(node: JsUnknownBinding) -> JsAnyObjectBindingPatternMember {
-        JsAnyObjectBindingPatternMember::JsUnknownBinding(node)
-    }
-}
 impl AstNode for JsAnyObjectBindingPatternMember {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsObjectBindingPatternProperty::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = JsBogusBinding::KIND_SET
+        .union(JsObjectBindingPatternProperty::KIND_SET)
         .union(JsObjectBindingPatternRest::KIND_SET)
-        .union(JsObjectBindingPatternShorthandProperty::KIND_SET)
-        .union(JsUnknownBinding::KIND_SET);
+        .union(JsObjectBindingPatternShorthandProperty::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
-            JS_OBJECT_BINDING_PATTERN_PROPERTY
+            JS_BOGUS_BINDING
+                | JS_OBJECT_BINDING_PATTERN_PROPERTY
                 | JS_OBJECT_BINDING_PATTERN_REST
                 | JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
-                | JS_UNKNOWN_BINDING
         )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
+            JS_BOGUS_BINDING => {
+                JsAnyObjectBindingPatternMember::JsBogusBinding(JsBogusBinding { syntax })
+            }
             JS_OBJECT_BINDING_PATTERN_PROPERTY => {
                 JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(
                     JsObjectBindingPatternProperty { syntax },
@@ -28578,37 +28578,35 @@ impl AstNode for JsAnyObjectBindingPatternMember {
                     JsObjectBindingPatternShorthandProperty { syntax },
                 )
             }
-            JS_UNKNOWN_BINDING => {
-                JsAnyObjectBindingPatternMember::JsUnknownBinding(JsUnknownBinding { syntax })
-            }
             _ => return None,
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
+            JsAnyObjectBindingPatternMember::JsBogusBinding(it) => &it.syntax,
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => &it.syntax,
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(it) => &it.syntax,
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(it) => {
                 &it.syntax
             }
-            JsAnyObjectBindingPatternMember::JsUnknownBinding(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
+            JsAnyObjectBindingPatternMember::JsBogusBinding(it) => it.syntax,
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => it.syntax,
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(it) => it.syntax,
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(it) => {
                 it.syntax
             }
-            JsAnyObjectBindingPatternMember::JsUnknownBinding(it) => it.syntax,
         }
     }
 }
 impl std::fmt::Debug for JsAnyObjectBindingPatternMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            JsAnyObjectBindingPatternMember::JsBogusBinding(it) => std::fmt::Debug::fmt(it, f),
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
@@ -28618,19 +28616,18 @@ impl std::fmt::Debug for JsAnyObjectBindingPatternMember {
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
-            JsAnyObjectBindingPatternMember::JsUnknownBinding(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
 impl From<JsAnyObjectBindingPatternMember> for SyntaxNode {
     fn from(n: JsAnyObjectBindingPatternMember) -> SyntaxNode {
         match n {
+            JsAnyObjectBindingPatternMember::JsBogusBinding(it) => it.into(),
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => it.into(),
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(it) => it.into(),
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(it) => {
                 it.into()
             }
-            JsAnyObjectBindingPatternMember::JsUnknownBinding(it) => it.into(),
         }
     }
 }
@@ -28639,6 +28636,9 @@ impl From<JsAnyObjectBindingPatternMember> for SyntaxElement {
         let node: SyntaxNode = n.into();
         node.into()
     }
+}
+impl From<JsBogusMember> for JsAnyObjectMember {
+    fn from(node: JsBogusMember) -> JsAnyObjectMember { JsAnyObjectMember::JsBogusMember(node) }
 }
 impl From<JsGetterObjectMember> for JsAnyObjectMember {
     fn from(node: JsGetterObjectMember) -> JsAnyObjectMember {
@@ -28668,32 +28668,30 @@ impl From<JsShorthandPropertyObjectMember> for JsAnyObjectMember {
 impl From<JsSpread> for JsAnyObjectMember {
     fn from(node: JsSpread) -> JsAnyObjectMember { JsAnyObjectMember::JsSpread(node) }
 }
-impl From<JsUnknownMember> for JsAnyObjectMember {
-    fn from(node: JsUnknownMember) -> JsAnyObjectMember { JsAnyObjectMember::JsUnknownMember(node) }
-}
 impl AstNode for JsAnyObjectMember {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsGetterObjectMember::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = JsBogusMember::KIND_SET
+        .union(JsGetterObjectMember::KIND_SET)
         .union(JsMethodObjectMember::KIND_SET)
         .union(JsPropertyObjectMember::KIND_SET)
         .union(JsSetterObjectMember::KIND_SET)
         .union(JsShorthandPropertyObjectMember::KIND_SET)
-        .union(JsSpread::KIND_SET)
-        .union(JsUnknownMember::KIND_SET);
+        .union(JsSpread::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
-            JS_GETTER_OBJECT_MEMBER
+            JS_BOGUS_MEMBER
+                | JS_GETTER_OBJECT_MEMBER
                 | JS_METHOD_OBJECT_MEMBER
                 | JS_PROPERTY_OBJECT_MEMBER
                 | JS_SETTER_OBJECT_MEMBER
                 | JS_SHORTHAND_PROPERTY_OBJECT_MEMBER
                 | JS_SPREAD
-                | JS_UNKNOWN_MEMBER
         )
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
+            JS_BOGUS_MEMBER => JsAnyObjectMember::JsBogusMember(JsBogusMember { syntax }),
             JS_GETTER_OBJECT_MEMBER => {
                 JsAnyObjectMember::JsGetterObjectMember(JsGetterObjectMember { syntax })
             }
@@ -28712,57 +28710,56 @@ impl AstNode for JsAnyObjectMember {
                 )
             }
             JS_SPREAD => JsAnyObjectMember::JsSpread(JsSpread { syntax }),
-            JS_UNKNOWN_MEMBER => JsAnyObjectMember::JsUnknownMember(JsUnknownMember { syntax }),
             _ => return None,
         };
         Some(res)
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
+            JsAnyObjectMember::JsBogusMember(it) => &it.syntax,
             JsAnyObjectMember::JsGetterObjectMember(it) => &it.syntax,
             JsAnyObjectMember::JsMethodObjectMember(it) => &it.syntax,
             JsAnyObjectMember::JsPropertyObjectMember(it) => &it.syntax,
             JsAnyObjectMember::JsSetterObjectMember(it) => &it.syntax,
             JsAnyObjectMember::JsShorthandPropertyObjectMember(it) => &it.syntax,
             JsAnyObjectMember::JsSpread(it) => &it.syntax,
-            JsAnyObjectMember::JsUnknownMember(it) => &it.syntax,
         }
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
+            JsAnyObjectMember::JsBogusMember(it) => it.syntax,
             JsAnyObjectMember::JsGetterObjectMember(it) => it.syntax,
             JsAnyObjectMember::JsMethodObjectMember(it) => it.syntax,
             JsAnyObjectMember::JsPropertyObjectMember(it) => it.syntax,
             JsAnyObjectMember::JsSetterObjectMember(it) => it.syntax,
             JsAnyObjectMember::JsShorthandPropertyObjectMember(it) => it.syntax,
             JsAnyObjectMember::JsSpread(it) => it.syntax,
-            JsAnyObjectMember::JsUnknownMember(it) => it.syntax,
         }
     }
 }
 impl std::fmt::Debug for JsAnyObjectMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            JsAnyObjectMember::JsBogusMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyObjectMember::JsGetterObjectMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyObjectMember::JsMethodObjectMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyObjectMember::JsPropertyObjectMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyObjectMember::JsSetterObjectMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyObjectMember::JsShorthandPropertyObjectMember(it) => std::fmt::Debug::fmt(it, f),
             JsAnyObjectMember::JsSpread(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyObjectMember::JsUnknownMember(it) => std::fmt::Debug::fmt(it, f),
         }
     }
 }
 impl From<JsAnyObjectMember> for SyntaxNode {
     fn from(n: JsAnyObjectMember) -> SyntaxNode {
         match n {
+            JsAnyObjectMember::JsBogusMember(it) => it.into(),
             JsAnyObjectMember::JsGetterObjectMember(it) => it.into(),
             JsAnyObjectMember::JsMethodObjectMember(it) => it.into(),
             JsAnyObjectMember::JsPropertyObjectMember(it) => it.into(),
             JsAnyObjectMember::JsSetterObjectMember(it) => it.into(),
             JsAnyObjectMember::JsShorthandPropertyObjectMember(it) => it.into(),
             JsAnyObjectMember::JsSpread(it) => it.into(),
-            JsAnyObjectMember::JsUnknownMember(it) => it.into(),
         }
     }
 }
@@ -29072,6 +29069,9 @@ impl From<JsAnyRoot> for SyntaxElement {
 impl From<JsBlockStatement> for JsAnyStatement {
     fn from(node: JsBlockStatement) -> JsAnyStatement { JsAnyStatement::JsBlockStatement(node) }
 }
+impl From<JsBogusStatement> for JsAnyStatement {
+    fn from(node: JsBogusStatement) -> JsAnyStatement { JsAnyStatement::JsBogusStatement(node) }
+}
 impl From<JsBreakStatement> for JsAnyStatement {
     fn from(node: JsBreakStatement) -> JsAnyStatement { JsAnyStatement::JsBreakStatement(node) }
 }
@@ -29136,9 +29136,6 @@ impl From<JsTryFinallyStatement> for JsAnyStatement {
 impl From<JsTryStatement> for JsAnyStatement {
     fn from(node: JsTryStatement) -> JsAnyStatement { JsAnyStatement::JsTryStatement(node) }
 }
-impl From<JsUnknownStatement> for JsAnyStatement {
-    fn from(node: JsUnknownStatement) -> JsAnyStatement { JsAnyStatement::JsUnknownStatement(node) }
-}
 impl From<JsVariableStatement> for JsAnyStatement {
     fn from(node: JsVariableStatement) -> JsAnyStatement {
         JsAnyStatement::JsVariableStatement(node)
@@ -29194,6 +29191,7 @@ impl From<TsTypeAliasDeclaration> for JsAnyStatement {
 impl AstNode for JsAnyStatement {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> = JsBlockStatement::KIND_SET
+        .union(JsBogusStatement::KIND_SET)
         .union(JsBreakStatement::KIND_SET)
         .union(JsClassDeclaration::KIND_SET)
         .union(JsContinueStatement::KIND_SET)
@@ -29212,7 +29210,6 @@ impl AstNode for JsAnyStatement {
         .union(JsThrowStatement::KIND_SET)
         .union(JsTryFinallyStatement::KIND_SET)
         .union(JsTryStatement::KIND_SET)
-        .union(JsUnknownStatement::KIND_SET)
         .union(JsVariableStatement::KIND_SET)
         .union(JsWhileStatement::KIND_SET)
         .union(JsWithStatement::KIND_SET)
@@ -29229,6 +29226,7 @@ impl AstNode for JsAnyStatement {
         matches!(
             kind,
             JS_BLOCK_STATEMENT
+                | JS_BOGUS_STATEMENT
                 | JS_BREAK_STATEMENT
                 | JS_CLASS_DECLARATION
                 | JS_CONTINUE_STATEMENT
@@ -29247,7 +29245,6 @@ impl AstNode for JsAnyStatement {
                 | JS_THROW_STATEMENT
                 | JS_TRY_FINALLY_STATEMENT
                 | JS_TRY_STATEMENT
-                | JS_UNKNOWN_STATEMENT
                 | JS_VARIABLE_STATEMENT
                 | JS_WHILE_STATEMENT
                 | JS_WITH_STATEMENT
@@ -29265,6 +29262,7 @@ impl AstNode for JsAnyStatement {
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
             JS_BLOCK_STATEMENT => JsAnyStatement::JsBlockStatement(JsBlockStatement { syntax }),
+            JS_BOGUS_STATEMENT => JsAnyStatement::JsBogusStatement(JsBogusStatement { syntax }),
             JS_BREAK_STATEMENT => JsAnyStatement::JsBreakStatement(JsBreakStatement { syntax }),
             JS_CLASS_DECLARATION => {
                 JsAnyStatement::JsClassDeclaration(JsClassDeclaration { syntax })
@@ -29299,9 +29297,6 @@ impl AstNode for JsAnyStatement {
                 JsAnyStatement::JsTryFinallyStatement(JsTryFinallyStatement { syntax })
             }
             JS_TRY_STATEMENT => JsAnyStatement::JsTryStatement(JsTryStatement { syntax }),
-            JS_UNKNOWN_STATEMENT => {
-                JsAnyStatement::JsUnknownStatement(JsUnknownStatement { syntax })
-            }
             JS_VARIABLE_STATEMENT => {
                 JsAnyStatement::JsVariableStatement(JsVariableStatement { syntax })
             }
@@ -29341,6 +29336,7 @@ impl AstNode for JsAnyStatement {
     fn syntax(&self) -> &SyntaxNode {
         match self {
             JsAnyStatement::JsBlockStatement(it) => &it.syntax,
+            JsAnyStatement::JsBogusStatement(it) => &it.syntax,
             JsAnyStatement::JsBreakStatement(it) => &it.syntax,
             JsAnyStatement::JsClassDeclaration(it) => &it.syntax,
             JsAnyStatement::JsContinueStatement(it) => &it.syntax,
@@ -29359,7 +29355,6 @@ impl AstNode for JsAnyStatement {
             JsAnyStatement::JsThrowStatement(it) => &it.syntax,
             JsAnyStatement::JsTryFinallyStatement(it) => &it.syntax,
             JsAnyStatement::JsTryStatement(it) => &it.syntax,
-            JsAnyStatement::JsUnknownStatement(it) => &it.syntax,
             JsAnyStatement::JsVariableStatement(it) => &it.syntax,
             JsAnyStatement::JsWhileStatement(it) => &it.syntax,
             JsAnyStatement::JsWithStatement(it) => &it.syntax,
@@ -29377,6 +29372,7 @@ impl AstNode for JsAnyStatement {
     fn into_syntax(self) -> SyntaxNode {
         match self {
             JsAnyStatement::JsBlockStatement(it) => it.syntax,
+            JsAnyStatement::JsBogusStatement(it) => it.syntax,
             JsAnyStatement::JsBreakStatement(it) => it.syntax,
             JsAnyStatement::JsClassDeclaration(it) => it.syntax,
             JsAnyStatement::JsContinueStatement(it) => it.syntax,
@@ -29395,7 +29391,6 @@ impl AstNode for JsAnyStatement {
             JsAnyStatement::JsThrowStatement(it) => it.syntax,
             JsAnyStatement::JsTryFinallyStatement(it) => it.syntax,
             JsAnyStatement::JsTryStatement(it) => it.syntax,
-            JsAnyStatement::JsUnknownStatement(it) => it.syntax,
             JsAnyStatement::JsVariableStatement(it) => it.syntax,
             JsAnyStatement::JsWhileStatement(it) => it.syntax,
             JsAnyStatement::JsWithStatement(it) => it.syntax,
@@ -29415,6 +29410,7 @@ impl std::fmt::Debug for JsAnyStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             JsAnyStatement::JsBlockStatement(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyStatement::JsBogusStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::JsBreakStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::JsClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::JsContinueStatement(it) => std::fmt::Debug::fmt(it, f),
@@ -29433,7 +29429,6 @@ impl std::fmt::Debug for JsAnyStatement {
             JsAnyStatement::JsThrowStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::JsTryFinallyStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::JsTryStatement(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyStatement::JsUnknownStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::JsVariableStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::JsWhileStatement(it) => std::fmt::Debug::fmt(it, f),
             JsAnyStatement::JsWithStatement(it) => std::fmt::Debug::fmt(it, f),
@@ -29453,6 +29448,7 @@ impl From<JsAnyStatement> for SyntaxNode {
     fn from(n: JsAnyStatement) -> SyntaxNode {
         match n {
             JsAnyStatement::JsBlockStatement(it) => it.into(),
+            JsAnyStatement::JsBogusStatement(it) => it.into(),
             JsAnyStatement::JsBreakStatement(it) => it.into(),
             JsAnyStatement::JsClassDeclaration(it) => it.into(),
             JsAnyStatement::JsContinueStatement(it) => it.into(),
@@ -29471,7 +29467,6 @@ impl From<JsAnyStatement> for SyntaxNode {
             JsAnyStatement::JsThrowStatement(it) => it.into(),
             JsAnyStatement::JsTryFinallyStatement(it) => it.into(),
             JsAnyStatement::JsTryStatement(it) => it.into(),
-            JsAnyStatement::JsUnknownStatement(it) => it.into(),
             JsAnyStatement::JsVariableStatement(it) => it.into(),
             JsAnyStatement::JsWhileStatement(it) => it.into(),
             JsAnyStatement::JsWithStatement(it) => it.into(),
@@ -31214,8 +31209,8 @@ impl From<TsAnyTupleTypeElement> for SyntaxElement {
         node.into()
     }
 }
-impl From<JsUnknownMember> for TsAnyTypeMember {
-    fn from(node: JsUnknownMember) -> TsAnyTypeMember { TsAnyTypeMember::JsUnknownMember(node) }
+impl From<JsBogusMember> for TsAnyTypeMember {
+    fn from(node: JsBogusMember) -> TsAnyTypeMember { TsAnyTypeMember::JsBogusMember(node) }
 }
 impl From<TsCallSignatureTypeMember> for TsAnyTypeMember {
     fn from(node: TsCallSignatureTypeMember) -> TsAnyTypeMember {
@@ -31254,7 +31249,7 @@ impl From<TsSetterSignatureTypeMember> for TsAnyTypeMember {
 }
 impl AstNode for TsAnyTypeMember {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsUnknownMember::KIND_SET
+    const KIND_SET: SyntaxKindSet<Language> = JsBogusMember::KIND_SET
         .union(TsCallSignatureTypeMember::KIND_SET)
         .union(TsConstructSignatureTypeMember::KIND_SET)
         .union(TsGetterSignatureTypeMember::KIND_SET)
@@ -31265,7 +31260,7 @@ impl AstNode for TsAnyTypeMember {
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
-            JS_UNKNOWN_MEMBER
+            JS_BOGUS_MEMBER
                 | TS_CALL_SIGNATURE_TYPE_MEMBER
                 | TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER
                 | TS_GETTER_SIGNATURE_TYPE_MEMBER
@@ -31277,7 +31272,7 @@ impl AstNode for TsAnyTypeMember {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_UNKNOWN_MEMBER => TsAnyTypeMember::JsUnknownMember(JsUnknownMember { syntax }),
+            JS_BOGUS_MEMBER => TsAnyTypeMember::JsBogusMember(JsBogusMember { syntax }),
             TS_CALL_SIGNATURE_TYPE_MEMBER => {
                 TsAnyTypeMember::TsCallSignatureTypeMember(TsCallSignatureTypeMember { syntax })
             }
@@ -31309,7 +31304,7 @@ impl AstNode for TsAnyTypeMember {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            TsAnyTypeMember::JsUnknownMember(it) => &it.syntax,
+            TsAnyTypeMember::JsBogusMember(it) => &it.syntax,
             TsAnyTypeMember::TsCallSignatureTypeMember(it) => &it.syntax,
             TsAnyTypeMember::TsConstructSignatureTypeMember(it) => &it.syntax,
             TsAnyTypeMember::TsGetterSignatureTypeMember(it) => &it.syntax,
@@ -31321,7 +31316,7 @@ impl AstNode for TsAnyTypeMember {
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            TsAnyTypeMember::JsUnknownMember(it) => it.syntax,
+            TsAnyTypeMember::JsBogusMember(it) => it.syntax,
             TsAnyTypeMember::TsCallSignatureTypeMember(it) => it.syntax,
             TsAnyTypeMember::TsConstructSignatureTypeMember(it) => it.syntax,
             TsAnyTypeMember::TsGetterSignatureTypeMember(it) => it.syntax,
@@ -31335,7 +31330,7 @@ impl AstNode for TsAnyTypeMember {
 impl std::fmt::Debug for TsAnyTypeMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            TsAnyTypeMember::JsUnknownMember(it) => std::fmt::Debug::fmt(it, f),
+            TsAnyTypeMember::JsBogusMember(it) => std::fmt::Debug::fmt(it, f),
             TsAnyTypeMember::TsCallSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
             TsAnyTypeMember::TsConstructSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
             TsAnyTypeMember::TsGetterSignatureTypeMember(it) => std::fmt::Debug::fmt(it, f),
@@ -31349,7 +31344,7 @@ impl std::fmt::Debug for TsAnyTypeMember {
 impl From<TsAnyTypeMember> for SyntaxNode {
     fn from(n: TsAnyTypeMember) -> SyntaxNode {
         match n {
-            TsAnyTypeMember::JsUnknownMember(it) => it.into(),
+            TsAnyTypeMember::JsBogusMember(it) => it.into(),
             TsAnyTypeMember::TsCallSignatureTypeMember(it) => it.into(),
             TsAnyTypeMember::TsConstructSignatureTypeMember(it) => it.into(),
             TsAnyTypeMember::TsGetterSignatureTypeMember(it) => it.into(),
@@ -31510,6 +31505,9 @@ impl From<TsBigIntLiteralType> for TsType {
 impl From<TsBigintType> for TsType {
     fn from(node: TsBigintType) -> TsType { TsType::TsBigintType(node) }
 }
+impl From<TsBogusType> for TsType {
+    fn from(node: TsBogusType) -> TsType { TsType::TsBogusType(node) }
+}
 impl From<TsBooleanLiteralType> for TsType {
     fn from(node: TsBooleanLiteralType) -> TsType { TsType::TsBooleanLiteralType(node) }
 }
@@ -31606,6 +31604,7 @@ impl AstNode for TsType {
         .union(TsArrayType::KIND_SET)
         .union(TsBigIntLiteralType::KIND_SET)
         .union(TsBigintType::KIND_SET)
+        .union(TsBogusType::KIND_SET)
         .union(TsBooleanLiteralType::KIND_SET)
         .union(TsBooleanType::KIND_SET)
         .union(TsConditionalType::KIND_SET)
@@ -31643,6 +31642,7 @@ impl AstNode for TsType {
                 | TS_ARRAY_TYPE
                 | TS_BIG_INT_LITERAL_TYPE
                 | TS_BIGINT_TYPE
+                | TS_BOGUS_TYPE
                 | TS_BOOLEAN_LITERAL_TYPE
                 | TS_BOOLEAN_TYPE
                 | TS_CONDITIONAL_TYPE
@@ -31681,6 +31681,7 @@ impl AstNode for TsType {
             TS_ARRAY_TYPE => TsType::TsArrayType(TsArrayType { syntax }),
             TS_BIG_INT_LITERAL_TYPE => TsType::TsBigIntLiteralType(TsBigIntLiteralType { syntax }),
             TS_BIGINT_TYPE => TsType::TsBigintType(TsBigintType { syntax }),
+            TS_BOGUS_TYPE => TsType::TsBogusType(TsBogusType { syntax }),
             TS_BOOLEAN_LITERAL_TYPE => {
                 TsType::TsBooleanLiteralType(TsBooleanLiteralType { syntax })
             }
@@ -31725,6 +31726,7 @@ impl AstNode for TsType {
             TsType::TsArrayType(it) => &it.syntax,
             TsType::TsBigIntLiteralType(it) => &it.syntax,
             TsType::TsBigintType(it) => &it.syntax,
+            TsType::TsBogusType(it) => &it.syntax,
             TsType::TsBooleanLiteralType(it) => &it.syntax,
             TsType::TsBooleanType(it) => &it.syntax,
             TsType::TsConditionalType(it) => &it.syntax,
@@ -31763,6 +31765,7 @@ impl AstNode for TsType {
             TsType::TsArrayType(it) => it.syntax,
             TsType::TsBigIntLiteralType(it) => it.syntax,
             TsType::TsBigintType(it) => it.syntax,
+            TsType::TsBogusType(it) => it.syntax,
             TsType::TsBooleanLiteralType(it) => it.syntax,
             TsType::TsBooleanType(it) => it.syntax,
             TsType::TsConditionalType(it) => it.syntax,
@@ -31803,6 +31806,7 @@ impl std::fmt::Debug for TsType {
             TsType::TsArrayType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsBigIntLiteralType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsBigintType(it) => std::fmt::Debug::fmt(it, f),
+            TsType::TsBogusType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsBooleanLiteralType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsBooleanType(it) => std::fmt::Debug::fmt(it, f),
             TsType::TsConditionalType(it) => std::fmt::Debug::fmt(it, f),
@@ -31843,6 +31847,7 @@ impl From<TsType> for SyntaxNode {
             TsType::TsArrayType(it) => it.into(),
             TsType::TsBigIntLiteralType(it) => it.into(),
             TsType::TsBigintType(it) => it.into(),
+            TsType::TsBogusType(it) => it.into(),
             TsType::TsBooleanLiteralType(it) => it.into(),
             TsType::TsBooleanType(it) => it.into(),
             TsType::TsConditionalType(it) => it.into(),
@@ -33614,10 +33619,10 @@ impl std::fmt::Display for TsVoidType {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct JsUnknown {
+pub struct JsBogus {
     syntax: SyntaxNode,
 }
-impl JsUnknown {
+impl JsBogus {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -33627,11 +33632,11 @@ impl JsUnknown {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode for JsUnknown {
+impl AstNode for JsBogus {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(JS_UNKNOWN as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN }
+        SyntaxKindSet::from_raw(RawSyntaxKind(JS_BOGUS as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BOGUS }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -33642,25 +33647,25 @@ impl AstNode for JsUnknown {
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
     fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
-impl std::fmt::Debug for JsUnknown {
+impl std::fmt::Debug for JsBogus {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("JsUnknown")
+        f.debug_struct("JsBogus")
             .field("items", &DebugSyntaxElementChildren(self.items()))
             .finish()
     }
 }
-impl From<JsUnknown> for SyntaxNode {
-    fn from(n: JsUnknown) -> SyntaxNode { n.syntax }
+impl From<JsBogus> for SyntaxNode {
+    fn from(n: JsBogus) -> SyntaxNode { n.syntax }
 }
-impl From<JsUnknown> for SyntaxElement {
-    fn from(n: JsUnknown) -> SyntaxElement { n.syntax.into() }
+impl From<JsBogus> for SyntaxElement {
+    fn from(n: JsBogus) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct JsUnknownAssignment {
+pub struct JsBogusAssignment {
     syntax: SyntaxNode,
 }
-impl JsUnknownAssignment {
+impl JsBogusAssignment {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -33670,11 +33675,11 @@ impl JsUnknownAssignment {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode for JsUnknownAssignment {
+impl AstNode for JsBogusAssignment {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(JS_UNKNOWN_ASSIGNMENT as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_ASSIGNMENT }
+        SyntaxKindSet::from_raw(RawSyntaxKind(JS_BOGUS_ASSIGNMENT as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BOGUS_ASSIGNMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -33685,25 +33690,25 @@ impl AstNode for JsUnknownAssignment {
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
     fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
-impl std::fmt::Debug for JsUnknownAssignment {
+impl std::fmt::Debug for JsBogusAssignment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("JsUnknownAssignment")
+        f.debug_struct("JsBogusAssignment")
             .field("items", &DebugSyntaxElementChildren(self.items()))
             .finish()
     }
 }
-impl From<JsUnknownAssignment> for SyntaxNode {
-    fn from(n: JsUnknownAssignment) -> SyntaxNode { n.syntax }
+impl From<JsBogusAssignment> for SyntaxNode {
+    fn from(n: JsBogusAssignment) -> SyntaxNode { n.syntax }
 }
-impl From<JsUnknownAssignment> for SyntaxElement {
-    fn from(n: JsUnknownAssignment) -> SyntaxElement { n.syntax.into() }
+impl From<JsBogusAssignment> for SyntaxElement {
+    fn from(n: JsBogusAssignment) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct JsUnknownBinding {
+pub struct JsBogusBinding {
     syntax: SyntaxNode,
 }
-impl JsUnknownBinding {
+impl JsBogusBinding {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -33713,11 +33718,11 @@ impl JsUnknownBinding {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode for JsUnknownBinding {
+impl AstNode for JsBogusBinding {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(JS_UNKNOWN_BINDING as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_BINDING }
+        SyntaxKindSet::from_raw(RawSyntaxKind(JS_BOGUS_BINDING as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BOGUS_BINDING }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -33728,25 +33733,25 @@ impl AstNode for JsUnknownBinding {
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
     fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
-impl std::fmt::Debug for JsUnknownBinding {
+impl std::fmt::Debug for JsBogusBinding {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("JsUnknownBinding")
+        f.debug_struct("JsBogusBinding")
             .field("items", &DebugSyntaxElementChildren(self.items()))
             .finish()
     }
 }
-impl From<JsUnknownBinding> for SyntaxNode {
-    fn from(n: JsUnknownBinding) -> SyntaxNode { n.syntax }
+impl From<JsBogusBinding> for SyntaxNode {
+    fn from(n: JsBogusBinding) -> SyntaxNode { n.syntax }
 }
-impl From<JsUnknownBinding> for SyntaxElement {
-    fn from(n: JsUnknownBinding) -> SyntaxElement { n.syntax.into() }
+impl From<JsBogusBinding> for SyntaxElement {
+    fn from(n: JsBogusBinding) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct JsUnknownExpression {
+pub struct JsBogusExpression {
     syntax: SyntaxNode,
 }
-impl JsUnknownExpression {
+impl JsBogusExpression {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -33756,11 +33761,11 @@ impl JsUnknownExpression {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode for JsUnknownExpression {
+impl AstNode for JsBogusExpression {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(JS_UNKNOWN_EXPRESSION as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_EXPRESSION }
+        SyntaxKindSet::from_raw(RawSyntaxKind(JS_BOGUS_EXPRESSION as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BOGUS_EXPRESSION }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -33771,25 +33776,25 @@ impl AstNode for JsUnknownExpression {
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
     fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
-impl std::fmt::Debug for JsUnknownExpression {
+impl std::fmt::Debug for JsBogusExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("JsUnknownExpression")
+        f.debug_struct("JsBogusExpression")
             .field("items", &DebugSyntaxElementChildren(self.items()))
             .finish()
     }
 }
-impl From<JsUnknownExpression> for SyntaxNode {
-    fn from(n: JsUnknownExpression) -> SyntaxNode { n.syntax }
+impl From<JsBogusExpression> for SyntaxNode {
+    fn from(n: JsBogusExpression) -> SyntaxNode { n.syntax }
 }
-impl From<JsUnknownExpression> for SyntaxElement {
-    fn from(n: JsUnknownExpression) -> SyntaxElement { n.syntax.into() }
+impl From<JsBogusExpression> for SyntaxElement {
+    fn from(n: JsBogusExpression) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct JsUnknownImportAssertionEntry {
+pub struct JsBogusImportAssertionEntry {
     syntax: SyntaxNode,
 }
-impl JsUnknownImportAssertionEntry {
+impl JsBogusImportAssertionEntry {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -33799,11 +33804,11 @@ impl JsUnknownImportAssertionEntry {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode for JsUnknownImportAssertionEntry {
+impl AstNode for JsBogusImportAssertionEntry {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(JS_UNKNOWN_IMPORT_ASSERTION_ENTRY as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_IMPORT_ASSERTION_ENTRY }
+        SyntaxKindSet::from_raw(RawSyntaxKind(JS_BOGUS_IMPORT_ASSERTION_ENTRY as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BOGUS_IMPORT_ASSERTION_ENTRY }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -33814,25 +33819,25 @@ impl AstNode for JsUnknownImportAssertionEntry {
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
     fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
-impl std::fmt::Debug for JsUnknownImportAssertionEntry {
+impl std::fmt::Debug for JsBogusImportAssertionEntry {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("JsUnknownImportAssertionEntry")
+        f.debug_struct("JsBogusImportAssertionEntry")
             .field("items", &DebugSyntaxElementChildren(self.items()))
             .finish()
     }
 }
-impl From<JsUnknownImportAssertionEntry> for SyntaxNode {
-    fn from(n: JsUnknownImportAssertionEntry) -> SyntaxNode { n.syntax }
+impl From<JsBogusImportAssertionEntry> for SyntaxNode {
+    fn from(n: JsBogusImportAssertionEntry) -> SyntaxNode { n.syntax }
 }
-impl From<JsUnknownImportAssertionEntry> for SyntaxElement {
-    fn from(n: JsUnknownImportAssertionEntry) -> SyntaxElement { n.syntax.into() }
+impl From<JsBogusImportAssertionEntry> for SyntaxElement {
+    fn from(n: JsBogusImportAssertionEntry) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct JsUnknownMember {
+pub struct JsBogusMember {
     syntax: SyntaxNode,
 }
-impl JsUnknownMember {
+impl JsBogusMember {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -33842,11 +33847,11 @@ impl JsUnknownMember {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode for JsUnknownMember {
+impl AstNode for JsBogusMember {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(JS_UNKNOWN_MEMBER as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_MEMBER }
+        SyntaxKindSet::from_raw(RawSyntaxKind(JS_BOGUS_MEMBER as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BOGUS_MEMBER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -33857,25 +33862,25 @@ impl AstNode for JsUnknownMember {
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
     fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
-impl std::fmt::Debug for JsUnknownMember {
+impl std::fmt::Debug for JsBogusMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("JsUnknownMember")
+        f.debug_struct("JsBogusMember")
             .field("items", &DebugSyntaxElementChildren(self.items()))
             .finish()
     }
 }
-impl From<JsUnknownMember> for SyntaxNode {
-    fn from(n: JsUnknownMember) -> SyntaxNode { n.syntax }
+impl From<JsBogusMember> for SyntaxNode {
+    fn from(n: JsBogusMember) -> SyntaxNode { n.syntax }
 }
-impl From<JsUnknownMember> for SyntaxElement {
-    fn from(n: JsUnknownMember) -> SyntaxElement { n.syntax.into() }
+impl From<JsBogusMember> for SyntaxElement {
+    fn from(n: JsBogusMember) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct JsUnknownNamedImportSpecifier {
+pub struct JsBogusNamedImportSpecifier {
     syntax: SyntaxNode,
 }
-impl JsUnknownNamedImportSpecifier {
+impl JsBogusNamedImportSpecifier {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -33885,11 +33890,11 @@ impl JsUnknownNamedImportSpecifier {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode for JsUnknownNamedImportSpecifier {
+impl AstNode for JsBogusNamedImportSpecifier {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(JS_UNKNOWN_NAMED_IMPORT_SPECIFIER as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_NAMED_IMPORT_SPECIFIER }
+        SyntaxKindSet::from_raw(RawSyntaxKind(JS_BOGUS_NAMED_IMPORT_SPECIFIER as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BOGUS_NAMED_IMPORT_SPECIFIER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -33900,25 +33905,25 @@ impl AstNode for JsUnknownNamedImportSpecifier {
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
     fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
-impl std::fmt::Debug for JsUnknownNamedImportSpecifier {
+impl std::fmt::Debug for JsBogusNamedImportSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("JsUnknownNamedImportSpecifier")
+        f.debug_struct("JsBogusNamedImportSpecifier")
             .field("items", &DebugSyntaxElementChildren(self.items()))
             .finish()
     }
 }
-impl From<JsUnknownNamedImportSpecifier> for SyntaxNode {
-    fn from(n: JsUnknownNamedImportSpecifier) -> SyntaxNode { n.syntax }
+impl From<JsBogusNamedImportSpecifier> for SyntaxNode {
+    fn from(n: JsBogusNamedImportSpecifier) -> SyntaxNode { n.syntax }
 }
-impl From<JsUnknownNamedImportSpecifier> for SyntaxElement {
-    fn from(n: JsUnknownNamedImportSpecifier) -> SyntaxElement { n.syntax.into() }
+impl From<JsBogusNamedImportSpecifier> for SyntaxElement {
+    fn from(n: JsBogusNamedImportSpecifier) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct JsUnknownParameter {
+pub struct JsBogusParameter {
     syntax: SyntaxNode,
 }
-impl JsUnknownParameter {
+impl JsBogusParameter {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -33928,11 +33933,11 @@ impl JsUnknownParameter {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode for JsUnknownParameter {
+impl AstNode for JsBogusParameter {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(JS_UNKNOWN_PARAMETER as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_PARAMETER }
+        SyntaxKindSet::from_raw(RawSyntaxKind(JS_BOGUS_PARAMETER as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BOGUS_PARAMETER }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -33943,25 +33948,25 @@ impl AstNode for JsUnknownParameter {
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
     fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
-impl std::fmt::Debug for JsUnknownParameter {
+impl std::fmt::Debug for JsBogusParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("JsUnknownParameter")
+        f.debug_struct("JsBogusParameter")
             .field("items", &DebugSyntaxElementChildren(self.items()))
             .finish()
     }
 }
-impl From<JsUnknownParameter> for SyntaxNode {
-    fn from(n: JsUnknownParameter) -> SyntaxNode { n.syntax }
+impl From<JsBogusParameter> for SyntaxNode {
+    fn from(n: JsBogusParameter) -> SyntaxNode { n.syntax }
 }
-impl From<JsUnknownParameter> for SyntaxElement {
-    fn from(n: JsUnknownParameter) -> SyntaxElement { n.syntax.into() }
+impl From<JsBogusParameter> for SyntaxElement {
+    fn from(n: JsBogusParameter) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct JsUnknownStatement {
+pub struct JsBogusStatement {
     syntax: SyntaxNode,
 }
-impl JsUnknownStatement {
+impl JsBogusStatement {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -33971,11 +33976,11 @@ impl JsUnknownStatement {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode for JsUnknownStatement {
+impl AstNode for JsBogusStatement {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(JS_UNKNOWN_STATEMENT as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_STATEMENT }
+        SyntaxKindSet::from_raw(RawSyntaxKind(JS_BOGUS_STATEMENT as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BOGUS_STATEMENT }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -33986,18 +33991,61 @@ impl AstNode for JsUnknownStatement {
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
     fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
-impl std::fmt::Debug for JsUnknownStatement {
+impl std::fmt::Debug for JsBogusStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("JsUnknownStatement")
+        f.debug_struct("JsBogusStatement")
             .field("items", &DebugSyntaxElementChildren(self.items()))
             .finish()
     }
 }
-impl From<JsUnknownStatement> for SyntaxNode {
-    fn from(n: JsUnknownStatement) -> SyntaxNode { n.syntax }
+impl From<JsBogusStatement> for SyntaxNode {
+    fn from(n: JsBogusStatement) -> SyntaxNode { n.syntax }
 }
-impl From<JsUnknownStatement> for SyntaxElement {
-    fn from(n: JsUnknownStatement) -> SyntaxElement { n.syntax.into() }
+impl From<JsBogusStatement> for SyntaxElement {
+    fn from(n: JsBogusStatement) -> SyntaxElement { n.syntax.into() }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub struct TsBogusType {
+    syntax: SyntaxNode,
+}
+impl TsBogusType {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+}
+impl AstNode for TsBogusType {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(TS_BOGUS_TYPE as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == TS_BOGUS_TYPE }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
+}
+impl std::fmt::Debug for TsBogusType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsBogusType")
+            .field("items", &DebugSyntaxElementChildren(self.items()))
+            .finish()
+    }
+}
+impl From<TsBogusType> for SyntaxNode {
+    fn from(n: TsBogusType) -> SyntaxNode { n.syntax }
+}
+impl From<TsBogusType> for SyntaxElement {
+    fn from(n: TsBogusType) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct JsArrayAssignmentPatternElementList {

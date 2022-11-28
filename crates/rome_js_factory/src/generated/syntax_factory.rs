@@ -12,15 +12,16 @@ impl SyntaxFactory for JsSyntaxFactory {
         children: ParsedChildren<Self::Kind>,
     ) -> RawSyntaxNode<Self::Kind> {
         match kind {
-            JS_UNKNOWN
-            | JS_UNKNOWN_ASSIGNMENT
-            | JS_UNKNOWN_BINDING
-            | JS_UNKNOWN_EXPRESSION
-            | JS_UNKNOWN_IMPORT_ASSERTION_ENTRY
-            | JS_UNKNOWN_MEMBER
-            | JS_UNKNOWN_NAMED_IMPORT_SPECIFIER
-            | JS_UNKNOWN_PARAMETER
-            | JS_UNKNOWN_STATEMENT => RawSyntaxNode::new(kind, children.into_iter().map(Some)),
+            JS_BOGUS
+            | JS_BOGUS_ASSIGNMENT
+            | JS_BOGUS_BINDING
+            | JS_BOGUS_EXPRESSION
+            | JS_BOGUS_IMPORT_ASSERTION_ENTRY
+            | JS_BOGUS_MEMBER
+            | JS_BOGUS_NAMED_IMPORT_SPECIFIER
+            | JS_BOGUS_PARAMETER
+            | JS_BOGUS_STATEMENT
+            | TS_BOGUS_TYPE => RawSyntaxNode::new(kind, children.into_iter().map(Some)),
             JS_ARRAY_ASSIGNMENT_PATTERN => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
@@ -48,7 +49,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_ARRAY_ASSIGNMENT_PATTERN.to_unknown(),
+                        JS_ARRAY_ASSIGNMENT_PATTERN.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -74,7 +75,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT.to_unknown(),
+                        JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -107,7 +108,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_ARRAY_BINDING_PATTERN.to_unknown(),
+                        JS_ARRAY_BINDING_PATTERN.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -133,7 +134,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_ARRAY_BINDING_PATTERN_REST_ELEMENT.to_unknown(),
+                        JS_ARRAY_BINDING_PATTERN_REST_ELEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -166,7 +167,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_ARRAY_EXPRESSION.to_unknown(),
+                        JS_ARRAY_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -178,7 +179,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut current_element = elements.next();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_ARRAY_HOLE.to_unknown(),
+                        JS_ARRAY_HOLE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -232,7 +233,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_ARROW_FUNCTION_EXPRESSION.to_unknown(),
+                        JS_ARROW_FUNCTION_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -283,7 +284,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_ASSIGNMENT_EXPRESSION.to_unknown(),
+                        JS_ASSIGNMENT_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -316,7 +317,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_ASSIGNMENT_WITH_DEFAULT.to_unknown(),
+                        JS_ASSIGNMENT_WITH_DEFAULT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -342,7 +343,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_AWAIT_EXPRESSION.to_unknown(),
+                        JS_AWAIT_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -361,7 +362,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_BIG_INT_LITERAL_EXPRESSION.to_unknown(),
+                        JS_BIG_INT_LITERAL_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -416,7 +417,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_BINARY_EXPRESSION.to_unknown(),
+                        JS_BINARY_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -449,7 +450,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_BINDING_PATTERN_WITH_DEFAULT.to_unknown(),
+                        JS_BINDING_PATTERN_WITH_DEFAULT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -482,7 +483,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_BLOCK_STATEMENT.to_unknown(),
+                        JS_BLOCK_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -501,7 +502,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_BOOLEAN_LITERAL_EXPRESSION.to_unknown(),
+                        JS_BOOLEAN_LITERAL_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -534,7 +535,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_BREAK_STATEMENT.to_unknown(),
+                        JS_BREAK_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -567,7 +568,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_CALL_ARGUMENTS.to_unknown(),
+                        JS_CALL_ARGUMENTS.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -607,7 +608,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_CALL_EXPRESSION.to_unknown(),
+                        JS_CALL_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -647,7 +648,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_CASE_CLAUSE.to_unknown(),
+                        JS_CASE_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -680,7 +681,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_CATCH_CLAUSE.to_unknown(),
+                        JS_CATCH_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -720,7 +721,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_CATCH_DECLARATION.to_unknown(),
+                        JS_CATCH_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -795,7 +796,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_CLASS_DECLARATION.to_unknown(),
+                        JS_CLASS_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -870,7 +871,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_CLASS_EXPORT_DEFAULT_DECLARATION.to_unknown(),
+                        JS_CLASS_EXPORT_DEFAULT_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -938,7 +939,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_CLASS_EXPRESSION.to_unknown(),
+                        JS_CLASS_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -978,7 +979,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_COMPUTED_MEMBER_ASSIGNMENT.to_unknown(),
+                        JS_COMPUTED_MEMBER_ASSIGNMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1025,7 +1026,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_COMPUTED_MEMBER_EXPRESSION.to_unknown(),
+                        JS_COMPUTED_MEMBER_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1058,7 +1059,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_COMPUTED_MEMBER_NAME.to_unknown(),
+                        JS_COMPUTED_MEMBER_NAME.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1105,7 +1106,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_CONDITIONAL_EXPRESSION.to_unknown(),
+                        JS_CONDITIONAL_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1145,7 +1146,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_CONSTRUCTOR_CLASS_MEMBER.to_unknown(),
+                        JS_CONSTRUCTOR_CLASS_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1178,7 +1179,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_CONSTRUCTOR_PARAMETERS.to_unknown(),
+                        JS_CONSTRUCTOR_PARAMETERS.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1211,7 +1212,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_CONTINUE_STATEMENT.to_unknown(),
+                        JS_CONTINUE_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1237,7 +1238,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_DEBUGGER_STATEMENT.to_unknown(),
+                        JS_DEBUGGER_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1270,7 +1271,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_DEFAULT_CLAUSE.to_unknown(),
+                        JS_DEFAULT_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1296,7 +1297,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_DEFAULT_IMPORT_SPECIFIER.to_unknown(),
+                        JS_DEFAULT_IMPORT_SPECIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1322,7 +1323,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_DIRECTIVE.to_unknown(),
+                        JS_DIRECTIVE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1383,7 +1384,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_DO_WHILE_STATEMENT.to_unknown(),
+                        JS_DO_WHILE_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1409,7 +1410,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_ELSE_CLAUSE.to_unknown(),
+                        JS_ELSE_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1428,7 +1429,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_EMPTY_CLASS_MEMBER.to_unknown(),
+                        JS_EMPTY_CLASS_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1447,7 +1448,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_EMPTY_STATEMENT.to_unknown(),
+                        JS_EMPTY_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1473,7 +1474,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_EXPORT.to_unknown(),
+                        JS_EXPORT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1499,7 +1500,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_EXPORT_AS_CLAUSE.to_unknown(),
+                        JS_EXPORT_AS_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1532,7 +1533,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_EXPORT_DEFAULT_DECLARATION_CLAUSE.to_unknown(),
+                        JS_EXPORT_DEFAULT_DECLARATION_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1565,7 +1566,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE.to_unknown(),
+                        JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1619,7 +1620,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_EXPORT_FROM_CLAUSE.to_unknown(),
+                        JS_EXPORT_FROM_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1666,7 +1667,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_EXPORT_NAMED_CLAUSE.to_unknown(),
+                        JS_EXPORT_NAMED_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1734,7 +1735,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_EXPORT_NAMED_FROM_CLAUSE.to_unknown(),
+                        JS_EXPORT_NAMED_FROM_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1767,7 +1768,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_EXPORT_NAMED_FROM_SPECIFIER.to_unknown(),
+                        JS_EXPORT_NAMED_FROM_SPECIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1793,7 +1794,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_EXPORT_NAMED_SHORTHAND_SPECIFIER.to_unknown(),
+                        JS_EXPORT_NAMED_SHORTHAND_SPECIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1833,7 +1834,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_EXPORT_NAMED_SPECIFIER.to_unknown(),
+                        JS_EXPORT_NAMED_SPECIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1859,7 +1860,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_EXPRESSION_SNIPPED.to_unknown(),
+                        JS_EXPRESSION_SNIPPED.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1885,7 +1886,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_EXPRESSION_STATEMENT.to_unknown(),
+                        JS_EXPRESSION_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1918,7 +1919,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_EXTENDS_CLAUSE.to_unknown(),
+                        JS_EXTENDS_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1944,7 +1945,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_FINALLY_CLAUSE.to_unknown(),
+                        JS_FINALLY_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2005,7 +2006,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_FOR_IN_STATEMENT.to_unknown(),
+                        JS_FOR_IN_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2073,7 +2074,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_FOR_OF_STATEMENT.to_unknown(),
+                        JS_FOR_OF_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2148,7 +2149,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_FOR_STATEMENT.to_unknown(),
+                        JS_FOR_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2174,7 +2175,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_FOR_VARIABLE_DECLARATION.to_unknown(),
+                        JS_FOR_VARIABLE_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2214,7 +2215,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_FORMAL_PARAMETER.to_unknown(),
+                        JS_FORMAL_PARAMETER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2254,7 +2255,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_FUNCTION_BODY.to_unknown(),
+                        JS_FUNCTION_BODY.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2322,7 +2323,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_FUNCTION_DECLARATION.to_unknown(),
+                        JS_FUNCTION_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2390,7 +2391,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_FUNCTION_EXPORT_DEFAULT_DECLARATION.to_unknown(),
+                        JS_FUNCTION_EXPORT_DEFAULT_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2458,7 +2459,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_FUNCTION_EXPRESSION.to_unknown(),
+                        JS_FUNCTION_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2519,7 +2520,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_GETTER_CLASS_MEMBER.to_unknown(),
+                        JS_GETTER_CLASS_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2573,7 +2574,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_GETTER_OBJECT_MEMBER.to_unknown(),
+                        JS_GETTER_OBJECT_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2592,7 +2593,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_IDENTIFIER_ASSIGNMENT.to_unknown(),
+                        JS_IDENTIFIER_ASSIGNMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2611,7 +2612,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_IDENTIFIER_BINDING.to_unknown(),
+                        JS_IDENTIFIER_BINDING.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2630,7 +2631,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_IDENTIFIER_EXPRESSION.to_unknown(),
+                        JS_IDENTIFIER_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2684,7 +2685,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_IF_STATEMENT.to_unknown(),
+                        JS_IF_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2717,7 +2718,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_IMPORT.to_unknown(),
+                        JS_IMPORT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2757,7 +2758,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_IMPORT_ASSERTION.to_unknown(),
+                        JS_IMPORT_ASSERTION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2790,7 +2791,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_IMPORT_ASSERTION_ENTRY.to_unknown(),
+                        JS_IMPORT_ASSERTION_ENTRY.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2816,7 +2817,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_IMPORT_BARE_CLAUSE.to_unknown(),
+                        JS_IMPORT_BARE_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2842,7 +2843,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_IMPORT_CALL_EXPRESSION.to_unknown(),
+                        JS_IMPORT_CALL_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2889,7 +2890,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_IMPORT_DEFAULT_CLAUSE.to_unknown(),
+                        JS_IMPORT_DEFAULT_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2922,7 +2923,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_IMPORT_META_EXPRESSION.to_unknown(),
+                        JS_IMPORT_META_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -2976,7 +2977,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_IMPORT_NAMED_CLAUSE.to_unknown(),
+                        JS_IMPORT_NAMED_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3037,7 +3038,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_IMPORT_NAMESPACE_CLAUSE.to_unknown(),
+                        JS_IMPORT_NAMESPACE_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3070,7 +3071,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_IN_EXPRESSION.to_unknown(),
+                        JS_IN_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3096,7 +3097,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_INITIALIZER_CLAUSE.to_unknown(),
+                        JS_INITIALIZER_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3129,7 +3130,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_INSTANCEOF_EXPRESSION.to_unknown(),
+                        JS_INSTANCEOF_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3162,7 +3163,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_LABELED_STATEMENT.to_unknown(),
+                        JS_LABELED_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3181,7 +3182,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_LITERAL_EXPORT_NAME.to_unknown(),
+                        JS_LITERAL_EXPORT_NAME.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3203,7 +3204,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_LITERAL_MEMBER_NAME.to_unknown(),
+                        JS_LITERAL_MEMBER_NAME.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3236,7 +3237,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_LOGICAL_EXPRESSION.to_unknown(),
+                        JS_LOGICAL_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3311,7 +3312,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_METHOD_CLASS_MEMBER.to_unknown(),
+                        JS_METHOD_CLASS_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3372,7 +3373,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_METHOD_OBJECT_MEMBER.to_unknown(),
+                        JS_METHOD_OBJECT_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3412,7 +3413,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_MODULE.to_unknown(),
+                        JS_MODULE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3431,7 +3432,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_MODULE_SOURCE.to_unknown(),
+                        JS_MODULE_SOURCE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3449,10 +3450,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if current_element.is_some() {
-                    return RawSyntaxNode::new(
-                        JS_NAME.to_unknown(),
-                        children.into_iter().map(Some),
-                    );
+                    return RawSyntaxNode::new(JS_NAME.to_bogus(), children.into_iter().map(Some));
                 }
                 slots.into_node(JS_NAME, children)
             }
@@ -3490,7 +3488,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_NAMED_IMPORT_SPECIFIER.to_unknown(),
+                        JS_NAMED_IMPORT_SPECIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3523,7 +3521,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_NAMED_IMPORT_SPECIFIERS.to_unknown(),
+                        JS_NAMED_IMPORT_SPECIFIERS.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3556,7 +3554,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_NAMESPACE_IMPORT_SPECIFIER.to_unknown(),
+                        JS_NAMESPACE_IMPORT_SPECIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3596,7 +3594,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_NEW_EXPRESSION.to_unknown(),
+                        JS_NEW_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3629,7 +3627,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_NEW_TARGET_EXPRESSION.to_unknown(),
+                        JS_NEW_TARGET_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3648,7 +3646,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_NULL_LITERAL_EXPRESSION.to_unknown(),
+                        JS_NULL_LITERAL_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3667,7 +3665,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_NUMBER_LITERAL_EXPRESSION.to_unknown(),
+                        JS_NUMBER_LITERAL_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3700,7 +3698,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_OBJECT_ASSIGNMENT_PATTERN.to_unknown(),
+                        JS_OBJECT_ASSIGNMENT_PATTERN.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3740,7 +3738,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY.to_unknown(),
+                        JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3766,7 +3764,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_OBJECT_ASSIGNMENT_PATTERN_REST.to_unknown(),
+                        JS_OBJECT_ASSIGNMENT_PATTERN_REST.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3792,7 +3790,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY.to_unknown(),
+                        JS_OBJECT_ASSIGNMENT_PATTERN_SHORTHAND_PROPERTY.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3825,7 +3823,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_OBJECT_BINDING_PATTERN.to_unknown(),
+                        JS_OBJECT_BINDING_PATTERN.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3865,7 +3863,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_OBJECT_BINDING_PATTERN_PROPERTY.to_unknown(),
+                        JS_OBJECT_BINDING_PATTERN_PROPERTY.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3891,7 +3889,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_OBJECT_BINDING_PATTERN_REST.to_unknown(),
+                        JS_OBJECT_BINDING_PATTERN_REST.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3917,7 +3915,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY.to_unknown(),
+                        JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3950,7 +3948,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_OBJECT_EXPRESSION.to_unknown(),
+                        JS_OBJECT_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -3983,7 +3981,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_PARAMETERS.to_unknown(),
+                        JS_PARAMETERS.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4016,7 +4014,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_PARENTHESIZED_ASSIGNMENT.to_unknown(),
+                        JS_PARENTHESIZED_ASSIGNMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4049,7 +4047,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_PARENTHESIZED_EXPRESSION.to_unknown(),
+                        JS_PARENTHESIZED_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4075,7 +4073,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_POST_UPDATE_EXPRESSION.to_unknown(),
+                        JS_POST_UPDATE_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4101,7 +4099,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_PRE_UPDATE_EXPRESSION.to_unknown(),
+                        JS_PRE_UPDATE_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4127,7 +4125,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_PRIVATE_CLASS_MEMBER_NAME.to_unknown(),
+                        JS_PRIVATE_CLASS_MEMBER_NAME.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4153,7 +4151,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_PRIVATE_NAME.to_unknown(),
+                        JS_PRIVATE_NAME.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4200,7 +4198,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_PROPERTY_CLASS_MEMBER.to_unknown(),
+                        JS_PROPERTY_CLASS_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4233,7 +4231,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_PROPERTY_OBJECT_MEMBER.to_unknown(),
+                        JS_PROPERTY_OBJECT_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4252,7 +4250,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_REFERENCE_IDENTIFIER.to_unknown(),
+                        JS_REFERENCE_IDENTIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4271,7 +4269,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_REGEX_LITERAL_EXPRESSION.to_unknown(),
+                        JS_REGEX_LITERAL_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4304,7 +4302,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_REST_PARAMETER.to_unknown(),
+                        JS_REST_PARAMETER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4337,7 +4335,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_RETURN_STATEMENT.to_unknown(),
+                        JS_RETURN_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4377,7 +4375,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_SCRIPT.to_unknown(),
+                        JS_SCRIPT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4410,7 +4408,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_SEQUENCE_EXPRESSION.to_unknown(),
+                        JS_SEQUENCE_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4471,7 +4469,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_SETTER_CLASS_MEMBER.to_unknown(),
+                        JS_SETTER_CLASS_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4525,7 +4523,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_SETTER_OBJECT_MEMBER.to_unknown(),
+                        JS_SETTER_OBJECT_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4551,7 +4549,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_SHORTHAND_NAMED_IMPORT_SPECIFIER.to_unknown(),
+                        JS_SHORTHAND_NAMED_IMPORT_SPECIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4570,7 +4568,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_SHORTHAND_PROPERTY_OBJECT_MEMBER.to_unknown(),
+                        JS_SHORTHAND_PROPERTY_OBJECT_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4596,7 +4594,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_SPREAD.to_unknown(),
+                        JS_SPREAD.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4636,7 +4634,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER.to_unknown(),
+                        JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4669,7 +4667,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_STATIC_MEMBER_ASSIGNMENT.to_unknown(),
+                        JS_STATIC_MEMBER_ASSIGNMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4702,7 +4700,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_STATIC_MEMBER_EXPRESSION.to_unknown(),
+                        JS_STATIC_MEMBER_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4721,7 +4719,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_STATIC_MODIFIER.to_unknown(),
+                        JS_STATIC_MODIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4740,7 +4738,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_STRING_LITERAL_EXPRESSION.to_unknown(),
+                        JS_STRING_LITERAL_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4759,7 +4757,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_SUPER_EXPRESSION.to_unknown(),
+                        JS_SUPER_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4820,7 +4818,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_SWITCH_STATEMENT.to_unknown(),
+                        JS_SWITCH_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4839,7 +4837,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_TEMPLATE_CHUNK_ELEMENT.to_unknown(),
+                        JS_TEMPLATE_CHUNK_ELEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4872,7 +4870,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_TEMPLATE_ELEMENT.to_unknown(),
+                        JS_TEMPLATE_ELEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4919,7 +4917,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_TEMPLATE_EXPRESSION.to_unknown(),
+                        JS_TEMPLATE_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4938,7 +4936,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_THIS_EXPRESSION.to_unknown(),
+                        JS_THIS_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -4971,7 +4969,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_THROW_STATEMENT.to_unknown(),
+                        JS_THROW_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5011,7 +5009,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_TRY_FINALLY_STATEMENT.to_unknown(),
+                        JS_TRY_FINALLY_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5044,7 +5042,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_TRY_STATEMENT.to_unknown(),
+                        JS_TRY_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5073,7 +5071,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_UNARY_EXPRESSION.to_unknown(),
+                        JS_UNARY_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5099,7 +5097,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_VARIABLE_DECLARATION.to_unknown(),
+                        JS_VARIABLE_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5125,7 +5123,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_VARIABLE_DECLARATION_CLAUSE.to_unknown(),
+                        JS_VARIABLE_DECLARATION_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5158,7 +5156,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_VARIABLE_DECLARATOR.to_unknown(),
+                        JS_VARIABLE_DECLARATOR.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5184,7 +5182,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_VARIABLE_STATEMENT.to_unknown(),
+                        JS_VARIABLE_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5231,7 +5229,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_WHILE_STATEMENT.to_unknown(),
+                        JS_WHILE_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5278,7 +5276,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_WITH_STATEMENT.to_unknown(),
+                        JS_WITH_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5304,7 +5302,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_YIELD_ARGUMENT.to_unknown(),
+                        JS_YIELD_ARGUMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5330,7 +5328,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JS_YIELD_EXPRESSION.to_unknown(),
+                        JS_YIELD_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5356,7 +5354,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_ATTRIBUTE.to_unknown(),
+                        JSX_ATTRIBUTE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5382,7 +5380,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_ATTRIBUTE_INITIALIZER_CLAUSE.to_unknown(),
+                        JSX_ATTRIBUTE_INITIALIZER_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5422,7 +5420,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_CLOSING_ELEMENT.to_unknown(),
+                        JSX_CLOSING_ELEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5455,7 +5453,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_CLOSING_FRAGMENT.to_unknown(),
+                        JSX_CLOSING_FRAGMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5488,7 +5486,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_ELEMENT.to_unknown(),
+                        JSX_ELEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5521,7 +5519,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_EXPRESSION_ATTRIBUTE_VALUE.to_unknown(),
+                        JSX_EXPRESSION_ATTRIBUTE_VALUE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5554,7 +5552,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_EXPRESSION_CHILD.to_unknown(),
+                        JSX_EXPRESSION_CHILD.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5587,7 +5585,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_FRAGMENT.to_unknown(),
+                        JSX_FRAGMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5620,7 +5618,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_MEMBER_NAME.to_unknown(),
+                        JSX_MEMBER_NAME.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5638,10 +5636,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if current_element.is_some() {
-                    return RawSyntaxNode::new(
-                        JSX_NAME.to_unknown(),
-                        children.into_iter().map(Some),
-                    );
+                    return RawSyntaxNode::new(JSX_NAME.to_bogus(), children.into_iter().map(Some));
                 }
                 slots.into_node(JSX_NAME, children)
             }
@@ -5672,7 +5667,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_NAMESPACE_NAME.to_unknown(),
+                        JSX_NAMESPACE_NAME.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5719,7 +5714,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_OPENING_ELEMENT.to_unknown(),
+                        JSX_OPENING_ELEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5745,7 +5740,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_OPENING_FRAGMENT.to_unknown(),
+                        JSX_OPENING_FRAGMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5764,7 +5759,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_REFERENCE_IDENTIFIER.to_unknown(),
+                        JSX_REFERENCE_IDENTIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5818,7 +5813,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_SELF_CLOSING_ELEMENT.to_unknown(),
+                        JSX_SELF_CLOSING_ELEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5858,7 +5853,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_SPREAD_ATTRIBUTE.to_unknown(),
+                        JSX_SPREAD_ATTRIBUTE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5898,7 +5893,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_SPREAD_CHILD.to_unknown(),
+                        JSX_SPREAD_CHILD.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5917,7 +5912,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_STRING.to_unknown(),
+                        JSX_STRING.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5936,7 +5931,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSX_TAG_EXPRESSION.to_unknown(),
+                        JSX_TAG_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5954,10 +5949,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 }
                 slots.next_slot();
                 if current_element.is_some() {
-                    return RawSyntaxNode::new(
-                        JSX_TEXT.to_unknown(),
-                        children.into_iter().map(Some),
-                    );
+                    return RawSyntaxNode::new(JSX_TEXT.to_bogus(), children.into_iter().map(Some));
                 }
                 slots.into_node(JSX_TEXT, children)
             }
@@ -5974,7 +5966,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_ABSTRACT_MODIFIER.to_unknown(),
+                        TS_ABSTRACT_MODIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -5993,7 +5985,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_ACCESSIBILITY_MODIFIER.to_unknown(),
+                        TS_ACCESSIBILITY_MODIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6012,7 +6004,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_ANY_TYPE.to_unknown(),
+                        TS_ANY_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6045,7 +6037,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_ARRAY_TYPE.to_unknown(),
+                        TS_ARRAY_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6078,7 +6070,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_AS_ASSIGNMENT.to_unknown(),
+                        TS_AS_ASSIGNMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6111,7 +6103,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_AS_EXPRESSION.to_unknown(),
+                        TS_AS_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6137,7 +6129,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_ASSERTS_CONDITION.to_unknown(),
+                        TS_ASSERTS_CONDITION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6170,7 +6162,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_ASSERTS_RETURN_TYPE.to_unknown(),
+                        TS_ASSERTS_RETURN_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6196,7 +6188,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_BIG_INT_LITERAL_TYPE.to_unknown(),
+                        TS_BIG_INT_LITERAL_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6215,7 +6207,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_BIGINT_TYPE.to_unknown(),
+                        TS_BIGINT_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6234,7 +6226,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_BOOLEAN_LITERAL_TYPE.to_unknown(),
+                        TS_BOOLEAN_LITERAL_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6253,7 +6245,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_BOOLEAN_TYPE.to_unknown(),
+                        TS_BOOLEAN_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6293,7 +6285,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_CALL_SIGNATURE_TYPE_MEMBER.to_unknown(),
+                        TS_CALL_SIGNATURE_TYPE_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6354,7 +6346,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_CONDITIONAL_TYPE.to_unknown(),
+                        TS_CONDITIONAL_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6401,7 +6393,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER.to_unknown(),
+                        TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6441,7 +6433,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER.to_unknown(),
+                        TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6495,7 +6487,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_CONSTRUCTOR_TYPE.to_unknown(),
+                        TS_CONSTRUCTOR_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6556,7 +6548,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_DECLARE_FUNCTION_DECLARATION.to_unknown(),
+                        TS_DECLARE_FUNCTION_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6617,7 +6609,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION.to_unknown(),
+                        TS_DECLARE_FUNCTION_EXPORT_DEFAULT_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6636,7 +6628,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_DECLARE_MODIFIER.to_unknown(),
+                        TS_DECLARE_MODIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6662,7 +6654,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_DECLARE_STATEMENT.to_unknown(),
+                        TS_DECLARE_STATEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6688,7 +6680,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_DEFAULT_TYPE_CLAUSE.to_unknown(),
+                        TS_DEFAULT_TYPE_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6714,7 +6706,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_DEFINITE_PROPERTY_ANNOTATION.to_unknown(),
+                        TS_DEFINITE_PROPERTY_ANNOTATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6740,7 +6732,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_DEFINITE_VARIABLE_ANNOTATION.to_unknown(),
+                        TS_DEFINITE_VARIABLE_ANNOTATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6759,7 +6751,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_EMPTY_EXTERNAL_MODULE_DECLARATION_BODY.to_unknown(),
+                        TS_EMPTY_EXTERNAL_MODULE_DECLARATION_BODY.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6813,7 +6805,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_ENUM_DECLARATION.to_unknown(),
+                        TS_ENUM_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6839,7 +6831,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_ENUM_MEMBER.to_unknown(),
+                        TS_ENUM_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6879,7 +6871,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_EXPORT_AS_NAMESPACE_CLAUSE.to_unknown(),
+                        TS_EXPORT_AS_NAMESPACE_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6912,7 +6904,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_EXPORT_ASSIGNMENT_CLAUSE.to_unknown(),
+                        TS_EXPORT_ASSIGNMENT_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6938,7 +6930,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_EXPORT_DECLARE_CLAUSE.to_unknown(),
+                        TS_EXPORT_DECLARE_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6964,7 +6956,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_EXTENDS_CLAUSE.to_unknown(),
+                        TS_EXTENDS_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -6997,7 +6989,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_EXTERNAL_MODULE_DECLARATION.to_unknown(),
+                        TS_EXTERNAL_MODULE_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7037,7 +7029,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_EXTERNAL_MODULE_REFERENCE.to_unknown(),
+                        TS_EXTERNAL_MODULE_REFERENCE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7077,7 +7069,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_FUNCTION_TYPE.to_unknown(),
+                        TS_FUNCTION_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7138,7 +7130,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_GETTER_SIGNATURE_CLASS_MEMBER.to_unknown(),
+                        TS_GETTER_SIGNATURE_CLASS_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7192,7 +7184,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_GETTER_SIGNATURE_TYPE_MEMBER.to_unknown(),
+                        TS_GETTER_SIGNATURE_TYPE_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7218,7 +7210,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_GLOBAL_DECLARATION.to_unknown(),
+                        TS_GLOBAL_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7237,7 +7229,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_IDENTIFIER_BINDING.to_unknown(),
+                        TS_IDENTIFIER_BINDING.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7263,7 +7255,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_IMPLEMENTS_CLAUSE.to_unknown(),
+                        TS_IMPLEMENTS_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7317,7 +7309,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_IMPORT_EQUALS_DECLARATION.to_unknown(),
+                        TS_IMPORT_EQUALS_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7378,7 +7370,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_IMPORT_TYPE.to_unknown(),
+                        TS_IMPORT_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7404,7 +7396,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_IMPORT_TYPE_QUALIFIER.to_unknown(),
+                        TS_IMPORT_TYPE_QUALIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7458,7 +7450,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_INDEX_SIGNATURE_CLASS_MEMBER.to_unknown(),
+                        TS_INDEX_SIGNATURE_CLASS_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7484,7 +7476,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_INDEX_SIGNATURE_PARAMETER.to_unknown(),
+                        TS_INDEX_SIGNATURE_PARAMETER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7538,7 +7530,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_INDEX_SIGNATURE_TYPE_MEMBER.to_unknown(),
+                        TS_INDEX_SIGNATURE_TYPE_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7578,7 +7570,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_INDEXED_ACCESS_TYPE.to_unknown(),
+                        TS_INDEXED_ACCESS_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7604,7 +7596,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_INFER_TYPE.to_unknown(),
+                        TS_INFER_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7630,7 +7622,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_INSTANTIATION_EXPRESSION.to_unknown(),
+                        TS_INSTANTIATION_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7691,7 +7683,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_INTERFACE_DECLARATION.to_unknown(),
+                        TS_INTERFACE_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7717,7 +7709,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_INTERSECTION_TYPE.to_unknown(),
+                        TS_INTERSECTION_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7813,7 +7805,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_MAPPED_TYPE.to_unknown(),
+                        TS_MAPPED_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7839,7 +7831,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_MAPPED_TYPE_AS_CLAUSE.to_unknown(),
+                        TS_MAPPED_TYPE_AS_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7865,7 +7857,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_MAPPED_TYPE_OPTIONAL_MODIFIER_CLAUSE.to_unknown(),
+                        TS_MAPPED_TYPE_OPTIONAL_MODIFIER_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7891,7 +7883,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_MAPPED_TYPE_READONLY_MODIFIER_CLAUSE.to_unknown(),
+                        TS_MAPPED_TYPE_READONLY_MODIFIER_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -7959,7 +7951,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_METHOD_SIGNATURE_CLASS_MEMBER.to_unknown(),
+                        TS_METHOD_SIGNATURE_CLASS_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8013,7 +8005,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_METHOD_SIGNATURE_TYPE_MEMBER.to_unknown(),
+                        TS_METHOD_SIGNATURE_TYPE_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8046,7 +8038,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_MODULE_BLOCK.to_unknown(),
+                        TS_MODULE_BLOCK.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8079,7 +8071,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_MODULE_DECLARATION.to_unknown(),
+                        TS_MODULE_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8105,7 +8097,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_NAME_WITH_TYPE_ARGUMENTS.to_unknown(),
+                        TS_NAME_WITH_TYPE_ARGUMENTS.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8152,7 +8144,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_NAMED_TUPLE_TYPE_ELEMENT.to_unknown(),
+                        TS_NAMED_TUPLE_TYPE_ELEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8171,7 +8163,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_NEVER_TYPE.to_unknown(),
+                        TS_NEVER_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8197,7 +8189,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_NON_NULL_ASSERTION_ASSIGNMENT.to_unknown(),
+                        TS_NON_NULL_ASSERTION_ASSIGNMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8223,7 +8215,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_NON_NULL_ASSERTION_EXPRESSION.to_unknown(),
+                        TS_NON_NULL_ASSERTION_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8242,7 +8234,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_NON_PRIMITIVE_TYPE.to_unknown(),
+                        TS_NON_PRIMITIVE_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8261,7 +8253,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_NULL_LITERAL_TYPE.to_unknown(),
+                        TS_NULL_LITERAL_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8287,7 +8279,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_NUMBER_LITERAL_TYPE.to_unknown(),
+                        TS_NUMBER_LITERAL_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8306,7 +8298,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_NUMBER_TYPE.to_unknown(),
+                        TS_NUMBER_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8339,7 +8331,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_OBJECT_TYPE.to_unknown(),
+                        TS_OBJECT_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8365,7 +8357,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_OPTIONAL_PROPERTY_ANNOTATION.to_unknown(),
+                        TS_OPTIONAL_PROPERTY_ANNOTATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8391,7 +8383,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_OPTIONAL_TUPLE_TYPE_ELEMENT.to_unknown(),
+                        TS_OPTIONAL_TUPLE_TYPE_ELEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8410,7 +8402,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_OVERRIDE_MODIFIER.to_unknown(),
+                        TS_OVERRIDE_MODIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8443,7 +8435,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_PARENTHESIZED_TYPE.to_unknown(),
+                        TS_PARENTHESIZED_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8476,7 +8468,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_PREDICATE_RETURN_TYPE.to_unknown(),
+                        TS_PREDICATE_RETURN_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8502,7 +8494,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_PROPERTY_PARAMETER.to_unknown(),
+                        TS_PROPERTY_PARAMETER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8542,7 +8534,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_PROPERTY_SIGNATURE_CLASS_MEMBER.to_unknown(),
+                        TS_PROPERTY_SIGNATURE_CLASS_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8589,7 +8581,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_PROPERTY_SIGNATURE_TYPE_MEMBER.to_unknown(),
+                        TS_PROPERTY_SIGNATURE_TYPE_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8622,7 +8614,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_QUALIFIED_MODULE_NAME.to_unknown(),
+                        TS_QUALIFIED_MODULE_NAME.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8655,7 +8647,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_QUALIFIED_NAME.to_unknown(),
+                        TS_QUALIFIED_NAME.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8674,7 +8666,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_READONLY_MODIFIER.to_unknown(),
+                        TS_READONLY_MODIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8700,7 +8692,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_REFERENCE_TYPE.to_unknown(),
+                        TS_REFERENCE_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8726,7 +8718,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_REST_TUPLE_TYPE_ELEMENT.to_unknown(),
+                        TS_REST_TUPLE_TYPE_ELEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8752,7 +8744,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_RETURN_TYPE_ANNOTATION.to_unknown(),
+                        TS_RETURN_TYPE_ANNOTATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8785,7 +8777,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_SATISFIES_ASSIGNMENT.to_unknown(),
+                        TS_SATISFIES_ASSIGNMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8818,7 +8810,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_SATISFIES_EXPRESSION.to_unknown(),
+                        TS_SATISFIES_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8879,7 +8871,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_SETTER_SIGNATURE_CLASS_MEMBER.to_unknown(),
+                        TS_SETTER_SIGNATURE_CLASS_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8933,7 +8925,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_SETTER_SIGNATURE_TYPE_MEMBER.to_unknown(),
+                        TS_SETTER_SIGNATURE_TYPE_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8952,7 +8944,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_STRING_LITERAL_TYPE.to_unknown(),
+                        TS_STRING_LITERAL_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8971,7 +8963,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_STRING_TYPE.to_unknown(),
+                        TS_STRING_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -8990,7 +8982,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_SYMBOL_TYPE.to_unknown(),
+                        TS_SYMBOL_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9009,7 +9001,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_TEMPLATE_CHUNK_ELEMENT.to_unknown(),
+                        TS_TEMPLATE_CHUNK_ELEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9042,7 +9034,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_TEMPLATE_ELEMENT.to_unknown(),
+                        TS_TEMPLATE_ELEMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9075,7 +9067,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_TEMPLATE_LITERAL_TYPE.to_unknown(),
+                        TS_TEMPLATE_LITERAL_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9101,7 +9093,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_THIS_PARAMETER.to_unknown(),
+                        TS_THIS_PARAMETER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9120,7 +9112,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_THIS_TYPE.to_unknown(),
+                        TS_THIS_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9153,7 +9145,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_TUPLE_TYPE.to_unknown(),
+                        TS_TUPLE_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9207,7 +9199,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_TYPE_ALIAS_DECLARATION.to_unknown(),
+                        TS_TYPE_ALIAS_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9233,7 +9225,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_TYPE_ANNOTATION.to_unknown(),
+                        TS_TYPE_ANNOTATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9266,7 +9258,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_TYPE_ARGUMENTS.to_unknown(),
+                        TS_TYPE_ARGUMENTS.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9306,7 +9298,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_TYPE_ASSERTION_ASSIGNMENT.to_unknown(),
+                        TS_TYPE_ASSERTION_ASSIGNMENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9346,7 +9338,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_TYPE_ASSERTION_EXPRESSION.to_unknown(),
+                        TS_TYPE_ASSERTION_EXPRESSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9372,7 +9364,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_TYPE_CONSTRAINT_CLAUSE.to_unknown(),
+                        TS_TYPE_CONSTRAINT_CLAUSE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9398,7 +9390,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_TYPE_OPERATOR_TYPE.to_unknown(),
+                        TS_TYPE_OPERATOR_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9431,7 +9423,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_TYPE_PARAMETER.to_unknown(),
+                        TS_TYPE_PARAMETER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9450,7 +9442,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_TYPE_PARAMETER_NAME.to_unknown(),
+                        TS_TYPE_PARAMETER_NAME.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9483,7 +9475,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_TYPE_PARAMETERS.to_unknown(),
+                        TS_TYPE_PARAMETERS.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9516,7 +9508,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_TYPEOF_TYPE.to_unknown(),
+                        TS_TYPEOF_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9535,7 +9527,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_UNDEFINED_TYPE.to_unknown(),
+                        TS_UNDEFINED_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9561,7 +9553,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_UNION_TYPE.to_unknown(),
+                        TS_UNION_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9580,7 +9572,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_UNKNOWN_TYPE.to_unknown(),
+                        TS_UNKNOWN_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -9599,7 +9591,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        TS_VOID_TYPE.to_unknown(),
+                        TS_VOID_TYPE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }

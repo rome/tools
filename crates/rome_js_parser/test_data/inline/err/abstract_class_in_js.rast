@@ -2,7 +2,7 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")],
                 CLASS_KW@9..15 "class" [] [Whitespace(" ")],
@@ -22,7 +22,7 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..19
-    0: JS_UNKNOWN_STATEMENT@0..19
+    0: JS_BOGUS_STATEMENT@0..19
       0: ABSTRACT_KW@0..9 "abstract" [] [Whitespace(" ")]
       1: CLASS_KW@9..15 "class" [] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@15..17

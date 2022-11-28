@@ -4300,10 +4300,10 @@ impl std::fmt::Display for CssVarFunctionValue {
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct CssUnknown {
+pub struct CssBogus {
     syntax: SyntaxNode,
 }
-impl CssUnknown {
+impl CssBogus {
     #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
     #[doc = r""]
     #[doc = r" # Safety"]
@@ -4313,11 +4313,11 @@ impl CssUnknown {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-impl AstNode for CssUnknown {
+impl AstNode for CssBogus {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_UNKNOWN as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_UNKNOWN }
+        SyntaxKindSet::from_raw(RawSyntaxKind(CSS_BOGUS as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == CSS_BOGUS }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         if Self::can_cast(syntax.kind()) {
             Some(Self { syntax })
@@ -4328,18 +4328,18 @@ impl AstNode for CssUnknown {
     fn syntax(&self) -> &SyntaxNode { &self.syntax }
     fn into_syntax(self) -> SyntaxNode { self.syntax }
 }
-impl std::fmt::Debug for CssUnknown {
+impl std::fmt::Debug for CssBogus {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("CssUnknown")
+        f.debug_struct("CssBogus")
             .field("items", &DebugSyntaxElementChildren(self.items()))
             .finish()
     }
 }
-impl From<CssUnknown> for SyntaxNode {
-    fn from(n: CssUnknown) -> SyntaxNode { n.syntax }
+impl From<CssBogus> for SyntaxNode {
+    fn from(n: CssBogus) -> SyntaxNode { n.syntax }
 }
-impl From<CssUnknown> for SyntaxElement {
-    fn from(n: CssUnknown) -> SyntaxElement { n.syntax.into() }
+impl From<CssBogus> for SyntaxElement {
+    fn from(n: CssBogus) -> SyntaxElement { n.syntax.into() }
 }
 #[derive(Clone, Eq, PartialEq, Hash)]
 pub struct CssAnySelectorPatternList {

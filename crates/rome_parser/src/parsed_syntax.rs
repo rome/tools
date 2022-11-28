@@ -241,7 +241,7 @@ impl ParsedSyntax {
     /// Returns this Syntax if it is present in the source text or tries to recover the
     /// parser if the syntax is absent. The recovery...
     ///
-    /// * eats all unexpected tokens into an `Unknown*` node until the parser reaches one
+    /// * eats all unexpected tokens into a `Bogus*` node until the parser reaches one
     ///   of the "safe tokens" configured in the [ParseRecovery].
     /// * creates an error using the passed in error builder and adds it to the parsing diagnostics.
     ///

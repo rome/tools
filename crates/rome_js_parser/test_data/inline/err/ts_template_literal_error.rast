@@ -26,79 +26,79 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        JsUnknownStatement {
-            items: [
-                TYPE_KW@26..32 "type" [Newline("\n")] [Whitespace(" ")],
-                TsIdentifierBinding {
-                    name_token: IDENT@32..34 "C" [] [Whitespace(" ")],
-                },
-                EQ@34..36 "=" [] [Whitespace(" ")],
-                JsUnknown {
-                    items: [
-                        BACKTICK@36..37 "`" [] [],
-                        JsUnknown {
-                            items: [
-                                JsUnknown {
-                                    items: [
-                                        DOLLAR_CURLY@37..39 "${" [] [],
-                                        TsReferenceType {
-                                            name: JsReferenceIdentifier {
-                                                value_token: IDENT@39..41 "A" [] [Whitespace(" ")],
-                                            },
-                                            type_arguments: missing (optional),
+        TsTypeAliasDeclaration {
+            type_token: TYPE_KW@26..32 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@32..34 "C" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            eq_token: EQ@34..36 "=" [] [Whitespace(" ")],
+            ty: TsBogusType {
+                items: [
+                    BACKTICK@36..37 "`" [] [],
+                    JsBogus {
+                        items: [
+                            JsBogus {
+                                items: [
+                                    DOLLAR_CURLY@37..39 "${" [] [],
+                                    TsReferenceType {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@39..41 "A" [] [Whitespace(" ")],
                                         },
-                                        JsUnknown {
-                                            items: [
-                                                IDENT@41..42 "B" [] [],
-                                            ],
-                                        },
-                                        R_CURLY@42..43 "}" [] [],
-                                    ],
-                                },
-                                TsTemplateChunkElement {
-                                    template_chunk_token: TEMPLATE_CHUNK@43..46 "bcd" [] [],
-                                },
-                            ],
-                        },
-                        BACKTICK@46..47 "`" [] [],
-                    ],
-                },
-            ],
+                                        type_arguments: missing (optional),
+                                    },
+                                    JsBogus {
+                                        items: [
+                                            IDENT@41..42 "B" [] [],
+                                        ],
+                                    },
+                                    R_CURLY@42..43 "}" [] [],
+                                ],
+                            },
+                            TsTemplateChunkElement {
+                                template_chunk_token: TEMPLATE_CHUNK@43..46 "bcd" [] [],
+                            },
+                        ],
+                    },
+                    BACKTICK@46..47 "`" [] [],
+                ],
+            },
+            semicolon_token: missing (optional),
         },
-        JsUnknownStatement {
-            items: [
-                TYPE_KW@47..53 "type" [Newline("\n")] [Whitespace(" ")],
-                TsIdentifierBinding {
-                    name_token: IDENT@53..55 "D" [] [Whitespace(" ")],
-                },
-                EQ@55..57 "=" [] [Whitespace(" ")],
-                JsUnknown {
-                    items: [
-                        BACKTICK@57..58 "`" [] [],
-                        JsUnknown {
-                            items: [
-                                JsUnknown {
-                                    items: [
-                                        DOLLAR_CURLY@58..60 "${" [] [],
-                                        TsReferenceType {
-                                            name: JsReferenceIdentifier {
-                                                value_token: IDENT@60..62 "A" [] [Whitespace(" ")],
-                                            },
-                                            type_arguments: missing (optional),
+        TsTypeAliasDeclaration {
+            type_token: TYPE_KW@47..53 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@53..55 "D" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            eq_token: EQ@55..57 "=" [] [Whitespace(" ")],
+            ty: TsBogusType {
+                items: [
+                    BACKTICK@57..58 "`" [] [],
+                    JsBogus {
+                        items: [
+                            JsBogus {
+                                items: [
+                                    DOLLAR_CURLY@58..60 "${" [] [],
+                                    TsReferenceType {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@60..62 "A" [] [Whitespace(" ")],
                                         },
-                                        JsUnknown {
-                                            items: [
-                                                IDENT@62..63 "B" [] [],
-                                            ],
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                        BACKTICK@63..64 "`" [] [],
-                    ],
-                },
-            ],
+                                        type_arguments: missing (optional),
+                                    },
+                                    JsBogus {
+                                        items: [
+                                            IDENT@62..63 "B" [] [],
+                                        ],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                    BACKTICK@63..64 "`" [] [],
+                ],
+            },
+            semicolon_token: missing (optional),
         },
     ],
     eof_token: EOF@64..65 "" [Newline("\n")] [],
@@ -126,43 +126,47 @@ JsModule {
       4: TS_STRING_LITERAL_TYPE@23..26
         0: JS_STRING_LITERAL@23..26 "\"b\"" [] []
       5: (empty)
-    2: JS_UNKNOWN_STATEMENT@26..47
+    2: TS_TYPE_ALIAS_DECLARATION@26..47
       0: TYPE_KW@26..32 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@32..34
         0: IDENT@32..34 "C" [] [Whitespace(" ")]
-      2: EQ@34..36 "=" [] [Whitespace(" ")]
-      3: JS_UNKNOWN@36..47
+      2: (empty)
+      3: EQ@34..36 "=" [] [Whitespace(" ")]
+      4: TS_BOGUS_TYPE@36..47
         0: BACKTICK@36..37 "`" [] []
-        1: JS_UNKNOWN@37..46
-          0: JS_UNKNOWN@37..43
+        1: JS_BOGUS@37..46
+          0: JS_BOGUS@37..43
             0: DOLLAR_CURLY@37..39 "${" [] []
             1: TS_REFERENCE_TYPE@39..41
               0: JS_REFERENCE_IDENTIFIER@39..41
                 0: IDENT@39..41 "A" [] [Whitespace(" ")]
               1: (empty)
-            2: JS_UNKNOWN@41..42
+            2: JS_BOGUS@41..42
               0: IDENT@41..42 "B" [] []
             3: R_CURLY@42..43 "}" [] []
           1: TS_TEMPLATE_CHUNK_ELEMENT@43..46
             0: TEMPLATE_CHUNK@43..46 "bcd" [] []
         2: BACKTICK@46..47 "`" [] []
-    3: JS_UNKNOWN_STATEMENT@47..64
+      5: (empty)
+    3: TS_TYPE_ALIAS_DECLARATION@47..64
       0: TYPE_KW@47..53 "type" [Newline("\n")] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@53..55
         0: IDENT@53..55 "D" [] [Whitespace(" ")]
-      2: EQ@55..57 "=" [] [Whitespace(" ")]
-      3: JS_UNKNOWN@57..64
+      2: (empty)
+      3: EQ@55..57 "=" [] [Whitespace(" ")]
+      4: TS_BOGUS_TYPE@57..64
         0: BACKTICK@57..58 "`" [] []
-        1: JS_UNKNOWN@58..63
-          0: JS_UNKNOWN@58..63
+        1: JS_BOGUS@58..63
+          0: JS_BOGUS@58..63
             0: DOLLAR_CURLY@58..60 "${" [] []
             1: TS_REFERENCE_TYPE@60..62
               0: JS_REFERENCE_IDENTIFIER@60..62
                 0: IDENT@60..62 "A" [] [Whitespace(" ")]
               1: (empty)
-            2: JS_UNKNOWN@62..63
+            2: JS_BOGUS@62..63
               0: IDENT@62..63 "B" [] []
         2: BACKTICK@63..64 "`" [] []
+      5: (empty)
   3: EOF@64..65 "" [Newline("\n")] []
 --
 ts_template_literal_error.ts:3:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

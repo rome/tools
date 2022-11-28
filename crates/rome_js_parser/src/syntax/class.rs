@@ -148,7 +148,7 @@ pub(super) fn parse_class_declaration(p: &mut JsParser, context: StatementContex
 
     let mut class = parse_class(p, ClassKind::Declaration);
 
-    if !class.kind(p).is_unknown() && context.is_single_statement() {
+    if !class.kind(p).is_bogus() && context.is_single_statement() {
         // test_err class_in_single_statement_context
         // if (true) class A {}
         p.error(
@@ -158,7 +158,7 @@ pub(super) fn parse_class_declaration(p: &mut JsParser, context: StatementContex
             )
             .hint("wrap the class in a block statement"),
         );
-        class.change_to_unknown(p)
+        class.change_to_bogus(p)
     }
 
     Present(class)
@@ -333,7 +333,7 @@ fn eat_class_heritage_clause(p: &mut JsParser) {
                                     "classes can only implement interfaces in TypeScript files",
                                     current.range(p),
                                 ));
-                                current.change_to_unknown(p);
+                                current.change_to_bogus(p);
                             }
                             Some(current)
                         }
@@ -388,7 +388,7 @@ fn parse_extends_clause(p: &mut JsParser) -> ParsedSyntax {
 
         parse_ts_type_arguments(p).ok();
 
-        let extra_class = extra.complete(p, JS_UNKNOWN);
+        let extra_class = extra.complete(p, JS_BOGUS);
 
         p.error(p.err_builder(
             "Classes can only extend a single class.",
@@ -441,7 +441,7 @@ impl ParseNodeList for ClassMembersList {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
-                JS_UNKNOWN_MEMBER,
+                JS_BOGUS_MEMBER,
                 token_set![
                     T![;],
                     T![ident],
@@ -522,7 +522,7 @@ fn parse_class_member(p: &mut JsParser, inside_abstract_class: bool) -> ParsedSy
             let modifiers_valid = modifiers.validate_and_complete(p, member.kind(p));
 
             if !valid || !modifiers_valid {
-                member.change_to_unknown(p);
+                member.change_to_bogus(p);
             }
 
             Present(member)
@@ -812,14 +812,14 @@ fn parse_class_member_impl(
             // class B { set: String; get: Number }
             let mut property = parse_property_class_member_body(p, member_marker, modifiers);
 
-            if !property.kind(p).is_unknown() && is_constructor {
+            if !property.kind(p).is_bogus() && is_constructor {
                 let err = p.err_builder(
                     "class properties may not be called `constructor`",
                     property.range(p),
                 );
 
                 p.error(err);
-                property.change_to_unknown(p);
+                property.change_to_bogus(p);
             }
 
             Present(property)
@@ -1059,7 +1059,7 @@ fn parse_ts_property_annotation(
 
             p.error(error);
 
-            m.complete(p, JS_UNKNOWN)
+            m.complete(p, JS_BOGUS)
         }
         // handled by the test at the beginning of the function that returns if the parser isn't at a
         // ! or ? token.
@@ -1067,7 +1067,7 @@ fn parse_ts_property_annotation(
     };
 
     if !valid {
-        annotation.change_to_unknown(p);
+        annotation.change_to_bogus(p);
     }
 
     Present(annotation)
@@ -1180,7 +1180,7 @@ fn parse_method_class_member_rest(
             &modifiers.get_first_range_unchecked(ModifierKind::Abstract),
         );
         p.error(err);
-        member.change_to_unknown(p);
+        member.change_to_bogus(p);
     } else if flags.contains(SignatureFlags::GENERATOR) && member_kind.is_signature() {
         // test_err ts ts_method_signature_generator
         // declare class A { * method(); }
@@ -1200,10 +1200,10 @@ fn parse_method_class_member_rest(
             "'async' modifier cannot be used in an ambient context.",
             member.range(p),
         ));
-        member.change_to_unknown(p);
+        member.change_to_bogus(p);
     } else if optional.is_err() {
         // error already emitted by `optional_member_token()`
-        member.change_to_unknown(p);
+        member.change_to_bogus(p);
     }
 
     member
@@ -1500,7 +1500,7 @@ fn parse_constructor_parameter(p: &mut JsParser, context: ExpressionContext) -> 
         let kind = if modifiers.validate_and_complete(p, TS_PROPERTY_PARAMETER) {
             TS_PROPERTY_PARAMETER
         } else {
-            JS_UNKNOWN_PARAMETER
+            JS_BOGUS_PARAMETER
         };
 
         Present(property_parameter.complete(p, kind))
@@ -1513,7 +1513,7 @@ fn parse_constructor_parameter(p: &mut JsParser, context: ExpressionContext) -> 
                     "A constructor cannot have a 'this' parameter.",
                     parameter.range(p),
                 ));
-                parameter.change_to_unknown(p);
+                parameter.change_to_bogus(p);
             }
             parameter
         })
@@ -1613,9 +1613,9 @@ fn parse_class_member_modifiers(
     }
 
     // It's unclear what kind of list this is supposed to be at this moment.
-    // Create an `UNKNOWN` node. The list type gets changed later on by calling
+    // Create an `JS_BOGUS` node. The list type gets changed later on by calling
     // `complete` or `abandon` when the member kind is known,
-    let list = list.complete(p, JS_UNKNOWN);
+    let list = list.complete(p, JS_BOGUS);
     ClassMemberModifiers::new(modifiers, list, flags)
 }
 
@@ -1857,7 +1857,7 @@ impl ClassMemberModifiers {
             }
             TS_INDEX_SIGNATURE_CLASS_MEMBER => TS_INDEX_SIGNATURE_MODIFIER_LIST,
             TS_PROPERTY_PARAMETER => TS_PROPERTY_PARAMETER_MODIFIER_LIST,
-            JS_UNKNOWN_MEMBER | JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER => {
+            JS_BOGUS_MEMBER | JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER => {
                 // Error recovery kicked in. There's no "right" list to pick in this case, let's just remove it
                 self.list_marker.undo_completion(p).abandon(p);
                 return false;
@@ -2036,7 +2036,7 @@ impl ClassMemberModifiers {
                     JS_PROPERTY_CLASS_MEMBER
                         | TS_PROPERTY_SIGNATURE_CLASS_MEMBER
                         | TS_INDEX_SIGNATURE_CLASS_MEMBER
-                        | JS_UNKNOWN_MEMBER
+                        | JS_BOGUS_MEMBER
                         | TS_PROPERTY_PARAMETER
                 ) {
                     // test_err ts ts_readonly_modifier_non_class_or_indexer
@@ -2107,7 +2107,7 @@ impl ClassMemberModifiers {
                         | TS_SETTER_SIGNATURE_CLASS_MEMBER
                         | JS_GETTER_CLASS_MEMBER
                         | TS_GETTER_SIGNATURE_CLASS_MEMBER
-                        | JS_UNKNOWN_MEMBER
+                        | JS_BOGUS_MEMBER
                 ) {
                     return Some(
                         p.err_builder("'abstract' modifier can only appear on a class, method or property declaration.",modifier.as_text_range(), )

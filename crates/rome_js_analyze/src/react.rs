@@ -258,7 +258,7 @@ fn is_named_react_export(binding: Binding, lib: ReactLibrary, name: &str) -> Opt
             named_import.name().ok()?.value().ok()?
         }
         JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(_) => ident.name_token().ok()?,
-        JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(_) => {
+        JsAnyNamedImportSpecifier::JsBogusNamedImportSpecifier(_) => {
             return Some(false);
         }
     };

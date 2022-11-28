@@ -290,7 +290,7 @@ fn with_object_binding_pat_identifiers(
                 P::JsObjectBindingPatternShorthandProperty(p) => p
                     .identifier()
                     .map_or(false, |it| with_binding_identifier(it, f)),
-                P::JsUnknownBinding(_) => false,
+                P::JsBogusBinding(_) => false,
             }
         })
 }
@@ -320,7 +320,7 @@ fn with_binding_identifier(
 ) -> bool {
     match binding {
         JsAnyBinding::JsIdentifierBinding(id) => f(id),
-        JsAnyBinding::JsUnknownBinding(_) => false,
+        JsAnyBinding::JsBogusBinding(_) => false,
     }
 }
 
@@ -401,9 +401,7 @@ fn has_member_expr_in_object_assign_pat(pat: JsObjectAssignmentPattern) -> bool 
                 P::JsObjectAssignmentPatternRest(p) => {
                     p.target().map_or(false, is_member_expr_assignment)
                 }
-                P::JsObjectAssignmentPatternShorthandProperty(_) | P::JsUnknownAssignment(_) => {
-                    false
-                }
+                P::JsObjectAssignmentPatternShorthandProperty(_) | P::JsBogusAssignment(_) => false,
             }
         })
 }
@@ -455,7 +453,7 @@ fn has_outer_variables_in_array_assign_pat(pat: JsObjectAssignmentPattern, scope
                 P::JsObjectAssignmentPatternShorthandProperty(p) => p
                     .identifier()
                     .map_or(false, |it| is_outer_ident_in_assignment(it, scope)),
-                P::JsUnknownAssignment(_) => false,
+                P::JsBogusAssignment(_) => false,
             }
         })
 }

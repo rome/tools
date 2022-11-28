@@ -52,12 +52,12 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::JsonStringValue::new_unchecked(node) };
                     $body
                 }
-                $crate::JsonSyntaxKind::JSON_UNKNOWN => {
-                    let $pattern = unsafe { $crate::JsonUnknown::new_unchecked(node) };
+                $crate::JsonSyntaxKind::JSON_BOGUS => {
+                    let $pattern = unsafe { $crate::JsonBogus::new_unchecked(node) };
                     $body
                 }
-                $crate::JsonSyntaxKind::JSON_UNKNOWN_VALUE => {
-                    let $pattern = unsafe { $crate::JsonUnknownValue::new_unchecked(node) };
+                $crate::JsonSyntaxKind::JSON_BOGUS_VALUE => {
+                    let $pattern = unsafe { $crate::JsonBogusValue::new_unchecked(node) };
                     $body
                 }
                 $crate::JsonSyntaxKind::JSON_ARRAY_ELEMENT_LIST => {

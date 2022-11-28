@@ -15,7 +15,7 @@ impl FormatRule<TsAnyTypeMember> for FormatTsAnyTypeMember {
             TsAnyTypeMember::TsGetterSignatureTypeMember(node) => node.format().fmt(f),
             TsAnyTypeMember::TsSetterSignatureTypeMember(node) => node.format().fmt(f),
             TsAnyTypeMember::TsIndexSignatureTypeMember(node) => node.format().fmt(f),
-            TsAnyTypeMember::JsUnknownMember(node) => node.format().fmt(f),
+            TsAnyTypeMember::JsBogusMember(node) => node.format().fmt(f),
         }
     }
 }
