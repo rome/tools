@@ -753,6 +753,8 @@ struct NurserySchema {
     no_header_scope: Option<RuleConfiguration>,
     #[doc = "Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors."]
     no_invalid_constructor_super: Option<RuleConfiguration>,
+    #[doc = "Disallow non-null assertions using the ! postfix operator."]
+    no_non_null_assertion: Option<RuleConfiguration>,
     #[doc = "Disallow literal numbers that lose precision"]
     no_precision_loss: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a setter"]
@@ -782,7 +784,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 25] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 26] = [
         "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
@@ -795,6 +797,7 @@ impl Nursery {
         "noExtraNonNullAssertion",
         "noHeaderScope",
         "noInvalidConstructorSuper",
+        "noNonNullAssertion",
         "noPrecisionLoss",
         "noSetterReturn",
         "noStringCaseMismatch",

@@ -149,13 +149,8 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"function f() {
-            return (
-                <div
-                ><img /></div>
-            )
-        };
-        f();
+        const SOURCE: &str = r#"const x = {};
+        x!!.y;
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
