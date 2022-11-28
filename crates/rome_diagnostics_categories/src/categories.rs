@@ -79,6 +79,7 @@ define_dategories! {
     "lint/nursery/noBannedTypes":"https://docs.rome.tools/lint/rules/noBannedTypes",
     "lint/nursery/noConditionalAssignment": "https://docs.rome.tools/lint/rules/noConditionalAssignment",
     "lint/nursery/noConstAssign": "https://docs.rome.tools/lint/rules/noConstAssign",
+    "lint/nursery/noConstEnum": "https://docs.rome.tools/lint/rules/noConstEnum",
     "lint/nursery/noDistractingElements": "https://docs.rome.tools/lint/rules/noDistractingElements",
     "lint/nursery/noConstructorReturn": "https://docs.rome.tools/lint/rules/noConstructorReturn",
     "lint/nursery/noSetterReturn": "https://docs.rome.tools/lint/rules/noSetterReturn",

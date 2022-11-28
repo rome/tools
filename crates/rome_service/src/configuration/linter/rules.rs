@@ -737,6 +737,8 @@ struct NurserySchema {
     no_conditional_assignment: Option<RuleConfiguration>,
     #[doc = "Prevents from having const variables being re-assigned."]
     no_const_assign: Option<RuleConfiguration>,
+    #[doc = "Disallow TypeScript const enum"]
+    no_const_enum: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a constructor"]
     no_constructor_return: Option<RuleConfiguration>,
     #[doc = "Enforces that no distracting elements are used."]
@@ -782,11 +784,12 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 25] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 26] = [
         "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
         "noConstAssign",
+        "noConstEnum",
         "noConstructorReturn",
         "noDistractingElements",
         "noDupeKeys",
