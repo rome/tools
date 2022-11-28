@@ -499,7 +499,6 @@ fn applies_custom_trailing_comma() {
     file.read_to_string(&mut content)
         .expect("failed to read file from memory FS");
 
-    dbg!(&content);
     assert_eq!(content, APPLY_TRAILING_COMMA_AFTER);
 
     drop(file);
@@ -572,7 +571,6 @@ fn with_semicolons_options() {
     file.read_to_string(&mut content)
         .expect("failed to read file from memory FS");
 
-    dbg!(&content);
     assert_eq!(content, "statement()\n");
 
     drop(file);
