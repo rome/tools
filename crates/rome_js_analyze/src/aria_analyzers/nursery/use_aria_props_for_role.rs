@@ -2,7 +2,7 @@ use crate::aria_services::Aria;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::jsx_ext::JsxAnyElement;
+use rome_js_syntax::jsx_ext::AnyJsxElement;
 use rome_js_syntax::JsxAttribute;
 use rome_rowan::AstNode;
 
@@ -43,7 +43,7 @@ impl UseAriaPropsForRoleState {
 }
 
 impl Rule for UseAriaPropsForRole {
-    type Query = Aria<JsxAnyElement>;
+    type Query = Aria<AnyJsxElement>;
     type State = UseAriaPropsForRoleState;
     type Signals = Option<Self::State>;
     type Options = ();
@@ -52,14 +52,8 @@ impl Rule for UseAriaPropsForRole {
         let node = ctx.query();
         let roles = ctx.aria_roles();
 
-        let role_attribute = match node {
-            JsxAnyElement::JsxSelfClosingElement(element) => {
-                element.attributes().find_by_name("role").ok()?
-            }
-            JsxAnyElement::JsxOpeningElement(element) => {
-                element.attributes().find_by_name("role").ok()?
-            }
-        }?;
+        let role_attribute = node.find_attribute_by_name("role")?;
+
         let name = role_attribute
             .initializer()?
             .value()
@@ -80,13 +74,13 @@ impl Rule for UseAriaPropsForRole {
                     }
                 }
             }
-            return Some(UseAriaPropsForRoleState {
+            Some(UseAriaPropsForRoleState {
                 attribute: Some((role_attribute, name.text().to_string())),
                 missing_aria_props,
-            });
+            })
+        } else {
+            Some(UseAriaPropsForRoleState::default())
         }
-
-        Some(UseAriaPropsForRoleState::default())
     }
 
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
