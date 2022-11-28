@@ -709,11 +709,8 @@ export type Category =
 	| "lint/a11y"
 	| "lint/security"
 	| "lint/nursery"
-<<<<<<< HEAD
-	| "suppressions/parse"
-=======
 	| "lint/configuration"
->>>>>>> a7ec7fa340 (codegen issues)
+	| "suppressions/parse"
 	| "suppressions/unknownGroup"
 	| "suppressions/unknownRule"
 	| "suppressions/unused"
