@@ -36,9 +36,9 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
                 make::js_parameters(
                     make::token(T!['(']),
                     make::js_parameter_list(
-                        Some(AnyJsParameter::JsAnyFormalParameter(
+                        Some(AnyJsParameter::AnyJsFormalParameter(
                             AnyJsFormalParameter::JsFormalParameter(
-                                make::js_formal_parameter(AnyJsBindingPattern::JsAnyBinding(
+                                make::js_formal_parameter(AnyJsBindingPattern::AnyJsBinding(
                                     AnyJsBinding::JsIdentifierBinding(make::js_identifier_binding(
                                         make::ident("params"),
                                     )),
@@ -57,7 +57,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
             )
             .with_return_type_annotation(make::ts_return_type_annotation(
                 make::token(T![:]),
-                AnyTsReturnType::TsType(AnyTsType::TsReferenceType(
+                AnyTsReturnType::AnyTsType(AnyTsType::TsReferenceType(
                     make::ts_reference_type(AnyTsName::JsReferenceIdentifier(
                         make::js_reference_identifier(make::ident("Promise")),
                     ))
@@ -80,9 +80,9 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
                 make::js_parameters(
                     make::token(T!['(']),
                     make::js_parameter_list(
-                        Some(AnyJsParameter::JsAnyFormalParameter(
+                        Some(AnyJsParameter::AnyJsFormalParameter(
                             AnyJsFormalParameter::JsFormalParameter(
-                                make::js_formal_parameter(AnyJsBindingPattern::JsAnyBinding(
+                                make::js_formal_parameter(AnyJsBindingPattern::AnyJsBinding(
                                     AnyJsBinding::JsIdentifierBinding(make::js_identifier_binding(
                                         make::ident("params"),
                                     )),
@@ -202,7 +202,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
         }
         AnyJsModuleItem::JsExport(make::js_export(
             export,
-            AnyJsExportClause::JsAnyDeclarationClause(match decl {
+            AnyJsExportClause::AnyJsDeclarationClause(match decl {
                 AnyJsDeclaration::JsClassDeclaration(decl) => {
                     AnyJsDeclarationClause::JsClassDeclaration(decl)
                 }
@@ -255,7 +255,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
         )
         .with_return_type_annotation(make::ts_return_type_annotation(
             make::token(T![:]),
-            AnyTsReturnType::TsType(AnyTsType::TsVoidType(make::ts_void_type(make::token(T![
+            AnyTsReturnType::AnyTsType(AnyTsType::TsVoidType(make::ts_void_type(make::token(T![
                 void
             ])))),
         ))
@@ -307,7 +307,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
 
     items.push(AnyJsModuleItem::JsExport(make::js_export(
         make::token(T![export]),
-        AnyJsExportClause::JsAnyDeclarationClause(AnyJsDeclarationClause::TsInterfaceDeclaration(
+        AnyJsExportClause::AnyJsDeclarationClause(AnyJsDeclarationClause::TsInterfaceDeclaration(
             make::ts_interface_declaration(
                 make::token(T![interface]),
                 make::ts_identifier_binding(make::ident("Workspace")),
@@ -323,7 +323,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
 
     items.push(AnyJsModuleItem::JsExport(make::js_export(
         make::token(T![export]),
-        AnyJsExportClause::JsAnyDeclarationClause(AnyJsDeclarationClause::JsFunctionDeclaration(
+        AnyJsExportClause::AnyJsDeclarationClause(AnyJsDeclarationClause::JsFunctionDeclaration(
             make::js_function_declaration(
                 make::token(T![function]),
                 AnyJsBinding::JsIdentifierBinding(make::js_identifier_binding(make::ident(
@@ -332,9 +332,9 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
                 make::js_parameters(
                     make::token(T!['(']),
                     make::js_parameter_list(
-                        Some(AnyJsParameter::JsAnyFormalParameter(
+                        Some(AnyJsParameter::AnyJsFormalParameter(
                             AnyJsFormalParameter::JsFormalParameter(
-                                make::js_formal_parameter(AnyJsBindingPattern::JsAnyBinding(
+                                make::js_formal_parameter(AnyJsBindingPattern::AnyJsBinding(
                                     AnyJsBinding::JsIdentifierBinding(make::js_identifier_binding(
                                         make::ident("transport"),
                                     )),
@@ -377,7 +377,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
             )
             .with_return_type_annotation(make::ts_return_type_annotation(
                 make::token(T![:]),
-                AnyTsReturnType::TsType(AnyTsType::TsReferenceType(
+                AnyTsReturnType::AnyTsType(AnyTsType::TsReferenceType(
                     make::ts_reference_type(AnyTsName::JsReferenceIdentifier(
                         make::js_reference_identifier(make::ident("Workspace")),
                     ))
