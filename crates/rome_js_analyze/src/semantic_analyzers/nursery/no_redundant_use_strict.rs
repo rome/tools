@@ -1,8 +1,8 @@
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{JsDirective, JsDirectiveList, JsLanguage, JsModule, TextRange};
-use rome_rowan::{AstNode, BatchMutationExt, SyntaxNode};
+use rome_js_syntax::{JsDirective, JsModule};
+use rome_rowan::{AstNode, BatchMutationExt};
 
 use crate::{semantic_services::Semantic, JsRuleAction};
 
@@ -12,7 +12,11 @@ declare_rule! {
  /// ## Examples
  ///
  /// ### Invalid
- ///
+ /// "use strict";
+ /// function test() {
+ ///  	"use strict";
+ /// }
+
  pub(crate) NoRedundantUseStrict {
      version: "0.10.0",
      name: "NoRedundantUseStrict",
