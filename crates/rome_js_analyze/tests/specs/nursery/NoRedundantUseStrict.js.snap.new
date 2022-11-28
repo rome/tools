@@ -1,0 +1,68 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 73
+expression: NoRedundantUseStrict.js
+---
+# Input
+```js
+function test() {
+	"use strict";
+	function inner_a() {
+		"use strict"; // redundant directive
+	}
+	function inner_b() {
+		function inner_inner() {
+			"use strict"; // additional redundant directive
+		}
+	}
+}
+
+```
+
+# Diagnostics
+```
+NoRedundantUseStrict.js:2:2 lint/nursery/NoRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Cannot have redundant directive of "use strict".
+  
+    1 │ function test() {
+  > 2 │ 	"use strict";
+      │ 	^^^^^^^^^^^^^
+    3 │ 	function inner_a() {
+    4 │ 		"use strict"; // redundant directive
+  
+  i This is where the redundant "use strict" is declared.
+  
+    2 │ 	"use strict";
+    3 │ 	function inner_a() {
+  > 4 │ 		"use strict"; // redundant directive
+      │ 		^^^^^^^^^^^^^
+    5 │ 	}
+    6 │ 	function inner_b() {
+  
+  i This is where the redundant "use strict" is declared.
+  
+     6 │ 	function inner_b() {
+     7 │ 		function inner_inner() {
+   > 8 │ 			"use strict"; // additional redundant directive
+       │ 			^^^^^^^^^^^^^
+     9 │ 		}
+    10 │ 	}
+  
+  i Suggested fix: Remove redundant use strict
+  
+     2  2 │   	"use strict";
+     3  3 │   	function inner_a() {
+     4    │ - → → "use·strict";·//·redundant·directive
+     5    │ - → }
+        4 │ + → }
+     6  5 │   	function inner_b() {
+     7  6 │   		function inner_inner() {
+     8    │ - → → → "use·strict";·//·additional·redundant·directive
+     9  7 │   		}
+    10  8 │   	}
+  
+
+```
+
+

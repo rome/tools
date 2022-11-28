@@ -100,6 +100,7 @@ define_dategories! {
     "lint/nursery/useFlatMap": "https://docs.rome.tools/lint/rules/useFlatMap",
     "lint/nursery/useNumericLiterals": "https://docs.rome.tools/lint/rules/useNumericLiterals",
     "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
+    "lint/nursery/NoRedundantUseStrict": "https://docs.rome.tools/lint/rules/useValidForDirection",
 
     ;
 
