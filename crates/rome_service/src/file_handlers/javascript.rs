@@ -240,8 +240,13 @@ fn lint(params: LintParams) -> LintResults {
             let severity = diagnostic
                 .category()
                 .filter(|category| category.name().starts_with("lint/"))
-                .and_then(|category| params.rules.as_ref()?.get_severity_from_code(category))
-                .unwrap_or(Severity::Warning);
+                .map(|category| {
+                    params
+                        .rules
+                        .and_then(|rules| rules.get_severity_from_code(category))
+                        .unwrap_or(Severity::Warning)
+                })
+                .unwrap_or_else(|| diagnostic.severity());
 
             if severity <= Severity::Error {
                 errors += 1;

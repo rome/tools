@@ -127,6 +127,7 @@ define_dategories! {
     "lint/nursery",
 
     // Suppression comments
+    "suppressions/parse",
     "suppressions/unknownGroup",
     "suppressions/unknownRule",
     "suppressions/unused",

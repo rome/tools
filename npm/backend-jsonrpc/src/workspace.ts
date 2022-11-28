@@ -709,6 +709,7 @@ export type Category =
 	| "lint/a11y"
 	| "lint/security"
 	| "lint/nursery"
+	| "suppressions/parse"
 	| "suppressions/unknownGroup"
 	| "suppressions/unknownRule"
 	| "suppressions/unused"

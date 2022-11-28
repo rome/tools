@@ -136,6 +136,7 @@ impl CommentStyle for JsCommentStyle {
 
     fn is_suppression(text: &str) -> bool {
         parse_suppression_comment(text)
+            .filter_map(Result::ok)
             .flat_map(|suppression| suppression.categories)
             .any(|(key, _)| key == category!("format"))
     }

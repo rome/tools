@@ -43,7 +43,9 @@ pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
 pub use crate::syntax::SyntaxVisitor;
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
 use rome_console::markup;
-use rome_diagnostics::{category, Applicability, DiagnosticTags, FileId};
+use rome_diagnostics::{
+    category, Applicability, Diagnostic, DiagnosticExt, DiagnosticTags, FileId,
+};
 use rome_rowan::{
     AstNode, BatchMutation, Direction, Language, SyntaxElement, SyntaxToken, TextRange, TextSize,
     TokenAtOffset, TriviaPieceKind, WalkEvent,
@@ -55,7 +57,7 @@ use rome_rowan::{
 /// auxiliary data structures as well as emit "query match" events to be
 /// processed by lint rules and in turn emit "analyzer signals" in the form of
 /// diagnostics, code actions or both
-pub struct Analyzer<'analyzer, L: Language, Matcher, Break> {
+pub struct Analyzer<'analyzer, L: Language, Matcher, Break, Diag> {
     /// List of visitors being run by this instance of the analyzer for each phase
     phases: BTreeMap<Phases, Vec<Box<dyn Visitor<Language = L> + 'analyzer>>>,
     /// Holds the metadata for all the rules statically known to the analyzer
@@ -63,7 +65,7 @@ pub struct Analyzer<'analyzer, L: Language, Matcher, Break> {
     /// Executor for the query matches emitted by the visitors
     query_matcher: Matcher,
     /// Language-specific suppression comment parsing function
-    parse_suppression_comment: SuppressionParser,
+    parse_suppression_comment: SuppressionParser<Diag>,
     /// Language-specific suppression comment emitter
     apply_suppression_comment: SuppressionCommentEmitter<L>,
     /// Handles analyzer signals emitted by individual rules
@@ -78,17 +80,18 @@ pub struct AnalyzerContext<'a, L: Language> {
     pub options: &'a AnalyzerOptions,
 }
 
-impl<'analyzer, L, Matcher, Break> Analyzer<'analyzer, L, Matcher, Break>
+impl<'analyzer, L, Matcher, Break, Diag> Analyzer<'analyzer, L, Matcher, Break, Diag>
 where
     L: Language,
     Matcher: QueryMatcher<L>,
+    Diag: Diagnostic + Clone + Send + Sync + 'static,
 {
     /// Construct a new instance of the analyzer with the given rule registry
     /// and suppression comment parser
     pub fn new(
         metadata: &'analyzer MetadataRegistry,
         query_matcher: Matcher,
-        parse_suppression_comment: SuppressionParser,
+        parse_suppression_comment: SuppressionParser<Diag>,
         apply_suppression_comment: SuppressionCommentEmitter<L>,
         emit_signal: SignalHandler<'analyzer, L, Break>,
     ) -> Self {
@@ -192,7 +195,7 @@ where
 }
 
 /// Holds all the state required to run a single analysis phase to completion
-struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break> {
+struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break, Diag> {
     /// Identifier of the phase this runner is executing
     phase: Phases,
     /// List of visitors being run by this instance of the analyzer for each phase
@@ -204,7 +207,7 @@ struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break> {
     /// Queue for pending analyzer signals
     signal_queue: BinaryHeap<SignalEntry<'phase, L>>,
     /// Language-specific suppression comment parsing function
-    parse_suppression_comment: SuppressionParser,
+    parse_suppression_comment: SuppressionParser<Diag>,
     /// Language-specific suppression comment emitter
     apply_suppression_comment: SuppressionCommentEmitter<L>,
     /// Line index at the current position of the traversal
@@ -245,10 +248,11 @@ struct LineSuppression {
     did_suppress_signal: bool,
 }
 
-impl<'a, 'phase, L, Matcher, Break> PhaseRunner<'a, 'phase, L, Matcher, Break>
+impl<'a, 'phase, L, Matcher, Break, Diag> PhaseRunner<'a, 'phase, L, Matcher, Break, Diag>
 where
     L: Language,
     Matcher: QueryMatcher<L>,
+    Diag: Diagnostic + Clone + Send + Sync + 'static,
 {
     /// Runs phase 0 over nodes and tokens to process line breaks and
     /// suppression comments
@@ -456,7 +460,22 @@ where
         let mut suppressions = Vec::new();
         let mut has_legacy = false;
 
-        for kind in (self.parse_suppression_comment)(text) {
+        for result in (self.parse_suppression_comment)(text) {
+            let kind = match result {
+                Ok(kind) => kind,
+                Err(diag) => {
+                    // Emit the suppression parser diagnostic
+                    let signal = DiagnosticSignal::new(move || {
+                        let location = diag.location();
+                        let span = location.span.map_or(range, |span| span + range.start());
+                        diag.clone().with_file_path(file_id).with_file_span(span)
+                    });
+
+                    (self.emit_signal)(&signal)?;
+                    continue;
+                }
+            };
+
             let rule = match kind {
                 SuppressionKind::Everything => None,
                 SuppressionKind::Rule(rule) => Some(rule),
@@ -614,7 +633,7 @@ fn range_match(filter: Option<TextRange>, range: TextRange) -> bool {
 /// - `// rome-ignore lint/correctness/useWhile lint/nursery/noUnreachable` -> `vec![Rule("correctness/useWhile"), Rule("nursery/noUnreachable")]`
 /// - `// rome-ignore lint(correctness/useWhile)` -> `vec![MaybeLegacy("correctness/useWhile")]`
 /// - `// rome-ignore lint(correctness/useWhile) lint(nursery/noUnreachable)` -> `vec![MaybeLegacy("correctness/useWhile"), MaybeLegacy("nursery/noUnreachable")]`
-type SuppressionParser = fn(&str) -> Vec<SuppressionKind>;
+type SuppressionParser<D> = fn(&str) -> Vec<Result<SuppressionKind, D>>;
 
 /// This enum is used to categorize what is disabled by a suppression comment and with what syntax
 pub enum SuppressionKind<'a> {

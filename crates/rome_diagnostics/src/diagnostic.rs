@@ -1,4 +1,4 @@
-use std::{fmt::Debug, io};
+use std::{convert::Infallible, fmt::Debug, io};
 
 use bitflags::bitflags;
 use serde::{Deserialize, Serialize};
@@ -148,6 +148,11 @@ bitflags! {
         const DEPRECATED_CODE = 1 << DiagnosticTag::DeprecatedCode as u8;
     }
 }
+
+// Implement the `Diagnostic` on the `Infallible` error type from the standard
+// library as a utility for implementing signatures that require a diagnostic
+// type when the operation can never fail
+impl Diagnostic for Infallible {}
 
 pub(crate) mod internal {
     //! The `AsDiagnostic` trait needs to be declared as public as its referred

@@ -7,6 +7,7 @@ use rome_analyze::{
 use rome_aria::{AriaProperties, AriaRoles};
 use rome_diagnostics::{category, FileId};
 use rome_js_factory::make::{jsx_expression_child, token};
+use rome_js_syntax::suppression::SuppressionDiagnostic;
 use rome_js_syntax::{
     suppression::parse_suppression_comment, AnyJsxChild, JsLanguage, JsSyntaxToken, T,
 };
@@ -67,22 +68,37 @@ where
     F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
     B: 'a,
 {
-    fn parse_linter_suppression_comment(text: &str) -> Vec<SuppressionKind> {
-        parse_suppression_comment(text)
-            .flat_map(|comment| comment.categories)
-            .filter_map(|(key, value)| {
+    fn parse_linter_suppression_comment(
+        text: &str,
+    ) -> Vec<Result<SuppressionKind, SuppressionDiagnostic>> {
+        let mut result = Vec::new();
+
+        for comment in parse_suppression_comment(text) {
+            let categories = match comment {
+                Ok(comment) => comment.categories,
+                Err(err) => {
+                    result.push(Err(err));
+                    continue;
+                }
+            };
+
+            for (key, value) in categories {
                 if key == category!("lint") {
                     if let Some(value) = value {
-                        Some(SuppressionKind::MaybeLegacy(value))
+                        result.push(Ok(SuppressionKind::MaybeLegacy(value)));
                     } else {
-                        Some(SuppressionKind::Everything)
+                        result.push(Ok(SuppressionKind::Everything));
                     }
                 } else {
                     let category = key.name();
-                    category.strip_prefix("lint/").map(SuppressionKind::Rule)
+                    if let Some(rule) = category.strip_prefix("lint/") {
+                        result.push(Ok(SuppressionKind::Rule(rule)));
+                    }
                 }
-            })
-            .collect()
+            }
+        }
+
+        result
     }
 
     let mut registry = RuleRegistry::builder(&filter);
@@ -239,11 +255,19 @@ mod tests {
             function checkSuppressions4(a, b) {
                 a == b;
             }
+
+            function checkSuppressions5() {
+                // rome-ignore format explanation
+                // rome-ignore format(:
+                // rome-ignore (value): explanation
+                // rome-ignore unknown: explanation
+            }
         ";
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::js_module());
 
-        let mut error_ranges: Vec<TextRange> = Vec::new();
+        let mut lint_ranges: Vec<TextRange> = Vec::new();
+        let mut parse_ranges: Vec<TextRange> = Vec::new();
         let mut warn_ranges: Vec<TextRange> = Vec::new();
 
         let options = AnalyzerOptions::default();
@@ -262,7 +286,11 @@ mod tests {
 
                     let code = error.category().unwrap();
                     if code == category!("lint/correctness/noDoubleEquals") {
-                        error_ranges.push(span.unwrap());
+                        lint_ranges.push(span.unwrap());
+                    }
+
+                    if code == category!("suppressions/parse") {
+                        parse_ranges.push(span.unwrap());
                     }
 
                     if code == category!("suppressions/deprecatedSyntax") {
@@ -276,7 +304,7 @@ mod tests {
         );
 
         assert_eq!(
-            error_ranges.as_slice(),
+            lint_ranges.as_slice(),
             &[
                 TextRange::new(TextSize::from(67), TextSize::from(69)),
                 TextRange::new(TextSize::from(651), TextSize::from(653)),
@@ -284,6 +312,16 @@ mod tests {
                 TextRange::new(TextSize::from(932), TextSize::from(934)),
                 TextRange::new(TextSize::from(1523), TextSize::from(1525)),
                 TextRange::new(TextSize::from(1718), TextSize::from(1720)),
+            ]
+        );
+
+        assert_eq!(
+            parse_ranges.as_slice(),
+            &[
+                TextRange::new(TextSize::from(1821), TextSize::from(1832)),
+                TextRange::new(TextSize::from(1871), TextSize::from(1872)),
+                TextRange::new(TextSize::from(1904), TextSize::from(1905)),
+                TextRange::new(TextSize::from(1956), TextSize::from(1963)),
             ]
         );
 

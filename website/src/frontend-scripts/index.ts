@@ -63,7 +63,7 @@ function onColorSchemeChange() {
 }
 
 const colorSchemeSwitcher = document.querySelector(".color-scheme-switch");
-// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
+// rome-ignore lint/style/useOptionalChain: netlify's node version does not support optional call expressions
 if (colorSchemeSwitcher != null) {
 	colorSchemeSwitcher.addEventListener("click", toggleColorSchemeSwitch, false);
 }
