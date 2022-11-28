@@ -129,6 +129,7 @@ pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
         // contextual keywords
         "abstract",
         "as",
+        "satisfies",
         "asserts",
         "assert",
         "any",
@@ -334,6 +335,7 @@ pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
         "JS_COMPUTED_MEMBER_ASSIGNMENT",
         "TS_NON_NULL_ASSERTION_ASSIGNMENT",
         "TS_AS_ASSIGNMENT",
+        "TS_SATISFIES_ASSIGNMENT",
         "TS_TYPE_ASSERTION_ASSIGNMENT",
         "JS_ARRAY_ASSIGNMENT_PATTERN",
         "JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST",
@@ -460,6 +462,7 @@ pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
         "TS_NON_NULL_ASSERTION_EXPRESSION",
         "TS_TYPE_ASSERTION_EXPRESSION",
         "TS_AS_EXPRESSION",
+        "TS_SATISFIES_EXPRESSION",
         "TS_INSTANTIATION_EXPRESSION",
         "TS_ENUM_DECLARATION",
         "TS_ENUM_MEMBER_LIST",

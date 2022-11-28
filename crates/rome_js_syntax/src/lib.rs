@@ -168,6 +168,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | NEW_TARGET
             | JS_TEMPLATE
             | TS_AS_EXPRESSION
+            | TS_SATISFIES_EXPRESSION
             | TS_TYPE_ASSERTION_EXPRESSION
             | TS_NON_NULL_ASSERTION_EXPRESSION
             | JSX_TAG_EXPRESSION
@@ -215,6 +216,7 @@ impl rome_rowan::SyntaxKind for JsSyntaxKind {
             | JS_PARENTHESIZED_ASSIGNMENT
             | JS_STATIC_MEMBER_ASSIGNMENT
             | TS_AS_ASSIGNMENT
+            | TS_SATISFIES_ASSIGNMENT
             | TS_NON_NULL_ASSERTION_ASSIGNMENT
             | TS_TYPE_ASSERTION_ASSIGNMENT
             | JS_UNKNOWN_ASSIGNMENT => JS_UNKNOWN_ASSIGNMENT,
@@ -342,7 +344,7 @@ impl OperatorPrecedence {
             T![^] => OperatorPrecedence::BitwiseXor,
             T![&] => OperatorPrecedence::BitwiseAnd,
             T![==] | T![!=] | T![===] | T![!==] => OperatorPrecedence::Equality,
-            T![<] | T![>] | T![<=] | T![>=] | T![instanceof] | T![in] | T![as] => {
+            T![<] | T![>] | T![<=] | T![>=] | T![instanceof] | T![in] | T![as] | T![satisfies] => {
                 OperatorPrecedence::Relational
             }
             T![<<] | T![>>] | T![>>>] => OperatorPrecedence::Shift,

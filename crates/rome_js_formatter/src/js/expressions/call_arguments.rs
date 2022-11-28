@@ -886,6 +886,10 @@ fn can_group_expression_argument(
             can_group_expression_argument(&as_expression.expression()?, false, comments)?
         }
 
+        TsSatisfiesExpression(satisfies_expression) => {
+            can_group_expression_argument(&satisfies_expression.expression()?, false, comments)?
+        }
+
         JsArrowFunctionExpression(arrow_function) => {
             let body = arrow_function.body()?;
             let return_type_annotation = arrow_function.return_type_annotation();

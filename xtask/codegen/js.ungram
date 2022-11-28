@@ -315,6 +315,7 @@ JsAnyExpression =
 	// Typescript
 	| TsTypeAssertionExpression
 	| TsAsExpression
+	| TsSatisfiesExpression
 	| TsNonNullAssertionExpression
 	| TsInstantiationExpression
 	// JSX
@@ -852,6 +853,7 @@ JsAnyAssignment =
 	| JsParenthesizedAssignment
 	| TsNonNullAssertionAssignment
 	| TsAsAssignment
+	| TsSatisfiesAssignment
 	| TsTypeAssertionAssignment
 	| JsUnknownAssignment
 
@@ -898,6 +900,14 @@ TsNonNullAssertionAssignment =
 TsAsAssignment =
 	assignment: JsAnyAssignment
 	'as'
+	type: TsType
+
+// Only valid inside of parenthesized assignments
+// (a satisfies string) = "test";
+//  ^^^^^^^^^^^^
+TsSatisfiesAssignment =
+	assignment: JsAnyAssignment
+	'satisfies'
 	type: TsType
 
 TsTypeAssertionAssignment =
@@ -2131,6 +2141,11 @@ TsInstantiationExpression =
 TsAsExpression =
 	expression: JsAnyExpression
 	'as'
+	type: TsType
+
+TsSatisfiesExpression =
+	expression: JsAnyExpression
+	'satisfies'
 	type: TsType
 
 TsNonNullAssertionExpression =

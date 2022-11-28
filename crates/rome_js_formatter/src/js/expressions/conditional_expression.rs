@@ -45,7 +45,8 @@ impl NeedsParentheses for JsConditionalExpression {
             JsSyntaxKind::JS_UNARY_EXPRESSION
             | JsSyntaxKind::JS_AWAIT_EXPRESSION
             | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
-            | JsSyntaxKind::TS_AS_EXPRESSION => true,
+            | JsSyntaxKind::TS_AS_EXPRESSION
+            | JsSyntaxKind::TS_SATISFIES_EXPRESSION => true,
 
             _ => {
                 is_conditional_test(self.syntax(), parent)

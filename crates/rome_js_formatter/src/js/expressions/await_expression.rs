@@ -69,7 +69,9 @@ pub(super) fn await_or_yield_needs_parens(parent: &JsSyntaxNode, node: &JsSyntax
     ));
 
     match parent.kind() {
-        JsSyntaxKind::JS_UNARY_EXPRESSION | JsSyntaxKind::TS_AS_EXPRESSION => true,
+        JsSyntaxKind::JS_UNARY_EXPRESSION
+        | JsSyntaxKind::TS_AS_EXPRESSION
+        | JsSyntaxKind::TS_SATISFIES_EXPRESSION => true,
 
         _ => {
             let expression = node;

@@ -782,6 +782,7 @@ impl LogicalOrLikeChain {
                     | JsAnyExpression::JsCallExpression(_)
                     | JsAnyExpression::JsNewExpression(_)
                     | JsAnyExpression::TsAsExpression(_)
+                    | JsAnyExpression::TsSatisfiesExpression(_)
                     | JsAnyExpression::TsNonNullAssertionExpression(_)
                     | JsAnyExpression::TsTypeAssertionExpression(_)
             ) {
@@ -804,6 +805,7 @@ impl LogicalOrLikeChain {
             JsAnyExpression::JsCallExpression(expression) => expression.callee().ok(),
             JsAnyExpression::JsNewExpression(expression) => expression.callee().ok(),
             JsAnyExpression::TsAsExpression(expression) => expression.expression().ok(),
+            JsAnyExpression::TsSatisfiesExpression(expression) => expression.expression().ok(),
             JsAnyExpression::TsNonNullAssertionExpression(expression) => {
                 expression.expression().ok()
             }

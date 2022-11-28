@@ -2756,6 +2756,44 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::TsAsExpression {
         )
     }
 }
+impl FormatRule<rome_js_syntax::TsSatisfiesExpression>
+    for crate::ts::expressions::satisfies_expression::FormatTsSatisfiesExpression
+{
+    type Context = JsFormatContext;
+    #[inline(always)]
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsSatisfiesExpression,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsSatisfiesExpression>::fmt(self, node, f)
+    }
+}
+impl AsFormat<JsFormatContext> for rome_js_syntax::TsSatisfiesExpression {
+    type Format<'a> = FormatRefWithRule<
+        'a,
+        rome_js_syntax::TsSatisfiesExpression,
+        crate::ts::expressions::satisfies_expression::FormatTsSatisfiesExpression,
+    >;
+    fn format(&self) -> Self::Format<'_> {
+        FormatRefWithRule::new(
+            self,
+            crate::ts::expressions::satisfies_expression::FormatTsSatisfiesExpression::default(),
+        )
+    }
+}
+impl IntoFormat<JsFormatContext> for rome_js_syntax::TsSatisfiesExpression {
+    type Format = FormatOwnedWithRule<
+        rome_js_syntax::TsSatisfiesExpression,
+        crate::ts::expressions::satisfies_expression::FormatTsSatisfiesExpression,
+    >;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule::new(
+            self,
+            crate::ts::expressions::satisfies_expression::FormatTsSatisfiesExpression::default(),
+        )
+    }
+}
 impl FormatRule<rome_js_syntax::TsNonNullAssertionExpression>
     for crate::ts::expressions::non_null_assertion_expression::FormatTsNonNullAssertionExpression
 {
@@ -4784,6 +4822,44 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::TsAsAssignment {
         FormatOwnedWithRule::new(
             self,
             crate::ts::assignments::as_assignment::FormatTsAsAssignment::default(),
+        )
+    }
+}
+impl FormatRule<rome_js_syntax::TsSatisfiesAssignment>
+    for crate::ts::assignments::satisfies_assignment::FormatTsSatisfiesAssignment
+{
+    type Context = JsFormatContext;
+    #[inline(always)]
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsSatisfiesAssignment,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsSatisfiesAssignment>::fmt(self, node, f)
+    }
+}
+impl AsFormat<JsFormatContext> for rome_js_syntax::TsSatisfiesAssignment {
+    type Format<'a> = FormatRefWithRule<
+        'a,
+        rome_js_syntax::TsSatisfiesAssignment,
+        crate::ts::assignments::satisfies_assignment::FormatTsSatisfiesAssignment,
+    >;
+    fn format(&self) -> Self::Format<'_> {
+        FormatRefWithRule::new(
+            self,
+            crate::ts::assignments::satisfies_assignment::FormatTsSatisfiesAssignment::default(),
+        )
+    }
+}
+impl IntoFormat<JsFormatContext> for rome_js_syntax::TsSatisfiesAssignment {
+    type Format = FormatOwnedWithRule<
+        rome_js_syntax::TsSatisfiesAssignment,
+        crate::ts::assignments::satisfies_assignment::FormatTsSatisfiesAssignment,
+    >;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule::new(
+            self,
+            crate::ts::assignments::satisfies_assignment::FormatTsSatisfiesAssignment::default(),
         )
     }
 }

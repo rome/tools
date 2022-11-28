@@ -1081,6 +1081,14 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::TsReturnTypeAnnotation::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_SATISFIES_ASSIGNMENT => {
+                    let $pattern = unsafe { $crate::TsSatisfiesAssignment::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_SATISFIES_EXPRESSION => {
+                    let $pattern = unsafe { $crate::TsSatisfiesExpression::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_SETTER_SIGNATURE_CLASS_MEMBER => {
                     let $pattern =
                         unsafe { $crate::TsSetterSignatureClassMember::new_unchecked(node) };
