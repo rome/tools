@@ -27,8 +27,6 @@ rome_diagnostics = { path = "../../crates/rome_diagnostics" }
 # code size when deploying.
 console_error_panic_hook = { version = "0.1.6", optional = true }
 
-[dev-dependencies]
-wasm-bindgen-test = "0.3.13"
 
 [build-dependencies]
 serde_json = "1.0.79"
