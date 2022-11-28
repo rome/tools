@@ -21,7 +21,7 @@ impl FormatRule<JsAnyObjectAssignmentPatternMember> for FormatJsAnyObjectAssignm
             JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternRest(node) => {
                 node.format().fmt(f)
             }
-            JsAnyObjectAssignmentPatternMember::JsUnknownAssignment(node) => node.format().fmt(f),
+            JsAnyObjectAssignmentPatternMember::JsBogusAssignment(node) => node.format().fmt(f),
         }
     }
 }

@@ -280,13 +280,13 @@ where
     }
 }
 
-/// Rule for formatting an unknown node.
-pub(crate) trait FormatUnknownNodeRule<N>
+/// Rule for formatting an bogus node.
+pub(crate) trait FormatBogusNodeRule<N>
 where
     N: AstNode<Language = JsLanguage>,
 {
     fn fmt(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
-        format_unknown_node(node.syntax()).fmt(f)
+        format_bogus_node(node.syntax()).fmt(f)
     }
 }
 

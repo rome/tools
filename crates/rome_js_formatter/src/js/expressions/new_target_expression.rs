@@ -6,9 +6,9 @@ use rome_js_syntax::JsNewTargetExpressionFields;
 use rome_js_syntax::{JsNewTargetExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatNewTarget;
+pub(crate) struct FormatJsNewTargetExpression;
 
-impl FormatNodeRule<JsNewTargetExpression> for FormatNewTarget {
+impl FormatNodeRule<JsNewTargetExpression> for FormatJsNewTargetExpression {
     fn fmt_fields(&self, node: &JsNewTargetExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsNewTargetExpressionFields {
             new_token,

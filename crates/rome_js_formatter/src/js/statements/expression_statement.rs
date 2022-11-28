@@ -15,17 +15,17 @@ pub(crate) struct FormatJsExpressionStatement;
 impl FormatNodeRule<JsExpressionStatement> for FormatJsExpressionStatement {
     fn fmt_node(&self, node: &JsExpressionStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let needs_parentheses = self.needs_parentheses(node);
-        let is_after_unknown = f
+        let is_after_bogus = f
             .elements()
             .start_tag(TagKind::Verbatim)
             .map_or(false, |signal| match signal {
-                Tag::StartVerbatim(kind) => kind.is_unknown(),
+                Tag::StartVerbatim(kind) => kind.is_bogus(),
                 _ => unreachable!(),
             });
 
         if f.options().semicolons().is_as_needed()
-            // Don't perform semicolon insertion if the previous statement is an unknown statement.
-            && !is_after_unknown
+            // Don't perform semicolon insertion if the previous statement is an bogus statement.
+            && !is_after_bogus
             && (needs_parentheses || needs_semicolon(node))
         {
             write!(f, [text(";")])?;

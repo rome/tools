@@ -46,12 +46,12 @@ JsModule {
                         variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@24..26 "=" [] [Whitespace(" ")],
-                            expression: JsUnknownExpression {
+                            expression: JsBogusExpression {
                                 items: [
                                     BACKTICK@26..27 "`" [] [],
-                                    JsUnknown {
+                                    JsBogus {
                                         items: [
-                                            JsUnknown {
+                                            JsBogus {
                                                 items: [
                                                     DOLLAR_CURLY@27..29 "${" [] [],
                                                     JsIdentifierExpression {
@@ -59,7 +59,7 @@ JsModule {
                                                             value_token: IDENT@29..31 "a" [] [Whitespace(" ")],
                                                         },
                                                     },
-                                                    JsUnknown {
+                                                    JsBogus {
                                                         items: [
                                                             IDENT@31..32 "a" [] [],
                                                         ],
@@ -119,15 +119,15 @@ JsModule {
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@24..34
               0: EQ@24..26 "=" [] [Whitespace(" ")]
-              1: JS_UNKNOWN_EXPRESSION@26..34
+              1: JS_BOGUS_EXPRESSION@26..34
                 0: BACKTICK@26..27 "`" [] []
-                1: JS_UNKNOWN@27..33
-                  0: JS_UNKNOWN@27..33
+                1: JS_BOGUS@27..33
+                  0: JS_BOGUS@27..33
                     0: DOLLAR_CURLY@27..29 "${" [] []
                     1: JS_IDENTIFIER_EXPRESSION@29..31
                       0: JS_REFERENCE_IDENTIFIER@29..31
                         0: IDENT@29..31 "a" [] [Whitespace(" ")]
-                    2: JS_UNKNOWN@31..32
+                    2: JS_BOGUS@31..32
                       0: IDENT@31..32 "a" [] []
                     3: R_CURLY@32..33 "}" [] []
                 2: BACKTICK@33..34 "`" [] []

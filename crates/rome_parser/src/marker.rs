@@ -146,11 +146,11 @@ impl CompletedMarker {
         }
     }
 
-    pub fn change_to_unknown<P>(&mut self, p: &mut P)
+    pub fn change_to_bogus<P>(&mut self, p: &mut P)
     where
         P: Parser,
     {
-        self.change_kind(p, self.kind(p).to_unknown());
+        self.change_kind(p, self.kind(p).to_bogus());
     }
 
     /// Get the range of the marker

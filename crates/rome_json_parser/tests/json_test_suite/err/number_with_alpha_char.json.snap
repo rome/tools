@@ -21,7 +21,7 @@ JsonRoot {
                 value_token: JSON_NUMBER_LITERAL@1..19 "1.8011670033376514" [] [],
             },
             missing separator,
-            JsonUnknownValue {
+            JsonBogusValue {
                 items: [
                     IDENT@19..20 "H" [] [],
                 ],
@@ -47,7 +47,7 @@ JsonRoot {
       0: JSON_NUMBER_VALUE@1..19
         0: JSON_NUMBER_LITERAL@1..19 "1.8011670033376514" [] []
       1: (empty)
-      2: JSON_UNKNOWN_VALUE@19..20
+      2: JSON_BOGUS_VALUE@19..20
         0: IDENT@19..20 "H" [] []
       3: (empty)
       4: JSON_NUMBER_VALUE@20..24

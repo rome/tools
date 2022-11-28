@@ -234,7 +234,7 @@ impl ModuleIndex {
 enum NodeKind {
     Node,
     List { separated: bool },
-    Unknown,
+    Bogus,
     Union { variants: Vec<String> },
 }
 
@@ -276,11 +276,7 @@ fn generate_formatter(repo: &GitRepo, language_kind: LanguageKind) {
                 name,
             )
         }))
-        .chain(
-            ast.unknowns
-                .into_iter()
-                .map(|name| (NodeKind::Unknown, name)),
-        )
+        .chain(ast.bogus.into_iter().map(|name| (NodeKind::Bogus, name)))
         .chain(ast.unions.into_iter().map(|node| {
             (
                 NodeKind::Union {
@@ -379,15 +375,15 @@ fn generate_formatter(repo: &GitRepo, language_kind: LanguageKind) {
                     }
                 }
             }
-            NodeKind::Unknown => {
+            NodeKind::Bogus => {
                 quote! {
-                    use crate::FormatUnknownNodeRule;
+                    use crate::FormatBogusNodeRule;
                     use #syntax_crate_ident::#node_id;
 
                     #[derive(Debug, Clone, Default)]
                     pub(crate) struct #format_id;
 
-                    impl FormatUnknownNodeRule<#node_id> for #format_id {
+                    impl FormatBogusNodeRule<#node_id> for #format_id {
                     }
                 }
             }
@@ -463,8 +459,8 @@ impl BoilerplateImpls {
         let format_rule_impl = match kind {
             NodeKind::List { .. } | NodeKind::Union { .. } => quote!(),
             kind => {
-                let rule = if matches!(kind, NodeKind::Unknown) {
-                    Ident::new("FormatUnknownNodeRule", Span::call_site())
+                let rule = if matches!(kind, NodeKind::Bogus) {
+                    Ident::new("FormatBogusNodeRule", Span::call_site())
                 } else {
                     Ident::new("FormatNodeRule", Span::call_site())
                 };
@@ -510,7 +506,7 @@ impl BoilerplateImpls {
 
         let tokens = quote! {
             use rome_formatter::{FormatRefWithRule, FormatOwnedWithRule, FormatRule, FormatResult};
-            use crate::{AsFormat, IntoFormat, FormatNodeRule, FormatUnknownNodeRule, #formatter_ident, #formatter_context_ident};
+            use crate::{AsFormat, IntoFormat, FormatNodeRule, FormatBogusNodeRule, #formatter_ident, #formatter_context_ident};
 
             #( #impls )*
         };
@@ -555,7 +551,7 @@ impl NodeDialect {
 }
 
 enum NodeConcept {
-    Unknown,
+    Bogus,
     List,
     Union,
     /// - auxiliary (everything else)
@@ -590,7 +586,7 @@ impl NodeConcept {
             NodeConcept::Binding => "bindings",
             NodeConcept::Type => "types",
             NodeConcept::Module => "module",
-            NodeConcept::Unknown => "unknown",
+            NodeConcept::Bogus => "bogus",
             NodeConcept::List => "lists",
             NodeConcept::Union => "any",
             NodeConcept::Tag => "tag",
@@ -648,8 +644,8 @@ fn name_to_module(kind: &NodeKind, in_name: &str, language: LanguageKind) -> Nod
     };
 
     // Classify nodes by concept
-    let concept = if matches!(kind, NodeKind::Unknown) {
-        NodeConcept::Unknown
+    let concept = if matches!(kind, NodeKind::Bogus) {
+        NodeConcept::Bogus
     } else if matches!(kind, NodeKind::List { .. }) {
         NodeConcept::List
     } else if matches!(kind, NodeKind::Union { .. }) {

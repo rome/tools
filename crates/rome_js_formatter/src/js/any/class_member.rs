@@ -21,7 +21,7 @@ impl FormatRule<JsAnyClassMember> for FormatJsAnyClassMember {
             JsAnyClassMember::TsSetterSignatureClassMember(node) => node.format().fmt(f),
             JsAnyClassMember::TsIndexSignatureClassMember(node) => node.format().fmt(f),
             JsAnyClassMember::JsEmptyClassMember(node) => node.format().fmt(f),
-            JsAnyClassMember::JsUnknownMember(node) => node.format().fmt(f),
+            JsAnyClassMember::JsBogusMember(node) => node.format().fmt(f),
         }
     }
 }

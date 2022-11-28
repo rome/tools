@@ -2,7 +2,7 @@ JsScript {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     statements: JsStatementList [
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 EXPORT_KW@0..17 "export" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")],
                 JsFunctionDeclaration {
@@ -44,7 +44,7 @@ JsScript {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_STATEMENT_LIST@0..1441
-    0: JS_UNKNOWN_STATEMENT@0..1441
+    0: JS_BOGUS_STATEMENT@0..1441
       0: EXPORT_KW@0..17 "export" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")]
       1: JS_FUNCTION_DECLARATION@17..1441
         0: (empty)

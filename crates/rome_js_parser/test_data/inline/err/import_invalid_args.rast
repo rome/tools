@@ -14,15 +14,15 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
                     IMPORT_KW@8..15 "import" [Newline("\n")] [],
-                    JsUnknown {
+                    JsBogus {
                         items: [
                             L_PAREN@15..16 "(" [] [],
-                            JsUnknown {
+                            JsBogus {
                                 items: [
-                                    JsUnknown {
+                                    JsBogusMember {
                                         items: [
                                             DOT3@16..19 "..." [] [],
                                             JsArrayExpression {
@@ -109,12 +109,12 @@ JsModule {
           2: R_PAREN@7..8 ")" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@8..27
-      0: JS_UNKNOWN_EXPRESSION@8..27
+      0: JS_BOGUS_EXPRESSION@8..27
         0: IMPORT_KW@8..15 "import" [Newline("\n")] []
-        1: JS_UNKNOWN@15..27
+        1: JS_BOGUS@15..27
           0: L_PAREN@15..16 "(" [] []
-          1: JS_UNKNOWN@16..26
-            0: JS_UNKNOWN@16..26
+          1: JS_BOGUS@16..26
+            0: JS_BOGUS_MEMBER@16..26
               0: DOT3@16..19 "..." [] []
               1: JS_ARRAY_EXPRESSION@19..26
                 0: L_BRACK@19..20 "[" [] []

@@ -1,4 +1,4 @@
-use crate::runner::create_unknown_node_in_tree_diagnostic;
+use crate::runner::create_bogus_node_in_tree_diagnostic;
 use crate::{
     check_file_encoding,
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
@@ -56,17 +56,14 @@ impl TestCase for BabelTypescriptTestCase {
                 files,
                 errors: result.diagnostics().to_vec(),
             }
-        } else if let Some(unknown) = result
+        } else if let Some(bogus) = result
             .syntax()
             .descendants()
-            .find(|descendant| descendant.kind().is_unknown())
+            .find(|descendant| descendant.kind().is_bogus())
         {
             TestRunOutcome::IncorrectlyErrored {
                 files,
-                errors: vec![create_unknown_node_in_tree_diagnostic(
-                    FileId::zero(),
-                    unknown,
-                )],
+                errors: vec![create_bogus_node_in_tree_diagnostic(FileId::zero(), bogus)],
             }
         } else {
             TestRunOutcome::Passed(files)

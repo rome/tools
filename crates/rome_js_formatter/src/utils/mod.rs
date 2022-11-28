@@ -241,7 +241,7 @@ impl Format<JsFormatContext> for FormatOptionalSemicolon<'_> {
 
 /// Format some code followed by an optional semicolon.
 /// Performs semicolon insertion if it is missing in the input source, the [semicolons option](crate::JsFormatOptions::semicolons) is [Semicolons::Always], and the
-/// preceding element isn't an unknown node
+/// preceding element isn't an bogus node
 pub(crate) struct FormatSemicolon<'a> {
     semicolon: Option<&'a JsSyntaxToken>,
 }
@@ -257,15 +257,15 @@ impl Format<JsFormatContext> for FormatSemicolon<'_> {
         match self.semicolon {
             Some(semicolon) => semicolon.format().fmt(f),
             None => {
-                let is_after_unknown = f.elements().start_tag(TagKind::Verbatim).map_or(
+                let is_after_bogus = f.elements().start_tag(TagKind::Verbatim).map_or(
                     false,
                     |signal| match signal {
-                        Tag::StartVerbatim(kind) => kind.is_unknown(),
+                        Tag::StartVerbatim(kind) => kind.is_bogus(),
                         _ => unreachable!(),
                     },
                 );
 
-                if !is_after_unknown {
+                if !is_after_bogus {
                     write!(f, [text(";")])?;
                 }
 

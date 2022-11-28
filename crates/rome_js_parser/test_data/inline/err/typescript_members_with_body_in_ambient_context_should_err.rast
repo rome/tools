@@ -15,7 +15,7 @@ JsModule {
                 implements_clause: missing (optional),
                 l_curly_token: L_CURLY@19..20 "{" [] [],
                 members: JsClassMemberList [
-                    JsUnknownMember {
+                    JsBogusMember {
                         items: [
                             JsConstructorModifierList [],
                             JsLiteralMemberName {
@@ -34,7 +34,7 @@ JsModule {
                             },
                         ],
                     },
-                    JsUnknownMember {
+                    JsBogusMember {
                         items: [
                             TsMethodSignatureModifierList [],
                             JsLiteralMemberName {
@@ -53,7 +53,7 @@ JsModule {
                             },
                         ],
                     },
-                    JsUnknownMember {
+                    JsBogusMember {
                         items: [
                             TsMethodSignatureModifierList [],
                             GET_KW@55..64 "get" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
@@ -84,7 +84,7 @@ JsModule {
                             },
                         ],
                     },
-                    JsUnknownMember {
+                    JsBogusMember {
                         items: [
                             TsMethodSignatureModifierList [],
                             SET_KW@93..102 "set" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
@@ -134,7 +134,7 @@ JsModule {
                             implements_clause: missing (optional),
                             l_curly_token: L_CURLY@153..154 "{" [] [],
                             members: JsClassMemberList [
-                                JsUnknownMember {
+                                JsBogusMember {
                                     items: [
                                         JsConstructorModifierList [],
                                         JsLiteralMemberName {
@@ -153,7 +153,7 @@ JsModule {
                                         },
                                     ],
                                 },
-                                JsUnknownMember {
+                                JsBogusMember {
                                     items: [
                                         TsMethodSignatureModifierList [],
                                         JsLiteralMemberName {
@@ -172,7 +172,7 @@ JsModule {
                                         },
                                     ],
                                 },
-                                JsUnknownMember {
+                                JsBogusMember {
                                     items: [
                                         TsMethodSignatureModifierList [],
                                         GET_KW@199..213 "get" [Newline("\n"), Whitespace("         ")] [Whitespace(" ")],
@@ -203,7 +203,7 @@ JsModule {
                                         },
                                     ],
                                 },
-                                JsUnknownMember {
+                                JsBogusMember {
                                     items: [
                                         TsMethodSignatureModifierList [],
                                         SET_KW@242..256 "set" [Newline("\n"), Whitespace("         ")] [Whitespace(" ")],
@@ -256,7 +256,7 @@ JsModule {
         5: (empty)
         6: L_CURLY@19..20 "{" [] []
         7: JS_CLASS_MEMBER_LIST@20..112
-          0: JS_UNKNOWN_MEMBER@20..41
+          0: JS_BOGUS_MEMBER@20..41
             0: JS_CONSTRUCTOR_MODIFIER_LIST@20..20
             1: JS_LITERAL_MEMBER_NAME@20..36
               0: IDENT@20..36 "constructor" [Newline("\n"), Whitespace("    ")] []
@@ -269,7 +269,7 @@ JsModule {
               1: JS_DIRECTIVE_LIST@40..40
               2: JS_STATEMENT_LIST@40..40
               3: R_CURLY@40..41 "}" [] []
-          1: JS_UNKNOWN_MEMBER@41..55
+          1: JS_BOGUS_MEMBER@41..55
             0: TS_METHOD_SIGNATURE_MODIFIER_LIST@41..41
             1: JS_LITERAL_MEMBER_NAME@41..50
               0: IDENT@41..50 "name" [Newline("\n"), Whitespace("    ")] []
@@ -282,7 +282,7 @@ JsModule {
               1: JS_DIRECTIVE_LIST@54..54
               2: JS_STATEMENT_LIST@54..54
               3: R_CURLY@54..55 "}" [] []
-          2: JS_UNKNOWN_MEMBER@55..93
+          2: JS_BOGUS_MEMBER@55..93
             0: TS_METHOD_SIGNATURE_MODIFIER_LIST@55..55
             1: GET_KW@55..64 "get" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
             2: JS_LITERAL_MEMBER_NAME@64..68
@@ -303,7 +303,7 @@ JsModule {
                     0: JS_STRING_LITERAL@88..90 "\"\"" [] []
                   2: SEMICOLON@90..92 ";" [] [Whitespace(" ")]
               3: R_CURLY@92..93 "}" [] []
-          3: JS_UNKNOWN_MEMBER@93..112
+          3: JS_BOGUS_MEMBER@93..112
             0: TS_METHOD_SIGNATURE_MODIFIER_LIST@93..93
             1: SET_KW@93..102 "set" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
             2: JS_LITERAL_MEMBER_NAME@102..106
@@ -341,7 +341,7 @@ JsModule {
               5: (empty)
               6: L_CURLY@153..154 "{" [] []
               7: JS_CLASS_MEMBER_LIST@154..266
-                0: JS_UNKNOWN_MEMBER@154..180
+                0: JS_BOGUS_MEMBER@154..180
                   0: JS_CONSTRUCTOR_MODIFIER_LIST@154..154
                   1: JS_LITERAL_MEMBER_NAME@154..175
                     0: IDENT@154..175 "constructor" [Newline("\n"), Whitespace("         ")] []
@@ -354,7 +354,7 @@ JsModule {
                     1: JS_DIRECTIVE_LIST@179..179
                     2: JS_STATEMENT_LIST@179..179
                     3: R_CURLY@179..180 "}" [] []
-                1: JS_UNKNOWN_MEMBER@180..199
+                1: JS_BOGUS_MEMBER@180..199
                   0: TS_METHOD_SIGNATURE_MODIFIER_LIST@180..180
                   1: JS_LITERAL_MEMBER_NAME@180..194
                     0: IDENT@180..194 "name" [Newline("\n"), Whitespace("         ")] []
@@ -367,7 +367,7 @@ JsModule {
                     1: JS_DIRECTIVE_LIST@198..198
                     2: JS_STATEMENT_LIST@198..198
                     3: R_CURLY@198..199 "}" [] []
-                2: JS_UNKNOWN_MEMBER@199..242
+                2: JS_BOGUS_MEMBER@199..242
                   0: TS_METHOD_SIGNATURE_MODIFIER_LIST@199..199
                   1: GET_KW@199..213 "get" [Newline("\n"), Whitespace("         ")] [Whitespace(" ")]
                   2: JS_LITERAL_MEMBER_NAME@213..217
@@ -388,7 +388,7 @@ JsModule {
                           0: JS_STRING_LITERAL@237..239 "\"\"" [] []
                         2: SEMICOLON@239..241 ";" [] [Whitespace(" ")]
                     3: R_CURLY@241..242 "}" [] []
-                3: JS_UNKNOWN_MEMBER@242..266
+                3: JS_BOGUS_MEMBER@242..266
                   0: TS_METHOD_SIGNATURE_MODIFIER_LIST@242..242
                   1: SET_KW@242..256 "set" [Newline("\n"), Whitespace("         ")] [Whitespace(" ")]
                   2: JS_LITERAL_MEMBER_NAME@256..260

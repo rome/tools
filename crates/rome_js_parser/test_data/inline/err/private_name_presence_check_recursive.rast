@@ -50,7 +50,7 @@ JsModule {
                                             value_token: IDENT@32..37 "prop" [] [Whitespace(" ")],
                                         },
                                         in_token: IN_KW@37..40 "in" [] [Whitespace(" ")],
-                                        object: JsUnknownExpression {
+                                        object: JsBogusExpression {
                                             items: [
                                                 HASH@40..41 "#" [] [],
                                                 IDENT@41..46 "prop" [] [Whitespace(" ")],
@@ -70,7 +70,7 @@ JsModule {
                                         value_token: JS_NUMBER_LITERAL@54..60 "5" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")],
                                     },
                                     operator_token: PLUS@60..62 "+" [] [Whitespace(" ")],
-                                    right: JsUnknownExpression {
+                                    right: JsBogusExpression {
                                         items: [
                                             HASH@62..63 "#" [] [],
                                             IDENT@63..67 "prop" [] [],
@@ -80,7 +80,7 @@ JsModule {
                                 semicolon_token: SEMICOLON@67..68 ";" [] [],
                             },
                             JsExpressionStatement {
-                                expression: JsUnknownExpression {
+                                expression: JsBogusExpression {
                                     items: [
                                         HASH@68..73 "#" [Newline("\n"), Whitespace("   ")] [],
                                         IDENT@73..77 "prop" [] [],
@@ -90,7 +90,7 @@ JsModule {
                             },
                             JsExpressionStatement {
                                 expression: JsBinaryExpression {
-                                    left: JsUnknownExpression {
+                                    left: JsBogusExpression {
                                         items: [
                                             HASH@77..82 "#" [Newline("\n"), Whitespace("   ")] [],
                                             IDENT@82..87 "prop" [] [Whitespace(" ")],
@@ -160,7 +160,7 @@ JsModule {
                       0: HASH@27..32 "#" [Newline("\n"), Whitespace("   ")] []
                       1: IDENT@32..37 "prop" [] [Whitespace(" ")]
                     1: IN_KW@37..40 "in" [] [Whitespace(" ")]
-                    2: JS_UNKNOWN_EXPRESSION@40..46
+                    2: JS_BOGUS_EXPRESSION@40..46
                       0: HASH@40..41 "#" [] []
                       1: IDENT@41..46 "prop" [] [Whitespace(" ")]
                   1: IN_KW@46..49 "in" [] [Whitespace(" ")]
@@ -172,18 +172,18 @@ JsModule {
                   0: JS_NUMBER_LITERAL_EXPRESSION@54..60
                     0: JS_NUMBER_LITERAL@54..60 "5" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]
                   1: PLUS@60..62 "+" [] [Whitespace(" ")]
-                  2: JS_UNKNOWN_EXPRESSION@62..67
+                  2: JS_BOGUS_EXPRESSION@62..67
                     0: HASH@62..63 "#" [] []
                     1: IDENT@63..67 "prop" [] []
                 1: SEMICOLON@67..68 ";" [] []
               2: JS_EXPRESSION_STATEMENT@68..77
-                0: JS_UNKNOWN_EXPRESSION@68..77
+                0: JS_BOGUS_EXPRESSION@68..77
                   0: HASH@68..73 "#" [Newline("\n"), Whitespace("   ")] []
                   1: IDENT@73..77 "prop" [] []
                 1: (empty)
               3: JS_EXPRESSION_STATEMENT@77..91
                 0: JS_BINARY_EXPRESSION@77..90
-                  0: JS_UNKNOWN_EXPRESSION@77..87
+                  0: JS_BOGUS_EXPRESSION@77..87
                     0: HASH@77..82 "#" [Newline("\n"), Whitespace("   ")] []
                     1: IDENT@82..87 "prop" [] [Whitespace(" ")]
                   1: PLUS@87..89 "+" [] [Whitespace(" ")]

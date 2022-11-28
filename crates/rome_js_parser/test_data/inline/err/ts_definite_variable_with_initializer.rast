@@ -2,19 +2,19 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
-                JsUnknown {
+                JsBogus {
                     items: [
                         LET_KW@0..4 "let" [] [Whitespace(" ")],
-                        JsUnknown {
+                        JsBogus {
                             items: [
-                                JsUnknown {
+                                JsBogus {
                                     items: [
                                         JsIdentifierBinding {
                                             name_token: IDENT@4..5 "a" [] [],
                                         },
-                                        JsUnknown {
+                                        JsBogus {
                                             items: [
                                                 BANG@5..6 "!" [] [],
                                                 TsTypeAnnotation {
@@ -48,14 +48,14 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..24
-    0: JS_UNKNOWN_STATEMENT@0..24
-      0: JS_UNKNOWN@0..23
+    0: JS_BOGUS_STATEMENT@0..24
+      0: JS_BOGUS@0..23
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: JS_UNKNOWN@4..23
-          0: JS_UNKNOWN@4..23
+        1: JS_BOGUS@4..23
+          0: JS_BOGUS@4..23
             0: JS_IDENTIFIER_BINDING@4..5
               0: IDENT@4..5 "a" [] []
-            1: JS_UNKNOWN@5..15
+            1: JS_BOGUS@5..15
               0: BANG@5..6 "!" [] []
               1: TS_TYPE_ANNOTATION@6..15
                 0: COLON@6..8 ":" [] [Whitespace(" ")]

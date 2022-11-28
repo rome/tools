@@ -29,7 +29,7 @@ JsModule {
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@31..32 "(" [] [],
                         parameters: JsConstructorParameterList [
-                            JsUnknownParameter {
+                            JsBogusParameter {
                                 items: [
                                     SUPER_KW@32..37 "super" [] [],
                                     L_PAREN@37..38 "(" [] [],
@@ -40,7 +40,7 @@ JsModule {
                     },
                     body: missing (required),
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         R_PAREN@39..41 ")" [] [Whitespace(" ")],
                         L_CURLY@41..42 "{" [] [],
@@ -49,7 +49,7 @@ JsModule {
             ],
             r_curly_token: R_CURLY@42..44 "}" [] [Whitespace(" ")],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 R_CURLY@44..45 "}" [] [],
             ],
@@ -84,16 +84,16 @@ JsModule {
           2: JS_CONSTRUCTOR_PARAMETERS@31..39
             0: L_PAREN@31..32 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@32..38
-              0: JS_UNKNOWN_PARAMETER@32..38
+              0: JS_BOGUS_PARAMETER@32..38
                 0: SUPER_KW@32..37 "super" [] []
                 1: L_PAREN@37..38 "(" [] []
             2: R_PAREN@38..39 ")" [] []
           3: (empty)
-        1: JS_UNKNOWN_MEMBER@39..42
+        1: JS_BOGUS_MEMBER@39..42
           0: R_PAREN@39..41 ")" [] [Whitespace(" ")]
           1: L_CURLY@41..42 "{" [] []
       8: R_CURLY@42..44 "}" [] [Whitespace(" ")]
-    1: JS_UNKNOWN_STATEMENT@44..45
+    1: JS_BOGUS_STATEMENT@44..45
       0: R_CURLY@44..45 "}" [] []
   3: EOF@45..46 "" [Newline("\n")] []
 --

@@ -3,9 +3,9 @@ JsModule {
     directives: JsDirectiveList [],
     items: JsModuleItemList [
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
-                    JsUnknown {
+                    JsBogus {
                         items: [
                             IDENT@0..5 "yield" [] [],
                         ],
@@ -33,7 +33,7 @@ JsModule {
                 l_paren_token: L_PAREN@33..34 "(" [] [],
                 items: JsParameterList [
                     JsFormalParameter {
-                        binding: JsUnknownBinding {
+                        binding: JsBogusBinding {
                             items: [
                                 IDENT@34..39 "await" [] [],
                             ],
@@ -65,7 +65,7 @@ JsModule {
                 l_paren_token: L_PAREN@58..59 "(" [] [],
                 items: JsParameterList [
                     JsFormalParameter {
-                        binding: JsUnknownBinding {
+                        binding: JsBogusBinding {
                             items: [
                                 IDENT@59..64 "yield" [] [],
                             ],
@@ -85,7 +85,7 @@ JsModule {
                 r_curly_token: R_CURLY@67..68 "}" [] [],
             },
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 ENUM_KW@68..73 "enum" [Newline("\n")] [],
                 TsEnumMemberList [],
@@ -95,9 +95,9 @@ JsModule {
             semicolon_token: SEMICOLON@73..74 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
-                    JsUnknown {
+                    JsBogus {
                         items: [
                             IDENT@74..85 "implements" [Newline("\n")] [],
                         ],
@@ -107,9 +107,9 @@ JsModule {
             semicolon_token: SEMICOLON@85..86 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
-                    JsUnknown {
+                    JsBogus {
                         items: [
                             IDENT@86..96 "interface" [Newline("\n")] [],
                         ],
@@ -127,8 +127,8 @@ JsModule {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..97
     0: JS_EXPRESSION_STATEMENT@0..6
-      0: JS_UNKNOWN_EXPRESSION@0..5
-        0: JS_UNKNOWN@0..5
+      0: JS_BOGUS_EXPRESSION@0..5
+        0: JS_BOGUS@0..5
           0: IDENT@0..5 "yield" [] []
       1: SEMICOLON@5..6 ";" [] []
     1: JS_EXPRESSION_STATEMENT@6..13
@@ -147,7 +147,7 @@ JsModule {
         0: L_PAREN@33..34 "(" [] []
         1: JS_PARAMETER_LIST@34..39
           0: JS_FORMAL_PARAMETER@34..39
-            0: JS_UNKNOWN_BINDING@34..39
+            0: JS_BOGUS_BINDING@34..39
               0: IDENT@34..39 "await" [] []
             1: (empty)
             2: (empty)
@@ -170,7 +170,7 @@ JsModule {
         0: L_PAREN@58..59 "(" [] []
         1: JS_PARAMETER_LIST@59..64
           0: JS_FORMAL_PARAMETER@59..64
-            0: JS_UNKNOWN_BINDING@59..64
+            0: JS_BOGUS_BINDING@59..64
               0: IDENT@59..64 "yield" [] []
             1: (empty)
             2: (empty)
@@ -182,19 +182,19 @@ JsModule {
         1: JS_DIRECTIVE_LIST@67..67
         2: JS_STATEMENT_LIST@67..67
         3: R_CURLY@67..68 "}" [] []
-    4: JS_UNKNOWN_STATEMENT@68..73
+    4: JS_BOGUS_STATEMENT@68..73
       0: ENUM_KW@68..73 "enum" [Newline("\n")] []
       1: TS_ENUM_MEMBER_LIST@73..73
     5: JS_EMPTY_STATEMENT@73..74
       0: SEMICOLON@73..74 ";" [] []
     6: JS_EXPRESSION_STATEMENT@74..86
-      0: JS_UNKNOWN_EXPRESSION@74..85
-        0: JS_UNKNOWN@74..85
+      0: JS_BOGUS_EXPRESSION@74..85
+        0: JS_BOGUS@74..85
           0: IDENT@74..85 "implements" [Newline("\n")] []
       1: SEMICOLON@85..86 ";" [] []
     7: JS_EXPRESSION_STATEMENT@86..97
-      0: JS_UNKNOWN_EXPRESSION@86..96
-        0: JS_UNKNOWN@86..96
+      0: JS_BOGUS_EXPRESSION@86..96
+        0: JS_BOGUS@86..96
           0: IDENT@86..96 "interface" [Newline("\n")] []
       1: SEMICOLON@96..97 ";" [] []
   3: EOF@97..98 "" [Newline("\n")] []

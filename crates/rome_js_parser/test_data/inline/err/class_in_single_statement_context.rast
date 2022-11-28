@@ -9,7 +9,7 @@ JsModule {
                 value_token: TRUE_KW@4..8 "true" [] [],
             },
             r_paren_token: R_PAREN@8..10 ")" [] [Whitespace(" ")],
-            consequent: JsUnknownStatement {
+            consequent: JsBogusStatement {
                 items: [
                     CLASS_KW@10..16 "class" [] [Whitespace(" ")],
                     JsIdentifierBinding {
@@ -36,7 +36,7 @@ JsModule {
       2: JS_BOOLEAN_LITERAL_EXPRESSION@4..8
         0: TRUE_KW@4..8 "true" [] []
       3: R_PAREN@8..10 ")" [] [Whitespace(" ")]
-      4: JS_UNKNOWN_STATEMENT@10..20
+      4: JS_BOGUS_STATEMENT@10..20
         0: CLASS_KW@10..16 "class" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_BINDING@16..18
           0: IDENT@16..18 "A" [] [Whitespace(" ")]

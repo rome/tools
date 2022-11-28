@@ -9,7 +9,7 @@ impl FormatRule<JsAnyBinding> for FormatJsAnyBinding {
     fn fmt(&self, node: &JsAnyBinding, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
             JsAnyBinding::JsIdentifierBinding(node) => node.format().fmt(f),
-            JsAnyBinding::JsUnknownBinding(node) => node.format().fmt(f),
+            JsAnyBinding::JsBogusBinding(node) => node.format().fmt(f),
         }
     }
 }

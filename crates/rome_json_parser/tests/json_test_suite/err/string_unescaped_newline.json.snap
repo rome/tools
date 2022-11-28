@@ -22,7 +22,7 @@ JsonRoot {
                 value_token: JSON_STRING_LITERAL@1..5 "\"new" [] [],
             },
             missing separator,
-            JsonUnknownValue {
+            JsonBogusValue {
                 items: [
                     IDENT@5..10 "line" [Newline("\n")] [],
                 ],
@@ -48,7 +48,7 @@ JsonRoot {
       0: JSON_STRING_VALUE@1..5
         0: JSON_STRING_LITERAL@1..5 "\"new" [] []
       1: (empty)
-      2: JSON_UNKNOWN_VALUE@5..10
+      2: JSON_BOGUS_VALUE@5..10
         0: IDENT@5..10 "line" [Newline("\n")] []
       3: (empty)
       4: JSON_STRING_VALUE@10..12

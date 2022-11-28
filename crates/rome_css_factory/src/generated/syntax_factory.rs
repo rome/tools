@@ -12,7 +12,7 @@ impl SyntaxFactory for CssSyntaxFactory {
         children: ParsedChildren<Self::Kind>,
     ) -> RawSyntaxNode<Self::Kind> {
         match kind {
-            CSS_UNKNOWN => RawSyntaxNode::new(kind, children.into_iter().map(Some)),
+            CSS_BOGUS => RawSyntaxNode::new(kind, children.into_iter().map(Some)),
             CSS_ANY_FUNCTION => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
@@ -26,7 +26,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_ANY_FUNCTION.to_unknown(),
+                        CSS_ANY_FUNCTION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -73,7 +73,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_AT_KEYFRAMES.to_unknown(),
+                        CSS_AT_KEYFRAMES.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -106,7 +106,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_AT_KEYFRAMES_BODY.to_unknown(),
+                        CSS_AT_KEYFRAMES_BODY.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -160,7 +160,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_AT_MEDIA.to_unknown(),
+                        CSS_AT_MEDIA.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -207,7 +207,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_AT_MEDIA_QUERY.to_unknown(),
+                        CSS_AT_MEDIA_QUERY.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -240,7 +240,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_AT_MEDIA_QUERY_CONSEQUENT.to_unknown(),
+                        CSS_AT_MEDIA_QUERY_CONSEQUENT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -273,7 +273,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_AT_MEDIA_QUERY_FEATURE.to_unknown(),
+                        CSS_AT_MEDIA_QUERY_FEATURE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -292,7 +292,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_AT_MEDIA_QUERY_FEATURE_BOOLEAN.to_unknown(),
+                        CSS_AT_MEDIA_QUERY_FEATURE_BOOLEAN.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -325,7 +325,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_AT_MEDIA_QUERY_FEATURE_COMPARE.to_unknown(),
+                        CSS_AT_MEDIA_QUERY_FEATURE_COMPARE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -358,7 +358,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_AT_MEDIA_QUERY_FEATURE_PLAIN.to_unknown(),
+                        CSS_AT_MEDIA_QUERY_FEATURE_PLAIN.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -405,7 +405,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_AT_MEDIA_QUERY_FEATURE_RANGE.to_unknown(),
+                        CSS_AT_MEDIA_QUERY_FEATURE_RANGE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -445,7 +445,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_AT_MEDIA_QUERY_RANGE.to_unknown(),
+                        CSS_AT_MEDIA_QUERY_RANGE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -485,7 +485,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_ATTRIBUTE.to_unknown(),
+                        CSS_ATTRIBUTE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -553,7 +553,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_ATTRIBUTE_MATCHER.to_unknown(),
+                        CSS_ATTRIBUTE_MATCHER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -579,7 +579,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_ATTRIBUTE_META.to_unknown(),
+                        CSS_ATTRIBUTE_META.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -598,7 +598,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_ATTRIBUTE_MODIFIER.to_unknown(),
+                        CSS_ATTRIBUTE_MODIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -617,7 +617,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_ATTRIBUTE_NAME.to_unknown(),
+                        CSS_ATTRIBUTE_NAME.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -643,7 +643,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_ATTRIBUTE_SELECTOR_PATTERN.to_unknown(),
+                        CSS_ATTRIBUTE_SELECTOR_PATTERN.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -676,7 +676,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_BLOCK.to_unknown(),
+                        CSS_BLOCK.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -702,7 +702,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_CLASS_SELECTOR_PATTERN.to_unknown(),
+                        CSS_CLASS_SELECTOR_PATTERN.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -756,7 +756,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_COMBINATOR_SELECTOR_PATTERN.to_unknown(),
+                        CSS_COMBINATOR_SELECTOR_PATTERN.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -775,7 +775,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_CUSTOM_PROPERTY.to_unknown(),
+                        CSS_CUSTOM_PROPERTY.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -822,7 +822,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_DECLARATION.to_unknown(),
+                        CSS_DECLARATION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -848,7 +848,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_DECLARATION_IMPORTANT.to_unknown(),
+                        CSS_DECLARATION_IMPORTANT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -874,7 +874,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_DIMENSION.to_unknown(),
+                        CSS_DIMENSION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -900,7 +900,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_ID_SELECTOR_PATTERN.to_unknown(),
+                        CSS_ID_SELECTOR_PATTERN.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -919,7 +919,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_IDENTIFIER.to_unknown(),
+                        CSS_IDENTIFIER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -959,7 +959,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_KEYFRAMES_BLOCK.to_unknown(),
+                        CSS_KEYFRAMES_BLOCK.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -992,7 +992,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_KEYFRAMES_SELECTOR.to_unknown(),
+                        CSS_KEYFRAMES_SELECTOR.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1011,7 +1011,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_NUMBER.to_unknown(),
+                        CSS_NUMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1030,7 +1030,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_PARAMETER.to_unknown(),
+                        CSS_PARAMETER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1056,7 +1056,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_PERCENTAGE.to_unknown(),
+                        CSS_PERCENTAGE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1089,7 +1089,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_PSEUDO_CLASS_SELECTOR_PATTERN.to_unknown(),
+                        CSS_PSEUDO_CLASS_SELECTOR_PATTERN.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1122,7 +1122,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_PSEUDO_CLASS_SELECTOR_PATTERN_PARAMETERS.to_unknown(),
+                        CSS_PSEUDO_CLASS_SELECTOR_PATTERN_PARAMETERS.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1148,7 +1148,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_RATIO.to_unknown(),
+                        CSS_RATIO.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1173,10 +1173,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 }
                 slots.next_slot();
                 if current_element.is_some() {
-                    return RawSyntaxNode::new(
-                        CSS_RULE.to_unknown(),
-                        children.into_iter().map(Some),
-                    );
+                    return RawSyntaxNode::new(CSS_RULE.to_bogus(), children.into_iter().map(Some));
                 }
                 slots.into_node(CSS_RULE, children)
             }
@@ -1193,7 +1190,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_SELECTOR.to_unknown(),
+                        CSS_SELECTOR.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1233,7 +1230,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_SIMPLE_FUNCTION.to_unknown(),
+                        CSS_SIMPLE_FUNCTION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1252,7 +1249,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_STRING.to_unknown(),
+                        CSS_STRING.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1271,7 +1268,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_TYPE_SELECTOR_PATTERN.to_unknown(),
+                        CSS_TYPE_SELECTOR_PATTERN.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1290,7 +1287,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_UNIVERSAL_SELECTOR_PATTERN.to_unknown(),
+                        CSS_UNIVERSAL_SELECTOR_PATTERN.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1337,7 +1334,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_VAR_FUNCTION.to_unknown(),
+                        CSS_VAR_FUNCTION.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -1363,7 +1360,7 @@ impl SyntaxFactory for CssSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        CSS_VAR_FUNCTION_VALUE.to_unknown(),
+                        CSS_VAR_FUNCTION_VALUE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }

@@ -31,7 +31,7 @@ JsScript {
                             },
                             COMMA@40..42 "," [] [Whitespace(" ")],
                             JsFormalParameter {
-                                binding: JsUnknownBinding {
+                                binding: JsBogusBinding {
                                     items: [
                                         IDENT@42..49 "private" [] [],
                                     ],
@@ -42,7 +42,7 @@ JsScript {
                             },
                             COMMA@49..51 "," [] [Whitespace(" ")],
                             JsFormalParameter {
-                                binding: JsUnknownBinding {
+                                binding: JsBogusBinding {
                                     items: [
                                         IDENT@51..60 "protected" [] [],
                                     ],
@@ -53,7 +53,7 @@ JsScript {
                             },
                             COMMA@60..62 "," [] [Whitespace(" ")],
                             JsFormalParameter {
-                                binding: JsUnknownBinding {
+                                binding: JsBogusBinding {
                                     items: [
                                         IDENT@62..68 "public" [] [],
                                     ],
@@ -108,21 +108,21 @@ JsScript {
                 3: (empty)
               1: COMMA@40..42 "," [] [Whitespace(" ")]
               2: JS_FORMAL_PARAMETER@42..49
-                0: JS_UNKNOWN_BINDING@42..49
+                0: JS_BOGUS_BINDING@42..49
                   0: IDENT@42..49 "private" [] []
                 1: (empty)
                 2: (empty)
                 3: (empty)
               3: COMMA@49..51 "," [] [Whitespace(" ")]
               4: JS_FORMAL_PARAMETER@51..60
-                0: JS_UNKNOWN_BINDING@51..60
+                0: JS_BOGUS_BINDING@51..60
                   0: IDENT@51..60 "protected" [] []
                 1: (empty)
                 2: (empty)
                 3: (empty)
               5: COMMA@60..62 "," [] [Whitespace(" ")]
               6: JS_FORMAL_PARAMETER@62..68
-                0: JS_UNKNOWN_BINDING@62..68
+                0: JS_BOGUS_BINDING@62..68
                   0: IDENT@62..68 "public" [] []
                 1: (empty)
                 2: (empty)

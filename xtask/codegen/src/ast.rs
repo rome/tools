@@ -209,7 +209,7 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
                     fields,
                 })
             }
-            NodeRuleClassification::Unknown => ast.unknowns.push(name),
+            NodeRuleClassification::Bogus => ast.bogus.push(name),
             NodeRuleClassification::List {
                 separator,
                 element_name,
@@ -235,8 +235,8 @@ enum NodeRuleClassification {
     Union(Vec<String>),
     /// Regular node containing tokens or sub nodes of the form `A = B 'c'
     Node,
-    /// An Unknown node of the form `A = SyntaxElement*`
-    Unknown,
+    /// A bogus node of the form `A = SyntaxElement*`
+    Bogus,
 
     /// A list node of the form `A = B*` or `A = (B (',' B)*)` or `A = (B (',' B)* ','?)`
     List {
@@ -272,7 +272,7 @@ fn classify_node_rule(grammar: &Grammar, rule: &Rule) -> NodeRuleClassification 
             };
 
             if element_type == SYNTAX_ELEMENT_TYPE {
-                NodeRuleClassification::Unknown
+                NodeRuleClassification::Bogus
             } else {
                 NodeRuleClassification::List {
                     separator: None,

@@ -48,7 +48,7 @@ JsModule {
             r_paren_token: R_PAREN@48..50 ")" [] [Whitespace(" ")],
             body: missing (required),
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 R_CURLY@50..51 "}" [] [],
             ],
@@ -97,7 +97,7 @@ JsModule {
         0: TRUE_KW@44..48 "true" [] []
       3: R_PAREN@48..50 ")" [] [Whitespace(" ")]
       4: (empty)
-    4: JS_UNKNOWN_STATEMENT@50..51
+    4: JS_BOGUS_STATEMENT@50..51
       0: R_CURLY@50..51 "}" [] []
   3: EOF@51..52 "" [Newline("\n")] []
 --

@@ -14,7 +14,7 @@ impl FormatRule<JsAnyObjectMember> for FormatJsAnyObjectMember {
             JsAnyObjectMember::JsSetterObjectMember(node) => node.format().fmt(f),
             JsAnyObjectMember::JsShorthandPropertyObjectMember(node) => node.format().fmt(f),
             JsAnyObjectMember::JsSpread(node) => node.format().fmt(f),
-            JsAnyObjectMember::JsUnknownMember(node) => node.format().fmt(f),
+            JsAnyObjectMember::JsBogusMember(node) => node.format().fmt(f),
         }
     }
 }

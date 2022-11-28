@@ -35,7 +35,7 @@ impl FormatRule<JsAnyExpression> for FormatJsAnyExpression {
             JsAnyExpression::JsSuperExpression(node) => node.format().fmt(f),
             JsAnyExpression::JsThisExpression(node) => node.format().fmt(f),
             JsAnyExpression::JsUnaryExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsUnknownExpression(node) => node.format().fmt(f),
+            JsAnyExpression::JsBogusExpression(node) => node.format().fmt(f),
             JsAnyExpression::JsYieldExpression(node) => node.format().fmt(f),
             JsAnyExpression::JsNewTargetExpression(node) => node.format().fmt(f),
             JsAnyExpression::JsTemplateExpression(node) => node.format().fmt(f),

@@ -49,7 +49,7 @@ impl Rule for InlineVariable {
             JsAnyBindingPattern::JsAnyBinding(JsAnyBinding::JsIdentifierBinding(binding)) => {
                 binding
             }
-            JsAnyBindingPattern::JsAnyBinding(JsAnyBinding::JsUnknownBinding(_))
+            JsAnyBindingPattern::JsAnyBinding(JsAnyBinding::JsBogusBinding(_))
             | JsAnyBindingPattern::JsArrayBindingPattern(_)
             | JsAnyBindingPattern::JsObjectBindingPattern(_) => return None,
         };

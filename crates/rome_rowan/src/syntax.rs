@@ -24,11 +24,11 @@ pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {
     const TOMBSTONE: Self;
     const EOF: Self;
 
-    /// Returns `true` if this is an unknown node kind.
-    fn is_unknown(&self) -> bool;
+    /// Returns `true` if this is a kind of a bogus node.
+    fn is_bogus(&self) -> bool;
 
-    /// Converts this into to the best matching unknown node kind.
-    fn to_unknown(&self) -> Self;
+    /// Converts this into to the best matching bogus node kind.
+    fn to_bogus(&self) -> Self;
 
     /// Converts this kind to a raw syntax kind.
     fn to_raw(&self) -> RawSyntaxKind;

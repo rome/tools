@@ -21,22 +21,22 @@
 // NOTES
 //
 // - SyntaxNode, SyntaxToken and SyntaxElement will be stripped from the codegen
-// - Unknown nodes are special nodes used to keep track of broken code; they are
+// - Bogus nodes are special nodes used to keep track of broken code; they are
 //   not part of the grammar but they will appear inside the green tree
 
 
 ///////////////
-// UNKNOWN NODES
+// BOGUS NODES
 ///////////////
 // SyntaxElement is a generic data structure that is meant to track nodes and tokens
 // in cases where we care about both types
 //
-// As Unknown* node will need to yield both tokens and nodes without discrimination,
+// As Bogus* node will need to yield both tokens and nodes without discrimination,
 // and their children will need to yield nodes and tokens as well.
 // For this reason, SyntaxElement = SyntaxElement
 SyntaxElement = SyntaxElement
 
-CssUnknown = SyntaxElement*
+CssBogus = SyntaxElement*
 
 CssRoot = CssAnyRule*
 

@@ -18,9 +18,9 @@ JsScript {
                     l_curly_token: L_CURLY@27..29 "{" [] [Whitespace(" ")],
                     statements: JsStatementList [
                         JsExpressionStatement {
-                            expression: JsUnknownExpression {
+                            expression: JsBogusExpression {
                                 items: [
-                                    JsUnknown {
+                                    JsBogus {
                                         items: [
                                             IDENT@29..34 "await" [] [],
                                         ],
@@ -51,7 +51,7 @@ JsScript {
                     l_curly_token: L_CURLY@57..59 "{" [] [Whitespace(" ")],
                     statements: JsStatementList [
                         JsExpressionStatement {
-                            expression: JsUnknownExpression {
+                            expression: JsBogusExpression {
                                 items: [
                                     AWAIT_KW@59..65 "await" [] [Whitespace(" ")],
                                     JsNumberLiteralExpression {
@@ -90,8 +90,8 @@ JsScript {
           1: L_CURLY@27..29 "{" [] [Whitespace(" ")]
           2: JS_STATEMENT_LIST@29..36
             0: JS_EXPRESSION_STATEMENT@29..36
-              0: JS_UNKNOWN_EXPRESSION@29..34
-                0: JS_UNKNOWN@29..34
+              0: JS_BOGUS_EXPRESSION@29..34
+                0: JS_BOGUS@29..34
                   0: IDENT@29..34 "await" [] []
               1: SEMICOLON@34..36 ";" [] [Whitespace(" ")]
           3: R_CURLY@36..38 "}" [] [Whitespace(" ")]
@@ -111,7 +111,7 @@ JsScript {
           1: L_CURLY@57..59 "{" [] [Whitespace(" ")]
           2: JS_STATEMENT_LIST@59..69
             0: JS_EXPRESSION_STATEMENT@59..69
-              0: JS_UNKNOWN_EXPRESSION@59..67
+              0: JS_BOGUS_EXPRESSION@59..67
                 0: AWAIT_KW@59..65 "await" [] [Whitespace(" ")]
                 1: JS_NUMBER_LITERAL_EXPRESSION@65..67
                   0: JS_NUMBER_LITERAL@65..67 "10" [] []

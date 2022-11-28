@@ -16,7 +16,7 @@ impl FormatRule<JsAnyAssignment> for FormatJsAnyAssignment {
             JsAnyAssignment::TsAsAssignment(node) => node.format().fmt(f),
             JsAnyAssignment::TsSatisfiesAssignment(node) => node.format().fmt(f),
             JsAnyAssignment::TsTypeAssertionAssignment(node) => node.format().fmt(f),
-            JsAnyAssignment::JsUnknownAssignment(node) => node.format().fmt(f),
+            JsAnyAssignment::JsBogusAssignment(node) => node.format().fmt(f),
         }
     }
 }

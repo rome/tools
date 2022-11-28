@@ -643,7 +643,7 @@ impl JsAnyExpression {
                 }
             }
 
-            JsAnyExpression::JsUnknownExpression(_) => OperatorPrecedence::lowest(),
+            JsAnyExpression::JsBogusExpression(_) => OperatorPrecedence::lowest(),
             JsAnyExpression::JsParenthesizedExpression(_) => OperatorPrecedence::highest(),
         };
 

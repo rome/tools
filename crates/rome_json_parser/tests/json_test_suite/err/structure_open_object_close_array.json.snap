@@ -23,7 +23,7 @@ JsonRoot {
                 r_curly_token: missing (required),
             },
             missing separator,
-            JsonUnknownValue {
+            JsonBogusValue {
                 items: [
                     R_BRACK@1..2 "]" [] [],
                 ],
@@ -47,7 +47,7 @@ JsonRoot {
         1: JSON_MEMBER_LIST@1..1
         2: (empty)
       1: (empty)
-      2: JSON_UNKNOWN_VALUE@1..2
+      2: JSON_BOGUS_VALUE@1..2
         0: R_BRACK@1..2 "]" [] []
     2: (empty)
   1: EOF@2..2 "" [] []

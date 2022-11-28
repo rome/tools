@@ -6936,90 +6936,97 @@ where
         }),
     ))
 }
-pub fn js_unknown<I>(slots: I) -> JsUnknown
+pub fn js_bogus<I>(slots: I) -> JsBogus
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknown::unwrap_cast(SyntaxNode::new_detached(JsSyntaxKind::JS_UNKNOWN, slots))
+    JsBogus::unwrap_cast(SyntaxNode::new_detached(JsSyntaxKind::JS_BOGUS, slots))
 }
-pub fn js_unknown_assignment<I>(slots: I) -> JsUnknownAssignment
+pub fn js_bogus_assignment<I>(slots: I) -> JsBogusAssignment
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknownAssignment::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_UNKNOWN_ASSIGNMENT,
+    JsBogusAssignment::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BOGUS_ASSIGNMENT,
         slots,
     ))
 }
-pub fn js_unknown_binding<I>(slots: I) -> JsUnknownBinding
+pub fn js_bogus_binding<I>(slots: I) -> JsBogusBinding
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknownBinding::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_UNKNOWN_BINDING,
+    JsBogusBinding::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BOGUS_BINDING,
         slots,
     ))
 }
-pub fn js_unknown_expression<I>(slots: I) -> JsUnknownExpression
+pub fn js_bogus_expression<I>(slots: I) -> JsBogusExpression
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknownExpression::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_UNKNOWN_EXPRESSION,
+    JsBogusExpression::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BOGUS_EXPRESSION,
         slots,
     ))
 }
-pub fn js_unknown_import_assertion_entry<I>(slots: I) -> JsUnknownImportAssertionEntry
+pub fn js_bogus_import_assertion_entry<I>(slots: I) -> JsBogusImportAssertionEntry
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknownImportAssertionEntry::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_UNKNOWN_IMPORT_ASSERTION_ENTRY,
+    JsBogusImportAssertionEntry::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BOGUS_IMPORT_ASSERTION_ENTRY,
         slots,
     ))
 }
-pub fn js_unknown_member<I>(slots: I) -> JsUnknownMember
+pub fn js_bogus_member<I>(slots: I) -> JsBogusMember
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknownMember::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_UNKNOWN_MEMBER,
+    JsBogusMember::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BOGUS_MEMBER,
         slots,
     ))
 }
-pub fn js_unknown_named_import_specifier<I>(slots: I) -> JsUnknownNamedImportSpecifier
+pub fn js_bogus_named_import_specifier<I>(slots: I) -> JsBogusNamedImportSpecifier
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknownNamedImportSpecifier::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_UNKNOWN_NAMED_IMPORT_SPECIFIER,
+    JsBogusNamedImportSpecifier::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BOGUS_NAMED_IMPORT_SPECIFIER,
         slots,
     ))
 }
-pub fn js_unknown_parameter<I>(slots: I) -> JsUnknownParameter
+pub fn js_bogus_parameter<I>(slots: I) -> JsBogusParameter
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknownParameter::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_UNKNOWN_PARAMETER,
+    JsBogusParameter::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BOGUS_PARAMETER,
         slots,
     ))
 }
-pub fn js_unknown_statement<I>(slots: I) -> JsUnknownStatement
+pub fn js_bogus_statement<I>(slots: I) -> JsBogusStatement
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknownStatement::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_UNKNOWN_STATEMENT,
+    JsBogusStatement::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BOGUS_STATEMENT,
         slots,
     ))
+}
+pub fn ts_bogus_type<I>(slots: I) -> TsBogusType
+where
+    I: IntoIterator<Item = Option<SyntaxElement>>,
+    I::IntoIter: ExactSizeIterator,
+{
+    TsBogusType::unwrap_cast(SyntaxNode::new_detached(JsSyntaxKind::TS_BOGUS_TYPE, slots))
 }

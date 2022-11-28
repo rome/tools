@@ -43,7 +43,7 @@ fn parse_ts_identifier_binding(
     ts_identifier_context: TsIdentifierContext,
 ) -> ParsedSyntax {
     parse_identifier(p, TS_IDENTIFIER_BINDING).map(|mut ident| {
-        if ident.kind(p).is_unknown() {
+        if ident.kind(p).is_bogus() {
             return ident;
         }
 
@@ -52,7 +52,7 @@ fn parse_ts_identifier_binding(
         if is_reserved_word_this_context {
             let error = p.err_builder(format!("Type alias cannot be {}", name), ident.range(p));
             p.error(error);
-            ident.change_to_unknown(p);
+            ident.change_to_bogus(p);
         }
 
         ident
@@ -278,7 +278,7 @@ fn parse_decorator(p: &mut JsParser) -> ParsedSyntax {
         parse_lhs_expr(p, ExpressionContext::default().and_in_ts_decorator(true))
             .or_add_diagnostic(p, expected_expression);
 
-        Present(m.complete(p, JS_UNKNOWN))
+        Present(m.complete(p, JS_BOGUS))
     } else {
         Absent
     }

@@ -135,7 +135,7 @@ impl ParseSeparatedList for TsTypeParameterList {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
-                JS_UNKNOWN,
+                TS_BOGUS_TYPE,
                 token_set![T![>], T![,], T![ident], T![yield], T![await]],
             )
             .enable_recovery_on_line_break(),
@@ -744,7 +744,7 @@ impl ParseNodeList for TypeMembers {
     fn recover(&mut self, p: &mut JsParser, member: ParsedSyntax) -> RecoveryResult {
         member.or_recover(
             p,
-            &ParseRecovery::new(JS_UNKNOWN, token_set![T!['}'], T![,], T![;]])
+            &ParseRecovery::new(JS_BOGUS, token_set![T!['}'], T![,], T![;]])
                 .enable_recovery_on_line_break(),
             expected_property_or_signature,
         )
@@ -952,7 +952,7 @@ impl ParseSeparatedList for TsTupleTypeElementList {
                     syntax.range(p).as_range(),
                 );
                 p.error(err);
-                syntax.change_to_unknown(p);
+                syntax.change_to_bogus(p);
             }
 
             return Present(syntax);
@@ -984,7 +984,7 @@ impl ParseSeparatedList for TsTupleTypeElementList {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
-                JS_UNKNOWN,
+                TS_BOGUS_TYPE,
                 token_set![
                     T![']'],
                     T![...],
@@ -1393,7 +1393,7 @@ impl ParseSeparatedList for TypeArgumentsList {
             parsed_element.or_recover(
                 p,
                 &ParseRecovery::new(
-                    JS_UNKNOWN,
+                    TS_BOGUS_TYPE,
                     token_set![T![>], T![,], T![ident], T![yield], T![await]],
                 )
                 .enable_recovery_on_line_break(),

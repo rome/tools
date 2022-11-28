@@ -13,7 +13,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..9 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsPropertySignatureModifierList [
                             TsAbstractModifier {
@@ -32,7 +32,7 @@ JsModule {
                         SEMICOLON@36..37 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             TsAbstractModifier {
@@ -56,7 +56,7 @@ JsModule {
                         SEMICOLON@64..65 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             TsAbstractModifier {
@@ -78,7 +78,7 @@ JsModule {
                         SEMICOLON@95..96 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             TsAbstractModifier {
@@ -123,7 +123,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@8..9 "{" [] []
       7: JS_CLASS_MEMBER_LIST@9..120
-        0: JS_UNKNOWN_MEMBER@9..37
+        0: JS_BOGUS_MEMBER@9..37
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@9..22
             0: TS_ABSTRACT_MODIFIER@9..22
               0: ABSTRACT_KW@9..22 "abstract" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]
@@ -134,7 +134,7 @@ JsModule {
             1: TS_NUMBER_TYPE@30..36
               0: NUMBER_KW@30..36 "number" [] []
           3: SEMICOLON@36..37 ";" [] []
-        1: JS_UNKNOWN_MEMBER@37..65
+        1: JS_BOGUS_MEMBER@37..65
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@37..50
             0: TS_ABSTRACT_MODIFIER@37..50
               0: ABSTRACT_KW@37..50 "abstract" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]
@@ -149,7 +149,7 @@ JsModule {
             1: TS_STRING_TYPE@58..64
               0: STRING_KW@58..64 "string" [] []
           4: SEMICOLON@64..65 ";" [] []
-        2: JS_UNKNOWN_MEMBER@65..96
+        2: JS_BOGUS_MEMBER@65..96
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@65..78
             0: TS_ABSTRACT_MODIFIER@65..78
               0: ABSTRACT_KW@65..78 "abstract" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]
@@ -163,7 +163,7 @@ JsModule {
             1: TS_NUMBER_TYPE@89..95
               0: NUMBER_KW@89..95 "number" [] []
           6: SEMICOLON@95..96 ";" [] []
-        3: JS_UNKNOWN_MEMBER@96..120
+        3: JS_BOGUS_MEMBER@96..120
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@96..109
             0: TS_ABSTRACT_MODIFIER@96..109
               0: ABSTRACT_KW@96..109 "abstract" [Newline("\n"), Whitespace("   ")] [Whitespace(" ")]

@@ -125,11 +125,11 @@ JsModule {
                 r_curly_token: R_CURLY@83..84 "}" [] [],
             },
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 FOR_KW@84..89 "for" [Newline("\n")] [Whitespace(" ")],
                 L_PAREN@89..90 "(" [] [],
-                JsUnknown {
+                JsBogus {
                     items: [
                         LET_KW@90..94 "let" [] [Whitespace(" ")],
                         JsVariableDeclarator {
@@ -168,7 +168,7 @@ JsModule {
                 },
             ],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 FOR_KW@112..117 "for" [Newline("\n")] [Whitespace(" ")],
                 AWAIT_KW@117..123 "await" [] [Whitespace(" ")],
@@ -197,7 +197,7 @@ JsModule {
                 },
             ],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 FOR_KW@139..144 "for" [Newline("\n")] [Whitespace(" ")],
                 AWAIT_KW@144..150 "await" [] [Whitespace(" ")],
@@ -376,10 +376,10 @@ JsModule {
         0: L_CURLY@82..83 "{" [] []
         1: JS_STATEMENT_LIST@83..83
         2: R_CURLY@83..84 "}" [] []
-    3: JS_UNKNOWN_STATEMENT@84..112
+    3: JS_BOGUS_STATEMENT@84..112
       0: FOR_KW@84..89 "for" [Newline("\n")] [Whitespace(" ")]
       1: L_PAREN@89..90 "(" [] []
-      2: JS_UNKNOWN@90..103
+      2: JS_BOGUS@90..103
         0: LET_KW@90..94 "let" [] [Whitespace(" ")]
         1: JS_VARIABLE_DECLARATOR@94..95
           0: JS_IDENTIFIER_BINDING@94..95
@@ -405,7 +405,7 @@ JsModule {
         0: L_CURLY@110..111 "{" [] []
         1: JS_STATEMENT_LIST@111..111
         2: R_CURLY@111..112 "}" [] []
-    4: JS_UNKNOWN_STATEMENT@112..139
+    4: JS_BOGUS_STATEMENT@112..139
       0: FOR_KW@112..117 "for" [Newline("\n")] [Whitespace(" ")]
       1: AWAIT_KW@117..123 "await" [] [Whitespace(" ")]
       2: L_PAREN@123..124 "(" [] []
@@ -426,7 +426,7 @@ JsModule {
         0: L_CURLY@137..138 "{" [] []
         1: JS_STATEMENT_LIST@138..138
         2: R_CURLY@138..139 "}" [] []
-    5: JS_UNKNOWN_STATEMENT@139..177
+    5: JS_BOGUS_STATEMENT@139..177
       0: FOR_KW@139..144 "for" [Newline("\n")] [Whitespace(" ")]
       1: AWAIT_KW@144..150 "await" [] [Whitespace(" ")]
       2: L_PAREN@150..151 "(" [] []

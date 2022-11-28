@@ -42,6 +42,7 @@ impl FormatRule<TsType> for FormatTsType {
             TsType::TsFunctionType(node) => node.format().fmt(f),
             TsType::TsConstructorType(node) => node.format().fmt(f),
             TsType::TsConditionalType(node) => node.format().fmt(f),
+            TsType::TsBogusType(node) => node.format().fmt(f),
         }
     }
 }

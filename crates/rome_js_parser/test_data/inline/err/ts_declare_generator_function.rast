@@ -2,10 +2,10 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 DECLARE_KW@0..8 "declare" [] [Whitespace(" ")],
-                JsUnknownStatement {
+                JsBogusStatement {
                     items: [
                         FUNCTION_KW@8..16 "function" [] [],
                         STAR@16..18 "*" [] [Whitespace(" ")],
@@ -38,13 +38,13 @@ JsModule {
                 body: TsModuleBlock {
                     l_curly_token: L_CURLY@51..52 "{" [] [],
                     items: JsModuleItemList [
-                        JsUnknownStatement {
+                        JsBogusStatement {
                             items: [
                                 EXPORT_KW@52..62 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
-                                JsUnknown {
+                                JsBogus {
                                     items: [
                                         DEFAULT_KW@62..70 "default" [] [Whitespace(" ")],
-                                        JsUnknown {
+                                        JsBogus {
                                             items: [
                                                 FUNCTION_KW@70..78 "function" [] [],
                                                 STAR@78..80 "*" [] [Whitespace(" ")],
@@ -81,9 +81,9 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..94
-    0: JS_UNKNOWN_STATEMENT@0..31
+    0: JS_BOGUS_STATEMENT@0..31
       0: DECLARE_KW@0..8 "declare" [] [Whitespace(" ")]
-      1: JS_UNKNOWN_STATEMENT@8..31
+      1: JS_BOGUS_STATEMENT@8..31
         0: FUNCTION_KW@8..16 "function" [] []
         1: STAR@16..18 "*" [] [Whitespace(" ")]
         2: JS_IDENTIFIER_BINDING@18..22
@@ -106,11 +106,11 @@ JsModule {
         2: TS_MODULE_BLOCK@51..94
           0: L_CURLY@51..52 "{" [] []
           1: JS_MODULE_ITEM_LIST@52..92
-            0: JS_UNKNOWN_STATEMENT@52..92
+            0: JS_BOGUS_STATEMENT@52..92
               0: EXPORT_KW@52..62 "export" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
-              1: JS_UNKNOWN@62..92
+              1: JS_BOGUS@62..92
                 0: DEFAULT_KW@62..70 "default" [] [Whitespace(" ")]
-                1: JS_UNKNOWN@70..92
+                1: JS_BOGUS@70..92
                   0: FUNCTION_KW@70..78 "function" [] []
                   1: STAR@78..80 "*" [] [Whitespace(" ")]
                   2: JS_IDENTIFIER_BINDING@80..84

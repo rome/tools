@@ -13,9 +13,9 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@11..12 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 TsDeclareModifier {
                                     modifier_token: DECLARE_KW@12..25 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
@@ -39,9 +39,9 @@ JsModule {
                         SEMICOLON@41..42 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 TsDeclareModifier {
                                     modifier_token: DECLARE_KW@42..55 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
@@ -54,9 +54,9 @@ JsModule {
                         JsConstructorParameters {
                             l_paren_token: L_PAREN@66..67 "(" [] [],
                             parameters: JsConstructorParameterList [
-                                JsUnknownParameter {
+                                JsBogusParameter {
                                     items: [
-                                        JsUnknown {
+                                        JsBogus {
                                             items: [
                                                 TsDeclareModifier {
                                                     modifier_token: DECLARE_KW@67..75 "declare" [] [Whitespace(" ")],
@@ -87,9 +87,9 @@ JsModule {
                         },
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 TsDeclareModifier {
                                     modifier_token: DECLARE_KW@92..105 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
@@ -118,9 +118,9 @@ JsModule {
                         },
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 TsDeclareModifier {
                                     modifier_token: DECLARE_KW@130..143 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
@@ -154,9 +154,9 @@ JsModule {
                         },
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 TsDeclareModifier {
                                     modifier_token: DECLARE_KW@169..182 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
@@ -206,8 +206,8 @@ JsModule {
       5: (empty)
       6: L_CURLY@11..12 "{" [] []
       7: JS_CLASS_MEMBER_LIST@12..205
-        0: JS_UNKNOWN_MEMBER@12..42
-          0: JS_UNKNOWN@12..25
+        0: JS_BOGUS_MEMBER@12..42
+          0: JS_BOGUS@12..25
             0: TS_DECLARE_MODIFIER@12..25
               0: DECLARE_KW@12..25 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@25..31
@@ -221,8 +221,8 @@ JsModule {
             1: TS_STRING_TYPE@35..41
               0: STRING_KW@35..41 "string" [] []
           4: SEMICOLON@41..42 ";" [] []
-        1: JS_UNKNOWN_MEMBER@42..92
-          0: JS_UNKNOWN@42..55
+        1: JS_BOGUS_MEMBER@42..92
+          0: JS_BOGUS@42..55
             0: TS_DECLARE_MODIFIER@42..55
               0: DECLARE_KW@42..55 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@55..66
@@ -230,8 +230,8 @@ JsModule {
           2: JS_CONSTRUCTOR_PARAMETERS@66..90
             0: L_PAREN@66..67 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@67..88
-              0: JS_UNKNOWN_PARAMETER@67..88
-                0: JS_UNKNOWN@67..84
+              0: JS_BOGUS_PARAMETER@67..88
+                0: JS_BOGUS@67..84
                   0: TS_DECLARE_MODIFIER@67..75
                     0: DECLARE_KW@67..75 "declare" [] [Whitespace(" ")]
                   1: TS_READONLY_MODIFIER@75..84
@@ -248,8 +248,8 @@ JsModule {
             1: JS_DIRECTIVE_LIST@91..91
             2: JS_STATEMENT_LIST@91..91
             3: R_CURLY@91..92 "}" [] []
-        2: JS_UNKNOWN_MEMBER@92..130
-          0: JS_UNKNOWN@92..105
+        2: JS_BOGUS_MEMBER@92..130
+          0: JS_BOGUS@92..105
             0: TS_DECLARE_MODIFIER@92..105
               0: DECLARE_KW@92..105 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: GET_KW@105..109 "get" [] [Whitespace(" ")]
@@ -267,8 +267,8 @@ JsModule {
                   0: JS_STRING_LITERAL@125..129 "\"a\"" [] [Whitespace(" ")]
                 2: (empty)
             3: R_CURLY@129..130 "}" [] []
-        3: JS_UNKNOWN_MEMBER@130..169
-          0: JS_UNKNOWN@130..143
+        3: JS_BOGUS_MEMBER@130..169
+          0: JS_BOGUS@130..143
             0: TS_DECLARE_MODIFIER@130..143
               0: DECLARE_KW@130..143 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: SET_KW@143..147 "set" [] [Whitespace(" ")]
@@ -290,8 +290,8 @@ JsModule {
             1: JS_DIRECTIVE_LIST@168..168
             2: JS_STATEMENT_LIST@168..168
             3: R_CURLY@168..169 "}" [] []
-        4: JS_UNKNOWN_MEMBER@169..205
-          0: JS_UNKNOWN@169..182
+        4: JS_BOGUS_MEMBER@169..205
+          0: JS_BOGUS@169..182
             0: TS_DECLARE_MODIFIER@169..182
               0: DECLARE_KW@169..182 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: L_BRACK@182..183 "[" [] []

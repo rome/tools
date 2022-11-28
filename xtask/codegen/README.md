@@ -55,7 +55,7 @@ Here's a list of internal conventions that we follow to write grammar:
 	}
 	```
 
-1. Nodes used to track broken code should contain the **Unknown** word in its name (it's case sensitive).
+1. Nodes used to track broken code should contain the **Bogus** word in its name (case sensitive).
 This is needed because it will generate a different type of code, useful in case of errors inside the source code Rome will parse.
 
 ## `cargo codegen test`

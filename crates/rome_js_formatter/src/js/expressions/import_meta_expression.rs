@@ -6,12 +6,9 @@ use rome_js_syntax::JsImportMetaExpressionFields;
 use rome_js_syntax::{JsImportMetaExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatImportMeta;
+pub(crate) struct FormatJsImportMetaExpression;
 
-#[derive(Debug, Clone, Default)]
-pub(crate) struct FormatJsImportMeta;
-
-impl FormatNodeRule<JsImportMetaExpression> for FormatImportMeta {
+impl FormatNodeRule<JsImportMetaExpression> for FormatJsImportMetaExpression {
     fn fmt_fields(&self, node: &JsImportMetaExpression, f: &mut JsFormatter) -> FormatResult<()> {
         let JsImportMetaExpressionFields {
             import_token,

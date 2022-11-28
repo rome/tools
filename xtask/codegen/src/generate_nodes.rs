@@ -543,19 +543,19 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
             }
         });
 
-    let unknowns = ast.unknowns.iter().map(|unknown| {
-        let name = format_ident!("{}", unknown);
-        let string_name = unknown;
-        let kind = format_ident!("{}", to_upper_snake_case(unknown));
+    let bogus = ast.bogus.iter().map(|bogus_name| {
+        let ident = format_ident!("{}", bogus_name);
+        let string_name = bogus_name;
+        let kind = format_ident!("{}", to_upper_snake_case(bogus_name));
 
         quote! {
             #[derive(Clone, PartialEq, Eq, Hash)]
             #[cfg_attr(feature = "serde", derive(Serialize))]
-            pub struct #name {
+            pub struct #ident {
                 syntax: SyntaxNode
             }
 
-            impl #name {
+            impl #ident {
                 /// Create an AstNode from a SyntaxNode without checking its kind
                 ///
                 /// # Safety
@@ -571,7 +571,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 }
             }
 
-            impl AstNode for #name {
+            impl AstNode for #ident {
                 type Language = Language;
 
                 const KIND_SET: SyntaxKindSet<Language> =
@@ -596,7 +596,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 }
             }
 
-            impl std::fmt::Debug for #name {
+            impl std::fmt::Debug for #ident {
                 fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                     f.debug_struct(#string_name)
                         .field("items", &DebugSyntaxElementChildren(self.items()))
@@ -604,14 +604,14 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
                 }
             }
 
-            impl From<#name> for SyntaxNode {
-                fn from(n: #name) -> SyntaxNode {
+            impl From<#ident> for SyntaxNode {
+                fn from(n: #ident) -> SyntaxNode {
                     n.syntax
                 }
             }
 
-            impl From<#name> for SyntaxElement {
-                fn from(n: #name) -> SyntaxElement {
+            impl From<#ident> for SyntaxElement {
+                fn from(n: #ident) -> SyntaxElement {
                     n.syntax.into()
                 }
             }
@@ -821,7 +821,7 @@ pub fn generate_nodes(ast: &AstSrc, language_kind: LanguageKind) -> Result<Strin
         #(#node_boilerplate_impls)*
         #(#union_boilerplate_impls)*
         #(#display_impls)*
-        #(#unknowns)*
+        #(#bogus)*
         #(#lists)*
 
         #[derive(Clone)]

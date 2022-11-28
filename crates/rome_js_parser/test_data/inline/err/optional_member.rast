@@ -13,13 +13,13 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [],
                         JsLiteralMemberName {
                             value: IDENT@10..13 "foo" [] [],
                         },
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 QUESTION@13..14 "?" [] [],
                             ],
@@ -48,11 +48,11 @@ JsModule {
       5: (empty)
       6: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@10..16
-        0: JS_UNKNOWN_MEMBER@10..16
+        0: JS_BOGUS_MEMBER@10..16
           0: JS_PROPERTY_MODIFIER_LIST@10..10
           1: JS_LITERAL_MEMBER_NAME@10..13
             0: IDENT@10..13 "foo" [] []
-          2: JS_UNKNOWN@13..14
+          2: JS_BOGUS@13..14
             0: QUESTION@13..14 "?" [] []
           3: SEMICOLON@14..16 ";" [] [Whitespace(" ")]
       8: R_CURLY@16..17 "}" [] []

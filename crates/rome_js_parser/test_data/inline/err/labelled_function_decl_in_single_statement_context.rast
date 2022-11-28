@@ -15,7 +15,7 @@ JsModule {
                 body: JsLabeledStatement {
                     label_token: IDENT@18..24 "label2" [] [],
                     colon_token: COLON@24..26 ":" [] [Whitespace(" ")],
-                    body: JsUnknownStatement {
+                    body: JsBogusStatement {
                         items: [
                             FUNCTION_KW@26..35 "function" [] [Whitespace(" ")],
                             JsIdentifierBinding {
@@ -58,7 +58,7 @@ JsModule {
         2: JS_LABELED_STATEMENT@18..41
           0: IDENT@18..24 "label2" [] []
           1: COLON@24..26 ":" [] [Whitespace(" ")]
-          2: JS_UNKNOWN_STATEMENT@26..41
+          2: JS_BOGUS_STATEMENT@26..41
             0: FUNCTION_KW@26..35 "function" [] [Whitespace(" ")]
             1: JS_IDENTIFIER_BINDING@35..36
               0: IDENT@35..36 "a" [] []

@@ -26,7 +26,7 @@ impl FormatRule<JsAnyStatement> for FormatJsAnyStatement {
             JsAnyStatement::JsThrowStatement(node) => node.format().fmt(f),
             JsAnyStatement::JsTryFinallyStatement(node) => node.format().fmt(f),
             JsAnyStatement::JsTryStatement(node) => node.format().fmt(f),
-            JsAnyStatement::JsUnknownStatement(node) => node.format().fmt(f),
+            JsAnyStatement::JsBogusStatement(node) => node.format().fmt(f),
             JsAnyStatement::JsVariableStatement(node) => node.format().fmt(f),
             JsAnyStatement::JsWhileStatement(node) => node.format().fmt(f),
             JsAnyStatement::JsWithStatement(node) => node.format().fmt(f),

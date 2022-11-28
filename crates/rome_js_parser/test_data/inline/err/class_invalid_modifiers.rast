@@ -13,7 +13,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsMethodModifierList [
                             TsAccessibilityModifier {
@@ -50,7 +50,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@36..38 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsMethodModifierList [
                             JsStaticModifier {
@@ -97,7 +97,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@10..26
-        0: JS_UNKNOWN_MEMBER@10..26
+        0: JS_BOGUS_MEMBER@10..26
           0: JS_METHOD_MODIFIER_LIST@10..17
             0: TS_ACCESSIBILITY_MODIFIER@10..17
               0: PUBLIC_KW@10..17 "public" [] [Whitespace(" ")]
@@ -123,7 +123,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@36..38 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@38..61
-        0: JS_UNKNOWN_MEMBER@38..61
+        0: JS_BOGUS_MEMBER@38..61
           0: JS_METHOD_MODIFIER_LIST@38..52
             0: JS_STATIC_MODIFIER@38..45
               0: STATIC_KW@38..45 "static" [] [Whitespace(" ")]

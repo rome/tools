@@ -9,7 +9,7 @@ JsModule {
                 value_token: TRUE_KW@4..8 "true" [] [],
             },
             r_paren_token: R_PAREN@8..10 ")" [] [Whitespace(" ")],
-            consequent: JsUnknownStatement {
+            consequent: JsBogusStatement {
                 items: [
                     JsVariableDeclaration {
                         kind: LET_KW@10..14 "let" [] [Whitespace(" ")],
@@ -35,7 +35,7 @@ JsModule {
                 value_token: TRUE_KW@24..28 "true" [] [],
             },
             r_paren_token: R_PAREN@28..30 ")" [] [Whitespace(" ")],
-            body: JsUnknownStatement {
+            body: JsBogusStatement {
                 items: [
                     JsVariableDeclaration {
                         kind: CONST_KW@30..36 "const" [] [Whitespace(" ")],
@@ -72,7 +72,7 @@ JsModule {
       2: JS_BOOLEAN_LITERAL_EXPRESSION@4..8
         0: TRUE_KW@4..8 "true" [] []
       3: R_PAREN@8..10 ")" [] [Whitespace(" ")]
-      4: JS_UNKNOWN_STATEMENT@10..16
+      4: JS_BOGUS_STATEMENT@10..16
         0: JS_VARIABLE_DECLARATION@10..15
           0: LET_KW@10..14 "let" [] [Whitespace(" ")]
           1: JS_VARIABLE_DECLARATOR_LIST@14..15
@@ -89,7 +89,7 @@ JsModule {
       2: JS_BOOLEAN_LITERAL_EXPRESSION@24..28
         0: TRUE_KW@24..28 "true" [] []
       3: R_PAREN@28..30 ")" [] [Whitespace(" ")]
-      4: JS_UNKNOWN_STATEMENT@30..42
+      4: JS_BOGUS_STATEMENT@30..42
         0: JS_VARIABLE_DECLARATION@30..41
           0: CONST_KW@30..36 "const" [] [Whitespace(" ")]
           1: JS_VARIABLE_DECLARATOR_LIST@36..41

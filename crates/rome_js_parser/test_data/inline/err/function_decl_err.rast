@@ -132,7 +132,7 @@ JsModule {
             },
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
                     YIELD_KW@119..126 "yield" [Newline("\n")] [Whitespace(" ")],
                     JsYieldArgument {
@@ -147,7 +147,7 @@ JsModule {
             },
             semicolon_token: SEMICOLON@130..131 ";" [] [],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 FUNCTION_KW@131..141 "function" [Newline("\n")] [Whitespace(" ")],
                 JsIdentifierBinding {
@@ -158,7 +158,7 @@ JsModule {
                     items: JsParameterList [],
                     r_paren_token: R_PAREN@147..148 ")" [] [],
                 },
-                JsUnknown {
+                JsBogus {
                     items: [
                         COLON@148..150 ":" [] [Whitespace(" ")],
                         TsNumberType {
@@ -186,7 +186,7 @@ JsModule {
                 l_paren_token: L_PAREN@173..174 "(" [] [],
                 items: JsParameterList [
                     JsFormalParameter {
-                        binding: JsUnknownBinding {
+                        binding: JsBogusBinding {
                             items: [
                                 IDENT@174..179 "await" [] [],
                             ],
@@ -218,7 +218,7 @@ JsModule {
                 l_paren_token: L_PAREN@197..198 "(" [] [],
                 items: JsParameterList [
                     JsFormalParameter {
-                        binding: JsUnknownBinding {
+                        binding: JsBogusBinding {
                             items: [
                                 IDENT@198..203 "yield" [] [],
                             ],
@@ -355,7 +355,7 @@ JsModule {
         2: JS_STATEMENT_LIST@118..118
         3: R_CURLY@118..119 "}" [] []
     7: JS_EXPRESSION_STATEMENT@119..131
-      0: JS_UNKNOWN_EXPRESSION@119..130
+      0: JS_BOGUS_EXPRESSION@119..130
         0: YIELD_KW@119..126 "yield" [Newline("\n")] [Whitespace(" ")]
         1: JS_YIELD_ARGUMENT@126..130
           0: (empty)
@@ -363,7 +363,7 @@ JsModule {
             0: JS_REFERENCE_IDENTIFIER@126..130
               0: IDENT@126..130 "foo3" [] []
       1: SEMICOLON@130..131 ";" [] []
-    8: JS_UNKNOWN_STATEMENT@131..159
+    8: JS_BOGUS_STATEMENT@131..159
       0: FUNCTION_KW@131..141 "function" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@141..146
         0: IDENT@141..146 "test2" [] []
@@ -371,7 +371,7 @@ JsModule {
         0: L_PAREN@146..147 "(" [] []
         1: JS_PARAMETER_LIST@147..147
         2: R_PAREN@147..148 ")" [] []
-      3: JS_UNKNOWN@148..157
+      3: JS_BOGUS@148..157
         0: COLON@148..150 ":" [] [Whitespace(" ")]
         1: TS_NUMBER_TYPE@150..157
           0: NUMBER_KW@150..157 "number" [] [Whitespace(" ")]
@@ -391,7 +391,7 @@ JsModule {
         0: L_PAREN@173..174 "(" [] []
         1: JS_PARAMETER_LIST@174..179
           0: JS_FORMAL_PARAMETER@174..179
-            0: JS_UNKNOWN_BINDING@174..179
+            0: JS_BOGUS_BINDING@174..179
               0: IDENT@174..179 "await" [] []
             1: (empty)
             2: (empty)
@@ -414,7 +414,7 @@ JsModule {
         0: L_PAREN@197..198 "(" [] []
         1: JS_PARAMETER_LIST@198..203
           0: JS_FORMAL_PARAMETER@198..203
-            0: JS_UNKNOWN_BINDING@198..203
+            0: JS_BOGUS_BINDING@198..203
               0: IDENT@198..203 "yield" [] []
             1: (empty)
             2: (empty)

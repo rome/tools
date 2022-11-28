@@ -13,7 +13,7 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@12..13 "(" [] [],
                 items: JsParameterList [
-                    JsUnknownParameter {
+                    JsBogusParameter {
                         items: [
                             TRUE_KW@13..17 "true" [] [],
                         ],
@@ -47,7 +47,7 @@ JsModule {
       5: JS_PARAMETERS@12..19
         0: L_PAREN@12..13 "(" [] []
         1: JS_PARAMETER_LIST@13..17
-          0: JS_UNKNOWN_PARAMETER@13..17
+          0: JS_BOGUS_PARAMETER@13..17
             0: TRUE_KW@13..17 "true" [] []
         2: R_PAREN@17..19 ")" [] [Whitespace(" ")]
       6: (empty)

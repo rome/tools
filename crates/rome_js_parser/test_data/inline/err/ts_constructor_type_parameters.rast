@@ -13,7 +13,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsConstructorModifierList [],
                         JsLiteralMemberName {
@@ -75,7 +75,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@10..31
-        0: JS_UNKNOWN_MEMBER@10..31
+        0: JS_BOGUS_MEMBER@10..31
           0: JS_CONSTRUCTOR_MODIFIER_LIST@10..10
           1: JS_LITERAL_MEMBER_NAME@10..21
             0: IDENT@10..21 "constructor" [] []

@@ -8,7 +8,7 @@ JsModule {
                 expression: JsObjectExpression {
                     l_curly_token: L_CURLY@1..3 "{" [] [Whitespace(" ")],
                     members: JsObjectMemberList [
-                        JsUnknownMember {
+                        JsBogusMember {
                             items: [
                                 SET_KW@3..7 "set" [] [Whitespace(" ")],
                                 JsLiteralMemberName {
@@ -74,7 +74,7 @@ JsModule {
         1: JS_OBJECT_EXPRESSION@1..26
           0: L_CURLY@1..3 "{" [] [Whitespace(" ")]
           1: JS_OBJECT_MEMBER_LIST@3..25
-            0: JS_UNKNOWN_MEMBER@3..25
+            0: JS_BOGUS_MEMBER@3..25
               0: SET_KW@3..7 "set" [] [Whitespace(" ")]
               1: JS_LITERAL_MEMBER_NAME@7..8
                 0: IDENT@7..8 "a" [] []

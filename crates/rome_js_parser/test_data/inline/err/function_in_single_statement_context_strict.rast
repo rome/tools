@@ -9,7 +9,7 @@ JsModule {
                 value_token: TRUE_KW@4..8 "true" [] [],
             },
             r_paren_token: R_PAREN@8..10 ")" [] [Whitespace(" ")],
-            consequent: JsUnknownStatement {
+            consequent: JsBogusStatement {
                 items: [
                     FUNCTION_KW@10..19 "function" [] [Whitespace(" ")],
                     JsIdentifierBinding {
@@ -33,7 +33,7 @@ JsModule {
         JsLabeledStatement {
             label_token: IDENT@25..32 "label1" [Newline("\n")] [],
             colon_token: COLON@32..34 ":" [] [Whitespace(" ")],
-            body: JsUnknownStatement {
+            body: JsBogusStatement {
                 items: [
                     FUNCTION_KW@34..43 "function" [] [Whitespace(" ")],
                     JsIdentifierBinding {
@@ -60,7 +60,7 @@ JsModule {
                 value_token: TRUE_KW@57..61 "true" [] [],
             },
             r_paren_token: R_PAREN@61..63 ")" [] [Whitespace(" ")],
-            body: JsUnknownStatement {
+            body: JsBogusStatement {
                 items: [
                     FUNCTION_KW@63..72 "function" [] [Whitespace(" ")],
                     JsIdentifierBinding {
@@ -94,7 +94,7 @@ JsModule {
       2: JS_BOOLEAN_LITERAL_EXPRESSION@4..8
         0: TRUE_KW@4..8 "true" [] []
       3: R_PAREN@8..10 ")" [] [Whitespace(" ")]
-      4: JS_UNKNOWN_STATEMENT@10..25
+      4: JS_BOGUS_STATEMENT@10..25
         0: FUNCTION_KW@10..19 "function" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_BINDING@19..20
           0: IDENT@19..20 "a" [] []
@@ -111,7 +111,7 @@ JsModule {
     1: JS_LABELED_STATEMENT@25..49
       0: IDENT@25..32 "label1" [Newline("\n")] []
       1: COLON@32..34 ":" [] [Whitespace(" ")]
-      2: JS_UNKNOWN_STATEMENT@34..49
+      2: JS_BOGUS_STATEMENT@34..49
         0: FUNCTION_KW@34..43 "function" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_BINDING@43..44
           0: IDENT@43..44 "b" [] []
@@ -130,7 +130,7 @@ JsModule {
       2: JS_BOOLEAN_LITERAL_EXPRESSION@57..61
         0: TRUE_KW@57..61 "true" [] []
       3: R_PAREN@61..63 ")" [] [Whitespace(" ")]
-      4: JS_UNKNOWN_STATEMENT@63..78
+      4: JS_BOGUS_STATEMENT@63..78
         0: FUNCTION_KW@63..72 "function" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_BINDING@72..73
           0: IDENT@72..73 "c" [] []

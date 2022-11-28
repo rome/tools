@@ -96,7 +96,7 @@ pub(crate) fn parse_module_item_list(
 
         let recovered = module_item.or_recover(
             p,
-            &ParseRecovery::new(JS_UNKNOWN_STATEMENT, recovery_set),
+            &ParseRecovery::new(JS_BOGUS_STATEMENT, recovery_set),
             expected_statement,
         );
 
@@ -363,7 +363,7 @@ impl ParseSeparatedList for NamedImportSpecifierList {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
-                JS_UNKNOWN_NAMED_IMPORT_SPECIFIER,
+                JS_BOGUS_NAMED_IMPORT_SPECIFIER,
                 STMT_RECOVERY_SET.union(token_set![T![,], T!['}'], T![;]]),
             )
             .enable_recovery_on_line_break(),
@@ -503,7 +503,7 @@ impl ParseSeparatedList for ImportAssertionList {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
-                JS_UNKNOWN_IMPORT_ASSERTION_ENTRY,
+                JS_BOGUS_IMPORT_ASSERTION_ENTRY,
                 STMT_RECOVERY_SET.union(token_set![T![,], T!['}']]),
             )
             .enable_recovery_on_line_break(),
@@ -575,7 +575,7 @@ fn parse_import_assertion_entry(
     let mut entry = m.complete(p, JS_IMPORT_ASSERTION_ENTRY);
 
     if !valid {
-        entry.change_to_unknown(p);
+        entry.change_to_bogus(p);
     }
 
     Present(entry)
@@ -734,7 +734,7 @@ impl ParseSeparatedList for ExportNamedSpecifierList {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
-                JS_UNKNOWN,
+                JS_BOGUS,
                 STMT_RECOVERY_SET.union(token_set![T![,], T!['}'], T![;]]),
             )
             .enable_recovery_on_line_break(),
@@ -1018,7 +1018,7 @@ impl ParseSeparatedList for ExportNamedFromSpecifierList {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
-                JS_UNKNOWN,
+                JS_BOGUS,
                 STMT_RECOVERY_SET.union(token_set![T![,], T!['}'], T![;]]),
             )
             .enable_recovery_on_line_break(),
@@ -1133,7 +1133,7 @@ fn parse_export_default_clause(p: &mut JsParser) -> ParsedSyntax {
                     );
 
                 p.error(err);
-                clause.change_kind(p, JsSyntaxKind::JS_UNKNOWN);
+                clause.change_kind(p, JsSyntaxKind::JS_BOGUS);
             }
         }
         // TypeScript supports multiple `export default interface` They all get merged together

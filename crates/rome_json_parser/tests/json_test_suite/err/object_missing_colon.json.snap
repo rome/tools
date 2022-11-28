@@ -22,7 +22,7 @@ JsonRoot {
                     value_token: JSON_STRING_LITERAL@1..5 "\"a\"" [] [Whitespace(" ")],
                 },
                 colon_token: missing (required),
-                value: JsonUnknownValue {
+                value: JsonBogusValue {
                     items: [
                         IDENT@5..6 "b" [] [],
                     ],
@@ -46,7 +46,7 @@ JsonRoot {
         0: JSON_MEMBER_NAME@1..5
           0: JSON_STRING_LITERAL@1..5 "\"a\"" [] [Whitespace(" ")]
         1: (empty)
-        2: JSON_UNKNOWN_VALUE@5..6
+        2: JSON_BOGUS_VALUE@5..6
           0: IDENT@5..6 "b" [] []
     2: R_CURLY@6..7 "}" [] []
   1: EOF@7..7 "" [] []

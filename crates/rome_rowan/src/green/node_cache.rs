@@ -193,7 +193,7 @@ pub(crate) enum NodeCacheNodeEntryMut<'a> {
 /// Represents a vacant entry, a node that hasn't been cached yet.
 /// The `insert` method allows to place a node inside of the vacant entry. The inserted node
 /// may have a different representation (kind or children) than the originally queried node.
-/// For example, a node may change its kind to unknown or add empty slots. The only importance is
+/// For example, a node may change its kind to bogus or add empty slots. The only importance is
 /// that these changes apply for all nodes that have the same shape as the originally queried node.
 pub(crate) struct VacantNodeEntry<'a> {
     hash: u64,

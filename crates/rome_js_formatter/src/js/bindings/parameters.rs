@@ -211,7 +211,7 @@ pub(crate) fn should_hug_function_parameters(
                                 .map_or(false, |type_annotation| {
                                     matches!(type_annotation.ty(), Ok(TsType::TsObjectType(_)))
                                 }),
-                            JsAnyBinding(JsUnknownBinding(_)) => {
+                            JsAnyBinding(JsBogusBinding(_)) => {
                                 return Err(FormatError::SyntaxError)
                             }
                         }
@@ -234,7 +234,7 @@ pub(crate) fn should_hug_function_parameters(
                     }
                 }
             }
-            JsUnknownParameter(_) => return Err(FormatError::SyntaxError),
+            JsBogusParameter(_) => return Err(FormatError::SyntaxError),
         };
 
         Ok(result)

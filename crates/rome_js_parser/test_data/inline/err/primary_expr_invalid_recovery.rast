@@ -2,22 +2,22 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
-                JsUnknown {
+                JsBogus {
                     items: [
                         LET_KW@0..4 "let" [] [Whitespace(" ")],
-                        JsUnknown {
+                        JsBogus {
                             items: [
-                                JsUnknown {
+                                JsBogus {
                                     items: [
                                         JsIdentifierBinding {
                                             name_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                                         },
-                                        JsUnknown {
+                                        JsBogus {
                                             items: [
                                                 EQ@6..8 "=" [] [Whitespace(" ")],
-                                                JsUnknown {
+                                                JsBogus {
                                                     items: [
                                                         ERROR_TOKEN@8..9 "\\" [] [],
                                                     ],
@@ -58,16 +58,16 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..17
-    0: JS_UNKNOWN_STATEMENT@0..11
-      0: JS_UNKNOWN@0..9
+    0: JS_BOGUS_STATEMENT@0..11
+      0: JS_BOGUS@0..9
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: JS_UNKNOWN@4..9
-          0: JS_UNKNOWN@4..9
+        1: JS_BOGUS@4..9
+          0: JS_BOGUS@4..9
             0: JS_IDENTIFIER_BINDING@4..6
               0: IDENT@4..6 "a" [] [Whitespace(" ")]
-            1: JS_UNKNOWN@6..9
+            1: JS_BOGUS@6..9
               0: EQ@6..8 "=" [] [Whitespace(" ")]
-              1: JS_UNKNOWN@8..9
+              1: JS_BOGUS@8..9
                 0: ERROR_TOKEN@8..9 "\\" [] []
       1: SEMICOLON@9..11 ";" [] [Whitespace(" ")]
     1: JS_EXPRESSION_STATEMENT@11..17

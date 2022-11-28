@@ -132,7 +132,7 @@ impl Display for MemberDefinition {
 }
 enum MemberDefinitionError {
     NotASinglePropertyMember,
-    UnknownMemberType,
+    BogusMemberType,
 }
 impl TryFrom<JsAnyObjectMember> for MemberDefinition {
     type Error = MemberDefinitionError;
@@ -149,7 +149,7 @@ impl TryFrom<JsAnyObjectMember> for MemberDefinition {
                 Ok(MemberDefinition::ShorthandProperty(member))
             }
             JsAnyObjectMember::JsSpread(_) => Err(MemberDefinitionError::NotASinglePropertyMember),
-            JsAnyObjectMember::JsUnknownMember(_) => Err(MemberDefinitionError::UnknownMemberType),
+            JsAnyObjectMember::JsBogusMember(_) => Err(MemberDefinitionError::BogusMemberType),
         }
     }
 }
