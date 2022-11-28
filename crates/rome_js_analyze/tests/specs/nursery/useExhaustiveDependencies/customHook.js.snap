@@ -4,10 +4,11 @@ expression: customHook.js
 ---
 # Input
 ```js
-/* Options: {"hooks": [["useMyEffect", 0, 1]]} */
-
 function MyComponent() {
     let a = 1;
+    useEffect(() => {
+        console.log(a);
+    });
     useMyEffect(() => {
         console.log(a);
     });
@@ -16,25 +17,49 @@ function MyComponent() {
 
 # Diagnostics
 ```
-customHook.js:5:5 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+customHook.js:3:5 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This hook do not specify all of its dependencies.
   
-    3 │ function MyComponent() {
-    4 │     let a = 1;
-  > 5 │     useMyEffect(() => {
-      │     ^^^^^^^^^^^
-    6 │         console.log(a);
-    7 │     });
+    1 │ function MyComponent() {
+    2 │     let a = 1;
+  > 3 │     useEffect(() => {
+      │     ^^^^^^^^^
+    4 │         console.log(a);
+    5 │     });
   
   i This dependency is not specified in the hook dependency list.
   
-    4 │     let a = 1;
-    5 │     useMyEffect(() => {
-  > 6 │         console.log(a);
+    2 │     let a = 1;
+    3 │     useEffect(() => {
+  > 4 │         console.log(a);
       │                     ^
-    7 │     });
-    8 │ }
+    5 │     });
+    6 │     useMyEffect(() => {
+  
+
+```
+
+```
+customHook.js:6:5 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This hook do not specify all of its dependencies.
+  
+    4 │         console.log(a);
+    5 │     });
+  > 6 │     useMyEffect(() => {
+      │     ^^^^^^^^^^^
+    7 │         console.log(a);
+    8 │     });
+  
+  i This dependency is not specified in the hook dependency list.
+  
+    5 │     });
+    6 │     useMyEffect(() => {
+  > 7 │         console.log(a);
+      │                     ^
+    8 │     });
+    9 │ }
   
 
 ```

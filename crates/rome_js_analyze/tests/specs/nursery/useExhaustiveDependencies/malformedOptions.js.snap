@@ -4,7 +4,7 @@ expression: malformedOptions.js
 ---
 # Input
 ```js
-/* Options: {"hook": [["useMyEffect", 0, 1]]} */
+
 ```
 
 # Diagnostics

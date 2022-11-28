@@ -288,3 +288,91 @@ use rome_analyze::declare_rule;
      }
  }
  ```
+
+#### Rule configuration
+
+Some rules may allow customization using configuration. The first step is to setup a struct to represent the rule configuartion.
+
+```rust
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ReactExtensiveDependenciesOptions {
+    hooks_config: HashMap<String, ReactHookConfiguration>,
+    stable_config: HashSet<StableReactHookConfiguration>,
+}
+
+impl Rule for UseExhaustiveDependencies {
+    type Query = Semantic<JsCallExpression>;
+    type State = Fix;
+    type Signals = Vec<Self::State>;
+    type Options = ReactExtensiveDependenciesOptions;
+
+    ...
+}
+```
+
+This allow the rule to be configured inside "rome.json" file like:
+
+```json
+{
+    "linter": {
+        "rules": {
+            "recommended": true,
+            "nursery": {
+                "useExhaustiveDependencies": {
+                    "level": "error",
+                    "options": {
+                        "hooks": [
+                            ["useMyEffect", 0, 1]
+                        ]
+                    }
+                }
+            }
+        },
+    }
+}
+```
+
+In this specific case, we don't want the configuration to replace all the standard React hooks configuration,
+so to have more control on the options deserialization, we can implement the trait `DeserializableRuleOptions`.
+
+In the example below we also deserialize to a struct with a more user friendly schema.
+
+This code run only once when the analyzer is first called.
+
+```rust
+
+impl DeserializableRuleOptions for ReactExtensiveDependenciesOptions {
+    fn try_from(value: serde_json::Value) -> Result<Self, serde_json::Error> {
+        #[derive(Debug, Deserialize)]
+        #[serde(deny_unknown_fields)]
+        struct Options {
+            #[serde(default)]
+            hooks: Vec<(String, usize, usize)>,
+            #[serde(default)]
+            stables: HashSet<StableReactHookConfiguration>,
+        }
+
+        let options: Options = serde_json::from_value(value)?;
+
+        let mut default = ReactExtensiveDependenciesOptions::default();
+        for (k, closure_index, dependencies_index) in options.hooks.into_iter() {
+            default.hooks_config.insert(
+                k,
+                ReactHookConfiguration {
+                    closure_index,
+                    dependencies_index,
+                },
+            );
+        }
+        default.stable_config.extend(options.stables.into_iter());
+
+        Ok(default)
+    }
+}
+```
+
+If this the rule can retrieve its option with
+
+```rust
+let options = ctx.options();
+```

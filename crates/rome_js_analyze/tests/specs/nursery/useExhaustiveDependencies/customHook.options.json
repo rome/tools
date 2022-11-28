@@ -1,0 +1,9 @@
+{
+    "hooks": [
+        [
+            "useMyEffect",
+            0,
+            1
+        ]
+    ]
+}

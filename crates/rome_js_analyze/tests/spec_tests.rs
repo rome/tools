@@ -89,13 +89,12 @@ fn write_analysis_to_snapshot(
     let mut code_fixes = Vec::new();
     let mut options = AnalyzerOptions::default();
 
-    // We allow a test file to configure its rule using a special comment like
-    // /* Options: { ... } */
-    if let Some(start) = input_code.find("/* Options:") {
-        let end = start + 11 + input_code[start + 11..].find("*/").unwrap();
-        let json = input_code[start + 11..end].trim();
-
-        let v: serde_json::Value = serde_json::from_str(json).expect("must be a valid JSON");
+    // We allow a test file to configure its rule using a special 
+    // file with the same name as the test but with extension ".options.json"
+    // that configures that specific rule.
+    let options_file = input_file.with_extension("options.json");
+    if let Ok(json) = std::fs::read_to_string(options_file) {
+        let v: serde_json::Value = serde_json::from_str(&json).expect("must be a valid JSON");
 
         //RuleKey needs 'static string, so we must leak them here
         let (group, rule) = parse_test_path(input_file);
