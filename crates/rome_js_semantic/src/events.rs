@@ -160,7 +160,7 @@ pub struct SemanticEventExtractor {
     stash: VecDeque<SemanticEvent>,
     scopes: Vec<Scope>,
     next_scope_id: usize,
-    /// At any point this is the set of available bindings and 
+    /// At any point this is the set of available bindings and
     /// the range of its declaration
     bindings: FxHashMap<SyntaxTokenText, TextRange>,
 }
@@ -467,9 +467,7 @@ impl SemanticEventExtractor {
         };
 
         let current_scope = self.current_scope_mut();
-        let references = current_scope.references
-            .entry(name)
-            .or_default();
+        let references = current_scope.references.entry(name).or_default();
         references.push(Reference::Read {
             range: node.text_range(),
             is_exported,
@@ -651,7 +649,7 @@ impl SemanticEventExtractor {
             }
 
             // Remove all bindings declared in this scope
-            
+
             for binding in scope.bindings {
                 self.bindings.remove(&binding.name);
             }
