@@ -293,7 +293,7 @@ use rome_analyze::declare_rule;
 
 Some rules may allow customization using configuration. The first step is to setup a struct to represent the rule configuartion.
 
-```rust
+```rust,ignore
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ReactExtensiveDependenciesOptions {
     hooks_config: HashMap<String, ReactHookConfiguration>,
@@ -339,7 +339,7 @@ In the example below we also deserialize to a struct with a more user friendly s
 
 This code run only once when the analyzer is first called.
 
-```rust
+```rust,ignore
 
 impl DeserializableRuleOptions for ReactExtensiveDependenciesOptions {
     fn try_from(value: serde_json::Value) -> Result<Self, serde_json::Error> {
@@ -373,6 +373,6 @@ impl DeserializableRuleOptions for ReactExtensiveDependenciesOptions {
 
 If this the rule can retrieve its option with
 
-```rust
+```rust,ignore
 let options = ctx.options();
 ```

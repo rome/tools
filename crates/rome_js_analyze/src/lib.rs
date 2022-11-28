@@ -68,6 +68,7 @@ impl<'a, L: rome_rowan::Language + Default> rome_analyze::RegistryVisitor<L>
         <R::Query as rome_analyze::Queryable>::Output: Clone,
     {
         let rule_key = rome_analyze::RuleKey::rule::<R>();
+        dbg!(&rule_key);
         let options = if let Some(options) = self.options.configuration.rules.get_rule(&rule_key) {
             let value = options.value();
             match <R::Options as DeserializableRuleOptions>::try_from(value.clone()) {
@@ -177,7 +178,6 @@ where
     analyzer.add_visitor(Phases::Semantic, SemanticModelVisitor);
     analyzer.add_visitor(Phases::Semantic, SyntaxVisitor::default());
 
-    let mut services = ServiceBag::default();
     services.insert_service(Arc::new(AriaRoles::default()));
     services.insert_service(Arc::new(AriaProperties::default()));
     analyzer.run(AnalyzerContext {

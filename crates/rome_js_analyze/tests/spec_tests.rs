@@ -22,6 +22,16 @@ use std::{
 
 tests_macros::gen_tests! {"tests/specs/**/*.{cjs,js,jsx,tsx,ts,json,jsonc}", crate::run_test, "module"}
 
+fn scripts_from_json(extension: &OsStr, input_code: &str) -> Option<Vec<String>> {
+    if extension == "json" || extension == "jsonc" {
+        let input_code = StripComments::new(input_code.as_bytes());
+        let scripts: Vec<String> = serde_json::from_reader(input_code).ok()?;
+        Some(scripts)
+    } else {
+        None
+    }
+}
+
 fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     register_leak_checker();
 
@@ -41,9 +51,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     let mut snapshot = String::new();
     let extension = input_file.extension().unwrap_or_default();
 
-    if extension == "json" || extension == "jsonc" {
-        let input_code = StripComments::new(input_code.as_bytes());
-        let scripts: Vec<String> = serde_json::from_reader(input_code).unwrap();
+    if let Some(scripts) = scripts_from_json(extension, &input_code) {
         for script in scripts {
             write_analysis_to_snapshot(
                 &mut snapshot,
@@ -55,7 +63,9 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
             )
         }
     } else {
-        let source_type = input_file.try_into().unwrap();
+        let Ok(source_type) = input_file.try_into() else {
+            return;
+        };
         write_analysis_to_snapshot(
             &mut snapshot,
             &input_code,
@@ -89,7 +99,7 @@ fn write_analysis_to_snapshot(
     let mut code_fixes = Vec::new();
     let mut options = AnalyzerOptions::default();
 
-    // We allow a test file to configure its rule using a special 
+    // We allow a test file to configure its rule using a special
     // file with the same name as the test but with extension ".options.json"
     // that configures that specific rule.
     let options_file = input_file.with_extension("options.json");

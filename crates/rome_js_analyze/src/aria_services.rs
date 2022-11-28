@@ -34,7 +34,10 @@ impl FromServices for AriaServices {
         let properties: &Arc<AriaProperties> = services.get_service().ok_or_else(|| {
             MissingServicesDiagnostic::new(rule_key.rule_name(), &["AriaProperties"])
         })?;
-        Ok(Self { roles: roles.clone(), properties: properties.clone() })
+        Ok(Self {
+            roles: roles.clone(),
+            properties: properties.clone(),
+        })
     }
 }
 
