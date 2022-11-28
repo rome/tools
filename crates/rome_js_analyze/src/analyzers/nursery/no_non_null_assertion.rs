@@ -102,7 +102,7 @@ impl Rule for NoNonNullAssertion {
     			},
     		).note(
     			markup! {
-    				"Consider using the optional chain operator "<Emphasis>"?."</Emphasis>" instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.',
+    				"Consider using the optional chain operator "<Emphasis>"?."</Emphasis>" instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
                     "
     			},
     		)
