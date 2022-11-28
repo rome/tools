@@ -1,6 +1,6 @@
 //! Implementation of the [FileSystem] and related traits for the underlying OS filesystem
 use super::{BoxedTraversal, ErrorKind, File, FileSystemDiagnostic};
-use crate::fs::{FileSystemExt, OpenOptions};
+use crate::fs::OpenOptions;
 use crate::{
     fs::{TraversalContext, TraversalScope},
     FileSystem, RomePath,
@@ -21,34 +21,19 @@ pub struct OsFileSystem;
 
 impl FileSystem for OsFileSystem {
     fn open_with_options(&self, path: &Path, options: OpenOptions) -> io::Result<Box<dyn File>> {
-        let mut fs_options = fs::File::options();
-        Ok(Box::new(OsFile {
-            inner: options.into_fs_options(&mut fs_options).open(path)?,
-        }))
+        tracing::debug_span!("OsFileSystem::open_with_options", path = ?path, options = ?options)
+            .in_scope(move || -> io::Result<Box<dyn File>> {
+                let mut fs_options = fs::File::options();
+                Ok(Box::new(OsFile {
+                    inner: options.into_fs_options(&mut fs_options).open(path)?,
+                }))
+            })
     }
 
     fn traversal(&self, func: BoxedTraversal) {
         OsTraversalScope::with(move |scope| {
             func(scope);
         })
-    }
-}
-
-impl FileSystemExt for OsFileSystem {
-    fn create(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        tracing::debug_span!("OsFileSystem::create", path = ?path).in_scope(
-            move || -> io::Result<Box<dyn File>> {
-                self.open_with_options(path, OpenOptions::default().write(true).create_new(true))
-            },
-        )
-    }
-
-    fn open(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        tracing::debug_span!("OsFileSystem::open", path = ?path).in_scope(
-            move || -> io::Result<Box<dyn File>> {
-                self.open_with_options(path, OpenOptions::default().read(true).write(true))
-            },
-        )
     }
 }
 
