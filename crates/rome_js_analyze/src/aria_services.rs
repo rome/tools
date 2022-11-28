@@ -7,10 +7,10 @@ use rome_js_syntax::JsLanguage;
 use rome_rowan::AstNode;
 use std::sync::Arc;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub(crate) struct AriaServices {
-    roles: Arc<AriaRoles>,
-    properties: Arc<AriaProperties>,
+    pub(crate) roles: Arc<AriaRoles>,
+    pub(crate) properties: Arc<AriaProperties>,
 }
 
 impl AriaServices {
@@ -25,13 +25,16 @@ impl AriaServices {
 
 impl FromServices for AriaServices {
     fn from_services(
-        _rule_key: &RuleKey,
-        _services: &ServiceBag,
+        rule_key: &RuleKey,
+        services: &ServiceBag,
     ) -> Result<Self, MissingServicesDiagnostic> {
-        Ok(Self {
-            roles: Arc::new(AriaRoles::default()),
-            properties: Arc::new(AriaProperties::default()),
-        })
+        let roles = services
+            .get_service()
+            .ok_or_else(|| MissingServicesDiagnostic::new(rule_key.rule_name(), &["AriaRoles"]))?;
+        let properties = services.get_service().ok_or_else(|| {
+            MissingServicesDiagnostic::new(rule_key.rule_name(), &["AriaProperties"])
+        })?;
+        Ok(Self { roles, properties })
     }
 }
 

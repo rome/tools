@@ -4,6 +4,7 @@ use rome_analyze::{
     InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry, Phases, RuleAction,
     RuleRegistry, ServiceBag, SuppressionCommentEmitterPayload, SuppressionKind, SyntaxVisitor,
 };
+use rome_aria::{AriaProperties, AriaRoles};
 use rome_diagnostics::{category, FileId};
 use rome_js_factory::make::{jsx_expression_child, token};
 use rome_js_syntax::{
@@ -11,6 +12,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, TokenAtOffset, TriviaPieceKind};
 use serde::{Deserialize, Serialize};
+use std::sync::Arc;
 use std::{borrow::Cow, error::Error};
 
 mod analyzers;
@@ -100,11 +102,14 @@ where
     analyzer.add_visitor(Phases::Semantic, SemanticModelVisitor);
     analyzer.add_visitor(Phases::Semantic, SyntaxVisitor::default());
 
+    let mut services = ServiceBag::default();
+    services.insert_service(Arc::new(AriaRoles::default()));
+    services.insert_service(Arc::new(AriaProperties::default()));
     analyzer.run(AnalyzerContext {
         file_id,
         root: root.clone(),
         range: filter.range,
-        services: ServiceBag::default(),
+        services,
         options,
     })
 }

@@ -98,7 +98,7 @@ impl<L: Language> RegistryVisitor<L> for MetadataRegistry {
 /// after the "SemanticModel" is ready, which demands a whole transverse of the parsed tree.
 pub struct RuleRegistry<L: Language> {
     /// Holds a collection of rules for each phase.
-    phase_rules: [PhaseRules<L>; 3],
+    phase_rules: [PhaseRules<L>; 2],
 }
 
 impl<L: Language + Default> RuleRegistry<L> {

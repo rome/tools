@@ -395,7 +395,6 @@ pub struct SuggestionList {
     pub(crate) list: Vec<MarkupBuf>,
 }
 
-// TODO: this code will be hit once https://github.com/rome/tools/issues/3829 is closed. Make sure it works as expected.
 impl Advices for RuleAdvice {
     fn record(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
         for detail in &self.details {

@@ -2,9 +2,9 @@ use crate::aria_services::Aria;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
+use rome_js_syntax::jsx_ext::JsxAnyElement;
 use rome_js_syntax::JsxAttribute;
-use rome_js_syntax::{JsxOpeningElement, JsxSelfClosingElement};
-use rome_rowan::{declare_node_union, AstNode};
+use rome_rowan::AstNode;
 
 declare_rule! {
     /// Enforce that elements with ARIA roles must have all required attributes for that role
@@ -12,23 +12,6 @@ declare_rule! {
         version: "11.0.0",
         name: "useAriaPropsForRole",
         recommended: false,
-    }
-}
-
-declare_node_union! {
-    pub(crate) JsxAnyElement = JsxSelfClosingElement| JsxOpeningElement
-}
-
-impl JsxAnyElement {
-    pub(crate) fn find_by_name(&self, attribute: &str) -> Option<JsxAttribute> {
-        match self {
-            JsxAnyElement::JsxSelfClosingElement(element) => {
-                element.attributes().find_by_name(attribute).ok()?
-            }
-            JsxAnyElement::JsxOpeningElement(element) => {
-                element.attributes().find_by_name(attribute).ok()?
-            }
-        }
     }
 }
 
@@ -91,7 +74,7 @@ impl Rule for UseAriaPropsForRole {
             let properties = role.properties();
             for (property_name, required) in properties {
                 if *required {
-                    let attribute = node.find_by_name(property_name);
+                    let attribute = node.find_attribute_by_name(property_name);
                     if attribute.is_none() {
                         missing_aria_props.push(property_name.to_string());
                     }
