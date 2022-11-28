@@ -1,0 +1,32 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: useAriaPropTypes.jsx
+---
+# Input
+```js
+let a = <span aria-current="invalid-value" />
+```
+
+# Diagnostics
+```
+useAriaPropTypes.jsx:1:28 lint/nursery/useAriaPropTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The value of the ARIA attribute aria-current is not correct.
+  
+  > 1 │ let a = <span aria-current="invalid-value" />
+      │                            ^^^^^^^^^^^^^^^
+  
+  i The supported values for the aria-current attribute are:
+  
+  - page
+  - step
+  - location
+  - date
+  - time
+  - true
+  - false
+  
+
+```
+
+

@@ -1,17 +1,17 @@
-//! Generated file, do not edit by hand, see `xtask/codegen`
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::JsAnyImportClause;
+use rome_js_syntax::AnyJsImportClause;
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsAnyImportClause;
-impl FormatRule<JsAnyImportClause> for FormatJsAnyImportClause {
+pub(crate) struct FormatAnyJsImportClause;
+impl FormatRule<AnyJsImportClause> for FormatAnyJsImportClause {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &JsAnyImportClause, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyJsImportClause, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyImportClause::JsImportBareClause(node) => node.format().fmt(f),
-            JsAnyImportClause::JsImportNamedClause(node) => node.format().fmt(f),
-            JsAnyImportClause::JsImportDefaultClause(node) => node.format().fmt(f),
-            JsAnyImportClause::JsImportNamespaceClause(node) => node.format().fmt(f),
+            AnyJsImportClause::JsImportBareClause(node) => node.format().fmt(f),
+            AnyJsImportClause::JsImportNamedClause(node) => node.format().fmt(f),
+            AnyJsImportClause::JsImportDefaultClause(node) => node.format().fmt(f),
+            AnyJsImportClause::JsImportNamespaceClause(node) => node.format().fmt(f),
         }
     }
 }

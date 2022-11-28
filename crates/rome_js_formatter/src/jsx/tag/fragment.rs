@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use crate::jsx::tag::element::JsxAnyTagWithChildren;
+use crate::jsx::tag::element::AnyJsxTagWithChildren;
 use crate::utils::jsx::is_jsx_suppressed;
 use rome_formatter::write;
 use rome_js_syntax::JsxFragment;
@@ -10,7 +10,7 @@ pub struct FormatJsxFragment;
 
 impl FormatNodeRule<JsxFragment> for FormatJsxFragment {
     fn fmt_fields(&self, node: &JsxFragment, f: &mut JsFormatter) -> FormatResult<()> {
-        write!(f, [JsxAnyTagWithChildren::from(node.clone())])
+        write!(f, [AnyJsxTagWithChildren::from(node.clone())])
     }
 
     fn is_suppressed(&self, node: &JsxFragment, f: &JsFormatter) -> bool {

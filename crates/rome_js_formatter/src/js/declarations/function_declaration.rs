@@ -4,15 +4,15 @@ use crate::js::expressions::call_arguments::GroupedCallArgumentLayout;
 use crate::utils::function_body::{FormatMaybeCachedFunctionBody, FunctionBodyCacheMode};
 use rome_formatter::{write, RemoveSoftLinesBuffer};
 use rome_js_syntax::{
-    JsAnyBinding, JsFunctionBody, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
-    JsFunctionExpression, JsParameters, JsSyntaxToken, TsAnyReturnType,
+    AnyJsBinding, AnyTsReturnType, AnyTsType, JsFunctionBody, JsFunctionDeclaration,
+    JsFunctionExportDefaultDeclaration, JsFunctionExpression, JsParameters, JsSyntaxToken,
     TsDeclareFunctionDeclaration, TsDeclareFunctionExportDefaultDeclaration,
-    TsReturnTypeAnnotation, TsType, TsTypeParameters,
+    TsReturnTypeAnnotation, TsTypeParameters,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsFunctionDeclaration;
+pub(crate) struct FormatJsFunctionDeclaration;
 
 impl FormatNodeRule<JsFunctionDeclaration> for FormatJsFunctionDeclaration {
     fn fmt_fields(&self, node: &JsFunctionDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
@@ -30,7 +30,7 @@ declare_node_union! {
 }
 
 #[derive(Copy, Clone, Debug, Default)]
-pub struct FormatFunctionOptions {
+pub(crate) struct FormatFunctionOptions {
     pub call_argument_layout: Option<GroupedCallArgumentLayout>,
     pub body_cache_mode: FunctionBodyCacheMode,
 }
@@ -78,7 +78,7 @@ impl FormatFunction {
         }
     }
 
-    fn id(&self) -> SyntaxResult<Option<JsAnyBinding>> {
+    fn id(&self) -> SyntaxResult<Option<AnyJsBinding>> {
         match self {
             FormatFunction::JsFunctionDeclaration(declaration) => declaration.id().map(Some),
             FormatFunction::JsFunctionExpression(expression) => Ok(expression.id()),
@@ -258,7 +258,7 @@ impl Format<JsFormatContext> for FormatFunction {
 pub(crate) fn should_group_function_parameters(
     type_parameters: Option<&TsTypeParameters>,
     parameter_count: usize,
-    return_type: Option<SyntaxResult<TsAnyReturnType>>,
+    return_type: Option<SyntaxResult<AnyTsReturnType>>,
     formatted_return_type: &mut Memoized<impl Format<JsFormatContext>, JsFormatContext>,
     f: &mut JsFormatter,
 ) -> FormatResult<bool> {
@@ -289,7 +289,7 @@ pub(crate) fn should_group_function_parameters(
     } else {
         matches!(
             return_type,
-            TsAnyReturnType::TsType(TsType::TsObjectType(_) | TsType::TsMappedType(_))
+            AnyTsReturnType::AnyTsType(AnyTsType::TsObjectType(_) | AnyTsType::TsMappedType(_))
         ) || formatted_return_type.inspect(f)?.will_break()
     };
 

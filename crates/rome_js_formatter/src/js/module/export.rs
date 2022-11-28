@@ -5,7 +5,7 @@ use rome_js_syntax::JsExport;
 use rome_js_syntax::JsExportFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsExport;
+pub(crate) struct FormatJsExport;
 
 impl FormatNodeRule<JsExport> for FormatJsExport {
     fn fmt_fields(&self, node: &JsExport, f: &mut JsFormatter) -> FormatResult<()> {

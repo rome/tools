@@ -15,7 +15,7 @@ JsModule {
                 implements_clause: missing (optional),
                 l_curly_token: L_CURLY@16..18 "{" [] [Whitespace(" ")],
                 members: JsClassMemberList [
-                    JsUnknownMember {
+                    JsBogusMember {
                         items: [
                             TsMethodSignatureModifierList [],
                             STAR@18..20 "*" [] [Whitespace(" ")],
@@ -45,7 +45,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@49..51 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             TsAbstractModifier {
@@ -78,7 +78,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@82..83 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [],
                         STAR@83..91 "*" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")],
@@ -138,7 +138,7 @@ JsModule {
         5: (empty)
         6: L_CURLY@16..18 "{" [] [Whitespace(" ")]
         7: JS_CLASS_MEMBER_LIST@18..30
-          0: JS_UNKNOWN_MEMBER@18..30
+          0: JS_BOGUS_MEMBER@18..30
             0: TS_METHOD_SIGNATURE_MODIFIER_LIST@18..18
             1: STAR@18..20 "*" [] [Whitespace(" ")]
             2: JS_LITERAL_MEMBER_NAME@20..26
@@ -159,7 +159,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@49..51 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@51..72
-        0: JS_UNKNOWN_MEMBER@51..72
+        0: JS_BOGUS_MEMBER@51..72
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@51..60
             0: TS_ABSTRACT_MODIFIER@51..60
               0: ABSTRACT_KW@51..60 "abstract" [] [Whitespace(" ")]
@@ -182,7 +182,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@82..83 "{" [] []
       7: JS_CLASS_MEMBER_LIST@83..123
-        0: JS_UNKNOWN_MEMBER@83..102
+        0: JS_BOGUS_MEMBER@83..102
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@83..83
           1: STAR@83..91 "*" [Newline("\n"), Whitespace("     ")] [Whitespace(" ")]
           2: JS_LITERAL_MEMBER_NAME@91..99

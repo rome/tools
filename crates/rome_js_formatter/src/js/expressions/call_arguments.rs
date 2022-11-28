@@ -10,15 +10,15 @@ use crate::utils::test_call::is_test_call_expression;
 use crate::utils::{is_long_curried_call, write_arguments_multi_line};
 use rome_formatter::{format_args, format_element, write, VecBuffer};
 use rome_js_syntax::{
-    JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody, JsAnyLiteralExpression, JsAnyStatement,
-    JsCallArgumentList, JsCallArguments, JsCallArgumentsFields, JsCallExpression,
-    JsExpressionStatement, JsFunctionExpression, JsImportCallExpression, JsLanguage,
-    TsAnyReturnType, TsType,
+    AnyJsCallArgument, AnyJsExpression, AnyJsFunctionBody, AnyJsLiteralExpression, AnyJsStatement,
+    AnyTsReturnType, AnyTsType, JsCallArgumentList, JsCallArguments, JsCallArgumentsFields,
+    JsCallExpression, JsExpressionStatement, JsFunctionExpression, JsImportCallExpression,
+    JsLanguage,
 };
 use rome_rowan::{AstSeparatedElement, AstSeparatedList, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsCallArguments;
+pub(crate) struct FormatJsCallArguments;
 
 impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
     fn fmt_fields(&self, node: &JsCallArguments, f: &mut JsFormatter) -> FormatResult<()> {
@@ -143,7 +143,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
 enum FormatCallArgument {
     /// Argument that has not been inspected if its formatted content breaks.
     Default {
-        element: AstSeparatedElement<JsLanguage, JsAnyCallArgument>,
+        element: AstSeparatedElement<JsLanguage, AnyJsCallArgument>,
 
         /// Whether this is the last element.
         is_last: bool,
@@ -160,7 +160,7 @@ enum FormatCallArgument {
         content: FormatResult<Option<FormatElement>>,
 
         /// The separated element
-        element: AstSeparatedElement<JsLanguage, JsAnyCallArgument>,
+        element: AstSeparatedElement<JsLanguage, AnyJsCallArgument>,
 
         /// The lines before this element
         leading_lines: usize,
@@ -247,7 +247,7 @@ impl FormatCallArgument {
                 element, is_last, ..
             } => {
                 match element.node()? {
-                    JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsFunctionExpression(
+                    AnyJsCallArgument::AnyJsExpression(AnyJsExpression::JsFunctionExpression(
                         function,
                     )) => {
                         write!(
@@ -258,8 +258,8 @@ impl FormatCallArgument {
                             })]
                         )?;
                     }
-                    JsAnyCallArgument::JsAnyExpression(
-                        JsAnyExpression::JsArrowFunctionExpression(arrow),
+                    AnyJsCallArgument::AnyJsExpression(
+                        AnyJsExpression::JsArrowFunctionExpression(arrow),
                     ) => {
                         write!(
                             f,
@@ -298,7 +298,7 @@ impl FormatCallArgument {
     }
 
     /// Returns the [`separated element`](AstSeparatedElement) of this argument.
-    fn element(&self) -> &AstSeparatedElement<JsLanguage, JsAnyCallArgument> {
+    fn element(&self) -> &AstSeparatedElement<JsLanguage, AnyJsCallArgument> {
         match self {
             FormatCallArgument::Default { element, .. } => element,
             FormatCallArgument::Inspected { element, .. } => element,
@@ -354,10 +354,10 @@ fn write_grouped_arguments(
         }
 
         match grouped_arg.element().node()? {
-            JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsArrowFunctionExpression(_)) => {
+            AnyJsCallArgument::AnyJsExpression(AnyJsExpression::JsArrowFunctionExpression(_)) => {
                 grouped_arg.cache_function_body(f);
             }
-            JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsFunctionExpression(function))
+            AnyJsCallArgument::AnyJsExpression(AnyJsExpression::JsFunctionExpression(function))
                 if !other_args.is_empty() && !has_no_parameters(function) =>
             {
                 grouped_arg.cache_function_body(f);
@@ -537,14 +537,14 @@ struct FormatGroupedFirstArgument<'a> {
 
 impl Format<JsFormatContext> for FormatGroupedFirstArgument<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        use JsAnyExpression::*;
+        use AnyJsExpression::*;
 
         let element = self.argument.element();
 
         match element.node()? {
             // Call the arrow function formatting but explicitly passes the call argument layout down
             // so that the arrow function formatting removes any soft line breaks between parameters and the return type.
-            JsAnyCallArgument::JsAnyExpression(JsArrowFunctionExpression(arrow)) => {
+            AnyJsCallArgument::AnyJsExpression(JsArrowFunctionExpression(arrow)) => {
                 with_token_tracking_disabled(f, |f| {
                     write!(
                         f,
@@ -594,14 +594,14 @@ struct FormatGroupedLastArgument<'a> {
 
 impl Format<JsFormatContext> for FormatGroupedLastArgument<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        use JsAnyExpression::*;
+        use AnyJsExpression::*;
         let element = self.argument.element();
 
         // For function and arrow expressions, re-format the node and pass the argument that it is the
         // last grouped argument. This changes the formatting of parameters, type parameters, and return types
         // to remove any soft line breaks.
         match element.node()? {
-            JsAnyCallArgument::JsAnyExpression(JsFunctionExpression(function))
+            AnyJsCallArgument::AnyJsExpression(JsFunctionExpression(function))
                 if !self.is_only && !has_no_parameters(function) =>
             {
                 with_token_tracking_disabled(f, |f| {
@@ -623,7 +623,7 @@ impl Format<JsFormatContext> for FormatGroupedLastArgument<'_> {
                 })
             }
 
-            JsAnyCallArgument::JsAnyExpression(JsArrowFunctionExpression(arrow)) => {
+            AnyJsCallArgument::AnyJsExpression(JsArrowFunctionExpression(arrow)) => {
                 with_token_tracking_disabled(f, |f| {
                     write!(
                         f,
@@ -770,18 +770,18 @@ fn should_group_first_argument(
     list: &JsCallArgumentList,
     comments: &JsComments,
 ) -> SyntaxResult<bool> {
-    use JsAnyExpression::*;
+    use AnyJsExpression::*;
 
     let mut iter = list.iter();
     match (iter.next(), iter.next()) {
         (
-            Some(Ok(JsAnyCallArgument::JsAnyExpression(first))),
-            Some(Ok(JsAnyCallArgument::JsAnyExpression(second))),
+            Some(Ok(AnyJsCallArgument::AnyJsExpression(first))),
+            Some(Ok(AnyJsCallArgument::AnyJsExpression(second))),
         ) if iter.next().is_none() => {
             match &first {
                 JsFunctionExpression(_) => {}
                 JsArrowFunctionExpression(arrow) => {
-                    if !matches!(arrow.body(), Ok(JsAnyFunctionBody::JsFunctionBody(_))) {
+                    if !matches!(arrow.body(), Ok(AnyJsFunctionBody::JsFunctionBody(_))) {
                         return Ok(false);
                     }
                 }
@@ -807,13 +807,13 @@ fn should_group_last_argument(
     list: &JsCallArgumentList,
     comments: &JsComments,
 ) -> SyntaxResult<bool> {
-    use JsAnyExpression::*;
+    use AnyJsExpression::*;
 
     let mut iter = list.iter();
     let last = iter.next_back();
 
     match last {
-        Some(Ok(JsAnyCallArgument::JsAnyExpression(last))) => {
+        Some(Ok(AnyJsCallArgument::AnyJsExpression(last))) => {
             if comments.has_leading_comments(last.syntax())
                 || comments.has_trailing_comments(last.syntax())
             {
@@ -838,7 +838,7 @@ fn should_group_last_argument(
                     if list.len() == 2
                         && matches!(
                             penultimate,
-                            Some(Ok(JsAnyCallArgument::JsAnyExpression(
+                            Some(Ok(AnyJsCallArgument::AnyJsExpression(
                                 JsArrowFunctionExpression(_)
                             )))
                         )
@@ -861,11 +861,11 @@ fn should_group_last_argument(
 
 /// Checks if `argument` benefits from grouping in call arguments.
 fn can_group_expression_argument(
-    argument: &JsAnyExpression,
+    argument: &AnyJsExpression,
     is_arrow_recursion: bool,
     comments: &JsComments,
 ) -> SyntaxResult<bool> {
-    use JsAnyExpression::*;
+    use AnyJsExpression::*;
 
     let result = match argument {
         JsObjectExpression(object_expression) => {
@@ -884,6 +884,10 @@ fn can_group_expression_argument(
 
         TsAsExpression(as_expression) => {
             can_group_expression_argument(&as_expression.expression()?, false, comments)?
+        }
+
+        TsSatisfiesExpression(satisfies_expression) => {
+            can_group_expression_argument(&satisfies_expression.expression()?, false, comments)?
         }
 
         JsArrowFunctionExpression(arrow_function) => {
@@ -905,10 +909,10 @@ fn can_group_expression_argument(
                 return_type_annotation
                     .and_then(|rty| rty.ty().ok())
                     .map_or(true, |any_type| match any_type {
-                        TsAnyReturnType::TsType(TsType::TsReferenceType(_)) => match &body {
-                            JsAnyFunctionBody::JsFunctionBody(body) => {
+                        AnyTsReturnType::AnyTsType(AnyTsType::TsReferenceType(_)) => match &body {
+                            AnyJsFunctionBody::JsFunctionBody(body) => {
                                 body.statements().iter().any(|statement| {
-                                    !matches!(statement, JsAnyStatement::JsEmptyStatement(_))
+                                    !matches!(statement, AnyJsStatement::JsEmptyStatement(_))
                                 }) || comments.has_dangling_comments(body.syntax())
                             }
                             _ => false,
@@ -917,14 +921,14 @@ fn can_group_expression_argument(
                     });
 
             let can_group_body = match &body {
-                JsAnyFunctionBody::JsFunctionBody(_)
-                | JsAnyFunctionBody::JsAnyExpression(
+                AnyJsFunctionBody::JsFunctionBody(_)
+                | AnyJsFunctionBody::AnyJsExpression(
                     JsObjectExpression(_) | JsArrayExpression(_) | JsxTagExpression(_),
                 ) => true,
-                JsAnyFunctionBody::JsAnyExpression(arrow @ JsArrowFunctionExpression(_)) => {
+                AnyJsFunctionBody::AnyJsExpression(arrow @ JsArrowFunctionExpression(_)) => {
                     can_group_expression_argument(arrow, true, comments)?
                 }
-                JsAnyFunctionBody::JsAnyExpression(
+                AnyJsFunctionBody::AnyJsExpression(
                     JsCallExpression(_) | JsConditionalExpression(_),
                 ) if !is_arrow_recursion => true,
                 _ => false,
@@ -949,7 +953,7 @@ fn is_commonjs_or_amd_call(
     let callee = call.callee()?;
 
     Ok(match callee {
-        JsAnyExpression::JsIdentifierExpression(identifier) => {
+        AnyJsExpression::JsIdentifierExpression(identifier) => {
             let reference = identifier.name()?;
 
             if reference.has_name("require") {
@@ -963,8 +967,8 @@ fn is_commonjs_or_amd_call(
                         1 => true,
                         2 => matches!(
                             args.first(),
-                            Some(Ok(JsAnyCallArgument::JsAnyExpression(
-                                JsAnyExpression::JsArrayExpression(_)
+                            Some(Ok(AnyJsCallArgument::AnyJsExpression(
+                                AnyJsExpression::JsArrayExpression(_)
                             )))
                         ),
                         3 => {
@@ -974,13 +978,13 @@ fn is_commonjs_or_amd_call(
                             matches!(
                                 (first, second),
                                 (
-                                    Some(Ok(JsAnyCallArgument::JsAnyExpression(
-                                        JsAnyExpression::JsAnyLiteralExpression(
-                                            JsAnyLiteralExpression::JsStringLiteralExpression(_)
+                                    Some(Ok(AnyJsCallArgument::AnyJsExpression(
+                                        AnyJsExpression::AnyJsLiteralExpression(
+                                            AnyJsLiteralExpression::JsStringLiteralExpression(_)
                                         )
                                     ))),
-                                    Some(Ok(JsAnyCallArgument::JsAnyExpression(
-                                        JsAnyExpression::JsArrayExpression(_)
+                                    Some(Ok(AnyJsCallArgument::AnyJsExpression(
+                                        AnyJsExpression::JsArrayExpression(_)
                                     )))
                                 )
                             )
@@ -1003,11 +1007,9 @@ fn is_multiline_template_only_args(arguments: &JsCallArguments) -> bool {
     let args = arguments.args();
 
     match args.first() {
-        Some(Ok(JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsTemplate(template))))
-            if args.len() == 1 =>
-        {
-            is_multiline_template_starting_on_same_line(&template)
-        }
+        Some(Ok(AnyJsCallArgument::AnyJsExpression(AnyJsExpression::JsTemplateExpression(
+            template,
+        )))) if args.len() == 1 => is_multiline_template_starting_on_same_line(&template),
         _ => false,
     }
 }
@@ -1018,13 +1020,13 @@ fn is_multiline_template_only_args(arguments: &JsCallArguments) -> bool {
 /// useMemo(() => {}, [])
 /// ```
 fn is_react_hook_with_deps_array(arguments: &JsCallArguments, comments: &JsComments) -> bool {
-    use JsAnyExpression::*;
+    use AnyJsExpression::*;
     let mut args = arguments.args().iter();
 
     match (args.next(), args.next()) {
         (
-            Some(Ok(JsAnyCallArgument::JsAnyExpression(JsArrowFunctionExpression(callback)))),
-            Some(Ok(JsAnyCallArgument::JsAnyExpression(JsArrayExpression(deps)))),
+            Some(Ok(AnyJsCallArgument::AnyJsExpression(JsArrowFunctionExpression(callback)))),
+            Some(Ok(AnyJsCallArgument::AnyJsExpression(JsArrayExpression(deps)))),
         ) if arguments.args().len() == 2 => {
             if comments.has_comments(callback.syntax()) || comments.has_comments(deps.syntax()) {
                 return false;
@@ -1037,7 +1039,7 @@ fn is_react_hook_with_deps_array(arguments: &JsCallArguments, comments: &JsComme
                 return false;
             }
 
-            matches!(callback.body(), Ok(JsAnyFunctionBody::JsFunctionBody(_)))
+            matches!(callback.body(), Ok(AnyJsFunctionBody::JsFunctionBody(_)))
         }
         _ => false,
     }
@@ -1060,9 +1062,9 @@ fn is_function_composition_args(arguments: &JsCallArguments) -> bool {
     let mut has_seen_function_like = false;
 
     for arg in args.iter().flatten() {
-        use JsAnyExpression::*;
+        use AnyJsExpression::*;
         match arg {
-            JsAnyCallArgument::JsAnyExpression(
+            AnyJsCallArgument::AnyJsExpression(
                 JsFunctionExpression(_) | JsArrowFunctionExpression(_),
             ) => {
                 if has_seen_function_like {
@@ -1070,12 +1072,12 @@ fn is_function_composition_args(arguments: &JsCallArguments) -> bool {
                 }
                 has_seen_function_like = true;
             }
-            JsAnyCallArgument::JsAnyExpression(JsCallExpression(call)) => {
+            AnyJsCallArgument::AnyJsExpression(JsCallExpression(call)) => {
                 if call.arguments().map_or(false, |call_arguments| {
                     call_arguments.args().iter().flatten().any(|arg| {
                         matches!(
                             arg,
-                            JsAnyCallArgument::JsAnyExpression(
+                            AnyJsCallArgument::AnyJsExpression(
                                 JsFunctionExpression(_) | JsArrowFunctionExpression(_)
                             )
                         )

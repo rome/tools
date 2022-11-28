@@ -1,8 +1,8 @@
 use crate::prelude::*;
-use rome_js_syntax::{JsAnyStatement, JsStatementList};
+use rome_js_syntax::{AnyJsStatement, JsStatementList};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsStatementList;
+pub(crate) struct FormatJsStatementList;
 
 impl FormatRule<JsStatementList> for FormatJsStatementList {
     type Context = JsFormatContext;
@@ -12,7 +12,7 @@ impl FormatRule<JsStatementList> for FormatJsStatementList {
 
         for statement in node.iter() {
             match statement {
-                JsAnyStatement::JsEmptyStatement(empty) => {
+                AnyJsStatement::JsEmptyStatement(empty) => {
                     join.entry_no_separator(&empty.format());
                 }
                 _ => {

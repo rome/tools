@@ -13,7 +13,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..9 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsIndexSignatureModifierList [
                             TsReadonlyModifier {
@@ -66,7 +66,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@8..9 "{" [] []
       7: JS_CLASS_MEMBER_LIST@9..50
-        0: JS_UNKNOWN_MEMBER@9..50
+        0: JS_BOGUS_MEMBER@9..50
           0: TS_INDEX_SIGNATURE_MODIFIER_LIST@9..30
             0: TS_READONLY_MODIFIER@9..23
               0: READONLY_KW@9..23 "readonly" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]

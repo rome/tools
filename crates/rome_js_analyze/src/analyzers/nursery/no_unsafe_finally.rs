@@ -240,8 +240,8 @@ fn sentinel_for_continue(kind: JsSyntaxKind) -> bool {
 }
 
 fn sentinel_for_throw_or_return(kind: JsSyntaxKind) -> bool {
-    JsAnyRoot::can_cast(kind)
-        || JsAnyFunction::can_cast(kind)
-        || JsAnyClassMember::can_cast(kind)
-        || JsAnyObjectMember::can_cast(kind)
+    AnyJsRoot::can_cast(kind)
+        || AnyJsFunction::can_cast(kind)
+        || AnyJsClassMember::can_cast(kind)
+        || AnyJsObjectMember::can_cast(kind)
 }

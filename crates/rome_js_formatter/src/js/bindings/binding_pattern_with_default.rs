@@ -5,7 +5,7 @@ use rome_js_syntax::JsBindingPatternWithDefault;
 use rome_js_syntax::JsBindingPatternWithDefaultFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsBindingPatternWithDefault;
+pub(crate) struct FormatJsBindingPatternWithDefault;
 
 impl FormatNodeRule<JsBindingPatternWithDefault> for FormatJsBindingPatternWithDefault {
     fn fmt_fields(

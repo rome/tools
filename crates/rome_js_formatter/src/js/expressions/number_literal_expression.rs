@@ -6,7 +6,7 @@ use rome_js_syntax::JsNumberLiteralExpression;
 use rome_js_syntax::{JsNumberLiteralExpressionFields, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsNumberLiteralExpression;
+pub(crate) struct FormatJsNumberLiteralExpression;
 
 impl FormatNodeRule<JsNumberLiteralExpression> for FormatJsNumberLiteralExpression {
     fn fmt_fields(

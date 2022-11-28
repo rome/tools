@@ -74,7 +74,7 @@ pub fn generate_syntax_factory(ast: &AstSrc, language_kind: LanguageKind) -> Res
                 // Additional unexpected elements
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        #kind.to_unknown(),
+                        #kind.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
@@ -100,8 +100,8 @@ pub fn generate_syntax_factory(ast: &AstSrc, language_kind: LanguageKind) -> Res
         }
     });
 
-    let unknown_kinds = ast
-        .unknowns
+    let bogus_kinds = ast
+        .bogus
         .iter()
         .map(|node| format_ident!("{}", to_upper_snake_case(node)));
 
@@ -122,7 +122,7 @@ pub fn generate_syntax_factory(ast: &AstSrc, language_kind: LanguageKind) -> Res
             ) -> RawSyntaxNode<Self::Kind>
             {
                 match kind {
-                    #(#unknown_kinds)|* => {
+                    #(#bogus_kinds)|* => {
                         RawSyntaxNode::new(kind, children.into_iter().map(Some))
                     },
                     #(#normal_node_arms),*,

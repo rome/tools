@@ -16,7 +16,7 @@ JsModule {
                             expression: JsArrowFunctionExpression {
                                 async_token: ASYNC_KW@8..14 "async" [] [Whitespace(" ")],
                                 type_parameters: missing (optional),
-                                parameters: JsUnknownBinding {
+                                parameters: JsBogusBinding {
                                     items: [
                                         IDENT@14..20 "await" [] [Whitespace(" ")],
                                     ],
@@ -66,9 +66,9 @@ JsModule {
                                             type_annotation: missing (optional),
                                             initializer: JsInitializerClause {
                                                 eq_token: EQ@42..44 "=" [] [Whitespace(" ")],
-                                                expression: JsUnknownExpression {
+                                                expression: JsBogusExpression {
                                                     items: [
-                                                        JsUnknown {
+                                                        JsBogus {
                                                             items: [
                                                                 IDENT@44..49 "await" [] [],
                                                             ],
@@ -127,7 +127,7 @@ JsModule {
                                             type_annotation: missing (optional),
                                             initializer: JsInitializerClause {
                                                 eq_token: EQ@76..78 "=" [] [Whitespace(" ")],
-                                                expression: JsUnknownExpression {
+                                                expression: JsBogusExpression {
                                                     items: [
                                                         AWAIT_KW@78..84 "await" [] [Whitespace(" ")],
                                                         JsNumberLiteralExpression {
@@ -178,7 +178,7 @@ JsModule {
               1: JS_ARROW_FUNCTION_EXPRESSION@8..25
                 0: ASYNC_KW@8..14 "async" [] [Whitespace(" ")]
                 1: (empty)
-                2: JS_UNKNOWN_BINDING@14..20
+                2: JS_BOGUS_BINDING@14..20
                   0: IDENT@14..20 "await" [] [Whitespace(" ")]
                 3: (empty)
                 4: FAT_ARROW@20..23 "=>" [] [Whitespace(" ")]
@@ -216,8 +216,8 @@ JsModule {
                       2: (empty)
                       3: JS_INITIALIZER_CLAUSE@42..49
                         0: EQ@42..44 "=" [] [Whitespace(" ")]
-                        1: JS_UNKNOWN_EXPRESSION@44..49
-                          0: JS_UNKNOWN@44..49
+                        1: JS_BOGUS_EXPRESSION@44..49
+                          0: JS_BOGUS@44..49
                             0: IDENT@44..49 "await" [] []
                   2: R_PAREN@49..51 ")" [] [Whitespace(" ")]
                 3: (empty)
@@ -258,7 +258,7 @@ JsModule {
                       2: (empty)
                       3: JS_INITIALIZER_CLAUSE@76..86
                         0: EQ@76..78 "=" [] [Whitespace(" ")]
-                        1: JS_UNKNOWN_EXPRESSION@78..86
+                        1: JS_BOGUS_EXPRESSION@78..86
                           0: AWAIT_KW@78..84 "await" [] [Whitespace(" ")]
                           1: JS_NUMBER_LITERAL_EXPRESSION@84..86
                             0: JS_NUMBER_LITERAL@84..86 "10" [] []

@@ -1,11 +1,12 @@
 ///! Provides traits for parsing pattern like nodes
-use crate::parser::ParserProgress;
+use crate::prelude::*;
 use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::js_parse_error;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{CompletedMarker, ParseDiagnostic, ParseRecovery, ParsedSyntax, Parser};
+use crate::{JsParser, ParseRecovery, ParsedSyntax};
 use rome_js_syntax::JsSyntaxKind::{EOF, JS_ARRAY_HOLE};
 use rome_js_syntax::{JsSyntaxKind, TextRange, T};
+use rome_parser::ParserProgress;
 
 /// Trait for parsing a pattern with an optional default of the form `pattern = default`
 pub(crate) trait ParseWithDefaultPattern {
@@ -14,13 +15,13 @@ pub(crate) trait ParseWithDefaultPattern {
 
     /// Creates a diagnostic for the case where the pattern is missing. For example, if the
     /// code only contains ` = default`
-    fn expected_pattern_error(p: &Parser, range: TextRange) -> ParseDiagnostic;
+    fn expected_pattern_error(p: &JsParser, range: TextRange) -> ParseDiagnostic;
 
     /// Parses a pattern (without its default value)
-    fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax;
+    fn parse_pattern(&self, p: &mut JsParser) -> ParsedSyntax;
 
     /// Parses a pattern and wraps it in a pattern with default if a `=` token follows the pattern
-    fn parse_pattern_with_optional_default(&self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_pattern_with_optional_default(&self, p: &mut JsParser) -> ParsedSyntax {
         let pattern = self.parse_pattern(p);
 
         // test_err js_invalid_assignment
@@ -43,8 +44,8 @@ pub(crate) trait ParseWithDefaultPattern {
 
 /// Trait for parsing an array like pattern of the form `[a, b = "c", { }]`
 pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
-    /// The kind of an unknown pattern. Used in case the pattern contains elements that aren't valid patterns
-    fn unknown_pattern_kind() -> JsSyntaxKind;
+    /// The kind of a bogus pattern. Used in case the pattern contains elements that aren't valid patterns
+    fn bogus_pattern_kind() -> JsSyntaxKind;
     /// The kind of the array like pattern (array assignment or array binding)
     fn array_pattern_kind() -> JsSyntaxKind;
     /// The kind of the rest pattern
@@ -52,12 +53,12 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
     /// The kind of the list
     fn list_kind() -> JsSyntaxKind;
     ///  Creates a diagnostic saying that the parser expected an element at the position passed as an argument.
-    fn expected_element_error(p: &Parser, range: TextRange) -> ParseDiagnostic;
+    fn expected_element_error(p: &JsParser, range: TextRange) -> ParseDiagnostic;
     /// Creates a pattern with default instance. Used to parse the array elements.
     fn pattern_with_default(&self) -> P;
 
     /// Tries to parse an array like pattern
-    fn parse_array_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_array_pattern(&self, p: &mut JsParser) -> ParsedSyntax {
         if !p.at(T!['[']) {
             return Absent;
         }
@@ -73,7 +74,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
                 progress.assert_progressing(p);
 
                 let recovery = ParseRecovery::new(
-                    Self::unknown_pattern_kind(),
+                    Self::bogus_pattern_kind(),
                     token_set!(EOF, T![,], T![']'], T![=], T![;], T![...], T![')']),
                 )
                 .enable_recovery_on_line_break();
@@ -101,7 +102,11 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
     }
 
     /// Parses a single array element
-    fn parse_any_array_element(&self, p: &mut Parser, recovery: &ParseRecovery) -> ParsedSyntax {
+    fn parse_any_array_element(
+        &self,
+        p: &mut JsParser,
+        recovery: &ParseRecovery<JsSyntaxKind>,
+    ) -> ParsedSyntax {
         match p.cur() {
             T![,] => Present(p.start().complete(p, JS_ARRAY_HOLE)),
             T![...] => self
@@ -114,7 +119,7 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
     }
 
     /// Parses a rest element
-    fn parse_rest_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_rest_pattern(&self, p: &mut JsParser) -> ParsedSyntax {
         if !p.at(T![...]) {
             return Absent;
         }
@@ -136,16 +141,16 @@ pub(crate) trait ParseArrayPattern<P: ParseWithDefaultPattern> {
 /// Trait for parsing an object pattern like node of the form `{ a, b: c}`
 pub(crate) trait ParseObjectPattern {
     /// Kind used when recovering from invalid properties.
-    fn unknown_pattern_kind() -> JsSyntaxKind;
+    fn bogus_pattern_kind() -> JsSyntaxKind;
     /// The kind of the pattern like node this trait parses
     fn object_pattern_kind() -> JsSyntaxKind;
     /// The kind of the property list
     fn list_kind() -> JsSyntaxKind;
     /// Creates a diagnostic saying that a property is expected at the passed in range that isn't present.
-    fn expected_property_pattern_error(p: &Parser, range: TextRange) -> ParseDiagnostic;
+    fn expected_property_pattern_error(p: &JsParser, range: TextRange) -> ParseDiagnostic;
 
     /// Parses the object pattern like node
-    fn parse_object_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_object_pattern(&self, p: &mut JsParser) -> ParsedSyntax {
         if !p.at(T!['{']) {
             return Absent;
         }
@@ -166,7 +171,7 @@ pub(crate) trait ParseObjectPattern {
                 continue;
             }
             let recovery_set = ParseRecovery::new(
-                Self::unknown_pattern_kind(),
+                Self::bogus_pattern_kind(),
                 token_set!(EOF, T![,], T!['}'], T![...], T![;], T![')'], T![=]),
             )
             .enable_recovery_on_line_break();
@@ -192,7 +197,11 @@ pub(crate) trait ParseObjectPattern {
     }
 
     /// Parses a single property
-    fn parse_any_property_pattern(&self, p: &mut Parser, recovery: &ParseRecovery) -> ParsedSyntax {
+    fn parse_any_property_pattern(
+        &self,
+        p: &mut JsParser,
+        recovery: &ParseRecovery<JsSyntaxKind>,
+    ) -> ParsedSyntax {
         if p.at(T![...]) {
             self.parse_rest_property_pattern(p)
                 .map(|rest_pattern| validate_rest_pattern(p, rest_pattern, T!['}'], recovery))
@@ -202,31 +211,31 @@ pub(crate) trait ParseObjectPattern {
     }
 
     /// Parses a shorthand `{ a }` or a "named" `{ a: b }` property
-    fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax;
+    fn parse_property_pattern(&self, p: &mut JsParser) -> ParsedSyntax;
 
     /// Parses a rest property `{ ...a }`
-    fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax;
+    fn parse_rest_property_pattern(&self, p: &mut JsParser) -> ParsedSyntax;
 }
 
 /// Validates if the parsed completed rest marker is a valid rest element inside of a
-/// array or object assignment target and converts it to an unknown assignment target if not.
+/// array or object assignment target and converts it to an bogus assignment target if not.
 /// A rest element must be:
 ///
 /// * the last element
 /// * not followed by a trailing comma
 /// * not have a default value
 fn validate_rest_pattern(
-    p: &mut Parser,
+    p: &mut JsParser,
     mut rest: CompletedMarker,
     end_token: JsSyntaxKind,
-    recovery: &ParseRecovery,
+    recovery: &ParseRecovery<JsSyntaxKind>,
 ) -> CompletedMarker {
     if p.at(end_token) {
         return rest;
     }
 
     if p.at(T![=]) {
-        let kind = rest.kind();
+        let kind = rest.kind(p);
         let rest_range = rest.range(p);
         let rest_marker = rest.undo_completion(p);
         let default_start = p.cur_range().start();
@@ -248,7 +257,7 @@ fn validate_rest_pattern(
         );
 
         let mut invalid = rest_marker.complete(p, kind);
-        invalid.change_to_unknown(p);
+        invalid.change_to_bogus(p);
         invalid
     } else if p.at(T![,]) && p.nth_at(1, end_token) {
         p.error(
@@ -256,7 +265,7 @@ fn validate_rest_pattern(
                 .detail(p.cur_range(), "Remove the trailing comma here")
                 .detail(rest.range(p), "Rest element"),
         );
-        rest.change_to_unknown(p);
+        rest.change_to_bogus(p);
         rest
     } else {
         p.error(
@@ -268,7 +277,7 @@ fn validate_rest_pattern(
                     ),
                 ),
         );
-        rest.change_to_unknown(p);
+        rest.change_to_bogus(p);
         rest
     }
 }

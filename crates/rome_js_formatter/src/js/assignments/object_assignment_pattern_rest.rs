@@ -5,7 +5,7 @@ use rome_js_syntax::JsObjectAssignmentPatternRest;
 use rome_js_syntax::JsObjectAssignmentPatternRestFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsObjectAssignmentPatternRest;
+pub(crate) struct FormatJsObjectAssignmentPatternRest;
 
 impl FormatNodeRule<JsObjectAssignmentPatternRest> for FormatJsObjectAssignmentPatternRest {
     fn fmt_fields(

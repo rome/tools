@@ -3,7 +3,7 @@ use rome_js_syntax::JsConstructorModifierList;
 use rome_rowan::AstNodeList;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsConstructorModifierList;
+pub(crate) struct FormatJsConstructorModifierList;
 
 impl FormatRule<JsConstructorModifierList> for FormatJsConstructorModifierList {
     type Context = JsFormatContext;

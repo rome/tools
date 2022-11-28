@@ -199,8 +199,8 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::CssVarFunctionValue::new_unchecked(node) };
                     $body
                 }
-                $crate::CssSyntaxKind::CSS_UNKNOWN => {
-                    let $pattern = unsafe { $crate::CssUnknown::new_unchecked(node) };
+                $crate::CssSyntaxKind::CSS_BOGUS => {
+                    let $pattern = unsafe { $crate::CssBogus::new_unchecked(node) };
                     $body
                 }
                 $crate::CssSyntaxKind::CSS_ANY_SELECTOR_PATTERN_LIST => {

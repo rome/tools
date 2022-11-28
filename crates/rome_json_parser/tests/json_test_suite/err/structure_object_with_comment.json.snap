@@ -10,6 +10,67 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonBogusValue {
+        items: [
+            L_CURLY@0..1 "{" [] [],
+            JsonBogus {
+                items: [
+                    JsonMember {
+                        name: JsonMemberName {
+                            value_token: JSON_STRING_LITERAL@1..4 "\"a\"" [] [],
+                        },
+                        colon_token: COLON@4..5 ":" [] [],
+                        value: missing (required),
+                    },
+                    JsonBogusValue {
+                        items: [
+                            COMMENT@5..16 "/*comment*/" [] [],
+                        ],
+                    },
+                    JsonMember {
+                        name: JsonMemberName {
+                            value_token: JSON_STRING_LITERAL@16..19 "\"b\"" [] [],
+                        },
+                        colon_token: missing (required),
+                        value: missing (required),
+                    },
+                ],
+            },
+            R_CURLY@19..20 "}" [] [],
+        ],
+    },
+    eof_token: EOF@20..20 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..20
+  0: JSON_BOGUS_VALUE@0..20
+    0: L_CURLY@0..1 "{" [] []
+    1: JSON_BOGUS@1..19
+      0: JSON_MEMBER@1..5
+        0: JSON_MEMBER_NAME@1..4
+          0: JSON_STRING_LITERAL@1..4 "\"a\"" [] []
+        1: COLON@4..5 ":" [] []
+        2: (empty)
+      1: JSON_BOGUS_VALUE@5..16
+        0: COMMENT@5..16 "/*comment*/" [] []
+      2: JSON_MEMBER@16..19
+        0: JSON_MEMBER_NAME@16..19
+          0: JSON_STRING_LITERAL@16..19 "\"b\"" [] []
+        1: (empty)
+        2: (empty)
+    2: R_CURLY@19..20 "}" [] []
+  1: EOF@20..20 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -20,17 +81,24 @@ structure_object_with_comment.json:1:6 parse ━━━━━━━━━━━�
   > 1 │ {"a":/*comment*/"b"}
       │      ^^^^^^^^^^^
   
+structure_object_with_comment.json:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `"b"`
+  
+  > 1 │ {"a":/*comment*/"b"}
+      │                 ^^^
+  
+  i Remove "b"
+  
+structure_object_with_comment.json:1:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `:` but instead found `}`
+  
+  > 1 │ {"a":/*comment*/"b"}
+      │                    ^
+  
+  i Remove }
+  
 ```
 
-## Tokens
-
-```
-L_CURLY: `{` (0..1)
-JSON_STRING_LITERAL: `"a"` (1..4)
-COLON: `:` (4..5)
-COMMENT: `/*comment*/` (5..16)
-JSON_STRING_LITERAL: `"b"` (16..19)
-R_CURLY: `}` (19..20)
-EOF: `` (20..20)
-```
 

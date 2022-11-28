@@ -130,7 +130,45 @@ third = (
 ```diff
 --- Prettier
 +++ Rome
-@@ -80,15 +80,23 @@
+@@ -1,15 +1,12 @@
+ x = (
+   <fbt>
+-    <fbt:param>First</fbt:param>,
+-    <fbt:param>Second</fbt:param>
++    <fbt:param>First</fbt:param>,<fbt:param>Second</fbt:param>
+   </fbt>
+ );
+ 
+ x = (
+   <fbt>
+-    <fbt:param>First</fbt:param>
+-    ,
+-    <fbt:param>Second</fbt:param>
++    <fbt:param>First</fbt:param>,<fbt:param>Second</fbt:param>
+   </fbt>
+ );
+ 
+@@ -62,33 +59,35 @@
+ 
+ x = (
+   <fbt>
+-    {hour}
+-    :
+-    {minute}
+-    :
+-    {second}
++    {hour}:{minute}:{second}
+   </fbt>
+ );
+ 
+ x = (
+   <fbt>
+-    {hour}:
+-    {minute}:
+-    {second}
++    {hour}:{minute}:{second}
+   </fbt>
+ );
  
  first = (
    <fbt>
@@ -165,16 +203,13 @@ third = (
 ```js
 x = (
   <fbt>
-    <fbt:param>First</fbt:param>,
-    <fbt:param>Second</fbt:param>
+    <fbt:param>First</fbt:param>,<fbt:param>Second</fbt:param>
   </fbt>
 );
 
 x = (
   <fbt>
-    <fbt:param>First</fbt:param>
-    ,
-    <fbt:param>Second</fbt:param>
+    <fbt:param>First</fbt:param>,<fbt:param>Second</fbt:param>
   </fbt>
 );
 
@@ -227,19 +262,13 @@ x = (
 
 x = (
   <fbt>
-    {hour}
-    :
-    {minute}
-    :
-    {second}
+    {hour}:{minute}:{second}
   </fbt>
 );
 
 x = (
   <fbt>
-    {hour}:
-    {minute}:
-    {second}
+    {hour}:{minute}:{second}
   </fbt>
 );
 

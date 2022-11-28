@@ -13,12 +13,12 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@10..11 "(" [] [],
                 items: JsParameterList [
-                    JsUnknownParameter {
+                    JsBogusParameter {
                         items: [
                             JsIdentifierBinding {
                                 name_token: IDENT@11..12 "x" [] [],
                             },
-                            JsUnknown {
+                            JsBogus {
                                 items: [
                                     COLON@12..14 ":" [] [Whitespace(" ")],
                                     TsStringType {
@@ -50,7 +50,7 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@35..36 "(" [] [],
                 items: JsParameterList [
-                    JsUnknownParameter {
+                    JsBogusParameter {
                         items: [
                             JsIdentifierBinding {
                                 name_token: IDENT@36..37 "x" [] [],
@@ -87,10 +87,10 @@ JsModule {
       5: JS_PARAMETERS@10..22
         0: L_PAREN@10..11 "(" [] []
         1: JS_PARAMETER_LIST@11..20
-          0: JS_UNKNOWN_PARAMETER@11..20
+          0: JS_BOGUS_PARAMETER@11..20
             0: JS_IDENTIFIER_BINDING@11..12
               0: IDENT@11..12 "x" [] []
-            1: JS_UNKNOWN@12..20
+            1: JS_BOGUS@12..20
               0: COLON@12..14 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@14..20
                 0: STRING_KW@14..20 "string" [] []
@@ -111,7 +111,7 @@ JsModule {
       5: JS_PARAMETERS@35..40
         0: L_PAREN@35..36 "(" [] []
         1: JS_PARAMETER_LIST@36..38
-          0: JS_UNKNOWN_PARAMETER@36..38
+          0: JS_BOGUS_PARAMETER@36..38
             0: JS_IDENTIFIER_BINDING@36..37
               0: IDENT@36..37 "x" [] []
             1: QUESTION@37..38 "?" [] []

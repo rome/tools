@@ -35,7 +35,9 @@ jobs:
         run: rustup show
 
       - name: Cache
-        uses: Swatinem/rust-cache@v1
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: "xtask-release"
 
       - name: Install critcmp
         run: cargo install critcmp

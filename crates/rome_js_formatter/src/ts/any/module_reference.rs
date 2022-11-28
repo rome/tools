@@ -1,15 +1,15 @@
-//! Generated file, do not edit by hand, see `xtask/codegen`
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::TsAnyModuleReference;
+use rome_js_syntax::AnyTsModuleReference;
 #[derive(Debug, Clone, Default)]
-pub struct FormatTsAnyModuleReference;
-impl FormatRule<TsAnyModuleReference> for FormatTsAnyModuleReference {
+pub(crate) struct FormatAnyTsModuleReference;
+impl FormatRule<AnyTsModuleReference> for FormatAnyTsModuleReference {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &TsAnyModuleReference, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyTsModuleReference, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            TsAnyModuleReference::TsAnyName(node) => node.format().fmt(f),
-            TsAnyModuleReference::TsExternalModuleReference(node) => node.format().fmt(f),
+            AnyTsModuleReference::AnyTsName(node) => node.format().fmt(f),
+            AnyTsModuleReference::TsExternalModuleReference(node) => node.format().fmt(f),
         }
     }
 }

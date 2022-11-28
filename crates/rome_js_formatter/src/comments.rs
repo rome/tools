@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::JsAnyConditional;
+use crate::utils::AnyJsConditional;
 use rome_diagnostics_categories::category;
 use rome_formatter::{
     comments::{
@@ -10,7 +10,7 @@ use rome_formatter::{
 };
 use rome_js_syntax::suppression::parse_suppression_comment;
 use rome_js_syntax::{
-    JsAnyClass, JsAnyName, JsAnyRoot, JsAnyStatement, JsArrayHole, JsArrowFunctionExpression,
+    AnyJsClass, AnyJsName, AnyJsRoot, AnyJsStatement, JsArrayHole, JsArrowFunctionExpression,
     JsBlockStatement, JsCallArguments, JsCatchClause, JsEmptyStatement, JsFinallyClause,
     JsFormalParameter, JsFunctionBody, JsIdentifierExpression, JsIfStatement, JsLanguage,
     JsSyntaxKind, JsSyntaxNode, JsVariableDeclarator, JsWhileStatement, TsInterfaceDeclaration,
@@ -136,6 +136,7 @@ impl CommentStyle for JsCommentStyle {
 
     fn is_suppression(text: &str) -> bool {
         parse_suppression_comment(text)
+            .filter_map(Result::ok)
             .flat_map(|suppression| suppression.categories)
             .any(|(key, _)| key == category!("format"))
     }
@@ -369,7 +370,7 @@ fn handle_class_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
         return CommentPlacement::Default(comment);
     }
 
-    let first_member = if let Some(class) = JsAnyClass::cast_ref(comment.enclosing_node()) {
+    let first_member = if let Some(class) = AnyJsClass::cast_ref(comment.enclosing_node()) {
         class.members().first().map(AstNode::into_syntax)
     } else if let Some(interface) = TsInterfaceDeclaration::cast_ref(comment.enclosing_node()) {
         interface.members().first().map(AstNode::into_syntax)
@@ -472,7 +473,7 @@ fn handle_method_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacem
             let first_non_empty = body
                 .statements()
                 .iter()
-                .find(|statement| !matches!(statement, JsAnyStatement::JsEmptyStatement(_)));
+                .find(|statement| !matches!(statement, AnyJsStatement::JsEmptyStatement(_)));
 
             return match first_non_empty {
                 None => CommentPlacement::dangling(body.into_syntax(), comment),
@@ -487,13 +488,13 @@ fn handle_method_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacem
 /// Handle a all comments document.
 /// See `blank.js`
 fn handle_root_comments(comment: DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage> {
-    if let Some(root) = JsAnyRoot::cast_ref(comment.enclosing_node()) {
+    if let Some(root) = AnyJsRoot::cast_ref(comment.enclosing_node()) {
         let is_blank = match &root {
-            JsAnyRoot::JsExpressionSnipped(_) => false,
-            JsAnyRoot::JsModule(module) => {
+            AnyJsRoot::JsExpressionSnipped(_) => false,
+            AnyJsRoot::JsModule(module) => {
                 module.directives().is_empty() && module.items().is_empty()
             }
-            JsAnyRoot::JsScript(script) => {
+            AnyJsRoot::JsScript(script) => {
                 script.directives().is_empty() && script.statements().is_empty()
             }
         };
@@ -528,7 +529,7 @@ fn handle_member_expression_comment(
     // a
     // /* comment */[b]
     // ```
-    if JsAnyName::can_cast(following.kind()) || JsIdentifierExpression::can_cast(following.kind()) {
+    if AnyJsName::can_cast(following.kind()) || JsIdentifierExpression::can_cast(following.kind()) {
         CommentPlacement::leading(comment.enclosing_node().clone(), comment)
     } else {
         CommentPlacement::Default(comment)
@@ -560,7 +561,7 @@ fn handle_function_declaration_comment(
         match body
             .statements()
             .iter()
-            .find(|statement| !matches!(statement, JsAnyStatement::JsEmptyStatement(_)))
+            .find(|statement| !matches!(statement, AnyJsStatement::JsEmptyStatement(_)))
         {
             Some(first) => CommentPlacement::leading(first.into_syntax(), comment),
             None => CommentPlacement::dangling(body.into_syntax(), comment),
@@ -576,7 +577,7 @@ fn handle_conditional_comment(
     let enclosing = comment.enclosing_node();
 
     let (conditional, following) = match (
-        JsAnyConditional::cast_ref(enclosing),
+        AnyJsConditional::cast_ref(enclosing),
         comment.following_node(),
     ) {
         (Some(conditional), Some(following)) => (conditional, following),
@@ -924,7 +925,7 @@ fn handle_variable_declarator_comment(
             value.kind(),
             JsSyntaxKind::JS_OBJECT_EXPRESSION
                 | JsSyntaxKind::JS_ARRAY_EXPRESSION
-                | JsSyntaxKind::JS_TEMPLATE
+                | JsSyntaxKind::JS_TEMPLATE_EXPRESSION
                 | JsSyntaxKind::TS_OBJECT_TYPE
                 | JsSyntaxKind::TS_UNION_TYPE
         )
@@ -1116,11 +1117,11 @@ fn handle_import_export_specifier_comment(
 }
 
 fn place_leading_statement_comment(
-    statement: JsAnyStatement,
+    statement: AnyJsStatement,
     comment: DecoratedComment<JsLanguage>,
 ) -> CommentPlacement<JsLanguage> {
     match statement {
-        JsAnyStatement::JsBlockStatement(block) => place_block_statement_comment(block, comment),
+        AnyJsStatement::JsBlockStatement(block) => place_block_statement_comment(block, comment),
         statement => CommentPlacement::leading(statement.into_syntax(), comment),
     }
 }
@@ -1132,7 +1133,7 @@ fn place_block_statement_comment(
     let first_non_empty = block_statement
         .statements()
         .iter()
-        .find(|statement| !matches!(statement, JsAnyStatement::JsEmptyStatement(_)));
+        .find(|statement| !matches!(statement, AnyJsStatement::JsEmptyStatement(_)));
 
     match first_non_empty {
         None => CommentPlacement::dangling(block_statement.into_syntax(), comment),

@@ -53,4 +53,8 @@ ci.js:1:1 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━
 
 ```
 
+```block
+Checked 1 file(s) in <TIME>
+```
+
 

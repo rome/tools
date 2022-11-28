@@ -1,15 +1,15 @@
-//! Generated file, do not edit by hand, see `xtask/codegen`
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::JsAnyFunctionBody;
+use rome_js_syntax::AnyJsFunctionBody;
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsAnyFunctionBody;
-impl FormatRule<JsAnyFunctionBody> for FormatJsAnyFunctionBody {
+pub(crate) struct FormatAnyJsFunctionBody;
+impl FormatRule<AnyJsFunctionBody> for FormatAnyJsFunctionBody {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &JsAnyFunctionBody, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyJsFunctionBody, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyFunctionBody::JsAnyExpression(node) => node.format().fmt(f),
-            JsAnyFunctionBody::JsFunctionBody(node) => node.format().fmt(f),
+            AnyJsFunctionBody::AnyJsExpression(node) => node.format().fmt(f),
+            AnyJsFunctionBody::JsFunctionBody(node) => node.format().fmt(f),
         }
     }
 }

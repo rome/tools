@@ -3,7 +3,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsBinaryExpressionFields,
+    AnyJsExpression, AnyJsLiteralExpression, JsBinaryExpression, JsBinaryExpressionFields,
     JsBinaryOperator, JsUnaryOperator, TextRange,
 };
 use rome_rowan::{AstNode, BatchMutationExt};
@@ -77,7 +77,7 @@ declare_rule! {
 
 impl Rule for UseValidTypeof {
     type Query = Ast<JsBinaryExpression>;
-    type State = (TypeofError, Option<(JsAnyExpression, JsTypeName)>);
+    type State = (TypeofError, Option<(AnyJsExpression, JsTypeName)>);
     type Signals = Option<Self::State>;
     type Options = ();
 
@@ -106,18 +106,18 @@ impl Rule for UseValidTypeof {
         let range = match (&left, &right) {
             // Check for `typeof $expr == $lit` and `$lit == typeof $expr`
             (
-                JsAnyExpression::JsUnaryExpression(unary),
-                lit @ JsAnyExpression::JsAnyLiteralExpression(literal),
+                AnyJsExpression::JsUnaryExpression(unary),
+                lit @ AnyJsExpression::AnyJsLiteralExpression(literal),
             )
             | (
-                lit @ JsAnyExpression::JsAnyLiteralExpression(literal),
-                JsAnyExpression::JsUnaryExpression(unary),
+                lit @ AnyJsExpression::AnyJsLiteralExpression(literal),
+                AnyJsExpression::JsUnaryExpression(unary),
             ) => {
                 if unary.operator().ok()? != JsUnaryOperator::Typeof {
                     return None;
                 }
 
-                if let JsAnyLiteralExpression::JsStringLiteralExpression(literal) = literal {
+                if let AnyJsLiteralExpression::JsStringLiteralExpression(literal) = literal {
                     let literal = literal.value_token().ok()?;
                     let range = literal.text_trimmed_range();
 
@@ -144,8 +144,8 @@ impl Rule for UseValidTypeof {
 
             // Check for `typeof $expr == typeof $expr`
             (
-                JsAnyExpression::JsUnaryExpression(left),
-                JsAnyExpression::JsUnaryExpression(right),
+                AnyJsExpression::JsUnaryExpression(left),
+                AnyJsExpression::JsUnaryExpression(right),
             ) => {
                 let is_typeof_left = left.operator().ok()? == JsUnaryOperator::Typeof;
                 let is_typeof_right = right.operator().ok()? == JsUnaryOperator::Typeof;
@@ -161,12 +161,12 @@ impl Rule for UseValidTypeof {
 
             // Check for `typeof $expr == $ident`
             (
-                JsAnyExpression::JsUnaryExpression(unary),
-                id @ JsAnyExpression::JsIdentifierExpression(ident),
+                AnyJsExpression::JsUnaryExpression(unary),
+                id @ AnyJsExpression::JsIdentifierExpression(ident),
             )
             | (
-                JsAnyExpression::JsIdentifierExpression(ident),
-                id @ JsAnyExpression::JsUnaryExpression(unary),
+                AnyJsExpression::JsIdentifierExpression(ident),
+                id @ AnyJsExpression::JsUnaryExpression(unary),
             ) => {
                 if unary.operator().ok()? != JsUnaryOperator::Typeof {
                     return None;
@@ -186,8 +186,8 @@ impl Rule for UseValidTypeof {
             }
 
             // Check for `typeof $expr == $expr`
-            (JsAnyExpression::JsUnaryExpression(unary), expr)
-            | (expr, JsAnyExpression::JsUnaryExpression(unary)) => {
+            (AnyJsExpression::JsUnaryExpression(unary), expr)
+            | (expr, AnyJsExpression::JsUnaryExpression(unary)) => {
                 if unary.operator().ok()? != JsUnaryOperator::Typeof {
                     return None;
                 }
@@ -225,7 +225,7 @@ impl Rule for UseValidTypeof {
 
         mutation.replace_node(
             expr.clone(),
-            JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(
+            AnyJsExpression::AnyJsLiteralExpression(AnyJsLiteralExpression::from(
                 make::js_string_literal_expression(make::js_string_literal(type_name.as_str())),
             )),
         );

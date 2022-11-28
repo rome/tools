@@ -21,28 +21,28 @@
 // NOTES
 //
 // - SyntaxNode, SyntaxToken and SyntaxElement will be stripped from the codegen
-// - Unknown nodes are special nodes used to keep track of broken code; they are
+// - Bogus nodes are special nodes used to keep track of broken code; they are
 //   not part of the grammar but they will appear inside the green tree
 
 
 ///////////////
-// UNKNOWN NODES
+// BOGUS NODES
 ///////////////
 // SyntaxElement is a generic data structure that is meant to track nodes and tokens
 // in cases where we care about both types
 //
-// As Unknown* node will need to yield both tokens and nodes without discrimination,
+// As Bogus* node will need to yield both tokens and nodes without discrimination,
 // and their children will need to yield nodes and tokens as well.
 // For this reason, SyntaxElement = SyntaxElement
 SyntaxElement = SyntaxElement
 
-CssUnknown = SyntaxElement*
+CssBogus = SyntaxElement*
 
-CssRoot = CssAnyRule*
+CssRoot = AnyCssRule*
 
-CssAnyRule =
+AnyCssRule =
 	CssRule
-	| CssAnyAtRule
+	| AnyCssAtRule
 
 
 // .header { color: red }
@@ -61,9 +61,9 @@ CssSelector =
 	pattern_list: CssAnySelectorPatternList
 
 
-CssAnySelectorPatternList = CssAnySelectorPattern*
+CssAnySelectorPatternList = AnyCssSelectorPattern*
 
-CssAnySelectorPattern =
+AnyCssSelectorPattern =
 	CssIdSelectorPattern
 	| CssClassSelectorPattern
 	| CssUniversalSelectorPattern
@@ -132,7 +132,7 @@ CssPseudoClassSelectorPattern =
 
 CssPseudoClassSelectorPatternParameters =
 	'('
-	parameter: CssAnyValue
+	parameter: AnyCssValue
 	')'
 
 // div {}
@@ -144,9 +144,9 @@ CssTypeSelectorPattern = ident: CssIdentifier
 // div > a {}
 // ^^^^^^^
 CssCombinatorSelectorPattern =
-	left: CssAnySelectorPattern
+	left: AnyCssSelectorPattern
 	combinator: '>' | '+' | '~' | 'css_space_literal'
-	right: CssAnySelectorPattern
+	right: AnyCssSelectorPattern
 
 CssBlock =
 	'{'
@@ -159,7 +159,7 @@ CssDeclarationList = CssDeclaration*
 CssDeclaration =
 	name: CssIdentifier | CssCustomProperty
 	':'
-	value: CssAnyValue
+	value: AnyCssValue
 	important: CssDeclarationImportant?
 
 
@@ -170,7 +170,7 @@ CssDeclarationImportant =
 /////////////
 // AT RULES
 ////////////
-CssAnyAtRule =
+AnyCssAtRule =
 	CssAtKeyframes
 	| CssAtMedia
 
@@ -210,7 +210,7 @@ CssAtMedia =
 	'media'
 	query_list: CssAtMediaQueryList
 	'{'
-	body: CssAnyRule
+	body: AnyCssRule
 	'}'
 
 
@@ -221,7 +221,7 @@ CssAtMediaQueryList = (CssAtMediaQuery (',' CssAtMediaQuery)*)
 // 		  ^^^^^^^^^^^^^^^^^^^^
 CssAtMediaQuery =
 	condition: 'not' | 'or' | 'only'?
-	type: CssAnyAtMediaQueryType
+	type: AnyCssAtMediaQueryType
 	consequent: CssAtMediaQueryConsequent?
 
 
@@ -230,10 +230,10 @@ CssAtMediaQuery =
 CssAtMediaQueryConsequent =
 	'and'
 	condition: 'not'?
-	type: CssAnyAtMediaQueryType
+	type: AnyCssAtMediaQueryType
 
 
-CssAnyAtMediaQueryType =
+AnyCssAtMediaQueryType =
 	CssIdentifier
 	| CssAtMediaQueryFeature
 
@@ -243,10 +243,10 @@ CssAnyAtMediaQueryType =
 // 				^^^^^^^
 CssAtMediaQueryFeature =
 	'('
-	feature: CssAnyAtMediaQueryFeatureType
+	feature: AnyCssAtMediaQueryFeatureType
 	')'
 
-CssAnyAtMediaQueryFeatureType =
+AnyCssAtMediaQueryFeatureType =
 	CssAtMediaQueryFeaturePlain
 	| CssAtMediaQueryFeatureBoolean
 	| CssAtMediaQueryFeatureCompare
@@ -258,7 +258,7 @@ CssAnyAtMediaQueryFeatureType =
 CssAtMediaQueryFeaturePlain =
 	name: CssIdentifier
 	':'
-	value: CssAnyValue
+	value: AnyCssValue
 
 // @media (width) {}
 // 				^^^^^^^
@@ -270,15 +270,15 @@ CssAtMediaQueryFeatureBoolean = CssIdentifier
 CssAtMediaQueryFeatureCompare =
 	name: CssIdentifier
 	range: CssAtMediaQueryRange
-	value: CssAnyValue
+	value: AnyCssValue
 
 // @media (400px <= width <= 700px) {}
 // 				^^^^^^^^^^^^^^^^^^^^^^^^
 CssAtMediaQueryFeatureRange =
-	first_value: CssAnyValue
+	first_value: AnyCssValue
 	first_range: CssAtMediaQueryRange
 	name: CssIdentifier
-	second_value: CssAnyValue
+	second_value: AnyCssValue
 	second_range: CssAtMediaQueryRange
 
 CssAtMediaQueryRange = '>' | '<' | '>=' | '<='
@@ -288,7 +288,7 @@ CssAtMediaQueryRange = '>' | '<' | '>=' | '<='
 // AUXILIARY
 ///////////////
 
-CssAnyValue =
+AnyCssValue =
 	CssIdentifier
 	| CssString
 	| CssNumber
@@ -345,7 +345,7 @@ CssCustomProperty = value: 'css_custom_property'
 
 CssParameterList = CssParameter*
 
-CssParameter = CssAnyValue
+CssParameter = AnyCssValue
 
 CssIdentifier = value: 'ident'
 CssString = value: 'css_string_literal'

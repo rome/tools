@@ -5,7 +5,7 @@ use rome_js_syntax::{JsSwitchStatement, JsSwitchStatementFields};
 use rome_rowan::AstNodeList;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsSwitchStatement;
+pub(crate) struct FormatJsSwitchStatement;
 
 impl FormatNodeRule<JsSwitchStatement> for FormatJsSwitchStatement {
     fn fmt_fields(&self, node: &JsSwitchStatement, f: &mut JsFormatter) -> FormatResult<()> {

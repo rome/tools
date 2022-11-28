@@ -21,7 +21,7 @@ JsModule {
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@21..22 "(" [] [],
                         parameters: JsConstructorParameterList [
-                            JsUnknownParameter {
+                            JsBogusParameter {
                                 items: [
                                     THIS_KW@22..26 "this" [] [],
                                 ],
@@ -64,7 +64,7 @@ JsModule {
           2: JS_CONSTRUCTOR_PARAMETERS@21..28
             0: L_PAREN@21..22 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@22..26
-              0: JS_UNKNOWN_PARAMETER@22..26
+              0: JS_BOGUS_PARAMETER@22..26
                 0: THIS_KW@22..26 "this" [] []
             2: R_PAREN@26..28 ")" [] [Whitespace(" ")]
           3: JS_FUNCTION_BODY@28..31

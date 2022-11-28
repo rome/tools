@@ -20,9 +20,6 @@ serde_json = { version = "1.0.85", features = ["raw_value"]}
 schemars = { version = "0.8.10", optional = true }
 tracing = { workspace = true }
 
-[dev-dependencies]
-rome_js_syntax = { path = "../rome_js_syntax" }
-rome_js_factory = { path = "../rome_js_factory" }
 
 [features]
 serde = ["schemars"]

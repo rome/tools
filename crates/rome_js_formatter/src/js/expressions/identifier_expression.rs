@@ -6,7 +6,7 @@ use rome_js_syntax::JsIdentifierExpressionFields;
 use rome_js_syntax::{JsIdentifierExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsIdentifierExpression;
+pub(crate) struct FormatJsIdentifierExpression;
 
 impl FormatNodeRule<JsIdentifierExpression> for FormatJsIdentifierExpression {
     fn fmt_fields(&self, node: &JsIdentifierExpression, f: &mut JsFormatter) -> FormatResult<()> {

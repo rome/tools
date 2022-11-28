@@ -53,11 +53,7 @@ pub fn generate_ast(mode: Mode, language_kind_list: Vec<String>) -> Result<()> {
             ),
             Color::Green,
         );
-        let mut ast = match kind {
-            LanguageKind::Js => load_js_ast(),
-            LanguageKind::Css => load_css_ast(),
-            LanguageKind::Json => load_json_ast(),
-        };
+        let mut ast = load_ast(kind);
         ast.sort();
         generate_syntax(ast, &mode, kind)?;
     }
@@ -65,57 +61,51 @@ pub fn generate_ast(mode: Mode, language_kind_list: Vec<String>) -> Result<()> {
     Ok(())
 }
 
+pub(crate) fn load_ast(language: LanguageKind) -> AstSrc {
+    match language {
+        LanguageKind::Js => load_js_ast(),
+        LanguageKind::Css => load_css_ast(),
+        LanguageKind::Json => load_json_ast(),
+    }
+}
+
 pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageKind) -> Result<()> {
-    let (nodes, nodes_mut, kinds, factory, node_factory, macros, kind_src) = match language_kind {
-        LanguageKind::Js => (
-            crate::JS_AST_NODES,
-            crate::JS_AST_NODES_MUT,
-            crate::JS_SYNTAX_KINDS,
-            crate::JS_SYNTAX_FACTORY,
-            crate::JS_NODE_FACTORY,
-            crate::JS_AST_MACROS,
-            JS_KINDS_SRC,
-        ),
-        LanguageKind::Css => (
-            crate::CSS_AST_NODES,
-            crate::CSS_AST_NODES_MUT,
-            crate::CSS_SYNTAX_KINDS,
-            crate::CSS_SYNTAX_FACTORY,
-            crate::CSS_NODE_FACTORY,
-            crate::CSS_AST_MACROS,
-            CSS_KINDS_SRC,
-        ),
-        LanguageKind::Json => (
-            crate::JSON_AST_NODES,
-            crate::JSON_AST_NODES_MUT,
-            crate::JSON_SYNTAX_KINDS,
-            crate::JSON_SYNTAX_FACTORY,
-            crate::JSON_NODE_FACTORY,
-            crate::JSON_AST_MACROS,
-            JSON_KINDS_SRC,
-        ),
+    let syntax_generated_path = project_root()
+        .join("crates")
+        .join(language_kind.syntax_crate_name())
+        .join("src/generated");
+    let factory_generated_path = project_root()
+        .join("crates")
+        .join(language_kind.factory_crate_name())
+        .join("src/generated");
+
+    let kind_src = match language_kind {
+        LanguageKind::Js => JS_KINDS_SRC,
+        LanguageKind::Css => CSS_KINDS_SRC,
+        LanguageKind::Json => JSON_KINDS_SRC,
     };
-    let ast_nodes_file = project_root().join(nodes);
+
+    let ast_nodes_file = syntax_generated_path.join("nodes.rs");
     let contents = generate_nodes(&ast, language_kind)?;
     update(ast_nodes_file.as_path(), &contents, mode)?;
 
-    let ast_nodes_mut_file = project_root().join(nodes_mut);
+    let ast_nodes_mut_file = syntax_generated_path.join("nodes_mut.rs");
     let contents = generate_nodes_mut(&ast, language_kind)?;
     update(ast_nodes_mut_file.as_path(), &contents, mode)?;
 
-    let syntax_kinds_file = project_root().join(kinds);
+    let syntax_kinds_file = syntax_generated_path.join("kind.rs");
     let contents = generate_syntax_kinds(kind_src, language_kind)?;
     update(syntax_kinds_file.as_path(), &contents, mode)?;
 
-    let syntax_factory_file = project_root().join(factory);
+    let syntax_factory_file = factory_generated_path.join("syntax_factory.rs");
     let contents = generate_syntax_factory(&ast, language_kind)?;
     update(syntax_factory_file.as_path(), &contents, mode)?;
 
-    let node_factory_file = project_root().join(node_factory);
+    let node_factory_file = factory_generated_path.join("node_factory.rs");
     let contents = generate_node_factory(&ast, language_kind)?;
     update(node_factory_file.as_path(), &contents, mode)?;
 
-    let ast_macros_file = project_root().join(macros);
+    let ast_macros_file = syntax_generated_path.join("macros.rs");
     let contents = generate_macros(&ast, language_kind)?;
     update(ast_macros_file.as_path(), &contents, mode)?;
 
@@ -219,7 +209,7 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
                     fields,
                 })
             }
-            NodeRuleClassification::Unknown => ast.unknowns.push(name),
+            NodeRuleClassification::Bogus => ast.bogus.push(name),
             NodeRuleClassification::List {
                 separator,
                 element_name,
@@ -245,8 +235,8 @@ enum NodeRuleClassification {
     Union(Vec<String>),
     /// Regular node containing tokens or sub nodes of the form `A = B 'c'
     Node,
-    /// An Unknown node of the form `A = SyntaxElement*`
-    Unknown,
+    /// A bogus node of the form `A = SyntaxElement*`
+    Bogus,
 
     /// A list node of the form `A = B*` or `A = (B (',' B)*)` or `A = (B (',' B)* ','?)`
     List {
@@ -282,7 +272,7 @@ fn classify_node_rule(grammar: &Grammar, rule: &Rule) -> NodeRuleClassification 
             };
 
             if element_type == SYNTAX_ELEMENT_TYPE {
-                NodeRuleClassification::Unknown
+                NodeRuleClassification::Bogus
             } else {
                 NodeRuleClassification::List {
                     separator: None,

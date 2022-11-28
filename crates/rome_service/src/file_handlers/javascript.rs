@@ -17,7 +17,7 @@ use rome_analyze::{
     AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Never, QueryMatch,
     RegistryVisitor, RuleCategories, RuleCategory, RuleFilter, RuleGroup,
 };
-use rome_diagnostics::{category, Applicability, Diagnostic, Severity};
+use rome_diagnostics::{category, Applicability, Diagnostic, DiagnosticExt, Severity};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::utils::rename::{RenameError, RenameSymbolExtensions};
@@ -29,7 +29,7 @@ use rome_js_formatter::{context::JsFormatOptions, format_node};
 use rome_js_parser::Parse;
 use rome_js_semantic::{semantic_model, SemanticModelOptions};
 use rome_js_syntax::{
-    JsAnyRoot, JsLanguage, JsSyntaxNode, SourceType, TextRange, TextSize, TokenAtOffset,
+    AnyJsRoot, JsLanguage, JsSyntaxNode, SourceType, TextRange, TextSize, TokenAtOffset,
 };
 use rome_rowan::{AstNode, BatchMutationExt, Direction};
 use std::borrow::Cow;
@@ -148,7 +148,7 @@ where
 
 fn debug_syntax_tree(_rome_path: &RomePath, parse: AnyParse) -> GetSyntaxTreeResult {
     let syntax: JsSyntaxNode = parse.syntax();
-    let tree: JsAnyRoot = parse.tree();
+    let tree: AnyJsRoot = parse.tree();
     GetSyntaxTreeResult {
         cst: format!("{syntax:#?}"),
         ast: format!("{tree:#?}"),
@@ -240,23 +240,28 @@ fn lint(params: LintParams) -> LintResults {
             let severity = diagnostic
                 .category()
                 .filter(|category| category.name().starts_with("lint/"))
-                .and_then(|category| params.rules.as_ref()?.get_severity_from_code(category))
-                .unwrap_or(Severity::Error);
+                .map(|category| {
+                    params
+                        .rules
+                        .and_then(|rules| rules.get_severity_from_code(category))
+                        .unwrap_or(Severity::Warning)
+                })
+                .unwrap_or_else(|| diagnostic.severity());
 
             if severity <= Severity::Error {
                 errors += 1;
             }
 
             if diagnostic_count <= params.max_diagnostics {
-                diagnostic.set_severity(severity);
-
                 for action in signal.actions() {
                     if !action.is_suppression() {
                         diagnostic = diagnostic.add_code_suggestion(action.into());
                     }
                 }
 
-                diagnostics.push(rome_diagnostics::serde::Diagnostic::new(diagnostic));
+                let error = diagnostic.with_severity(severity);
+
+                diagnostics.push(rome_diagnostics::serde::Diagnostic::new(error));
             }
         }
 
@@ -365,7 +370,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
         settings,
     } = params;
 
-    let mut tree: JsAnyRoot = parse.tree();
+    let mut tree: AnyJsRoot = parse.tree();
     let mut actions = Vec::new();
 
     let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
@@ -417,7 +422,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
         match action {
             Some(action) => {
                 if let Some((range, _)) = action.mutation.as_text_edits() {
-                    tree = match JsAnyRoot::cast(action.mutation.commit()) {
+                    tree = match AnyJsRoot::cast(action.mutation.commit()) {
                         Some(tree) => tree,
                         None => {
                             return Err(RomeError::RuleError(

@@ -2,7 +2,7 @@ use crate::prelude::*;
 
 use crate::parentheses::{is_callee, is_member_object, is_spread, is_tag, NeedsParentheses};
 use rome_formatter::{format_args, write};
-use rome_js_syntax::{JsAnyExpression, JsSyntaxNode};
+use rome_js_syntax::{AnyJsExpression, JsSyntaxNode};
 use rome_js_syntax::{JsSyntaxKind, TsTypeAssertionExpression, TsTypeAssertionExpressionFields};
 
 #[derive(Debug, Clone, Default)]
@@ -25,7 +25,7 @@ impl FormatNodeRule<TsTypeAssertionExpression> for FormatTsTypeAssertionExpressi
 
         let break_after_cast = !matches!(
             expression,
-            JsAnyExpression::JsArrayExpression(_) | JsAnyExpression::JsObjectExpression(_)
+            AnyJsExpression::JsArrayExpression(_) | AnyJsExpression::JsObjectExpression(_)
         );
 
         let format_cast = format_with(|f| {
@@ -72,6 +72,7 @@ impl NeedsParentheses for TsTypeAssertionExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         match parent.kind() {
             JsSyntaxKind::TS_AS_EXPRESSION => true,
+            JsSyntaxKind::TS_SATISFIES_EXPRESSION => true,
             _ => type_cast_like_needs_parens(self.syntax(), parent),
         }
     }
@@ -80,7 +81,9 @@ impl NeedsParentheses for TsTypeAssertionExpression {
 pub(super) fn type_cast_like_needs_parens(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
     debug_assert!(matches!(
         node.kind(),
-        JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION | JsSyntaxKind::TS_AS_EXPRESSION
+        JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
+            | JsSyntaxKind::TS_AS_EXPRESSION
+            | JsSyntaxKind::TS_SATISFIES_EXPRESSION
     ));
 
     match parent.kind() {

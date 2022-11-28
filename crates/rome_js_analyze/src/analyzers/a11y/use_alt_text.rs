@@ -1,7 +1,7 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsObjectExpression, JsStringLiteralExpression,
+    AnyJsExpression, AnyJsLiteralExpression, JsObjectExpression, JsStringLiteralExpression,
     JsxSelfClosingElement, JsxString, TextRange,
 };
 use rome_rowan::{declare_node_union, AstNode};
@@ -104,11 +104,11 @@ impl Rule for UseAltText {
                     .ok()?;
 
                 match attribute_value {
-                    JsAnyExpression::JsAnyLiteralExpression(
-                        JsAnyLiteralExpression::JsNullLiteralExpression(null),
+                    AnyJsExpression::AnyJsLiteralExpression(
+                        AnyJsLiteralExpression::JsNullLiteralExpression(null),
                     ) => return Some(null.syntax().text_trimmed_range()),
-                    JsAnyExpression::JsAnyLiteralExpression(
-                        JsAnyLiteralExpression::JsStringLiteralExpression(string),
+                    AnyJsExpression::AnyJsLiteralExpression(
+                        AnyJsLiteralExpression::JsStringLiteralExpression(string),
                     ) => {
                         if string
                             .value_token()

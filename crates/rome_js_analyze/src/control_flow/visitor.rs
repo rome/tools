@@ -2,7 +2,7 @@ use std::any::TypeId;
 
 use rome_analyze::{merge_node_visitors, QueryMatch, Visitor, VisitorContext};
 use rome_js_syntax::{
-    JsAnyFunction, JsConstructorClassMember, JsGetterClassMember, JsGetterObjectMember, JsLanguage,
+    AnyJsFunction, JsConstructorClassMember, JsGetterClassMember, JsGetterObjectMember, JsLanguage,
     JsMethodClassMember, JsMethodObjectMember, JsModule, JsScript, JsSetterClassMember,
     JsSetterObjectMember,
 };
@@ -156,9 +156,9 @@ pub(super) struct FunctionVisitor {
 }
 
 declare_node_union! {
-    pub(crate) JsAnyControlFlowRoot = JsModule
+    pub(crate) AnyJsControlFlowRoot = JsModule
         | JsScript
-        | JsAnyFunction
+        | AnyJsFunction
         | JsGetterObjectMember
         | JsSetterObjectMember
         | JsMethodObjectMember
@@ -169,7 +169,7 @@ declare_node_union! {
 }
 
 impl rome_analyze::NodeVisitor<ControlFlowVisitor> for FunctionVisitor {
-    type Node = JsAnyControlFlowRoot;
+    type Node = AnyJsControlFlowRoot;
 
     fn enter(
         _: Self::Node,

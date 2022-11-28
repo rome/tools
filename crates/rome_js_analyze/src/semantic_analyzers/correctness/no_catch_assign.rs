@@ -65,7 +65,7 @@ impl Rule for NoCatchAssign {
                 // Only [JsIdentifierBinding] is allowed to use `model.all_references` now, so I need to make sure this is
                 // a [JsIdentifierBinding].
                 let identifier_binding = catch_binding
-                    .as_js_any_binding()?
+                    .as_any_js_binding()?
                     .as_js_identifier_binding()?;
                 let catch_binding_syntax = catch_binding.syntax();
                 let mut invalid_assignment = vec![];

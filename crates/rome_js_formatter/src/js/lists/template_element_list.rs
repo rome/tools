@@ -1,18 +1,18 @@
 use crate::context::TabWidth;
-use crate::js::expressions::template_chunk_element::AnyTemplateChunkElement;
-use crate::js::expressions::template_element::{AnyTemplateElement, TemplateElementOptions};
+use crate::js::auxiliary::template_chunk_element::AnyTemplateChunkElement;
+use crate::js::auxiliary::template_element::{AnyTemplateElement, TemplateElementOptions};
 use crate::prelude::*;
 use crate::utils::test_each_template::EachTemplateTable;
 use rome_formatter::FormatRuleWithOptions;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsLanguage,
-    JsTemplateElementList, TsAnyTemplateElement, TsTemplateElementList,
+    AnyJsExpression, AnyJsLiteralExpression, AnyJsTemplateElement, AnyTsTemplateElement,
+    JsLanguage, JsTemplateElementList, TsTemplateElementList,
 };
 use rome_rowan::{declare_node_union, AstNodeListIterator, SyntaxResult};
 use std::iter::FusedIterator;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsTemplateElementList {
+pub(crate) struct FormatJsTemplateElementList {
     options: FormatJsTemplateElementListOptions,
 }
 
@@ -38,7 +38,7 @@ impl FormatRule<JsTemplateElementList> for FormatJsTemplateElementList {
 }
 
 #[derive(Debug, Copy, Clone, Default)]
-pub struct FormatJsTemplateElementListOptions {
+pub(crate) struct FormatJsTemplateElementListOptions {
     pub(crate) is_test_each_pattern: bool,
 }
 
@@ -116,7 +116,7 @@ impl AnyTemplateElementList {
                 }
 
                 let mut expression_elements = list.iter().filter_map(|element| match element {
-                    JsAnyTemplateElement::JsTemplateElement(element) => Some(element),
+                    AnyJsTemplateElement::JsTemplateElement(element) => Some(element),
                     _ => None,
                 });
 
@@ -166,7 +166,7 @@ declare_node_union! {
 }
 
 fn is_simple_member_expression(
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     comments: &JsComments,
 ) -> SyntaxResult<bool> {
     let mut current = expression;
@@ -177,21 +177,21 @@ fn is_simple_member_expression(
         }
 
         current = match current {
-            JsAnyExpression::JsStaticMemberExpression(expression) => expression.object()?,
-            JsAnyExpression::JsComputedMemberExpression(expression) => {
+            AnyJsExpression::JsStaticMemberExpression(expression) => expression.object()?,
+            AnyJsExpression::JsComputedMemberExpression(expression) => {
                 if matches!(
                     expression.member()?,
-                    JsAnyExpression::JsAnyLiteralExpression(
-                        JsAnyLiteralExpression::JsStringLiteralExpression(_)
-                            | JsAnyLiteralExpression::JsNumberLiteralExpression(_)
-                    ) | JsAnyExpression::JsIdentifierExpression(_)
+                    AnyJsExpression::AnyJsLiteralExpression(
+                        AnyJsLiteralExpression::JsStringLiteralExpression(_)
+                            | AnyJsLiteralExpression::JsNumberLiteralExpression(_)
+                    ) | AnyJsExpression::JsIdentifierExpression(_)
                 ) {
                     expression.object()?
                 } else {
                     break;
                 }
             }
-            JsAnyExpression::JsIdentifierExpression(_) | JsAnyExpression::JsThisExpression(_) => {
+            AnyJsExpression::JsIdentifierExpression(_) | AnyJsExpression::JsThisExpression(_) => {
                 return Ok(true);
             }
             _ => {
@@ -204,8 +204,8 @@ fn is_simple_member_expression(
 }
 
 enum TemplateElementIterator {
-    JsTemplateElementList(AstNodeListIterator<JsLanguage, JsAnyTemplateElement>),
-    TsTemplateElementList(AstNodeListIterator<JsLanguage, TsAnyTemplateElement>),
+    JsTemplateElementList(AstNodeListIterator<JsLanguage, AnyJsTemplateElement>),
+    TsTemplateElementList(AstNodeListIterator<JsLanguage, AnyTsTemplateElement>),
 }
 
 impl Iterator for TemplateElementIterator {
@@ -215,10 +215,10 @@ impl Iterator for TemplateElementIterator {
         match self {
             TemplateElementIterator::JsTemplateElementList(inner) => {
                 let result = match inner.next()? {
-                    JsAnyTemplateElement::JsTemplateChunkElement(chunk) => {
+                    AnyJsTemplateElement::JsTemplateChunkElement(chunk) => {
                         AnyTemplateElementOrChunk::from(AnyTemplateChunkElement::from(chunk))
                     }
-                    JsAnyTemplateElement::JsTemplateElement(element) => {
+                    AnyJsTemplateElement::JsTemplateElement(element) => {
                         AnyTemplateElementOrChunk::from(AnyTemplateElement::from(element))
                     }
                 };
@@ -226,10 +226,10 @@ impl Iterator for TemplateElementIterator {
             }
             TemplateElementIterator::TsTemplateElementList(inner) => {
                 let result = match inner.next()? {
-                    TsAnyTemplateElement::TsTemplateChunkElement(chunk) => {
+                    AnyTsTemplateElement::TsTemplateChunkElement(chunk) => {
                         AnyTemplateElementOrChunk::from(AnyTemplateChunkElement::from(chunk))
                     }
-                    TsAnyTemplateElement::TsTemplateElement(element) => {
+                    AnyTsTemplateElement::TsTemplateElement(element) => {
                         AnyTemplateElementOrChunk::from(AnyTemplateElement::from(element))
                     }
                 };

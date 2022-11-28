@@ -7,4 +7,4 @@ mod nodes;
 mod visitor;
 
 pub(crate) use self::visitor::make_visitor;
-pub(crate) use self::visitor::JsAnyControlFlowRoot;
+pub(crate) use self::visitor::AnyJsControlFlowRoot;

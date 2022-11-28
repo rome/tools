@@ -4,7 +4,7 @@ use rome_formatter::write;
 use rome_js_syntax::{JsExportDefaultDeclarationClause, JsExportDefaultDeclarationClauseFields};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsExportDefaultDeclarationClause;
+pub(crate) struct FormatJsExportDefaultDeclarationClause;
 
 impl FormatNodeRule<JsExportDefaultDeclarationClause> for FormatJsExportDefaultDeclarationClause {
     fn fmt_fields(

@@ -7,7 +7,7 @@ use rome_js_syntax::JsExportDefaultExpressionClause;
 use rome_js_syntax::JsExportDefaultExpressionClauseFields;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsExportDefaultExpressionClause;
+pub(crate) struct FormatJsExportDefaultExpressionClause;
 
 impl FormatNodeRule<JsExportDefaultExpressionClause> for FormatJsExportDefaultExpressionClause {
     fn fmt_fields(

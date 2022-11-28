@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::{ConditionalJsxChain, JsAnyConditional};
+use crate::utils::{AnyJsConditional, ConditionalJsxChain};
 use rome_formatter::FormatRuleWithOptions;
 
 use crate::parentheses::{
@@ -9,7 +9,7 @@ use crate::parentheses::{
 use rome_js_syntax::{JsConditionalExpression, JsSyntaxKind, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsConditionalExpression {
+pub(crate) struct FormatJsConditionalExpression {
     jsx_chain: ConditionalJsxChain,
 }
 
@@ -28,7 +28,7 @@ impl FormatNodeRule<JsConditionalExpression> for FormatJsConditionalExpression {
         node: &JsConditionalExpression,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        JsAnyConditional::from(node.clone())
+        AnyJsConditional::from(node.clone())
             .format()
             .with_options(self.jsx_chain)
             .fmt(formatter)
@@ -45,7 +45,8 @@ impl NeedsParentheses for JsConditionalExpression {
             JsSyntaxKind::JS_UNARY_EXPRESSION
             | JsSyntaxKind::JS_AWAIT_EXPRESSION
             | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
-            | JsSyntaxKind::TS_AS_EXPRESSION => true,
+            | JsSyntaxKind::TS_AS_EXPRESSION
+            | JsSyntaxKind::TS_SATISFIES_EXPRESSION => true,
 
             _ => {
                 is_conditional_test(self.syntax(), parent)

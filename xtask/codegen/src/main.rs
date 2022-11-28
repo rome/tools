@@ -1,3 +1,5 @@
+#[cfg(feature = "aria")]
+mod generate_aria;
 #[cfg(feature = "schema")]
 mod generate_bindings;
 #[cfg(feature = "configuration")]
@@ -8,6 +10,8 @@ mod generate_schema;
 use pico_args::Arguments;
 use xtask::{project_root, pushd, Mode, Result};
 
+#[cfg(feature = "aria")]
+use crate::generate_aria::generate_aria;
 #[cfg(feature = "schema")]
 use crate::generate_bindings::generate_workspace_bindings;
 #[cfg(feature = "configuration")]
@@ -15,7 +19,7 @@ use crate::generate_configuration::generate_rules_configuration;
 #[cfg(feature = "schema")]
 use crate::generate_schema::generate_configuration_schema;
 use xtask_codegen::{
-    generate_analyzer, generate_ast, generate_formatter, generate_parser_tests, generate_tables,
+    generate_analyzer, generate_ast, generate_formatters, generate_parser_tests, generate_tables,
 };
 
 fn main() -> Result<()> {
@@ -29,7 +33,7 @@ fn main() -> Result<()> {
             Ok(())
         }
         "formatter" => {
-            generate_formatter();
+            generate_formatters();
             Ok(())
         }
         "test" => {
@@ -59,11 +63,16 @@ fn main() -> Result<()> {
             generate_workspace_bindings(Mode::Overwrite)?;
             Ok(())
         }
+        #[cfg(feature = "aria")]
+        "aria" => {
+            generate_aria(Mode::Overwrite)?;
+            Ok(())
+        }
         "all" => {
             generate_tables()?;
             generate_grammar(args);
             generate_parser_tests(Mode::Overwrite)?;
-            generate_formatter();
+            generate_formatters();
             generate_analyzer()?;
             #[cfg(feature = "configuration")]
             generate_rules_configuration(Mode::Overwrite)?;
@@ -71,6 +80,8 @@ fn main() -> Result<()> {
             generate_configuration_schema(Mode::Overwrite)?;
             #[cfg(feature = "schema")]
             generate_workspace_bindings(Mode::Overwrite)?;
+            #[cfg(feature = "aria")]
+            generate_aria(Mode::Overwrite)?;
             Ok(())
         }
         _ => {
@@ -81,8 +92,9 @@ Run codegen command.
 USAGE:
 	cargo codegen <SUBCOMMAND> [option]
 SUBCOMMANDS:
+	aria            Generate aria bindings for lint rules
 	analyzer        Generate factory functions for the analyzer and the configuration of the analyzers
-	configuration   Generate the part of the configuration that depends on some metadata
+	configuration    Generate the part of the configuration that depends on some metadata
 	schema          Generate the JSON schema for the Rome configuration file format
 	bindings        Generate TypeScript definitions for the JavaScript bindings to the Workspace API
 	grammar         Transforms ungram files into AST

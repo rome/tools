@@ -13,7 +13,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@7..8 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         L_CURLY@8..9 "{" [] [],
                     ],
@@ -21,7 +21,7 @@ JsModule {
             ],
             r_curly_token: R_CURLY@9..10 "}" [] [],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 R_CURLY@10..11 "}" [] [],
             ],
@@ -44,10 +44,10 @@ JsModule {
       5: (empty)
       6: L_CURLY@7..8 "{" [] []
       7: JS_CLASS_MEMBER_LIST@8..9
-        0: JS_UNKNOWN_MEMBER@8..9
+        0: JS_BOGUS_MEMBER@8..9
           0: L_CURLY@8..9 "{" [] []
       8: R_CURLY@9..10 "}" [] []
-    1: JS_UNKNOWN_STATEMENT@10..11
+    1: JS_BOGUS_STATEMENT@10..11
       0: R_CURLY@10..11 "}" [] []
   3: EOF@11..12 "" [Newline("\n")] []
 --

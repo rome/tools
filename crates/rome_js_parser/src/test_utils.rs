@@ -1,19 +1,19 @@
+use crate::Parse;
 use rome_console::fmt::{Formatter, Termcolor};
+use rome_console::markup;
 use rome_diagnostics::DiagnosticExt;
 use rome_diagnostics::{termcolor::Buffer, PrintDiagnostic};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode};
 use rome_rowan::{AstNode, SyntaxKind, SyntaxSlot};
 use std::{fmt::Debug, path::Path};
 
-use crate::{markup, Parse};
-
 /// This check is used in the parser test to ensure it doesn't emit
-/// unknown nodes without diagnostics, and in the analyzer tests to
+/// bogus nodes without diagnostics, and in the analyzer tests to
 /// check the syntax trees resulting from code actions are correct
-pub fn has_unknown_nodes_or_empty_slots(node: &JsSyntaxNode) -> bool {
+pub fn has_bogus_nodes_or_empty_slots(node: &JsSyntaxNode) -> bool {
     node.descendants().any(|descendant| {
         let kind = descendant.kind();
-        if kind.is_unknown() {
+        if kind.is_bogus() {
             return true;
         }
 
@@ -28,7 +28,7 @@ pub fn has_unknown_nodes_or_empty_slots(node: &JsSyntaxNode) -> bool {
 }
 
 /// This function analyzes the parsing result of a file and panic with a
-/// detailed message if it contains any error-level diagnostic, unknown nodes,
+/// detailed message if it contains any error-level diagnostic, bogus nodes,
 /// empty list slots or missing required children
 pub fn assert_errors_are_absent<T>(program: &Parse<T>, path: &Path)
 where
@@ -38,8 +38,7 @@ where
     let debug_tree = format!("{:?}", program.tree());
     let has_missing_children = debug_tree.contains("missing (required)");
 
-    if !program.has_errors() && !has_unknown_nodes_or_empty_slots(&syntax) && !has_missing_children
-    {
+    if !program.has_errors() && !has_bogus_nodes_or_empty_slots(&syntax) && !has_missing_children {
         return;
     }
 

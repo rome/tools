@@ -1,5 +1,5 @@
 use rome_js_syntax::{
-    JsSyntaxKind, JsSyntaxNode, TsIntersectionTypeElementList, TsType, TsUnionTypeVariantList,
+    AnyTsType, JsSyntaxKind, JsSyntaxNode, TsIntersectionTypeElementList, TsUnionTypeVariantList,
 };
 use rome_rowan::AstSeparatedList;
 
@@ -14,37 +14,37 @@ use crate::parentheses::{
 ///         [key in A]: number;
 ///     };
 /// ```
-pub(crate) fn is_object_like_type(ty: &TsType) -> bool {
-    matches!(ty, TsType::TsMappedType(_) | TsType::TsObjectType(_))
+pub(crate) fn is_object_like_type(ty: &AnyTsType) -> bool {
+    matches!(ty, AnyTsType::TsMappedType(_) | AnyTsType::TsObjectType(_))
 }
 
 /// Utility function that checks if the current type is can categorized as "simple"
-pub(crate) fn is_simple_type(ty: &TsType) -> bool {
+pub(crate) fn is_simple_type(ty: &AnyTsType) -> bool {
     if matches!(
         ty,
-        TsType::TsAnyType(_)
-            | TsType::TsNullLiteralType(_)
-            | TsType::TsThisType(_)
-            | TsType::TsVoidType(_)
-            | TsType::TsNumberType(_)
-            | TsType::TsNumberLiteralType(_)
-            | TsType::TsBooleanType(_)
-            | TsType::TsBooleanLiteralType(_)
-            | TsType::TsBigintType(_)
-            | TsType::TsBigIntLiteralType(_)
-            | TsType::TsStringType(_)
-            | TsType::TsStringLiteralType(_)
-            | TsType::TsSymbolType(_)
-            | TsType::TsTemplateLiteralType(_)
-            | TsType::TsNeverType(_)
-            | TsType::TsNonPrimitiveType(_)
-            | TsType::TsUndefinedType(_)
-            | TsType::TsUnknownType(_)
+        AnyTsType::TsAnyType(_)
+            | AnyTsType::TsNullLiteralType(_)
+            | AnyTsType::TsThisType(_)
+            | AnyTsType::TsVoidType(_)
+            | AnyTsType::TsNumberType(_)
+            | AnyTsType::TsNumberLiteralType(_)
+            | AnyTsType::TsBooleanType(_)
+            | AnyTsType::TsBooleanLiteralType(_)
+            | AnyTsType::TsBigintType(_)
+            | AnyTsType::TsBigIntLiteralType(_)
+            | AnyTsType::TsStringType(_)
+            | AnyTsType::TsStringLiteralType(_)
+            | AnyTsType::TsSymbolType(_)
+            | AnyTsType::TsTemplateLiteralType(_)
+            | AnyTsType::TsNeverType(_)
+            | AnyTsType::TsNonPrimitiveType(_)
+            | AnyTsType::TsUndefinedType(_)
+            | AnyTsType::TsUnknownType(_)
     ) {
         return true;
     }
 
-    if let TsType::TsReferenceType(reference) = ty {
+    if let AnyTsType::TsReferenceType(reference) = ty {
         return reference.type_arguments().is_none();
     }
 
@@ -54,17 +54,21 @@ pub(crate) fn is_simple_type(ty: &TsType) -> bool {
 /// Logic ported from [prettier], function `shouldHugType`
 ///
 /// [prettier]: https://github.com/prettier/prettier/blob/main/src/language-js/print/type-annotation.js#L27-L56
-pub(crate) fn should_hug_type(ty: &TsType) -> bool {
+pub(crate) fn should_hug_type(ty: &AnyTsType) -> bool {
     if is_simple_type(ty) || is_object_like_type(ty) {
         return true;
     }
 
     // Checking for unions where all types but one are "void types", so things like `TypeName | null | void`
-    if let TsType::TsUnionType(union_type) = ty {
+    if let AnyTsType::TsUnionType(union_type) = ty {
         let mut iter = union_type.types().iter();
 
-        let has_object_type =
-            iter.any(|ty| matches!(ty, Ok(TsType::TsObjectType(_) | TsType::TsReferenceType(_))));
+        let has_object_type = iter.any(|ty| {
+            matches!(
+                ty,
+                Ok(AnyTsType::TsObjectType(_) | AnyTsType::TsReferenceType(_))
+            )
+        });
 
         let void_count = union_type
             .types()
@@ -72,7 +76,7 @@ pub(crate) fn should_hug_type(ty: &TsType) -> bool {
             .filter(|node| {
                 matches!(
                     node,
-                    Ok(TsType::TsVoidType(_) | TsType::TsNullLiteralType(_))
+                    Ok(AnyTsType::TsVoidType(_) | AnyTsType::TsNullLiteralType(_))
                 )
             })
             .count();

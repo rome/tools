@@ -10,6 +10,41 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonBogusValue {
+        items: [
+            L_CURLY@0..1 "{" [] [],
+            JsonBogus {
+                items: [
+                    JsonBogusValue {
+                        items: [
+                            ERROR_TOKEN@1..4 "'a'" [] [],
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+    eof_token: EOF@4..4 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..4
+  0: JSON_BOGUS_VALUE@0..4
+    0: L_CURLY@0..1 "{" [] []
+    1: JSON_BOGUS@1..4
+      0: JSON_BOGUS_VALUE@1..4
+        0: ERROR_TOKEN@1..4 "'a'" [] []
+  1: EOF@4..4 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -22,13 +57,18 @@ structure_open_object_string_with_apostrophes.json:1:2 parse ━━━━━━�
   
   i Use double quotes to escape the string.
   
+structure_open_object_string_with_apostrophes.json:1:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `}` but instead the file ends
+  
+  > 1 │ {'a'
+      │     
+  
+  i the file ends here
+  
+  > 1 │ {'a'
+      │     
+  
 ```
 
-## Tokens
-
-```
-L_CURLY: `{` (0..1)
-ERROR_TOKEN: `'a'` (1..4)
-EOF: `` (4..4)
-```
 

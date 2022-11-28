@@ -13,13 +13,13 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..9 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [],
                         JsLiteralMemberName {
                             value: IDENT@9..12 "a" [Newline("\n"), Whitespace(" ")] [],
                         },
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 COLON@12..14 ":" [] [Whitespace(" ")],
                                 TsStringType {
@@ -30,13 +30,13 @@ JsModule {
                         SEMICOLON@20..21 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [],
                         JsLiteralMemberName {
                             value: IDENT@21..24 "b" [Newline("\n"), Whitespace(" ")] [],
                         },
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 QUESTION@24..25 "?" [] [],
                                 TsTypeAnnotation {
@@ -50,13 +50,13 @@ JsModule {
                         SEMICOLON@33..34 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [],
                         JsLiteralMemberName {
                             value: IDENT@34..37 "c" [Newline("\n"), Whitespace(" ")] [],
                         },
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 BANG@37..38 "!" [] [],
                                 TsTypeAnnotation {
@@ -90,31 +90,31 @@ JsModule {
       5: (empty)
       6: L_CURLY@8..9 "{" [] []
       7: JS_CLASS_MEMBER_LIST@9..46
-        0: JS_UNKNOWN_MEMBER@9..21
+        0: JS_BOGUS_MEMBER@9..21
           0: JS_PROPERTY_MODIFIER_LIST@9..9
           1: JS_LITERAL_MEMBER_NAME@9..12
             0: IDENT@9..12 "a" [Newline("\n"), Whitespace(" ")] []
-          2: JS_UNKNOWN@12..20
+          2: JS_BOGUS@12..20
             0: COLON@12..14 ":" [] [Whitespace(" ")]
             1: TS_STRING_TYPE@14..20
               0: STRING_KW@14..20 "string" [] []
           3: SEMICOLON@20..21 ";" [] []
-        1: JS_UNKNOWN_MEMBER@21..34
+        1: JS_BOGUS_MEMBER@21..34
           0: JS_PROPERTY_MODIFIER_LIST@21..21
           1: JS_LITERAL_MEMBER_NAME@21..24
             0: IDENT@21..24 "b" [Newline("\n"), Whitespace(" ")] []
-          2: JS_UNKNOWN@24..33
+          2: JS_BOGUS@24..33
             0: QUESTION@24..25 "?" [] []
             1: TS_TYPE_ANNOTATION@25..33
               0: COLON@25..27 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@27..33
                 0: STRING_KW@27..33 "string" [] []
           3: SEMICOLON@33..34 ";" [] []
-        2: JS_UNKNOWN_MEMBER@34..46
+        2: JS_BOGUS_MEMBER@34..46
           0: JS_PROPERTY_MODIFIER_LIST@34..34
           1: JS_LITERAL_MEMBER_NAME@34..37
             0: IDENT@34..37 "c" [Newline("\n"), Whitespace(" ")] []
-          2: JS_UNKNOWN@37..46
+          2: JS_BOGUS@37..46
             0: BANG@37..38 "!" [] []
             1: TS_TYPE_ANNOTATION@38..46
               0: COLON@38..40 ":" [] [Whitespace(" ")]

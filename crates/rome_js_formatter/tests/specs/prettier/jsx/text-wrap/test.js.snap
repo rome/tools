@@ -494,65 +494,6 @@ let myDiv = ReactTestUtils.renderIntoDocument(
      <div>First</div>
      Second
    </div>
-@@ -436,13 +441,16 @@
- 
- x = (
-   <div>
--    <div>First</div>-<div>Second</div>
-+    <div>First</div>-
-+    <div>Second</div>
-   </div>
- );
- 
- x = (
-   <div>
--    <div>First</div>-<div>Second</div>
-+    <div>First</div>
-+    -
-+    <div>Second</div>
-   </div>
- );
- 
-@@ -496,19 +504,26 @@
- 
- x = (
-   <div>
--    {hour}:{minute}:{second}
-+    {hour}
-+    :
-+    {minute}
-+    :
-+    {second}
-   </div>
- );
- 
- x = (
-   <div>
--    {hour}:{minute}:{second}
-+    {hour}:
-+    {minute}:
-+    {second}
-   </div>
- );
- 
- x = (
-   <div>
--    <strong>text here</strong>.<br />
-+    <strong>text here</strong>.
-+    <br />
-   </div>
- );
- 
-@@ -528,7 +543,8 @@
-     <span>
-       <strong>{name}</strong>’s{" "}
-     </span>
--    Hello <strong>world</strong>.<br />
-+    Hello <strong>world</strong>.
-+    <br />
-     <Text>You {type}ed this shipment to</Text>
-   </div>
- );
 ```
 
 # Output
@@ -1001,16 +942,13 @@ x = (
 
 x = (
   <div>
-    <div>First</div>-
-    <div>Second</div>
+    <div>First</div>-<div>Second</div>
   </div>
 );
 
 x = (
   <div>
-    <div>First</div>
-    -
-    <div>Second</div>
+    <div>First</div>-<div>Second</div>
   </div>
 );
 
@@ -1064,26 +1002,19 @@ x = (
 
 x = (
   <div>
-    {hour}
-    :
-    {minute}
-    :
-    {second}
+    {hour}:{minute}:{second}
   </div>
 );
 
 x = (
   <div>
-    {hour}:
-    {minute}:
-    {second}
+    {hour}:{minute}:{second}
   </div>
 );
 
 x = (
   <div>
-    <strong>text here</strong>.
-    <br />
+    <strong>text here</strong>.<br />
   </div>
 );
 
@@ -1103,8 +1034,7 @@ x = (
     <span>
       <strong>{name}</strong>’s{" "}
     </span>
-    Hello <strong>world</strong>.
-    <br />
+    Hello <strong>world</strong>.<br />
     <Text>You {type}ed this shipment to</Text>
   </div>
 );

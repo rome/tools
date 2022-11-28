@@ -26,7 +26,7 @@ JsModule {
             members: TsTypeMemberList [],
             r_curly_token: R_CURLY@26..27 "}" [] [],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 CLASS_KW@27..34 "class" [Newline("\n")] [Whitespace(" ")],
                 JsIdentifierBinding {
@@ -57,7 +57,7 @@ JsModule {
                 R_CURLY@62..63 "}" [] [],
             ],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 CLASS_KW@63..70 "class" [Newline("\n")] [Whitespace(" ")],
                 JsIdentifierBinding {
@@ -123,13 +123,13 @@ JsModule {
             members: JsClassMemberList [],
             r_curly_token: R_CURLY@144..145 "}" [] [],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 CLASS_KW@145..152 "class" [Newline("\n")] [Whitespace(" ")],
                 JsIdentifierBinding {
                     name_token: IDENT@152..154 "F" [] [Whitespace(" ")],
                 },
-                JsUnknown {
+                JsBogus {
                     items: [
                         EXTENDS_KW@154..162 "extends" [] [Whitespace(" ")],
                         JsIdentifierExpression {
@@ -173,7 +173,7 @@ JsModule {
       4: L_CURLY@25..26 "{" [] []
       5: TS_TYPE_MEMBER_LIST@26..26
       6: R_CURLY@26..27 "}" [] []
-    2: JS_UNKNOWN_STATEMENT@27..63
+    2: JS_BOGUS_STATEMENT@27..63
       0: CLASS_KW@27..34 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@34..36
         0: IDENT@34..36 "B" [] [Whitespace(" ")]
@@ -193,7 +193,7 @@ JsModule {
       4: L_CURLY@61..62 "{" [] []
       5: JS_CLASS_MEMBER_LIST@62..62
       6: R_CURLY@62..63 "}" [] []
-    3: JS_UNKNOWN_STATEMENT@63..104
+    3: JS_BOGUS_STATEMENT@63..104
       0: CLASS_KW@63..70 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@70..72
         0: IDENT@70..72 "C" [] [Whitespace(" ")]
@@ -241,11 +241,11 @@ JsModule {
       6: L_CURLY@143..144 "{" [] []
       7: JS_CLASS_MEMBER_LIST@144..144
       8: R_CURLY@144..145 "}" [] []
-    6: JS_UNKNOWN_STATEMENT@145..167
+    6: JS_BOGUS_STATEMENT@145..167
       0: CLASS_KW@145..152 "class" [Newline("\n")] [Whitespace(" ")]
       1: JS_IDENTIFIER_BINDING@152..154
         0: IDENT@152..154 "F" [] [Whitespace(" ")]
-      2: JS_UNKNOWN@154..165
+      2: JS_BOGUS@154..165
         0: EXTENDS_KW@154..162 "extends" [] [Whitespace(" ")]
         1: JS_IDENTIFIER_EXPRESSION@162..163
           0: JS_REFERENCE_IDENTIFIER@162..163

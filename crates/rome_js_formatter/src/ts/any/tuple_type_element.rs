@@ -1,17 +1,17 @@
-//! Generated file, do not edit by hand, see `xtask/codegen`
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::TsAnyTupleTypeElement;
+use rome_js_syntax::AnyTsTupleTypeElement;
 #[derive(Debug, Clone, Default)]
-pub struct FormatTsAnyTupleTypeElement;
-impl FormatRule<TsAnyTupleTypeElement> for FormatTsAnyTupleTypeElement {
+pub(crate) struct FormatAnyTsTupleTypeElement;
+impl FormatRule<AnyTsTupleTypeElement> for FormatAnyTsTupleTypeElement {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &TsAnyTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyTsTupleTypeElement, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            TsAnyTupleTypeElement::TsNamedTupleTypeElement(node) => node.format().fmt(f),
-            TsAnyTupleTypeElement::TsType(node) => node.format().fmt(f),
-            TsAnyTupleTypeElement::TsRestTupleTypeElement(node) => node.format().fmt(f),
-            TsAnyTupleTypeElement::TsOptionalTupleTypeElement(node) => node.format().fmt(f),
+            AnyTsTupleTypeElement::TsNamedTupleTypeElement(node) => node.format().fmt(f),
+            AnyTsTupleTypeElement::AnyTsType(node) => node.format().fmt(f),
+            AnyTsTupleTypeElement::TsRestTupleTypeElement(node) => node.format().fmt(f),
+            AnyTsTupleTypeElement::TsOptionalTupleTypeElement(node) => node.format().fmt(f),
         }
     }
 }

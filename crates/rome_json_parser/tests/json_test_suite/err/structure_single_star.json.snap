@@ -10,6 +10,29 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonBogusValue {
+        items: [
+            ERROR_TOKEN@0..1 "*" [] [],
+        ],
+    },
+    eof_token: EOF@1..1 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..1
+  0: JSON_BOGUS_VALUE@0..1
+    0: ERROR_TOKEN@0..1 "*" [] []
+  1: EOF@1..1 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -22,10 +45,4 @@ structure_single_star.json:1:1 parse ━━━━━━━━━━━━━━�
   
 ```
 
-## Tokens
-
-```
-ERROR_TOKEN: `*` (0..1)
-EOF: `` (1..1)
-```
 

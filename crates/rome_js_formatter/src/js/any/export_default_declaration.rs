@@ -1,21 +1,21 @@
-//! Generated file, do not edit by hand, see `xtask/codegen`
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::JsAnyExportDefaultDeclaration;
+use rome_js_syntax::AnyJsExportDefaultDeclaration;
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsAnyExportDefaultDeclaration;
-impl FormatRule<JsAnyExportDefaultDeclaration> for FormatJsAnyExportDefaultDeclaration {
+pub(crate) struct FormatAnyJsExportDefaultDeclaration;
+impl FormatRule<AnyJsExportDefaultDeclaration> for FormatAnyJsExportDefaultDeclaration {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &JsAnyExportDefaultDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyJsExportDefaultDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyExportDefaultDeclaration::JsClassExportDefaultDeclaration(node) => {
+            AnyJsExportDefaultDeclaration::JsClassExportDefaultDeclaration(node) => {
                 node.format().fmt(f)
             }
-            JsAnyExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(node) => {
+            AnyJsExportDefaultDeclaration::JsFunctionExportDefaultDeclaration(node) => {
                 node.format().fmt(f)
             }
-            JsAnyExportDefaultDeclaration::TsInterfaceDeclaration(node) => node.format().fmt(f),
-            JsAnyExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(node) => {
+            AnyJsExportDefaultDeclaration::TsInterfaceDeclaration(node) => node.format().fmt(f),
+            AnyJsExportDefaultDeclaration::TsDeclareFunctionExportDefaultDeclaration(node) => {
                 node.format().fmt(f)
             }
         }

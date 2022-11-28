@@ -4,7 +4,7 @@ use crate::AsFormat;
 use crate::context::trailing_comma::FormatTrailingComma;
 use rome_formatter::write;
 use rome_js_syntax::{
-    JsAnyArrayAssignmentPatternElement, JsAnyArrayBindingPatternElement, JsAnyArrayElement,
+    AnyJsArrayAssignmentPatternElement, AnyJsArrayBindingPatternElement, AnyJsArrayElement,
     JsLanguage,
 };
 use rome_rowan::{AstNode, AstSeparatedList};
@@ -13,7 +13,7 @@ use rome_rowan::{AstNode, AstSeparatedList};
 pub(crate) fn write_array_node<N, I>(node: &N, f: &mut JsFormatter) -> FormatResult<()>
 where
     N: AstSeparatedList<Language = JsLanguage, Node = I>,
-    I: ArrayNodeElement + AsFormat,
+    I: ArrayNodeElement + AsFormat<JsFormatContext>,
 {
     let trailing_separator = FormatTrailingComma::ES5.trailing_separator(f.options());
 
@@ -84,7 +84,7 @@ pub(crate) trait ArrayNodeElement: AstNode<Language = JsLanguage> {
     fn separator_mode(&self) -> TrailingSeparatorMode;
 }
 
-impl ArrayNodeElement for JsAnyArrayElement {
+impl ArrayNodeElement for AnyJsArrayElement {
     fn separator_mode(&self) -> TrailingSeparatorMode {
         match self {
             Self::JsArrayHole(_) => TrailingSeparatorMode::Force,
@@ -93,7 +93,7 @@ impl ArrayNodeElement for JsAnyArrayElement {
     }
 }
 
-impl ArrayNodeElement for JsAnyArrayAssignmentPatternElement {
+impl ArrayNodeElement for AnyJsArrayAssignmentPatternElement {
     fn separator_mode(&self) -> TrailingSeparatorMode {
         match self {
             Self::JsArrayHole(_) => TrailingSeparatorMode::Force,
@@ -103,7 +103,7 @@ impl ArrayNodeElement for JsAnyArrayAssignmentPatternElement {
     }
 }
 
-impl ArrayNodeElement for JsAnyArrayBindingPatternElement {
+impl ArrayNodeElement for AnyJsArrayBindingPatternElement {
     fn separator_mode(&self) -> TrailingSeparatorMode {
         match self {
             Self::JsArrayHole(_) => TrailingSeparatorMode::Force,

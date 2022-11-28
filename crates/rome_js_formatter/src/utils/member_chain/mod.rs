@@ -116,7 +116,7 @@ use crate::utils::member_chain::groups::{
 use crate::utils::member_chain::simple_argument::SimpleArgument;
 use rome_formatter::{write, Buffer};
 use rome_js_syntax::{
-    JsAnyCallArgument, JsAnyExpression, JsAnyLiteralExpression, JsCallExpression,
+    AnyJsCallArgument, AnyJsExpression, AnyJsLiteralExpression, JsCallExpression,
     JsIdentifierExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, JsThisExpression,
 };
 use rome_rowan::{AstNode, SyntaxResult};
@@ -428,8 +428,8 @@ fn split_members_into_head_and_remaining_groups(
             ChainMember::ComputedMember { expression } => {
                 if matches!(
                     expression.member(),
-                    Ok(JsAnyExpression::JsAnyLiteralExpression(
-                        JsAnyLiteralExpression::JsNumberLiteralExpression(_),
+                    Ok(AnyJsExpression::AnyJsLiteralExpression(
+                        AnyJsLiteralExpression::JsNumberLiteralExpression(_),
                     ))
                 ) {
                     None
@@ -535,8 +535,8 @@ fn is_computed_array_member_access(member: &ChainMember) -> bool {
     if let ChainMember::ComputedMember { expression } = member {
         matches!(
             expression.member(),
-            Ok(JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsNumberLiteralExpression(_)
+            Ok(AnyJsExpression::AnyJsLiteralExpression(
+                AnyJsLiteralExpression::JsNumberLiteralExpression(_)
             ))
         )
     } else {
@@ -549,9 +549,9 @@ fn has_arrow_or_function_expression_arg(call: &JsCallExpression) -> bool {
         arguments.args().iter().any(|argument| {
             matches!(
                 argument,
-                Ok(JsAnyCallArgument::JsAnyExpression(
-                    JsAnyExpression::JsArrowFunctionExpression(_)
-                        | JsAnyExpression::JsFunctionExpression(_)
+                Ok(AnyJsCallArgument::AnyJsExpression(
+                    AnyJsExpression::JsArrowFunctionExpression(_)
+                        | AnyJsExpression::JsFunctionExpression(_)
                 ))
             )
         })
@@ -606,13 +606,13 @@ fn has_short_name(identifier: &JsIdentifierExpression, tab_width: TabWidth) -> b
 }
 
 struct ChainMembersIterator<'a> {
-    next: Option<JsAnyExpression>,
+    next: Option<AnyJsExpression>,
     comments: &'a JsComments,
     root: bool,
 }
 
 impl<'a> ChainMembersIterator<'a> {
-    fn new(root: JsAnyExpression, comments: &'a JsComments) -> Self {
+    fn new(root: AnyJsExpression, comments: &'a JsComments) -> Self {
         Self {
             next: Some(root),
             comments,
@@ -625,7 +625,7 @@ impl Iterator for ChainMembersIterator<'_> {
     type Item = ChainMember;
 
     fn next(&mut self) -> Option<Self::Item> {
-        use JsAnyExpression::*;
+        use AnyJsExpression::*;
 
         let expression = self.next.take()?;
 

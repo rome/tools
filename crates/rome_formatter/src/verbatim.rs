@@ -149,12 +149,12 @@ impl<L: Language> FormatVerbatimNode<'_, L> {
     }
 }
 
-/// Formats unknown nodes. The difference between this method  and `format_verbatim` is that this method
+/// Formats bogus nodes. The difference between this method  and `format_verbatim` is that this method
 /// doesn't track nodes/tokens as [VerbatimKind::Verbatim]. They are just printed as they are.
-pub fn format_unknown_node<L: Language>(node: &SyntaxNode<L>) -> FormatVerbatimNode<L> {
+pub fn format_bogus_node<L: Language>(node: &SyntaxNode<L>) -> FormatVerbatimNode<L> {
     FormatVerbatimNode {
         node,
-        kind: VerbatimKind::Unknown,
+        kind: VerbatimKind::Bogus,
         format_comments: true,
     }
 }

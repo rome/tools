@@ -53,7 +53,7 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@45..46 "(" [] [],
                 items: JsParameterList [
-                    JsUnknownParameter {
+                    JsBogusParameter {
                         items: [
                             DOT3@46..49 "..." [] [],
                             JsIdentifierBinding {
@@ -99,7 +99,7 @@ JsModule {
             parameters: JsParameters {
                 l_paren_token: L_PAREN@87..88 "(" [] [],
                 items: JsParameterList [
-                    JsUnknownParameter {
+                    JsBogusParameter {
                         items: [
                             DOT3@88..91 "..." [] [],
                             JsIdentifierBinding {
@@ -179,7 +179,7 @@ JsModule {
       5: JS_PARAMETERS@45..74
         0: L_PAREN@45..46 "(" [] []
         1: JS_PARAMETER_LIST@46..72
-          0: JS_UNKNOWN_PARAMETER@46..72
+          0: JS_BOGUS_PARAMETER@46..72
             0: DOT3@46..49 "..." [] []
             1: JS_IDENTIFIER_BINDING@49..53
               0: IDENT@49..53 "rest" [] []
@@ -211,7 +211,7 @@ JsModule {
       5: JS_PARAMETERS@87..108
         0: L_PAREN@87..88 "(" [] []
         1: JS_PARAMETER_LIST@88..106
-          0: JS_UNKNOWN_PARAMETER@88..95
+          0: JS_BOGUS_PARAMETER@88..95
             0: DOT3@88..91 "..." [] []
             1: JS_IDENTIFIER_BINDING@91..95
               0: IDENT@91..95 "rest" [] []

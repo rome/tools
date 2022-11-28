@@ -1,9 +1,9 @@
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
-use rome_js_syntax::JsAnyClass;
+use rome_js_syntax::AnyJsClass;
 
 pub struct FormatClass<'a> {
-    class: &'a JsAnyClass,
+    class: &'a AnyJsClass,
 }
 
 impl FormatClass<'_> {
@@ -34,8 +34,8 @@ impl FormatClass<'_> {
     }
 }
 
-impl<'a> From<&'a JsAnyClass> for FormatClass<'a> {
-    fn from(class: &'a JsAnyClass) -> Self {
+impl<'a> From<&'a AnyJsClass> for FormatClass<'a> {
+    fn from(class: &'a AnyJsClass) -> Self {
         Self { class }
     }
 }

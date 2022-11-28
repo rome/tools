@@ -18,7 +18,7 @@ JsModule {
                                 right: JsArrayExpression {
                                     l_brack_token: L_BRACK@10..11 "[" [] [],
                                     elements: JsArrayElementList [
-                                        JsUnknownExpression {
+                                        JsBogusExpression {
                                             items: [
                                                 EQ@11..12 "=" [] [],
                                             ],
@@ -43,7 +43,7 @@ JsModule {
                                                     },
                                                 },
                                                 missing separator,
-                                                JsUnknownMember {
+                                                JsBogusMember {
                                                     items: [
                                                         L_CURLY@16..17 "{" [] [],
                                                     ],
@@ -87,7 +87,7 @@ JsModule {
                 2: JS_ARRAY_EXPRESSION@10..17
                   0: L_BRACK@10..11 "[" [] []
                   1: JS_ARRAY_ELEMENT_LIST@11..17
-                    0: JS_UNKNOWN_EXPRESSION@11..12
+                    0: JS_BOGUS_EXPRESSION@11..12
                       0: EQ@11..12 "=" [] []
                     1: (empty)
                     2: JS_PARENTHESIZED_EXPRESSION@12..14
@@ -104,7 +104,7 @@ JsModule {
                           0: JS_REFERENCE_IDENTIFIER@15..16
                             0: IDENT@15..16 "V" [] []
                         1: (empty)
-                        2: JS_UNKNOWN_MEMBER@16..17
+                        2: JS_BOGUS_MEMBER@16..17
                           0: L_CURLY@16..17 "{" [] []
                       2: (empty)
                   2: (empty)

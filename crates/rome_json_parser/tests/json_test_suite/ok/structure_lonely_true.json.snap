@@ -10,10 +10,25 @@ true
 ```
 
 
-## Tokens
+## AST
 
 ```
-TRUE_KW: `true` (0..4)
-EOF: `` (4..4)
+JsonRoot {
+    value: JsonBooleanValue {
+        value_token: TRUE_KW@0..4 "true" [] [],
+    },
+    eof_token: EOF@4..4 "" [] [],
+}
 ```
+
+## CST 
+
+```
+0: JSON_ROOT@0..4
+  0: JSON_BOOLEAN_VALUE@0..4
+    0: TRUE_KW@0..4 "true" [] []
+  1: EOF@4..4 "" [] []
+
+```
+
 

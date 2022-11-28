@@ -9,7 +9,7 @@ use rome_js_syntax::JsBigIntLiteralExpressionFields;
 use rome_js_syntax::{JsBigIntLiteralExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsBigIntLiteralExpression;
+pub(crate) struct FormatJsBigIntLiteralExpression;
 
 impl FormatNodeRule<JsBigIntLiteralExpression> for FormatJsBigIntLiteralExpression {
     fn fmt_fields(

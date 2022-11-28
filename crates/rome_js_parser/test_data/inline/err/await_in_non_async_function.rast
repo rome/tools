@@ -21,7 +21,7 @@ JsModule {
                 directives: JsDirectiveList [],
                 statements: JsStatementList [
                     JsExpressionStatement {
-                        expression: JsUnknownExpression {
+                        expression: JsBogusExpression {
                             items: [
                                 AWAIT_KW@18..24 "await" [] [Whitespace(" ")],
                                 JsNumberLiteralExpression {
@@ -60,7 +60,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@18..18
         2: JS_STATEMENT_LIST@18..28
           0: JS_EXPRESSION_STATEMENT@18..28
-            0: JS_UNKNOWN_EXPRESSION@18..26
+            0: JS_BOGUS_EXPRESSION@18..26
               0: AWAIT_KW@18..24 "await" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@24..26
                 0: JS_NUMBER_LITERAL@24..26 "10" [] []

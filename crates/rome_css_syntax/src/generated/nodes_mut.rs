@@ -88,7 +88,7 @@ impl CssAtMedia {
                 .splice_slots(3usize..=3usize, once(Some(element.into()))),
         )
     }
-    pub fn with_body(self, element: CssAnyRule) -> Self {
+    pub fn with_body(self, element: AnyCssRule) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(4usize..=4usize, once(Some(element.into_syntax().into()))),
@@ -120,7 +120,7 @@ impl CssAtMediaQuery {
                 .splice_slots(2usize..=2usize, once(element.map(|element| element.into()))),
         )
     }
-    pub fn with_ty(self, element: CssAnyAtMediaQueryType) -> Self {
+    pub fn with_ty(self, element: AnyCssAtMediaQueryType) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
@@ -146,7 +146,7 @@ impl CssAtMediaQueryConsequent {
                 .splice_slots(1usize..=1usize, once(element.map(|element| element.into()))),
         )
     }
-    pub fn with_ty(self, element: CssAnyAtMediaQueryType) -> Self {
+    pub fn with_ty(self, element: AnyCssAtMediaQueryType) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
@@ -160,7 +160,7 @@ impl CssAtMediaQueryFeature {
                 .splice_slots(0usize..=0usize, once(Some(element.into()))),
         )
     }
-    pub fn with_feature(self, element: CssAnyAtMediaQueryFeatureType) -> Self {
+    pub fn with_feature(self, element: AnyCssAtMediaQueryFeatureType) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
@@ -194,7 +194,7 @@ impl CssAtMediaQueryFeatureCompare {
                 .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
-    pub fn with_value(self, element: CssAnyValue) -> Self {
+    pub fn with_value(self, element: AnyCssValue) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
@@ -214,7 +214,7 @@ impl CssAtMediaQueryFeaturePlain {
                 .splice_slots(1usize..=1usize, once(Some(element.into()))),
         )
     }
-    pub fn with_value(self, element: CssAnyValue) -> Self {
+    pub fn with_value(self, element: AnyCssValue) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
@@ -222,7 +222,7 @@ impl CssAtMediaQueryFeaturePlain {
     }
 }
 impl CssAtMediaQueryFeatureRange {
-    pub fn with_first_value(self, element: CssAnyValue) -> Self {
+    pub fn with_first_value(self, element: AnyCssValue) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
@@ -240,7 +240,7 @@ impl CssAtMediaQueryFeatureRange {
                 .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
-    pub fn with_second_value(self, element: CssAnyValue) -> Self {
+    pub fn with_second_value(self, element: AnyCssValue) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
@@ -434,7 +434,7 @@ impl CssClassSelectorPattern {
     }
 }
 impl CssCombinatorSelectorPattern {
-    pub fn with_left(self, element: CssAnySelectorPattern) -> Self {
+    pub fn with_left(self, element: AnyCssSelectorPattern) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
@@ -464,7 +464,7 @@ impl CssCombinatorSelectorPattern {
                 .splice_slots(4usize..=4usize, once(Some(element.into()))),
         )
     }
-    pub fn with_right(self, element: CssAnySelectorPattern) -> Self {
+    pub fn with_right(self, element: AnyCssSelectorPattern) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(5usize..=5usize, once(Some(element.into_syntax().into()))),
@@ -498,7 +498,7 @@ impl CssDeclaration {
                 .splice_slots(2usize..=2usize, once(Some(element.into()))),
         )
     }
-    pub fn with_value(self, element: CssAnyValue) -> Self {
+    pub fn with_value(self, element: AnyCssValue) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(3usize..=3usize, once(Some(element.into_syntax().into()))),
@@ -616,7 +616,7 @@ impl CssNumber {
     }
 }
 impl CssParameter {
-    pub fn with_css_any_value(self, element: CssAnyValue) -> Self {
+    pub fn with_any_css_value(self, element: AnyCssValue) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
@@ -664,7 +664,7 @@ impl CssPseudoClassSelectorPatternParameters {
                 .splice_slots(0usize..=0usize, once(Some(element.into()))),
         )
     }
-    pub fn with_parameter(self, element: CssAnyValue) -> Self {
+    pub fn with_parameter(self, element: AnyCssValue) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),

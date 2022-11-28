@@ -3,7 +3,7 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsAnyObjectMember, JsGetterObjectMember, JsObjectExpression, JsSetterObjectMember,
+    AnyJsObjectMember, JsGetterObjectMember, JsObjectExpression, JsSetterObjectMember,
 };
 use rome_js_syntax::{
     JsMethodObjectMember, JsPropertyObjectMember, JsShorthandPropertyObjectMember, TextRange,
@@ -102,14 +102,14 @@ impl MemberDefinition {
         }
     }
 
-    fn node(&self) -> JsAnyObjectMember {
+    fn node(&self) -> AnyJsObjectMember {
         match self {
-            MemberDefinition::Getter(getter) => JsAnyObjectMember::from(getter.clone()),
-            MemberDefinition::Setter(setter) => JsAnyObjectMember::from(setter.clone()),
-            MemberDefinition::Method(method) => JsAnyObjectMember::from(method.clone()),
-            MemberDefinition::Property(property) => JsAnyObjectMember::from(property.clone()),
+            MemberDefinition::Getter(getter) => AnyJsObjectMember::from(getter.clone()),
+            MemberDefinition::Setter(setter) => AnyJsObjectMember::from(setter.clone()),
+            MemberDefinition::Method(method) => AnyJsObjectMember::from(method.clone()),
+            MemberDefinition::Property(property) => AnyJsObjectMember::from(property.clone()),
             MemberDefinition::ShorthandProperty(shorthand_property) => {
-                JsAnyObjectMember::from(shorthand_property.clone())
+                AnyJsObjectMember::from(shorthand_property.clone())
             }
         }
     }
@@ -132,24 +132,24 @@ impl Display for MemberDefinition {
 }
 enum MemberDefinitionError {
     NotASinglePropertyMember,
-    UnknownMemberType,
+    BogusMemberType,
 }
-impl TryFrom<JsAnyObjectMember> for MemberDefinition {
+impl TryFrom<AnyJsObjectMember> for MemberDefinition {
     type Error = MemberDefinitionError;
 
-    fn try_from(member: JsAnyObjectMember) -> Result<Self, Self::Error> {
+    fn try_from(member: AnyJsObjectMember) -> Result<Self, Self::Error> {
         match member {
-            JsAnyObjectMember::JsGetterObjectMember(member) => Ok(MemberDefinition::Getter(member)),
-            JsAnyObjectMember::JsSetterObjectMember(member) => Ok(MemberDefinition::Setter(member)),
-            JsAnyObjectMember::JsMethodObjectMember(member) => Ok(MemberDefinition::Method(member)),
-            JsAnyObjectMember::JsPropertyObjectMember(member) => {
+            AnyJsObjectMember::JsGetterObjectMember(member) => Ok(MemberDefinition::Getter(member)),
+            AnyJsObjectMember::JsSetterObjectMember(member) => Ok(MemberDefinition::Setter(member)),
+            AnyJsObjectMember::JsMethodObjectMember(member) => Ok(MemberDefinition::Method(member)),
+            AnyJsObjectMember::JsPropertyObjectMember(member) => {
                 Ok(MemberDefinition::Property(member))
             }
-            JsAnyObjectMember::JsShorthandPropertyObjectMember(member) => {
+            AnyJsObjectMember::JsShorthandPropertyObjectMember(member) => {
                 Ok(MemberDefinition::ShorthandProperty(member))
             }
-            JsAnyObjectMember::JsSpread(_) => Err(MemberDefinitionError::NotASinglePropertyMember),
-            JsAnyObjectMember::JsUnknownMember(_) => Err(MemberDefinitionError::UnknownMemberType),
+            AnyJsObjectMember::JsSpread(_) => Err(MemberDefinitionError::NotASinglePropertyMember),
+            AnyJsObjectMember::JsBogusMember(_) => Err(MemberDefinitionError::BogusMemberType),
         }
     }
 }

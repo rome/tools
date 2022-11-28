@@ -5,7 +5,7 @@ use rome_formatter::{
     CstFormatContext, FormatContext, FormatElement, FormatOptions, IndentStyle, LineWidth,
     TransformSourceMap,
 };
-use rome_js_syntax::{JsAnyFunctionBody, JsLanguage, SourceType};
+use rome_js_syntax::{AnyJsFunctionBody, JsLanguage, SourceType};
 use std::fmt;
 use std::fmt::Debug;
 use std::rc::Rc;
@@ -40,7 +40,7 @@ pub struct JsFormatContext {
     ///  ```
     ///
     /// This should be rare enough for us not to care about it.
-    cached_function_body: Option<(JsAnyFunctionBody, FormatElement)>,
+    cached_function_body: Option<(AnyJsFunctionBody, FormatElement)>,
 
     source_map: Option<TransformSourceMap>,
 }
@@ -61,7 +61,7 @@ impl JsFormatContext {
     /// See [JsFormatContext::cached_function_body] for more in depth documentation.
     pub(crate) fn get_cached_function_body(
         &self,
-        body: &JsAnyFunctionBody,
+        body: &AnyJsFunctionBody,
     ) -> Option<FormatElement> {
         self.cached_function_body
             .as_ref()
@@ -79,7 +79,7 @@ impl JsFormatContext {
     /// See [JsFormatContext::cached_function_body] for more in depth documentation.
     pub(crate) fn set_cached_function_body(
         &mut self,
-        body: &JsAnyFunctionBody,
+        body: &AnyJsFunctionBody,
         formatted: FormatElement,
     ) {
         self.cached_function_body = Some((body.clone(), formatted))
@@ -233,9 +233,7 @@ impl FormatOptions for JsFormatOptions {
     }
 
     fn as_print_options(&self) -> PrinterOptions {
-        PrinterOptions::default()
-            .with_indent(self.indent_style)
-            .with_print_width(self.line_width.into())
+        PrinterOptions::from(self)
     }
 }
 

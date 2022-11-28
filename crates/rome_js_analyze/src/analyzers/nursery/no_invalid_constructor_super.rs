@@ -2,7 +2,7 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::{markup, MarkupBuf};
 use rome_js_syntax::{
-    JsAnyClass, JsAnyExpression, JsAssignmentOperator, JsConstructorClassMember, JsLogicalOperator,
+    AnyJsClass, AnyJsExpression, JsAssignmentOperator, JsConstructorClassMember, JsLogicalOperator,
 };
 use rome_rowan::{AstNode, AstNodeList, TextRange};
 
@@ -118,7 +118,7 @@ impl Rule for NoInvalidConstructorSuper {
         let extends_clause = node
             .syntax()
             .ancestors()
-            .find_map(|node| JsAnyClass::cast(node)?.extends_clause());
+            .find_map(|node| AnyJsClass::cast(node)?.extends_clause());
 
         match (super_expression, extends_clause) {
             (Some(super_expression), Some(extends_clause)) => {
@@ -138,7 +138,7 @@ impl Rule for NoInvalidConstructorSuper {
             }
             (None, Some(extends_clause)) => {
                 let super_class = extends_clause.super_class().ok()?;
-                if !matches!(super_class, JsAnyExpression::JsAnyLiteralExpression(_,)) {
+                if !matches!(super_class, AnyJsExpression::AnyJsLiteralExpression(_,)) {
                     Some(NoInvalidConstructorSuperState::MissingSuper(
                         extends_clause.syntax().text_trimmed_range(),
                     ))
@@ -162,22 +162,22 @@ impl Rule for NoInvalidConstructorSuper {
     }
 }
 
-fn is_valid_constructor(expression: JsAnyExpression) -> Option<bool> {
+fn is_valid_constructor(expression: AnyJsExpression) -> Option<bool> {
     match expression {
-        JsAnyExpression::JsThisExpression(_)
-        | JsAnyExpression::JsFunctionExpression(_)
-        | JsAnyExpression::JsCallExpression(_)
-        | JsAnyExpression::JsImportCallExpression(_)
-        | JsAnyExpression::ImportMeta(_)
-        | JsAnyExpression::JsYieldExpression(_)
-        | JsAnyExpression::JsNewExpression(_)
-        | JsAnyExpression::NewTarget(_)
-        | JsAnyExpression::JsClassExpression(_) => Some(true),
-        JsAnyExpression::JsIdentifierExpression(identifier) => {
+        AnyJsExpression::JsThisExpression(_)
+        | AnyJsExpression::JsFunctionExpression(_)
+        | AnyJsExpression::JsCallExpression(_)
+        | AnyJsExpression::JsImportCallExpression(_)
+        | AnyJsExpression::JsImportMetaExpression(_)
+        | AnyJsExpression::JsYieldExpression(_)
+        | AnyJsExpression::JsNewExpression(_)
+        | AnyJsExpression::JsNewTargetExpression(_)
+        | AnyJsExpression::JsClassExpression(_) => Some(true),
+        AnyJsExpression::JsIdentifierExpression(identifier) => {
             let name = identifier.name().ok()?;
             return Some(name.value_token().ok()?.text_trimmed() != "undefined");
         }
-        JsAnyExpression::JsAssignmentExpression(assignment) => {
+        AnyJsExpression::JsAssignmentExpression(assignment) => {
             let operator = assignment.operator().ok()?;
 
             if matches!(
@@ -193,7 +193,7 @@ fn is_valid_constructor(expression: JsAnyExpression) -> Option<bool> {
             Some(false)
         }
 
-        JsAnyExpression::JsLogicalExpression(expression) => {
+        AnyJsExpression::JsLogicalExpression(expression) => {
             let operator = expression.operator().ok()?;
             if matches!(operator, JsLogicalOperator::LogicalAnd) {
                 return is_valid_constructor(expression.right().ok()?);
@@ -202,14 +202,14 @@ fn is_valid_constructor(expression: JsAnyExpression) -> Option<bool> {
             is_valid_constructor(expression.left().ok()?)
                 .or_else(|| is_valid_constructor(expression.right().ok()?))
         }
-        JsAnyExpression::JsConditionalExpression(conditional_expression) => {
+        AnyJsExpression::JsConditionalExpression(conditional_expression) => {
             is_valid_constructor(conditional_expression.alternate().ok()?)
                 .or_else(|| is_valid_constructor(conditional_expression.consequent().ok()?))
         }
-        JsAnyExpression::JsSequenceExpression(sequence_expression) => {
+        AnyJsExpression::JsSequenceExpression(sequence_expression) => {
             is_valid_constructor(sequence_expression.right().ok()?)
         }
-        JsAnyExpression::JsParenthesizedExpression(expression) => {
+        AnyJsExpression::JsParenthesizedExpression(expression) => {
             is_valid_constructor(expression.expression().ok()?)
         }
         _ => Some(false),

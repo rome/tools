@@ -10,6 +10,55 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonBogusValue {
+        items: [
+            L_CURLY@0..1 "{" [] [],
+            JsonBogus {
+                items: [
+                    JsonBogusValue {
+                        items: [
+                            ERROR_TOKEN@1..4 "'a'" [] [],
+                        ],
+                    },
+                    JsonMember {
+                        name: missing (required),
+                        colon_token: COLON@4..5 ":" [] [],
+                        value: JsonNumberValue {
+                            value_token: JSON_NUMBER_LITERAL@5..6 "0" [] [],
+                        },
+                    },
+                ],
+            },
+            R_CURLY@6..7 "}" [] [],
+        ],
+    },
+    eof_token: EOF@7..7 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..7
+  0: JSON_BOGUS_VALUE@0..7
+    0: L_CURLY@0..1 "{" [] []
+    1: JSON_BOGUS@1..6
+      0: JSON_BOGUS_VALUE@1..4
+        0: ERROR_TOKEN@1..4 "'a'" [] []
+      1: JSON_MEMBER@4..6
+        0: (empty)
+        1: COLON@4..5 ":" [] []
+        2: JSON_NUMBER_VALUE@5..6
+          0: JSON_NUMBER_LITERAL@5..6 "0" [] []
+    2: R_CURLY@6..7 "}" [] []
+  1: EOF@7..7 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -22,16 +71,15 @@ object_single_quote.json:1:2 parse ━━━━━━━━━━━━━━━
   
   i Use double quotes to escape the string.
   
+object_single_quote.json:1:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `:`
+  
+  > 1 │ {'a':0}
+      │     ^
+  
+  i Remove :
+  
 ```
 
-## Tokens
-
-```
-L_CURLY: `{` (0..1)
-ERROR_TOKEN: `'a'` (1..4)
-COLON: `:` (4..5)
-JSON_NUMBER_LITERAL: `0` (5..6)
-R_CURLY: `}` (6..7)
-EOF: `` (7..7)
-```
 

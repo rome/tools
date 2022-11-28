@@ -1,14 +1,14 @@
 use crate::prelude::*;
 use rome_formatter::{write, Buffer, CstFormatContext};
 use rome_js_syntax::JsBlockStatement;
-use rome_js_syntax::{JsAnyStatement, JsEmptyStatement};
+use rome_js_syntax::{AnyJsStatement, JsEmptyStatement};
 
 use rome_js_syntax::JsBlockStatementFields;
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::{AstNode, AstNodeList, SyntaxNodeOptionExt};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsBlockStatement;
+pub(crate) struct FormatJsBlockStatement;
 
 impl FormatNodeRule<JsBlockStatement> for FormatJsBlockStatement {
     fn fmt_fields(&self, node: &JsBlockStatement, f: &mut JsFormatter) -> FormatResult<()> {
@@ -82,7 +82,7 @@ fn is_empty_block(block: &JsBlockStatement, comments: &JsComments) -> bool {
     // ```
     block.statements().is_empty()
         || block.statements().iter().all(|s| {
-            matches!(s, JsAnyStatement::JsEmptyStatement(_))
+            matches!(s, AnyJsStatement::JsEmptyStatement(_))
                 && !comments.has_comments(s.syntax())
                 && !comments.is_suppressed(s.syntax())
         })

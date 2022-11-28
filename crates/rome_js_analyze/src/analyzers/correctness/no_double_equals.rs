@@ -2,7 +2,7 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, T};
+use rome_js_syntax::{AnyJsExpression, AnyJsLiteralExpression, JsBinaryExpression, T};
 use rome_js_syntax::{JsSyntaxKind::*, JsSyntaxToken};
 use rome_rowan::{BatchMutationExt, SyntaxResult};
 
@@ -114,11 +114,11 @@ impl Rule for NoDoubleEquals {
     }
 }
 
-fn is_null_literal(res: SyntaxResult<JsAnyExpression>) -> bool {
+fn is_null_literal(res: SyntaxResult<AnyJsExpression>) -> bool {
     matches!(
         res,
-        Ok(JsAnyExpression::JsAnyLiteralExpression(
-            JsAnyLiteralExpression::JsNullLiteralExpression(_)
+        Ok(AnyJsExpression::AnyJsLiteralExpression(
+            AnyJsLiteralExpression::JsNullLiteralExpression(_)
         ))
     )
 }

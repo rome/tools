@@ -51,5 +51,5 @@ Check out our [homepage](https://rome.tools) to learn more about Rome, or direct
 
 Browse Rome's internal [Rust API Documentation] if you're interested to learn more about how Rome works.
 
-[Rust API Documentation]: https://rome.github.io/tools/rome
+[Rust API Documentation]: https://rustdocs.rome.tools/
 

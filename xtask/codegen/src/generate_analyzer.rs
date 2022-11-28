@@ -13,13 +13,22 @@ pub fn generate_analyzer() -> Result<()> {
     let mut semantic_analyzers = BTreeMap::new();
     generate_category("semantic_analyzers", &mut semantic_analyzers)?;
 
+    let mut aria_analyzers = BTreeMap::new();
+    generate_category("aria_analyzers", &mut aria_analyzers)?;
+
     let mut assists = BTreeMap::new();
     generate_category("assists", &mut assists)?;
 
     let mut syntax = BTreeMap::new();
     generate_category("syntax", &mut syntax)?;
 
-    update_registry_builder(analyzers, semantic_analyzers, assists, syntax)
+    update_registry_builder(
+        analyzers,
+        semantic_analyzers,
+        aria_analyzers,
+        assists,
+        syntax,
+    )
 }
 
 fn generate_category(
@@ -68,7 +77,7 @@ fn generate_category(
 
     let kind = match name {
         "syntax" => format_ident!("Syntax"),
-        "analyzers" | "semantic_analyzers" => format_ident!("Lint"),
+        "analyzers" | "semantic_analyzers" | "aria_analyzers" => format_ident!("Lint"),
         "assists" => format_ident!("Action"),
         _ => panic!("unimplemented analyzer category {name:?}"),
     };
@@ -191,6 +200,7 @@ fn to_camel_case(input: &str) -> Result<String> {
 fn update_registry_builder(
     analyzers: BTreeMap<&'static str, TokenStream>,
     semantic_analyzers: BTreeMap<&'static str, TokenStream>,
+    aria_analyzers: BTreeMap<&'static str, TokenStream>,
     assists: BTreeMap<&'static str, TokenStream>,
     syntax: BTreeMap<&'static str, TokenStream>,
 ) -> Result<()> {
@@ -199,6 +209,7 @@ fn update_registry_builder(
     let categories = analyzers
         .into_iter()
         .chain(semantic_analyzers)
+        .chain(aria_analyzers)
         .chain(assists)
         .chain(syntax)
         .map(|(_, tokens)| tokens);

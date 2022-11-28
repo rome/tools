@@ -4,7 +4,7 @@ JsModule {
     items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsUnknownAssignment {
+                left: JsBogusAssignment {
                     items: [
                         PLUS2@0..2 "++" [] [],
                         JsIdentifierAssignment {
@@ -25,7 +25,7 @@ JsModule {
             expression: JsAssignmentExpression {
                 left: JsParenthesizedAssignment {
                     l_paren_token: L_PAREN@8..10 "(" [Newline("\n")] [],
-                    assignment: JsUnknownAssignment {
+                    assignment: JsBogusAssignment {
                         items: [
                             PLUS2@10..12 "++" [] [],
                             JsIdentifierAssignment {
@@ -64,7 +64,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsUnknownAssignment {
+                left: JsBogusAssignment {
                     items: [
                         JsIdentifierExpression {
                             name: JsReferenceIdentifier {
@@ -88,7 +88,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsUnknownAssignment {
+                left: JsBogusAssignment {
                     items: [
                         JsIdentifierExpression {
                             name: JsReferenceIdentifier {
@@ -116,7 +116,7 @@ JsModule {
             expression: JsAssignmentExpression {
                 left: JsParenthesizedAssignment {
                     l_paren_token: L_PAREN@51..53 "(" [Newline("\n")] [],
-                    assignment: JsUnknownAssignment {
+                    assignment: JsBogusAssignment {
                         items: [
                             JsIdentifierExpression {
                                 name: JsReferenceIdentifier {
@@ -147,7 +147,7 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..62
     0: JS_EXPRESSION_STATEMENT@0..8
       0: JS_ASSIGNMENT_EXPRESSION@0..7
-        0: JS_UNKNOWN_ASSIGNMENT@0..4
+        0: JS_BOGUS_ASSIGNMENT@0..4
           0: PLUS2@0..2 "++" [] []
           1: JS_IDENTIFIER_ASSIGNMENT@2..4
             0: IDENT@2..4 "a" [] [Whitespace(" ")]
@@ -160,7 +160,7 @@ JsModule {
       0: JS_ASSIGNMENT_EXPRESSION@8..18
         0: JS_PARENTHESIZED_ASSIGNMENT@8..15
           0: L_PAREN@8..10 "(" [Newline("\n")] []
-          1: JS_UNKNOWN_ASSIGNMENT@10..13
+          1: JS_BOGUS_ASSIGNMENT@10..13
             0: PLUS2@10..12 "++" [] []
             1: JS_IDENTIFIER_ASSIGNMENT@12..13
               0: IDENT@12..13 "a" [] []
@@ -184,7 +184,7 @@ JsModule {
       1: SEMICOLON@26..27 ";" [] []
     3: JS_EXPRESSION_STATEMENT@27..37
       0: JS_ASSIGNMENT_EXPRESSION@27..36
-        0: JS_UNKNOWN_ASSIGNMENT@27..33
+        0: JS_BOGUS_ASSIGNMENT@27..33
           0: JS_IDENTIFIER_EXPRESSION@27..29
             0: JS_REFERENCE_IDENTIFIER@27..29
               0: IDENT@27..29 "a" [Newline("\n")] []
@@ -198,7 +198,7 @@ JsModule {
       1: SEMICOLON@36..37 ";" [] []
     4: JS_EXPRESSION_STATEMENT@37..51
       0: JS_ASSIGNMENT_EXPRESSION@37..50
-        0: JS_UNKNOWN_ASSIGNMENT@37..47
+        0: JS_BOGUS_ASSIGNMENT@37..47
           0: JS_IDENTIFIER_EXPRESSION@37..39
             0: JS_REFERENCE_IDENTIFIER@37..39
               0: IDENT@37..39 "a" [Newline("\n")] []
@@ -216,7 +216,7 @@ JsModule {
       0: JS_ASSIGNMENT_EXPRESSION@51..61
         0: JS_PARENTHESIZED_ASSIGNMENT@51..58
           0: L_PAREN@51..53 "(" [Newline("\n")] []
-          1: JS_UNKNOWN_ASSIGNMENT@53..56
+          1: JS_BOGUS_ASSIGNMENT@53..56
             0: JS_IDENTIFIER_EXPRESSION@53..55
               0: JS_REFERENCE_IDENTIFIER@53..55
                 0: IDENT@53..55 "a" [] [Whitespace(" ")]

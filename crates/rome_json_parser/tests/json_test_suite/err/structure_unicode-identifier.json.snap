@@ -10,22 +10,39 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonBogusValue {
+        items: [
+            IDENT@0..2 "å" [] [],
+        ],
+    },
+    eof_token: EOF@2..2 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..2
+  0: JSON_BOGUS_VALUE@0..2
+    0: IDENT@0..2 "å" [] []
+  1: EOF@2..2 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
 structure_unicode-identifier.json:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × The JSON standard doesn't allow identifiers
+  × String values must be double quoted.
   
   > 1 │ å
       │ ^
   
 ```
 
-## Tokens
-
-```
-IDENT: `å` (0..2)
-EOF: `` (2..2)
-```
 

@@ -5,7 +5,7 @@ use quote::{format_ident, quote};
 use rome_js_factory::syntax::SourceType;
 use rome_js_factory::{
     make,
-    syntax::{JsAnyDeclaration, JsAnyModuleItem, JsAnyStatement},
+    syntax::{AnyJsDeclaration, AnyJsModuleItem, AnyJsStatement},
 };
 use rome_js_formatter::{context::JsFormatOptions, format_node};
 use rome_rowan::AstNode;
@@ -25,39 +25,39 @@ fn main() -> io::Result<()> {
     let module = make::js_module(
         make::js_directive_list(None),
         make::js_module_item_list(items.into_iter().map(|(decl, _)| {
-            JsAnyModuleItem::JsAnyStatement(match decl {
-                JsAnyDeclaration::JsClassDeclaration(decl) => {
-                    JsAnyStatement::JsClassDeclaration(decl)
+            AnyJsModuleItem::AnyJsStatement(match decl {
+                AnyJsDeclaration::JsClassDeclaration(decl) => {
+                    AnyJsStatement::JsClassDeclaration(decl)
                 }
-                JsAnyDeclaration::JsFunctionDeclaration(decl) => {
-                    JsAnyStatement::JsFunctionDeclaration(decl)
+                AnyJsDeclaration::JsFunctionDeclaration(decl) => {
+                    AnyJsStatement::JsFunctionDeclaration(decl)
                 }
-                JsAnyDeclaration::JsVariableDeclaration(decl) => {
-                    JsAnyStatement::JsVariableStatement(make::js_variable_statement(decl).build())
+                AnyJsDeclaration::JsVariableDeclaration(decl) => {
+                    AnyJsStatement::JsVariableStatement(make::js_variable_statement(decl).build())
                 }
-                JsAnyDeclaration::TsDeclareFunctionDeclaration(decl) => {
-                    JsAnyStatement::TsDeclareFunctionDeclaration(decl)
+                AnyJsDeclaration::TsDeclareFunctionDeclaration(decl) => {
+                    AnyJsStatement::TsDeclareFunctionDeclaration(decl)
                 }
-                JsAnyDeclaration::TsEnumDeclaration(decl) => {
-                    JsAnyStatement::TsEnumDeclaration(decl)
+                AnyJsDeclaration::TsEnumDeclaration(decl) => {
+                    AnyJsStatement::TsEnumDeclaration(decl)
                 }
-                JsAnyDeclaration::TsExternalModuleDeclaration(decl) => {
-                    JsAnyStatement::TsExternalModuleDeclaration(decl)
+                AnyJsDeclaration::TsExternalModuleDeclaration(decl) => {
+                    AnyJsStatement::TsExternalModuleDeclaration(decl)
                 }
-                JsAnyDeclaration::TsGlobalDeclaration(decl) => {
-                    JsAnyStatement::TsGlobalDeclaration(decl)
+                AnyJsDeclaration::TsGlobalDeclaration(decl) => {
+                    AnyJsStatement::TsGlobalDeclaration(decl)
                 }
-                JsAnyDeclaration::TsImportEqualsDeclaration(decl) => {
-                    JsAnyStatement::TsImportEqualsDeclaration(decl)
+                AnyJsDeclaration::TsImportEqualsDeclaration(decl) => {
+                    AnyJsStatement::TsImportEqualsDeclaration(decl)
                 }
-                JsAnyDeclaration::TsInterfaceDeclaration(decl) => {
-                    JsAnyStatement::TsInterfaceDeclaration(decl)
+                AnyJsDeclaration::TsInterfaceDeclaration(decl) => {
+                    AnyJsStatement::TsInterfaceDeclaration(decl)
                 }
-                JsAnyDeclaration::TsModuleDeclaration(decl) => {
-                    JsAnyStatement::TsModuleDeclaration(decl)
+                AnyJsDeclaration::TsModuleDeclaration(decl) => {
+                    AnyJsStatement::TsModuleDeclaration(decl)
                 }
-                JsAnyDeclaration::TsTypeAliasDeclaration(decl) => {
-                    JsAnyStatement::TsTypeAliasDeclaration(decl)
+                AnyJsDeclaration::TsTypeAliasDeclaration(decl) => {
+                    AnyJsStatement::TsTypeAliasDeclaration(decl)
                 }
             })
         })),

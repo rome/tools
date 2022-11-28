@@ -1,49 +1,49 @@
 use crate::{
-    JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyClass, JsAnyClassMember, JsAnyClassMemberName,
-    JsAnyFunction, JsAnyFunctionBody, JsClassMemberList, JsExtendsClause, JsSyntaxToken,
-    TsAnyPropertyAnnotation, TsAnyVariableAnnotation, TsImplementsClause, TsReturnTypeAnnotation,
+    AnyJsArrowFunctionParameters, AnyJsBinding, AnyJsClass, AnyJsClassMember, AnyJsClassMemberName,
+    AnyJsFunction, AnyJsFunctionBody, AnyTsPropertyAnnotation, AnyTsVariableAnnotation,
+    JsClassMemberList, JsExtendsClause, JsSyntaxToken, TsImplementsClause, TsReturnTypeAnnotation,
     TsTypeAnnotation, TsTypeParameters,
 };
 use rome_rowan::{AstSeparatedList, SyntaxResult};
 
-impl JsAnyClass {
+impl AnyJsClass {
     pub fn abstract_token(&self) -> Option<JsSyntaxToken> {
         match self {
-            JsAnyClass::JsClassDeclaration(declaration) => declaration.abstract_token(),
-            JsAnyClass::JsClassExpression(_) => None,
-            JsAnyClass::JsClassExportDefaultDeclaration(clause) => clause.abstract_token(),
+            AnyJsClass::JsClassDeclaration(declaration) => declaration.abstract_token(),
+            AnyJsClass::JsClassExpression(_) => None,
+            AnyJsClass::JsClassExportDefaultDeclaration(clause) => clause.abstract_token(),
         }
     }
 
     pub fn class_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            JsAnyClass::JsClassDeclaration(declaration) => declaration.class_token(),
-            JsAnyClass::JsClassExpression(expression) => expression.class_token(),
-            JsAnyClass::JsClassExportDefaultDeclaration(declaration) => declaration.class_token(),
+            AnyJsClass::JsClassDeclaration(declaration) => declaration.class_token(),
+            AnyJsClass::JsClassExpression(expression) => expression.class_token(),
+            AnyJsClass::JsClassExportDefaultDeclaration(declaration) => declaration.class_token(),
         }
     }
 
-    pub fn id(&self) -> SyntaxResult<Option<JsAnyBinding>> {
+    pub fn id(&self) -> SyntaxResult<Option<AnyJsBinding>> {
         match self {
-            JsAnyClass::JsClassDeclaration(declaration) => declaration.id().map(Some),
-            JsAnyClass::JsClassExpression(expression) => Ok(expression.id()),
-            JsAnyClass::JsClassExportDefaultDeclaration(declaration) => Ok(declaration.id()),
+            AnyJsClass::JsClassDeclaration(declaration) => declaration.id().map(Some),
+            AnyJsClass::JsClassExpression(expression) => Ok(expression.id()),
+            AnyJsClass::JsClassExportDefaultDeclaration(declaration) => Ok(declaration.id()),
         }
     }
 
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         match self {
-            JsAnyClass::JsClassDeclaration(declaration) => declaration.type_parameters(),
-            JsAnyClass::JsClassExpression(expression) => expression.type_parameters(),
-            JsAnyClass::JsClassExportDefaultDeclaration(clause) => clause.type_parameters(),
+            AnyJsClass::JsClassDeclaration(declaration) => declaration.type_parameters(),
+            AnyJsClass::JsClassExpression(expression) => expression.type_parameters(),
+            AnyJsClass::JsClassExportDefaultDeclaration(clause) => clause.type_parameters(),
         }
     }
 
     pub fn extends_clause(&self) -> Option<JsExtendsClause> {
         match self {
-            JsAnyClass::JsClassDeclaration(declaration) => declaration.extends_clause(),
-            JsAnyClass::JsClassExpression(expression) => expression.extends_clause(),
-            JsAnyClass::JsClassExportDefaultDeclaration(declaration) => {
+            AnyJsClass::JsClassDeclaration(declaration) => declaration.extends_clause(),
+            AnyJsClass::JsClassExpression(expression) => expression.extends_clause(),
+            AnyJsClass::JsClassExportDefaultDeclaration(declaration) => {
                 declaration.extends_clause()
             }
         }
@@ -51,9 +51,9 @@ impl JsAnyClass {
 
     pub fn implements_clause(&self) -> Option<TsImplementsClause> {
         match self {
-            JsAnyClass::JsClassDeclaration(declaration) => declaration.implements_clause(),
-            JsAnyClass::JsClassExpression(expression) => expression.implements_clause(),
-            JsAnyClass::JsClassExportDefaultDeclaration(declaration) => {
+            AnyJsClass::JsClassDeclaration(declaration) => declaration.implements_clause(),
+            AnyJsClass::JsClassExpression(expression) => expression.implements_clause(),
+            AnyJsClass::JsClassExportDefaultDeclaration(declaration) => {
                 declaration.implements_clause()
             }
         }
@@ -61,58 +61,58 @@ impl JsAnyClass {
 
     pub fn l_curly_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            JsAnyClass::JsClassDeclaration(declaration) => declaration.l_curly_token(),
-            JsAnyClass::JsClassExpression(expression) => expression.l_curly_token(),
-            JsAnyClass::JsClassExportDefaultDeclaration(declaration) => declaration.l_curly_token(),
+            AnyJsClass::JsClassDeclaration(declaration) => declaration.l_curly_token(),
+            AnyJsClass::JsClassExpression(expression) => expression.l_curly_token(),
+            AnyJsClass::JsClassExportDefaultDeclaration(declaration) => declaration.l_curly_token(),
         }
     }
 
     pub fn members(&self) -> JsClassMemberList {
         match self {
-            JsAnyClass::JsClassDeclaration(declaration) => declaration.members(),
-            JsAnyClass::JsClassExpression(expression) => expression.members(),
-            JsAnyClass::JsClassExportDefaultDeclaration(declaration) => declaration.members(),
+            AnyJsClass::JsClassDeclaration(declaration) => declaration.members(),
+            AnyJsClass::JsClassExpression(expression) => expression.members(),
+            AnyJsClass::JsClassExportDefaultDeclaration(declaration) => declaration.members(),
         }
     }
 
     pub fn r_curly_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            JsAnyClass::JsClassDeclaration(declaration) => declaration.r_curly_token(),
-            JsAnyClass::JsClassExpression(expression) => expression.r_curly_token(),
-            JsAnyClass::JsClassExportDefaultDeclaration(declaration) => declaration.r_curly_token(),
+            AnyJsClass::JsClassDeclaration(declaration) => declaration.r_curly_token(),
+            AnyJsClass::JsClassExpression(expression) => expression.r_curly_token(),
+            AnyJsClass::JsClassExportDefaultDeclaration(declaration) => declaration.r_curly_token(),
         }
     }
 }
 
-impl JsAnyClassMember {
+impl AnyJsClassMember {
     /// Returns the `name` of the member if it has any.
-    pub fn name(&self) -> SyntaxResult<Option<JsAnyClassMemberName>> {
+    pub fn name(&self) -> SyntaxResult<Option<AnyJsClassMemberName>> {
         match self {
-            JsAnyClassMember::JsConstructorClassMember(constructor) => constructor
+            AnyJsClassMember::JsConstructorClassMember(constructor) => constructor
                 .name()
-                .map(|name| Some(JsAnyClassMemberName::from(name))),
-            JsAnyClassMember::JsEmptyClassMember(_) => Ok(None),
-            JsAnyClassMember::JsGetterClassMember(getter) => getter.name().map(Some),
-            JsAnyClassMember::JsMethodClassMember(method) => method.name().map(Some),
-            JsAnyClassMember::JsPropertyClassMember(property) => property.name().map(Some),
-            JsAnyClassMember::JsSetterClassMember(setter) => setter.name().map(Some),
-            JsAnyClassMember::JsStaticInitializationBlockClassMember(_) => Ok(None),
-            JsAnyClassMember::JsUnknownMember(_) => Ok(None),
-            JsAnyClassMember::TsConstructorSignatureClassMember(constructor) => constructor
+                .map(|name| Some(AnyJsClassMemberName::from(name))),
+            AnyJsClassMember::JsEmptyClassMember(_) => Ok(None),
+            AnyJsClassMember::JsGetterClassMember(getter) => getter.name().map(Some),
+            AnyJsClassMember::JsMethodClassMember(method) => method.name().map(Some),
+            AnyJsClassMember::JsPropertyClassMember(property) => property.name().map(Some),
+            AnyJsClassMember::JsSetterClassMember(setter) => setter.name().map(Some),
+            AnyJsClassMember::JsStaticInitializationBlockClassMember(_) => Ok(None),
+            AnyJsClassMember::JsBogusMember(_) => Ok(None),
+            AnyJsClassMember::TsConstructorSignatureClassMember(constructor) => constructor
                 .name()
-                .map(|name| Some(JsAnyClassMemberName::from(name))),
-            JsAnyClassMember::TsGetterSignatureClassMember(getter) => getter.name().map(Some),
-            JsAnyClassMember::TsIndexSignatureClassMember(_) => Ok(None),
-            JsAnyClassMember::TsMethodSignatureClassMember(method) => method.name().map(Some),
-            JsAnyClassMember::TsPropertySignatureClassMember(property) => property.name().map(Some),
-            JsAnyClassMember::TsSetterSignatureClassMember(setter) => setter.name().map(Some),
+                .map(|name| Some(AnyJsClassMemberName::from(name))),
+            AnyJsClassMember::TsGetterSignatureClassMember(getter) => getter.name().map(Some),
+            AnyJsClassMember::TsIndexSignatureClassMember(_) => Ok(None),
+            AnyJsClassMember::TsMethodSignatureClassMember(method) => method.name().map(Some),
+            AnyJsClassMember::TsPropertySignatureClassMember(property) => property.name().map(Some),
+            AnyJsClassMember::TsSetterSignatureClassMember(setter) => setter.name().map(Some),
         }
     }
 
     /// Tests if the member has a [JsLiteralMemberName] of `name`.
     pub fn has_name(&self, name: &str) -> SyntaxResult<bool> {
         match self.name()? {
-            Some(JsAnyClassMemberName::JsLiteralMemberName(literal)) => {
+            Some(AnyJsClassMemberName::JsLiteralMemberName(literal)) => {
                 Ok(literal.value()?.text_trimmed() == name)
             }
             _ => Ok(false),
@@ -120,19 +120,19 @@ impl JsAnyClassMember {
     }
 }
 
-impl JsAnyClassMemberName {
+impl AnyJsClassMemberName {
     pub const fn is_computed(&self) -> bool {
-        matches!(self, JsAnyClassMemberName::JsComputedMemberName(_))
+        matches!(self, AnyJsClassMemberName::JsComputedMemberName(_))
     }
 }
 
-impl JsAnyFunction {
+impl AnyJsFunction {
     pub fn async_token(&self) -> Option<JsSyntaxToken> {
         match self {
-            JsAnyFunction::JsArrowFunctionExpression(expr) => expr.async_token(),
-            JsAnyFunction::JsFunctionExpression(expr) => expr.async_token(),
-            JsAnyFunction::JsFunctionDeclaration(declaration) => declaration.async_token(),
-            JsAnyFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+            AnyJsFunction::JsArrowFunctionExpression(expr) => expr.async_token(),
+            AnyJsFunction::JsFunctionExpression(expr) => expr.async_token(),
+            AnyJsFunction::JsFunctionDeclaration(declaration) => declaration.async_token(),
+            AnyJsFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.async_token()
             }
         }
@@ -144,12 +144,12 @@ impl JsAnyFunction {
 
     pub fn function_token(&self) -> SyntaxResult<Option<JsSyntaxToken>> {
         match self {
-            JsAnyFunction::JsArrowFunctionExpression(_) => Ok(None),
-            JsAnyFunction::JsFunctionExpression(expr) => expr.function_token().map(Some),
-            JsAnyFunction::JsFunctionDeclaration(declaration) => {
+            AnyJsFunction::JsArrowFunctionExpression(_) => Ok(None),
+            AnyJsFunction::JsFunctionExpression(expr) => expr.function_token().map(Some),
+            AnyJsFunction::JsFunctionDeclaration(declaration) => {
                 declaration.function_token().map(Some)
             }
-            JsAnyFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+            AnyJsFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.function_token().map(Some)
             }
         }
@@ -157,10 +157,10 @@ impl JsAnyFunction {
 
     pub fn star_token(&self) -> Option<JsSyntaxToken> {
         match self {
-            JsAnyFunction::JsArrowFunctionExpression(_) => None,
-            JsAnyFunction::JsFunctionExpression(expr) => expr.star_token(),
-            JsAnyFunction::JsFunctionDeclaration(declaration) => declaration.star_token(),
-            JsAnyFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+            AnyJsFunction::JsArrowFunctionExpression(_) => None,
+            AnyJsFunction::JsFunctionExpression(expr) => expr.star_token(),
+            AnyJsFunction::JsFunctionDeclaration(declaration) => declaration.star_token(),
+            AnyJsFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.star_token()
             }
         }
@@ -170,104 +170,104 @@ impl JsAnyFunction {
         self.star_token().is_some()
     }
 
-    pub fn id(&self) -> SyntaxResult<Option<JsAnyBinding>> {
+    pub fn id(&self) -> SyntaxResult<Option<AnyJsBinding>> {
         match self {
-            JsAnyFunction::JsArrowFunctionExpression(_) => Ok(None),
-            JsAnyFunction::JsFunctionExpression(expr) => Ok(expr.id()),
-            JsAnyFunction::JsFunctionDeclaration(declaration) => declaration.id().map(Some),
-            JsAnyFunction::JsFunctionExportDefaultDeclaration(declaration) => Ok(declaration.id()),
+            AnyJsFunction::JsArrowFunctionExpression(_) => Ok(None),
+            AnyJsFunction::JsFunctionExpression(expr) => Ok(expr.id()),
+            AnyJsFunction::JsFunctionDeclaration(declaration) => declaration.id().map(Some),
+            AnyJsFunction::JsFunctionExportDefaultDeclaration(declaration) => Ok(declaration.id()),
         }
     }
 
     pub fn type_parameters(&self) -> Option<TsTypeParameters> {
         match self {
-            JsAnyFunction::JsArrowFunctionExpression(expr) => expr.type_parameters(),
-            JsAnyFunction::JsFunctionExpression(expr) => expr.type_parameters(),
-            JsAnyFunction::JsFunctionDeclaration(declaration) => declaration.type_parameters(),
-            JsAnyFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+            AnyJsFunction::JsArrowFunctionExpression(expr) => expr.type_parameters(),
+            AnyJsFunction::JsFunctionExpression(expr) => expr.type_parameters(),
+            AnyJsFunction::JsFunctionDeclaration(declaration) => declaration.type_parameters(),
+            AnyJsFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.type_parameters()
             }
         }
     }
 
-    pub fn parameters(&self) -> SyntaxResult<JsAnyArrowFunctionParameters> {
+    pub fn parameters(&self) -> SyntaxResult<AnyJsArrowFunctionParameters> {
         match self {
-            JsAnyFunction::JsArrowFunctionExpression(expr) => expr.parameters(),
-            JsAnyFunction::JsFunctionExpression(expr) => expr
+            AnyJsFunction::JsArrowFunctionExpression(expr) => expr.parameters(),
+            AnyJsFunction::JsFunctionExpression(expr) => expr
                 .parameters()
-                .map(JsAnyArrowFunctionParameters::JsParameters),
-            JsAnyFunction::JsFunctionDeclaration(declaration) => declaration
+                .map(AnyJsArrowFunctionParameters::JsParameters),
+            AnyJsFunction::JsFunctionDeclaration(declaration) => declaration
                 .parameters()
-                .map(JsAnyArrowFunctionParameters::JsParameters),
-            JsAnyFunction::JsFunctionExportDefaultDeclaration(declaration) => declaration
+                .map(AnyJsArrowFunctionParameters::JsParameters),
+            AnyJsFunction::JsFunctionExportDefaultDeclaration(declaration) => declaration
                 .parameters()
-                .map(JsAnyArrowFunctionParameters::JsParameters),
+                .map(AnyJsArrowFunctionParameters::JsParameters),
         }
     }
 
     pub fn return_type_annotation(&self) -> Option<TsReturnTypeAnnotation> {
         match self {
-            JsAnyFunction::JsArrowFunctionExpression(expr) => expr.return_type_annotation(),
-            JsAnyFunction::JsFunctionExpression(expr) => expr.return_type_annotation(),
-            JsAnyFunction::JsFunctionDeclaration(declaration) => {
+            AnyJsFunction::JsArrowFunctionExpression(expr) => expr.return_type_annotation(),
+            AnyJsFunction::JsFunctionExpression(expr) => expr.return_type_annotation(),
+            AnyJsFunction::JsFunctionDeclaration(declaration) => {
                 declaration.return_type_annotation()
             }
-            JsAnyFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+            AnyJsFunction::JsFunctionExportDefaultDeclaration(declaration) => {
                 declaration.return_type_annotation()
             }
         }
     }
 
-    pub fn body(&self) -> SyntaxResult<JsAnyFunctionBody> {
+    pub fn body(&self) -> SyntaxResult<AnyJsFunctionBody> {
         match self {
-            JsAnyFunction::JsArrowFunctionExpression(expr) => expr.body(),
-            JsAnyFunction::JsFunctionExpression(expr) => {
-                expr.body().map(JsAnyFunctionBody::JsFunctionBody)
+            AnyJsFunction::JsArrowFunctionExpression(expr) => expr.body(),
+            AnyJsFunction::JsFunctionExpression(expr) => {
+                expr.body().map(AnyJsFunctionBody::JsFunctionBody)
             }
-            JsAnyFunction::JsFunctionDeclaration(declaration) => {
-                declaration.body().map(JsAnyFunctionBody::JsFunctionBody)
+            AnyJsFunction::JsFunctionDeclaration(declaration) => {
+                declaration.body().map(AnyJsFunctionBody::JsFunctionBody)
             }
-            JsAnyFunction::JsFunctionExportDefaultDeclaration(declaration) => {
-                declaration.body().map(JsAnyFunctionBody::JsFunctionBody)
+            AnyJsFunction::JsFunctionExportDefaultDeclaration(declaration) => {
+                declaration.body().map(AnyJsFunctionBody::JsFunctionBody)
             }
         }
     }
 }
 
-impl TsAnyVariableAnnotation {
+impl AnyTsVariableAnnotation {
     pub fn type_annotation(&self) -> SyntaxResult<Option<TsTypeAnnotation>> {
         match self {
-            TsAnyVariableAnnotation::TsDefiniteVariableAnnotation(definite) => {
+            AnyTsVariableAnnotation::TsDefiniteVariableAnnotation(definite) => {
                 definite.type_annotation().map(Some)
             }
-            TsAnyVariableAnnotation::TsTypeAnnotation(type_annotation) => {
+            AnyTsVariableAnnotation::TsTypeAnnotation(type_annotation) => {
                 Ok(Some(type_annotation.clone()))
             }
         }
     }
 }
 
-impl TsAnyPropertyAnnotation {
+impl AnyTsPropertyAnnotation {
     pub fn type_annotation(&self) -> SyntaxResult<Option<TsTypeAnnotation>> {
         match self {
-            TsAnyPropertyAnnotation::TsDefinitePropertyAnnotation(definite) => {
+            AnyTsPropertyAnnotation::TsDefinitePropertyAnnotation(definite) => {
                 definite.type_annotation().map(Some)
             }
-            TsAnyPropertyAnnotation::TsOptionalPropertyAnnotation(optional) => {
+            AnyTsPropertyAnnotation::TsOptionalPropertyAnnotation(optional) => {
                 Ok(optional.type_annotation())
             }
-            TsAnyPropertyAnnotation::TsTypeAnnotation(type_annotation) => {
+            AnyTsPropertyAnnotation::TsTypeAnnotation(type_annotation) => {
                 Ok(Some(type_annotation.clone()))
             }
         }
     }
 }
 
-impl JsAnyArrowFunctionParameters {
+impl AnyJsArrowFunctionParameters {
     pub fn len(&self) -> usize {
         match self {
-            JsAnyArrowFunctionParameters::JsAnyBinding(_) => 1,
-            JsAnyArrowFunctionParameters::JsParameters(parameters) => parameters.items().len(),
+            AnyJsArrowFunctionParameters::AnyJsBinding(_) => 1,
+            AnyJsArrowFunctionParameters::JsParameters(parameters) => parameters.items().len(),
         }
     }
 

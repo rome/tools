@@ -1,4 +1,4 @@
-//! Generated file, do not edit by hand, see `xtask/codegen`
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 pub(crate) mod any_type;
 pub(crate) mod array_type;
@@ -26,6 +26,7 @@ pub(crate) mod reference_type;
 pub(crate) mod string_literal_type;
 pub(crate) mod string_type;
 pub(crate) mod symbol_type;
+pub(crate) mod template_literal_type;
 pub(crate) mod this_type;
 pub(crate) mod tuple_type;
 pub(crate) mod type_operator_type;

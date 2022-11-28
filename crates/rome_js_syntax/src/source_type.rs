@@ -171,7 +171,7 @@ impl SourceType {
         self.version
     }
 
-    pub fn module_kind(&self) -> ModuleKind {
+    pub const fn module_kind(&self) -> ModuleKind {
         self.module_kind
     }
 

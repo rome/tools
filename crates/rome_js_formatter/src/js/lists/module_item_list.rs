@@ -1,8 +1,8 @@
 use crate::prelude::*;
-use rome_js_syntax::{JsAnyModuleItem, JsAnyStatement, JsModuleItemList};
+use rome_js_syntax::{AnyJsModuleItem, AnyJsStatement, JsModuleItemList};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsModuleItemList;
+pub(crate) struct FormatJsModuleItemList;
 
 impl FormatRule<JsModuleItemList> for FormatJsModuleItemList {
     type Context = JsFormatContext;
@@ -12,7 +12,7 @@ impl FormatRule<JsModuleItemList> for FormatJsModuleItemList {
 
         for module_item in node {
             match module_item {
-                JsAnyModuleItem::JsAnyStatement(JsAnyStatement::JsEmptyStatement(empty)) => {
+                AnyJsModuleItem::AnyJsStatement(AnyJsStatement::JsEmptyStatement(empty)) => {
                     join.entry_no_separator(&empty.format());
                 }
                 _ => {

@@ -1,90 +1,58 @@
 #[cfg(feature = "dhat-heap")]
-use crate::features::print_diff;
+use crate::features::print_stats;
+use crate::language::Parse;
+use crate::test_case::TestCase;
 use crate::BenchmarkSummary;
 use itertools::Itertools;
 use rome_diagnostics::console::fmt::Termcolor;
 use rome_diagnostics::console::markup;
-use rome_diagnostics::location::FileId;
 use rome_diagnostics::termcolor::Buffer;
 use rome_diagnostics::DiagnosticExt;
 use rome_diagnostics::PrintDiagnostic;
-use rome_js_parser::{parse_common, Parse, ParseDiagnostic};
-use rome_js_syntax::{JsAnyRoot, SourceType};
+use rome_parser::diagnostic::ParseDiagnostic;
 use std::fmt::{Display, Formatter};
-use std::ops::Add;
 use std::time::Duration;
 
 #[derive(Debug, Clone)]
-
 pub struct ParseMeasurement {
     id: String,
     code: String,
-    parsing: Duration,
-    tree_sink: Duration,
+    duration: Duration,
     diagnostics: Vec<ParseDiagnostic>,
 }
 
-pub fn benchmark_parse_lib(id: &str, code: &str, source_type: SourceType) -> BenchmarkSummary {
+pub fn benchmark_parse_lib(case: &TestCase, parse: &Parse) -> BenchmarkSummary {
     #[cfg(feature = "dhat-heap")]
     println!("Start");
     #[cfg(feature = "dhat-heap")]
-    let stats = dhat::HeapStats::get();
+    let stats = print_stats(dhat::HeapStats::get(), None);
 
     let parser_timer = timing::start();
-    let (events, diagnostics, trivia) = parse_common(code, FileId::zero(), source_type);
+    let parsed = parse.parse();
     let parse_duration = parser_timer.stop();
 
     #[cfg(feature = "dhat-heap")]
     println!("Parsed");
     #[cfg(feature = "dhat-heap")]
-    let stats = print_diff(stats, dhat::HeapStats::get());
-
-    let tree_sink_timer = timing::start();
-    let mut tree_sink = rome_js_parser::LosslessTreeSink::new(code, &trivia);
-    rome_js_parser::process(&mut tree_sink, events, diagnostics);
-    let (_green, diagnostics) = tree_sink.finish();
-    let tree_sink_duration = tree_sink_timer.stop();
-
-    #[cfg(feature = "dhat-heap")]
-    println!("Tree-Sink");
-    #[cfg(feature = "dhat-heap")]
-    print_diff(stats, dhat::HeapStats::get());
+    print_stats(dhat::HeapStats::get(), Some(stats));
 
     BenchmarkSummary::Parser(ParseMeasurement {
-        id: id.to_string(),
-        code: code.to_string(),
-        parsing: parse_duration,
-        tree_sink: tree_sink_duration,
-        diagnostics,
+        id: case.filename().to_string(),
+        code: case.code().to_string(),
+        duration: parse_duration,
+        diagnostics: parsed.into_diagnostics(),
     })
 }
 
-pub fn run_parse(code: &str, source_type: SourceType) -> Parse<JsAnyRoot> {
-    rome_js_parser::parse(code, FileId::zero(), source_type)
-}
-
 impl ParseMeasurement {
-    fn total(&self) -> Duration {
-        self.parsing.add(self.tree_sink)
-    }
-
     pub(crate) fn summary(&self) -> String {
-        format!(
-            "{}, Total Time: {:?}, parsing: {:?}, tree_sink: {:?}",
-            self.id,
-            self.total(),
-            self.parsing,
-            self.tree_sink,
-        )
+        format!("{}, Total Time: {:?}", self.id, self.duration,)
     }
 }
 
 impl Display for ParseMeasurement {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        let _ = writeln!(f, "\tParsing:      {:>10?}", self.parsing);
-        let _ = writeln!(f, "\tTree_sink:    {:>10?}", self.tree_sink);
-        let _ = writeln!(f, "\t              ----------");
-        let _ = writeln!(f, "\tTotal:        {:>10?}", self.total());
+        let _ = writeln!(f, "\tDuration:        {:>10?}", self.duration);
 
         let _ = writeln!(f, "\tDiagnostics");
 

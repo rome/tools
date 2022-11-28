@@ -5,7 +5,7 @@ use rome_diagnostics::location::FileId;
 use rome_diagnostics::{
     Advices, Diagnostic, DiagnosticExt, Location, LogCategory, PrintDiagnostic, Visit,
 };
-use rome_js_syntax::{JsAnyRoot, JsSyntaxToken, SourceType, TextRange, TextSize, WalkEvent};
+use rome_js_syntax::{AnyJsRoot, JsSyntaxToken, SourceType, TextRange, TextSize, WalkEvent};
 use rome_rowan::{AstNode, NodeOrToken};
 use std::collections::{BTreeMap, HashMap};
 
@@ -358,7 +358,7 @@ struct SemanticAssertions {
 }
 
 impl SemanticAssertions {
-    fn from_root(root: JsAnyRoot, code: &str, test_name: &str) -> Self {
+    fn from_root(root: AnyJsRoot, code: &str, test_name: &str) -> Self {
         let mut declarations_assertions: BTreeMap<String, DeclarationAssertion> = BTreeMap::new();
         let mut read_assertions = vec![];
         let mut write_assertions = vec![];

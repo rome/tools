@@ -1,10 +1,8 @@
 #[cfg(feature = "dhat-heap")]
-use crate::features::print_diff;
+use crate::features::print_stats;
+use crate::language::FormatNode;
 use crate::BenchmarkSummary;
 use rome_formatter::Printed;
-use rome_js_formatter::context::JsFormatOptions;
-use rome_js_formatter::format_node;
-use rome_js_syntax::{JsSyntaxNode, SourceType};
 use std::fmt::{Display, Formatter};
 use std::time::Duration;
 
@@ -13,13 +11,9 @@ pub struct FormatterMeasurement {
     id: String,
     formatting: Duration,
 }
-pub fn benchmark_format_lib(
-    id: &str,
-    root: &JsSyntaxNode,
-    source_type: SourceType,
-) -> BenchmarkSummary {
+pub fn benchmark_format_lib(id: &str, format_node: &FormatNode) -> BenchmarkSummary {
     let formatter_timer = timing::start();
-    run_format(root, source_type);
+    criterion::black_box(run_format(format_node));
     let formatter_duration = formatter_timer.stop();
 
     BenchmarkSummary::Formatter(FormatterMeasurement {
@@ -28,19 +22,19 @@ pub fn benchmark_format_lib(
     })
 }
 
-pub fn run_format(root: &JsSyntaxNode, source_type: SourceType) -> Printed {
+pub fn run_format(format_node: &FormatNode) -> Printed {
     #[cfg(feature = "dhat-heap")]
     let stats = {
         println!("Start");
-        dhat::HeapStats::get()
+        print_stats(dhat::HeapStats::get(), None)
     };
 
-    let formatted = format_node(JsFormatOptions::new(source_type), root).unwrap();
+    let formatted = format_node.format_node().unwrap();
 
     #[cfg(feature = "dhat-heap")]
     let stats = {
         println!("Formatted");
-        print_diff(stats, dhat::HeapStats::get())
+        print_stats(dhat::HeapStats::get(), Some(stats))
     };
 
     let printed = formatted.print();
@@ -49,7 +43,7 @@ pub fn run_format(root: &JsSyntaxNode, source_type: SourceType) -> Printed {
     #[cfg(feature = "dhat-heap")]
     {
         println!("Printed");
-        print_diff(stats, dhat::HeapStats::get());
+        print_stats(dhat::HeapStats::get(), Some(stats));
     }
 
     printed.expect("Document to be valid")

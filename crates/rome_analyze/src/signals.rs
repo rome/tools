@@ -9,8 +9,7 @@ use crate::{
 };
 use rome_console::MarkupBuf;
 use rome_diagnostics::{
-    advice::CodeSuggestionAdvice, location::FileId, Applicability, CodeSuggestion, Diagnostic,
-    Error, FileSpan,
+    advice::CodeSuggestionAdvice, location::FileId, Applicability, CodeSuggestion, Error, FileSpan,
 };
 use rome_rowan::{BatchMutation, Language};
 use std::borrow::Cow;
@@ -38,7 +37,7 @@ pub(crate) struct DiagnosticSignal<D, A, L, T> {
 impl<L: Language, D, T> DiagnosticSignal<D, fn() -> Option<AnalyzerAction<L>>, L, T>
 where
     D: Fn() -> T,
-    T: Diagnostic + Send + Sync + 'static,
+    Error: From<T>,
 {
     pub(crate) fn new(factory: D) -> Self {
         Self {
@@ -65,7 +64,7 @@ impl<L: Language, D, A, T> DiagnosticSignal<D, A, L, T> {
 impl<L: Language, D, A, T> AnalyzerSignal<L> for DiagnosticSignal<D, A, L, T>
 where
     D: Fn() -> T,
-    T: Diagnostic + Send + Sync + 'static,
+    Error: From<T>,
     A: Fn() -> Option<AnalyzerAction<L>>,
 {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {

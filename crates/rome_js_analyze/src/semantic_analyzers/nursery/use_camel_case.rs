@@ -95,7 +95,7 @@ fn is_non_camel_ok(binding: &JsIdentifierBinding, model: &SemanticModel) -> Opti
 }
 
 impl Rule for UseCamelCase {
-    type Query = Semantic<JsAnyCamelCaseName>;
+    type Query = Semantic<AnyJsCamelCaseName>;
     type State = State;
     type Signals = Option<Self::State>;
     type Options = ();
@@ -105,7 +105,7 @@ impl Rule for UseCamelCase {
         let model = ctx.model();
 
         match name {
-            JsAnyCamelCaseName::JsIdentifierBinding(binding) => {
+            AnyJsCamelCaseName::JsIdentifierBinding(binding) => {
                 let is_non_camel_ok = is_non_camel_ok(binding, model);
                 match is_non_camel_ok {
                     Some(false) | None => {
@@ -135,7 +135,7 @@ impl Rule for UseCamelCase {
                     _ => None,
                 }
             }
-            JsAnyCamelCaseName::JsLiteralMemberName(name) => {
+            AnyJsCamelCaseName::JsLiteralMemberName(name) => {
                 let is_method_class = name.parent::<JsMethodClassMember>().is_some();
                 let is_getter = name.parent::<JsGetterClassMember>().is_some();
                 let is_setter = name.parent::<JsSetterClassMember>().is_some();
@@ -147,7 +147,7 @@ impl Rule for UseCamelCase {
                     None
                 }
             }
-            JsAnyCamelCaseName::JsPrivateClassMemberName(name) => {
+            AnyJsCamelCaseName::JsPrivateClassMemberName(name) => {
                 let is_property = name.parent::<JsPropertyClassMember>().is_some();
                 if is_property {
                     let name = name.text();
@@ -193,7 +193,7 @@ impl Rule for UseCamelCase {
         let candidates = once(Cow::from(new_name)).chain(candidates);
 
         match ctx.query() {
-            JsAnyCamelCaseName::JsIdentifierBinding(binding) => {
+            AnyJsCamelCaseName::JsIdentifierBinding(binding) => {
                 let renamed =
                     batch.rename_node_declaration_with_retry(model, binding.clone(), candidates);
                 if renamed {
@@ -213,5 +213,5 @@ impl Rule for UseCamelCase {
 }
 
 declare_node_union! {
-    pub(crate) JsAnyCamelCaseName = JsIdentifierBinding | JsLiteralMemberName | JsPrivateClassMemberName
+    pub(crate) AnyJsCamelCaseName = JsIdentifierBinding | JsLiteralMemberName | JsPrivateClassMemberName
 }

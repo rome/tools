@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 223
 expression: content
 ---
 # Emitted Messages
@@ -8,6 +7,10 @@ expression: content
 ```block
 The number of diagnostics exceeds the number allowed by Rome.
 Diagnostics not shown: 10.
+```
+
+```block
+Compared 60 file(s) in <TIME>
 ```
 
 

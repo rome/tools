@@ -2,7 +2,7 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::jsx_ext::JsxAnyElement;
+use rome_js_syntax::jsx_ext::AnyJsxElement;
 use rome_js_syntax::*;
 use rome_rowan::{AstNode, BatchMutationExt};
 
@@ -40,7 +40,7 @@ declare_rule! {
 }
 
 impl Rule for NoDistractingElements {
-    type Query = Ast<JsxAnyElement>;
+    type Query = Ast<AnyJsxElement>;
     type State = JsSyntaxToken;
     type Signals = Option<Self::State>;
     type Options = ();

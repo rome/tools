@@ -5,10 +5,10 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::{
     make,
-    syntax::{TsType, T},
+    syntax::{AnyTsType, T},
 };
 use rome_js_syntax::{
-    JsAnyDeclarationClause, TriviaPieceKind, TsInterfaceDeclaration, TsTypeAliasDeclaration,
+    AnyJsDeclarationClause, TriviaPieceKind, TsInterfaceDeclaration, TsTypeAliasDeclaration,
 };
 use rome_rowan::{AstNode, AstNodeList, BatchMutationExt};
 
@@ -70,7 +70,7 @@ impl DiagnosticMessage {
         match self {
             Self::NoEmptyInterface => make_type_alias_from_interface(
                 node,
-                TsType::from(make::ts_object_type(
+                AnyTsType::from(make::ts_object_type(
                     make::token(T!['{']),
                     make::ts_type_member_list([]),
                     make::token(T!['}']),
@@ -89,7 +89,7 @@ impl DiagnosticMessage {
                     ts_reference_type.build()
                 };
 
-                make_type_alias_from_interface(node, TsType::from(ts_reference_type))
+                make_type_alias_from_interface(node, AnyTsType::from(ts_reference_type))
             }
         }
     }
@@ -132,8 +132,8 @@ impl Rule for NoEmptyInterface {
         let node = ctx.query();
 
         mutation.replace_node(
-            JsAnyDeclarationClause::from(node.clone()),
-            JsAnyDeclarationClause::from(state.fix_with(node)?),
+            AnyJsDeclarationClause::from(node.clone()),
+            AnyJsDeclarationClause::from(state.fix_with(node)?),
         );
 
         Some(JsRuleAction {
@@ -148,7 +148,7 @@ impl Rule for NoEmptyInterface {
 /// Builds a [TsTypeAliasDeclaration] from an [TsInterfaceDeclaration].
 fn make_type_alias_from_interface(
     node: &TsInterfaceDeclaration,
-    ts_type: TsType,
+    ts_type: AnyTsType,
 ) -> Option<TsTypeAliasDeclaration> {
     let type_params = node.type_parameters();
     let new_node = make::ts_type_alias_declaration(

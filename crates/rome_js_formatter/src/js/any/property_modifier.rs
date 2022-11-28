@@ -1,17 +1,17 @@
-//! Generated file, do not edit by hand, see `xtask/codegen`
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::JsAnyPropertyModifier;
+use rome_js_syntax::AnyJsPropertyModifier;
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsAnyPropertyModifier;
-impl FormatRule<JsAnyPropertyModifier> for FormatJsAnyPropertyModifier {
+pub(crate) struct FormatAnyJsPropertyModifier;
+impl FormatRule<AnyJsPropertyModifier> for FormatAnyJsPropertyModifier {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &JsAnyPropertyModifier, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyJsPropertyModifier, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyPropertyModifier::TsAccessibilityModifier(node) => node.format().fmt(f),
-            JsAnyPropertyModifier::JsStaticModifier(node) => node.format().fmt(f),
-            JsAnyPropertyModifier::TsReadonlyModifier(node) => node.format().fmt(f),
-            JsAnyPropertyModifier::TsOverrideModifier(node) => node.format().fmt(f),
+            AnyJsPropertyModifier::TsAccessibilityModifier(node) => node.format().fmt(f),
+            AnyJsPropertyModifier::JsStaticModifier(node) => node.format().fmt(f),
+            AnyJsPropertyModifier::TsReadonlyModifier(node) => node.format().fmt(f),
+            AnyJsPropertyModifier::TsOverrideModifier(node) => node.format().fmt(f),
         }
     }
 }

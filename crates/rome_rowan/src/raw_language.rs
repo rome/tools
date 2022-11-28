@@ -26,7 +26,7 @@ pub enum RawLanguageKind {
     STRING_TOKEN = 4,
     NUMBER_TOKEN = 5,
     LITERAL_EXPRESSION = 6,
-    UNKNOWN = 7,
+    BOGUS = 7,
     FOR_KW = 8,
     L_PAREN_TOKEN = 9,
     SEMICOLON_TOKEN = 10,
@@ -36,16 +36,21 @@ pub enum RawLanguageKind {
     CONDITION = 14,
     PLUS_TOKEN = 15,
     WHITESPACE = 16,
+    TOMBSTONE = 17,
+    EOF = 18,
     __LAST,
 }
 
 impl SyntaxKind for RawLanguageKind {
-    fn is_unknown(&self) -> bool {
-        self == &RawLanguageKind::UNKNOWN
+    const TOMBSTONE: Self = RawLanguageKind::TOMBSTONE;
+    const EOF: Self = RawLanguageKind::EOF;
+
+    fn is_bogus(&self) -> bool {
+        self == &RawLanguageKind::BOGUS
     }
 
-    fn to_unknown(&self) -> Self {
-        RawLanguageKind::UNKNOWN
+    fn to_bogus(&self) -> Self {
+        RawLanguageKind::BOGUS
     }
 
     fn to_raw(&self) -> RawSyntaxKind {
@@ -68,6 +73,21 @@ impl SyntaxKind for RawLanguageKind {
             self,
             RawLanguageKind::EXPRESSION_LIST | RawLanguageKind::SEPARATED_EXPRESSION_LIST
         )
+    }
+
+    fn to_string(&self) -> Option<&'static str> {
+        let str = match self {
+            COMMA_TOKEN => ",",
+            RawLanguageKind::FOR_KW => "for",
+            RawLanguageKind::L_PAREN_TOKEN => "(",
+            RawLanguageKind::SEMICOLON_TOKEN => ";",
+            RawLanguageKind::R_PAREN_TOKEN => ")",
+            RawLanguageKind::EQUAL_TOKEN => "=",
+            RawLanguageKind::LET_TOKEN => "let",
+            RawLanguageKind::PLUS_TOKEN => "+",
+            _ => return None,
+        };
+        Some(str)
     }
 }
 
@@ -179,7 +199,7 @@ impl SyntaxFactory for RawLanguageSyntaxFactory {
         children: ParsedChildren<Self::Kind>,
     ) -> RawSyntaxNode<Self::Kind> {
         match kind {
-            RawLanguageKind::UNKNOWN | RawLanguageKind::ROOT => {
+            RawLanguageKind::BOGUS | RawLanguageKind::ROOT => {
                 RawSyntaxNode::new(kind, children.into_iter().map(Some))
             }
             RawLanguageKind::EXPRESSION_LIST => {
@@ -196,7 +216,7 @@ impl SyntaxFactory for RawLanguageSyntaxFactory {
                 let actual_len = children.len();
 
                 if actual_len > 1 {
-                    return RawSyntaxNode::new(kind.to_unknown(), children.into_iter().map(Some));
+                    return RawSyntaxNode::new(kind.to_bogus(), children.into_iter().map(Some));
                 }
 
                 let mut elements = children.into_iter();
@@ -208,7 +228,7 @@ impl SyntaxFactory for RawLanguageSyntaxFactory {
                         RawLanguageKind::STRING_TOKEN | RawLanguageKind::NUMBER_TOKEN
                     ) {
                         return RawSyntaxNode::new(
-                            kind.to_unknown(),
+                            kind.to_bogus(),
                             std::iter::once(current_element),
                         );
                     }
@@ -250,7 +270,7 @@ impl SyntaxFactory for RawLanguageSyntaxFactory {
                 slots.next_slot();
 
                 if current_element.is_some() {
-                    return RawSyntaxNode::new(kind.to_unknown(), children.into_iter().map(Some));
+                    return RawSyntaxNode::new(kind.to_bogus(), children.into_iter().map(Some));
                 }
 
                 slots.into_node(kind, children)

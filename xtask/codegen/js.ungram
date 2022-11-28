@@ -21,33 +21,34 @@
 // NOTES
 //
 // - SyntaxNode, SyntaxToken and SyntaxElement will be stripped from the codegen
-// - Unknown nodes are special nodes used to keep track of broken code; they are
+// - Bogus nodes are special nodes used to keep track of broken code; they are
 //   not part of the grammar but they will appear inside the green tree
 //
 
 
 ///////////////
-// UNKNOWN NODES
+// Bogus NODES
 ///////////////
 // SyntaxElement is a generic data structure that is meant to track nodes and tokens
 // in cases where we care about both types
 //
-// As Unknown* node will need to yield both tokens and nodes without discrimination,
+// As Bogus* node will need to yield both tokens and nodes without discrimination,
 // and their children will need to yield nodes and tokens as well.
 // For this reason, SyntaxElement = SyntaxElement
 SyntaxElement = SyntaxElement
 
-JsUnknown = SyntaxElement*
-JsUnknownStatement = SyntaxElement*
-JsUnknownExpression = SyntaxElement*
-JsUnknownMember = SyntaxElement*
-JsUnknownBinding = SyntaxElement*
-JsUnknownAssignment = SyntaxElement*
-JsUnknownParameter = SyntaxElement*
-JsUnknownImportAssertionEntry = SyntaxElement*
-JsUnknownNamedImportSpecifier = SyntaxElement*
+JsBogus = SyntaxElement*
+JsBogusStatement = SyntaxElement*
+JsBogusExpression = SyntaxElement*
+JsBogusMember = SyntaxElement*
+JsBogusBinding = SyntaxElement*
+JsBogusAssignment = SyntaxElement*
+JsBogusParameter = SyntaxElement*
+JsBogusImportAssertionEntry = SyntaxElement*
+JsBogusNamedImportSpecifier = SyntaxElement*
+TsBogusType = SyntaxElement*
 
-JsAnyRoot =
+AnyJsRoot =
 	JsScript | JsModule | JsExpressionSnipped
 
 JsScript =
@@ -63,7 +64,7 @@ JsModule =
 	eof: 'EOF'
 
 JsExpressionSnipped =
-	expression: JsAnyExpression
+	expression: AnyJsExpression
 	eof: 'EOF'
 
 
@@ -77,7 +78,7 @@ JsDirectiveList = JsDirective*
 // STATEMENTS
 ///////////////
 
-JsAnyStatement =
+AnyJsStatement =
 	JsBlockStatement
 	| JsBreakStatement
 	| JsClassDeclaration
@@ -96,7 +97,7 @@ JsAnyStatement =
 	| JsThrowStatement
 	| JsTryFinallyStatement
 	| JsTryStatement
-	| JsUnknownStatement
+	| JsBogusStatement
 	| JsVariableStatement
 	| JsWhileStatement
 	| JsWithStatement
@@ -117,75 +118,75 @@ JsBlockStatement =
 	statements: JsStatementList
 	'}'
 
-JsStatementList = JsAnyStatement*
+JsStatementList = AnyJsStatement*
 
 JsEmptyStatement =
     ';'
 
 JsExpressionStatement =
-    expression: JsAnyExpression ';'?
+    expression: AnyJsExpression ';'?
 
 
 JsWhileStatement =
-    'while' '(' test: JsAnyExpression ')'
-    body: JsAnyStatement
+    'while' '(' test: AnyJsExpression ')'
+    body: AnyJsStatement
 
 
 JsDoWhileStatement =
     'do'
-    body: JsAnyStatement
-    'while' '(' test: JsAnyExpression ')'
+    body: AnyJsStatement
+    'while' '(' test: AnyJsExpression ')'
     ';'?
 
 
 // if statement
 JsIfStatement =
-	'if' '(' test: JsAnyExpression ')'
-	consequent: JsAnyStatement
+	'if' '(' test: AnyJsExpression ')'
+	consequent: AnyJsStatement
 	else_clause: JsElseClause?
 
 JsElseClause =
 	'else'
-	alternate: JsAnyStatement
+	alternate: AnyJsStatement
 
 
 // for..in statement
 JsForStatement =
 	'for'
 	'('
-	initializer: JsAnyForInitializer?
+	initializer: AnyJsForInitializer?
 	first_semi: ';'
-	test: JsAnyExpression?
+	test: AnyJsExpression?
 	second_semi: ';'
-	update: JsAnyExpression?
+	update: AnyJsExpression?
 	')'
-	body: JsAnyStatement
+	body: AnyJsStatement
 
-JsAnyForInitializer = JsVariableDeclaration | JsAnyExpression
+AnyJsForInitializer = JsVariableDeclaration | AnyJsExpression
 
 // for..in statement
 JsForInStatement =
 	'for'
 	'('
-	initializer: JsAnyForInOrOfInitializer
+	initializer: AnyJsForInOrOfInitializer
 	'in'
-	expression: JsAnyExpression
+	expression: AnyJsExpression
 	')'
-	body: JsAnyStatement
+	body: AnyJsStatement
 
 // for..of statement
 JsForOfStatement =
 	'for'
 	'await'?
 	'('
-	initializer: JsAnyForInOrOfInitializer
+	initializer: AnyJsForInOrOfInitializer
 	'of'
-	expression: JsAnyExpression
+	expression: AnyJsExpression
 	')'
-	body: JsAnyStatement
+	body: AnyJsStatement
 
-JsAnyForInOrOfInitializer =
-	JsAnyAssignmentPattern
+AnyJsForInOrOfInitializer =
+	AnyJsAssignmentPattern
 	| JsForVariableDeclaration
 
 JsForVariableDeclaration =
@@ -205,36 +206,36 @@ JsContinueStatement =
 
 JsReturnStatement =
     'return'
-    argument: JsAnyExpression?
+    argument: AnyJsExpression?
     ';'?
 
 
 JsWithStatement =
-    'with' '(' object: JsAnyExpression ')'
-    body: JsAnyStatement
+    'with' '(' object: AnyJsExpression ')'
+    body: AnyJsStatement
 
 
 JsLabeledStatement =
     label: 'ident' ':'
-    body: JsAnyStatement
+    body: AnyJsStatement
 
 
 JsSwitchStatement =
-    'switch' '(' discriminant: JsAnyExpression ')'
+    'switch' '(' discriminant: AnyJsExpression ')'
     '{'
     cases: JsSwitchCaseList
     '}'
 
-JsSwitchCaseList = JsAnySwitchClause*
+JsSwitchCaseList = AnyJsSwitchClause*
 
-JsAnySwitchClause = JsCaseClause | JsDefaultClause
-JsCaseClause = 'case' test: JsAnyExpression ':' consequent: JsStatementList
+AnyJsSwitchClause = JsCaseClause | JsDefaultClause
+JsCaseClause = 'case' test: AnyJsExpression ':' consequent: JsStatementList
 JsDefaultClause = 'default' ':' consequent: JsStatementList
 
 
 JsThrowStatement =
     'throw'
-    argument: JsAnyExpression
+    argument: AnyJsExpression
     ';'?
 
 // try..catch..finally statement
@@ -256,7 +257,7 @@ JsCatchClause =
 
 JsCatchDeclaration =
     '('
-    binding: JsAnyBindingPattern
+    binding: AnyJsBindingPattern
     type_annotation: TsTypeAnnotation?
     ')'
 
@@ -272,7 +273,7 @@ JsDebuggerStatement =
 // declare function test();
 TsDeclareStatement =
 	'declare'
-	declaration: JsAnyDeclarationClause
+	declaration: AnyJsDeclarationClause
 
 
 ///////////////
@@ -280,9 +281,9 @@ TsDeclareStatement =
 ///////////////
 
 // Expression
-JsAnyExpression =
-	JsAnyLiteralExpression
-	| ImportMeta
+AnyJsExpression =
+	AnyJsLiteralExpression
+	| JsImportMetaExpression
 	| JsArrayExpression
 	| JsArrowFunctionExpression
 	| JsAssignmentExpression
@@ -308,28 +309,29 @@ JsAnyExpression =
 	| JsSuperExpression
 	| JsThisExpression
 	| JsUnaryExpression
-	| JsUnknownExpression
+	| JsBogusExpression
 	| JsYieldExpression
-	| NewTarget
-	| JsTemplate
+	| JsNewTargetExpression
+	| JsTemplateExpression
 	// Typescript
 	| TsTypeAssertionExpression
 	| TsAsExpression
+	| TsSatisfiesExpression
 	| TsNonNullAssertionExpression
 	| TsInstantiationExpression
 	// JSX
 	| JsxTagExpression
 
-JsTemplate =
-	tag: JsAnyExpression?
+JsTemplateExpression =
+	tag: AnyJsExpression?
 	type_arguments: TsTypeArguments?
 	l_tick: '`'
 	elements: JsTemplateElementList
 	r_tick: '`'
 
-JsTemplateElementList = JsAnyTemplateElement*
+JsTemplateElementList = AnyJsTemplateElement*
 
-JsAnyTemplateElement =
+AnyJsTemplateElement =
 	JsTemplateChunkElement
 	| JsTemplateElement
 
@@ -337,7 +339,7 @@ JsTemplateChunkElement = 'template_chunk'
 
 JsTemplateElement =
 	'dollar_curly'
-	expression: JsAnyExpression
+	expression: AnyJsExpression
 	'}'
 
 JsThisExpression = 'this'
@@ -347,13 +349,13 @@ JsSuperExpression = 'super'
 // new expression
 JsNewExpression =
 	'new'
-	callee: JsAnyExpression
+	callee: AnyJsExpression
 	type_arguments: TsTypeArguments?
 	arguments: JsCallArguments?
 
 // call expression
 JsCallExpression =
-	callee: JsAnyExpression
+	callee: AnyJsExpression
 	optional_chain: '?.'?
 	type_arguments: TsTypeArguments?
 	arguments: JsCallArguments
@@ -361,7 +363,7 @@ JsCallExpression =
 
 JsAwaitExpression =
 	'await'
-	argument: JsAnyExpression
+	argument: AnyJsExpression
 
 
 JsYieldExpression =
@@ -370,31 +372,31 @@ JsYieldExpression =
 
 JsYieldArgument =
 	'*'?
-	expression: JsAnyExpression
+	expression: AnyJsExpression
 
 JsImportCallExpression =
 	'import'
 	arguments: JsCallArguments
 
 // new target expression
-NewTarget = 'new' '.' 'target'
+JsNewTargetExpression = 'new' '.' 'target'
 
 
 JsConditionalExpression =
-	test: JsAnyExpression
+	test: AnyJsExpression
 	'?'
-	consequent: JsAnyExpression
+	consequent: AnyJsExpression
 	':'
-	alternate: JsAnyExpression
+	alternate: AnyJsExpression
 
 // import meta expression
-ImportMeta = 'import' '.' 'meta'
+JsImportMetaExpression = 'import' '.' 'meta'
 
 JsFunctionExpression =
 	'async'?
 	'function'
 	'*'?
-	id: JsAnyBinding?
+	id: AnyJsBinding?
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
@@ -404,13 +406,13 @@ JsFunctionExpression =
 JsArrowFunctionExpression =
 	'async'?
 	type_parameters: TsTypeParameters?
-	parameters: JsAnyArrowFunctionParameters
+	parameters: AnyJsArrowFunctionParameters
 	return_type_annotation: TsReturnTypeAnnotation?
 	'=>'
-	body: JsAnyFunctionBody
+	body: AnyJsFunctionBody
 
-JsAnyArrowFunctionParameters = JsParameters | JsAnyBinding
-JsAnyFunctionBody = JsAnyExpression | JsFunctionBody
+AnyJsArrowFunctionParameters = JsParameters | AnyJsBinding
+AnyJsFunctionBody = AnyJsExpression | JsFunctionBody
 
 // Array expression
 JsArrayExpression =
@@ -418,33 +420,33 @@ JsArrayExpression =
 	elements: JsArrayElementList
 	']'
 
-JsArrayElementList = (JsAnyArrayElement (',' JsAnyArrayElement)* ','?)
+JsArrayElementList = (AnyJsArrayElement (',' AnyJsArrayElement)* ','?)
 
-JsAnyArrayElement =
-	JsAnyExpression
+AnyJsArrayElement =
+	AnyJsExpression
 	| JsSpread
 	| JsArrayHole
 
 JsArrayHole = hole: ''?
 
 JsAssignmentExpression =
-  left: JsAnyAssignmentPattern
+  left: AnyJsAssignmentPattern
   operator_token: (
 		'=' |'+=' | '-=' | '*=' | '/=' | '%=' |
 		'**=' | '>>=' | '<<=' | '>>>=' | '&=' |
 		'|=' | '^=' | '&&=' | '||=' | '??='
   )
-  right: JsAnyExpression
+  right: AnyJsExpression
 
 
 JsSequenceExpression =
-	left: JsAnyExpression
+	left: AnyJsExpression
 	comma: ','
-	right: JsAnyExpression
+	right: AnyJsExpression
 
 
 JsParenthesizedExpression =
-	'(' expression: JsAnyExpression ')'
+	'(' expression: AnyJsExpression ')'
 
 
 JsIdentifierExpression = name: JsReferenceIdentifier
@@ -452,64 +454,64 @@ JsIdentifierExpression = name: JsReferenceIdentifier
 // a.b
 // a.#b
 JsStaticMemberExpression =
-	object: JsAnyExpression
+	object: AnyJsExpression
 	operator_token: ('.' | '?.')
-	member: JsAnyName
+	member: AnyJsName
 
 // a[b]
 JsComputedMemberExpression =
-	object: JsAnyExpression
+	object: AnyJsExpression
 	optional_chain: '?.'?
 	'['
-	member: JsAnyExpression
+	member: AnyJsExpression
 	']'
 
 JsBinaryExpression =
-    left: JsAnyExpression
+    left: AnyJsExpression
     operator_token: (
     	'<' | '>' | '<=' | '>=' | '==' | '===' | '!=' | '!=='
     	| '+' | '-' | '*' | '/' | '%' | '**' | '<<' | '>>' | '>>>'
     	| '&' | '|' | '^'
 		)
-    right: JsAnyExpression
+    right: AnyJsExpression
 
 JsInstanceofExpression =
-	left: JsAnyExpression
+	left: AnyJsExpression
 	'instanceof'
-	right: JsAnyExpression
+	right: AnyJsExpression
 
 JsInExpression =
-	property: JsAnyInProperty
+	property: AnyJsInProperty
 	'in'
-	object: JsAnyExpression
+	object: AnyJsExpression
 
-JsAnyInProperty =
+AnyJsInProperty =
 	JsPrivateName
-	| JsAnyExpression
+	| AnyJsExpression
 
 JsLogicalExpression =
-	left: JsAnyExpression
+	left: AnyJsExpression
 	operator_token: ('??' | '||' | '&&')
-	right: JsAnyExpression
+	right: AnyJsExpression
 
 // unary expression
 JsUnaryExpression =
   operator_token: ('delete' | 'void' | 'typeof' | '+' | '-' | '~' | '!')
-  argument: JsAnyExpression
+  argument: AnyJsExpression
 
 JsPreUpdateExpression =
     operator_token: ('++' | '--')
-    operand: JsAnyAssignment
+    operand: AnyJsAssignment
 
 JsPostUpdateExpression =
-    operand: JsAnyAssignment
+    operand: AnyJsAssignment
     operator_token: ('++' | '--')
 
 
 ///////////////
 // OBJECTS
 ///////////////
-JsAnyObjectMemberName =
+AnyJsObjectMemberName =
 	JsLiteralMemberName
 	| JsComputedMemberName
 
@@ -518,30 +520,30 @@ JsObjectExpression =
 	members: JsObjectMemberList
 	'}'
 
-JsObjectMemberList = (JsAnyObjectMember (',' JsAnyObjectMember)* ','?)
+JsObjectMemberList = (AnyJsObjectMember (',' AnyJsObjectMember)* ','?)
 
-JsAnyObjectMember =
+AnyJsObjectMember =
 	JsPropertyObjectMember
 	| JsMethodObjectMember
 	| JsGetterObjectMember
 	| JsSetterObjectMember
 	| JsShorthandPropertyObjectMember
 	| JsSpread
-	| JsUnknownMember
+	| JsBogusMember
 
 
 // { a: 5, b: () => {} }
 //   ^^^^  ^^^^^^^^^^^
 JsPropertyObjectMember =
-	name: JsAnyObjectMemberName
+	name: AnyJsObjectMemberName
 	':'
-	value: JsAnyExpression
+	value: AnyJsExpression
 
 // { get a() {} }
 //   ^^^^^^^^^^
 JsGetterObjectMember =
 	'get'
-	name: JsAnyObjectMemberName
+	name: AnyJsObjectMemberName
 	'('')'
 	return_type: TsTypeAnnotation?
 	body: JsFunctionBody
@@ -550,9 +552,9 @@ JsGetterObjectMember =
 //    ^^^^^^^^^^^^^^^
 JsSetterObjectMember =
 	'set'
-	name: JsAnyObjectMemberName
+	name: AnyJsObjectMemberName
 	'('
-	parameter: JsAnyFormalParameter
+	parameter: AnyJsFormalParameter
 	')'
 	body: JsFunctionBody
 
@@ -561,7 +563,7 @@ JsSetterObjectMember =
 JsMethodObjectMember =
 	'async'?
 	'*'?
-	name: JsAnyObjectMemberName
+	name: AnyJsObjectMemberName
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
@@ -578,7 +580,7 @@ JsShorthandPropertyObjectMember = name: JsReferenceIdentifier
 JsClassDeclaration =
 	'abstract'?
 	'class'
-	id: JsAnyBinding
+	id: AnyJsBinding
 	type_parameters: TsTypeParameters?
 	extends_clause: JsExtendsClause?
 	implements_clause: TsImplementsClause?
@@ -588,7 +590,7 @@ JsClassDeclaration =
 
 JsClassExpression =
 	'class'
-	id: JsAnyBinding?
+	id: AnyJsBinding?
 	type_parameters: TsTypeParameters?
 	extends_clause: JsExtendsClause?
 	implements_clause: TsImplementsClause?
@@ -596,9 +598,9 @@ JsClassExpression =
 	members: JsClassMemberList
 	'}'
 
-JsClassMemberList = JsAnyClassMember*
+JsClassMemberList = AnyJsClassMember*
 
-JsAnyClass =
+AnyJsClass =
 	JsClassDeclaration
 	| JsClassExpression
 	| JsClassExportDefaultDeclaration
@@ -607,7 +609,7 @@ JsAnyClass =
 //            ^^^^^^^^^
 JsExtendsClause =
 	'extends'
-	super_class: JsAnyExpression
+	super_class: AnyJsExpression
 	type_arguments: TsTypeArguments?
 
 TsImplementsClause =
@@ -618,12 +620,12 @@ TsImplementsClause =
 //              ^^^^^
 JsPrivateClassMemberName = '#' id: 'ident'
 
-JsAnyClassMemberName =
+AnyJsClassMemberName =
 	JsLiteralMemberName
 	| JsComputedMemberName
 	| JsPrivateClassMemberName
 
-JsAnyClassMember =
+AnyJsClassMember =
 	JsConstructorClassMember
 	| JsStaticInitializationBlockClassMember
 	| JsPropertyClassMember
@@ -637,7 +639,7 @@ JsAnyClassMember =
 	| TsSetterSignatureClassMember
 	| TsIndexSignatureClassMember
 	| JsEmptyClassMember
-	| JsUnknownMember
+	| JsBogusMember
 
 JsStaticModifier = modifier: 'static'
 TsDeclareModifier = modifier: 'declare'
@@ -672,10 +674,10 @@ JsConstructorParameters =
 	parameters: JsConstructorParameterList
 	')'
 
-JsConstructorParameterList = (JsAnyConstructorParameter (',' JsAnyConstructorParameter)* ','?)
+JsConstructorParameterList = (AnyJsConstructorParameter (',' AnyJsConstructorParameter)* ','?)
 
-JsAnyConstructorParameter =
-	JsAnyFormalParameter
+AnyJsConstructorParameter =
+	AnyJsFormalParameter
 	| JsRestParameter
 	| TsPropertyParameter
 
@@ -683,11 +685,11 @@ JsAnyConstructorParameter =
 //             ^^^^^^^^^^^^^^^^^
 TsPropertyParameter =
 	modifiers: TsPropertyParameterModifierList
-	formal_parameter: JsAnyFormalParameter
+	formal_parameter: AnyJsFormalParameter
 
-TsPropertyParameterModifierList = TsAnyPropertyParameterModifier*
+TsPropertyParameterModifierList = AnyTsPropertyParameterModifier*
 
-TsAnyPropertyParameterModifier =
+AnyTsPropertyParameterModifier =
 	TsAccessibilityModifier
 	| TsReadonlyModifier
 	| TsOverrideModifier
@@ -702,28 +704,28 @@ TsConstructorSignatureClassMember =
 //              ^^ ^^^^^^ ^^^^^^^^^
 JsPropertyClassMember =
 	modifiers: JsPropertyModifierList
-	name: JsAnyClassMemberName
-	property_annotation: TsAnyPropertyAnnotation?
+	name: AnyJsClassMemberName
+	property_annotation: AnyTsPropertyAnnotation?
 	value: JsInitializerClause?
 	';'?
 
-JsAnyPropertyModifier =
+AnyJsPropertyModifier =
 	TsAccessibilityModifier
 	| JsStaticModifier
 	| TsReadonlyModifier
 	| TsOverrideModifier
 
-JsPropertyModifierList = JsAnyPropertyModifier*
+JsPropertyModifierList = AnyJsPropertyModifier*
 
 TsPropertySignatureClassMember =
 	modifiers: TsPropertySignatureModifierList
-	name: JsAnyClassMemberName
-	property_annotation: TsAnyPropertySignatureAnnotation?
+	name: AnyJsClassMemberName
+	property_annotation: AnyTsPropertySignatureAnnotation?
 	';'?
 
-TsPropertySignatureModifierList = TsAnyPropertySignatureModifier*
+TsPropertySignatureModifierList = AnyTsPropertySignatureModifier*
 
-TsAnyPropertySignatureModifier =
+AnyTsPropertySignatureModifier =
 	TsDeclareModifier
   	| TsAccessibilityModifier
   	| JsStaticModifier
@@ -731,11 +733,11 @@ TsAnyPropertySignatureModifier =
   	| TsOverrideModifier
   	| TsAbstractModifier
 
-TsAnyPropertySignatureAnnotation =
+AnyTsPropertySignatureAnnotation =
 	TsTypeAnnotation
 	| TsOptionalPropertyAnnotation
 
-TsAnyPropertyAnnotation =
+AnyTsPropertyAnnotation =
 	TsTypeAnnotation
 	| TsOptionalPropertyAnnotation
 	| TsDefinitePropertyAnnotation
@@ -754,32 +756,32 @@ JsMethodClassMember =
 	modifiers: JsMethodModifierList
 	'async'?
 	'*'?
-	name: JsAnyClassMemberName
+	name: AnyJsClassMemberName
 	'?'?
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
 	body: JsFunctionBody
 
-JsAnyMethodModifier =
+AnyJsMethodModifier =
 	TsAccessibilityModifier
 	| JsStaticModifier
 	| TsOverrideModifier
 
-JsMethodModifierList = JsAnyMethodModifier*
+JsMethodModifierList = AnyJsMethodModifier*
 
 TsMethodSignatureClassMember =
 	modifiers: TsMethodSignatureModifierList
 	'async'?
-	name: JsAnyClassMemberName
+	name: AnyJsClassMemberName
 	'?'?
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
 	';'?
 
-TsMethodSignatureModifierList = TsAnyMethodSignatureModifier*
-TsAnyMethodSignatureModifier =
+TsMethodSignatureModifierList = AnyTsMethodSignatureModifier*
+AnyTsMethodSignatureModifier =
 	TsAccessibilityModifier
 	| JsStaticModifier
 	| TsOverrideModifier
@@ -790,7 +792,7 @@ TsAnyMethodSignatureModifier =
 JsGetterClassMember =
 	modifiers: JsMethodModifierList
 	'get'
-	name: JsAnyClassMemberName
+	name: AnyJsClassMemberName
 	'(' ')'
 	return_type: TsTypeAnnotation?
 	body: JsFunctionBody
@@ -798,7 +800,7 @@ JsGetterClassMember =
 TsGetterSignatureClassMember =
 	modifiers: TsMethodSignatureModifierList
 	'get'
-	name: JsAnyClassMemberName
+	name: AnyJsClassMemberName
 	'(' ')'
 	return_type: TsTypeAnnotation?
 	';'?
@@ -808,18 +810,18 @@ TsGetterSignatureClassMember =
 JsSetterClassMember =
 	modifiers: JsMethodModifierList
 	'set'
-	name: JsAnyClassMemberName
+	name: AnyJsClassMemberName
 	'('
-	parameter: JsAnyFormalParameter
+	parameter: AnyJsFormalParameter
 	')'
 	body: JsFunctionBody
 
 TsSetterSignatureClassMember =
 	modifiers: TsMethodSignatureModifierList
 	'set'
-	name: JsAnyClassMemberName
+	name: AnyJsClassMemberName
 	'('
-	parameter: JsAnyFormalParameter
+	parameter: AnyJsFormalParameter
 	')'
 	';'?
 
@@ -833,11 +835,11 @@ TsIndexSignatureClassMember =
 	type_annotation: TsTypeAnnotation
 	';'?
 
-TsAnyIndexSignatureModifier =
+AnyTsIndexSignatureModifier =
 	JsStaticModifier
 	| TsReadonlyModifier
 
-TsIndexSignatureModifierList = TsAnyIndexSignatureModifier*
+TsIndexSignatureModifierList = AnyTsIndexSignatureModifier*
 
 JsEmptyClassMember = ';'
 
@@ -845,27 +847,28 @@ JsEmptyClassMember = ';'
 // ASSIGNMENT TARGETS
 ///////////////
 
-JsAnyAssignment =
+AnyJsAssignment =
 	JsIdentifierAssignment
 	| JsStaticMemberAssignment
 	| JsComputedMemberAssignment
 	| JsParenthesizedAssignment
 	| TsNonNullAssertionAssignment
 	| TsAsAssignment
+	| TsSatisfiesAssignment
 	| TsTypeAssertionAssignment
-	| JsUnknownAssignment
+	| JsBogusAssignment
 
 
 JsAssignmentWithDefault =
-	pattern: JsAnyAssignmentPattern
+	pattern: AnyJsAssignmentPattern
 	'='
-	default: JsAnyExpression
+	default: AnyJsExpression
 
 // (a) = "test"
 // ^^^
 JsParenthesizedAssignment =
 	'('
-	assignment: JsAnyAssignment
+	assignment: AnyJsAssignment
 	')'
 
 // Assignment to an identifier from the lexical scope
@@ -876,38 +879,46 @@ JsIdentifierAssignment = name: 'ident'
 // a.b = a.#b = "test"
 // ^^^   ^^^^
 JsStaticMemberAssignment =
-	object: JsAnyExpression
+	object: AnyJsExpression
 	'.'
-	member: JsAnyName
+	member: AnyJsName
 
 // a['b'] = a[expr] = "test"
 // ^^^^^^   ^^^^^^^
 JsComputedMemberAssignment =
-	object: JsAnyExpression
+	object: AnyJsExpression
 	'['
-	member: JsAnyExpression
+	member: AnyJsExpression
 	']'
 
 TsNonNullAssertionAssignment =
-	assignment: JsAnyAssignment
+	assignment: AnyJsAssignment
 	'!'
 
 // Only valid inside of parenthesized assignments
 // (a as string) = "test";
 //  ^^^^^^^^^^^^
 TsAsAssignment =
-	assignment: JsAnyAssignment
+	assignment: AnyJsAssignment
 	'as'
-	type: TsType
+	type: AnyTsType
+
+// Only valid inside of parenthesized assignments
+// (a satisfies string) = "test";
+//  ^^^^^^^^^^^^
+TsSatisfiesAssignment =
+	assignment: AnyJsAssignment
+	'satisfies'
+	type: AnyTsType
 
 TsTypeAssertionAssignment =
 	'<'
-	type: TsType
+	type: AnyTsType
 	'>'
-	assignment: JsAnyAssignment
+	assignment: AnyJsAssignment
 
-JsAnyAssignmentPattern =
-	JsAnyAssignment
+AnyJsAssignmentPattern =
+	AnyJsAssignment
 	| JsArrayAssignmentPattern
 	| JsObjectAssignmentPattern
 
@@ -919,11 +930,11 @@ JsArrayAssignmentPattern =
 	elements: JsArrayAssignmentPatternElementList
 	']'
 
-JsArrayAssignmentPatternElementList = (JsAnyArrayAssignmentPatternElement (',' JsAnyArrayAssignmentPatternElement)* ','?)
+JsArrayAssignmentPatternElementList = (AnyJsArrayAssignmentPatternElement (',' AnyJsArrayAssignmentPatternElement)* ','?)
 
-JsAnyArrayAssignmentPatternElement =
+AnyJsArrayAssignmentPatternElement =
 	JsAssignmentWithDefault
-	| JsAnyAssignmentPattern
+	| AnyJsAssignmentPattern
 	| JsArrayAssignmentPatternRestElement
 	| JsArrayHole
 
@@ -931,7 +942,7 @@ JsAnyArrayAssignmentPatternElement =
 //        ^^^^^^^
 JsArrayAssignmentPatternRestElement =
 	'...'
-	pattern: JsAnyAssignmentPattern
+	pattern: AnyJsAssignmentPattern
 
 // ({a, b: x, ...rest} = c)
 //  ^^^^^^^^^^^^^^^^^^
@@ -940,13 +951,13 @@ JsObjectAssignmentPattern =
 	properties: JsObjectAssignmentPatternPropertyList
 	'}'
 
-JsObjectAssignmentPatternPropertyList = (JsAnyObjectAssignmentPatternMember (',' JsAnyObjectAssignmentPatternMember)* ','?)
+JsObjectAssignmentPatternPropertyList = (AnyJsObjectAssignmentPatternMember (',' AnyJsObjectAssignmentPatternMember)* ','?)
 
-JsAnyObjectAssignmentPatternMember =
+AnyJsObjectAssignmentPatternMember =
 	JsObjectAssignmentPatternShorthandProperty
 	| JsObjectAssignmentPatternProperty
 	| JsObjectAssignmentPatternRest
-	| JsUnknownAssignment
+	| JsBogusAssignment
 
 // ({ x } = b) or ({ x = "test" } = b)
 //    ^              ^^^^^^^^^^
@@ -957,24 +968,24 @@ JsObjectAssignmentPatternShorthandProperty =
 // ({ x: a } = b) or ({ x: a = "test" } = b)
 //    ^^^^              ^^^^^^^^^^^^^
 JsObjectAssignmentPatternProperty =
-	member: JsAnyObjectMemberName
+	member: AnyJsObjectMemberName
 	':'
-	pattern: JsAnyAssignmentPattern
+	pattern: AnyJsAssignmentPattern
 	init: JsInitializerClause?
 
 // ({ a, ...b } = a)
 //       ^^^^
 JsObjectAssignmentPatternRest =
 	'...'
-	target: JsAnyAssignment
+	target: AnyJsAssignment
 
 ///////////////
 // BINDINGS
 ///////////////
 
-JsAnyBinding =
+AnyJsBinding =
 	JsIdentifierBinding
-	| JsUnknownBinding
+	| JsBogusBinding
 
 // Binds a value to an identifier.
 // let x = OR function(test) {}
@@ -985,12 +996,12 @@ JsIdentifierBinding =
 // [ a = "b"] = [];
 //   ^^^^^^^
 JsBindingPatternWithDefault =
-	pattern: JsAnyBindingPattern
+	pattern: AnyJsBindingPattern
 	'='
-	default: JsAnyExpression
+	default: AnyJsExpression
 
-JsAnyBindingPattern =
-	JsAnyBinding
+AnyJsBindingPattern =
+	AnyJsBinding
 	| JsArrayBindingPattern
 	| JsObjectBindingPattern
 
@@ -1001,17 +1012,17 @@ JsArrayBindingPattern =
 	elements: JsArrayBindingPatternElementList
 	']'
 
-JsArrayBindingPatternElementList = (JsAnyArrayBindingPatternElement (',' JsAnyArrayBindingPatternElement)* ','?)
+JsArrayBindingPatternElementList = (AnyJsArrayBindingPatternElement (',' AnyJsArrayBindingPatternElement)* ','?)
 
-JsAnyArrayBindingPatternElement =
+AnyJsArrayBindingPatternElement =
 	JsArrayHole
-	| JsAnyBindingPattern
+	| AnyJsBindingPattern
 	| JsBindingPatternWithDefault
 	| JsArrayBindingPatternRestElement
 
 JsArrayBindingPatternRestElement =
 	'...'
-	pattern: JsAnyBindingPattern
+	pattern: AnyJsBindingPattern
 
 // let { a, b} = c;
 //     ^^^^^^^
@@ -1020,22 +1031,22 @@ JsObjectBindingPattern =
 	properties: JsObjectBindingPatternPropertyList
 	'}'
 
-JsObjectBindingPatternPropertyList = (JsAnyObjectBindingPatternMember (',' JsAnyObjectBindingPatternMember)* ','?)
+JsObjectBindingPatternPropertyList = (AnyJsObjectBindingPatternMember (',' AnyJsObjectBindingPatternMember)* ','?)
 
-JsAnyObjectBindingPatternMember =
+AnyJsObjectBindingPatternMember =
 	JsObjectBindingPatternProperty
 	| JsObjectBindingPatternRest
 	| JsObjectBindingPatternShorthandProperty
-	| JsUnknownBinding
+	| JsBogusBinding
 
 // let { a: b.m } = {}
 //       ^^^^^^
 // let { a: b.m = "test" } = {}
 //       ^^^^^^^^^^^^^^^
 JsObjectBindingPatternProperty =
-	member: JsAnyObjectMemberName
+	member: AnyJsObjectMemberName
 	':'
-	pattern: JsAnyBindingPattern
+	pattern: AnyJsBindingPattern
 	init: JsInitializerClause?
 
 // let { a } = c
@@ -1043,21 +1054,21 @@ JsObjectBindingPatternProperty =
 // let { a = "test" } = c
 //       ^^^^^^^^^^
 JsObjectBindingPatternShorthandProperty =
-	identifier: JsAnyBinding
+	identifier: AnyJsBinding
 	init: JsInitializerClause?
 
 // let { ...a } = c
 //       ^^^^
 JsObjectBindingPatternRest =
 	'...'
-	binding: JsAnyBinding
+	binding: AnyJsBinding
 
 
 ///////////////
 // LITERALS
 ///////////////
 
-JsAnyLiteralExpression =
+AnyJsLiteralExpression =
 	JsStringLiteralExpression
 	| JsNumberLiteralExpression
 	| JsBigIntLiteralExpression
@@ -1087,7 +1098,7 @@ JsRegexLiteralExpression = value: 'js_regex_literal'
 // DECLARATIONS
 ///////////////
 
-JsAnyDeclaration =
+AnyJsDeclaration =
 	JsClassDeclaration
 	| JsFunctionDeclaration
 	| JsVariableDeclaration
@@ -1105,7 +1116,7 @@ JsAnyDeclaration =
 //        ^^^^^^^^^
 // declare let a, b;
 //         ^^^^^^^^^
-JsAnyDeclarationClause =
+AnyJsDeclarationClause =
 	JsClassDeclaration
 	| JsFunctionDeclaration
 	| JsVariableDeclarationClause
@@ -1127,7 +1138,7 @@ JsFunctionDeclaration =
 	'async'?
 	'function'
 	'*'?
-	id: JsAnyBinding
+	id: AnyJsBinding
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
@@ -1135,11 +1146,11 @@ JsFunctionDeclaration =
 
 TsTypeAnnotation =
 	':'
-	type: TsType
+	type: AnyTsType
 
 TsReturnTypeAnnotation =
 	':'
-	type: TsAnyReturnType
+	type: AnyTsReturnType
 
 // let a, b = c;
 JsVariableStatement =
@@ -1158,11 +1169,11 @@ JsVariableDeclaratorList = (JsVariableDeclarator (',' JsVariableDeclarator)*)
 // let b = c;
 //     ^^^^^
 JsVariableDeclarator =
-    id: JsAnyBindingPattern
-    variable_annotation: TsAnyVariableAnnotation?
+    id: AnyJsBindingPattern
+    variable_annotation: AnyTsVariableAnnotation?
     initializer: JsInitializerClause?
 
-TsAnyVariableAnnotation =
+AnyTsVariableAnnotation =
 	TsTypeAnnotation
 	| TsDefiniteVariableAnnotation
 
@@ -1175,18 +1186,18 @@ TsDefiniteVariableAnnotation =
 // MODULE SYNTAX
 ///////////////
 
-JsAnyModuleItem =
-	JsAnyStatement
+AnyJsModuleItem =
+	AnyJsStatement
 	| JsExport
 	| JsImport
-JsModuleItemList = JsAnyModuleItem*
+JsModuleItemList = AnyJsModuleItem*
 
 JsImport =
 	'import'
-	import_clause: JsAnyImportClause
+	import_clause: AnyJsImportClause
 	';'?
 
-JsAnyImportClause =
+AnyJsImportClause =
     JsImportBareClause
     | JsImportNamedClause
     | JsImportDefaultClause
@@ -1202,7 +1213,7 @@ JsImportBareClause =
 // import type foo from "mod"
 JsImportDefaultClause =
 		'type'?
-		local_name: JsAnyBinding
+		local_name: AnyJsBinding
 		'from'
 		source: JsModuleSource
 		assertion: JsImportAssertion?
@@ -1213,7 +1224,7 @@ JsImportNamespaceClause =
   'type'?
 	'*'
 	'as'
-	local_name: JsAnyBinding
+	local_name: AnyJsBinding
 	'from'
 	source: JsModuleSource
 	assertion: JsImportAssertion?
@@ -1232,7 +1243,7 @@ JsImportNamespaceClause =
 JsImportNamedClause =
     'type'?
     default_specifier: JsDefaultImportSpecifier?
-    named_import: JsAnyNamedImport
+    named_import: AnyJsNamedImport
     'from'
     source: JsModuleSource
     assertion: JsImportAssertion?
@@ -1240,10 +1251,10 @@ JsImportNamedClause =
 // import a, { b, c } from "d";
 //        ^^
 JsDefaultImportSpecifier =
-    local_name: JsAnyBinding
+    local_name: AnyJsBinding
     trailing_comma: ','
 
-JsAnyNamedImport =
+AnyJsNamedImport =
 	JsNamedImportSpecifiers
 	|  JsNamespaceImportSpecifier
 
@@ -1252,7 +1263,7 @@ JsAnyNamedImport =
 JsNamespaceImportSpecifier =
     '*'
     'as'
-    local_name: JsAnyBinding
+    local_name: AnyJsBinding
 
 // import a, { b, c } from "d";
 //           ^^^^^^^^
@@ -1261,12 +1272,12 @@ JsNamedImportSpecifiers =
     specifiers: JsNamedImportSpecifierList
     '}'
 
-JsNamedImportSpecifierList = (JsAnyNamedImportSpecifier (',' JsAnyNamedImportSpecifier)* ','?)
+JsNamedImportSpecifierList = (AnyJsNamedImportSpecifier (',' AnyJsNamedImportSpecifier)* ','?)
 
-JsAnyNamedImportSpecifier =
+AnyJsNamedImportSpecifier =
     JsShorthandNamedImportSpecifier
     | JsNamedImportSpecifier
-    | JsUnknownNamedImportSpecifier
+    | JsBogusNamedImportSpecifier
 
 // import { foo as test } from "mod";
 //          ^^^^^^^^^^^
@@ -1276,13 +1287,13 @@ JsNamedImportSpecifier =
     'type'?
     name: JsLiteralExportName
     'as'
-    local_name: JsAnyBinding
+    local_name: AnyJsBinding
 
 // import { type foo } from "mod";
 //          ^^^^^^^^
 JsShorthandNamedImportSpecifier =
     'type'?
-    local_name: JsAnyBinding
+    local_name: AnyJsBinding
 
 // import a from "mod" assert { type: "json" }
 //                     ^^^^^^^^^^^^^^^^^^^^^^^
@@ -1292,11 +1303,11 @@ JsImportAssertion =
     assertions: JsImportAssertionEntryList
     '}'
 
-JsImportAssertionEntryList = (JsAnyImportAssertionEntry (',' JsAnyImportAssertionEntry)* ','?)
+JsImportAssertionEntryList = (AnyJsImportAssertionEntry (',' AnyJsImportAssertionEntry)* ','?)
 
-JsAnyImportAssertionEntry =
+AnyJsImportAssertionEntry =
 	JsImportAssertionEntry
-	| JsUnknownImportAssertionEntry
+	| JsBogusImportAssertionEntry
 
 // import a from "mod" assert { type: "json" }
 //                              ^^^^^^^^^^^^
@@ -1321,7 +1332,7 @@ JsModuleSource = value: 'js_string_literal'
 
 JsExport =
 	'export'
-	export_clause: JsAnyExportClause
+	export_clause: AnyJsExportClause
 
 
 // export function a() {}
@@ -1342,13 +1353,13 @@ JsExport =
 // export as namespace c;
 // export = b;
 // export import a = b;
-JsAnyExportClause =
+AnyJsExportClause =
 	JsExportDefaultDeclarationClause
 	| JsExportDefaultExpressionClause
 	| JsExportNamedClause
 	| JsExportFromClause
 	| JsExportNamedFromClause
-	| JsAnyDeclarationClause
+	| AnyJsDeclarationClause
 	| TsExportAsNamespaceClause
 	| TsExportAssignmentClause
 	| TsExportDeclareClause
@@ -1358,17 +1369,17 @@ JsAnyExportClause =
 //        ^^^^^^^^^^
 JsExportDefaultExpressionClause =
 	'default'
-	expression: JsAnyExpression
+	expression: AnyJsExpression
 	';'?
 
 // export default class {}
 //        ^^^^^^^^^^^^^^^^
 JsExportDefaultDeclarationClause =
 	'default'
-	declaration: JsAnyExportDefaultDeclaration
+	declaration: AnyJsExportDefaultDeclaration
 	';'?
 
-JsAnyExportDefaultDeclaration =
+AnyJsExportDefaultDeclaration =
 	JsClassExportDefaultDeclaration
 	| JsFunctionExportDefaultDeclaration
 	| TsInterfaceDeclaration
@@ -1380,7 +1391,7 @@ JsAnyExportDefaultDeclaration =
 JsClassExportDefaultDeclaration =
 	'abstract'?
 	'class'
-	id: JsAnyBinding?
+	id: AnyJsBinding?
 	type_parameters: TsTypeParameters?
 	extends_clause: JsExtendsClause?
 	implements_clause: TsImplementsClause?
@@ -1394,7 +1405,7 @@ JsFunctionExportDefaultDeclaration =
 	'async'?
 	'function'
 	'*'?
-	id: JsAnyBinding?
+	id: AnyJsBinding?
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
@@ -1409,9 +1420,9 @@ JsExportNamedClause =
 	'}'
 	';'?
 
-JsExportNamedSpecifierList = (JsAnyExportNamedSpecifier (',' JsAnyExportNamedSpecifier)* ','?)
+JsExportNamedSpecifierList = (AnyJsExportNamedSpecifier (',' AnyJsExportNamedSpecifier)* ','?)
 
-JsAnyExportNamedSpecifier =
+AnyJsExportNamedSpecifier =
     JsExportNamedShorthandSpecifier
     | JsExportNamedSpecifier
 
@@ -1486,14 +1497,14 @@ TsExportAsNamespaceClause =
 // export = class {}
 TsExportAssignmentClause =
 	'='
-	expression: JsAnyExpression
+	expression: AnyJsExpression
 	';'?
 
 // export declare class A {}
 //        ^^^^^^^^^^^^^^^^^^
 TsExportDeclareClause =
 	'declare'
-	declaration: JsAnyDeclarationClause
+	declaration: AnyJsDeclarationClause
 
 ///////////////
 // AUXILIARY
@@ -1505,7 +1516,7 @@ TsExportDeclareClause =
 //   ^^^^
 JsSpread =
 	'...'
-	argument: JsAnyExpression
+	argument: AnyJsExpression
 
 
 // Reference to an identifier from the lexical scope
@@ -1519,12 +1530,12 @@ JsPrivateName =
 	'#'
 	value: 'ident'
 
-JsAnyName =
+AnyJsName =
 	JsName
 	| JsPrivateName
 
 
-JsAnyFunction =
+AnyJsFunction =
 	JsFunctionExpression
 	| JsFunctionDeclaration
 	| JsArrowFunctionExpression
@@ -1539,7 +1550,7 @@ JsLiteralMemberName = value: ('ident' | 'js_string_literal' | 'js_number_literal
 //   ^^^^^^^^
 JsComputedMemberName =
 	'['
-	expression: JsAnyExpression
+	expression: AnyJsExpression
 	']'
 
 
@@ -1548,21 +1559,21 @@ JsParameters =
 	items: JsParameterList
 	')'
 
-JsParameterList = (JsAnyParameter (',' JsAnyParameter)* ','?)
+JsParameterList = (AnyJsParameter (',' AnyJsParameter)* ','?)
 
-JsAnyFormalParameter =
+AnyJsFormalParameter =
 	JsFormalParameter
-	| JsUnknownParameter
+	| JsBogusParameter
 
-JsAnyParameter =
-	JsAnyFormalParameter
+AnyJsParameter =
+	AnyJsFormalParameter
 	| JsRestParameter
 	| TsThisParameter
 
 // (a?: string) => {}
 //  ^^^^^^^^^^
 JsFormalParameter =
-	binding: JsAnyBindingPattern
+	binding: AnyJsBindingPattern
 	'?'?
 	type_annotation: TsTypeAnnotation?
 	initializer: JsInitializerClause?
@@ -1571,7 +1582,7 @@ JsFormalParameter =
 //  ^^^^
 JsRestParameter =
 	'...'
-	binding: JsAnyBindingPattern
+	binding: AnyJsBindingPattern
 	type_annotation: TsTypeAnnotation?
 
 // function a(this: string) {}
@@ -1582,10 +1593,10 @@ TsThisParameter =
 
 JsCallArguments = '(' args: JsCallArgumentList ')'
 
-JsCallArgumentList = (JsAnyCallArgument (',' JsAnyCallArgument)* ','?)
+JsCallArgumentList = (AnyJsCallArgument (',' AnyJsCallArgument)* ','?)
 
-JsAnyCallArgument =
-	JsAnyExpression
+AnyJsCallArgument =
+	AnyJsExpression
 	| JsSpread
 
 
@@ -1595,7 +1606,7 @@ JsAnyCallArgument =
 //           ^^^^
 JsInitializerClause =
 	'='
-	expression: JsAnyExpression
+	expression: AnyJsExpression
 
 JsFunctionBody =
 	'{'
@@ -1611,7 +1622,7 @@ JsFunctionBody =
 // Typescript definitions
 //
 
-TsType =
+AnyTsType =
 	// Predefined types
 	TsAnyType
 	| TsUnknownType
@@ -1649,6 +1660,7 @@ TsType =
 	| TsFunctionType
 	| TsConstructorType
 	| TsConditionalType
+	| TsBogusType
 
 // Predefined types
 TsAnyType = 'any'
@@ -1666,11 +1678,11 @@ TsThisType = 'this'
 
 TsParenthesizedType =
 	'('
-	ty: TsType
+	ty: AnyTsType
 	')'
 
 TsReferenceType =
-	name: TsAnyName
+	name: AnyTsName
 	type_arguments: TsTypeArguments?
 
 TsTypeAliasDeclaration =
@@ -1678,7 +1690,7 @@ TsTypeAliasDeclaration =
 	binding_identifier: TsIdentifierBinding
 	type_parameters: TsTypeParameters?
 	'='
-	ty: TsType
+	ty: AnyTsType
 	';'?
 
 // Binds a type identifier
@@ -1688,7 +1700,7 @@ TsIdentifierBinding = name: 'ident'
 TsEnumDeclaration =
 	'const'?
 	'enum'
-	id: JsAnyBinding
+	id: AnyJsBinding
 	'{'
 	members: TsEnumMemberList
 	'}'
@@ -1696,19 +1708,19 @@ TsEnumDeclaration =
 TsEnumMemberList = (TsEnumMember (',' TsEnumMember)* ','?)
 
 TsEnumMember =
-	name: JsAnyObjectMemberName
+	name: AnyJsObjectMemberName
 	initializer: JsInitializerClause?
 
 TsImportEqualsDeclaration =
 	'import'
 	'type'?
-	id: JsAnyBinding
+	id: AnyJsBinding
 	'='
-	module_reference: TsAnyModuleReference
+	module_reference: AnyTsModuleReference
 	';'?
 
-TsAnyModuleReference =
-	TsAnyName
+AnyTsModuleReference =
+	AnyTsName
 	| TsExternalModuleReference
 
 TsExternalModuleReference =
@@ -1727,7 +1739,7 @@ TsExternalModuleReference =
 TsDeclareFunctionDeclaration =
 	'async'?
 	'function'
-	id: JsAnyBinding
+	id: AnyJsBinding
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
@@ -1741,7 +1753,7 @@ TsDeclareFunctionDeclaration =
 TsDeclareFunctionExportDefaultDeclaration =
 	'async'?
 	'function'
-	id: JsAnyBinding?
+	id: AnyJsBinding?
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	return_type_annotation: TsReturnTypeAnnotation?
@@ -1750,7 +1762,7 @@ TsDeclareFunctionExportDefaultDeclaration =
 
 TsModuleDeclaration =
 	module_or_namespace: ('module' | 'namespace')
-	name: TsAnyModuleName
+	name: AnyTsModuleName
 	body: TsModuleBlock
 
 // declare global {}
@@ -1764,14 +1776,14 @@ TsModuleBlock =
 	items: JsModuleItemList
 	'}'
 
-TsAnyModuleName =
+AnyTsModuleName =
 	TsIdentifierBinding
 	| TsQualifiedModuleName
 
 // declare module a.b.c {}
 //                ^^^^^
 TsQualifiedModuleName =
-	left: TsAnyModuleName
+	left: AnyTsModuleName
 	'.'
 	right: JsName
 
@@ -1783,9 +1795,9 @@ TsQualifiedModuleName =
 TsExternalModuleDeclaration =
 	'module'
 	source: JsModuleSource
-	body: TsAnyExternalModuleDeclarationBody?
+	body: AnyTsExternalModuleDeclarationBody?
 
-TsAnyExternalModuleDeclarationBody =
+AnyTsExternalModuleDeclarationBody =
 	TsEmptyExternalModuleDeclarationBody
 	| TsModuleBlock
 
@@ -1796,14 +1808,14 @@ TsUnionType =
 	leading_separator: '|'?
 	types: TsUnionTypeVariantList
 
-TsUnionTypeVariantList = (TsType ('|' TsType)*)
+TsUnionTypeVariantList = (AnyTsType ('|' AnyTsType)*)
 
 // & a & b
 TsIntersectionType =
 	leading_separator: '&'?
 	types: TsIntersectionTypeElementList
 
-TsIntersectionTypeElementList = (TsType ('&' TsType)*)
+TsIntersectionTypeElementList = (AnyTsType ('&' AnyTsType)*)
 
 // keyof A;
 // ^^^^^^^
@@ -1813,7 +1825,7 @@ TsIntersectionTypeElementList = (TsType ('&' TsType)*)
 // ^^^^^^^^^^^^^^^^^
 TsTypeOperatorType =
 	operator_token: ('keyof' | 'unique' | 'readonly')
-	type: TsType
+	type: AnyTsType
 
 // infer A;
 // ^^^^^^^
@@ -1827,18 +1839,18 @@ TsFunctionType =
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	'=>'
-	return_type: TsAnyReturnType
+	return_type: AnyTsReturnType
 
-TsAnyReturnType =
-	TsType
+AnyTsReturnType =
+	AnyTsType
 	| TsPredicateReturnType
 	| TsAssertsReturnType
 
 // function test(a): a is string { return true }
 TsPredicateReturnType =
-	parameter_name: TsAnyTypePredicateParameterName
+	parameter_name: AnyTsTypePredicateParameterName
 	'is'
-	type: TsType
+	type: AnyTsType
 
 // function test(a): asserts a { ... }
 //                   ^^^^^^^^^
@@ -1846,21 +1858,21 @@ TsPredicateReturnType =
 //                    ^^^^^^^^^^^^^^^^^^^
 TsAssertsReturnType =
 	'asserts'
-	parameter_name: TsAnyTypePredicateParameterName
+	parameter_name: AnyTsTypePredicateParameterName
 	predicate: TsAssertsCondition?
 
 TsAssertsCondition =
 	'is'
-	type: TsType
+	type: AnyTsType
 
 
-TsAnyTypePredicateParameterName =
+AnyTsTypePredicateParameterName =
 	JsReferenceIdentifier
 	| TsThisType
 
 TsTypeofType =
 	'typeof'
-	expression_name: TsAnyName
+	expression_name: AnyTsName
 	type_arguments: TsTypeArguments?
 
 TsConstructorType =
@@ -1869,16 +1881,16 @@ TsConstructorType =
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
 	'=>'
-	return_type: TsType
+	return_type: AnyTsType
 
 TsConditionalType =
-	check_type: TsType
+	check_type: AnyTsType
 	'extends'
-	extends_type: TsType
+	extends_type: AnyTsType
 	'?'
-	true_type: TsType
+	true_type: AnyTsType
 	':'
-	false_type: TsType
+	false_type: AnyTsType
 
 
 // type A<X, Y> = { x: X, y: Y }
@@ -1902,11 +1914,11 @@ TsTypeParameterName = 'ident'
 
 TsTypeConstraintClause =
 	'extends'
-	type: TsType
+	type: AnyTsType
 
 TsDefaultTypeClause =
 	'='
-	type: TsType
+	type: AnyTsType
 
 // { a: string }
 TsObjectType = '{' members: TsTypeMemberList '}'
@@ -1926,9 +1938,9 @@ TsExtendsClause =
 
 TsTypeList = (TsNameWithTypeArguments (',' TsNameWithTypeArguments)*)
 
-TsTypeMemberList = TsAnyTypeMember*
+TsTypeMemberList = AnyTsTypeMember*
 
-TsAnyTypeMember =
+AnyTsTypeMember =
 	TsCallSignatureTypeMember
 	| TsPropertySignatureTypeMember
 	| TsConstructSignatureTypeMember
@@ -1936,7 +1948,7 @@ TsAnyTypeMember =
 	| TsGetterSignatureTypeMember
 	| TsSetterSignatureTypeMember
 	| TsIndexSignatureTypeMember
-	| JsUnknownMember
+	| JsBogusMember
 
 // { <A>(a: A): number }
 //   ^^^^^^^^^^^^^^^^^
@@ -1950,7 +1962,7 @@ TsCallSignatureTypeMember =
 //   ^^^^^^^^^
 TsPropertySignatureTypeMember =
 	'readonly'?
-	name: JsAnyObjectMemberName
+	name: AnyJsObjectMemberName
 	optional: '?'?
 	type_annotation: TsTypeAnnotation?
 	separator_token: (',' | ';')?
@@ -1967,7 +1979,7 @@ TsConstructSignatureTypeMember =
 // { a?(): number }
 //   ^^^^^^^^^^^^
 TsMethodSignatureTypeMember =
-	name: JsAnyObjectMemberName
+	name: AnyJsObjectMemberName
 	optional: '?'?
 	type_parameters: TsTypeParameters?
 	parameters: JsParameters
@@ -1978,7 +1990,7 @@ TsMethodSignatureTypeMember =
 //   ^^^^^^^^^^^^^^^
 TsGetterSignatureTypeMember =
 	'get'
-	name: JsAnyObjectMemberName
+	name: AnyJsObjectMemberName
 	'('
 	')'
 	type_annotation: TsTypeAnnotation?
@@ -1988,9 +2000,9 @@ TsGetterSignatureTypeMember =
 //   ^^^^^^^^^^^^^^^^^^^^
 TsSetterSignatureTypeMember =
 	'set'
-	name: JsAnyObjectMemberName
+	name: AnyJsObjectMemberName
 	'('
-	parameter: JsAnyFormalParameter
+	parameter: AnyJsFormalParameter
 	')'
 	separator_token: (',' | ';')?
 
@@ -2018,7 +2030,7 @@ TsMappedType =
 	'['
 	property_name: TsTypeParameterName
 	'in'
-	keys_type: TsType
+	keys_type: AnyTsType
 	as_clause: TsMappedTypeAsClause?
 	']'
 	optional_modifier: TsMappedTypeOptionalModifierClause?
@@ -2028,7 +2040,7 @@ TsMappedType =
 
 TsMappedTypeAsClause =
 	'as'
-	type: TsType
+	type: AnyTsType
 
 TsMappedTypeOptionalModifierClause =
 	operator_token: ('+' | '-')?
@@ -2053,18 +2065,18 @@ TsImportType =
 
 TsImportTypeQualifier =
 	'.'
-	right: TsAnyName
+	right: AnyTsName
 
 
 TsArrayType =
-	element_type: TsType
+	element_type: AnyTsType
 	'['
 	']'
 
 TsIndexedAccessType =
-	object_type: TsType
+	object_type: AnyTsType
 	'['
-	index_type: TsType
+	index_type: AnyTsType
 	']'
 
 TsTupleType =
@@ -2072,11 +2084,11 @@ TsTupleType =
 	elements: TsTupleTypeElementList
 	']'
 
-TsTupleTypeElementList = (TsAnyTupleTypeElement (',' TsAnyTupleTypeElement)* ','?)
+TsTupleTypeElementList = (AnyTsTupleTypeElement (',' AnyTsTupleTypeElement)* ','?)
 
-TsAnyTupleTypeElement =
+AnyTsTupleTypeElement =
 	TsNamedTupleTypeElement
-	| TsType
+	| AnyTsType
 	| TsRestTupleTypeElement
 	| TsOptionalTupleTypeElement
 
@@ -2085,14 +2097,14 @@ TsNamedTupleTypeElement =
 	name: JsName
 	'?'?
 	':'
-	type: TsType
+	type: AnyTsType
 
 TsRestTupleTypeElement =
 	'...'
-	type: TsType
+	type: AnyTsType
 
 TsOptionalTupleTypeElement =
-	type: TsType
+	type: AnyTsType
 	'?'
 
 TsStringLiteralType = literal: 'js_string_literal'
@@ -2105,48 +2117,53 @@ TsTemplateLiteralType =
 	elements: TsTemplateElementList
 	r_tick: '`'
 
-TsTemplateElementList = TsAnyTemplateElement*
+TsTemplateElementList = AnyTsTemplateElement*
 
-TsAnyTemplateElement =
+AnyTsTemplateElement =
 	TsTemplateChunkElement
 	| TsTemplateElement
 
 TsTemplateChunkElement = 'template_chunk'
 TsTemplateElement =
 	'dollar_curly'
-	type: TsType
+	type: AnyTsType
 	'}'
 
 TsTypeAssertionExpression =
 	'<'
-	type: TsType
+	type: AnyTsType
 	'>'
-	expression: JsAnyExpression
+	expression: AnyJsExpression
 
 // This `SyntaxKind` is related to `ExpressionWithTypeArguments` in Typescript
 TsInstantiationExpression =
-	expression: JsAnyExpression
+	expression: AnyJsExpression
 	arguments: TsTypeArguments
 
 TsAsExpression =
-	expression: JsAnyExpression
+	expression: AnyJsExpression
 	'as'
-	type: TsType
+	type: AnyTsType
+
+TsSatisfiesExpression =
+	expression: AnyJsExpression
+	'satisfies'
+	type: AnyTsType
 
 TsNonNullAssertionExpression =
-	expression: JsAnyExpression
+	expression: AnyJsExpression
 	'!'
 
 TsNameWithTypeArguments =
-	name: TsAnyName
+	name: AnyTsName
 	type_arguments: TsTypeArguments?
 
-TsAnyName =
+AnyTsName =
 	JsReferenceIdentifier
 	| TsQualifiedName
 
 TsQualifiedName =
-	left: TsAnyName
+	left: AnyTsName
 	'.'
 	right: JsName
 
@@ -2155,7 +2172,7 @@ TsTypeArguments =
 	TsTypeArgumentList
 	'>'
 
-TsTypeArgumentList = (TsType (',' TsType)* )
+TsTypeArgumentList = (AnyTsType (',' AnyTsType)* )
 
 /////////////////////////////////////////////////////// JSX
 
@@ -2164,9 +2181,9 @@ TsTypeArgumentList = (TsType (',' TsType)* )
 // ==================================
 
 JsxTagExpression =
-	tag: JsxAnyTag
+	tag: AnyJsxTag
 
-JsxAnyTag =
+AnyJsxTag =
 	JsxElement
 	| JsxSelfClosingElement
 	| JsxFragment
@@ -2174,7 +2191,7 @@ JsxAnyTag =
 // <a />
 JsxSelfClosingElement =
 	'<'
-	name: JsxAnyElementName
+	name: AnyJsxElementName
 	type_arguments: TsTypeArguments?
 	attributes: JsxAttributeList
 	'/'
@@ -2187,7 +2204,7 @@ JsxElement =
 
 JsxOpeningElement =
 	'<'
-	name: JsxAnyElementName
+	name: AnyJsxElementName
 	type_arguments: TsTypeArguments?
 	attributes: JsxAttributeList
 	'>'
@@ -2195,7 +2212,7 @@ JsxOpeningElement =
 JsxClosingElement =
 	'<'
 	'/'
-	name: JsxAnyElementName
+	name: AnyJsxElementName
 	'>'
 
 // <>content</>
@@ -2226,24 +2243,24 @@ JsxNamespaceName =
 	':'
 	name: JsxName
 
-JsxAnyElementName =
+AnyJsxElementName =
 	JsxName
 	| JsxReferenceIdentifier
 	| JsxMemberName
 	| JsxNamespaceName
 
-JsxAnyObjectName =
+AnyJsxObjectName =
 	JsxReferenceIdentifier
 	| JsxMemberName
 	| JsxNamespaceName
 
 // <a.test>
 JsxMemberName =
-	object: JsxAnyObjectName
+	object: AnyJsxObjectName
 	'.'
 	member: JsName
 
-JsxAnyName =
+AnyJsxName =
 	JsxName
 	| JsxNamespaceName
 
@@ -2251,31 +2268,31 @@ JsxAnyName =
 // Attributes
 // ==================================
 
-JsxAttributeList = JsxAnyAttribute*
+JsxAttributeList = AnyJsxAttribute*
 
-JsxAnyAttribute =
+AnyJsxAttribute =
 	JsxAttribute
 	| JsxSpreadAttribute
 
 JsxAttribute =
-	name: JsxAnyAttributeName
+	name: AnyJsxAttributeName
 	initializer: JsxAttributeInitializerClause?
 
 JsxAttributeInitializerClause =
 	'='
-	value: JsxAnyAttributeValue
+	value: AnyJsxAttributeValue
 
-JsxAnyAttributeValue =
-	JsxAnyTag
+AnyJsxAttributeValue =
+	AnyJsxTag
 	| JsxString
 	| JsxExpressionAttributeValue
 
 JsxExpressionAttributeValue =
 	'{'
-	expression: JsAnyExpression
+	expression: AnyJsExpression
 	'}'
 
-JsxAnyAttributeName =
+AnyJsxAttributeName =
 	JsxName
 	| JsxNamespaceName
 
@@ -2284,16 +2301,16 @@ JsxAnyAttributeName =
 JsxSpreadAttribute =
 	'{'
 	'...'
-	argument: JsAnyExpression // parse_assignment_expression_or_higher
+	argument: AnyJsExpression // parse_assignment_expression_or_higher
 	'}'
 
 // ==================================
 // Children
 // ==================================
 
-JsxChildList = JsxAnyChild*
+JsxChildList = AnyJsxChild*
 
-JsxAnyChild =
+AnyJsxChild =
 	JsxElement
 	| JsxSelfClosingElement
 	| JsxText
@@ -2303,13 +2320,13 @@ JsxAnyChild =
 
 JsxExpressionChild =
 	'{'
-	expression: JsAnyExpression?
+	expression: AnyJsExpression?
 	'}'
 
 JsxSpreadChild =
 	'{'
 	'...'
-	expression: JsAnyExpression
+	expression: AnyJsExpression
 	'}'
 
 // ==================================

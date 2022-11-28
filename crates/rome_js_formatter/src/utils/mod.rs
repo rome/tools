@@ -2,7 +2,7 @@ pub(crate) mod array;
 mod assignment_like;
 mod binary_like_expression;
 mod conditional;
-pub mod number_utils;
+pub(crate) mod number_utils;
 pub mod string_utils;
 
 pub(crate) mod format_class;
@@ -24,17 +24,17 @@ use crate::parentheses::is_callee;
 pub(crate) use crate::parentheses::resolve_left_most_expression;
 use crate::prelude::*;
 pub(crate) use assignment_like::{
-    with_assignment_layout, AssignmentLikeLayout, JsAnyAssignmentLike,
+    with_assignment_layout, AnyJsAssignmentLike, AssignmentLikeLayout,
 };
 pub(crate) use binary_like_expression::{
-    needs_binary_like_parentheses, JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression,
+    needs_binary_like_parentheses, AnyJsBinaryLikeExpression, AnyJsBinaryLikeLeftExpression,
 };
-pub(crate) use conditional::{ConditionalJsxChain, JsAnyConditional};
+pub(crate) use conditional::{AnyJsConditional, ConditionalJsxChain};
 pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;
 use rome_formatter::{format_args, write, Buffer};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyStatement, JsCallExpression, JsInitializerClause, JsLanguage, Modifiers,
+    AnyJsExpression, AnyJsStatement, JsCallExpression, JsInitializerClause, JsLanguage, Modifiers,
 };
 use rome_js_syntax::{JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
@@ -71,7 +71,7 @@ pub(crate) fn is_long_curried_call(expression: Option<&JsCallExpression>) -> boo
 /// We can have two kind of separators: `,`, `;` or ASI.
 /// Because of how the grammar crafts the nodes, the parent will add the separator to the node.
 /// So here, we create - on purpose - an empty node.
-pub struct FormatTypeMemberSeparator<'a> {
+pub(crate) struct FormatTypeMemberSeparator<'a> {
     token: Option<&'a JsSyntaxToken>,
 }
 
@@ -92,7 +92,7 @@ impl Format<JsFormatContext> for FormatTypeMemberSeparator<'_> {
 }
 
 /// Utility function to format the node [rome_js_syntax::JsInitializerClause]
-pub struct FormatInitializerClause<'a> {
+pub(crate) struct FormatInitializerClause<'a> {
     initializer: Option<&'a JsInitializerClause>,
 }
 
@@ -112,7 +112,7 @@ impl Format<JsFormatContext> for FormatInitializerClause<'_> {
     }
 }
 
-pub struct FormatInterpreterToken<'a> {
+pub(crate) struct FormatInterpreterToken<'a> {
     token: Option<&'a JsSyntaxToken>,
 }
 
@@ -157,12 +157,12 @@ pub(crate) fn node_has_leading_newline(node: &JsSyntaxNode) -> bool {
 /// Formats the body of a statement where it can either be a single statement, an empty statement,
 /// or a block statement.
 pub(crate) struct FormatStatementBody<'a> {
-    body: &'a JsAnyStatement,
+    body: &'a AnyJsStatement,
     force_space: bool,
 }
 
 impl<'a> FormatStatementBody<'a> {
-    pub fn new(body: &'a JsAnyStatement) -> Self {
+    pub fn new(body: &'a AnyJsStatement) -> Self {
         Self {
             body,
             force_space: false,
@@ -179,7 +179,7 @@ impl<'a> FormatStatementBody<'a> {
 
 impl Format<JsFormatContext> for FormatStatementBody<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        use JsAnyStatement::*;
+        use AnyJsStatement::*;
 
         if let JsEmptyStatement(empty) = &self.body {
             write!(f, [empty.format()])
@@ -241,8 +241,8 @@ impl Format<JsFormatContext> for FormatOptionalSemicolon<'_> {
 
 /// Format some code followed by an optional semicolon.
 /// Performs semicolon insertion if it is missing in the input source, the [semicolons option](crate::JsFormatOptions::semicolons) is [Semicolons::Always], and the
-/// preceding element isn't an unknown node
-pub struct FormatSemicolon<'a> {
+/// preceding element isn't an bogus node
+pub(crate) struct FormatSemicolon<'a> {
     semicolon: Option<&'a JsSyntaxToken>,
 }
 
@@ -257,15 +257,15 @@ impl Format<JsFormatContext> for FormatSemicolon<'_> {
         match self.semicolon {
             Some(semicolon) => semicolon.format().fmt(f),
             None => {
-                let is_after_unknown = f.elements().start_tag(TagKind::Verbatim).map_or(
+                let is_after_bogus = f.elements().start_tag(TagKind::Verbatim).map_or(
                     false,
                     |signal| match signal {
-                        Tag::StartVerbatim(kind) => kind.is_unknown(),
+                        Tag::StartVerbatim(kind) => kind.is_bogus(),
                         _ => unreachable!(),
                     },
                 );
 
-                if !is_after_unknown {
+                if !is_after_bogus {
                     write!(f, [text(";")])?;
                 }
 
@@ -280,12 +280,12 @@ impl Format<JsFormatContext> for FormatSemicolon<'_> {
 /// - [JsNewExpression]
 /// - [JsImportCallExpression]
 /// - [JsCallExpression]
-pub(crate) fn is_call_like_expression(expression: &JsAnyExpression) -> bool {
+pub(crate) fn is_call_like_expression(expression: &AnyJsExpression) -> bool {
     matches!(
         expression,
-        JsAnyExpression::JsNewExpression(_)
-            | JsAnyExpression::JsImportCallExpression(_)
-            | JsAnyExpression::JsCallExpression(_)
+        AnyJsExpression::JsNewExpression(_)
+            | AnyJsExpression::JsImportCallExpression(_)
+            | AnyJsExpression::JsCallExpression(_)
     )
 }
 

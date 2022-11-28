@@ -10,6 +10,31 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonArrayValue {
+        l_brack_token: L_BRACK@0..2 "[" [] [Whitespace("\u{c}")],
+        elements: JsonArrayElementList [],
+        r_brack_token: R_BRACK@2..3 "]" [] [],
+    },
+    eof_token: EOF@3..3 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..3
+  0: JSON_ARRAY_VALUE@0..3
+    0: L_BRACK@0..2 "[" [] [Whitespace("\u{c}")]
+    1: JSON_ARRAY_ELEMENT_LIST@2..2
+    2: R_BRACK@2..3 "]" [] []
+  1: EOF@3..3 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -24,12 +49,4 @@ structure_whitespace_formfeed.json:1:2 parse ━━━━━━━━━━━�
   
 ```
 
-## Tokens
-
-```
-L_BRACK: `[` (0..1)
-WHITESPACE: `` (1..2)
-R_BRACK: `]` (2..3)
-EOF: `` (3..3)
-```
 

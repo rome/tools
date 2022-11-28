@@ -30,13 +30,13 @@ pub use highlight::*;
 pub(crate) use buffered_lexer::BufferedLexer;
 pub use rome_js_syntax::*;
 
-use crate::ParseDiagnostic;
 use rome_diagnostics::location::FileId;
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_unicode_table::{
     is_id_continue, is_id_start, lookup_byte,
     Dispatch::{self, *},
 };
+use rome_parser::diagnostic::ParseDiagnostic;
 
 use self::errors::invalid_digits_after_unicode_escape_sequence;
 
@@ -1096,6 +1096,7 @@ impl<'src> Lexer<'src> {
             b"require" => REQUIRE_KW,
             b"number" => NUMBER_KW,
             b"object" => OBJECT_KW,
+            b"satisfies" => SATISFIES_KW,
             b"set" => SET_KW,
             b"string" => STRING_KW,
             b"symbol" => SYMBOL_KW,

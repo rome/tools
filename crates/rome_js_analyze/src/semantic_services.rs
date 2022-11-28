@@ -3,7 +3,7 @@ use rome_analyze::{
     RuleKey, ServiceBag, Visitor, VisitorContext, VisitorFinishContext,
 };
 use rome_js_semantic::{SemanticEventExtractor, SemanticModel, SemanticModelBuilder};
-use rome_js_syntax::{JsAnyRoot, JsLanguage, WalkEvent};
+use rome_js_syntax::{AnyJsRoot, JsLanguage, WalkEvent};
 use rome_rowan::{AstNode, SyntaxNode};
 
 pub struct SemanticServices {
@@ -83,7 +83,7 @@ pub(crate) struct SemanticModelBuilderVisitor {
 }
 
 impl SemanticModelBuilderVisitor {
-    pub(crate) fn new(root: &JsAnyRoot) -> Self {
+    pub(crate) fn new(root: &AnyJsRoot) -> Self {
         Self {
             extractor: SemanticEventExtractor::default(),
             builder: SemanticModelBuilder::new(root.clone()),

@@ -13,9 +13,9 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..9 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 TsAccessibilityModifier {
                                     modifier_token: PUBLIC_KW@9..22 "public" [Newline("\n"), Whitespace("    ")] [Whitespace("  ")],
@@ -58,9 +58,9 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@53..54 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 TsAccessibilityModifier {
                                     modifier_token: PRIVATE_KW@54..68 "private" [Newline("\n"), Whitespace("    ")] [Whitespace("  ")],
@@ -103,9 +103,9 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@99..100 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 TsAccessibilityModifier {
                                     modifier_token: PROTECTED_KW@100..116 "protected" [Newline("\n"), Whitespace("    ")] [Whitespace("  ")],
@@ -155,8 +155,8 @@ JsModule {
       5: (empty)
       6: L_CURLY@8..9 "{" [] []
       7: JS_CLASS_MEMBER_LIST@9..42
-        0: JS_UNKNOWN_MEMBER@9..42
-          0: JS_UNKNOWN@9..22
+        0: JS_BOGUS_MEMBER@9..42
+          0: JS_BOGUS@9..22
             0: TS_ACCESSIBILITY_MODIFIER@9..22
               0: PUBLIC_KW@9..22 "public" [Newline("\n"), Whitespace("    ")] [Whitespace("  ")]
           1: L_BRACK@22..23 "[" [] []
@@ -184,8 +184,8 @@ JsModule {
       5: (empty)
       6: L_CURLY@53..54 "{" [] []
       7: JS_CLASS_MEMBER_LIST@54..88
-        0: JS_UNKNOWN_MEMBER@54..88
-          0: JS_UNKNOWN@54..68
+        0: JS_BOGUS_MEMBER@54..88
+          0: JS_BOGUS@54..68
             0: TS_ACCESSIBILITY_MODIFIER@54..68
               0: PRIVATE_KW@54..68 "private" [Newline("\n"), Whitespace("    ")] [Whitespace("  ")]
           1: L_BRACK@68..69 "[" [] []
@@ -213,8 +213,8 @@ JsModule {
       5: (empty)
       6: L_CURLY@99..100 "{" [] []
       7: JS_CLASS_MEMBER_LIST@100..136
-        0: JS_UNKNOWN_MEMBER@100..136
-          0: JS_UNKNOWN@100..116
+        0: JS_BOGUS_MEMBER@100..136
+          0: JS_BOGUS@100..116
             0: TS_ACCESSIBILITY_MODIFIER@100..116
               0: PROTECTED_KW@100..116 "protected" [Newline("\n"), Whitespace("    ")] [Whitespace("  ")]
           1: L_BRACK@116..117 "[" [] []

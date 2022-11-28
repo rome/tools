@@ -1,4 +1,4 @@
-//! Generated file, do not edit by hand, see `xtask/codegen`
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 pub(crate) mod default_import_specifier;
 pub(crate) mod export;
@@ -16,7 +16,6 @@ pub(crate) mod import_assertion;
 pub(crate) mod import_assertion_entry;
 pub(crate) mod import_bare_clause;
 pub(crate) mod import_default_clause;
-pub(crate) mod import_meta;
 pub(crate) mod import_named_clause;
 pub(crate) mod import_namespace_clause;
 pub(crate) mod literal_export_name;

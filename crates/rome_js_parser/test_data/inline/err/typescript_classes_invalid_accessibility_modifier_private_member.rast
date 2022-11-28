@@ -13,7 +13,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             TsAccessibilityModifier {
@@ -27,7 +27,7 @@ JsModule {
                         SEMICOLON@23..25 ";" [] [Whitespace(" ")],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             TsAccessibilityModifier {
@@ -41,7 +41,7 @@ JsModule {
                         SEMICOLON@41..43 ";" [] [Whitespace(" ")],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             TsAccessibilityModifier {
@@ -79,7 +79,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@8..10 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@10..56
-        0: JS_UNKNOWN_MEMBER@10..25
+        0: JS_BOGUS_MEMBER@10..25
           0: JS_PROPERTY_MODIFIER_LIST@10..18
             0: TS_ACCESSIBILITY_MODIFIER@10..18
               0: PRIVATE_KW@10..18 "private" [] [Whitespace(" ")]
@@ -87,7 +87,7 @@ JsModule {
             0: HASH@18..19 "#" [] []
             1: IDENT@19..23 "name" [] []
           2: SEMICOLON@23..25 ";" [] [Whitespace(" ")]
-        1: JS_UNKNOWN_MEMBER@25..43
+        1: JS_BOGUS_MEMBER@25..43
           0: JS_PROPERTY_MODIFIER_LIST@25..35
             0: TS_ACCESSIBILITY_MODIFIER@25..35
               0: PROTECTED_KW@25..35 "protected" [] [Whitespace(" ")]
@@ -95,7 +95,7 @@ JsModule {
             0: HASH@35..36 "#" [] []
             1: IDENT@36..41 "other" [] []
           2: SEMICOLON@41..43 ";" [] [Whitespace(" ")]
-        2: JS_UNKNOWN_MEMBER@43..56
+        2: JS_BOGUS_MEMBER@43..56
           0: JS_PROPERTY_MODIFIER_LIST@43..50
             0: TS_ACCESSIBILITY_MODIFIER@43..50
               0: PUBLIC_KW@43..50 "public" [] [Whitespace(" ")]

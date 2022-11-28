@@ -7,7 +7,7 @@ use rome_console::{markup, MarkupBuf};
 use rome_diagnostics::Applicability;
 use rome_js_factory::make::{jsx_attribute_list, jsx_self_closing_element};
 use rome_js_syntax::{
-    JsCallExpression, JsPropertyObjectMember, JsxAnyAttribute, JsxAttribute, JsxElement,
+    AnyJsxAttribute, JsCallExpression, JsPropertyObjectMember, JsxAttribute, JsxElement,
     JsxSelfClosingElement,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList, BatchMutationExt};
@@ -248,8 +248,8 @@ impl Rule for NoVoidElementsWithChildren {
                     ReactCreateElementCall::from_call_expression(call_expression, model)?;
                 let element_type = react_create_element
                     .element_type
-                    .as_js_any_expression()?
-                    .as_js_any_literal_expression()?
+                    .as_any_js_expression()?
+                    .as_any_js_literal_expression()?
                     .as_js_string_literal_expression()?;
 
                 let element_name = element_type.inner_string_text().ok()?;
@@ -318,7 +318,7 @@ impl Rule for NoVoidElementsWithChildren {
                         .attributes()
                         .into_iter()
                         .filter_map(|attribute| {
-                            if let JsxAnyAttribute::JsxAttribute(attribute) = &attribute {
+                            if let AnyJsxAttribute::JsxAttribute(attribute) = &attribute {
                                 if let Some(children_prop) = children_prop {
                                     if children_prop == attribute {
                                         return None;

@@ -364,6 +364,10 @@ export interface Nursery {
 	 */
 	noConstAssign?: RuleConfiguration;
 	/**
+	 * Disallow TypeScript const enum
+	 */
+	noConstEnum?: RuleConfiguration;
+	/**
 	 * Disallow returning a value from a constructor
 	 */
 	noConstructorReturn?: RuleConfiguration;
@@ -427,6 +431,14 @@ export interface Nursery {
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	/**
+	 * Enforce that ARIA state and property values are valid.
+	 */
+	useAriaPropTypes?: RuleConfiguration;
+	/**
+	 * Enforce that elements with ARIA roles must have all required attributes for that role
+	 */
+	useAriaPropsForRole?: RuleConfiguration;
 	/**
 	 * Enforce camel case naming convention.
 	 */
@@ -663,6 +675,7 @@ export type Category =
 	| "lint/nursery/noBannedTypes"
 	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstAssign"
+	| "lint/nursery/noConstEnum"
 	| "lint/nursery/noConstructorReturn"
 	| "lint/nursery/noDistractingElements"
 	| "lint/nursery/noDupeKeys"
@@ -685,6 +698,8 @@ export type Category =
 	| "lint/nursery/useFlatMap"
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/useValidForDirection"
+	| "lint/nursery/useAriaPropsForRole"
+	| "lint/nursery/useAriaPropTypes"
 	| "files/missingHandler"
 	| "format"
 	| "internalError/io"
@@ -699,6 +714,7 @@ export type Category =
 	| "lint/a11y"
 	| "lint/security"
 	| "lint/nursery"
+	| "suppressions/parse"
 	| "suppressions/unknownGroup"
 	| "suppressions/unknownRule"
 	| "suppressions/unused"
@@ -945,7 +961,7 @@ export interface RenameResult {
 }
 export interface Workspace {
 	supportsFeature(
-		params: SupportsFeatureParams,
+		params: SupportsFeatureParams
 	): Promise<SupportsFeatureResult>;
 	updateSettings(params: UpdateSettingsParams): Promise<void>;
 	openFile(params: OpenFileParams): Promise<void>;
@@ -955,7 +971,7 @@ export interface Workspace {
 	getControlFlowGraph(params: GetControlFlowGraphParams): Promise<string>;
 	getFormatterIr(params: GetFormatterIRParams): Promise<string>;
 	pullDiagnostics(
-		params: PullDiagnosticsParams,
+		params: PullDiagnosticsParams
 	): Promise<PullDiagnosticsResult>;
 	pullActions(params: PullActionsParams): Promise<PullActionsResult>;
 	formatFile(params: FormatFileParams): Promise<Printed>;

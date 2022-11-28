@@ -1,30 +1,21 @@
-import { NodeWasm } from "./nodeWasm";
-import { Deamon } from "./daemon";
-import type { Diagnostic, Configuration } from "@rometools/backend-jsonrpc";
-import { createError } from "./utils";
+import { Distribution, loadModule, WasmModule, wrapError } from "./wasm";
+import type {
+	Configuration,
+	Diagnostic,
+	PullDiagnosticsResult,
+	RomePath,
+	Workspace,
+} from "@rometools/wasm-nodejs";
 
 // Re-export of some useful types for users
-export type { Configuration };
-
-export interface FormatFilesDebugOptions extends FormatFilesOptions {
-	/**
-	 * If `true`, you'll be able to inspect the IR of the formatter
-	 */
-	debug: boolean;
-}
+export type { Configuration, Diagnostic };
+export { Distribution };
 
 export interface FormatContentDebugOptions extends FormatContentOptions {
 	/**
 	 * If `true`, you'll be able to inspect the IR of the formatter
 	 */
 	debug: boolean;
-}
-
-export interface FormatFilesOptions {
-	/**
-	 * Writes the new content to disk
-	 */
-	write?: boolean;
 }
 
 export interface FormatContentOptions {
@@ -58,40 +49,19 @@ export interface FormatDebugResult {
 	/**
 	 * A series of errors encountered while executing an operation
 	 */
-	diagnostics: string[];
+	diagnostics: Diagnostic[];
 	/**
 	 * The IR emitted by the formatter
 	 */
 	ir: string;
 }
 
-export interface ParseOptions {
+export interface LintContentOptions {
 	/**
 	 * A virtual path of the file. You should add the extension,
 	 * so Rome knows how to parse the content
 	 */
 	filePath: string;
-}
-
-export interface ParseResult {
-	/**
-	 * The CST of the code
-	 */
-	cst: string;
-	/**
-	 * The AST of the code
-	 */
-	ast: string;
-	/**
-	 * A series of errors encountered while executing an operation
-	 */
-	diagnostics: string[];
-}
-
-function isFormatFilesDebug(
-	options: FormatFilesOptions | FormatFilesDebugOptions,
-): options is FormatFilesDebugOptions {
-	return "debug" in options && options.debug !== undefined;
 }
 
 function isFormatContentDebug(
@@ -100,68 +70,48 @@ function isFormatContentDebug(
 	return "debug" in options && options.debug !== undefined;
 }
 
-/**
- * What kind of client Rome should use to communicate with the binary
- */
-export enum BackendKind {
-	/**
-	 * Use this if you want to communicate with the WebAssembly client built for Node.JS
-	 */
-	NODE,
-	/**
-	 * Use this if you want to communicate with the Daemon
-	 */
-	DAEMON,
+export interface RomeCreate {
+	distribution: Distribution;
 }
 
-type Backend = NodeWasm | Deamon;
-
-export type RomeCreate =
-	| {
-			backendKind: BackendKind.NODE;
-	  }
-	| {
-			backendKind: BackendKind.DAEMON;
-			pathToBinary?: string;
-	  };
+export interface PrintDiagnosticsOptions {
+	/**
+	 * The name of the file to print diagnostics for
+	 */
+	filePath: string;
+	/**
+	 * The content of the file the diagnostics were emitted for
+	 */
+	fileSource: string;
+	/**
+	 * Whether to print the diagnostics in verbose mode
+	 */
+	verbose?: boolean;
+}
 
 export class Rome {
-	private readonly backend: Backend;
-	private readonly kind: BackendKind;
-
-	private constructor(backend: Backend, backendKind = BackendKind.NODE) {
-		this.backend = backend;
-		this.kind = backendKind;
-	}
+	private constructor(
+		private readonly module: WasmModule,
+		private readonly workspace: Workspace,
+	) {}
 
 	/**
 	 * It creates a new instance of the class {Rome}.
-	 *
-	 * When using the Daemon, an optional path to the Rome binary can be provided.
-	 * This is useful for debugging/test purpose.
-	 *
-	 * @param backendOptions
 	 */
-	public static async create(backendOptions?: RomeCreate): Promise<Rome> {
-		if (backendOptions) {
-			switch (backendOptions.backendKind) {
-				case BackendKind.DAEMON: {
-					let client = await Deamon.connectToDaemon(
-						backendOptions.pathToBinary,
-					);
-					return new Rome(client, backendOptions.backendKind);
-				}
+	public static async create(options: RomeCreate): Promise<Rome> {
+		const module = await loadModule(options.distribution);
+		const workspace = new module.Workspace();
+		return new Rome(module, workspace);
+	}
 
-				case BackendKind.NODE:
-				default: {
-					let client = await NodeWasm.loadWebAssembly();
-					return new Rome(client);
-				}
-			}
-		} else {
-			let client = await NodeWasm.loadWebAssembly();
-			return new Rome(client);
-		}
+	/**
+	 * Stop this instance of Rome
+	 *
+	 * After calling `shutdown()` on this object, it should be considered
+	 * unusable as calling any method on it will fail
+	 */
+	public shutdown() {
+		this.workspace.free();
 	}
 
 	/**
@@ -171,52 +121,50 @@ export class Rome {
 	 *
 	 * @param configuration
 	 */
-	public async applyConfiguration(configuration: Configuration): Promise<void> {
+	public applyConfiguration(configuration: Configuration): void {
 		try {
-			await this.backend.workspace.updateSettings({
+			this.workspace.updateSettings({
 				configuration,
 			});
 		} catch (e) {
-			throw createError(e, this.kind);
+			throw wrapError(e);
 		}
 	}
 
-	async formatFiles(paths: string[]): Promise<FormatResult>;
-	async formatFiles(
-		paths: string[],
-		options?: FormatFilesOptions,
-	): Promise<FormatResult>;
-	async formatFiles(
-		paths: string[],
-		options?: FormatFilesDebugOptions,
-	): Promise<FormatDebugResult>;
-	async formatFiles(
-		paths: string[],
-		options?: FormatFilesOptions | FormatFilesDebugOptions,
-	): Promise<FormatResult | FormatDebugResult> {
-		paths;
-
-		if (options && isFormatFilesDebug(options)) {
-			return {
-				content: "",
-				diagnostics: [],
-				ir: "",
-			};
-		}
-		return {
-			content: "",
-			diagnostics: [],
-		};
-	}
-
-	async formatContent(
+	private withFile<T>(
+		path: string,
 		content: string,
-		options: FormatContentOptions,
-	): Promise<FormatResult>;
-	async formatContent(
+		func: (path: RomePath) => T,
+	): T {
+		try {
+			const romePath: RomePath = {
+				path,
+				id: 0,
+			};
+
+			this.workspace.openFile({
+				content,
+				version: 0,
+				path: romePath,
+			});
+
+			try {
+				return func(romePath);
+			} finally {
+				this.workspace.closeFile({
+					path: romePath,
+				});
+			}
+		} catch (err) {
+			throw wrapError(err);
+		}
+	}
+
+	formatContent(content: string, options: FormatContentOptions): FormatResult;
+	formatContent(
 		content: string,
 		options: FormatContentDebugOptions,
-	): Promise<FormatDebugResult>;
+	): FormatDebugResult;
 
 	/**
 	 * If formats some content.
@@ -224,85 +172,109 @@ export class Rome {
 	 * @param {String} content The content to format
 	 * @param {FormatContentOptions | FormatContentDebugOptions} options Options needed when formatting some content
 	 */
-	async formatContent(
+	formatContent(
 		content: string,
 		options: FormatContentOptions | FormatContentDebugOptions,
-	): Promise<FormatResult | FormatDebugResult> {
-		let code;
-		const file = {
-			version: 0,
-			path: {
-				path: options.filePath,
-				id: 0,
-			},
-		};
+	): FormatResult | FormatDebugResult {
+		return this.withFile(options.filePath, content, (path) => {
+			let code = content;
 
-		await this.backend.workspace.openFile({
-			content,
-			version: file.version,
-			path: file.path,
-		});
-
-		if (options.range) {
-			const result = await this.backend.workspace.formatRange({
-				path: file.path,
-				range: options.range,
+			const { diagnostics } = this.workspace.pullDiagnostics({
+				path,
+				categories: ["Syntax"],
+				max_diagnostics: Number.MAX_SAFE_INTEGER,
 			});
-			code = result.code;
-		} else {
-			try {
-				const result = await this.backend.workspace.formatFile({
-					path: file.path,
-				});
-				code = result.code;
-			} catch {
-				const { diagnostics } = await this.backend.workspace.pullDiagnostics({
-					path: file.path,
-					categories: ["Syntax"],
-					max_diagnostics: Number.MAX_SAFE_INTEGER,
-				});
-				return {
-					content: content,
-					diagnostics,
-				};
+
+			const hasErrors = diagnostics.some(
+				(diag) => diag.severity === "Fatal" || diag.severity === "Error",
+			);
+			if (!hasErrors) {
+				if (options.range) {
+					const result = this.workspace.formatRange({
+						path,
+						range: options.range,
+					});
+					code = result.code;
+				} else {
+					const result = this.workspace.formatFile({
+						path,
+					});
+					code = result.code;
+				}
+
+				if (isFormatContentDebug(options)) {
+					const ir = this.workspace.getFormatterIr({
+						path,
+					});
+
+					return {
+						content: code,
+						diagnostics,
+						ir,
+					};
+				}
 			}
-		}
 
-		if (isFormatContentDebug(options)) {
-			const ir = await this.backend.workspace.getFormatterIr({
-				path: file.path,
-			});
-
-			await this.backend.workspace.closeFile({
-				path: file.path,
-			});
 			return {
 				content: code,
-				diagnostics: [],
-				ir,
+				diagnostics,
 			};
-		}
-
-		await this.backend.workspace.closeFile({
-			path: file.path,
 		});
-
-		return {
-			content: code,
-			diagnostics: [],
-		};
 	}
 
-	async parseContent(
+	/**
+	 * Lint the content of a file.
+	 *
+	 * @param {String} content The content to lint
+	 * @param {LintContentOptions} options Options needed when linting some content
+	 */
+	lintContent(
 		content: string,
-		options: ParseOptions,
-	): Promise<ParseResult> {
-		content;
-		options;
-		return {
-			ast: "",
-			cst: "",
-			diagnostics: [],
-		};
+		options: LintContentOptions,
+	): PullDiagnosticsResult {
+		return this.withFile(options.filePath, content, (path) => {
+			return this.workspace.pullDiagnostics({
+				path,
+				categories: ["Syntax", "Lint"],
+				max_diagnostics: Number.MAX_SAFE_INTEGER,
+			});
+		});
+	}
+
+	/**
+	 * Print a list of diagnostics to an HTML string.
+	 *
+	 * @param {Diagnostic[]} diagnostics The list of diagnostics to print
+	 * @param {PrintDiagnosticsOptions} options Options needed for printing the diagnostics
+	 */
+	printDiagnostics(
+		diagnostics: Diagnostic[],
+		options: PrintDiagnosticsOptions,
+	): string {
+		try {
+			const printer = new this.module.DiagnosticPrinter(
+				options.filePath,
+				options.fileSource,
+			);
+
+			try {
+				for (const diag of diagnostics) {
+					if (options.verbose) {
+						printer.print_verbose(diag);
+					} else {
+						printer.print_simple(diag);
+					}
+				}
+			} catch (err) {
+				// Only call `free` if the `print` method throws, `finish` will
+				// take care of deallocating the printer even if it fails
+				printer.free();
+				throw err;
+			}
+
+			return printer.finish();
+		} catch (err) {
+			throw wrapError(err);
+		}
 	}
 }

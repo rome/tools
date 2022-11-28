@@ -1,0 +1,165 @@
+// Vitest Snapshot v1
+
+exports[`Rome WebAssembly lintContent > should lint content > lint diagnostics 1`] = `
+[
+  {
+    "advices": {
+      "advices": [
+        {
+          "Log": [
+            "Info",
+            [
+              {
+                "content": "==",
+                "elements": [
+                  "Emphasis",
+                ],
+              },
+              {
+                "content": " is only allowed when comparing against ",
+                "elements": [],
+              },
+              {
+                "content": "null",
+                "elements": [
+                  "Emphasis",
+                ],
+              },
+            ],
+          ],
+        },
+        {
+          "Frame": {
+            "path": null,
+            "source_code": null,
+            "span": [
+              6,
+              8,
+            ],
+          },
+        },
+        {
+          "Log": [
+            "Info",
+            [
+              {
+                "content": "Using ",
+                "elements": [],
+              },
+              {
+                "content": "===",
+                "elements": [
+                  "Emphasis",
+                ],
+              },
+              {
+                "content": " may be unsafe if you are relying on type coercion",
+                "elements": [],
+              },
+            ],
+          ],
+        },
+        {
+          "Log": [
+            "Info",
+            [
+              {
+                "content": "Suggested fix: Use ",
+                "elements": [],
+              },
+              {
+                "content": "===",
+                "elements": [
+                  "Emphasis",
+                ],
+              },
+            ],
+          ],
+        },
+        {
+          "Diff": {
+            "dictionary": "if (a === b) {}",
+            "ops": [
+              {
+                "DiffOp": {
+                  "Equal": {
+                    "range": [
+                      0,
+                      8,
+                    ],
+                  },
+                },
+              },
+              {
+                "DiffOp": {
+                  "Insert": {
+                    "range": [
+                      8,
+                      9,
+                    ],
+                  },
+                },
+              },
+              {
+                "DiffOp": {
+                  "Equal": {
+                    "range": [
+                      9,
+                      15,
+                    ],
+                  },
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+    "category": "lint/correctness/noDoubleEquals",
+    "description": "Use === instead of ==.
+== is only allowed when comparing against \`null\`",
+    "location": {
+      "path": {
+        "File": {
+          "Path": "example.js",
+        },
+      },
+      "source_code": null,
+      "span": [
+        6,
+        8,
+      ],
+    },
+    "message": [
+      {
+        "content": "Use ",
+        "elements": [],
+      },
+      {
+        "content": "===",
+        "elements": [
+          "Emphasis",
+        ],
+      },
+      {
+        "content": " instead of ",
+        "elements": [],
+      },
+      {
+        "content": "==",
+        "elements": [
+          "Emphasis",
+        ],
+      },
+    ],
+    "severity": "Error",
+    "source": null,
+    "tags": [
+      "Fixable",
+    ],
+    "verbose_advices": {
+      "advices": [],
+    },
+  },
+]
+`;

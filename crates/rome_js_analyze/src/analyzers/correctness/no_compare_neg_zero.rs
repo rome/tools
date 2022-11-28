@@ -3,7 +3,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsBinaryExpression, JsSyntaxKind, JsUnaryOperator,
+    AnyJsExpression, AnyJsLiteralExpression, JsBinaryExpression, JsSyntaxKind, JsUnaryOperator,
 };
 use rome_rowan::{AstNode, BatchMutationExt, SyntaxToken};
 
@@ -89,8 +89,8 @@ impl Rule for NoCompareNegZero {
         if state.left_need_replaced {
             mutation.replace_node(
                 node.left().ok()?,
-                JsAnyExpression::JsAnyLiteralExpression(
-                    JsAnyLiteralExpression::JsNumberLiteralExpression(
+                AnyJsExpression::AnyJsLiteralExpression(
+                    AnyJsLiteralExpression::JsNumberLiteralExpression(
                         make::js_number_literal_expression(SyntaxToken::new_detached(
                             JsSyntaxKind::JS_NUMBER_LITERAL,
                             "0",
@@ -105,8 +105,8 @@ impl Rule for NoCompareNegZero {
         if state.right_need_replaced {
             mutation.replace_node(
                 node.right().ok()?,
-                JsAnyExpression::JsAnyLiteralExpression(
-                    JsAnyLiteralExpression::JsNumberLiteralExpression(
+                AnyJsExpression::AnyJsLiteralExpression(
+                    AnyJsLiteralExpression::JsNumberLiteralExpression(
                         make::js_number_literal_expression(SyntaxToken::new_detached(
                             JsSyntaxKind::JS_NUMBER_LITERAL,
                             "0",
@@ -127,16 +127,16 @@ impl Rule for NoCompareNegZero {
     }
 }
 
-fn is_neg_zero(node: &JsAnyExpression) -> Option<bool> {
+fn is_neg_zero(node: &AnyJsExpression) -> Option<bool> {
     match node {
-        JsAnyExpression::JsUnaryExpression(expr) => {
+        AnyJsExpression::JsUnaryExpression(expr) => {
             if !matches!(expr.operator().ok()?, JsUnaryOperator::Minus) {
                 return Some(false);
             }
             let argument = expr.argument().ok()?;
 
-            if let JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsNumberLiteralExpression(expr),
+            if let AnyJsExpression::AnyJsLiteralExpression(
+                AnyJsLiteralExpression::JsNumberLiteralExpression(expr),
             ) = argument
             {
                 Some(expr.value_token().ok()?.text_trimmed() == "0")

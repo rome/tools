@@ -36,7 +36,7 @@ JsModule {
                         JsxSpreadAttribute {
                             l_curly_token: L_CURLY@17..18 "{" [] [],
                             dotdotdot_token: DOT3@18..21 "..." [] [],
-                            argument: JsUnknownExpression {
+                            argument: JsBogusExpression {
                                 items: [
                                     JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
@@ -183,7 +183,7 @@ JsModule {
             0: JSX_SPREAD_ATTRIBUTE@17..33
               0: L_CURLY@17..18 "{" [] []
               1: DOT3@18..21 "..." [] []
-              2: JS_UNKNOWN_EXPRESSION@21..31
+              2: JS_BOGUS_EXPRESSION@21..31
                 0: JS_IDENTIFIER_EXPRESSION@21..24
                   0: JS_REFERENCE_IDENTIFIER@21..24
                     0: IDENT@21..24 "obj" [] []

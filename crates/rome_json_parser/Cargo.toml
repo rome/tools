@@ -12,7 +12,10 @@ rome_rowan = { path = "../rome_rowan" }
 rome_console = { path = "../rome_console" }
 rome_diagnostics = { path = "../rome_diagnostics" }
 rome_json_syntax = { path = "../rome_json_syntax" }
+rome_json_factory = { path = "../rome_json_factory" }
 rome_js_unicode_table = { path = "../rome_js_unicode_table" }
+rome_parser = { path = "../rome_parser" }
+tracing = { workspace = true }
 
 [dev-dependencies]
 tests_macros = { path = "../tests_macros" }

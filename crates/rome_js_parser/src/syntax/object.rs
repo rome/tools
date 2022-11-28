@@ -2,6 +2,7 @@
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParsedSyntax, RecoveryResult};
+use crate::prelude::*;
 use crate::state::{EnterParameters, SignatureFlags};
 use crate::syntax::expr::{
     is_nth_at_reference_identifier, parse_assignment_expression_or_higher, parse_expression,
@@ -18,9 +19,10 @@ use crate::syntax::typescript::{
     parse_ts_return_type_annotation, parse_ts_type_annotation, parse_ts_type_parameters,
 };
 use crate::JsSyntaxFeature::TypeScript;
-use crate::{ParseRecovery, ParseSeparatedList, Parser, SyntaxFeature};
+use crate::{JsParser, ParseRecovery};
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::{JsSyntaxKind, T};
+use rome_parser::parse_lists::ParseSeparatedList;
 
 // test object_expr
 // let a = {};
@@ -34,25 +36,26 @@ use rome_js_syntax::{JsSyntaxKind, T};
 struct ObjectMembersList;
 
 impl ParseSeparatedList for ObjectMembersList {
-    fn parse_element(&mut self, p: &mut Parser) -> ParsedSyntax {
+    type Kind = JsSyntaxKind;
+    type Parser<'source> = JsParser<'source>;
+
+    const LIST_KIND: Self::Kind = JS_OBJECT_MEMBER_LIST;
+
+    fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
         parse_object_member(p)
     }
 
-    fn is_at_list_end(&self, p: &mut Parser) -> bool {
+    fn is_at_list_end(&self, p: &mut JsParser) -> bool {
         p.at(T!['}'])
     }
 
-    fn recover(&mut self, p: &mut Parser, parsed_element: ParsedSyntax) -> RecoveryResult {
+    fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
-            &ParseRecovery::new(JS_UNKNOWN_MEMBER, token_set![T![,], T!['}'], T![;], T![:]])
+            &ParseRecovery::new(JS_BOGUS_MEMBER, token_set![T![,], T!['}'], T![;], T![:]])
                 .enable_recovery_on_line_break(),
             js_parse_error::expected_object_member,
         )
-    }
-
-    fn list_kind() -> JsSyntaxKind {
-        JS_OBJECT_MEMBER_LIST
     }
 
     fn separating_element_kind(&mut self) -> JsSyntaxKind {
@@ -65,7 +68,7 @@ impl ParseSeparatedList for ObjectMembersList {
 }
 
 /// An object literal such as `{ a: b, "b": 5 + 5 }`.
-pub(super) fn parse_object_expression(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_object_expression(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T!['{']) {
         return Absent;
     }
@@ -79,7 +82,7 @@ pub(super) fn parse_object_expression(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// An individual object property such as `"a": b` or `5: 6 + 6`.
-fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_object_member(p: &mut JsParser) -> ParsedSyntax {
     match p.cur() {
         // test getter_object_member
         // let a = {
@@ -175,7 +178,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 						p.cur_range()));
                     p.bump(T![=]);
                     parse_assignment_expression_or_higher(p, ExpressionContext::default()).ok();
-                    return Present(m.complete(p, JS_UNKNOWN_MEMBER));
+                    return Present(m.complete(p, JS_BOGUS_MEMBER));
                 }
 
                 return Present(m.complete(p, JS_SHORTHAND_PROPERTY_OBJECT_MEMBER));
@@ -222,7 +225,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
                 // let d = {5}
 
                 #[allow(deprecated)]
-                SingleTokenParseRecovery::new(token_set![T![:], T![,]], JS_UNKNOWN).recover(p);
+                SingleTokenParseRecovery::new(token_set![T![:], T![,]], JS_BOGUS).recover(p);
 
                 if p.eat(T![:]) {
                     parse_assignment_expression_or_higher(p, ExpressionContext::default())
@@ -242,7 +245,7 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// Parses a getter object member: `{ get a() { return "a"; } }`
-fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_getter_object_member(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![get]) {
         return Absent;
     }
@@ -275,7 +278,7 @@ fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// Parses a setter object member like `{ set a(value) { .. } }`
-fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_setter_object_member(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![set]) {
         return Absent;
     }
@@ -321,14 +324,14 @@ fn parse_setter_object_member(p: &mut Parser) -> ParsedSyntax {
 // test object_member_name
 // let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
 /// Parses a `JsAnyObjectMemberName` and returns its completion marker
-pub(crate) fn parse_object_member_name(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_object_member_name(p: &mut JsParser) -> ParsedSyntax {
     match p.cur() {
         T!['['] => parse_computed_member_name(p),
         _ => parse_literal_member_name(p),
     }
 }
 
-pub(crate) fn is_nth_at_type_member_name(p: &mut Parser, offset: usize) -> bool {
+pub(crate) fn is_nth_at_type_member_name(p: &mut JsParser, offset: usize) -> bool {
     let nth = p.nth(offset);
 
     let start_names = token_set![
@@ -343,11 +346,11 @@ pub(crate) fn is_nth_at_type_member_name(p: &mut Parser, offset: usize) -> bool 
     nth.is_keyword() || start_names.contains(nth)
 }
 
-pub(crate) fn is_at_object_member_name(p: &mut Parser) -> bool {
+pub(crate) fn is_at_object_member_name(p: &mut JsParser) -> bool {
     is_nth_at_type_member_name(p, 0)
 }
 
-pub(crate) fn parse_computed_member_name(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_computed_member_name(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T!['[']) {
         return Absent;
     }
@@ -364,14 +367,14 @@ pub(crate) fn parse_computed_member_name(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_COMPUTED_MEMBER_NAME))
 }
 
-pub(super) fn is_at_literal_member_name(p: &mut Parser, offset: usize) -> bool {
+pub(super) fn is_at_literal_member_name(p: &mut JsParser, offset: usize) -> bool {
     matches!(
         p.nth(offset),
         JS_STRING_LITERAL | JS_NUMBER_LITERAL | T![ident]
     ) || p.nth(offset).is_keyword()
 }
 
-pub(super) fn parse_literal_member_name(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_literal_member_name(p: &mut JsParser) -> ParsedSyntax {
     let m = p.start();
     match p.cur() {
         JS_STRING_LITERAL | JS_NUMBER_LITERAL | T![ident] => {
@@ -389,7 +392,7 @@ pub(super) fn parse_literal_member_name(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// Parses a method object member
-fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_method_object_member(p: &mut JsParser) -> ParsedSyntax {
     let is_async = is_parser_at_async_method_member(p);
     if !is_async && !p.at(T![*]) && !is_at_object_member_name(p) {
         return Absent;
@@ -427,7 +430,7 @@ fn parse_method_object_member(p: &mut Parser) -> ParsedSyntax {
 // })
 
 /// Parses the body of a method object member starting right after the member name.
-fn parse_method_object_member_body(p: &mut Parser, flags: SignatureFlags) {
+fn parse_method_object_member_body(p: &mut JsParser, flags: SignatureFlags) {
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_type_parameters, |p, type_parameters| {
             ts_only_syntax_error(p, "type parameters", type_parameters.range(p))
@@ -446,7 +449,7 @@ fn parse_method_object_member_body(p: &mut Parser, flags: SignatureFlags) {
     parse_function_body(p, flags).or_add_diagnostic(p, js_parse_error::expected_function_body);
 }
 
-fn is_parser_at_async_method_member(p: &mut Parser) -> bool {
+fn is_parser_at_async_method_member(p: &mut JsParser) -> bool {
     p.at(T![async])
         && !p.has_nth_preceding_line_break(1)
         && (is_nth_at_type_member_name(p, 1) || p.nth_at(1, T![*]))

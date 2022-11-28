@@ -1,10 +1,11 @@
-use crate::{markup, parse, parse_module, test_utils::assert_errors_are_absent, Parse};
+use crate::{parse, parse_module, test_utils::assert_errors_are_absent, Parse};
 use expect_test::expect_file;
 use rome_console::fmt::{Formatter, Termcolor};
+use rome_console::markup;
 use rome_diagnostics::location::FileId;
 use rome_diagnostics::DiagnosticExt;
 use rome_diagnostics::PrintDiagnostic;
-use rome_js_syntax::{JsAnyRoot, JsSyntaxKind, SourceType};
+use rome_js_syntax::{AnyJsRoot, JsSyntaxKind, SourceType};
 use rome_js_syntax::{JsCallArguments, JsLogicalExpression, JsSyntaxToken};
 use rome_rowan::{AstNode, Direction, TextSize};
 use std::fmt::Write;
@@ -49,7 +50,7 @@ fn parser_missing_smoke_test() {
     assert_eq!(closing, None);
 }
 
-fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
+fn try_parse(path: &str, text: &str) -> Parse<AnyJsRoot> {
     let res = catch_unwind(|| {
         let path = Path::new(path);
         // Files containing a // SCRIPT comment are parsed as script and not as module
@@ -75,7 +76,7 @@ fn try_parse(path: &str, text: &str) -> Parse<JsAnyRoot> {
     res.unwrap()
 }
 
-fn try_parse_with_printed_ast(path: &str, text: &str) -> (Parse<JsAnyRoot>, String) {
+fn try_parse_with_printed_ast(path: &str, text: &str) -> (Parse<AnyJsRoot>, String) {
     catch_unwind(|| {
         let parse = try_parse(path, text);
         let formatted = format!("{:#?}", &parse.tree());
@@ -150,7 +151,7 @@ mod parser {
     }
 }
 
-fn assert_errors_are_present(program: &Parse<JsAnyRoot>, path: &Path) {
+fn assert_errors_are_present(program: &Parse<AnyJsRoot>, path: &Path) {
     assert!(
         !program.diagnostics().is_empty(),
         "There should be errors in the file {:?}\nSyntax Tree: {:#?}",

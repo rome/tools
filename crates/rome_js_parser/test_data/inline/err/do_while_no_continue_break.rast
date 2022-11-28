@@ -15,7 +15,7 @@ JsModule {
             r_paren_token: missing (required),
             semicolon_token: missing (optional),
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 BREAK_KW@7..13 "break" [] [Whitespace(" ")],
             ],
@@ -28,12 +28,12 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 CONTINUE_KW@14..22 "continue" [] [],
             ],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 R_PAREN@22..23 ")" [] [],
             ],
@@ -51,7 +51,7 @@ JsModule {
             r_paren_token: missing (required),
             semicolon_token: missing (optional),
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 CONTINUE_KW@31..40 "continue" [] [Whitespace(" ")],
             ],
@@ -64,12 +64,12 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 BREAK_KW@41..46 "break" [] [],
             ],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 R_PAREN@46..47 ")" [] [],
             ],
@@ -93,7 +93,7 @@ JsModule {
       4: (empty)
       5: (empty)
       6: (empty)
-    1: JS_UNKNOWN_STATEMENT@7..13
+    1: JS_BOGUS_STATEMENT@7..13
       0: BREAK_KW@7..13 "break" [] [Whitespace(" ")]
     2: JS_EXPRESSION_STATEMENT@13..14
       0: JS_PARENTHESIZED_EXPRESSION@13..14
@@ -101,9 +101,9 @@ JsModule {
         1: (empty)
         2: (empty)
       1: (empty)
-    3: JS_UNKNOWN_STATEMENT@14..22
+    3: JS_BOGUS_STATEMENT@14..22
       0: CONTINUE_KW@14..22 "continue" [] []
-    4: JS_UNKNOWN_STATEMENT@22..23
+    4: JS_BOGUS_STATEMENT@22..23
       0: R_PAREN@22..23 ")" [] []
     5: JS_DO_WHILE_STATEMENT@23..31
       0: DO_KW@23..27 "do" [Newline("\n")] [Whitespace(" ")]
@@ -116,7 +116,7 @@ JsModule {
       4: (empty)
       5: (empty)
       6: (empty)
-    6: JS_UNKNOWN_STATEMENT@31..40
+    6: JS_BOGUS_STATEMENT@31..40
       0: CONTINUE_KW@31..40 "continue" [] [Whitespace(" ")]
     7: JS_EXPRESSION_STATEMENT@40..41
       0: JS_PARENTHESIZED_EXPRESSION@40..41
@@ -124,9 +124,9 @@ JsModule {
         1: (empty)
         2: (empty)
       1: (empty)
-    8: JS_UNKNOWN_STATEMENT@41..46
+    8: JS_BOGUS_STATEMENT@41..46
       0: BREAK_KW@41..46 "break" [] []
-    9: JS_UNKNOWN_STATEMENT@46..47
+    9: JS_BOGUS_STATEMENT@46..47
       0: R_PAREN@46..47 ")" [] []
   3: EOF@47..48 "" [Newline("\n")] []
 --

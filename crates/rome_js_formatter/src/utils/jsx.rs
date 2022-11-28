@@ -3,8 +3,8 @@ use crate::prelude::*;
 use crate::JsCommentStyle;
 use rome_formatter::{comments::CommentStyle, format_args, write};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsComputedMemberExpression, JsStaticMemberExpression,
-    JsSyntaxKind, JsxAnyChild, JsxAnyTag, JsxChildList, JsxExpressionChild, JsxTagExpression,
+    AnyJsExpression, AnyJsLiteralExpression, AnyJsxChild, AnyJsxTag, JsComputedMemberExpression,
+    JsStaticMemberExpression, JsSyntaxKind, JsxChildList, JsxExpressionChild, JsxTagExpression,
     JsxText, TextLen,
 };
 use rome_rowan::{Direction, SyntaxResult, SyntaxTokenText, TextRange, TextSize};
@@ -55,7 +55,7 @@ pub fn is_meaningful_jsx_text(text: &str) -> bool {
 //   <div a={  some} />
 //   </div>
 /// ```
-pub(crate) fn is_jsx_suppressed(tag: &JsxAnyTag, comments: &JsComments) -> bool {
+pub(crate) fn is_jsx_suppressed(tag: &AnyJsxTag, comments: &JsComments) -> bool {
     comments.mark_suppression_checked(tag.syntax());
 
     match tag.parent::<JsxChildList>() {
@@ -193,8 +193,8 @@ pub(crate) fn is_whitespace_jsx_expression(
     comments: &JsComments,
 ) -> bool {
     match child.expression() {
-        Some(JsAnyExpression::JsAnyLiteralExpression(
-            JsAnyLiteralExpression::JsStringLiteralExpression(literal),
+        Some(AnyJsExpression::AnyJsLiteralExpression(
+            AnyJsLiteralExpression::JsStringLiteralExpression(literal),
         )) => {
             match (
                 child.l_curly_token(),
@@ -221,13 +221,13 @@ pub(crate) fn jsx_split_children<I>(
     comments: &JsComments,
 ) -> SyntaxResult<Vec<JsxChild>>
 where
-    I: IntoIterator<Item = JsxAnyChild>,
+    I: IntoIterator<Item = AnyJsxChild>,
 {
     let mut builder = JsxSplitChildrenBuilder::new();
 
     for child in children.into_iter() {
         match child {
-            JsxAnyChild::JsxText(text) => {
+            AnyJsxChild::JsxText(text) => {
                 // Split the text into words
                 // Keep track if there's any leading/trailing empty line, new line or whitespace
 
@@ -282,18 +282,18 @@ where
                         }
 
                         (relative_start, JsxTextChunk::Word(word)) => {
-                            builder.entry(JsxChild::Word(JsxWord {
-                                text: value_token
-                                    .token_text()
-                                    .slice(TextRange::at(relative_start, word.text_len())),
-                                source_position: value_token.text_range().start() + relative_start,
-                            }));
+                            let text = value_token
+                                .token_text()
+                                .slice(TextRange::at(relative_start, word.text_len()));
+                            let source_position = value_token.text_range().start() + relative_start;
+
+                            builder.entry(JsxChild::Word(JsxWord::new(text, source_position)));
                         }
                     }
                 }
             }
 
-            JsxAnyChild::JsxExpressionChild(child) => {
+            AnyJsxChild::JsxExpressionChild(child) => {
                 if is_whitespace_jsx_expression(&child, comments) {
                     builder.entry(JsxChild::Whitespace)
                 } else {
@@ -389,7 +389,7 @@ pub(crate) enum JsxChild {
     EmptyLine,
 
     /// Any other content that isn't a text. Should be formatted as is.
-    NonText(JsxAnyChild),
+    NonText(AnyJsxChild),
 }
 
 impl JsxChild {
@@ -406,7 +406,14 @@ pub(crate) struct JsxWord {
 }
 
 impl JsxWord {
-    pub fn is_ascii_punctuation(&self) -> bool {
+    fn new(text: SyntaxTokenText, source_position: TextSize) -> Self {
+        JsxWord {
+            text,
+            source_position,
+        }
+    }
+
+    pub(crate) fn is_ascii_punctuation(&self) -> bool {
         self.text.chars().count() == 1
             && self
                 .text
@@ -487,14 +494,100 @@ impl<'a> Iterator for JsxSplitChunksIterator<'a> {
 
 impl FusedIterator for JsxSplitChunksIterator<'_> {}
 
+/// An iterator adaptor that allows a lookahead of two tokens
+///
+/// # Examples
+/// ```
+/// use rome_js_formatter::utils::jsx::JsxChildrenIterator;
+///
+/// let buffer = vec![1, 2, 3, 4];
+///
+/// let mut iter = JsxChildrenIterator::new(buffer.iter());
+///
+/// assert_eq!(iter.peek(), Some(&&1));
+/// assert_eq!(iter.peek_next(), Some(&&2));
+/// assert_eq!(iter.next(), Some(&1));
+/// assert_eq!(iter.next(), Some(&2));
+/// ```
+#[derive(Clone, Debug)]
+pub struct JsxChildrenIterator<I: Iterator> {
+    iter: I,
+
+    peeked: Option<Option<I::Item>>,
+    peeked_next: Option<Option<I::Item>>,
+}
+
+impl<I: Iterator> JsxChildrenIterator<I> {
+    pub fn new(iter: I) -> Self {
+        Self {
+            iter,
+            peeked: None,
+            peeked_next: None,
+        }
+    }
+
+    pub fn peek(&mut self) -> Option<&I::Item> {
+        let iter = &mut self.iter;
+        self.peeked.get_or_insert_with(|| iter.next()).as_ref()
+    }
+
+    pub fn peek_next(&mut self) -> Option<&I::Item> {
+        let iter = &mut self.iter;
+        let peeked = &mut self.peeked;
+
+        self.peeked_next
+            .get_or_insert_with(|| {
+                peeked.get_or_insert_with(|| iter.next());
+                iter.next()
+            })
+            .as_ref()
+    }
+}
+
+impl<I: Iterator> Iterator for JsxChildrenIterator<I> {
+    type Item = I::Item;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        match self.peeked.take() {
+            Some(peeked) => {
+                self.peeked = self.peeked_next.take();
+                peeked
+            }
+            None => self.iter.next(),
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::utils::jsx::{jsx_split_children, JsxChild, JsxSplitChunksIterator, JsxTextChunk};
+    use crate::utils::jsx::{
+        jsx_split_children, JsxChild, JsxChildrenIterator, JsxSplitChunksIterator, JsxTextChunk,
+    };
     use rome_diagnostics::location::FileId;
     use rome_formatter::comments::Comments;
     use rome_js_parser::parse;
     use rome_js_syntax::{JsxChildList, JsxText, SourceType};
     use rome_rowan::{AstNode, TextSize};
+
+    #[test]
+    fn jsx_children_iterator_test() {
+        let buffer = vec![1, 2, 3, 4];
+
+        let mut iter = JsxChildrenIterator::new(buffer.iter());
+
+        assert_eq!(iter.peek(), Some(&&1));
+        assert_eq!(iter.peek(), Some(&&1));
+        assert_eq!(iter.peek_next(), Some(&&2));
+        assert_eq!(iter.peek_next(), Some(&&2));
+
+        assert_eq!(iter.next(), Some(&1));
+        assert_eq!(iter.next(), Some(&2));
+
+        assert_eq!(iter.peek_next(), Some(&&4));
+        assert_eq!(iter.peek_next(), Some(&&4));
+        assert_eq!(iter.peek(), Some(&&3));
+        assert_eq!(iter.peek(), Some(&&3));
+    }
 
     fn assert_jsx_text_chunks(text: &str, expected_chunks: Vec<(TextSize, JsxTextChunk)>) {
         let parse = parse(

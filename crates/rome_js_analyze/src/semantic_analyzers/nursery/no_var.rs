@@ -1,4 +1,4 @@
-use crate::{control_flow::JsAnyControlFlowRoot, semantic_services::Semantic, JsRuleAction};
+use crate::{control_flow::AnyJsControlFlowRoot, semantic_services::Semantic, JsRuleAction};
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
@@ -53,7 +53,7 @@ impl Rule for NoVar {
         let var_scope = declaration
             .syntax()
             .ancestors()
-            .find(|x| JsAnyControlFlowRoot::can_cast(x.kind()))?;
+            .find(|x| AnyJsControlFlowRoot::can_cast(x.kind()))?;
         let contextual_note = if JsScript::can_cast(var_scope.kind()) {
             markup! {
                 "A variable declared with "<Emphasis>"var"</Emphasis>" in the global scope pollutes the global object."

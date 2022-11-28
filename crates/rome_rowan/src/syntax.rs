@@ -21,11 +21,14 @@ pub use trivia::{
 
 /// Type tag for each node or token of a language
 pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {
-    /// Returns `true` if this is an unknown node kind.
-    fn is_unknown(&self) -> bool;
+    const TOMBSTONE: Self;
+    const EOF: Self;
 
-    /// Converts this into to the best matching unknown node kind.
-    fn to_unknown(&self) -> Self;
+    /// Returns `true` if this is a kind of a bogus node.
+    fn is_bogus(&self) -> bool;
+
+    /// Converts this into to the best matching bogus node kind.
+    fn to_bogus(&self) -> Self;
 
     /// Converts this kind to a raw syntax kind.
     fn to_raw(&self) -> RawSyntaxKind;
@@ -38,6 +41,9 @@ pub trait SyntaxKind: fmt::Debug + PartialEq + Copy {
 
     /// Returns `true` if this kind is a list node.
     fn is_list(&self) -> bool;
+
+    /// Returns a string for keywords and punctuation tokens or `None` otherwise.
+    fn to_string(&self) -> Option<&'static str>;
 }
 
 pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Hash {

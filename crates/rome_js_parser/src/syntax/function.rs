@@ -1,4 +1,5 @@
-use crate::parser::{ParsedSyntax, ParserProgress};
+use crate::parser::ParsedSyntax;
+use crate::prelude::*;
 use crate::state::{EnterFunction, EnterParameters, SignatureFlags};
 use crate::syntax::binding::{
     is_at_identifier_binding, is_nth_at_identifier_binding, parse_binding, parse_binding_pattern,
@@ -18,9 +19,10 @@ use crate::syntax::typescript::{
 
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{CompletedMarker, JsSyntaxFeature, Marker, ParseRecovery, Parser, SyntaxFeature};
+use crate::{JsParser, JsSyntaxFeature, ParseRecovery};
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::{JsSyntaxKind, TextRange, T};
+use rome_parser::ParserProgress;
 use rome_rowan::SyntaxKind;
 
 /// A function declaration, this could be async and or a generator. This takes a marker
@@ -58,7 +60,7 @@ use rome_rowan::SyntaxKind;
 // function test(a: string, b?: number, c="default") {}
 // function test2<A, B extends A, C = A>(a: A, b: B, c: C) {}
 pub(super) fn parse_function_declaration(
-    p: &mut Parser,
+    p: &mut JsParser,
     context: StatementContext,
 ) -> ParsedSyntax {
     if !is_at_function(p) {
@@ -66,7 +68,7 @@ pub(super) fn parse_function_declaration(
     }
 
     let m = p.start();
-    let mut function = if p.state.in_ambient_context() {
+    let mut function = if p.state().in_ambient_context() {
         parse_ambient_function(p, m, AmbientFunctionKind::Declaration)
     } else {
         parse_function(
@@ -78,14 +80,14 @@ pub(super) fn parse_function_declaration(
         )
     };
 
-    if context != StatementContext::StatementList && !function.kind().is_unknown() {
+    if context != StatementContext::StatementList && !function.kind(p).is_bogus() {
         if JsSyntaxFeature::StrictMode.is_supported(p) {
             // test_err function_in_single_statement_context_strict
             // if (true) function a() {}
             // label1: function b() {}
             // while (true) function c() {}
             p.error(p.err_builder("In strict mode code, functions can only be declared at top level or inside a block", function.range(p)).hint( "wrap the function in a block statement"));
-            function.change_to_unknown(p);
+            function.change_to_bogus(p);
         } else if !matches!(context, StatementContext::If | StatementContext::Label) {
             // test function_in_if_or_labelled_stmt_loose_mode
             // // SCRIPT
@@ -94,14 +96,14 @@ pub(super) fn parse_function_declaration(
             // if (true) function d() {}
             // if (true) "test"; else function e() {}
             p.error(p.err_builder("In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if or labelled statement", function.range(p)).hint( "wrap the function in a block statement"));
-            function.change_to_unknown(p);
+            function.change_to_bogus(p);
         }
     }
 
     Present(function)
 }
 
-pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_function_expression(p: &mut JsParser) -> ParsedSyntax {
     if !is_at_function(p) {
         return Absent;
     }
@@ -120,14 +122,14 @@ pub(super) fn parse_function_expression(p: &mut Parser) -> ParsedSyntax {
 // test ts ts_export_function_overload
 // export function test(a: string): string;
 // export function test(a: string | undefined): string { return "hello" }
-pub(super) fn parse_function_export_default_declaration(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_function_export_default_declaration(p: &mut JsParser) -> ParsedSyntax {
     if !is_at_function(p) {
         return Absent;
     }
 
     let m = p.start();
 
-    Present(if p.state.in_ambient_context() {
+    Present(if p.state().in_ambient_context() {
         parse_ambient_function(p, m, AmbientFunctionKind::ExportDefault)
     } else {
         parse_function(p, m, FunctionKind::ExportDefault)
@@ -189,12 +191,12 @@ impl From<FunctionKind> for JsSyntaxKind {
     }
 }
 
-fn is_at_function(p: &mut Parser) -> bool {
+fn is_at_function(p: &mut JsParser) -> bool {
     p.at_ts(token_set![T![async], T![function]]) || is_at_async_function(p, LineBreak::DoNotCheck)
 }
 
 #[inline]
-fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMarker {
+fn parse_function(p: &mut JsParser, m: Marker, kind: FunctionKind) -> CompletedMarker {
     let mut flags = SignatureFlags::empty();
 
     let in_async = is_at_async_function(p, LineBreak::DoNotCheck);
@@ -299,7 +301,7 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
         // if (true) function* t() {}
         if kind.is_in_single_statement_context() && (in_async || generator_range.is_some()) {
             p.error(p.err_builder("`async` and generator functions can only be declared at top level or inside a block", function.range(p) ));
-            function.change_to_unknown(p);
+            function.change_to_bogus(p);
         }
 
         function
@@ -312,13 +314,13 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
 //     break;
 //   }
 // }
-pub(super) fn parse_function_body(p: &mut Parser, flags: SignatureFlags) -> ParsedSyntax {
+pub(super) fn parse_function_body(p: &mut JsParser, flags: SignatureFlags) -> ParsedSyntax {
     p.with_state(EnterFunction(flags), |p| {
         parse_block_impl(p, JS_FUNCTION_BODY)
     })
 }
 
-fn parse_function_id(p: &mut Parser, kind: FunctionKind, flags: SignatureFlags) -> ParsedSyntax {
+fn parse_function_id(p: &mut JsParser, kind: FunctionKind, flags: SignatureFlags) -> ParsedSyntax {
     match kind {
         // Takes the async and generator restriction from the expression
         FunctionKind::Expression => {
@@ -368,7 +370,11 @@ fn parse_function_id(p: &mut Parser, kind: FunctionKind, flags: SignatureFlags) 
 // declare module a {
 //   function test(): string;
 // }
-fn parse_ambient_function(p: &mut Parser, m: Marker, kind: AmbientFunctionKind) -> CompletedMarker {
+fn parse_ambient_function(
+    p: &mut JsParser,
+    m: Marker,
+    kind: AmbientFunctionKind,
+) -> CompletedMarker {
     let stmt_start = p.cur_range().start();
 
     // test_err ts ts_declare_async_function
@@ -419,7 +425,7 @@ fn parse_ambient_function(p: &mut Parser, m: Marker, kind: AmbientFunctionKind) 
     semi(p, TextRange::new(stmt_start, p.cur_range().start()));
 
     if is_async {
-        m.complete(p, JS_UNKNOWN_STATEMENT)
+        m.complete(p, JS_BOGUS_STATEMENT)
     } else if kind.is_export_default() {
         // test ts ts_declare_function_export_default_declaration
         // declare module 'x' {
@@ -445,7 +451,7 @@ fn parse_ambient_function(p: &mut Parser, m: Marker, kind: AmbientFunctionKind) 
     }
 }
 
-pub(crate) fn parse_ts_type_annotation_or_error(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_type_annotation_or_error(p: &mut JsParser) -> ParsedSyntax {
     TypeScript.parse_exclusive_syntax(p, parse_ts_type_annotation, |p, annotation| {
         p.err_builder(
             "return types can only be used in TypeScript files",
@@ -466,7 +472,7 @@ pub(crate) enum LineBreak {
 
 #[inline]
 /// Checks if the parser is inside a "async function"
-pub(super) fn is_at_async_function(p: &mut Parser, should_check_line_break: LineBreak) -> bool {
+pub(super) fn is_at_async_function(p: &mut JsParser, should_check_line_break: LineBreak) -> bool {
     let async_function_tokens = p.at(T![async]) && p.nth_at(1, T![function]);
     if should_check_line_break == LineBreak::DoCheck {
         async_function_tokens && !p.has_nth_preceding_line_break(1)
@@ -494,7 +500,7 @@ impl Ambiguity {
     }
 }
 
-pub(crate) fn parse_arrow_function_expression(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_arrow_function_expression(p: &mut JsParser) -> ParsedSyntax {
     parse_parenthesized_arrow_function_expression(p)
         .or_else(|| parse_arrow_function_with_single_parameter(p))
 }
@@ -516,7 +522,7 @@ pub(crate) fn parse_arrow_function_expression(p: &mut Parser) -> ParsedSyntax {
 /// function because the start very much looks like one, except that the `=>` token is missing
 /// (it's a TypeScript `<string>` cast followed by a parenthesized expression).
 fn try_parse_parenthesized_arrow_function_head(
-    p: &mut Parser,
+    p: &mut JsParser,
     ambiguity: Ambiguity,
 ) -> Result<(Marker, SignatureFlags), Marker> {
     let m = p.start();
@@ -572,12 +578,12 @@ fn try_parse_parenthesized_arrow_function_head(
 // test ts ts_arrow_function_type_parameters
 // let a = <A, B extends A, C = string>(a: A, b: B, c: C) => "hello";
 // let b = async <A, B>(a: A, b: B): Promise<string> => "hello";
-fn parse_possible_parenthesized_arrow_function_expression(p: &mut Parser) -> ParsedSyntax {
+fn parse_possible_parenthesized_arrow_function_expression(p: &mut JsParser) -> ParsedSyntax {
     let start_pos = p.cur_range().start();
 
     // Test if we already tried to parse this position as an arrow function and failed.
     // If so, bail out immediately.
-    if p.state.not_parenthesized_arrow.contains(&start_pos) {
+    if p.state().not_parenthesized_arrow.contains(&start_pos) {
         return Absent;
     }
 
@@ -594,13 +600,13 @@ fn parse_possible_parenthesized_arrow_function_expression(p: &mut Parser) -> Par
             // the callback returns `Err` (which is the case that this branch is handling).
             m.abandon(p);
 
-            p.state.not_parenthesized_arrow.insert(start_pos);
+            p.state_mut().not_parenthesized_arrow.insert(start_pos);
             Absent
         }
     }
 }
 
-fn parse_parenthesized_arrow_function_expression(p: &mut Parser) -> ParsedSyntax {
+fn parse_parenthesized_arrow_function_expression(p: &mut JsParser) -> ParsedSyntax {
     let is_parenthesized = is_parenthesized_arrow_function_expression(p);
     match is_parenthesized {
         IsParenthesizedArrowFunctionExpression::True => {
@@ -638,7 +644,7 @@ enum IsParenthesizedArrowFunctionExpression {
 //  => {}
 
 fn is_parenthesized_arrow_function_expression(
-    p: &mut Parser,
+    p: &mut JsParser,
 ) -> IsParenthesizedArrowFunctionExpression {
     match p.cur() {
         // These could be the start of a parenthesized arrow function expression but needs further verification
@@ -667,7 +673,7 @@ fn is_parenthesized_arrow_function_expression(
 
 // Tests if the parser is at an arrow function expression
 fn is_parenthesized_arrow_function_expression_impl(
-    p: &mut Parser,
+    p: &mut JsParser,
     flags: SignatureFlags,
 ) -> IsParenthesizedArrowFunctionExpression {
     let n = usize::from(flags.contains(SignatureFlags::ASYNC));
@@ -767,15 +773,15 @@ fn is_parenthesized_arrow_function_expression_impl(
 
 /// Computes the signature flags for parsing the parameters of an arrow expression. These
 /// have different semantics from parsing the body
-fn arrow_function_parameter_flags(p: &Parser, mut flags: SignatureFlags) -> SignatureFlags {
-    if p.state.in_generator() {
+fn arrow_function_parameter_flags(p: &JsParser, mut flags: SignatureFlags) -> SignatureFlags {
+    if p.state().in_generator() {
         // Arrow functions inherit whatever yield is a valid identifier name from the parent.
         flags |= SignatureFlags::GENERATOR;
     }
 
     // The arrow function is in an async context if the outer function is in an async context or itself is
     // declared async
-    if p.state.in_async() {
+    if p.state().in_async() {
         flags |= SignatureFlags::ASYNC;
     }
 
@@ -789,7 +795,7 @@ fn arrow_function_parameter_flags(p: &Parser, mut flags: SignatureFlags) -> Sign
 // await => {}
 // baz =>
 // {}
-fn parse_arrow_function_with_single_parameter(p: &mut Parser) -> ParsedSyntax {
+fn parse_arrow_function_with_single_parameter(p: &mut JsParser) -> ParsedSyntax {
     if !is_arrow_function_with_single_parameter(p) {
         return Absent;
     }
@@ -817,7 +823,7 @@ fn parse_arrow_function_with_single_parameter(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION))
 }
 
-fn is_arrow_function_with_single_parameter(p: &mut Parser) -> bool {
+fn is_arrow_function_with_single_parameter(p: &mut JsParser) -> bool {
     // a => ...
     if p.nth_at(1, T![=>]) {
         // test single_parameter_arrow_function_with_parameter_named_async
@@ -834,7 +840,7 @@ fn is_arrow_function_with_single_parameter(p: &mut Parser) -> bool {
     }
 }
 
-fn parse_arrow_body(p: &mut Parser, mut flags: SignatureFlags) -> ParsedSyntax {
+fn parse_arrow_body(p: &mut JsParser, mut flags: SignatureFlags) -> ParsedSyntax {
     // test arrow_in_constructor
     // class A {
     //   constructor() {
@@ -842,7 +848,7 @@ fn parse_arrow_body(p: &mut Parser, mut flags: SignatureFlags) -> ParsedSyntax {
     //     () => super();
     //  }
     // }
-    if p.state.in_constructor() {
+    if p.state().in_constructor() {
         flags |= SignatureFlags::CONSTRUCTOR
     }
 
@@ -856,7 +862,7 @@ fn parse_arrow_body(p: &mut Parser, mut flags: SignatureFlags) -> ParsedSyntax {
 }
 
 pub(crate) fn parse_any_parameter(
-    p: &mut Parser,
+    p: &mut JsParser,
     parameter_context: ParameterContext,
     expression_context: ExpressionContext,
 ) -> ParsedSyntax {
@@ -867,9 +873,9 @@ pub(crate) fn parse_any_parameter(
     };
 
     parameter.map(|mut parameter| {
-        if parameter.kind() == TS_THIS_PARAMETER {
+        if parameter.kind(p) == TS_THIS_PARAMETER {
             if TypeScript.is_unsupported(p) {
-                parameter.change_to_unknown(p);
+                parameter.change_to_bogus(p);
                 p.error(ts_only_syntax_error(
                     p,
                     "this parameter",
@@ -878,7 +884,7 @@ pub(crate) fn parse_any_parameter(
             } else if parameter_context.is_arrow_function() {
                 // test_err ts ts_arrow_function_this_parameter
                 // let a = (this: string) => {}
-                parameter.change_to_unknown(p);
+                parameter.change_to_bogus(p);
                 p.error(p.err_builder(
                     "An arrow function cannot have a 'this' parameter.",
                     parameter.range(p),
@@ -890,7 +896,7 @@ pub(crate) fn parse_any_parameter(
     })
 }
 
-pub(crate) fn parse_rest_parameter(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+pub(crate) fn parse_rest_parameter(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
     if !p.at(T![...]) {
         return Absent;
     }
@@ -940,7 +946,7 @@ pub(crate) fn parse_rest_parameter(p: &mut Parser, context: ExpressionContext) -
     }
 
     if !valid {
-        rest_parameter.change_to_unknown(p);
+        rest_parameter.change_to_bogus(p);
     }
 
     Present(rest_parameter)
@@ -949,7 +955,7 @@ pub(crate) fn parse_rest_parameter(p: &mut Parser, context: ExpressionContext) -
 // test ts ts_this_parameter
 // function a(this) {}
 // function b(this: string) {}
-pub(crate) fn parse_ts_this_parameter(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_ts_this_parameter(p: &mut JsParser) -> ParsedSyntax {
     if !p.at(T![this]) {
         return Absent;
     }
@@ -1006,13 +1012,13 @@ impl ParameterContext {
 // function a(x: string) {}
 // function b(x?) {}
 pub(crate) fn parse_formal_parameter(
-    p: &mut Parser,
+    p: &mut JsParser,
     parameter_context: ParameterContext,
     expression_context: ExpressionContext,
 ) -> ParsedSyntax {
     skip_ts_decorators(p);
     parse_binding_pattern(p, expression_context).map(|binding| {
-        let binding_kind = binding.kind();
+        let binding_kind = binding.kind(p);
         let binding_range = binding.range(p);
         let m = binding.precede(p);
         let mut valid = true;
@@ -1082,7 +1088,7 @@ pub(crate) fn parse_formal_parameter(
         let mut parameter = m.complete(p, JS_FORMAL_PARAMETER);
 
         if !valid {
-            parameter.change_to_unknown(p);
+            parameter.change_to_bogus(p);
         }
 
         parameter
@@ -1093,7 +1099,7 @@ pub(crate) fn parse_formal_parameter(
 /// if any typescript specific syntax like `:` is present after the parameter name.
 /// Returns `true` if the function skipped over a valid binding, returns false if the parser
 /// is not positioned at a binding.
-pub(super) fn skip_parameter_start(p: &mut Parser) -> bool {
+pub(super) fn skip_parameter_start(p: &mut JsParser) -> bool {
     if is_at_identifier_binding(p) || p.at(T![this]) {
         // a
         p.bump_any();
@@ -1102,9 +1108,9 @@ pub(super) fn skip_parameter_start(p: &mut Parser) -> bool {
 
     if p.at(T!['[']) || p.at(T!['{']) {
         // Array or object pattern. Try to parse it and return true if there were no parsing errors
-        let previous_error_count = p.diagnostics.len();
+        let previous_error_count = p.context().diagnostics().len();
         let pattern = parse_binding_pattern(p, ExpressionContext::default());
-        pattern.is_present() && p.diagnostics.len() == previous_error_count
+        pattern.is_present() && p.context().diagnostics().len() == previous_error_count
     } else {
         false
     }
@@ -1114,7 +1120,7 @@ pub(super) fn skip_parameter_start(p: &mut Parser) -> bool {
 // function evalInComputedPropertyKey({ [computed]: ignored }) {}
 /// parse the whole list of parameters, brackets included
 pub(super) fn parse_parameter_list(
-    p: &mut Parser,
+    p: &mut JsParser,
     parameter_context: ParameterContext,
     flags: SignatureFlags,
 ) -> ParsedSyntax {
@@ -1134,9 +1140,9 @@ pub(super) fn parse_parameter_list(
 
 /// Parses a (param, param) list into the current active node
 pub(super) fn parse_parameters_list(
-    p: &mut Parser,
+    p: &mut JsParser,
     flags: SignatureFlags,
-    parse_parameter: impl Fn(&mut Parser, ExpressionContext) -> ParsedSyntax,
+    parse_parameter: impl Fn(&mut JsParser, ExpressionContext) -> ParsedSyntax,
     list_kind: JsSyntaxKind,
 ) {
     let mut first = true;
@@ -1178,7 +1184,7 @@ pub(super) fn parse_parameters_list(
             let recovered_result = parameter.or_recover(
                 p,
                 &ParseRecovery::new(
-                    JS_UNKNOWN_PARAMETER,
+                    JS_BOGUS_PARAMETER,
                     token_set![
                         T![ident],
                         T![await],

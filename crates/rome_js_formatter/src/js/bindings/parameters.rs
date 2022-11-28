@@ -2,22 +2,22 @@ use crate::prelude::*;
 use rome_formatter::{write, CstFormatContext};
 
 use crate::js::lists::parameter_list::{
-    AnyParameter, FormatJsAnyParameterList, JsAnyParameterList,
+    AnyJsParameterList, AnyParameter, FormatJsAnyParameterList,
 };
 
 use crate::utils::test_call::is_test_call_argument;
 use rome_js_syntax::{
-    JsAnyConstructorParameter, JsAnyFormalParameter, JsConstructorParameters, JsParameters,
-    JsSyntaxToken, TsType,
+    AnyJsConstructorParameter, AnyJsFormalParameter, AnyTsType, JsConstructorParameters,
+    JsParameters, JsSyntaxToken,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsParameters;
+pub(crate) struct FormatJsParameters;
 
 impl FormatNodeRule<JsParameters> for FormatJsParameters {
     fn fmt_fields(&self, node: &JsParameters, f: &mut JsFormatter) -> FormatResult<()> {
-        FormatJsAnyParameters::from(node.clone()).fmt(f)
+        FormatAnyJsParameters::from(node.clone()).fmt(f)
     }
 
     fn fmt_dangling_comments(&self, _: &JsParameters, _: &mut JsFormatter) -> FormatResult<()> {
@@ -27,10 +27,10 @@ impl FormatNodeRule<JsParameters> for FormatJsParameters {
 }
 
 declare_node_union! {
-    pub(crate) FormatJsAnyParameters = JsParameters | JsConstructorParameters
+    pub(crate) FormatAnyJsParameters = JsParameters | JsConstructorParameters
 }
 
-impl Format<JsFormatContext> for FormatJsAnyParameters {
+impl Format<JsFormatContext> for FormatAnyJsParameters {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let list = self.list();
 
@@ -96,31 +96,31 @@ impl Format<JsFormatContext> for FormatJsAnyParameters {
     }
 }
 
-impl FormatJsAnyParameters {
+impl FormatAnyJsParameters {
     fn l_paren_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            FormatJsAnyParameters::JsParameters(parameters) => parameters.l_paren_token(),
-            FormatJsAnyParameters::JsConstructorParameters(parameters) => {
+            FormatAnyJsParameters::JsParameters(parameters) => parameters.l_paren_token(),
+            FormatAnyJsParameters::JsConstructorParameters(parameters) => {
                 parameters.l_paren_token()
             }
         }
     }
 
-    fn list(&self) -> JsAnyParameterList {
+    fn list(&self) -> AnyJsParameterList {
         match self {
-            FormatJsAnyParameters::JsParameters(parameters) => {
-                JsAnyParameterList::from(parameters.items())
+            FormatAnyJsParameters::JsParameters(parameters) => {
+                AnyJsParameterList::from(parameters.items())
             }
-            FormatJsAnyParameters::JsConstructorParameters(parameters) => {
-                JsAnyParameterList::from(parameters.parameters())
+            FormatAnyJsParameters::JsConstructorParameters(parameters) => {
+                AnyJsParameterList::from(parameters.parameters())
             }
         }
     }
 
     fn r_paren_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            FormatJsAnyParameters::JsParameters(parameters) => parameters.r_paren_token(),
-            FormatJsAnyParameters::JsConstructorParameters(parameters) => {
+            FormatAnyJsParameters::JsParameters(parameters) => parameters.r_paren_token(),
+            FormatAnyJsParameters::JsConstructorParameters(parameters) => {
                 parameters.r_paren_token()
             }
         }
@@ -129,11 +129,11 @@ impl FormatJsAnyParameters {
     /// Returns `true` for function parameters if the function is an argument of a [test `CallExpression`](is_test_call_expression).
     fn is_in_test_call(&self) -> SyntaxResult<bool> {
         let result = match self {
-            FormatJsAnyParameters::JsParameters(parameters) => match parameters.syntax().parent() {
+            FormatAnyJsParameters::JsParameters(parameters) => match parameters.syntax().parent() {
                 Some(function) => is_test_call_argument(&function)?,
                 None => false,
             },
-            FormatJsAnyParameters::JsConstructorParameters(_) => false,
+            FormatAnyJsParameters::JsConstructorParameters(_) => false,
         };
 
         Ok(result)
@@ -173,12 +173,12 @@ pub enum ParameterLayout {
 }
 
 pub(crate) fn should_hug_function_parameters(
-    parameters: &FormatJsAnyParameters,
+    parameters: &FormatAnyJsParameters,
     comments: &JsComments,
 ) -> FormatResult<bool> {
     use rome_js_syntax::{
-        JsAnyBinding::*, JsAnyBindingPattern::*, JsAnyExpression::*, JsAnyFormalParameter::*,
-        JsAnyParameter::*,
+        AnyJsBinding::*, AnyJsBindingPattern::*, AnyJsExpression::*, AnyJsFormalParameter::*,
+        AnyJsParameter::*,
     };
 
     let list = parameters.list();
@@ -196,7 +196,7 @@ pub(crate) fn should_hug_function_parameters(
 
     /// Returns true if the first parameter should be forced onto the same line as the `(` and `)` parentheses.
     /// See the `[ParameterLayout::Hug] documentation.
-    fn hug_formal_parameter(parameter: &self::JsAnyFormalParameter) -> FormatResult<bool> {
+    fn hug_formal_parameter(parameter: &self::AnyJsFormalParameter) -> FormatResult<bool> {
         let result = match parameter {
             JsFormalParameter(parameter) => {
                 match parameter.initializer() {
@@ -206,12 +206,12 @@ pub(crate) fn should_hug_function_parameters(
                             JsArrayBindingPattern(_) | JsObjectBindingPattern(_) => true,
                             // only if the type parameter is an object type
                             // `a: { prop: string }`
-                            JsAnyBinding(JsIdentifierBinding(_)) => parameter
+                            AnyJsBinding(JsIdentifierBinding(_)) => parameter
                                 .type_annotation()
                                 .map_or(false, |type_annotation| {
-                                    matches!(type_annotation.ty(), Ok(TsType::TsObjectType(_)))
+                                    matches!(type_annotation.ty(), Ok(AnyTsType::TsObjectType(_)))
                                 }),
-                            JsAnyBinding(JsUnknownBinding(_)) => {
+                            AnyJsBinding(JsBogusBinding(_)) => {
                                 return Err(FormatError::SyntaxError)
                             }
                         }
@@ -234,27 +234,27 @@ pub(crate) fn should_hug_function_parameters(
                     }
                 }
             }
-            JsUnknownParameter(_) => return Err(FormatError::SyntaxError),
+            JsBogusParameter(_) => return Err(FormatError::SyntaxError),
         };
 
         Ok(result)
     }
 
     let result = match only_parameter {
-        AnyParameter::JsAnyParameter(parameter) => match parameter {
-            JsAnyFormalParameter(formal_parameter) => hug_formal_parameter(&formal_parameter)?,
+        AnyParameter::AnyJsParameter(parameter) => match parameter {
+            AnyJsFormalParameter(formal_parameter) => hug_formal_parameter(&formal_parameter)?,
             JsRestParameter(_) => false,
             TsThisParameter(this) => this.type_annotation().map_or(false, |type_annotation| {
-                matches!(type_annotation.ty(), Ok(TsType::TsObjectType(_)))
+                matches!(type_annotation.ty(), Ok(AnyTsType::TsObjectType(_)))
             }),
         },
-        AnyParameter::JsAnyConstructorParameter(constructor_parameter) => {
+        AnyParameter::AnyJsConstructorParameter(constructor_parameter) => {
             match constructor_parameter {
-                JsAnyConstructorParameter::JsAnyFormalParameter(formal_parameter) => {
+                AnyJsConstructorParameter::AnyJsFormalParameter(formal_parameter) => {
                     hug_formal_parameter(&formal_parameter)?
                 }
-                JsAnyConstructorParameter::JsRestParameter(_)
-                | JsAnyConstructorParameter::TsPropertyParameter(_) => false,
+                AnyJsConstructorParameter::JsRestParameter(_)
+                | AnyJsConstructorParameter::TsPropertyParameter(_) => false,
             }
         }
     };

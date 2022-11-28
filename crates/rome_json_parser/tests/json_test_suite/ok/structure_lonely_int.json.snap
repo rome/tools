@@ -10,10 +10,25 @@ expression: snapshot
 ```
 
 
-## Tokens
+## AST
 
 ```
-JSON_NUMBER_LITERAL: `42` (0..2)
-EOF: `` (2..2)
+JsonRoot {
+    value: JsonNumberValue {
+        value_token: JSON_NUMBER_LITERAL@0..2 "42" [] [],
+    },
+    eof_token: EOF@2..2 "" [] [],
+}
 ```
+
+## CST 
+
+```
+0: JSON_ROOT@0..2
+  0: JSON_NUMBER_VALUE@0..2
+    0: JSON_NUMBER_LITERAL@0..2 "42" [] []
+  1: EOF@2..2 "" [] []
+
+```
+
 

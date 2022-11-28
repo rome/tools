@@ -272,7 +272,7 @@ impl LabelId {
 
 #[derive(Clone, Copy, Eq, PartialEq, Debug)]
 pub enum VerbatimKind {
-    Unknown,
+    Bogus,
     Suppressed,
     Verbatim {
         /// the length of the formatted node
@@ -281,7 +281,7 @@ pub enum VerbatimKind {
 }
 
 impl VerbatimKind {
-    pub const fn is_unknown(&self) -> bool {
-        matches!(self, VerbatimKind::Unknown)
+    pub const fn is_bogus(&self) -> bool {
+        matches!(self, VerbatimKind::Bogus)
     }
 }

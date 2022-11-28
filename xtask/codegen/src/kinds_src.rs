@@ -129,6 +129,7 @@ pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
         // contextual keywords
         "abstract",
         "as",
+        "satisfies",
         "asserts",
         "assert",
         "any",
@@ -279,13 +280,13 @@ pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
         "JS_BOOLEAN_LITERAL_EXPRESSION",
         "JS_NULL_LITERAL_EXPRESSION",
         "JS_REGEX_LITERAL_EXPRESSION",
-        "JS_TEMPLATE",
+        "JS_TEMPLATE_EXPRESSION",
         "JS_TEMPLATE_ELEMENT",
         "JS_TEMPLATE_CHUNK_ELEMENT",
         "JS_TEMPLATE_ELEMENT_LIST",
         "JS_IMPORT_CALL_EXPRESSION",
-        "NEW_TARGET",
-        "IMPORT_META",
+        "JS_NEW_TARGET_EXPRESSION",
+        "JS_IMPORT_META_EXPRESSION",
         "JS_SHORTHAND_PROPERTY_OBJECT_MEMBER",
         "JS_SPREAD",
         "JS_OBJECT_BINDING_PATTERN",
@@ -334,6 +335,7 @@ pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
         "JS_COMPUTED_MEMBER_ASSIGNMENT",
         "TS_NON_NULL_ASSERTION_ASSIGNMENT",
         "TS_AS_ASSIGNMENT",
+        "TS_SATISFIES_ASSIGNMENT",
         "TS_TYPE_ASSERTION_ASSIGNMENT",
         "JS_ARRAY_ASSIGNMENT_PATTERN",
         "JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST",
@@ -460,6 +462,7 @@ pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
         "TS_NON_NULL_ASSERTION_EXPRESSION",
         "TS_TYPE_ASSERTION_EXPRESSION",
         "TS_AS_EXPRESSION",
+        "TS_SATISFIES_EXPRESSION",
         "TS_INSTANTIATION_EXPRESSION",
         "TS_ENUM_DECLARATION",
         "TS_ENUM_MEMBER_LIST",
@@ -502,16 +505,17 @@ pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
         "JSX_EXPRESSION_CHILD",
         "JSX_SPREAD_CHILD",
         "JSX_STRING",
-        // unknown nodes JS
-        "JS_UNKNOWN",
-        "JS_UNKNOWN_EXPRESSION",
-        "JS_UNKNOWN_STATEMENT",
-        "JS_UNKNOWN_MEMBER",
-        "JS_UNKNOWN_BINDING",
-        "JS_UNKNOWN_PARAMETER",
-        "JS_UNKNOWN_IMPORT_ASSERTION_ENTRY",
-        "JS_UNKNOWN_NAMED_IMPORT_SPECIFIER",
-        "JS_UNKNOWN_ASSIGNMENT",
+        // bogus nodes JS
+        "JS_BOGUS",
+        "JS_BOGUS_EXPRESSION",
+        "JS_BOGUS_STATEMENT",
+        "JS_BOGUS_MEMBER",
+        "JS_BOGUS_BINDING",
+        "JS_BOGUS_PARAMETER",
+        "JS_BOGUS_IMPORT_ASSERTION_ENTRY",
+        "JS_BOGUS_NAMED_IMPORT_SPECIFIER",
+        "JS_BOGUS_ASSIGNMENT",
+        "TS_BOGUS_TYPE",
     ],
 };
 
@@ -520,7 +524,7 @@ pub struct AstSrc {
     pub nodes: Vec<AstNodeSrc>,
     pub unions: Vec<AstEnumSrc>,
     pub lists: BTreeMap<String, AstListSrc>,
-    pub unknowns: Vec<String>,
+    pub bogus: Vec<String>,
 }
 
 impl AstSrc {
@@ -541,7 +545,7 @@ impl AstSrc {
         // No need to sort lists, they're stored in a btree
         self.nodes.sort_unstable_by(|a, b| a.name.cmp(&b.name));
         self.unions.sort_unstable_by(|a, b| a.name.cmp(&b.name));
-        self.unknowns.sort_unstable();
+        self.bogus.sort_unstable();
 
         for union in self.unions.iter_mut() {
             union.variants.sort_unstable();

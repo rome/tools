@@ -3,7 +3,7 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyExpression, JsSyntaxKind, TsNonNullAssertionExpression};
+use rome_js_syntax::{AnyJsExpression, JsSyntaxKind, TsNonNullAssertionExpression};
 use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
 
 declare_rule! {
@@ -45,7 +45,7 @@ declare_rule! {
 }
 
 fn can_replace_with_optional_chain(node: &TsNonNullAssertionExpression) -> bool {
-    match node.parent::<JsAnyExpression>() {
+    match node.parent::<AnyJsExpression>() {
         Some(parent) => {
             matches!(
                 parent.syntax().kind(),
@@ -133,8 +133,8 @@ impl Rule for NoNonNullAssertion {
                 }
             });
 
-        match node.parent::<JsAnyExpression>()? {
-            JsAnyExpression::JsComputedMemberExpression(parent) => {
+        match node.parent::<AnyJsExpression>()? {
+            AnyJsExpression::JsComputedMemberExpression(parent) => {
                 if parent.is_optional() {
                     mutation.remove_token(node.excl_token().ok()?);
                 } else {
@@ -144,7 +144,7 @@ impl Rule for NoNonNullAssertion {
                     );
                 }
             }
-            JsAnyExpression::JsCallExpression(parent) => {
+            AnyJsExpression::JsCallExpression(parent) => {
                 if parent.is_optional() {
                     mutation.remove_token(node.excl_token().ok()?);
                 } else {
@@ -154,7 +154,7 @@ impl Rule for NoNonNullAssertion {
                     );
                 }
             }
-            JsAnyExpression::JsStaticMemberExpression(parent) => {
+            AnyJsExpression::JsStaticMemberExpression(parent) => {
                 if parent.is_optional() {
                     mutation.remove_token(node.excl_token().ok()?);
                 } else {

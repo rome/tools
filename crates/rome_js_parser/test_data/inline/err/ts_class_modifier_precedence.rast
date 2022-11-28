@@ -71,7 +71,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@75..76 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             TsReadonlyModifier {
@@ -93,7 +93,7 @@ JsModule {
                         SEMICOLON@128..129 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             TsOverrideModifier {
@@ -109,7 +109,7 @@ JsModule {
                         SEMICOLON@158..159 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             JsStaticModifier {
@@ -131,7 +131,7 @@ JsModule {
                         SEMICOLON@188..189 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsPropertySignatureModifierList [
                             TsAbstractModifier {
@@ -153,7 +153,7 @@ JsModule {
                         SEMICOLON@222..223 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             TsReadonlyModifier {
@@ -175,7 +175,7 @@ JsModule {
                         SEMICOLON@267..268 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             TsOverrideModifier {
@@ -197,7 +197,7 @@ JsModule {
                         SEMICOLON@302..303 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsPropertySignatureModifierList [
                             TsOverrideModifier {
@@ -219,7 +219,7 @@ JsModule {
                         SEMICOLON@355..356 ";" [] [],
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             TsReadonlyModifier {
@@ -306,7 +306,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@75..76 "{" [] []
       7: JS_CLASS_MEMBER_LIST@76..409
-        0: JS_UNKNOWN_MEMBER@76..129
+        0: JS_BOGUS_MEMBER@76..129
           0: JS_PROPERTY_MODIFIER_LIST@76..119
             0: TS_READONLY_MODIFIER@76..111
               0: READONLY_KW@76..111 "readonly" [Newline("\n"), Whitespace("    "), Comments("// Accessibility"), Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -319,7 +319,7 @@ JsModule {
             1: TS_STRING_TYPE@122..128
               0: STRING_KW@122..128 "string" [] []
           3: SEMICOLON@128..129 ";" [] []
-        1: JS_UNKNOWN_MEMBER@129..159
+        1: JS_BOGUS_MEMBER@129..159
           0: JS_PROPERTY_MODIFIER_LIST@129..153
             0: TS_OVERRIDE_MODIFIER@129..143
               0: OVERRIDE_KW@129..143 "override" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -328,7 +328,7 @@ JsModule {
           1: JS_LITERAL_MEMBER_NAME@153..158
             0: IDENT@153..158 "base1" [] []
           2: SEMICOLON@158..159 ";" [] []
-        2: JS_UNKNOWN_MEMBER@159..189
+        2: JS_BOGUS_MEMBER@159..189
           0: JS_PROPERTY_MODIFIER_LIST@159..179
             0: JS_STATIC_MODIFIER@159..171
               0: STATIC_KW@159..171 "static" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -341,7 +341,7 @@ JsModule {
             1: TS_STRING_TYPE@182..188
               0: STRING_KW@182..188 "string" [] []
           3: SEMICOLON@188..189 ";" [] []
-        3: JS_UNKNOWN_MEMBER@189..223
+        3: JS_BOGUS_MEMBER@189..223
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@189..213
             0: TS_ABSTRACT_MODIFIER@189..203
               0: ABSTRACT_KW@189..203 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -354,7 +354,7 @@ JsModule {
             1: TS_STRING_TYPE@216..222
               0: STRING_KW@216..222 "string" [] []
           3: SEMICOLON@222..223 ";" [] []
-        4: JS_UNKNOWN_MEMBER@223..268
+        4: JS_BOGUS_MEMBER@223..268
           0: JS_PROPERTY_MODIFIER_LIST@223..258
             0: TS_READONLY_MODIFIER@223..251
               0: READONLY_KW@223..251 "readonly" [Newline("\n"), Whitespace("    "), Comments("// Static"), Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -367,7 +367,7 @@ JsModule {
             1: TS_STRING_TYPE@261..267
               0: STRING_KW@261..267 "string" [] []
           3: SEMICOLON@267..268 ";" [] []
-        5: JS_UNKNOWN_MEMBER@268..303
+        5: JS_BOGUS_MEMBER@268..303
           0: JS_PROPERTY_MODIFIER_LIST@268..289
             0: TS_OVERRIDE_MODIFIER@268..282
               0: OVERRIDE_KW@268..282 "override" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -380,7 +380,7 @@ JsModule {
             1: TS_STRING_TYPE@296..302
               0: STRING_KW@296..302 "string" [] []
           3: SEMICOLON@302..303 ";" [] []
-        6: JS_UNKNOWN_MEMBER@303..356
+        6: JS_BOGUS_MEMBER@303..356
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@303..342
             0: TS_OVERRIDE_MODIFIER@303..333
               0: OVERRIDE_KW@303..333 "override" [Newline("\n"), Whitespace("    "), Comments("// abstract"), Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -393,7 +393,7 @@ JsModule {
             1: TS_STRING_TYPE@349..355
               0: STRING_KW@349..355 "string" [] []
           3: SEMICOLON@355..356 ";" [] []
-        7: JS_UNKNOWN_MEMBER@356..409
+        7: JS_BOGUS_MEMBER@356..409
           0: JS_PROPERTY_MODIFIER_LIST@356..395
             0: TS_READONLY_MODIFIER@356..386
               0: READONLY_KW@356..386 "readonly" [Newline("\n"), Whitespace("    "), Comments("// override"), Newline("\n"), Whitespace("    ")] [Whitespace(" ")]

@@ -37,7 +37,7 @@ pub trait SyntaxFactory: fmt::Debug {
     ) -> RawSyntaxNode<Self::Kind>;
 
     /// Crates a *node list* syntax node. Validates if all elements are valid and changes the node's kind to
-    /// [SyntaxKind::to_unknown] if that's not the case.
+    /// [SyntaxKind::to_bogus] if that's not the case.
     fn make_node_list_syntax<F>(
         kind: Self::Kind,
         children: ParsedChildren<Self::Kind>,
@@ -50,7 +50,7 @@ pub trait SyntaxFactory: fmt::Debug {
             .into_iter()
             .all(|element| can_cast(element.kind()));
 
-        let kind = if valid { kind } else { kind.to_unknown() };
+        let kind = if valid { kind } else { kind.to_bogus() };
 
         RawSyntaxNode::new(kind, children.into_iter().map(Some))
     }
@@ -58,7 +58,7 @@ pub trait SyntaxFactory: fmt::Debug {
     /// Creates a *separated list* syntax node. Validates if the elements are valid, are correctly
     /// separated by the specified separator token.
     ///
-    /// It changes the kind of the node to [SyntaxKind::to_unknown] if an element isn't a valid list-node
+    /// It changes the kind of the node to [SyntaxKind::to_bogus] if an element isn't a valid list-node
     /// nor separator.
     ///
     /// It inserts empty slots for missing elements or missing markers
@@ -107,7 +107,7 @@ pub trait SyntaxFactory: fmt::Debug {
         }
 
         if !valid {
-            RawSyntaxNode::new(kind.to_unknown(), children.into_iter().map(Some))
+            RawSyntaxNode::new(kind.to_bogus(), children.into_iter().map(Some))
         } else if missing_count > 0 {
             RawSyntaxNode::new(
                 kind,

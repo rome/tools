@@ -15,7 +15,7 @@ JsModule {
                 implements_clause: missing (optional),
                 l_curly_token: L_CURLY@16..18 "{" [] [Whitespace(" ")],
                 members: JsClassMemberList [
-                    JsUnknownMember {
+                    JsBogusMember {
                         items: [
                             TsPropertySignatureModifierList [],
                             JsLiteralMemberName {
@@ -44,7 +44,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@42..44 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsPropertySignatureModifierList [
                             TsDeclareModifier {
@@ -85,7 +85,7 @@ JsModule {
         5: (empty)
         6: L_CURLY@16..18 "{" [] [Whitespace(" ")]
         7: JS_CLASS_MEMBER_LIST@18..32
-          0: JS_UNKNOWN_MEMBER@18..32
+          0: JS_BOGUS_MEMBER@18..32
             0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@18..18
             1: JS_LITERAL_MEMBER_NAME@18..23
               0: IDENT@18..23 "prop" [] [Whitespace(" ")]
@@ -104,7 +104,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@42..44 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@44..66
-        0: JS_UNKNOWN_MEMBER@44..66
+        0: JS_BOGUS_MEMBER@44..66
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@44..52
             0: TS_DECLARE_MODIFIER@44..52
               0: DECLARE_KW@44..52 "declare" [] [Whitespace(" ")]

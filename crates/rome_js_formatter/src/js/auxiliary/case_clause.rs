@@ -1,12 +1,12 @@
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
-use rome_js_syntax::JsAnyStatement;
+use rome_js_syntax::AnyJsStatement;
 use rome_js_syntax::JsCaseClause;
 use rome_js_syntax::JsCaseClauseFields;
 use rome_rowan::AstNodeList;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsCaseClause;
+pub(crate) struct FormatJsCaseClause;
 
 impl FormatNodeRule<JsCaseClause> for FormatJsCaseClause {
     fn fmt_fields(&self, node: &JsCaseClause, f: &mut JsFormatter) -> FormatResult<()> {
@@ -29,7 +29,7 @@ impl FormatNodeRule<JsCaseClause> for FormatJsCaseClause {
 
         let is_first_child_block_stmt = matches!(
             consequent.iter().next(),
-            Some(JsAnyStatement::JsBlockStatement(_))
+            Some(AnyJsStatement::JsBlockStatement(_))
         );
 
         if consequent.is_empty() {

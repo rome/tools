@@ -21,7 +21,7 @@ JsModule {
                 directives: JsDirectiveList [],
                 statements: JsStatementList [
                     JsExpressionStatement {
-                        expression: JsUnknownExpression {
+                        expression: JsBogusExpression {
                             items: [
                                 YIELD_KW@17..23 "yield" [] [Whitespace(" ")],
                                 JsYieldArgument {
@@ -59,7 +59,7 @@ JsModule {
                 directives: JsDirectiveList [],
                 statements: JsStatementList [
                     JsExpressionStatement {
-                        expression: JsUnknownExpression {
+                        expression: JsBogusExpression {
                             items: [
                                 YIELD_KW@47..53 "yield" [] [Whitespace(" ")],
                                 JsYieldArgument {
@@ -101,7 +101,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@17..17
         2: JS_STATEMENT_LIST@17..28
           0: JS_EXPRESSION_STATEMENT@17..28
-            0: JS_UNKNOWN_EXPRESSION@17..26
+            0: JS_BOGUS_EXPRESSION@17..26
               0: YIELD_KW@17..23 "yield" [] [Whitespace(" ")]
               1: JS_YIELD_ARGUMENT@23..26
                 0: (empty)
@@ -127,7 +127,7 @@ JsModule {
         1: JS_DIRECTIVE_LIST@47..47
         2: JS_STATEMENT_LIST@47..57
           0: JS_EXPRESSION_STATEMENT@47..57
-            0: JS_UNKNOWN_EXPRESSION@47..55
+            0: JS_BOGUS_EXPRESSION@47..55
               0: YIELD_KW@47..53 "yield" [] [Whitespace(" ")]
               1: JS_YIELD_ARGUMENT@53..55
                 0: (empty)

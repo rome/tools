@@ -1,6 +1,6 @@
 use crate::check_file_encoding;
 use crate::runner::{
-    create_unknown_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
+    create_bogus_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
 };
 use regex::Regex;
 use rome_js_syntax::{ModuleKind, SourceType};
@@ -34,18 +34,17 @@ impl TestCase for MicrosoftTypeScriptTestCase {
         let TestCaseMetadata { files, run_options } = extract_metadata(&self.code, &self.name);
 
         let mut all_errors = Vec::new();
-        let mut unknowns_errors = Vec::new();
+        let mut bogus_errors = Vec::new();
 
         for file in &files {
             match file.parse().ok() {
                 Ok(root) => {
-                    if let Some(unknown) = root
+                    if let Some(bogus) = root
                         .syntax()
                         .descendants()
-                        .find(|descendant| descendant.kind().is_unknown())
+                        .find(|descendant| descendant.kind().is_bogus())
                     {
-                        unknowns_errors
-                            .push(create_unknown_node_in_tree_diagnostic(file.id(), unknown));
+                        bogus_errors.push(create_bogus_node_in_tree_diagnostic(file.id(), bogus));
                     }
                 }
                 Err(errors) => all_errors.extend(errors),
@@ -61,9 +60,9 @@ impl TestCase for MicrosoftTypeScriptTestCase {
                 errors: all_errors,
                 files,
             }
-        } else if !unknowns_errors.is_empty() {
+        } else if !bogus_errors.is_empty() {
             TestRunOutcome::IncorrectlyErrored {
-                errors: unknowns_errors,
+                errors: bogus_errors,
                 files,
             }
         } else {

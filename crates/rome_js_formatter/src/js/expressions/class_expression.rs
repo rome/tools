@@ -7,7 +7,7 @@ use crate::parentheses::{
 use rome_js_syntax::{JsClassExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsClassExpression;
+pub(crate) struct FormatJsClassExpression;
 
 impl FormatNodeRule<JsClassExpression> for FormatJsClassExpression {
     fn fmt_fields(&self, node: &JsClassExpression, f: &mut JsFormatter) -> FormatResult<()> {

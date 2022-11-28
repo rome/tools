@@ -6,20 +6,6 @@ use rome_js_syntax::{
     JsSyntaxElement as SyntaxElement, JsSyntaxNode as SyntaxNode, JsSyntaxToken as SyntaxToken, *,
 };
 use rome_rowan::AstNode;
-pub fn import_meta(
-    import_token: SyntaxToken,
-    dot_token: SyntaxToken,
-    meta_token: SyntaxToken,
-) -> ImportMeta {
-    ImportMeta::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::IMPORT_META,
-        [
-            Some(SyntaxElement::Token(import_token)),
-            Some(SyntaxElement::Token(dot_token)),
-            Some(SyntaxElement::Token(meta_token)),
-        ],
-    ))
-}
 pub fn js_array_assignment_pattern(
     l_brack_token: SyntaxToken,
     elements: JsArrayAssignmentPatternElementList,
@@ -36,7 +22,7 @@ pub fn js_array_assignment_pattern(
 }
 pub fn js_array_assignment_pattern_rest_element(
     dotdotdot_token: SyntaxToken,
-    pattern: JsAnyAssignmentPattern,
+    pattern: AnyJsAssignmentPattern,
 ) -> JsArrayAssignmentPatternRestElement {
     JsArrayAssignmentPatternRestElement::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_ARRAY_ASSIGNMENT_PATTERN_REST_ELEMENT,
@@ -62,7 +48,7 @@ pub fn js_array_binding_pattern(
 }
 pub fn js_array_binding_pattern_rest_element(
     dotdotdot_token: SyntaxToken,
-    pattern: JsAnyBindingPattern,
+    pattern: AnyJsBindingPattern,
 ) -> JsArrayBindingPatternRestElement {
     JsArrayBindingPatternRestElement::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_ARRAY_BINDING_PATTERN_REST_ELEMENT,
@@ -90,9 +76,9 @@ pub fn js_array_hole() -> JsArrayHole {
     JsArrayHole::unwrap_cast(SyntaxNode::new_detached(JsSyntaxKind::JS_ARRAY_HOLE, []))
 }
 pub fn js_arrow_function_expression(
-    parameters: JsAnyArrowFunctionParameters,
+    parameters: AnyJsArrowFunctionParameters,
     fat_arrow_token: SyntaxToken,
-    body: JsAnyFunctionBody,
+    body: AnyJsFunctionBody,
 ) -> JsArrowFunctionExpressionBuilder {
     JsArrowFunctionExpressionBuilder {
         parameters,
@@ -104,9 +90,9 @@ pub fn js_arrow_function_expression(
     }
 }
 pub struct JsArrowFunctionExpressionBuilder {
-    parameters: JsAnyArrowFunctionParameters,
+    parameters: AnyJsArrowFunctionParameters,
     fat_arrow_token: SyntaxToken,
-    body: JsAnyFunctionBody,
+    body: AnyJsFunctionBody,
     async_token: Option<SyntaxToken>,
     type_parameters: Option<TsTypeParameters>,
     return_type_annotation: Option<TsReturnTypeAnnotation>,
@@ -144,9 +130,9 @@ impl JsArrowFunctionExpressionBuilder {
     }
 }
 pub fn js_assignment_expression(
-    left: JsAnyAssignmentPattern,
+    left: AnyJsAssignmentPattern,
     operator_token_token: SyntaxToken,
-    right: JsAnyExpression,
+    right: AnyJsExpression,
 ) -> JsAssignmentExpression {
     JsAssignmentExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION,
@@ -158,9 +144,9 @@ pub fn js_assignment_expression(
     ))
 }
 pub fn js_assignment_with_default(
-    pattern: JsAnyAssignmentPattern,
+    pattern: AnyJsAssignmentPattern,
     eq_token: SyntaxToken,
-    default: JsAnyExpression,
+    default: AnyJsExpression,
 ) -> JsAssignmentWithDefault {
     JsAssignmentWithDefault::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_ASSIGNMENT_WITH_DEFAULT,
@@ -173,7 +159,7 @@ pub fn js_assignment_with_default(
 }
 pub fn js_await_expression(
     await_token: SyntaxToken,
-    argument: JsAnyExpression,
+    argument: AnyJsExpression,
 ) -> JsAwaitExpression {
     JsAwaitExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_AWAIT_EXPRESSION,
@@ -190,9 +176,9 @@ pub fn js_big_int_literal_expression(value_token: SyntaxToken) -> JsBigIntLitera
     ))
 }
 pub fn js_binary_expression(
-    left: JsAnyExpression,
+    left: AnyJsExpression,
     operator_token_token: SyntaxToken,
-    right: JsAnyExpression,
+    right: AnyJsExpression,
 ) -> JsBinaryExpression {
     JsBinaryExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_BINARY_EXPRESSION,
@@ -204,9 +190,9 @@ pub fn js_binary_expression(
     ))
 }
 pub fn js_binding_pattern_with_default(
-    pattern: JsAnyBindingPattern,
+    pattern: AnyJsBindingPattern,
     eq_token: SyntaxToken,
-    default: JsAnyExpression,
+    default: AnyJsExpression,
 ) -> JsBindingPatternWithDefault {
     JsBindingPatternWithDefault::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_BINDING_PATTERN_WITH_DEFAULT,
@@ -285,7 +271,7 @@ pub fn js_call_arguments(
     ))
 }
 pub fn js_call_expression(
-    callee: JsAnyExpression,
+    callee: AnyJsExpression,
     arguments: JsCallArguments,
 ) -> JsCallExpressionBuilder {
     JsCallExpressionBuilder {
@@ -296,7 +282,7 @@ pub fn js_call_expression(
     }
 }
 pub struct JsCallExpressionBuilder {
-    callee: JsAnyExpression,
+    callee: AnyJsExpression,
     arguments: JsCallArguments,
     optional_chain_token: Option<SyntaxToken>,
     type_arguments: Option<TsTypeArguments>,
@@ -326,7 +312,7 @@ impl JsCallExpressionBuilder {
 }
 pub fn js_case_clause(
     case_token: SyntaxToken,
-    test: JsAnyExpression,
+    test: AnyJsExpression,
     colon_token: SyntaxToken,
     consequent: JsStatementList,
 ) -> JsCaseClause {
@@ -371,7 +357,7 @@ impl JsCatchClauseBuilder {
 }
 pub fn js_catch_declaration(
     l_paren_token: SyntaxToken,
-    binding: JsAnyBindingPattern,
+    binding: AnyJsBindingPattern,
     r_paren_token: SyntaxToken,
 ) -> JsCatchDeclarationBuilder {
     JsCatchDeclarationBuilder {
@@ -383,7 +369,7 @@ pub fn js_catch_declaration(
 }
 pub struct JsCatchDeclarationBuilder {
     l_paren_token: SyntaxToken,
-    binding: JsAnyBindingPattern,
+    binding: AnyJsBindingPattern,
     r_paren_token: SyntaxToken,
     type_annotation: Option<TsTypeAnnotation>,
 }
@@ -407,7 +393,7 @@ impl JsCatchDeclarationBuilder {
 }
 pub fn js_class_declaration(
     class_token: SyntaxToken,
-    id: JsAnyBinding,
+    id: AnyJsBinding,
     l_curly_token: SyntaxToken,
     members: JsClassMemberList,
     r_curly_token: SyntaxToken,
@@ -426,7 +412,7 @@ pub fn js_class_declaration(
 }
 pub struct JsClassDeclarationBuilder {
     class_token: SyntaxToken,
-    id: JsAnyBinding,
+    id: AnyJsBinding,
     l_curly_token: SyntaxToken,
     members: JsClassMemberList,
     r_curly_token: SyntaxToken,
@@ -496,7 +482,7 @@ pub struct JsClassExportDefaultDeclarationBuilder {
     members: JsClassMemberList,
     r_curly_token: SyntaxToken,
     abstract_token: Option<SyntaxToken>,
-    id: Option<JsAnyBinding>,
+    id: Option<AnyJsBinding>,
     type_parameters: Option<TsTypeParameters>,
     extends_clause: Option<JsExtendsClause>,
     implements_clause: Option<TsImplementsClause>,
@@ -506,7 +492,7 @@ impl JsClassExportDefaultDeclarationBuilder {
         self.abstract_token = Some(abstract_token);
         self
     }
-    pub fn with_id(mut self, id: JsAnyBinding) -> Self {
+    pub fn with_id(mut self, id: AnyJsBinding) -> Self {
         self.id = Some(id);
         self
     }
@@ -565,13 +551,13 @@ pub struct JsClassExpressionBuilder {
     l_curly_token: SyntaxToken,
     members: JsClassMemberList,
     r_curly_token: SyntaxToken,
-    id: Option<JsAnyBinding>,
+    id: Option<AnyJsBinding>,
     type_parameters: Option<TsTypeParameters>,
     extends_clause: Option<JsExtendsClause>,
     implements_clause: Option<TsImplementsClause>,
 }
 impl JsClassExpressionBuilder {
-    pub fn with_id(mut self, id: JsAnyBinding) -> Self {
+    pub fn with_id(mut self, id: AnyJsBinding) -> Self {
         self.id = Some(id);
         self
     }
@@ -608,9 +594,9 @@ impl JsClassExpressionBuilder {
     }
 }
 pub fn js_computed_member_assignment(
-    object: JsAnyExpression,
+    object: AnyJsExpression,
     l_brack_token: SyntaxToken,
-    member: JsAnyExpression,
+    member: AnyJsExpression,
     r_brack_token: SyntaxToken,
 ) -> JsComputedMemberAssignment {
     JsComputedMemberAssignment::unwrap_cast(SyntaxNode::new_detached(
@@ -624,9 +610,9 @@ pub fn js_computed_member_assignment(
     ))
 }
 pub fn js_computed_member_expression(
-    object: JsAnyExpression,
+    object: AnyJsExpression,
     l_brack_token: SyntaxToken,
-    member: JsAnyExpression,
+    member: AnyJsExpression,
     r_brack_token: SyntaxToken,
 ) -> JsComputedMemberExpressionBuilder {
     JsComputedMemberExpressionBuilder {
@@ -638,9 +624,9 @@ pub fn js_computed_member_expression(
     }
 }
 pub struct JsComputedMemberExpressionBuilder {
-    object: JsAnyExpression,
+    object: AnyJsExpression,
     l_brack_token: SyntaxToken,
-    member: JsAnyExpression,
+    member: AnyJsExpression,
     r_brack_token: SyntaxToken,
     optional_chain_token: Option<SyntaxToken>,
 }
@@ -665,7 +651,7 @@ impl JsComputedMemberExpressionBuilder {
 }
 pub fn js_computed_member_name(
     l_brack_token: SyntaxToken,
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     r_brack_token: SyntaxToken,
 ) -> JsComputedMemberName {
     JsComputedMemberName::unwrap_cast(SyntaxNode::new_detached(
@@ -678,11 +664,11 @@ pub fn js_computed_member_name(
     ))
 }
 pub fn js_conditional_expression(
-    test: JsAnyExpression,
+    test: AnyJsExpression,
     question_mark_token: SyntaxToken,
-    consequent: JsAnyExpression,
+    consequent: AnyJsExpression,
     colon_token: SyntaxToken,
-    alternate: JsAnyExpression,
+    alternate: AnyJsExpression,
 ) -> JsConditionalExpression {
     JsConditionalExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_CONDITIONAL_EXPRESSION,
@@ -799,7 +785,7 @@ pub fn js_default_clause(
     ))
 }
 pub fn js_default_import_specifier(
-    local_name: JsAnyBinding,
+    local_name: AnyJsBinding,
     trailing_comma_token: SyntaxToken,
 ) -> JsDefaultImportSpecifier {
     JsDefaultImportSpecifier::unwrap_cast(SyntaxNode::new_detached(
@@ -838,10 +824,10 @@ impl JsDirectiveBuilder {
 }
 pub fn js_do_while_statement(
     do_token: SyntaxToken,
-    body: JsAnyStatement,
+    body: AnyJsStatement,
     while_token: SyntaxToken,
     l_paren_token: SyntaxToken,
-    test: JsAnyExpression,
+    test: AnyJsExpression,
     r_paren_token: SyntaxToken,
 ) -> JsDoWhileStatementBuilder {
     JsDoWhileStatementBuilder {
@@ -856,10 +842,10 @@ pub fn js_do_while_statement(
 }
 pub struct JsDoWhileStatementBuilder {
     do_token: SyntaxToken,
-    body: JsAnyStatement,
+    body: AnyJsStatement,
     while_token: SyntaxToken,
     l_paren_token: SyntaxToken,
-    test: JsAnyExpression,
+    test: AnyJsExpression,
     r_paren_token: SyntaxToken,
     semicolon_token: Option<SyntaxToken>,
 }
@@ -884,7 +870,7 @@ impl JsDoWhileStatementBuilder {
         ))
     }
 }
-pub fn js_else_clause(else_token: SyntaxToken, alternate: JsAnyStatement) -> JsElseClause {
+pub fn js_else_clause(else_token: SyntaxToken, alternate: AnyJsStatement) -> JsElseClause {
     JsElseClause::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_ELSE_CLAUSE,
         [
@@ -905,7 +891,7 @@ pub fn js_empty_statement(semicolon_token: SyntaxToken) -> JsEmptyStatement {
         [Some(SyntaxElement::Token(semicolon_token))],
     ))
 }
-pub fn js_export(export_token: SyntaxToken, export_clause: JsAnyExportClause) -> JsExport {
+pub fn js_export(export_token: SyntaxToken, export_clause: AnyJsExportClause) -> JsExport {
     JsExport::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_EXPORT,
         [
@@ -928,7 +914,7 @@ pub fn js_export_as_clause(
 }
 pub fn js_export_default_declaration_clause(
     default_token: SyntaxToken,
-    declaration: JsAnyExportDefaultDeclaration,
+    declaration: AnyJsExportDefaultDeclaration,
 ) -> JsExportDefaultDeclarationClauseBuilder {
     JsExportDefaultDeclarationClauseBuilder {
         default_token,
@@ -938,7 +924,7 @@ pub fn js_export_default_declaration_clause(
 }
 pub struct JsExportDefaultDeclarationClauseBuilder {
     default_token: SyntaxToken,
-    declaration: JsAnyExportDefaultDeclaration,
+    declaration: AnyJsExportDefaultDeclaration,
     semicolon_token: Option<SyntaxToken>,
 }
 impl JsExportDefaultDeclarationClauseBuilder {
@@ -960,7 +946,7 @@ impl JsExportDefaultDeclarationClauseBuilder {
 }
 pub fn js_export_default_expression_clause(
     default_token: SyntaxToken,
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
 ) -> JsExportDefaultExpressionClauseBuilder {
     JsExportDefaultExpressionClauseBuilder {
         default_token,
@@ -970,7 +956,7 @@ pub fn js_export_default_expression_clause(
 }
 pub struct JsExportDefaultExpressionClauseBuilder {
     default_token: SyntaxToken,
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     semicolon_token: Option<SyntaxToken>,
 }
 impl JsExportDefaultExpressionClauseBuilder {
@@ -1242,7 +1228,7 @@ impl JsExportNamedSpecifierBuilder {
     }
 }
 pub fn js_expression_snipped(
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     eof_token: SyntaxToken,
 ) -> JsExpressionSnipped {
     JsExpressionSnipped::unwrap_cast(SyntaxNode::new_detached(
@@ -1253,14 +1239,14 @@ pub fn js_expression_snipped(
         ],
     ))
 }
-pub fn js_expression_statement(expression: JsAnyExpression) -> JsExpressionStatementBuilder {
+pub fn js_expression_statement(expression: AnyJsExpression) -> JsExpressionStatementBuilder {
     JsExpressionStatementBuilder {
         expression,
         semicolon_token: None,
     }
 }
 pub struct JsExpressionStatementBuilder {
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     semicolon_token: Option<SyntaxToken>,
 }
 impl JsExpressionStatementBuilder {
@@ -1281,7 +1267,7 @@ impl JsExpressionStatementBuilder {
 }
 pub fn js_extends_clause(
     extends_token: SyntaxToken,
-    super_class: JsAnyExpression,
+    super_class: AnyJsExpression,
 ) -> JsExtendsClauseBuilder {
     JsExtendsClauseBuilder {
         extends_token,
@@ -1291,7 +1277,7 @@ pub fn js_extends_clause(
 }
 pub struct JsExtendsClauseBuilder {
     extends_token: SyntaxToken,
-    super_class: JsAnyExpression,
+    super_class: AnyJsExpression,
     type_arguments: Option<TsTypeArguments>,
 }
 impl JsExtendsClauseBuilder {
@@ -1323,11 +1309,11 @@ pub fn js_finally_clause(finally_token: SyntaxToken, body: JsBlockStatement) -> 
 pub fn js_for_in_statement(
     for_token: SyntaxToken,
     l_paren_token: SyntaxToken,
-    initializer: JsAnyForInOrOfInitializer,
+    initializer: AnyJsForInOrOfInitializer,
     in_token: SyntaxToken,
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     r_paren_token: SyntaxToken,
-    body: JsAnyStatement,
+    body: AnyJsStatement,
 ) -> JsForInStatement {
     JsForInStatement::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_FOR_IN_STATEMENT,
@@ -1345,11 +1331,11 @@ pub fn js_for_in_statement(
 pub fn js_for_of_statement(
     for_token: SyntaxToken,
     l_paren_token: SyntaxToken,
-    initializer: JsAnyForInOrOfInitializer,
+    initializer: AnyJsForInOrOfInitializer,
     of_token: SyntaxToken,
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     r_paren_token: SyntaxToken,
-    body: JsAnyStatement,
+    body: AnyJsStatement,
 ) -> JsForOfStatementBuilder {
     JsForOfStatementBuilder {
         for_token,
@@ -1365,11 +1351,11 @@ pub fn js_for_of_statement(
 pub struct JsForOfStatementBuilder {
     for_token: SyntaxToken,
     l_paren_token: SyntaxToken,
-    initializer: JsAnyForInOrOfInitializer,
+    initializer: AnyJsForInOrOfInitializer,
     of_token: SyntaxToken,
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     r_paren_token: SyntaxToken,
-    body: JsAnyStatement,
+    body: AnyJsStatement,
     await_token: Option<SyntaxToken>,
 }
 impl JsForOfStatementBuilder {
@@ -1399,7 +1385,7 @@ pub fn js_for_statement(
     first_semi_token: SyntaxToken,
     second_semi_token: SyntaxToken,
     r_paren_token: SyntaxToken,
-    body: JsAnyStatement,
+    body: AnyJsStatement,
 ) -> JsForStatementBuilder {
     JsForStatementBuilder {
         for_token,
@@ -1419,21 +1405,21 @@ pub struct JsForStatementBuilder {
     first_semi_token: SyntaxToken,
     second_semi_token: SyntaxToken,
     r_paren_token: SyntaxToken,
-    body: JsAnyStatement,
-    initializer: Option<JsAnyForInitializer>,
-    test: Option<JsAnyExpression>,
-    update: Option<JsAnyExpression>,
+    body: AnyJsStatement,
+    initializer: Option<AnyJsForInitializer>,
+    test: Option<AnyJsExpression>,
+    update: Option<AnyJsExpression>,
 }
 impl JsForStatementBuilder {
-    pub fn with_initializer(mut self, initializer: JsAnyForInitializer) -> Self {
+    pub fn with_initializer(mut self, initializer: AnyJsForInitializer) -> Self {
         self.initializer = Some(initializer);
         self
     }
-    pub fn with_test(mut self, test: JsAnyExpression) -> Self {
+    pub fn with_test(mut self, test: AnyJsExpression) -> Self {
         self.test = Some(test);
         self
     }
-    pub fn with_update(mut self, update: JsAnyExpression) -> Self {
+    pub fn with_update(mut self, update: AnyJsExpression) -> Self {
         self.update = Some(update);
         self
     }
@@ -1469,7 +1455,7 @@ pub fn js_for_variable_declaration(
         ],
     ))
 }
-pub fn js_formal_parameter(binding: JsAnyBindingPattern) -> JsFormalParameterBuilder {
+pub fn js_formal_parameter(binding: AnyJsBindingPattern) -> JsFormalParameterBuilder {
     JsFormalParameterBuilder {
         binding,
         question_mark_token: None,
@@ -1478,7 +1464,7 @@ pub fn js_formal_parameter(binding: JsAnyBindingPattern) -> JsFormalParameterBui
     }
 }
 pub struct JsFormalParameterBuilder {
-    binding: JsAnyBindingPattern,
+    binding: AnyJsBindingPattern,
     question_mark_token: Option<SyntaxToken>,
     type_annotation: Option<TsTypeAnnotation>,
     initializer: Option<JsInitializerClause>,
@@ -1529,7 +1515,7 @@ pub fn js_function_body(
 }
 pub fn js_function_declaration(
     function_token: SyntaxToken,
-    id: JsAnyBinding,
+    id: AnyJsBinding,
     parameters: JsParameters,
     body: JsFunctionBody,
 ) -> JsFunctionDeclarationBuilder {
@@ -1546,7 +1532,7 @@ pub fn js_function_declaration(
 }
 pub struct JsFunctionDeclarationBuilder {
     function_token: SyntaxToken,
-    id: JsAnyBinding,
+    id: AnyJsBinding,
     parameters: JsParameters,
     body: JsFunctionBody,
     async_token: Option<SyntaxToken>,
@@ -1614,7 +1600,7 @@ pub struct JsFunctionExportDefaultDeclarationBuilder {
     body: JsFunctionBody,
     async_token: Option<SyntaxToken>,
     star_token: Option<SyntaxToken>,
-    id: Option<JsAnyBinding>,
+    id: Option<AnyJsBinding>,
     type_parameters: Option<TsTypeParameters>,
     return_type_annotation: Option<TsReturnTypeAnnotation>,
 }
@@ -1627,7 +1613,7 @@ impl JsFunctionExportDefaultDeclarationBuilder {
         self.star_token = Some(star_token);
         self
     }
-    pub fn with_id(mut self, id: JsAnyBinding) -> Self {
+    pub fn with_id(mut self, id: AnyJsBinding) -> Self {
         self.id = Some(id);
         self
     }
@@ -1683,7 +1669,7 @@ pub struct JsFunctionExpressionBuilder {
     body: JsFunctionBody,
     async_token: Option<SyntaxToken>,
     star_token: Option<SyntaxToken>,
-    id: Option<JsAnyBinding>,
+    id: Option<AnyJsBinding>,
     type_parameters: Option<TsTypeParameters>,
     return_type_annotation: Option<TsReturnTypeAnnotation>,
 }
@@ -1696,7 +1682,7 @@ impl JsFunctionExpressionBuilder {
         self.star_token = Some(star_token);
         self
     }
-    pub fn with_id(mut self, id: JsAnyBinding) -> Self {
+    pub fn with_id(mut self, id: AnyJsBinding) -> Self {
         self.id = Some(id);
         self
     }
@@ -1733,7 +1719,7 @@ impl JsFunctionExpressionBuilder {
 pub fn js_getter_class_member(
     modifiers: JsMethodModifierList,
     get_token: SyntaxToken,
-    name: JsAnyClassMemberName,
+    name: AnyJsClassMemberName,
     l_paren_token: SyntaxToken,
     r_paren_token: SyntaxToken,
     body: JsFunctionBody,
@@ -1751,7 +1737,7 @@ pub fn js_getter_class_member(
 pub struct JsGetterClassMemberBuilder {
     modifiers: JsMethodModifierList,
     get_token: SyntaxToken,
-    name: JsAnyClassMemberName,
+    name: AnyJsClassMemberName,
     l_paren_token: SyntaxToken,
     r_paren_token: SyntaxToken,
     body: JsFunctionBody,
@@ -1780,7 +1766,7 @@ impl JsGetterClassMemberBuilder {
 }
 pub fn js_getter_object_member(
     get_token: SyntaxToken,
-    name: JsAnyObjectMemberName,
+    name: AnyJsObjectMemberName,
     l_paren_token: SyntaxToken,
     r_paren_token: SyntaxToken,
     body: JsFunctionBody,
@@ -1796,7 +1782,7 @@ pub fn js_getter_object_member(
 }
 pub struct JsGetterObjectMemberBuilder {
     get_token: SyntaxToken,
-    name: JsAnyObjectMemberName,
+    name: AnyJsObjectMemberName,
     l_paren_token: SyntaxToken,
     r_paren_token: SyntaxToken,
     body: JsFunctionBody,
@@ -1843,9 +1829,9 @@ pub fn js_identifier_expression(name: JsReferenceIdentifier) -> JsIdentifierExpr
 pub fn js_if_statement(
     if_token: SyntaxToken,
     l_paren_token: SyntaxToken,
-    test: JsAnyExpression,
+    test: AnyJsExpression,
     r_paren_token: SyntaxToken,
-    consequent: JsAnyStatement,
+    consequent: AnyJsStatement,
 ) -> JsIfStatementBuilder {
     JsIfStatementBuilder {
         if_token,
@@ -1859,9 +1845,9 @@ pub fn js_if_statement(
 pub struct JsIfStatementBuilder {
     if_token: SyntaxToken,
     l_paren_token: SyntaxToken,
-    test: JsAnyExpression,
+    test: AnyJsExpression,
     r_paren_token: SyntaxToken,
-    consequent: JsAnyStatement,
+    consequent: AnyJsStatement,
     else_clause: Option<JsElseClause>,
 }
 impl JsIfStatementBuilder {
@@ -1884,7 +1870,7 @@ impl JsIfStatementBuilder {
         ))
     }
 }
-pub fn js_import(import_token: SyntaxToken, import_clause: JsAnyImportClause) -> JsImportBuilder {
+pub fn js_import(import_token: SyntaxToken, import_clause: AnyJsImportClause) -> JsImportBuilder {
     JsImportBuilder {
         import_token,
         import_clause,
@@ -1893,7 +1879,7 @@ pub fn js_import(import_token: SyntaxToken, import_clause: JsAnyImportClause) ->
 }
 pub struct JsImportBuilder {
     import_token: SyntaxToken,
-    import_clause: JsAnyImportClause,
+    import_clause: AnyJsImportClause,
     semicolon_token: Option<SyntaxToken>,
 }
 impl JsImportBuilder {
@@ -1982,7 +1968,7 @@ pub fn js_import_call_expression(
     ))
 }
 pub fn js_import_default_clause(
-    local_name: JsAnyBinding,
+    local_name: AnyJsBinding,
     from_token: SyntaxToken,
     source: JsModuleSource,
 ) -> JsImportDefaultClauseBuilder {
@@ -1995,7 +1981,7 @@ pub fn js_import_default_clause(
     }
 }
 pub struct JsImportDefaultClauseBuilder {
-    local_name: JsAnyBinding,
+    local_name: AnyJsBinding,
     from_token: SyntaxToken,
     source: JsModuleSource,
     type_token: Option<SyntaxToken>,
@@ -2024,8 +2010,22 @@ impl JsImportDefaultClauseBuilder {
         ))
     }
 }
+pub fn js_import_meta_expression(
+    import_token: SyntaxToken,
+    dot_token: SyntaxToken,
+    meta_token: SyntaxToken,
+) -> JsImportMetaExpression {
+    JsImportMetaExpression::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_IMPORT_META_EXPRESSION,
+        [
+            Some(SyntaxElement::Token(import_token)),
+            Some(SyntaxElement::Token(dot_token)),
+            Some(SyntaxElement::Token(meta_token)),
+        ],
+    ))
+}
 pub fn js_import_named_clause(
-    named_import: JsAnyNamedImport,
+    named_import: AnyJsNamedImport,
     from_token: SyntaxToken,
     source: JsModuleSource,
 ) -> JsImportNamedClauseBuilder {
@@ -2039,7 +2039,7 @@ pub fn js_import_named_clause(
     }
 }
 pub struct JsImportNamedClauseBuilder {
-    named_import: JsAnyNamedImport,
+    named_import: AnyJsNamedImport,
     from_token: SyntaxToken,
     source: JsModuleSource,
     type_token: Option<SyntaxToken>,
@@ -2078,7 +2078,7 @@ impl JsImportNamedClauseBuilder {
 pub fn js_import_namespace_clause(
     star_token: SyntaxToken,
     as_token: SyntaxToken,
-    local_name: JsAnyBinding,
+    local_name: AnyJsBinding,
     from_token: SyntaxToken,
     source: JsModuleSource,
 ) -> JsImportNamespaceClauseBuilder {
@@ -2095,7 +2095,7 @@ pub fn js_import_namespace_clause(
 pub struct JsImportNamespaceClauseBuilder {
     star_token: SyntaxToken,
     as_token: SyntaxToken,
-    local_name: JsAnyBinding,
+    local_name: AnyJsBinding,
     from_token: SyntaxToken,
     source: JsModuleSource,
     type_token: Option<SyntaxToken>,
@@ -2127,9 +2127,9 @@ impl JsImportNamespaceClauseBuilder {
     }
 }
 pub fn js_in_expression(
-    property: JsAnyInProperty,
+    property: AnyJsInProperty,
     in_token: SyntaxToken,
-    object: JsAnyExpression,
+    object: AnyJsExpression,
 ) -> JsInExpression {
     JsInExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_IN_EXPRESSION,
@@ -2142,7 +2142,7 @@ pub fn js_in_expression(
 }
 pub fn js_initializer_clause(
     eq_token: SyntaxToken,
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
 ) -> JsInitializerClause {
     JsInitializerClause::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_INITIALIZER_CLAUSE,
@@ -2153,9 +2153,9 @@ pub fn js_initializer_clause(
     ))
 }
 pub fn js_instanceof_expression(
-    left: JsAnyExpression,
+    left: AnyJsExpression,
     instanceof_token: SyntaxToken,
-    right: JsAnyExpression,
+    right: AnyJsExpression,
 ) -> JsInstanceofExpression {
     JsInstanceofExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_INSTANCEOF_EXPRESSION,
@@ -2169,7 +2169,7 @@ pub fn js_instanceof_expression(
 pub fn js_labeled_statement(
     label_token: SyntaxToken,
     colon_token: SyntaxToken,
-    body: JsAnyStatement,
+    body: AnyJsStatement,
 ) -> JsLabeledStatement {
     JsLabeledStatement::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_LABELED_STATEMENT,
@@ -2193,9 +2193,9 @@ pub fn js_literal_member_name(value_token: SyntaxToken) -> JsLiteralMemberName {
     ))
 }
 pub fn js_logical_expression(
-    left: JsAnyExpression,
+    left: AnyJsExpression,
     operator_token_token: SyntaxToken,
-    right: JsAnyExpression,
+    right: AnyJsExpression,
 ) -> JsLogicalExpression {
     JsLogicalExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_LOGICAL_EXPRESSION,
@@ -2208,7 +2208,7 @@ pub fn js_logical_expression(
 }
 pub fn js_method_class_member(
     modifiers: JsMethodModifierList,
-    name: JsAnyClassMemberName,
+    name: AnyJsClassMemberName,
     parameters: JsParameters,
     body: JsFunctionBody,
 ) -> JsMethodClassMemberBuilder {
@@ -2226,7 +2226,7 @@ pub fn js_method_class_member(
 }
 pub struct JsMethodClassMemberBuilder {
     modifiers: JsMethodModifierList,
-    name: JsAnyClassMemberName,
+    name: AnyJsClassMemberName,
     parameters: JsParameters,
     body: JsFunctionBody,
     async_token: Option<SyntaxToken>,
@@ -2280,7 +2280,7 @@ impl JsMethodClassMemberBuilder {
     }
 }
 pub fn js_method_object_member(
-    name: JsAnyObjectMemberName,
+    name: AnyJsObjectMemberName,
     parameters: JsParameters,
     body: JsFunctionBody,
 ) -> JsMethodObjectMemberBuilder {
@@ -2295,7 +2295,7 @@ pub fn js_method_object_member(
     }
 }
 pub struct JsMethodObjectMemberBuilder {
-    name: JsAnyObjectMemberName,
+    name: AnyJsObjectMemberName,
     parameters: JsParameters,
     body: JsFunctionBody,
     async_token: Option<SyntaxToken>,
@@ -2391,7 +2391,7 @@ pub fn js_name(value_token: SyntaxToken) -> JsName {
 pub fn js_named_import_specifier(
     name: JsLiteralExportName,
     as_token: SyntaxToken,
-    local_name: JsAnyBinding,
+    local_name: AnyJsBinding,
 ) -> JsNamedImportSpecifierBuilder {
     JsNamedImportSpecifierBuilder {
         name,
@@ -2403,7 +2403,7 @@ pub fn js_named_import_specifier(
 pub struct JsNamedImportSpecifierBuilder {
     name: JsLiteralExportName,
     as_token: SyntaxToken,
-    local_name: JsAnyBinding,
+    local_name: AnyJsBinding,
     type_token: Option<SyntaxToken>,
 }
 impl JsNamedImportSpecifierBuilder {
@@ -2440,7 +2440,7 @@ pub fn js_named_import_specifiers(
 pub fn js_namespace_import_specifier(
     star_token: SyntaxToken,
     as_token: SyntaxToken,
-    local_name: JsAnyBinding,
+    local_name: AnyJsBinding,
 ) -> JsNamespaceImportSpecifier {
     JsNamespaceImportSpecifier::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_NAMESPACE_IMPORT_SPECIFIER,
@@ -2453,7 +2453,7 @@ pub fn js_namespace_import_specifier(
 }
 pub fn js_new_expression(
     new_token: SyntaxToken,
-    callee: JsAnyExpression,
+    callee: AnyJsExpression,
 ) -> JsNewExpressionBuilder {
     JsNewExpressionBuilder {
         new_token,
@@ -2464,7 +2464,7 @@ pub fn js_new_expression(
 }
 pub struct JsNewExpressionBuilder {
     new_token: SyntaxToken,
-    callee: JsAnyExpression,
+    callee: AnyJsExpression,
     type_arguments: Option<TsTypeArguments>,
     arguments: Option<JsCallArguments>,
 }
@@ -2490,6 +2490,20 @@ impl JsNewExpressionBuilder {
             ],
         ))
     }
+}
+pub fn js_new_target_expression(
+    new_token: SyntaxToken,
+    dot_token: SyntaxToken,
+    target_token: SyntaxToken,
+) -> JsNewTargetExpression {
+    JsNewTargetExpression::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_NEW_TARGET_EXPRESSION,
+        [
+            Some(SyntaxElement::Token(new_token)),
+            Some(SyntaxElement::Token(dot_token)),
+            Some(SyntaxElement::Token(target_token)),
+        ],
+    ))
 }
 pub fn js_null_literal_expression(value_token: SyntaxToken) -> JsNullLiteralExpression {
     JsNullLiteralExpression::unwrap_cast(SyntaxNode::new_detached(
@@ -2518,9 +2532,9 @@ pub fn js_object_assignment_pattern(
     ))
 }
 pub fn js_object_assignment_pattern_property(
-    member: JsAnyObjectMemberName,
+    member: AnyJsObjectMemberName,
     colon_token: SyntaxToken,
-    pattern: JsAnyAssignmentPattern,
+    pattern: AnyJsAssignmentPattern,
 ) -> JsObjectAssignmentPatternPropertyBuilder {
     JsObjectAssignmentPatternPropertyBuilder {
         member,
@@ -2530,9 +2544,9 @@ pub fn js_object_assignment_pattern_property(
     }
 }
 pub struct JsObjectAssignmentPatternPropertyBuilder {
-    member: JsAnyObjectMemberName,
+    member: AnyJsObjectMemberName,
     colon_token: SyntaxToken,
-    pattern: JsAnyAssignmentPattern,
+    pattern: AnyJsAssignmentPattern,
     init: Option<JsInitializerClause>,
 }
 impl JsObjectAssignmentPatternPropertyBuilder {
@@ -2555,7 +2569,7 @@ impl JsObjectAssignmentPatternPropertyBuilder {
 }
 pub fn js_object_assignment_pattern_rest(
     dotdotdot_token: SyntaxToken,
-    target: JsAnyAssignment,
+    target: AnyJsAssignment,
 ) -> JsObjectAssignmentPatternRest {
     JsObjectAssignmentPatternRest::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_OBJECT_ASSIGNMENT_PATTERN_REST,
@@ -2608,9 +2622,9 @@ pub fn js_object_binding_pattern(
     ))
 }
 pub fn js_object_binding_pattern_property(
-    member: JsAnyObjectMemberName,
+    member: AnyJsObjectMemberName,
     colon_token: SyntaxToken,
-    pattern: JsAnyBindingPattern,
+    pattern: AnyJsBindingPattern,
 ) -> JsObjectBindingPatternPropertyBuilder {
     JsObjectBindingPatternPropertyBuilder {
         member,
@@ -2620,9 +2634,9 @@ pub fn js_object_binding_pattern_property(
     }
 }
 pub struct JsObjectBindingPatternPropertyBuilder {
-    member: JsAnyObjectMemberName,
+    member: AnyJsObjectMemberName,
     colon_token: SyntaxToken,
-    pattern: JsAnyBindingPattern,
+    pattern: AnyJsBindingPattern,
     init: Option<JsInitializerClause>,
 }
 impl JsObjectBindingPatternPropertyBuilder {
@@ -2645,7 +2659,7 @@ impl JsObjectBindingPatternPropertyBuilder {
 }
 pub fn js_object_binding_pattern_rest(
     dotdotdot_token: SyntaxToken,
-    binding: JsAnyBinding,
+    binding: AnyJsBinding,
 ) -> JsObjectBindingPatternRest {
     JsObjectBindingPatternRest::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_OBJECT_BINDING_PATTERN_REST,
@@ -2656,7 +2670,7 @@ pub fn js_object_binding_pattern_rest(
     ))
 }
 pub fn js_object_binding_pattern_shorthand_property(
-    identifier: JsAnyBinding,
+    identifier: AnyJsBinding,
 ) -> JsObjectBindingPatternShorthandPropertyBuilder {
     JsObjectBindingPatternShorthandPropertyBuilder {
         identifier,
@@ -2664,7 +2678,7 @@ pub fn js_object_binding_pattern_shorthand_property(
     }
 }
 pub struct JsObjectBindingPatternShorthandPropertyBuilder {
-    identifier: JsAnyBinding,
+    identifier: AnyJsBinding,
     init: Option<JsInitializerClause>,
 }
 impl JsObjectBindingPatternShorthandPropertyBuilder {
@@ -2713,7 +2727,7 @@ pub fn js_parameters(
 }
 pub fn js_parenthesized_assignment(
     l_paren_token: SyntaxToken,
-    assignment: JsAnyAssignment,
+    assignment: AnyJsAssignment,
     r_paren_token: SyntaxToken,
 ) -> JsParenthesizedAssignment {
     JsParenthesizedAssignment::unwrap_cast(SyntaxNode::new_detached(
@@ -2727,7 +2741,7 @@ pub fn js_parenthesized_assignment(
 }
 pub fn js_parenthesized_expression(
     l_paren_token: SyntaxToken,
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     r_paren_token: SyntaxToken,
 ) -> JsParenthesizedExpression {
     JsParenthesizedExpression::unwrap_cast(SyntaxNode::new_detached(
@@ -2740,7 +2754,7 @@ pub fn js_parenthesized_expression(
     ))
 }
 pub fn js_post_update_expression(
-    operand: JsAnyAssignment,
+    operand: AnyJsAssignment,
     operator_token_token: SyntaxToken,
 ) -> JsPostUpdateExpression {
     JsPostUpdateExpression::unwrap_cast(SyntaxNode::new_detached(
@@ -2753,7 +2767,7 @@ pub fn js_post_update_expression(
 }
 pub fn js_pre_update_expression(
     operator_token_token: SyntaxToken,
-    operand: JsAnyAssignment,
+    operand: AnyJsAssignment,
 ) -> JsPreUpdateExpression {
     JsPreUpdateExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_PRE_UPDATE_EXPRESSION,
@@ -2786,7 +2800,7 @@ pub fn js_private_name(hash_token: SyntaxToken, value_token: SyntaxToken) -> JsP
 }
 pub fn js_property_class_member(
     modifiers: JsPropertyModifierList,
-    name: JsAnyClassMemberName,
+    name: AnyJsClassMemberName,
 ) -> JsPropertyClassMemberBuilder {
     JsPropertyClassMemberBuilder {
         modifiers,
@@ -2798,15 +2812,15 @@ pub fn js_property_class_member(
 }
 pub struct JsPropertyClassMemberBuilder {
     modifiers: JsPropertyModifierList,
-    name: JsAnyClassMemberName,
-    property_annotation: Option<TsAnyPropertyAnnotation>,
+    name: AnyJsClassMemberName,
+    property_annotation: Option<AnyTsPropertyAnnotation>,
     value: Option<JsInitializerClause>,
     semicolon_token: Option<SyntaxToken>,
 }
 impl JsPropertyClassMemberBuilder {
     pub fn with_property_annotation(
         mut self,
-        property_annotation: TsAnyPropertyAnnotation,
+        property_annotation: AnyTsPropertyAnnotation,
     ) -> Self {
         self.property_annotation = Some(property_annotation);
         self
@@ -2836,9 +2850,9 @@ impl JsPropertyClassMemberBuilder {
     }
 }
 pub fn js_property_object_member(
-    name: JsAnyObjectMemberName,
+    name: AnyJsObjectMemberName,
     colon_token: SyntaxToken,
-    value: JsAnyExpression,
+    value: AnyJsExpression,
 ) -> JsPropertyObjectMember {
     JsPropertyObjectMember::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_PROPERTY_OBJECT_MEMBER,
@@ -2863,7 +2877,7 @@ pub fn js_regex_literal_expression(value_token: SyntaxToken) -> JsRegexLiteralEx
 }
 pub fn js_rest_parameter(
     dotdotdot_token: SyntaxToken,
-    binding: JsAnyBindingPattern,
+    binding: AnyJsBindingPattern,
 ) -> JsRestParameterBuilder {
     JsRestParameterBuilder {
         dotdotdot_token,
@@ -2873,7 +2887,7 @@ pub fn js_rest_parameter(
 }
 pub struct JsRestParameterBuilder {
     dotdotdot_token: SyntaxToken,
-    binding: JsAnyBindingPattern,
+    binding: AnyJsBindingPattern,
     type_annotation: Option<TsTypeAnnotation>,
 }
 impl JsRestParameterBuilder {
@@ -2902,11 +2916,11 @@ pub fn js_return_statement(return_token: SyntaxToken) -> JsReturnStatementBuilde
 }
 pub struct JsReturnStatementBuilder {
     return_token: SyntaxToken,
-    argument: Option<JsAnyExpression>,
+    argument: Option<AnyJsExpression>,
     semicolon_token: Option<SyntaxToken>,
 }
 impl JsReturnStatementBuilder {
-    pub fn with_argument(mut self, argument: JsAnyExpression) -> Self {
+    pub fn with_argument(mut self, argument: AnyJsExpression) -> Self {
         self.argument = Some(argument);
         self
     }
@@ -2964,9 +2978,9 @@ impl JsScriptBuilder {
     }
 }
 pub fn js_sequence_expression(
-    left: JsAnyExpression,
+    left: AnyJsExpression,
     comma_token: SyntaxToken,
-    right: JsAnyExpression,
+    right: AnyJsExpression,
 ) -> JsSequenceExpression {
     JsSequenceExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_SEQUENCE_EXPRESSION,
@@ -2980,9 +2994,9 @@ pub fn js_sequence_expression(
 pub fn js_setter_class_member(
     modifiers: JsMethodModifierList,
     set_token: SyntaxToken,
-    name: JsAnyClassMemberName,
+    name: AnyJsClassMemberName,
     l_paren_token: SyntaxToken,
-    parameter: JsAnyFormalParameter,
+    parameter: AnyJsFormalParameter,
     r_paren_token: SyntaxToken,
     body: JsFunctionBody,
 ) -> JsSetterClassMember {
@@ -3001,9 +3015,9 @@ pub fn js_setter_class_member(
 }
 pub fn js_setter_object_member(
     set_token: SyntaxToken,
-    name: JsAnyObjectMemberName,
+    name: AnyJsObjectMemberName,
     l_paren_token: SyntaxToken,
-    parameter: JsAnyFormalParameter,
+    parameter: AnyJsFormalParameter,
     r_paren_token: SyntaxToken,
     body: JsFunctionBody,
 ) -> JsSetterObjectMember {
@@ -3020,7 +3034,7 @@ pub fn js_setter_object_member(
     ))
 }
 pub fn js_shorthand_named_import_specifier(
-    local_name: JsAnyBinding,
+    local_name: AnyJsBinding,
 ) -> JsShorthandNamedImportSpecifierBuilder {
     JsShorthandNamedImportSpecifierBuilder {
         local_name,
@@ -3028,7 +3042,7 @@ pub fn js_shorthand_named_import_specifier(
     }
 }
 pub struct JsShorthandNamedImportSpecifierBuilder {
-    local_name: JsAnyBinding,
+    local_name: AnyJsBinding,
     type_token: Option<SyntaxToken>,
 }
 impl JsShorthandNamedImportSpecifierBuilder {
@@ -3054,7 +3068,7 @@ pub fn js_shorthand_property_object_member(
         [Some(SyntaxElement::Node(name.into_syntax()))],
     ))
 }
-pub fn js_spread(dotdotdot_token: SyntaxToken, argument: JsAnyExpression) -> JsSpread {
+pub fn js_spread(dotdotdot_token: SyntaxToken, argument: AnyJsExpression) -> JsSpread {
     JsSpread::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_SPREAD,
         [
@@ -3080,9 +3094,9 @@ pub fn js_static_initialization_block_class_member(
     ))
 }
 pub fn js_static_member_assignment(
-    object: JsAnyExpression,
+    object: AnyJsExpression,
     dot_token: SyntaxToken,
-    member: JsAnyName,
+    member: AnyJsName,
 ) -> JsStaticMemberAssignment {
     JsStaticMemberAssignment::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_STATIC_MEMBER_ASSIGNMENT,
@@ -3094,9 +3108,9 @@ pub fn js_static_member_assignment(
     ))
 }
 pub fn js_static_member_expression(
-    object: JsAnyExpression,
+    object: AnyJsExpression,
     operator_token_token: SyntaxToken,
-    member: JsAnyName,
+    member: AnyJsName,
 ) -> JsStaticMemberExpression {
     JsStaticMemberExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION,
@@ -3128,7 +3142,7 @@ pub fn js_super_expression(super_token: SyntaxToken) -> JsSuperExpression {
 pub fn js_switch_statement(
     switch_token: SyntaxToken,
     l_paren_token: SyntaxToken,
-    discriminant: JsAnyExpression,
+    discriminant: AnyJsExpression,
     r_paren_token: SyntaxToken,
     l_curly_token: SyntaxToken,
     cases: JsSwitchCaseList,
@@ -3147,12 +3161,32 @@ pub fn js_switch_statement(
         ],
     ))
 }
-pub fn js_template(
+pub fn js_template_chunk_element(template_chunk_token: SyntaxToken) -> JsTemplateChunkElement {
+    JsTemplateChunkElement::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_TEMPLATE_CHUNK_ELEMENT,
+        [Some(SyntaxElement::Token(template_chunk_token))],
+    ))
+}
+pub fn js_template_element(
+    dollar_curly_token: SyntaxToken,
+    expression: AnyJsExpression,
+    r_curly_token: SyntaxToken,
+) -> JsTemplateElement {
+    JsTemplateElement::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_TEMPLATE_ELEMENT,
+        [
+            Some(SyntaxElement::Token(dollar_curly_token)),
+            Some(SyntaxElement::Node(expression.into_syntax())),
+            Some(SyntaxElement::Token(r_curly_token)),
+        ],
+    ))
+}
+pub fn js_template_expression(
     l_tick_token: SyntaxToken,
     elements: JsTemplateElementList,
     r_tick_token: SyntaxToken,
-) -> JsTemplateBuilder {
-    JsTemplateBuilder {
+) -> JsTemplateExpressionBuilder {
+    JsTemplateExpressionBuilder {
         l_tick_token,
         elements,
         r_tick_token,
@@ -3160,15 +3194,15 @@ pub fn js_template(
         type_arguments: None,
     }
 }
-pub struct JsTemplateBuilder {
+pub struct JsTemplateExpressionBuilder {
     l_tick_token: SyntaxToken,
     elements: JsTemplateElementList,
     r_tick_token: SyntaxToken,
-    tag: Option<JsAnyExpression>,
+    tag: Option<AnyJsExpression>,
     type_arguments: Option<TsTypeArguments>,
 }
-impl JsTemplateBuilder {
-    pub fn with_tag(mut self, tag: JsAnyExpression) -> Self {
+impl JsTemplateExpressionBuilder {
+    pub fn with_tag(mut self, tag: AnyJsExpression) -> Self {
         self.tag = Some(tag);
         self
     }
@@ -3176,9 +3210,9 @@ impl JsTemplateBuilder {
         self.type_arguments = Some(type_arguments);
         self
     }
-    pub fn build(self) -> JsTemplate {
-        JsTemplate::unwrap_cast(SyntaxNode::new_detached(
-            JsSyntaxKind::JS_TEMPLATE,
+    pub fn build(self) -> JsTemplateExpression {
+        JsTemplateExpression::unwrap_cast(SyntaxNode::new_detached(
+            JsSyntaxKind::JS_TEMPLATE_EXPRESSION,
             [
                 self.tag
                     .map(|token| SyntaxElement::Node(token.into_syntax())),
@@ -3191,26 +3225,6 @@ impl JsTemplateBuilder {
         ))
     }
 }
-pub fn js_template_chunk_element(template_chunk_token: SyntaxToken) -> JsTemplateChunkElement {
-    JsTemplateChunkElement::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_TEMPLATE_CHUNK_ELEMENT,
-        [Some(SyntaxElement::Token(template_chunk_token))],
-    ))
-}
-pub fn js_template_element(
-    dollar_curly_token: SyntaxToken,
-    expression: JsAnyExpression,
-    r_curly_token: SyntaxToken,
-) -> JsTemplateElement {
-    JsTemplateElement::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_TEMPLATE_ELEMENT,
-        [
-            Some(SyntaxElement::Token(dollar_curly_token)),
-            Some(SyntaxElement::Node(expression.into_syntax())),
-            Some(SyntaxElement::Token(r_curly_token)),
-        ],
-    ))
-}
 pub fn js_this_expression(this_token: SyntaxToken) -> JsThisExpression {
     JsThisExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_THIS_EXPRESSION,
@@ -3219,7 +3233,7 @@ pub fn js_this_expression(this_token: SyntaxToken) -> JsThisExpression {
 }
 pub fn js_throw_statement(
     throw_token: SyntaxToken,
-    argument: JsAnyExpression,
+    argument: AnyJsExpression,
 ) -> JsThrowStatementBuilder {
     JsThrowStatementBuilder {
         throw_token,
@@ -3229,7 +3243,7 @@ pub fn js_throw_statement(
 }
 pub struct JsThrowStatementBuilder {
     throw_token: SyntaxToken,
-    argument: JsAnyExpression,
+    argument: AnyJsExpression,
     semicolon_token: Option<SyntaxToken>,
 }
 impl JsThrowStatementBuilder {
@@ -3301,7 +3315,7 @@ pub fn js_try_statement(
 }
 pub fn js_unary_expression(
     operator_token_token: SyntaxToken,
-    argument: JsAnyExpression,
+    argument: AnyJsExpression,
 ) -> JsUnaryExpression {
     JsUnaryExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_UNARY_EXPRESSION,
@@ -3351,7 +3365,7 @@ impl JsVariableDeclarationClauseBuilder {
         ))
     }
 }
-pub fn js_variable_declarator(id: JsAnyBindingPattern) -> JsVariableDeclaratorBuilder {
+pub fn js_variable_declarator(id: AnyJsBindingPattern) -> JsVariableDeclaratorBuilder {
     JsVariableDeclaratorBuilder {
         id,
         variable_annotation: None,
@@ -3359,14 +3373,14 @@ pub fn js_variable_declarator(id: JsAnyBindingPattern) -> JsVariableDeclaratorBu
     }
 }
 pub struct JsVariableDeclaratorBuilder {
-    id: JsAnyBindingPattern,
-    variable_annotation: Option<TsAnyVariableAnnotation>,
+    id: AnyJsBindingPattern,
+    variable_annotation: Option<AnyTsVariableAnnotation>,
     initializer: Option<JsInitializerClause>,
 }
 impl JsVariableDeclaratorBuilder {
     pub fn with_variable_annotation(
         mut self,
-        variable_annotation: TsAnyVariableAnnotation,
+        variable_annotation: AnyTsVariableAnnotation,
     ) -> Self {
         self.variable_annotation = Some(variable_annotation);
         self
@@ -3417,9 +3431,9 @@ impl JsVariableStatementBuilder {
 pub fn js_while_statement(
     while_token: SyntaxToken,
     l_paren_token: SyntaxToken,
-    test: JsAnyExpression,
+    test: AnyJsExpression,
     r_paren_token: SyntaxToken,
-    body: JsAnyStatement,
+    body: AnyJsStatement,
 ) -> JsWhileStatement {
     JsWhileStatement::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_WHILE_STATEMENT,
@@ -3435,9 +3449,9 @@ pub fn js_while_statement(
 pub fn js_with_statement(
     with_token: SyntaxToken,
     l_paren_token: SyntaxToken,
-    object: JsAnyExpression,
+    object: AnyJsExpression,
     r_paren_token: SyntaxToken,
-    body: JsAnyStatement,
+    body: AnyJsStatement,
 ) -> JsWithStatement {
     JsWithStatement::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JS_WITH_STATEMENT,
@@ -3450,14 +3464,14 @@ pub fn js_with_statement(
         ],
     ))
 }
-pub fn js_yield_argument(expression: JsAnyExpression) -> JsYieldArgumentBuilder {
+pub fn js_yield_argument(expression: AnyJsExpression) -> JsYieldArgumentBuilder {
     JsYieldArgumentBuilder {
         expression,
         star_token: None,
     }
 }
 pub struct JsYieldArgumentBuilder {
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     star_token: Option<SyntaxToken>,
 }
 impl JsYieldArgumentBuilder {
@@ -3501,14 +3515,14 @@ impl JsYieldExpressionBuilder {
         ))
     }
 }
-pub fn jsx_attribute(name: JsxAnyAttributeName) -> JsxAttributeBuilder {
+pub fn jsx_attribute(name: AnyJsxAttributeName) -> JsxAttributeBuilder {
     JsxAttributeBuilder {
         name,
         initializer: None,
     }
 }
 pub struct JsxAttributeBuilder {
-    name: JsxAnyAttributeName,
+    name: AnyJsxAttributeName,
     initializer: Option<JsxAttributeInitializerClause>,
 }
 impl JsxAttributeBuilder {
@@ -3529,7 +3543,7 @@ impl JsxAttributeBuilder {
 }
 pub fn jsx_attribute_initializer_clause(
     eq_token: SyntaxToken,
-    value: JsxAnyAttributeValue,
+    value: AnyJsxAttributeValue,
 ) -> JsxAttributeInitializerClause {
     JsxAttributeInitializerClause::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JSX_ATTRIBUTE_INITIALIZER_CLAUSE,
@@ -3542,7 +3556,7 @@ pub fn jsx_attribute_initializer_clause(
 pub fn jsx_closing_element(
     l_angle_token: SyntaxToken,
     slash_token: SyntaxToken,
-    name: JsxAnyElementName,
+    name: AnyJsxElementName,
     r_angle_token: SyntaxToken,
 ) -> JsxClosingElement {
     JsxClosingElement::unwrap_cast(SyntaxNode::new_detached(
@@ -3585,7 +3599,7 @@ pub fn jsx_element(
 }
 pub fn jsx_expression_attribute_value(
     l_curly_token: SyntaxToken,
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     r_curly_token: SyntaxToken,
 ) -> JsxExpressionAttributeValue {
     JsxExpressionAttributeValue::unwrap_cast(SyntaxNode::new_detached(
@@ -3610,10 +3624,10 @@ pub fn jsx_expression_child(
 pub struct JsxExpressionChildBuilder {
     l_curly_token: SyntaxToken,
     r_curly_token: SyntaxToken,
-    expression: Option<JsAnyExpression>,
+    expression: Option<AnyJsExpression>,
 }
 impl JsxExpressionChildBuilder {
-    pub fn with_expression(mut self, expression: JsAnyExpression) -> Self {
+    pub fn with_expression(mut self, expression: AnyJsExpression) -> Self {
         self.expression = Some(expression);
         self
     }
@@ -3644,7 +3658,7 @@ pub fn jsx_fragment(
     ))
 }
 pub fn jsx_member_name(
-    object: JsxAnyObjectName,
+    object: AnyJsxObjectName,
     dot_token: SyntaxToken,
     member: JsName,
 ) -> JsxMemberName {
@@ -3679,7 +3693,7 @@ pub fn jsx_namespace_name(
 }
 pub fn jsx_opening_element(
     l_angle_token: SyntaxToken,
-    name: JsxAnyElementName,
+    name: AnyJsxElementName,
     attributes: JsxAttributeList,
     r_angle_token: SyntaxToken,
 ) -> JsxOpeningElementBuilder {
@@ -3693,7 +3707,7 @@ pub fn jsx_opening_element(
 }
 pub struct JsxOpeningElementBuilder {
     l_angle_token: SyntaxToken,
-    name: JsxAnyElementName,
+    name: AnyJsxElementName,
     attributes: JsxAttributeList,
     r_angle_token: SyntaxToken,
     type_arguments: Option<TsTypeArguments>,
@@ -3737,7 +3751,7 @@ pub fn jsx_reference_identifier(value_token: SyntaxToken) -> JsxReferenceIdentif
 }
 pub fn jsx_self_closing_element(
     l_angle_token: SyntaxToken,
-    name: JsxAnyElementName,
+    name: AnyJsxElementName,
     attributes: JsxAttributeList,
     slash_token: SyntaxToken,
     r_angle_token: SyntaxToken,
@@ -3753,7 +3767,7 @@ pub fn jsx_self_closing_element(
 }
 pub struct JsxSelfClosingElementBuilder {
     l_angle_token: SyntaxToken,
-    name: JsxAnyElementName,
+    name: AnyJsxElementName,
     attributes: JsxAttributeList,
     slash_token: SyntaxToken,
     r_angle_token: SyntaxToken,
@@ -3782,7 +3796,7 @@ impl JsxSelfClosingElementBuilder {
 pub fn jsx_spread_attribute(
     l_curly_token: SyntaxToken,
     dotdotdot_token: SyntaxToken,
-    argument: JsAnyExpression,
+    argument: AnyJsExpression,
     r_curly_token: SyntaxToken,
 ) -> JsxSpreadAttribute {
     JsxSpreadAttribute::unwrap_cast(SyntaxNode::new_detached(
@@ -3798,7 +3812,7 @@ pub fn jsx_spread_attribute(
 pub fn jsx_spread_child(
     l_curly_token: SyntaxToken,
     dotdotdot_token: SyntaxToken,
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     r_curly_token: SyntaxToken,
 ) -> JsxSpreadChild {
     JsxSpreadChild::unwrap_cast(SyntaxNode::new_detached(
@@ -3817,7 +3831,7 @@ pub fn jsx_string(value_token: SyntaxToken) -> JsxString {
         [Some(SyntaxElement::Token(value_token))],
     ))
 }
-pub fn jsx_tag_expression(tag: JsxAnyTag) -> JsxTagExpression {
+pub fn jsx_tag_expression(tag: AnyJsxTag) -> JsxTagExpression {
     JsxTagExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JSX_TAG_EXPRESSION,
         [Some(SyntaxElement::Node(tag.into_syntax()))],
@@ -3827,20 +3841,6 @@ pub fn jsx_text(value_token: SyntaxToken) -> JsxText {
     JsxText::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::JSX_TEXT,
         [Some(SyntaxElement::Token(value_token))],
-    ))
-}
-pub fn new_target(
-    new_token: SyntaxToken,
-    dot_token: SyntaxToken,
-    target_token: SyntaxToken,
-) -> NewTarget {
-    NewTarget::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::NEW_TARGET,
-        [
-            Some(SyntaxElement::Token(new_token)),
-            Some(SyntaxElement::Token(dot_token)),
-            Some(SyntaxElement::Token(target_token)),
-        ],
     ))
 }
 pub fn ts_abstract_modifier(modifier_token: SyntaxToken) -> TsAbstractModifier {
@@ -3862,7 +3862,7 @@ pub fn ts_any_type(any_token: SyntaxToken) -> TsAnyType {
     ))
 }
 pub fn ts_array_type(
-    element_type: TsType,
+    element_type: AnyTsType,
     l_brack_token: SyntaxToken,
     r_brack_token: SyntaxToken,
 ) -> TsArrayType {
@@ -3876,9 +3876,9 @@ pub fn ts_array_type(
     ))
 }
 pub fn ts_as_assignment(
-    assignment: JsAnyAssignment,
+    assignment: AnyJsAssignment,
     as_token: SyntaxToken,
-    ty: TsType,
+    ty: AnyTsType,
 ) -> TsAsAssignment {
     TsAsAssignment::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_AS_ASSIGNMENT,
@@ -3890,9 +3890,9 @@ pub fn ts_as_assignment(
     ))
 }
 pub fn ts_as_expression(
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     as_token: SyntaxToken,
-    ty: TsType,
+    ty: AnyTsType,
 ) -> TsAsExpression {
     TsAsExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_AS_EXPRESSION,
@@ -3903,7 +3903,7 @@ pub fn ts_as_expression(
         ],
     ))
 }
-pub fn ts_asserts_condition(is_token: SyntaxToken, ty: TsType) -> TsAssertsCondition {
+pub fn ts_asserts_condition(is_token: SyntaxToken, ty: AnyTsType) -> TsAssertsCondition {
     TsAssertsCondition::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_ASSERTS_CONDITION,
         [
@@ -3914,7 +3914,7 @@ pub fn ts_asserts_condition(is_token: SyntaxToken, ty: TsType) -> TsAssertsCondi
 }
 pub fn ts_asserts_return_type(
     asserts_token: SyntaxToken,
-    parameter_name: TsAnyTypePredicateParameterName,
+    parameter_name: AnyTsTypePredicateParameterName,
 ) -> TsAssertsReturnTypeBuilder {
     TsAssertsReturnTypeBuilder {
         asserts_token,
@@ -3924,7 +3924,7 @@ pub fn ts_asserts_return_type(
 }
 pub struct TsAssertsReturnTypeBuilder {
     asserts_token: SyntaxToken,
-    parameter_name: TsAnyTypePredicateParameterName,
+    parameter_name: AnyTsTypePredicateParameterName,
     predicate: Option<TsAssertsCondition>,
 }
 impl TsAssertsReturnTypeBuilder {
@@ -4033,13 +4033,13 @@ impl TsCallSignatureTypeMemberBuilder {
     }
 }
 pub fn ts_conditional_type(
-    check_type: TsType,
+    check_type: AnyTsType,
     extends_token: SyntaxToken,
-    extends_type: TsType,
+    extends_type: AnyTsType,
     question_mark_token: SyntaxToken,
-    true_type: TsType,
+    true_type: AnyTsType,
     colon_token: SyntaxToken,
-    false_type: TsType,
+    false_type: AnyTsType,
 ) -> TsConditionalType {
     TsConditionalType::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_CONDITIONAL_TYPE,
@@ -4142,7 +4142,7 @@ pub fn ts_constructor_type(
     new_token: SyntaxToken,
     parameters: JsParameters,
     fat_arrow_token: SyntaxToken,
-    return_type: TsType,
+    return_type: AnyTsType,
 ) -> TsConstructorTypeBuilder {
     TsConstructorTypeBuilder {
         new_token,
@@ -4157,7 +4157,7 @@ pub struct TsConstructorTypeBuilder {
     new_token: SyntaxToken,
     parameters: JsParameters,
     fat_arrow_token: SyntaxToken,
-    return_type: TsType,
+    return_type: AnyTsType,
     abstract_token: Option<SyntaxToken>,
     type_parameters: Option<TsTypeParameters>,
 }
@@ -4187,7 +4187,7 @@ impl TsConstructorTypeBuilder {
 }
 pub fn ts_declare_function_declaration(
     function_token: SyntaxToken,
-    id: JsAnyBinding,
+    id: AnyJsBinding,
     parameters: JsParameters,
 ) -> TsDeclareFunctionDeclarationBuilder {
     TsDeclareFunctionDeclarationBuilder {
@@ -4202,7 +4202,7 @@ pub fn ts_declare_function_declaration(
 }
 pub struct TsDeclareFunctionDeclarationBuilder {
     function_token: SyntaxToken,
-    id: JsAnyBinding,
+    id: AnyJsBinding,
     parameters: JsParameters,
     async_token: Option<SyntaxToken>,
     type_parameters: Option<TsTypeParameters>,
@@ -4265,7 +4265,7 @@ pub struct TsDeclareFunctionExportDefaultDeclarationBuilder {
     function_token: SyntaxToken,
     parameters: JsParameters,
     async_token: Option<SyntaxToken>,
-    id: Option<JsAnyBinding>,
+    id: Option<AnyJsBinding>,
     type_parameters: Option<TsTypeParameters>,
     return_type_annotation: Option<TsReturnTypeAnnotation>,
     semicolon_token: Option<SyntaxToken>,
@@ -4275,7 +4275,7 @@ impl TsDeclareFunctionExportDefaultDeclarationBuilder {
         self.async_token = Some(async_token);
         self
     }
-    pub fn with_id(mut self, id: JsAnyBinding) -> Self {
+    pub fn with_id(mut self, id: AnyJsBinding) -> Self {
         self.id = Some(id);
         self
     }
@@ -4321,7 +4321,7 @@ pub fn ts_declare_modifier(modifier_token: SyntaxToken) -> TsDeclareModifier {
 }
 pub fn ts_declare_statement(
     declare_token: SyntaxToken,
-    declaration: JsAnyDeclarationClause,
+    declaration: AnyJsDeclarationClause,
 ) -> TsDeclareStatement {
     TsDeclareStatement::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_DECLARE_STATEMENT,
@@ -4331,7 +4331,7 @@ pub fn ts_declare_statement(
         ],
     ))
 }
-pub fn ts_default_type_clause(eq_token: SyntaxToken, ty: TsType) -> TsDefaultTypeClause {
+pub fn ts_default_type_clause(eq_token: SyntaxToken, ty: AnyTsType) -> TsDefaultTypeClause {
     TsDefaultTypeClause::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_DEFAULT_TYPE_CLAUSE,
         [
@@ -4374,7 +4374,7 @@ pub fn ts_empty_external_module_declaration_body(
 }
 pub fn ts_enum_declaration(
     enum_token: SyntaxToken,
-    id: JsAnyBinding,
+    id: AnyJsBinding,
     l_curly_token: SyntaxToken,
     members: TsEnumMemberList,
     r_curly_token: SyntaxToken,
@@ -4390,7 +4390,7 @@ pub fn ts_enum_declaration(
 }
 pub struct TsEnumDeclarationBuilder {
     enum_token: SyntaxToken,
-    id: JsAnyBinding,
+    id: AnyJsBinding,
     l_curly_token: SyntaxToken,
     members: TsEnumMemberList,
     r_curly_token: SyntaxToken,
@@ -4415,14 +4415,14 @@ impl TsEnumDeclarationBuilder {
         ))
     }
 }
-pub fn ts_enum_member(name: JsAnyObjectMemberName) -> TsEnumMemberBuilder {
+pub fn ts_enum_member(name: AnyJsObjectMemberName) -> TsEnumMemberBuilder {
     TsEnumMemberBuilder {
         name,
         initializer: None,
     }
 }
 pub struct TsEnumMemberBuilder {
-    name: JsAnyObjectMemberName,
+    name: AnyJsObjectMemberName,
     initializer: Option<JsInitializerClause>,
 }
 impl TsEnumMemberBuilder {
@@ -4479,7 +4479,7 @@ impl TsExportAsNamespaceClauseBuilder {
 }
 pub fn ts_export_assignment_clause(
     eq_token: SyntaxToken,
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
 ) -> TsExportAssignmentClauseBuilder {
     TsExportAssignmentClauseBuilder {
         eq_token,
@@ -4489,7 +4489,7 @@ pub fn ts_export_assignment_clause(
 }
 pub struct TsExportAssignmentClauseBuilder {
     eq_token: SyntaxToken,
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     semicolon_token: Option<SyntaxToken>,
 }
 impl TsExportAssignmentClauseBuilder {
@@ -4511,7 +4511,7 @@ impl TsExportAssignmentClauseBuilder {
 }
 pub fn ts_export_declare_clause(
     declare_token: SyntaxToken,
-    declaration: JsAnyDeclarationClause,
+    declaration: AnyJsDeclarationClause,
 ) -> TsExportDeclareClause {
     TsExportDeclareClause::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_EXPORT_DECLARE_CLAUSE,
@@ -4543,10 +4543,10 @@ pub fn ts_external_module_declaration(
 pub struct TsExternalModuleDeclarationBuilder {
     module_token: SyntaxToken,
     source: JsModuleSource,
-    body: Option<TsAnyExternalModuleDeclarationBody>,
+    body: Option<AnyTsExternalModuleDeclarationBody>,
 }
 impl TsExternalModuleDeclarationBuilder {
-    pub fn with_body(mut self, body: TsAnyExternalModuleDeclarationBody) -> Self {
+    pub fn with_body(mut self, body: AnyTsExternalModuleDeclarationBody) -> Self {
         self.body = Some(body);
         self
     }
@@ -4581,7 +4581,7 @@ pub fn ts_external_module_reference(
 pub fn ts_function_type(
     parameters: JsParameters,
     fat_arrow_token: SyntaxToken,
-    return_type: TsAnyReturnType,
+    return_type: AnyTsReturnType,
 ) -> TsFunctionTypeBuilder {
     TsFunctionTypeBuilder {
         parameters,
@@ -4593,7 +4593,7 @@ pub fn ts_function_type(
 pub struct TsFunctionTypeBuilder {
     parameters: JsParameters,
     fat_arrow_token: SyntaxToken,
-    return_type: TsAnyReturnType,
+    return_type: AnyTsReturnType,
     type_parameters: Option<TsTypeParameters>,
 }
 impl TsFunctionTypeBuilder {
@@ -4617,7 +4617,7 @@ impl TsFunctionTypeBuilder {
 pub fn ts_getter_signature_class_member(
     modifiers: TsMethodSignatureModifierList,
     get_token: SyntaxToken,
-    name: JsAnyClassMemberName,
+    name: AnyJsClassMemberName,
     l_paren_token: SyntaxToken,
     r_paren_token: SyntaxToken,
 ) -> TsGetterSignatureClassMemberBuilder {
@@ -4634,7 +4634,7 @@ pub fn ts_getter_signature_class_member(
 pub struct TsGetterSignatureClassMemberBuilder {
     modifiers: TsMethodSignatureModifierList,
     get_token: SyntaxToken,
-    name: JsAnyClassMemberName,
+    name: AnyJsClassMemberName,
     l_paren_token: SyntaxToken,
     r_paren_token: SyntaxToken,
     return_type: Option<TsTypeAnnotation>,
@@ -4668,7 +4668,7 @@ impl TsGetterSignatureClassMemberBuilder {
 }
 pub fn ts_getter_signature_type_member(
     get_token: SyntaxToken,
-    name: JsAnyObjectMemberName,
+    name: AnyJsObjectMemberName,
     l_paren_token: SyntaxToken,
     r_paren_token: SyntaxToken,
 ) -> TsGetterSignatureTypeMemberBuilder {
@@ -4683,7 +4683,7 @@ pub fn ts_getter_signature_type_member(
 }
 pub struct TsGetterSignatureTypeMemberBuilder {
     get_token: SyntaxToken,
-    name: JsAnyObjectMemberName,
+    name: AnyJsObjectMemberName,
     l_paren_token: SyntaxToken,
     r_paren_token: SyntaxToken,
     type_annotation: Option<TsTypeAnnotation>,
@@ -4746,9 +4746,9 @@ pub fn ts_implements_clause(
 }
 pub fn ts_import_equals_declaration(
     import_token: SyntaxToken,
-    id: JsAnyBinding,
+    id: AnyJsBinding,
     eq_token: SyntaxToken,
-    module_reference: TsAnyModuleReference,
+    module_reference: AnyTsModuleReference,
 ) -> TsImportEqualsDeclarationBuilder {
     TsImportEqualsDeclarationBuilder {
         import_token,
@@ -4761,9 +4761,9 @@ pub fn ts_import_equals_declaration(
 }
 pub struct TsImportEqualsDeclarationBuilder {
     import_token: SyntaxToken,
-    id: JsAnyBinding,
+    id: AnyJsBinding,
     eq_token: SyntaxToken,
-    module_reference: TsAnyModuleReference,
+    module_reference: AnyTsModuleReference,
     type_token: Option<SyntaxToken>,
     semicolon_token: Option<SyntaxToken>,
 }
@@ -4846,7 +4846,7 @@ impl TsImportTypeBuilder {
         ))
     }
 }
-pub fn ts_import_type_qualifier(dot_token: SyntaxToken, right: TsAnyName) -> TsImportTypeQualifier {
+pub fn ts_import_type_qualifier(dot_token: SyntaxToken, right: AnyTsName) -> TsImportTypeQualifier {
     TsImportTypeQualifier::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_IMPORT_TYPE_QUALIFIER,
         [
@@ -4959,9 +4959,9 @@ impl TsIndexSignatureTypeMemberBuilder {
     }
 }
 pub fn ts_indexed_access_type(
-    object_type: TsType,
+    object_type: AnyTsType,
     l_brack_token: SyntaxToken,
-    index_type: TsType,
+    index_type: AnyTsType,
     r_brack_token: SyntaxToken,
 ) -> TsIndexedAccessType {
     TsIndexedAccessType::unwrap_cast(SyntaxNode::new_detached(
@@ -4984,7 +4984,7 @@ pub fn ts_infer_type(infer_token: SyntaxToken, type_parameter: TsTypeParameterNa
     ))
 }
 pub fn ts_instantiation_expression(
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     arguments: TsTypeArguments,
 ) -> TsInstantiationExpression {
     TsInstantiationExpression::unwrap_cast(SyntaxNode::new_detached(
@@ -5078,7 +5078,7 @@ pub fn ts_mapped_type(
     l_brack_token: SyntaxToken,
     property_name: TsTypeParameterName,
     in_token: SyntaxToken,
-    keys_type: TsType,
+    keys_type: AnyTsType,
     r_brack_token: SyntaxToken,
     r_curly_token: SyntaxToken,
 ) -> TsMappedTypeBuilder {
@@ -5102,7 +5102,7 @@ pub struct TsMappedTypeBuilder {
     l_brack_token: SyntaxToken,
     property_name: TsTypeParameterName,
     in_token: SyntaxToken,
-    keys_type: TsType,
+    keys_type: AnyTsType,
     r_brack_token: SyntaxToken,
     r_curly_token: SyntaxToken,
     readonly_modifier: Option<TsMappedTypeReadonlyModifierClause>,
@@ -5163,7 +5163,7 @@ impl TsMappedTypeBuilder {
         ))
     }
 }
-pub fn ts_mapped_type_as_clause(as_token: SyntaxToken, ty: TsType) -> TsMappedTypeAsClause {
+pub fn ts_mapped_type_as_clause(as_token: SyntaxToken, ty: AnyTsType) -> TsMappedTypeAsClause {
     TsMappedTypeAsClause::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_MAPPED_TYPE_AS_CLAUSE,
         [
@@ -5230,7 +5230,7 @@ impl TsMappedTypeReadonlyModifierClauseBuilder {
 }
 pub fn ts_method_signature_class_member(
     modifiers: TsMethodSignatureModifierList,
-    name: JsAnyClassMemberName,
+    name: AnyJsClassMemberName,
     parameters: JsParameters,
 ) -> TsMethodSignatureClassMemberBuilder {
     TsMethodSignatureClassMemberBuilder {
@@ -5246,7 +5246,7 @@ pub fn ts_method_signature_class_member(
 }
 pub struct TsMethodSignatureClassMemberBuilder {
     modifiers: TsMethodSignatureModifierList,
-    name: JsAnyClassMemberName,
+    name: AnyJsClassMemberName,
     parameters: JsParameters,
     async_token: Option<SyntaxToken>,
     question_mark_token: Option<SyntaxToken>,
@@ -5299,7 +5299,7 @@ impl TsMethodSignatureClassMemberBuilder {
     }
 }
 pub fn ts_method_signature_type_member(
-    name: JsAnyObjectMemberName,
+    name: AnyJsObjectMemberName,
     parameters: JsParameters,
 ) -> TsMethodSignatureTypeMemberBuilder {
     TsMethodSignatureTypeMemberBuilder {
@@ -5312,7 +5312,7 @@ pub fn ts_method_signature_type_member(
     }
 }
 pub struct TsMethodSignatureTypeMemberBuilder {
-    name: JsAnyObjectMemberName,
+    name: AnyJsObjectMemberName,
     parameters: JsParameters,
     optional_token: Option<SyntaxToken>,
     type_parameters: Option<TsTypeParameters>,
@@ -5372,7 +5372,7 @@ pub fn ts_module_block(
 }
 pub fn ts_module_declaration(
     module_or_namespace_token: SyntaxToken,
-    name: TsAnyModuleName,
+    name: AnyTsModuleName,
     body: TsModuleBlock,
 ) -> TsModuleDeclaration {
     TsModuleDeclaration::unwrap_cast(SyntaxNode::new_detached(
@@ -5384,14 +5384,14 @@ pub fn ts_module_declaration(
         ],
     ))
 }
-pub fn ts_name_with_type_arguments(name: TsAnyName) -> TsNameWithTypeArgumentsBuilder {
+pub fn ts_name_with_type_arguments(name: AnyTsName) -> TsNameWithTypeArgumentsBuilder {
     TsNameWithTypeArgumentsBuilder {
         name,
         type_arguments: None,
     }
 }
 pub struct TsNameWithTypeArgumentsBuilder {
-    name: TsAnyName,
+    name: AnyTsName,
     type_arguments: Option<TsTypeArguments>,
 }
 impl TsNameWithTypeArgumentsBuilder {
@@ -5413,7 +5413,7 @@ impl TsNameWithTypeArgumentsBuilder {
 pub fn ts_named_tuple_type_element(
     name: JsName,
     colon_token: SyntaxToken,
-    ty: TsType,
+    ty: AnyTsType,
 ) -> TsNamedTupleTypeElementBuilder {
     TsNamedTupleTypeElementBuilder {
         name,
@@ -5426,7 +5426,7 @@ pub fn ts_named_tuple_type_element(
 pub struct TsNamedTupleTypeElementBuilder {
     name: JsName,
     colon_token: SyntaxToken,
-    ty: TsType,
+    ty: AnyTsType,
     dotdotdot_token: Option<SyntaxToken>,
     question_mark_token: Option<SyntaxToken>,
 }
@@ -5461,7 +5461,7 @@ pub fn ts_never_type(never_token: SyntaxToken) -> TsNeverType {
     ))
 }
 pub fn ts_non_null_assertion_assignment(
-    assignment: JsAnyAssignment,
+    assignment: AnyJsAssignment,
     excl_token: SyntaxToken,
 ) -> TsNonNullAssertionAssignment {
     TsNonNullAssertionAssignment::unwrap_cast(SyntaxNode::new_detached(
@@ -5473,7 +5473,7 @@ pub fn ts_non_null_assertion_assignment(
     ))
 }
 pub fn ts_non_null_assertion_expression(
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     excl_token: SyntaxToken,
 ) -> TsNonNullAssertionExpression {
     TsNonNullAssertionExpression::unwrap_cast(SyntaxNode::new_detached(
@@ -5570,7 +5570,7 @@ impl TsOptionalPropertyAnnotationBuilder {
     }
 }
 pub fn ts_optional_tuple_type_element(
-    ty: TsType,
+    ty: AnyTsType,
     question_mark_token: SyntaxToken,
 ) -> TsOptionalTupleTypeElement {
     TsOptionalTupleTypeElement::unwrap_cast(SyntaxNode::new_detached(
@@ -5589,7 +5589,7 @@ pub fn ts_override_modifier(modifier_token: SyntaxToken) -> TsOverrideModifier {
 }
 pub fn ts_parenthesized_type(
     l_paren_token: SyntaxToken,
-    ty: TsType,
+    ty: AnyTsType,
     r_paren_token: SyntaxToken,
 ) -> TsParenthesizedType {
     TsParenthesizedType::unwrap_cast(SyntaxNode::new_detached(
@@ -5602,9 +5602,9 @@ pub fn ts_parenthesized_type(
     ))
 }
 pub fn ts_predicate_return_type(
-    parameter_name: TsAnyTypePredicateParameterName,
+    parameter_name: AnyTsTypePredicateParameterName,
     is_token: SyntaxToken,
-    ty: TsType,
+    ty: AnyTsType,
 ) -> TsPredicateReturnType {
     TsPredicateReturnType::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_PREDICATE_RETURN_TYPE,
@@ -5617,7 +5617,7 @@ pub fn ts_predicate_return_type(
 }
 pub fn ts_property_parameter(
     modifiers: TsPropertyParameterModifierList,
-    formal_parameter: JsAnyFormalParameter,
+    formal_parameter: AnyJsFormalParameter,
 ) -> TsPropertyParameter {
     TsPropertyParameter::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_PROPERTY_PARAMETER,
@@ -5629,7 +5629,7 @@ pub fn ts_property_parameter(
 }
 pub fn ts_property_signature_class_member(
     modifiers: TsPropertySignatureModifierList,
-    name: JsAnyClassMemberName,
+    name: AnyJsClassMemberName,
 ) -> TsPropertySignatureClassMemberBuilder {
     TsPropertySignatureClassMemberBuilder {
         modifiers,
@@ -5640,14 +5640,14 @@ pub fn ts_property_signature_class_member(
 }
 pub struct TsPropertySignatureClassMemberBuilder {
     modifiers: TsPropertySignatureModifierList,
-    name: JsAnyClassMemberName,
-    property_annotation: Option<TsAnyPropertySignatureAnnotation>,
+    name: AnyJsClassMemberName,
+    property_annotation: Option<AnyTsPropertySignatureAnnotation>,
     semicolon_token: Option<SyntaxToken>,
 }
 impl TsPropertySignatureClassMemberBuilder {
     pub fn with_property_annotation(
         mut self,
-        property_annotation: TsAnyPropertySignatureAnnotation,
+        property_annotation: AnyTsPropertySignatureAnnotation,
     ) -> Self {
         self.property_annotation = Some(property_annotation);
         self
@@ -5671,7 +5671,7 @@ impl TsPropertySignatureClassMemberBuilder {
     }
 }
 pub fn ts_property_signature_type_member(
-    name: JsAnyObjectMemberName,
+    name: AnyJsObjectMemberName,
 ) -> TsPropertySignatureTypeMemberBuilder {
     TsPropertySignatureTypeMemberBuilder {
         name,
@@ -5682,7 +5682,7 @@ pub fn ts_property_signature_type_member(
     }
 }
 pub struct TsPropertySignatureTypeMemberBuilder {
-    name: JsAnyObjectMemberName,
+    name: AnyJsObjectMemberName,
     readonly_token: Option<SyntaxToken>,
     optional_token: Option<SyntaxToken>,
     type_annotation: Option<TsTypeAnnotation>,
@@ -5721,7 +5721,7 @@ impl TsPropertySignatureTypeMemberBuilder {
     }
 }
 pub fn ts_qualified_module_name(
-    left: TsAnyModuleName,
+    left: AnyTsModuleName,
     dot_token: SyntaxToken,
     right: JsName,
 ) -> TsQualifiedModuleName {
@@ -5735,7 +5735,7 @@ pub fn ts_qualified_module_name(
     ))
 }
 pub fn ts_qualified_name(
-    left: TsAnyName,
+    left: AnyTsName,
     dot_token: SyntaxToken,
     right: JsName,
 ) -> TsQualifiedName {
@@ -5754,14 +5754,14 @@ pub fn ts_readonly_modifier(modifier_token: SyntaxToken) -> TsReadonlyModifier {
         [Some(SyntaxElement::Token(modifier_token))],
     ))
 }
-pub fn ts_reference_type(name: TsAnyName) -> TsReferenceTypeBuilder {
+pub fn ts_reference_type(name: AnyTsName) -> TsReferenceTypeBuilder {
     TsReferenceTypeBuilder {
         name,
         type_arguments: None,
     }
 }
 pub struct TsReferenceTypeBuilder {
-    name: TsAnyName,
+    name: AnyTsName,
     type_arguments: Option<TsTypeArguments>,
 }
 impl TsReferenceTypeBuilder {
@@ -5782,7 +5782,7 @@ impl TsReferenceTypeBuilder {
 }
 pub fn ts_rest_tuple_type_element(
     dotdotdot_token: SyntaxToken,
-    ty: TsType,
+    ty: AnyTsType,
 ) -> TsRestTupleTypeElement {
     TsRestTupleTypeElement::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_REST_TUPLE_TYPE_ELEMENT,
@@ -5794,7 +5794,7 @@ pub fn ts_rest_tuple_type_element(
 }
 pub fn ts_return_type_annotation(
     colon_token: SyntaxToken,
-    ty: TsAnyReturnType,
+    ty: AnyTsReturnType,
 ) -> TsReturnTypeAnnotation {
     TsReturnTypeAnnotation::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_RETURN_TYPE_ANNOTATION,
@@ -5804,12 +5804,40 @@ pub fn ts_return_type_annotation(
         ],
     ))
 }
+pub fn ts_satisfies_assignment(
+    assignment: AnyJsAssignment,
+    satisfies_token: SyntaxToken,
+    ty: AnyTsType,
+) -> TsSatisfiesAssignment {
+    TsSatisfiesAssignment::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::TS_SATISFIES_ASSIGNMENT,
+        [
+            Some(SyntaxElement::Node(assignment.into_syntax())),
+            Some(SyntaxElement::Token(satisfies_token)),
+            Some(SyntaxElement::Node(ty.into_syntax())),
+        ],
+    ))
+}
+pub fn ts_satisfies_expression(
+    expression: AnyJsExpression,
+    satisfies_token: SyntaxToken,
+    ty: AnyTsType,
+) -> TsSatisfiesExpression {
+    TsSatisfiesExpression::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::TS_SATISFIES_EXPRESSION,
+        [
+            Some(SyntaxElement::Node(expression.into_syntax())),
+            Some(SyntaxElement::Token(satisfies_token)),
+            Some(SyntaxElement::Node(ty.into_syntax())),
+        ],
+    ))
+}
 pub fn ts_setter_signature_class_member(
     modifiers: TsMethodSignatureModifierList,
     set_token: SyntaxToken,
-    name: JsAnyClassMemberName,
+    name: AnyJsClassMemberName,
     l_paren_token: SyntaxToken,
-    parameter: JsAnyFormalParameter,
+    parameter: AnyJsFormalParameter,
     r_paren_token: SyntaxToken,
 ) -> TsSetterSignatureClassMemberBuilder {
     TsSetterSignatureClassMemberBuilder {
@@ -5825,9 +5853,9 @@ pub fn ts_setter_signature_class_member(
 pub struct TsSetterSignatureClassMemberBuilder {
     modifiers: TsMethodSignatureModifierList,
     set_token: SyntaxToken,
-    name: JsAnyClassMemberName,
+    name: AnyJsClassMemberName,
     l_paren_token: SyntaxToken,
-    parameter: JsAnyFormalParameter,
+    parameter: AnyJsFormalParameter,
     r_paren_token: SyntaxToken,
     semicolon_token: Option<SyntaxToken>,
 }
@@ -5854,9 +5882,9 @@ impl TsSetterSignatureClassMemberBuilder {
 }
 pub fn ts_setter_signature_type_member(
     set_token: SyntaxToken,
-    name: JsAnyObjectMemberName,
+    name: AnyJsObjectMemberName,
     l_paren_token: SyntaxToken,
-    parameter: JsAnyFormalParameter,
+    parameter: AnyJsFormalParameter,
     r_paren_token: SyntaxToken,
 ) -> TsSetterSignatureTypeMemberBuilder {
     TsSetterSignatureTypeMemberBuilder {
@@ -5870,9 +5898,9 @@ pub fn ts_setter_signature_type_member(
 }
 pub struct TsSetterSignatureTypeMemberBuilder {
     set_token: SyntaxToken,
-    name: JsAnyObjectMemberName,
+    name: AnyJsObjectMemberName,
     l_paren_token: SyntaxToken,
-    parameter: JsAnyFormalParameter,
+    parameter: AnyJsFormalParameter,
     r_paren_token: SyntaxToken,
     separator_token_token: Option<SyntaxToken>,
 }
@@ -5922,7 +5950,7 @@ pub fn ts_template_chunk_element(template_chunk_token: SyntaxToken) -> TsTemplat
 }
 pub fn ts_template_element(
     dollar_curly_token: SyntaxToken,
-    ty: TsType,
+    ty: AnyTsType,
     r_curly_token: SyntaxToken,
 ) -> TsTemplateElement {
     TsTemplateElement::unwrap_cast(SyntaxNode::new_detached(
@@ -5998,7 +6026,7 @@ pub fn ts_type_alias_declaration(
     type_token: SyntaxToken,
     binding_identifier: TsIdentifierBinding,
     eq_token: SyntaxToken,
-    ty: TsType,
+    ty: AnyTsType,
 ) -> TsTypeAliasDeclarationBuilder {
     TsTypeAliasDeclarationBuilder {
         type_token,
@@ -6013,7 +6041,7 @@ pub struct TsTypeAliasDeclarationBuilder {
     type_token: SyntaxToken,
     binding_identifier: TsIdentifierBinding,
     eq_token: SyntaxToken,
-    ty: TsType,
+    ty: AnyTsType,
     type_parameters: Option<TsTypeParameters>,
     semicolon_token: Option<SyntaxToken>,
 }
@@ -6042,7 +6070,7 @@ impl TsTypeAliasDeclarationBuilder {
         ))
     }
 }
-pub fn ts_type_annotation(colon_token: SyntaxToken, ty: TsType) -> TsTypeAnnotation {
+pub fn ts_type_annotation(colon_token: SyntaxToken, ty: AnyTsType) -> TsTypeAnnotation {
     TsTypeAnnotation::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_TYPE_ANNOTATION,
         [
@@ -6067,9 +6095,9 @@ pub fn ts_type_arguments(
 }
 pub fn ts_type_assertion_assignment(
     l_angle_token: SyntaxToken,
-    ty: TsType,
+    ty: AnyTsType,
     r_angle_token: SyntaxToken,
-    assignment: JsAnyAssignment,
+    assignment: AnyJsAssignment,
 ) -> TsTypeAssertionAssignment {
     TsTypeAssertionAssignment::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_TYPE_ASSERTION_ASSIGNMENT,
@@ -6083,9 +6111,9 @@ pub fn ts_type_assertion_assignment(
 }
 pub fn ts_type_assertion_expression(
     l_angle_token: SyntaxToken,
-    ty: TsType,
+    ty: AnyTsType,
     r_angle_token: SyntaxToken,
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
 ) -> TsTypeAssertionExpression {
     TsTypeAssertionExpression::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION,
@@ -6097,7 +6125,10 @@ pub fn ts_type_assertion_expression(
         ],
     ))
 }
-pub fn ts_type_constraint_clause(extends_token: SyntaxToken, ty: TsType) -> TsTypeConstraintClause {
+pub fn ts_type_constraint_clause(
+    extends_token: SyntaxToken,
+    ty: AnyTsType,
+) -> TsTypeConstraintClause {
     TsTypeConstraintClause::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_TYPE_CONSTRAINT_CLAUSE,
         [
@@ -6106,7 +6137,10 @@ pub fn ts_type_constraint_clause(extends_token: SyntaxToken, ty: TsType) -> TsTy
         ],
     ))
 }
-pub fn ts_type_operator_type(operator_token_token: SyntaxToken, ty: TsType) -> TsTypeOperatorType {
+pub fn ts_type_operator_type(
+    operator_token_token: SyntaxToken,
+    ty: AnyTsType,
+) -> TsTypeOperatorType {
     TsTypeOperatorType::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_TYPE_OPERATOR_TYPE,
         [
@@ -6171,7 +6205,7 @@ pub fn ts_type_parameters(
 }
 pub fn ts_typeof_type(
     typeof_token: SyntaxToken,
-    expression_name: TsAnyName,
+    expression_name: AnyTsName,
 ) -> TsTypeofTypeBuilder {
     TsTypeofTypeBuilder {
         typeof_token,
@@ -6181,7 +6215,7 @@ pub fn ts_typeof_type(
 }
 pub struct TsTypeofTypeBuilder {
     typeof_token: SyntaxToken,
-    expression_name: TsAnyName,
+    expression_name: AnyTsName,
     type_arguments: Option<TsTypeArguments>,
 }
 impl TsTypeofTypeBuilder {
@@ -6250,7 +6284,7 @@ pub fn js_array_assignment_pattern_element_list<I, S>(
     separators: S,
 ) -> JsArrayAssignmentPatternElementList
 where
-    I: IntoIterator<Item = JsAnyArrayAssignmentPatternElement>,
+    I: IntoIterator<Item = AnyJsArrayAssignmentPatternElement>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -6274,7 +6308,7 @@ pub fn js_array_binding_pattern_element_list<I, S>(
     separators: S,
 ) -> JsArrayBindingPatternElementList
 where
-    I: IntoIterator<Item = JsAnyArrayBindingPatternElement>,
+    I: IntoIterator<Item = AnyJsArrayBindingPatternElement>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -6295,7 +6329,7 @@ where
 }
 pub fn js_array_element_list<I, S>(items: I, separators: S) -> JsArrayElementList
 where
-    I: IntoIterator<Item = JsAnyArrayElement>,
+    I: IntoIterator<Item = AnyJsArrayElement>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -6316,7 +6350,7 @@ where
 }
 pub fn js_call_argument_list<I, S>(items: I, separators: S) -> JsCallArgumentList
 where
-    I: IntoIterator<Item = JsAnyCallArgument>,
+    I: IntoIterator<Item = AnyJsCallArgument>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -6337,7 +6371,7 @@ where
 }
 pub fn js_class_member_list<I>(items: I) -> JsClassMemberList
 where
-    I: IntoIterator<Item = JsAnyClassMember>,
+    I: IntoIterator<Item = AnyJsClassMember>,
     I::IntoIter: ExactSizeIterator,
 {
     JsClassMemberList::unwrap_cast(SyntaxNode::new_detached(
@@ -6361,7 +6395,7 @@ where
 }
 pub fn js_constructor_parameter_list<I, S>(items: I, separators: S) -> JsConstructorParameterList
 where
-    I: IntoIterator<Item = JsAnyConstructorParameter>,
+    I: IntoIterator<Item = AnyJsConstructorParameter>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -6418,7 +6452,7 @@ where
 }
 pub fn js_export_named_specifier_list<I, S>(items: I, separators: S) -> JsExportNamedSpecifierList
 where
-    I: IntoIterator<Item = JsAnyExportNamedSpecifier>,
+    I: IntoIterator<Item = AnyJsExportNamedSpecifier>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -6439,7 +6473,7 @@ where
 }
 pub fn js_import_assertion_entry_list<I, S>(items: I, separators: S) -> JsImportAssertionEntryList
 where
-    I: IntoIterator<Item = JsAnyImportAssertionEntry>,
+    I: IntoIterator<Item = AnyJsImportAssertionEntry>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -6460,7 +6494,7 @@ where
 }
 pub fn js_method_modifier_list<I>(items: I) -> JsMethodModifierList
 where
-    I: IntoIterator<Item = JsAnyMethodModifier>,
+    I: IntoIterator<Item = AnyJsMethodModifier>,
     I::IntoIter: ExactSizeIterator,
 {
     JsMethodModifierList::unwrap_cast(SyntaxNode::new_detached(
@@ -6472,7 +6506,7 @@ where
 }
 pub fn js_module_item_list<I>(items: I) -> JsModuleItemList
 where
-    I: IntoIterator<Item = JsAnyModuleItem>,
+    I: IntoIterator<Item = AnyJsModuleItem>,
     I::IntoIter: ExactSizeIterator,
 {
     JsModuleItemList::unwrap_cast(SyntaxNode::new_detached(
@@ -6484,7 +6518,7 @@ where
 }
 pub fn js_named_import_specifier_list<I, S>(items: I, separators: S) -> JsNamedImportSpecifierList
 where
-    I: IntoIterator<Item = JsAnyNamedImportSpecifier>,
+    I: IntoIterator<Item = AnyJsNamedImportSpecifier>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -6508,7 +6542,7 @@ pub fn js_object_assignment_pattern_property_list<I, S>(
     separators: S,
 ) -> JsObjectAssignmentPatternPropertyList
 where
-    I: IntoIterator<Item = JsAnyObjectAssignmentPatternMember>,
+    I: IntoIterator<Item = AnyJsObjectAssignmentPatternMember>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -6532,7 +6566,7 @@ pub fn js_object_binding_pattern_property_list<I, S>(
     separators: S,
 ) -> JsObjectBindingPatternPropertyList
 where
-    I: IntoIterator<Item = JsAnyObjectBindingPatternMember>,
+    I: IntoIterator<Item = AnyJsObjectBindingPatternMember>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -6553,7 +6587,7 @@ where
 }
 pub fn js_object_member_list<I, S>(items: I, separators: S) -> JsObjectMemberList
 where
-    I: IntoIterator<Item = JsAnyObjectMember>,
+    I: IntoIterator<Item = AnyJsObjectMember>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -6574,7 +6608,7 @@ where
 }
 pub fn js_parameter_list<I, S>(items: I, separators: S) -> JsParameterList
 where
-    I: IntoIterator<Item = JsAnyParameter>,
+    I: IntoIterator<Item = AnyJsParameter>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -6595,7 +6629,7 @@ where
 }
 pub fn js_property_modifier_list<I>(items: I) -> JsPropertyModifierList
 where
-    I: IntoIterator<Item = JsAnyPropertyModifier>,
+    I: IntoIterator<Item = AnyJsPropertyModifier>,
     I::IntoIter: ExactSizeIterator,
 {
     JsPropertyModifierList::unwrap_cast(SyntaxNode::new_detached(
@@ -6607,7 +6641,7 @@ where
 }
 pub fn js_statement_list<I>(items: I) -> JsStatementList
 where
-    I: IntoIterator<Item = JsAnyStatement>,
+    I: IntoIterator<Item = AnyJsStatement>,
     I::IntoIter: ExactSizeIterator,
 {
     JsStatementList::unwrap_cast(SyntaxNode::new_detached(
@@ -6619,7 +6653,7 @@ where
 }
 pub fn js_switch_case_list<I>(items: I) -> JsSwitchCaseList
 where
-    I: IntoIterator<Item = JsAnySwitchClause>,
+    I: IntoIterator<Item = AnyJsSwitchClause>,
     I::IntoIter: ExactSizeIterator,
 {
     JsSwitchCaseList::unwrap_cast(SyntaxNode::new_detached(
@@ -6631,7 +6665,7 @@ where
 }
 pub fn js_template_element_list<I>(items: I) -> JsTemplateElementList
 where
-    I: IntoIterator<Item = JsAnyTemplateElement>,
+    I: IntoIterator<Item = AnyJsTemplateElement>,
     I::IntoIter: ExactSizeIterator,
 {
     JsTemplateElementList::unwrap_cast(SyntaxNode::new_detached(
@@ -6664,7 +6698,7 @@ where
 }
 pub fn jsx_attribute_list<I>(items: I) -> JsxAttributeList
 where
-    I: IntoIterator<Item = JsxAnyAttribute>,
+    I: IntoIterator<Item = AnyJsxAttribute>,
     I::IntoIter: ExactSizeIterator,
 {
     JsxAttributeList::unwrap_cast(SyntaxNode::new_detached(
@@ -6676,7 +6710,7 @@ where
 }
 pub fn jsx_child_list<I>(items: I) -> JsxChildList
 where
-    I: IntoIterator<Item = JsxAnyChild>,
+    I: IntoIterator<Item = AnyJsxChild>,
     I::IntoIter: ExactSizeIterator,
 {
     JsxChildList::unwrap_cast(SyntaxNode::new_detached(
@@ -6709,7 +6743,7 @@ where
 }
 pub fn ts_index_signature_modifier_list<I>(items: I) -> TsIndexSignatureModifierList
 where
-    I: IntoIterator<Item = TsAnyIndexSignatureModifier>,
+    I: IntoIterator<Item = AnyTsIndexSignatureModifier>,
     I::IntoIter: ExactSizeIterator,
 {
     TsIndexSignatureModifierList::unwrap_cast(SyntaxNode::new_detached(
@@ -6724,7 +6758,7 @@ pub fn ts_intersection_type_element_list<I, S>(
     separators: S,
 ) -> TsIntersectionTypeElementList
 where
-    I: IntoIterator<Item = TsType>,
+    I: IntoIterator<Item = AnyTsType>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -6745,7 +6779,7 @@ where
 }
 pub fn ts_method_signature_modifier_list<I>(items: I) -> TsMethodSignatureModifierList
 where
-    I: IntoIterator<Item = TsAnyMethodSignatureModifier>,
+    I: IntoIterator<Item = AnyTsMethodSignatureModifier>,
     I::IntoIter: ExactSizeIterator,
 {
     TsMethodSignatureModifierList::unwrap_cast(SyntaxNode::new_detached(
@@ -6757,7 +6791,7 @@ where
 }
 pub fn ts_property_parameter_modifier_list<I>(items: I) -> TsPropertyParameterModifierList
 where
-    I: IntoIterator<Item = TsAnyPropertyParameterModifier>,
+    I: IntoIterator<Item = AnyTsPropertyParameterModifier>,
     I::IntoIter: ExactSizeIterator,
 {
     TsPropertyParameterModifierList::unwrap_cast(SyntaxNode::new_detached(
@@ -6769,7 +6803,7 @@ where
 }
 pub fn ts_property_signature_modifier_list<I>(items: I) -> TsPropertySignatureModifierList
 where
-    I: IntoIterator<Item = TsAnyPropertySignatureModifier>,
+    I: IntoIterator<Item = AnyTsPropertySignatureModifier>,
     I::IntoIter: ExactSizeIterator,
 {
     TsPropertySignatureModifierList::unwrap_cast(SyntaxNode::new_detached(
@@ -6781,7 +6815,7 @@ where
 }
 pub fn ts_template_element_list<I>(items: I) -> TsTemplateElementList
 where
-    I: IntoIterator<Item = TsAnyTemplateElement>,
+    I: IntoIterator<Item = AnyTsTemplateElement>,
     I::IntoIter: ExactSizeIterator,
 {
     TsTemplateElementList::unwrap_cast(SyntaxNode::new_detached(
@@ -6793,7 +6827,7 @@ where
 }
 pub fn ts_tuple_type_element_list<I, S>(items: I, separators: S) -> TsTupleTypeElementList
 where
-    I: IntoIterator<Item = TsAnyTupleTypeElement>,
+    I: IntoIterator<Item = AnyTsTupleTypeElement>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -6814,7 +6848,7 @@ where
 }
 pub fn ts_type_argument_list<I, S>(items: I, separators: S) -> TsTypeArgumentList
 where
-    I: IntoIterator<Item = TsType>,
+    I: IntoIterator<Item = AnyTsType>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -6856,7 +6890,7 @@ where
 }
 pub fn ts_type_member_list<I>(items: I) -> TsTypeMemberList
 where
-    I: IntoIterator<Item = TsAnyTypeMember>,
+    I: IntoIterator<Item = AnyTsTypeMember>,
     I::IntoIter: ExactSizeIterator,
 {
     TsTypeMemberList::unwrap_cast(SyntaxNode::new_detached(
@@ -6889,7 +6923,7 @@ where
 }
 pub fn ts_union_type_variant_list<I, S>(items: I, separators: S) -> TsUnionTypeVariantList
 where
-    I: IntoIterator<Item = TsType>,
+    I: IntoIterator<Item = AnyTsType>,
     I::IntoIter: ExactSizeIterator,
     S: IntoIterator<Item = JsSyntaxToken>,
     S::IntoIter: ExactSizeIterator,
@@ -6908,90 +6942,97 @@ where
         }),
     ))
 }
-pub fn js_unknown<I>(slots: I) -> JsUnknown
+pub fn js_bogus<I>(slots: I) -> JsBogus
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknown::unwrap_cast(SyntaxNode::new_detached(JsSyntaxKind::JS_UNKNOWN, slots))
+    JsBogus::unwrap_cast(SyntaxNode::new_detached(JsSyntaxKind::JS_BOGUS, slots))
 }
-pub fn js_unknown_assignment<I>(slots: I) -> JsUnknownAssignment
+pub fn js_bogus_assignment<I>(slots: I) -> JsBogusAssignment
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknownAssignment::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_UNKNOWN_ASSIGNMENT,
+    JsBogusAssignment::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BOGUS_ASSIGNMENT,
         slots,
     ))
 }
-pub fn js_unknown_binding<I>(slots: I) -> JsUnknownBinding
+pub fn js_bogus_binding<I>(slots: I) -> JsBogusBinding
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknownBinding::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_UNKNOWN_BINDING,
+    JsBogusBinding::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BOGUS_BINDING,
         slots,
     ))
 }
-pub fn js_unknown_expression<I>(slots: I) -> JsUnknownExpression
+pub fn js_bogus_expression<I>(slots: I) -> JsBogusExpression
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknownExpression::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_UNKNOWN_EXPRESSION,
+    JsBogusExpression::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BOGUS_EXPRESSION,
         slots,
     ))
 }
-pub fn js_unknown_import_assertion_entry<I>(slots: I) -> JsUnknownImportAssertionEntry
+pub fn js_bogus_import_assertion_entry<I>(slots: I) -> JsBogusImportAssertionEntry
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknownImportAssertionEntry::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_UNKNOWN_IMPORT_ASSERTION_ENTRY,
+    JsBogusImportAssertionEntry::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BOGUS_IMPORT_ASSERTION_ENTRY,
         slots,
     ))
 }
-pub fn js_unknown_member<I>(slots: I) -> JsUnknownMember
+pub fn js_bogus_member<I>(slots: I) -> JsBogusMember
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknownMember::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_UNKNOWN_MEMBER,
+    JsBogusMember::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BOGUS_MEMBER,
         slots,
     ))
 }
-pub fn js_unknown_named_import_specifier<I>(slots: I) -> JsUnknownNamedImportSpecifier
+pub fn js_bogus_named_import_specifier<I>(slots: I) -> JsBogusNamedImportSpecifier
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknownNamedImportSpecifier::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_UNKNOWN_NAMED_IMPORT_SPECIFIER,
+    JsBogusNamedImportSpecifier::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BOGUS_NAMED_IMPORT_SPECIFIER,
         slots,
     ))
 }
-pub fn js_unknown_parameter<I>(slots: I) -> JsUnknownParameter
+pub fn js_bogus_parameter<I>(slots: I) -> JsBogusParameter
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknownParameter::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_UNKNOWN_PARAMETER,
+    JsBogusParameter::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BOGUS_PARAMETER,
         slots,
     ))
 }
-pub fn js_unknown_statement<I>(slots: I) -> JsUnknownStatement
+pub fn js_bogus_statement<I>(slots: I) -> JsBogusStatement
 where
     I: IntoIterator<Item = Option<SyntaxElement>>,
     I::IntoIter: ExactSizeIterator,
 {
-    JsUnknownStatement::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_UNKNOWN_STATEMENT,
+    JsBogusStatement::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BOGUS_STATEMENT,
         slots,
     ))
+}
+pub fn ts_bogus_type<I>(slots: I) -> TsBogusType
+where
+    I: IntoIterator<Item = Option<SyntaxElement>>,
+    I::IntoIter: ExactSizeIterator,
+{
+    TsBogusType::unwrap_cast(SyntaxNode::new_detached(JsSyntaxKind::TS_BOGUS_TYPE, slots))
 }

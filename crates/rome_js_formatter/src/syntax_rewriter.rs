@@ -1,9 +1,9 @@
 use crate::comments::is_type_comment;
-use crate::parentheses::JsAnyParenthesized;
+use crate::parentheses::AnyJsParenthesized;
 use rome_formatter::{TransformSourceMap, TransformSourceMapBuilder};
 use rome_js_syntax::{
-    JsAnyAssignment, JsAnyExpression, JsLanguage, JsLogicalExpression, JsSyntaxKind, JsSyntaxNode,
-    TsType,
+    AnyJsAssignment, AnyJsExpression, AnyTsType, JsLanguage, JsLogicalExpression, JsSyntaxKind,
+    JsSyntaxNode,
 };
 use rome_rowan::syntax::SyntaxTrivia;
 use rome_rowan::{
@@ -46,8 +46,8 @@ struct JsFormatSyntaxRewriter {
 impl JsFormatSyntaxRewriter {
     /// Replaces parenthesized expression that:
     /// * have no syntax error: has no missing required child or no skipped token trivia attached to the left or right paren
-    /// * inner expression isn't an unknown node
-    /// * no closure or type cast type cast comment
+    /// * inner expression isn't an bogus node
+    /// * no closure or type cast comment
     ///
     /// with the inner expression.
     ///
@@ -122,7 +122,7 @@ impl JsFormatSyntaxRewriter {
     /// Which may turn `//comment` into a trailing comment that then gets formatted differently on the next formatting pass, resulting in instability issues.
     fn visit_parenthesized(
         &mut self,
-        parenthesized: JsAnyParenthesized,
+        parenthesized: AnyJsParenthesized,
     ) -> VisitNodeSignal<JsLanguage> {
         let (l_paren, inner, r_paren) = match (
             parenthesized.l_paren_token(),
@@ -133,7 +133,7 @@ impl JsFormatSyntaxRewriter {
                 let prev_token = l_paren.prev_token();
 
                 // Keep parentheses around unknown expressions. Rome can't know the precedence.
-                if inner.kind().is_unknown()
+                if inner.kind().is_bogus()
                     // Don't remove parentheses if they have skipped trivia. We don't know for certain what the intended syntax is.
                     // Nor if there's a leading type cast comment
                     || has_type_cast_comment_or_skipped(&l_paren.leading_trivia())
@@ -164,20 +164,20 @@ impl JsFormatSyntaxRewriter {
             // Return the parenthesized expression as is. This will be formatted as verbatim
             None => {
                 let updated = match parenthesized {
-                    JsAnyParenthesized::JsParenthesizedExpression(expression) => {
+                    AnyJsParenthesized::JsParenthesizedExpression(expression) => {
                         // SAFETY: Safe because the rewriter never rewrites an expression to a non expression.
                         expression
-                            .with_expression(JsAnyExpression::unwrap_cast(inner))
+                            .with_expression(AnyJsExpression::unwrap_cast(inner))
                             .into_syntax()
                     }
-                    JsAnyParenthesized::JsParenthesizedAssignment(assignment) => {
+                    AnyJsParenthesized::JsParenthesizedAssignment(assignment) => {
                         // SAFETY: Safe because the rewriter never rewrites an assignment to a non assignment.
                         assignment
-                            .with_assignment(JsAnyAssignment::unwrap_cast(inner))
+                            .with_assignment(AnyJsAssignment::unwrap_cast(inner))
                             .into_syntax()
                     }
-                    JsAnyParenthesized::TsParenthesizedType(ty) => {
-                        ty.with_ty(TsType::unwrap_cast(inner)).into_syntax()
+                    AnyJsParenthesized::TsParenthesizedType(ty) => {
+                        ty.with_ty(AnyTsType::unwrap_cast(inner)).into_syntax()
                     }
                 };
 
@@ -332,13 +332,13 @@ impl JsFormatSyntaxRewriter {
                 let right_key = right.syntax().key();
 
                 // SAFETY: Safe because the rewriter never rewrites an expression to a non expression.
-                let left = JsAnyExpression::unwrap_cast(self.transform(left.into_syntax()));
+                let left = AnyJsExpression::unwrap_cast(self.transform(left.into_syntax()));
                 let operator = self.visit_token(operator);
                 // SAFETY: Safe because the rewriter never rewrites an expression to a non expression.
-                let right = JsAnyExpression::unwrap_cast(self.transform(right.into_syntax()));
+                let right = AnyJsExpression::unwrap_cast(self.transform(right.into_syntax()));
 
                 let updated = match right {
-                    JsAnyExpression::JsLogicalExpression(right_logical) => {
+                    AnyJsExpression::JsLogicalExpression(right_logical) => {
                         match (
                             right_logical.left(),
                             right_logical.operator_token(),
@@ -400,8 +400,8 @@ impl SyntaxRewriter for JsFormatSyntaxRewriter {
 
     fn visit_node(&mut self, node: JsSyntaxNode) -> VisitNodeSignal<Self::Language> {
         match node.kind() {
-            kind if JsAnyParenthesized::can_cast(kind) => {
-                let parenthesized = JsAnyParenthesized::unwrap_cast(node);
+            kind if AnyJsParenthesized::can_cast(kind) => {
+                let parenthesized = AnyJsParenthesized::unwrap_cast(node);
 
                 self.visit_parenthesized(parenthesized)
             }

@@ -1,4 +1,4 @@
-use crate::parser::expected_any;
+use crate::prelude::*;
 use crate::span::Span;
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{is_nth_at_identifier, parse_identifier, ExpressionContext};
@@ -9,11 +9,12 @@ use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{ParseDiagnostic, ParsedSyntax, Parser, SyntaxFeature, ToDiagnostic};
+use crate::{JsParser, ParsedSyntax};
 use rome_js_syntax::{JsSyntaxKind::*, *};
+use rome_parser::diagnostic::expected_any;
 use rome_rowan::SyntaxKind as SyntaxKindTrait;
 
-pub(crate) fn parse_binding_pattern(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
+pub(crate) fn parse_binding_pattern(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax {
     match p.cur() {
         T!['['] => ArrayBindingPattern.parse_array_pattern(p),
         T!['{'] if context.is_object_expression_allowed() => {
@@ -24,17 +25,17 @@ pub(crate) fn parse_binding_pattern(p: &mut Parser, context: ExpressionContext) 
 }
 
 #[inline]
-pub(crate) fn is_at_identifier_binding(p: &mut Parser) -> bool {
+pub(crate) fn is_at_identifier_binding(p: &mut JsParser) -> bool {
     is_nth_at_identifier_binding(p, 0)
 }
 
 #[inline]
-pub(crate) fn is_nth_at_identifier_binding(p: &mut Parser, n: usize) -> bool {
+pub(crate) fn is_nth_at_identifier_binding(p: &mut JsParser, n: usize) -> bool {
     is_nth_at_identifier(p, n)
 }
 
 #[inline]
-pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_binding(p: &mut JsParser) -> ParsedSyntax {
     parse_identifier_binding(p)
 }
 
@@ -59,11 +60,11 @@ pub(crate) fn parse_binding(p: &mut Parser) -> ParsedSyntax {
 /// * the same identifier is bound multiple times inside of a `let` or const` declaration
 /// * it is named "yield" inside of a generator function or in strict mode
 /// * it is named "await" inside of an async function
-pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_identifier_binding(p: &mut JsParser) -> ParsedSyntax {
     let parsed = parse_identifier(p, JS_IDENTIFIER_BINDING);
 
     parsed.map(|mut identifier| {
-        if identifier.kind().is_unknown() {
+        if identifier.kind(p).is_bogus() {
             return identifier;
         }
 
@@ -79,11 +80,11 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
             );
             p.error(err);
 
-            identifier.change_to_unknown(p);
+            identifier.change_to_bogus(p);
             return identifier;
         }
 
-        if let Some(parent) = p.state.duplicate_binding_parent {
+        if let Some(parent) = p.state().duplicate_binding_parent {
             if identifier_name == "let" {
                 let err = p
                     .err_builder(
@@ -97,11 +98,11 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
                     .hint("Rename the let identifier here");
 
                 p.error(err);
-                identifier.change_to_unknown(p);
+                identifier.change_to_bogus(p);
                 return identifier;
             }
 
-            if let Some(existing) = p.state.name_map.get(identifier_name) {
+            if let Some(existing) = p.state().name_map.get(identifier_name) {
                 let err = p
                     .err_builder(
                         format!(
@@ -122,14 +123,15 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
                         format!("`{}` is first declared here", identifier_name),
                     );
                 p.error(err);
-                identifier.change_to_unknown(p);
+                identifier.change_to_bogus(p);
                 return identifier;
             }
 
             let identifier_name = String::from(identifier_name);
-            p.state
+            let identifier_range = identifier.range(p);
+            p.state_mut()
                 .name_map
-                .insert(identifier_name, identifier.range(p).as_range());
+                .insert(identifier_name, identifier_range.as_range());
         }
 
         identifier
@@ -145,12 +147,12 @@ impl ParseWithDefaultPattern for BindingPatternWithDefault {
     }
 
     #[inline]
-    fn expected_pattern_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
+    fn expected_pattern_error(p: &JsParser, range: TextRange) -> ParseDiagnostic {
         expected_binding(p, range)
     }
 
     #[inline]
-    fn parse_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_pattern(&self, p: &mut JsParser) -> ParsedSyntax {
         parse_binding_pattern(p, ExpressionContext::default())
     }
 }
@@ -182,8 +184,8 @@ struct ArrayBindingPattern;
 // let [ ...rest, other_assignment ] = a;
 impl ParseArrayPattern<BindingPatternWithDefault> for ArrayBindingPattern {
     #[inline]
-    fn unknown_pattern_kind() -> JsSyntaxKind {
-        JS_UNKNOWN_BINDING
+    fn bogus_pattern_kind() -> JsSyntaxKind {
+        JS_BOGUS_BINDING
     }
 
     #[inline]
@@ -201,7 +203,7 @@ impl ParseArrayPattern<BindingPatternWithDefault> for ArrayBindingPattern {
     }
 
     #[inline]
-    fn expected_element_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
+    fn expected_element_error(p: &JsParser, range: TextRange) -> ParseDiagnostic {
         expected_any(
             &[
                 "identifier",
@@ -211,7 +213,7 @@ impl ParseArrayPattern<BindingPatternWithDefault> for ArrayBindingPattern {
             ],
             range,
         )
-        .to_diagnostic(p)
+        .into_diagnostic(p)
     }
 
     #[inline]
@@ -229,8 +231,8 @@ struct ObjectBindingPattern;
 
 impl ParseObjectPattern for ObjectBindingPattern {
     #[inline]
-    fn unknown_pattern_kind() -> JsSyntaxKind {
-        JS_UNKNOWN_BINDING
+    fn bogus_pattern_kind() -> JsSyntaxKind {
+        JS_BOGUS_BINDING
     }
 
     #[inline]
@@ -243,8 +245,8 @@ impl ParseObjectPattern for ObjectBindingPattern {
     }
 
     #[inline]
-    fn expected_property_pattern_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
-        expected_any(&["identifier", "member name", "rest pattern"], range).to_diagnostic(p)
+    fn expected_property_pattern_error(p: &JsParser, range: TextRange) -> ParseDiagnostic {
+        expected_any(&["identifier", "member name", "rest pattern"], range).into_diagnostic(p)
     }
 
     // test object_property_binding
@@ -264,7 +266,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
     // let { a b } = c
     // let { = "test" } = c
     // let { , d } = c
-    fn parse_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_property_pattern(&self, p: &mut JsParser) -> ParsedSyntax {
         if !is_at_object_member_name(p) && !p.at_ts(token_set![T![:], T![=]]) {
             return Absent;
         }
@@ -285,9 +287,9 @@ impl ParseObjectPattern for ObjectBindingPattern {
 
         // test destructuring_initializer_binding
         // const { value, f = (value) => value } = item
-        let parent = p.state.duplicate_binding_parent.take();
+        let parent = p.state_mut().duplicate_binding_parent.take();
         parse_initializer_clause(p, ExpressionContext::default()).ok();
-        p.state.duplicate_binding_parent = parent;
+        p.state_mut().duplicate_binding_parent = parent;
 
         Present(m.complete(p, kind))
     }
@@ -305,7 +307,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
     // async function test() {
     //   let { ...await } = a;
     // }
-    fn parse_rest_property_pattern(&self, p: &mut Parser) -> ParsedSyntax {
+    fn parse_rest_property_pattern(&self, p: &mut JsParser) -> ParsedSyntax {
         if p.at(T![...]) {
             let m = p.start();
             p.bump(T![...]);
@@ -314,14 +316,14 @@ impl ParseObjectPattern for ObjectBindingPattern {
                 .or_add_diagnostic(p, expected_identifier);
 
             if let Some(mut inner) = inner {
-                if inner.kind() != JS_IDENTIFIER_BINDING {
+                if inner.kind(p) != JS_IDENTIFIER_BINDING {
                     let inner_range = inner.range(p);
                     // Don't add multiple errors
-                    if inner.kind() != JS_UNKNOWN_BINDING {
+                    if inner.kind(p) != JS_BOGUS_BINDING {
                         p.error(p.err_builder("Expected identifier binding", inner_range,).hint( "Object rest patterns must bind to an identifier, other patterns are not allowed."));
                     }
 
-                    inner.change_kind(p, JS_UNKNOWN_BINDING);
+                    inner.change_kind(p, JS_BOGUS_BINDING);
                 }
             }
 

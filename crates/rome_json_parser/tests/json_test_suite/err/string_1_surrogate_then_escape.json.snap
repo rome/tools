@@ -10,6 +10,37 @@ expression: snapshot
 ```
 
 
+## AST
+
+```
+JsonRoot {
+    value: JsonArrayValue {
+        l_brack_token: L_BRACK@0..1 "[" [] [],
+        elements: JsonArrayElementList [
+            JsonStringValue {
+                value_token: JSON_STRING_LITERAL@1..11 "\"\\uD800\\\"]" [] [],
+            },
+        ],
+        r_brack_token: missing (required),
+    },
+    eof_token: EOF@11..11 "" [] [],
+}
+```
+
+## CST 
+
+```
+0: JSON_ROOT@0..11
+  0: JSON_ARRAY_VALUE@0..11
+    0: L_BRACK@0..1 "[" [] []
+    1: JSON_ARRAY_ELEMENT_LIST@1..11
+      0: JSON_STRING_VALUE@1..11
+        0: JSON_STRING_LITERAL@1..11 "\"\\uD800\\\"]" [] []
+    2: (empty)
+  1: EOF@11..11 "" [] []
+
+```
+
 ## Diagnostics
 
 ```
@@ -25,13 +56,18 @@ string_1_surrogate_then_escape.json:1:2 parse ━━━━━━━━━━━�
   > 1 │ ["\uD800\"]
       │            
   
+string_1_surrogate_then_escape.json:1:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `]` but instead the file ends
+  
+  > 1 │ ["\uD800\"]
+      │            
+  
+  i the file ends here
+  
+  > 1 │ ["\uD800\"]
+      │            
+  
 ```
 
-## Tokens
-
-```
-L_BRACK: `[` (0..1)
-JSON_STRING_LITERAL: `"\uD800\"]` (1..11)
-EOF: `` (11..11)
-```
 

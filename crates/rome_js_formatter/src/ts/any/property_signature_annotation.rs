@@ -1,19 +1,19 @@
-//! Generated file, do not edit by hand, see `xtask/codegen`
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::TsAnyPropertySignatureAnnotation;
+use rome_js_syntax::AnyTsPropertySignatureAnnotation;
 #[derive(Debug, Clone, Default)]
-pub struct FormatTsAnyPropertySignatureAnnotation;
-impl FormatRule<TsAnyPropertySignatureAnnotation> for FormatTsAnyPropertySignatureAnnotation {
+pub(crate) struct FormatAnyTsPropertySignatureAnnotation;
+impl FormatRule<AnyTsPropertySignatureAnnotation> for FormatAnyTsPropertySignatureAnnotation {
     type Context = JsFormatContext;
     fn fmt(
         &self,
-        node: &TsAnyPropertySignatureAnnotation,
+        node: &AnyTsPropertySignatureAnnotation,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
         match node {
-            TsAnyPropertySignatureAnnotation::TsTypeAnnotation(node) => node.format().fmt(f),
-            TsAnyPropertySignatureAnnotation::TsOptionalPropertyAnnotation(node) => {
+            AnyTsPropertySignatureAnnotation::TsTypeAnnotation(node) => node.format().fmt(f),
+            AnyTsPropertySignatureAnnotation::TsOptionalPropertyAnnotation(node) => {
                 node.format().fmt(f)
             }
         }

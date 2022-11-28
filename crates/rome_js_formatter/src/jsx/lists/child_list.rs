@@ -1,12 +1,12 @@
 use crate::prelude::*;
 use crate::utils::jsx::{
     is_meaningful_jsx_text, is_whitespace_jsx_expression, jsx_split_children, JsxChild,
-    JsxRawSpace, JsxSpace,
+    JsxChildrenIterator, JsxRawSpace, JsxSpace,
 };
 use crate::JsFormatter;
 use rome_formatter::format_element::tag::{GroupMode, Tag};
 use rome_formatter::{format_args, write, CstFormatContext, FormatRuleWithOptions, VecBuffer};
-use rome_js_syntax::{JsxAnyChild, JsxChildList};
+use rome_js_syntax::{AnyJsxChild, JsxChildList};
 use std::cell::RefCell;
 
 #[derive(Debug, Clone, Default)]
@@ -72,7 +72,6 @@ impl FormatJsxChildList {
         let mut flat = FlatBuilder::new();
         let mut multiline = MultilineBuilder::new(multiline_layout);
 
-        let mut last: Option<JsxChild> = None;
         let mut force_multiline = layout.is_multiline();
 
         let mut children = jsx_split_children(list, f.context().comments())?;
@@ -82,7 +81,8 @@ impl FormatJsxChildList {
             children.pop();
         }
 
-        let mut children_iter = children.into_iter().peekable();
+        let mut last: Option<&JsxChild> = None;
+        let mut children_iter = JsxChildrenIterator::new(children.iter());
 
         // Trim leading new lines
         if let Some(JsxChild::Newline | JsxChild::EmptyLine) = children_iter.peek() {
@@ -102,11 +102,11 @@ impl FormatJsxChildList {
                         }
 
                         // Last word or last word before an element without any whitespace in between
-                        Some(JsxChild::NonText(child)) => Some(WordSeparator::EndOfText {
-                            is_next_self_closing: matches!(
-                                child,
-                                JsxAnyChild::JsxSelfClosingElement(_)
-                            ),
+                        Some(JsxChild::NonText(next_child)) => Some(WordSeparator::EndOfText {
+                            is_soft_line_break: !matches!(
+                                next_child,
+                                AnyJsxChild::JsxSelfClosingElement(_)
+                            ) || word.is_ascii_punctuation(),
                         }),
 
                         Some(JsxChild::Newline | JsxChild::Whitespace | JsxChild::EmptyLine) => {
@@ -165,9 +165,50 @@ impl FormatJsxChildList {
 
                 // A new line between some JSX text and an element
                 JsxChild::Newline => {
-                    child_breaks = true;
+                    let is_soft_break = {
+                        // Here we handle the case when we have a newline between an ascii punctuation word and a jsx element
+                        // We need to use the previous and the next element
+                        // [JsxChild::Word, JsxChild::Newline, JsxChild::NonText]
+                        // ```
+                        // <div>
+                        //   <div>First</div>,
+                        //   <div>Second</div>
+                        // </div>
+                        // ```
+                        if let Some(JsxChild::Word(word)) = last {
+                            let is_next_element_self_closing = matches!(
+                                children_iter.peek(),
+                                Some(JsxChild::NonText(AnyJsxChild::JsxSelfClosingElement(_)))
+                            );
+                            !is_next_element_self_closing && word.is_ascii_punctuation()
+                        }
+                        // Here we handle the case when we have an ascii punctuation word between a new line and a jsx element
+                        // Here we need to look ahead two elements
+                        // [JsxChild::Newline, JsxChild::Word, JsxChild::NonText]
+                        // ```
+                        // <div>
+                        //   <div>First</div>
+                        //   ,<div>Second</div>
+                        // </div>
+                        // ```
+                        else if let Some(JsxChild::Word(next_word)) = children_iter.peek() {
+                            let is_next_next_element_self_closing = matches!(
+                                children_iter.peek_next(),
+                                Some(JsxChild::NonText(AnyJsxChild::JsxSelfClosingElement(_)))
+                            );
 
-                    multiline.write_separator(&hard_line_break(), f);
+                            !is_next_next_element_self_closing && next_word.is_ascii_punctuation()
+                        } else {
+                            false
+                        }
+                    };
+
+                    if is_soft_break {
+                        multiline.write_separator(&soft_line_break(), f);
+                    } else {
+                        child_breaks = true;
+                        multiline.write_separator(&hard_line_break(), f);
+                    }
                 }
 
                 // An empty line between some JSX text and an element
@@ -190,7 +231,7 @@ impl FormatJsxChildList {
                             // <pre className="h-screen overflow-y-scroll" />
                             // adefg
                             // ```
-                            if matches!(non_text, JsxAnyChild::JsxSelfClosingElement(_))
+                            if matches!(non_text, AnyJsxChild::JsxSelfClosingElement(_))
                                 && !word.is_ascii_punctuation()
                             {
                                 Some(LineMode::Hard)
@@ -267,8 +308,8 @@ impl FormatJsxChildList {
     /// [JsxText] and [JsxExpressionChild] and instead, formats the nodes itself.
     #[cfg(debug_assertions)]
     fn disarm_debug_assertions(&self, node: &JsxChildList, f: &mut JsFormatter) {
-        use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression};
-        use JsxAnyChild::*;
+        use rome_js_syntax::{AnyJsExpression, AnyJsLiteralExpression};
+        use AnyJsxChild::*;
 
         for child in node {
             match child {
@@ -280,8 +321,8 @@ impl FormatJsxChildList {
                         .mark_suppression_checked(expression.syntax());
 
                     match expression.expression().unwrap() {
-                        JsAnyExpression::JsAnyLiteralExpression(
-                            JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
+                        AnyJsExpression::AnyJsLiteralExpression(
+                            AnyJsLiteralExpression::JsStringLiteralExpression(string_literal),
                         ) => {
                             f.context()
                                 .comments()
@@ -336,7 +377,7 @@ impl FormatJsxChildList {
         let mut meta = ChildrenMeta::default();
 
         for child in list {
-            use JsxAnyChild::*;
+            use AnyJsxChild::*;
 
             match child {
                 JsxElement(_) | JsxFragment(_) | JsxSelfClosingElement(_) => meta.any_tag = true,
@@ -406,7 +447,8 @@ enum WordSeparator {
     /// <div>a{expression}</div> // last element before expression
     /// ```
     ///
-    /// Creates a soft line break EXCEPT if the next element is a self closing element, which results in a hard line break:
+    /// Creates a soft line break EXCEPT if the next element is a self closing element
+    /// or the previous word was an ascii punctuation, which results in a hard line break:
     ///
     /// ```javascript
     /// a = <div>ab<br/></div>;
@@ -420,10 +462,7 @@ enum WordSeparator {
     ///     </div>
     /// );
     /// ```
-    EndOfText {
-        /// `true` if the next element is a [JsxSelfClosingElement]
-        is_next_self_closing: bool,
-    },
+    EndOfText { is_soft_line_break: bool },
 }
 
 impl WordSeparator {
@@ -432,7 +471,7 @@ impl WordSeparator {
         matches!(
             self,
             WordSeparator::EndOfText {
-                is_next_self_closing: true
+                is_soft_line_break: false,
             }
         )
     }
@@ -442,9 +481,10 @@ impl Format<JsFormatContext> for WordSeparator {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         match self {
             WordSeparator::BetweenWords => soft_line_break_or_space().fmt(f),
-            WordSeparator::EndOfText {
-                is_next_self_closing: self_closing,
-            } => {
+            WordSeparator::EndOfText { is_soft_line_break } => {
+                if *is_soft_line_break {
+                    soft_line_break().fmt(f)
+                }
                 // ```javascript
                 // <div>ab<br/></div>
                 // ```
@@ -456,12 +496,8 @@ impl Format<JsFormatContext> for WordSeparator {
                 //  <br />
                 // </div>
                 // ```
-                if *self_closing {
-                    hard_line_break().fmt(f)
-                }
-                // Try to fit everything else on a single line
                 else {
-                    soft_line_break().fmt(f)
+                    hard_line_break().fmt(f)
                 }
             }
         }

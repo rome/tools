@@ -5,7 +5,7 @@ use rome_diagnostics::Applicability;
 use rome_js_factory::make::{js_literal_member_name, js_property_object_member};
 use rome_js_semantic::{Reference, ReferencesExtensions};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyObjectMemberName, JsIdentifierBinding,
+    AnyJsExpression, AnyJsLiteralExpression, AnyJsObjectMemberName, JsIdentifierBinding,
     JsIdentifierExpression, JsReferenceIdentifier, JsShorthandPropertyObjectMember,
     JsStringLiteralExpression, JsSyntaxKind, JsVariableDeclaration, JsVariableDeclarator,
     JsVariableDeclaratorList,
@@ -56,21 +56,22 @@ fn is_id_and_string_literal_inner_text_equal(
     declarator: &JsVariableDeclarator,
 ) -> Option<(JsIdentifierBinding, JsStringLiteralExpression)> {
     let id = declarator.id().ok()?;
-    let id = id.as_js_any_binding()?.as_js_identifier_binding()?;
+    let id = id.as_any_js_binding()?.as_js_identifier_binding()?;
     let name = id.name_token().ok()?;
     let id_text = name.text_trimmed();
 
     let expression = declarator.initializer()?.expression().ok()?;
     let literal = expression
-        .as_js_any_literal_expression()?
+        .as_any_js_literal_expression()?
         .as_js_string_literal_expression()?;
     let literal_text = literal.inner_string_text().ok()?;
 
+    if id_text.len() != usize::from(literal_text.len()) {
+        return None;
+    }
+
     for (from_id, from_literal) in id_text.chars().zip(literal_text.chars()) {
-        if from_id != from_literal {
-            return None;
-        }
-        if from_id.is_lowercase() || from_literal.is_lowercase() {
+        if from_id != from_literal || from_id.is_lowercase() {
             return None;
         }
     }
@@ -142,7 +143,7 @@ impl Rule for NoShoutyConstants {
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let root = ctx.root();
-        let literal = JsAnyLiteralExpression::JsStringLiteralExpression(state.literal.clone());
+        let literal = AnyJsLiteralExpression::JsStringLiteralExpression(state.literal.clone());
 
         let mut batch = root.begin();
 
@@ -155,8 +156,8 @@ impl Rule for NoShoutyConstants {
             .cast::<JsIdentifierExpression>()
         {
             batch.replace_node(
-                JsAnyExpression::JsIdentifierExpression(node),
-                JsAnyExpression::JsAnyLiteralExpression(literal),
+                AnyJsExpression::JsIdentifierExpression(node),
+                AnyJsExpression::AnyJsLiteralExpression(literal),
             );
         } else if let Some(node) = state
             .reference
@@ -166,7 +167,7 @@ impl Rule for NoShoutyConstants {
         {
             // for replacing JsShorthandPropertyObjectMember
             let new_element = js_property_object_member(
-                JsAnyObjectMemberName::JsLiteralMemberName(js_literal_member_name(
+                AnyJsObjectMemberName::JsLiteralMemberName(js_literal_member_name(
                     SyntaxToken::new_detached(
                         JsSyntaxKind::JS_LITERAL_MEMBER_NAME,
                         JsReferenceIdentifier::cast_ref(state.reference.syntax())?
@@ -178,7 +179,7 @@ impl Rule for NoShoutyConstants {
                     ),
                 )),
                 SyntaxToken::new_detached(JsSyntaxKind::COLON, ":", [], []),
-                JsAnyExpression::JsAnyLiteralExpression(literal),
+                AnyJsExpression::AnyJsLiteralExpression(literal),
             );
 
             batch.replace_element(node.into_syntax().into(), new_element.into_syntax().into());

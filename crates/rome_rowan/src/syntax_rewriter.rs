@@ -16,7 +16,7 @@ use std::iter::once;
 /// # Examples
 ///
 /// Implementation of a rewritter that replaces all literal expression nodes that contain a number token
-/// with an unknown node.
+/// with a bogus node.
 ///
 /// ```
 /// # use std::iter::once;
@@ -47,12 +47,12 @@ use std::iter::once;
 ///                 match token.kind() {
 ///                     RawLanguageKind::NUMBER_TOKEN => {
 ///                         // Use your language's syntax factory instead
-///                         let unknown_node = SyntaxNode::new_detached(
-///                             RawLanguageKind::UNKNOWN,
+///                         let bogus_node = SyntaxNode::new_detached(
+///                             RawLanguageKind::BOGUS,
 ///                             once(Some(token.into())),
 ///                         );
 ///
-///                         VisitNodeSignal::Replace(unknown_node)
+///                         VisitNodeSignal::Replace(bogus_node)
 ///                     }
 ///                     // Not interested in string literal expressions, continue traversal
 ///                     _ => VisitNodeSignal::Traverse(expression.into_syntax()),
@@ -104,14 +104,14 @@ use std::iter::once;
 ///  // The literal expression containing a string token should be unchanged
 ///  assert_eq!(&literal_expressions, &original_literal_expressions[1..]);
 ///
-///  let mut unknowns: Vec<_> = transformed
+///  let mut bogus: Vec<_> = transformed
 ///     .descendants()
-///     .filter(|p| p.kind() == RawLanguageKind::UNKNOWN)
+///     .filter(|p| p.kind() == RawLanguageKind::BOGUS)
 ///     .collect();
 ///
-/// // It replaced the number literal expression with an unknown node.
-/// assert_eq!(unknowns.len(), 1);
-/// assert_eq!(unknowns.pop().unwrap().text(), "5");
+/// // It replaced the number literal expression with a bogus node.
+/// assert_eq!(bogus.len(), 1);
+/// assert_eq!(bogus.pop().unwrap().text(), "5");
 /// ```
 pub trait SyntaxRewriter {
     type Language: Language;

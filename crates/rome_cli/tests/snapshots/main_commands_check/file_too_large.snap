@@ -19,6 +19,10 @@ check.js lint ━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ```block
+Checked 1 file(s) in <TIME>
+```
+
+```block
 Skipped 1 file(s)
 ```
 

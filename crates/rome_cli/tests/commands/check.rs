@@ -557,7 +557,6 @@ fn upgrade_severity() {
 
     let messages = &console.out_buffer;
 
-    dbg!(&result);
     assert_eq!(
         messages
             .iter()
@@ -671,6 +670,21 @@ fn no_lint_if_files_are_listed_in_ignore_option() {
     ));
 }
 
+/// Creating a symbolic link will fail on Windows if the current process is
+/// unprivileged. Since running tests as administrator is uncommon and
+/// constraining, this error gets silently ignored if we're not running on CI
+/// (the workflows are being being run with the correct permissions on CI)
+#[cfg(target_os = "windows")]
+macro_rules! check_windows_symlink {
+    ($result:expr) => {
+        match $result {
+            Ok(res) => res,
+            Err(err) if option_env!("CI") == Some("1") => panic!("failed to create symlink: {err}"),
+            Err(_) => return,
+        }
+    };
+}
+
 #[test]
 fn fs_error_dereferenced_symlink() {
     let fs = MemoryFileSystem::default();
@@ -693,7 +707,10 @@ fn fs_error_dereferenced_symlink() {
 
     #[cfg(target_os = "windows")]
     {
-        symlink_file(root_path.join("null"), root_path.join("broken_symlink")).unwrap();
+        check_windows_symlink!(symlink_file(
+            root_path.join("null"),
+            root_path.join("broken_symlink")
+        ));
     }
 
     let result = run_cli(
@@ -711,10 +728,7 @@ fn fs_error_dereferenced_symlink() {
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
-        #[cfg(target_family = "unix")]
-        "fs_error_dereferenced_symlink_unix",
-        #[cfg(target_os = "windows")]
-        "fs_error_dereferenced_symlink_windows",
+        "fs_error_dereferenced_symlink",
         fs,
         console,
         result,
@@ -747,8 +761,14 @@ fn fs_error_infinite_symlink_exapansion() {
 
     #[cfg(target_os = "windows")]
     {
-        symlink_dir(subdir1_path.clone(), root_path.join("self_symlink1")).unwrap();
-        symlink_dir(subdir1_path, subdir2_path.join("self_symlink2")).unwrap();
+        check_windows_symlink!(symlink_dir(
+            subdir1_path.clone(),
+            root_path.join("self_symlink1")
+        ));
+        check_windows_symlink!(symlink_dir(
+            subdir1_path,
+            subdir2_path.join("self_symlink2")
+        ));
     }
 
     let result = run_cli(
@@ -766,10 +786,7 @@ fn fs_error_infinite_symlink_exapansion() {
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
-        #[cfg(target_family = "unix")]
-        "fs_error_infinite_symlink_exapansion_unix",
-        #[cfg(target_os = "windows")]
-        "fs_error_infinite_symlink_exapansion_windows",
+        "fs_error_infinite_symlink_expansion",
         fs,
         console,
         result,
@@ -923,7 +940,8 @@ fn max_diagnostics_default() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    for i in 0..60 {
+    // Creates 40 diagnostics.
+    for i in 0..20 {
         let file_path = PathBuf::from(format!("src/file_{i}.js"));
         fs.insert(file_path, LINT_ERROR.as_bytes());
     }
@@ -957,11 +975,6 @@ fn max_diagnostics_default() {
 
     console.out_buffer = filtered_messages;
 
-    for i in 0..60 {
-        let file_path = format!("src/file_{i}.js");
-        fs.remove(Path::new(&file_path));
-    }
-
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "max_diagnostics_default",
@@ -978,7 +991,7 @@ fn max_diagnostics() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    for i in 0..60 {
+    for i in 0..10 {
         let file_path = PathBuf::from(format!("src/file_{i}.js"));
         fs.insert(file_path, LINT_ERROR.as_bytes());
     }
@@ -1016,11 +1029,6 @@ fn max_diagnostics() {
     }
 
     console.out_buffer = filtered_messages;
-
-    for i in 0..60 {
-        let file_path = format!("src/file_{i}.js");
-        fs.remove(Path::new(&file_path));
-    }
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -1113,6 +1121,62 @@ fn print_verbose() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "print_verbose",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn unsupported_file() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("check.txt");
+    fs.insert(file_path.into(), LINT_ERROR.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+    );
+
+    match result {
+        Err(Termination::NoFilesWereProcessed) => {}
+        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "unsupported_file",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn suppression_syntax_error() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("check.js");
+    fs.insert(file_path.into(), *b"// rome-ignore(:\n");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+    );
+
+    match result {
+        Err(Termination::CheckError) => {}
+        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "suppression_syntax_error",
         fs,
         console,
         result,

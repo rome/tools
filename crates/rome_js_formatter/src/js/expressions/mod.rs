@@ -1,4 +1,4 @@
-//! Generated file, do not edit by hand, see `xtask/codegen`
+//! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 pub(crate) mod array_expression;
 pub(crate) mod arrow_function_expression;
@@ -15,10 +15,12 @@ pub(crate) mod conditional_expression;
 pub(crate) mod function_expression;
 pub(crate) mod identifier_expression;
 pub(crate) mod import_call_expression;
+pub(crate) mod import_meta_expression;
 pub(crate) mod in_expression;
 pub(crate) mod instanceof_expression;
 pub(crate) mod logical_expression;
 pub(crate) mod new_expression;
+pub(crate) mod new_target_expression;
 pub(crate) mod null_literal_expression;
 pub(crate) mod number_literal_expression;
 pub(crate) mod object_expression;
@@ -30,9 +32,7 @@ pub(crate) mod sequence_expression;
 pub(crate) mod static_member_expression;
 pub(crate) mod string_literal_expression;
 pub(crate) mod super_expression;
-pub(crate) mod template;
-pub(crate) mod template_chunk_element;
-pub(crate) mod template_element;
+pub(crate) mod template_expression;
 pub(crate) mod this_expression;
 pub(crate) mod unary_expression;
 pub(crate) mod yield_argument;
