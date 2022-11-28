@@ -1,0 +1,49 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\satisfies-operators\\comments-unstable.ts"
+---
+
+# Input
+
+```js
+const t1 = {
+    prop1: 1,
+    prop2: 2,
+    prop3: 3
+} satisfies
+// Comment
+Record<string, number>;
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -2,5 +2,6 @@
+   prop1: 1,
+   prop2: 2,
+   prop3: 3,
+-} satisfies // Comment
+-Record<string, number>;
++} satisfies
++  // Comment
++  Record<string, number>;
+```
+
+# Output
+
+```js
+const t1 = {
+  prop1: 1,
+  prop2: 2,
+  prop3: 3,
+} satisfies
+  // Comment
+  Record<string, number>;
+```
+
+
+

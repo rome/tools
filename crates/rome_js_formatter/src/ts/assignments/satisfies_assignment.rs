@@ -1,31 +1,16 @@
 use crate::prelude::*;
 
 use crate::parentheses::NeedsParentheses;
-use rome_formatter::write;
+use crate::ts::assignments::as_assignment::TsAsOrSatisfiesAssignment;
+use rome_js_syntax::JsSyntaxNode;
 use rome_js_syntax::TsSatisfiesAssignment;
-use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, TsSatisfiesAssignmentFields};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsSatisfiesAssignment;
 
 impl FormatNodeRule<TsSatisfiesAssignment> for FormatTsSatisfiesAssignment {
     fn fmt_fields(&self, node: &TsSatisfiesAssignment, f: &mut JsFormatter) -> FormatResult<()> {
-        let TsSatisfiesAssignmentFields {
-            assignment,
-            satisfies_token,
-            ty,
-        } = node.as_fields();
-
-        write![
-            f,
-            [
-                assignment.format(),
-                space(),
-                satisfies_token.format(),
-                space(),
-                ty.format(),
-            ]
-        ]
+        TsAsOrSatisfiesAssignment::from(node.clone()).fmt(f)
     }
 
     fn needs_parentheses(&self, item: &TsSatisfiesAssignment) -> bool {
@@ -35,15 +20,7 @@ impl FormatNodeRule<TsSatisfiesAssignment> for FormatTsSatisfiesAssignment {
 
 impl NeedsParentheses for TsSatisfiesAssignment {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
-        matches!(
-            parent.kind(),
-            JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION
-                | JsSyntaxKind::TS_NON_NULL_ASSERTION_ASSIGNMENT
-                | JsSyntaxKind::TS_TYPE_ASSERTION_ASSIGNMENT
-                | JsSyntaxKind::JS_PRE_UPDATE_EXPRESSION
-                | JsSyntaxKind::JS_POST_UPDATE_EXPRESSION
-                | JsSyntaxKind::JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY
-        )
+        TsAsOrSatisfiesAssignment::from(self.clone()).needs_parentheses_with_parent(parent)
     }
 }
 

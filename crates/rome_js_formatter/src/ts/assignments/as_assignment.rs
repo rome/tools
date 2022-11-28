@@ -1,31 +1,17 @@
 use crate::prelude::*;
 
 use crate::parentheses::NeedsParentheses;
-use rome_formatter::write;
-use rome_js_syntax::TsAsAssignment;
-use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, TsAsAssignmentFields};
+use rome_formatter::{format_args, write};
+use rome_js_syntax::{JsAnyAssignment, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, TsType};
+use rome_js_syntax::{TsAsAssignment, TsSatisfiesAssignment};
+use rome_rowan::{declare_node_union, SyntaxResult};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsAsAssignment;
 
 impl FormatNodeRule<TsAsAssignment> for FormatTsAsAssignment {
     fn fmt_fields(&self, node: &TsAsAssignment, f: &mut JsFormatter) -> FormatResult<()> {
-        let TsAsAssignmentFields {
-            assignment,
-            as_token,
-            ty,
-        } = node.as_fields();
-
-        write![
-            f,
-            [
-                assignment.format(),
-                space(),
-                as_token.format(),
-                space(),
-                ty.format(),
-            ]
-        ]
+        TsAsOrSatisfiesAssignment::from(node.clone()).fmt(f)
     }
 
     fn needs_parentheses(&self, item: &TsAsAssignment) -> bool {
@@ -34,6 +20,32 @@ impl FormatNodeRule<TsAsAssignment> for FormatTsAsAssignment {
 }
 
 impl NeedsParentheses for TsAsAssignment {
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        TsAsOrSatisfiesAssignment::from(self.clone()).needs_parentheses_with_parent(parent)
+    }
+}
+
+declare_node_union! {
+    pub(crate) TsAsOrSatisfiesAssignment = TsAsAssignment | TsSatisfiesAssignment
+}
+
+impl Format<JsFormatContext> for TsAsOrSatisfiesAssignment {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        let assignment = self.assignment()?;
+        let operation_token = self.operation_token()?;
+        let ty = self.ty()?;
+
+        write![f, [assignment.format(), space(), operation_token.format()]]?;
+
+        if f.comments().has_leading_own_line_comment(ty.syntax()) {
+            write!(f, [indent(&format_args![hard_line_break(), ty.format()])])
+        } else {
+            write!(f, [space(), ty.format()])
+        }
+    }
+}
+
+impl NeedsParentheses for TsAsOrSatisfiesAssignment {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         matches!(
             parent.kind(),
@@ -44,6 +56,31 @@ impl NeedsParentheses for TsAsAssignment {
                 | JsSyntaxKind::JS_POST_UPDATE_EXPRESSION
                 | JsSyntaxKind::JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY
         )
+    }
+}
+
+impl TsAsOrSatisfiesAssignment {
+    fn assignment(&self) -> SyntaxResult<JsAnyAssignment> {
+        match self {
+            TsAsOrSatisfiesAssignment::TsAsAssignment(assignment) => assignment.assignment(),
+            TsAsOrSatisfiesAssignment::TsSatisfiesAssignment(assignment) => assignment.assignment(),
+        }
+    }
+
+    fn operation_token(&self) -> SyntaxResult<JsSyntaxToken> {
+        match self {
+            TsAsOrSatisfiesAssignment::TsAsAssignment(assignment) => assignment.as_token(),
+            TsAsOrSatisfiesAssignment::TsSatisfiesAssignment(assignment) => {
+                assignment.satisfies_token()
+            }
+        }
+    }
+
+    fn ty(&self) -> SyntaxResult<TsType> {
+        match self {
+            TsAsOrSatisfiesAssignment::TsAsAssignment(assignment) => assignment.ty(),
+            TsAsOrSatisfiesAssignment::TsSatisfiesAssignment(assignment) => assignment.ty(),
+        }
     }
 }
 

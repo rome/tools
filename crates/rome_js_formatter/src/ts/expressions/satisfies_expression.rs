@@ -1,48 +1,15 @@
 use crate::prelude::*;
 
-use crate::parentheses::{
-    is_binary_like_left_or_right, is_callee, is_member_object, NeedsParentheses,
-};
-use crate::ts::expressions::type_assertion_expression::type_cast_like_needs_parens;
-use rome_formatter::write;
-use rome_js_syntax::TsSatisfiesExpressionFields;
-use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, TsSatisfiesExpression};
+use crate::parentheses::NeedsParentheses;
+use crate::ts::expressions::as_expression::TsAsOrSatisfiesExpression;
+use rome_js_syntax::{JsSyntaxNode, TsSatisfiesExpression};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsSatisfiesExpression;
 
 impl FormatNodeRule<TsSatisfiesExpression> for FormatTsSatisfiesExpression {
     fn fmt_fields(&self, node: &TsSatisfiesExpression, f: &mut JsFormatter) -> FormatResult<()> {
-        let TsSatisfiesExpressionFields {
-            ty,
-            satisfies_token,
-            expression,
-        } = node.as_fields();
-
-        let format_inner = format_with(|f| {
-            write![
-                f,
-                [
-                    expression.format(),
-                    space(),
-                    satisfies_token.format(),
-                    space(),
-                    ty.format(),
-                ]
-            ]
-        });
-
-        let parent = node.syntax().parent();
-
-        let is_callee_or_object = parent.map_or(false, |parent| {
-            is_callee(node.syntax(), &parent) || is_member_object(node.syntax(), &parent)
-        });
-
-        if is_callee_or_object {
-            write!(f, [group(&soft_block_indent(&format_inner))])
-        } else {
-            write!(f, [format_inner])
-        }
+        TsAsOrSatisfiesExpression::from(node.clone()).fmt(f)
     }
 
     fn needs_parentheses(&self, item: &TsSatisfiesExpression) -> bool {
@@ -52,14 +19,7 @@ impl FormatNodeRule<TsSatisfiesExpression> for FormatTsSatisfiesExpression {
 
 impl NeedsParentheses for TsSatisfiesExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
-        match parent.kind() {
-            JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => true,
-
-            _ => {
-                type_cast_like_needs_parens(self.syntax(), parent)
-                    || is_binary_like_left_or_right(self.syntax(), parent)
-            }
-        }
+        TsAsOrSatisfiesExpression::from(self.clone()).needs_parentheses_with_parent(parent)
     }
 }
 
