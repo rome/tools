@@ -32,8 +32,6 @@ pub(crate) mod sequence_expression;
 pub(crate) mod static_member_expression;
 pub(crate) mod string_literal_expression;
 pub(crate) mod super_expression;
-pub(crate) mod template_chunk_element;
-pub(crate) mod template_element;
 pub(crate) mod template_expression;
 pub(crate) mod this_expression;
 pub(crate) mod unary_expression;

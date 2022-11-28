@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use crate::ts::bogus::bogus_type::FormatTsBogusType;
-use crate::ts::expressions::template_literal_type::FormatTsTemplateLiteralType;
 use crate::ts::module::import_type::FormatTsImportType;
 use crate::ts::types::any_type::FormatTsAnyType;
 use crate::ts::types::array_type::FormatTsArrayType;
@@ -26,6 +25,7 @@ use crate::ts::types::reference_type::FormatTsReferenceType;
 use crate::ts::types::string_literal_type::FormatTsStringLiteralType;
 use crate::ts::types::string_type::FormatTsStringType;
 use crate::ts::types::symbol_type::FormatTsSymbolType;
+use crate::ts::types::template_literal_type::FormatTsTemplateLiteralType;
 use crate::ts::types::this_type::FormatTsThisType;
 use crate::ts::types::tuple_type::FormatTsTupleType;
 use crate::ts::types::type_operator_type::FormatTsTypeOperatorType;

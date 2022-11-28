@@ -2949,7 +2949,7 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTypeArguments {
     }
 }
 impl FormatRule<rome_js_syntax::JsTemplateChunkElement>
-    for crate::js::expressions::template_chunk_element::FormatJsTemplateChunkElement
+    for crate::js::auxiliary::template_chunk_element::FormatJsTemplateChunkElement
 {
     type Context = JsFormatContext;
     #[inline(always)]
@@ -2965,29 +2965,29 @@ impl AsFormat<JsFormatContext> for rome_js_syntax::JsTemplateChunkElement {
     type Format<'a> = FormatRefWithRule<
         'a,
         rome_js_syntax::JsTemplateChunkElement,
-        crate::js::expressions::template_chunk_element::FormatJsTemplateChunkElement,
+        crate::js::auxiliary::template_chunk_element::FormatJsTemplateChunkElement,
     >;
     fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
-            crate::js::expressions::template_chunk_element::FormatJsTemplateChunkElement::default(),
+            crate::js::auxiliary::template_chunk_element::FormatJsTemplateChunkElement::default(),
         )
     }
 }
 impl IntoFormat<JsFormatContext> for rome_js_syntax::JsTemplateChunkElement {
     type Format = FormatOwnedWithRule<
         rome_js_syntax::JsTemplateChunkElement,
-        crate::js::expressions::template_chunk_element::FormatJsTemplateChunkElement,
+        crate::js::auxiliary::template_chunk_element::FormatJsTemplateChunkElement,
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule::new(
             self,
-            crate::js::expressions::template_chunk_element::FormatJsTemplateChunkElement::default(),
+            crate::js::auxiliary::template_chunk_element::FormatJsTemplateChunkElement::default(),
         )
     }
 }
 impl FormatRule<rome_js_syntax::JsTemplateElement>
-    for crate::js::expressions::template_element::FormatJsTemplateElement
+    for crate::js::auxiliary::template_element::FormatJsTemplateElement
 {
     type Context = JsFormatContext;
     #[inline(always)]
@@ -3003,24 +3003,24 @@ impl AsFormat<JsFormatContext> for rome_js_syntax::JsTemplateElement {
     type Format<'a> = FormatRefWithRule<
         'a,
         rome_js_syntax::JsTemplateElement,
-        crate::js::expressions::template_element::FormatJsTemplateElement,
+        crate::js::auxiliary::template_element::FormatJsTemplateElement,
     >;
     fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
-            crate::js::expressions::template_element::FormatJsTemplateElement::default(),
+            crate::js::auxiliary::template_element::FormatJsTemplateElement::default(),
         )
     }
 }
 impl IntoFormat<JsFormatContext> for rome_js_syntax::JsTemplateElement {
     type Format = FormatOwnedWithRule<
         rome_js_syntax::JsTemplateElement,
-        crate::js::expressions::template_element::FormatJsTemplateElement,
+        crate::js::auxiliary::template_element::FormatJsTemplateElement,
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule::new(
             self,
-            crate::js::expressions::template_element::FormatJsTemplateElement::default(),
+            crate::js::auxiliary::template_element::FormatJsTemplateElement::default(),
         )
     }
 }
@@ -7589,7 +7589,7 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::TsBooleanLiteralType {
     }
 }
 impl FormatRule<rome_js_syntax::TsTemplateLiteralType>
-    for crate::ts::expressions::template_literal_type::FormatTsTemplateLiteralType
+    for crate::ts::types::template_literal_type::FormatTsTemplateLiteralType
 {
     type Context = JsFormatContext;
     #[inline(always)]
@@ -7605,24 +7605,24 @@ impl AsFormat<JsFormatContext> for rome_js_syntax::TsTemplateLiteralType {
     type Format<'a> = FormatRefWithRule<
         'a,
         rome_js_syntax::TsTemplateLiteralType,
-        crate::ts::expressions::template_literal_type::FormatTsTemplateLiteralType,
+        crate::ts::types::template_literal_type::FormatTsTemplateLiteralType,
     >;
     fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
-            crate::ts::expressions::template_literal_type::FormatTsTemplateLiteralType::default(),
+            crate::ts::types::template_literal_type::FormatTsTemplateLiteralType::default(),
         )
     }
 }
 impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTemplateLiteralType {
     type Format = FormatOwnedWithRule<
         rome_js_syntax::TsTemplateLiteralType,
-        crate::ts::expressions::template_literal_type::FormatTsTemplateLiteralType,
+        crate::ts::types::template_literal_type::FormatTsTemplateLiteralType,
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule::new(
             self,
-            crate::ts::expressions::template_literal_type::FormatTsTemplateLiteralType::default(),
+            crate::ts::types::template_literal_type::FormatTsTemplateLiteralType::default(),
         )
     }
 }
@@ -8792,7 +8792,7 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::TsOptionalTupleTypeElement 
     }
 }
 impl FormatRule<rome_js_syntax::TsTemplateChunkElement>
-    for crate::ts::expressions::template_chunk_element::FormatTsTemplateChunkElement
+    for crate::ts::auxiliary::template_chunk_element::FormatTsTemplateChunkElement
 {
     type Context = JsFormatContext;
     #[inline(always)]
@@ -8808,29 +8808,29 @@ impl AsFormat<JsFormatContext> for rome_js_syntax::TsTemplateChunkElement {
     type Format<'a> = FormatRefWithRule<
         'a,
         rome_js_syntax::TsTemplateChunkElement,
-        crate::ts::expressions::template_chunk_element::FormatTsTemplateChunkElement,
+        crate::ts::auxiliary::template_chunk_element::FormatTsTemplateChunkElement,
     >;
     fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
-            crate::ts::expressions::template_chunk_element::FormatTsTemplateChunkElement::default(),
+            crate::ts::auxiliary::template_chunk_element::FormatTsTemplateChunkElement::default(),
         )
     }
 }
 impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTemplateChunkElement {
     type Format = FormatOwnedWithRule<
         rome_js_syntax::TsTemplateChunkElement,
-        crate::ts::expressions::template_chunk_element::FormatTsTemplateChunkElement,
+        crate::ts::auxiliary::template_chunk_element::FormatTsTemplateChunkElement,
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule::new(
             self,
-            crate::ts::expressions::template_chunk_element::FormatTsTemplateChunkElement::default(),
+            crate::ts::auxiliary::template_chunk_element::FormatTsTemplateChunkElement::default(),
         )
     }
 }
 impl FormatRule<rome_js_syntax::TsTemplateElement>
-    for crate::ts::expressions::template_element::FormatTsTemplateElement
+    for crate::ts::auxiliary::template_element::FormatTsTemplateElement
 {
     type Context = JsFormatContext;
     #[inline(always)]
@@ -8846,24 +8846,24 @@ impl AsFormat<JsFormatContext> for rome_js_syntax::TsTemplateElement {
     type Format<'a> = FormatRefWithRule<
         'a,
         rome_js_syntax::TsTemplateElement,
-        crate::ts::expressions::template_element::FormatTsTemplateElement,
+        crate::ts::auxiliary::template_element::FormatTsTemplateElement,
     >;
     fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
-            crate::ts::expressions::template_element::FormatTsTemplateElement::default(),
+            crate::ts::auxiliary::template_element::FormatTsTemplateElement::default(),
         )
     }
 }
 impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTemplateElement {
     type Format = FormatOwnedWithRule<
         rome_js_syntax::TsTemplateElement,
-        crate::ts::expressions::template_element::FormatTsTemplateElement,
+        crate::ts::auxiliary::template_element::FormatTsTemplateElement,
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule::new(
             self,
-            crate::ts::expressions::template_element::FormatTsTemplateElement::default(),
+            crate::ts::auxiliary::template_element::FormatTsTemplateElement::default(),
         )
     }
 }

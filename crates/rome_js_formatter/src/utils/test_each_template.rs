@@ -1,4 +1,4 @@
-use crate::js::expressions::template_element::TemplateElementOptions;
+use crate::js::auxiliary::template_element::TemplateElementOptions;
 use crate::js::lists::template_element_list::{TemplateElementIndention, TemplateElementLayout};
 use crate::prelude::*;
 use rome_formatter::printer::Printer;

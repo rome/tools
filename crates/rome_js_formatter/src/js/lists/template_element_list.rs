@@ -1,6 +1,6 @@
 use crate::context::TabWidth;
-use crate::js::expressions::template_chunk_element::AnyTemplateChunkElement;
-use crate::js::expressions::template_element::{AnyTemplateElement, TemplateElementOptions};
+use crate::js::auxiliary::template_chunk_element::AnyTemplateChunkElement;
+use crate::js::auxiliary::template_element::{AnyTemplateElement, TemplateElementOptions};
 use crate::prelude::*;
 use crate::utils::test_each_template::EachTemplateTable;
 use rome_formatter::FormatRuleWithOptions;
