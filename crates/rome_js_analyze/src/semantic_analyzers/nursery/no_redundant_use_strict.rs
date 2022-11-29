@@ -39,10 +39,9 @@ impl Rule for NoRedundantUseStrict {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        let check_use_strict_directive = |node: &JsDirective| {
-            node.value_token()
-                .and_then(|v| Ok(v.text_trimmed().to_owned()))
-        };
+        let check_use_strict_directive =
+            |node: &JsDirective| node.value_token().map(|v| v.text_trimmed().to_owned());
+
         let mut use_strict_vec = vec![];
         for n in node.syntax().descendants() {
             if let Some(js_directive) = JsDirective::cast(n) {
