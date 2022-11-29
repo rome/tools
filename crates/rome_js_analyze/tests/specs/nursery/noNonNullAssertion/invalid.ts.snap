@@ -22,6 +22,8 @@ x!?.y.z;
 x!!!?.y.z;
 x.y.z!?.();
 x.y.z!!!?.();
+(b! as number) = "test";
+(b!! as number) = "test";
 
 ```
 
@@ -35,9 +37,6 @@ invalid.ts:1:1 lint/nursery/noNonNullAssertion ━━━━━━━━━━━
       │ ^^
     2 │ x!.y;
     3 │ x.y!;
-  
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
   
 
 ```
@@ -53,10 +52,7 @@ invalid.ts:2:1 lint/nursery/noNonNullAssertion  FIXABLE  ━━━━━━━�
     3 │ x.y!;
     4 │ !x!.y;
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
-  i Suggested fix: Replace with optional chain operator ?.
+  i Suggested fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
   
      1  1 │   x!;
      2    │ - x!.y;
@@ -79,9 +75,6 @@ invalid.ts:3:1 lint/nursery/noNonNullAssertion ━━━━━━━━━━━
     4 │ !x!.y;
     5 │ x!.y?.z;
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
 
 ```
 
@@ -97,10 +90,7 @@ invalid.ts:4:2 lint/nursery/noNonNullAssertion  FIXABLE  ━━━━━━━�
     5 │ x!.y?.z;
     6 │ x![y];
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
-  i Suggested fix: Replace with optional chain operator ?.
+  i Suggested fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
   
      2  2 │   x!.y;
      3  3 │   x.y!;
@@ -124,10 +114,7 @@ invalid.ts:5:1 lint/nursery/noNonNullAssertion  FIXABLE  ━━━━━━━�
     6 │ x![y];
     7 │ x![y]?.z;
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
-  i Suggested fix: Replace with optional chain operator ?.
+  i Suggested fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
   
      3  3 │   x.y!;
      4  4 │   !x!.y;
@@ -151,10 +138,7 @@ invalid.ts:6:1 lint/nursery/noNonNullAssertion  FIXABLE  ━━━━━━━�
     7 │ x![y]?.z;
     8 │ x.y.z!();
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
-  i Suggested fix: Replace with optional chain operator ?.
+  i Suggested fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
   
      4  4 │   !x!.y;
      5  5 │   x!.y?.z;
@@ -178,10 +162,7 @@ invalid.ts:7:1 lint/nursery/noNonNullAssertion  FIXABLE  ━━━━━━━�
     8 │ x.y.z!();
     9 │ x.y?.z!();
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
-  i Suggested fix: Replace with optional chain operator ?.
+  i Suggested fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
   
      5  5 │   x!.y?.z;
      6  6 │   x![y];
@@ -205,10 +186,7 @@ invalid.ts:8:1 lint/nursery/noNonNullAssertion  FIXABLE  ━━━━━━━�
      9 │ x.y?.z!();
     10 │ x!!!;
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
-  i Suggested fix: Replace with optional chain operator ?.
+  i Suggested fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
   
      6  6 │   x![y];
      7  7 │   x![y]?.z;
@@ -232,10 +210,7 @@ invalid.ts:9:1 lint/nursery/noNonNullAssertion  FIXABLE  ━━━━━━━�
     10 │ x!!!;
     11 │ x!!.y;
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
-  i Suggested fix: Replace with optional chain operator ?.
+  i Suggested fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
   
      7  7 │   x![y]?.z;
      8  8 │   x.y.z!();
@@ -259,9 +234,6 @@ invalid.ts:10:1 lint/nursery/noNonNullAssertion ━━━━━━━━━━�
     11 │ x!!.y;
     12 │ x.y!!;
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
 
 ```
 
@@ -277,10 +249,7 @@ invalid.ts:11:1 lint/nursery/noNonNullAssertion  FIXABLE  ━━━━━━━�
     12 │ x.y!!;
     13 │ x.y.z!!();
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
-  i Suggested fix: Replace with optional chain operator ?.
+  i Suggested fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
   
      9  9 │   x.y?.z!();
     10 10 │   x!!!;
@@ -304,9 +273,6 @@ invalid.ts:12:1 lint/nursery/noNonNullAssertion ━━━━━━━━━━�
     13 │ x.y.z!!();
     14 │ x!?.[y].z;
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
 
 ```
 
@@ -322,10 +288,7 @@ invalid.ts:13:1 lint/nursery/noNonNullAssertion  FIXABLE  ━━━━━━━�
     14 │ x!?.[y].z;
     15 │ x!?.y.z;
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
-  i Suggested fix: Replace with optional chain operator ?.
+  i Suggested fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
   
     11 11 │   x!!.y;
     12 12 │   x.y!!;
@@ -349,10 +312,7 @@ invalid.ts:14:1 lint/nursery/noNonNullAssertion  FIXABLE  ━━━━━━━�
     15 │ x!?.y.z;
     16 │ x!!!?.y.z;
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
-  i Suggested fix: Replace with optional chain operator ?.
+  i Suggested fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
   
     14 │ x!?.[y].z;
        │  -        
@@ -371,10 +331,7 @@ invalid.ts:15:1 lint/nursery/noNonNullAssertion  FIXABLE  ━━━━━━━�
     16 │ x!!!?.y.z;
     17 │ x.y.z!?.();
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
-  i Suggested fix: Replace with optional chain operator ?.
+  i Suggested fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
   
     15 │ x!?.y.z;
        │  -      
@@ -393,10 +350,7 @@ invalid.ts:16:1 lint/nursery/noNonNullAssertion  FIXABLE  ━━━━━━━�
     17 │ x.y.z!?.();
     18 │ x.y.z!!!?.();
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
-  i Suggested fix: Replace with optional chain operator ?.
+  i Suggested fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
   
     16 │ x!!!?.y.z;
        │  ---      
@@ -413,12 +367,9 @@ invalid.ts:17:1 lint/nursery/noNonNullAssertion  FIXABLE  ━━━━━━━�
   > 17 │ x.y.z!?.();
        │ ^^^^^^
     18 │ x.y.z!!!?.();
-    19 │ 
+    19 │ (b! as number) = "test";
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
-  i Suggested fix: Replace with optional chain operator ?.
+  i Suggested fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
   
     17 │ x.y.z!?.();
        │      -     
@@ -434,15 +385,42 @@ invalid.ts:18:1 lint/nursery/noNonNullAssertion  FIXABLE  ━━━━━━━�
     17 │ x.y.z!?.();
   > 18 │ x.y.z!!!?.();
        │ ^^^^^^^^
-    19 │ 
+    19 │ (b! as number) = "test";
+    20 │ (b!! as number) = "test";
   
-  i Consider using the optional chain operator ?. instead. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator.
-                        
-  
-  i Suggested fix: Replace with optional chain operator ?.
+  i Suggested fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
   
     18 │ x.y.z!!!?.();
        │      ---     
+
+```
+
+```
+invalid.ts:19:2 lint/nursery/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    17 │ x.y.z!?.();
+    18 │ x.y.z!!!?.();
+  > 19 │ (b! as number) = "test";
+       │  ^^
+    20 │ (b!! as number) = "test";
+    21 │ 
+  
+
+```
+
+```
+invalid.ts:20:2 lint/nursery/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    18 │ x.y.z!!!?.();
+    19 │ (b! as number) = "test";
+  > 20 │ (b!! as number) = "test";
+       │  ^^^
+    21 │ 
+  
 
 ```
 
