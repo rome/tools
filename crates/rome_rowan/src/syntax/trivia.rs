@@ -391,7 +391,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
     /// let pieces: Vec<_> = node.first_leading_trivia().unwrap().pieces().collect();
     /// assert!(pieces[2].is_comments())
     /// ```
-    pub fn is_comments(&self) -> bool {
+    pub const fn is_comments(&self) -> bool {
         matches!(
             self.trivia.kind,
             TriviaPieceKind::SingleLineComment | TriviaPieceKind::MultiLineComment

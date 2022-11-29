@@ -226,10 +226,8 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"const foo = `
-text
-${a == b}
-`;
+        const SOURCE: &str = r#"// existing comment
+a == b
 
         "#;
 

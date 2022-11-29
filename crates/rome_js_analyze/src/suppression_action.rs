@@ -1,5 +1,6 @@
 use crate::utils::batch::JsBatchMutation;
 use rome_analyze::SuppressionCommentEmitterPayload;
+use rome_js_factory::make;
 use rome_js_factory::make::{jsx_expression_child, token};
 use rome_js_syntax::jsx_ext::AnyJsxElement;
 use rome_js_syntax::{
@@ -28,14 +29,15 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
     // considering that our suppression system works via lines, we need to look for the first newline,
     // so we can place the comment there
     let first_token_with_newline = original_token.as_ref().map(|original_token| {
-        match find_fist_token_with_newline(original_token.clone()) {
+        match find_first_token_with_newline(original_token.clone()) {
             None => (original_token.clone(), false),
             Some(token) => token,
         }
     });
 
-    if let Some((first_token_with_newline, is_at_root)) = first_token_with_newline {
-        dbg!(&first_token_with_newline);
+    if let Some((first_token_with_newline, should_insert_leading_newline)) =
+        first_token_with_newline
+    {
         // we check if the token that has the newline is inside a JSX element: JsxOpeningElement or JsxSelfClosingElement
         let current_jsx_element = first_token_with_newline.parent().and_then(|parent| {
             if AnyJsxElement::can_cast(parent.kind()) || JsxText::can_cast(parent.kind()) {
@@ -88,8 +90,9 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
                     );
                 }
             } else {
-                let new_token = if !is_at_root {
-                    first_token_with_newline.with_leading_trivia([
+                let mut new_token = first_token_with_newline.clone();
+                if !should_insert_leading_newline {
+                    new_token = new_token.with_leading_trivia([
                         (TriviaPieceKind::Newline, "\n"),
                         (
                             TriviaPieceKind::SingleLineComment,
@@ -98,7 +101,7 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
                         (TriviaPieceKind::Newline, "\n"),
                     ])
                 } else {
-                    first_token_with_newline.with_leading_trivia([
+                    new_token = new_token.with_leading_trivia([
                         (
                             TriviaPieceKind::SingleLineComment,
                             format!("// {}: suppressed ", suppression_text).as_str(),
@@ -109,8 +112,9 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
                 mutation.replace_token_transfer_trivia(first_token_with_newline, new_token);
             }
         } else {
-            let new_token = if !is_at_root {
-                first_token_with_newline.with_leading_trivia([
+            let mut new_token = first_token_with_newline.clone();
+            if !should_insert_leading_newline {
+                new_token = new_token.with_leading_trivia([
                     (TriviaPieceKind::Newline, "\n"),
                     (
                         TriviaPieceKind::SingleLineComment,
@@ -119,7 +123,7 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
                     (TriviaPieceKind::Newline, "\n"),
                 ])
             } else {
-                first_token_with_newline.with_leading_trivia([
+                new_token = new_token.with_leading_trivia([
                     (
                         TriviaPieceKind::SingleLineComment,
                         format!("// {}: suppressed ", suppression_text).as_str(),
@@ -140,13 +144,14 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
 ///
 /// Due to the nature of JavaScript templates, we also check if the tokens we browse are
 /// `${` and if so, we stop there.
-fn find_fist_token_with_newline(token: JsSyntaxToken) -> Option<(JsSyntaxToken, bool)> {
+fn find_first_token_with_newline(token: JsSyntaxToken) -> Option<(JsSyntaxToken, bool)> {
     let mut current_token = token;
-    let mut is_at_root = false;
+    let mut should_insert_leading_newline = false;
     loop {
         let trivia = current_token.leading_trivia();
         if trivia.pieces().any(|trivia| trivia.is_newline())
             || current_token.text_trimmed().contains('\n')
+            || current_token.text_trimmed().contains("\r\n")
         {
             break;
         } else if matches!(current_token.kind(), JsSyntaxKind::DOLLAR_CURLY)
@@ -174,7 +179,7 @@ fn find_fist_token_with_newline(token: JsSyntaxToken) -> Option<(JsSyntaxToken, 
             // This happens when we reached the root of a CST, and we can't get new tokens.
             // When this happens, we bail.
             if current_token == parent_token {
-                is_at_root = true;
+                should_insert_leading_newline = true;
                 break;
             }
             current_token = parent_token;
@@ -182,8 +187,16 @@ fn find_fist_token_with_newline(token: JsSyntaxToken) -> Option<(JsSyntaxToken, 
             return None;
         }
     }
-
-    Some((current_token, is_at_root))
+    // If the flag has been set to `true`, it means we are at the beginning of the file.
+    if should_insert_leading_newline == false {
+        // Still, if there's a a multiline comment, we want to try to attach the suppression comment
+        // to the existing multiline comment without newlines.
+        should_insert_leading_newline = current_token
+            .leading_trivia()
+            .pieces()
+            .all(|piece| !piece.kind().is_multiline_comment());
+    }
+    Some((current_token, should_insert_leading_newline))
 }
 
 /// This function peeks the token from a given offset and the range of the emitted diagnostic.

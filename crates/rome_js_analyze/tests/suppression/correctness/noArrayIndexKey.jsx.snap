@@ -55,11 +55,10 @@ noArrayIndexKey.jsx:4:22 lint/correctness/noArrayIndexKey  FIXABLE  ━━━━
      2  2 │   
      3  3 │   something.forEach((Element, index) => {
      4    │ - ····return·<div·key={index}>foo</div>;
-        4 │ + ····
-        5 │ + //·rome-ignore·lint/correctness/noArrayIndexKey:·suppressed·
-        6 │ + return··<div·key={index}>foo</div>;
-     5  7 │   });
-     6  8 │   
+        4 │ + ····//·rome-ignore·lint/correctness/noArrayIndexKey:·suppressed·
+        5 │ + return··<div·key={index}>foo</div>;
+     5  6 │   });
+     6  7 │   
   
 
 ```
@@ -93,10 +92,9 @@ noArrayIndexKey.jsx:7:49 lint/correctness/noArrayIndexKey  FIXABLE  ━━━━
   
      5  5 │   });
      6  6 │   
-        7 │ + 
-        8 │ + //·rome-ignore·lint/correctness/noArrayIndexKey:·suppressed·
-     7  9 │   something.forEach((Element, index) => <div key={index}>foo</div>);
-     8 10 │   
+        7 │ + //·rome-ignore·lint/correctness/noArrayIndexKey:·suppressed·
+     7  8 │   something.forEach((Element, index) => <div key={index}>foo</div>);
+     8  9 │   
   
 
 ```
@@ -169,11 +167,10 @@ noArrayIndexKey.jsx:17:20 lint/correctness/noArrayIndexKey  FIXABLE  ━━━�
     15 15 │   something.forEach((Element, index) => {
     16 16 │       return <List
     17    │ - ········><div·key={index}>foo</div>
-       17 │ + ········
-       18 │ + //·rome-ignore·lint/correctness/noArrayIndexKey:·suppressed·
-       19 │ + ><div·key={index}>foo</div>
-    18 20 │       </List>;
-    19 21 │   });
+       17 │ + ········//·rome-ignore·lint/correctness/noArrayIndexKey:·suppressed·
+       18 │ + ><div·key={index}>foo</div>
+    18 19 │       </List>;
+    19 20 │   });
   
 
 ```

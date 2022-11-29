@@ -8,6 +8,9 @@ const foo = `
 text
 ${a == b}
 `;
+
+// existing comment
+a == b
 ```
 
 # Diagnostics
@@ -21,6 +24,7 @@ noDoubleEquals.js:3:5 lint/correctness/noDoubleEquals  FIXABLE  ━━━━━�
   > 3 │ ${a == b}
       │     ^^
     4 │ `;
+    5 │ 
   
   i == is only allowed when comparing against null
   
@@ -29,6 +33,7 @@ noDoubleEquals.js:3:5 lint/correctness/noDoubleEquals  FIXABLE  ━━━━━�
   > 3 │ ${a == b}
       │     ^^
     4 │ `;
+    5 │ 
   
   i Using === may be unsafe if you are relying on type coercion
   
@@ -37,10 +42,38 @@ noDoubleEquals.js:3:5 lint/correctness/noDoubleEquals  FIXABLE  ━━━━━�
     1 1 │   const foo = `
     2 2 │   text
     3   │ - ${a·==·b}
-      3 │ + ${
-      4 │ + //·rome-ignore·lint/correctness/noDoubleEquals:·suppressed·
-      5 │ + a··==·b}
-    4 6 │   `;
+      3 │ + ${//·rome-ignore·lint/correctness/noDoubleEquals:·suppressed·
+      4 │ + a··==·b}
+    4 5 │   `;
+    5 6 │   
+  
+
+```
+
+```
+noDoubleEquals.js:7:3 lint/correctness/noDoubleEquals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use === instead of ==
+  
+    6 │ // existing comment
+  > 7 │ a == b
+      │   ^^
+  
+  i == is only allowed when comparing against null
+  
+    6 │ // existing comment
+  > 7 │ a == b
+      │   ^^
+  
+  i Using === may be unsafe if you are relying on type coercion
+  
+  i Safe fix: Suppress rule lint/correctness/noDoubleEquals
+  
+    5 5 │   
+    6 6 │   // existing comment
+    7   │ - a·==·b
+      7 │ + //·rome-ignore·lint/correctness/noDoubleEquals:·suppressed·
+      8 │ + a··==·b
   
 
 ```

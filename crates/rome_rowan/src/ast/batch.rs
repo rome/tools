@@ -235,7 +235,6 @@ where
             prev_token.trailing_trivia().pieces(),
             next_token.trailing_trivia().pieces(),
         );
-
         let new_token = next_token
             .with_leading_trivia_pieces(leading_trivia)
             .with_trailing_trivia_pieces(trailing_trivia);
