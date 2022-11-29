@@ -226,8 +226,7 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"// existing comment
-a == b
+        const SOURCE: &str = r#"export type Invalid<S extends number> = `Hello ${T}`
 
         "#;
 
@@ -235,7 +234,7 @@ a == b
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
-        let rule_filter = RuleFilter::Rule("correctness", "noDoubleEquals");
+        let rule_filter = RuleFilter::Rule("correctness", "noUndeclaredVariables");
         analyze(
             FileId::zero(),
             &parsed.tree(),

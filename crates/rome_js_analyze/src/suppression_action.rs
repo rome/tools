@@ -1,6 +1,5 @@
 use crate::utils::batch::JsBatchMutation;
 use rome_analyze::SuppressionCommentEmitterPayload;
-use rome_js_factory::make;
 use rome_js_factory::make::{jsx_expression_child, token};
 use rome_js_syntax::jsx_ext::AnyJsxElement;
 use rome_js_syntax::{
@@ -169,22 +168,9 @@ fn find_first_token_with_newline(token: JsSyntaxToken) -> Option<(JsSyntaxToken,
         } else if let Some(token) = current_token.prev_token() {
             current_token = token;
             continue;
-        } else if let Some(parent_token) = current_token
-            // Calling the parent on a token returns the node where the token belongs to.
-            // We try to call parent again, and we peek the first token
-            .parent()
-            .and_then(|p| p.parent())
-            .and_then(|p| p.first_token())
-        {
-            // This happens when we reached the root of a CST, and we can't get new tokens.
-            // When this happens, we bail.
-            if current_token == parent_token {
-                should_insert_leading_newline = true;
-                break;
-            }
-            current_token = parent_token;
         } else {
-            return None;
+            should_insert_leading_newline = true;
+            break;
         }
     }
     // If the flag has been set to `true`, it means we are at the beginning of the file.
