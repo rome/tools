@@ -22,7 +22,7 @@ rome_js_analyze = { path = "../../crates/rome_js_analyze"}
 
 pico-args = { version = "0.5.0", features=["eq-separator"] }
 timing = "0.2.3"
-criterion = "0.3.5"
+criterion = "0.4.0"
 regex = "1.5.5"
 ureq = "2.4.0"
 url = "2.2.2"
