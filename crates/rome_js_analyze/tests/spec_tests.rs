@@ -312,7 +312,6 @@ pub(crate) fn run_suppression_test(input: &'static str, _: &str, _: &str, _: &st
         ..AnalysisFilter::default()
     };
 
-    dbg!(&rule_filter);
     let mut snapshot = String::new();
     write_analysis_to_snapshot(
         &mut snapshot,
