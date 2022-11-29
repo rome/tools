@@ -7,18 +7,25 @@ use rome_rowan::{AstNode, BatchMutationExt};
 use crate::{semantic_services::Semantic, JsRuleAction};
 
 declare_rule! {
- /// Promotes the use of awesome tricks
+ /// Prevents from having redundant \"use strict\"
  ///
  /// ## Examples
  ///
  /// ### Invalid
  /// "use strict";
- /// function test() {
+ /// function foo() {
  ///  	"use strict";
  /// }
+ ///
+ /// ### valid
+ /// "use strict";
+ /// function foo() {
+ ///
+ /// }
+ ///
 
  pub(crate) NoRedundantUseStrict {
-     version: "0.10.0",
+     version: "11.0.0",
      name: "NoRedundantUseStrict",
      recommended: false,
     }
