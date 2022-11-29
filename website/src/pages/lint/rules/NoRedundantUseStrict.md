@@ -19,7 +19,17 @@ function foo() {
 ### valid
 
 "use strict";
+
 function foo() {
 
+}
+
+### valid
+
+function foo() {
+"use strict";
+}
+function bar() {
+"use strict";
 }
 
