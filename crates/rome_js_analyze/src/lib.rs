@@ -68,8 +68,6 @@ impl<'a, L: rome_rowan::Language + Default> rome_analyze::RegistryVisitor<L>
         <R::Query as rome_analyze::Queryable>::Output: Clone,
     {
         let rule_key = rome_analyze::RuleKey::rule::<R>();
-        dbg!(&rule_key);
-
         let options = if let Some(options) = self.options.configuration.rules.get_rule(&rule_key) {
             let value = options.value();
             match <R::Options as DeserializableRuleOptions>::try_from(value.clone()) {
