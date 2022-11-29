@@ -226,11 +226,10 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"something.forEach((Element, index) => {
-    return <List
-        ><div key={index}>foo</div>
-    </List>;
-});
+        const SOURCE: &str = r#"const foo = `
+text
+${a == b}
+`;
 
         "#;
 
@@ -238,7 +237,7 @@ mod tests {
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
-        let rule_filter = RuleFilter::Rule("correctness", "noArrayIndexKey");
+        let rule_filter = RuleFilter::Rule("correctness", "noDoubleEquals");
         analyze(
             FileId::zero(),
             &parsed.tree(),

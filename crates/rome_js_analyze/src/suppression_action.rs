@@ -3,8 +3,8 @@ use rome_analyze::SuppressionCommentEmitterPayload;
 use rome_js_factory::make::{jsx_expression_child, token};
 use rome_js_syntax::jsx_ext::AnyJsxElement;
 use rome_js_syntax::{
-    AnyJsxChild, JsLanguage, JsSyntaxToken, JsxChildList, JsxElement, JsxOpeningElement,
-    JsxSelfClosingElement, JsxText, TextRange, T,
+    AnyJsxChild, JsLanguage, JsSyntaxKind, JsSyntaxToken, JsTemplateElement, JsxChildList,
+    JsxElement, JsxOpeningElement, JsxSelfClosingElement, JsxText, TextRange, T,
 };
 use rome_rowan::{AstNode, AstNodeExt, TokenAtOffset, TriviaPieceKind};
 
@@ -35,6 +35,7 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
     });
 
     if let Some((first_token_with_newline, is_at_root)) = first_token_with_newline {
+        dbg!(&first_token_with_newline);
         // we check if the token that has the newline is inside a JSX element: JsxOpeningElement or JsxSelfClosingElement
         let current_jsx_element = first_token_with_newline.parent().and_then(|parent| {
             if AnyJsxElement::can_cast(parent.kind()) || JsxText::can_cast(parent.kind()) {
@@ -136,6 +137,9 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
 ///
 /// Due to the nature of JSX, sometimes the current token might contain text that contains
 /// some newline. In case that happens, we choose that token.
+///
+/// Due to the nature of JavaScript templates, we also check if the tokens we browse are
+/// `${` and if so, we stop there.
 fn find_fist_token_with_newline(token: JsSyntaxToken) -> Option<(JsSyntaxToken, bool)> {
     let mut current_token = token;
     let mut is_at_root = false;
@@ -145,6 +149,18 @@ fn find_fist_token_with_newline(token: JsSyntaxToken) -> Option<(JsSyntaxToken, 
             || current_token.text_trimmed().contains('\n')
         {
             break;
+        } else if matches!(current_token.kind(), JsSyntaxKind::DOLLAR_CURLY)
+            && current_token
+                .parent()
+                .map(|p| JsTemplateElement::can_cast(p.kind()))
+                .unwrap_or_default()
+        {
+            if let Some(next_token) = current_token.next_token() {
+                current_token = next_token;
+                break;
+            } else {
+                continue;
+            }
         } else if let Some(token) = current_token.prev_token() {
             current_token = token;
             continue;
