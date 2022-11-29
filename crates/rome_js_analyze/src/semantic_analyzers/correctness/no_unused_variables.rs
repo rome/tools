@@ -114,11 +114,11 @@ pub enum SuggestedFix {
     PrefixUnderscore,
 }
 
-fn is_ok_to_be_unused(parent_function: Option<JsAnyParameterParentFunction>) -> bool {
+fn is_function_that_is_ok_parameter_not_be_used(parent_function: Option<JsAnyParameterParentFunction>) -> bool {
     matches!(
         parent_function,
         Some(
-            // bindings in signatures are ok to not be  used
+            // bindings in signatures are ok to not be used
             JsAnyParameterParentFunction::TsMethodSignatureClassMember(_)
             | JsAnyParameterParentFunction::TsCallSignatureTypeMember(_)
             | JsAnyParameterParentFunction::TsConstructSignatureTypeMember(_)
@@ -134,13 +134,12 @@ fn is_ok_to_be_unused(parent_function: Option<JsAnyParameterParentFunction>) -> 
     )
 }
 
-fn is_public_or_private(parameter: TsPropertyParameter) -> Option<bool> {
+fn is_property_parameter_ok_not_be_used(parameter: TsPropertyParameter) -> Option<bool> {
     for modifier in parameter.modifiers() {
         if let Some(modifier) = modifier.as_ts_accessibility_modifier() {
             match modifier.modifier_token().ok()?.kind() {
-                // which modifiers are ok to not be used
+                // modifiers that are ok to not be used
                 JsSyntaxKind::PRIVATE_KW | JsSyntaxKind::PUBLIC_KW => return Some(true),
-                // no modifiers, need to be check further
                 _ => {}
             }
         }
@@ -175,7 +174,8 @@ fn suggested_fix_if_unused(binding: &AnyJsIdentifierBinding) -> Option<Suggested
         // Some parameters are ok to not be used
         AnyJsBindingDeclaration::TsPropertyParameter(parameter) => {
             let is_binding_ok =
-                is_ok_to_be_unused(parameter.parent_function()) || is_public_or_private(parameter)?;
+                is_function_that_is_ok_parameter_not_be_used(parameter.parent_function()) 
+                || is_property_parameter_ok_not_be_used(parameter)?;
             if !is_binding_ok {
                 suggestion_for_binding(binding)
             } else {
@@ -183,7 +183,7 @@ fn suggested_fix_if_unused(binding: &AnyJsIdentifierBinding) -> Option<Suggested
             }
         }
         AnyJsBindingDeclaration::JsFormalParameter(parameter) => {
-            let is_binding_ok = is_ok_to_be_unused(parameter.parent_function());
+            let is_binding_ok = is_function_that_is_ok_parameter_not_be_used(parameter.parent_function());
             if !is_binding_ok {
                 suggestion_for_binding(binding)
             } else {
@@ -191,7 +191,7 @@ fn suggested_fix_if_unused(binding: &AnyJsIdentifierBinding) -> Option<Suggested
             }
         }
         AnyJsBindingDeclaration::JsRestParameter(parameter) => {
-            let is_binding_ok = is_ok_to_be_unused(parameter.parent_function());
+            let is_binding_ok = is_function_that_is_ok_parameter_not_be_used(parameter.parent_function());
             if !is_binding_ok {
                 suggestion_for_binding(binding)
             } else {
