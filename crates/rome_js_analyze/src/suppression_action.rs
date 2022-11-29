@@ -174,7 +174,7 @@ fn find_first_token_with_newline(token: JsSyntaxToken) -> Option<(JsSyntaxToken,
         }
     }
     // If the flag has been set to `true`, it means we are at the beginning of the file.
-    if should_insert_leading_newline == false {
+    if !should_insert_leading_newline {
         // Still, if there's a a multiline comment, we want to try to attach the suppression comment
         // to the existing multiline comment without newlines.
         should_insert_leading_newline = current_token
