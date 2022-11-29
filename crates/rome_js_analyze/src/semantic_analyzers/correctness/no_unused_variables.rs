@@ -135,12 +135,12 @@ fn is_ok_to_be_unused(parent_function: Option<JsAnyParameterParentFunction>) -> 
 }
 
 fn is_public_or_private(parameter: TsPropertyParameter) -> Option<bool> {
-    for modifier in parameter.modifiers().into_iter() {
+    for modifier in parameter.modifiers() {
         if let Some(modifier) = modifier.as_ts_accessibility_modifier() {
             match modifier.modifier_token().ok()?.kind() {
-                // with modifiers are ok to not be used
+                // which modifiers are ok to not be used
                 JsSyntaxKind::PRIVATE_KW | JsSyntaxKind::PUBLIC_KW => return Some(true),
-                // no midifiers, need to be check further
+                // no modifiers, need to be check further
                 _ => {}
             }
         }
@@ -169,7 +169,6 @@ fn suggested_fix_if_unused(binding: &JsAnyIdentifierBinding) -> Option<Suggested
         // ok to not be used
         JsAnyBindingDeclaration::TsIndexSignatureParameter(_)
         | JsAnyBindingDeclaration::TsDeclareFunctionDeclaration(_)
-        | JsAnyBindingDeclaration::TsTypeAliasDeclaration(_)
         | JsAnyBindingDeclaration::JsClassExpression(_)
         | JsAnyBindingDeclaration::JsFunctionExpression(_) => None,
 
@@ -209,17 +208,12 @@ fn suggested_fix_if_unused(binding: &JsAnyIdentifierBinding) -> Option<Suggested
                 None
             }
         }
-        node @ JsAnyBindingDeclaration::JsClassDeclaration(_)
+        node @ JsAnyBindingDeclaration::TsTypeAliasDeclaration(_)
+        | node @ JsAnyBindingDeclaration::JsClassDeclaration(_)
         | node @ JsAnyBindingDeclaration::JsFunctionDeclaration(_)
         | node @ JsAnyBindingDeclaration::TsInterfaceDeclaration(_)
-        | node @ JsAnyBindingDeclaration::TsEnumDeclaration(_) => {
-            if is_under_declare(&node.syntax().clone()) {
-                None
-            } else {
-                Some(SuggestedFix::PrefixUnderscore)
-            }
-        }
-        node @ JsAnyBindingDeclaration::TsModuleDeclaration(_)
+        | node @ JsAnyBindingDeclaration::TsEnumDeclaration(_)
+        | node @ JsAnyBindingDeclaration::TsModuleDeclaration(_)
         | node @ JsAnyBindingDeclaration::TsImportEqualsDeclaration(_) => {
             if is_under_declare(&node.syntax().clone()) {
                 None
@@ -229,7 +223,7 @@ fn suggested_fix_if_unused(binding: &JsAnyIdentifierBinding) -> Option<Suggested
         }
 
         // Bindings under unknown parameter are never ok to be unused
-        JsAnyBindingDeclaration::JsUnknownParameter(_) => Some(SuggestedFix::NoSuggestion),
+        JsAnyBindingDeclaration::JsBogusParameter(_) => Some(SuggestedFix::NoSuggestion),
 
         // Bindings under catch are never ok to be unused
         JsAnyBindingDeclaration::JsCatchDeclaration(_) => Some(SuggestedFix::PrefixUnderscore),
@@ -239,7 +233,7 @@ fn suggested_fix_if_unused(binding: &JsAnyIdentifierBinding) -> Option<Suggested
         | JsAnyBindingDeclaration::JsImportNamespaceClause(_)
         | JsAnyBindingDeclaration::JsShorthandNamedImportSpecifier(_)
         | JsAnyBindingDeclaration::JsNamedImportSpecifier(_)
-        | JsAnyBindingDeclaration::JsUnknownNamedImportSpecifier(_)
+        | JsAnyBindingDeclaration::JsBogusNamedImportSpecifier(_)
         | JsAnyBindingDeclaration::JsDefaultImportSpecifier(_)
         | JsAnyBindingDeclaration::JsNamespaceImportSpecifier(_) => {
             Some(SuggestedFix::NoSuggestion)

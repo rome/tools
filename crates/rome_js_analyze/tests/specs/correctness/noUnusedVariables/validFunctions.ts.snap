@@ -23,7 +23,7 @@ add(1, 1);
 
 # Diagnostics
 ```
-validFunctions.ts:2:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+validFunctions.ts:2:10 lint/correctness/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This function is unused.
   
@@ -34,14 +34,6 @@ validFunctions.ts:2:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━
     4 │ 
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-  
-  i Suggested fix: If this is intentional, prepend a with an underscore.
-  
-     1  1 │   // used function declaration
-     2    │ - function·a()·{}
-        2 │ + function·_a()·{}
-     3  3 │   a()
-     4  4 │   
   
 
 ```

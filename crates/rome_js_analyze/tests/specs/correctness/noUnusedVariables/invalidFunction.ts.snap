@@ -45,7 +45,7 @@ try { } catch (e) { }
 
 # Diagnostics
 ```
-invalidFunction.ts:1:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidFunction.ts:1:10 lint/correctness/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This function is unused.
   
@@ -56,18 +56,11 @@ invalidFunction.ts:1:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━�
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: If this is intentional, prepend f1 with an underscore.
-  
-     1    │ - function·f1()·{·}
-        1 │ + function·_f1()·{·}
-     2  2 │   
-     3  3 │   // recursive functions are never called,
-  
 
 ```
 
 ```
-invalidFunction.ts:5:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidFunction.ts:5:10 lint/correctness/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This function is unused.
   
@@ -80,22 +73,11 @@ invalidFunction.ts:5:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━�
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: If this is intentional, prepend f2 with an underscore.
-  
-     3  3 │   // recursive functions are never called,
-     4  4 │   // so they are invalid
-     5    │ - function·f2()·{
-     6    │ - ····f2();
-        5 │ + function·_f2()·{
-        6 │ + ····_f2();
-     7  7 │   }
-     8  8 │   
-  
 
 ```
 
 ```
-invalidFunction.ts:9:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidFunction.ts:9:10 lint/correctness/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This function is unused.
   
@@ -107,18 +89,6 @@ invalidFunction.ts:9:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━�
     11 │         f3();
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-  
-  i Suggested fix: If this is intentional, prepend f3 with an underscore.
-  
-     7  7 │   }
-     8  8 │   
-     9    │ - function·f3()·{
-        9 │ + function·_f3()·{
-    10 10 │       function g() {
-    11    │ - ········f3();
-       11 │ + ········_f3();
-    12 12 │       }
-    13 13 │       g();
   
 
 ```

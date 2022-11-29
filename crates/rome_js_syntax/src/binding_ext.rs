@@ -1,13 +1,13 @@
 use crate::{
-    JsArrowFunctionExpression, JsCatchDeclaration, JsClassDeclaration,
-    JsClassExportDefaultDeclaration, JsClassExpression, JsConstructorClassMember,
-    JsConstructorParameterList, JsConstructorParameters, JsDefaultImportSpecifier,
-    JsFormalParameter, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
-    JsFunctionExpression, JsIdentifierBinding, JsImportDefaultClause, JsImportNamespaceClause,
-    JsMethodClassMember, JsMethodObjectMember, JsNamedImportSpecifier, JsNamespaceImportSpecifier,
-    JsParameterList, JsParameters, JsRestParameter, JsSetterClassMember, JsSetterObjectMember,
-    JsShorthandNamedImportSpecifier, JsSyntaxKind, JsSyntaxNode, JsUnknownNamedImportSpecifier,
-    JsUnknownParameter, JsVariableDeclarator, TsCallSignatureTypeMember,
+    JsArrowFunctionExpression, JsBogusNamedImportSpecifier, JsBogusParameter, JsCatchDeclaration,
+    JsClassDeclaration, JsClassExportDefaultDeclaration, JsClassExpression,
+    JsConstructorClassMember, JsConstructorParameterList, JsConstructorParameters,
+    JsDefaultImportSpecifier, JsFormalParameter, JsFunctionDeclaration,
+    JsFunctionExportDefaultDeclaration, JsFunctionExpression, JsIdentifierBinding,
+    JsImportDefaultClause, JsImportNamespaceClause, JsMethodClassMember, JsMethodObjectMember,
+    JsNamedImportSpecifier, JsNamespaceImportSpecifier, JsParameterList, JsParameters,
+    JsRestParameter, JsSetterClassMember, JsSetterObjectMember, JsShorthandNamedImportSpecifier,
+    JsSyntaxKind, JsSyntaxNode, JsVariableDeclarator, TsCallSignatureTypeMember,
     TsConstructSignatureTypeMember, TsConstructorSignatureClassMember, TsConstructorType,
     TsDeclareFunctionDeclaration, TsDeclareFunctionExportDefaultDeclaration, TsEnumDeclaration,
     TsFunctionType, TsIdentifierBinding, TsImportEqualsDeclaration, TsIndexSignatureClassMember,
@@ -22,7 +22,7 @@ declare_node_union! {
         // variable
             JsVariableDeclarator
         // parameters
-            | JsFormalParameter | JsRestParameter | JsUnknownParameter
+            | JsFormalParameter | JsRestParameter | JsBogusParameter
             | TsIndexSignatureParameter | TsPropertyParameter
         // functions
             | JsFunctionDeclaration | JsFunctionExpression
@@ -32,7 +32,7 @@ declare_node_union! {
             | TsInterfaceDeclaration | TsTypeAliasDeclaration | TsEnumDeclaration | TsModuleDeclaration
         // import
             | JsImportDefaultClause | JsImportNamespaceClause | JsShorthandNamedImportSpecifier
-                | JsNamedImportSpecifier | JsUnknownNamedImportSpecifier | JsDefaultImportSpecifier
+                | JsNamedImportSpecifier | JsBogusNamedImportSpecifier | JsDefaultImportSpecifier
                 | JsNamespaceImportSpecifier
             | TsImportEqualsDeclaration
         // export
