@@ -19,19 +19,13 @@ use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 use rome_rowan::{TextRange, TextSize, TokenAtOffset};
 use tracing::debug;
 
-const JSON_SETTINGS: LanguageSettings<JsonLanguage> = LanguageSettings {
-    formatter: (),
-    linter: (),
-    globals: None,
-};
-
 impl Language for JsonLanguage {
     type FormatterSettings = ();
     type LinterSettings = ();
     type FormatOptions = JsonFormatOptions;
 
-    fn lookup_settings(_: &LanguagesSettings) -> &LanguageSettings<Self> {
-        &JSON_SETTINGS
+    fn lookup_settings(language: &LanguagesSettings) -> &LanguageSettings<Self> {
+        &language.json
     }
 
     fn resolve_format_options(
