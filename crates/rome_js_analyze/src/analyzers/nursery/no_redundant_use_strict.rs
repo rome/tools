@@ -12,39 +12,45 @@ declare_rule! {
  /// ## Examples
  ///
  /// ### Invalid
+ /// ```js,expect_diagnostic
  /// "use strict";
  /// function foo() {
  ///  	"use strict";
  /// }
- ///
- /// ### valid
+ /// ```
+ /// ```js,expect_diagnostic
+ /// "use strict";
  /// "use strict";
  ///
  /// function foo() {
  ///
  /// }
- ///
+ /// ```
  /// ### valid
+ /// ```js
+ /// function foo() {
  ///
+ /// }
+ ///```
+ /// ```js
  ///  function foo() {
  ///     "use strict";
  /// }
  /// function bar() {
  ///     "use strict";
  /// }
- ///
+ ///```
  ///
 
  pub(crate) NoRedundantUseStrict {
      version: "11.0.0",
-     name: "NoRedundantUseStrict",
+     name: "noRedundantUseStrict",
      recommended: false,
     }
 }
 
 pub struct State {
     first: JsDirective,
-    redundant: JsDirective,
 }
 declare_node_union! { AnyNodeWithDirectives = JsFunctionBody | AnyJsRoot }
 
@@ -100,34 +106,31 @@ impl Rule for NoRedundantUseStrict {
             if &outer_most == node {
                 return None;
             }
-            return Some(State {
-                first: outer_most,
-                redundant: (*node).clone(),
-            });
+            return Some(State { first: outer_most });
         }
         None
     }
-    fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let diag = RuleDiagnostic::new(
             rule_category!(),
-            state.first.range(),
+            ctx.query().range(),
             markup! {
-                "Cannot have redundant directive of \"use strict\"."
+                "Cannot have redundant directive of "<Emphasis>{"use strict"}</Emphasis>"."
             },
         )
         .detail(
-            state.redundant.range(),
-            markup! {"This is where the redundant \"use strict\" is declared."},
+            state.first.range(),
+            markup! {"This is where the "<Emphasis>{"use strict"}</Emphasis>" is declared."},
         );
 
         Some(diag)
     }
 
-    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<JsRuleAction> {
         let root = ctx.root();
         let mut batch = root.begin();
 
-        batch.remove_node(state.redundant.clone());
+        batch.remove_node(ctx.query().clone());
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,

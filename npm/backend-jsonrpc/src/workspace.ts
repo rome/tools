@@ -699,7 +699,7 @@ export type Category =
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useAriaPropsForRole"
 	| "lint/nursery/useAriaPropTypes"
-	| "lint/nursery/NoRedundantUseStrict"
+	| "lint/nursery/noRedundantUseStrict"
 	| "files/missingHandler"
 	| "format"
 	| "internalError/io"

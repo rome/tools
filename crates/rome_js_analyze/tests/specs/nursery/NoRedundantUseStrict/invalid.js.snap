@@ -24,22 +24,22 @@ function test() {
 
 # Diagnostics
 ```
-invalid.js:1:1 lint/nursery/NoRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:2:1 lint/nursery/noRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Cannot have redundant directive of "use strict".
-  
-  > 1 │ "use strict";
-      │ ^^^^^^^^^^^^^
-    2 │ "use strict";
-    3 │ 
-  
-  i This is where the redundant "use strict" is declared.
+  ! Cannot have redundant directive of use strict.
   
     1 │ "use strict";
   > 2 │ "use strict";
       │ ^^^^^^^^^^^^^
     3 │ 
     4 │ function test() {
+  
+  i This is where the use strict is declared.
+  
+  > 1 │ "use strict";
+      │ ^^^^^^^^^^^^^
+    2 │ "use strict";
+    3 │ 
   
   i Safe fix: Remove redundant use strict
   
@@ -52,22 +52,22 @@ invalid.js:1:1 lint/nursery/NoRedundantUseStrict  FIXABLE  ━━━━━━━
 ```
 
 ```
-invalid.js:1:1 lint/nursery/NoRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:5:2 lint/nursery/noRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Cannot have redundant directive of "use strict".
-  
-  > 1 │ "use strict";
-      │ ^^^^^^^^^^^^^
-    2 │ "use strict";
-    3 │ 
-  
-  i This is where the redundant "use strict" is declared.
+  ! Cannot have redundant directive of use strict.
   
     4 │ function test() {
   > 5 │ 	"use strict";
       │ 	^^^^^^^^^^^^^
     6 │ 	function inner_a() {
     7 │ 		"use strict"; // redundant directive
+  
+  i This is where the use strict is declared.
+  
+  > 1 │ "use strict";
+      │ ^^^^^^^^^^^^^
+    2 │ "use strict";
+    3 │ 
   
   i Safe fix: Remove redundant use strict
   
@@ -83,16 +83,9 @@ invalid.js:1:1 lint/nursery/NoRedundantUseStrict  FIXABLE  ━━━━━━━
 ```
 
 ```
-invalid.js:1:1 lint/nursery/NoRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:7:3 lint/nursery/noRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Cannot have redundant directive of "use strict".
-  
-  > 1 │ "use strict";
-      │ ^^^^^^^^^^^^^
-    2 │ "use strict";
-    3 │ 
-  
-  i This is where the redundant "use strict" is declared.
+  ! Cannot have redundant directive of use strict.
   
     5 │ 	"use strict";
     6 │ 	function inner_a() {
@@ -100,6 +93,13 @@ invalid.js:1:1 lint/nursery/NoRedundantUseStrict  FIXABLE  ━━━━━━━
       │ 		^^^^^^^^^^^^^
     8 │ 	}
     9 │ 	function inner_b() {
+  
+  i This is where the use strict is declared.
+  
+  > 1 │ "use strict";
+      │ ^^^^^^^^^^^^^
+    2 │ "use strict";
+    3 │ 
   
   i Safe fix: Remove redundant use strict
   
@@ -115,16 +115,9 @@ invalid.js:1:1 lint/nursery/NoRedundantUseStrict  FIXABLE  ━━━━━━━
 ```
 
 ```
-invalid.js:1:1 lint/nursery/NoRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:11:4 lint/nursery/noRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Cannot have redundant directive of "use strict".
-  
-  > 1 │ "use strict";
-      │ ^^^^^^^^^^^^^
-    2 │ "use strict";
-    3 │ 
-  
-  i This is where the redundant "use strict" is declared.
+  ! Cannot have redundant directive of use strict.
   
      9 │ 	function inner_b() {
     10 │ 		function inner_inner() {
@@ -132,6 +125,13 @@ invalid.js:1:1 lint/nursery/NoRedundantUseStrict  FIXABLE  ━━━━━━━
        │ 			^^^^^^^^^^^^^
     12 │ 		}
     13 │ 	}
+  
+  i This is where the use strict is declared.
+  
+  > 1 │ "use strict";
+      │ ^^^^^^^^^^^^^
+    2 │ "use strict";
+    3 │ 
   
   i Safe fix: Remove redundant use strict
   
