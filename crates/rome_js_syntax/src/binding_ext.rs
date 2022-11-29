@@ -18,7 +18,7 @@ use crate::{
 use rome_rowan::{declare_node_union, AstNode};
 
 declare_node_union! {
-    pub JsAnyBindingDeclaration =
+    pub AnyJsBindingDeclaration =
         // variable
             JsVariableDeclarator
         // parameters
@@ -43,10 +43,10 @@ declare_node_union! {
 }
 
 declare_node_union! {
-    pub JsAnyIdentifierBinding = JsIdentifierBinding | TsIdentifierBinding
+    pub AnyJsIdentifierBinding = JsIdentifierBinding | TsIdentifierBinding
 }
 
-fn declaration(node: &JsSyntaxNode) -> Option<JsAnyBindingDeclaration> {
+fn declaration(node: &JsSyntaxNode) -> Option<AnyJsBindingDeclaration> {
     use JsSyntaxKind::*;
     let parent = node.parent()?;
     let possible_declarator = parent.ancestors().find(|x| {
@@ -64,7 +64,7 @@ fn declaration(node: &JsSyntaxNode) -> Option<JsAnyBindingDeclaration> {
         )
     })?;
 
-    JsAnyBindingDeclaration::cast(possible_declarator)
+    AnyJsBindingDeclaration::cast(possible_declarator)
 }
 
 fn is_under_pattern_binding(node: &JsSyntaxNode) -> Option<bool> {
@@ -109,11 +109,11 @@ fn is_under_object_pattern_binding(node: &JsSyntaxNode) -> Option<bool> {
     }
 }
 
-impl JsAnyIdentifierBinding {
-    pub fn declaration(&self) -> Option<JsAnyBindingDeclaration> {
+impl AnyJsIdentifierBinding {
+    pub fn declaration(&self) -> Option<AnyJsBindingDeclaration> {
         let node = match self {
-            JsAnyIdentifierBinding::JsIdentifierBinding(binding) => &binding.syntax,
-            JsAnyIdentifierBinding::TsIdentifierBinding(binding) => &binding.syntax,
+            AnyJsIdentifierBinding::JsIdentifierBinding(binding) => &binding.syntax,
+            AnyJsIdentifierBinding::TsIdentifierBinding(binding) => &binding.syntax,
         };
         declaration(node)
     }
@@ -134,7 +134,7 @@ impl JsAnyIdentifierBinding {
 impl JsIdentifierBinding {
     /// Navigate upward until the declaration of this binding bypassing all nodes
     /// related to pattern binding.
-    pub fn declaration(&self) -> Option<JsAnyBindingDeclaration> {
+    pub fn declaration(&self) -> Option<AnyJsBindingDeclaration> {
         declaration(&self.syntax)
     }
 
@@ -152,7 +152,7 @@ impl JsIdentifierBinding {
 }
 
 impl TsIdentifierBinding {
-    pub fn declaration(&self) -> Option<JsAnyBindingDeclaration> {
+    pub fn declaration(&self) -> Option<AnyJsBindingDeclaration> {
         declaration(&self.syntax)
     }
 

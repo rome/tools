@@ -1,6 +1,6 @@
 use rome_js_semantic::{ReferencesExtensions, SemanticModel};
 use rome_js_syntax::{
-    binding_ext::JsAnyIdentifierBinding, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage,
+    binding_ext::AnyJsIdentifierBinding, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage,
     JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
 use rome_rowan::{AstNode, BatchMutation, SyntaxNodeCast, TriviaPiece};
@@ -28,7 +28,7 @@ impl RenamableNode for JsIdentifierAssignment {
     }
 }
 
-impl RenamableNode for JsAnyIdentifierBinding {
+impl RenamableNode for AnyJsIdentifierBinding {
     fn binding(&self, _: &SemanticModel) -> Option<JsSyntaxNode> {
         let node = self.syntax();
         Some(node.clone())

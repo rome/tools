@@ -5,7 +5,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_semantic::{ReferencesExtensions, SemanticScopeExtensions};
 use rome_js_syntax::{
-    binding_ext::{JsAnyBindingDeclaration, JsAnyIdentifierBinding, JsAnyParameterParentFunction},
+    binding_ext::{AnyJsBindingDeclaration, AnyJsIdentifierBinding, JsAnyParameterParentFunction},
     JsClassExpression, JsFunctionDeclaration, JsFunctionExpression, JsSyntaxKind, JsSyntaxNode,
     JsVariableDeclarator, TsPropertyParameter,
 };
@@ -154,7 +154,7 @@ fn is_under_declare(node: &JsSyntaxNode) -> bool {
         .any(|x| x.kind() == JsSyntaxKind::TS_DECLARE_STATEMENT)
 }
 
-fn suggestion_for_binding(binding: &JsAnyIdentifierBinding) -> Option<SuggestedFix> {
+fn suggestion_for_binding(binding: &AnyJsIdentifierBinding) -> Option<SuggestedFix> {
     if binding.is_under_object_pattern_binding()? {
         Some(SuggestedFix::NoSuggestion)
     } else {
@@ -164,16 +164,16 @@ fn suggestion_for_binding(binding: &JsAnyIdentifierBinding) -> Option<SuggestedF
 
 // It is ok in some Typescripts constructs for a parameter to be unused.
 // Returning None means is ok to be unused
-fn suggested_fix_if_unused(binding: &JsAnyIdentifierBinding) -> Option<SuggestedFix> {
+fn suggested_fix_if_unused(binding: &AnyJsIdentifierBinding) -> Option<SuggestedFix> {
     match binding.declaration()? {
         // ok to not be used
-        JsAnyBindingDeclaration::TsIndexSignatureParameter(_)
-        | JsAnyBindingDeclaration::TsDeclareFunctionDeclaration(_)
-        | JsAnyBindingDeclaration::JsClassExpression(_)
-        | JsAnyBindingDeclaration::JsFunctionExpression(_) => None,
+        AnyJsBindingDeclaration::TsIndexSignatureParameter(_)
+        | AnyJsBindingDeclaration::TsDeclareFunctionDeclaration(_)
+        | AnyJsBindingDeclaration::JsClassExpression(_)
+        | AnyJsBindingDeclaration::JsFunctionExpression(_) => None,
 
         // Some parameters are ok to not be used
-        JsAnyBindingDeclaration::TsPropertyParameter(parameter) => {
+        AnyJsBindingDeclaration::TsPropertyParameter(parameter) => {
             let is_binding_ok =
                 is_ok_to_be_unused(parameter.parent_function()) || is_public_or_private(parameter)?;
             if !is_binding_ok {
@@ -182,7 +182,7 @@ fn suggested_fix_if_unused(binding: &JsAnyIdentifierBinding) -> Option<Suggested
                 None
             }
         }
-        JsAnyBindingDeclaration::JsFormalParameter(parameter) => {
+        AnyJsBindingDeclaration::JsFormalParameter(parameter) => {
             let is_binding_ok = is_ok_to_be_unused(parameter.parent_function());
             if !is_binding_ok {
                 suggestion_for_binding(binding)
@@ -190,7 +190,7 @@ fn suggested_fix_if_unused(binding: &JsAnyIdentifierBinding) -> Option<Suggested
                 None
             }
         }
-        JsAnyBindingDeclaration::JsRestParameter(parameter) => {
+        AnyJsBindingDeclaration::JsRestParameter(parameter) => {
             let is_binding_ok = is_ok_to_be_unused(parameter.parent_function());
             if !is_binding_ok {
                 suggestion_for_binding(binding)
@@ -200,7 +200,7 @@ fn suggested_fix_if_unused(binding: &JsAnyIdentifierBinding) -> Option<Suggested
         }
 
         // declarations need to be check if they are under `declare`
-        node @ JsAnyBindingDeclaration::JsVariableDeclarator(_) => {
+        node @ AnyJsBindingDeclaration::JsVariableDeclarator(_) => {
             let is_binding_ok = is_under_declare(&node.syntax().clone());
             if !is_binding_ok {
                 suggestion_for_binding(binding)
@@ -208,13 +208,13 @@ fn suggested_fix_if_unused(binding: &JsAnyIdentifierBinding) -> Option<Suggested
                 None
             }
         }
-        node @ JsAnyBindingDeclaration::TsTypeAliasDeclaration(_)
-        | node @ JsAnyBindingDeclaration::JsClassDeclaration(_)
-        | node @ JsAnyBindingDeclaration::JsFunctionDeclaration(_)
-        | node @ JsAnyBindingDeclaration::TsInterfaceDeclaration(_)
-        | node @ JsAnyBindingDeclaration::TsEnumDeclaration(_)
-        | node @ JsAnyBindingDeclaration::TsModuleDeclaration(_)
-        | node @ JsAnyBindingDeclaration::TsImportEqualsDeclaration(_) => {
+        node @ AnyJsBindingDeclaration::TsTypeAliasDeclaration(_)
+        | node @ AnyJsBindingDeclaration::JsClassDeclaration(_)
+        | node @ AnyJsBindingDeclaration::JsFunctionDeclaration(_)
+        | node @ AnyJsBindingDeclaration::TsInterfaceDeclaration(_)
+        | node @ AnyJsBindingDeclaration::TsEnumDeclaration(_)
+        | node @ AnyJsBindingDeclaration::TsModuleDeclaration(_)
+        | node @ AnyJsBindingDeclaration::TsImportEqualsDeclaration(_) => {
             if is_under_declare(&node.syntax().clone()) {
                 None
             } else {
@@ -223,33 +223,33 @@ fn suggested_fix_if_unused(binding: &JsAnyIdentifierBinding) -> Option<Suggested
         }
 
         // Bindings under unknown parameter are never ok to be unused
-        JsAnyBindingDeclaration::JsBogusParameter(_) => Some(SuggestedFix::NoSuggestion),
+        AnyJsBindingDeclaration::JsBogusParameter(_) => Some(SuggestedFix::NoSuggestion),
 
         // Bindings under catch are never ok to be unused
-        JsAnyBindingDeclaration::JsCatchDeclaration(_) => Some(SuggestedFix::PrefixUnderscore),
+        AnyJsBindingDeclaration::JsCatchDeclaration(_) => Some(SuggestedFix::PrefixUnderscore),
 
         // Imports are never ok to be unused
-        JsAnyBindingDeclaration::JsImportDefaultClause(_)
-        | JsAnyBindingDeclaration::JsImportNamespaceClause(_)
-        | JsAnyBindingDeclaration::JsShorthandNamedImportSpecifier(_)
-        | JsAnyBindingDeclaration::JsNamedImportSpecifier(_)
-        | JsAnyBindingDeclaration::JsBogusNamedImportSpecifier(_)
-        | JsAnyBindingDeclaration::JsDefaultImportSpecifier(_)
-        | JsAnyBindingDeclaration::JsNamespaceImportSpecifier(_) => {
+        AnyJsBindingDeclaration::JsImportDefaultClause(_)
+        | AnyJsBindingDeclaration::JsImportNamespaceClause(_)
+        | AnyJsBindingDeclaration::JsShorthandNamedImportSpecifier(_)
+        | AnyJsBindingDeclaration::JsNamedImportSpecifier(_)
+        | AnyJsBindingDeclaration::JsBogusNamedImportSpecifier(_)
+        | AnyJsBindingDeclaration::JsDefaultImportSpecifier(_)
+        | AnyJsBindingDeclaration::JsNamespaceImportSpecifier(_) => {
             Some(SuggestedFix::NoSuggestion)
         }
 
         // exports with binding are ok to be unused
-        JsAnyBindingDeclaration::JsClassExportDefaultDeclaration(_)
-        | JsAnyBindingDeclaration::JsFunctionExportDefaultDeclaration(_)
-        | JsAnyBindingDeclaration::TsDeclareFunctionExportDefaultDeclaration(_) => {
+        AnyJsBindingDeclaration::JsClassExportDefaultDeclaration(_)
+        | AnyJsBindingDeclaration::JsFunctionExportDefaultDeclaration(_)
+        | AnyJsBindingDeclaration::TsDeclareFunctionExportDefaultDeclaration(_) => {
             Some(SuggestedFix::NoSuggestion)
         }
     }
 }
 
 impl Rule for NoUnusedVariables {
-    type Query = Semantic<JsAnyIdentifierBinding>;
+    type Query = Semantic<AnyJsIdentifierBinding>;
     type State = SuggestedFix;
     type Signals = Option<Self::State>;
     type Options = ();
@@ -258,8 +258,8 @@ impl Rule for NoUnusedVariables {
         let binding = ctx.query();
 
         let name = match binding {
-            JsAnyIdentifierBinding::JsIdentifierBinding(binding) => binding.name_token().ok()?,
-            JsAnyIdentifierBinding::TsIdentifierBinding(binding) => binding.name_token().ok()?,
+            AnyJsIdentifierBinding::JsIdentifierBinding(binding) => binding.name_token().ok()?,
+            AnyJsIdentifierBinding::TsIdentifierBinding(binding) => binding.name_token().ok()?,
         };
 
         let name = name.token_text_trimmed();
@@ -368,10 +368,10 @@ impl Rule for NoUnusedVariables {
                 let mut mutation = ctx.root().begin();
 
                 let name = match binding {
-                    JsAnyIdentifierBinding::JsIdentifierBinding(binding) => {
+                    AnyJsIdentifierBinding::JsIdentifierBinding(binding) => {
                         binding.name_token().ok()?
                     }
-                    JsAnyIdentifierBinding::TsIdentifierBinding(binding) => {
+                    AnyJsIdentifierBinding::TsIdentifierBinding(binding) => {
                         binding.name_token().ok()?
                     }
                 };

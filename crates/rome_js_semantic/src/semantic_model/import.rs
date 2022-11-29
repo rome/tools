@@ -1,7 +1,7 @@
 use super::*;
 use crate::{HasDeclarationAstNode, SemanticModel};
 use rome_js_syntax::{
-    binding_ext::JsAnyIdentifierBinding, JsIdentifierBinding, JsLanguage, JsSyntaxKind,
+    binding_ext::AnyJsIdentifierBinding, JsIdentifierBinding, JsLanguage, JsSyntaxKind,
 };
 use rome_rowan::AstNode;
 
@@ -43,7 +43,7 @@ impl CanBeImportedExported for TsIdentifierBinding {
     }
 }
 
-impl CanBeImportedExported for JsAnyIdentifierBinding {
+impl CanBeImportedExported for AnyJsIdentifierBinding {
     type Result = bool;
 
     fn is_exported(&self, model: &SemanticModel) -> Self::Result {
