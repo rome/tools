@@ -43,7 +43,7 @@
 //! In the example, this only is the `|| happy`.
 //!
 //! Thus, the first group is: `[Left(some && thing && elsewhere), Right(|| happy)]`. The formatting formats the left side
-//! as is (the call will recurse into the [JsAnyBinaryLikeExpression] formatting again) but formats the operator with the right side.
+//! as is (the call will recurse into the [AnyJsBinaryLikeExpression] formatting again) but formats the operator with the right side.
 //!
 //! Now, let's see how the implementation groups the `some && thing && elsewhere`. It first traverses to the left most binary like expression,
 //! which is `some && thing`. It then adds this as a `Left` side to the group. From here, the algorithm traverses upwards and adds all right sides
@@ -167,7 +167,7 @@ impl Format<JsFormatContext> for AnyJsBinaryLikeExpression {
 
 /// Creates a [BinaryLeftOrRightSide::Left] for the first left hand side that:
 /// * isn't a [JsBinaryLikeExpression]
-/// * is a [JsBinaryLikeExpression] but it should be formatted as its own group (see [JsAnyBinaryLikeExpression::can_flatten]).
+/// * is a [JsBinaryLikeExpression] but it should be formatted as its own group (see [AnyJsBinaryLikeExpression::can_flatten]).
 ///
 /// It then traverses upwards from the left most node and creates [BinaryLikeLeftOrRightSide::Right]s for
 /// every [JsBinaryLikeExpression] until it reaches the root again.
@@ -569,7 +569,7 @@ impl NeedsParentheses for AnyJsBinaryLikeExpression {
     }
 }
 
-/// Implements the rules when a node needs parentheses that are common across all [JsAnyBinaryLikeExpression] nodes.
+/// Implements the rules when a node needs parentheses that are common across all [AnyJsBinaryLikeExpression] nodes.
 pub(crate) fn needs_binary_like_parentheses(
     node: &AnyJsBinaryLikeExpression,
     parent: &JsSyntaxNode,
@@ -642,7 +642,7 @@ pub(crate) fn needs_binary_like_parentheses(
 }
 
 declare_node_union! {
-    /// Union type for any valid left hand side of a [JsAnyBinaryLikeExpression].
+    /// Union type for any valid left hand side of a [AnyJsBinaryLikeExpression].
     pub(crate) AnyJsBinaryLikeLeftExpression = AnyJsExpression | JsPrivateName
 }
 
@@ -771,8 +771,8 @@ enum VisitEvent {
     Exit(AnyJsBinaryLikeExpression),
 }
 
-/// Iterator that visits [JsAnyBinaryLikeExpression]s in pre-order.
-/// This is similar to [JsSyntaxNode::descendants] but it only traverses into [JsAnyBinaryLikeExpression] and their left side
+/// Iterator that visits [AnyJsBinaryLikeExpression]s in pre-order.
+/// This is similar to [JsSyntaxNode::descendants] but it only traverses into [AnyJsBinaryLikeExpression] and their left side
 /// (the right side is never visited).
 ///
 /// # Examples
@@ -805,7 +805,7 @@ enum VisitEvent {
 ///
 /// Notice how the iterator doesn't yield events for the terminal identifiers `a`, `b`, `c`, `d`, and `e`,
 /// nor for the right hand side expression `d && e`. This is because the visitor only traverses into
-/// [JsAnyBinaryLikeExpression]s and of those, only along the left side.
+/// [AnyJsBinaryLikeExpression]s and of those, only along the left side.
 struct BinaryLikePreorder {
     /// The next node to visit or [None] if the iterator passed the start node (is at its end).
     next: Option<VisitEvent>,
