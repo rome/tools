@@ -2,9 +2,9 @@ use crate::JsRuleAction;
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{AnyJsRoot, JsDirective, JsDirectiveList, JsFunctionBody};
+use rome_js_syntax::{AnyJsRoot, JsDirective, JsFunctionBody, JsLanguage};
 
-use rome_rowan::{AstNode, BatchMutationExt};
+use rome_rowan::{declare_node_union, AstNode, BatchMutationExt, SyntaxNode};
 
 declare_rule! {
  /// Prevents from having redundant \"use strict\"
@@ -44,7 +44,31 @@ declare_rule! {
 
 pub struct State {
     first: JsDirective,
-    redundant: Vec<JsDirective>,
+    redundant: JsDirective,
+}
+declare_node_union! { AnyNodeWithDirectives = JsFunctionBody | AnyJsRoot }
+
+impl AnyNodeWithDirectives {
+    fn directives(&self) -> Option<Vec<JsDirective>> {
+        match self {
+            AnyNodeWithDirectives::JsFunctionBody(node) => {
+                get_directives_from_directive_list(node.syntax())
+            }
+            AnyNodeWithDirectives::AnyJsRoot(node) => {
+                get_directives_from_directive_list(node.syntax())
+            }
+        }
+    }
+}
+
+fn get_directives_from_directive_list(node: &SyntaxNode<JsLanguage>) -> Option<Vec<JsDirective>> {
+    let mut directives = vec![];
+    for n in node.first_child()?.children() {
+        if let Some(js_directive) = JsDirective::cast(n) {
+            directives.push(js_directive)
+        }
+    }
+    Some(directives)
 }
 
 impl Rule for NoRedundantUseStrict {
@@ -55,76 +79,64 @@ impl Rule for NoRedundantUseStrict {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        let mut directives = vec![(*node).clone()];
-
-        let check_use_strict_directive =
-            |node: &JsDirective| node.value_token().map(|v| v.text_trimmed().to_owned());
-
-        // We have to trace the check from great-grandfather's ancestors to skip itself.
-        let ancestors = node.syntax().parent()?.parent()?.parent()?.ancestors();
-        for possible_directive_list_parent in ancestors {
-            if JsFunctionBody::can_cast(possible_directive_list_parent.kind())
-                || AnyJsRoot::can_cast(possible_directive_list_parent.kind())
-            {
-                for n in possible_directive_list_parent.children() {
-                    if JsDirectiveList::can_cast(n.kind()) {
-                        for n in n.children() {
-                            if let Some(js_directive) = JsDirective::cast(n) {
-                                if let Ok("\"use strict\"" | "'use strict'") =
-                                    check_use_strict_directive(&js_directive).as_deref()
-                                {
-                                    directives.push(js_directive);
-                                }
-                            }
-                        }
-                    }
+        let mut outer_most: Option<JsDirective> = None;
+        for parent in node
+            .syntax()
+            .ancestors()
+            .filter_map(AnyNodeWithDirectives::cast)
+        {
+            for directive in parent.directives()? {
+                if directive.value_token().map_or(false, |t| {
+                    matches!(t.text_trimmed(), "'use strict'" | "\"use strict\"")
+                }) {
+                    outer_most = Some(directive);
+                    break; // continue with next parent
                 }
             }
         }
 
-        if directives.len() > 1 {
-            let first = directives.pop()?;
-            directives.reverse();
-            let redundant = directives;
-
-            return Some(State { redundant, first });
+        if let Some(outer_most) = outer_most {
+            // skip itself
+            if &outer_most == node {
+                return None;
+            }
+            return Some(State {
+                first: outer_most,
+                redundant: (*node).clone(),
+            });
         }
-
         None
     }
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let mut diag = RuleDiagnostic::new(
+        let diag = RuleDiagnostic::new(
             rule_category!(),
             state.first.range(),
             markup! {
                 "Cannot have redundant directive of \"use strict\"."
             },
+        )
+        .detail(
+            state.redundant.range(),
+            markup! {"This is where the redundant \"use strict\" is declared."},
         );
 
-        for js_directive in &state.redundant {
-            diag = diag.detail(
-                js_directive.range(),
-                markup! {"This is where the redundant \"use strict\" is declared."},
-            );
-        }
         Some(diag)
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
         let root = ctx.root();
         let mut batch = root.begin();
-        for js_directive in state.redundant.iter() {
-            if let Ok(token) = js_directive.value_token() {
-                batch.remove_token(token);
-            }
-            if let Some(token) = js_directive.semicolon_token() {
-                batch.remove_token(token);
-            }
+
+        if let Ok(token) = state.redundant.value_token() {
+            batch.remove_token(token);
+        }
+        if let Some(token) = state.redundant.semicolon_token() {
+            batch.remove_token(token);
         }
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
-            applicability: Applicability::MaybeIncorrect,
+            applicability: Applicability::Always,
             message: markup! { "Remove redundant use strict" }.to_owned(),
             mutation: batch,
         })
