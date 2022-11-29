@@ -73,14 +73,14 @@ fn generate_roles() -> TokenStream {
     }
 }
 
-fn generate_enums<'a>(len: usize, array: std::slice::Iter<&str>, enum_name: &str) -> TokenStream {
+fn generate_enums(len: usize, array: std::slice::Iter<&str>, enum_name: &str) -> TokenStream {
     let enum_name = Ident::new(enum_name, Span::call_site());
     let mut enum_metadata = Vec::with_capacity(len);
     let mut from_enum_metadata = Vec::with_capacity(len);
     let mut from_string_metadata = Vec::with_capacity(len);
     for property in array {
         let name = Ident::new(
-            &property.replace("-", "_").to_camel().to_string(),
+            &property.replace('-', "_").to_camel().to_string(),
             Span::call_site(),
         );
         let property = Literal::string(property);

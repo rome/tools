@@ -821,14 +821,14 @@ impl JsCallExpression {
         is_optional_chain(self.clone().into())
     }
 
-    /// Get [JsAnyCallArgument] by it index inside the [JsCallExpression] argument list.
+    /// Get [AnyJsCallArgument] by it index inside the [JsCallExpression] argument list.
     ///
     /// Each index inside "indices" should be unique.
     /// "indices" must be sorted.
     ///
     /// Supports maximum of 16 indices to avoid stack overflow. Eeach argument will consume:
     ///
-    /// - 8 bytes for the [Option<JsAnyCallArgument>] result;
+    /// - 8 bytes for the [Option<AnyJsCallArgument>] result;
     /// - 8 bytes for the [usize] argument.
     pub fn get_arguments_by_index<const N: usize>(
         &self,
