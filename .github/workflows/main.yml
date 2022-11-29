@@ -54,8 +54,7 @@ jobs:
       - name: Run clippy
         uses: actions-rs/cargo@v1
         with:
-          command: clippy
-          args: --workspace --all-targets --verbose -- --deny warnings -W clippy::cargo -W clippy::dbg_macro -A clippy::cargo_common_metadata
+          command: lint
 
   check-dependencies:
     name: Check Dependencies

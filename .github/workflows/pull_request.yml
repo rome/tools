@@ -45,10 +45,11 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           shared-key: "check"
-      - name: Run clipy
-        uses: actions-rs/cargo@v1
+      - name: Run clippy
+        uses: actions-rs/clippy-check@v1
         with:
-          command: lint
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --workspace --all-targets --all-features --verbose -- --deny warnings -W clippy::cargo -W clippy::dbg_macro -A clippy::cargo_common_metadata
       - name: Run cargo check
         uses: actions-rs/cargo@v1
         with:
