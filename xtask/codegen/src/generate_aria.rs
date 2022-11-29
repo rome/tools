@@ -79,20 +79,15 @@ fn generate_enums(len: usize, array: std::slice::Iter<&str>, enum_name: &str) ->
     let mut from_enum_metadata = Vec::with_capacity(len);
     let mut from_string_metadata = Vec::with_capacity(len);
     for property in array {
-        let name = Ident::new(
-            &property.replace('-', "_").to_camel().to_string(),
-            Span::call_site(),
-        );
+        let name = Ident::new(&property.replace('-', "_").to_camel(), Span::call_site());
         let property = Literal::string(property);
-        enum_metadata.push(quote! {
-            #name
-        });
         from_enum_metadata.push(quote! {
             #enum_name::#name => #property
         });
         from_string_metadata.push(quote! {
             #property => Ok(#enum_name::#name)
-        })
+        });
+        enum_metadata.push(name);
     }
 
     from_string_metadata.push(quote! {
