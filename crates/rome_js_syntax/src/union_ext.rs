@@ -109,7 +109,7 @@ impl AnyJsClassMember {
         }
     }
 
-    /// Tests if the member has a [`JsLiteralMemberName](rome_js_syntax::JsLiteralMemberName) of `name`.
+    /// Tests if the member has a [`JsLiteralMemberName`](rome_js_syntax::JsLiteralMemberName) of `name`.
     pub fn has_name(&self, name: &str) -> SyntaxResult<bool> {
         match self.name()? {
             Some(AnyJsClassMemberName::JsLiteralMemberName(literal)) => {
