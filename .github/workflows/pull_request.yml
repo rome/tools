@@ -67,7 +67,7 @@ jobs:
       - name: Cache
         uses: Swatinem/rust-cache@v2
         with:
-          shared-key: "check"
+          shared-key: "dependencies"
       - name: Install toolchain
         run:  rustup toolchain install nightly
       - name: Install udeps
