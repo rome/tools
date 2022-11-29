@@ -4,4 +4,8 @@ ${a == b}
 `;
 
 // existing comment
-a == b
+a == b;
+
+if (a == b) {
+    false;
+}

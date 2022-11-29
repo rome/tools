@@ -10,7 +10,11 @@ ${a == b}
 `;
 
 // existing comment
-a == b
+a == b;
+
+if (a == b) {
+    false;
+}
 ```
 
 # Diagnostics
@@ -39,13 +43,13 @@ noDoubleEquals.js:3:5 lint/correctness/noDoubleEquals  FIXABLE  ━━━━━�
   
   i Safe fix: Suppress rule lint/correctness/noDoubleEquals
   
-    1 1 │   const foo = `
-    2 2 │   text
-    3   │ - ${a·==·b}
-      3 │ + ${//·rome-ignore·lint/correctness/noDoubleEquals:·suppressed·
-      4 │ + a··==·b}
-    4 5 │   `;
-    5 6 │   
+     1  1 │   const foo = `
+     2  2 │   text
+     3    │ - ${a·==·b}
+        3 │ + ${//·rome-ignore·lint/correctness/noDoubleEquals:·suppressed·
+        4 │ + a··==·b}
+     4  5 │   `;
+     5  6 │   
   
 
 ```
@@ -56,24 +60,66 @@ noDoubleEquals.js:7:3 lint/correctness/noDoubleEquals  FIXABLE  ━━━━━�
   ! Use === instead of ==
   
     6 │ // existing comment
-  > 7 │ a == b
+  > 7 │ a == b;
       │   ^^
+    8 │ 
+    9 │ if (a == b) {
   
   i == is only allowed when comparing against null
   
     6 │ // existing comment
-  > 7 │ a == b
+  > 7 │ a == b;
       │   ^^
+    8 │ 
+    9 │ if (a == b) {
   
   i Using === may be unsafe if you are relying on type coercion
   
   i Safe fix: Suppress rule lint/correctness/noDoubleEquals
   
-    5 5 │   
-    6 6 │   // existing comment
-    7   │ - a·==·b
-      7 │ + //·rome-ignore·lint/correctness/noDoubleEquals:·suppressed·
-      8 │ + a··==·b
+     5  5 │   
+     6  6 │   // existing comment
+     7    │ - a·==·b;
+        7 │ + //·rome-ignore·lint/correctness/noDoubleEquals:·suppressed·
+        8 │ + a··==·b;
+     8  9 │   
+     9 10 │   if (a == b) {
+  
+
+```
+
+```
+noDoubleEquals.js:9:7 lint/correctness/noDoubleEquals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use === instead of ==
+  
+     7 │ a == b;
+     8 │ 
+   > 9 │ if (a == b) {
+       │       ^^
+    10 │     false;
+    11 │ }
+  
+  i == is only allowed when comparing against null
+  
+     7 │ a == b;
+     8 │ 
+   > 9 │ if (a == b) {
+       │       ^^
+    10 │     false;
+    11 │ }
+  
+  i Using === may be unsafe if you are relying on type coercion
+  
+  i Safe fix: Suppress rule lint/correctness/noDoubleEquals
+  
+     7  7 │   a == b;
+     8  8 │   
+     9    │ - if·(a·==·b)·{
+        9 │ + //·rome-ignore·lint/correctness/noDoubleEquals:·suppressed·
+       10 │ + if··(a·==·b)·{
+    10 11 │       false;
+    11 12 │   }
   
 
 ```
