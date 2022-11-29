@@ -15,10 +15,20 @@ use crate::{FileSystem, RomePath, TraversalContext, TraversalScope};
 use super::{BoxedTraversal, ErrorKind, File, FileSystemDiagnostic};
 
 /// Fully in-memory file system, stores the content of all known files in a hashmap
-#[derive(Default)]
 pub struct MemoryFileSystem {
     files: AssertUnwindSafe<RwLock<HashMap<PathBuf, FileEntry>>>,
     errors: HashMap<PathBuf, ErrorEntry>,
+    allow_write: bool,
+}
+
+impl Default for MemoryFileSystem {
+    fn default() -> Self {
+        Self {
+            files: Default::default(),
+            errors: Default::default(),
+            allow_write: true,
+        }
+    }
 }
 
 /// This is what's actually being stored for each file in the filesystem
@@ -48,6 +58,18 @@ pub enum ErrorEntry {
 }
 
 impl MemoryFileSystem {
+    /// Create a read-only instance of [MemoryFileSystem]
+    ///
+    /// This instance will disallow any modification through the [FileSystem]
+    /// trait, but the content of the filesystem may still be modified using
+    /// the methods on [MemoryFileSystem] itself.
+    pub fn new_read_only() -> Self {
+        Self {
+            allow_write: false,
+            ..Self::default()
+        }
+    }
+
     /// Create or update a file in the filesystem
     pub fn insert(&mut self, path: PathBuf, content: impl Into<Vec<u8>>) {
         let files = self.files.0.get_mut();
@@ -72,6 +94,15 @@ impl MemoryFileSystem {
 
 impl FileSystem for MemoryFileSystem {
     fn open_with_options(&self, path: &Path, options: OpenOptions) -> io::Result<Box<dyn File>> {
+        if !self.allow_write
+            && (options.create || options.create_new || options.truncate || options.write)
+        {
+            return Err(io::Error::new(
+                io::ErrorKind::PermissionDenied,
+                "cannot acquire write access to file in read-only filesystem",
+            ));
+        }
+
         let mut inner = if options.create || options.create_new {
             // Acquire write access to the files map if the file may need to be created
             let mut files = self.files.0.write();
@@ -230,6 +261,37 @@ mod tests {
     use crate::{fs::FileSystemExt, OpenOptions};
     use crate::{FileSystem, MemoryFileSystem, PathInterner, RomePath, TraversalContext};
     use rome_diagnostics::location::FileId;
+
+    #[test]
+    fn fs_read_only() {
+        let mut fs = MemoryFileSystem::new_read_only();
+
+        let path = Path::new("file.js");
+        fs.insert(path.into(), *b"content");
+
+        assert!(fs.open(path).is_ok());
+
+        match fs.create(path) {
+            Ok(_) => panic!("fs.create() for a read-only filesystem should return an error"),
+            Err(error) => {
+                assert_eq!(error.kind(), io::ErrorKind::PermissionDenied);
+            }
+        }
+
+        match fs.create_new(path) {
+            Ok(_) => panic!("fs.create() for a read-only filesystem should return an error"),
+            Err(error) => {
+                assert_eq!(error.kind(), io::ErrorKind::PermissionDenied);
+            }
+        }
+
+        match fs.open_with_options(path, OpenOptions::default().read(true).write(true)) {
+            Ok(_) => panic!("fs.open_with_options(read + write) for a read-only filesystem should return an error"),
+            Err(error) => {
+                assert_eq!(error.kind(), io::ErrorKind::PermissionDenied);
+            }
+        }
+    }
 
     #[test]
     fn file_read_write() {
