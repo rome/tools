@@ -4,10 +4,10 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::SemanticModel;
-use rome_js_syntax::jsx_ext::JsxAnyElement;
+use rome_js_syntax::jsx_ext::AnyJsxElement;
 use rome_js_syntax::{
-    JsCallExpression, JsNumberLiteralExpression, JsPropertyObjectMember, JsStringLiteralExpression,
-    JsUnaryExpression, JsxAnyAttributeValue, JsxAttribute, TextRange,
+    AnyJsxAttributeValue, JsCallExpression, JsNumberLiteralExpression, JsPropertyObjectMember,
+    JsStringLiteralExpression, JsUnaryExpression, JsxAttribute, TextRange,
 };
 use rome_rowan::{declare_node_union, AstNode};
 
@@ -56,7 +56,7 @@ declare_node_union! {
 }
 
 declare_node_union! {
-    pub(crate) NoPositiveTabindexQuery = JsxAnyElement | JsCallExpression
+    pub(crate) NoPositiveTabindexQuery = AnyJsxElement | JsCallExpression
 }
 
 declare_node_union! {
@@ -74,7 +74,7 @@ declare_node_union! {
 impl NoPositiveTabindexQuery {
     fn find_tabindex_attribute(&self, model: &SemanticModel) -> Option<TabindexProp> {
         match self {
-            NoPositiveTabindexQuery::JsxAnyElement(jsx) => jsx
+            NoPositiveTabindexQuery::AnyJsxElement(jsx) => jsx
                 .find_attribute_by_name("tabIndex")
                 .map(TabindexProp::from),
             NoPositiveTabindexQuery::JsCallExpression(expression) => {
@@ -162,13 +162,13 @@ impl Rule for NoPositiveTabindex {
 }
 
 /// Verify that a JSX attribute value has a valid tab index, meaning it is not positive.
-fn attribute_has_valid_tabindex(jsx_any_attribute_value: &JsxAnyAttributeValue) -> Option<bool> {
+fn attribute_has_valid_tabindex(jsx_any_attribute_value: &AnyJsxAttributeValue) -> Option<bool> {
     match jsx_any_attribute_value {
-        JsxAnyAttributeValue::JsxString(jsx_string) => {
+        AnyJsxAttributeValue::JsxString(jsx_string) => {
             let value = jsx_string.inner_string_text().ok()?.to_string();
             Some(is_tabindex_valid(&value))
         }
-        JsxAnyAttributeValue::JsxExpressionAttributeValue(value) => {
+        AnyJsxAttributeValue::JsxExpressionAttributeValue(value) => {
             let expression = value.expression().ok()?;
             let expression_value =
                 AnyNumberLikeExpression::cast_ref(expression.syntax())?.value()?;

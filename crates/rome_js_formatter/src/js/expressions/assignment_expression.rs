@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::JsAnyAssignmentLike;
+use crate::utils::AnyJsAssignmentLike;
 
 use crate::parentheses::{
     is_arrow_function_body, is_first_in_statement, FirstInStatementMode, NeedsParentheses,
@@ -7,7 +7,7 @@ use crate::parentheses::{
 use rome_formatter::write;
 
 use rome_js_syntax::{
-    JsAnyAssignmentPattern, JsAnyForInitializer, JsArrowFunctionExpression, JsAssignmentExpression,
+    AnyJsAssignmentPattern, AnyJsForInitializer, JsArrowFunctionExpression, JsAssignmentExpression,
     JsComputedMemberName, JsExpressionStatement, JsForStatement, JsSequenceExpression,
     JsSyntaxKind, JsSyntaxNode,
 };
@@ -18,7 +18,7 @@ pub(crate) struct FormatJsAssignmentExpression;
 
 impl FormatNodeRule<JsAssignmentExpression> for FormatJsAssignmentExpression {
     fn fmt_fields(&self, node: &JsAssignmentExpression, f: &mut JsFormatter) -> FormatResult<()> {
-        write![f, [JsAnyAssignmentLike::from(node.clone())]]
+        write![f, [AnyJsAssignmentLike::from(node.clone())]]
     }
 
     fn needs_parentheses(&self, item: &JsAssignmentExpression) -> bool {
@@ -40,7 +40,7 @@ impl NeedsParentheses for JsAssignmentExpression {
 
                 JsForStatement(for_statement) => {
                      let is_initializer = match for_statement.initializer() {
-                        Some(JsAnyForInitializer::JsAnyExpression(expression)) => {
+                        Some(AnyJsForInitializer::AnyJsExpression(expression)) => {
                             expression.syntax() == self.syntax()
                         }
                         None | Some(_) => false,
@@ -61,7 +61,7 @@ impl NeedsParentheses for JsAssignmentExpression {
                         FirstInStatementMode::ExpressionStatementOrArrow,
                     ) && matches!(
                         self.left(),
-                        Ok(JsAnyAssignmentPattern::JsObjectAssignmentPattern(_))
+                        Ok(AnyJsAssignmentPattern::JsObjectAssignmentPattern(_))
                     )
                 },
                 JsSequenceExpression(_) => {
@@ -75,7 +75,7 @@ impl NeedsParentheses for JsAssignmentExpression {
                                 let for_statement = JsForStatement::unwrap_cast(ancestor);
 
                                 let is_initializer = match for_statement.initializer() {
-                                    Some(JsAnyForInitializer::JsAnyExpression(expression)) => {
+                                    Some(AnyJsForInitializer::AnyJsExpression(expression)) => {
                                         expression.syntax() == &child
                                     }
                                     None | Some(_) => false,

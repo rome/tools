@@ -1,5 +1,5 @@
 use super::*;
-use rome_js_syntax::{JsAnyRoot, JsSyntaxNode, TextRange};
+use rome_js_syntax::{AnyJsRoot, JsSyntaxNode, TextRange};
 use rustc_hash::{FxHashMap, FxHashSet};
 use std::collections::hash_map::Entry;
 
@@ -10,7 +10,7 @@ use std::collections::hash_map::Entry;
 /// data necessary to build a [SemanticModelData], that is allocated with an [Arc]
 /// and stored inside the [SemanticModel].
 pub struct SemanticModelBuilder {
-    root: JsAnyRoot,
+    root: AnyJsRoot,
     node_by_range: FxHashMap<TextRange, JsSyntaxNode>,
     globals: Vec<SemanticModelGlobalBindingData>,
     globals_by_name: FxHashMap<String, Option<usize>>,
@@ -27,7 +27,7 @@ pub struct SemanticModelBuilder {
 }
 
 impl SemanticModelBuilder {
-    pub fn new(root: JsAnyRoot) -> Self {
+    pub fn new(root: AnyJsRoot) -> Self {
         Self {
             root,
             node_by_range: FxHashMap::default(),

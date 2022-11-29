@@ -2,7 +2,7 @@ use crate::prelude::*;
 
 use rome_formatter::{write, CstFormatContext};
 use rome_js_syntax::{
-    JsSyntaxToken, JsxAnyAttribute, JsxAnyAttributeValue, JsxAnyElementName, JsxAttributeList,
+    AnyJsxAttribute, AnyJsxAttributeValue, AnyJsxElementName, JsSyntaxToken, JsxAttributeList,
     JsxOpeningElement, JsxSelfClosingElement, JsxString, TsTypeArguments,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
@@ -12,15 +12,15 @@ pub struct FormatJsxOpeningElement;
 
 impl FormatNodeRule<JsxOpeningElement> for FormatJsxOpeningElement {
     fn fmt_fields(&self, node: &JsxOpeningElement, f: &mut JsFormatter) -> FormatResult<()> {
-        JsxAnyOpeningElement::from(node.clone()).fmt(f)
+        AnyJsxOpeningElement::from(node.clone()).fmt(f)
     }
 }
 
 declare_node_union! {
-    pub(super) JsxAnyOpeningElement = JsxSelfClosingElement | JsxOpeningElement
+    pub(super) AnyJsxOpeningElement = JsxSelfClosingElement | JsxOpeningElement
 }
 
-impl Format<JsFormatContext> for JsxAnyOpeningElement {
+impl Format<JsFormatContext> for AnyJsxOpeningElement {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let layout = self.compute_layout(f.context().comments())?;
 
@@ -30,7 +30,7 @@ impl Format<JsFormatContext> for JsxAnyOpeningElement {
         let attributes = self.attributes();
 
         let format_close = format_with(|f| {
-            if let JsxAnyOpeningElement::JsxSelfClosingElement(element) = self {
+            if let AnyJsxOpeningElement::JsxSelfClosingElement(element) = self {
                 write!(f, [element.slash_token().format()])?;
             }
 
@@ -105,44 +105,44 @@ impl Format<JsFormatContext> for JsxAnyOpeningElement {
     }
 }
 
-impl JsxAnyOpeningElement {
+impl AnyJsxOpeningElement {
     fn l_angle_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            JsxAnyOpeningElement::JsxSelfClosingElement(element) => element.l_angle_token(),
-            JsxAnyOpeningElement::JsxOpeningElement(element) => element.l_angle_token(),
+            AnyJsxOpeningElement::JsxSelfClosingElement(element) => element.l_angle_token(),
+            AnyJsxOpeningElement::JsxOpeningElement(element) => element.l_angle_token(),
         }
     }
 
-    fn name(&self) -> SyntaxResult<JsxAnyElementName> {
+    fn name(&self) -> SyntaxResult<AnyJsxElementName> {
         match self {
-            JsxAnyOpeningElement::JsxSelfClosingElement(element) => element.name(),
-            JsxAnyOpeningElement::JsxOpeningElement(element) => element.name(),
+            AnyJsxOpeningElement::JsxSelfClosingElement(element) => element.name(),
+            AnyJsxOpeningElement::JsxOpeningElement(element) => element.name(),
         }
     }
 
     fn type_arguments(&self) -> Option<TsTypeArguments> {
         match self {
-            JsxAnyOpeningElement::JsxSelfClosingElement(element) => element.type_arguments(),
-            JsxAnyOpeningElement::JsxOpeningElement(element) => element.type_arguments(),
+            AnyJsxOpeningElement::JsxSelfClosingElement(element) => element.type_arguments(),
+            AnyJsxOpeningElement::JsxOpeningElement(element) => element.type_arguments(),
         }
     }
 
     fn attributes(&self) -> JsxAttributeList {
         match self {
-            JsxAnyOpeningElement::JsxSelfClosingElement(element) => element.attributes(),
-            JsxAnyOpeningElement::JsxOpeningElement(element) => element.attributes(),
+            AnyJsxOpeningElement::JsxSelfClosingElement(element) => element.attributes(),
+            AnyJsxOpeningElement::JsxOpeningElement(element) => element.attributes(),
         }
     }
 
     fn r_angle_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            JsxAnyOpeningElement::JsxSelfClosingElement(element) => element.r_angle_token(),
-            JsxAnyOpeningElement::JsxOpeningElement(element) => element.r_angle_token(),
+            AnyJsxOpeningElement::JsxSelfClosingElement(element) => element.r_angle_token(),
+            AnyJsxOpeningElement::JsxOpeningElement(element) => element.r_angle_token(),
         }
     }
 
     fn is_self_closing(&self) -> bool {
-        matches!(self, JsxAnyOpeningElement::JsxSelfClosingElement(_))
+        matches!(self, AnyJsxOpeningElement::JsxSelfClosingElement(_))
     }
 
     fn compute_layout(&self, comments: &JsComments) -> SyntaxResult<OpeningElementLayout> {
@@ -203,7 +203,7 @@ enum OpeningElementLayout {
 }
 
 /// Returns `true` if this is an attribute with a [JsxString] initializer that does not contain any new line characters.
-fn is_single_line_string_literal_attribute(attribute: &JsxAnyAttribute) -> bool {
+fn is_single_line_string_literal_attribute(attribute: &AnyJsxAttribute) -> bool {
     as_string_literal_attribute_value(attribute).map_or(false, |string| {
         string
             .value_token()
@@ -212,7 +212,7 @@ fn is_single_line_string_literal_attribute(attribute: &JsxAnyAttribute) -> bool 
 }
 
 /// Returns `true` if this is an attribute with a [JsxString] initializer that contains at least one new line character.
-fn is_multiline_string_literal_attribute(attribute: &JsxAnyAttribute) -> bool {
+fn is_multiline_string_literal_attribute(attribute: &AnyJsxAttribute) -> bool {
     as_string_literal_attribute_value(attribute).map_or(false, |string| {
         string
             .value_token()
@@ -222,9 +222,9 @@ fn is_multiline_string_literal_attribute(attribute: &JsxAnyAttribute) -> bool {
 
 /// Returns `Some` if the initializer value of this attribute is a [JsxString].
 /// Returns [None] otherwise.
-fn as_string_literal_attribute_value(attribute: &JsxAnyAttribute) -> Option<JsxString> {
-    use JsxAnyAttribute::*;
-    use JsxAnyAttributeValue::*;
+fn as_string_literal_attribute_value(attribute: &AnyJsxAttribute) -> Option<JsxString> {
+    use AnyJsxAttribute::*;
+    use AnyJsxAttributeValue::*;
 
     match attribute {
         JsxAttribute(attribute) => {

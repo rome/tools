@@ -12,8 +12,10 @@ impl SyntaxFactory for JsonSyntaxFactory {
         children: ParsedChildren<Self::Kind>,
     ) -> RawSyntaxNode<Self::Kind> {
         match kind {
-            JSON_UNKNOWN => RawSyntaxNode::new(kind, children.into_iter().map(Some)),
-            JSON_ARRAY => {
+            JSON_BOGUS | JSON_BOGUS_VALUE => {
+                RawSyntaxNode::new(kind, children.into_iter().map(Some))
+            }
+            JSON_ARRAY_VALUE => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
@@ -40,13 +42,13 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_ARRAY.to_unknown(),
+                        JSON_ARRAY_VALUE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(JSON_ARRAY, children)
+                slots.into_node(JSON_ARRAY_VALUE, children)
             }
-            JSON_BOOLEAN => {
+            JSON_BOOLEAN_VALUE => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
@@ -59,18 +61,18 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_BOOLEAN.to_unknown(),
+                        JSON_BOOLEAN_VALUE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(JSON_BOOLEAN, children)
+                slots.into_node(JSON_BOOLEAN_VALUE, children)
             }
             JSON_MEMBER => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsonString::can_cast(element.kind()) {
+                    if JsonMemberName::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -84,7 +86,7 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 }
                 slots.next_slot();
                 if let Some(element) = &current_element {
-                    if JsonAnyValue::can_cast(element.kind()) {
+                    if AnyJsonValue::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -92,13 +94,32 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_MEMBER.to_unknown(),
+                        JSON_MEMBER.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
                 slots.into_node(JSON_MEMBER, children)
             }
-            JSON_NULL => {
+            JSON_MEMBER_NAME => {
+                let mut elements = (&children).into_iter();
+                let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
+                let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == JSON_STRING_LITERAL {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if current_element.is_some() {
+                    return RawSyntaxNode::new(
+                        JSON_MEMBER_NAME.to_bogus(),
+                        children.into_iter().map(Some),
+                    );
+                }
+                slots.into_node(JSON_MEMBER_NAME, children)
+            }
+            JSON_NULL_VALUE => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
@@ -111,13 +132,13 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_NULL.to_unknown(),
+                        JSON_NULL_VALUE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(JSON_NULL, children)
+                slots.into_node(JSON_NULL_VALUE, children)
             }
-            JSON_NUMBER => {
+            JSON_NUMBER_VALUE => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
@@ -130,13 +151,13 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_NUMBER.to_unknown(),
+                        JSON_NUMBER_VALUE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(JSON_NUMBER, children)
+                slots.into_node(JSON_NUMBER_VALUE, children)
             }
-            JSON_OBJECT => {
+            JSON_OBJECT_VALUE => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
@@ -163,18 +184,18 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_OBJECT.to_unknown(),
+                        JSON_OBJECT_VALUE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(JSON_OBJECT, children)
+                slots.into_node(JSON_OBJECT_VALUE, children)
             }
             JSON_ROOT => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsonAnyValue::can_cast(element.kind()) {
+                    if AnyJsonValue::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
@@ -189,13 +210,13 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_ROOT.to_unknown(),
+                        JSON_ROOT.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
                 slots.into_node(JSON_ROOT, children)
             }
-            JSON_STRING => {
+            JSON_STRING_VALUE => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
@@ -208,16 +229,16 @@ impl SyntaxFactory for JsonSyntaxFactory {
                 slots.next_slot();
                 if current_element.is_some() {
                     return RawSyntaxNode::new(
-                        JSON_STRING.to_unknown(),
+                        JSON_STRING_VALUE.to_bogus(),
                         children.into_iter().map(Some),
                     );
                 }
-                slots.into_node(JSON_STRING, children)
+                slots.into_node(JSON_STRING_VALUE, children)
             }
             JSON_ARRAY_ELEMENT_LIST => Self::make_separated_list_syntax(
                 kind,
                 children,
-                JsonAnyValue::can_cast,
+                AnyJsonValue::can_cast,
                 T ! [,],
                 false,
             ),

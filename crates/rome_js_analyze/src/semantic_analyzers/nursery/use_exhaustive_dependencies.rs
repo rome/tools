@@ -1,6 +1,8 @@
 use crate::react::hooks::*;
 use crate::semantic_services::Semantic;
-use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, DeserializableRuleOptions, Rule, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_js_syntax::{
     JsCallExpression, JsIdentifierBinding, JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode,
@@ -77,18 +79,14 @@ declare_rule! {
     }
 }
 
-lazy_static::lazy_static! {
-    static ref OPTIONS: ReactExtensiveDependenciesOptions = ReactExtensiveDependenciesOptions::new();
-}
-
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ReactExtensiveDependenciesOptions {
     hooks_config: HashMap<String, ReactHookConfiguration>,
     stable_config: HashSet<StableReactHookConfiguration>,
 }
 
-impl ReactExtensiveDependenciesOptions {
-    pub fn new() -> Self {
+impl Default for ReactExtensiveDependenciesOptions {
+    fn default() -> Self {
         let hooks_config = HashMap::from_iter([
             ("useEffect".to_string(), (0, 1).into()),
             ("useLayoutEffect".to_string(), (0, 1).into()),
@@ -112,6 +110,35 @@ impl ReactExtensiveDependenciesOptions {
             hooks_config,
             stable_config,
         }
+    }
+}
+
+impl DeserializableRuleOptions for ReactExtensiveDependenciesOptions {
+    fn try_from(value: serde_json::Value) -> Result<Self, serde_json::Error> {
+        #[derive(Debug, Deserialize)]
+        #[serde(deny_unknown_fields)]
+        struct Options {
+            #[serde(default)]
+            hooks: Vec<(String, usize, usize)>,
+            #[serde(default)]
+            stables: HashSet<StableReactHookConfiguration>,
+        }
+
+        let options: Options = serde_json::from_value(value)?;
+
+        let mut default = ReactExtensiveDependenciesOptions::default();
+        for (k, closure_index, dependencies_index) in options.hooks.into_iter() {
+            default.hooks_config.insert(
+                k,
+                ReactHookConfiguration {
+                    closure_index,
+                    dependencies_index,
+                },
+            );
+        }
+        default.stable_config.extend(options.stables.into_iter());
+
+        Ok(default)
     }
 }
 
@@ -147,7 +174,7 @@ impl Rule for UseExhaustiveDependencies {
     type Options = ReactExtensiveDependenciesOptions;
 
     fn run(ctx: &RuleContext<Self>) -> Vec<Self::State> {
-        let options = ctx.options().unwrap_or(&OPTIONS);
+        let options = ctx.options();
 
         let mut signals = vec![];
 

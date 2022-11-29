@@ -3,7 +3,7 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsAnyArrayBindingPatternElement, JsAnyObjectBindingPatternMember,
+    AnyJsArrayBindingPatternElement, AnyJsObjectBindingPatternMember,
     JsArrayBindingPatternElementList, JsForVariableDeclaration, JsIdentifierAssignment,
     JsIdentifierBinding, JsObjectBindingPatternPropertyList, JsVariableDeclaration,
     JsVariableDeclarator, JsVariableDeclaratorList,
@@ -68,9 +68,9 @@ impl Rule for NoConstAssign {
         let declared_binding = model.binding(node)?;
 
         if let Some(possible_declarator) = declared_binding.syntax().ancestors().find(|node| {
-            !JsAnyObjectBindingPatternMember::can_cast(node.kind())
+            !AnyJsObjectBindingPatternMember::can_cast(node.kind())
                 && !JsObjectBindingPatternPropertyList::can_cast(node.kind())
-                && !JsAnyArrayBindingPatternElement::can_cast(node.kind())
+                && !AnyJsArrayBindingPatternElement::can_cast(node.kind())
                 && !JsArrayBindingPatternElementList::can_cast(node.kind())
                 && !JsIdentifierBinding::can_cast(node.kind())
         }) {

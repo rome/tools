@@ -3,7 +3,7 @@ use crate::semantic_services::Semantic;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsCallExpression, JsObjectExpression, JsStringLiteralExpression, JsxAnyElementName,
+    AnyJsxElementName, JsCallExpression, JsObjectExpression, JsStringLiteralExpression,
     JsxOpeningElement, JsxString,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList};
@@ -104,8 +104,8 @@ impl Rule for UseButtonType {
                 // first argument needs to be a string
                 let first_argument = react_create_element
                     .element_type
-                    .as_js_any_expression()?
-                    .as_js_any_literal_expression()?
+                    .as_any_js_expression()?
+                    .as_any_js_literal_expression()?
                     .as_js_string_literal_expression()?;
 
                 // case sensitive is important, <button> is different from <Button>
@@ -115,7 +115,7 @@ impl Rule for UseButtonType {
                         if let Some(member) = type_member {
                             let property_value = member.value().ok()?;
                             let value = property_value
-                                .as_js_any_literal_expression()?
+                                .as_any_js_literal_expression()?
                                 .as_js_string_literal_expression()?;
 
                             if !ALLOWED_BUTTON_TYPES.contains(&&*value.inner_string_text().ok()?) {
@@ -175,9 +175,9 @@ impl Rule for UseButtonType {
 /// Checks whether the current element is a button
 ///
 /// Case sensitive is important, `<button>` is different from `<Button>`
-fn is_button(name: &JsxAnyElementName) -> Option<bool> {
+fn is_button(name: &AnyJsxElementName) -> Option<bool> {
     Some(match name {
-        JsxAnyElementName::JsxName(name) => {
+        AnyJsxElementName::JsxName(name) => {
             let name = name.value_token().ok()?;
             name.text_trimmed() == "button"
         }

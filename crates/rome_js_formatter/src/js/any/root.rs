@@ -1,16 +1,16 @@
 //! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::JsAnyRoot;
+use rome_js_syntax::AnyJsRoot;
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatJsAnyRoot;
-impl FormatRule<JsAnyRoot> for FormatJsAnyRoot {
+pub(crate) struct FormatAnyJsRoot;
+impl FormatRule<AnyJsRoot> for FormatAnyJsRoot {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &JsAnyRoot, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyJsRoot, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyRoot::JsScript(node) => node.format().fmt(f),
-            JsAnyRoot::JsModule(node) => node.format().fmt(f),
-            JsAnyRoot::JsExpressionSnipped(node) => node.format().fmt(f),
+            AnyJsRoot::JsScript(node) => node.format().fmt(f),
+            AnyJsRoot::JsModule(node) => node.format().fmt(f),
+            AnyJsRoot::JsExpressionSnipped(node) => node.format().fmt(f),
         }
     }
 }

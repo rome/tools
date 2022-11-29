@@ -1,18 +1,18 @@
 //! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::JsAnyNamedImportSpecifier;
+use rome_js_syntax::AnyJsNamedImportSpecifier;
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatJsAnyNamedImportSpecifier;
-impl FormatRule<JsAnyNamedImportSpecifier> for FormatJsAnyNamedImportSpecifier {
+pub(crate) struct FormatAnyJsNamedImportSpecifier;
+impl FormatRule<AnyJsNamedImportSpecifier> for FormatAnyJsNamedImportSpecifier {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &JsAnyNamedImportSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyJsNamedImportSpecifier, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(node) => {
+            AnyJsNamedImportSpecifier::JsShorthandNamedImportSpecifier(node) => {
                 node.format().fmt(f)
             }
-            JsAnyNamedImportSpecifier::JsNamedImportSpecifier(node) => node.format().fmt(f),
-            JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(node) => node.format().fmt(f),
+            AnyJsNamedImportSpecifier::JsNamedImportSpecifier(node) => node.format().fmt(f),
+            AnyJsNamedImportSpecifier::JsBogusNamedImportSpecifier(node) => node.format().fmt(f),
         }
     }
 }

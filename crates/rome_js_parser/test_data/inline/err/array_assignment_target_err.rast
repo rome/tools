@@ -15,7 +15,7 @@ JsModule {
                             name_token: IDENT@3..4 "a" [] [],
                         },
                         COMMA@4..6 "," [] [Whitespace(" ")],
-                        JsUnknownAssignment {
+                        JsBogusAssignment {
                             items: [
                                 PLUS2@6..8 "++" [] [],
                                 JsIdentifierAssignment {
@@ -37,36 +37,42 @@ JsModule {
             semicolon_token: SEMICOLON@19..20 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsAssignmentExpression {
-                left: JsArrayAssignmentPattern {
-                    l_brack_token: L_BRACK@20..22 "[" [Newline("\n")] [],
-                    elements: JsArrayAssignmentPatternElementList [
-                        JsIdentifierAssignment {
-                            name_token: IDENT@22..23 "a" [] [],
-                        },
-                        COMMA@23..25 "," [] [Whitespace(" ")],
-                        JsIdentifierAssignment {
-                            name_token: IDENT@25..26 "c" [] [],
-                        },
-                        COMMA@26..28 "," [] [Whitespace(" ")],
-                        JsUnknownAssignment {
-                            items: [
-                                DOT3@28..31 "..." [] [],
-                                JsIdentifierAssignment {
-                                    name_token: IDENT@31..35 "rest" [] [],
-                                },
-                            ],
-                        },
-                        COMMA@35..36 "," [] [],
-                    ],
-                    r_brack_token: R_BRACK@36..38 "]" [] [Whitespace(" ")],
-                },
-                operator_token: EQ@38..40 "=" [] [Whitespace(" ")],
-                right: JsIdentifierExpression {
-                    name: JsReferenceIdentifier {
-                        value_token: IDENT@40..44 "test" [] [],
+            expression: JsBogusExpression {
+                items: [
+                    JsBogus {
+                        items: [
+                            L_BRACK@20..22 "[" [Newline("\n")] [],
+                            JsBogus {
+                                items: [
+                                    JsIdentifierAssignment {
+                                        name_token: IDENT@22..23 "a" [] [],
+                                    },
+                                    COMMA@23..25 "," [] [Whitespace(" ")],
+                                    JsIdentifierAssignment {
+                                        name_token: IDENT@25..26 "c" [] [],
+                                    },
+                                    COMMA@26..28 "," [] [Whitespace(" ")],
+                                    JsBogus {
+                                        items: [
+                                            DOT3@28..31 "..." [] [],
+                                            JsIdentifierAssignment {
+                                                name_token: IDENT@31..35 "rest" [] [],
+                                            },
+                                        ],
+                                    },
+                                    COMMA@35..36 "," [] [],
+                                ],
+                            },
+                            R_BRACK@36..38 "]" [] [Whitespace(" ")],
+                        ],
                     },
-                },
+                    EQ@38..40 "=" [] [Whitespace(" ")],
+                    JsIdentifierExpression {
+                        name: JsReferenceIdentifier {
+                            value_token: IDENT@40..44 "test" [] [],
+                        },
+                    },
+                ],
             },
             semicolon_token: SEMICOLON@44..45 ";" [] [],
         },
@@ -154,7 +160,7 @@ JsModule {
                             name_token: IDENT@91..92 "a" [] [],
                         },
                         missing separator,
-                        JsUnknownAssignment {
+                        JsBogusAssignment {
                             items: [
                                 COLON@92..94 ":" [] [Whitespace(" ")],
                                 IDENT@94..95 "b" [] [],
@@ -191,7 +197,7 @@ JsModule {
             2: JS_IDENTIFIER_ASSIGNMENT@3..4
               0: IDENT@3..4 "a" [] []
             3: COMMA@4..6 "," [] [Whitespace(" ")]
-            4: JS_UNKNOWN_ASSIGNMENT@6..9
+            4: JS_BOGUS_ASSIGNMENT@6..9
               0: PLUS2@6..8 "++" [] []
               1: JS_IDENTIFIER_ASSIGNMENT@8..9
                 0: IDENT@8..9 "b" [] []
@@ -203,17 +209,17 @@ JsModule {
             0: IDENT@15..19 "test" [] []
       1: SEMICOLON@19..20 ";" [] []
     1: JS_EXPRESSION_STATEMENT@20..45
-      0: JS_ASSIGNMENT_EXPRESSION@20..44
-        0: JS_ARRAY_ASSIGNMENT_PATTERN@20..38
+      0: JS_BOGUS_EXPRESSION@20..44
+        0: JS_BOGUS@20..38
           0: L_BRACK@20..22 "[" [Newline("\n")] []
-          1: JS_ARRAY_ASSIGNMENT_PATTERN_ELEMENT_LIST@22..36
+          1: JS_BOGUS@22..36
             0: JS_IDENTIFIER_ASSIGNMENT@22..23
               0: IDENT@22..23 "a" [] []
             1: COMMA@23..25 "," [] [Whitespace(" ")]
             2: JS_IDENTIFIER_ASSIGNMENT@25..26
               0: IDENT@25..26 "c" [] []
             3: COMMA@26..28 "," [] [Whitespace(" ")]
-            4: JS_UNKNOWN_ASSIGNMENT@28..35
+            4: JS_BOGUS@28..35
               0: DOT3@28..31 "..." [] []
               1: JS_IDENTIFIER_ASSIGNMENT@31..35
                 0: IDENT@31..35 "rest" [] []
@@ -282,7 +288,7 @@ JsModule {
             0: JS_IDENTIFIER_ASSIGNMENT@91..92
               0: IDENT@91..92 "a" [] []
             1: (empty)
-            2: JS_UNKNOWN_ASSIGNMENT@92..95
+            2: JS_BOGUS_ASSIGNMENT@92..95
               0: COLON@92..94 ":" [] [Whitespace(" ")]
               1: IDENT@94..95 "b" [] []
           2: R_BRACK@95..97 "]" [] [Whitespace(" ")]

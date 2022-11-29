@@ -4,13 +4,11 @@ use crate::{
     context::RuleContext,
     registry::{RuleLanguage, RuleRoot},
     rule::Rule,
-    AnalyzerDiagnostic, AnalyzerOptions, Queryable, RuleGroup, ServiceBag,
-    SuppressionCommentEmitter,
+    AnalyzerDiagnostic, Queryable, RuleGroup, ServiceBag, SuppressionCommentEmitter,
 };
 use rome_console::MarkupBuf;
 use rome_diagnostics::{
-    advice::CodeSuggestionAdvice, location::FileId, Applicability, CodeSuggestion, Diagnostic,
-    Error, FileSpan,
+    advice::CodeSuggestionAdvice, location::FileId, Applicability, CodeSuggestion, Error, FileSpan,
 };
 use rome_rowan::{BatchMutation, Language};
 use std::borrow::Cow;
@@ -38,7 +36,7 @@ pub(crate) struct DiagnosticSignal<D, A, L, T> {
 impl<L: Language, D, T> DiagnosticSignal<D, fn() -> Option<AnalyzerAction<L>>, L, T>
 where
     D: Fn() -> T,
-    T: Diagnostic + Send + Sync + 'static,
+    Error: From<T>,
 {
     pub(crate) fn new(factory: D) -> Self {
         Self {
@@ -65,7 +63,7 @@ impl<L: Language, D, A, T> DiagnosticSignal<D, A, L, T> {
 impl<L: Language, D, A, T> AnalyzerSignal<L> for DiagnosticSignal<D, A, L, T>
 where
     D: Fn() -> T,
-    T: Diagnostic + Send + Sync + 'static,
+    Error: From<T>,
     A: Fn() -> Option<AnalyzerAction<L>>,
 {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
@@ -106,6 +104,14 @@ impl<L: Language> AnalyzerAction<L> {
 
 pub struct AnalyzerActionIter<L: Language> {
     analyzer_actions: IntoIter<AnalyzerAction<L>>,
+}
+
+impl<L: Language> Default for AnalyzerActionIter<L> {
+    fn default() -> Self {
+        Self {
+            analyzer_actions: vec![].into_iter(),
+        }
+    }
 }
 
 impl<L: Language> From<AnalyzerAction<L>> for CodeSuggestionAdvice<MarkupBuf> {
@@ -242,7 +248,6 @@ pub(crate) struct RuleSignal<'phase, R: Rule> {
     query_result: <<R as Rule>::Query as Queryable>::Output,
     state: R::State,
     services: &'phase ServiceBag,
-    options: AnalyzerOptions,
     /// An optional action to suppress the rule.
     apply_suppression_comment: SuppressionCommentEmitter<RuleLanguage<R>>,
 }
@@ -257,7 +262,6 @@ where
         query_result: <<R as Rule>::Query as Queryable>::Output,
         state: R::State,
         services: &'phase ServiceBag,
-        options: AnalyzerOptions,
         apply_suppression_comment: SuppressionCommentEmitter<
             <<R as Rule>::Query as Queryable>::Language,
         >,
@@ -268,7 +272,6 @@ where
             query_result,
             state,
             services,
-            options,
             apply_suppression_comment,
         }
     }
@@ -276,18 +279,16 @@ where
 
 impl<'bag, R> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<'bag, R>
 where
-    R: Rule,
+    R: Rule + 'static,
 {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
-        let ctx =
-            RuleContext::new(&self.query_result, self.root, self.services, &self.options).ok()?;
+        let ctx = RuleContext::new(&self.query_result, self.root, self.services).ok()?;
 
         R::diagnostic(&ctx, &self.state).map(AnalyzerDiagnostic::from)
     }
 
     fn actions(&self) -> AnalyzerActionIter<RuleLanguage<R>> {
-        let ctx =
-            RuleContext::new(&self.query_result, self.root, self.services, &self.options).ok();
+        let ctx = RuleContext::new(&self.query_result, self.root, self.services).ok();
         if let Some(ctx) = ctx {
             let mut actions = Vec::new();
             if let Some(action) = R::action(&ctx, &self.state) {

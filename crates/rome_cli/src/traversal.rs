@@ -465,6 +465,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                     }
                 } else {
                     for diag in diagnostics {
+                        eprintln!("Diagnostics {:?}", diag.severity());
                         let severity = diag.severity();
                         if severity == Severity::Error {
                             *errors += 1;

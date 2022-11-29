@@ -28,22 +28,22 @@ impl RenamableNode for JsIdentifierAssignment {
     }
 }
 
-pub enum JsAnyRenamableDeclaration {
+pub enum AnyJsRenamableDeclaration {
     JsIdentifierBinding(JsIdentifierBinding),
     JsReferenceIdentifier(JsReferenceIdentifier),
     JsIdentifierAssignment(JsIdentifierAssignment),
 }
 
-impl RenamableNode for JsAnyRenamableDeclaration {
+impl RenamableNode for AnyJsRenamableDeclaration {
     fn binding(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
         match self {
-            JsAnyRenamableDeclaration::JsIdentifierBinding(node) => {
+            AnyJsRenamableDeclaration::JsIdentifierBinding(node) => {
                 RenamableNode::binding(node, model)
             }
-            JsAnyRenamableDeclaration::JsReferenceIdentifier(node) => {
+            AnyJsRenamableDeclaration::JsReferenceIdentifier(node) => {
                 RenamableNode::binding(node, model)
             }
-            JsAnyRenamableDeclaration::JsIdentifierAssignment(node) => {
+            AnyJsRenamableDeclaration::JsIdentifierAssignment(node) => {
                 RenamableNode::binding(node, model)
             }
         }
@@ -59,22 +59,22 @@ pub enum RenameError {
     },
 }
 
-impl TryFrom<JsSyntaxNode> for JsAnyRenamableDeclaration {
+impl TryFrom<JsSyntaxNode> for AnyJsRenamableDeclaration {
     type Error = RenameError;
 
     fn try_from(node: JsSyntaxNode) -> Result<Self, Self::Error> {
         match node.kind() {
             JsSyntaxKind::JS_IDENTIFIER_BINDING => node
                 .cast::<JsIdentifierBinding>()
-                .map(JsAnyRenamableDeclaration::JsIdentifierBinding)
+                .map(AnyJsRenamableDeclaration::JsIdentifierBinding)
                 .ok_or(Self::Error::CannotFindDeclaration),
             JsSyntaxKind::JS_REFERENCE_IDENTIFIER => node
                 .cast::<JsReferenceIdentifier>()
-                .map(JsAnyRenamableDeclaration::JsReferenceIdentifier)
+                .map(AnyJsRenamableDeclaration::JsReferenceIdentifier)
                 .ok_or(Self::Error::CannotFindDeclaration),
             JsSyntaxKind::JS_IDENTIFIER_ASSIGNMENT => node
                 .cast::<JsIdentifierAssignment>()
-                .map(JsAnyRenamableDeclaration::JsIdentifierAssignment)
+                .map(AnyJsRenamableDeclaration::JsIdentifierAssignment)
                 .ok_or(Self::Error::CannotFindDeclaration),
             _ => Err(Self::Error::CannotFindDeclaration),
         }
@@ -124,7 +124,7 @@ pub trait RenameSymbolExtensions {
     fn rename_any_renamable_node(
         &mut self,
         model: &SemanticModel,
-        node: JsAnyRenamableDeclaration,
+        node: AnyJsRenamableDeclaration,
         new_name: &str,
     ) -> bool {
         self.rename_node_declaration(model, node, new_name)

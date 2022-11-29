@@ -3,7 +3,7 @@ JsScript {
     directives: JsDirectiveList [],
     statements: JsStatementList [
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
                     YIELD_KW@0..16 "yield" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")],
                     JsYieldArgument {
@@ -25,7 +25,7 @@ JsScript {
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_STATEMENT_LIST@0..19
     0: JS_EXPRESSION_STATEMENT@0..19
-      0: JS_UNKNOWN_EXPRESSION@0..18
+      0: JS_BOGUS_EXPRESSION@0..18
         0: YIELD_KW@0..16 "yield" [Comments("// SCRIPT"), Newline("\n")] [Whitespace(" ")]
         1: JS_YIELD_ARGUMENT@16..18
           0: (empty)

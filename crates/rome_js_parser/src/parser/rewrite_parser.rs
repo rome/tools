@@ -150,8 +150,8 @@ impl RewriteCompletedMarker {
         self.0.text(p.inner)
     }
 
-    pub fn change_to_unknown(&mut self, p: &mut RewriteParser) {
-        self.0.change_to_unknown(p.inner)
+    pub fn change_to_bogus(&mut self, p: &mut RewriteParser) {
+        self.0.change_to_bogus(p.inner)
     }
 }
 

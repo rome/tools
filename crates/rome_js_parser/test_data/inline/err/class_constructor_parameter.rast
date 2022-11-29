@@ -21,7 +21,7 @@ JsModule {
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@21..22 "(" [] [],
                         parameters: JsConstructorParameterList [
-                            JsUnknownParameter {
+                            JsBogusParameter {
                                 items: [
                                     TsPropertyParameterModifierList [
                                         TsAccessibilityModifier {
@@ -76,7 +76,7 @@ JsModule {
           2: JS_CONSTRUCTOR_PARAMETERS@21..35
             0: L_PAREN@21..22 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@22..33
-              0: JS_UNKNOWN_PARAMETER@22..33
+              0: JS_BOGUS_PARAMETER@22..33
                 0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@22..32
                   0: TS_ACCESSIBILITY_MODIFIER@22..32
                     0: PROTECTED_KW@22..32 "protected" [] [Whitespace(" ")]

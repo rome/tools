@@ -16,9 +16,9 @@ JsModule {
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@8..10 "{" [] [Whitespace(" ")],
                                 members: JsObjectMemberList [
-                                    JsUnknownMember {
+                                    JsBogusMember {
                                         items: [
-                                            JsUnknown {
+                                            JsBogus {
                                                 items: [
                                                     SLASH@10..11 "/" [] [],
                                                 ],
@@ -30,9 +30,9 @@ JsModule {
                                         ],
                                     },
                                     COMMA@14..16 "," [] [Whitespace(" ")],
-                                    JsUnknownMember {
+                                    JsBogusMember {
                                         items: [
-                                            JsUnknown {
+                                            JsBogus {
                                                 items: [
                                                     SLASH@16..17 "/" [] [],
                                                 ],
@@ -66,7 +66,7 @@ JsModule {
                             expression: JsObjectExpression {
                                 l_curly_token: L_CURLY@35..36 "{" [] [],
                                 members: JsObjectMemberList [
-                                    JsUnknownMember {
+                                    JsBogusMember {
                                         items: [
                                             L_CURLY@36..37 "{" [] [],
                                         ],
@@ -80,7 +80,7 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 R_CURLY@38..39 "}" [] [],
             ],
@@ -106,15 +106,15 @@ JsModule {
               1: JS_OBJECT_EXPRESSION@8..26
                 0: L_CURLY@8..10 "{" [] [Whitespace(" ")]
                 1: JS_OBJECT_MEMBER_LIST@10..25
-                  0: JS_UNKNOWN_MEMBER@10..14
-                    0: JS_UNKNOWN@10..11
+                  0: JS_BOGUS_MEMBER@10..14
+                    0: JS_BOGUS@10..11
                       0: SLASH@10..11 "/" [] []
                     1: COLON@11..13 ":" [] [Whitespace(" ")]
                     2: JS_NUMBER_LITERAL_EXPRESSION@13..14
                       0: JS_NUMBER_LITERAL@13..14 "6" [] []
                   1: COMMA@14..16 "," [] [Whitespace(" ")]
-                  2: JS_UNKNOWN_MEMBER@16..25
-                    0: JS_UNKNOWN@16..17
+                  2: JS_BOGUS_MEMBER@16..25
+                    0: JS_BOGUS@16..17
                       0: SLASH@16..17 "/" [] []
                     1: COLON@17..19 ":" [] [Whitespace(" ")]
                     2: JS_REGEX_LITERAL_EXPRESSION@19..25
@@ -134,11 +134,11 @@ JsModule {
               1: JS_OBJECT_EXPRESSION@35..38
                 0: L_CURLY@35..36 "{" [] []
                 1: JS_OBJECT_MEMBER_LIST@36..37
-                  0: JS_UNKNOWN_MEMBER@36..37
+                  0: JS_BOGUS_MEMBER@36..37
                     0: L_CURLY@36..37 "{" [] []
                 2: R_CURLY@37..38 "}" [] []
       1: (empty)
-    2: JS_UNKNOWN_STATEMENT@38..39
+    2: JS_BOGUS_STATEMENT@38..39
       0: R_CURLY@38..39 "}" [] []
   3: EOF@39..40 "" [Newline("\n")] []
 --

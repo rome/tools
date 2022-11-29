@@ -2,7 +2,7 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyArrayElement, JsAnyExpression, JsArrayExpression, TriviaPieceKind};
+use rome_js_syntax::{AnyJsArrayElement, AnyJsExpression, JsArrayExpression, TriviaPieceKind};
 use rome_rowan::{AstNode, AstNodeExt, AstSeparatedList, BatchMutationExt};
 
 use crate::JsRuleAction;
@@ -35,7 +35,7 @@ impl Rule for NoSparseArray {
 
         // We defer collect `JsHole` index until user want to apply code action.
         node.elements().iter().find_map(|element| {
-            if matches!(element.ok()?, JsAnyArrayElement::JsArrayHole(_),) {
+            if matches!(element.ok()?, AnyJsArrayElement::JsArrayHole(_),) {
                 Some(())
             } else {
                 None
@@ -62,7 +62,7 @@ markup! {
         let mut final_array_element_list = node.elements();
 
         for (i, item) in final_array_element_list.iter().enumerate() {
-            if matches!(item, Ok(JsAnyArrayElement::JsArrayHole(_))) {
+            if matches!(item, Ok(AnyJsArrayElement::JsArrayHole(_))) {
                 let undefine_indent = if i == 0 {
                     make::ident("undefined")
                 } else {
@@ -76,7 +76,7 @@ markup! {
                 let n_element = final_array_element_list.iter().nth(i)?.ok()?;
                 final_array_element_list = final_array_element_list.replace_node(
                     n_element,
-                    JsAnyArrayElement::JsAnyExpression(JsAnyExpression::JsIdentifierExpression(
+                    AnyJsArrayElement::AnyJsExpression(AnyJsExpression::JsIdentifierExpression(
                         ident_expr,
                     )),
                 )?;

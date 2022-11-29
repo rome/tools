@@ -28,13 +28,13 @@ JsModule {
                 semicolon_token: SEMICOLON@26..27 ";" [] [],
             },
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 EXPORT_KW@27..35 "export" [Newline("\n")] [Whitespace(" ")],
-                JsUnknown {
+                JsBogus {
                     items: [
                         L_CURLY@35..37 "{" [] [Whitespace(" ")],
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 JsExportNamedFromSpecifier {
                                     type_token: missing (optional),
@@ -46,7 +46,7 @@ JsModule {
                                         exported_name: missing (required),
                                     },
                                 },
-                                JsUnknown {
+                                JsBogus {
                                     items: [
                                         JS_NUMBER_LITERAL@42..44 "5" [] [Whitespace(" ")],
                                     ],
@@ -102,15 +102,15 @@ JsModule {
                 semicolon_token: SEMICOLON@85..86 ";" [] [],
             },
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 EXPORT_KW@86..94 "export" [Newline("\n")] [Whitespace(" ")],
-                JsUnknown {
+                JsBogus {
                     items: [
                         L_CURLY@94..96 "{" [] [Whitespace(" ")],
-                        JsUnknown {
+                        JsBogus {
                             items: [
-                                JsUnknown {
+                                JsBogus {
                                     items: [
                                         JS_NUMBER_LITERAL@96..98 "5" [] [Whitespace(" ")],
                                         AS_KW@98..101 "as" [] [Whitespace(" ")],
@@ -156,11 +156,11 @@ JsModule {
           0: JS_STRING_LITERAL@21..26 "\"mod\"" [] []
         6: (empty)
         7: SEMICOLON@26..27 ";" [] []
-    1: JS_UNKNOWN_STATEMENT@27..57
+    1: JS_BOGUS_STATEMENT@27..57
       0: EXPORT_KW@27..35 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_UNKNOWN@35..57
+      1: JS_BOGUS@35..57
         0: L_CURLY@35..37 "{" [] [Whitespace(" ")]
-        1: JS_UNKNOWN@37..44
+        1: JS_BOGUS@37..44
           0: JS_EXPORT_NAMED_FROM_SPECIFIER@37..42
             0: (empty)
             1: JS_LITERAL_EXPORT_NAME@37..39
@@ -168,7 +168,7 @@ JsModule {
             2: JS_EXPORT_AS_CLAUSE@39..42
               0: AS_KW@39..42 "as" [] [Whitespace(" ")]
               1: (empty)
-          1: JS_UNKNOWN@42..44
+          1: JS_BOGUS@42..44
             0: JS_NUMBER_LITERAL@42..44 "5" [] [Whitespace(" ")]
         2: R_CURLY@44..46 "}" [] [Whitespace(" ")]
         3: FROM_KW@46..51 "from" [] [Whitespace(" ")]
@@ -204,12 +204,12 @@ JsModule {
           0: JS_STRING_LITERAL@80..85 "\"mod\"" [] []
         6: (empty)
         7: SEMICOLON@85..86 ";" [] []
-    3: JS_UNKNOWN_STATEMENT@86..116
+    3: JS_BOGUS_STATEMENT@86..116
       0: EXPORT_KW@86..94 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_UNKNOWN@94..116
+      1: JS_BOGUS@94..116
         0: L_CURLY@94..96 "{" [] [Whitespace(" ")]
-        1: JS_UNKNOWN@96..103
-          0: JS_UNKNOWN@96..103
+        1: JS_BOGUS@96..103
+          0: JS_BOGUS@96..103
             0: JS_NUMBER_LITERAL@96..98 "5" [] [Whitespace(" ")]
             1: AS_KW@98..101 "as" [] [Whitespace(" ")]
             2: IDENT@101..103 "b" [] [Whitespace(" ")]

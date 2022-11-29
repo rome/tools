@@ -2,7 +2,7 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_syntax::{
-    JsAnyExpression, JsCallArgumentList, JsCallArguments, JsCallExpression,
+    AnyJsExpression, JsCallArgumentList, JsCallArguments, JsCallExpression,
     JsConditionalExpression, JsDoWhileStatement, JsForStatement, JsIfStatement, JsNewExpression,
     JsSyntaxKind, JsSyntaxNode, JsUnaryExpression, JsUnaryOperator, JsWhileStatement,
 };
@@ -134,8 +134,8 @@ fn is_negation(node: &JsSyntaxNode) -> Option<JsUnaryExpression> {
 }
 
 impl Rule for NoExtraBooleanCast {
-    type Query = Ast<JsAnyExpression>;
-    type State = (JsAnyExpression, ExtraBooleanCastType);
+    type Query = Ast<AnyJsExpression>;
+    type State = (AnyJsExpression, ExtraBooleanCastType);
     type Signals = Option<Self::State>;
     type Options = ();
 
@@ -169,7 +169,7 @@ impl Rule for NoExtraBooleanCast {
                             .next()?
                             .ok()
                             .map(|item| item.into_syntax())
-                            .and_then(JsAnyExpression::cast)
+                            .and_then(AnyJsExpression::cast)
                             .map(|expr| (expr, ExtraBooleanCastType::BooleanCall));
                     }
                 }
@@ -189,7 +189,7 @@ impl Rule for NoExtraBooleanCast {
                             .next()?
                             .ok()
                             .map(|item| item.into_syntax())
-                            .and_then(JsAnyExpression::cast)
+                            .and_then(AnyJsExpression::cast)
                             .map(|expr| (expr, ExtraBooleanCastType::BooleanCall));
                     }
                 }
@@ -245,11 +245,11 @@ impl Rule for NoExtraBooleanCast {
 ///
 fn is_double_negation_ignore_parenthesis(
     syntax: &rome_rowan::SyntaxNode<rome_js_syntax::JsLanguage>,
-) -> Option<(JsAnyExpression, ExtraBooleanCastType)> {
+) -> Option<(AnyJsExpression, ExtraBooleanCastType)> {
     if let Some(negation_expr) = is_negation(syntax) {
         let argument = negation_expr.argument().ok()?;
         match argument {
-            JsAnyExpression::JsUnaryExpression(expr)
+            AnyJsExpression::JsUnaryExpression(expr)
                 if expr.operator().ok()? == JsUnaryOperator::LogicalNot =>
             {
                 expr.argument()
@@ -257,7 +257,7 @@ fn is_double_negation_ignore_parenthesis(
                     .map(|argument| (argument, ExtraBooleanCastType::DoubleNegation))
             }
             // Check edge case `!(!xxx)`
-            JsAnyExpression::JsParenthesizedExpression(expr) => {
+            AnyJsExpression::JsParenthesizedExpression(expr) => {
                 expr.expression().ok().and_then(|expr| {
                     is_negation(expr.syntax()).and_then(|negation| {
                         Some((

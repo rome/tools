@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::{ConditionalJsxChain, JsAnyConditional};
+use crate::utils::{AnyJsConditional, ConditionalJsxChain};
 use rome_formatter::FormatRuleWithOptions;
 
 use crate::parentheses::{
@@ -28,7 +28,7 @@ impl FormatNodeRule<JsConditionalExpression> for FormatJsConditionalExpression {
         node: &JsConditionalExpression,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        JsAnyConditional::from(node.clone())
+        AnyJsConditional::from(node.clone())
             .format()
             .with_options(self.jsx_chain)
             .fmt(formatter)

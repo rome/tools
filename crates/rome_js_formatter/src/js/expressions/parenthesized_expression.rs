@@ -3,7 +3,7 @@ use rome_formatter::{format_args, write, CstFormatContext};
 
 use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::{
-    JsAnyExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields, JsSyntaxNode,
+    AnyJsExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields, JsSyntaxNode,
 };
 
 #[derive(Debug, Clone, Default)]
@@ -28,7 +28,7 @@ impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpressi
         let should_hug = !comments.has_comments(expression.syntax())
             && (matches!(
                 expression,
-                JsAnyExpression::JsObjectExpression(_) | JsAnyExpression::JsArrayExpression(_)
+                AnyJsExpression::JsObjectExpression(_) | AnyJsExpression::JsArrayExpression(_)
             ));
 
         if should_hug {

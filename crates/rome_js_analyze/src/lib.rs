@@ -1,19 +1,27 @@
 use control_flow::make_visitor;
+use rome_analyze::context::ServiceBagRuleOptionsWrapper;
+use rome_analyze::options::OptionsDeserializationDiagnostic;
 use rome_analyze::{
     AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal, ControlFlow,
-    InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry, Phases, RuleAction,
-    RuleRegistry, ServiceBag, SuppressionCommentEmitterPayload, SuppressionKind, SyntaxVisitor,
+    DeserializableRuleOptions, InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry,
+    Phases, RuleAction, RuleRegistry, ServiceBag, SuppressionCommentEmitterPayload,
+    SuppressionKind, SyntaxVisitor,
 };
+use rome_aria::{AriaProperties, AriaRoles};
 use rome_diagnostics::{category, FileId};
 use rome_js_factory::make::{jsx_expression_child, token};
+use rome_js_syntax::suppression::SuppressionDiagnostic;
 use rome_js_syntax::{
-    suppression::parse_suppression_comment, JsLanguage, JsSyntaxToken, JsxAnyChild, T,
+    suppression::parse_suppression_comment, AnyJsxChild, JsLanguage, JsSyntaxToken, T,
 };
 use rome_rowan::{AstNode, TokenAtOffset, TriviaPieceKind};
 use serde::{Deserialize, Serialize};
+use std::sync::Arc;
 use std::{borrow::Cow, error::Error};
 
 mod analyzers;
+mod aria_analyzers;
+mod aria_services;
 mod assists;
 mod ast_utils;
 mod control_flow;
@@ -44,6 +52,46 @@ pub fn metadata() -> &'static MetadataRegistry {
     &METADATA
 }
 
+pub struct RulesConfigurator<'a> {
+    options: &'a AnalyzerOptions,
+    services: &'a mut ServiceBag,
+    diagnostics: Vec<OptionsDeserializationDiagnostic>,
+}
+
+impl<'a, L: rome_rowan::Language + Default> rome_analyze::RegistryVisitor<L>
+    for RulesConfigurator<'a>
+{
+    fn record_rule<R>(&mut self)
+    where
+        R: rome_analyze::Rule + 'static,
+        R::Query: rome_analyze::Queryable<Language = L>,
+        <R::Query as rome_analyze::Queryable>::Output: Clone,
+    {
+        let rule_key = rome_analyze::RuleKey::rule::<R>();
+        dbg!(&rule_key);
+        let options = if let Some(options) = self.options.configuration.rules.get_rule(&rule_key) {
+            let value = options.value();
+            match <R::Options as DeserializableRuleOptions>::try_from(value.clone()) {
+                Ok(result) => result,
+                Err(error) => {
+                    let err = OptionsDeserializationDiagnostic::new(
+                        rule_key.rule_name(),
+                        value.to_string(),
+                        error,
+                    );
+                    self.diagnostics.push(err);
+                    <R::Options as Default>::default()
+                }
+            }
+        } else {
+            <R::Options as Default>::default()
+        };
+
+        self.services
+            .insert_service(ServiceBagRuleOptionsWrapper::<R>(options));
+    }
+}
+
 /// Run the analyzer on the provided `root`: this process will use the given `filter`
 /// to selectively restrict analysis to specific rules / a specific source range,
 /// then call `emit_signal` when an analysis rule emits a diagnostic or action.
@@ -63,26 +111,58 @@ where
     F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
     B: 'a,
 {
-    fn parse_linter_suppression_comment(text: &str) -> Vec<SuppressionKind> {
-        parse_suppression_comment(text)
-            .flat_map(|comment| comment.categories)
-            .filter_map(|(key, value)| {
+    fn parse_linter_suppression_comment(
+        text: &str,
+    ) -> Vec<Result<SuppressionKind, SuppressionDiagnostic>> {
+        let mut result = Vec::new();
+
+        for comment in parse_suppression_comment(text) {
+            let categories = match comment {
+                Ok(comment) => comment.categories,
+                Err(err) => {
+                    result.push(Err(err));
+                    continue;
+                }
+            };
+
+            for (key, value) in categories {
                 if key == category!("lint") {
                     if let Some(value) = value {
-                        Some(SuppressionKind::MaybeLegacy(value))
+                        result.push(Ok(SuppressionKind::MaybeLegacy(value)));
                     } else {
-                        Some(SuppressionKind::Everything)
+                        result.push(Ok(SuppressionKind::Everything));
                     }
                 } else {
                     let category = key.name();
-                    category.strip_prefix("lint/").map(SuppressionKind::Rule)
+                    if let Some(rule) = category.strip_prefix("lint/") {
+                        result.push(Ok(SuppressionKind::Rule(rule)));
+                    }
                 }
-            })
-            .collect()
+            }
+        }
+
+        result
     }
 
     let mut registry = RuleRegistry::builder(&filter);
     visit_registry(&mut registry);
+
+    // Parse rule options
+    let mut services = ServiceBag::default();
+    let mut configurator = RulesConfigurator {
+        options,
+        services: &mut services,
+        diagnostics: vec![],
+    };
+    visit_registry(&mut configurator);
+
+    // Bail if we can't parse a rule option
+    if !configurator.diagnostics.is_empty() {
+        for diagnostic in configurator.diagnostics {
+            emit_signal(&diagnostic);
+        }
+        return None;
+    }
 
     let mut analyzer = Analyzer::new(
         metadata(),
@@ -98,11 +178,13 @@ where
     analyzer.add_visitor(Phases::Semantic, SemanticModelVisitor);
     analyzer.add_visitor(Phases::Semantic, SyntaxVisitor::default());
 
+    services.insert_service(Arc::new(AriaRoles::default()));
+    services.insert_service(Arc::new(AriaProperties::default()));
     analyzer.run(AnalyzerContext {
         file_id,
         root: root.clone(),
         range: filter.range,
-        services: ServiceBag::default(),
+        services,
         options,
     })
 }
@@ -134,6 +216,7 @@ mod tests {
     use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic, Severity};
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};
+    use std::slice;
 
     use crate::{analyze, AnalysisFilter, ControlFlow};
 
@@ -149,25 +232,19 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"function f() {
-            return (
-                <div
-                ><img /></div>
-            )
-        };
-        f();
+        const SOURCE: &str = r#"<span aria-current="invalid"></span>
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
-        let _rule_filter = RuleFilter::Rule("correctness", "flipBinExp");
+        let rule_filter = RuleFilter::Rule("correctness", "noUselessFragments");
         analyze(
             FileId::zero(),
             &parsed.tree(),
             AnalysisFilter {
-                // enabled_rules: Some(slice::from_ref(&rule_filter)),
+                enabled_rules: Some(slice::from_ref(&rule_filter)),
                 ..AnalysisFilter::default()
             },
             &options,
@@ -194,7 +271,7 @@ mod tests {
             },
         );
 
-        assert_eq!(error_ranges.as_slice(), &[]);
+        // assert_eq!(error_ranges.as_slice(), &[]);
     }
 
     #[test]
@@ -237,11 +314,19 @@ mod tests {
             function checkSuppressions4(a, b) {
                 a == b;
             }
+
+            function checkSuppressions5() {
+                // rome-ignore format explanation
+                // rome-ignore format(:
+                // rome-ignore (value): explanation
+                // rome-ignore unknown: explanation
+            }
         ";
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::js_module());
 
-        let mut error_ranges: Vec<TextRange> = Vec::new();
+        let mut lint_ranges: Vec<TextRange> = Vec::new();
+        let mut parse_ranges: Vec<TextRange> = Vec::new();
         let mut warn_ranges: Vec<TextRange> = Vec::new();
 
         let options = AnalyzerOptions::default();
@@ -260,7 +345,11 @@ mod tests {
 
                     let code = error.category().unwrap();
                     if code == category!("lint/correctness/noDoubleEquals") {
-                        error_ranges.push(span.unwrap());
+                        lint_ranges.push(span.unwrap());
+                    }
+
+                    if code == category!("suppressions/parse") {
+                        parse_ranges.push(span.unwrap());
                     }
 
                     if code == category!("suppressions/deprecatedSyntax") {
@@ -274,7 +363,7 @@ mod tests {
         );
 
         assert_eq!(
-            error_ranges.as_slice(),
+            lint_ranges.as_slice(),
             &[
                 TextRange::new(TextSize::from(67), TextSize::from(69)),
                 TextRange::new(TextSize::from(651), TextSize::from(653)),
@@ -282,6 +371,16 @@ mod tests {
                 TextRange::new(TextSize::from(932), TextSize::from(934)),
                 TextRange::new(TextSize::from(1523), TextSize::from(1525)),
                 TextRange::new(TextSize::from(1718), TextSize::from(1720)),
+            ]
+        );
+
+        assert_eq!(
+            parse_ranges.as_slice(),
+            &[
+                TextRange::new(TextSize::from(1821), TextSize::from(1832)),
+                TextRange::new(TextSize::from(1871), TextSize::from(1872)),
+                TextRange::new(TextSize::from(1904), TextSize::from(1905)),
+                TextRange::new(TextSize::from(1956), TextSize::from(1963)),
             ]
         );
 
@@ -390,7 +489,7 @@ fn apply_suppression_comment(payload: SuppressionCommentEmitterPayload<JsLanguag
         }
     };
     if let Some(current_token) = current_token {
-        if let Some(element) = current_token.ancestors().find_map(JsxAnyChild::cast) {
+        if let Some(element) = current_token.ancestors().find_map(AnyJsxChild::cast) {
             let jsx_comment = jsx_expression_child(
                 token(T!['{']).with_trailing_trivia([(
                     TriviaPieceKind::SingleLineComment,
@@ -400,7 +499,7 @@ fn apply_suppression_comment(payload: SuppressionCommentEmitterPayload<JsLanguag
             );
             mutation.add_jsx_element_before_element(
                 &element,
-                &JsxAnyChild::JsxExpressionChild(jsx_comment.build()),
+                &AnyJsxChild::JsxExpressionChild(jsx_comment.build()),
             );
         } else {
             let new_token = current_token.with_leading_trivia([

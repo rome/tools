@@ -36,12 +36,24 @@ impl rome_rowan::SyntaxKind for JsonSyntaxKind {
     const TOMBSTONE: Self = JsonSyntaxKind::TOMBSTONE;
     const EOF: Self = JsonSyntaxKind::EOF;
 
-    fn is_unknown(&self) -> bool {
-        matches!(self, JsonSyntaxKind::JSON_UNKNOWN)
+    fn is_bogus(&self) -> bool {
+        matches!(
+            self,
+            JsonSyntaxKind::JSON_BOGUS | JsonSyntaxKind::JSON_BOGUS_VALUE
+        )
     }
 
-    fn to_unknown(&self) -> Self {
-        JsonSyntaxKind::JSON_UNKNOWN
+    fn to_bogus(&self) -> Self {
+        match self {
+            JsonSyntaxKind::JSON_NUMBER_VALUE
+            | JsonSyntaxKind::JSON_STRING_VALUE
+            | JsonSyntaxKind::JSON_BOOLEAN_VALUE
+            | JsonSyntaxKind::JSON_NULL_VALUE
+            | JsonSyntaxKind::JSON_ARRAY_VALUE
+            | JsonSyntaxKind::JSON_OBJECT_VALUE
+            | JsonSyntaxKind::JSON_BOGUS_VALUE => JsonSyntaxKind::JSON_BOGUS_VALUE,
+            _ => JsonSyntaxKind::JSON_BOGUS,
+        }
     }
 
     #[inline]

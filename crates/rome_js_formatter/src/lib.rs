@@ -189,7 +189,7 @@ use rome_formatter::{
 };
 use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
 use rome_js_syntax::{
-    JsAnyDeclaration, JsAnyStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
+    AnyJsDeclaration, AnyJsStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
 use rome_rowan::TextRange;
 use rome_rowan::{AstNode, SyntaxNode};
@@ -280,13 +280,13 @@ where
     }
 }
 
-/// Rule for formatting an unknown node.
-pub(crate) trait FormatUnknownNodeRule<N>
+/// Rule for formatting an bogus node.
+pub(crate) trait FormatBogusNodeRule<N>
 where
     N: AstNode<Language = JsLanguage>,
 {
     fn fmt(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
-        format_unknown_node(node.syntax()).fmt(f)
+        format_bogus_node(node.syntax()).fmt(f)
     }
 }
 
@@ -338,8 +338,8 @@ impl FormatLanguage for JsFormatLanguage {
             return false;
         }
 
-        JsAnyStatement::can_cast(kind)
-            || JsAnyDeclaration::can_cast(kind)
+        AnyJsStatement::can_cast(kind)
+            || AnyJsDeclaration::can_cast(kind)
             || matches!(
                 kind,
                 JsSyntaxKind::JS_DIRECTIVE | JsSyntaxKind::JS_EXPORT | JsSyntaxKind::JS_IMPORT

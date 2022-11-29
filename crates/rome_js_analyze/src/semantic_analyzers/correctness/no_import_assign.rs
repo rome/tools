@@ -57,7 +57,7 @@ declare_rule! {
 }
 
 impl Rule for NoImportAssign {
-    type Query = Semantic<JsAnyImportLike>;
+    type Query = Semantic<AnyJsImportLike>;
     /// The first element of the tuple is the invalid `JsIdentifierAssignment`, the second element of the tuple is the imported `JsIdentifierBinding`.
     type State = (JsIdentifierAssignment, JsIdentifierBinding);
     type Signals = Vec<Self::State>;
@@ -68,23 +68,23 @@ impl Rule for NoImportAssign {
         let mut invalid_assign_list = vec![];
         let local_name_binding = match label_statement {
             // `import xx from 'y'`
-            JsAnyImportLike::JsImportDefaultClause(clause) => clause.local_name().ok(),
+            AnyJsImportLike::JsImportDefaultClause(clause) => clause.local_name().ok(),
             // `import * as xxx from 'y'`
-            JsAnyImportLike::JsImportNamespaceClause(clause) => clause.local_name().ok(),
+            AnyJsImportLike::JsImportNamespaceClause(clause) => clause.local_name().ok(),
             // `import {x as xx} from 'y'`
             //          ^^^^^^^
-            JsAnyImportLike::JsNamedImportSpecifier(specifier) => specifier.local_name().ok(),
+            AnyJsImportLike::JsNamedImportSpecifier(specifier) => specifier.local_name().ok(),
             // `import {x} from 'y'`
             //          ^
-            JsAnyImportLike::JsShorthandNamedImportSpecifier(specifier) => {
+            AnyJsImportLike::JsShorthandNamedImportSpecifier(specifier) => {
                 specifier.local_name().ok()
             }
             // `import a, * as b from 'y'`
             //            ^^^^^^
-            JsAnyImportLike::JsNamespaceImportSpecifier(specifier) => specifier.local_name().ok(),
+            AnyJsImportLike::JsNamespaceImportSpecifier(specifier) => specifier.local_name().ok(),
             // `import a, * as b from 'y'`
             //         ^
-            JsAnyImportLike::JsDefaultImportSpecifier(specifier) => specifier.local_name().ok(),
+            AnyJsImportLike::JsDefaultImportSpecifier(specifier) => specifier.local_name().ok(),
         };
         local_name_binding
             .and_then(|binding| {
@@ -125,5 +125,5 @@ impl Rule for NoImportAssign {
 }
 
 declare_node_union! {
-    pub(crate) JsAnyImportLike = JsImportDefaultClause | JsImportNamespaceClause | JsNamedImportSpecifier | JsShorthandNamedImportSpecifier | JsNamespaceImportSpecifier | JsDefaultImportSpecifier
+    pub(crate) AnyJsImportLike = JsImportDefaultClause | JsImportNamespaceClause | JsNamedImportSpecifier | JsShorthandNamedImportSpecifier | JsNamespaceImportSpecifier | JsDefaultImportSpecifier
 }

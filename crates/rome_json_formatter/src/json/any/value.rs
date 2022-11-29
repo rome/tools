@@ -1,20 +1,20 @@
 //! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_json_syntax::JsonAnyValue;
+use rome_json_syntax::AnyJsonValue;
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatJsonAnyValue;
-impl FormatRule<JsonAnyValue> for FormatJsonAnyValue {
+pub(crate) struct FormatAnyJsonValue;
+impl FormatRule<AnyJsonValue> for FormatAnyJsonValue {
     type Context = JsonFormatContext;
-    fn fmt(&self, node: &JsonAnyValue, f: &mut JsonFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyJsonValue, f: &mut JsonFormatter) -> FormatResult<()> {
         match node {
-            JsonAnyValue::JsonString(node) => node.format().fmt(f),
-            JsonAnyValue::JsonBoolean(node) => node.format().fmt(f),
-            JsonAnyValue::JsonNull(node) => node.format().fmt(f),
-            JsonAnyValue::JsonNumber(node) => node.format().fmt(f),
-            JsonAnyValue::JsonArray(node) => node.format().fmt(f),
-            JsonAnyValue::JsonObject(node) => node.format().fmt(f),
-            JsonAnyValue::JsonUnknown(node) => node.format().fmt(f),
+            AnyJsonValue::JsonStringValue(node) => node.format().fmt(f),
+            AnyJsonValue::JsonBooleanValue(node) => node.format().fmt(f),
+            AnyJsonValue::JsonNullValue(node) => node.format().fmt(f),
+            AnyJsonValue::JsonNumberValue(node) => node.format().fmt(f),
+            AnyJsonValue::JsonArrayValue(node) => node.format().fmt(f),
+            AnyJsonValue::JsonObjectValue(node) => node.format().fmt(f),
+            AnyJsonValue::JsonBogusValue(node) => node.format().fmt(f),
         }
     }
 }

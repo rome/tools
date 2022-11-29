@@ -120,12 +120,12 @@ JsModule {
             },
             semicolon_token: missing (optional),
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
-                JsUnknown {
+                JsBogus {
                     items: [
                         VAR_KW@55..58 "var" [] [],
-                        JsUnknown {
+                        JsBogus {
                             items: [],
                         },
                     ],
@@ -278,10 +278,10 @@ JsModule {
                 0: IDENT@53..55 "b" [] [Whitespace(" ")]
           2: (empty)
       1: (empty)
-    4: JS_UNKNOWN_STATEMENT@55..59
-      0: JS_UNKNOWN@55..58
+    4: JS_BOGUS_STATEMENT@55..59
+      0: JS_BOGUS@55..58
         0: VAR_KW@55..58 "var" [] []
-        1: JS_UNKNOWN@58..58
+        1: JS_BOGUS@58..58
       1: SEMICOLON@58..59 ";" [] []
     5: JS_EXPRESSION_STATEMENT@59..70
       0: JS_CALL_EXPRESSION@59..69

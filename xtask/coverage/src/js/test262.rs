@@ -1,5 +1,5 @@
 use crate::runner::{
-    create_unknown_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
+    create_bogus_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
 };
 use regex::Regex;
 use rome_diagnostics::location::FileId;
@@ -102,16 +102,13 @@ impl Test262TestCase {
 
         match parse(&code, FileId::zero(), source_type).ok() {
             Ok(root) if !should_fail => {
-                if let Some(unknown) = root
+                if let Some(bogus) = root
                     .syntax()
                     .descendants()
-                    .find(|descendant| descendant.kind().is_unknown())
+                    .find(|descendant| descendant.kind().is_bogus())
                 {
                     TestRunOutcome::IncorrectlyErrored {
-                        errors: vec![create_unknown_node_in_tree_diagnostic(
-                            FileId::zero(),
-                            unknown,
-                        )],
+                        errors: vec![create_bogus_node_in_tree_diagnostic(FileId::zero(), bogus)],
                         files,
                     }
                 } else {

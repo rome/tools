@@ -4,7 +4,7 @@ pub mod hooks;
 
 use rome_js_semantic::{Binding, SemanticModel};
 use rome_js_syntax::{
-    JsAnyCallArgument, JsAnyExpression, JsAnyMemberExpression, JsAnyNamedImportSpecifier,
+    AnyJsCallArgument, AnyJsExpression, AnyJsMemberExpression, AnyJsNamedImportSpecifier,
     JsCallExpression, JsIdentifierBinding, JsImport, JsImportNamedClause,
     JsNamedImportSpecifierList, JsNamedImportSpecifiers, JsObjectExpression,
     JsPropertyObjectMember, JsxMemberName, JsxReferenceIdentifier,
@@ -22,11 +22,11 @@ pub(crate) trait ReactApiCall {
 ///[React.createElement]: https://reactjs.org/docs/react-api.html#createelement
 pub(crate) struct ReactCreateElementCall {
     /// The type of the react element
-    pub(crate) element_type: JsAnyCallArgument,
+    pub(crate) element_type: AnyJsCallArgument,
     /// Optional props
     pub(crate) props: Option<JsObjectExpression>,
     /// Optional children
-    pub(crate) children: Option<JsAnyExpression>,
+    pub(crate) children: Option<AnyJsExpression>,
 }
 
 impl ReactCreateElementCall {
@@ -73,14 +73,14 @@ impl ReactCreateElementCall {
                         .and_then(|argument| argument.ok())
                         .and_then(|argument| {
                             argument
-                                .as_js_any_expression()?
+                                .as_any_js_expression()?
                                 .as_js_object_expression()
                                 .cloned()
                         });
                 let third_argument = iter
                     .next()
                     .and_then(|argument| argument.ok())
-                    .and_then(|argument| argument.as_js_any_expression().cloned());
+                    .and_then(|argument| argument.as_any_js_expression().cloned());
 
                 Some(ReactCreateElementCall {
                     element_type: first_argument,
@@ -164,7 +164,7 @@ const VALID_REACT_API: [&str; 14] = [
 ///
 /// [`React` API]: https://reactjs.org/docs/react-api.html
 pub(crate) fn is_react_call_api(
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
     model: &SemanticModel,
     lib: ReactLibrary,
     api_name: &str,
@@ -175,7 +175,7 @@ pub(crate) fn is_react_call_api(
     }
 
     let expr = expression.omit_parentheses();
-    if let Some(callee) = JsAnyMemberExpression::cast_ref(expr.syntax()) {
+    if let Some(callee) = AnyJsMemberExpression::cast_ref(expr.syntax()) {
         let Some(object) = callee.get_object_reference_identifier() else { return false };
         if !callee.has_member_name(api_name) {
             return false;
@@ -252,13 +252,13 @@ fn is_react_export(binding: Binding, lib: ReactLibrary) -> bool {
 
 fn is_named_react_export(binding: Binding, lib: ReactLibrary, name: &str) -> Option<bool> {
     let ident = JsIdentifierBinding::cast_ref(binding.syntax())?;
-    let import_specifier = ident.parent::<JsAnyNamedImportSpecifier>()?;
+    let import_specifier = ident.parent::<AnyJsNamedImportSpecifier>()?;
     let name_token = match &import_specifier {
-        JsAnyNamedImportSpecifier::JsNamedImportSpecifier(named_import) => {
+        AnyJsNamedImportSpecifier::JsNamedImportSpecifier(named_import) => {
             named_import.name().ok()?.value().ok()?
         }
-        JsAnyNamedImportSpecifier::JsShorthandNamedImportSpecifier(_) => ident.name_token().ok()?,
-        JsAnyNamedImportSpecifier::JsUnknownNamedImportSpecifier(_) => {
+        AnyJsNamedImportSpecifier::JsShorthandNamedImportSpecifier(_) => ident.name_token().ok()?,
+        AnyJsNamedImportSpecifier::JsBogusNamedImportSpecifier(_) => {
             return Some(false);
         }
     };

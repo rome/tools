@@ -3,7 +3,7 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, Rul
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyExpression, JsCallExpression, JsNewExpression, JsNewExpressionFields};
+use rome_js_syntax::{AnyJsExpression, JsCallExpression, JsNewExpression, JsNewExpressionFields};
 use rome_rowan::{AstNode, BatchMutationExt};
 
 declare_rule! {
@@ -76,8 +76,8 @@ impl Rule for NoNewSymbol {
 
         let call_expression = convert_new_expression_to_call_expression(node)?;
         mutation.replace_node_discard_trivia(
-            JsAnyExpression::JsNewExpression(node.clone()),
-            JsAnyExpression::JsCallExpression(call_expression),
+            AnyJsExpression::JsNewExpression(node.clone()),
+            AnyJsExpression::JsCallExpression(call_expression),
         );
 
         Some(JsRuleAction {

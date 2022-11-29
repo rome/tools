@@ -1,7 +1,7 @@
 //! Extended AST node definitions for statements which are unique and special enough to generate code for manually
 
 use crate::{
-    JsAnyArrayAssignmentPatternElement, JsAnyAssignmentPattern, JsForVariableDeclaration,
+    AnyJsArrayAssignmentPatternElement, AnyJsAssignmentPattern, JsForVariableDeclaration,
     JsVariableDeclaration, T,
 };
 use rome_rowan::SyntaxResult;
@@ -69,10 +69,10 @@ impl JsForVariableDeclaration {
     }
 }
 
-impl JsAnyArrayAssignmentPatternElement {
-    pub fn pattern(self) -> Option<JsAnyAssignmentPattern> {
+impl AnyJsArrayAssignmentPatternElement {
+    pub fn pattern(self) -> Option<AnyJsAssignmentPattern> {
         match self {
-            Self::JsAnyAssignmentPattern(p) => Some(p),
+            Self::AnyJsAssignmentPattern(p) => Some(p),
             Self::JsArrayAssignmentPatternRestElement(p) => p.pattern().ok(),
             Self::JsAssignmentWithDefault(p) => p.pattern().ok(),
             Self::JsArrayHole(_) => None,

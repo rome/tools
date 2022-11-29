@@ -14,7 +14,7 @@ use rome_formatter::{
     TransformSourceMap,
 };
 use rome_formatter::{Formatted, Printed};
-use rome_json_syntax::{JsonAnyValue, JsonLanguage, JsonSyntaxNode, JsonSyntaxToken};
+use rome_json_syntax::{AnyJsonValue, JsonLanguage, JsonSyntaxNode, JsonSyntaxToken};
 use rome_rowan::{AstNode, SyntaxNode, SyntaxTriviaPieceComments, TextRange};
 
 include!("../../rome_formatter/shared_traits.rs");
@@ -32,13 +32,13 @@ where
     fn fmt_fields(&self, node: &N, f: &mut JsonFormatter) -> FormatResult<()>;
 }
 
-/// Rule for formatting an unknown node.
-pub(crate) trait FormatUnknownNodeRule<N>
+/// Rule for formatting an bogus nodes.
+pub(crate) trait FormatBogusNodeRule<N>
 where
     N: AstNode<Language = JsonLanguage>,
 {
     fn fmt(&self, node: &N, f: &mut JsonFormatter) -> FormatResult<()> {
-        format_unknown_node(node.syntax()).fmt(f)
+        format_bogus_node(node.syntax()).fmt(f)
     }
 }
 
@@ -58,7 +58,7 @@ impl FormatLanguage for JsonFormatLanguage {
     type FormatRule = FormatJsonSyntaxNode;
 
     fn is_range_formatting_node(&self, node: &SyntaxNode<Self::SyntaxLanguage>) -> bool {
-        JsonAnyValue::can_cast(node.kind())
+        AnyJsonValue::can_cast(node.kind())
     }
 
     fn options(&self) -> &<Self::Context as FormatContext>::Options {

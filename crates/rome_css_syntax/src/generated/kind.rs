@@ -259,7 +259,7 @@ pub enum CssSyntaxKind {
     CSS_KEYFRAMES_SELECTOR_LIST,
     CSS_PARAMETER_LIST,
     CSS_DECLARATION_IMPORTANT,
-    CSS_UNKNOWN,
+    CSS_BOGUS,
     #[doc(hidden)]
     __LAST,
 }

@@ -1,15 +1,15 @@
 //! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::JsAnyForInitializer;
+use rome_js_syntax::AnyJsForInitializer;
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatJsAnyForInitializer;
-impl FormatRule<JsAnyForInitializer> for FormatJsAnyForInitializer {
+pub(crate) struct FormatAnyJsForInitializer;
+impl FormatRule<AnyJsForInitializer> for FormatAnyJsForInitializer {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &JsAnyForInitializer, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyJsForInitializer, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyForInitializer::JsVariableDeclaration(node) => node.format().fmt(f),
-            JsAnyForInitializer::JsAnyExpression(node) => node.format().fmt(f),
+            AnyJsForInitializer::JsVariableDeclaration(node) => node.format().fmt(f),
+            AnyJsForInitializer::AnyJsExpression(node) => node.format().fmt(f),
         }
     }
 }

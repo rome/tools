@@ -1,0 +1,26 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: useAriaPropsForRole.jsx
+---
+# Input
+```js
+let a = <span role="checkbox"></span>;
+```
+
+# Diagnostics
+```
+useAriaPropsForRole.jsx:1:15 lint/nursery/useAriaPropsForRole ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The element with the checkbox ARIA role does not have the required ARIA attributes.
+  
+  > 1 │ let a = <span role="checkbox"></span>;
+      │               ^^^^^^^^^^^^^^^
+  
+  i Missing aria props
+  
+  - aria-checked
+  
+
+```
+
+

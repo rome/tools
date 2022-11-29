@@ -253,7 +253,7 @@ pub const CSS_KINDS_SRC: KindsSrc = KindsSrc {
         "CSS_KEYFRAMES_SELECTOR_LIST",
         "CSS_PARAMETER_LIST",
         "CSS_DECLARATION_IMPORTANT",
-        // unknown nodes
-        "CSS_UNKNOWN",
+        // Bogs nodes
+        "CSS_BOGUS",
     ],
 };

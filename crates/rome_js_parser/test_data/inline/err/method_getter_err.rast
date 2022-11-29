@@ -22,7 +22,7 @@ JsModule {
                     value: missing (optional),
                     semicolon_token: missing (optional),
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         L_CURLY@17..18 "{" [] [],
                     ],
@@ -30,7 +30,7 @@ JsModule {
             ],
             r_curly_token: R_CURLY@18..19 "}" [] [],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 R_CURLY@19..21 "}" [Newline("\n")] [],
             ],
@@ -60,10 +60,10 @@ JsModule {
           2: (empty)
           3: (empty)
           4: (empty)
-        1: JS_UNKNOWN_MEMBER@17..18
+        1: JS_BOGUS_MEMBER@17..18
           0: L_CURLY@17..18 "{" [] []
       8: R_CURLY@18..19 "}" [] []
-    1: JS_UNKNOWN_STATEMENT@19..21
+    1: JS_BOGUS_STATEMENT@19..21
       0: R_CURLY@19..21 "}" [Newline("\n")] []
   3: EOF@21..22 "" [Newline("\n")] []
 --

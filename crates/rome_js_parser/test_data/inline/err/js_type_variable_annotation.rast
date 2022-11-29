@@ -2,19 +2,19 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
-                JsUnknown {
+                JsBogus {
                     items: [
                         LET_KW@0..4 "let" [] [Whitespace(" ")],
-                        JsUnknown {
+                        JsBogus {
                             items: [
-                                JsUnknown {
+                                JsBogus {
                                     items: [
                                         JsIdentifierBinding {
                                             name_token: IDENT@4..5 "a" [] [],
                                         },
-                                        JsUnknown {
+                                        JsBogus {
                                             items: [
                                                 COLON@5..7 ":" [] [Whitespace(" ")],
                                                 TsStringType {
@@ -25,12 +25,12 @@ JsModule {
                                     ],
                                 },
                                 COMMA@13..15 "," [] [Whitespace(" ")],
-                                JsUnknown {
+                                JsBogus {
                                     items: [
                                         JsIdentifierBinding {
                                             name_token: IDENT@15..16 "b" [] [],
                                         },
-                                        JsUnknown {
+                                        JsBogus {
                                             items: [
                                                 BANG@16..17 "!" [] [],
                                                 TsTypeAnnotation {
@@ -58,22 +58,22 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..26
-    0: JS_UNKNOWN_STATEMENT@0..26
-      0: JS_UNKNOWN@0..25
+    0: JS_BOGUS_STATEMENT@0..26
+      0: JS_BOGUS@0..25
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: JS_UNKNOWN@4..25
-          0: JS_UNKNOWN@4..13
+        1: JS_BOGUS@4..25
+          0: JS_BOGUS@4..13
             0: JS_IDENTIFIER_BINDING@4..5
               0: IDENT@4..5 "a" [] []
-            1: JS_UNKNOWN@5..13
+            1: JS_BOGUS@5..13
               0: COLON@5..7 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@7..13
                 0: STRING_KW@7..13 "string" [] []
           1: COMMA@13..15 "," [] [Whitespace(" ")]
-          2: JS_UNKNOWN@15..25
+          2: JS_BOGUS@15..25
             0: JS_IDENTIFIER_BINDING@15..16
               0: IDENT@15..16 "b" [] []
-            1: JS_UNKNOWN@16..25
+            1: JS_BOGUS@16..25
               0: BANG@16..17 "!" [] []
               1: TS_TYPE_ANNOTATION@17..25
                 0: COLON@17..19 ":" [] [Whitespace(" ")]

@@ -21,7 +21,7 @@ JsModule {
                     parameters: JsConstructorParameters {
                         l_paren_token: L_PAREN@21..22 "(" [] [],
                         parameters: JsConstructorParameterList [
-                            JsUnknownParameter {
+                            JsBogusParameter {
                                 items: [
                                     TsPropertyParameterModifierList [
                                         TsReadonlyModifier {
@@ -76,7 +76,7 @@ JsModule {
           2: JS_CONSTRUCTOR_PARAMETERS@21..34
             0: L_PAREN@21..22 "(" [] []
             1: JS_CONSTRUCTOR_PARAMETER_LIST@22..32
-              0: JS_UNKNOWN_PARAMETER@22..32
+              0: JS_BOGUS_PARAMETER@22..32
                 0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@22..31
                   0: TS_READONLY_MODIFIER@22..31
                     0: READONLY_KW@22..31 "readonly" [] [Whitespace(" ")]

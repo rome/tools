@@ -1,6 +1,6 @@
 use crate::context::trailing_comma::FormatTrailingComma;
 use crate::prelude::*;
-use rome_js_syntax::{JsAnyObjectBindingPatternMember, JsObjectBindingPatternPropertyList};
+use rome_js_syntax::{AnyJsObjectBindingPatternMember, JsObjectBindingPatternPropertyList};
 
 #[derive(Debug, Clone, Default)]
 pub(crate) struct FormatJsObjectBindingPatternPropertyList;
@@ -17,7 +17,7 @@ impl FormatRule<JsObjectBindingPatternPropertyList> for FormatJsObjectBindingPat
         let has_trailing_rest = match node.into_iter().last() {
             Some(elem) => matches!(
                 elem?,
-                JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(_)
+                AnyJsObjectBindingPatternMember::JsObjectBindingPatternRest(_)
             ),
             None => false,
         };

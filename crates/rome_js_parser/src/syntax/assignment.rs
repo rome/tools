@@ -130,7 +130,7 @@ pub(crate) fn expression_to_assignment(
         // /=0*_:m/=/*_:|
         |mut invalid_assignment_target| {
             // Doesn't seem to be a valid assignment target. Recover and create an error.
-            invalid_assignment_target.change_kind(p, JS_UNKNOWN_ASSIGNMENT);
+            invalid_assignment_target.change_kind(p, JS_BOGUS_ASSIGNMENT);
 
             p.error(invalid_assignment_error(
                 p,
@@ -202,8 +202,8 @@ struct ArrayAssignmentPattern;
 // [a: b] = c
 impl ParseArrayPattern<AssignmentPatternWithDefault> for ArrayAssignmentPattern {
     #[inline]
-    fn unknown_pattern_kind() -> JsSyntaxKind {
-        JS_UNKNOWN_ASSIGNMENT
+    fn bogus_pattern_kind() -> JsSyntaxKind {
+        JS_BOGUS_ASSIGNMENT
     }
 
     #[inline]
@@ -252,8 +252,8 @@ struct ObjectAssignmentPattern;
 // ({ bar: [baz = "baz"], foo = "foo", ...rest } = {});
 impl ParseObjectPattern for ObjectAssignmentPattern {
     #[inline]
-    fn unknown_pattern_kind() -> JsSyntaxKind {
-        JS_UNKNOWN_ASSIGNMENT
+    fn bogus_pattern_kind() -> JsSyntaxKind {
+        JS_BOGUS_ASSIGNMENT
     }
 
     #[inline]
@@ -341,7 +341,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
                 target.kind(p),
                 JS_OBJECT_ASSIGNMENT_PATTERN | JS_ARRAY_ASSIGNMENT_PATTERN
             ) {
-                target.change_kind(p, JS_UNKNOWN_ASSIGNMENT);
+                target.change_kind(p, JS_BOGUS_ASSIGNMENT);
                 p.error(p.err_builder(
                     "object and array assignment targets are not allowed in rest patterns",
                     target.range(p),
@@ -437,7 +437,7 @@ impl RewriteParseEvents for ReparseAssignment {
             }
             _ => {
                 self.inside_assignment = false;
-                if TsType::can_cast(kind)
+                if AnyTsType::can_cast(kind)
                     && matches!(
                         self.parents.last(),
                         Some((
@@ -450,7 +450,7 @@ impl RewriteParseEvents for ReparseAssignment {
                 {
                     kind
                 } else {
-                    JS_UNKNOWN_ASSIGNMENT
+                    JS_BOGUS_ASSIGNMENT
                 }
             }
         };
@@ -477,10 +477,10 @@ impl RewriteParseEvents for ReparseAssignment {
                         );
                         p.error(error);
 
-                        completed.change_to_unknown(p);
+                        completed.change_to_bogus(p);
                     }
                 }
-                JS_UNKNOWN_ASSIGNMENT => {
+                JS_BOGUS_ASSIGNMENT => {
                     let range = completed.range(p);
                     p.error(
                         p.err_builder(
@@ -496,7 +496,7 @@ impl RewriteParseEvents for ReparseAssignment {
             self.result = Some(completed.into());
         }
 
-        if TsType::can_cast(kind)
+        if AnyTsType::can_cast(kind)
             && matches!(
                 self.parents.last(),
                 Some((
@@ -518,7 +518,7 @@ impl RewriteParseEvents for ReparseAssignment {
                 JS_COMPUTED_MEMBER_ASSIGNMENT | JS_STATIC_MEMBER_ASSIGNMENT
             ) && token.kind == T![?.]
             {
-                *parent_kind = JS_UNKNOWN_ASSIGNMENT
+                *parent_kind = JS_BOGUS_ASSIGNMENT
             }
         }
 

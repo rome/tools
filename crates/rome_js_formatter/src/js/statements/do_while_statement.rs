@@ -3,7 +3,7 @@ use crate::prelude::*;
 use crate::utils::{FormatStatementBody, FormatStatementSemicolon};
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsDoWhileStatementFields;
-use rome_js_syntax::{JsAnyStatement, JsDoWhileStatement};
+use rome_js_syntax::{AnyJsStatement, JsDoWhileStatement};
 
 #[derive(Debug, Clone, Default)]
 pub(crate) struct FormatJsDoWhileStatement;
@@ -32,7 +32,7 @@ impl FormatNodeRule<JsDoWhileStatement> for FormatJsDoWhileStatement {
             ])]
         )?;
 
-        if matches!(body, JsAnyStatement::JsBlockStatement(_)) {
+        if matches!(body, AnyJsStatement::JsBlockStatement(_)) {
             write!(f, [space()])?;
         } else {
             write!(f, [hard_line_break()])?;

@@ -6,7 +6,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyStatement, JsDoWhileStatement, JsElseClause, JsForInStatement, JsForOfStatement,
+    AnyJsStatement, JsDoWhileStatement, JsElseClause, JsForInStatement, JsForOfStatement,
     JsForStatement, JsIfStatement, JsLanguage, JsSyntaxTrivia, JsWhileStatement, JsWithStatement,
     TriviaPieceKind, T,
 };
@@ -72,11 +72,11 @@ declare_rule! {
 }
 
 declare_node_union! {
-    pub(crate) JsAnyBlockStatement = JsIfStatement | JsElseClause | JsDoWhileStatement | JsForInStatement | JsForOfStatement | JsForStatement | JsWhileStatement | JsWithStatement
+    pub(crate) AnyJsBlockStatement = JsIfStatement | JsElseClause | JsDoWhileStatement | JsForInStatement | JsForOfStatement | JsForStatement | JsWhileStatement | JsWithStatement
 }
 
 impl Rule for UseBlockStatements {
-    type Query = Ast<JsAnyBlockStatement>;
+    type Query = Ast<AnyJsBlockStatement>;
     type State = UseBlockStatementsOperationType;
     type Signals = Option<Self::State>;
     type Options = ();
@@ -84,35 +84,35 @@ impl Rule for UseBlockStatements {
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();
         match node {
-            JsAnyBlockStatement::JsIfStatement(stmt) => {
+            AnyJsBlockStatement::JsIfStatement(stmt) => {
                 use_block_statements_diagnostic!(stmt, consequent)
             }
-            JsAnyBlockStatement::JsDoWhileStatement(stmt) => {
+            AnyJsBlockStatement::JsDoWhileStatement(stmt) => {
                 use_block_statements_diagnostic!(stmt)
             }
-            JsAnyBlockStatement::JsForInStatement(stmt) => {
+            AnyJsBlockStatement::JsForInStatement(stmt) => {
                 use_block_statements_diagnostic!(stmt)
             }
-            JsAnyBlockStatement::JsForOfStatement(stmt) => {
+            AnyJsBlockStatement::JsForOfStatement(stmt) => {
                 use_block_statements_diagnostic!(stmt)
             }
-            JsAnyBlockStatement::JsForStatement(stmt) => {
+            AnyJsBlockStatement::JsForStatement(stmt) => {
                 use_block_statements_diagnostic!(stmt)
             }
-            JsAnyBlockStatement::JsWhileStatement(stmt) => {
+            AnyJsBlockStatement::JsWhileStatement(stmt) => {
                 use_block_statements_diagnostic!(stmt)
             }
-            JsAnyBlockStatement::JsWithStatement(stmt) => {
+            AnyJsBlockStatement::JsWithStatement(stmt) => {
                 use_block_statements_diagnostic!(stmt)
             }
-            JsAnyBlockStatement::JsElseClause(stmt) => {
+            AnyJsBlockStatement::JsElseClause(stmt) => {
                 let body = stmt.alternate().ok()?;
-                if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
+                if matches!(body, AnyJsStatement::JsEmptyStatement(_)) {
                     return Some(UseBlockStatementsOperationType::ReplaceBody);
                 }
                 let is_block = matches!(
                     body,
-                    JsAnyStatement::JsBlockStatement(_) | JsAnyStatement::JsIfStatement(_)
+                    AnyJsStatement::JsBlockStatement(_) | AnyJsStatement::JsIfStatement(_)
                 );
                 if !is_block {
                     return Some(UseBlockStatementsOperationType::Wrap(body));
@@ -189,8 +189,8 @@ impl Rule for UseBlockStatements {
                     // else-clause nodes if this statement is part of an
                     // else-if chain
                     let mut node = node.clone();
-                    while let Some(parent) = node.parent::<JsAnyBlockStatement>() {
-                        if !matches!(parent, JsAnyBlockStatement::JsElseClause(_)) {
+                    while let Some(parent) = node.parent::<AnyJsBlockStatement>() {
+                        if !matches!(parent, AnyJsBlockStatement::JsElseClause(_)) {
                             break;
                         }
 
@@ -236,7 +236,7 @@ impl Rule for UseBlockStatements {
 
                 mutation.replace_node_discard_trivia(
                     stmt.clone(),
-                    JsAnyStatement::JsBlockStatement(make::js_block_statement(
+                    AnyJsStatement::JsBlockStatement(make::js_block_statement(
                         l_curly_token,
                         make::js_statement_list(iter::once(stmt.clone())),
                         r_curly_token,
@@ -244,7 +244,7 @@ impl Rule for UseBlockStatements {
                 );
             }
             UseBlockStatementsOperationType::ReplaceBody => match node {
-                JsAnyBlockStatement::JsIfStatement(stmt) => {
+                AnyJsBlockStatement::JsIfStatement(stmt) => {
                     use_block_statements_replace_body!(
                         JsIfStatement,
                         with_consequent,
@@ -253,7 +253,7 @@ impl Rule for UseBlockStatements {
                         stmt
                     )
                 }
-                JsAnyBlockStatement::JsElseClause(stmt) => {
+                AnyJsBlockStatement::JsElseClause(stmt) => {
                     use_block_statements_replace_body!(
                         JsElseClause,
                         with_alternate,
@@ -262,22 +262,22 @@ impl Rule for UseBlockStatements {
                         stmt
                     )
                 }
-                JsAnyBlockStatement::JsDoWhileStatement(stmt) => {
+                AnyJsBlockStatement::JsDoWhileStatement(stmt) => {
                     use_block_statements_replace_body!(JsDoWhileStatement, mutation, node, stmt)
                 }
-                JsAnyBlockStatement::JsForInStatement(stmt) => {
+                AnyJsBlockStatement::JsForInStatement(stmt) => {
                     use_block_statements_replace_body!(JsForInStatement, mutation, node, stmt)
                 }
-                JsAnyBlockStatement::JsForOfStatement(stmt) => {
+                AnyJsBlockStatement::JsForOfStatement(stmt) => {
                     use_block_statements_replace_body!(JsForOfStatement, mutation, node, stmt)
                 }
-                JsAnyBlockStatement::JsForStatement(stmt) => {
+                AnyJsBlockStatement::JsForStatement(stmt) => {
                     use_block_statements_replace_body!(JsForStatement, mutation, node, stmt)
                 }
-                JsAnyBlockStatement::JsWhileStatement(stmt) => {
+                AnyJsBlockStatement::JsWhileStatement(stmt) => {
                     use_block_statements_replace_body!(JsWhileStatement, mutation, node, stmt)
                 }
-                JsAnyBlockStatement::JsWithStatement(stmt) => {
+                AnyJsBlockStatement::JsWithStatement(stmt) => {
                     use_block_statements_replace_body!(JsWithStatement, mutation, node, stmt)
                 }
             },
@@ -307,7 +307,7 @@ fn collect_to_first_newline(trivia: JsSyntaxTrivia) -> Vec<SyntaxTriviaPiece<JsL
 }
 
 pub enum UseBlockStatementsOperationType {
-    Wrap(JsAnyStatement),
+    Wrap(AnyJsStatement),
     ReplaceBody,
 }
 
@@ -315,9 +315,9 @@ pub enum UseBlockStatementsOperationType {
 macro_rules! use_block_statements_diagnostic {
     ($id:ident, $field:ident) => {{
         let body = $id.$field().ok()?;
-        if matches!(body, JsAnyStatement::JsEmptyStatement(_)) {
+        if matches!(body, AnyJsStatement::JsEmptyStatement(_)) {
             Some(UseBlockStatementsOperationType::ReplaceBody)
-        } else if !matches!(body, JsAnyStatement::JsBlockStatement(_)) {
+        } else if !matches!(body, AnyJsStatement::JsBlockStatement(_)) {
             Some(UseBlockStatementsOperationType::Wrap(body))
         } else {
             None
@@ -333,10 +333,10 @@ macro_rules! use_block_statements_replace_body {
     ($stmt_type:ident, $builder_method:ident, $mutation:ident, $node:ident, $stmt:ident) => {
         $mutation.replace_node(
             $node.clone(),
-            JsAnyBlockStatement::$stmt_type(
+            AnyJsBlockStatement::$stmt_type(
                 $stmt
                     .clone()
-                    .$builder_method(JsAnyStatement::JsBlockStatement(make::js_block_statement(
+                    .$builder_method(AnyJsStatement::JsBlockStatement(make::js_block_statement(
                         make::token(T!['{'])
                             .with_leading_trivia(iter::once((TriviaPieceKind::Whitespace, " "))),
                         make::js_statement_list([]),

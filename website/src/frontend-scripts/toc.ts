@@ -245,7 +245,7 @@ class Manager {
 			return false;
 		}
 
-		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
+		// rome-ignore lint/style/useOptionalChain: netlify's node version does not support optional call expressions
 		if (callback !== undefined) {
 			callback();
 		}
@@ -269,13 +269,13 @@ class Manager {
 		window.location.hash = hash;
 		this.scrollToHeading(hash);
 
-		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
+		// rome-ignore lint/style/useOptionalChain: netlify's node version does not support optional call expressions
 		if (navigator.clipboard !== undefined) {
 			navigator.clipboard.writeText(window.location.href);
 		}
 
 		// Only another copied text can appear here so delete it if it exists
-		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
+		// rome-ignore lint/style/useOptionalChain: netlify's node version does not support optional call expressions
 		if (target.nextElementSibling != null) {
 			target.nextElementSibling.remove();
 		}

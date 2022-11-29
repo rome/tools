@@ -46,11 +46,10 @@ pub trait File {
 
 /// This struct is a "mirror" of [std::fs::FileOptions].
 /// Refer to their documentation for more details
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub struct OpenOptions {
     read: bool,
     write: bool,
-    append: bool,
     truncate: bool,
     create: bool,
     create_new: bool,
@@ -63,10 +62,6 @@ impl OpenOptions {
     }
     pub fn write(mut self, write: bool) -> Self {
         self.write = write;
-        self
-    }
-    pub fn append(mut self, append: bool) -> Self {
-        self.append = append;
         self
     }
     pub fn truncate(mut self, truncate: bool) -> Self {
@@ -86,7 +81,6 @@ impl OpenOptions {
         options
             .read(self.read)
             .write(self.write)
-            .append(self.append)
             .truncate(self.truncate)
             .create(self.create)
             .create_new(self.create_new)
@@ -95,19 +89,41 @@ impl OpenOptions {
 
 /// Trait that contains additional methods to work with [FileSystem]
 pub trait FileSystemExt: FileSystem {
-    /// Open a file with `read` and `write` options
+    /// Open a file with the `read` option
+    ///
+    /// Equivalent to [std::fs::File::open]
     fn open(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        self.open_with_options(path, OpenOptions::default().read(true).write(true))
+        self.open_with_options(path, OpenOptions::default().read(true))
     }
-    /// Open a file with `write` and `create_new` options
+
+    /// Open a file with the `write` and `create` options
+    ///
+    /// Equivalent to [std::fs::File::create]
     fn create(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        self.open_with_options(path, OpenOptions::default().write(true).create_new(true))
+        self.open_with_options(
+            path,
+            OpenOptions::default()
+                .write(true)
+                .create(true)
+                .truncate(true),
+        )
     }
-    /// Opens a file with read options
-    fn read(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        self.open_with_options(path, OpenOptions::default().read(true).create_new(true))
+
+    /// Opens a file with the `read`, `write` and `create_new` options
+    ///
+    /// Equivalent to [std::fs::File::create_new]
+    fn create_new(&self, path: &Path) -> io::Result<Box<dyn File>> {
+        self.open_with_options(
+            path,
+            OpenOptions::default()
+                .read(true)
+                .write(true)
+                .create_new(true),
+        )
     }
 }
+
+impl<T: ?Sized> FileSystemExt for T where T: FileSystem {}
 
 type BoxedTraversal<'fs, 'scope> = Box<dyn FnOnce(&dyn TraversalScope<'scope>) + Send + 'fs>;
 

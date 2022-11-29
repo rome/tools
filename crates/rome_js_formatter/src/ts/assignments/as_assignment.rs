@@ -2,7 +2,7 @@ use crate::prelude::*;
 
 use crate::parentheses::NeedsParentheses;
 use rome_formatter::{format_args, write};
-use rome_js_syntax::{JsAnyAssignment, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, TsType};
+use rome_js_syntax::{AnyJsAssignment, AnyTsType, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_js_syntax::{TsAsAssignment, TsSatisfiesAssignment};
 use rome_rowan::{declare_node_union, SyntaxResult};
 
@@ -60,7 +60,7 @@ impl NeedsParentheses for TsAsOrSatisfiesAssignment {
 }
 
 impl TsAsOrSatisfiesAssignment {
-    fn assignment(&self) -> SyntaxResult<JsAnyAssignment> {
+    fn assignment(&self) -> SyntaxResult<AnyJsAssignment> {
         match self {
             TsAsOrSatisfiesAssignment::TsAsAssignment(assignment) => assignment.assignment(),
             TsAsOrSatisfiesAssignment::TsSatisfiesAssignment(assignment) => assignment.assignment(),
@@ -76,7 +76,7 @@ impl TsAsOrSatisfiesAssignment {
         }
     }
 
-    fn ty(&self) -> SyntaxResult<TsType> {
+    fn ty(&self) -> SyntaxResult<AnyTsType> {
         match self {
             TsAsOrSatisfiesAssignment::TsAsAssignment(assignment) => assignment.ty(),
             TsAsOrSatisfiesAssignment::TsSatisfiesAssignment(assignment) => assignment.ty(),

@@ -27,7 +27,7 @@ JsModule {
                                         modifier_token: PRIVATE_KW@22..30 "private" [] [Whitespace(" ")],
                                     },
                                 ],
-                                formal_parameter: JsUnknownParameter {
+                                formal_parameter: JsBogusParameter {
                                     items: [
                                         JsObjectBindingPattern {
                                             l_curly_token: L_CURLY@30..32 "{" [] [Whitespace(" ")],
@@ -58,7 +58,7 @@ JsModule {
                                         modifier_token: PROTECTED_KW@40..50 "protected" [] [Whitespace(" ")],
                                     },
                                 ],
-                                formal_parameter: JsUnknownParameter {
+                                formal_parameter: JsBogusParameter {
                                     items: [
                                         JsArrayBindingPattern {
                                             l_brack_token: L_BRACK@50..51 "[" [] [],
@@ -118,7 +118,7 @@ JsModule {
                 0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@22..30
                   0: TS_ACCESSIBILITY_MODIFIER@22..30
                     0: PRIVATE_KW@22..30 "private" [] [Whitespace(" ")]
-                1: JS_UNKNOWN_PARAMETER@30..38
+                1: JS_BOGUS_PARAMETER@30..38
                   0: JS_OBJECT_BINDING_PATTERN@30..38
                     0: L_CURLY@30..32 "{" [] [Whitespace(" ")]
                     1: JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST@32..37
@@ -137,7 +137,7 @@ JsModule {
                 0: TS_PROPERTY_PARAMETER_MODIFIER_LIST@40..50
                   0: TS_ACCESSIBILITY_MODIFIER@40..50
                     0: PROTECTED_KW@40..50 "protected" [] [Whitespace(" ")]
-                1: JS_UNKNOWN_PARAMETER@50..56
+                1: JS_BOGUS_PARAMETER@50..56
                   0: JS_ARRAY_BINDING_PATTERN@50..56
                     0: L_BRACK@50..51 "[" [] []
                     1: JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST@51..55

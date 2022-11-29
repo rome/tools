@@ -34,7 +34,7 @@ JsModule {
         TsEnumDeclaration {
             const_token: missing (optional),
             enum_token: ENUM_KW@12..18 "enum" [Newline("\n")] [Whitespace(" ")],
-            id: JsUnknownBinding {
+            id: JsBogusBinding {
                 items: [
                     JS_NUMBER_LITERAL@18..20 "1" [] [Whitespace(" ")],
                 ],
@@ -96,7 +96,7 @@ JsModule {
     1: TS_ENUM_DECLARATION@12..27
       0: (empty)
       1: ENUM_KW@12..18 "enum" [Newline("\n")] [Whitespace(" ")]
-      2: JS_UNKNOWN_BINDING@18..20
+      2: JS_BOGUS_BINDING@18..20
         0: JS_NUMBER_LITERAL@18..20 "1" [] [Whitespace(" ")]
       3: L_CURLY@20..21 "{" [] []
       4: TS_ENUM_MEMBER_LIST@21..26

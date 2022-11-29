@@ -1,9 +1,9 @@
 use crate::prelude::*;
-use crate::utils::{needs_binary_like_parentheses, JsAnyBinaryLikeExpression};
+use crate::utils::{needs_binary_like_parentheses, AnyJsBinaryLikeExpression};
 
 use crate::parentheses::NeedsParentheses;
 
-use rome_js_syntax::{JsAnyStatement, JsForStatement, JsInExpression, JsSyntaxNode};
+use rome_js_syntax::{AnyJsStatement, JsForStatement, JsInExpression, JsSyntaxNode};
 use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
@@ -11,7 +11,7 @@ pub(crate) struct FormatJsInExpression;
 
 impl FormatNodeRule<JsInExpression> for FormatJsInExpression {
     fn fmt_fields(&self, node: &JsInExpression, formatter: &mut JsFormatter) -> FormatResult<()> {
-        JsAnyBinaryLikeExpression::JsInExpression(node.clone()).fmt(formatter)
+        AnyJsBinaryLikeExpression::JsInExpression(node.clone()).fmt(formatter)
     }
 
     fn needs_parentheses(&self, item: &JsInExpression) -> bool {
@@ -25,7 +25,7 @@ impl NeedsParentheses for JsInExpression {
             return true;
         }
 
-        needs_binary_like_parentheses(&JsAnyBinaryLikeExpression::from(self.clone()), parent)
+        needs_binary_like_parentheses(&AnyJsBinaryLikeExpression::from(self.clone()), parent)
     }
 }
 
@@ -43,7 +43,7 @@ fn is_in_for_initializer(expression: &JsInExpression) -> bool {
                     == Some(&current);
             }
             Err(parent) => {
-                if JsAnyStatement::can_cast(parent.kind()) {
+                if AnyJsStatement::can_cast(parent.kind()) {
                     // Don't cross statement boundaries
                     break;
                 }

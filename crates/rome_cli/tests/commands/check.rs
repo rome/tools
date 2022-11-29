@@ -1154,3 +1154,31 @@ fn unsupported_file() {
         result,
     ));
 }
+
+#[test]
+fn suppression_syntax_error() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("check.js");
+    fs.insert(file_path.into(), *b"// rome-ignore(:\n");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+    );
+
+    match result {
+        Err(Termination::CheckError) => {}
+        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "suppression_syntax_error",
+        fs,
+        console,
+        result,
+    ));
+}

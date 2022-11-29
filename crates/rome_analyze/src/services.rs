@@ -47,15 +47,15 @@ pub struct ServiceBag {
 }
 
 impl ServiceBag {
-    pub fn insert_service<T: 'static + Clone>(&mut self, service: T) {
+    pub fn insert_service<T: 'static>(&mut self, service: T) {
         let id = TypeId::of::<T>();
         self.services.insert(id, Box::new(service));
     }
 
-    pub fn get_service<T: 'static + Clone>(&self) -> Option<T> {
+    pub fn get_service<T: 'static>(&self) -> Option<&T> {
         let id = TypeId::of::<T>();
         let svc = self.services.get(&id)?;
-        svc.downcast_ref().cloned()
+        svc.downcast_ref()
     }
 }
 

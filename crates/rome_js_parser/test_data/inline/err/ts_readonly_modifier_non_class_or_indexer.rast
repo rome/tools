@@ -13,9 +13,9 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@11..12 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 TsReadonlyModifier {
                                     modifier_token: READONLY_KW@12..24 "readonly" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
@@ -38,9 +38,9 @@ JsModule {
                         },
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 TsReadonlyModifier {
                                     modifier_token: READONLY_KW@40..52 "readonly" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
@@ -63,9 +63,9 @@ JsModule {
                         },
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 TsReadonlyModifier {
                                     modifier_token: READONLY_KW@63..75 "readonly" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
@@ -94,9 +94,9 @@ JsModule {
                         },
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 TsReadonlyModifier {
                                     modifier_token: READONLY_KW@101..113 "readonly" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
@@ -151,8 +151,8 @@ JsModule {
       5: (empty)
       6: L_CURLY@11..12 "{" [] []
       7: JS_CLASS_MEMBER_LIST@12..139
-        0: JS_UNKNOWN_MEMBER@12..40
-          0: JS_UNKNOWN@12..24
+        0: JS_BOGUS_MEMBER@12..40
+          0: JS_BOGUS@12..24
             0: TS_READONLY_MODIFIER@12..24
               0: READONLY_KW@12..24 "readonly" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@24..35
@@ -166,8 +166,8 @@ JsModule {
             1: JS_DIRECTIVE_LIST@39..39
             2: JS_STATEMENT_LIST@39..39
             3: R_CURLY@39..40 "}" [] []
-        1: JS_UNKNOWN_MEMBER@40..63
-          0: JS_UNKNOWN@40..52
+        1: JS_BOGUS_MEMBER@40..63
+          0: JS_BOGUS@40..52
             0: TS_READONLY_MODIFIER@40..52
               0: READONLY_KW@40..52 "readonly" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@52..58
@@ -181,8 +181,8 @@ JsModule {
             1: JS_DIRECTIVE_LIST@62..62
             2: JS_STATEMENT_LIST@62..62
             3: R_CURLY@62..63 "}" [] []
-        2: JS_UNKNOWN_MEMBER@63..101
-          0: JS_UNKNOWN@63..75
+        2: JS_BOGUS_MEMBER@63..101
+          0: JS_BOGUS@63..75
             0: TS_READONLY_MODIFIER@63..75
               0: READONLY_KW@63..75 "readonly" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           1: GET_KW@75..79 "get" [] [Whitespace(" ")]
@@ -200,8 +200,8 @@ JsModule {
                   0: JS_STRING_LITERAL@95..98 "\"a\"" [] []
                 2: SEMICOLON@98..100 ";" [] [Whitespace(" ")]
             3: R_CURLY@100..101 "}" [] []
-        3: JS_UNKNOWN_MEMBER@101..139
-          0: JS_UNKNOWN@101..113
+        3: JS_BOGUS_MEMBER@101..139
+          0: JS_BOGUS@101..113
             0: TS_READONLY_MODIFIER@101..113
               0: READONLY_KW@101..113 "readonly" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
           1: SET_KW@113..117 "set" [] [Whitespace(" ")]

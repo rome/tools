@@ -2,7 +2,7 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{JsxAnyChild, JsxText, TriviaPieceKind, T};
+use rome_js_syntax::{AnyJsxChild, JsxText, TriviaPieceKind, T};
 use rome_rowan::{AstNode, BatchMutationExt};
 
 use crate::JsRuleAction;
@@ -83,8 +83,8 @@ impl Rule for NoCommentText {
         );
 
         mutation.replace_node(
-            JsxAnyChild::JsxText(node.clone()),
-            JsxAnyChild::JsxExpressionChild(
+            AnyJsxChild::JsxText(node.clone()),
+            AnyJsxChild::JsxExpressionChild(
                 make::jsx_expression_child(
                     make::token(T!['{']).with_trailing_trivia(
                         [(

@@ -13,7 +13,7 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@17..19 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsAbstractModifier {
                             modifier_token: ABSTRACT_KW@19..28 "abstract" [] [Whitespace(" ")],
@@ -51,7 +51,7 @@ JsModule {
       5: (empty)
       6: L_CURLY@17..19 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@19..39
-        0: JS_UNKNOWN_MEMBER@19..39
+        0: JS_BOGUS_MEMBER@19..39
           0: TS_ABSTRACT_MODIFIER@19..28
             0: ABSTRACT_KW@19..28 "abstract" [] [Whitespace(" ")]
           1: ASYNC_KW@28..34 "async" [] [Whitespace(" ")]

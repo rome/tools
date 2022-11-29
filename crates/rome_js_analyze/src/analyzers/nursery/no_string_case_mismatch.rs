@@ -89,8 +89,8 @@ impl Rule for NoStringCaseMismatch {
         let mut mutation = ctx.root().begin();
         mutation.replace_node(
             state.literal.clone(),
-            JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsStringLiteralExpression(
+            AnyJsExpression::AnyJsLiteralExpression(
+                AnyJsLiteralExpression::JsStringLiteralExpression(
                     make::js_string_literal_expression(make::js_string_literal(
                         &state.expected_value,
                     )),
@@ -114,7 +114,7 @@ pub(crate) struct CaseMismatchInfo {
     expected_case: ExpectedStringCase,
     expected_value: String,
     call: JsCallExpression,
-    literal: JsAnyExpression,
+    literal: AnyJsExpression,
 }
 
 impl CaseMismatchInfo {
@@ -128,8 +128,8 @@ impl CaseMismatchInfo {
             _ => return None,
         };
         let (call, literal) = match (left, right) {
-            (JsAnyExpression::JsCallExpression(call), other)
-            | (other, JsAnyExpression::JsCallExpression(call)) => (call, other),
+            (AnyJsExpression::JsCallExpression(call), other)
+            | (other, AnyJsExpression::JsCallExpression(call)) => (call, other),
             _ => return None,
         };
         Self::compare_call_with_literal(call, literal)
@@ -138,7 +138,7 @@ impl CaseMismatchInfo {
     fn from_switch_stmt(stmt: &JsSwitchStatement) -> Vec<Self> {
         match stmt.as_fields() {
             JsSwitchStatementFields {
-                discriminant: Ok(JsAnyExpression::JsCallExpression(call)),
+                discriminant: Ok(AnyJsExpression::JsCallExpression(call)),
                 cases,
                 ..
             } => cases
@@ -150,7 +150,7 @@ impl CaseMismatchInfo {
         }
     }
 
-    fn compare_call_with_literal(call: JsCallExpression, literal: JsAnyExpression) -> Option<Self> {
+    fn compare_call_with_literal(call: JsCallExpression, literal: AnyJsExpression) -> Option<Self> {
         let expected_case = ExpectedStringCase::from_call(&call)?;
         let literal_value = literal.as_string_constant()?;
         let expected_value = expected_case.convert(&literal_value);
@@ -179,7 +179,7 @@ impl ExpectedStringCase {
         }
 
         let callee = call.callee().ok()?;
-        let member_expr = JsAnyMemberExpression::cast_ref(callee.syntax())?;
+        let member_expr = AnyJsMemberExpression::cast_ref(callee.syntax())?;
         if member_expr.has_member_name("toLowerCase") {
             return Some(Self::Lower);
         }

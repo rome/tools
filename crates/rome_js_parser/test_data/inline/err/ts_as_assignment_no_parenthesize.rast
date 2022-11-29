@@ -45,7 +45,7 @@ JsModule {
                 left: JsParenthesizedAssignment {
                     l_paren_token: L_PAREN@35..37 "(" [Newline("\n")] [],
                     assignment: TsAsAssignment {
-                        assignment: JsUnknownAssignment {
+                        assignment: JsBogusAssignment {
                             items: [
                                 JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
@@ -75,7 +75,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsUnknownAssignment {
+                left: JsBogusAssignment {
                     items: [
                         L_ANGLE@63..65 "<" [Newline("\n")] [],
                         TsNumberType {
@@ -134,7 +134,7 @@ JsModule {
         0: JS_PARENTHESIZED_ASSIGNMENT@35..52
           0: L_PAREN@35..37 "(" [Newline("\n")] []
           1: TS_AS_ASSIGNMENT@37..50
-            0: JS_UNKNOWN_ASSIGNMENT@37..41
+            0: JS_BOGUS_ASSIGNMENT@37..41
               0: JS_IDENTIFIER_EXPRESSION@37..38
                 0: JS_REFERENCE_IDENTIFIER@37..38
                   0: IDENT@37..38 "a" [] []
@@ -152,7 +152,7 @@ JsModule {
       1: SEMICOLON@62..63 ";" [] []
     3: JS_EXPRESSION_STATEMENT@63..79
       0: JS_ASSIGNMENT_EXPRESSION@63..78
-        0: JS_UNKNOWN_ASSIGNMENT@63..75
+        0: JS_BOGUS_ASSIGNMENT@63..75
           0: L_ANGLE@63..65 "<" [Newline("\n")] []
           1: TS_NUMBER_TYPE@65..71
             0: NUMBER_KW@65..71 "number" [] []

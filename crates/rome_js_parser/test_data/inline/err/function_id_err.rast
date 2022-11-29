@@ -24,7 +24,7 @@ JsModule {
                         async_token: missing (optional),
                         function_token: FUNCTION_KW@18..30 "function" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")],
                         star_token: missing (optional),
-                        id: JsUnknownBinding {
+                        id: JsBogusBinding {
                             items: [
                                 IDENT@30..35 "yield" [] [],
                             ],
@@ -84,7 +84,7 @@ JsModule {
             0: (empty)
             1: FUNCTION_KW@18..30 "function" [Newline("\n"), Whitespace("  ")] [Whitespace(" ")]
             2: (empty)
-            3: JS_UNKNOWN_BINDING@30..35
+            3: JS_BOGUS_BINDING@30..35
               0: IDENT@30..35 "yield" [] []
             4: (empty)
             5: JS_PARAMETERS@35..42

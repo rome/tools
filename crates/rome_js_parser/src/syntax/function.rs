@@ -80,14 +80,14 @@ pub(super) fn parse_function_declaration(
         )
     };
 
-    if context != StatementContext::StatementList && !function.kind(p).is_unknown() {
+    if context != StatementContext::StatementList && !function.kind(p).is_bogus() {
         if JsSyntaxFeature::StrictMode.is_supported(p) {
             // test_err function_in_single_statement_context_strict
             // if (true) function a() {}
             // label1: function b() {}
             // while (true) function c() {}
             p.error(p.err_builder("In strict mode code, functions can only be declared at top level or inside a block", function.range(p)).hint( "wrap the function in a block statement"));
-            function.change_to_unknown(p);
+            function.change_to_bogus(p);
         } else if !matches!(context, StatementContext::If | StatementContext::Label) {
             // test function_in_if_or_labelled_stmt_loose_mode
             // // SCRIPT
@@ -96,7 +96,7 @@ pub(super) fn parse_function_declaration(
             // if (true) function d() {}
             // if (true) "test"; else function e() {}
             p.error(p.err_builder("In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if or labelled statement", function.range(p)).hint( "wrap the function in a block statement"));
-            function.change_to_unknown(p);
+            function.change_to_bogus(p);
         }
     }
 
@@ -301,7 +301,7 @@ fn parse_function(p: &mut JsParser, m: Marker, kind: FunctionKind) -> CompletedM
         // if (true) function* t() {}
         if kind.is_in_single_statement_context() && (in_async || generator_range.is_some()) {
             p.error(p.err_builder("`async` and generator functions can only be declared at top level or inside a block", function.range(p) ));
-            function.change_to_unknown(p);
+            function.change_to_bogus(p);
         }
 
         function
@@ -425,7 +425,7 @@ fn parse_ambient_function(
     semi(p, TextRange::new(stmt_start, p.cur_range().start()));
 
     if is_async {
-        m.complete(p, JS_UNKNOWN_STATEMENT)
+        m.complete(p, JS_BOGUS_STATEMENT)
     } else if kind.is_export_default() {
         // test ts ts_declare_function_export_default_declaration
         // declare module 'x' {
@@ -875,7 +875,7 @@ pub(crate) fn parse_any_parameter(
     parameter.map(|mut parameter| {
         if parameter.kind(p) == TS_THIS_PARAMETER {
             if TypeScript.is_unsupported(p) {
-                parameter.change_to_unknown(p);
+                parameter.change_to_bogus(p);
                 p.error(ts_only_syntax_error(
                     p,
                     "this parameter",
@@ -884,7 +884,7 @@ pub(crate) fn parse_any_parameter(
             } else if parameter_context.is_arrow_function() {
                 // test_err ts ts_arrow_function_this_parameter
                 // let a = (this: string) => {}
-                parameter.change_to_unknown(p);
+                parameter.change_to_bogus(p);
                 p.error(p.err_builder(
                     "An arrow function cannot have a 'this' parameter.",
                     parameter.range(p),
@@ -946,7 +946,7 @@ pub(crate) fn parse_rest_parameter(p: &mut JsParser, context: ExpressionContext)
     }
 
     if !valid {
-        rest_parameter.change_to_unknown(p);
+        rest_parameter.change_to_bogus(p);
     }
 
     Present(rest_parameter)
@@ -1088,7 +1088,7 @@ pub(crate) fn parse_formal_parameter(
         let mut parameter = m.complete(p, JS_FORMAL_PARAMETER);
 
         if !valid {
-            parameter.change_to_unknown(p);
+            parameter.change_to_bogus(p);
         }
 
         parameter
@@ -1184,7 +1184,7 @@ pub(super) fn parse_parameters_list(
             let recovered_result = parameter.or_recover(
                 p,
                 &ParseRecovery::new(
-                    JS_UNKNOWN_PARAMETER,
+                    JS_BOGUS_PARAMETER,
                     token_set![
                         T![ident],
                         T![await],

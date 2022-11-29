@@ -232,6 +232,14 @@ impl_group_language!(
     T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29
 );
 
+pub trait DeserializableRuleOptions: Default + DeserializeOwned + Sized {
+    fn try_from(value: serde_json::Value) -> Result<Self, serde_json::Error> {
+        serde_json::from_value(value)
+    }
+}
+
+impl DeserializableRuleOptions for () {}
+
 /// Trait implemented by all analysis rules: declares interest to a certain AstNode type,
 /// and a callback function to be executed on all nodes matching the query to possibly
 /// raise an analysis event
@@ -247,7 +255,7 @@ pub trait Rule: RuleMeta + Sized {
     /// analyzer
     type Signals: IntoIterator<Item = Self::State>;
     /// The options that belong to a rule
-    type Options: DeserializeOwned;
+    type Options: DeserializableRuleOptions;
 
     fn phase() -> Phases {
         <<<Self as Rule>::Query as Queryable>::Services as Phase>::phase()
@@ -336,7 +344,10 @@ pub trait Rule: RuleMeta + Sized {
         ctx: &RuleContext<Self>,
         text_range: &TextRange,
         apply_suppression_comment: SuppressionCommentEmitter<RuleLanguage<Self>>,
-    ) -> Option<SuppressAction<RuleLanguage<Self>>> {
+    ) -> Option<SuppressAction<RuleLanguage<Self>>>
+    where
+        Self: 'static,
+    {
         // if the rule belongs to `Lint`, we auto generate an action to suppress the rule
         if <Self::Group as RuleGroup>::Category::CATEGORY == RuleCategory::Lint {
             let rule_category = format!(
@@ -345,8 +356,9 @@ pub trait Rule: RuleMeta + Sized {
                 Self::METADATA.name
             );
             let suppression_text = format!("rome-ignore {}", rule_category);
-            let mut mutation = ctx.root().begin();
-            let token = ctx.root().syntax().token_at_offset(text_range.start());
+            let root = ctx.root();
+            let token = root.syntax().token_at_offset(text_range.start());
+            let mut mutation = root.begin();
             apply_suppression_comment(SuppressionCommentEmitterPayload {
                 suppression_text: suppression_text.as_str(),
                 mutation: &mut mutation,
@@ -385,7 +397,14 @@ pub struct RuleDiagnostic {
 pub struct RuleAdvice {
     pub(crate) details: Vec<Detail>,
     pub(crate) notes: Vec<(LogCategory, MarkupBuf)>,
+    pub(crate) suggestion_list: Option<SuggestionList>,
     pub(crate) code_suggestion_list: Vec<CodeSuggestionAdvice<MarkupBuf>>,
+}
+
+#[derive(Debug, Default)]
+pub struct SuggestionList {
+    pub(crate) message: MarkupBuf,
+    pub(crate) list: Vec<MarkupBuf>,
 }
 
 impl Advices for RuleAdvice {
@@ -400,6 +419,19 @@ impl Advices for RuleAdvice {
         // we then print notes
         for (log_category, note) in &self.notes {
             visitor.record_log(*log_category, &markup! { {note} }.to_owned())?;
+        }
+
+        if let Some(suggestion_list) = &self.suggestion_list {
+            visitor.record_log(
+                LogCategory::Info,
+                &markup! { {suggestion_list.message} }.to_owned(),
+            )?;
+            let list: Vec<_> = suggestion_list
+                .list
+                .iter()
+                .map(|suggestion| suggestion as &dyn Display)
+                .collect();
+            visitor.record_list(&list)?;
         }
 
         // finally, we print possible code suggestions on how to fix the issue
@@ -484,6 +516,22 @@ impl RuleDiagnostic {
     /// Adds a footer to this [`RuleDiagnostic`], with the `Info` log category.
     pub fn note(self, msg: impl Display) -> Self {
         self.footer(LogCategory::Info, msg)
+    }
+
+    /// It creates a new footer note which contains a message and a list of possible suggestions.
+    /// Useful when there's need to suggest a list of things inside a diagnostic.
+    pub fn footer_list(mut self, message: impl Display, list: &[impl Display]) -> Self {
+        if !list.is_empty() {
+            self.rule_advice.suggestion_list = Some(SuggestionList {
+                message: markup! { {message} }.to_owned(),
+                list: list
+                    .iter()
+                    .map(|msg| markup! { {msg} }.to_owned())
+                    .collect(),
+            });
+        }
+
+        self
     }
 
     /// Adds a footer to this [`RuleDiagnostic`], with the `Warn` severity.

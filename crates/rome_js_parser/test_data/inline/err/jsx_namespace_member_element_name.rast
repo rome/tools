@@ -40,16 +40,16 @@ JsModule {
             semicolon_token: SEMICOLON@27..28 ";" [] [],
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
-                    JsUnknown {
+                    JsBogus {
                         items: [
-                            JsUnknown {
+                            JsBogus {
                                 items: [
                                     L_ANGLE@28..30 "<" [Newline("\n")] [],
-                                    JsUnknown {
+                                    JsBogus {
                                         items: [
-                                            JsUnknown {
+                                            JsBogus {
                                                 items: [
                                                     JsxName {
                                                         value_token: JSX_IDENT@30..39 "namespace" [] [],
@@ -71,13 +71,13 @@ JsModule {
                                 ],
                             },
                             JsxChildList [],
-                            JsUnknown {
+                            JsBogus {
                                 items: [
                                     L_ANGLE@44..45 "<" [] [],
                                     SLASH@45..46 "/" [] [],
-                                    JsUnknown {
+                                    JsBogus {
                                         items: [
-                                            JsUnknown {
+                                            JsBogus {
                                                 items: [
                                                     JsxName {
                                                         value_token: JSX_IDENT@46..55 "namespace" [] [],
@@ -138,12 +138,12 @@ JsModule {
             3: R_ANGLE@26..27 ">" [] []
       1: SEMICOLON@27..28 ";" [] []
     1: JS_EXPRESSION_STATEMENT@28..61
-      0: JS_UNKNOWN_EXPRESSION@28..60
-        0: JS_UNKNOWN@28..60
-          0: JS_UNKNOWN@28..44
+      0: JS_BOGUS_EXPRESSION@28..60
+        0: JS_BOGUS@28..60
+          0: JS_BOGUS@28..44
             0: L_ANGLE@28..30 "<" [Newline("\n")] []
-            1: JS_UNKNOWN@30..43
-              0: JS_UNKNOWN@30..41
+            1: JS_BOGUS@30..43
+              0: JS_BOGUS@30..41
                 0: JSX_NAME@30..39
                   0: JSX_IDENT@30..39 "namespace" [] []
                 1: COLON@39..40 ":" [] []
@@ -155,11 +155,11 @@ JsModule {
             2: JSX_ATTRIBUTE_LIST@43..43
             3: R_ANGLE@43..44 ">" [] []
           1: JSX_CHILD_LIST@44..44
-          2: JS_UNKNOWN@44..60
+          2: JS_BOGUS@44..60
             0: L_ANGLE@44..45 "<" [] []
             1: SLASH@45..46 "/" [] []
-            2: JS_UNKNOWN@46..59
-              0: JS_UNKNOWN@46..57
+            2: JS_BOGUS@46..59
+              0: JS_BOGUS@46..57
                 0: JSX_NAME@46..55
                   0: JSX_IDENT@46..55 "namespace" [] []
                 1: COLON@55..56 ":" [] []

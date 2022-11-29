@@ -42,6 +42,7 @@ define_dategories! {
     "lint/correctness/noRenderReturnValue": "https://docs.rome.tools/lint/rules/noRenderReturnValue",
     "lint/correctness/noDebugger": "https://docs.rome.tools/lint/rules/noDebugger",
 
+
     // style group
     "lint/style/noNegationElse": "https://docs.rome.tools/lint/rules/noNegationElse",
     "lint/style/noShoutyConstants": "https://docs.rome.tools/lint/rules/noShoutyConstants",
@@ -79,6 +80,7 @@ define_dategories! {
     "lint/nursery/noBannedTypes":"https://docs.rome.tools/lint/rules/noBannedTypes",
     "lint/nursery/noConditionalAssignment": "https://docs.rome.tools/lint/rules/noConditionalAssignment",
     "lint/nursery/noConstAssign": "https://docs.rome.tools/lint/rules/noConstAssign",
+    "lint/nursery/noConstEnum": "https://docs.rome.tools/lint/rules/noConstEnum",
     "lint/nursery/noDistractingElements": "https://docs.rome.tools/lint/rules/noDistractingElements",
     "lint/nursery/noConstructorReturn": "https://docs.rome.tools/lint/rules/noConstructorReturn",
     "lint/nursery/noSetterReturn": "https://docs.rome.tools/lint/rules/noSetterReturn",
@@ -100,6 +102,9 @@ define_dategories! {
     "lint/nursery/useFlatMap": "https://docs.rome.tools/lint/rules/useFlatMap",
     "lint/nursery/useNumericLiterals": "https://docs.rome.tools/lint/rules/useNumericLiterals",
     "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
+
+    "lint/nursery/useAriaPropsForRole": "https://docs.rome.tools/lint/rules/useAriaPropsForRole",
+    "lint/nursery/useAriaPropTypes": "https://docs.rome.tools/lint/rules/useAriaPropTypes",
     "lint/nursery/NoRedundantUseStrict": "https://docs.rome.tools/lint/rules/useValidForDirection",
 
     ;
@@ -110,7 +115,6 @@ define_dategories! {
     "internalError/io",
     "internalError/fs",
     "internalError/panic",
-
     // parse categories
     "parse",
     "parse/noSuperWithoutExtends",
@@ -123,8 +127,10 @@ define_dategories! {
     "lint/a11y",
     "lint/security",
     "lint/nursery",
+    "lint/configuration",
 
     // Suppression comments
+    "suppressions/parse",
     "suppressions/unknownGroup",
     "suppressions/unknownRule",
     "suppressions/unused",

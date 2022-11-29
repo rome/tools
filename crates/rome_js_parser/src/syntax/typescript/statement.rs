@@ -54,7 +54,7 @@ fn parse_ts_enum_member(p: &mut JsParser) -> ParsedSyntax {
             let err = p.err_builder("An `enum` member cannot be private", p.cur_range());
             p.error(err);
             syntax::class::parse_private_class_member_name(p).map(|mut x| {
-                x.change_to_unknown(p);
+                x.change_to_bogus(p);
                 x
             })
         }
@@ -90,7 +90,7 @@ impl ParseSeparatedList for TsEnumMembersList {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
-                JS_UNKNOWN_MEMBER,
+                JS_BOGUS_MEMBER,
                 STMT_RECOVERY_SET.union(token_set![JsSyntaxKind::IDENT, T![,], T!['}']]),
             )
             .enable_recovery_on_line_break(),
@@ -137,7 +137,7 @@ fn parse_ts_enum_id(p: &mut JsParser, enum_token_range: TextRange) {
 
                 let m = p.start();
                 p.bump_any();
-                let _ = m.complete(p, JS_UNKNOWN_BINDING);
+                let _ = m.complete(p, JS_BOGUS_BINDING);
 
                 let err = p.err_builder("invalid `enum` name", range);
                 p.error(err);

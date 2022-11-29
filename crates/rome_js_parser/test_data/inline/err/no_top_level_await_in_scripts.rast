@@ -24,7 +24,7 @@ JsScript {
             },
         },
         JsExpressionStatement {
-            expression: JsUnknownExpression {
+            expression: JsBogusExpression {
                 items: [
                     AWAIT_KW@34..41 "await" [Newline("\n")] [Whitespace(" ")],
                     JsCallExpression {
@@ -71,7 +71,7 @@ JsScript {
         2: JS_STATEMENT_LIST@33..33
         3: R_CURLY@33..34 "}" [] []
     1: JS_EXPRESSION_STATEMENT@34..48
-      0: JS_UNKNOWN_EXPRESSION@34..47
+      0: JS_BOGUS_EXPRESSION@34..47
         0: AWAIT_KW@34..41 "await" [Newline("\n")] [Whitespace(" ")]
         1: JS_CALL_EXPRESSION@41..47
           0: JS_IDENTIFIER_EXPRESSION@41..45

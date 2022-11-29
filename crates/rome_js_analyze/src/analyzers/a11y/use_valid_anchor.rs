@@ -2,7 +2,7 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::{markup, MarkupBuf};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsxAnyAttributeValue,
+    AnyJsExpression, AnyJsLiteralExpression, AnyJsTemplateElement, AnyJsxAttributeValue,
     JsxAttribute, JsxElement, JsxSelfClosingElement,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList, TextRange};
@@ -266,19 +266,19 @@ fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorSt
     let attribute_value = initializer?.value().ok()?;
 
     match attribute_value {
-        JsxAnyAttributeValue::JsxExpressionAttributeValue(attribute_value) => {
+        AnyJsxAttributeValue::JsxExpressionAttributeValue(attribute_value) => {
             let expression = attribute_value.expression().ok()?;
 
             match expression {
                 // href={null}
-                JsAnyExpression::JsAnyLiteralExpression(
-                    JsAnyLiteralExpression::JsNullLiteralExpression(null),
+                AnyJsExpression::AnyJsLiteralExpression(
+                    AnyJsLiteralExpression::JsNullLiteralExpression(null),
                 ) => {
                     return Some(UseValidAnchorState::IncorrectHref(
                         null.syntax().text_trimmed_range(),
                     ));
                 }
-                JsAnyExpression::JsIdentifierExpression(identifier) => {
+                AnyJsExpression::JsIdentifierExpression(identifier) => {
                     let text = identifier.name().ok()?.value_token().ok()?;
                     // href={undefined}
                     if text.text_trimmed() == "undefined" {
@@ -287,8 +287,8 @@ fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorSt
                         ));
                     }
                 }
-                JsAnyExpression::JsAnyLiteralExpression(
-                    JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
+                AnyJsExpression::AnyJsLiteralExpression(
+                    AnyJsLiteralExpression::JsStringLiteralExpression(string_literal),
                 ) => {
                     let text = string_literal.inner_string_text().ok()?;
                     if text == "#" {
@@ -297,9 +297,9 @@ fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorSt
                         ));
                     }
                 }
-                JsAnyExpression::JsTemplate(template) => {
+                AnyJsExpression::JsTemplateExpression(template) => {
                     let mut iter = template.elements().iter();
-                    if let Some(JsAnyTemplateElement::JsTemplateChunkElement(element)) = iter.next()
+                    if let Some(AnyJsTemplateElement::JsTemplateChunkElement(element)) = iter.next()
                     {
                         let template_token = element.template_chunk_token().ok()?;
                         let text = template_token.text_trimmed();
@@ -310,14 +310,14 @@ fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorSt
                         }
                     }
                 }
-                JsAnyExpression::ImportMeta(_)
-                | JsAnyExpression::JsClassExpression(_)
-                | JsAnyExpression::JsImportCallExpression(_)
-                | JsAnyExpression::JsObjectExpression(_)
-                | JsAnyExpression::JsSuperExpression(_)
-                | JsAnyExpression::JsUnaryExpression(_)
-                | JsAnyExpression::JsxTagExpression(_)
-                | JsAnyExpression::NewTarget(_) => {
+                AnyJsExpression::JsImportMetaExpression(_)
+                | AnyJsExpression::JsClassExpression(_)
+                | AnyJsExpression::JsImportCallExpression(_)
+                | AnyJsExpression::JsObjectExpression(_)
+                | AnyJsExpression::JsSuperExpression(_)
+                | AnyJsExpression::JsUnaryExpression(_)
+                | AnyJsExpression::JsxTagExpression(_)
+                | AnyJsExpression::JsNewTargetExpression(_) => {
                     return Some(UseValidAnchorState::IncorrectHref(
                         expression.syntax().text_trimmed_range(),
                     ));
@@ -325,8 +325,8 @@ fn is_invalid_anchor(anchor_attribute: &JsxAttribute) -> Option<UseValidAnchorSt
                 _ => {}
             }
         }
-        JsxAnyAttributeValue::JsxAnyTag(_) => {}
-        JsxAnyAttributeValue::JsxString(href_string) => {
+        AnyJsxAttributeValue::AnyJsxTag(_) => {}
+        AnyJsxAttributeValue::JsxString(href_string) => {
             let href_value = href_string.inner_string_text().ok()?;
 
             // href="#" or href="javascript:void(0)"

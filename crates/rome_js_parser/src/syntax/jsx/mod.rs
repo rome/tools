@@ -340,7 +340,7 @@ impl ParseNodeList for JsxChildrenList {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
-                JsSyntaxKind::JS_UNKNOWN,
+                JsSyntaxKind::JS_BOGUS,
                 token_set![T![<], T![>], T!['{'], T!['}']],
             ),
             jsx_expected_children,
@@ -416,7 +416,7 @@ fn parse_jsx_any_element_name(p: &mut JsParser) -> ParsedSyntax {
                 name.range(p),
             );
             p.error(error);
-            name.change_to_unknown(p);
+            name.change_to_bogus(p);
         }
 
         while p.at(T![.]) {
@@ -506,7 +506,7 @@ impl ParseNodeList for JsxAttributeList {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
-                JsSyntaxKind::JS_UNKNOWN,
+                JsSyntaxKind::JS_BOGUS,
                 token_set![T![/], T![>], T![<], T!['{'], T!['}'], T![...], T![ident]],
             ),
             jsx_expected_attribute,
@@ -558,7 +558,7 @@ fn parse_jsx_spread_attribute(p: &mut JsParser) -> ParsedSyntax {
                 "Comma operator isn't a valid value for a JSX spread argument.",
                 expr.range(p),
             ));
-            expr.change_to_unknown(p);
+            expr.change_to_bogus(p);
         }
 
         expr
@@ -704,8 +704,8 @@ fn parse_jsx_assignment_expression(p: &mut JsParser, is_spread: bool) -> ParsedS
         };
 
         let err = match expr.kind(p) {
-            JsSyntaxKind::IMPORT_META
-            | JsSyntaxKind::NEW_TARGET
+            JsSyntaxKind::JS_IMPORT_META_EXPRESSION
+            | JsSyntaxKind::JS_NEW_TARGET_EXPRESSION
             | JsSyntaxKind::JS_CLASS_EXPRESSION => Some(p.err_builder(msg, expr.range(p))),
             JsSyntaxKind::JS_SEQUENCE_EXPRESSION if is_spread => {
                 Some(p.err_builder(msg, expr.range(p)))
@@ -715,7 +715,7 @@ fn parse_jsx_assignment_expression(p: &mut JsParser, is_spread: bool) -> ParsedS
 
         if let Some(err) = err {
             p.error(err);
-            expr.change_to_unknown(p);
+            expr.change_to_bogus(p);
         }
 
         expr

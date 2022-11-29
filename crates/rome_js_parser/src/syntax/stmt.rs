@@ -167,7 +167,7 @@ pub(crate) fn parse_statement(p: &mut JsParser, context: StatementContext) -> Pa
                 return Present(import);
             }
 
-            import.change_kind(p, JS_UNKNOWN_STATEMENT);
+            import.change_kind(p, JS_BOGUS_STATEMENT);
 
             let error = match p.source_type().module_kind() {
                 ModuleKind::Script => p
@@ -329,7 +329,7 @@ pub(crate) fn parse_non_top_level_export(p: &mut JsParser) -> ParsedSyntax {
         };
 
         p.error(error);
-        export.change_kind(p, JS_UNKNOWN_STATEMENT);
+        export.change_kind(p, JS_BOGUS_STATEMENT);
         export
     })
 }
@@ -366,7 +366,7 @@ fn parse_labeled_statement(p: &mut JsParser, context: StatementContext) -> Parse
 		p.bump(T![:]);
 
 		let identifier_range = identifier.range(p);
-		let is_valid_identifier = !identifier.kind(p).is_unknown();
+		let is_valid_identifier = !identifier.kind(p).is_bogus();
 		let labelled_statement = identifier.undo_completion(p);
         let label = p.text(identifier_range);
 
@@ -405,7 +405,7 @@ fn parse_labeled_statement(p: &mut JsParser, context: StatementContext) -> Parse
                 // test_err labelled_function_decl_in_single_statement_context
                 // if (true) label1: label2: function a() {}
                 p.error(p.err_builder("Labelled function declarations are only allowed at top-level or inside a block", body.range(p)).hint( "Wrap the labelled statement in a block statement"));
-                body.change_to_unknown(p);
+                body.change_to_bogus(p);
             },
             // test labelled_statement_in_single_statement_context
             // if (true) label1: var a = 10;
@@ -553,7 +553,7 @@ fn parse_break_statement(p: &mut JsParser) -> ParsedSyntax {
 
     if let Some(error) = error {
         p.error(error);
-        Present(m.complete(p, JS_UNKNOWN_STATEMENT))
+        Present(m.complete(p, JS_BOGUS_STATEMENT))
     } else {
         Present(m.complete(p, JS_BREAK_STATEMENT))
     }
@@ -626,7 +626,7 @@ fn parse_continue_statement(p: &mut JsParser) -> ParsedSyntax {
 
     if let Some(error) = error {
         p.error(error);
-        Present(m.complete(p, JS_UNKNOWN_STATEMENT))
+        Present(m.complete(p, JS_BOGUS_STATEMENT))
     } else {
         Present(m.complete(p, JS_CONTINUE_STATEMENT))
     }
@@ -663,7 +663,7 @@ fn parse_return_statement(p: &mut JsParser) -> ParsedSyntax {
         );
 
         p.error(err);
-        complete.change_kind(p, JS_UNKNOWN_STATEMENT);
+        complete.change_kind(p, JS_BOGUS_STATEMENT);
     }
     Present(complete)
 }
@@ -836,7 +836,7 @@ pub(crate) fn parse_statements(p: &mut JsParser, stop_on_r_curly: bool, statemen
         if parse_statement(p, StatementContext::StatementList)
             .or_recover(
                 p,
-                &ParseRecovery::new(JS_UNKNOWN_STATEMENT, recovery_set),
+                &ParseRecovery::new(JS_BOGUS_STATEMENT, recovery_set),
                 expected_statement,
             )
             .is_err()
@@ -1017,7 +1017,7 @@ pub(crate) fn parse_variable_statement(
                 )
                 .hint("Wrap this declaration in a block statement"),
             );
-            statement.change_to_unknown(p);
+            statement.change_to_bogus(p);
         }
 
         statement
@@ -1134,7 +1134,7 @@ impl ParseSeparatedList for VariableDeclaratorList {
     fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
-            &ParseRecovery::new(JS_UNKNOWN, STMT_RECOVERY_SET.union(token_set!(T![,])))
+            &ParseRecovery::new(JS_BOGUS, STMT_RECOVERY_SET.union(token_set!(T![,])))
                 .enable_recovery_on_line_break(),
             expected_binding,
         )
@@ -1146,7 +1146,7 @@ impl ParseSeparatedList for VariableDeclaratorList {
 
     fn finish_list(&mut self, p: &mut JsParser, m: Marker) -> CompletedMarker {
         if self.declarator_context.is_first {
-            let m = m.complete(p, JS_UNKNOWN);
+            let m = m.complete(p, JS_BOGUS);
             let range = m.range(p);
             p.error(expected_binding(p, range));
             m
@@ -1243,7 +1243,7 @@ fn parse_variable_declarator(
 
                         .detail(ts_annotation.range(p), "Annotation")
                 );
-                initializer.change_to_unknown(p);
+                initializer.change_to_bogus(p);
             }
         }
 
@@ -1263,7 +1263,7 @@ fn parse_variable_declarator(
                         .err_builder("`for` statement declarators cannot have a type annotation", ts_annotation.range(p));
 
                     p.error(err);
-                    ts_annotation.change_to_unknown(p);
+                    ts_annotation.change_to_bogus(p);
                 }
             }
             if let Some(initializer) = initializer {
@@ -1483,7 +1483,7 @@ fn parse_for_head(p: &mut JsParser, has_l_paren: bool, is_for_await: bool) -> Js
                 {
                     let err = p.err_builder("the left hand side of a `for..in` statement cannot be a destructuring pattern", assignment.range(p));
                     p.error(err);
-                    assignment.change_to_unknown(p);
+                    assignment.change_to_bogus(p);
                 } else if !is_for_await && starts_with_async_of {
                     //  for ( [lookahead ∉ { let, async of }] LeftHandSideExpression[?Yield, ?Await] of AssignmentExpression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
                     // [+Await] for await ( [lookahead ≠ let] LeftHandSideExpression[?Yield, ?Await] of AssignmentExpression[+In, ?Yield, ?Await] ) Statement[?Yield, ?Await, ?Return]
@@ -1501,7 +1501,7 @@ fn parse_for_head(p: &mut JsParser, has_l_paren: bool, is_for_await: bool) -> Js
                         "The left-hand side of a `for...of` statement may not be `async`",
                         assignment.range(p),
                     ));
-                    assignment.change_to_unknown(p);
+                    assignment.change_to_bogus(p);
                 }
             }
 
@@ -1609,7 +1609,7 @@ fn parse_for_statement(p: &mut JsParser) -> ParsedSyntax {
                     "or convert this to a `for...of` statement",
                 ),
             );
-            completed.change_kind(p, JS_UNKNOWN_STATEMENT)
+            completed.change_kind(p, JS_BOGUS_STATEMENT)
         }
     }
 
@@ -1639,7 +1639,7 @@ impl ParseNodeList for SwitchCaseStatementList {
     ) -> parser::RecoveryResult {
         parsed_element.or_recover(
             p,
-            &ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET),
+            &ParseRecovery::new(JS_BOGUS_STATEMENT, STMT_RECOVERY_SET),
             js_parse_error::expected_case,
         )
     }
@@ -1651,11 +1651,11 @@ fn parse_switch_clause(p: &mut JsParser, first_default: &mut Option<TextRange>) 
     match p.cur() {
         T![default] => {
             // in case we have two `default` expression, we mark the second one
-            // as `JS_CASE_CLAUSE` where the "default" keyword is an Unknown node
+            // as `JS_CASE_CLAUSE` where the "default" keyword is an bogus node
             let syntax_kind = if first_default.is_some() {
                 let discriminant = p.start();
                 p.bump_any(); // interpret `default` as the test of the case
-                discriminant.complete(p, JS_UNKNOWN_EXPRESSION);
+                discriminant.complete(p, JS_BOGUS_EXPRESSION);
                 JS_CASE_CLAUSE
             } else {
                 p.expect(T![default]);
@@ -1734,7 +1734,7 @@ impl ParseNodeList for SwitchCasesList {
             let recovered_element = parsed_element.or_recover(
                 p,
                 &ParseRecovery::new(
-                    JS_UNKNOWN_STATEMENT,
+                    JS_BOGUS_STATEMENT,
                     token_set![T![default], T![case], T!['}']],
                 )
                 .enable_recovery_on_line_break(),

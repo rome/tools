@@ -4,6 +4,7 @@ pub(crate) mod any;
 pub(crate) mod assignments;
 pub(crate) mod auxiliary;
 pub(crate) mod bindings;
+pub(crate) mod bogus;
 pub(crate) mod classes;
 pub(crate) mod declarations;
 pub(crate) mod expressions;

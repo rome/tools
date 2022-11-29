@@ -2,7 +2,7 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{TriviaPieceKind, TsReferenceType, TsType, TsTypeArguments, T};
+use rome_js_syntax::{AnyTsType, TriviaPieceKind, TsReferenceType, TsTypeArguments, T};
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
 
 use crate::JsRuleAction;
@@ -49,7 +49,7 @@ declare_rule! {
 
 impl Rule for UseShorthandArrayType {
     type Query = Ast<TsReferenceType>;
-    type State = TsType;
+    type State = AnyTsType;
     type Signals = Option<Self::State>;
     type Options = ();
 
@@ -82,7 +82,7 @@ impl Rule for UseShorthandArrayType {
         let node = ctx.query();
         let mut mutation = ctx.root().begin();
 
-        mutation.replace_node(TsType::TsReferenceType(node.clone()), state.clone());
+        mutation.replace_node(AnyTsType::TsReferenceType(node.clone()), state.clone());
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
@@ -102,7 +102,7 @@ fn is_array_reference(ty: &TsReferenceType) -> Option<bool> {
     })
 }
 
-fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
+fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<AnyTsType> {
     if type_arguments.ts_type_argument_list().len() > 0 {
         let types_array = type_arguments
             .ts_type_argument_list()
@@ -111,16 +111,16 @@ fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
                 let param = param.ok()?;
                 let element_type = match &param {
                     // Intersection or higher types
-                    TsType::TsUnionType(_)
-                    | TsType::TsIntersectionType(_)
-                    | TsType::TsFunctionType(_)
-                    | TsType::TsConstructorType(_)
-                    | TsType::TsConditionalType(_)
-                    | TsType::TsTypeOperatorType(_)
-                    | TsType::TsInferType(_)
-                    | TsType::TsMappedType(_) => None,
+                    AnyTsType::TsUnionType(_)
+                    | AnyTsType::TsIntersectionType(_)
+                    | AnyTsType::TsFunctionType(_)
+                    | AnyTsType::TsConstructorType(_)
+                    | AnyTsType::TsConditionalType(_)
+                    | AnyTsType::TsTypeOperatorType(_)
+                    | AnyTsType::TsInferType(_)
+                    | AnyTsType::TsMappedType(_) => None,
 
-                    TsType::TsReferenceType(ty) if is_array_reference(ty).unwrap_or(false) => {
+                    AnyTsType::TsReferenceType(ty) if is_array_reference(ty).unwrap_or(false) => {
                         if let Some(type_arguments) = ty.type_arguments() {
                             convert_to_array_type(type_arguments)
                         } else {
@@ -130,7 +130,7 @@ fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
                     _ => Some(param),
                 };
                 element_type.map(|element_type| {
-                    TsType::TsArrayType(make::ts_array_type(
+                    AnyTsType::TsArrayType(make::ts_array_type(
                         element_type,
                         make::token(T!['[']),
                         make::token(T![']']),
@@ -160,7 +160,7 @@ fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
                             )))
                     }),
                 ));
-                return Some(TsType::TsUnionType(ts_union_type_builder.build()));
+                return Some(AnyTsType::TsUnionType(ts_union_type_builder.build()));
             }
         }
     }

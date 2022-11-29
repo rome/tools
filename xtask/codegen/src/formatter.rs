@@ -234,7 +234,7 @@ impl ModuleIndex {
 enum NodeKind {
     Node,
     List { separated: bool },
-    Unknown,
+    Bogus,
     Union { variants: Vec<String> },
 }
 
@@ -276,11 +276,7 @@ fn generate_formatter(repo: &GitRepo, language_kind: LanguageKind) {
                 name,
             )
         }))
-        .chain(
-            ast.unknowns
-                .into_iter()
-                .map(|name| (NodeKind::Unknown, name)),
-        )
+        .chain(ast.bogus.into_iter().map(|name| (NodeKind::Bogus, name)))
         .chain(ast.unions.into_iter().map(|node| {
             (
                 NodeKind::Union {
@@ -379,15 +375,15 @@ fn generate_formatter(repo: &GitRepo, language_kind: LanguageKind) {
                     }
                 }
             }
-            NodeKind::Unknown => {
+            NodeKind::Bogus => {
                 quote! {
-                    use crate::FormatUnknownNodeRule;
+                    use crate::FormatBogusNodeRule;
                     use #syntax_crate_ident::#node_id;
 
                     #[derive(Debug, Clone, Default)]
                     pub(crate) struct #format_id;
 
-                    impl FormatUnknownNodeRule<#node_id> for #format_id {
+                    impl FormatBogusNodeRule<#node_id> for #format_id {
                     }
                 }
             }
@@ -463,8 +459,8 @@ impl BoilerplateImpls {
         let format_rule_impl = match kind {
             NodeKind::List { .. } | NodeKind::Union { .. } => quote!(),
             kind => {
-                let rule = if matches!(kind, NodeKind::Unknown) {
-                    Ident::new("FormatUnknownNodeRule", Span::call_site())
+                let rule = if matches!(kind, NodeKind::Bogus) {
+                    Ident::new("FormatBogusNodeRule", Span::call_site())
                 } else {
                     Ident::new("FormatNodeRule", Span::call_site())
                 };
@@ -510,7 +506,7 @@ impl BoilerplateImpls {
 
         let tokens = quote! {
             use rome_formatter::{FormatRefWithRule, FormatOwnedWithRule, FormatRule, FormatResult};
-            use crate::{AsFormat, IntoFormat, FormatNodeRule, FormatUnknownNodeRule, #formatter_ident, #formatter_context_ident};
+            use crate::{AsFormat, IntoFormat, FormatNodeRule, FormatBogusNodeRule, #formatter_ident, #formatter_context_ident};
 
             #( #impls )*
         };
@@ -552,10 +548,23 @@ impl NodeDialect {
             NodeDialect::Json => "json",
         }
     }
+
+    fn from_str(name: &str) -> NodeDialect {
+        match name {
+            "Jsx" => NodeDialect::Jsx,
+            "Js" => NodeDialect::Js,
+            "Ts" => NodeDialect::Ts,
+            "Json" => NodeDialect::Json,
+            _ => {
+                eprintln!("missing prefix {}", name);
+                NodeDialect::Js
+            }
+        }
+    }
 }
 
 enum NodeConcept {
-    Unknown,
+    Bogus,
     List,
     Union,
     /// - auxiliary (everything else)
@@ -590,7 +599,7 @@ impl NodeConcept {
             NodeConcept::Binding => "bindings",
             NodeConcept::Type => "types",
             NodeConcept::Module => "module",
-            NodeConcept::Unknown => "unknown",
+            NodeConcept::Bogus => "bogus",
             NodeConcept::List => "lists",
             NodeConcept::Union => "any",
             NodeConcept::Tag => "tag",
@@ -622,41 +631,27 @@ impl NodeModuleInformation {
 
 /// Convert an AstNode name to a path / Rust module name
 fn name_to_module(kind: &NodeKind, in_name: &str, language: LanguageKind) -> NodeModuleInformation {
-    // Detect language prefix
-    let mid_before_second_capital_letter = in_name
-        .chars()
-        .position({
-            let mut uppercases = 0;
-            move |c| {
-                uppercases += i32::from(c.is_uppercase());
-                uppercases >= 2
-            }
-        })
-        .expect("Node name malformed");
-    let (prefix, mut name) = in_name.split_at(mid_before_second_capital_letter);
+    let mut upper_case_indices = in_name.match_indices(|c: char| c.is_uppercase());
 
-    let dialect = match prefix {
-        "Jsx" => NodeDialect::Jsx,
-        "Js" => NodeDialect::Js,
-        "Ts" => NodeDialect::Ts,
-        "Json" => NodeDialect::Json,
-        _ => {
-            eprintln!("missing prefix {}", in_name);
-            name = in_name;
-            NodeDialect::Js
-        }
-    };
+    assert!(matches!(upper_case_indices.next(), Some((0, _))));
+
+    let (second_upper_start, _) = upper_case_indices.next().expect("Node name malformed");
+    let (mut dialect_prefix, mut name) = in_name.split_at(second_upper_start);
+
+    // AnyJsX
+    if dialect_prefix == "Any" {
+        let (third_upper_start, _) = upper_case_indices.next().expect("Node name malformed");
+        (dialect_prefix, name) = name.split_at(third_upper_start - dialect_prefix.len());
+    }
+
+    let dialect = NodeDialect::from_str(dialect_prefix);
 
     // Classify nodes by concept
-    let concept = if matches!(kind, NodeKind::Unknown) {
-        NodeConcept::Unknown
+    let concept = if matches!(kind, NodeKind::Bogus) {
+        NodeConcept::Bogus
     } else if matches!(kind, NodeKind::List { .. }) {
         NodeConcept::List
     } else if matches!(kind, NodeKind::Union { .. }) {
-        if name.starts_with("Any") {
-            name = &name[3..];
-        }
-
         NodeConcept::Union
     } else {
         match language {
@@ -666,8 +661,7 @@ fn name_to_module(kind: &NodeKind, in_name: &str, language: LanguageKind) -> Nod
 
                 _ if name.ends_with("Expression")
                     || name.ends_with("Argument")
-                    || name.ends_with("Arguments")
-                    || name.starts_with("Template") =>
+                    || name.ends_with("Arguments") =>
                 {
                     NodeConcept::Expression
                 }
@@ -727,8 +721,9 @@ fn name_to_module(kind: &NodeKind, in_name: &str, language: LanguageKind) -> Nod
                 // Default to auxiliary
                 _ => NodeConcept::Auxiliary,
             },
-            LanguageKind::Json => match dbg!(name) {
-                "Array" | "Boolean" | "Null" | "Object" | "Number" | "String" => NodeConcept::Value,
+
+            LanguageKind::Json => match name {
+                _ if name.ends_with("Value") => NodeConcept::Value,
                 _ => NodeConcept::Auxiliary,
             },
             LanguageKind::Css => NodeConcept::Auxiliary,

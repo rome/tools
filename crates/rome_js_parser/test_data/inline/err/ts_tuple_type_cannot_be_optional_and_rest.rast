@@ -2,41 +2,41 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsUnknownStatement {
-            items: [
-                TYPE_KW@0..5 "type" [] [Whitespace(" ")],
-                TsIdentifierBinding {
-                    name_token: IDENT@5..7 "A" [] [Whitespace(" ")],
-                },
-                EQ@7..9 "=" [] [Whitespace(" ")],
-                JsUnknown {
-                    items: [
-                        L_BRACK@9..11 "[" [] [Whitespace(" ")],
-                        JsUnknown {
-                            items: [
-                                JsUnknown {
-                                    items: [
-                                        DOT3@11..14 "..." [] [],
-                                        JsName {
-                                            value_token: IDENT@14..18 "name" [] [],
+        TsTypeAliasDeclaration {
+            type_token: TYPE_KW@0..5 "type" [] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@5..7 "A" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            eq_token: EQ@7..9 "=" [] [Whitespace(" ")],
+            ty: TsBogusType {
+                items: [
+                    L_BRACK@9..11 "[" [] [Whitespace(" ")],
+                    JsBogus {
+                        items: [
+                            JsBogus {
+                                items: [
+                                    DOT3@11..14 "..." [] [],
+                                    JsName {
+                                        value_token: IDENT@14..18 "name" [] [],
+                                    },
+                                    QUESTION@18..19 "?" [] [],
+                                    COLON@19..21 ":" [] [Whitespace(" ")],
+                                    TsArrayType {
+                                        element_type: TsStringType {
+                                            string_token: STRING_KW@21..27 "string" [] [],
                                         },
-                                        QUESTION@18..19 "?" [] [],
-                                        COLON@19..21 ":" [] [Whitespace(" ")],
-                                        TsArrayType {
-                                            element_type: TsStringType {
-                                                string_token: STRING_KW@21..27 "string" [] [],
-                                            },
-                                            l_brack_token: L_BRACK@27..28 "[" [] [],
-                                            r_brack_token: R_BRACK@28..30 "]" [] [Whitespace(" ")],
-                                        },
-                                    ],
-                                },
-                            ],
-                        },
-                        R_BRACK@30..31 "]" [] [],
-                    ],
-                },
-            ],
+                                        l_brack_token: L_BRACK@27..28 "[" [] [],
+                                        r_brack_token: R_BRACK@28..30 "]" [] [Whitespace(" ")],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                    R_BRACK@30..31 "]" [] [],
+                ],
+            },
+            semicolon_token: missing (optional),
         },
     ],
     eof_token: EOF@31..32 "" [Newline("\n")] [],
@@ -46,15 +46,16 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..31
-    0: JS_UNKNOWN_STATEMENT@0..31
+    0: TS_TYPE_ALIAS_DECLARATION@0..31
       0: TYPE_KW@0..5 "type" [] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@5..7
         0: IDENT@5..7 "A" [] [Whitespace(" ")]
-      2: EQ@7..9 "=" [] [Whitespace(" ")]
-      3: JS_UNKNOWN@9..31
+      2: (empty)
+      3: EQ@7..9 "=" [] [Whitespace(" ")]
+      4: TS_BOGUS_TYPE@9..31
         0: L_BRACK@9..11 "[" [] [Whitespace(" ")]
-        1: JS_UNKNOWN@11..30
-          0: JS_UNKNOWN@11..30
+        1: JS_BOGUS@11..30
+          0: JS_BOGUS@11..30
             0: DOT3@11..14 "..." [] []
             1: JS_NAME@14..18
               0: IDENT@14..18 "name" [] []
@@ -66,6 +67,7 @@ JsModule {
               1: L_BRACK@27..28 "[" [] []
               2: R_BRACK@28..30 "]" [] [Whitespace(" ")]
         2: R_BRACK@30..31 "]" [] []
+      5: (empty)
   3: EOF@31..32 "" [Newline("\n")] []
 --
 ts_tuple_type_cannot_be_optional_and_rest.ts:1:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

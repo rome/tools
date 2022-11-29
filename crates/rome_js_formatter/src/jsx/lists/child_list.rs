@@ -6,7 +6,7 @@ use crate::utils::jsx::{
 use crate::JsFormatter;
 use rome_formatter::format_element::tag::{GroupMode, Tag};
 use rome_formatter::{format_args, write, CstFormatContext, FormatRuleWithOptions, VecBuffer};
-use rome_js_syntax::{JsxAnyChild, JsxChildList};
+use rome_js_syntax::{AnyJsxChild, JsxChildList};
 use std::cell::RefCell;
 
 #[derive(Debug, Clone, Default)]
@@ -105,7 +105,7 @@ impl FormatJsxChildList {
                         Some(JsxChild::NonText(next_child)) => Some(WordSeparator::EndOfText {
                             is_soft_line_break: !matches!(
                                 next_child,
-                                JsxAnyChild::JsxSelfClosingElement(_)
+                                AnyJsxChild::JsxSelfClosingElement(_)
                             ) || word.is_ascii_punctuation(),
                         }),
 
@@ -178,7 +178,7 @@ impl FormatJsxChildList {
                         if let Some(JsxChild::Word(word)) = last {
                             let is_next_element_self_closing = matches!(
                                 children_iter.peek(),
-                                Some(JsxChild::NonText(JsxAnyChild::JsxSelfClosingElement(_)))
+                                Some(JsxChild::NonText(AnyJsxChild::JsxSelfClosingElement(_)))
                             );
                             !is_next_element_self_closing && word.is_ascii_punctuation()
                         }
@@ -194,7 +194,7 @@ impl FormatJsxChildList {
                         else if let Some(JsxChild::Word(next_word)) = children_iter.peek() {
                             let is_next_next_element_self_closing = matches!(
                                 children_iter.peek_next(),
-                                Some(JsxChild::NonText(JsxAnyChild::JsxSelfClosingElement(_)))
+                                Some(JsxChild::NonText(AnyJsxChild::JsxSelfClosingElement(_)))
                             );
 
                             !is_next_next_element_self_closing && next_word.is_ascii_punctuation()
@@ -231,7 +231,7 @@ impl FormatJsxChildList {
                             // <pre className="h-screen overflow-y-scroll" />
                             // adefg
                             // ```
-                            if matches!(non_text, JsxAnyChild::JsxSelfClosingElement(_))
+                            if matches!(non_text, AnyJsxChild::JsxSelfClosingElement(_))
                                 && !word.is_ascii_punctuation()
                             {
                                 Some(LineMode::Hard)
@@ -308,8 +308,8 @@ impl FormatJsxChildList {
     /// [JsxText] and [JsxExpressionChild] and instead, formats the nodes itself.
     #[cfg(debug_assertions)]
     fn disarm_debug_assertions(&self, node: &JsxChildList, f: &mut JsFormatter) {
-        use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression};
-        use JsxAnyChild::*;
+        use rome_js_syntax::{AnyJsExpression, AnyJsLiteralExpression};
+        use AnyJsxChild::*;
 
         for child in node {
             match child {
@@ -321,8 +321,8 @@ impl FormatJsxChildList {
                         .mark_suppression_checked(expression.syntax());
 
                     match expression.expression().unwrap() {
-                        JsAnyExpression::JsAnyLiteralExpression(
-                            JsAnyLiteralExpression::JsStringLiteralExpression(string_literal),
+                        AnyJsExpression::AnyJsLiteralExpression(
+                            AnyJsLiteralExpression::JsStringLiteralExpression(string_literal),
                         ) => {
                             f.context()
                                 .comments()
@@ -377,7 +377,7 @@ impl FormatJsxChildList {
         let mut meta = ChildrenMeta::default();
 
         for child in list {
-            use JsxAnyChild::*;
+            use AnyJsxChild::*;
 
             match child {
                 JsxElement(_) | JsxFragment(_) | JsxSelfClosingElement(_) => meta.any_tag = true,

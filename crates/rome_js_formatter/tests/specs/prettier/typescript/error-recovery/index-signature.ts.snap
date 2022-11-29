@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: typescript/error-recovery/index-signature.ts
+  test_file: "typescript\\error-recovery\\index-signature.ts"
 ---
 
 # Input
@@ -34,7 +34,7 @@ type TooLongSingleParam = {
 ```diff
 --- Prettier
 +++ Rome
-@@ -2,30 +2,20 @@
+@@ -2,30 +2,22 @@
  
  type TwoParams = {
    [a: string, b: string]: string;
@@ -62,9 +62,11 @@ type TooLongSingleParam = {
 -};
 +  [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
 +}
-+type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string;
++type TooLong81 =
++  { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string;
 +}
-+type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string;
++type TooLong80 =
++  { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string;
 +}
  
  // note lack of trailing comma in the index signature
@@ -91,9 +93,11 @@ type ThreeParams = {
 type TooLong = {
   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
 }
-type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string;
+type TooLong81 =
+  { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string;
 }
-type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string;
+type TooLong80 =
+  { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string;
 }
 
 // note lack of trailing comma in the index signature
@@ -442,8 +446,8 @@ index-signature.ts:14:99 parse ━━━━━━━━━━━━━━━━�
 # Lines exceeding max width of 80 characters
 ```
    11:   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
-   13: type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string;
-   15: type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string;
-   20:   [looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong: string]: string;
+   14:   { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string;
+   17:   { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string;
+   22:   [looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong: string]: string;
 ```
 

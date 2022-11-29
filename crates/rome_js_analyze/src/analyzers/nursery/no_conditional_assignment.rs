@@ -102,8 +102,8 @@ impl Rule for NoConditionalAssignment {
     }
 }
 
-fn into_js_assignment(expr: JsAnyExpression) -> Option<JsAssignmentExpression> {
-    if let JsAnyExpression::JsAssignmentExpression(e) = expr {
+fn into_js_assignment(expr: AnyJsExpression) -> Option<JsAssignmentExpression> {
+    if let AnyJsExpression::JsAssignmentExpression(e) = expr {
         Some(e)
     } else {
         None
@@ -111,7 +111,7 @@ fn into_js_assignment(expr: JsAnyExpression) -> Option<JsAssignmentExpression> {
 }
 
 impl ConditionalStatement {
-    fn test(&self) -> Option<JsAnyExpression> {
+    fn test(&self) -> Option<AnyJsExpression> {
         match self {
             Self::JsConditionalExpression(it) => it.test().ok(),
             Self::JsWhileStatement(it) => it.test().ok(),

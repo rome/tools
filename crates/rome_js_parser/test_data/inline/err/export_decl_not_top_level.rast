@@ -5,7 +5,7 @@ JsModule {
         JsBlockStatement {
             l_curly_token: L_CURLY@0..1 "{" [] [],
             statements: JsStatementList [
-                JsUnknownStatement {
+                JsBogusStatement {
                     items: [
                         EXPORT_KW@1..10 "export" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")],
                         JsExportNamedFromClause {
@@ -44,7 +44,7 @@ JsModule {
     0: JS_BLOCK_STATEMENT@0..33
       0: L_CURLY@0..1 "{" [] []
       1: JS_STATEMENT_LIST@1..31
-        0: JS_UNKNOWN_STATEMENT@1..31
+        0: JS_BOGUS_STATEMENT@1..31
           0: EXPORT_KW@1..10 "export" [Newline("\n"), Whitespace(" ")] [Whitespace(" ")]
           1: JS_EXPORT_NAMED_FROM_CLAUSE@10..31
             0: (empty)

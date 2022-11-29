@@ -55,11 +55,11 @@ impl rome_rowan::SyntaxKind for CssSyntaxKind {
     const TOMBSTONE: Self = CssSyntaxKind::TOMBSTONE;
     const EOF: Self = EOF;
 
-    fn is_unknown(&self) -> bool {
-        matches!(self, CSS_UNKNOWN)
+    fn is_bogus(&self) -> bool {
+        matches!(self, CSS_BOGUS)
     }
 
-    fn to_unknown(&self) -> Self {
+    fn to_bogus(&self) -> Self {
         todo!()
     }
 

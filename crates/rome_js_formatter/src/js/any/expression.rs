@@ -1,50 +1,50 @@
 //! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::JsAnyExpression;
+use rome_js_syntax::AnyJsExpression;
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatJsAnyExpression;
-impl FormatRule<JsAnyExpression> for FormatJsAnyExpression {
+pub(crate) struct FormatAnyJsExpression;
+impl FormatRule<AnyJsExpression> for FormatAnyJsExpression {
     type Context = JsFormatContext;
-    fn fmt(&self, node: &JsAnyExpression, f: &mut JsFormatter) -> FormatResult<()> {
+    fn fmt(&self, node: &AnyJsExpression, f: &mut JsFormatter) -> FormatResult<()> {
         match node {
-            JsAnyExpression::JsAnyLiteralExpression(node) => node.format().fmt(f),
-            JsAnyExpression::ImportMeta(node) => node.format().fmt(f),
-            JsAnyExpression::JsArrayExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsArrowFunctionExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsAssignmentExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsAwaitExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsBinaryExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsCallExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsClassExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsComputedMemberExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsConditionalExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsFunctionExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsIdentifierExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsImportCallExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsInExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsInstanceofExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsLogicalExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsNewExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsObjectExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsParenthesizedExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsPostUpdateExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsPreUpdateExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsSequenceExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsStaticMemberExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsSuperExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsThisExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsUnaryExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsUnknownExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsYieldExpression(node) => node.format().fmt(f),
-            JsAnyExpression::NewTarget(node) => node.format().fmt(f),
-            JsAnyExpression::JsTemplate(node) => node.format().fmt(f),
-            JsAnyExpression::TsTypeAssertionExpression(node) => node.format().fmt(f),
-            JsAnyExpression::TsAsExpression(node) => node.format().fmt(f),
-            JsAnyExpression::TsSatisfiesExpression(node) => node.format().fmt(f),
-            JsAnyExpression::TsNonNullAssertionExpression(node) => node.format().fmt(f),
-            JsAnyExpression::TsInstantiationExpression(node) => node.format().fmt(f),
-            JsAnyExpression::JsxTagExpression(node) => node.format().fmt(f),
+            AnyJsExpression::AnyJsLiteralExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsImportMetaExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsArrayExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsArrowFunctionExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsAssignmentExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsAwaitExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsBinaryExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsCallExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsClassExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsComputedMemberExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsConditionalExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsFunctionExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsIdentifierExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsImportCallExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsInExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsInstanceofExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsLogicalExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsNewExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsObjectExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsParenthesizedExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsPostUpdateExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsPreUpdateExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsSequenceExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsStaticMemberExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsSuperExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsThisExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsUnaryExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsBogusExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsYieldExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsNewTargetExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsTemplateExpression(node) => node.format().fmt(f),
+            AnyJsExpression::TsTypeAssertionExpression(node) => node.format().fmt(f),
+            AnyJsExpression::TsAsExpression(node) => node.format().fmt(f),
+            AnyJsExpression::TsSatisfiesExpression(node) => node.format().fmt(f),
+            AnyJsExpression::TsNonNullAssertionExpression(node) => node.format().fmt(f),
+            AnyJsExpression::TsInstantiationExpression(node) => node.format().fmt(f),
+            AnyJsExpression::JsxTagExpression(node) => node.format().fmt(f),
         }
     }
 }

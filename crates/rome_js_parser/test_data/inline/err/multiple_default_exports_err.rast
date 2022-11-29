@@ -23,10 +23,10 @@ JsModule {
                 semicolon_token: missing (optional),
             },
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 EXPORT_KW@25..33 "export" [Newline("\n")] [Whitespace(" ")],
-                JsUnknown {
+                JsBogus {
                     items: [
                         DEFAULT_KW@33..41 "default" [] [Whitespace(" ")],
                         JsBinaryExpression {
@@ -47,10 +47,10 @@ JsModule {
                 },
             ],
         },
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 EXPORT_KW@47..55 "export" [Newline("\n")] [Whitespace(" ")],
-                JsUnknown {
+                JsBogus {
                     items: [
                         DEFAULT_KW@55..63 "default" [] [Whitespace(" ")],
                         JsParenthesizedExpression {
@@ -107,9 +107,9 @@ JsModule {
             7: R_CURLY@23..24 "}" [] []
           2: R_PAREN@24..25 ")" [] []
         2: (empty)
-    1: JS_UNKNOWN_STATEMENT@25..47
+    1: JS_BOGUS_STATEMENT@25..47
       0: EXPORT_KW@25..33 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_UNKNOWN@33..47
+      1: JS_BOGUS@33..47
         0: DEFAULT_KW@33..41 "default" [] [Whitespace(" ")]
         1: JS_BINARY_EXPRESSION@41..46
           0: JS_IDENTIFIER_EXPRESSION@41..43
@@ -120,9 +120,9 @@ JsModule {
             0: JS_REFERENCE_IDENTIFIER@45..46
               0: IDENT@45..46 "b" [] []
         2: SEMICOLON@46..47 ";" [] []
-    2: JS_UNKNOWN_STATEMENT@47..80
+    2: JS_BOGUS_STATEMENT@47..80
       0: EXPORT_KW@47..55 "export" [Newline("\n")] [Whitespace(" ")]
-      1: JS_UNKNOWN@55..80
+      1: JS_BOGUS@55..80
         0: DEFAULT_KW@55..63 "default" [] [Whitespace(" ")]
         1: JS_PARENTHESIZED_EXPRESSION@63..80
           0: L_PAREN@63..64 "(" [] []

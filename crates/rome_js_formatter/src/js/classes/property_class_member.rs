@@ -1,9 +1,9 @@
 use crate::context::Semicolons;
 use crate::prelude::*;
-use crate::utils::{FormatSemicolon, JsAnyAssignmentLike};
+use crate::utils::{AnyJsAssignmentLike, FormatSemicolon};
 use rome_formatter::write;
 use rome_js_syntax::{
-    JsAnyClassMember, JsAnyClassMemberName, JsInitializerClause, JsPropertyClassMember,
+    AnyJsClassMember, AnyJsClassMemberName, JsInitializerClause, JsPropertyClassMember,
     JsSyntaxToken, TsPropertySignatureClassMember,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
@@ -17,10 +17,10 @@ impl FormatNodeRule<JsPropertyClassMember> for FormatJsPropertyClassMember {
         write!(
             f,
             [
-                &JsAnyAssignmentLike::from(node.clone()),
+                &AnyJsAssignmentLike::from(node.clone()),
                 FormatClassPropertySemicolon {
                     semicolon: semicolon_token.as_ref(),
-                    property: &JsAnyPropertyClassMember::from(node.clone())
+                    property: &AnyJsPropertyClassMember::from(node.clone())
                 }
             ]
         )
@@ -28,30 +28,30 @@ impl FormatNodeRule<JsPropertyClassMember> for FormatJsPropertyClassMember {
 }
 
 declare_node_union! {
-    pub(crate) JsAnyPropertyClassMember = JsPropertyClassMember | TsPropertySignatureClassMember
+    pub(crate) AnyJsPropertyClassMember = JsPropertyClassMember | TsPropertySignatureClassMember
 }
 
-impl JsAnyPropertyClassMember {
-    fn name(&self) -> SyntaxResult<JsAnyClassMemberName> {
+impl AnyJsPropertyClassMember {
+    fn name(&self) -> SyntaxResult<AnyJsClassMemberName> {
         match self {
-            JsAnyPropertyClassMember::JsPropertyClassMember(property) => property.name(),
-            JsAnyPropertyClassMember::TsPropertySignatureClassMember(property) => property.name(),
+            AnyJsPropertyClassMember::JsPropertyClassMember(property) => property.name(),
+            AnyJsPropertyClassMember::TsPropertySignatureClassMember(property) => property.name(),
         }
     }
 
     fn value(&self) -> Option<JsInitializerClause> {
         match self {
-            JsAnyPropertyClassMember::JsPropertyClassMember(property) => property.value(),
-            JsAnyPropertyClassMember::TsPropertySignatureClassMember(_) => None,
+            AnyJsPropertyClassMember::JsPropertyClassMember(property) => property.value(),
+            AnyJsPropertyClassMember::TsPropertySignatureClassMember(_) => None,
         }
     }
 
     fn has_property_annotation(&self) -> bool {
         match self {
-            JsAnyPropertyClassMember::JsPropertyClassMember(property) => {
+            AnyJsPropertyClassMember::JsPropertyClassMember(property) => {
                 property.property_annotation().is_some()
             }
-            JsAnyPropertyClassMember::TsPropertySignatureClassMember(property) => {
+            AnyJsPropertyClassMember::TsPropertySignatureClassMember(property) => {
                 property.property_annotation().is_some()
             }
         }
@@ -59,13 +59,13 @@ impl JsAnyPropertyClassMember {
 }
 
 pub(crate) struct FormatClassPropertySemicolon<'a> {
-    property: &'a JsAnyPropertyClassMember,
+    property: &'a AnyJsPropertyClassMember,
     semicolon: Option<&'a JsSyntaxToken>,
 }
 
 impl<'a> FormatClassPropertySemicolon<'a> {
     pub fn new(
-        property: &'a JsAnyPropertyClassMember,
+        property: &'a AnyJsPropertyClassMember,
         semicolon: Option<&'a JsSyntaxToken>,
     ) -> Self {
         Self {
@@ -90,8 +90,8 @@ impl Format<JsFormatContext> for FormatClassPropertySemicolon<'_> {
     }
 }
 
-fn needs_semicolon(property: &JsAnyPropertyClassMember) -> SyntaxResult<bool> {
-    if let JsAnyClassMemberName::JsLiteralMemberName(name) = property.name()? {
+fn needs_semicolon(property: &AnyJsPropertyClassMember) -> SyntaxResult<bool> {
+    if let AnyJsClassMemberName::JsLiteralMemberName(name) = property.name()? {
         // `get;`, `set;` or `static`
         if matches!(name.value()?.text_trimmed(), "static" | "get" | "set")
             && property.value().is_none()
@@ -101,7 +101,7 @@ fn needs_semicolon(property: &JsAnyPropertyClassMember) -> SyntaxResult<bool> {
         }
     }
 
-    let Some(next_member) = property.syntax().next_sibling().and_then(JsAnyClassMember::cast) else { return Ok(false); };
+    let Some(next_member) = property.syntax().next_sibling().and_then(AnyJsClassMember::cast) else { return Ok(false); };
 
     // a;
     // static b;
@@ -118,64 +118,64 @@ fn needs_semicolon(property: &JsAnyPropertyClassMember) -> SyntaxResult<bool> {
     }
 
     Ok(match next_member {
-        JsAnyClassMember::TsConstructorSignatureClassMember(_)
-        | JsAnyClassMember::JsConstructorClassMember(_)
-        | JsAnyClassMember::JsEmptyClassMember(_)
+        AnyJsClassMember::TsConstructorSignatureClassMember(_)
+        | AnyJsClassMember::JsConstructorClassMember(_)
+        | AnyJsClassMember::JsEmptyClassMember(_)
         // `get`, `set`, and `static` start with a keyword -> no need for semi
-        | JsAnyClassMember::JsStaticInitializationBlockClassMember(_)
-        | JsAnyClassMember::JsGetterClassMember(_)
-        | JsAnyClassMember::TsGetterSignatureClassMember(_)
-        | JsAnyClassMember::TsSetterSignatureClassMember(_)
-        | JsAnyClassMember::JsSetterClassMember(_) => false,
+        | AnyJsClassMember::JsStaticInitializationBlockClassMember(_)
+        | AnyJsClassMember::JsGetterClassMember(_)
+        | AnyJsClassMember::TsGetterSignatureClassMember(_)
+        | AnyJsClassMember::TsSetterSignatureClassMember(_)
+        | AnyJsClassMember::JsSetterClassMember(_) => false,
 
         // Computed members may be misinterpreted as array accessors/array types
-        member @ JsAnyClassMember::JsPropertyClassMember(_)
-        | member @ JsAnyClassMember::TsPropertySignatureClassMember(_) => match member.name()? {
+        member @ AnyJsClassMember::JsPropertyClassMember(_)
+        | member @ AnyJsClassMember::TsPropertySignatureClassMember(_) => match member.name()? {
             Some(name) => name.is_computed(),
             None => false,
         },
 
         // When the name starts with the generator token or `[`
-        JsAnyClassMember::JsMethodClassMember(method) => {
+        AnyJsClassMember::JsMethodClassMember(method) => {
             method.async_token().is_none()
                 && (method.name()?.is_computed() || method.star_token().is_some())
         }
 
         // When the name starts with a `[`
-        JsAnyClassMember::TsMethodSignatureClassMember(method) => {
+        AnyJsClassMember::TsMethodSignatureClassMember(method) => {
             method.async_token().is_none() && method.name()?.is_computed()
         }
 
         // Keep it, just to be safe
-        JsAnyClassMember::JsUnknownMember(_) => true,
+        AnyJsClassMember::JsBogusMember(_) => true,
 
-        JsAnyClassMember::TsIndexSignatureClassMember(_) => true,
+        AnyJsClassMember::TsIndexSignatureClassMember(_) => true,
     })
 }
 
 /// Tests if `member` has any modifiers
-fn has_modifiers(member: &JsAnyClassMember) -> bool {
+fn has_modifiers(member: &AnyJsClassMember) -> bool {
     let is_empty = match member {
-        JsAnyClassMember::JsConstructorClassMember(constructor) => {
+        AnyJsClassMember::JsConstructorClassMember(constructor) => {
             constructor.modifiers().is_empty()
         }
-        JsAnyClassMember::JsEmptyClassMember(_) => true,
-        JsAnyClassMember::JsGetterClassMember(getter) => getter.modifiers().is_empty(),
-        JsAnyClassMember::JsMethodClassMember(method) => method.modifiers().is_empty(),
-        JsAnyClassMember::JsPropertyClassMember(property) => property.modifiers().is_empty(),
-        JsAnyClassMember::JsSetterClassMember(setter) => setter.modifiers().is_empty(),
-        JsAnyClassMember::JsStaticInitializationBlockClassMember(_) => true,
-        JsAnyClassMember::JsUnknownMember(_) => true,
-        JsAnyClassMember::TsConstructorSignatureClassMember(constructor) => {
+        AnyJsClassMember::JsEmptyClassMember(_) => true,
+        AnyJsClassMember::JsGetterClassMember(getter) => getter.modifiers().is_empty(),
+        AnyJsClassMember::JsMethodClassMember(method) => method.modifiers().is_empty(),
+        AnyJsClassMember::JsPropertyClassMember(property) => property.modifiers().is_empty(),
+        AnyJsClassMember::JsSetterClassMember(setter) => setter.modifiers().is_empty(),
+        AnyJsClassMember::JsStaticInitializationBlockClassMember(_) => true,
+        AnyJsClassMember::JsBogusMember(_) => true,
+        AnyJsClassMember::TsConstructorSignatureClassMember(constructor) => {
             constructor.modifiers().is_empty()
         }
-        JsAnyClassMember::TsGetterSignatureClassMember(getter) => getter.modifiers().is_empty(),
-        JsAnyClassMember::TsIndexSignatureClassMember(index) => index.modifiers().is_empty(),
-        JsAnyClassMember::TsMethodSignatureClassMember(method) => method.modifiers().is_empty(),
-        JsAnyClassMember::TsPropertySignatureClassMember(property) => {
+        AnyJsClassMember::TsGetterSignatureClassMember(getter) => getter.modifiers().is_empty(),
+        AnyJsClassMember::TsIndexSignatureClassMember(index) => index.modifiers().is_empty(),
+        AnyJsClassMember::TsMethodSignatureClassMember(method) => method.modifiers().is_empty(),
+        AnyJsClassMember::TsPropertySignatureClassMember(property) => {
             property.modifiers().is_empty()
         }
-        JsAnyClassMember::TsSetterSignatureClassMember(setter) => setter.modifiers().is_empty(),
+        AnyJsClassMember::TsSetterSignatureClassMember(setter) => setter.modifiers().is_empty(),
     };
 
     !is_empty

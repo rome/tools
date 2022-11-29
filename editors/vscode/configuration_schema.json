@@ -797,6 +797,17 @@
             }
           ]
         },
+        "noConstEnum": {
+          "description": "Disallow TypeScript const enum",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noConstructorReturn": {
           "description": "Disallow returning a value from a constructor",
           "anyOf": [
@@ -956,6 +967,28 @@
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "useAriaPropTypes": {
+          "description": "Enforce that ARIA state and property values are valid.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useAriaPropsForRole": {
+          "description": "Enforce that elements with ARIA roles must have all required attributes for that role",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "useCamelCase": {

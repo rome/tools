@@ -3,7 +3,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_semantic::{Reference, ReferencesExtensions};
 use rome_js_syntax::{
-    JsAnyBinding, JsAnyBindingPattern, JsAnyExpression, JsIdentifierExpression,
+    AnyJsBinding, AnyJsBindingPattern, AnyJsExpression, JsIdentifierExpression,
     JsVariableDeclarator,
 };
 use rome_rowan::{BatchMutationExt, SyntaxNodeCast};
@@ -31,7 +31,7 @@ pub(crate) struct State {
     /// List of references to the variable
     references: Vec<Reference>,
     /// Initializer expression for the variable to be inlined
-    expression: JsAnyExpression,
+    expression: AnyJsExpression,
 }
 
 impl Rule for InlineVariable {
@@ -46,12 +46,12 @@ impl Rule for InlineVariable {
 
         let id = declarator.id().ok()?;
         let binding = match id {
-            JsAnyBindingPattern::JsAnyBinding(JsAnyBinding::JsIdentifierBinding(binding)) => {
+            AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsIdentifierBinding(binding)) => {
                 binding
             }
-            JsAnyBindingPattern::JsAnyBinding(JsAnyBinding::JsUnknownBinding(_))
-            | JsAnyBindingPattern::JsArrayBindingPattern(_)
-            | JsAnyBindingPattern::JsObjectBindingPattern(_) => return None,
+            AnyJsBindingPattern::AnyJsBinding(AnyJsBinding::JsBogusBinding(_))
+            | AnyJsBindingPattern::JsArrayBindingPattern(_)
+            | AnyJsBindingPattern::JsObjectBindingPattern(_) => return None,
         };
 
         // Do not inline if the initializer is not inlinable
@@ -59,10 +59,10 @@ impl Rule for InlineVariable {
         let initializer = declarator.initializer()?;
         let expr = initializer.expression().ok()?;
         match expr {
-            JsAnyExpression::JsArrowFunctionExpression(_)
-            | JsAnyExpression::JsFunctionExpression(_)
-            | JsAnyExpression::JsClassExpression(_)
-            | JsAnyExpression::JsAssignmentExpression(_) => return None,
+            AnyJsExpression::JsArrowFunctionExpression(_)
+            | AnyJsExpression::JsFunctionExpression(_)
+            | AnyJsExpression::JsClassExpression(_)
+            | AnyJsExpression::JsAssignmentExpression(_) => return None,
             _ => {}
         }
 
@@ -103,7 +103,7 @@ impl Rule for InlineVariable {
                 .cast::<JsIdentifierExpression>()?;
 
             mutation.replace_node(
-                JsAnyExpression::JsIdentifierExpression(node),
+                AnyJsExpression::JsIdentifierExpression(node),
                 expression.clone(),
             );
         }

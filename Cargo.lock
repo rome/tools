@@ -386,16 +386,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "ctor"
-version = "0.1.23"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cdffe87e1d521a10f9696f833fe502293ea446d7f256c06128293a4119bdf4cb"
-dependencies = [
- "quote",
- "syn",
-]
-
-[[package]]
 name = "cuckoofilter"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1262,9 +1252,9 @@ dependencies = [
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.43"
+version = "1.0.46"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0a2ca2c61bc9f3d74d2886294ab7b9853abd9c1ad903a3ac7815c58989bb7bab"
+checksum = "94e2ef8dbfc347b10c094890f778ee2e36ca9bb4262e86dc99cd217e35f3470b"
 dependencies = [
  "unicode-ident",
 ]
@@ -1488,14 +1478,19 @@ dependencies = [
  "rome_console",
  "rome_control_flow",
  "rome_diagnostics",
- "rome_js_factory",
- "rome_js_syntax",
  "rome_rowan",
  "rustc-hash",
  "schemars",
  "serde",
  "serde_json",
  "tracing",
+]
+
+[[package]]
+name = "rome_aria"
+version = "0.0.0"
+dependencies = [
+ "rustc-hash",
 ]
 
 [[package]]
@@ -1536,7 +1531,6 @@ name = "rome_console"
 version = "0.0.0"
 dependencies = [
  "atty",
- "lazy_static",
  "rome_markup",
  "rome_text_size",
  "schemars",
@@ -1657,6 +1651,7 @@ dependencies = [
  "lazy_static",
  "roaring",
  "rome_analyze",
+ "rome_aria",
  "rome_console",
  "rome_control_flow",
  "rome_diagnostics",
@@ -1687,7 +1682,6 @@ version = "0.0.0"
 dependencies = [
  "cfg-if",
  "countme",
- "ctor",
  "iai",
  "insta",
  "quickcheck",
@@ -1754,7 +1748,8 @@ dependencies = [
 name = "rome_js_syntax"
 version = "0.0.0"
 dependencies = [
- "rome_diagnostics_categories",
+ "rome_console",
+ "rome_diagnostics",
  "rome_js_factory",
  "rome_rowan",
  "schemars",
@@ -1777,7 +1772,6 @@ dependencies = [
 name = "rome_json_formatter"
 version = "0.0.0"
 dependencies = [
- "insta",
  "rome_diagnostics",
  "rome_formatter",
  "rome_json_parser",
@@ -1820,7 +1814,6 @@ dependencies = [
  "rome_analyze",
  "rome_console",
  "rome_diagnostics",
- "rome_flags",
  "rome_formatter",
  "rome_fs",
  "rome_js_formatter",
@@ -1937,7 +1930,6 @@ dependencies = [
  "schemars",
  "serde_json",
  "wasm-bindgen",
- "wasm-bindgen-test",
 ]
 
 [[package]]
@@ -2012,12 +2004,6 @@ dependencies = [
  "serde_derive_internals",
  "syn",
 ]
-
-[[package]]
-name = "scoped-tls"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ea6a9290e3c9cf0f18145ef7ffa62d68ee0bf5fcd651017e586dc7fd5da448c2"
 
 [[package]]
 name = "scopeguard"
@@ -2753,18 +2739,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "wasm-bindgen-futures"
-version = "0.4.31"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "de9a9cec1733468a8c657e57fa2413d2ae2c0129b95e87c5b72b8ace4d13f31f"
-dependencies = [
- "cfg-if",
- "js-sys",
- "wasm-bindgen",
- "web-sys",
-]
-
-[[package]]
 name = "wasm-bindgen-macro"
 version = "0.2.82"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2792,30 +2766,6 @@ name = "wasm-bindgen-shared"
 version = "0.2.82"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6598dd0bd3c7d51095ff6531a5b23e02acdc81804e30d8f07afb77b7215a140a"
-
-[[package]]
-name = "wasm-bindgen-test"
-version = "0.3.31"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "68b30cf2cba841a812f035c40c50f53eb9c56181192a9dd2c71b65e6a87a05ba"
-dependencies = [
- "console_error_panic_hook",
- "js-sys",
- "scoped-tls",
- "wasm-bindgen",
- "wasm-bindgen-futures",
- "wasm-bindgen-test-macro",
-]
-
-[[package]]
-name = "wasm-bindgen-test-macro"
-version = "0.3.31"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "88ad594bf33e73cafcac2ae9062fc119d4f75f9c77e25022f91c9a64bd5b6463"
-dependencies = [
- "proc-macro2",
- "quote",
-]
 
 [[package]]
 name = "web-sys"
@@ -2978,6 +2928,7 @@ dependencies = [
  "pulldown-cmark",
  "quote",
  "rome_analyze",
+ "rome_aria",
  "rome_js_analyze",
  "rome_js_factory",
  "rome_js_formatter",

@@ -3,7 +3,7 @@
 use crate::{generated::nodes::*, JsonSyntaxToken as SyntaxToken};
 use rome_rowan::AstNode;
 use std::iter::once;
-impl JsonArray {
+impl JsonArrayValue {
     pub fn with_l_brack_token(self, element: SyntaxToken) -> Self {
         Self::unwrap_cast(
             self.syntax
@@ -23,7 +23,7 @@ impl JsonArray {
         )
     }
 }
-impl JsonBoolean {
+impl JsonBooleanValue {
     pub fn with_value_token_token(self, element: SyntaxToken) -> Self {
         Self::unwrap_cast(
             self.syntax
@@ -32,7 +32,7 @@ impl JsonBoolean {
     }
 }
 impl JsonMember {
-    pub fn with_key(self, element: JsonString) -> Self {
+    pub fn with_name(self, element: JsonMemberName) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
@@ -44,14 +44,14 @@ impl JsonMember {
                 .splice_slots(1usize..=1usize, once(Some(element.into()))),
         )
     }
-    pub fn with_value(self, element: JsonAnyValue) -> Self {
+    pub fn with_value(self, element: AnyJsonValue) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(2usize..=2usize, once(Some(element.into_syntax().into()))),
         )
     }
 }
-impl JsonNull {
+impl JsonMemberName {
     pub fn with_value_token(self, element: SyntaxToken) -> Self {
         Self::unwrap_cast(
             self.syntax
@@ -59,7 +59,7 @@ impl JsonNull {
         )
     }
 }
-impl JsonNumber {
+impl JsonNullValue {
     pub fn with_value_token(self, element: SyntaxToken) -> Self {
         Self::unwrap_cast(
             self.syntax
@@ -67,7 +67,15 @@ impl JsonNumber {
         )
     }
 }
-impl JsonObject {
+impl JsonNumberValue {
+    pub fn with_value_token(self, element: SyntaxToken) -> Self {
+        Self::unwrap_cast(
+            self.syntax
+                .splice_slots(0usize..=0usize, once(Some(element.into()))),
+        )
+    }
+}
+impl JsonObjectValue {
     pub fn with_l_curly_token(self, element: SyntaxToken) -> Self {
         Self::unwrap_cast(
             self.syntax
@@ -88,7 +96,7 @@ impl JsonObject {
     }
 }
 impl JsonRoot {
-    pub fn with_value(self, element: JsonAnyValue) -> Self {
+    pub fn with_value(self, element: AnyJsonValue) -> Self {
         Self::unwrap_cast(
             self.syntax
                 .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
@@ -101,7 +109,7 @@ impl JsonRoot {
         )
     }
 }
-impl JsonString {
+impl JsonStringValue {
     pub fn with_value_token(self, element: SyntaxToken) -> Self {
         Self::unwrap_cast(
             self.syntax

@@ -13,9 +13,9 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@31..32 "{" [] [],
             members: JsClassMemberList [
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
-                        JsUnknown {
+                        JsBogus {
                             items: [
                                 TsAbstractModifier {
                                     modifier_token: ABSTRACT_KW@32..46 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
@@ -38,7 +38,7 @@ JsModule {
                         },
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             TsAbstractModifier {
@@ -67,7 +67,7 @@ JsModule {
                         },
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             TsAbstractModifier {
@@ -88,7 +88,7 @@ JsModule {
                         },
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             TsAbstractModifier {
@@ -117,7 +117,7 @@ JsModule {
                         },
                     ],
                 },
-                JsUnknownMember {
+                JsBogusMember {
                     items: [
                         TsMethodSignatureModifierList [
                             TsAbstractModifier {
@@ -162,8 +162,8 @@ JsModule {
       5: (empty)
       6: L_CURLY@31..32 "{" [] []
       7: JS_CLASS_MEMBER_LIST@32..195
-        0: JS_UNKNOWN_MEMBER@32..63
-          0: JS_UNKNOWN@32..46
+        0: JS_BOGUS_MEMBER@32..63
+          0: JS_BOGUS@32..46
             0: TS_ABSTRACT_MODIFIER@32..46
               0: ABSTRACT_KW@32..46 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@46..57
@@ -177,7 +177,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@62..62
             2: JS_STATEMENT_LIST@62..62
             3: R_CURLY@62..63 "}" [] []
-        1: JS_UNKNOWN_MEMBER@63..96
+        1: JS_BOGUS_MEMBER@63..96
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@63..77
             0: TS_ABSTRACT_MODIFIER@63..77
               0: ABSTRACT_KW@63..77 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -196,7 +196,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@95..95
             2: JS_STATEMENT_LIST@95..95
             3: R_CURLY@95..96 "}" [] []
-        2: JS_UNKNOWN_MEMBER@96..127
+        2: JS_BOGUS_MEMBER@96..127
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@96..110
             0: TS_ABSTRACT_MODIFIER@96..110
               0: ABSTRACT_KW@96..110 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -210,7 +210,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@126..126
             2: JS_STATEMENT_LIST@126..126
             3: R_CURLY@126..127 "}" [] []
-        3: JS_UNKNOWN_MEMBER@127..162
+        3: JS_BOGUS_MEMBER@127..162
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@127..141
             0: TS_ABSTRACT_MODIFIER@127..141
               0: ABSTRACT_KW@127..141 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
@@ -230,7 +230,7 @@ JsModule {
             1: JS_DIRECTIVE_LIST@161..161
             2: JS_STATEMENT_LIST@161..161
             3: R_CURLY@161..162 "}" [] []
-        4: JS_UNKNOWN_MEMBER@162..195
+        4: JS_BOGUS_MEMBER@162..195
           0: TS_METHOD_SIGNATURE_MODIFIER_LIST@162..176
             0: TS_ABSTRACT_MODIFIER@162..176
               0: ABSTRACT_KW@162..176 "abstract" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]

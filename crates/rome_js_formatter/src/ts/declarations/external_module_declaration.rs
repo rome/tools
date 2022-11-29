@@ -2,7 +2,7 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use rome_js_syntax::TsExternalModuleDeclarationFields;
-use rome_js_syntax::{TsAnyExternalModuleDeclarationBody, TsExternalModuleDeclaration};
+use rome_js_syntax::{AnyTsExternalModuleDeclarationBody, TsExternalModuleDeclaration};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsExternalModuleDeclaration;
@@ -22,12 +22,12 @@ impl FormatNodeRule<TsExternalModuleDeclaration> for FormatTsExternalModuleDecla
         write!(f, [module_token.format(), space(), source.format(),])?;
 
         match body {
-            Some(TsAnyExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(
+            Some(AnyTsExternalModuleDeclarationBody::TsEmptyExternalModuleDeclarationBody(
                 body,
             )) => {
                 body.format().fmt(f)?;
             }
-            Some(TsAnyExternalModuleDeclarationBody::TsModuleBlock(body)) => {
+            Some(AnyTsExternalModuleDeclarationBody::TsModuleBlock(body)) => {
                 write!(f, [space(), body.format()])?;
             }
             None if f.options().semicolons().is_always() => {

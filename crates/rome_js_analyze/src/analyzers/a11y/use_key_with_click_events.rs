@@ -1,6 +1,6 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{jsx_ext::JsxAnyElement, JsxAnyAttribute, JsxAnyElementName};
+use rome_js_syntax::{jsx_ext::AnyJsxElement, AnyJsxAttribute, AnyJsxElementName};
 use rome_rowan::AstNode;
 
 declare_rule! {
@@ -56,7 +56,7 @@ declare_rule! {
 }
 
 impl Rule for UseKeyWithClickEvents {
-    type Query = Ast<JsxAnyElement>;
+    type Query = Ast<AnyJsxElement>;
     type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
@@ -65,7 +65,7 @@ impl Rule for UseKeyWithClickEvents {
         let element = ctx.query();
 
         match element.name() {
-            Ok(JsxAnyElementName::JsxName(name)) => {
+            Ok(AnyJsxElementName::JsxName(name)) => {
                 let element_name = name.value_token().ok()?.text_trimmed().to_lowercase();
 
                 // Don't handle interactive roles
@@ -92,7 +92,7 @@ impl Rule for UseKeyWithClickEvents {
 
         for attribute in attributes {
             match attribute {
-                JsxAnyAttribute::JsxAttribute(attribute) => {
+                AnyJsxAttribute::JsxAttribute(attribute) => {
                     let attribute_name = attribute.name().ok()?;
                     let name = attribute_name.as_jsx_name()?;
                     let name_token = name.value_token().ok()?;
@@ -104,7 +104,7 @@ impl Rule for UseKeyWithClickEvents {
                         return None;
                     }
                 }
-                JsxAnyAttribute::JsxSpreadAttribute(_) => {
+                AnyJsxAttribute::JsxSpreadAttribute(_) => {
                     return None;
                 }
             }

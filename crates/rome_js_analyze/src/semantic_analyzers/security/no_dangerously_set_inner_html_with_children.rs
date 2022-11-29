@@ -76,22 +76,22 @@ pub(crate) struct RuleState {
 }
 
 declare_node_union! {
-    pub(crate) JsAnyCreateElement = JsxElement | JsxSelfClosingElement | JsCallExpression
+    pub(crate) AnyJsCreateElement = JsxElement | JsxSelfClosingElement | JsCallExpression
 }
 
-impl JsAnyCreateElement {
+impl AnyJsCreateElement {
     /// If checks if the element has direct children (no children prop)
     fn has_children(&self, model: &SemanticModel) -> Option<JsSyntaxNode> {
         match self {
-            JsAnyCreateElement::JsxElement(element) => {
+            AnyJsCreateElement::JsxElement(element) => {
                 if !element.children().is_empty() {
                     Some(element.children().syntax().clone())
                 } else {
                     None
                 }
             }
-            JsAnyCreateElement::JsxSelfClosingElement(_) => None,
-            JsAnyCreateElement::JsCallExpression(expression) => {
+            AnyJsCreateElement::JsxSelfClosingElement(_) => None,
+            AnyJsCreateElement::JsCallExpression(expression) => {
                 let react_create_element =
                     ReactCreateElementCall::from_call_expression(expression, model)?;
 
@@ -103,7 +103,7 @@ impl JsAnyCreateElement {
     }
     fn find_dangerous_prop(&self, model: &SemanticModel) -> Option<DangerousProp> {
         match self {
-            JsAnyCreateElement::JsxElement(element) => {
+            AnyJsCreateElement::JsxElement(element) => {
                 let opening_element = element.opening_element().ok()?;
 
                 opening_element
@@ -111,11 +111,11 @@ impl JsAnyCreateElement {
                     .ok()?
                     .map(DangerousProp::from)
             }
-            JsAnyCreateElement::JsxSelfClosingElement(element) => element
+            AnyJsCreateElement::JsxSelfClosingElement(element) => element
                 .find_attribute_by_name("dangerouslySetInnerHTML")
                 .ok()?
                 .map(DangerousProp::from),
-            JsAnyCreateElement::JsCallExpression(call_expression) => {
+            AnyJsCreateElement::JsCallExpression(call_expression) => {
                 let react_create_element =
                     ReactCreateElementCall::from_call_expression(call_expression, model)?;
 
@@ -128,7 +128,7 @@ impl JsAnyCreateElement {
 
     fn find_children_prop(&self, model: &SemanticModel) -> Option<DangerousProp> {
         match self {
-            JsAnyCreateElement::JsxElement(element) => {
+            AnyJsCreateElement::JsxElement(element) => {
                 let opening_element = element.opening_element().ok()?;
 
                 opening_element
@@ -136,11 +136,11 @@ impl JsAnyCreateElement {
                     .ok()?
                     .map(DangerousProp::from)
             }
-            JsAnyCreateElement::JsxSelfClosingElement(element) => element
+            AnyJsCreateElement::JsxSelfClosingElement(element) => element
                 .find_attribute_by_name("children")
                 .ok()?
                 .map(DangerousProp::from),
-            JsAnyCreateElement::JsCallExpression(call_expression) => {
+            AnyJsCreateElement::JsCallExpression(call_expression) => {
                 let react_create_element =
                     ReactCreateElementCall::from_call_expression(call_expression, model)?;
 
@@ -153,7 +153,7 @@ impl JsAnyCreateElement {
 }
 
 impl Rule for NoDangerouslySetInnerHtmlWithChildren {
-    type Query = Semantic<JsAnyCreateElement>;
+    type Query = Semantic<AnyJsCreateElement>;
     type State = RuleState;
     type Signals = Option<Self::State>;
     type Options = ();

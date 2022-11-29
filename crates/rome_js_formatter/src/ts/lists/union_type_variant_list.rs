@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::ts::expressions::template_literal_type::FormatTsTemplateLiteralType;
+use crate::ts::bogus::bogus_type::FormatTsBogusType;
 use crate::ts::module::import_type::FormatTsImportType;
 use crate::ts::types::any_type::FormatTsAnyType;
 use crate::ts::types::array_type::FormatTsArrayType;
@@ -25,6 +25,7 @@ use crate::ts::types::reference_type::FormatTsReferenceType;
 use crate::ts::types::string_literal_type::FormatTsStringLiteralType;
 use crate::ts::types::string_type::FormatTsStringType;
 use crate::ts::types::symbol_type::FormatTsSymbolType;
+use crate::ts::types::template_literal_type::FormatTsTemplateLiteralType;
 use crate::ts::types::this_type::FormatTsThisType;
 use crate::ts::types::tuple_type::FormatTsTupleType;
 use crate::ts::types::type_operator_type::FormatTsTypeOperatorType;
@@ -35,7 +36,7 @@ use crate::ts::types::unknown_type::FormatTsUnknownType;
 use crate::ts::types::void_type::FormatTsVoidType;
 use crate::JsCommentStyle;
 use rome_formatter::{comments::CommentStyle, write, FormatRuleWithOptions};
-use rome_js_syntax::{JsLanguage, TsType, TsUnionType, TsUnionTypeVariantList};
+use rome_js_syntax::{AnyTsType, JsLanguage, TsUnionType, TsUnionTypeVariantList};
 use rome_rowan::{AstSeparatedElement, AstSeparatedList};
 
 #[derive(Debug, Clone, Default)]
@@ -76,7 +77,7 @@ impl FormatRule<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
 pub struct FormatTypeVariant<'a> {
     last: bool,
     should_hug: bool,
-    element: AstSeparatedElement<JsLanguage, TsType>,
+    element: AstSeparatedElement<JsLanguage, AnyTsType>,
     list: &'a TsUnionTypeVariantList,
 }
 
@@ -94,66 +95,73 @@ impl Format<JsFormatContext> for FormatTypeVariant<'_> {
                 write!(f, [format_suppressed_node(node.syntax()).skip_comments()])
             } else {
                 match node {
-                    TsType::TsAnyType(ty) => FormatTsAnyType::default().fmt_node(ty, f),
-                    TsType::TsArrayType(ty) => FormatTsArrayType::default().fmt_node(ty, f),
-                    TsType::TsBigIntLiteralType(ty) => {
+                    AnyTsType::TsAnyType(ty) => FormatTsAnyType::default().fmt_node(ty, f),
+                    AnyTsType::TsArrayType(ty) => FormatTsArrayType::default().fmt_node(ty, f),
+                    AnyTsType::TsBigIntLiteralType(ty) => {
                         FormatTsBigIntLiteralType::default().fmt_node(ty, f)
                     }
-                    TsType::TsBigintType(ty) => FormatTsBigintType::default().fmt_node(ty, f),
-                    TsType::TsBooleanLiteralType(ty) => {
+                    AnyTsType::TsBigintType(ty) => FormatTsBigintType::default().fmt_node(ty, f),
+                    AnyTsType::TsBooleanLiteralType(ty) => {
                         FormatTsBooleanLiteralType::default().fmt_node(ty, f)
                     }
-                    TsType::TsBooleanType(ty) => FormatTsBooleanType::default().fmt_node(ty, f),
-                    TsType::TsConditionalType(ty) => {
+                    AnyTsType::TsBooleanType(ty) => FormatTsBooleanType::default().fmt_node(ty, f),
+                    AnyTsType::TsConditionalType(ty) => {
                         FormatTsConditionalType::default().fmt_node(ty, f)
                     }
-                    TsType::TsConstructorType(ty) => {
+                    AnyTsType::TsConstructorType(ty) => {
                         FormatTsConstructorType::default().fmt_node(ty, f)
                     }
-                    TsType::TsFunctionType(ty) => FormatTsFunctionType::default().fmt_node(ty, f),
-                    TsType::TsImportType(ty) => FormatTsImportType::default().fmt_node(ty, f),
-                    TsType::TsIndexedAccessType(ty) => {
+                    AnyTsType::TsFunctionType(ty) => {
+                        FormatTsFunctionType::default().fmt_node(ty, f)
+                    }
+                    AnyTsType::TsImportType(ty) => FormatTsImportType::default().fmt_node(ty, f),
+                    AnyTsType::TsIndexedAccessType(ty) => {
                         FormatTsIndexedAccessType::default().fmt_node(ty, f)
                     }
-                    TsType::TsInferType(ty) => FormatTsInferType::default().fmt_node(ty, f),
-                    TsType::TsIntersectionType(ty) => {
+                    AnyTsType::TsInferType(ty) => FormatTsInferType::default().fmt_node(ty, f),
+                    AnyTsType::TsIntersectionType(ty) => {
                         FormatTsIntersectionType::default().fmt_node(ty, f)
                     }
-                    TsType::TsMappedType(ty) => FormatTsMappedType::default().fmt_node(ty, f),
-                    TsType::TsNeverType(ty) => FormatTsNeverType::default().fmt_node(ty, f),
-                    TsType::TsNonPrimitiveType(ty) => {
+                    AnyTsType::TsMappedType(ty) => FormatTsMappedType::default().fmt_node(ty, f),
+                    AnyTsType::TsNeverType(ty) => FormatTsNeverType::default().fmt_node(ty, f),
+                    AnyTsType::TsNonPrimitiveType(ty) => {
                         FormatTsNonPrimitiveType::default().fmt_node(ty, f)
                     }
-                    TsType::TsNullLiteralType(ty) => {
+                    AnyTsType::TsNullLiteralType(ty) => {
                         FormatTsNullLiteralType::default().fmt_node(ty, f)
                     }
-                    TsType::TsNumberLiteralType(ty) => {
+                    AnyTsType::TsNumberLiteralType(ty) => {
                         FormatTsNumberLiteralType::default().fmt_node(ty, f)
                     }
-                    TsType::TsNumberType(ty) => FormatTsNumberType::default().fmt_node(ty, f),
-                    TsType::TsObjectType(ty) => FormatTsObjectType::default().fmt_node(ty, f),
-                    TsType::TsParenthesizedType(ty) => {
+                    AnyTsType::TsNumberType(ty) => FormatTsNumberType::default().fmt_node(ty, f),
+                    AnyTsType::TsObjectType(ty) => FormatTsObjectType::default().fmt_node(ty, f),
+                    AnyTsType::TsParenthesizedType(ty) => {
                         FormatTsParenthesizedType::default().fmt_node(ty, f)
                     }
-                    TsType::TsReferenceType(ty) => FormatTsReferenceType::default().fmt_node(ty, f),
-                    TsType::TsStringLiteralType(ty) => {
+                    AnyTsType::TsReferenceType(ty) => {
+                        FormatTsReferenceType::default().fmt_node(ty, f)
+                    }
+                    AnyTsType::TsStringLiteralType(ty) => {
                         FormatTsStringLiteralType::default().fmt_node(ty, f)
                     }
-                    TsType::TsStringType(ty) => FormatTsStringType::default().fmt_node(ty, f),
-                    TsType::TsSymbolType(ty) => FormatTsSymbolType::default().fmt_node(ty, f),
-                    TsType::TsTemplateLiteralType(ty) => {
+                    AnyTsType::TsStringType(ty) => FormatTsStringType::default().fmt_node(ty, f),
+                    AnyTsType::TsSymbolType(ty) => FormatTsSymbolType::default().fmt_node(ty, f),
+                    AnyTsType::TsTemplateLiteralType(ty) => {
                         FormatTsTemplateLiteralType::default().fmt_node(ty, f)
                     }
-                    TsType::TsThisType(ty) => FormatTsThisType::default().fmt_node(ty, f),
-                    TsType::TsTupleType(ty) => FormatTsTupleType::default().fmt_node(ty, f),
-                    TsType::TsTypeOperatorType(ty) => {
+                    AnyTsType::TsThisType(ty) => FormatTsThisType::default().fmt_node(ty, f),
+                    AnyTsType::TsTupleType(ty) => FormatTsTupleType::default().fmt_node(ty, f),
+                    AnyTsType::TsTypeOperatorType(ty) => {
                         FormatTsTypeOperatorType::default().fmt_node(ty, f)
                     }
-                    TsType::TsTypeofType(ty) => FormatTsTypeofType::default().fmt_node(ty, f),
-                    TsType::TsUndefinedType(ty) => FormatTsUndefinedType::default().fmt_node(ty, f),
-                    TsType::TsUnionType(ty) => FormatTsUnionType::default().fmt_node(ty, f),
-                    TsType::TsUnknownType(ty) => FormatTsUnknownType::default().fmt_node(ty, f),
-                    TsType::TsVoidType(ty) => FormatTsVoidType::default().fmt_node(ty, f),
+                    AnyTsType::TsTypeofType(ty) => FormatTsTypeofType::default().fmt_node(ty, f),
+                    AnyTsType::TsUndefinedType(ty) => {
+                        FormatTsUndefinedType::default().fmt_node(ty, f)
+                    }
+                    AnyTsType::TsUnionType(ty) => FormatTsUnionType::default().fmt_node(ty, f),
+                    AnyTsType::TsUnknownType(ty) => FormatTsUnknownType::default().fmt_node(ty, f),
+                    AnyTsType::TsVoidType(ty) => FormatTsVoidType::default().fmt_node(ty, f),
+                    AnyTsType::TsBogusType(ty) => FormatTsBogusType::default().fmt(ty, f),
                 }
             }
         });
@@ -189,10 +197,14 @@ impl Format<JsFormatContext> for FormatTypeVariant<'_> {
     }
 }
 
-fn is_type_suppressed(ty: &TsType, list: &TsUnionTypeVariantList, comments: &JsComments) -> bool {
+fn is_type_suppressed(
+    ty: &AnyTsType,
+    list: &TsUnionTypeVariantList,
+    comments: &JsComments,
+) -> bool {
     comments.mark_suppression_checked(ty.syntax());
 
-    if let TsType::TsUnionType(union) = ty {
+    if let AnyTsType::TsUnionType(union) = ty {
         // If the union isn't empty, than the suppression applies to the first variant
         if !union.types().is_empty() {
             return false;

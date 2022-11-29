@@ -184,18 +184,18 @@ pub fn generate_node_factory(ast: &AstSrc, language_kind: LanguageKind) -> Resul
         }
     });
 
-    let unknowns = ast.unknowns.iter().map(|name| {
-        let unknown_name = format_ident!("{}", name);
+    let bogus = ast.bogus.iter().map(|name| {
+        let bogus_name = format_ident!("{}", name);
         let kind = format_ident!("{}", to_upper_snake_case(name));
         let factory_name = format_ident!("{}", to_lower_snake_case(name));
 
         quote! {
-            pub fn #factory_name<I>(slots: I) -> #unknown_name
+            pub fn #factory_name<I>(slots: I) -> #bogus_name
             where
                 I: IntoIterator<Item = Option<SyntaxElement>>,
                 I::IntoIter: ExactSizeIterator,
             {
-                #unknown_name::unwrap_cast(SyntaxNode::new_detached(
+                #bogus_name::unwrap_cast(SyntaxNode::new_detached(
                     #syntax_kind::#kind,
                     slots
                 ))
@@ -211,7 +211,7 @@ pub fn generate_node_factory(ast: &AstSrc, language_kind: LanguageKind) -> Resul
 
         #(#nodes)*
         #(#lists)*
-        #(#unknowns)*
+        #(#bogus)*
     };
 
     let pretty = xtask::reformat(output)?;

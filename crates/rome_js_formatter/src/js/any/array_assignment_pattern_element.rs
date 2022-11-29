@@ -1,27 +1,27 @@
 //! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
 use crate::prelude::*;
-use rome_js_syntax::JsAnyArrayAssignmentPatternElement;
+use rome_js_syntax::AnyJsArrayAssignmentPatternElement;
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatJsAnyArrayAssignmentPatternElement;
-impl FormatRule<JsAnyArrayAssignmentPatternElement> for FormatJsAnyArrayAssignmentPatternElement {
+pub(crate) struct FormatAnyJsArrayAssignmentPatternElement;
+impl FormatRule<AnyJsArrayAssignmentPatternElement> for FormatAnyJsArrayAssignmentPatternElement {
     type Context = JsFormatContext;
     fn fmt(
         &self,
-        node: &JsAnyArrayAssignmentPatternElement,
+        node: &AnyJsArrayAssignmentPatternElement,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
         match node {
-            JsAnyArrayAssignmentPatternElement::JsAssignmentWithDefault(node) => {
+            AnyJsArrayAssignmentPatternElement::JsAssignmentWithDefault(node) => {
                 node.format().fmt(f)
             }
-            JsAnyArrayAssignmentPatternElement::JsAnyAssignmentPattern(node) => {
+            AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(node) => {
                 node.format().fmt(f)
             }
-            JsAnyArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(node) => {
+            AnyJsArrayAssignmentPatternElement::JsArrayAssignmentPatternRestElement(node) => {
                 node.format().fmt(f)
             }
-            JsAnyArrayAssignmentPatternElement::JsArrayHole(node) => node.format().fmt(f),
+            AnyJsArrayAssignmentPatternElement::JsArrayHole(node) => node.format().fmt(f),
         }
     }
 }

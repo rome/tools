@@ -2,10 +2,10 @@ JsModule {
     interpreter_token: missing (optional),
     directives: JsDirectiveList [],
     items: JsModuleItemList [
-        JsUnknownStatement {
+        JsBogusStatement {
             items: [
                 EXPORT_KW@0..7 "export" [] [Whitespace(" ")],
-                JsUnknown {
+                JsBogus {
                     items: [
                         L_CURLY@7..8 "{" [] [],
                         JsExportNamedFromSpecifierList [],
@@ -27,9 +27,9 @@ JsModule {
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..40
-    0: JS_UNKNOWN_STATEMENT@0..40
+    0: JS_BOGUS_STATEMENT@0..40
       0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
-      1: JS_UNKNOWN@7..40
+      1: JS_BOGUS@7..40
         0: L_CURLY@7..8 "{" [] []
         1: JS_EXPORT_NAMED_FROM_SPECIFIER_LIST@8..8
         2: R_CURLY@8..10 "}" [] [Whitespace(" ")]

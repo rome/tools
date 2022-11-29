@@ -4,7 +4,7 @@ JsModule {
     items: JsModuleItemList [
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsUnknownAssignment {
+                left: JsBogusAssignment {
                     items: [
                         IDENT@0..5 "eval" [] [Whitespace(" ")],
                     ],
@@ -18,7 +18,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsUnknownAssignment {
+                left: JsBogusAssignment {
                     items: [
                         IDENT@8..14 "eval" [Newline("\n")] [Whitespace(" ")],
                     ],
@@ -32,7 +32,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsUnknownAssignment {
+                left: JsBogusAssignment {
                     items: [
                         IDENT@19..25 "eval" [Newline("\n")] [Whitespace(" ")],
                     ],
@@ -46,7 +46,7 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsUnknownAssignment {
+                left: JsBogusAssignment {
                     items: [
                         IDENT@29..40 "arguments" [Newline("\n")] [Whitespace(" ")],
                     ],
@@ -60,14 +60,14 @@ JsModule {
         },
         JsExpressionStatement {
             expression: JsAssignmentExpression {
-                left: JsUnknownAssignment {
+                left: JsBogusAssignment {
                     items: [
                         IDENT@47..58 "arguments" [Newline("\n")] [Whitespace(" ")],
                     ],
                 },
                 operator_token: PIPE2EQ@58..62 "||=" [] [Whitespace(" ")],
                 right: JsAssignmentExpression {
-                    left: JsUnknownAssignment {
+                    left: JsBogusAssignment {
                         items: [
                             JsCallExpression {
                                 callee: JsStringLiteralExpression {
@@ -78,28 +78,34 @@ JsModule {
                                 arguments: JsCallArguments {
                                     l_paren_token: L_PAREN@67..69 "(" [Newline("\n")] [],
                                     args: JsCallArgumentList [
-                                        JsAssignmentExpression {
-                                            left: JsObjectAssignmentPattern {
-                                                l_curly_token: L_CURLY@69..71 "{" [] [Whitespace(" ")],
-                                                properties: JsObjectAssignmentPatternPropertyList [
-                                                    JsUnknownAssignment {
-                                                        items: [
-                                                            JsUnknownAssignment {
-                                                                items: [
-                                                                    IDENT@71..76 "eval" [] [Whitespace(" ")],
-                                                                ],
-                                                            },
-                                                        ],
-                                                    },
-                                                ],
-                                                r_curly_token: R_CURLY@76..78 "}" [] [Whitespace(" ")],
-                                            },
-                                            operator_token: EQ@78..80 "=" [] [Whitespace(" ")],
-                                            right: JsIdentifierExpression {
-                                                name: JsReferenceIdentifier {
-                                                    value_token: IDENT@80..81 "o" [] [],
+                                        JsBogusExpression {
+                                            items: [
+                                                JsBogus {
+                                                    items: [
+                                                        L_CURLY@69..71 "{" [] [Whitespace(" ")],
+                                                        JsBogus {
+                                                            items: [
+                                                                JsBogus {
+                                                                    items: [
+                                                                        JsBogusAssignment {
+                                                                            items: [
+                                                                                IDENT@71..76 "eval" [] [Whitespace(" ")],
+                                                                            ],
+                                                                        },
+                                                                    ],
+                                                                },
+                                                            ],
+                                                        },
+                                                        R_CURLY@76..78 "}" [] [Whitespace(" ")],
+                                                    ],
                                                 },
-                                            },
+                                                EQ@78..80 "=" [] [Whitespace(" ")],
+                                                JsIdentifierExpression {
+                                                    name: JsReferenceIdentifier {
+                                                        value_token: IDENT@80..81 "o" [] [],
+                                                    },
+                                                },
+                                            ],
                                         },
                                     ],
                                     r_paren_token: R_PAREN@81..82 ")" [] [],
@@ -156,7 +162,7 @@ JsModule {
   2: JS_MODULE_ITEM_LIST@0..105
     0: JS_EXPRESSION_STATEMENT@0..8
       0: JS_ASSIGNMENT_EXPRESSION@0..8
-        0: JS_UNKNOWN_ASSIGNMENT@0..5
+        0: JS_BOGUS_ASSIGNMENT@0..5
           0: IDENT@0..5 "eval" [] [Whitespace(" ")]
         1: EQ@5..7 "=" [] [Whitespace(" ")]
         2: JS_NUMBER_LITERAL_EXPRESSION@7..8
@@ -164,7 +170,7 @@ JsModule {
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@8..19
       0: JS_ASSIGNMENT_EXPRESSION@8..19
-        0: JS_UNKNOWN_ASSIGNMENT@8..14
+        0: JS_BOGUS_ASSIGNMENT@8..14
           0: IDENT@8..14 "eval" [Newline("\n")] [Whitespace(" ")]
         1: QUESTION2EQ@14..18 "??=" [] [Whitespace(" ")]
         2: JS_NUMBER_LITERAL_EXPRESSION@18..19
@@ -172,7 +178,7 @@ JsModule {
       1: (empty)
     2: JS_EXPRESSION_STATEMENT@19..29
       0: JS_ASSIGNMENT_EXPRESSION@19..29
-        0: JS_UNKNOWN_ASSIGNMENT@19..25
+        0: JS_BOGUS_ASSIGNMENT@19..25
           0: IDENT@19..25 "eval" [Newline("\n")] [Whitespace(" ")]
         1: STAREQ@25..28 "*=" [] [Whitespace(" ")]
         2: JS_NUMBER_LITERAL_EXPRESSION@28..29
@@ -180,7 +186,7 @@ JsModule {
       1: (empty)
     3: JS_EXPRESSION_STATEMENT@29..47
       0: JS_ASSIGNMENT_EXPRESSION@29..47
-        0: JS_UNKNOWN_ASSIGNMENT@29..40
+        0: JS_BOGUS_ASSIGNMENT@29..40
           0: IDENT@29..40 "arguments" [Newline("\n")] [Whitespace(" ")]
         1: EQ@40..42 "=" [] [Whitespace(" ")]
         2: JS_STRING_LITERAL_EXPRESSION@42..47
@@ -188,11 +194,11 @@ JsModule {
       1: (empty)
     4: JS_EXPRESSION_STATEMENT@47..105
       0: JS_ASSIGNMENT_EXPRESSION@47..105
-        0: JS_UNKNOWN_ASSIGNMENT@47..58
+        0: JS_BOGUS_ASSIGNMENT@47..58
           0: IDENT@47..58 "arguments" [Newline("\n")] [Whitespace(" ")]
         1: PIPE2EQ@58..62 "||=" [] [Whitespace(" ")]
         2: JS_ASSIGNMENT_EXPRESSION@62..105
-          0: JS_UNKNOWN_ASSIGNMENT@62..102
+          0: JS_BOGUS_ASSIGNMENT@62..102
             0: JS_CALL_EXPRESSION@62..82
               0: JS_STRING_LITERAL_EXPRESSION@62..67
                 0: JS_STRING_LITERAL@62..67 "\"baz\"" [] []
@@ -201,12 +207,12 @@ JsModule {
               3: JS_CALL_ARGUMENTS@67..82
                 0: L_PAREN@67..69 "(" [Newline("\n")] []
                 1: JS_CALL_ARGUMENT_LIST@69..81
-                  0: JS_ASSIGNMENT_EXPRESSION@69..81
-                    0: JS_OBJECT_ASSIGNMENT_PATTERN@69..78
+                  0: JS_BOGUS_EXPRESSION@69..81
+                    0: JS_BOGUS@69..78
                       0: L_CURLY@69..71 "{" [] [Whitespace(" ")]
-                      1: JS_OBJECT_ASSIGNMENT_PATTERN_PROPERTY_LIST@71..76
-                        0: JS_UNKNOWN_ASSIGNMENT@71..76
-                          0: JS_UNKNOWN_ASSIGNMENT@71..76
+                      1: JS_BOGUS@71..76
+                        0: JS_BOGUS@71..76
+                          0: JS_BOGUS_ASSIGNMENT@71..76
                             0: IDENT@71..76 "eval" [] [Whitespace(" ")]
                       2: R_CURLY@76..78 "}" [] [Whitespace(" ")]
                     1: EQ@78..80 "=" [] [Whitespace(" ")]

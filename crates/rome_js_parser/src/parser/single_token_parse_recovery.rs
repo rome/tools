@@ -15,19 +15,19 @@ pub(crate) struct SingleTokenParseRecovery {
     recovery: TokenSet<JsSyntaxKind>,
     /// It tells the parser to recover if the current token is a curly brace
     include_braces: bool,
-    /// The kind of the unknown node the parser inserts if it isn't able to recover because
+    /// The kind of the bogus node the parser inserts if it isn't able to recover because
     /// the current token is neither in the recovery set nor any of `{` or `}`.
-    unknown_node_kind: JsSyntaxKind,
+    bogus_node_kind: JsSyntaxKind,
 }
 
 #[allow(deprecated)]
 impl SingleTokenParseRecovery {
-    pub fn new(recovery: TokenSet<JsSyntaxKind>, unknown_node_kind: JsSyntaxKind) -> Self {
+    pub fn new(recovery: TokenSet<JsSyntaxKind>, bogus_node_kind: JsSyntaxKind) -> Self {
         Self {
             error: None,
             recovery,
             include_braces: false,
-            unknown_node_kind,
+            bogus_node_kind,
         }
     }
 
@@ -49,7 +49,7 @@ impl SingleTokenParseRecovery {
         if !self.parsing_is_recoverable(p) {
             let m = p.start();
             p.bump_any();
-            m.complete(p, self.get_unknown_node_kind());
+            m.complete(p, self.get_bogus_node_kind());
         }
     }
 
@@ -63,9 +63,9 @@ impl SingleTokenParseRecovery {
         self.error.to_owned()
     }
 
-    /// It returns the unknown node kind that will be used to complete the parsing
-    fn get_unknown_node_kind(&self) -> JsSyntaxKind {
-        self.unknown_node_kind
+    /// It returns the bogus node kind that will be used to complete the parsing
+    fn get_bogus_node_kind(&self) -> JsSyntaxKind {
+        self.bogus_node_kind
     }
 
     fn is_at_braces(&self, parser: &JsParser) -> bool {

@@ -1,6 +1,6 @@
 use json_comments::StripComments;
 use rome_analyze::{
-    AnalysisFilter, AnalyzerAction, AnalyzerOptions, ControlFlow, Never, RuleFilter,
+    AnalysisFilter, AnalyzerAction, AnalyzerOptions, ControlFlow, Never, RuleFilter, RuleKey,
 };
 use rome_console::{
     fmt::{Formatter, Termcolor},
@@ -12,7 +12,7 @@ use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{DiagnosticExt, Error, PrintDiagnostic, Severity};
 use rome_js_parser::{
     parse,
-    test_utils::{assert_errors_are_absent, has_unknown_nodes_or_empty_slots},
+    test_utils::{assert_errors_are_absent, has_bogus_nodes_or_empty_slots},
 };
 use rome_js_syntax::{JsLanguage, SourceType};
 use similar::TextDiff;
@@ -21,6 +21,16 @@ use std::{
 };
 
 tests_macros::gen_tests! {"tests/specs/**/*.{cjs,js,jsx,tsx,ts,json,jsonc}", crate::run_test, "module"}
+
+fn scripts_from_json(extension: &OsStr, input_code: &str) -> Option<Vec<String>> {
+    if extension == "json" || extension == "jsonc" {
+        let input_code = StripComments::new(input_code.as_bytes());
+        let scripts: Vec<String> = serde_json::from_reader(input_code).ok()?;
+        Some(scripts)
+    } else {
+        None
+    }
+}
 
 fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     register_leak_checker();
@@ -41,9 +51,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     let mut snapshot = String::new();
     let extension = input_file.extension().unwrap_or_default();
 
-    if extension == "json" || extension == "jsonc" {
-        let input_code = StripComments::new(input_code.as_bytes());
-        let scripts: Vec<String> = serde_json::from_reader(input_code).unwrap();
+    if let Some(scripts) = scripts_from_json(extension, &input_code) {
         for script in scripts {
             write_analysis_to_snapshot(
                 &mut snapshot,
@@ -55,7 +63,9 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
             )
         }
     } else {
-        let source_type = input_file.try_into().unwrap();
+        let Ok(source_type) = input_file.try_into() else {
+            return;
+        };
         write_analysis_to_snapshot(
             &mut snapshot,
             &input_code,
@@ -87,7 +97,24 @@ fn write_analysis_to_snapshot(
 
     let mut diagnostics = Vec::new();
     let mut code_fixes = Vec::new();
-    let options = AnalyzerOptions::default();
+    let mut options = AnalyzerOptions::default();
+
+    // We allow a test file to configure its rule using a special
+    // file with the same name as the test but with extension ".options.json"
+    // that configures that specific rule.
+    let options_file = input_file.with_extension("options.json");
+    if let Ok(json) = std::fs::read_to_string(options_file) {
+        let v: serde_json::Value = serde_json::from_str(&json).expect("must be a valid JSON");
+
+        //RuleKey needs 'static string, so we must leak them here
+        let (group, rule) = parse_test_path(input_file);
+        let group = Box::leak(Box::new(group.to_string()));
+        let rule = Box::leak(Box::new(rule.to_string()));
+        let rule_key = RuleKey::new(group, rule);
+
+        options.configuration.rules.push_rule(rule_key, v);
+    }
+
     rome_js_analyze::analyze(FileId::zero(), &root, filter, &options, |event| {
         if let Some(mut diag) = event.diagnostic() {
             for action in event.actions() {
@@ -194,8 +221,8 @@ fn check_code_action(
     // returns the same code as printing the modified syntax tree
     assert_eq!(new_tree.to_string(), output);
 
-    if has_unknown_nodes_or_empty_slots(&new_tree) {
-        panic!("modified tree has unknown nodes or empty slots:\n{new_tree:#?}")
+    if has_bogus_nodes_or_empty_slots(&new_tree) {
+        panic!("modified tree has bogus nodes or empty slots:\n{new_tree:#?}")
     }
 
     // Checks the returned tree contains no missing children node

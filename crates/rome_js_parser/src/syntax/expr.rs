@@ -131,7 +131,7 @@ pub(crate) fn parse_expression_or_recover_to_next_statement(
     func(p, context).or_recover(
         p,
         &ParseRecovery::new(
-            JsSyntaxKind::JS_UNKNOWN_EXPRESSION,
+            JsSyntaxKind::JS_BOGUS_EXPRESSION,
             STMT_RECOVERY_SET.union(token_set![T!['}']]),
         )
         .enable_recovery_on_line_break(),
@@ -302,7 +302,7 @@ fn parse_assign_expr_recursive(
             // inside of the `ReparseAssignment` implementation because not using parentheses is valid
             // in for heads `for (a as any in []) {}`
             p.error(invalid_assignment_error(p, target.range(p)));
-            target.change_kind(p, JS_UNKNOWN_ASSIGNMENT);
+            target.change_kind(p, JS_BOGUS_ASSIGNMENT);
             target
         } else {
             expression_to_assignment_pattern(p, target, checkpoint)
@@ -391,7 +391,7 @@ fn parse_yield_expression(p: &mut JsParser, context: ExpressionContext) -> Compl
             "`yield` is only allowed within generator functions.",
             yield_range,
         ));
-        yield_expr.change_to_unknown(p);
+        yield_expr.change_to_bogus(p);
     }
 
     yield_expr
@@ -521,7 +521,7 @@ fn parse_binary_or_logical_expression_recursive(
 
         let op_range = p.cur_range();
 
-        let mut is_unknown = false;
+        let mut is_bogus = false;
         if let Present(left) = &mut left {
             // test exponent_unary_parenthesized
             // (delete a.b) ** 2;
@@ -551,13 +551,13 @@ fn parse_binary_or_logical_expression_recursive(
 					.detail(left.range(p), "The left-hand side");
 
                 p.error(err);
-                is_unknown = true;
+                is_bogus = true;
             } else if op != T![in] && left.kind(p) == JS_PRIVATE_NAME {
                 p.error(private_names_only_allowed_on_left_side_of_in_expression(
                     p,
                     left.range(p),
                 ));
-                left.change_kind(p, JS_UNKNOWN_EXPRESSION);
+                left.change_kind(p, JS_BOGUS_EXPRESSION);
             }
         } else {
             let err = p
@@ -592,7 +592,7 @@ fn parse_binary_or_logical_expression_recursive(
                     "'as' expression",
                     as_expression.range(p),
                 ));
-                as_expression.change_to_unknown(p);
+                as_expression.change_to_bogus(p);
             }
             left = Present(as_expression);
             continue;
@@ -621,7 +621,7 @@ fn parse_binary_or_logical_expression_recursive(
                     "'satisfies' expression",
                     satisfies_expression.range(p),
                 ));
-                satisfies_expression.change_to_unknown(p);
+                satisfies_expression.change_to_bogus(p);
             }
             left = Present(satisfies_expression);
             continue;
@@ -630,8 +630,8 @@ fn parse_binary_or_logical_expression_recursive(
         parse_binary_or_logical_expression(p, new_precedence, context)
             .or_add_diagnostic(p, expected_expression);
 
-        let expression_kind = if is_unknown {
-            JS_UNKNOWN_EXPRESSION
+        let expression_kind = if is_bogus {
+            JS_BOGUS_EXPRESSION
         } else {
             match op {
                 // test logical_expressions
@@ -668,7 +668,7 @@ fn parse_binary_or_logical_expression_recursive(
             //    #prop + 5;
             //  }
             // }
-            left.change_kind(p, JS_UNKNOWN_EXPRESSION);
+            left.change_kind(p, JS_BOGUS_EXPRESSION);
             p.error(private_names_only_allowed_on_left_side_of_in_expression(
                 p,
                 left.range(p),
@@ -725,7 +725,7 @@ fn parse_member_expression_rest(
                     p.bump(T![?.]);
                     let template_literal = p.start();
                     parse_template_literal(p, template_literal, true, true);
-                    m.complete(p, JS_UNKNOWN_EXPRESSION)
+                    m.complete(p, JS_BOGUS_EXPRESSION)
                 } else {
                     // '(' or any other unexpected character
                     break;
@@ -747,7 +747,7 @@ fn parse_member_expression_rest(
                 let mut non_null = m.complete(p, TS_NON_NULL_ASSERTION_EXPRESSION);
 
                 if TypeScript.is_unsupported(p) {
-                    non_null.change_to_unknown(p);
+                    non_null.change_to_bogus(p);
                     p.error(ts_only_syntax_error(
                         p,
                         "non-null assertions",
@@ -820,7 +820,7 @@ fn parse_new_expr(p: &mut JsParser, context: ExpressionContext) -> ParsedSyntax 
             p.error(expected_identifier(p, p.cur_range()));
         }
 
-        return Present(m.complete(p, NEW_TARGET));
+        return Present(m.complete(p, JS_NEW_TARGET_EXPRESSION));
     }
 
     if let Some(lhs) = parse_primary_expression(p, context.and_ts_type_assertion_allowed(false))
@@ -885,7 +885,7 @@ fn parse_super_expression(p: &mut JsParser) -> ParsedSyntax {
     let mut super_expression = super_marker.complete(p, JS_SUPER_EXPRESSION);
 
     if p.at(T![?.]) {
-        super_expression.change_kind(p, JS_UNKNOWN_EXPRESSION);
+        super_expression.change_kind(p, JS_BOGUS_EXPRESSION);
         p.error(p.err_builder(
             "Super doesn't support optional chaining as super can never be null",
             super_expression.range(p),
@@ -895,7 +895,7 @@ fn parse_super_expression(p: &mut JsParser) -> ParsedSyntax {
             "`super` is only valid inside of a class constructor of a subclass.",
             super_expression.range(p),
         ));
-        super_expression.change_kind(p, JS_UNKNOWN_EXPRESSION);
+        super_expression.change_kind(p, JS_BOGUS_EXPRESSION);
     }
 
     match p.cur() {
@@ -959,7 +959,7 @@ pub(super) fn parse_private_name(p: &mut JsParser) -> ParsedSyntax {
             )
             .hint("remove the space here"),
         );
-        Present(m.complete(p, JS_UNKNOWN))
+        Present(m.complete(p, JS_BOGUS))
     } else {
         if p.cur().is_keyword() {
             p.bump_remap(T![ident]);
@@ -1085,7 +1085,7 @@ fn parse_call_arguments(p: &mut JsParser) -> ParsedSyntax {
             .or_recover(
                 p,
                 &ParseRecovery::new(
-                    JS_UNKNOWN_EXPRESSION,
+                    JS_BOGUS_EXPRESSION,
                     EXPR_RECOVERY_SET.union(token_set!(T![')'], T![;], T![...])),
                 )
                 .enable_recovery_on_line_break(),
@@ -1300,7 +1300,7 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
                 // import.metaa
                 if p.at(T![ident]) && p.text(p.cur_range()) == "meta" {
                     p.bump_remap(META);
-                    m.complete(p, IMPORT_META)
+                    m.complete(p, JS_IMPORT_META_EXPRESSION)
                 } else if p.at(T![ident]) {
                     let err = p.err_builder(
                         format!(
@@ -1310,8 +1310,8 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
                         p.cur_range(),
                     );
 
-                    p.err_and_bump(err, JS_UNKNOWN);
-                    m.complete(p, IMPORT_META)
+                    p.err_and_bump(err, JS_BOGUS);
+                    m.complete(p, JS_IMPORT_META_EXPRESSION)
                 } else {
                     let err = p.err_builder(
                         "Expected `meta` following an import keyword, but found none",
@@ -1319,7 +1319,7 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
                     );
 
                     p.error(err);
-                    m.complete(p, JS_UNKNOWN)
+                    m.complete(p, JS_BOGUS)
                 }
             } else {
                 // test import_call
@@ -1353,7 +1353,7 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
                                 p.err_builder("`...` is not allowed in `import()`", range)
                             })
                             .map(|mut marker| {
-                                marker.change_to_unknown(p);
+                                marker.change_to_bogus(p);
                                 marker
                             });
                     } else {
@@ -1391,7 +1391,7 @@ fn parse_primary_expression(p: &mut JsParser, context: ExpressionContext) -> Par
         ERROR_TOKEN => {
             let m = p.start();
             p.bump_any();
-            m.complete(p, JS_UNKNOWN)
+            m.complete(p, JS_BOGUS)
         }
         T![ident] => parse_identifier_expression(p).unwrap(),
         // test jsx jsx_primary_expression
@@ -1513,7 +1513,7 @@ pub(super) fn parse_identifier(p: &mut JsParser, kind: JsSyntaxKind) -> ParsedSy
 
     if let Some(error) = error {
         p.error(error);
-        identifier.change_to_unknown(p);
+        identifier.change_to_bogus(p);
     }
 
     Present(identifier)
@@ -1574,7 +1574,7 @@ fn parse_template_literal(
 
     // The lexer emits an error for unterminated template literals
     p.eat(BACKTICK);
-    let mut completed = marker.complete(p, JS_TEMPLATE);
+    let mut completed = marker.complete(p, JS_TEMPLATE_EXPRESSION);
 
     // test_err template_after_optional_chain
     // obj.val?.prop`template`
@@ -1585,7 +1585,7 @@ fn parse_template_literal(
             "Tagged template expressions are not permitted in an optional chain.",
             completed.range(p),
         ));
-        completed.change_kind(p, JS_UNKNOWN_EXPRESSION);
+        completed.change_kind(p, JS_BOGUS_EXPRESSION);
     }
 
     completed
@@ -1616,7 +1616,7 @@ pub(crate) fn parse_template_elements<P>(
                 if !p.at(T!['}']) {
                     p.error(expected_token(T!['}']));
                     // Seems there's more. For example a `${a a}`. We must eat all tokens away to avoid a panic because of an unexpected token
-                    let _ =  ParseRecovery::new(JS_UNKNOWN, token_set![T!['}'], TEMPLATE_CHUNK, DOLLAR_CURLY, ERROR_TOKEN, BACKTICK]).recover(p);
+                    let _ =  ParseRecovery::new(JS_BOGUS, token_set![T!['}'], TEMPLATE_CHUNK, DOLLAR_CURLY, ERROR_TOKEN, BACKTICK]).recover(p);
                     if !p.at(T!['}']) {
                         e.complete(p, element_kind);
                         // Failed to fully recover, unclear where we are now, exit
@@ -1660,7 +1660,7 @@ impl ParseSeparatedList for ArrayElementsList {
         parsed_element.or_recover(
             p,
             &ParseRecovery::new(
-                JS_UNKNOWN_EXPRESSION,
+                JS_BOGUS_EXPRESSION,
                 EXPR_RECOVERY_SET.union(token_set!(T![']'])),
             ),
             js_parse_error::expected_array_element,
@@ -1905,7 +1905,7 @@ pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> 
                 await_range,
             ));
 
-            let expr = m.complete(p, JS_UNKNOWN_EXPRESSION);
+            let expr = m.complete(p, JS_BOGUS_EXPRESSION);
             return Present(expr);
         }
 
@@ -2032,7 +2032,7 @@ pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> 
             rewriter.result.take().map(|res| {
                 if StrictMode.is_supported(p) {
                     if let Some(range) = rewriter.exited_ident_expr {
-                        kind = JS_UNKNOWN_EXPRESSION;
+                        kind = JS_BOGUS_EXPRESSION;
                         p.error(p.err_builder(
                             "the target for a delete operator cannot be a single identifier",
                             range,
@@ -2041,7 +2041,7 @@ pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> 
                 }
 
                 if let Some(range) = rewriter.exited_private_member_expr {
-                    kind = JS_UNKNOWN_EXPRESSION;
+                    kind = JS_BOGUS_EXPRESSION;
                     p.error(p.err_builder(
                         "the target for a delete operator cannot be a private member",
                         range,
@@ -2054,12 +2054,12 @@ pub(super) fn parse_unary_expr(p: &mut JsParser, context: ExpressionContext) -> 
             parse_unary_expr(p, context).ok()
         };
 
-        if is_delete && kind != JS_UNKNOWN_EXPRESSION && TypeScript.is_supported(p) {
+        if is_delete && kind != JS_BOGUS_EXPRESSION && TypeScript.is_supported(p) {
             if let Some(res) = res {
                 match res.kind(p) {
                     JS_STATIC_MEMBER_EXPRESSION | JS_COMPUTED_MEMBER_EXPRESSION => {}
                     _ => {
-                        kind = JS_UNKNOWN_EXPRESSION;
+                        kind = JS_BOGUS_EXPRESSION;
                         p.error(p.err_builder(
                             "the target for a delete operator must be a property access",
                             res.range(p),

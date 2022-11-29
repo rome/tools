@@ -5,7 +5,7 @@ use rome_diagnostics::FileId;
 use rome_formatter::{FormatResult, Formatted, PrintResult, Printed};
 use rome_js_analyze::analyze;
 use rome_js_formatter::context::{JsFormatContext, JsFormatOptions};
-use rome_js_syntax::{JsAnyRoot, JsSyntaxNode, SourceType};
+use rome_js_syntax::{AnyJsRoot, JsSyntaxNode, SourceType};
 use rome_json_formatter::context::{JsonFormatContext, JsonFormatOptions};
 use rome_json_syntax::JsonSyntaxNode;
 use rome_parser::prelude::ParseDiagnostic;
@@ -38,7 +38,7 @@ impl<'a> Parse<'a> {
 }
 
 pub enum Parsed {
-    JavaScript(rome_js_parser::Parse<JsAnyRoot>, SourceType),
+    JavaScript(rome_js_parser::Parse<AnyJsRoot>, SourceType),
     Json(rome_json_parser::JsonParse),
 }
 
@@ -102,7 +102,7 @@ impl FormattedNode {
 }
 
 pub enum Analyze {
-    JavaScript(JsAnyRoot),
+    JavaScript(AnyJsRoot),
 }
 
 impl Analyze {

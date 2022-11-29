@@ -1,3 +1,5 @@
+use std::{borrow, collections::BTreeSet};
+
 use crate::{
     context::RuleContext,
     matcher::{GroupKey, MatchQueryParams},
@@ -9,7 +11,6 @@ use crate::{
 use rome_diagnostics::Error;
 use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
 use rustc_hash::FxHashSet;
-use std::{borrow, collections::BTreeSet};
 
 /// Defines all the phases that the [RuleRegistry] supports.
 #[repr(usize)]
@@ -343,12 +344,10 @@ impl<L: Language + Default> RegistryRule<L> {
             // if the query doesn't match
             let query_result =
                 <R::Query as Queryable>::unwrap_match(params.services, &params.query);
-            let ctx =
-                match RuleContext::new(&query_result, params.root, params.services, params.options)
-                {
-                    Ok(ctx) => ctx,
-                    Err(error) => return Err(error),
-                };
+            let ctx = match RuleContext::new(&query_result, params.root, params.services) {
+                Ok(ctx) => ctx,
+                Err(error) => return Err(error),
+            };
 
             for result in R::run(&ctx) {
                 let text_range =
@@ -362,7 +361,6 @@ impl<L: Language + Default> RegistryRule<L> {
                     query_result.clone(),
                     result,
                     params.services,
-                    params.options.clone(),
                     params.apply_suppression_comment,
                 ));
 

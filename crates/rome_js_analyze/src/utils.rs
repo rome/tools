@@ -1,6 +1,6 @@
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyStatement, JsLanguage, JsModuleItemList, JsStatementList, JsVariableDeclaration,
+    AnyJsStatement, JsLanguage, JsModuleItemList, JsStatementList, JsVariableDeclaration,
     JsVariableDeclarator, JsVariableDeclaratorList, JsVariableStatement, T,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutation};
@@ -129,7 +129,7 @@ pub fn to_camel_case(input: &str) -> Cow<str> {
 /// module item list, or by replacing the statement node with an empty statement
 pub(crate) fn remove_statement<N>(mutation: &mut BatchMutation<JsLanguage>, node: &N) -> Option<()>
 where
-    N: AstNode<Language = JsLanguage> + Into<JsAnyStatement>,
+    N: AstNode<Language = JsLanguage> + Into<AnyJsStatement>,
 {
     let parent = node.syntax().parent()?;
 
@@ -138,7 +138,7 @@ where
     } else {
         mutation.replace_node(
             node.clone().into(),
-            JsAnyStatement::JsEmptyStatement(make::js_empty_statement(make::token(T![;]))),
+            AnyJsStatement::JsEmptyStatement(make::js_empty_statement(make::token(T![;]))),
         );
     }
 

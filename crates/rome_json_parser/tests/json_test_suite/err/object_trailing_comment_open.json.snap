@@ -14,18 +14,18 @@ expression: snapshot
 
 ```
 JsonRoot {
-    value: JsonArray {
+    value: JsonArrayValue {
         l_brack_token: missing (required),
         elements: JsonArrayElementList [
-            JsonObject {
+            JsonObjectValue {
                 l_curly_token: L_CURLY@0..1 "{" [] [],
                 json_member_list: JsonMemberList [
                     JsonMember {
-                        key: JsonString {
+                        name: JsonMemberName {
                             value_token: JSON_STRING_LITERAL@1..4 "\"a\"" [] [],
                         },
                         colon_token: COLON@4..5 ":" [] [],
-                        value: JsonString {
+                        value: JsonStringValue {
                             value_token: JSON_STRING_LITERAL@5..8 "\"b\"" [] [],
                         },
                     },
@@ -33,7 +33,7 @@ JsonRoot {
                 r_curly_token: R_CURLY@8..9 "}" [] [],
             },
             missing separator,
-            JsonUnknown {
+            JsonBogusValue {
                 items: [
                     COMMENT@9..13 "/**/" [] [],
                     ERROR_TOKEN@13..14 "/" [] [],
@@ -50,21 +50,21 @@ JsonRoot {
 
 ```
 0: JSON_ROOT@0..14
-  0: JSON_ARRAY@0..14
+  0: JSON_ARRAY_VALUE@0..14
     0: (empty)
     1: JSON_ARRAY_ELEMENT_LIST@0..14
-      0: JSON_OBJECT@0..9
+      0: JSON_OBJECT_VALUE@0..9
         0: L_CURLY@0..1 "{" [] []
         1: JSON_MEMBER_LIST@1..8
           0: JSON_MEMBER@1..8
-            0: JSON_STRING@1..4
+            0: JSON_MEMBER_NAME@1..4
               0: JSON_STRING_LITERAL@1..4 "\"a\"" [] []
             1: COLON@4..5 ":" [] []
-            2: JSON_STRING@5..8
+            2: JSON_STRING_VALUE@5..8
               0: JSON_STRING_LITERAL@5..8 "\"b\"" [] []
         2: R_CURLY@8..9 "}" [] []
       1: (empty)
-      2: JSON_UNKNOWN@9..14
+      2: JSON_BOGUS_VALUE@9..14
         0: COMMENT@9..13 "/**/" [] []
         1: ERROR_TOKEN@13..14 "/" [] []
     2: (empty)

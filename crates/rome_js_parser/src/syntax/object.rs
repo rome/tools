@@ -52,7 +52,7 @@ impl ParseSeparatedList for ObjectMembersList {
     fn recover(&mut self, p: &mut JsParser, parsed_element: ParsedSyntax) -> RecoveryResult {
         parsed_element.or_recover(
             p,
-            &ParseRecovery::new(JS_UNKNOWN_MEMBER, token_set![T![,], T!['}'], T![;], T![:]])
+            &ParseRecovery::new(JS_BOGUS_MEMBER, token_set![T![,], T!['}'], T![;], T![:]])
                 .enable_recovery_on_line_break(),
             js_parse_error::expected_object_member,
         )
@@ -178,7 +178,7 @@ fn parse_object_member(p: &mut JsParser) -> ParsedSyntax {
 						p.cur_range()));
                     p.bump(T![=]);
                     parse_assignment_expression_or_higher(p, ExpressionContext::default()).ok();
-                    return Present(m.complete(p, JS_UNKNOWN_MEMBER));
+                    return Present(m.complete(p, JS_BOGUS_MEMBER));
                 }
 
                 return Present(m.complete(p, JS_SHORTHAND_PROPERTY_OBJECT_MEMBER));
@@ -225,7 +225,7 @@ fn parse_object_member(p: &mut JsParser) -> ParsedSyntax {
                 // let d = {5}
 
                 #[allow(deprecated)]
-                SingleTokenParseRecovery::new(token_set![T![:], T![,]], JS_UNKNOWN).recover(p);
+                SingleTokenParseRecovery::new(token_set![T![:], T![,]], JS_BOGUS).recover(p);
 
                 if p.eat(T![:]) {
                     parse_assignment_expression_or_higher(p, ExpressionContext::default())

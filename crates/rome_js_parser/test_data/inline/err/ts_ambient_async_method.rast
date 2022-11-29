@@ -15,7 +15,7 @@ JsModule {
                 implements_clause: missing (optional),
                 l_curly_token: L_CURLY@16..18 "{" [] [Whitespace(" ")],
                 members: JsClassMemberList [
-                    JsUnknownMember {
+                    JsBogusMember {
                         items: [
                             ASYNC_KW@18..24 "async" [] [Whitespace(" ")],
                             JsLiteralMemberName {
@@ -53,7 +53,7 @@ JsModule {
         5: (empty)
         6: L_CURLY@16..18 "{" [] [Whitespace(" ")]
         7: JS_CLASS_MEMBER_LIST@18..34
-          0: JS_UNKNOWN_MEMBER@18..34
+          0: JS_BOGUS_MEMBER@18..34
             0: ASYNC_KW@18..24 "async" [] [Whitespace(" ")]
             1: JS_LITERAL_MEMBER_NAME@24..30
               0: IDENT@24..30 "method" [] []

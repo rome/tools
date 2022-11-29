@@ -100,9 +100,9 @@ pub fn run(test_case: &str, _snapshot_name: &str, test_directory: &str, outcome:
                 || parsed
                     .syntax()
                     .descendants()
-                    .any(|node| node.kind().is_unknown())
+                    .any(|node| node.kind().is_bogus())
             {
-                panic!("Parsed tree of a 'OK' test case should not contain any missing required children or unknown nodes");
+                panic!("Parsed tree of a 'OK' test case should not contain any missing required children or bogus nodes");
             }
         }
         ExpectedOutcome::Fail => {
