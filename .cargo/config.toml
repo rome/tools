@@ -1,5 +1,5 @@
 [alias]
-lint = "clippy --workspace --all-targets --verbose -- --deny warnings"
+lint = "clippy --workspace --all-targets --verbose -- --deny warnings -W clippy::cargo -W clippy::dbg_macro -A clippy::cargo_common_metadata"
 format = "fmt --all --verbose"
 codegen = "run -p xtask_codegen --"
 codegen-configuration = "run -p xtask_codegen --features configuration -- configuration"
