@@ -151,15 +151,10 @@ impl Rule for NoNonNullAssertion {
 }
 
 fn can_replace_with_optional_chain(node: &TsNonNullAssertionExpression) -> bool {
-    match node.parent::<AnyJsExpression>() {
-        Some(parent) => {
-            matches!(
-                parent.syntax().kind(),
-                JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
-                    | JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION
-                    | JsSyntaxKind::JS_CALL_EXPRESSION
-            )
-        }
-        None => false,
-    }
+    use AnyJsExpression::*;
+
+    matches!(
+        node.parent::<AnyJsExpression>(),
+        Some(JsStaticMemberExpression(_) | JsComputedMemberExpression(_) | JsCallExpression(_))
+    )
 }
