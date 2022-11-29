@@ -127,12 +127,7 @@ impl Rule for NoRedundantUseStrict {
         let root = ctx.root();
         let mut batch = root.begin();
 
-        if let Ok(token) = state.redundant.value_token() {
-            batch.remove_token(token);
-        }
-        if let Some(token) = state.redundant.semicolon_token() {
-            batch.remove_token(token);
-        }
+        batch.remove_node(state.redundant.clone());
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,

@@ -41,7 +41,7 @@ invalid.js:1:1 lint/nursery/NoRedundantUseStrict  FIXABLE  ━━━━━━━
     3 │ 
     4 │ function test() {
   
-  i Suggested fix: Remove redundant use strict
+  i Safe fix: Remove redundant use strict
   
      1  1 │   "use strict";
      2    │ - "use·strict";
@@ -69,7 +69,7 @@ invalid.js:1:1 lint/nursery/NoRedundantUseStrict  FIXABLE  ━━━━━━━
     6 │ 	function inner_a() {
     7 │ 		"use strict"; // redundant directive
   
-  i Suggested fix: Remove redundant use strict
+  i Safe fix: Remove redundant use strict
   
      3  3 │   
      4  4 │   function test() {
@@ -101,7 +101,7 @@ invalid.js:1:1 lint/nursery/NoRedundantUseStrict  FIXABLE  ━━━━━━━
     8 │ 	}
     9 │ 	function inner_b() {
   
-  i Suggested fix: Remove redundant use strict
+  i Safe fix: Remove redundant use strict
   
      5  5 │   	"use strict";
      6  6 │   	function inner_a() {
@@ -133,7 +133,7 @@ invalid.js:1:1 lint/nursery/NoRedundantUseStrict  FIXABLE  ━━━━━━━
     12 │ 		}
     13 │ 	}
   
-  i Suggested fix: Remove redundant use strict
+  i Safe fix: Remove redundant use strict
   
      9  9 │   	function inner_b() {
     10 10 │   		function inner_inner() {
