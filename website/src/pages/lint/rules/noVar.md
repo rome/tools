@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noVar (since v11.0.0)
 
-> This rule is recommended by Rome.
-
 Disallow the use of `var`
 
 ECMAScript 6 allows programmers to create variables with block scope instead of function scope using the let and const keywords. Block scope is common in many other programming languages and helps programmers avoid mistakes.

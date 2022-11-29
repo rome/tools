@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noEmptyInterface (since v11.0.0)
 
-> This rule is recommended by Rome.
-
 Disallow the declaration of empty interfaces.
 
 >An empty interface in TypeScript does very little: any non-nullable value is assignable to `{}`. Using an empty interface is often a sign of programmer error, such as misunderstanding the concept of `{}` or forgetting to fill in fields.

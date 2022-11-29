@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # useNumericLiterals (since v11.0.0)
 
-> This rule is recommended by Rome.
-
 Disallow `parseInt()` and `Number.parseInt()` in favor of binary, octal, and hexadecimal literals
 
 ## Examples

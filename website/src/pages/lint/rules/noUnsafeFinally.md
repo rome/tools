@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noUnsafeFinally (since v11.0.0)
 
-> This rule is recommended by Rome.
-
 Disallow control flow statements in finally blocks.
 
 JavaScript suspends the control flow statements of `try` and `catch` blocks until

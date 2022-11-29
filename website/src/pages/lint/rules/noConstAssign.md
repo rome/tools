@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noConstAssign (since v10.0.0)
 
-> This rule is recommended by Rome.
-
 Prevents from having `const` variables being re-assigned.
 
 Trying to assign a value to a `const` will cause an `TypeError` when the code is executed.

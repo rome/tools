@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # useExhaustiveDependencies (since v10.0.0)
 
-> This rule is recommended by Rome.
-
 Enforce all dependencies are correctly specified.
 
 ## Examples

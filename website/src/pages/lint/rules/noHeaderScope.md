@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noHeaderScope (since v11.0.0)
 
-> This rule is recommended by Rome.
-
 Check that the scope attribute is only used on `th` elements.
 
 ESLint Equivalent: [scope](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/scope.md)

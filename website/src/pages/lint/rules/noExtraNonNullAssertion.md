@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noExtraNonNullAssertion (since v11.0.0)
 
-> This rule is recommended by Rome.
-
 Prevents the wrong usage of the non-null assertion operator (`!`) in TypeScript files.
 
 >The `!` non-null assertion operator in TypeScript is used to assert that a value's type does not include `null` or `undefined`. Using the operator any more than once on a single value does nothing.

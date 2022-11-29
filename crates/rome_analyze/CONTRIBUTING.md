@@ -30,7 +30,9 @@ programming errors (for instance detecting a coding pattern that will throw an
 exception at runtime), while the more pedantic rules that check for certain unwanted
 patterns but may have high false positive rates (for instance style-related rules)
 are left off from the recommended set, and the final user should enable them
-explicitly in their configuration.
+explicitly in their configuration. Rules intended to be recommended should be
+flagged as such even if they are still part of the `nursery` group, as unstable rules
+are only enabled by default on unstable builds.
 
 ## Lint rules
 

@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noVoidTypeReturn (since v11.0.0)
 
-> This rule is recommended by Rome.
-
 Disallow returning a value from a function with the return type 'void'
 
 'void' signals the absence of value. The returned value is likely to be ignored by the caller.

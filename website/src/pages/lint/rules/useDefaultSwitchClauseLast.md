@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # useDefaultSwitchClauseLast (since v11.0.0)
 
-> This rule is recommended by Rome.
-
 Enforce default clauses in switch statements to be last
 
 A switch statement can optionally have a default clause.

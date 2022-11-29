@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # useFlatMap (since v10.0.0)
 
-> This rule is recommended by Rome.
-
 Promotes the use of `.flatMap()` when `map().flat()` are used together.
 
 ## Examples

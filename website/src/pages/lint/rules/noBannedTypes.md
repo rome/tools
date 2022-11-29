@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noBannedTypes (since v10.0.0)
 
-> This rule is recommended by Rome.
-
 Disallow certain types.
 
 >Some built-in types have aliases, while some types are considered dangerous or harmful. It's often a good idea to ban certain types to help with consistency and safety.

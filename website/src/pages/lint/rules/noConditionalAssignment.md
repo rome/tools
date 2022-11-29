@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noConditionalAssignment (since v11.0.0)
 
-> This rule is recommended by Rome.
-
 Disallow assignment operators in conditional expressions.
 
 ## Examples

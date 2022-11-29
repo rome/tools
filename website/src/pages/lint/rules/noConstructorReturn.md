@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noConstructorReturn (since v11.0.0)
 
-> This rule is recommended by Rome.
-
 Disallow returning a value from a constructor
 
 While returning a value from a constructor does not produce an error, the returned value is being ignored. Therefore, returning a value from a constructor is either unnecessary or a possible error.

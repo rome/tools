@@ -824,11 +824,12 @@ impl Nursery {
         "useNumericLiterals",
         "useValidForDirection",
     ];
-    const RECOMMENDED_RULES: [&'static str; 25] = [
+    const RECOMMENDED_RULES: [&'static str; 26] = [
         "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
         "noConstAssign",
+        "noConstEnum",
         "noConstructorReturn",
         "noDistractingElements",
         "noDupeKeys",
@@ -851,11 +852,12 @@ impl Nursery {
         "useNumericLiterals",
         "useValidForDirection",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 25] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 26] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[3]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[4]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[5]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[6]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[7]),
@@ -903,7 +905,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 25] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 26] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }

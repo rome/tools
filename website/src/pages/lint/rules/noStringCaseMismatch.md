@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noStringCaseMismatch (since v11.0.0)
 
-> This rule is recommended by Rome.
-
 Disallow comparison of expressions modifying the string case with non-compliant value.
 
 ## Examples

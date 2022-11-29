@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # useValidForDirection (since v10.0.0)
 
-> This rule is recommended by Rome.
-
 Enforce "for" loop update clause moving the counter in the right direction.
 
 A for loop with a stop condition that can never be reached,

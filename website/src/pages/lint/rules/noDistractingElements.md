@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noDistractingElements (since v11.0.0)
 
-> This rule is recommended by Rome.
-
 Enforces that no distracting elements are used.
 
 Elements that can be visually distracting can cause accessibility issues with visually impaired users.
