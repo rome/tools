@@ -175,11 +175,9 @@ fn suggested_fix_if_unused(binding: &AnyJsIdentifierBinding) -> Option<Suggested
 
         // Some parameters are ok to not be used
         AnyJsBindingDeclaration::TsPropertyParameter(parameter) => {
-            dbg!(1);
             let is_binding_ok =
                 is_function_that_is_ok_parameter_not_be_used(parameter.parent_function())
                     || is_property_parameter_ok_not_be_used(parameter)?;
-            dbg!(is_binding_ok);
             if !is_binding_ok {
                 suggestion_for_binding(binding)
             } else {
