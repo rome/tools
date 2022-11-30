@@ -104,6 +104,8 @@ define_dategories! {
     "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
     "lint/nursery/useAriaPropsForRole": "https://docs.rome.tools/lint/rules/useAriaPropsForRole",
     "lint/nursery/useAriaPropTypes": "https://docs.rome.tools/lint/rules/useAriaPropTypes",
+    "lint/nursery/noRedundantUseStrict": "https://docs.rome.tools/lint/rules/noRedundantUseStrict",
+
     ;
 
     // General categories
@@ -115,7 +117,7 @@ define_dategories! {
     // parse categories
     "parse",
     "parse/noSuperWithoutExtends",
-    
+
     // Lint groups
     "lint",
     "lint/correctness",
@@ -125,7 +127,7 @@ define_dategories! {
     "lint/security",
     "lint/nursery",
     "lint/configuration",
-    
+
     // Suppression comments
     "suppressions/parse",
     "suppressions/unknownGroup",

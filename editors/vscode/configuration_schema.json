@@ -918,6 +918,17 @@
             }
           ]
         },
+        "noRedundantUseStrict": {
+          "description": "Prevents from having redundant \"use strict\".",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noSetterReturn": {
           "description": "Disallow returning a value from a setter",
           "anyOf": [

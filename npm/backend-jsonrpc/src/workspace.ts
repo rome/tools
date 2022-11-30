@@ -408,6 +408,10 @@ export interface Nursery {
 	 */
 	noPrecisionLoss?: RuleConfiguration;
 	/**
+	 * Prevents from having redundant "use strict".
+	 */
+	noRedundantUseStrict?: RuleConfiguration;
+	/**
 	 * Disallow returning a value from a setter
 	 */
 	noSetterReturn?: RuleConfiguration;
@@ -700,6 +704,7 @@ export type Category =
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useAriaPropsForRole"
 	| "lint/nursery/useAriaPropTypes"
+	| "lint/nursery/noRedundantUseStrict"
 	| "files/missingHandler"
 	| "format"
 	| "internalError/io"

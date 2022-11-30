@@ -759,6 +759,8 @@ struct NurserySchema {
     no_non_null_assertion: Option<RuleConfiguration>,
     #[doc = "Disallow literal numbers that lose precision"]
     no_precision_loss: Option<RuleConfiguration>,
+    #[doc = "Prevents from having redundant \"use strict\"."]
+    no_redundant_use_strict: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a setter"]
     no_setter_return: Option<RuleConfiguration>,
     #[doc = "Disallow comparison of expressions modifying the string case with non-compliant value."]
@@ -790,7 +792,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 29] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 30] = [
         "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
@@ -806,6 +808,7 @@ impl Nursery {
         "noInvalidConstructorSuper",
         "noNonNullAssertion",
         "noPrecisionLoss",
+        "noRedundantUseStrict",
         "noSetterReturn",
         "noStringCaseMismatch",
         "noUnsafeFinally",
