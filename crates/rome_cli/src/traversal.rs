@@ -770,7 +770,14 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             };
         }
 
-        let open_options = OpenOptions::default().read(true).write(true);
+        let write_access = matches!(
+            ctx.execution.traversal_mode(),
+            TraversalMode::Check {
+                fix_file_mode: Some(_),
+            } | TraversalMode::Format { write: true, .. }
+        );
+
+        let open_options = OpenOptions::default().read(true).write(write_access);
         let mut file = ctx
             .fs
             .open_with_options(path, open_options)

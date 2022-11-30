@@ -1,0 +1,30 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 334
+expression: content
+---
+# Termination Message
+
+```block
+no files were processed in the specified paths.
+```
+
+# Emitted Messages
+
+```block
+test.js internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × cannot acquire write access to file in read-only filesystem
+  
+
+```
+
+```block
+Formatted 0 file(s) in <TIME>
+```
+
+```block
+Skipped 1 file(s)
+```
+
+
