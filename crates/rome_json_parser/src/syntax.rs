@@ -311,7 +311,6 @@ fn parse_rest(p: &mut JsonParser, value: ParsedSyntax) {
         let range = match parse_value(p) {
             Present(value) => value.range(p),
             Absent => ParseRecovery::new(JSON_BOGUS_VALUE, VALUE_START)
-                .enable_recovery_on_line_break()
                 .recover(p)
                 .expect("Expect recovery to succeed because parser isn't at EOF nor at a value.")
                 .range(p),
