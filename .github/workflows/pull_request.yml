@@ -20,6 +20,14 @@ jobs:
   format:
     uses: ./.github/workflows/rustfmt.yaml
 
+
+  bench:
+    uses: ./.github/workflows/xtask_bench.yaml
+    with:
+      name: Analyzer
+      command: bench_analyzer
+    secrets: inherit
+
   lint:
     name: Lint Rust Files
     runs-on: ubuntu-latest
