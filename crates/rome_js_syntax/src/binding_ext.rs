@@ -64,7 +64,15 @@ fn declaration(node: &JsSyntaxNode) -> Option<AnyJsBindingDeclaration> {
         )
     })?;
 
-    AnyJsBindingDeclaration::cast(possible_declarator)
+    match AnyJsBindingDeclaration::cast(possible_declarator)? {
+        AnyJsBindingDeclaration::JsFormalParameter(parameter) => {
+            match parameter.parent::<TsPropertyParameter>() {
+                Some(parameter) => Some(AnyJsBindingDeclaration::TsPropertyParameter(parameter)),
+                None => Some(AnyJsBindingDeclaration::JsFormalParameter(parameter)),
+            }
+        }
+        declaration => Some(declaration),
+    }
 }
 
 fn is_under_pattern_binding(node: &JsSyntaxNode) -> Option<bool> {

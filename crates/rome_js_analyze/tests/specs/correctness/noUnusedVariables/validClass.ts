@@ -13,6 +13,6 @@ new (class B { })
 
 // a and b are actually properties
 class C {
-    constructor(private a, public b) {}
+    constructor(private a1, public b2) {}
 }
 console.log(new C(1, 2));

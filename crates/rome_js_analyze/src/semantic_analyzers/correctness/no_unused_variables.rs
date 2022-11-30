@@ -114,7 +114,9 @@ pub enum SuggestedFix {
     PrefixUnderscore,
 }
 
-fn is_function_that_is_ok_parameter_not_be_used(parent_function: Option<JsAnyParameterParentFunction>) -> bool {
+fn is_function_that_is_ok_parameter_not_be_used(
+    parent_function: Option<JsAnyParameterParentFunction>,
+) -> bool {
     matches!(
         parent_function,
         Some(
@@ -173,9 +175,11 @@ fn suggested_fix_if_unused(binding: &AnyJsIdentifierBinding) -> Option<Suggested
 
         // Some parameters are ok to not be used
         AnyJsBindingDeclaration::TsPropertyParameter(parameter) => {
+            dbg!(1);
             let is_binding_ok =
-                is_function_that_is_ok_parameter_not_be_used(parameter.parent_function()) 
-                || is_property_parameter_ok_not_be_used(parameter)?;
+                is_function_that_is_ok_parameter_not_be_used(parameter.parent_function())
+                    || is_property_parameter_ok_not_be_used(parameter)?;
+            dbg!(is_binding_ok);
             if !is_binding_ok {
                 suggestion_for_binding(binding)
             } else {
@@ -183,7 +187,8 @@ fn suggested_fix_if_unused(binding: &AnyJsIdentifierBinding) -> Option<Suggested
             }
         }
         AnyJsBindingDeclaration::JsFormalParameter(parameter) => {
-            let is_binding_ok = is_function_that_is_ok_parameter_not_be_used(parameter.parent_function());
+            let is_binding_ok =
+                is_function_that_is_ok_parameter_not_be_used(parameter.parent_function());
             if !is_binding_ok {
                 suggestion_for_binding(binding)
             } else {
@@ -191,7 +196,8 @@ fn suggested_fix_if_unused(binding: &AnyJsIdentifierBinding) -> Option<Suggested
             }
         }
         AnyJsBindingDeclaration::JsRestParameter(parameter) => {
-            let is_binding_ok = is_function_that_is_ok_parameter_not_be_used(parameter.parent_function());
+            let is_binding_ok =
+                is_function_that_is_ok_parameter_not_be_used(parameter.parent_function());
             if !is_binding_ok {
                 suggestion_for_binding(binding)
             } else {
