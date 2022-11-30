@@ -1,5 +1,5 @@
 # Checks for unused dependencies
-name: Format Rust Files
+name: Run xtask Benchmark
 on:
   workflow_call:
     inputs:
@@ -12,11 +12,9 @@ on:
         type: string
         required: true
 
-
 jobs:
   bench:
     name: Run
-    if: github.event.issue.pull_request && contains(github.event.comment.body, '!bench_analyzer')
     runs-on: ubuntu-latest
 
     steps:
