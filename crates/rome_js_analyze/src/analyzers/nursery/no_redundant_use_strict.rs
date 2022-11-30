@@ -32,7 +32,7 @@ declare_rule! {
  /// "use strict";
  /// }
  /// ```
- /// ### valid
+ /// ### Valid
  /// ```js
  /// function foo() {
  ///
