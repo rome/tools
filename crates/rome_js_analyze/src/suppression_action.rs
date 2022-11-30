@@ -85,7 +85,7 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
                     // We want to add an additional JsxText to keep the indentation
                     let indentation_text = make_indentation_from_jsx_element(&current_element);
                     mutation.add_jsx_elements_after_element(
-                        &AnyJsxChild::JsxText(current_element.clone()),
+                        &AnyJsxChild::JsxText(current_element),
                         &[
                             AnyJsxChild::JsxExpressionChild(jsx_comment),
                             AnyJsxChild::JsxText(indentation_text),
@@ -136,24 +136,22 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
                         (TriviaPieceKind::Newline, "\n"),
                     ])
                 }
+            } else if token_has_trailing_comments {
+                new_token = new_token.with_trailing_trivia([
+                    (
+                        TriviaPieceKind::SingleLineComment,
+                        format!("// {}: suppressed ", suppression_text).as_str(),
+                    ),
+                    (TriviaPieceKind::Newline, "\n"),
+                ])
             } else {
-                if token_has_trailing_comments {
-                    new_token = new_token.with_trailing_trivia([
-                        (
-                            TriviaPieceKind::SingleLineComment,
-                            format!("// {}: suppressed ", suppression_text).as_str(),
-                        ),
-                        (TriviaPieceKind::Newline, "\n"),
-                    ])
-                } else {
-                    new_token = new_token.with_leading_trivia([
-                        (
-                            TriviaPieceKind::SingleLineComment,
-                            format!("// {}: suppressed ", suppression_text).as_str(),
-                        ),
-                        (TriviaPieceKind::Newline, "\n"),
-                    ])
-                }
+                new_token = new_token.with_leading_trivia([
+                    (
+                        TriviaPieceKind::SingleLineComment,
+                        format!("// {}: suppressed ", suppression_text).as_str(),
+                    ),
+                    (TriviaPieceKind::Newline, "\n"),
+                ])
             };
             mutation.replace_token_transfer_trivia(token_to_apply_suppression, new_token);
         }
@@ -282,7 +280,7 @@ fn get_token_from_offset(
 ///
 /// This new element will serve as trailing "newline" for the suppression comment.
 fn make_indentation_from_jsx_element(current_element: &JsxText) -> JsxText {
-    if let Some(text) = current_element.value_token().ok() {
+    if let Ok(text) = current_element.value_token() {
         let chars = text.text().chars();
         let mut newlines = 0;
         let mut spaces = 0;
@@ -303,7 +301,7 @@ fn make_indentation_from_jsx_element(current_element: &JsxText) -> JsxText {
             if matches!(char, '\r' | '\n') {
                 newlines += 1;
             }
-            if matches!(char, ' ') && newlines == 1 && string_found == false {
+            if matches!(char, ' ') && newlines == 1 && !string_found {
                 spaces += 1;
             }
         }
