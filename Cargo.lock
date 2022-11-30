@@ -1048,6 +1048,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "natord"
+version = "1.0.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "308d96db8debc727c3fd9744aac51751243420e46edf401010908da7f8d5e57c"
+
+[[package]]
 name = "new_debug_unreachable"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1669,6 +1675,7 @@ dependencies = [
  "insta",
  "json_comments",
  "lazy_static",
+ "natord",
  "roaring",
  "rome_analyze",
  "rome_aria",
@@ -1903,6 +1910,7 @@ dependencies = [
  "rome_js_parser",
  "rome_js_semantic",
  "rome_js_syntax",
+ "rome_json_formatter",
  "rome_json_parser",
  "rome_json_syntax",
  "rome_parser",

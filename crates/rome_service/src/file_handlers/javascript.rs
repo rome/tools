@@ -53,8 +53,8 @@ pub struct JsLinterSettings {
 
 impl Language for JsLanguage {
     type FormatterSettings = JsFormatterSettings;
-    type FormatOptions = JsFormatOptions;
     type LinterSettings = JsLinterSettings;
+    type FormatOptions = JsFormatOptions;
 
     fn lookup_settings(languages: &LanguagesSettings) -> &LanguageSettings<Self> {
         &languages.javascript
