@@ -1,0 +1,47 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: useKeyWithClickEvents.jsx
+---
+# Input
+```js
+<div
+    className="SomeManyClasses"
+    onClick={(event) => {
+        console.log(event.current.target);
+    }}
+    style="color: red"
+>
+    Some content
+</div>
+```
+
+# Diagnostics
+```
+useKeyWithClickEvents.jsx:1:1 lint/a11y/useKeyWithClickEvents  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event.
+  
+  > 1 │ <div
+      │ ^^^^
+  > 2 │     className="SomeManyClasses"
+  > 3 │     onClick={(event) => {
+  > 4 │         console.log(event.current.target);
+  > 5 │     }}
+  > 6 │     style="color: red"
+  > 7 │ >
+      │ ^
+    8 │     Some content
+    9 │ </div>
+  
+  i Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation.
+  
+  i Safe fix: Suppress rule lint/a11y/useKeyWithClickEvents
+  
+       1 │ + //·rome-ignore·lint/a11y/useKeyWithClickEvents:·suppressed·
+    1  2 │   <div
+    2  3 │       className="SomeManyClasses"
+  
+
+```
+
+

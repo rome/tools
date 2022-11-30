@@ -226,15 +226,17 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"export type Invalid<S extends number> = `Hello ${T}`
-
-        "#;
+        const SOURCE: &str = r#"something.forEach((Element, index) => {
+    return <List
+        ><div key={index}>foo</div>
+    </List>;
+})"#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
-        let rule_filter = RuleFilter::Rule("correctness", "noUndeclaredVariables");
+        let rule_filter = RuleFilter::Rule("correctness", "noArrayIndexKey");
         analyze(
             FileId::zero(),
             &parsed.tree(),
@@ -258,7 +260,6 @@ mod tests {
 
                 for action in signal.actions() {
                     let new_code = action.mutation.commit();
-                    dbg!(&new_code);
                     eprintln!("{new_code}");
                 }
 

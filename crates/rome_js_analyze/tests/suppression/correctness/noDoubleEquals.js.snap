@@ -15,6 +15,16 @@ a == b;
 if (a == b) {
     false;
 }
+
+if (/** some weird comment
+    **/ a == b) {
+
+    }
+
+let a = `Output of "rome rage":
+  formatter enabled: ${formatter == true}
+  linter: ${linter}
+`;
 ```
 
 # Diagnostics
@@ -120,6 +130,74 @@ noDoubleEquals.js:9:7 lint/correctness/noDoubleEquals  FIXABLE  ━━━━━�
        10 │ + if··(a·==·b)·{
     10 11 │       false;
     11 12 │   }
+  
+
+```
+
+```
+noDoubleEquals.js:14:11 lint/correctness/noDoubleEquals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use === instead of ==
+  
+    13 │ if (/** some weird comment
+  > 14 │     **/ a == b) {
+       │           ^^
+    15 │ 
+    16 │     }
+  
+  i == is only allowed when comparing against null
+  
+    13 │ if (/** some weird comment
+  > 14 │     **/ a == b) {
+       │           ^^
+    15 │ 
+    16 │     }
+  
+  i Using === may be unsafe if you are relying on type coercion
+  
+  i Safe fix: Suppress rule lint/correctness/noDoubleEquals
+  
+    12 12 │   
+    13 13 │   if (/** some weird comment
+    14    │ - ····**/·a·==·b)·{
+       14 │ + ····**/·//·rome-ignore·lint/correctness/noDoubleEquals:·suppressed·
+       15 │ + a·==·b)·{
+    15 16 │   
+    16 17 │       }
+  
+
+```
+
+```
+noDoubleEquals.js:19:34 lint/correctness/noDoubleEquals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use === instead of ==
+  
+    18 │ let a = `Output of "rome rage":
+  > 19 │   formatter enabled: ${formatter == true}
+       │                                  ^^
+    20 │   linter: ${linter}
+    21 │ `;
+  
+  i == is only allowed when comparing against null
+  
+    18 │ let a = `Output of "rome rage":
+  > 19 │   formatter enabled: ${formatter == true}
+       │                                  ^^
+    20 │   linter: ${linter}
+    21 │ `;
+  
+  i Using === may be unsafe if you are relying on type coercion
+  
+  i Safe fix: Suppress rule lint/correctness/noDoubleEquals
+  
+    17 17 │   
+    18 18 │   let a = `Output of "rome rage":
+    19    │ - ··formatter·enabled:·${formatter·==·true}
+       19 │ + ··formatter·enabled:·${//·rome-ignore·lint/correctness/noDoubleEquals:·suppressed·
+       20 │ + formatter··==·true}
+    20 21 │     linter: ${linter}
+    21 22 │   `;
   
 
 ```

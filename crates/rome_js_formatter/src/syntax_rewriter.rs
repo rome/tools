@@ -7,7 +7,8 @@ use rome_js_syntax::{
 };
 use rome_rowan::syntax::SyntaxTrivia;
 use rome_rowan::{
-    chain_pieces, AstNode, SyntaxKind, SyntaxRewriter, SyntaxToken, TextSize, VisitNodeSignal,
+    chain_trivia_pieces, AstNode, SyntaxKind, SyntaxRewriter, SyntaxToken, TextSize,
+    VisitNodeSignal,
 };
 use std::collections::BTreeSet;
 
@@ -213,7 +214,7 @@ impl JsFormatSyntaxRewriter {
                     .map_or(false, |piece| piece.is_skipped() || piece.is_comments());
 
                 let l_paren_trivia =
-                    chain_pieces(l_paren.leading_trivia().pieces(), l_paren_trailing);
+                    chain_trivia_pieces(l_paren.leading_trivia().pieces(), l_paren_trailing);
 
                 let mut leading_trivia = first_token.leading_trivia().pieces().peekable();
                 let mut first_new_line = None;
@@ -255,12 +256,12 @@ impl JsFormatSyntaxRewriter {
                 }
                 // }
 
-                let leading_trivia = chain_pieces(
+                let leading_trivia = chain_trivia_pieces(
                     first_new_line.map(|(_, trivia)| trivia).into_iter(),
                     leading_trivia,
                 );
 
-                let new_leading = chain_pieces(l_paren_trivia, leading_trivia);
+                let new_leading = chain_trivia_pieces(l_paren_trivia, leading_trivia);
                 let new_first = first_token.with_leading_trivia_pieces(new_leading);
 
                 // SAFETY: Calling `unwrap` is safe because we know that `inner_first` is part of the `inner` subtree.
@@ -268,7 +269,7 @@ impl JsFormatSyntaxRewriter {
                     .replace_child(first_token.into(), new_first.into())
                     .unwrap();
 
-                let r_paren_trivia = chain_pieces(
+                let r_paren_trivia = chain_trivia_pieces(
                     r_paren.leading_trivia().pieces(),
                     r_paren.trailing_trivia().pieces(),
                 );
@@ -277,7 +278,7 @@ impl JsFormatSyntaxRewriter {
                 // doesn't contain ANY token, but we know that the subtree contains at least the first token.
                 let last_token = updated.last_token().unwrap();
 
-                let new_last = last_token.with_trailing_trivia_pieces(chain_pieces(
+                let new_last = last_token.with_trailing_trivia_pieces(chain_trivia_pieces(
                     last_token.trailing_trivia().pieces(),
                     r_paren_trivia,
                 ));

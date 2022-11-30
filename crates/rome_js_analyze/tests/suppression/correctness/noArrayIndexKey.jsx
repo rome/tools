@@ -17,3 +17,18 @@ something.forEach((Element, index) => {
         ><div key={index}>foo</div>
     </List>;
 });
+
+something.forEach((Element, index) => {
+    return <List>
+        "a b\
+        cd"
+        <div key={index}>foo</div>
+    </List>;
+});
+
+something.forEach((Element, index) => {
+    return <List>
+        "a b\
+        cd"<div key={index}>foo</div>
+    </List>;
+});

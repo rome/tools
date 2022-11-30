@@ -29,9 +29,9 @@ pub mod raw_language;
 #[cfg(feature = "serde")]
 mod serde_impls;
 mod syntax_factory;
-mod syntax_rewriter;
 mod syntax_token_text;
 mod tree_builder;
+mod trivia;
 
 pub use rome_text_size::{TextLen, TextRange, TextSize};
 
@@ -40,14 +40,15 @@ pub use crate::{
     green::RawSyntaxKind,
     syntax::{
         Language, SendNode, SyntaxElement, SyntaxElementChildren, SyntaxKind, SyntaxList,
-        SyntaxNode, SyntaxNodeChildren, SyntaxNodeOptionExt, SyntaxSlot, SyntaxToken,
-        SyntaxTriviaPiece, SyntaxTriviaPieceComments, TriviaPiece, TriviaPieceKind,
+        SyntaxNode, SyntaxNodeChildren, SyntaxNodeOptionExt, SyntaxRewriter, SyntaxSlot,
+        SyntaxToken, SyntaxTriviaPiece, SyntaxTriviaPieceComments, TriviaPiece, TriviaPieceKind,
+        VisitNodeSignal,
     },
     syntax_factory::*,
     syntax_node_text::SyntaxNodeText,
-    syntax_rewriter::{chain_pieces, ChainTriviaPiecesIterator, SyntaxRewriter, VisitNodeSignal},
     syntax_token_text::SyntaxTokenText,
     tree_builder::{Checkpoint, TreeBuilder},
+    trivia::{chain_trivia_pieces, ChainTriviaPiecesIterator},
     utility_types::{Direction, NodeOrToken, TokenAtOffset, WalkEvent},
 };
 

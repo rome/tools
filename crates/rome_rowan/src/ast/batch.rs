@@ -1,5 +1,6 @@
 use crate::{
-    chain_pieces, AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxSlot, SyntaxToken,
+    chain_trivia_pieces, AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxSlot,
+    SyntaxToken,
 };
 use rome_text_edit::TextEdit;
 use rome_text_size::TextRange;
@@ -226,12 +227,12 @@ where
         prev_token: SyntaxToken<L>,
         next_token: SyntaxToken<L>,
     ) {
-        let leading_trivia = chain_pieces(
+        let leading_trivia = chain_trivia_pieces(
             prev_token.leading_trivia().pieces(),
             next_token.leading_trivia().pieces(),
         );
 
-        let trailing_trivia = chain_pieces(
+        let trailing_trivia = chain_trivia_pieces(
             prev_token.trailing_trivia().pieces(),
             next_token.trailing_trivia().pieces(),
         );

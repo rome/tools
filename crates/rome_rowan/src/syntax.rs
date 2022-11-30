@@ -1,5 +1,6 @@
 mod element;
 mod node;
+mod rewriter;
 mod token;
 mod trivia;
 
@@ -10,6 +11,7 @@ pub use node::{
     Preorder, PreorderWithTokens, SendNode, SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren,
     SyntaxNodeOptionExt, SyntaxSlot,
 };
+pub use rewriter::{SyntaxRewriter, VisitNodeSignal};
 use std::fmt;
 use std::fmt::Debug;
 pub use token::SyntaxToken;

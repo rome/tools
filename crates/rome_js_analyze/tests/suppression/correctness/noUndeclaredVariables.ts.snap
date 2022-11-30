@@ -5,22 +5,33 @@ expression: noUndeclaredVariables.ts
 # Input
 ```js
 export type Invalid<S extends number> = `Hello ${T}`
+
+export type Invalid<S extends number> = `
+    Hello
+    ${T}
+`
 ```
 
 # Diagnostics
 ```
-noUndeclaredVariables.ts:1:50 lint/correctness/noUndeclaredVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
+noUndeclaredVariables.ts:5:7 lint/correctness/noUndeclaredVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━
 
   ! The T variable is undeclared
   
-  > 1 │ export type Invalid<S extends number> = `Hello ${T}`
-      │                                                  ^
+    3 │ export type Invalid<S extends number> = `
+    4 │     Hello
+  > 5 │     ${T}
+      │       ^
+    6 │ `
   
   i Safe fix: Suppress rule lint/correctness/noUndeclaredVariables
   
-    1   │ - export·type·Invalid<S·extends·number>·=·`Hello·${T}`
-      1 │ + //·rome-ignore·lint/correctness/noUndeclaredVariables:·suppressed·
-      2 │ + export··type·Invalid<S·extends·number>·=·`Hello·${T}`
+    3 3 │   export type Invalid<S extends number> = `
+    4 4 │       Hello
+    5   │ - ····${T}
+      5 │ + ····${//·rome-ignore·lint/correctness/noUndeclaredVariables:·suppressed·
+      6 │ + T}
+    6 7 │   `
   
 
 ```

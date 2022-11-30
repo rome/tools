@@ -23,6 +23,21 @@ something.forEach((Element, index) => {
         ><div key={index}>foo</div>
     </List>;
 });
+
+something.forEach((Element, index) => {
+    return <List>
+        "a b\
+        cd"
+        <div key={index}>foo</div>
+    </List>;
+});
+
+something.forEach((Element, index) => {
+    return <List>
+        "a b\
+        cd"<div key={index}>foo</div>
+    </List>;
+});
 ```
 
 # Diagnostics
@@ -171,6 +186,82 @@ noArrayIndexKey.jsx:17:20 lint/correctness/noArrayIndexKey  FIXABLE  ━━━�
        18 │ + ><div·key={index}>foo</div>
     18 19 │       </List>;
     19 20 │   });
+  
+
+```
+
+```
+noArrayIndexKey.jsx:25:19 lint/correctness/noArrayIndexKey  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using the index of an array as key property in an element.
+  
+    23 │         "a b\
+    24 │         cd"
+  > 25 │         <div key={index}>foo</div>
+       │                   ^^^^^
+    26 │     </List>;
+    27 │ });
+  
+  i This is the source of the key value.
+  
+    19 │ });
+    20 │ 
+  > 21 │ something.forEach((Element, index) => {
+       │                             ^^^^^
+    22 │     return <List>
+    23 │         "a b\
+  
+  i The order of the items may change, and this also affects performances and component state.
+  
+  i Check the React documentation. 
+  
+  i Safe fix: Suppress rule lint/correctness/noArrayIndexKey
+  
+    23 23 │           "a b\
+    24 24 │           cd"
+    25    │ - ········<div·key={index}>foo</div>
+       25 │ + ········{/*·rome-ignore·lint/correctness/noArrayIndexKey:·suppressed·*/}
+       26 │ + ········<div·key={index}>foo</div>
+    26 27 │       </List>;
+    27 28 │   });
+  
+
+```
+
+```
+noArrayIndexKey.jsx:32:22 lint/correctness/noArrayIndexKey  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using the index of an array as key property in an element.
+  
+    30 │     return <List>
+    31 │         "a b\
+  > 32 │         cd"<div key={index}>foo</div>
+       │                      ^^^^^
+    33 │     </List>;
+    34 │ });
+  
+  i This is the source of the key value.
+  
+    27 │ });
+    28 │ 
+  > 29 │ something.forEach((Element, index) => {
+       │                             ^^^^^
+    30 │     return <List>
+    31 │         "a b\
+  
+  i The order of the items may change, and this also affects performances and component state.
+  
+  i Check the React documentation. 
+  
+  i Safe fix: Suppress rule lint/correctness/noArrayIndexKey
+  
+    30 30 │       return <List>
+    31 31 │           "a b\
+    32    │ - ········cd"<div·key={index}>foo</div>
+       32 │ + ········cd"{/*·rome-ignore·lint/correctness/noArrayIndexKey:·suppressed·*/}
+       33 │ + ········<div·key={index}>foo</div>
+    33 34 │       </List>;
+    34 35 │   });
   
 
 ```

@@ -212,7 +212,7 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
     fn add_jsx_elements_after_element(
         &mut self,
         after_element: &AnyJsxChild,
-        new_element: &[AnyJsxChild],
+        new_elements: &[AnyJsxChild],
     ) -> bool {
         let old_list = after_element.parent::<JsxChildList>();
         if let Some(old_list) = &old_list {
@@ -221,7 +221,7 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
                 for element in old_list {
                     new_items.push(element.clone());
                     if element == *after_element {
-                        new_items.extend(new_element.to_vec());
+                        new_items.extend_from_slice(new_elements);
                     }
                 }
 
@@ -246,7 +246,7 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
                 let mut new_items = vec![];
                 for element in old_list {
                     if element == *after_element {
-                        new_items.extend(new_elements.to_vec());
+                        new_items.extend_from_slice(new_elements);
                     }
                     new_items.push(element.clone());
                 }
