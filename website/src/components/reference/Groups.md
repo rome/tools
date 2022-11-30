@@ -4,4 +4,4 @@
 - `Correctness`: Rules that detect incorrect or useless code.
 - `Security`: Rules that detect potential security flaws.
 - `Style`: Rules enforcing a consistent way of writing your code. 
-- `Nursery`: New rules that are still under development.  Nursery rules require explicit opt-in via configuration because they may still have bugs or performance problems. Nursery rules get promoted to other groups once they become stable or may be removed.  Rules that belong to this group are not subject to semantic version.
+- `Nursery`: New rules that are still under development.  Nursery rules require explicit opt-in via configuration on stable versions because they may still have bugs or performance problems. They are enabled by default on nightly builds, but as they are unstable their diagnostic severity may be set to either error or warning, depending on whether we intend for the rule to be recommended or not when it eventually gets stabilized. Nursery rules get promoted to other groups once they become stable or may be removed.  Rules that belong to this group are not subject to semantic version.
