@@ -344,8 +344,13 @@ impl AnyJsxElement {
         }
     }
 
+    /// Return true if the current element is actually a component
+    ///
+    /// - `<Span />` is a component and it would return `true`
+    /// - `<span ></span>` is **not** component and it would return `false`
     pub fn is_custom_component(&self) -> bool {
-        self.name().map_or(false, |it| it.as_jsx_name().is_some())
+        self.name()
+            .map_or(false, |it| it.as_jsx_reference_identifier().is_some())
     }
 
     pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<AnyJsxAttribute>) -> bool {

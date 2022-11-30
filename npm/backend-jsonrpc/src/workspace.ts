@@ -440,7 +440,7 @@ export interface Nursery {
 	 */
 	useAriaPropTypes?: RuleConfiguration;
 	/**
-	 * Enforce that elements with ARIA roles must have all required attributes for that role
+	 * Enforce that elements with ARIA roles must have all required ARIA attributes for that role.
 	 */
 	useAriaPropsForRole?: RuleConfiguration;
 	/**
