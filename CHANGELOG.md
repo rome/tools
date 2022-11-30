@@ -23,9 +23,6 @@
 - the new global argument `--colors` now accepts `force`, useful to force colors when
   Rome is spawned as a process;
 
-
-
-
 ### Configuration
 
 - Added a `$schema` property, where users can add the JSON schema. This feature provides
@@ -46,7 +43,7 @@
 - Fixed incompatibility issues with Prettier [#3531](https://github.com/rome/tools/issues/3531)
   - [#3686](https://github.com/rome/tools/pull/3686)
   - [#3732](https://github.com/rome/tools/pull/3732)
-  - [#3824])https://github.com/rome/tools/pull/3824)
+  - [#3824](https://github.com/rome/tools/pull/3824)
 - Fixed an issue where infinite parentheses were wrongly inserted [#3735](https://github.com/rome/tools/issues/3735)
 - Better formatting for `jestEach` templates
 
@@ -96,7 +93,7 @@
 ### Parser
 
 - Added support for `JSON`;
-- Added support satisfiesifies` keyword;
+- Added support `satisfies` keyword;
 - Fixed parse for `async` used as label [#3612](https://github.com/rome/tools/issues/3612)
 - Fixed parse of `export default function` in `d.ts` files [#3485](https://github.com/rome/tools/issues/3485)
 - Improved the parsing of `await` in non-async contexts [#2479](https://github.com/rome/tools/issues/2479)
@@ -116,7 +113,6 @@
 - The concept of `backend` has been removed, in favor of the concept of `distribution`.
 - Removed the possibility to connect to the daemon, for the time being.
 - The APIs are asynchronous anymore.
-
 
 
 ## 10.0.1
