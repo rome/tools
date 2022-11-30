@@ -150,7 +150,7 @@ fn is_property_parameter_ok_not_be_used(parameter: TsPropertyParameter) -> Optio
     Some(false)
 }
 
-fn is_under_declare(node: &JsSyntaxNode) -> bool {
+fn is_is_ambient_context(node: &JsSyntaxNode) -> bool {
     node.ancestors()
         .any(|x| x.kind() == JsSyntaxKind::TS_DECLARE_STATEMENT)
 }
@@ -207,7 +207,7 @@ fn suggested_fix_if_unused(binding: &AnyJsIdentifierBinding) -> Option<Suggested
 
         // declarations need to be check if they are under `declare`
         node @ AnyJsBindingDeclaration::JsVariableDeclarator(_) => {
-            let is_binding_ok = is_under_declare(&node.syntax().clone());
+            let is_binding_ok = is_is_ambient_context(&node.syntax().clone());
             if !is_binding_ok {
                 suggestion_for_binding(binding)
             } else {
@@ -221,7 +221,7 @@ fn suggested_fix_if_unused(binding: &AnyJsIdentifierBinding) -> Option<Suggested
         | node @ AnyJsBindingDeclaration::TsEnumDeclaration(_)
         | node @ AnyJsBindingDeclaration::TsModuleDeclaration(_)
         | node @ AnyJsBindingDeclaration::TsImportEqualsDeclaration(_) => {
-            if is_under_declare(&node.syntax().clone()) {
+            if is_is_ambient_context(&node.syntax().clone()) {
                 None
             } else {
                 Some(SuggestedFix::NoSuggestion)
