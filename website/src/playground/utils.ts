@@ -275,7 +275,12 @@ export function classnames(...names: (undefined | boolean | string)[]): string {
 }
 
 export function isTypeScriptFilename(filename: string): boolean {
-	return filename.endsWith(".ts") || filename.endsWith(".tsx");
+	return (
+		filename.endsWith(".ts") ||
+		filename.endsWith(".tsx") ||
+		filename.endsWith(".mts") ||
+		filename.endsWith(".cts")
+	);
 }
 
 export function isJSXFilename(filename: string): boolean {
@@ -283,7 +288,16 @@ export function isJSXFilename(filename: string): boolean {
 }
 
 export function isScriptFilename(filename: string): boolean {
-	return filename.endsWith(".js");
+	return filename.endsWith(".cjs") || filename.endsWith(".cts");
+}
+
+export function isModuleFilename(filename: string): boolean {
+	return (
+		filename.endsWith(".mjs") ||
+		filename.endsWith(".mts") ||
+		filename.endsWith(".js") ||
+		filename.endsWith(".ts")
+	);
 }
 
 export function modifyFilename(
@@ -307,9 +321,9 @@ export function getExtension(opts: ExtensionOptions): string {
 	let ext = "";
 
 	if (opts.script) {
-		ext = "js";
+		ext = "cjs";
 	} else {
-		ext = "mjs";
+		ext = "js";
 	}
 
 	if (opts.typescript) {
@@ -328,6 +342,7 @@ export function getExtension(opts: ExtensionOptions): string {
 export function isValidExtension(filename: string): boolean {
 	return (
 		isScriptFilename(filename) ||
+		isModuleFilename(filename) ||
 		isTypeScriptFilename(filename) ||
 		isJSXFilename(filename)
 	);
