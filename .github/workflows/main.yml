@@ -57,23 +57,8 @@ jobs:
           command: lint
 
   check-dependencies:
-    name: Check Dependencies
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout PR Branch
-        uses: actions/checkout@v3
-        with:
-          submodules: false
-      - name: Cache
-        uses: Swatinem/rust-cache@v2
-        with:
-          shared-key: "dependencies"
-      - name: Install toolchain
-        run:  rustup toolchain install nightly
-      - name: Install udeps
-        run: cargo install cargo-udeps --locked
-      - name: Run udeps
-        run: cargo +nightly udeps
+    uses: ./.github/workflows/dependencies.yaml
+    secrets: inherit
 
 
   test:

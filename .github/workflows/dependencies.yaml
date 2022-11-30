@@ -3,7 +3,6 @@ name: Check Rust Dependencies
 on:
   workflow_call:
 
-
 jobs:
   check-dependencies:
     name: Check Dependencies

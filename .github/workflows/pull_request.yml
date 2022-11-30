@@ -18,18 +18,7 @@ env:
 
 jobs:
   format:
-    name: Format Rust Files
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Install toolchain
-        run: rustup show
-      - name: Run rustfmt
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all --verbose -- --check
+    uses: ./.github/workflows/rustfmt.yaml
 
   lint:
     name: Lint Rust Files
@@ -58,7 +47,6 @@ jobs:
 
   check-dependencies:
     uses: ./.github/workflows/dependencies.yaml
-    secrets: inherit
 
   test:
     name: Test

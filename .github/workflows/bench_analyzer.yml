@@ -12,74 +12,9 @@ env:
 
 jobs:
   bench:
-    name: Bench
     if: github.event.issue.pull_request && contains(github.event.comment.body, '!bench_analyzer')
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Get PR SHA
-        id: sha
-        uses: actions/github-script@v6
-        with:
-          result-encoding: string
-          script: |
-            const response = await github.request(context.payload.issue.pull_request.url);
-            return response.data.head.sha;
-
-      - name: Checkout PR Branch
-        uses: actions/checkout@v3
-        with:
-          submodules: false
-          ref: ${{ steps.sha.outputs.result }}
-
-      - name: Install toolchain
-        run: rustup show
-
-      - name: Cache
-        uses: Swatinem/rust-cache@v2
-        with:
-          shared-key: "xtask-release"
-
-      - name: Install critcmp
-        run: cargo install critcmp
-
-      - name: Compile
-        run: cargo build --release --locked -p xtask_bench
-
-      - name: Run Bench on PR Branch
-        run: cargo bench_analyzer --save-baseline pr
-
-      - name: Checkout Main Branch
-        uses: actions/checkout@v3
-        with:
-          clean: false
-          ref: main
-
-      - name: Run Bench on Main Branch
-        run: cargo bench_analyzer --save-baseline main
-
-      - name: Compare Bench Results
-        id: bench_comparison
-        shell: bash
-        run: |
-          echo "### Analyzer Benchmark Results" > output
-          echo "\`\`\`"  >> output
-          critcmp main pr >> output
-          echo "\`\`\`" >> output
-          cat output
-          comment="$(cat output)"
-          comment="${comment//'%'/'%25'}"
-          comment="${comment//$'\n'/'%0A'}"
-          comment="${comment//$'\r'/'%0D'}"
-          echo "::set-output name=comment::$comment"
-
-      - name: Write a new comment
-        uses: peter-evans/create-or-update-comment@v1.4.5
-        continue-on-error: true
-        with:
-          issue-number: ${{ github.event.issue.number }}
-          body: |
-            ${{ steps.bench_comparison.outputs.comment }}
-
-      - name: Remove Criterion Artifact
-        run: rm -rf ./target/criterion
+    uses: ./.github/workflows/xtask_bench.yaml
+    with:
+      name: Analyzer
+      command: bench_analyzer
+    secrets: inherit

@@ -1,0 +1,19 @@
+# Checks for unused dependencies
+name: Format Rust Files
+on:
+  workflow_call:
+
+jobs:
+  check-dependencies:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install toolchain
+        run: rustup show
+      - name: Run rustfmt
+        uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: --all --verbose -- --check
