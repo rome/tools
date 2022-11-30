@@ -7,7 +7,7 @@ use rome_js_syntax::{JsDirective, JsDirectiveList, JsFunctionBody, JsModule, JsS
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 
 declare_rule! {
- /// Prevents from having redundant \"use strict\"
+ /// Prevents from having redundant `"use strict"`.
  ///
  /// ## Examples
  ///
