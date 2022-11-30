@@ -26,6 +26,12 @@ declare_rule! {
  ///
  /// }
  /// ```
+ /// ```js,expect_diagnostic
+ /// function foo() {
+ /// "use strict";
+ /// "use strict";
+ /// }
+ /// ```
  /// ### valid
  /// ```js
  /// function foo() {
