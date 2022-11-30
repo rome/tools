@@ -1,5 +1,124 @@
 # Rome changelog
 
+## 11.0.0
+
+### CLI
+
+#### BREAKING CHANGES
+
+- the argument `--no-colors` has been removed, in favor of `--color=off`
+
+#### Other changes
+
+- `init` command now adds the `$schema` property to the generated `rome.json` file,
+  if` rome` is installed inside the `node_modules` folder. Check the [guide] to know how
+  manually update this property to an existing project.
+- Added `--semicolons` argument to the `rome format`, where users can specify whether
+  they want semicolons or not in their source code.
+- Rome now exists with an error code if it doesn't process any file.
+- Fixed how the maximum number of diagnostics is calculated [#3869](https://github.com/rome/tools/pull/3869).
+- Rome now prints the total number of files that caused errors.
+- Rome now correctly traverses symbolic links, it correctly detects possible loops and
+  doesn't stop the traversal;
+- the new global argument `--colors` now accepts `force`, useful to force colors when
+  Rome is spawned as a process;
+
+
+
+
+### Configuration
+
+- Added a `$schema` property, where users can add the JSON schema. This feature provides
+  auto-completion and descriptions of all fields of the configuration file.
+- Added a new `files.ignore` option where users can ignore files across the board.
+-
+
+### Editors
+
+- The extension is published [Open VSX](https://open-vsx.org/) too.
+- The extension now correctly resolves the version installed via the `node_modules` folder
+- Fixed an issue where diagnostics were not updated after a change to the configuration file (#3724)[https://github.com/rome/tools/pull/3724]
+
+### Formatter
+
+#### BREAKING CHANGES
+
+- Fixed incompatibility issues with Prettier [#3531](https://github.com/rome/tools/issues/3531)
+  - [#3686](https://github.com/rome/tools/pull/3686)
+  - [#3732](https://github.com/rome/tools/pull/3732)
+  - [#3824])https://github.com/rome/tools/pull/3824)
+- Fixed an issue where infinite parentheses were wrongly inserted [#3735](https://github.com/rome/tools/issues/3735)
+- Better formatting for `jestEach` templates
+
+#### Other changes
+
+- Added support for omitting semicolons.
+
+
+### Linter
+
+- Fixed false positives emitted by `noUselessFragments` [#3668](https://github.com/rome/tools/issues/3668)
+- Fixed `noArrayIndexKey` where some cases were not detected [#3670](https://github.com/rome/tools/issues/3670)
+- Fixed false positives emitted by `noConstAssign` [#3728](https://github.com/rome/tools/issues/3728)
+- Fixed false positives emitted by `noShoutyConstants` [#3867](https://github.com/rome/tools/issues/3867)
+- Fixed false positives emitted by `noUnusedVariables` [#3779](https://github.com/rome/tools/issues/3779)
+- Fixed `noUndeclaredVariables` where some cases were not detected [#3798](https://github.com/rome/tools/issues/3798)
+
+#### New rules
+
+- [noAccessKey](https://docs.rome.tools/lint/rules/noAccessKey)
+- [noBannedTypes](https://docs.rome.tools/lint/rules/noBannedTypes)
+- [noConditionalAssignment](https://docs.rome.tools/lint/rules/noConditionalAssignment)
+- [noConstAssign](https://docs.rome.tools/lint/rules/noConstAssign)
+- [noConstEnum](https://docs.rome.tools/lint/rules/noConstEnum)
+- [noConstructorReturn](https://docs.rome.tools/lint/rules/noConstructorReturn)
+- [noDistractingElements](https://docs.rome.tools/lint/rules/noDistractingElements)
+- [noDupeKeys](https://docs.rome.tools/lint/rules/noDupeKeys)
+- [noEmptyInterface](https://docs.rome.tools/lint/rules/noEmptyInterface)
+- [noExplicitAny](https://docs.rome.tools/lint/rules/noExplicitAny)
+- [noExtraNonNullAssertion](https://docs.rome.tools/lint/rules/noExtraNonNullAssertion)
+- [noHeaderScope](https://docs.rome.tools/lint/rules/noHeaderScope)
+- [noInvalidConstructorSuper](https://docs.rome.tools/lint/rules/noInvalidConstructorSuper)
+- [noNonNullAssertion](https://docs.rome.tools/lint/rules/noNonNullAssertion)
+- [noPrecisionLoss](https://docs.rome.tools/lint/rules/noPrecisionLoss)
+- [noSetterReturn](https://docs.rome.tools/lint/rules/noSetterReturn)
+- [noStringCaseMismatch](https://docs.rome.tools/lint/rules/noStringCaseMismatch)
+- [noUnsafeFinally](https://docs.rome.tools/lint/rules/noUnsafeFinally)
+- [noVar](https://docs.rome.tools/lint/rules/noVar)
+- [noVoidTypeReturn](https://docs.rome.tools/lint/rules/noVoidTypeReturn)
+- [useConst](https://docs.rome.tools/lint/rules/useConst)
+- [useDefaultSwitchClauseLast](https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast)
+- [useFlatMap](https://docs.rome.tools/lint/rules/useFlatMap)
+- [useNumericLiterals](https://docs.rome.tools/lint/rules/useNumericLiterals)
+- [useAriaPropsForRole](https://docs.rome.tools/lint/rules/useAriaPropsForRole)
+- [useAriaPropTypes](https://docs.rome.tools/lint/rules/useAriaPropTypes)
+
+### Parser
+
+- Added support for `JSON`;
+- Added support satisfiesifies` keyword;
+- Fixed parse for `async` used as label [#3612](https://github.com/rome/tools/issues/3612)
+- Fixed parse of `export default function` in `d.ts` files [#3485](https://github.com/rome/tools/issues/3485)
+- Improved the parsing of `await` in non-async contexts [#2479](https://github.com/rome/tools/issues/2479)
+
+### VSCode
+
+- Removed the "preview" label from the extension;
+
+### JavaScript APIs
+
+#### Other changes
+
+- The package has been marked as unstable and in alpha state.
+
+#### Breaking change
+
+- The concept of `backend` has been removed, in favor of the concept of `distribution`.
+- Removed the possibility to connect to the daemon, for the time being.
+- The APIs are asynchronous anymore.
+
+
+
 ## 10.0.1
 
 ### CLI
