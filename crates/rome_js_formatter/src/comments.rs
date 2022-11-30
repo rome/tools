@@ -8,6 +8,7 @@ use rome_formatter::{
     },
     write,
 };
+
 use rome_js_syntax::suppression::parse_suppression_comment;
 use rome_js_syntax::{
     AnyJsClass, AnyJsName, AnyJsRoot, AnyJsStatement, JsArrayHole, JsArrowFunctionExpression,
