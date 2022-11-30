@@ -1,7 +1,7 @@
 # Checks for unused dependencies
-name: Pull request
+name: Check Rust Dependencies
 on:
-  workflow-call:
+  workflow_call:
     secrets:
       token:
         required: true
