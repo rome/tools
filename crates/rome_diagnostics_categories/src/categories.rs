@@ -93,6 +93,7 @@ define_dategories! {
     "lint/nursery/noSetterReturn": "https://docs.rome.tools/lint/rules/noSetterReturn",
     "lint/nursery/noStringCaseMismatch": "https://docs.rome.tools/lint/rules/noStringCaseMismatch",
     "lint/nursery/noUnsafeFinally": "https://docs.rome.tools/lint/rules/noUnsafeFinally",
+    "lint/nursery/noUselessSwitchCase": "https://docs.rome.tools/lint/rules/noUselessSwitchCase",
     "lint/nursery/noVar": "https://docs.rome.tools/lint/rules/noVar",
     "lint/nursery/noVoidTypeReturn": "https://docs.rome.tools/lint/rules/noVoidTypeReturn",
     "lint/nursery/useCamelCase": "https://docs.rome.tools/lint/rules/useCamelCase",

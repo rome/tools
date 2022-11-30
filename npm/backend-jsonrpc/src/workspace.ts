@@ -420,6 +420,10 @@ export interface Nursery {
 	 */
 	noUnsafeFinally?: RuleConfiguration;
 	/**
+	 * Disallow useless case in switch statements.
+	 */
+	noUselessSwitchCase?: RuleConfiguration;
+	/**
 	 * Disallow the use of var
 	 */
 	noVar?: RuleConfiguration;
@@ -689,6 +693,7 @@ export type Category =
 	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnsafeFinally"
+	| "lint/nursery/noUselessSwitchCase"
 	| "lint/nursery/noVar"
 	| "lint/nursery/noVoidTypeReturn"
 	| "lint/nursery/useCamelCase"
