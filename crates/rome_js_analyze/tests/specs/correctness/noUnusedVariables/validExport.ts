@@ -1,3 +1,5 @@
+/* should not generate diagnostics */
+
 function a() { }
 export { a };
 

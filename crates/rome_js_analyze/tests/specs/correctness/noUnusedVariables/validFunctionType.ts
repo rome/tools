@@ -1,3 +1,5 @@
+/* should not generate diagnostics */
+
 // `title` and 'args' are not used, but they are ok because they are inside
 // of function type definitions
 

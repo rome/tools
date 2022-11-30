@@ -1,6 +1,8 @@
+/* should not generate diagnostics */
+
 // used function declaration
 function a() {}
-a()
+a();
 
 // we never flag function expressions
 (function f() {})

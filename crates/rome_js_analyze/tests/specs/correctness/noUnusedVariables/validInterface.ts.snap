@@ -4,6 +4,7 @@ expression: validInterface.ts
 ---
 # Input
 ```js
+/* should not generate diagnostics */
 
 interface A {
     f(a: number);

@@ -269,6 +269,7 @@ impl SemanticEventExtractor {
             ),
 
             JS_FUNCTION_DECLARATION
+            | TS_DECLARE_FUNCTION_DECLARATION
             | JS_FUNCTION_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
             | JS_CONSTRUCTOR_CLASS_MEMBER
@@ -535,6 +536,7 @@ impl SemanticEventExtractor {
         match node.kind() {
             JS_MODULE | JS_SCRIPT => self.pop_scope(node.text_range()),
             JS_FUNCTION_DECLARATION
+            | TS_DECLARE_FUNCTION_DECLARATION
             | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
             | JS_FUNCTION_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION

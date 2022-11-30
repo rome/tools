@@ -1,3 +1,5 @@
+/* should not generate diagnostics */
+
 abstract class A {
     constructor(a: number) {
         console.log(a);

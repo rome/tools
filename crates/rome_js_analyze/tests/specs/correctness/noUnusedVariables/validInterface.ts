@@ -1,3 +1,4 @@
+/* should not generate diagnostics */
 
 interface A {
     f(a: number);

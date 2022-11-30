@@ -4,6 +4,8 @@ expression: validExport.ts
 ---
 # Input
 ```js
+/* should not generate diagnostics */
+
 function a() { }
 export { a };
 

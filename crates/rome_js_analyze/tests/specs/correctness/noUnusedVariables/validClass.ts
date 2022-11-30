@@ -1,3 +1,5 @@
+/* should not generate diagnostics */
+
 class A {
     constructor(a: number) {
         console.log(a)

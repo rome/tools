@@ -52,7 +52,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     let mut snapshot = String::new();
     let extension = input_file.extension().unwrap_or_default();
 
-    if let Some(scripts) = scripts_from_json(extension, &input_code) {
+    let quantity_diagnostics = if let Some(scripts) = scripts_from_json(extension, &input_code) {
         for script in scripts {
             write_analysis_to_snapshot(
                 &mut snapshot,
@@ -62,8 +62,10 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
                 file_name,
                 input_file,
                 CheckActionType::Lint,
-            )
+            );
         }
+
+        0
     } else {
         let Ok(source_type) = input_file.try_into() else {
             return;
@@ -76,8 +78,8 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
             file_name,
             input_file,
             CheckActionType::Lint,
-        );
-    }
+        )
+    };
 
     insta::with_settings!({
         prepend_module_to_snapshot => false,
@@ -85,6 +87,10 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     }, {
         insta::assert_snapshot!(file_name, snapshot, file_name);
     });
+
+    if input_code.contains("/* should not generate diagnostics */") && quantity_diagnostics > 0 {
+        panic!("This test should not generate diagnostics");
+    }
 }
 
 enum CheckActionType {
@@ -106,7 +112,7 @@ pub(crate) fn write_analysis_to_snapshot(
     file_name: &str,
     input_file: &Path,
     check_action_type: CheckActionType,
-) {
+) -> usize {
     let parsed = parse(input_code, FileId::zero(), source_type);
     let root = parsed.tree();
 
@@ -171,7 +177,7 @@ pub(crate) fn write_analysis_to_snapshot(
 
     if !diagnostics.is_empty() {
         writeln!(snapshot, "# Diagnostics").unwrap();
-        for diagnostic in diagnostics {
+        for diagnostic in &diagnostics {
             writeln!(snapshot, "```").unwrap();
             writeln!(snapshot, "{}", diagnostic).unwrap();
             writeln!(snapshot, "```").unwrap();
@@ -188,6 +194,8 @@ pub(crate) fn write_analysis_to_snapshot(
             writeln!(snapshot).unwrap();
         }
     }
+
+    diagnostics.len()
 }
 
 /// The test runner for the analyzer is currently designed to have a
