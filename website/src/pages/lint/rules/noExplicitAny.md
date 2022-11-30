@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noExplicitAny (since v10.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow the `any` type usage
 
 ## Examples
@@ -15,7 +17,7 @@ Disallow the `any` type usage
 let variable: any = 1;
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noExplicitAny.js:1:15 <a href="https://docs.rome.tools/lint/rules/noExplicitAny">lint/nursery/noExplicitAny</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noExplicitAny.js:1:15 <a href="https://docs.rome.tools/lint/rules/noExplicitAny">lint/suspicious/noExplicitAny</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unexpected </span><span style="color: Tomato;"><strong>any</strong></span><span style="color: Tomato;">. Specify a different type.</span>
   
@@ -31,7 +33,7 @@ class SomeClass {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noExplicitAny.js:2:24 <a href="https://docs.rome.tools/lint/rules/noExplicitAny">lint/nursery/noExplicitAny</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noExplicitAny.js:2:24 <a href="https://docs.rome.tools/lint/rules/noExplicitAny">lint/suspicious/noExplicitAny</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unexpected </span><span style="color: Tomato;"><strong>any</strong></span><span style="color: Tomato;">. Specify a different type.</span>
   
@@ -47,7 +49,7 @@ class SomeClass {
 function fn(param: Array<any>): void {}
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noExplicitAny.js:1:26 <a href="https://docs.rome.tools/lint/rules/noExplicitAny">lint/nursery/noExplicitAny</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noExplicitAny.js:1:26 <a href="https://docs.rome.tools/lint/rules/noExplicitAny">lint/suspicious/noExplicitAny</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unexpected </span><span style="color: Tomato;"><strong>any</strong></span><span style="color: Tomato;">. Specify a different type.</span>
   

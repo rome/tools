@@ -17,7 +17,7 @@ Disallow duplicate function arguments name.
 var f = function(a, b, b) {}
 ```
 
-<pre class="language-text"><code class="language-text">correctness/noDupeArgs.js:1:24 <a href="https://docs.rome.tools/lint/rules/noDupeArgs">lint/correctness/noDupeArgs</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noDupeArgs.js:1:24 <a href="https://docs.rome.tools/lint/rules/noDupeArgs">lint/suspicious/noDupeArgs</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Duplicate argument name</span>
   
@@ -31,7 +31,7 @@ var f = function(a, b, b) {}
 function b(a, b, b) {}
 ```
 
-<pre class="language-text"><code class="language-text">correctness/noDupeArgs.js:1:18 <a href="https://docs.rome.tools/lint/rules/noDupeArgs">lint/correctness/noDupeArgs</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noDupeArgs.js:1:18 <a href="https://docs.rome.tools/lint/rules/noDupeArgs">lint/suspicious/noDupeArgs</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Duplicate argument name</span>
   

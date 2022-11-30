@@ -5,7 +5,7 @@ expression: content
 ## `file.js`
 
 ```js
-// rome-ignore lint(correctness/noDoubleEquals): test
+// rome-ignore lint(suspicious/noDoubleEquals): test
 a == b;
 ```
 
@@ -16,14 +16,14 @@ file.js:1:1 suppressions/deprecatedSyntax  FIXABLE  ━━━━━━━━━�
 
   ! Suppression is using a deprecated syntax
   
-  > 1 │ // rome-ignore lint(correctness/noDoubleEquals): test
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 1 │ // rome-ignore lint(suspicious/noDoubleEquals): test
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     2 │ a == b;
   
   i Safe fix: Rewrite suppression to use the newer syntax
   
-    1   │ - //·rome-ignore·lint(correctness/noDoubleEquals):·test
-      1 │ + //·rome-ignore·lint/correctness/noDoubleEquals:·test
+    1   │ - //·rome-ignore·lint(suspicious/noDoubleEquals):·test
+      1 │ + //·rome-ignore·lint/suspicious/noDoubleEquals:·test
     2 2 │   a == b;
   
 

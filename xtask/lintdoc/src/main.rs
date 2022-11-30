@@ -596,13 +596,18 @@ fn extract_group_metadata(group: &str) -> (&str, Markup) {
                 "Rules focused on preventing accessibility problems."
             },
         ),
+        "complexity" => (
+            "Complexity",
+            markup! {
+                "Rules that focus on inspecting complex code that could be simplified."
+            },
+        ),
         "correctness" => (
             "Correctness",
             markup! {
-                "Rules that detect incorrect or useless code."
+                "Rules that detect code that is guaranteed to be incorrect or useless."
             },
         ),
-
         "nursery" => (
             "Nursery",
             markup! {
@@ -616,22 +621,28 @@ Nursery rules get promoted to other groups once they become stable or may be rem
 Rules that belong to this group "<Emphasis>"are not subject to semantic version"</Emphasis>"."
             },
         ),
-        "style" => (
-            "Style",
+        "perf" => (
+            "Performance",
             markup! {
-                "Rules enforcing a consistent way of writing your code. "
-            },
-        ),
-        "complexity" => (
-            "Complexity",
-            markup! {
-                "Rules that focus on inspecting complex code that could be simplified."
+                "Rules catching ways your code could be written to run faster, or generally be more efficient."
             },
         ),
         "security" => (
             "Security",
             markup! {
                 "Rules that detect potential security flaws."
+            },
+        ),
+        "style" => (
+            "Style",
+            markup! {
+                "Rules enforcing a consistent and idiomatic way of writing your code."
+            },
+        ),
+        "suspicious" => (
+            "Suspicious",
+            markup! {
+                "Rules that detect code that is likely to be incorrect or useless."
             },
         ),
         _ => panic!("Unknown group ID {group:?}"),
