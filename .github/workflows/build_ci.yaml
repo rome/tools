@@ -7,14 +7,15 @@ on:
       - 'ci/**'
 
 jobs:
-  publish-to-docker:
-    name: Publish to Docker
+  publish-container:
+    name: Publish Container
     runs-on: ubuntu-latest
     steps:
-      - name: Login to Docker Hub
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Publish to Docker Hub
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish Container
         run: ./ci/publish.sh
