@@ -919,7 +919,7 @@
           ]
         },
         "noRedundantUseStrict": {
-          "description": "Prevents from having redundant \"use strict\"",
+          "description": "Prevents from having redundant \"use strict\".",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

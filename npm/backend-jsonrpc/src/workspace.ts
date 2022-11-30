@@ -408,7 +408,7 @@ export interface Nursery {
 	 */
 	noPrecisionLoss?: RuleConfiguration;
 	/**
-	 * Prevents from having redundant "use strict"
+	 * Prevents from having redundant "use strict".
 	 */
 	noRedundantUseStrict?: RuleConfiguration;
 	/**
