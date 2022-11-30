@@ -896,6 +896,17 @@
             }
           ]
         },
+        "noNonNullAssertion": {
+          "description": "Disallow non-null assertions using the ! postfix operator.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noPrecisionLoss": {
           "description": "Disallow literal numbers that lose precision",
           "anyOf": [

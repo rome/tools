@@ -400,6 +400,10 @@ export interface Nursery {
 	 */
 	noInvalidConstructorSuper?: RuleConfiguration;
 	/**
+	 * Disallow non-null assertions using the ! postfix operator.
+	 */
+	noNonNullAssertion?: RuleConfiguration;
+	/**
 	 * Disallow literal numbers that lose precision
 	 */
 	noPrecisionLoss?: RuleConfiguration;
@@ -672,16 +676,17 @@ export type Category =
 	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstAssign"
 	| "lint/nursery/noConstEnum"
-	| "lint/nursery/noDistractingElements"
 	| "lint/nursery/noConstructorReturn"
-	| "lint/nursery/noSetterReturn"
+	| "lint/nursery/noDistractingElements"
 	| "lint/nursery/noDupeKeys"
 	| "lint/nursery/noEmptyInterface"
 	| "lint/nursery/noExplicitAny"
 	| "lint/nursery/noExtraNonNullAssertion"
 	| "lint/nursery/noHeaderScope"
 	| "lint/nursery/noInvalidConstructorSuper"
+	| "lint/nursery/noNonNullAssertion"
 	| "lint/nursery/noPrecisionLoss"
+	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnsafeFinally"
 	| "lint/nursery/noVar"
