@@ -618,7 +618,7 @@ impl<L: Language> SyntaxTrivia<L> {
 
         Some(SyntaxTriviaPiece {
             raw: self.raw.clone(),
-            offset: self.raw.text_range().end() - piece.length,
+            offset: self.raw.text_range().start(),
             trivia: *piece,
             _p: Default::default(),
         })
