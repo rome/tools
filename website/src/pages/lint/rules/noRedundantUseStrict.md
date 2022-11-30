@@ -5,7 +5,7 @@ parent: lint/rules/index
 
 # noRedundantUseStrict (since v11.0.0)
 
-Prevents from having redundant "use strict"
+Prevents from having redundant `"use strict"`.
 
 ## Examples
 
@@ -117,7 +117,7 @@ function foo() {
   
 </code></pre>
 
-### valid
+### Valid
 
 ```jsx
 function foo() {
