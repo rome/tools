@@ -413,6 +413,10 @@ export interface Nursery {
 	 */
 	noStringCaseMismatch?: RuleConfiguration;
 	/**
+	 * Disallow lexical declarations in switch clauses.
+	 */
+	noSwitchDeclarations?: RuleConfiguration;
+	/**
 	 * Ensures the super() constructor is called exactly once on every code path in a class constructor before this is accessed if the class has a superclass
 	 */
 	noUnreachableSuper?: RuleConfiguration;
@@ -814,6 +818,7 @@ export type Category =
 	| "lint/nursery/noSelfCompare"
 	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
+	| "lint/nursery/noSwitchDeclarations"
 	| "lint/nursery/noUnreachableSuper"
 	| "lint/nursery/noUnsafeFinally"
 	| "lint/nursery/noUnusedLabels"
