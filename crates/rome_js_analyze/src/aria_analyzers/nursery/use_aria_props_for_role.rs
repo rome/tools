@@ -81,17 +81,17 @@ impl Rule for UseAriaPropsForRole {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
         let roles = ctx.aria_roles();
-        let is_inside_a_component = node
+        let is_inside_element = node
             .syntax()
             .ancestors()
             .find_map(|ancestor| {
                 AnyJsxElement::cast(ancestor)
-                    .map(|element| Some(element.is_custom_component()))
+                    .map(|element| Some(element.is_element()))
                     .unwrap_or(None)
             })
             .unwrap_or(false);
 
-        if !is_inside_a_component {
+        if is_inside_element {
             let role_attribute = node.find_attribute_by_name("role")?;
 
             let name = role_attribute
@@ -103,24 +103,29 @@ impl Rule for UseAriaPropsForRole {
                 .ok()?;
 
             let role = roles.get_role(name.text());
-            let mut missing_aria_props = vec![];
-            return if let Some(role) = role {
-                let properties = role.properties();
-                for (property_name, required) in properties {
+            let missing_aria_props: Vec<_> = role
+                .into_iter()
+                .flat_map(|role| role.properties())
+                .filter_map(|(property_name, required)| {
                     if *required {
                         let attribute = node.find_attribute_by_name(property_name);
                         if attribute.is_none() {
-                            missing_aria_props.push(property_name.to_string());
+                            Some(property_name.to_string())
+                        } else {
+                            None
                         }
+                    } else {
+                        None
                     }
-                }
-                Some(UseAriaPropsForRoleState {
+                })
+                .collect();
+
+            if !missing_aria_props.is_empty() {
+                return Some(UseAriaPropsForRoleState {
                     attribute: Some((role_attribute, name.text().to_string())),
                     missing_aria_props,
-                })
-            } else {
-                Some(UseAriaPropsForRoleState::default())
-            };
+                });
+            }
         }
 
         None
