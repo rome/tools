@@ -67,3 +67,33 @@ impl DiagnosticTag {
 }
 
 pub const MAXIMUM_DISPLAYABLE_DIAGNOSTICS: u16 = 200;
+
+#[cfg(debug_assertions)]
+use rome_console::fmt::{Formatter, Termcolor};
+#[cfg(debug_assertions)]
+use rome_console::markup;
+#[cfg(debug_assertions)]
+use std::fmt::Write;
+
+/// Utility function for testing purpose. The function will print an [Error]
+/// to a string, which is then returned by the function.
+#[cfg(debug_assertions)]
+pub fn print_diagnostic_to_string(diagnostic: Error) -> String {
+    let mut buffer = termcolor::Buffer::no_color();
+
+    Formatter::new(&mut Termcolor(&mut buffer))
+        .write_markup(markup! {
+            {PrintDiagnostic::verbose(&diagnostic)}
+        })
+        .expect("failed to emit diagnostic");
+
+    let mut content = String::new();
+    writeln!(
+        content,
+        "{}",
+        std::str::from_utf8(buffer.as_slice()).expect("non utf8 in error buffer")
+    )
+    .unwrap();
+
+    content
+}

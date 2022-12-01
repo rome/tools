@@ -7,6 +7,8 @@ use crate::{
 };
 pub use javascript::JsFormatterSettings;
 use rome_analyze::AnalysisFilter;
+use rome_console::fmt::Formatter;
+use rome_console::markup;
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_js_syntax::{TextRange, TextSize};
@@ -97,6 +99,19 @@ impl Language {
     }
 }
 
+impl rome_console::fmt::Display for Language {
+    fn fmt(&self, fmt: &mut Formatter) -> std::io::Result<()> {
+        match self {
+            Language::JavaScript => fmt.write_markup(markup! { "JavaScript" }),
+            Language::JavaScriptReact => fmt.write_markup(markup! { "JSX" }),
+            Language::TypeScript => fmt.write_markup(markup! { "TypeScript" }),
+            Language::TypeScriptReact => fmt.write_markup(markup! { "TSX" }),
+            Language::Json => fmt.write_markup(markup! { "JSON" }),
+            Language::Unknown => fmt.write_markup(markup! { "Unknown" }),
+        }
+    }
+}
+
 // TODO: The Css variant is unused at the moment
 #[allow(dead_code)]
 pub(crate) enum Mime {
@@ -113,6 +128,17 @@ impl std::fmt::Display for Mime {
             Mime::Json => write!(f, "application/json"),
             Mime::Javascript => write!(f, "application/javascript"),
             Mime::Text => write!(f, "text/plain"),
+        }
+    }
+}
+
+impl rome_console::fmt::Display for Mime {
+    fn fmt(&self, f: &mut rome_console::fmt::Formatter<'_>) -> std::io::Result<()> {
+        match self {
+            Mime::Css => f.write_markup(markup! { "text/css"}),
+            Mime::Json => f.write_markup(markup! { "application/json"}),
+            Mime::Javascript => f.write_markup(markup! { "application/javascript"}),
+            Mime::Text => f.write_markup(markup! { "text/plain"}),
         }
     }
 }

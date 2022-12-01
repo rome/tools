@@ -23,3 +23,4 @@ dashmap = "5.4.0"
 rustc-hash = "1.1.0"
 countme = "3.0.1"
 tokio = { version = "1.15.0" }
+insta = "1.21.2"

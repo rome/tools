@@ -47,5 +47,5 @@ mimalloc = "0.1.29"
 tikv-jemallocator = "0.5.0"
 
 [dev-dependencies]
-insta = "1.18.2"
+insta = { workspace = true }
 tokio = { workspace = true, features = ["io-util"] }
