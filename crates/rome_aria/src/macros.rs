@@ -1,8 +1,8 @@
 #[macro_export]
 macro_rules! define_role {
     ( $( #[doc = $doc:literal] )+ $id:ident {
-        PROPS: [$p_count:literal, $p_value:expr ],
-        ROLES: [$r_count:literal, $r_value:expr ],
+        PROPS: $p_value:expr,
+        ROLES: $r_value:expr,
     }) => {
         $( #[doc = $doc] )*
         #[derive(Debug)]

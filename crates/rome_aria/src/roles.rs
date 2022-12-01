@@ -93,435 +93,435 @@ pub trait AriaRoleDefinition: Debug {
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#button
     ButtonRole {
-        PROPS: [2, &[("aria-expanded", false), ("aria-expanded", false)]],
-        ROLES: [3, &["roletype", "widget", "command"]],
+        PROPS: &[("aria-expanded", false), ("aria-expanded", false)],
+        ROLES: &["roletype", "widget", "command"],
     }
 }
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#checkbox
     CheckboxRole {
-        PROPS: [2, &[("aria-checked", true), ("aria-readonly", false)]],
-        ROLES: [3, &["switch", "menuitemcheckbox", "widget"]],
+        PROPS: &[("aria-checked", true), ("aria-readonly", false)],
+        ROLES: &["switch", "menuitemcheckbox", "widget"],
     }
 }
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#radio
     RadioRole {
-        PROPS: [2, &[("aria-checked", true), ("aria-readonly", false)]],
-        ROLES: [2, &["menuitemradio", "widget"]],
+        PROPS: &[("aria-checked", true), ("aria-readonly", false)],
+        ROLES: &["menuitemradio", "widget"],
     }
 }
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#switch
     SwitchRole {
-        PROPS: [1, &[("aria-checked", true)]],
-        ROLES: [2, &["checkbox", "widget"]],
+        PROPS: &[("aria-checked", true)],
+        ROLES: &["checkbox", "widget"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#option
     OptionRole {
-        PROPS: [1, &[("aria-selected", true)]],
-        ROLES: [2, &["treeitem", "widget"]],
+        PROPS: &[("aria-selected", true)],
+        ROLES: &["treeitem", "widget"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#combobox
     ComboBoxRole {
-        PROPS: [2, &[("aria-controls", true), ("aria-expanded", true)]],
-        ROLES: [2, &["select", "widget"]],
+        PROPS: &[("aria-controls", true), ("aria-expanded", true)],
+        ROLES: &["select", "widget"],
     }
 }
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#heading
     HeadingRole {
-        PROPS: [1,  &[("aria-level", true)]],
-        ROLES: [1,  &["sectionhead"]],
+        PROPS:  &[("aria-level", true)],
+        ROLES:  &["sectionhead"],
     }
 }
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#spinbutton
     SpinButtonRole {
-        PROPS: [3,  &[
+        PROPS:  &[
             ("aria-valuemax", true),
             ("aria-valuemin", true),
             ("aria-valuenow", true),
-        ]],
-        ROLES: [4, &["composite", "input", "range", "widget"]],
+        ],
+        ROLES: &["composite", "input", "range", "widget"],
     }
 }
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#checkbox
     SliderRole {
-        PROPS: [3,  &[
+        PROPS:  &[
             ("aria-valuemax", true),
             ("aria-valuemin", true),
             ("aria-valuenow", true),
-        ]],
-        ROLES: [3, &["input", "range", "widget"]],
+        ],
+        ROLES: &["input", "range", "widget"],
     }
 }
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#separator
     SeparatorRole {
-        PROPS: [3,  &[
+        PROPS:  &[
             ("aria-valuemax", true),
             ("aria-valuemin", true),
             ("aria-valuenow", true),
-        ]],
-        ROLES: [2, &["structure", "widget"]],
+        ],
+        ROLES: &["structure", "widget"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#scrollbar
     ScollbarRole {
-        PROPS: [5,  &[
+        PROPS:  &[
             ("aria-valuemax", true),
             ("aria-valuemin", true),
             ("aria-valuenow", true),
             ("aria-orientation", true),
             ("aria-controls", true),
-        ]],
-        ROLES: [2, &["range", "widget"]],
+        ],
+        ROLES: &["range", "widget"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#article
     ArticleRole {
-        PROPS: [0, &[]],
-        ROLES: [1, &["document"]],
+        PROPS: &[],
+        ROLES: &["document"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#dialog
     DialogRole {
-        PROPS: [2, &[("aria-label", false), ("aria-labelledby", false)]],
-        ROLES: [1, &["window"]],
+        PROPS: &[("aria-label", false), ("aria-labelledby", false)],
+        ROLES: &["window"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#alert
     AlertRole {
-        PROPS: [0, &[]],
-        ROLES: [1, &["section"]],
+        PROPS: &[],
+        ROLES: &["section"],
     }
 }
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#alertdialog
     AlertDialogRole {
-        PROPS: [0, &[]],
-        ROLES: [1, &["structure"]],
+        PROPS: &[],
+        ROLES: &["structure"],
     }
 }
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#application
     ApplicationRole {
-        PROPS: [0, &[]],
-        ROLES: [2, &["alert", "dialog"]],
+        PROPS: &[],
+        ROLES: &["alert", "dialog"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#banner
     BannerRole {
-        PROPS: [0, &[]],
-        ROLES: [1, &["landmark"]],
+        PROPS: &[],
+        ROLES: &["landmark"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#cell
     CellRole {
-        PROPS: [4, &[
+        PROPS: &[
             ("aria-colindex", false),
             ("aria-colspan", false),
             ("aria-rowindex", false),
             ("aria-rowspan", false),
-        ]],
-        ROLES: [1, &["section"]],
+        ],
+        ROLES: &["section"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#columnheader
     ColumnHeaderRole {
-        PROPS: [1, &[("aria-sort", false)]],
-        ROLES: [3, &["cell", "gridcell", "sectionhead"]],
+        PROPS: &[("aria-sort", false)],
+        ROLES: &["cell", "gridcell", "sectionhead"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#definition
     DefinitionRole {
-        PROPS: [1, &[("aria-labelledby", false)]],
-        ROLES: [1, &["section"]],
+        PROPS: &[("aria-labelledby", false)],
+        ROLES: &["section"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#feed
     FeedRole {
-        PROPS: [2, &[("aria-labelledby", false), ("aria-setsize", false)]],
-        ROLES: [1, &["section"]],
+        PROPS: &[("aria-labelledby", false), ("aria-setsize", false)],
+        ROLES: &["section"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#figure
     FigureRole {
-        PROPS: [2, &[("aria-label", false), ("aria-labelledby", false)]],
-        ROLES: [1, &["section"]],
+        PROPS: &[("aria-label", false), ("aria-labelledby", false)],
+        ROLES: &["section"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#form
     FormRole {
-        PROPS: [2, &[("aria-label", false), ("aria-labelledby", false)]],
-        ROLES: [1, &["section"]],
+        PROPS: &[("aria-label", false), ("aria-labelledby", false)],
+        ROLES: &["section"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#grid
     GridRole {
-        PROPS: [3, &[("aria-level", false), ("aria-multiselectable", false), ("aria-readonly", false)]],
-        ROLES: [2, &["composite", "table"]],
+        PROPS: &[("aria-level", false), ("aria-multiselectable", false), ("aria-readonly", false)],
+        ROLES: &["composite", "table"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#gridcell
     GridCellRole {
-        PROPS: [3, &[("aria-readonly", false), ("aria-required", false), ("aria-selected", false)]],
-        ROLES: [2, &["cell", "widget"]],
+        PROPS: &[("aria-readonly", false), ("aria-required", false), ("aria-selected", false)],
+        ROLES: &["cell", "widget"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#group
     GroupRole {
-        PROPS: [1, &[("aria-activedescendant", false)]],
-        ROLES: [3, &["row", "select", "toolbar"]],
+        PROPS: &[("aria-activedescendant", false)],
+        ROLES: &["row", "select", "toolbar"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#img
     ImgRole {
-        PROPS: [1, &[("aria-activedescendant", false)]],
-        ROLES: [1, &["section"]],
+        PROPS: &[("aria-activedescendant", false)],
+        ROLES: &["section"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#link
     LinkRole {
-        PROPS: [1, &[("aria-expanded", false)]],
-        ROLES: [1, &["command"]],
+        PROPS: &[("aria-expanded", false)],
+        ROLES: &["command"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#list
     ListRole {
-        PROPS: [0, &[]],
-        ROLES: [1, &["section"]],
+        PROPS: &[],
+        ROLES: &["section"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#listbox
     ListBoxRole {
-        PROPS: [0, &[]],
-        ROLES: [1, &["select"]],
+        PROPS: &[],
+        ROLES: &["select"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#listitem
     ListItemRole {
-        PROPS: [0, &[]],
-        ROLES: [1, &["section"]],
+        PROPS: &[],
+        ROLES: &["section"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#log
     LogRole {
-        PROPS: [0, &[]],
-        ROLES: [1, &["section"]],
+        PROPS: &[],
+        ROLES: &["section"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#main
     MainRole {
-        PROPS: [0, &[]],
-        ROLES: [1, &["landmark"]],
+        PROPS: &[],
+        ROLES: &["landmark"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#menubar
     MenubarRole {
-        PROPS: [0, &[]],
-        ROLES: [1, &["toolbar"]],
+        PROPS: &[],
+        ROLES: &["toolbar"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#menu
     MenuItem {
-        PROPS: [2, &[("aria-posinset", false), ("aria-setsize", false)]],
-        ROLES: [1, &["command"]],
+        PROPS: &[("aria-posinset", false), ("aria-setsize", false)],
+        ROLES: &["command"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#menuitemcheckbox
     MenuItemCheckboxRole {
-        PROPS: [1, &[("aria-checked", true)]],
-        ROLES: [2, &["checkbox", "menuitem"]],
+        PROPS: &[("aria-checked", true)],
+        ROLES: &["checkbox", "menuitem"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#menuitemradio
     MenuItemRadioRole {
-        PROPS: [1, &[("aria-checked", true)]],
-        ROLES: [2, &["radio", "menuitemcheckbox"]],
+        PROPS: &[("aria-checked", true)],
+        ROLES: &["radio", "menuitemcheckbox"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#navigation
     NavigationRole {
-        PROPS: [0, &[]],
-        ROLES: [1, &["landmark"]],
+        PROPS: &[],
+        ROLES: &["landmark"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#progressbar
     ProgressBarRole {
-        PROPS: [3, &[("aria-valuenow", true), ("aria-valuemin", true), ("aria-valuemax", true)]],
-        ROLES: [1, &["range"]],
+        PROPS: &[("aria-valuenow", true), ("aria-valuemin", true), ("aria-valuemax", true)],
+        ROLES: &["range"],
     }
 }
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#radiogroup
     RadiogroupRole {
-        PROPS: [2, &[("aria-readonly", false), ("aria-required", false)]],
-        ROLES: [1, &["range"]],
+        PROPS: &[("aria-readonly", false), ("aria-required", false)],
+        ROLES: &["range"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#row
     RowRole {
-        PROPS: [4, &[("aria-colindex", false), ("aria-level", false), ("aria-rowindex", false), ("aria-selected", false)]],
-        ROLES: [2, &["group", "widget"]],
+        PROPS: &[("aria-colindex", false), ("aria-level", false), ("aria-rowindex", false), ("aria-selected", false)],
+        ROLES: &["group", "widget"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#rowgroup
     RowGroupRole {
-        PROPS: [0, &[]],
-        ROLES: [1, &["structure"]],
+        PROPS: &[],
+        ROLES: &["structure"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#rowheader
     RowHeaderRole {
-        PROPS: [1, &[("aria-sort", false)]],
-        ROLES: [3, &["cell", "gridcell", "sectionhead"]],
+        PROPS: &[("aria-sort", false)],
+        ROLES: &["cell", "gridcell", "sectionhead"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#searchbox
     SearchboxRole {
-        PROPS: [6, &[
+        PROPS: &[
             ("aria-activedescendant", false),
             ("aria-autocomplete", false),
             ("aria-multiline", false),
             ("aria-placeholder", false),
             ("aria-readonly", false),
             ("aria-required", false),
-        ]],
-        ROLES: [1, &["textbox"]],
+        ],
+        ROLES: &["textbox"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#tab
     TabRole {
-        PROPS: [3, &[("aria-posinset", false), ("aria-selected", false), ("aria-setsize", false)]],
-        ROLES: [2, &["sectionhead", "widget"]],
+        PROPS: &[("aria-posinset", false), ("aria-selected", false), ("aria-setsize", false)],
+        ROLES: &["sectionhead", "widget"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#table
     TableRole {
-        PROPS: [2, &[("aria-colcount", false), ("aria-rowcount", false)]],
-        ROLES: [1, &["section"]],
+        PROPS: &[("aria-colcount", false), ("aria-rowcount", false)],
+        ROLES: &["section"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#tablelist
     TableListRole {
-        PROPS: [3, &[("aria-level", false), ("aria-multiselectable", false), ("aria-orientation", false)]],
-        ROLES: [1, &["composite"]],
+        PROPS: &[("aria-level", false), ("aria-multiselectable", false), ("aria-orientation", false)],
+        ROLES: &["composite"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#term
     TermRole {
-        PROPS: [0, &[]],
-        ROLES: [1, &["section"]],
+        PROPS: &[],
+        ROLES: &["section"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#textbox
     TextboxRole {
-        PROPS: [6, &[
+        PROPS: &[
             ("aria-activedescendant", false),
             ("aria-autocomplete", false),
             ("aria-multiline", false),
             ("aria-placeholder", false),
             ("aria-readonly", false),
             ("aria-required", false),
-        ]],
-        ROLES: [1, &["input"]],
+        ],
+        ROLES: &["input"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#toolbar
     ToolbarRole {
-        PROPS: [1, &[("aria-orientation", false)]],
-        ROLES: [1, &["group"]],
+        PROPS: &[("aria-orientation", false)],
+        ROLES: &["group"],
     }
 }
 
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#tree
     TreeRole {
-        PROPS: [2, &[("aria-multiselectable", false), ("aria-required", false)]],
-        ROLES: [1, &["select"]],
+        PROPS: &[("aria-multiselectable", false), ("aria-required", false)],
+        ROLES: &["select"],
     }
 }
 
