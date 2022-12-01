@@ -2,9 +2,7 @@ use self::{javascript::JsFileHandler, json::JsonFileHandler, unknown::UnknownFil
 use crate::workspace::FixFileMode;
 use crate::{
     settings::SettingsHandle,
-    workspace::{
-        server::AnyParse, FixFileResult, GetSyntaxTreeResult, PullActionsResult, RenameResult,
-    },
+    workspace::{FixFileResult, GetSyntaxTreeResult, PullActionsResult, RenameResult},
     RomeError, Rules,
 };
 pub use javascript::JsFormatterSettings;
@@ -12,6 +10,7 @@ use rome_analyze::AnalysisFilter;
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_js_syntax::{TextRange, TextSize};
+use rome_parser::AnyParse;
 use std::ffi::OsStr;
 
 mod javascript;

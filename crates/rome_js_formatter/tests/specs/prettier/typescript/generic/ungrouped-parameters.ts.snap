@@ -6,7 +6,7 @@ info:
 
 # Input
 
-```js
+```ts
 function filterTooltipWithFoo<F extends Field>(oldEncoding: Encoding<F>): {
   customTooltipWithoutAggregatedField?:
     | StringFieldDefWithCondition<F>
@@ -40,7 +40,7 @@ function filterTooltipWithFoo<F extends Field>(oldEncoding: Encoding<F>): {
 
 # Output
 
-```js
+```ts
 function filterTooltipWithFoo<F extends Field>(oldEncoding: Encoding<F>): {
   customTooltipWithoutAggregatedField?:
     | StringFieldDefWithCondition<F>

@@ -18,9 +18,8 @@ use rome_analyze::{AnalysisFilter, RuleFilter};
 use rome_diagnostics::{serde::Diagnostic as SerdeDiagnostic, Diagnostic, DiagnosticExt, Severity};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
-use rome_parser::diagnostic::ParseDiagnostic;
-use rome_rowan::{AstNode, Language as RowanLanguage, SendNode, SyntaxNode};
-use std::{any::type_name, panic::RefUnwindSafe, sync::RwLock};
+use rome_parser::AnyParse;
+use std::{panic::RefUnwindSafe, sync::RwLock};
 
 pub(super) struct WorkspaceServer {
     /// features available throughout the application
@@ -46,54 +45,6 @@ pub(crate) struct Document {
     pub(crate) content: String,
     pub(crate) version: i32,
     pub(crate) language_hint: Language,
-}
-
-/// Language-independent cache entry for a parsed file
-///
-/// This struct holds a handle to the root node of the parsed syntax tree,
-/// along with the list of diagnostics emitted by the parser while generating
-/// this entry.
-///
-/// It can be dynamically downcast into a concrete [SyntaxNode] or [AstNode] of
-/// the corresponding language, generally through a language-specific capability
-#[derive(Clone)]
-pub(crate) struct AnyParse {
-    pub(crate) root: SendNode,
-    pub(crate) diagnostics: Vec<ParseDiagnostic>,
-}
-
-impl AnyParse {
-    pub(crate) fn syntax<L>(&self) -> SyntaxNode<L>
-    where
-        L: RowanLanguage + 'static,
-    {
-        self.root.clone().into_node().unwrap_or_else(|| {
-            panic!(
-                "could not downcast root node to language {}",
-                type_name::<L>()
-            )
-        })
-    }
-
-    pub(crate) fn tree<N>(&self) -> N
-    where
-        N: AstNode,
-        N::Language: 'static,
-    {
-        N::unwrap_cast(self.syntax::<N::Language>())
-    }
-
-    /// This function transforms diagnostics coming from the parser into serializable diagnostics
-    pub(crate) fn into_diagnostics(self) -> Vec<SerdeDiagnostic> {
-        self.diagnostics
-            .into_iter()
-            .map(SerdeDiagnostic::new)
-            .collect()
-    }
-
-    fn has_errors(&self) -> bool {
-        self.diagnostics.iter().any(|diag| diag.is_error())
-    }
 }
 
 impl WorkspaceServer {

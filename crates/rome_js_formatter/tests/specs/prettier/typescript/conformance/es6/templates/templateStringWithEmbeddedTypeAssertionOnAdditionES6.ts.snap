@@ -6,7 +6,7 @@ info:
 
 # Input
 
-```js
+```ts
 ﻿// @target: ES6
 var x = `abc${ <any>(10 + 10) }def`;
 ```
@@ -25,7 +25,7 @@ var x = `abc${ <any>(10 + 10) }def`;
 
 # Output
 
-```js
+```ts
 // @target: ES6
 var x = `abc${<any>(10 + 10)}def`;
 ```

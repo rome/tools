@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/comments/type-parameters.ts
 ---
 
 # Input
 
-```js
+```ts
 functionName<A /* A comment */>();
 const a: T</* comment */> = 1;
 functionName</* comment */>();
@@ -65,7 +65,7 @@ type T = <
 
 # Output
 
-```js
+```ts
 functionName<A /* A comment */>();
 const a: T</* comment */> = 1;
 functionName</* comment */>();

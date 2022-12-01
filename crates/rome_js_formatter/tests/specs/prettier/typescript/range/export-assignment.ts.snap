@@ -6,7 +6,7 @@ info:
 
 # Input
 
-```js
+```ts
 f ( );
 export   =   f;
 g(  )
@@ -28,7 +28,7 @@ g(  )
 
 # Output
 
-```js
+```ts
 f ( );
 export = f;
 g(  )

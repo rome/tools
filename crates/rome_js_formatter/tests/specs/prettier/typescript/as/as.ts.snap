@@ -6,7 +6,7 @@ info:
 
 # Input
 
-```js
+```ts
 const name = (description as DescriptionObject).name || (description as string);
 this.isTabActionBar((e.target || e.srcElement) as HTMLElement);
 (originalError ? wrappedError(errMsg, originalError) : Error(errMsg)) as InjectionError;
@@ -78,7 +78,7 @@ const iter2 = createIterator(self.controller, child, self.tag as SyncFunctionCom
 
 # Output
 
-```js
+```ts
 const name = (description as DescriptionObject).name || (description as string);
 this.isTabActionBar((e.target || e.srcElement) as HTMLElement);
 (originalError

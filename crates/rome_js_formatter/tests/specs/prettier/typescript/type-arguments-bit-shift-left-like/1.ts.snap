@@ -6,7 +6,7 @@ info:
 
 # Input
 
-```js
+```ts
 f<<<T>(x)
 ```
 
@@ -23,7 +23,7 @@ f<<<T>(x)
 
 # Output
 
-```js
+```ts
 f << <T>x;
 ```
 

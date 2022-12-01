@@ -6,7 +6,7 @@ info:
 
 # Input
 
-```js
+```ts
 ﻿namespace hello.hi.world
 {
     function foo() {}
@@ -28,7 +28,7 @@ info:
 
 # Output
 
-```js
+```ts
 namespace hello.hi.world {
   function foo() {}
 }

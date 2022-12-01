@@ -6,7 +6,7 @@ info:
 
 # Input
 
-```js
+```ts
 const yesFrame = (
     ...args: Interpolation<ThemedStyledProps<{}, Theme>>[]
 ) => css`
@@ -37,7 +37,7 @@ const yesFrame = (
 
 # Output
 
-```js
+```ts
 const yesFrame = (
   ...args: Interpolation<ThemedStyledProps<{}, Theme>>[]
 ) => css`

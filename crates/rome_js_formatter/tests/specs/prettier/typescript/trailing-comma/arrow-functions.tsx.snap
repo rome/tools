@@ -6,7 +6,7 @@ info:
 
 # Input
 
-```js
+```tsx
 const f1 = <T,>() => 1;
 const f2 = <
   Tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
@@ -29,7 +29,7 @@ const f2 = <
 
 # Output
 
-```js
+```tsx
 const f1 = <T,>() => 1;
 const f2 = <
   Tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,

@@ -1,12 +1,12 @@
-use crate::{format_node, JsFormatOptions};
-use rome_diagnostics::console::fmt::{Formatter, Termcolor};
-use rome_diagnostics::console::markup;
-use rome_diagnostics::{location::FileId, termcolor};
-use rome_diagnostics::{DiagnosticExt, PrintDiagnostic};
+use crate::JsFormatLanguage;
+use crate::JsFormatOptions;
+use rome_diagnostics::location::FileId;
+use rome_formatter_test::check_reformat::{CheckReformat, CheckReformatParams};
 use rome_js_parser::parse;
 use rome_js_syntax::{JsSyntaxNode, SourceType};
+use rome_parser::AnyParse;
 
-pub struct CheckReformatParams<'a> {
+pub struct JsCheckReformat<'a> {
     pub root: &'a JsSyntaxNode,
     pub text: &'a str,
     pub source_type: SourceType,
@@ -16,58 +16,27 @@ pub struct CheckReformatParams<'a> {
 
 /// Perform a second pass of formatting on a file, printing a diff if the
 /// output doesn't match the input
-pub fn check_reformat(params: CheckReformatParams) {
-    let CheckReformatParams {
-        root,
-        text,
-        source_type,
-        file_name,
-        options,
-    } = params;
-
-    let re_parse = parse(text, FileId::zero(), source_type);
-
-    // Panic if the result from the formatter has syntax errors
-    if re_parse.has_errors() {
-        let mut buffer = termcolor::Buffer::ansi();
-
-        for diagnostic in re_parse.diagnostics() {
-            let error = diagnostic
-                .clone()
-                .with_file_path(file_name)
-                .with_file_source_code(text.to_string());
-            Formatter::new(&mut Termcolor(&mut buffer))
-                .write_markup(markup! {
-                    {PrintDiagnostic::verbose(&error)}
-                })
-                .expect("failed to emit diagnostic");
-        }
-
-        panic!(
-            "formatter output had syntax errors where input had none:\n{}",
-            std::str::from_utf8(buffer.as_slice()).expect("non utf8 in error buffer")
-        )
+impl CheckReformat<JsFormatLanguage> for JsCheckReformat<'_> {
+    fn parse(&self, text: &str) -> AnyParse {
+        parse(text, FileId::zero(), self.source_type).into()
     }
 
-    let formatted = format_node(options.clone(), &re_parse.syntax()).unwrap();
-    let printed = formatted.print().unwrap();
+    fn params(&self) -> CheckReformatParams<JsFormatLanguage> {
+        let JsCheckReformat {
+            root,
+            text,
+            file_name,
+            options,
+            ..
+        } = self;
 
-    if text != printed.as_code() {
-        let input_formatted = format_node(options, root).unwrap().into_document();
+        let format_language = JsFormatLanguage::new(options.clone());
 
-        let pretty_input_ir = format!("{input_formatted}");
-        let pretty_reformat_ir = format!("{}", formatted.into_document());
-
-        // Print a diff of the Formatter IR emitted for the input and the output
-        let diff = similar_asserts::SimpleDiff::from_str(
-            &pretty_input_ir,
-            &pretty_reformat_ir,
-            "input",
-            "output",
-        );
-
-        println!("{diff}");
-
-        similar_asserts::assert_eq!(text, printed.as_code());
+        CheckReformatParams {
+            root,
+            format_language,
+            text,
+            file_name,
+        }
     }
 }

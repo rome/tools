@@ -6,7 +6,7 @@ info:
 
 # Input
 
-```js
+```ts
 ﻿function f1(s: string) { }
 function f2(s?: string) { }
 function f3(...s: string[]) { }
@@ -36,7 +36,7 @@ fUnion(""); // All constituents can be called by passing a single string.
 
 # Output
 
-```js
+```ts
 function f1(s: string) {}
 function f2(s?: string) {}
 function f3(...s: string[]) {}

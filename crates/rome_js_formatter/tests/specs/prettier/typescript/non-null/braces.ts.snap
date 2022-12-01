@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/non-null/braces.ts
 ---
 
 # Input
 
-```js
+```ts
 const myFunction2 = (key: string): number =>
   ({
     a: 42,
@@ -55,7 +55,7 @@ class a extends ({}!) {}
 
 # Output
 
-```js
+```ts
 const myFunction2 = (key: string): number =>
   ({
     a: 42,

@@ -6,7 +6,7 @@ info:
 
 # Input
 
-```js
+```ts
 ﻿// A | B is equivalent to A if B is a subtype of A
 class C { }
 class D extends C { foo() { } }
@@ -43,7 +43,7 @@ var z1: string | typeof BC;
 
 # Output
 
-```js
+```ts
 // A | B is equivalent to A if B is a subtype of A
 class C {}
 class D extends C {

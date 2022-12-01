@@ -4,6 +4,9 @@ mod generated;
 mod json;
 mod prelude;
 
+#[cfg(test)]
+mod check_reformat;
+
 pub(crate) use crate::context::JsonFormatContext;
 use crate::context::JsonFormatOptions;
 use crate::cst::FormatJsonSyntaxNode;
@@ -44,12 +47,13 @@ where
     }
 }
 
-pub(crate) struct JsonFormatLanguage {
+#[derive(Debug, Default, Clone)]
+pub struct JsonFormatLanguage {
     options: JsonFormatOptions,
 }
 
 impl JsonFormatLanguage {
-    fn new(options: JsonFormatOptions) -> Self {
+    pub fn new(options: JsonFormatOptions) -> Self {
         Self { options }
     }
 }

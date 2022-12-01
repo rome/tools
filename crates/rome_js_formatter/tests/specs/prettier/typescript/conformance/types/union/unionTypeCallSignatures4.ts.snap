@@ -6,7 +6,7 @@ info:
 
 # Input
 
-```js
+```ts
 ﻿type F1 = (a: string, b?: string) => void;
 type F2 = (a: string, b?: string, c?: string) => void;
 type F3 = (a: string, ...rest: string[]) => void;
@@ -50,7 +50,7 @@ f12345("a", "b", "c");  // error
 
 # Output
 
-```js
+```ts
 type F1 = (a: string, b?: string) => void;
 type F2 = (a: string, b?: string, c?: string) => void;
 type F3 = (a: string, ...rest: string[]) => void;

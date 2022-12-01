@@ -6,7 +6,7 @@ info:
 
 # Input
 
-```js
+```ts
 export default (function log() {} as typeof console.log)
 ```
 
@@ -23,7 +23,7 @@ export default (function log() {} as typeof console.log)
 
 # Output
 
-```js
+```ts
 export default (function log() {}) as typeof console.log;
 ```
 

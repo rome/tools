@@ -6,7 +6,7 @@ info:
 
 # Input
 
-```js
+```ts
 new A < B >
 C
 ```
@@ -25,7 +25,7 @@ C
 
 # Output
 
-```js
+```ts
 new A() < B > C;
 ```
 
