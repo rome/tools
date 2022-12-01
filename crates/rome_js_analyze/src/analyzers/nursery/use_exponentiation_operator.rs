@@ -1,6 +1,7 @@
+use crate::semantic_services::Semantic;
 use crate::JsRuleAction;
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
+use rome_analyze::{declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::{make, syntax::T};
@@ -97,22 +98,22 @@ impl MathPowCall {
 }
 
 impl Rule for UseExponentiationOperator {
-    type Query = Ast<JsCallExpression>;
+    type Query = Semantic<JsCallExpression>;
     type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
+        let model = ctx.model();
 
         let has_math_pow = match node.callee().ok()?.omit_parentheses() {
             AnyJsExpression::JsStaticMemberExpression(static_member_expr) => {
-                let has_math = static_member_expr
+                let reference = static_member_expr
                     .object()
                     .ok()?
                     .omit_parentheses()
-                    .as_reference_identifier()?
-                    .has_name("Math");
+                    .as_reference_identifier()?;
                 let has_pow = static_member_expr
                     .member()
                     .ok()?
@@ -122,21 +123,32 @@ impl Rule for UseExponentiationOperator {
                     .token_text_trimmed()
                     == "pow";
 
-                has_math && has_pow
+                if reference.has_name("Math") {
+                    // verifies that the Math reference is not a local variable
+                    let declaration = model.binding(&reference);
+                    declaration.is_none() && has_pow
+                } else {
+                    false
+                }
             }
             AnyJsExpression::JsComputedMemberExpression(computed_member_expr) => {
-                let has_math = computed_member_expr
+                let reference = computed_member_expr
                     .object()
                     .ok()?
                     .omit_parentheses()
-                    .as_reference_identifier()?
-                    .has_name("Math");
+                    .as_reference_identifier()?;
                 let has_pow = computed_member_expr
                     .member()
                     .ok()?
                     .is_string_constant("pow");
 
-                has_math && has_pow
+                if reference.has_name("Math") {
+                    // verifies that the Math reference is not a local variable
+                    let declaration = model.binding(&reference);
+                    declaration.is_none() && has_pow
+                } else {
+                    false
+                }
             }
             _ => false,
         };
