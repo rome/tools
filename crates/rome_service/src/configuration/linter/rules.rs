@@ -827,7 +827,7 @@ impl Nursery {
     const RECOMMENDED_RULES: [&'static str; 2] = ["noAccessKey", "useAriaPropsForRole"];
     const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 2] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[0]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[20]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[22]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {

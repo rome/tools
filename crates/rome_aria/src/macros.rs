@@ -9,8 +9,8 @@ macro_rules! define_role {
         struct $id;
 
         impl $id {
-            const PROPS: &[(&'static str, bool)] = $p_value;
-            const ROLES: &[&'static str] = $r_value;
+            const PROPS: &[(&'static str, bool)] = &$p_value;
+            const ROLES: &[&'static str] = &$r_value;
         }
 
         impl $crate::AriaRoleDefinition for $id {
