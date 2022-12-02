@@ -1,5 +1,6 @@
 use crate::line_index::{LineCol, LineIndex};
 use anyhow::{ensure, Context, Result};
+use rome_analyze::ActionCategory;
 use rome_console::fmt::Termcolor;
 use rome_console::fmt::{self, Formatter};
 use rome_console::MarkupBuf;
@@ -149,11 +150,13 @@ pub(crate) fn code_fix_to_lsp(
     let kind = action.category.to_str();
     let mut kind = kind.into_owned();
 
-    if let Some((group, rule)) = action.rule_name {
-        kind.push('.');
-        kind.push_str(group.as_ref());
-        kind.push('.');
-        kind.push_str(rule.as_ref());
+    if !matches!(action.category, ActionCategory::Source(_)) {
+        if let Some((group, rule)) = action.rule_name {
+            kind.push('.');
+            kind.push_str(group.as_ref());
+            kind.push('.');
+            kind.push_str(rule.as_ref());
+        }
     }
 
     let suggestion = action.suggestion;
@@ -169,6 +172,10 @@ pub(crate) fn code_fix_to_lsp(
         change_annotations: None,
     };
 
+    let is_preferred = matches!(action.category, ActionCategory::Source(_))
+        || matches!(suggestion.applicability, Applicability::Always)
+            && !action.category.matches("quickfix.suppressRule");
+
     Ok(lsp::CodeAction {
         title: print_markup(&suggestion.msg),
         kind: Some(lsp::CodeActionKind::from(kind)),
@@ -179,13 +186,7 @@ pub(crate) fn code_fix_to_lsp(
         },
         edit: Some(edit),
         command: None,
-        is_preferred: if matches!(suggestion.applicability, Applicability::Always)
-            && !action.category.matches("quickfix.suppressRule")
-        {
-            Some(true)
-        } else {
-            None
-        },
+        is_preferred: is_preferred.then_some(true),
         disabled: None,
         data: None,
     })
