@@ -229,7 +229,7 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
                 let mut new_items = vec![];
                 let mut old_elements = old_list.into_iter();
 
-                while let Some(old_element) = old_elements.next() {
+                for old_element in old_elements.by_ref() {
                     let is_needle = old_element == *after_element;
 
                     new_items.push(old_element.clone());
