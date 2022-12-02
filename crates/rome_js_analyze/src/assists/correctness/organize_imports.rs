@@ -487,7 +487,7 @@ impl ImportNode {
                     let will_need_newline = sep
                         .trailing_trivia()
                         .last()
-                        .map(|piece| matches!(piece.kind(), TriviaPieceKind::SingleLineComment))
+                        .map(|piece| piece.kind().is_single_line_comment())
                         .unwrap_or(false);
 
                     (sep.clone(), will_need_newline)
