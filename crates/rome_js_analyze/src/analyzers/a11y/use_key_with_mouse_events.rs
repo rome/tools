@@ -76,7 +76,7 @@ impl Rule for UseKeyWithMouseEvents {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
 
-        if node.is_custom_component() {
+        if !node.is_custom_component() {
             if !has_valid_focus_attributes(node) {
                 return Some(UseKeyWithMouseEventsState::MissingOnFocus);
             }

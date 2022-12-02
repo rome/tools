@@ -773,7 +773,7 @@ struct NurserySchema {
     no_void_type_return: Option<RuleConfiguration>,
     #[doc = "Enforce that ARIA state and property values are valid."]
     use_aria_prop_types: Option<RuleConfiguration>,
-    #[doc = "Enforce that elements with ARIA roles must have all required attributes for that role"]
+    #[doc = "Enforce that elements with ARIA roles must have all required ARIA attributes for that role."]
     use_aria_props_for_role: Option<RuleConfiguration>,
     #[doc = "Enforce camel case naming convention."]
     use_camel_case: Option<RuleConfiguration>,
@@ -824,9 +824,11 @@ impl Nursery {
         "useNumericLiterals",
         "useValidForDirection",
     ];
-    const RECOMMENDED_RULES: [&'static str; 1] = ["noAccessKey"];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 1] =
-        [RuleFilter::Rule("nursery", Self::CATEGORY_RULES[0])];
+    const RECOMMENDED_RULES: [&'static str; 2] = ["noAccessKey", "useAriaPropsForRole"];
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 2] = [
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[0]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[22]),
+    ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
@@ -852,7 +854,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 1] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 2] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
