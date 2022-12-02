@@ -19,10 +19,10 @@ const defaultConfig = {
 
 const PRETTIER_ROOT = path.resolve(process.argv[2], 'tests/format');
 
-async function extractPrettierTests(type, config, prettier) {
+async function extractPrettierTests(type, config) {
 	const root = path.resolve(PRETTIER_ROOT, type);
 	console.log('Extracting tests from %s ...', root);
-	await traverseDir(root, config, prettier);
+	await traverseDir(root, config);
 }
 
 // Recursively traverse the test directory to search for snapshots files
