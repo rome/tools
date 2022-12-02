@@ -456,9 +456,7 @@ mod test {
     fn file_ignored() {
         snap_diagnostic(
             "file_ignored",
-            RomeError::FileIgnored("example.js".to_string())
-                .with_file_path("example.js")
-                .into(),
+            RomeError::FileIgnored("example.js".to_string()).with_file_path("example.js"),
         )
     }
 
@@ -466,9 +464,7 @@ mod test {
     fn cant_read_directory() {
         snap_diagnostic(
             "cant_read_directory",
-            RomeError::CantReadDirectory("example/".to_string())
-                .with_file_path("example.js")
-                .into(),
+            RomeError::CantReadDirectory("example/".to_string()).with_file_path("example.js"),
         )
     }
 
@@ -476,9 +472,7 @@ mod test {
     fn cant_read_file() {
         snap_diagnostic(
             "cant_read_file",
-            RomeError::CantReadFile("example.js".to_string())
-                .with_file_path("example.js")
-                .into(),
+            RomeError::CantReadFile("example.js".to_string()).with_file_path("example.js"),
         )
     }
 
