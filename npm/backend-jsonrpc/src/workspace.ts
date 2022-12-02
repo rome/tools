@@ -137,7 +137,7 @@ export interface Rules {
 	complexity?: Complexity;
 	correctness?: Correctness;
 	nursery?: Nursery;
-	perf?: Perf;
+	performance?: Performance;
 	/**
 	 * It enables the lint rules recommended by Rome. `true` by default.
 	 */
@@ -413,7 +413,7 @@ export interface Nursery {
 /**
  * A list of rules that belong to this group
  */
-export interface Perf {
+export interface Performance {
 	/**
 	 * Disallow the use of the delete operator
 	 */
@@ -709,7 +709,7 @@ export type Category =
 	| "lint/nursery/useExponentiationOperator"
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/useValidForDirection"
-	| "lint/perf/noDelete"
+	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
 	| "lint/style/noArguments"
@@ -753,7 +753,7 @@ export type Category =
 	| "lint/complexity"
 	| "lint/correctness"
 	| "lint/nursery"
-	| "lint/perf"
+	| "lint/performance"
 	| "lint/security"
 	| "lint/style"
 	| "lint/suspicious"

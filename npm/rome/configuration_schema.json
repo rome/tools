@@ -916,7 +916,7 @@
         }
       }
     },
-    "Perf": {
+    "Performance": {
       "description": "A list of rules that belong to this group",
       "type": "object",
       "properties": {
@@ -1036,10 +1036,10 @@
             }
           ]
         },
-        "perf": {
+        "performance": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Perf"
+              "$ref": "#/definitions/Performance"
             },
             {
               "type": "null"

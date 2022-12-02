@@ -75,7 +75,7 @@ define_dategories! {
     "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
 
     // performance
-    "lint/perf/noDelete": "https://docs.rome.tools/lint/rules/noDelete",
+    "lint/performance/noDelete": "https://docs.rome.tools/lint/rules/noDelete",
 
     // security
     "lint/security/noDangerouslySetInnerHtml": "https://docs.rome.tools/lint/rules/noDangerouslySetInnerHtml",
@@ -131,7 +131,7 @@ define_dategories! {
     "lint/complexity",
     "lint/correctness",
     "lint/nursery",
-    "lint/perf",
+    "lint/performance",
     "lint/security",
     "lint/style",
     "lint/suspicious",

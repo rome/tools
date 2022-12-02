@@ -621,7 +621,7 @@ Nursery rules get promoted to other groups once they become stable or may be rem
 Rules that belong to this group "<Emphasis>"are not subject to semantic version"</Emphasis>"."
             },
         ),
-        "perf" => (
+        "performance" => (
             "Performance",
             markup! {
                 "Rules catching ways your code could be written to run faster, or generally be more efficient."

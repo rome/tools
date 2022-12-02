@@ -23,7 +23,7 @@ pub struct Rules {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub nursery: Option<Nursery>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub perf: Option<Perf>,
+    pub performance: Option<Performance>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub security: Option<Security>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -39,7 +39,7 @@ impl Default for Rules {
             complexity: None,
             correctness: None,
             nursery: None,
-            perf: None,
+            performance: None,
             security: None,
             style: None,
             suspicious: None,
@@ -60,7 +60,7 @@ impl Rules {
                 "complexity" => Complexity::has_rule(rule_name).then_some((category, rule_name)),
                 "correctness" => Correctness::has_rule(rule_name).then_some((category, rule_name)),
                 "nursery" => Nursery::has_rule(rule_name).then_some((category, rule_name)),
-                "perf" => Perf::has_rule(rule_name).then_some((category, rule_name)),
+                "performance" => Performance::has_rule(rule_name).then_some((category, rule_name)),
                 "security" => Security::has_rule(rule_name).then_some((category, rule_name)),
                 "style" => Style::has_rule(rule_name).then_some((category, rule_name)),
                 "suspicious" => Suspicious::has_rule(rule_name).then_some((category, rule_name)),
@@ -129,13 +129,13 @@ impl Rules {
                             Severity::Warning
                         }
                     }),
-                "perf" => self
-                    .perf
+                "performance" => self
+                    .performance
                     .as_ref()
-                    .and_then(|perf| perf.rules.get(rule_name))
+                    .and_then(|performance| performance.rules.get(rule_name))
                     .map(|rule_setting| rule_setting.into())
                     .unwrap_or_else(|| {
-                        if Perf::is_recommended_rule(rule_name) {
+                        if Performance::is_recommended_rule(rule_name) {
                             Severity::Error
                         } else {
                             Severity::Warning
@@ -230,14 +230,14 @@ impl Rules {
         } else if self.is_recommended() && rome_flags::is_unstable() {
             enabled_rules.extend(Nursery::recommended_rules_as_filters());
         }
-        if let Some(group) = self.perf.as_ref() {
+        if let Some(group) = self.performance.as_ref() {
             if self.is_recommended() || group.is_recommended() {
-                enabled_rules.extend(Perf::recommended_rules_as_filters());
+                enabled_rules.extend(Performance::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
             disabled_rules.extend(&group.get_disabled_rules());
         } else if self.is_recommended() {
-            enabled_rules.extend(Perf::recommended_rules_as_filters());
+            enabled_rules.extend(Performance::recommended_rules_as_filters());
         }
         if let Some(group) = self.security.as_ref() {
             if self.is_recommended() || group.is_recommended() {
@@ -302,14 +302,14 @@ impl Rules {
         } else if self.is_recommended() && rome_flags::is_unstable() {
             enabled_rules.extend(Nursery::recommended_rules_as_filters());
         }
-        if let Some(group) = self.perf.as_ref() {
+        if let Some(group) = self.performance.as_ref() {
             if self.is_recommended() || group.is_recommended() {
-                enabled_rules.extend(Perf::recommended_rules_as_filters());
+                enabled_rules.extend(Performance::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
             disabled_rules.extend(&group.get_disabled_rules());
         } else if self.is_recommended() {
-            enabled_rules.extend(Perf::recommended_rules_as_filters());
+            enabled_rules.extend(Performance::recommended_rules_as_filters());
         }
         if let Some(group) = self.security.as_ref() {
             if self.is_recommended() || group.is_recommended() {
@@ -914,17 +914,17 @@ where
 #[derive(Deserialize, Default, Serialize, Debug, Clone)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default)]
-pub struct Perf {
+pub struct Performance {
     #[doc = r" It enables the recommended rules for this group"]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub recommended: Option<bool>,
     #[doc = r" List of rules for the current group"]
     #[serde(
         skip_serializing_if = "IndexMap::is_empty",
-        deserialize_with = "deserialize_perf_rules",
+        deserialize_with = "deserialize_performance_rules",
         flatten
     )]
-    #[cfg_attr(feature = "schemars", schemars(with = "PerfSchema"))]
+    #[cfg_attr(feature = "schemars", schemars(with = "PerformanceSchema"))]
     pub rules: IndexMap<String, RuleConfiguration>,
 }
 #[cfg_attr(
@@ -934,16 +934,16 @@ pub struct Perf {
 )]
 #[allow(dead_code)]
 #[doc = r" A list of rules that belong to this group"]
-struct PerfSchema {
+struct PerformanceSchema {
     #[doc = "Disallow the use of the delete operator"]
     no_delete: Option<RuleConfiguration>,
 }
-impl Perf {
-    const CATEGORY_NAME: &'static str = "perf";
+impl Performance {
+    const CATEGORY_NAME: &'static str = "performance";
     pub(crate) const CATEGORY_RULES: [&'static str; 1] = ["noDelete"];
     const RECOMMENDED_RULES: [&'static str; 1] = ["noDelete"];
     const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 1] =
-        [RuleFilter::Rule("perf", Self::CATEGORY_RULES[0])];
+        [RuleFilter::Rule("performance", Self::CATEGORY_RULES[0])];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
@@ -973,7 +973,7 @@ impl Perf {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
-fn deserialize_perf_rules<'de, D>(
+fn deserialize_performance_rules<'de, D>(
     deserializer: D,
 ) -> Result<IndexMap<String, RuleConfiguration>, D::Error>
 where
@@ -981,7 +981,7 @@ where
 {
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
-        if !Perf::CATEGORY_RULES.contains(&rule_name.as_str()) {
+        if !Performance::CATEGORY_RULES.contains(&rule_name.as_str()) {
             return Err(serde::de::Error::custom(RomeError::Configuration(
                 ConfigurationError::UnknownRule(rule_name.to_string()),
             )));

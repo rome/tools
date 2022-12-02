@@ -21,7 +21,7 @@ delete a?.b?.["c"];
 
 # Diagnostics
 ```
-noDelete.js:1:1 lint/perf/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDelete.js:1:1 lint/performance/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This is an unexpected use of the delete operator.
   
@@ -41,7 +41,7 @@ noDelete.js:1:1 lint/perf/noDelete  FIXABLE  ━━━━━━━━━━━�
 ```
 
 ```
-noDelete.js:3:1 lint/perf/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDelete.js:3:1 lint/performance/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This is an unexpected use of the delete operator.
   
@@ -65,7 +65,7 @@ noDelete.js:3:1 lint/perf/noDelete  FIXABLE  ━━━━━━━━━━━�
 ```
 
 ```
-noDelete.js:5:1 lint/perf/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDelete.js:5:1 lint/performance/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This is an unexpected use of the delete operator.
   
@@ -89,7 +89,7 @@ noDelete.js:5:1 lint/perf/noDelete  FIXABLE  ━━━━━━━━━━━�
 ```
 
 ```
-noDelete.js:7:1 lint/perf/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDelete.js:7:1 lint/performance/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This is an unexpected use of the delete operator.
   
