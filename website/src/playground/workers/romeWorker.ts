@@ -111,17 +111,20 @@ self.addEventListener("message", async (e) => {
 				case LintRules.All: {
 					configuration.linter!.rules = {
 						correctness: {
-							noRestrictedGlobals: "error",
-							noUndeclaredVariables: "error",
-							noUnusedVariables: "error",
-							noUselessFragments: "error",
+							noRestrictedGlobals: "warn",
+							noUndeclaredVariables: "warn",
+							noUnusedVariables: "warn",
+							noUselessFragments: "warn",
 						},
 						style: {
-							useFragmentSyntax: "error",
+							useFragmentSyntax: "warn",
 						},
 						nursery: {
-							noConstEnum: "error",
-							useCamelCase: "error",
+							noNonNullAssertion: "warn",
+							noPrecisionLoss: "warn",
+							noRedundantUseStrict: "warn",
+							useAriaPropTypes: "warn",
+							useCamelCase: "warn",
 						},
 					};
 					break;
