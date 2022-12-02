@@ -707,7 +707,7 @@ async fn pull_quick_fixes() -> Result<()> {
                 },
             },
             new_text: String::from(
-                "// rome-ignore lint/correctness/noCompareNegZero: suppressed \n",
+                "// rome-ignore lint/correctness/noCompareNegZero: <explanation>\n",
             ),
         }],
     );

@@ -37,7 +37,7 @@ useKeyWithClickEvents.jsx:1:1 lint/a11y/useKeyWithClickEvents  FIXABLE  ━━�
   
   i Safe fix: Suppress rule lint/a11y/useKeyWithClickEvents
   
-       1 │ + //·rome-ignore·lint/a11y/useKeyWithClickEvents:·suppressed·
+       1 │ + //·rome-ignore·lint/a11y/useKeyWithClickEvents:·<explanation>
     1  2 │   <div
     2  3 │       className="SomeManyClasses"
   

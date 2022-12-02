@@ -29,7 +29,7 @@ noUndeclaredVariables.ts:5:7 lint/correctness/noUndeclaredVariables  FIXABLE  �
     3 3 │   export type Invalid<S extends number> = `
     4 4 │       Hello
     5   │ - ····${T}
-      5 │ + ····${//·rome-ignore·lint/correctness/noUndeclaredVariables:·suppressed·
+      5 │ + ····${//·rome-ignore·lint/correctness/noUndeclaredVariables:·<explanation>
       6 │ + T}
     6 7 │   `
   

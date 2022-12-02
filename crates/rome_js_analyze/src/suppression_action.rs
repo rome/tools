@@ -61,7 +61,7 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
                 let jsx_comment = jsx_expression_child(
                     token(T!['{']).with_trailing_trivia([(
                         TriviaPieceKind::SingleLineComment,
-                        format!("/* {}: suppressed */", suppression_text).as_str(),
+                        format!("/* {}: <explanation> */", suppression_text).as_str(),
                     )]),
                     token(T!['}']),
                 )
@@ -99,7 +99,7 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
                         (TriviaPieceKind::Newline, "\n"),
                         (
                             TriviaPieceKind::SingleLineComment,
-                            format!("// {}: suppressed ", suppression_text).as_str(),
+                            format!("// {}: <explanation>", suppression_text).as_str(),
                         ),
                         (TriviaPieceKind::Newline, "\n"),
                     ])
@@ -107,7 +107,7 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
                     new_token = new_token.with_leading_trivia([
                         (
                             TriviaPieceKind::SingleLineComment,
-                            format!("// {}: suppressed ", suppression_text).as_str(),
+                            format!("// {}: <explanation>", suppression_text).as_str(),
                         ),
                         (TriviaPieceKind::Newline, "\n"),
                     ])
@@ -122,7 +122,7 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
                         (TriviaPieceKind::Newline, "\n"),
                         (
                             TriviaPieceKind::SingleLineComment,
-                            format!("// {}: suppressed ", suppression_text).as_str(),
+                            format!("// {}: <explanation>", suppression_text).as_str(),
                         ),
                         (TriviaPieceKind::Newline, "\n"),
                     ])
@@ -131,7 +131,7 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
                         (TriviaPieceKind::Newline, "\n"),
                         (
                             TriviaPieceKind::SingleLineComment,
-                            format!("// {}: suppressed ", suppression_text).as_str(),
+                            format!("// {}: <explanation>", suppression_text).as_str(),
                         ),
                         (TriviaPieceKind::Newline, "\n"),
                     ])
@@ -140,7 +140,7 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
                 new_token = new_token.with_trailing_trivia([
                     (
                         TriviaPieceKind::SingleLineComment,
-                        format!("// {}: suppressed ", suppression_text).as_str(),
+                        format!("// {}: <explanation>", suppression_text).as_str(),
                     ),
                     (TriviaPieceKind::Newline, "\n"),
                 ])
@@ -148,7 +148,7 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
                 new_token = new_token.with_leading_trivia([
                     (
                         TriviaPieceKind::SingleLineComment,
-                        format!("// {}: suppressed ", suppression_text).as_str(),
+                        format!("// {}: <explanation>", suppression_text).as_str(),
                     ),
                     (TriviaPieceKind::Newline, "\n"),
                 ])
