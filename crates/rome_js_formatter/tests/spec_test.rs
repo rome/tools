@@ -1,7 +1,7 @@
 use rome_diagnostics::location::FileId;
 use rome_formatter::{FormatOptions, LineWidth};
 use rome_formatter::{IndentStyle, Printed};
-use rome_formatter_test::check_reformat::CheckReformat;
+use rome_formatter_test::check_reformat::{CheckReformat, CheckReformatParams};
 use rome_fs::RomePath;
 use rome_js_formatter::context::trailing_comma::TrailingComma;
 use rome_js_formatter::context::{JsFormatOptions, QuoteProperties, QuoteStyle, Semicolons};
@@ -16,8 +16,8 @@ use std::fmt::Write;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-mod check_reformat {
-    include!("check_reformat.rs");
+mod language {
+    include!("language.rs");
 }
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy, Deserialize, Serialize)]
@@ -297,13 +297,12 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
 
         if !has_errors {
-            let js_check_reformat = check_reformat::JsCheckReformat {
-                root: &root,
-                text: printed.as_code(),
-                file_name,
-                options: options.clone(),
-            };
-            js_check_reformat.check_reformat();
+            let language = language::JsTestFormatLanguage::new(options.clone());
+            let check_reformat = CheckReformat::new(
+                CheckReformatParams::new(&root, printed.as_code(), file_name),
+                &language,
+            );
+            check_reformat.check_reformat();
         }
 
         snapshot_content.add_output(printed, options);
@@ -318,19 +317,16 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
 
             for test_case in test_options.cases {
                 let format_options: JsFormatOptions = test_case.into_format_options(source_type);
-                // we don't track the source type inside the serializable structs, so we
-                // inject it here
                 let formatted = format_node(format_options.clone(), &root).unwrap();
                 let printed = formatted.print().unwrap();
 
                 if !has_errors {
-                    let js_check_reformat = check_reformat::JsCheckReformat {
-                        root: &root,
-                        text: printed.as_code(),
-                        file_name,
-                        options: format_options.clone(),
-                    };
-                    js_check_reformat.check_reformat();
+                    let language = language::JsTestFormatLanguage::new(format_options.clone());
+                    let check_reformat = CheckReformat::new(
+                        CheckReformatParams::new(&root, printed.as_code(), file_name),
+                        &language,
+                    );
+                    check_reformat.check_reformat();
                 }
 
                 snapshot_content.add_output(printed, format_options);

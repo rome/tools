@@ -1,8 +1,10 @@
 use rome_rowan::{SyntaxNode, TextRange, TextSize};
 use std::{ffi::OsStr, fs::read_to_string, ops::Range, path::Path};
 
+use crate::check_reformat::{CheckReformat, CheckReformatParams};
 use crate::snapshot_builder::SnapshotBuilder;
 use crate::utils::{get_prettier_diff, strip_prettier_placeholders, PrettierDiff};
+use crate::TestFormatLanguage;
 use rome_formatter::{format_node, format_range, FormatLanguage, FormatOptions};
 use rome_parser::AnyParse;
 
@@ -81,24 +83,30 @@ impl<'a> PrettierTestFile<'a> {
     }
 }
 
-pub trait PrettierTestSnapshot<L>
+pub struct PrettierSnapshot<'a, L>
 where
-    L: FormatLanguage + Clone + 'static,
+    L: TestFormatLanguage,
 {
-    fn test_file(&self) -> &PrettierTestFile;
+    test_file: PrettierTestFile<'a>,
+    language: L,
+}
 
-    fn format_language(&self) -> L;
+impl<'a, L> PrettierSnapshot<'a, L>
+where
+    L: TestFormatLanguage,
+{
+    pub fn new(test_file: PrettierTestFile<'a>, language: L) -> Self {
+        PrettierSnapshot {
+            test_file,
+            language,
+        }
+    }
 
-    fn parsed(&self) -> &AnyParse;
-
-    fn check_reformat(&self, root: &SyntaxNode<L::SyntaxLanguage>, formatted: &str);
-
-    fn formatted(&self) -> Option<String> {
-        let parsed = self.parsed();
+    fn formatted(&self, parsed: &AnyParse) -> Option<String> {
         let has_errors = parsed.has_errors();
         let syntax = parsed.syntax();
 
-        let range = self.test_file().range();
+        let range = self.test_file.range();
 
         let result = match range {
             (Some(start), Some(end)) => {
@@ -114,10 +122,10 @@ where
                         TextSize::try_from(start).unwrap(),
                         TextSize::try_from(end).unwrap(),
                     ),
-                    self.format_language(),
+                    self.language.format_language(),
                 )
             }
-            _ => format_node(&syntax, self.format_language())
+            _ => format_node(&syntax, self.language.format_language())
                 .map(|formatted| formatted.print().unwrap()),
         };
 
@@ -129,7 +137,7 @@ where
                     .expect("the result of format_range should have a range");
 
                 let formatted = formatted.as_code();
-                let mut output_code = self.test_file().parse_input.clone();
+                let mut output_code = self.test_file.parse_input.clone();
                 output_code.replace_range(Range::<usize>::from(range), formatted);
                 output_code
             }
@@ -137,7 +145,11 @@ where
                 let formatted = formatted.into_code();
 
                 if !has_errors {
-                    self.check_reformat(&syntax, &formatted);
+                    let check_reformat = CheckReformat::new(
+                        CheckReformatParams::new(&syntax, &formatted, self.test_file.file_name()),
+                        &self.language,
+                    );
+                    check_reformat.check_reformat();
                 }
 
                 formatted
@@ -149,11 +161,10 @@ where
         Some(formatted)
     }
 
-    fn test(self)
-    where
-        Self: Sized,
-    {
-        let formatted = match self.formatted() {
+    pub fn test(self) {
+        let parsed = self.language.parse(self.test_file().parse_input());
+
+        let formatted = match self.formatted(&parsed) {
             Some(formatted) => formatted,
             None => return,
         };
@@ -172,11 +183,20 @@ where
             .with_input(&self.test_file().input_code)
             .with_prettier_diff(&prettier_diff)
             .with_output(&formatted)
-            .with_errors(self.parsed(), &self.test_file().parse_input);
+            .with_errors(&parsed, &self.test_file().parse_input);
 
-        let max_width = self.format_language().options().line_width().value() as usize;
+        let max_width = self
+            .language
+            .format_language()
+            .options()
+            .line_width()
+            .value() as usize;
         builder = builder.with_lines_exceeding_max_width(&formatted, max_width);
 
         builder.finish(relative_file_name);
+    }
+
+    fn test_file(&self) -> &PrettierTestFile {
+        &self.test_file
     }
 }

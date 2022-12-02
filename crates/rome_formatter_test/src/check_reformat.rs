@@ -1,40 +1,61 @@
+use crate::TestFormatLanguage;
 use rome_diagnostics::console::fmt::{Formatter, Termcolor};
 use rome_diagnostics::console::markup;
 use rome_diagnostics::termcolor;
 use rome_diagnostics::{DiagnosticExt, PrintDiagnostic};
 use rome_formatter::{format_node, FormatLanguage};
-use rome_parser::AnyParse;
 use rome_rowan::SyntaxNode;
 
 pub struct CheckReformatParams<'a, L>
 where
     L: FormatLanguage + Clone + 'static,
 {
-    pub root: &'a SyntaxNode<L::SyntaxLanguage>,
-    pub format_language: L,
-    pub text: &'a str,
-    pub file_name: &'a str,
+    root: &'a SyntaxNode<L::SyntaxLanguage>,
+    text: &'a str,
+    file_name: &'a str,
+}
+
+impl<'a, L> CheckReformatParams<'a, L>
+where
+    L: FormatLanguage + Clone + 'static,
+{
+    pub fn new(root: &'a SyntaxNode<L::SyntaxLanguage>, text: &'a str, file_name: &'a str) -> Self {
+        CheckReformatParams {
+            root,
+            text,
+            file_name,
+        }
+    }
 }
 
 /// Perform a second pass of formatting on a file, printing a diff if the
 /// output doesn't match the input
-pub trait CheckReformat<L>
+///
+pub struct CheckReformat<'a, 'b, L>
 where
-    L: FormatLanguage + Clone + 'static,
+    L: TestFormatLanguage,
 {
-    fn parse(&self, text: &str) -> AnyParse;
+    params: CheckReformatParams<'a, L::FormatLanguage>,
+    language: &'b L,
+}
 
-    fn params(&self) -> CheckReformatParams<L>;
+impl<'a, 'b, L> CheckReformat<'a, 'b, L>
+where
+    L: TestFormatLanguage,
+{
+    pub fn new(params: CheckReformatParams<'a, L::FormatLanguage>, language: &'b L) -> Self {
+        CheckReformat { params, language }
+    }
 
-    fn check_reformat(&self) {
+    pub fn check_reformat(&self) {
         let CheckReformatParams {
             root,
-            format_language,
             text,
             file_name,
-        } = self.params();
+        } = self.params;
 
-        let re_parse = self.parse(text);
+        let format_language = self.language.format_language();
+        let re_parse = self.language.parse(text);
 
         // Panic if the result from the formatter has syntax errors
         if re_parse.has_errors() {

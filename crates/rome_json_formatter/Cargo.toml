@@ -12,7 +12,6 @@ license = "MIT"
 rome_json_syntax = { path = "../rome_json_syntax" }
 rome_formatter = { path = "../rome_formatter" }
 rome_rowan = { path = "../rome_rowan" }
-serde = { version = "1.0.136", features = ["derive"], optional = true }
 
 [dev-dependencies]
 rome_parser = { path = "../rome_parser" }
@@ -28,9 +27,3 @@ tests_macros = { path = "../tests_macros" }
 insta = { version="1.18.2", features = ["glob"] }
 rome_diagnostics = { path = "../rome_diagnostics" }
 countme = { workspace = true, features = ["enable"] }
-similar = "2.1.0"
-similar-asserts = "1.2.0"
-ctor = "0.1.21"
-quickcheck = "1.0.3"
-quickcheck_macros = "1.0.0"
-iai = "0.1.1"

@@ -1,7 +1,7 @@
 use rome_diagnostics::location::FileId;
 use rome_formatter::{FormatOptions, LineWidth};
 use rome_formatter::{IndentStyle, Printed};
-use rome_formatter_test::check_reformat::CheckReformat;
+use rome_formatter_test::check_reformat::{CheckReformat, CheckReformatParams};
 use rome_fs::RomePath;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
@@ -14,8 +14,8 @@ use std::fmt::Write;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-mod check_reformat {
-    include!("check_reformat.rs");
+mod language {
+    include!("language.rs");
 }
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy, Deserialize, Serialize)]
@@ -202,13 +202,12 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, _f
         let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
 
         if !has_errors {
-            let json_check_reformat = check_reformat::JsonCheckReformat {
-                root: &root,
-                text: printed.as_code(),
-                file_name,
-                options: options.clone(),
-            };
-            json_check_reformat.check_reformat();
+            let language = language::JsonTestFormatLanguage::new(options.clone());
+            let check_reformat = CheckReformat::new(
+                CheckReformatParams::new(&root, printed.as_code(), file_name),
+                &language,
+            );
+            check_reformat.check_reformat();
         }
 
         snapshot_content.add_output(printed, options);
@@ -230,14 +229,13 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, _f
                     let printed = formatted.print().unwrap();
 
                     if !has_errors {
-                        let json_check_reformat = check_reformat::JsonCheckReformat {
-                            root: &root,
-                            text: printed.as_code(),
-                            file_name,
-                            options: format_options.clone(),
-                        };
-
-                        json_check_reformat.check_reformat();
+                        let language =
+                            language::JsonTestFormatLanguage::new(format_options.clone());
+                        let check_reformat = CheckReformat::new(
+                            CheckReformatParams::new(&root, printed.as_code(), file_name),
+                            &language,
+                        );
+                        check_reformat.check_reformat();
                     }
 
                     snapshot_content.add_output(printed, format_options);

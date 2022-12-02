@@ -412,12 +412,12 @@ mod tests {
     use crate::context::{JsFormatOptions, Semicolons};
     use rome_diagnostics::location::FileId;
     use rome_formatter::IndentStyle;
-    use rome_formatter_test::check_reformat::CheckReformat;
+    use rome_formatter_test::check_reformat::{CheckReformat, CheckReformatParams};
     use rome_js_parser::{parse, parse_script};
     use rome_js_syntax::SourceType;
     use rome_rowan::{TextRange, TextSize};
 
-    use crate::check_reformat::JsCheckReformat;
+    use crate::check_reformat::JsReformatLanguage;
 
     #[test]
     fn test_range_formatting() {
@@ -643,15 +643,14 @@ declare module 'x' {
             .unwrap()
             .print()
             .unwrap();
-        let js_check_reformat = JsCheckReformat {
-            root: &tree.syntax(),
-            text: result.as_code(),
-            source_type: syntax,
-            file_name: "quick_test",
-            options,
-        };
 
-        js_check_reformat.check_reformat();
+        let root = &tree.syntax();
+        let language = JsReformatLanguage::new(options);
+        let check_reformat = CheckReformat::new(
+            CheckReformatParams::new(root, result.as_code(), "quick_test"),
+            &language,
+        );
+        check_reformat.check_reformat();
 
         assert_eq!(
             result.as_code(),

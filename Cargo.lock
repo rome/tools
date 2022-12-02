@@ -406,16 +406,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "ctor"
-version = "0.1.26"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6d2301688392eb071b0bf1a37be05c469d3cc4dbbd95df672fe28ab021e6a096"
-dependencies = [
- "quote",
- "syn",
-]
-
-[[package]]
 name = "cuckoofilter"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1755,8 +1745,6 @@ dependencies = [
  "schemars",
  "serde",
  "serde_json",
- "similar",
- "similar-asserts",
  "tests_macros",
  "tracing",
  "unicode-width",
@@ -1828,11 +1816,7 @@ name = "rome_json_formatter"
 version = "0.0.0"
 dependencies = [
  "countme",
- "ctor",
- "iai",
  "insta",
- "quickcheck",
- "quickcheck_macros",
  "rome_console",
  "rome_diagnostics",
  "rome_formatter",
@@ -1846,8 +1830,6 @@ dependencies = [
  "rome_service",
  "serde",
  "serde_json",
- "similar",
- "similar-asserts",
  "tests_macros",
 ]
 

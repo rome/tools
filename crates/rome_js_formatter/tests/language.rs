@@ -1,23 +1,21 @@
-use crate::JsFormatLanguage;
-use crate::JsFormatOptions;
 use rome_diagnostics::location::FileId;
 use rome_formatter_test::TestFormatLanguage;
+use rome_js_formatter::context::JsFormatOptions;
+use rome_js_formatter::JsFormatLanguage;
 use rome_js_parser::parse;
 use rome_parser::AnyParse;
 
-/// Perform a second pass of formatting on a file, printing a diff if the
-/// output doesn't match the input
-pub struct JsReformatLanguage {
-    pub options: JsFormatOptions,
+pub struct JsTestFormatLanguage {
+    options: JsFormatOptions,
 }
 
-impl JsReformatLanguage {
+impl JsTestFormatLanguage {
     pub fn new(options: JsFormatOptions) -> Self {
-        JsReformatLanguage { options }
+        JsTestFormatLanguage { options }
     }
 }
 
-impl TestFormatLanguage for JsReformatLanguage {
+impl TestFormatLanguage for JsTestFormatLanguage {
     type FormatLanguage = JsFormatLanguage;
 
     fn parse(&self, text: &str) -> AnyParse {
