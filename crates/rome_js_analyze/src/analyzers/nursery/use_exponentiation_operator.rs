@@ -64,7 +64,7 @@ pub struct MathPowCall {
 }
 
 impl MathPowCall {
-    fn get_base(&self) -> Option<AnyJsExpression> {
+    fn make_base(&self) -> Option<AnyJsExpression> {
         Some(if self.does_base_need_parens()? {
             parenthesize_any_js_expression(&self.base)
         } else {
@@ -72,7 +72,7 @@ impl MathPowCall {
         })
     }
 
-    fn get_exponent(&self) -> Option<AnyJsExpression> {
+    fn make_exponent(&self) -> Option<AnyJsExpression> {
         Some(if self.does_exponent_need_parens()? {
             parenthesize_any_js_expression(&self.exponent)
         } else {
@@ -107,57 +107,41 @@ impl Rule for UseExponentiationOperator {
         let node = ctx.query();
         let model = ctx.model();
 
-        let has_math_pow = match node.callee().ok()?.omit_parentheses() {
+        let object = match node.callee().ok()?.omit_parentheses() {
             AnyJsExpression::JsStaticMemberExpression(static_member_expr) => {
-                let reference = static_member_expr
-                    .object()
-                    .ok()?
-                    .omit_parentheses()
-                    .as_reference_identifier()?;
-                let has_pow = static_member_expr
+                if static_member_expr
                     .member()
                     .ok()?
                     .as_js_name()?
                     .value_token()
                     .ok()?
                     .token_text_trimmed()
-                    == "pow";
-
-                if reference.has_name("Math") {
-                    // verifies that the Math reference is not a local variable
-                    let declaration = model.binding(&reference);
-                    declaration.is_none() && has_pow
-                } else {
-                    false
+                    != "pow"
+                {
+                    return None;
                 }
+
+                static_member_expr.object()
             }
             AnyJsExpression::JsComputedMemberExpression(computed_member_expr) => {
-                let reference = computed_member_expr
-                    .object()
-                    .ok()?
-                    .omit_parentheses()
-                    .as_reference_identifier()?;
-                let has_pow = computed_member_expr
+                if !computed_member_expr
                     .member()
                     .ok()?
-                    .is_string_constant("pow");
-
-                if reference.has_name("Math") {
-                    // verifies that the Math reference is not a local variable
-                    let declaration = model.binding(&reference);
-                    declaration.is_none() && has_pow
-                } else {
-                    false
+                    .is_string_constant("pow")
+                {
+                    return None;
                 }
+
+                computed_member_expr.object()
             }
-            _ => false,
+            _ => return None,
         };
 
-        if has_math_pow {
-            return Some(());
-        }
+        let reference = object.ok()?.omit_parentheses().as_reference_identifier()?;
 
-        None
+        // verifies that the Math reference is not a local variable
+        let has_math_pow = reference.has_name("Math") && model.binding(&reference).is_none();
+        has_math_pow.then_some(())
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
@@ -186,9 +170,9 @@ impl Rule for UseExponentiationOperator {
         };
 
         let new_node = make::js_binary_expression(
-            math_pow_call.get_base()?,
+            math_pow_call.make_base()?,
             make::token(T![**]),
-            math_pow_call.get_exponent()?,
+            math_pow_call.make_exponent()?,
         );
 
         if let Some((needs_parens, parent)) = does_exponentiation_expression_need_parens(node) {
@@ -253,9 +237,7 @@ fn does_exponentiation_expression_need_parens(
         if does_expression_need_parens(node, &parent)? {
             return Some((true, Some(parent)));
         }
-    }
-
-    if let Some(extends_clause) = node.parent::<JsExtendsClause>() {
+    } else if let Some(extends_clause) = node.parent::<JsExtendsClause>() {
         if extends_clause.parent::<JsClassDeclaration>().is_some() {
             return Some((true, None));
         }
