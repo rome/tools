@@ -272,9 +272,8 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
                     if next_element == before_element {
                         break;
                     }
-                    // SAFETY: the peek() makes sure the element exists
-                    let next_element = old_elements.next().unwrap();
-                    new_items.push(next_element);
+                    new_items.push(next_element.clone());
+                    old_elements.next();
                 }
 
                 new_items.extend(new_elements);
