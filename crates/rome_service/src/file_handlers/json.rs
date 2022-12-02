@@ -4,7 +4,6 @@ use crate::file_handlers::{DebugCapabilities, Language as LanguageId};
 use crate::settings::{
     FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle,
 };
-use crate::workspace::server::AnyParse;
 use crate::workspace::GetSyntaxTreeResult;
 use crate::RomeError;
 #[cfg(debug_assertions)]
@@ -13,8 +12,8 @@ use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
-use rome_json_parser::JsonParse;
 use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
+use rome_parser::AnyParse;
 #[cfg(debug_assertions)]
 use rome_rowan::{TextRange, TextSize, TokenAtOffset};
 use tracing::debug;
@@ -181,17 +180,4 @@ fn format_on_type(
 
     let printed = rome_json_formatter::format_sub_tree(options, &root_node)?;
     Ok(printed)
-}
-
-impl From<JsonParse> for AnyParse {
-    fn from(parse: JsonParse) -> Self {
-        let root = parse.syntax();
-        let diagnostics = parse.into_diagnostics();
-
-        Self {
-            // SAFETY: the parser should always return a root node
-            root: root.as_send().unwrap(),
-            diagnostics,
-        }
-    }
 }

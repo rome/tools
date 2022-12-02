@@ -1654,6 +1654,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "rome_formatter_test"
+version = "0.1.0"
+dependencies = [
+ "insta",
+ "rome_console",
+ "rome_diagnostics",
+ "rome_formatter",
+ "rome_parser",
+ "rome_rowan",
+ "serde",
+ "serde_json",
+ "similar",
+ "similar-asserts",
+]
+
+[[package]]
 name = "rome_fs"
 version = "0.0.0"
 dependencies = [
@@ -1717,18 +1733,18 @@ dependencies = [
  "rome_diagnostics",
  "rome_diagnostics_categories",
  "rome_formatter",
+ "rome_formatter_test",
  "rome_fs",
  "rome_js_factory",
  "rome_js_parser",
  "rome_js_syntax",
+ "rome_parser",
  "rome_rowan",
  "rome_service",
  "rome_text_size",
  "schemars",
  "serde",
  "serde_json",
- "similar",
- "similar-asserts",
  "tests_macros",
  "tracing",
  "unicode-width",
@@ -1799,11 +1815,22 @@ dependencies = [
 name = "rome_json_formatter"
 version = "0.0.0"
 dependencies = [
+ "countme",
+ "insta",
+ "rome_console",
  "rome_diagnostics",
  "rome_formatter",
+ "rome_formatter_test",
+ "rome_fs",
+ "rome_json_factory",
  "rome_json_parser",
  "rome_json_syntax",
+ "rome_parser",
  "rome_rowan",
+ "rome_service",
+ "serde",
+ "serde_json",
+ "tests_macros",
 ]
 
 [[package]]

@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/decorators-ts/angular.ts
 ---
 
 # Input
 
-```js
+```ts
 @Component({
   selector: 'toh-hero-button',
   template: `<button>{{label}}</button>`
@@ -36,7 +36,7 @@ export class HeroButtonComponent {
 
 # Output
 
-```js
+```ts
 @Component({
   selector: 'toh-hero-button',
   template: `<button>{{label}}</button>`

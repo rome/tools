@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/non-null/optional-chain.ts
 ---
 
 # Input
 
-```js
+```ts
 a?.b!.c;
 a?.b!.c.d;
 a?.b.c!.d;
@@ -58,7 +58,7 @@ a?.().b!.c?.c;
 
 # Output
 
-```js
+```ts
 a?.b!.c;
 a?.b!.c.d;
 a?.b.c!.d;

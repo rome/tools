@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/assignment/issue-5370.ts
 ---
 
 # Input
 
-```js
+```ts
 const durabilityMetricsSelectable: Immutable.OrderedSet<
   SomeReportingMetric,
 > = myExperienceSelectable.concat(otherDurabilityMetricsSelectable);
@@ -28,7 +28,7 @@ const durabilityMetricsSelectable: Immutable.OrderedSet<
 
 # Output
 
-```js
+```ts
 const durabilityMetricsSelectable: Immutable.OrderedSet<
   SomeReportingMetric,
 > = myExperienceSelectable.concat(otherDurabilityMetricsSelectable);

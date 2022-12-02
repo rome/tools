@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/tsx/type-parameters.tsx
 ---
 
 # Input
 
-```js
+```tsx
 const functionName1 = <T,>(arg) => false;
 const functionName2 = <T extends any>(arg) => false;
 const functionName3 = <T, S>(arg) => false;
@@ -46,7 +46,7 @@ type Type2 = Two<T>;
 
 # Output
 
-```js
+```tsx
 const functionName1 = <T,>(arg) => false;
 const functionName2 = <T extends any>(arg) => false;
 const functionName3 = <T, S>(arg) => false;

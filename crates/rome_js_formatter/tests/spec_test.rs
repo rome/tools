@@ -1,6 +1,7 @@
 use rome_diagnostics::location::FileId;
 use rome_formatter::{FormatOptions, LineWidth};
 use rome_formatter::{IndentStyle, Printed};
+use rome_formatter_test::check_reformat::{CheckReformat, CheckReformatParams};
 use rome_fs::RomePath;
 use rome_js_formatter::context::trailing_comma::TrailingComma;
 use rome_js_formatter::context::{JsFormatOptions, QuoteProperties, QuoteStyle, Semicolons};
@@ -15,8 +16,8 @@ use std::fmt::Write;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-mod check_reformat {
-    include!("check_reformat.rs");
+mod language {
+    include!("language.rs");
 }
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy, Deserialize, Serialize)]
@@ -118,32 +119,32 @@ pub struct SerializableFormatOptions {
     pub semicolons: Option<SerializableSemicolons>,
 }
 
-impl From<SerializableFormatOptions> for JsFormatOptions {
-    fn from(test: SerializableFormatOptions) -> Self {
-        Self::new(SourceType::default())
+impl SerializableFormatOptions {
+    fn into_format_options(self, source_type: SourceType) -> JsFormatOptions {
+        JsFormatOptions::new(source_type)
             .with_indent_style(
-                test.indent_style
+                self.indent_style
                     .map_or_else(|| IndentStyle::Tab, |value| value.into()),
             )
             .with_line_width(
-                test.line_width
+                self.line_width
                     .and_then(|width| LineWidth::try_from(width).ok())
                     .unwrap_or_default(),
             )
             .with_quote_style(
-                test.quote_style
+                self.quote_style
                     .map_or_else(|| QuoteStyle::Double, |value| value.into()),
             )
             .with_quote_properties(
-                test.quote_properties
+                self.quote_properties
                     .map_or_else(|| QuoteProperties::AsNeeded, |value| value.into()),
             )
             .with_trailing_comma(
-                test.trailing_comma
+                self.trailing_comma
                     .map_or_else(|| TrailingComma::All, |value| value.into()),
             )
             .with_semicolons(
-                test.semicolons
+                self.semicolons
                     .map_or_else(|| Semicolons::Always, |value| value.into()),
             )
     }
@@ -296,13 +297,12 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
 
         if !has_errors {
-            check_reformat::check_reformat(check_reformat::CheckReformatParams {
-                root: &root,
-                text: printed.as_code(),
-                source_type,
-                file_name,
-                options: options.clone(),
-            });
+            let language = language::JsTestFormatLanguage::new(options.clone());
+            let check_reformat = CheckReformat::new(
+                CheckReformatParams::new(&root, printed.as_code(), file_name),
+                &language,
+            );
+            check_reformat.check_reformat();
         }
 
         snapshot_content.add_output(printed, options);
@@ -310,31 +310,26 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         let test_directory = PathBuf::from(test_directory);
         let options_path = test_directory.join("options.json");
         if options_path.exists() {
-            {
-                let mut options_path = RomePath::new(&options_path, FileId::zero());
-                // SAFETY: we checked its existence already, we assume we have rights to read it
-                let options: TestOptions =
-                    serde_json::from_str(options_path.get_buffer_from_file().as_str()).unwrap();
+            let mut options_path = RomePath::new(&options_path, FileId::zero());
+            // SAFETY: we checked its existence already, we assume we have rights to read it
+            let test_options: TestOptions =
+                serde_json::from_str(options_path.get_buffer_from_file().as_str()).unwrap();
 
-                for test_case in options.cases {
-                    let format_options: JsFormatOptions = test_case.into();
-                    // we don't track the source type inside the serializable structs, so we
-                    // inject it here
-                    let formatted = format_node(format_options.clone(), &root).unwrap();
-                    let printed = formatted.print().unwrap();
+            for test_case in test_options.cases {
+                let format_options: JsFormatOptions = test_case.into_format_options(source_type);
+                let formatted = format_node(format_options.clone(), &root).unwrap();
+                let printed = formatted.print().unwrap();
 
-                    if !has_errors {
-                        check_reformat::check_reformat(check_reformat::CheckReformatParams {
-                            root: &root,
-                            text: printed.as_code(),
-                            source_type,
-                            file_name,
-                            options: format_options.clone(),
-                        });
-                    }
-
-                    snapshot_content.add_output(printed, format_options);
+                if !has_errors {
+                    let language = language::JsTestFormatLanguage::new(format_options.clone());
+                    let check_reformat = CheckReformat::new(
+                        CheckReformatParams::new(&root, printed.as_code(), file_name),
+                        &language,
+                    );
+                    check_reformat.check_reformat();
                 }
+
+                snapshot_content.add_output(printed, format_options);
             }
         }
 
