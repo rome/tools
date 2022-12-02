@@ -31,7 +31,6 @@ mod serde_impls;
 mod syntax_factory;
 mod syntax_token_text;
 mod tree_builder;
-mod trivia;
 
 pub use rome_text_size::{TextLen, TextRange, TextSize};
 
@@ -39,16 +38,15 @@ pub use crate::{
     ast::*,
     green::RawSyntaxKind,
     syntax::{
-        Language, SendNode, SyntaxElement, SyntaxElementChildren, SyntaxKind, SyntaxList,
-        SyntaxNode, SyntaxNodeChildren, SyntaxNodeOptionExt, SyntaxRewriter, SyntaxSlot,
-        SyntaxToken, SyntaxTriviaPiece, SyntaxTriviaPieceComments, TriviaPiece, TriviaPieceKind,
-        VisitNodeSignal,
+        chain_trivia_pieces, ChainTriviaPiecesIterator, Language, SendNode, SyntaxElement,
+        SyntaxElementChildren, SyntaxKind, SyntaxList, SyntaxNode, SyntaxNodeChildren,
+        SyntaxNodeOptionExt, SyntaxRewriter, SyntaxSlot, SyntaxToken, SyntaxTriviaPiece,
+        SyntaxTriviaPieceComments, TriviaPiece, TriviaPieceKind, VisitNodeSignal,
     },
     syntax_factory::*,
     syntax_node_text::SyntaxNodeText,
     syntax_token_text::SyntaxTokenText,
     tree_builder::{Checkpoint, TreeBuilder},
-    trivia::{chain_trivia_pieces, ChainTriviaPiecesIterator},
     utility_types::{Direction, NodeOrToken, TokenAtOffset, WalkEvent},
 };
 

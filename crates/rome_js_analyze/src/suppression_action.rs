@@ -71,7 +71,7 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
                     if let Some(parent) = parent {
                         mutation.add_jsx_elements_before_element(
                             &parent.into(),
-                            &[AnyJsxChild::JsxExpressionChild(jsx_comment)],
+                            [AnyJsxChild::JsxExpressionChild(jsx_comment)],
                         );
                     }
                 } else if let Some(current_element) =
@@ -79,14 +79,14 @@ pub(crate) fn apply_suppression_comment(payload: SuppressionCommentEmitterPayloa
                 {
                     mutation.add_jsx_elements_before_element(
                         &AnyJsxChild::JsxSelfClosingElement(current_element),
-                        &[AnyJsxChild::JsxExpressionChild(jsx_comment)],
+                        [AnyJsxChild::JsxExpressionChild(jsx_comment)],
                     );
                 } else if let Some(current_element) = JsxText::cast_ref(&current_jsx_element) {
                     // We want to add an additional JsxText to keep the indentation
                     let indentation_text = make_indentation_from_jsx_element(&current_element);
                     mutation.add_jsx_elements_after_element(
                         &AnyJsxChild::JsxText(current_element),
-                        &[
+                        [
                             AnyJsxChild::JsxExpressionChild(jsx_comment),
                             AnyJsxChild::JsxText(indentation_text),
                         ],
