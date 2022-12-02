@@ -20,9 +20,10 @@ the snapshots:
 
 1. Clone the Prettier git repository locally
 2. Remove all the directories inside
-   `crates/rome_js_formatter/tests/specs/prettier` to ensure all obsolete tests are
-   removed
-3. Go to `crates/rome_js_formatter/tests/specs/prettier` directory
+	 `crates/rome_json_formatter/tests/specs/prettier` to ensure all obsolete tests are
+	 removed
+3. Go to `crates/rome_formatter_test/src/prettier` directory
 4. Install prettier ``pnpm install``
-5. Run
-   `node crates/rome_js_formatter/tests/specs/prettier/prepare_tests.js <prettier root directory>`
+5. Go to `crates/rome_json_formatter/tests/specs/prettier` directory
+6. Run
+	 `node crates/rome_json_formatter/tests/specs/prettier/prepare_tests.js <prettier root directory>`
