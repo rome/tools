@@ -46,7 +46,7 @@ debugger;
 console.log(a);
 ";
 
-const APPLY_SUGGESTED_AFTER: &str = "let a = 4;\nconsole.log(a);\n";
+const APPLY_SUGGESTED_AFTER: &str = "const a = 4;\nconsole.log(a);\n";
 
 const NO_DEBUGGER_BEFORE: &str = "debugger;";
 const NO_DEBUGGER_AFTER: &str = "debugger;";

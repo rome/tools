@@ -193,7 +193,7 @@ export function formatWithPrettier(
 			code: formattedCode,
 			ir,
 		};
-	} catch (err: any) {
+	} catch (err: unknown) {
 		if (err instanceof SyntaxError) {
 			return {
 				type: "ERROR",
@@ -202,7 +202,7 @@ export function formatWithPrettier(
 		} else {
 			return {
 				type: "ERROR",
-				stack: err.stack,
+				stack: (err as Error).stack ?? "",
 			};
 		}
 	}

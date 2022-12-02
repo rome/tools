@@ -78,7 +78,7 @@ export default forwardRef<ReactCodeMirrorRef, Props>(function CodeMirror(
 ) {
 	const theme = useTheme();
 
-	let [editor, setEditor] = useState<EditorView>();
+	const [editor, setEditor] = useState<EditorView>();
 
 	function onCreateEditor(editor: EditorView) {
 		setEditor(editor);

@@ -824,7 +824,7 @@ impl Nursery {
         "useNumericLiterals",
         "useValidForDirection",
     ];
-    const RECOMMENDED_RULES: [&'static str; 26] = [
+    const RECOMMENDED_RULES: [&'static str; 25] = [
         "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
@@ -838,7 +838,6 @@ impl Nursery {
         "noExtraNonNullAssertion",
         "noHeaderScope",
         "noInvalidConstructorSuper",
-        "noPrecisionLoss",
         "noSetterReturn",
         "noStringCaseMismatch",
         "noUnsafeFinally",
@@ -852,7 +851,7 @@ impl Nursery {
         "useNumericLiterals",
         "useValidForDirection",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 26] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 25] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
@@ -866,7 +865,6 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[10]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[11]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[12]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[14]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[16]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[17]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[18]),
@@ -905,7 +903,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 26] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 25] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }

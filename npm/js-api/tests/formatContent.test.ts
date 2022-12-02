@@ -14,7 +14,7 @@ describe("Rome WebAssembly formatContent", () => {
 	});
 
 	it("should format content", () => {
-		let result = rome.formatContent("function f   () {  }", {
+		const result = rome.formatContent("function f   () {  }", {
 			filePath: "example.js",
 		});
 
@@ -23,8 +23,8 @@ describe("Rome WebAssembly formatContent", () => {
 	});
 
 	it("should not format and have diagnostics", () => {
-		let content = "function   () {  }";
-		let result = rome.formatContent(content, {
+		const content = "function   () {  }";
+		const result = rome.formatContent(content, {
 			filePath: "example.js",
 		});
 
@@ -37,7 +37,7 @@ describe("Rome WebAssembly formatContent", () => {
 	});
 
 	it("should format content in debug mode", () => {
-		let result = rome.formatContent("function f() {}", {
+		const result = rome.formatContent("function f() {}", {
 			filePath: "example.js",
 			debug: true,
 		});
@@ -50,7 +50,7 @@ describe("Rome WebAssembly formatContent", () => {
 	});
 
 	it("should not format content with range", () => {
-		let result = rome.formatContent("let a   ; function g () {  }", {
+		const result = rome.formatContent("let a   ; function g () {  }", {
 			filePath: "file.js",
 			range: [20, 25],
 		});
@@ -60,7 +60,7 @@ describe("Rome WebAssembly formatContent", () => {
 	});
 
 	it("should not format content with range in debug mode", () => {
-		let result = rome.formatContent("let a   ; function g () {  }", {
+		const result = rome.formatContent("let a   ; function g () {  }", {
 			filePath: "file.js",
 			range: [20, 25],
 			debug: true,
@@ -84,8 +84,8 @@ describe("Rome WebAssembly formatContent", () => {
 	});
 
 	it("should format content with custom configuration (8 spaces, single quotes, preserve quotes)", () => {
-		let content = `function   f() { return { "foo": 'bar' }  }`;
-		let formatted = `function f() {
+		const content = `function   f() { return { "foo": 'bar' }  }`;
+		const formatted = `function f() {
         return { 'foo': 'bar' };
 }
 `;
@@ -103,7 +103,7 @@ describe("Rome WebAssembly formatContent", () => {
 			},
 		});
 
-		let result = rome.formatContent(content, {
+		const result = rome.formatContent(content, {
 			filePath: "example.js",
 		});
 
