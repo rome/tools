@@ -676,7 +676,7 @@ impl SemanticAssertions {
                     error_scope_end_assertion_points_to_the_wrong_scope_start(
                         code,
                         &scope_end_assertion.range,
-                        &events,
+                        events,
                         test_name,
                     );
                 }
@@ -833,13 +833,11 @@ fn error_scope_end_assertion_points_to_the_wrong_scope_start(
     events: &[SemanticEvent],
     file_name: &str,
 ) {
-    let mut diagnostic = TestSemanticDiagnostic::new("The scope end found here do not match the assertion", range);
-    
+    let mut diagnostic =
+        TestSemanticDiagnostic::new("The scope end found here do not match the assertion", range);
+
     for e in events {
-        diagnostic.push_advice(
-            e.range(),
-            format!("This event was found: {e:?}"),
-        );
+        diagnostic.push_advice(e.range(), format!("This event was found: {e:?}"));
     }
 
     let error = diagnostic
