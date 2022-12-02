@@ -436,7 +436,9 @@ Template literals are preferred over string concatenation.
 
 New rules that are still under development.
 
-Nursery rules require explicit opt-in via configuration because they may still have bugs or performance problems.
+Nursery rules require explicit opt-in via configuration on stable versions because they may still have bugs or performance problems.
+They are enabled by default on nightly builds, but as they are unstable their diagnostic severity may be set to either error or
+warning, depending on whether we intend for the rule to be recommended or not when it eventually gets stabilized.
 Nursery rules get promoted to other groups once they become stable or may be removed.
 
 Rules that belong to this group <strong>are not subject to semantic version</strong>.
@@ -444,7 +446,6 @@ Rules that belong to this group <strong>are not subject to semantic version</str
 <section class="rule">
 <h3 data-toc-exclude id="noAccessKey">
 	<a href="/lint/rules/noAccessKey">noAccessKey</a>
-	<span class="recommended">recommended</span>
 </h3>
 Enforce that the <code>accessKey</code> attribute is not used on any HTML element.
 </section>
@@ -579,7 +580,6 @@ Enforce that ARIA state and property values are valid.
 <section class="rule">
 <h3 data-toc-exclude id="useAriaPropsForRole">
 	<a href="/lint/rules/useAriaPropsForRole">useAriaPropsForRole</a>
-	<span class="recommended">recommended</span>
 </h3>
 Enforce that elements with ARIA roles must have all required ARIA attributes for that role.
 </section>

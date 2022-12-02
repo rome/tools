@@ -80,7 +80,7 @@ class SyntaxTreeProvider
 		uri: Uri,
 		token: CancellationToken,
 	): ProviderResult<string> {
-		let documentUri = this.session.editor.document.uri.toString();
+		const documentUri = this.session.editor.document.uri.toString();
 		// if the document is already cached, we show it
 		const document = this.documents.get(documentUri);
 		if (document) {
@@ -102,7 +102,7 @@ class SyntaxTreeProvider
 			});
 	}
 
-	dispose(): any {
+	dispose(): void {
 		this.documents.clear();
 	}
 

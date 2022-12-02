@@ -46,7 +46,7 @@ declare_rule! {
     pub(crate) NoExplicitAny {
         version: "10.0.0",
         name: "noExplicitAny",
-        recommended: false,
+        recommended: true,
     }
 }
 

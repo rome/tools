@@ -4,11 +4,12 @@ import PrettierHeader from "../components/PrettierHeader";
 import RomeHeader from "../components/RomeHeader";
 import fastDiff from "fast-diff";
 import type { PrettierOutput } from "../types";
+import type { Extension } from "@codemirror/state";
 
 interface Props {
 	prettier: PrettierOutput;
 	rome: string;
-	extensions: any[];
+	extensions: Extension[];
 }
 
 function removeWhitespace(str: string): string {

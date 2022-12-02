@@ -56,7 +56,7 @@ declare_rule! {
     pub(crate) NoDupeKeys {
         version: "11.0.0",
         name: "noDupeKeys",
-        recommended: false, // should be once out of nursery
+        recommended: true, // should be once out of nursery
     }
 }
 

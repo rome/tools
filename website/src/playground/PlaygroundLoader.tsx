@@ -43,6 +43,7 @@ function PlaygroundLoader() {
 	const romeWorkerRef = useRef<Worker | null>(null);
 	const prettierWorkerRef = useRef<Worker | null>(null);
 
+	// rome-ignore lint/nursery/useExhaustiveDependencies: dependencies mismatch
 	useEffect(() => {
 		romeWorkerRef.current = new Worker(
 			new URL("./workers/romeWorker", import.meta.url),
@@ -114,6 +115,7 @@ function PlaygroundLoader() {
 	}, []);
 
 	// Dispatch updated settings
+	// rome-ignore lint/nursery/useExhaustiveDependencies: dependencies mismatch
 	useEffect(() => {
 		if (loadingState !== LoadingState.Success) {
 			return;
@@ -146,6 +148,7 @@ function PlaygroundLoader() {
 	}, [loadingState, state.settings]);
 
 	// Dispatch updated code to Prettier
+	// rome-ignore lint/nursery/useExhaustiveDependencies: dependencies mismatch
 	useEffect(() => {
 		if (loadingState !== LoadingState.Success) {
 			return;

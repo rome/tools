@@ -1,9 +1,11 @@
 import type Astro from "astro";
 
-type GlobInstance = Astro.MarkdownInstance<any> | Astro.MDXInstance<any>;
+type GlobInstance =
+	| Astro.MarkdownInstance<Record<string, unknown>>
+	| Astro.MDXInstance<Record<string, unknown>>;
 
 function getTitle(page: GlobInstance): string {
-	return page.frontmatter.title ?? "";
+	return (page.frontmatter.title as string) ?? "";
 }
 
 export function buildGetPages(pages: GlobInstance[]) {
@@ -19,7 +21,9 @@ export function buildGetPages(pages: GlobInstance[]) {
 	};
 }
 
-export function buildTOC(page: Astro.MDXInstance<any>): string {
+export function buildTOC(
+	page: Astro.MDXInstance<Record<string, unknown>>,
+): string {
 	const headings = page
 		.getHeadings()
 		.filter((heading) => heading.depth <= 4 && heading.depth > 1);

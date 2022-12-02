@@ -30,7 +30,7 @@ which is considered as unexpected behavior.
 
 <pre class="language-text"><code class="language-text">nursery/noUnsafeFinally.js:7:9 <a href="https://docs.rome.tools/lint/rules/noUnsafeFinally">lint/nursery/noUnsafeFinally</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Unsafe usage of 'return'.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unsafe usage of 'return'.</span>
   
     <strong>5 │ </strong>        return 2;
     <strong>6 │ </strong>    } finally {
@@ -55,7 +55,7 @@ which is considered as unexpected behavior.
 
 <pre class="language-text"><code class="language-text">nursery/noUnsafeFinally.js:5:9 <a href="https://docs.rome.tools/lint/rules/noUnsafeFinally">lint/nursery/noUnsafeFinally</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Unsafe usage of 'return'.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unsafe usage of 'return'.</span>
   
     <strong>3 │ </strong>        throw new Error(&quot;Try&quot;); // error is thrown but suspended until finally block ends
     <strong>4 │ </strong>    } finally {
@@ -82,7 +82,7 @@ which is considered as unexpected behavior.
 
 <pre class="language-text"><code class="language-text">nursery/noUnsafeFinally.js:7:9 <a href="https://docs.rome.tools/lint/rules/noUnsafeFinally">lint/nursery/noUnsafeFinally</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Unsafe usage of 'throw'.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unsafe usage of 'throw'.</span>
   
     <strong>5 │ </strong>        throw err; // The error thrown from try block is caught and re-thrown
     <strong>6 │ </strong>    } finally {
@@ -108,7 +108,7 @@ which is considered as unexpected behavior.
 
 <pre class="language-text"><code class="language-text">nursery/noUnsafeFinally.js:5:7 <a href="https://docs.rome.tools/lint/rules/noUnsafeFinally">lint/nursery/noUnsafeFinally</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Unsafe usage of 'break'.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unsafe usage of 'break'.</span>
   
     <strong>3 │ </strong>      return 0; // 0 is returned but suspended until finally block ends
     <strong>4 │ </strong>    } finally {
@@ -141,7 +141,7 @@ function a() {
 
 <pre class="language-text"><code class="language-text">nursery/noUnsafeFinally.js:8:9 <a href="https://docs.rome.tools/lint/rules/noUnsafeFinally">lint/nursery/noUnsafeFinally</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Unsafe usage of 'break'.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unsafe usage of 'break'.</span>
   
      <strong>6 │ </strong>        return;
      <strong>7 │ </strong>      } finally {
