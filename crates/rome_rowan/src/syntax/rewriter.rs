@@ -1,3 +1,5 @@
+//! A module that exports utilities to rewrite a syntax trees
+
 use crate::{Language, SyntaxNode, SyntaxSlot, SyntaxToken};
 use std::iter::once;
 
@@ -15,7 +17,7 @@ use std::iter::once;
 ///
 /// # Examples
 ///
-/// Implementation of a rewritter that replaces all literal expression nodes that contain a number token
+/// Implementation of a rewritten that replaces all literal expression nodes that contain a number token
 /// with a bogus node.
 ///
 /// ```
