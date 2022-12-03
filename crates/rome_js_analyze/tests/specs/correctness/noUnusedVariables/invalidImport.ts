@@ -1,2 +1,3 @@
 import A from 'A';
-import y = a;
+import { B } from 'b';
+import c2 = c1;
