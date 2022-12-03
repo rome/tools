@@ -96,8 +96,8 @@ declare_rule! {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ReactExtensiveDependenciesOptions {
-    hooks_config: HashMap<String, ReactHookConfiguration>,
-    stable_config: HashSet<StableReactHookConfiguration>,
+    pub(crate) hooks_config: HashMap<String, ReactHookConfiguration>,
+    pub(crate) stable_config: HashSet<StableReactHookConfiguration>,
 }
 
 impl Default for ReactExtensiveDependenciesOptions {

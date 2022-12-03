@@ -1,0 +1,27 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: valid.js
+---
+# Input
+```js
+/* does not generate diagnostics */
+
+function Component1({ a }) {
+    useEffect();
+
+    {
+        useEffect();
+    }
+}
+
+// Hook called indirectly
+function helper() {
+    useEffect();
+}
+
+function Component2({a}) {
+    helper();
+}
+```
+
+

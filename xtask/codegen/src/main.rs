@@ -7,6 +7,7 @@ mod generate_configuration;
 #[cfg(feature = "schema")]
 mod generate_schema;
 
+use case::CaseExt;
 use pico_args::Arguments;
 use xtask::{project_root, pushd, Mode, Result};
 
@@ -46,6 +47,60 @@ fn main() -> Result<()> {
         }
         "analyzer" => {
             generate_analyzer()?;
+            Ok(())
+        }
+        "newlintrule" => {
+            let path: String = args.value_from_str("--path").unwrap();
+            let rule_name: String = args.value_from_str("--name").unwrap();
+            let rule_name_upper_camel = rule_name.to_camel();
+            let rule_name_snake = rule_name.to_snake();
+            let rule_name_lower_camel = rule_name_snake.to_camel_lowercase();
+            let code = format!(r#"use rome_analyze::{{
+    context::RuleContext, declare_rule, Rule, RuleDiagnostic,
+}};
+use crate::semantic_services::Semantic;
+use rome_js_syntax::JsCallExpression;
+
+declare_rule! {{
+    /// <DESCRIPTION>
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// ```
+    ///
+    /// ## Valid
+    ///
+    /// ```js
+    /// ```
+    ///
+    pub(crate) {rule_name_upper_camel} {{
+        version: "12.0.0",
+        name: "{rule_name_lower_camel}",
+        recommended: false,
+    }}
+}}
+
+impl Rule for {rule_name_upper_camel} {{
+    type Query = Semantic<JsCallExpression>;
+    type State = ();
+    type Signals = Vec<Self::State>;
+    type Options = ();
+
+    fn run(_: &RuleContext<Self>) -> Vec<Self::State> {{
+        let mut signals = vec![];
+        signals
+    }}
+
+    fn diagnostic(_: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {{
+        None
+    }}
+}}
+"#);
+            let file_name = format!("{path}/{rule_name_snake}.rs");
+            std::fs::write(file_name, code).unwrap();
             Ok(())
         }
         #[cfg(feature = "configuration")]
@@ -101,6 +156,7 @@ SUBCOMMANDS:
 	formatter       Generates formatters for each language
 	test            Extracts parser inline comments into test files
 	unicode         Generates unicode table inside lexer
+    newlintrule     Generates a template for an empty lint rule
     all             Run all generators
 			"
             );

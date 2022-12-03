@@ -1,4 +1,4 @@
-use rome_js_syntax::AnyJsIdentifierUsage;
+use rome_js_syntax::{AnyJsIdentifierUsage, JsCallExpression};
 
 use super::*;
 use std::sync::Arc;
@@ -53,6 +53,7 @@ impl Reference {
         None
     }
 
+    /// Returns the range of this reference
     pub fn range(&self) -> &TextRange {
         let reference = self.data.reference(self.index);
         &reference.range
@@ -99,6 +100,41 @@ impl Reference {
     pub fn is_write(&self) -> bool {
         let reference = self.data.reference(self.index);
         matches!(reference.ty, SemanticModelReferenceType::Write { .. })
+    }
+}
+
+
+/// Provides all information regarding to a specific function of method call.
+#[derive(Debug)]
+pub struct Call {
+    pub(crate) data: Arc<SemanticModelData>,
+    pub(crate) index: ReferenceIndex,
+}
+
+impl Call {
+    /// Returns the range of this reference
+    pub fn range(&self) -> &TextRange {
+        let reference = self.data.reference(self.index);
+        &reference.range
+    }
+
+    /// Returns the node of this reference
+    pub fn syntax(&self) -> &JsSyntaxNode {
+        &self.data.node_by_range[self.range()]
+    }
+
+    /// Returns the typed AST node of this reference
+    pub fn tree(&self) -> JsCallExpression {
+        let node = self.syntax();
+        let call = node.ancestors()
+            .find(|x| !matches!(x.kind(),
+                JsSyntaxKind::JS_REFERENCE_IDENTIFIER
+                | JsSyntaxKind::JS_IDENTIFIER_EXPRESSION 
+            ));
+        debug_assert!(matches!(&call,
+            Some(call) if call.kind() == JsSyntaxKind::JS_CALL_EXPRESSION
+        ));
+        JsCallExpression::unwrap_cast(call.unwrap())
     }
 }
 
