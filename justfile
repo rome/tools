@@ -18,15 +18,15 @@ new-lintrule path name:
   just documentation
 
 [unix]
-touch file:
+_touch file:
   touch {{file}}
 
 [windows]
-touch file:
+_touch file:
   (gci {{file}}).LastWriteTime = Get-Date
 
 test-lintrule name:
-  just touch crates/rome_js_analyze/tests/spec_tests.rs
+  just _touch crates/rome_js_analyze/tests/spec_tests.rs
   cargo test -p rome_js_analyze -- {{snakecase(name)}}
 
 check-ready:
