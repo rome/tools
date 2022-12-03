@@ -914,6 +914,17 @@
             }
           ]
         },
+        "useHookAtTopLevel": {
+          "description": "Enforce that all React hooks are being called from the Top Level component functions.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useNumericLiterals": {
           "description": "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals",
           "anyOf": [

@@ -3,7 +3,7 @@ use std::{path::PathBuf, str::FromStr};
 use case::CaseExt;
 
 pub fn generate_new_lintrule(path: &str, rule_name: &str) {
-    let rule_folder = PathBuf::from_str(&path).unwrap();
+    let rule_folder = PathBuf::from_str(path).unwrap();
     match rule_folder.file_stem()
         .and_then(|x| x.to_str()) {
         Some("nursery") => {},

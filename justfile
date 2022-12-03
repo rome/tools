@@ -21,10 +21,10 @@ test-lintrule name:
   cargo test -p rome_js_analyze -- {{snakecase(name)}}
 
 check-ready:
-  git diff --exit-code
+  git diff --exit-code --quiet
   just codegen
   just documentation
   cargo lint
   cargo fmt
   cargo test
-  git diff --exit-code
+  git diff --exit-code --quiet
