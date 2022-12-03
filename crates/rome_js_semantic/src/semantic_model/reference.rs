@@ -103,7 +103,6 @@ impl Reference {
     }
 }
 
-
 /// Provides all information regarding to a specific function of method call.
 #[derive(Debug)]
 pub struct Call {
@@ -126,11 +125,12 @@ impl Call {
     /// Returns the typed AST node of this reference
     pub fn tree(&self) -> JsCallExpression {
         let node = self.syntax();
-        let call = node.ancestors()
-            .find(|x| !matches!(x.kind(),
-                JsSyntaxKind::JS_REFERENCE_IDENTIFIER
-                | JsSyntaxKind::JS_IDENTIFIER_EXPRESSION 
-            ));
+        let call = node.ancestors().find(|x| {
+            !matches!(
+                x.kind(),
+                JsSyntaxKind::JS_REFERENCE_IDENTIFIER | JsSyntaxKind::JS_IDENTIFIER_EXPRESSION
+            )
+        });
         debug_assert!(matches!(&call,
             Some(call) if call.kind() == JsSyntaxKind::JS_CALL_EXPRESSION
         ));

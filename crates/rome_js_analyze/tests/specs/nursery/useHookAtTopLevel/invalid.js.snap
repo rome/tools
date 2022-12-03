@@ -62,7 +62,7 @@ function Component2({a}) {
 ```
 invalid.js:4:9 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This hook it not necessarily at Top Level of the component function.
+  ! This hook is not necessarily being called from the Top Level of the component function.
   
     2 │ function Component1({ a }) {
     3 │     if (a == 1) {
@@ -81,7 +81,7 @@ invalid.js:4:9 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━�
 ```
 invalid.js:9:13 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This hook it not necessarily at Top Level of the component function.
+  ! This hook is not necessarily being called from the Top Level of the component function.
   
      7 │     if (a == 1) {
      8 │         {
@@ -100,7 +100,7 @@ invalid.js:9:13 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━
 ```
 invalid.js:14:9 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This hook it not necessarily at Top Level of the component function.
+  ! This hook is not necessarily being called from the Top Level of the component function.
   
     13 │     for (;a < 10;) {
   > 14 │         useEffect();
@@ -118,7 +118,7 @@ invalid.js:14:9 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━
 ```
 invalid.js:18:9 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This hook it not necessarily at Top Level of the component function.
+  ! This hook is not necessarily being called from the Top Level of the component function.
   
     17 │     for (const x of a) {
   > 18 │         useEffect();
@@ -136,7 +136,7 @@ invalid.js:18:9 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━
 ```
 invalid.js:22:9 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This hook it not necessarily at Top Level of the component function.
+  ! This hook is not necessarily being called from the Top Level of the component function.
   
     21 │     for (const x in a) {
   > 22 │         useEffect();
@@ -154,7 +154,7 @@ invalid.js:22:9 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━
 ```
 invalid.js:26:9 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This hook it not necessarily at Top Level of the component function.
+  ! This hook is not necessarily being called from the Top Level of the component function.
   
     25 │     while(a < 10) {
   > 26 │         useEffect();
@@ -172,7 +172,7 @@ invalid.js:26:9 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━
 ```
 invalid.js:30:9 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This hook it not necessarily at Top Level of the component function.
+  ! This hook is not necessarily being called from the Top Level of the component function.
   
     29 │     do {
   > 30 │         useEffect();
@@ -190,7 +190,7 @@ invalid.js:30:9 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━
 ```
 invalid.js:33:10 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This hook it not necessarily at Top Level of the component function.
+  ! This hook is not necessarily being called from the Top Level of the component function.
   
     31 │     } while(a < 10)
     32 │ 
@@ -209,7 +209,7 @@ invalid.js:33:10 lint/nursery/useHookAtTopLevel ━━━━━━━━━━�
 ```
 invalid.js:35:17 lint/nursery/useHookAtTopLevel ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This hook it not necessarily at Top Level of the component function.
+  ! This hook is not necessarily being called from the Top Level of the component function.
   
     33 │     a && useEffect();
     34 │ 

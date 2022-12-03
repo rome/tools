@@ -2,6 +2,9 @@
 
 function Component1({ a }) {
     useEffect();
+    const [name, setName] = useState("");
+    const value = useContext();
+    const memoizedCallback = useCallback();
 
     {
         useEffect();

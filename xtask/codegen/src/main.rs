@@ -55,7 +55,8 @@ fn main() -> Result<()> {
             let rule_name_upper_camel = rule_name.to_camel();
             let rule_name_snake = rule_name.to_snake();
             let rule_name_lower_camel = rule_name_snake.to_camel_lowercase();
-            let code = format!(r#"use rome_analyze::{{
+            let code = format!(
+                r#"use rome_analyze::{{
     context::RuleContext, declare_rule, Rule, RuleDiagnostic,
 }};
 use crate::semantic_services::Semantic;
@@ -98,7 +99,8 @@ impl Rule for {rule_name_upper_camel} {{
         None
     }}
 }}
-"#);
+"#
+            );
             let file_name = format!("{path}/{rule_name_snake}.rs");
             std::fs::write(file_name, code).unwrap();
             Ok(())

@@ -1,5 +1,5 @@
 use super::*;
-use rome_js_syntax::{AnyJsRoot, JsFunctionDeclaration, JsCallExpression};
+use rome_js_syntax::{AnyJsRoot, JsFunctionDeclaration};
 
 #[derive(Copy, Clone, Debug)]
 pub(crate) struct BindingIndex(usize);
@@ -340,24 +340,21 @@ impl SemanticModel {
 
     pub fn all_calls(&self, function: &JsFunctionDeclaration) -> Vec<Call> {
         let binding = function.id().unwrap();
-        let calls = binding.all_reads(self)
-            .filter_map(|x| {
-                let call = x.syntax()
-                    .ancestors()
-                    .find(|x| !matches!(x.kind(),
-                        JsSyntaxKind::JS_REFERENCE_IDENTIFIER
-                        | JsSyntaxKind::JS_IDENTIFIER_EXPRESSION 
-                    ));
-                match call {
-                    Some(node) if node.kind() == JsSyntaxKind::JS_CALL_EXPRESSION => {
-                        Some(Call {
-                            data: x.data,
-                            index: x.index,
-                        })
-                    }
-                    _ => None
-                }               
+        let calls = binding.all_reads(self).filter_map(|x| {
+            let call = x.syntax().ancestors().find(|x| {
+                !matches!(
+                    x.kind(),
+                    JsSyntaxKind::JS_REFERENCE_IDENTIFIER | JsSyntaxKind::JS_IDENTIFIER_EXPRESSION
+                )
             });
+            match call {
+                Some(node) if node.kind() == JsSyntaxKind::JS_CALL_EXPRESSION => Some(Call {
+                    data: x.data,
+                    index: x.index,
+                }),
+                _ => None,
+            }
+        });
         calls.collect()
     }
 }
