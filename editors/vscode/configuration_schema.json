@@ -588,6 +588,17 @@
             }
           ]
         },
+        "noAssignInExpressions": {
+          "description": "Disallow assignments in expressions.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noBannedTypes": {
           "description": "Disallow certain types.",
           "anyOf": [
