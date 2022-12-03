@@ -11,7 +11,7 @@ use super::use_exhaustive_dependencies::ReactExtensiveDependenciesOptions;
 declare_rule! {
     /// Enforce that all React hooks are being called from the Top Level
     /// component functions.
-    /// 
+    ///
     /// To understand why this required see https://reactjs.org/docs/hooks-rules.html#only-call-hooks-at-the-top-level
     ///
     /// ## Examples

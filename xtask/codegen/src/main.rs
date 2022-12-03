@@ -4,9 +4,9 @@ mod generate_aria;
 mod generate_bindings;
 #[cfg(feature = "configuration")]
 mod generate_configuration;
+mod generate_new_lintrule;
 #[cfg(feature = "schema")]
 mod generate_schema;
-mod generate_new_lintrule;
 
 use pico_args::Arguments;
 use xtask::{project_root, pushd, Mode, Result};
@@ -19,10 +19,10 @@ use crate::generate_bindings::generate_workspace_bindings;
 use crate::generate_configuration::generate_rules_configuration;
 #[cfg(feature = "schema")]
 use crate::generate_schema::generate_configuration_schema;
+use generate_new_lintrule::*;
 use xtask_codegen::{
     generate_analyzer, generate_ast, generate_formatters, generate_parser_tests, generate_tables,
 };
-use generate_new_lintrule::*;
 
 fn main() -> Result<()> {
     let _d = pushd(project_root());

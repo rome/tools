@@ -4,15 +4,13 @@ use case::CaseExt;
 
 pub fn generate_new_lintrule(path: &str, rule_name: &str) {
     let rule_folder = PathBuf::from_str(path).unwrap();
-    match rule_folder.file_stem()
-        .and_then(|x| x.to_str()) {
-        Some("nursery") => {},
+    match rule_folder.file_stem().and_then(|x| x.to_str()) {
+        Some("nursery") => {}
         _ => {
             panic!("all new rules must be at a nursery folder");
-        },
+        }
     }
 
-    
     let rule_name_upper_camel = rule_name.to_camel();
     let rule_name_snake = rule_name.to_snake();
     let rule_name_lower_camel = rule_name_snake.to_camel_lowercase();
@@ -65,7 +63,6 @@ None
     let file_name = format!("{path}/{rule_name_snake}.rs");
     std::fs::write(file_name, code).unwrap();
 
-
     let categories_path = "crates/rome_diagnostics_categories/src/categories.rs";
     let categories = std::fs::read_to_string(categories_path).unwrap();
     let insertion_point = r#"
@@ -82,5 +79,4 @@ None
     // General categories"#));
     debug_assert!(categories.contains(&rule_name_lower_camel));
     std::fs::write(categories_path, categories).unwrap();
-
 }
