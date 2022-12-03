@@ -15,6 +15,7 @@ mod kinds_src;
 mod parser_tests;
 mod termcolorful;
 mod unicode;
+pub mod generate_new_lintrule;
 use proc_macro2::{Ident, Span, TokenStream};
 use quote::quote;
 use std::path::Path;

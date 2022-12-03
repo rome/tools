@@ -8,8 +8,16 @@ codegen:
     cargo codegen-bindings
     cargo codegen-aria
 
-newlintrule path name:
+new-lintrule path name:
     cargo run -p xtask_codegen -- newlintrule --path={{path}} --name={{name}}
-    #crates/rome_diagnostics_categories/src/categories.rs
     cargo codegen analyzer
+    cargo codegen-configuration
     cargo lintdoc
+    cargo documentation
+
+check-lintrule name:
+  cargo test -p rome_js_analyze -- {{snakecase(name)}}
+  cargo codegen analyzer
+  cargo codegen-configuration
+  cargo lintdoc
+  cargo documentation

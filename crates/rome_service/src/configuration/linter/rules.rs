@@ -783,6 +783,10 @@ struct NurserySchema {
     use_exhaustive_dependencies: Option<RuleConfiguration>,
     #[doc = "Disallow the use of Math.pow in favor of the ** operator."]
     use_exponentiation_operator: Option<RuleConfiguration>,
+    #[doc = "Promotes the use of .flatMap() when map().flat() are used together."]
+    use_flat_map: Option<RuleConfiguration>,
+    #[doc = "Enforce that all React hooks are being called from the Top Level component functions."]
+    use_hook_at_top_level: Option<RuleConfiguration>,
     #[doc = "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals"]
     use_numeric_literals: Option<RuleConfiguration>,
 }
