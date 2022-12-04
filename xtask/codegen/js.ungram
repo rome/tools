@@ -642,6 +642,7 @@ AnyJsClassMember =
 	| JsBogusMember
 
 JsStaticModifier = modifier: 'static'
+JsAccessorModifier = modifier: 'accessor'
 TsDeclareModifier = modifier: 'declare'
 TsReadonlyModifier = modifier: 'readonly'
 TsAbstractModifier = modifier: 'abstract'
@@ -712,6 +713,7 @@ JsPropertyClassMember =
 AnyJsPropertyModifier =
 	TsAccessibilityModifier
 	| JsStaticModifier
+	| JsAccessorModifier
 	| TsReadonlyModifier
 	| TsOverrideModifier
 

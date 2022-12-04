@@ -125,6 +125,7 @@ pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
         "protected",
         "public",
         "static",
+        "accessor",
         "yield",
         // contextual keywords
         "abstract",
@@ -305,6 +306,7 @@ pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
         "JS_CLASS_EXPRESSION",
         "JS_CLASS_MEMBER_LIST",
         "JS_STATIC_MODIFIER",
+        "JS_ACCESSOR_MODIFIER",
         "TS_DECLARE_MODIFIER",
         "TS_READONLY_MODIFIER",
         "TS_ABSTRACT_MODIFIER",

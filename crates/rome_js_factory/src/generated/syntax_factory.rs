@@ -22,6 +22,25 @@ impl SyntaxFactory for JsSyntaxFactory {
             | JS_BOGUS_PARAMETER
             | JS_BOGUS_STATEMENT
             | TS_BOGUS_TYPE => RawSyntaxNode::new(kind, children.into_iter().map(Some)),
+            JS_ACCESSOR_MODIFIER => {
+                let mut elements = (&children).into_iter();
+                let mut slots: RawNodeSlots<1usize> = RawNodeSlots::default();
+                let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == T![accessor] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if current_element.is_some() {
+                    return RawSyntaxNode::new(
+                        JS_ACCESSOR_MODIFIER.to_bogus(),
+                        children.into_iter().map(Some),
+                    );
+                }
+                slots.into_node(JS_ACCESSOR_MODIFIER, children)
+            }
             JS_ARRAY_ASSIGNMENT_PATTERN => {
                 let mut elements = (&children).into_iter();
                 let mut slots: RawNodeSlots<3usize> = RawNodeSlots::default();
