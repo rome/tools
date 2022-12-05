@@ -13,8 +13,7 @@
 - The `init` command now adds the `$schema` property to the generated `rome.json` file
   if `rome` is installed inside the `node_modules` folder. Follow [this guide] to add the `$schema` property
   manually in a project with an existing `rome.json` file.
-- Added `--semicolons` argument to the `rome format`, where users can specify whether
-  they want semicolons or not in their source code.
+- A new `--semicolons` option that configures if the formatter prints semicolons at the end of every statement (default) or at the beginning of statements when necessary to prevent ASI failures.
 - Rome exists with an error code if it doesn't process any file.
 - Fixed how the maximum number of diagnostics is calculated [#3869](https://github.com/rome/tools/pull/3869).
   Rome now prints the total number of errors caused in the files.
