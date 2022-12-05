@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/compiler/castParentheses.ts
 ---
 
 # Input
 
-```js
+```ts
 ﻿class a {
     static b: any;
 }
@@ -36,7 +36,7 @@ var b = (<any>new a).b
 
 # Output
 
-```js
+```ts
 class a {
   static b: any;
 }

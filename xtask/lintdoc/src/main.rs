@@ -132,6 +132,7 @@ fn generate_group(
     errors: &mut Vec<(&'static str, Error)>,
 ) -> io::Result<()> {
     let (group_name, description) = extract_group_metadata(group);
+    let is_nursery = group == "nursery";
 
     writeln!(index, "\n## {group_name}")?;
     writeln!(index)?;
@@ -140,13 +141,14 @@ fn generate_group(
 
     writeln!(index, "<div class=\"category-rules\">")?;
     for (rule, meta) in rules {
-        match generate_rule(root, group, rule, meta.docs, meta.version, meta.recommended) {
+        let is_recommended = !is_nursery && meta.recommended;
+        match generate_rule(root, group, rule, meta.docs, meta.version, is_recommended) {
             Ok(summary) => {
                 writeln!(index, "<section class=\"rule\">")?;
                 writeln!(index, "<h3 data-toc-exclude id=\"{rule}\">")?;
                 writeln!(index, "	<a href=\"/lint/rules/{rule}\">{rule}</a>")?;
 
-                if meta.recommended {
+                if is_recommended {
                     writeln!(index, "	<span class=\"recommended\">recommended</span>")?;
                 }
                 writeln!(index, "</h3>")?;
@@ -606,7 +608,9 @@ fn extract_group_metadata(group: &str) -> (&str, Markup) {
             markup! {
                 "New rules that are still under development.
 
-Nursery rules require explicit opt-in via configuration because they may still have bugs or performance problems.
+Nursery rules require explicit opt-in via configuration on stable versions because they may still have bugs or performance problems.
+They are enabled by default on nightly builds, but as they are unstable their diagnostic severity may be set to either error or
+warning, depending on whether we intend for the rule to be recommended or not when it eventually gets stabilized.
 Nursery rules get promoted to other groups once they become stable or may be removed.
 
 Rules that belong to this group "<Emphasis>"are not subject to semantic version"</Emphasis>"."

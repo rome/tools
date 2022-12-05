@@ -177,7 +177,7 @@ pub fn load_config(
         "Attempting to load the configuration file at path {:?}",
         configuration_path
     );
-    let options = OpenOptions::default().read(true).write(true);
+    let options = OpenOptions::default().read(true);
     let file = file_system.open_with_options(&configuration_path, options);
     match file {
         Ok(mut file) => {

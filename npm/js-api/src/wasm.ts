@@ -22,7 +22,7 @@ export enum Distribution {
 	WEB = 2,
 }
 
-let isInitialized = {
+const isInitialized = {
 	[Distribution.BUNDLER]: false,
 	[Distribution.NODE]: false,
 	[Distribution.WEB]: false,
@@ -71,7 +71,7 @@ class WasmError extends Error {
 		this.stackTrace = stackTrace;
 	}
 
-	static fromError(e: any): WasmError {
+	static fromError(e: unknown): WasmError {
 		return new WasmError(e as string);
 	}
 }
@@ -81,6 +81,6 @@ class WasmError extends Error {
  *
  * @param e
  */
-export function wrapError(e: any): WasmError {
+export function wrapError(e: unknown): WasmError {
 	return WasmError.fromError(e);
 }

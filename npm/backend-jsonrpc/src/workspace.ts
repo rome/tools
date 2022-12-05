@@ -400,9 +400,17 @@ export interface Nursery {
 	 */
 	noInvalidConstructorSuper?: RuleConfiguration;
 	/**
+	 * Disallow non-null assertions using the ! postfix operator.
+	 */
+	noNonNullAssertion?: RuleConfiguration;
+	/**
 	 * Disallow literal numbers that lose precision
 	 */
 	noPrecisionLoss?: RuleConfiguration;
+	/**
+	 * Prevents from having redundant "use strict".
+	 */
+	noRedundantUseStrict?: RuleConfiguration;
 	/**
 	 * Disallow returning a value from a setter
 	 */
@@ -432,7 +440,7 @@ export interface Nursery {
 	 */
 	useAriaPropTypes?: RuleConfiguration;
 	/**
-	 * Enforce that elements with ARIA roles must have all required attributes for that role
+	 * Enforce that elements with ARIA roles must have all required ARIA attributes for that role.
 	 */
 	useAriaPropsForRole?: RuleConfiguration;
 	/**
@@ -676,16 +684,17 @@ export type Category =
 	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstAssign"
 	| "lint/nursery/noConstEnum"
-	| "lint/nursery/noDistractingElements"
 	| "lint/nursery/noConstructorReturn"
-	| "lint/nursery/noSetterReturn"
+	| "lint/nursery/noDistractingElements"
 	| "lint/nursery/noDupeKeys"
 	| "lint/nursery/noEmptyInterface"
 	| "lint/nursery/noExplicitAny"
 	| "lint/nursery/noExtraNonNullAssertion"
 	| "lint/nursery/noHeaderScope"
 	| "lint/nursery/noInvalidConstructorSuper"
+	| "lint/nursery/noNonNullAssertion"
 	| "lint/nursery/noPrecisionLoss"
+	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnsafeFinally"
 	| "lint/nursery/noVar"
@@ -700,6 +709,7 @@ export type Category =
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useAriaPropsForRole"
 	| "lint/nursery/useAriaPropTypes"
+	| "lint/nursery/noRedundantUseStrict"
 	| "files/missingHandler"
 	| "format"
 	| "internalError/io"
@@ -714,6 +724,7 @@ export type Category =
 	| "lint/a11y"
 	| "lint/security"
 	| "lint/nursery"
+	| "lint/configuration"
 	| "suppressions/parse"
 	| "suppressions/unknownGroup"
 	| "suppressions/unknownRule"

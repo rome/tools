@@ -7,6 +7,7 @@ use rome_diagnostics::Category;
 use rome_formatter::{IndentStyle, LineWidth};
 use rome_fs::RomePath;
 use rome_js_syntax::JsLanguage;
+use rome_json_syntax::JsonLanguage;
 use std::{
     num::NonZeroU64,
     sync::{RwLock, RwLockReadGuard},
@@ -152,6 +153,7 @@ impl Default for LinterSettings {
 #[derive(Debug, Default)]
 pub struct LanguagesSettings {
     pub javascript: LanguageSettings<JsLanguage>,
+    pub json: LanguageSettings<JsonLanguage>,
 }
 
 pub trait Language: rome_rowan::Language {

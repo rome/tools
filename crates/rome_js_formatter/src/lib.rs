@@ -172,7 +172,7 @@ mod ts;
 pub mod utils;
 
 #[cfg(test)]
-mod check_reformat;
+pub mod check_reformat;
 #[rustfmt::skip]
 mod generated;
 mod builders;
@@ -309,11 +309,12 @@ impl IntoFormat<JsFormatContext> for JsSyntaxToken {
     }
 }
 
-struct JsFormatLanguage {
+#[derive(Debug, Clone)]
+pub struct JsFormatLanguage {
     options: JsFormatOptions,
 }
 impl JsFormatLanguage {
-    fn new(options: JsFormatOptions) -> Self {
+    pub fn new(options: JsFormatOptions) -> Self {
         Self { options }
     }
 }
@@ -411,11 +412,12 @@ mod tests {
     use crate::context::{JsFormatOptions, Semicolons};
     use rome_diagnostics::location::FileId;
     use rome_formatter::IndentStyle;
+    use rome_formatter_test::check_reformat::{CheckReformat, CheckReformatParams};
     use rome_js_parser::{parse, parse_script};
     use rome_js_syntax::SourceType;
     use rome_rowan::{TextRange, TextSize};
 
-    use crate::check_reformat::{check_reformat, CheckReformatParams};
+    use crate::check_reformat::JsReformatLanguage;
 
     #[test]
     fn test_range_formatting() {
@@ -641,13 +643,15 @@ declare module 'x' {
             .unwrap()
             .print()
             .unwrap();
-        check_reformat(CheckReformatParams {
-            root: &tree.syntax(),
-            text: result.as_code(),
-            source_type: syntax,
-            file_name: "quick_test",
-            options,
-        });
+
+        let root = &tree.syntax();
+        let language = JsReformatLanguage::new(options);
+        let check_reformat = CheckReformat::new(
+            CheckReformatParams::new(root, result.as_code(), "quick_test"),
+            &language,
+        );
+        check_reformat.check_reformat();
+
         assert_eq!(
             result.as_code(),
             r#"[

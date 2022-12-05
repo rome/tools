@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/prettier-ignore/mapped-types.ts
 ---
 
 # Input
 
-```js
+```ts
 type a= {
     // prettier-ignore
     [A in B]: C  |  D
@@ -140,7 +140,7 @@ type a= {
 
 # Output
 
-```js
+```ts
 type a = {
     // prettier-ignore
     [A in B]: C  |  D

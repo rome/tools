@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/keywords/keywords.ts
 ---
 
 # Input
 
-```js
+```ts
 // All of these should be an error
 
 module Y3 {
@@ -133,7 +133,7 @@ module YYY4 {
 
 # Output
 
-```js
+```ts
 // All of these should be an error
 
 module Y3 {

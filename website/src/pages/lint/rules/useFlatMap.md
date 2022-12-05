@@ -18,7 +18,7 @@ array.map(sentence => sentence.split(' ')).flat();
 
 <pre class="language-text"><code class="language-text">nursery/useFlatMap.js:2:1 <a href="https://docs.rome.tools/lint/rules/useFlatMap">lint/nursery/useFlatMap</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The call chain </span><span style="color: Orange;"><strong>.map().flat()</strong></span><span style="color: Orange;"> can be replaced with a single </span><span style="color: Orange;"><strong>.flatMap()</strong></span><span style="color: Orange;"> call.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The call chain </span><span style="color: Tomato;"><strong>.map().flat()</strong></span><span style="color: Tomato;"> can be replaced with a single </span><span style="color: Tomato;"><strong>.flatMap()</strong></span><span style="color: Tomato;"> call.</span>
   
     <strong>1 │ </strong>const array = [&quot;split&quot;, &quot;the text&quot;, &quot;into words&quot;];
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>array.map(sentence =&gt; sentence.split(' ')).flat();
@@ -41,7 +41,7 @@ array.map(sentence => sentence.split(' ')).flat(1);
 
 <pre class="language-text"><code class="language-text">nursery/useFlatMap.js:2:1 <a href="https://docs.rome.tools/lint/rules/useFlatMap">lint/nursery/useFlatMap</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The call chain </span><span style="color: Orange;"><strong>.map().flat()</strong></span><span style="color: Orange;"> can be replaced with a single </span><span style="color: Orange;"><strong>.flatMap()</strong></span><span style="color: Orange;"> call.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The call chain </span><span style="color: Tomato;"><strong>.map().flat()</strong></span><span style="color: Tomato;"> can be replaced with a single </span><span style="color: Tomato;"><strong>.flatMap()</strong></span><span style="color: Tomato;"> call.</span>
   
     <strong>1 │ </strong>const array = [&quot;split&quot;, &quot;the text&quot;, &quot;into words&quot;];
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>array.map(sentence =&gt; sentence.split(' ')).flat(1);

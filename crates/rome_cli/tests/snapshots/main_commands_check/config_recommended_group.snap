@@ -1,0 +1,53 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "linter": {
+    "rules": {
+        "recommended": false,
+        "correctness": {
+            "recommended": true
+        }
+    }
+  }
+}
+```
+
+## `check.js`
+
+```js
+debugger;
+```
+
+# Termination Message
+
+```block
+some errors were emitted while running checks
+```
+
+# Emitted Messages
+
+```block
+check.js:1:1 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × This is an unexpected use of the debugger statement.
+  
+  > 1 │ debugger;
+      │ ^^^^^^^^^
+  
+  i Suggested fix: Remove debugger statement
+  
+    1 │ debugger;
+      │ ---------
+
+```
+
+```block
+Checked 1 file(s) in <TIME>
+```
+
+

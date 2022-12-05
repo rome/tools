@@ -81,8 +81,10 @@ debugger;
 
 ### Enable a lint rule
 
-Rules that are recommended are enabled by default. Rules that are not recommended
-are not enabled, but they should be enabled via configuration.
+Rules that are recommended are enabled by default and emit diagnostics with
+the error severity. Rules that are not recommended are not enabled by default,
+but they can be enabled via configuration. The diagnostics emitted by these
+rules are displayed with the warning severity in the documentation.
 
 To enable rules, you need to change their diagnostics severity based on your needs:
 

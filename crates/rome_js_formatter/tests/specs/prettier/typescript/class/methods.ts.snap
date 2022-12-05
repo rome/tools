@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/class/methods.ts
 ---
 
 # Input
 
-```js
+```ts
 class X {
     optionalMethod?() {}
 }
@@ -40,7 +40,7 @@ export class Check {
 
 # Output
 
-```js
+```ts
 class X {
   optionalMethod?() {}
 }

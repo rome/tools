@@ -53,7 +53,7 @@ declare_rule! {
     pub(crate) NoConditionalAssignment {
         version: "11.0.0",
         name: "noConditionalAssignment",
-        recommended: false,
+        recommended: true,
     }
 }
 

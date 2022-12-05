@@ -44,6 +44,27 @@ file.js:1:9 lint/complexity/useSimplifiedLogicExpression  FIXABLE  ━━━━�
 ```
 
 ```block
+file.js:1:1 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × This 'let' declares a variable which is never re-assigned.
+  
+  > 1 │ let a = !b || !c
+      │ ^^^
+  
+  i 'a' is never re-assigned.
+  
+  > 1 │ let a = !b || !c
+      │     ^
+  
+  i Suggested fix: Use 'const' instead.
+  
+  - let·a·=·!b·||·!c
+  + const·a·=·!b·||·!c
+  
+
+```
+
+```block
 Checked 1 file(s) in <TIME>
 ```
 

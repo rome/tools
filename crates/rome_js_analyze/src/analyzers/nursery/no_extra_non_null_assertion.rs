@@ -50,7 +50,7 @@ declare_rule! {
     pub(crate) NoExtraNonNullAssertion {
         version: "11.0.0",
         name: "noExtraNonNullAssertion",
-        recommended: false,
+        recommended: true,
     }
 }
 

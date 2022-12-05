@@ -3,7 +3,7 @@ use rome_formatter::{FormatOwnedWithRule, FormatRefWithRule, FormatResult};
 use rome_json_syntax::{map_syntax_node, JsonSyntaxNode};
 
 #[derive(Debug, Copy, Clone, Default)]
-pub(crate) struct FormatJsonSyntaxNode;
+pub struct FormatJsonSyntaxNode;
 
 impl FormatRule<JsonSyntaxNode> for FormatJsonSyntaxNode {
     type Context = JsonFormatContext;

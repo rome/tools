@@ -29,7 +29,6 @@ pub mod raw_language;
 #[cfg(feature = "serde")]
 mod serde_impls;
 mod syntax_factory;
-mod syntax_rewriter;
 mod syntax_token_text;
 mod tree_builder;
 
@@ -39,13 +38,13 @@ pub use crate::{
     ast::*,
     green::RawSyntaxKind,
     syntax::{
-        Language, SendNode, SyntaxElement, SyntaxElementChildren, SyntaxKind, SyntaxList,
-        SyntaxNode, SyntaxNodeChildren, SyntaxNodeOptionExt, SyntaxSlot, SyntaxToken,
-        SyntaxTriviaPiece, SyntaxTriviaPieceComments, TriviaPiece, TriviaPieceKind,
+        chain_trivia_pieces, ChainTriviaPiecesIterator, Language, SendNode, SyntaxElement,
+        SyntaxElementChildren, SyntaxKind, SyntaxList, SyntaxNode, SyntaxNodeChildren,
+        SyntaxNodeOptionExt, SyntaxRewriter, SyntaxSlot, SyntaxToken, SyntaxTriviaPiece,
+        SyntaxTriviaPieceComments, TriviaPiece, TriviaPieceKind, VisitNodeSignal,
     },
     syntax_factory::*,
     syntax_node_text::SyntaxNodeText,
-    syntax_rewriter::{SyntaxRewriter, VisitNodeSignal},
     syntax_token_text::SyntaxTokenText,
     tree_builder::{Checkpoint, TreeBuilder},
     utility_types::{Direction, NodeOrToken, TokenAtOffset, WalkEvent},

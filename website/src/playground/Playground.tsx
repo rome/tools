@@ -45,6 +45,7 @@ export default function PlaygroundLoader({
 	const romeOutput = file.rome;
 	const prettierOutput = file.prettier;
 
+	// rome-ignore lint/nursery/useExhaustiveDependencies: dynamic dependencies
 	const codeMirrorExtensions = useMemo(
 		() => [
 			javascript({
@@ -62,12 +63,14 @@ export default function PlaygroundLoader({
 
 	const astPanelCodeMirrorRef = useRef<null | ReactCodeMirrorRef>(null);
 
+	// rome-ignore lint/nursery/useExhaustiveDependencies: dynamic dependencies
 	useEffect(() => {
 		if (clipboardStatus !== "normal") {
 			setClipboardStatus("normal");
 		}
 	}, [romeOutput.formatter.ir]);
 
+	// rome-ignore lint/nursery/useExhaustiveDependencies: dynamic dependencies
 	const onUpdate = useCallback((viewUpdate: ViewUpdate) => {
 		const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
 		setPlaygroundState((state) =>
@@ -87,8 +90,8 @@ export default function PlaygroundLoader({
 	// We update the syntactic data of `RomeJsAst` only AstSource(`Display` string of our original AstRepresentation) changed.
 	useEffect(() => {
 		const ast = romeOutput.syntax.ast;
-		let tree = codeMirrorLangRomeAST.parser.parse(ast);
-		let rangeMap = new Map();
+		const tree = codeMirrorLangRomeAST.parser.parse(ast);
+		const rangeMap = new Map();
 		romeAstSyntacticDataRef.current = {
 			ast: tree,
 			rangeMap,
@@ -96,7 +99,7 @@ export default function PlaygroundLoader({
 		tree.iterate({
 			enter(node) {
 				if (node.type.name === "SyntaxToken") {
-					let range = node.node.getChild("Range");
+					const range = node.node.getChild("Range");
 					if (!range) {
 						return;
 					}
@@ -110,11 +113,11 @@ export default function PlaygroundLoader({
 					}
 
 					const children = range.node.getChildren("Number");
-					let first = children.at(0)?.node;
-					let second = children.at(1)?.node;
+					const first = children.at(0)?.node;
+					const second = children.at(1)?.node;
 					if (first && second) {
-						let start = +ast.slice(first.from, first.to);
-						let end = +ast.slice(second.from, second.to);
+						const start = +ast.slice(first.from, first.to);
+						const end = +ast.slice(second.from, second.to);
 						rangeMap.set([start, end], [node.from, node.to]);
 					}
 				}
@@ -122,6 +125,7 @@ export default function PlaygroundLoader({
 		});
 	}, [romeOutput.syntax.ast]);
 
+	// rome-ignore lint/nursery/useExhaustiveDependencies: dynamic dependencies
 	const onChange = useCallback((value: string) => {
 		setPlaygroundState((state) => ({
 			...state,
@@ -285,7 +289,7 @@ export default function PlaygroundLoader({
 		const view = astPanelCodeMirrorRef.current.view;
 		const rangeMap = romeAstSyntacticDataRef.current.rangeMap;
 
-		for (let [sourceRange, displaySourceRange] of rangeMap.entries()) {
+		for (const [sourceRange, displaySourceRange] of rangeMap.entries()) {
 			if (
 				cursorPosition >= sourceRange[0] &&
 				cursorPosition <= sourceRange[1]

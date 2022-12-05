@@ -22,6 +22,8 @@ serde = { version = "1.0.136", features = ["derive"], optional = true }
 schemars = { version = "0.8.10", optional = true }
 
 [dev-dependencies]
+rome_parser = { path = "../rome_parser" }
+rome_formatter_test = {path = "../rome_formatter_test"}
 rome_console = { path = "../rome_console" }
 rome_fs = { path = "../rome_fs" }
 rome_service = { path = "../rome_service" }
@@ -33,8 +35,6 @@ tests_macros = { path = "../tests_macros" }
 insta = { version="1.18.2", features = ["glob"] }
 rome_diagnostics = { path = "../rome_diagnostics" }
 countme = { workspace = true, features = ["enable"] }
-similar = "2.1.0"
-similar-asserts = "1.2.0"
 quickcheck = "1.0.3"
 quickcheck_macros = "1.0.0"
 iai = "0.1.1"

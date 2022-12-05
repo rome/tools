@@ -1,15 +1,15 @@
-use rome_text_edit::TextEdit;
-use rome_text_size::{TextRange, TextSize};
-use tracing::debug;
-
 use crate::{
-    AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxSlot, SyntaxToken, TriviaPiece,
+    chain_trivia_pieces, AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxSlot,
+    SyntaxToken,
 };
+use rome_text_edit::TextEdit;
+use rome_text_size::TextRange;
 use std::{
     cmp,
     collections::BinaryHeap,
     iter::{empty, once},
 };
+use tracing::debug;
 
 pub trait BatchMutationExt<L>: AstNode<Language = L>
 where
@@ -227,29 +227,20 @@ where
         prev_token: SyntaxToken<L>,
         next_token: SyntaxToken<L>,
     ) {
-        let leading_trivia: Vec<_> = prev_token
-            .leading_trivia()
-            .pieces()
-            .chain(prev_token.leading_trivia().pieces())
-            .map(|piece| TriviaPiece::new(piece.kind(), TextSize::of(piece.text())))
-            .collect();
+        let leading_trivia = chain_trivia_pieces(
+            prev_token.leading_trivia().pieces(),
+            next_token.leading_trivia().pieces(),
+        );
 
-        let trailing_trivia: Vec<_> = next_token
-            .trailing_trivia()
-            .pieces()
-            .chain(next_token.trailing_trivia().pieces())
-            .map(|piece| TriviaPiece::new(piece.kind(), TextSize::of(piece.text())))
-            .collect();
+        let trailing_trivia = chain_trivia_pieces(
+            prev_token.trailing_trivia().pieces(),
+            next_token.trailing_trivia().pieces(),
+        );
+        let new_token = next_token
+            .with_leading_trivia_pieces(leading_trivia)
+            .with_trailing_trivia_pieces(trailing_trivia);
 
-        self.replace_token_discard_trivia(
-            prev_token,
-            SyntaxToken::new_detached(
-                next_token.kind(),
-                &next_token.token_text(),
-                leading_trivia,
-                trailing_trivia,
-            ),
-        )
+        self.replace_token_discard_trivia(prev_token, new_token)
     }
 
     /// Push a change to replace the "prev_element" with "next_element".

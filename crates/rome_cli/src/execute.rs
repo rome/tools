@@ -95,15 +95,15 @@ impl Execution {
         }
     }
 
-    pub(crate) fn is_ci(&self) -> bool {
+    pub(crate) const fn is_ci(&self) -> bool {
         matches!(self.traversal_mode, TraversalMode::CI { .. })
     }
 
-    pub(crate) fn is_check(&self) -> bool {
+    pub(crate) const fn is_check(&self) -> bool {
         matches!(self.traversal_mode, TraversalMode::Check { .. })
     }
 
-    pub(crate) fn is_format(&self) -> bool {
+    pub(crate) const fn is_format(&self) -> bool {
         matches!(self.traversal_mode, TraversalMode::Format { .. })
     }
 

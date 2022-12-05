@@ -1,17 +1,18 @@
+pub use crate::registry::visit_registry;
+use crate::semantic_services::{SemanticModelBuilderVisitor, SemanticModelVisitor};
+use crate::suppression_action::apply_suppression_comment;
 use control_flow::make_visitor;
+use rome_analyze::context::ServiceBagRuleOptionsWrapper;
+use rome_analyze::options::OptionsDeserializationDiagnostic;
 use rome_analyze::{
     AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal, ControlFlow,
-    InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry, Phases, RuleAction,
-    RuleRegistry, ServiceBag, SuppressionCommentEmitterPayload, SuppressionKind, SyntaxVisitor,
+    DeserializableRuleOptions, InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry,
+    Phases, RuleAction, RuleRegistry, ServiceBag, SuppressionKind, SyntaxVisitor,
 };
 use rome_aria::{AriaProperties, AriaRoles};
 use rome_diagnostics::{category, FileId};
-use rome_js_factory::make::{jsx_expression_child, token};
 use rome_js_syntax::suppression::SuppressionDiagnostic;
-use rome_js_syntax::{
-    suppression::parse_suppression_comment, AnyJsxChild, JsLanguage, JsSyntaxToken, T,
-};
-use rome_rowan::{AstNode, TokenAtOffset, TriviaPieceKind};
+use rome_js_syntax::{suppression::parse_suppression_comment, JsLanguage};
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use std::{borrow::Cow, error::Error};
@@ -27,12 +28,9 @@ mod react;
 mod registry;
 mod semantic_analyzers;
 mod semantic_services;
+mod suppression_action;
 mod syntax;
 pub mod utils;
-
-pub use crate::registry::visit_registry;
-use crate::semantic_services::{SemanticModelBuilderVisitor, SemanticModelVisitor};
-use crate::utils::batch::JsBatchMutation;
 
 pub(crate) type JsRuleAction = RuleAction<JsLanguage>;
 
@@ -47,6 +45,45 @@ pub fn metadata() -> &'static MetadataRegistry {
     }
 
     &METADATA
+}
+
+pub struct RulesConfigurator<'a> {
+    options: &'a AnalyzerOptions,
+    services: &'a mut ServiceBag,
+    diagnostics: Vec<OptionsDeserializationDiagnostic>,
+}
+
+impl<'a, L: rome_rowan::Language + Default> rome_analyze::RegistryVisitor<L>
+    for RulesConfigurator<'a>
+{
+    fn record_rule<R>(&mut self)
+    where
+        R: rome_analyze::Rule + 'static,
+        R::Query: rome_analyze::Queryable<Language = L>,
+        <R::Query as rome_analyze::Queryable>::Output: Clone,
+    {
+        let rule_key = rome_analyze::RuleKey::rule::<R>();
+        let options = if let Some(options) = self.options.configuration.rules.get_rule(&rule_key) {
+            let value = options.value();
+            match <R::Options as DeserializableRuleOptions>::try_from(value.clone()) {
+                Ok(result) => result,
+                Err(error) => {
+                    let err = OptionsDeserializationDiagnostic::new(
+                        rule_key.rule_name(),
+                        value.to_string(),
+                        error,
+                    );
+                    self.diagnostics.push(err);
+                    <R::Options as Default>::default()
+                }
+            }
+        } else {
+            <R::Options as Default>::default()
+        };
+
+        self.services
+            .insert_service(ServiceBagRuleOptionsWrapper::<R>(options));
+    }
 }
 
 /// Run the analyzer on the provided `root`: this process will use the given `filter`
@@ -104,6 +141,23 @@ where
     let mut registry = RuleRegistry::builder(&filter);
     visit_registry(&mut registry);
 
+    // Parse rule options
+    let mut services = ServiceBag::default();
+    let mut configurator = RulesConfigurator {
+        options,
+        services: &mut services,
+        diagnostics: vec![],
+    };
+    visit_registry(&mut configurator);
+
+    // Bail if we can't parse a rule option
+    if !configurator.diagnostics.is_empty() {
+        for diagnostic in configurator.diagnostics {
+            emit_signal(&diagnostic);
+        }
+        return None;
+    }
+
     let mut analyzer = Analyzer::new(
         metadata(),
         InspectMatcher::new(registry.build(), inspect_matcher),
@@ -118,7 +172,6 @@ where
     analyzer.add_visitor(Phases::Semantic, SemanticModelVisitor);
     analyzer.add_visitor(Phases::Semantic, SyntaxVisitor::default());
 
-    let mut services = ServiceBag::default();
     services.insert_service(Arc::new(AriaRoles::default()));
     services.insert_service(Arc::new(AriaProperties::default()));
     analyzer.run(AnalyzerContext {
@@ -173,14 +226,17 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"<span aria-current="invalid"></span>
-        "#;
+        const SOURCE: &str = r#"something.forEach((Element, index) => {
+    return <List
+        ><div key={index}>foo</div>
+    </List>;
+})"#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
-        let rule_filter = RuleFilter::Rule("correctness", "noUselessFragments");
+        let rule_filter = RuleFilter::Rule("correctness", "noArrayIndexKey");
         analyze(
             FileId::zero(),
             &parsed.tree(),
@@ -190,7 +246,6 @@ mod tests {
             },
             &options,
             |signal| {
-                dbg!("here");
                 if let Some(diag) = signal.diagnostic() {
                     error_ranges.push(diag.location().span.unwrap());
                     let error = diag
@@ -398,81 +453,3 @@ impl std::fmt::Display for RuleError {
 }
 
 impl Error for RuleError {}
-
-/// We now try to "guess" the token where to apply the suppression comment.
-/// Considering that the detection of suppression comments in the linter is "line based", we start
-/// querying the node covered by the text range of the diagnostic, until we find the first token that has a newline
-/// among its leading trivia.
-///
-/// If we're not able to find any token, it means that the range is
-/// placed at row 1, so we take the root itself.
-fn apply_suppression_comment(payload: SuppressionCommentEmitterPayload<JsLanguage>) {
-    let SuppressionCommentEmitterPayload {
-        token_offset,
-        mutation,
-        suppression_text,
-        diagnostic_text_range,
-    } = payload;
-    let current_token = match token_offset {
-        TokenAtOffset::None => None,
-        TokenAtOffset::Single(token) => Some(match find_token_with_newline(token.clone()) {
-            None => token,
-            Some(token) => token,
-        }),
-        TokenAtOffset::Between(left_token, right_token) => {
-            let chosen_token = if right_token.text_range().start() == diagnostic_text_range.start()
-            {
-                right_token
-            } else {
-                left_token
-            };
-            Some(chosen_token)
-        }
-    };
-    if let Some(current_token) = current_token {
-        if let Some(element) = current_token.ancestors().find_map(AnyJsxChild::cast) {
-            let jsx_comment = jsx_expression_child(
-                token(T!['{']).with_trailing_trivia([(
-                    TriviaPieceKind::SingleLineComment,
-                    format!("/* {} */", suppression_text).as_str(),
-                )]),
-                token(T!['}']),
-            );
-            mutation.add_jsx_element_before_element(
-                &element,
-                &AnyJsxChild::JsxExpressionChild(jsx_comment.build()),
-            );
-        } else {
-            let new_token = current_token.with_leading_trivia([
-                (TriviaPieceKind::Newline, "\n"),
-                (
-                    TriviaPieceKind::SingleLineComment,
-                    format!("// {} ", suppression_text).as_str(),
-                ),
-                (TriviaPieceKind::Newline, "\n"),
-            ]);
-            mutation.replace_token_transfer_trivia(current_token, new_token);
-        }
-    }
-}
-
-/// It checks if the current token has leading trivia newline. If not, it
-/// it peeks the previous token and recursively call itself
-fn find_token_with_newline(token: JsSyntaxToken) -> Option<JsSyntaxToken> {
-    let mut current_token = token;
-    loop {
-        let trivia = current_token.leading_trivia();
-        if trivia.pieces().any(|trivia| trivia.is_newline())
-            || current_token.text_trimmed().contains('\n')
-        {
-            break;
-        } else if let Some(token) = current_token.prev_token() {
-            current_token = token;
-            continue;
-        } else {
-            return None;
-        }
-    }
-
-    Some(current_token)
-}

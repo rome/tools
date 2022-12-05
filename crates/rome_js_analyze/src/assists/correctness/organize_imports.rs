@@ -19,7 +19,8 @@ use rome_rowan::{
 use crate::JsRuleAction;
 
 declare_rule! {
-    /// Provides a whole-source code action to sort the imports in the file alphabetically
+    /// Provides a whole-source code action to sort the imports in the file
+    /// using natural ordering
     ///
     /// ## Examples
     ///
@@ -273,7 +274,7 @@ struct ImportGroup {
     /// The import that was at the start of the group before sorting
     first_node: JsImport,
     /// Multimap storing all the imports for each import source in the group,
-    /// sorted in alphabetical order
+    /// sorted in natural order
     nodes: BTreeMap<ImportKey, Vec<JsImport>>,
 }
 
@@ -281,7 +282,7 @@ impl ImportGroup {
     /// Returns true if the nodes in the group are already sorted in the file
     fn is_sorted(&self) -> bool {
         // The imports are sorted if the start of each node in the `BTreeMap`
-        // (sorted alphabetically) is higher or equal to the previous item in
+        // (sorted in natural order) is higher or equal to the previous item in
         // the sequence
         let mut iter = self
             .nodes
@@ -307,9 +308,8 @@ struct ImportKey(SyntaxTokenText);
 
 impl Ord for ImportKey {
     fn cmp(&self, other: &Self) -> Ordering {
-        // Sort imports alphabetically by defering to the string ordering logic
-        // of the standard library
-        (*self.0).cmp(&*other.0)
+        // Sort imports using natural ordering
+        natord::compare(&self.0, &other.0)
     }
 }
 

@@ -150,6 +150,17 @@ pub const CONFIG_LINTER_UPGRADE_DIAGNOSTIC: &str = r#"{
   }
 }"#;
 
+pub const CONFIG_RECOMMENDED_GROUP: &str = r#"{
+  "linter": {
+    "rules": {
+        "recommended": false,
+        "correctness": {
+            "recommended": true
+        }
+    }
+  }
+}"#;
+
 pub const CONFIG_INCORRECT_GLOBALS_V2: &str = r#"{
     "javascript": {
       "formatter": {

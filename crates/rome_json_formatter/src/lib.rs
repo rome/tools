@@ -4,6 +4,9 @@ mod generated;
 mod json;
 mod prelude;
 
+#[cfg(test)]
+mod check_reformat;
+
 pub(crate) use crate::context::JsonFormatContext;
 use crate::context::JsonFormatOptions;
 use crate::cst::FormatJsonSyntaxNode;
@@ -26,6 +29,8 @@ where
     N: AstNode<Language = JsonLanguage>,
 {
     fn fmt(&self, node: &N, f: &mut JsonFormatter) -> FormatResult<()> {
+        f.comments().mark_suppression_checked(node.syntax());
+
         self.fmt_fields(node, f)
     }
 
@@ -42,12 +47,13 @@ where
     }
 }
 
-pub(crate) struct JsonFormatLanguage {
+#[derive(Debug, Default, Clone)]
+pub struct JsonFormatLanguage {
     options: JsonFormatOptions,
 }
 
 impl JsonFormatLanguage {
-    fn new(options: JsonFormatOptions) -> Self {
+    pub fn new(options: JsonFormatOptions) -> Self {
         Self { options }
     }
 }
@@ -149,9 +155,11 @@ pub fn format_sub_tree(options: JsonFormatOptions, root: &JsonSyntaxNode) -> For
 
 #[cfg(test)]
 mod tests {
+    use crate::check_reformat::JsonReformatLanguage;
     use crate::context::JsonFormatOptions;
     use crate::format_node;
     use rome_diagnostics::FileId;
+    use rome_formatter_test::check_reformat::{CheckReformat, CheckReformatParams};
     use rome_json_parser::parse_json;
 
     #[test]
@@ -171,6 +179,47 @@ mod tests {
             .unwrap()
             .print()
             .unwrap();
+
+        assert_eq!(
+            result.as_code(),
+            r#"{
+    "a": 5,
+    "b": [1, 2, 3, 4],
+    "c": null,
+    "d": true,
+    "e": false
+}
+"#
+        );
+    }
+
+    #[ignore]
+    #[test]
+    // use this test check if your snippet prints as you wish, without using a snapshot
+    fn quick_test() {
+        let src = r#"
+{
+    "a": 5,
+    "b": [1, 2, 3, 4],
+    "c": null,
+    "d": true,
+    "e": false
+}
+"#;
+        let parse = parse_json(src, FileId::zero());
+        let options = JsonFormatOptions::default();
+        let result = format_node(options.clone(), &parse.syntax())
+            .unwrap()
+            .print()
+            .unwrap();
+
+        let root = &parse.syntax();
+        let language = JsonReformatLanguage::new(options);
+        let check_reformat = CheckReformat::new(
+            CheckReformatParams::new(root, result.as_code(), "quick_test"),
+            &language,
+        );
+        check_reformat.check_reformat();
 
         assert_eq!(
             result.as_code(),

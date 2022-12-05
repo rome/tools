@@ -896,8 +896,30 @@
             }
           ]
         },
+        "noNonNullAssertion": {
+          "description": "Disallow non-null assertions using the ! postfix operator.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noPrecisionLoss": {
           "description": "Disallow literal numbers that lose precision",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noRedundantUseStrict": {
+          "description": "Prevents from having redundant \"use strict\".",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -981,7 +1003,7 @@
           ]
         },
         "useAriaPropsForRole": {
-          "description": "Enforce that elements with ARIA roles must have all required attributes for that role",
+          "description": "Enforce that elements with ARIA roles must have all required ARIA attributes for that role.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

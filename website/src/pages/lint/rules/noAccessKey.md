@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noAccessKey (since v11.0.0)
 
-> This rule is recommended by Rome.
-
 Enforce that the `accessKey` attribute is not used on any HTML element.
 
 The `accessKey` assigns a keyboard shortcut to the current element. However, the `accessKey` value

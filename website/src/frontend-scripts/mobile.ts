@@ -39,7 +39,7 @@ export function toggleMobileSidebar() {
 		}
 	}
 }
-// rome-ignore lint/style/useOptionalChain: netlify's node version does not support optional call expressions
+
 if (mobileSidebarHandle != null) {
 	mobileSidebarHandle.addEventListener(
 		"click",

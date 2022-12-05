@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/interface2/break.ts
 ---
 
 # Input
 
-```js
+```ts
 export interface Environment1 extends GenericEnvironment<
   SomeType,
   AnotherType,
@@ -108,7 +108,7 @@ export interface ExtendsLongOneWithGenerics extends Bar< SomeLongTypeSomeLongTyp
 
 # Output
 
-```js
+```ts
 export interface Environment1 extends GenericEnvironment<
   SomeType,
   AnotherType,

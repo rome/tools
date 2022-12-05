@@ -69,7 +69,7 @@ declare_rule! {
     pub(crate) UseDefaultSwitchClauseLast {
         version: "11.0.0",
         name: "useDefaultSwitchClauseLast",
-        recommended: false,
+        recommended: true,
     }
 }
 

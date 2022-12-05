@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # useEnumInitializers (since v11.0.0)
 
-> This rule is recommended by Rome.
-
 Require that each enum member value be explicitly initialized.
 
 TypeScript enums are a practical way to organize semantically related constant values. Members of enums that don't have explicit values are by default given sequentially increasing numbers.

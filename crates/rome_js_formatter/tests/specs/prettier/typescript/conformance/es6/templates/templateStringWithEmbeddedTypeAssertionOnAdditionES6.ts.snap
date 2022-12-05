@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/conformance/es6/templates/templateStringWithEmbeddedTypeAssertionOnAdditionES6.ts
 ---
 
 # Input
 
-```js
+```ts
 ﻿// @target: ES6
 var x = `abc${ <any>(10 + 10) }def`;
 ```
@@ -25,7 +25,7 @@ var x = `abc${ <any>(10 + 10) }def`;
 
 # Output
 
-```js
+```ts
 // @target: ES6
 var x = `abc${<any>(10 + 10)}def`;
 ```

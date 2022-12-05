@@ -436,7 +436,9 @@ Template literals are preferred over string concatenation.
 
 New rules that are still under development.
 
-Nursery rules require explicit opt-in via configuration because they may still have bugs or performance problems.
+Nursery rules require explicit opt-in via configuration on stable versions because they may still have bugs or performance problems.
+They are enabled by default on nightly builds, but as they are unstable their diagnostic severity may be set to either error or
+warning, depending on whether we intend for the rule to be recommended or not when it eventually gets stabilized.
 Nursery rules get promoted to other groups once they become stable or may be removed.
 
 Rules that belong to this group <strong>are not subject to semantic version</strong>.
@@ -444,7 +446,6 @@ Rules that belong to this group <strong>are not subject to semantic version</str
 <section class="rule">
 <h3 data-toc-exclude id="noAccessKey">
 	<a href="/lint/rules/noAccessKey">noAccessKey</a>
-	<span class="recommended">recommended</span>
 </h3>
 Enforce that the <code>accessKey</code> attribute is not used on any HTML element.
 </section>
@@ -523,10 +524,22 @@ Prevents the incorrect use of <code>super()</code> inside classes.
 It also checks whether a call <code>super()</code> is missing from classes that extends other constructors.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noNonNullAssertion">
+	<a href="/lint/rules/noNonNullAssertion">noNonNullAssertion</a>
+</h3>
+Disallow non-null assertions using the <code>!</code> postfix operator.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noPrecisionLoss">
 	<a href="/lint/rules/noPrecisionLoss">noPrecisionLoss</a>
 </h3>
 Disallow literal numbers that lose precision
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noRedundantUseStrict">
+	<a href="/lint/rules/noRedundantUseStrict">noRedundantUseStrict</a>
+</h3>
+Prevents from having redundant <code>&quot;use strict&quot;</code>.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noSetterReturn">
@@ -568,7 +581,7 @@ Enforce that ARIA state and property values are valid.
 <h3 data-toc-exclude id="useAriaPropsForRole">
 	<a href="/lint/rules/useAriaPropsForRole">useAriaPropsForRole</a>
 </h3>
-Enforce that elements with ARIA roles must have all required attributes for that role
+Enforce that elements with ARIA roles must have all required ARIA attributes for that role.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useCamelCase">
@@ -591,7 +604,6 @@ Enforce default clauses in switch statements to be last
 <section class="rule">
 <h3 data-toc-exclude id="useEnumInitializers">
 	<a href="/lint/rules/useEnumInitializers">useEnumInitializers</a>
-	<span class="recommended">recommended</span>
 </h3>
 Require that each enum member value be explicitly initialized.
 </section>

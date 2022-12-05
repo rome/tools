@@ -23,6 +23,17 @@ Inside the folders, we will have folders for each group that Rome supports.
 When implementing **new rules**, they have to be implemented under the group `nursery`. New rules should
 always be considered unstable/not exhaustive.
 
+In addition to selecting a group, rules may be flagged as `recommended` if they
+should be part of the set of rules that are run in the default configuration of the
+Rome linter. As a general principle, rules should be recommended if they catch actual
+programming errors (for instance detecting a coding pattern that will throw an
+exception at runtime), while the more pedantic rules that check for certain unwanted
+patterns but may have high false positive rates (for instance style-related rules)
+are left off from the recommended set, and the final user should enable them
+explicitly in their configuration. Rules intended to be recommended should be
+flagged as such even if they are still part of the `nursery` group, as unstable rules
+are only enabled by default on unstable builds.
+
 ## Lint rules
 
 This gives to the project time to test the rule, find edge cases, etc.
@@ -288,3 +299,91 @@ use rome_analyze::declare_rule;
      }
  }
  ```
+
+#### Rule configuration
+
+Some rules may allow customization using configuration. The first step is to setup a struct to represent the rule configuartion.
+
+```rust,ignore
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ReactExtensiveDependenciesOptions {
+    hooks_config: HashMap<String, ReactHookConfiguration>,
+    stable_config: HashSet<StableReactHookConfiguration>,
+}
+
+impl Rule for UseExhaustiveDependencies {
+    type Query = Semantic<JsCallExpression>;
+    type State = Fix;
+    type Signals = Vec<Self::State>;
+    type Options = ReactExtensiveDependenciesOptions;
+
+    ...
+}
+```
+
+This allow the rule to be configured inside "rome.json" file like:
+
+```json
+{
+    "linter": {
+        "rules": {
+            "recommended": true,
+            "nursery": {
+                "useExhaustiveDependencies": {
+                    "level": "error",
+                    "options": {
+                        "hooks": [
+                            ["useMyEffect", 0, 1]
+                        ]
+                    }
+                }
+            }
+        },
+    }
+}
+```
+
+In this specific case, we don't want the configuration to replace all the standard React hooks configuration,
+so to have more control on the options deserialization, we can implement the trait `DeserializableRuleOptions`.
+
+In the example below we also deserialize to a struct with a more user friendly schema.
+
+This code run only once when the analyzer is first called.
+
+```rust,ignore
+
+impl DeserializableRuleOptions for ReactExtensiveDependenciesOptions {
+    fn try_from(value: serde_json::Value) -> Result<Self, serde_json::Error> {
+        #[derive(Debug, Deserialize)]
+        #[serde(deny_unknown_fields)]
+        struct Options {
+            #[serde(default)]
+            hooks: Vec<(String, usize, usize)>,
+            #[serde(default)]
+            stables: HashSet<StableReactHookConfiguration>,
+        }
+
+        let options: Options = serde_json::from_value(value)?;
+
+        let mut default = ReactExtensiveDependenciesOptions::default();
+        for (k, closure_index, dependencies_index) in options.hooks.into_iter() {
+            default.hooks_config.insert(
+                k,
+                ReactHookConfiguration {
+                    closure_index,
+                    dependencies_index,
+                },
+            );
+        }
+        default.stable_config.extend(options.stables.into_iter());
+
+        Ok(default)
+    }
+}
+```
+
+If this the rule can retrieve its option with
+
+```rust,ignore
+let options = ctx.options();
+```

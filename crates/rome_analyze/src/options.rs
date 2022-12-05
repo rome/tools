@@ -1,5 +1,8 @@
+use crate::signals::AnalyzerActionIter;
+use crate::AnalyzerSignal;
 use crate::{RuleKey, TextRange, TextSize};
 use rome_diagnostics::{Diagnostic, LineIndexBuf, Resource, SourceCode};
+use rome_rowan::Language;
 use serde::Deserialize;
 use serde_json::Error;
 use serde_json::Value;
@@ -10,7 +13,7 @@ use std::collections::HashMap;
 pub struct RuleOptions(Value);
 
 impl RuleOptions {
-    /// It returns the string contained in [RawValue], for the relative rule
+    /// It returns the deserialized rule option
     pub fn value(&self) -> &Value {
         &self.0
     }
@@ -56,8 +59,8 @@ pub struct AnalyzerOptions {
     pub configuration: AnalyzerConfiguration,
 }
 
-#[derive(Debug, Diagnostic)]
-#[diagnostic(category = "internalError/io")]
+#[derive(Debug, Clone, Diagnostic)]
+#[diagnostic(category = "lint/configuration")]
 pub struct OptionsDeserializationDiagnostic {
     #[message]
     message: String,
@@ -87,7 +90,7 @@ impl OptionsDeserializationDiagnostic {
         });
 
         let message = format!(
-            "Errors emitted while attempting run the rule {rule_name}: \n {}",
+            "Errors while reading options for rule {rule_name}: \n {}",
             error
         );
 
@@ -101,5 +104,16 @@ impl OptionsDeserializationDiagnostic {
                 line_starts: Some(line_starts),
             }),
         }
+    }
+}
+
+impl<L: Language> AnalyzerSignal<L> for OptionsDeserializationDiagnostic {
+    fn diagnostic(&self) -> Option<crate::AnalyzerDiagnostic> {
+        let error = rome_diagnostics::Error::from(self.clone());
+        Some(crate::AnalyzerDiagnostic::from_error(error))
+    }
+
+    fn actions(&self) -> AnalyzerActionIter<L> {
+        AnalyzerActionIter::default()
     }
 }

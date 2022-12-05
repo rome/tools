@@ -21,7 +21,7 @@ const obj = {
 
 <pre class="language-text"><code class="language-text">nursery/noDupeKeys.js:2:5 <a href="https://docs.rome.tools/lint/rules/noDupeKeys">lint/nursery/noDupeKeys</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This property value named a is later overwritten by an object member with the same name.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This property value named a is later overwritten by an object member with the same name.</span>
   
     <strong>1 │ </strong>const obj = {
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>   	a: 1,
@@ -60,7 +60,7 @@ const obj = {
 
 <pre class="language-text"><code class="language-text">nursery/noDupeKeys.js:2:5 <a href="https://docs.rome.tools/lint/rules/noDupeKeys">lint/nursery/noDupeKeys</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This setter named a is later overwritten by an object member with the same name.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This setter named a is later overwritten by an object member with the same name.</span>
   
     <strong>1 │ </strong>const obj = {
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>   	set a(v) {},

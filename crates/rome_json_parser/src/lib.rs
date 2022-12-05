@@ -7,6 +7,7 @@ use rome_json_factory::JsonSyntaxFactory;
 use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 pub use rome_parser::prelude::*;
 use rome_parser::tree_sink::LosslessTreeSink;
+use rome_parser::AnyParse;
 use rome_rowan::AstNode;
 
 mod lexer;
@@ -93,5 +94,18 @@ impl JsonParse {
     /// Panics if the node represented by this parse result mismatches.
     pub fn tree(&self) -> JsonRoot {
         JsonRoot::unwrap_cast(self.syntax())
+    }
+}
+
+impl From<JsonParse> for AnyParse {
+    fn from(parse: JsonParse) -> Self {
+        let root = parse.syntax();
+        let diagnostics = parse.into_diagnostics();
+
+        AnyParse::new(
+            // SAFETY: the parser should always return a root node
+            root.as_send().unwrap(),
+            diagnostics,
+        )
     }
 }

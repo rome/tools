@@ -49,12 +49,32 @@ jobs:
         uses: actions-rs/clippy-check@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          args: --workspace --all-targets --verbose -- --deny warnings
+          args: --workspace --all-targets --all-features --verbose -- --deny warnings -W clippy::cargo -W clippy::dbg_macro -A clippy::cargo_common_metadata
       - name: Run cargo check
         uses: actions-rs/cargo@v1
         with:
           command: check
-          args: --workspace --all-targets --release
+          args: --workspace --all-targets --all-features --release
+
+  check-dependencies:
+    name: Check Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR Branch
+        uses: actions/checkout@v3
+        with:
+          submodules: false
+      - name: Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: "dependencies"
+      - name: Install toolchain
+        run:  rustup toolchain install nightly
+      - name: Install udeps
+        run: cargo install cargo-udeps --locked
+      - name: Run udeps
+        run: cargo +nightly udeps
+
 
   test:
     name: Test

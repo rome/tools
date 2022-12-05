@@ -1,5 +1,5 @@
 use crate::{
-    AnalyzerOptions, AnalyzerSignal, Phases, QueryMatch, Rule, RuleFilter, RuleGroup, ServiceBag,
+    AnalyzerSignal, Phases, QueryMatch, Rule, RuleFilter, RuleGroup, ServiceBag,
     SuppressionCommentEmitter,
 };
 use rome_diagnostics::FileId;
@@ -22,7 +22,6 @@ pub struct MatchQueryParams<'phase, 'query, L: Language> {
     pub query: QueryMatch<L>,
     pub services: &'phase ServiceBag,
     pub signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
-    pub options: &'query AnalyzerOptions,
     pub apply_suppression_comment: SuppressionCommentEmitter<L>,
 }
 
@@ -56,7 +55,7 @@ pub struct RuleKey {
 }
 
 impl RuleKey {
-    pub(crate) fn new(group: &'static str, rule: &'static str) -> Self {
+    pub fn new(group: &'static str, rule: &'static str) -> Self {
         Self { group, rule }
     }
 

@@ -74,23 +74,23 @@ define_dategories! {
     "lint/security/noDangerouslySetInnerHtml": "https://docs.rome.tools/lint/rules/noDangerouslySetInnerHtml",
     "lint/security/noDangerouslySetInnerHtmlWithChildren": "https://docs.rome.tools/lint/rules/noDangerouslySetInnerHtmlWithChildren",
 
-
     // nursery
     "lint/nursery/noAccessKey": "https://docs.rome.tools/lint/rules/noAccessKey",
     "lint/nursery/noBannedTypes":"https://docs.rome.tools/lint/rules/noBannedTypes",
     "lint/nursery/noConditionalAssignment": "https://docs.rome.tools/lint/rules/noConditionalAssignment",
     "lint/nursery/noConstAssign": "https://docs.rome.tools/lint/rules/noConstAssign",
     "lint/nursery/noConstEnum": "https://docs.rome.tools/lint/rules/noConstEnum",
-    "lint/nursery/noDistractingElements": "https://docs.rome.tools/lint/rules/noDistractingElements",
     "lint/nursery/noConstructorReturn": "https://docs.rome.tools/lint/rules/noConstructorReturn",
-    "lint/nursery/noSetterReturn": "https://docs.rome.tools/lint/rules/noSetterReturn",
+    "lint/nursery/noDistractingElements": "https://docs.rome.tools/lint/rules/noDistractingElements",
     "lint/nursery/noDupeKeys":"https://docs.rome.tools/lint/rules/noDupeKeys",
     "lint/nursery/noEmptyInterface": "https://docs.rome.tools/lint/rules/noEmptyInterface",
     "lint/nursery/noExplicitAny": "https://docs.rome.tools/lint/rules/noExplicitAny",
     "lint/nursery/noExtraNonNullAssertion":"https://docs.rome.tools/lint/rules/noExtraNonNullAssertion",
     "lint/nursery/noHeaderScope": "https://docs.rome.tools/lint/rules/noHeaderScope",
     "lint/nursery/noInvalidConstructorSuper": "https://docs.rome.tools/lint/rules/noInvalidConstructorSuper",
+    "lint/nursery/noNonNullAssertion": "https://docs.rome.tools/lint/rules/noNonNullAssertion",
     "lint/nursery/noPrecisionLoss": "https://docs.rome.tools/lint/rules/noPrecisionLoss",
+    "lint/nursery/noSetterReturn": "https://docs.rome.tools/lint/rules/noSetterReturn",
     "lint/nursery/noStringCaseMismatch": "https://docs.rome.tools/lint/rules/noStringCaseMismatch",
     "lint/nursery/noUnsafeFinally": "https://docs.rome.tools/lint/rules/noUnsafeFinally",
     "lint/nursery/noVar": "https://docs.rome.tools/lint/rules/noVar",
@@ -105,6 +105,8 @@ define_dategories! {
     "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
     "lint/nursery/useAriaPropsForRole": "https://docs.rome.tools/lint/rules/useAriaPropsForRole",
     "lint/nursery/useAriaPropTypes": "https://docs.rome.tools/lint/rules/useAriaPropTypes",
+    "lint/nursery/noRedundantUseStrict": "https://docs.rome.tools/lint/rules/noRedundantUseStrict",
+
     ;
 
     // General categories
@@ -113,7 +115,6 @@ define_dategories! {
     "internalError/io",
     "internalError/fs",
     "internalError/panic",
-
     // parse categories
     "parse",
     "parse/noSuperWithoutExtends",
@@ -126,6 +127,7 @@ define_dategories! {
     "lint/a11y",
     "lint/security",
     "lint/nursery",
+    "lint/configuration",
 
     // Suppression comments
     "suppressions/parse",
