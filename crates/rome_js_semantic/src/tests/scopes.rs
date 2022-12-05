@@ -53,6 +53,11 @@ assert_semantics! {
     ",
 }
 
+// modules
+assert_semantics! {
+    ok_scope_module, "module/*START M*/ M {}/*END M*/;",
+}
+
 // Others
 assert_semantics! {
     ok_scope_global, "/*START GLOBAL*//*END GLOBAL*/",

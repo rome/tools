@@ -1,3 +1,5 @@
+/* should not generate diagnostics */
+
 import doSomething from 'a';
 
 // No captures
@@ -28,7 +30,6 @@ function MyComponent3() {
 }
 
 // interaction with other react hooks
-
 function MyComponent4() {
     const [name, setName] = useState(0);
     const ref = useRef();
@@ -63,7 +64,6 @@ function MyComponent4() {
 }
 
 // all hooks with dependencies
-
 function MyComponent5() {
     let a = 1;
     useEffect(() => console.log(a), [a]);
@@ -75,7 +75,6 @@ function MyComponent5() {
 }
 
 // inner closures
-
 function MyComponent5() {
     let a = 1;
     useEffect(() => {
@@ -84,8 +83,7 @@ function MyComponent5() {
     }, [a]);
 }
 
-// from import 
-
+// from import
 function MyComponent6() {
     useEffect(() => {
         doSomething();
@@ -101,10 +99,18 @@ function MyComponent7() {
     }, [someObj.name, someObj.age]);
 }
 
-// Specified dependency cover captures 
-
+// Specified dependency cover captures
 function MyComponent8({ a }) {
     useEffect(() => {
       console.log(a.b);
     }, [a]);
-  }
+}
+
+// Capturing const outside of component
+// https://github.com/rome/tools/issues/3727
+const outside = f();
+function MyComponent9() {
+    useEffect(() => {
+      console.log(outside);
+    });
+}
