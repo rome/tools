@@ -1,7 +1,7 @@
 use rome_rowan::{TextRange, TextSize};
 use std::{ffi::OsStr, fs::read_to_string, ops::Range, path::Path};
 
-use crate::check_reformat::{CheckReformat, CheckReformatParams};
+use crate::check_reformat::CheckReformat;
 use crate::snapshot_builder::{SnapshotBuilder, SnapshotOutput};
 use crate::utils::{get_prettier_diff, strip_prettier_placeholders, PrettierDiff};
 use crate::TestFormatLanguage;
@@ -156,7 +156,9 @@ where
 
                 if !has_errors {
                     let check_reformat = CheckReformat::new(
-                        CheckReformatParams::new(&syntax, &formatted, self.test_file.file_name()),
+                        &syntax,
+                        &formatted,
+                        self.test_file.file_name(),
                         &self.language,
                         self.options.clone(),
                     );

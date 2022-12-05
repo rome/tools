@@ -1,5 +1,5 @@
 use rome_diagnostics::FileId;
-use rome_formatter_test::check_reformat::{CheckReformat, CheckReformatParams};
+use rome_formatter_test::check_reformat::CheckReformat;
 use rome_js_formatter::context::{JsFormatOptions, Semicolons};
 use rome_js_formatter::format_node;
 use rome_js_parser::parse;
@@ -28,11 +28,8 @@ declare module 'x' {
 
     let root = &tree.syntax();
     let language = language::JsTestFormatLanguage::new(SourceType::tsx());
-    let check_reformat = CheckReformat::new(
-        CheckReformatParams::new(root, result.as_code(), "quick_test"),
-        &language,
-        options,
-    );
+    let check_reformat =
+        CheckReformat::new(root, result.as_code(), "quick_test", &language, options);
     check_reformat.check_reformat();
 
     assert_eq!(

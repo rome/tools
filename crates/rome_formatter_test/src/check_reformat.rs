@@ -3,30 +3,7 @@ use rome_diagnostics::console::fmt::{Formatter, Termcolor};
 use rome_diagnostics::console::markup;
 use rome_diagnostics::termcolor;
 use rome_diagnostics::{DiagnosticExt, PrintDiagnostic};
-use rome_formatter::FormatLanguage;
 use rome_rowan::SyntaxNode;
-
-pub struct CheckReformatParams<'a, L>
-where
-    L: FormatLanguage + 'static,
-{
-    root: &'a SyntaxNode<L::SyntaxLanguage>,
-    text: &'a str,
-    file_name: &'a str,
-}
-
-impl<'a, L> CheckReformatParams<'a, L>
-where
-    L: FormatLanguage + 'static,
-{
-    pub fn new(root: &'a SyntaxNode<L::SyntaxLanguage>, text: &'a str, file_name: &'a str) -> Self {
-        CheckReformatParams {
-            root,
-            text,
-            file_name,
-        }
-    }
-}
 
 /// Perform a second pass of formatting on a file, printing a diff if the
 /// output doesn't match the input
@@ -35,7 +12,10 @@ pub struct CheckReformat<'a, 'b, L>
 where
     L: TestFormatLanguage,
 {
-    params: CheckReformatParams<'a, L::FormatLanguage>,
+    root: &'a SyntaxNode<L::SyntaxLanguage>,
+    text: &'a str,
+    file_name: &'a str,
+
     language: &'b L,
     options: L::Options,
 }
@@ -45,25 +25,25 @@ where
     L: TestFormatLanguage,
 {
     pub fn new(
-        params: CheckReformatParams<'a, L::FormatLanguage>,
+        root: &'a SyntaxNode<L::SyntaxLanguage>,
+        text: &'a str,
+        file_name: &'a str,
+
         language: &'b L,
         options: L::Options,
     ) -> Self {
         CheckReformat {
-            params,
+            root,
+            text,
+            file_name,
+
             language,
             options,
         }
     }
 
     pub fn check_reformat(&self) {
-        let CheckReformatParams {
-            root,
-            text,
-            file_name,
-        } = self.params;
-
-        let re_parse = self.language.parse(text);
+        let re_parse = self.language.parse(self.text);
 
         // Panic if the result from the formatter has syntax errors
         if re_parse.has_errors() {
@@ -72,8 +52,8 @@ where
             for diagnostic in re_parse.diagnostics() {
                 let error = diagnostic
                     .clone()
-                    .with_file_path(file_name)
-                    .with_file_source_code(text.to_string());
+                    .with_file_path(self.file_name)
+                    .with_file_source_code(self.text.to_string());
                 Formatter::new(&mut Termcolor(&mut buffer))
                     .write_markup(markup! {
                         {PrintDiagnostic::verbose(&error)}
@@ -93,10 +73,10 @@ where
             .unwrap();
         let printed = formatted.print().unwrap();
 
-        if text != printed.as_code() {
+        if self.text != printed.as_code() {
             let input_format_element = self
                 .language
-                .format_node(self.options.clone(), root)
+                .format_node(self.options.clone(), self.root)
                 .unwrap();
             let pretty_input_ir = format!("{}", formatted.into_document());
             let pretty_reformat_ir = format!("{}", input_format_element.into_document());
@@ -111,7 +91,7 @@ where
 
             println!("{diff}");
 
-            similar_asserts::assert_eq!(text, printed.as_code());
+            similar_asserts::assert_eq!(self.text, printed.as_code());
         }
     }
 }

@@ -1,4 +1,4 @@
-use crate::check_reformat::{CheckReformat, CheckReformatParams};
+use crate::check_reformat::CheckReformat;
 use crate::snapshot_builder::{SnapshotBuilder, SnapshotOutput};
 use crate::TestFormatLanguage;
 use rome_diagnostics::FileId;
@@ -128,7 +128,9 @@ where
 
         if !has_errors {
             let check_reformat = CheckReformat::new(
-                CheckReformatParams::new(&root, printed.as_code(), self.test_file.file_name()),
+                &root,
+                printed.as_code(),
+                self.test_file.file_name(),
                 &self.language,
                 self.options.clone(),
             );
@@ -160,11 +162,9 @@ where
 
                 if !has_errors {
                     let check_reformat = CheckReformat::new(
-                        CheckReformatParams::new(
-                            &root,
-                            printed.as_code(),
-                            self.test_file.file_name(),
-                        ),
+                        &root,
+                        printed.as_code(),
+                        self.test_file.file_name(),
                         &self.language,
                         options.clone(),
                     );

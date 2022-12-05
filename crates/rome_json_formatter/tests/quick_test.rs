@@ -1,5 +1,5 @@
 use rome_diagnostics::FileId;
-use rome_formatter_test::check_reformat::{CheckReformat, CheckReformatParams};
+use rome_formatter_test::check_reformat::CheckReformat;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
 use rome_json_parser::parse_json;
@@ -30,11 +30,8 @@ fn quick_test() {
 
     let root = &parse.syntax();
     let language = language::JsonTestFormatLanguage::default();
-    let check_reformat = CheckReformat::new(
-        CheckReformatParams::new(root, result.as_code(), "quick_test"),
-        &language,
-        options,
-    );
+    let check_reformat =
+        CheckReformat::new(root, result.as_code(), "quick_test", &language, options);
     check_reformat.check_reformat();
 
     assert_eq!(
