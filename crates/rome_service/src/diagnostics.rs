@@ -167,7 +167,12 @@ impl Diagnostic for RomeError {
                     )
                 }
             }
-            RomeError::FormatError(err) => err.message(f),
+            RomeError::FormatError(err) => {
+                f.write_markup(markup! {
+                    "the formatter encountered an error while formatting the file: "
+                })?;
+                err.message(f)
+            },
             RomeError::FormatWithErrorsDisabled => f.write_markup(
                 markup!{  "The file could not be formatted since it has syntax errors and "<Emphasis>"formatWithErrors"</Emphasis>" is disabled" }
             ),
@@ -195,10 +200,9 @@ impl Diagnostic for RomeError {
                 write!(f, "The file {} was ignored", path)
             },
             RomeError::FileTooLarge { path, size, limit } => {
-                let path = format!("{}", path.display());
                 f.write_markup(
                     markup!{
-            "Size of "{{path}}" is "{{Bytes(*size)}}" which exceeds configured maximum of "{{Bytes(*limit)}}" for this project. The file size limit exists to prevent us inadvertently slowing down and loading large files that we shouldn't."
+            "Size of "{{path.display().to_string()}}" is "{{Bytes(*size)}}" which exceeds configured maximum of "{{Bytes(*limit)}}" for this project. The file size limit exists to prevent us inadvertently slowing down and loading large files that we shouldn't."
                     }
                 )
             },
@@ -433,6 +437,7 @@ mod test {
     use crate::file_handlers::Language;
     use crate::{RomeError, TransportError};
     use rome_diagnostics::{print_diagnostic_to_string, DiagnosticExt, Error, FileId};
+    use rome_formatter::FormatError;
     use rome_fs::RomePath;
     use std::path::PathBuf;
 
@@ -464,7 +469,7 @@ mod test {
     fn cant_read_directory() {
         snap_diagnostic(
             "cant_read_directory",
-            RomeError::CantReadDirectory("example/".to_string()).with_file_path("example.js"),
+            RomeError::CantReadDirectory("example/".to_string()).with_file_path("example/"),
         )
     }
 
@@ -536,6 +541,14 @@ mod test {
             "transport_serde_error",
             TransportError::SerdeError("Some serialization/deserialization error".to_string())
                 .into(),
+        )
+    }
+
+    #[test]
+    fn formatter_syntax_error() {
+        snap_diagnostic(
+            "formatter_syntax_error",
+            RomeError::FormatError(FormatError::SyntaxError).with_file_path("example.js"),
         )
     }
 }

@@ -133,13 +133,8 @@ impl std::fmt::Display for Mime {
 }
 
 impl rome_console::fmt::Display for Mime {
-    fn fmt(&self, f: &mut rome_console::fmt::Formatter<'_>) -> std::io::Result<()> {
-        match self {
-            Mime::Css => f.write_markup(markup! { "text/css"}),
-            Mime::Json => f.write_markup(markup! { "application/json"}),
-            Mime::Javascript => f.write_markup(markup! { "application/javascript"}),
-            Mime::Text => f.write_markup(markup! { "text/plain"}),
-        }
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::io::Result<()> {
+        write!(f, "{self}")
     }
 }
 
