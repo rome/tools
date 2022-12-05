@@ -718,6 +718,7 @@ export type Category =
 	| "lint/nursery/useExponentiationOperator"
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/useValidForDirection"
+	| "lint/nursery/useHookAtTopLevel"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
