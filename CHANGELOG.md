@@ -10,29 +10,28 @@
 
 #### Other changes
 
-- `init` command now adds the `$schema` property to the generated `rome.json` file,
-  if` rome` is installed inside the `node_modules` folder. Check the [guide] to know how
-  manually update this property to an existing project.
+- The `init` command now adds the `$schema` property to the generated `rome.json` file
+  if `rome` is installed inside the `node_modules` folder. Follow [this guide] to add the `$schema` property
+  manually in a project with an existing `rome.json` file.
 - Added `--semicolons` argument to the `rome format`, where users can specify whether
   they want semicolons or not in their source code.
 - Rome exists with an error code if it doesn't process any file.
 - Fixed how the maximum number of diagnostics is calculated [#3869](https://github.com/rome/tools/pull/3869).
   Rome now prints the total number of errors caused in the files.
-- Rome now correctly traverses symbolic links, it correctly detects possible loops and
-  doesn't stop the traversal;
-- the new global argument `--colors` now accepts `force`, useful to force colors when
+- Rome now traverses symbolic links and emits warnings if it detects loops, and continues processing the next file during the directory traversal.
+- You can force color output using the new global `--colors` option with the value `force`. Forcing color output can be useful if you spawn Rome as a subprocess. 
   Rome is spawned as a process;
 
 ### Configuration
 
-- Added a `$schema` property, where users can add the JSON schema. This feature provides
+- Added the JSON schema `$schema` property. The schema enables auto-completion by editors and...
   auto-completion and descriptions of all fields of the configuration file.
-- Added a new `files.ignore` option where users can ignore files across the board.
+- Added a new `files.ignore` option where users can ignore files across tools.
 
 ### Editors
 
-- The extension is published [Open VSX](https://open-vsx.org/) too.
-- The extension now correctly resolves the version installed via the `node_modules` folder
+- We also publish Rome to [Open VSX](https://open-vsx.org/).
+- The extension now resolves the Rome version installed in the `node_modules` folder.
 - Fixed an issue where diagnostics were not updated after a change to the configuration file (#3724)[https://github.com/rome/tools/pull/3724]
 - The LSP emits a new action where the user can suppress a rule.
 
