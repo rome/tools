@@ -33,14 +33,14 @@ declare_rule! {
     /// function l([, l]) {}
     /// function foo([[a, b], [c, d]]) {}
     /// ```
-    pub(crate) NoDupeArgs {
+    pub(crate) NoDuplicateParameters {
         version: "0.9.0",
-        name: "noDupeArgs",
+        name: "noDuplicateParameters",
         recommended: true,
     }
 }
 
-impl Rule for NoDupeArgs {
+impl Rule for NoDuplicateParameters {
     type Query = Ast<AnyJsFunctionAndMethod>;
     type State = JsIdentifierBinding;
     type Signals = Option<Self::State>;

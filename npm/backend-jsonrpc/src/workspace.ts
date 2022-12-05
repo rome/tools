@@ -312,7 +312,7 @@ export interface Nursery {
 	/**
 	 * Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
 	 */
-	noDupeKeys?: RuleConfiguration;
+	noDuplicateObjectKeys?: RuleConfiguration;
 	/**
 	 * Disallow the declaration of empty interfaces.
 	 */
@@ -536,7 +536,7 @@ export interface Suspicious {
 	/**
 	 * Disallow duplicate function arguments name.
 	 */
-	noDupeArgs?: RuleConfiguration;
+	noDuplicateParameters?: RuleConfiguration;
 	/**
 	 * Disallow the any type usage
 	 */
@@ -684,7 +684,7 @@ export type Category =
 	| "lint/nursery/noConstEnum"
 	| "lint/nursery/noConstructorReturn"
 	| "lint/nursery/noDistractingElements"
-	| "lint/nursery/noDupeKeys"
+	| "lint/nursery/noDuplicateObjectKeys"
 	| "lint/nursery/noEmptyInterface"
 	| "lint/nursery/noExtraNonNullAssertion"
 	| "lint/nursery/noHeaderScope"
@@ -732,7 +732,7 @@ export type Category =
 	| "lint/suspicious/noCompareNegZero"
 	| "lint/suspicious/noDebugger"
 	| "lint/suspicious/noDoubleEquals"
-	| "lint/suspicious/noDupeArgs"
+	| "lint/suspicious/noDuplicateParameters"
 	| "lint/suspicious/noExplicitAny"
 	| "lint/suspicious/noFunctionAssign"
 	| "lint/suspicious/noImportAssign"

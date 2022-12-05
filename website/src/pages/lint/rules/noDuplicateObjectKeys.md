@@ -1,9 +1,9 @@
 ---
-title: Lint Rule noDupeKeys
+title: Lint Rule noDuplicateObjectKeys
 parent: lint/rules/index
 ---
 
-# noDupeKeys (since v11.0.0)
+# noDuplicateObjectKeys (since v11.0.0)
 
 Prevents object literals having more than one property declaration for the same name.
 If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
@@ -19,7 +19,7 @@ const obj = {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noDupeKeys.js:2:5 <a href="https://docs.rome.tools/lint/rules/noDupeKeys">lint/nursery/noDupeKeys</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noDuplicateObjectKeys.js:2:5 <a href="https://docs.rome.tools/lint/rules/noDuplicateObjectKeys">lint/nursery/noDuplicateObjectKeys</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This property value named a is later overwritten by an object member with the same name.</span>
   
@@ -58,7 +58,7 @@ const obj = {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noDupeKeys.js:2:5 <a href="https://docs.rome.tools/lint/rules/noDupeKeys">lint/nursery/noDupeKeys</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noDuplicateObjectKeys.js:2:5 <a href="https://docs.rome.tools/lint/rules/noDuplicateObjectKeys">lint/nursery/noDuplicateObjectKeys</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This setter named a is later overwritten by an object member with the same name.</span>
   

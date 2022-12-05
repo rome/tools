@@ -1,9 +1,9 @@
 ---
-title: Lint Rule noDupeArgs
+title: Lint Rule noDuplicateParameters
 parent: lint/rules/index
 ---
 
-# noDupeArgs (since v0.9.0)
+# noDuplicateParameters (since v0.9.0)
 
 > This rule is recommended by Rome.
 
@@ -17,7 +17,7 @@ Disallow duplicate function arguments name.
 var f = function(a, b, b) {}
 ```
 
-<pre class="language-text"><code class="language-text">suspicious/noDupeArgs.js:1:24 <a href="https://docs.rome.tools/lint/rules/noDupeArgs">lint/suspicious/noDupeArgs</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noDuplicateParameters.js:1:24 <a href="https://docs.rome.tools/lint/rules/noDuplicateParameters">lint/suspicious/noDuplicateParameters</a> ━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Duplicate argument name</span>
   
@@ -31,7 +31,7 @@ var f = function(a, b, b) {}
 function b(a, b, b) {}
 ```
 
-<pre class="language-text"><code class="language-text">suspicious/noDupeArgs.js:1:18 <a href="https://docs.rome.tools/lint/rules/noDupeArgs">lint/suspicious/noDupeArgs</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noDuplicateParameters.js:1:18 <a href="https://docs.rome.tools/lint/rules/noDuplicateParameters">lint/suspicious/noDuplicateParameters</a> ━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Duplicate argument name</span>
   

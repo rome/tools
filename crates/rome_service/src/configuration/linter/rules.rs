@@ -736,7 +736,7 @@ struct NurserySchema {
     #[doc = "Enforces that no distracting elements are used."]
     no_distracting_elements: Option<RuleConfiguration>,
     #[doc = "Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake."]
-    no_dupe_keys: Option<RuleConfiguration>,
+    no_duplicate_object_keys: Option<RuleConfiguration>,
     #[doc = "Disallow the declaration of empty interfaces."]
     no_empty_interface: Option<RuleConfiguration>,
     #[doc = "Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files."]
@@ -793,7 +793,7 @@ impl Nursery {
         "noConstEnum",
         "noConstructorReturn",
         "noDistractingElements",
-        "noDupeKeys",
+        "noDuplicateObjectKeys",
         "noEmptyInterface",
         "noExtraNonNullAssertion",
         "noHeaderScope",
@@ -824,7 +824,7 @@ impl Nursery {
         "noConstEnum",
         "noConstructorReturn",
         "noDistractingElements",
-        "noDupeKeys",
+        "noDuplicateObjectKeys",
         "noEmptyInterface",
         "noExtraNonNullAssertion",
         "noHeaderScope",
@@ -1245,7 +1245,7 @@ struct SuspiciousSchema {
     #[doc = "Require the use of === and !=="]
     no_double_equals: Option<RuleConfiguration>,
     #[doc = "Disallow duplicate function arguments name."]
-    no_dupe_args: Option<RuleConfiguration>,
+    no_duplicate_parameters: Option<RuleConfiguration>,
     #[doc = "Disallow the any type usage"]
     no_explicit_any: Option<RuleConfiguration>,
     #[doc = "Disallow reassigning function declarations."]
@@ -1273,7 +1273,7 @@ impl Suspicious {
         "noCompareNegZero",
         "noDebugger",
         "noDoubleEquals",
-        "noDupeArgs",
+        "noDuplicateParameters",
         "noExplicitAny",
         "noFunctionAssign",
         "noImportAssign",
@@ -1291,7 +1291,7 @@ impl Suspicious {
         "noCompareNegZero",
         "noDebugger",
         "noDoubleEquals",
-        "noDupeArgs",
+        "noDuplicateParameters",
         "noExplicitAny",
         "noFunctionAssign",
         "noImportAssign",

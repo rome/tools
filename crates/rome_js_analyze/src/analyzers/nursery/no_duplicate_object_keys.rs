@@ -53,9 +53,9 @@ declare_rule! {
     /// }
     /// ```
     ///
-    pub(crate) NoDupeKeys {
+    pub(crate) NoDuplicateObjectKeys {
         version: "11.0.0",
-        name: "noDupeKeys",
+        name: "noDuplicateObjectKeys",
         recommended: true, // should be once out of nursery
     }
 }
@@ -201,7 +201,7 @@ impl DefinedProperty {
     }
 }
 
-impl Rule for NoDupeKeys {
+impl Rule for NoDuplicateObjectKeys {
     type Query = Ast<JsObjectExpression>;
     type State = PropertyConflict;
     type Signals = Vec<Self::State>;

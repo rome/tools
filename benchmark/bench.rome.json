@@ -14,7 +14,7 @@
                 "noDebugger": "error",
                 "noDelete": "error",
                 "noDoubleEquals": "error",
-                "noDupeArgs": "error",
+                "noDuplicateParameters": "error",
                 "noEmptyPattern": "error",
                 "noFunctionAssign": "error",
                 "noImportAssign": "error",

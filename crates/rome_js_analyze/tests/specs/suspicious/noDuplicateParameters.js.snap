@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-expression: noDupeArgs.js
+expression: noDuplicateParameters.js
 ---
 # Input
 ```js
@@ -43,7 +43,7 @@ export function f2(a, b, c = (a, b, b) => {}) {}
 
 # Diagnostics
 ```
-noDupeArgs.js:9:18 lint/suspicious/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateParameters.js:9:18 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Duplicate argument name
   
@@ -58,7 +58,7 @@ noDupeArgs.js:9:18 lint/suspicious/noDupeArgs ━━━━━━━━━━━�
 ```
 
 ```
-noDupeArgs.js:11:15 lint/suspicious/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateParameters.js:11:15 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Duplicate argument name
   
@@ -73,7 +73,7 @@ noDupeArgs.js:11:15 lint/suspicious/noDupeArgs ━━━━━━━━━━━
 ```
 
 ```
-noDupeArgs.js:13:18 lint/suspicious/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateParameters.js:13:18 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Duplicate argument name
   
@@ -88,7 +88,7 @@ noDupeArgs.js:13:18 lint/suspicious/noDupeArgs ━━━━━━━━━━━
 ```
 
 ```
-noDupeArgs.js:15:18 lint/suspicious/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateParameters.js:15:18 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Duplicate argument name
   
@@ -103,7 +103,7 @@ noDupeArgs.js:15:18 lint/suspicious/noDupeArgs ━━━━━━━━━━━
 ```
 
 ```
-noDupeArgs.js:17:25 lint/suspicious/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateParameters.js:17:25 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Duplicate argument name
   
@@ -118,7 +118,7 @@ noDupeArgs.js:17:25 lint/suspicious/noDupeArgs ━━━━━━━━━━━
 ```
 
 ```
-noDupeArgs.js:20:9 lint/suspicious/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateParameters.js:20:9 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Duplicate argument name
   
@@ -132,7 +132,7 @@ noDupeArgs.js:20:9 lint/suspicious/noDupeArgs ━━━━━━━━━━━�
 ```
 
 ```
-noDupeArgs.js:24:18 lint/suspicious/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateParameters.js:24:18 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Duplicate argument name
   
@@ -146,7 +146,7 @@ noDupeArgs.js:24:18 lint/suspicious/noDupeArgs ━━━━━━━━━━━
 ```
 
 ```
-noDupeArgs.js:29:25 lint/suspicious/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateParameters.js:29:25 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Duplicate argument name
   
@@ -161,7 +161,7 @@ noDupeArgs.js:29:25 lint/suspicious/noDupeArgs ━━━━━━━━━━━
 ```
 
 ```
-noDupeArgs.js:31:32 lint/suspicious/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateParameters.js:31:32 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Duplicate argument name
   
@@ -176,7 +176,7 @@ noDupeArgs.js:31:32 lint/suspicious/noDupeArgs ━━━━━━━━━━━
 ```
 
 ```
-noDupeArgs.js:32:31 lint/suspicious/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateParameters.js:32:31 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Duplicate argument name
   
@@ -190,7 +190,7 @@ noDupeArgs.js:32:31 lint/suspicious/noDupeArgs ━━━━━━━━━━━
 ```
 
 ```
-noDupeArgs.js:34:37 lint/suspicious/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateParameters.js:34:37 lint/suspicious/noDuplicateParameters ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Duplicate argument name
   

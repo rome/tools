@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-expression: noDupeKeys.js
+expression: noDuplicateObjectKeys.js
 ---
 # Input
 ```js
@@ -52,7 +52,7 @@ var { a, a } = obj;
 
 # Diagnostics
 ```
-noDupeKeys.js:3:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateObjectKeys.js:3:4 lint/nursery/noDuplicateObjectKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This property value named a is later overwritten by an object member with the same name.
   
@@ -82,7 +82,7 @@ noDupeKeys.js:3:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━�
 ```
 
 ```
-noDupeKeys.js:4:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateObjectKeys.js:4:4 lint/nursery/noDuplicateObjectKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This property value named a is later overwritten by an object member with the same name.
   
@@ -110,7 +110,7 @@ noDupeKeys.js:4:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━�
 ```
 
 ```
-noDupeKeys.js:4:10 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateObjectKeys.js:4:10 lint/nursery/noDuplicateObjectKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This property value named a is later overwritten by an object member with the same name.
   
@@ -138,7 +138,7 @@ noDupeKeys.js:4:10 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━
 ```
 
 ```
-noDupeKeys.js:5:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateObjectKeys.js:5:4 lint/nursery/noDuplicateObjectKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This property value named  is later overwritten by an object member with the same name.
   
@@ -168,7 +168,7 @@ noDupeKeys.js:5:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━�
 ```
 
 ```
-noDupeKeys.js:6:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateObjectKeys.js:6:4 lint/nursery/noDuplicateObjectKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This property value named z is later overwritten by an object member with the same name.
   
@@ -198,7 +198,7 @@ noDupeKeys.js:6:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━�
 ```
 
 ```
-noDupeKeys.js:7:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateObjectKeys.js:7:4 lint/nursery/noDuplicateObjectKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This getter named a is later overwritten by an object member with the same name.
   
@@ -228,7 +228,7 @@ noDupeKeys.js:7:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━�
 ```
 
 ```
-noDupeKeys.js:8:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateObjectKeys.js:8:4 lint/nursery/noDuplicateObjectKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This setter named a is later overwritten by an object member with the same name.
   
@@ -258,7 +258,7 @@ noDupeKeys.js:8:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━�
 ```
 
 ```
-noDupeKeys.js:9:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateObjectKeys.js:9:4 lint/nursery/noDuplicateObjectKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This property value named a is later overwritten by an object member with the same name.
   
@@ -288,7 +288,7 @@ noDupeKeys.js:9:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━�
 ```
 
 ```
-noDupeKeys.js:10:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateObjectKeys.js:10:4 lint/nursery/noDuplicateObjectKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This property value named a is later overwritten by an object member with the same name.
   
@@ -318,7 +318,7 @@ noDupeKeys.js:10:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━
 ```
 
 ```
-noDupeKeys.js:11:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateObjectKeys.js:11:4 lint/nursery/noDuplicateObjectKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This getter named a is later overwritten by an object member with the same name.
   
@@ -348,7 +348,7 @@ noDupeKeys.js:11:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━
 ```
 
 ```
-noDupeKeys.js:12:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateObjectKeys.js:12:4 lint/nursery/noDuplicateObjectKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This setter named a is later overwritten by an object member with the same name.
   
@@ -378,7 +378,7 @@ noDupeKeys.js:12:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━
 ```
 
 ```
-noDupeKeys.js:13:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateObjectKeys.js:13:4 lint/nursery/noDuplicateObjectKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This property value named a is later overwritten by an object member with the same name.
   
@@ -408,7 +408,7 @@ noDupeKeys.js:13:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━
 ```
 
 ```
-noDupeKeys.js:14:16 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateObjectKeys.js:14:16 lint/nursery/noDuplicateObjectKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This property value named a is later overwritten by an object member with the same name.
   
@@ -438,7 +438,7 @@ noDupeKeys.js:14:16 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━�
 ```
 
 ```
-noDupeKeys.js:15:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateObjectKeys.js:15:4 lint/nursery/noDuplicateObjectKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This getter named a is later overwritten by an object member with the same name.
   
@@ -468,7 +468,7 @@ noDupeKeys.js:15:4 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━
 ```
 
 ```
-noDupeKeys.js:15:16 lint/nursery/noDupeKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDuplicateObjectKeys.js:15:16 lint/nursery/noDuplicateObjectKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This setter named a is later overwritten by an object member with the same name.
   
