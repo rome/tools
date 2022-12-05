@@ -54,11 +54,13 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
             }
         },
         "correctness": {
+            "noUnreachable": "off"
+        },
+        "suspicious": {
             "noCatchAssign": "error",
             "noLabelVar": {
                 "level": "warn"
-            },
-            "noUnreachable": "off"
+            }
         }
     }
   },
@@ -110,7 +112,7 @@ pub const CONFIG_LINTER_SUPPRESSED_RULE: &str = r#"{
   "linter": {
     "rules": {
         "recommended": true,
-        "correctness": {
+        "suspicious": {
             "noDebugger": "off"
         }
     }
@@ -132,7 +134,7 @@ pub const CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC: &str = r#"{
   "linter": {
     "rules": {
         "recommended": true,
-        "correctness": {
+        "suspicious": {
             "noDebugger": "warn"
         }
     }

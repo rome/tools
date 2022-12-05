@@ -67,7 +67,7 @@ declare_rule! {
     pub(crate) UseBlockStatements {
         version: "0.7.0",
         name: "useBlockStatements",
-        recommended: true,
+        recommended: false,
     }
 }
 

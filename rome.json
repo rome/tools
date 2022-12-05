@@ -1,14 +1,15 @@
 {
 	"linter": {
 		"rules": {
-			"recommended": true,
-			"nursery": {
-				"noConstAssign": "error"
-			}
+			"recommended": true
 		},
-		"ignore": ["website/build"]
+		"ignore": [
+			"website/build"
+		]
 	},
 	"formatter": {
-		"ignore": ["website/build"]
+		"ignore": [
+			"website/build"
+		]
 	}
 }

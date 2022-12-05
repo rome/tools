@@ -43,6 +43,10 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
 
     let (group, rule) = parse_test_path(input_file);
 
+    if rome_js_analyze::metadata().find_rule(group, rule).is_none() {
+        panic!("could not find rule {group}/{rule}");
+    }
+
     let rule_filter = RuleFilter::Rule(group, rule);
     let filter = AnalysisFilter {
         enabled_rules: Some(slice::from_ref(&rule_filter)),
@@ -202,8 +206,8 @@ pub(crate) fn write_analysis_to_snapshot(
 /// one-to-one mapping between test case and analyzer rules, so each testing
 /// file will be run through the analyzer with only the rule corresponding
 /// to the file name (or the name of the parent directory if it's not "specs")
-/// enabled, eg. `correctness/useWhile.js` and `correctness/useWhile/test.js` will be analyzed with
-/// just the `correctness-ignore lint(correctness/useW/useWhile` rule
+/// enabled, eg. `style/useWhile.js` and `style/useWhile/test.js` will be analyzed with
+/// just the `style/useWhile` rule
 fn parse_test_path(file: &Path) -> (&str, &str) {
     let file_stem = file.file_stem().unwrap();
 

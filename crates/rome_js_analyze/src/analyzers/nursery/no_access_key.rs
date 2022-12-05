@@ -39,7 +39,7 @@ declare_rule! {
     pub(crate) NoAccessKey {
         version: "11.0.0",
         name: "noAccessKey",
-        recommended: true,
+        recommended: false,
     }
 }
 

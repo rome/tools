@@ -1,0 +1,219 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noFunctionAssign.js
+---
+# Input
+```js
+function foo() { };
+foo = bar;
+
+function foo2() { foo2 = bar; }
+
+foo3 = bar;
+function foo3() { };
+
+[foo4] = bar;
+function foo4() { };
+
+({ x: foo5 = 0 } = bar);
+function foo5() { };
+
+function foo6() { [foo6] = bar; }
+
+(function () { ({ x: foo7 = 0 } = bar); function foo7() { }; })();
+
+// Valid
+function foo8() { var foo8 = bar; }
+function foo9(foo9) { foo9 = bar; }
+function foo10() { var foo10; foo10 = bar; }
+var foo11 = () => { }; foo11 = bar;
+var foo12 = function () { }; foo12 = bar;
+var foo13 = function () { foo13 = bar; };
+```
+
+# Diagnostics
+```
+noFunctionAssign.js:1:10 lint/suspicious/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not reassign a function declaration.
+  
+  > 1 │ function foo() { };
+      │          ^^^
+    2 │ foo = bar;
+    3 │ 
+  
+  i Reassigned here.
+  
+    1 │ function foo() { };
+  > 2 │ foo = bar;
+      │ ^^^
+    3 │ 
+    4 │ function foo2() { foo2 = bar; }
+  
+  i Use a local variable instead.
+  
+
+```
+
+```
+noFunctionAssign.js:4:10 lint/suspicious/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not reassign a function declaration.
+  
+    2 │ foo = bar;
+    3 │ 
+  > 4 │ function foo2() { foo2 = bar; }
+      │          ^^^^
+    5 │ 
+    6 │ foo3 = bar;
+  
+  i Reassigned here.
+  
+    2 │ foo = bar;
+    3 │ 
+  > 4 │ function foo2() { foo2 = bar; }
+      │                   ^^^^
+    5 │ 
+    6 │ foo3 = bar;
+  
+  i Use a local variable instead.
+  
+
+```
+
+```
+noFunctionAssign.js:7:10 lint/suspicious/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not reassign a function declaration.
+  
+    6 │ foo3 = bar;
+  > 7 │ function foo3() { };
+      │          ^^^^
+    8 │ 
+    9 │ [foo4] = bar;
+  
+  i Reassigned here.
+  
+    4 │ function foo2() { foo2 = bar; }
+    5 │ 
+  > 6 │ foo3 = bar;
+      │ ^^^^
+    7 │ function foo3() { };
+    8 │ 
+  
+  i Reassignment happens here because the function declaration is hoisted.
+  
+  i Use a local variable instead.
+  
+
+```
+
+```
+noFunctionAssign.js:10:10 lint/suspicious/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not reassign a function declaration.
+  
+     9 │ [foo4] = bar;
+  > 10 │ function foo4() { };
+       │          ^^^^
+    11 │ 
+    12 │ ({ x: foo5 = 0 } = bar);
+  
+  i Reassigned here.
+  
+     7 │ function foo3() { };
+     8 │ 
+   > 9 │ [foo4] = bar;
+       │  ^^^^
+    10 │ function foo4() { };
+    11 │ 
+  
+  i Reassignment happens here because the function declaration is hoisted.
+  
+  i Use a local variable instead.
+  
+
+```
+
+```
+noFunctionAssign.js:13:10 lint/suspicious/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not reassign a function declaration.
+  
+    12 │ ({ x: foo5 = 0 } = bar);
+  > 13 │ function foo5() { };
+       │          ^^^^
+    14 │ 
+    15 │ function foo6() { [foo6] = bar; }
+  
+  i Reassigned here.
+  
+    10 │ function foo4() { };
+    11 │ 
+  > 12 │ ({ x: foo5 = 0 } = bar);
+       │       ^^^^
+    13 │ function foo5() { };
+    14 │ 
+  
+  i Reassignment happens here because the function declaration is hoisted.
+  
+  i Use a local variable instead.
+  
+
+```
+
+```
+noFunctionAssign.js:15:10 lint/suspicious/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not reassign a function declaration.
+  
+    13 │ function foo5() { };
+    14 │ 
+  > 15 │ function foo6() { [foo6] = bar; }
+       │          ^^^^
+    16 │ 
+    17 │ (function () { ({ x: foo7 = 0 } = bar); function foo7() { }; })();
+  
+  i Reassigned here.
+  
+    13 │ function foo5() { };
+    14 │ 
+  > 15 │ function foo6() { [foo6] = bar; }
+       │                    ^^^^
+    16 │ 
+    17 │ (function () { ({ x: foo7 = 0 } = bar); function foo7() { }; })();
+  
+  i Use a local variable instead.
+  
+
+```
+
+```
+noFunctionAssign.js:17:50 lint/suspicious/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not reassign a function declaration.
+  
+    15 │ function foo6() { [foo6] = bar; }
+    16 │ 
+  > 17 │ (function () { ({ x: foo7 = 0 } = bar); function foo7() { }; })();
+       │                                                  ^^^^
+    18 │ 
+    19 │ // Valid
+  
+  i Reassigned here.
+  
+    15 │ function foo6() { [foo6] = bar; }
+    16 │ 
+  > 17 │ (function () { ({ x: foo7 = 0 } = bar); function foo7() { }; })();
+       │                      ^^^^
+    18 │ 
+    19 │ // Valid
+  
+  i Reassignment happens here because the function declaration is hoisted.
+  
+  i Use a local variable instead.
+  
+
+```
+
+
