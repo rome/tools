@@ -12,7 +12,7 @@ Enforce all dependencies are correctly specified.
 ### Invalid
 
 ```jsx
-function f() {
+function component() {
     let a = 1;
     useEffect(() => {
         console.log(a);
@@ -24,7 +24,7 @@ function f() {
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This hook do not specify all of its dependencies.</span>
   
-    <strong>1 │ </strong>function f() {
+    <strong>1 │ </strong>function component() {
     <strong>2 │ </strong>    let a = 1;
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>3 │ </strong>    useEffect(() =&gt; {
    <strong>   │ </strong>    <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -43,7 +43,7 @@ function f() {
 </code></pre>
 
 ```jsx
-function f() {
+function component() {
     let b = 1;
     useEffect(() => {
     }, [b]);
@@ -54,7 +54,7 @@ function f() {
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This hook specifies more dependencies than necessary.</span>
   
-    <strong>1 │ </strong>function f() {
+    <strong>1 │ </strong>function component() {
     <strong>2 │ </strong>    let b = 1;
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>3 │ </strong>    useEffect(() =&gt; {
    <strong>   │ </strong>    <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -73,7 +73,7 @@ function f() {
 </code></pre>
 
 ```jsx
-function f() {
+function component() {
     const [name, setName] = useState();
     useEffect(() => {
         console.log(name);
@@ -86,7 +86,7 @@ function f() {
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This hook specifies more dependencies than necessary.</span>
   
-    <strong>1 │ </strong>function f() {
+    <strong>1 │ </strong>function component() {
     <strong>2 │ </strong>    const [name, setName] = useState();
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>3 │ </strong>    useEffect(() =&gt; {
    <strong>   │ </strong>    <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -105,7 +105,7 @@ function f() {
 </code></pre>
 
 ```jsx
-function f() {
+function component() {
     let a = 1;
     const b = a + 1;
     useEffect(() => {
@@ -139,7 +139,7 @@ function f() {
 ## Valid
 
 ```jsx
-function f() {
+function component() {
     let a = 1;
     useEffect(() => {
         console.log(a);
@@ -148,7 +148,7 @@ function f() {
 ```
 
 ```jsx
-function f() {
+function component() {
     const a = 1;
     useEffect(() => {
         console.log(a);
@@ -157,7 +157,7 @@ function f() {
 ```
 
 ```jsx
-function f() {
+function component() {
     const [name, setName] = useState();
     useEffect(() => {
         console.log(name);
