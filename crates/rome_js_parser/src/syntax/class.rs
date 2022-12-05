@@ -1674,7 +1674,7 @@ bitflags! {
         const ABSTRACT      = 1 << 6;
         const OVERRIDE      = 1 << 7;
         const PRIVATE_NAME  = 1 << 8;
-        const ACCESSOR      = 1 << 9; // TODO: order is important?
+        const ACCESSOR      = 1 << 9;
 
         const ACCESSIBILITY = ModifierFlags::PRIVATE.bits | ModifierFlags::PROTECTED.bits | ModifierFlags::PUBLIC.bits;
     }
