@@ -234,9 +234,10 @@ fn compute_source_type_from_path_or_extension(
     file_name: &str,
     extension: &str,
 ) -> Result<SourceType, SourceTypeError> {
-    let source_type = if file_name.ends_with(".d.ts") || file_name.ends_with(".d.mts") {
-        SourceType::d_ts()
-    } else if file_name.ends_with(".d.cts") {
+    let source_type = if file_name.ends_with(".d.ts")
+        || file_name.ends_with(".d.mts")
+        || file_name.ends_with(".d.cts")
+    {
         SourceType::d_ts()
     } else {
         match extension {
