@@ -29,6 +29,24 @@ type valid9<T> = T extends Array<infer R> ? R : any;
 // mapped type
 type valid10<T> = { [K in keyof T]: T[K] };
 
+// valid
+let readonlyValid1: ReadonlyArray<Foo | Bar>;
+let readonlyValid2: ReadonlyArray<keyof Bar>;
+let readonlyValid3: ReadonlyArray<foo | bar>;
+let readonlyValid5: ReadonlyArray<string & number>;
+let readonlyValid6: ReadonlyArray<() => string>;
+type readonlyValid7<T> = ReadonlyArray<T extends string ? string : number>
+type readonlyValid8 = ReadonlyArray<new (string, number) => string>
+let readonlyValid8: ReadonlyArray<(string & number)>;
+type readonlyValid9<T> = T extends ReadonlyArray<infer R> ? R : any;
+type readonlyValid10<T> = { [K in keyof T]: T[K] };
+
+// invalid
+let readonlyInvalid1: ReadonlyArray<foo>;
+let readonlyInvalid2: Promise<ReadonlyArray<string>>;
+let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
+let readonlyInvalid4: ReadonlyArray<[number, number]>;
+
 ```
 
 # Diagnostics
@@ -195,6 +213,123 @@ useShorthandArrayType.ts:20:13 lint/style/useShorthandArrayType  FIXABLE  ━━
        20 │ + let·valid8:·(string·&·number)[];
     21 21 │   // infer type
     22 22 │   type valid9<T> = T extends Array<infer R> ? R : any;
+  
+
+```
+
+```
+useShorthandArrayType.ts:34:21 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand readonly T[] syntax instead of ReadonlyArray<T> syntax.
+  
+    32 │ type readonlyValid7<T> = ReadonlyArray<T extends string ? string : number>
+    33 │ type readonlyValid8 = ReadonlyArray<new (string, number) => string>
+  > 34 │ let readonlyValid8: ReadonlyArray<(string & number)>;
+       │                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    35 │ type readonlyValid9<T> = T extends ReadonlyArray<infer R> ? R : any;
+    36 │ type readonlyValid10<T> = { [K in keyof T]: T[K] };
+  
+  i Suggested fix: Use shorthand readonly T[] syntax to replace
+  
+    32 32 │   type readonlyValid7<T> = ReadonlyArray<T extends string ? string : number>
+    33 33 │   type readonlyValid8 = ReadonlyArray<new (string, number) => string>
+    34    │ - let·readonlyValid8:·ReadonlyArray<(string·&·number)>;
+       34 │ + let·readonlyValid8:·readonly·(string·&·number)[];
+    35 35 │   type readonlyValid9<T> = T extends ReadonlyArray<infer R> ? R : any;
+    36 36 │   type readonlyValid10<T> = { [K in keyof T]: T[K] };
+  
+
+```
+
+```
+useShorthandArrayType.ts:39:23 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand readonly T[] syntax instead of ReadonlyArray<T> syntax.
+  
+    38 │ // invalid
+  > 39 │ let readonlyInvalid1: ReadonlyArray<foo>;
+       │                       ^^^^^^^^^^^^^^^^^^
+    40 │ let readonlyInvalid2: Promise<ReadonlyArray<string>>;
+    41 │ let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
+  
+  i Suggested fix: Use shorthand readonly T[] syntax to replace
+  
+    37 37 │   
+    38 38 │   // invalid
+    39    │ - let·readonlyInvalid1:·ReadonlyArray<foo>;
+       39 │ + let·readonlyInvalid1:·readonly·foo[];
+    40 40 │   let readonlyInvalid2: Promise<ReadonlyArray<string>>;
+    41 41 │   let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
+  
+
+```
+
+```
+useShorthandArrayType.ts:40:31 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand readonly T[] syntax instead of ReadonlyArray<T> syntax.
+  
+    38 │ // invalid
+    39 │ let readonlyInvalid1: ReadonlyArray<foo>;
+  > 40 │ let readonlyInvalid2: Promise<ReadonlyArray<string>>;
+       │                               ^^^^^^^^^^^^^^^^^^^^^
+    41 │ let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
+    42 │ let readonlyInvalid4: ReadonlyArray<[number, number]>;
+  
+  i Suggested fix: Use shorthand readonly T[] syntax to replace
+  
+    38 38 │   // invalid
+    39 39 │   let readonlyInvalid1: ReadonlyArray<foo>;
+    40    │ - let·readonlyInvalid2:·Promise<ReadonlyArray<string>>;
+       40 │ + let·readonlyInvalid2:·Promise<readonly·string[]>;
+    41 41 │   let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
+    42 42 │   let readonlyInvalid4: ReadonlyArray<[number, number]>;
+  
+
+```
+
+```
+useShorthandArrayType.ts:41:23 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand readonly T[] syntax instead of ReadonlyArray<T> syntax.
+  
+    39 │ let readonlyInvalid1: ReadonlyArray<foo>;
+    40 │ let readonlyInvalid2: Promise<ReadonlyArray<string>>;
+  > 41 │ let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
+       │                       ^^^^^^^^^^^^^^^^^^^^^^^
+    42 │ let readonlyInvalid4: ReadonlyArray<[number, number]>;
+    43 │ 
+  
+  i Suggested fix: Use shorthand readonly T[] syntax to replace
+  
+    39 39 │   let readonlyInvalid1: ReadonlyArray<foo>;
+    40 40 │   let readonlyInvalid2: Promise<ReadonlyArray<string>>;
+    41    │ - let·readonlyInvalid3:·ReadonlyArray<Foo<Bar>>;
+       41 │ + let·readonlyInvalid3:·readonly·Foo<Bar>[];
+    42 42 │   let readonlyInvalid4: ReadonlyArray<[number, number]>;
+    43 43 │   
+  
+
+```
+
+```
+useShorthandArrayType.ts:42:23 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand readonly T[] syntax instead of ReadonlyArray<T> syntax.
+  
+    40 │ let readonlyInvalid2: Promise<ReadonlyArray<string>>;
+    41 │ let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
+  > 42 │ let readonlyInvalid4: ReadonlyArray<[number, number]>;
+       │                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    43 │ 
+  
+  i Suggested fix: Use shorthand readonly T[] syntax to replace
+  
+    40 40 │   let readonlyInvalid2: Promise<ReadonlyArray<string>>;
+    41 41 │   let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
+    42    │ - let·readonlyInvalid4:·ReadonlyArray<[number,·number]>;
+       42 │ + let·readonlyInvalid4:·readonly·[number,·number][];
+    43 43 │   
   
 
 ```

@@ -2069,7 +2069,6 @@ TsImportTypeQualifier =
 
 
 TsArrayType =
-	'readonly'?
 	element_type: AnyTsType
 	'['
 	']'

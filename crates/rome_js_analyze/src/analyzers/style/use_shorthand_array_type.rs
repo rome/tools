@@ -2,8 +2,10 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::{AnyTsType, TriviaPieceKind, TsReferenceType, TsTypeArguments, T};
-use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt};
+use rome_js_syntax::{
+    AnyTsType, JsSyntaxKind, JsSyntaxToken, TriviaPieceKind, TsReferenceType, TsTypeArguments, T,
+};
+use rome_rowan::{AstNode, AstSeparatedList, BatchMutationExt, TriviaPiece};
 
 use crate::JsRuleAction;
 
@@ -43,13 +45,20 @@ declare_rule! {
     /// let correct: Array<Foo | Bar>;
     /// let correct: Array<keyof Bar>;
     /// let correct: Array<foo | bar>;
-    /// let correct: readonly string[];
     /// ```
     pub(crate) UseShorthandArrayType  {
         version: "0.7.0",
         name: "useShorthandArrayType",
         recommended: false,
     }
+}
+
+#[derive(Debug)]
+enum TsArrayKind {
+    /// `Array<T>`
+    Simple,
+    /// `ReadonlyArray<T>`
+    Readonly,
 }
 
 impl Rule for UseShorthandArrayType {
@@ -61,26 +70,30 @@ impl Rule for UseShorthandArrayType {
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();
         let type_arguments = node.type_arguments()?;
-        is_array_reference(node).and_then(|ret| {
-            if ret {
-                convert_to_array_type(type_arguments)
-            } else {
-                None
-            }
-        })
+
+        match get_array_kind_by_reference(node) {
+            Some(array_kind) => convert_to_array_type(type_arguments, array_kind),
+            None => None,
+        }
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
-
-        Some(RuleDiagnostic::new(
-            rule_category!(),
-            node.range(),
-            markup! {
-
-                "Use "<Emphasis>"shorthand T[] syntax"</Emphasis>" instead of "<Emphasis>"Array<T> syntax."</Emphasis>
-            },
-        ))
+        if let Some(kind) = get_array_kind_by_reference(node) {
+            return Some(RuleDiagnostic::new(
+                rule_category!(),
+                node.range(),
+                match kind {
+                    TsArrayKind::Simple => {
+                        markup! {"Use "<Emphasis>"shorthand T[] syntax"</Emphasis>" instead of "<Emphasis>"Array<T> syntax."</Emphasis>}
+                    }
+                    TsArrayKind::Readonly => {
+                        markup! {"Use "<Emphasis>"shorthand readonly T[] syntax"</Emphasis>" instead of "<Emphasis>"ReadonlyArray<T> syntax."</Emphasis>}
+                    }
+                },
+            ));
+        };
+        None
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
@@ -89,25 +102,44 @@ impl Rule for UseShorthandArrayType {
 
         mutation.replace_node(AnyTsType::TsReferenceType(node.clone()), state.clone());
 
-        Some(JsRuleAction {
-            category: ActionCategory::QuickFix,
-            applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Use "<Emphasis>"shorthand T[] syntax"</Emphasis>" to replace" }
-                .to_owned(),
-            mutation,
-        })
+        if let Some(kind) = get_array_kind_by_reference(node) {
+            let message = match kind {
+                TsArrayKind::Simple => {
+                    markup! { "Use "<Emphasis>"shorthand T[] syntax"</Emphasis>" to replace" }
+                        .to_owned()
+                }
+                TsArrayKind::Readonly => {
+                    markup! { "Use "<Emphasis>"shorthand readonly T[] syntax"</Emphasis>" to replace" }
+                        .to_owned()
+                }
+            };
+            return Some(JsRuleAction {
+                category: ActionCategory::QuickFix,
+                applicability: Applicability::MaybeIncorrect,
+                message,
+                mutation,
+            });
+        };
+        None
     }
 }
 
-fn is_array_reference(ty: &TsReferenceType) -> Option<bool> {
+fn get_array_kind_by_reference(ty: &TsReferenceType) -> Option<TsArrayKind> {
     let name = ty.name().ok()?;
     name.as_js_reference_identifier().and_then(|identifier| {
         let name = identifier.value_token().ok()?;
-        Some(name.text_trimmed() == "Array")
+        match name.text_trimmed() {
+            "Array" => Some(TsArrayKind::Simple),
+            "ReadonlyArray" => Some(TsArrayKind::Readonly),
+            _ => None,
+        }
     })
 }
 
-fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<AnyTsType> {
+fn convert_to_array_type(
+    type_arguments: TsTypeArguments,
+    array_kind: TsArrayKind,
+) -> Option<AnyTsType> {
     if type_arguments.ts_type_argument_list().len() > 0 {
         let types_array = type_arguments
             .ts_type_argument_list()
@@ -125,24 +157,43 @@ fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<AnyTsType> {
                     | AnyTsType::TsInferType(_)
                     | AnyTsType::TsMappedType(_) => None,
 
-                    AnyTsType::TsReferenceType(ty) if is_array_reference(ty).unwrap_or(false) => {
-                        if let Some(type_arguments) = ty.type_arguments() {
-                            convert_to_array_type(type_arguments)
-                        } else {
-                            Some(param)
+                    AnyTsType::TsReferenceType(ty) => match get_array_kind_by_reference(ty) {
+                        Some(array_kind) => {
+                            if let Some(type_arguments) = ty.type_arguments() {
+                                convert_to_array_type(type_arguments, array_kind)
+                            } else {
+                                Some(param)
+                            }
                         }
-                    }
+                        None => Some(param),
+                    },
                     _ => Some(param),
                 };
                 element_type.map(|element_type| {
-                    AnyTsType::TsArrayType(make::ts_array_type(
+                    let array_type = make::ts_array_type(
                         element_type,
                         make::token(T!['[']),
                         make::token(T![']']),
-                    ))
+                    );
+                    let readonly_token = JsSyntaxToken::new_detached(
+                        JsSyntaxKind::TS_READONLY_MODIFIER,
+                        "readonly ",
+                        [],
+                        [TriviaPiece::new(TriviaPieceKind::Whitespace, 1)],
+                    );
+                    match array_kind {
+                        TsArrayKind::Simple => AnyTsType::TsArrayType(array_type),
+                        TsArrayKind::Readonly => {
+                            AnyTsType::TsTypeOperatorType(make::ts_type_operator_type(
+                                readonly_token,
+                                AnyTsType::TsArrayType(array_type),
+                            ))
+                        }
+                    }
                 })
             })
             .collect::<Vec<_>>();
+
         match types_array.len() {
             0 => {}
             1 => {
