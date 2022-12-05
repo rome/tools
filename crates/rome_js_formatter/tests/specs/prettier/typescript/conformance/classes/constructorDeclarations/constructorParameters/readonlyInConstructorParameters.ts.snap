@@ -19,7 +19,8 @@ class E {
 class F {
     constructor(private readonly x: number) {}
 }
-new F(1).x;```
+new F(1).x;
+```
 
 
 # Prettier differences
@@ -55,7 +56,6 @@ class F {
 }
 new F(1).x;
 ```
-
 
 # Errors
 ```

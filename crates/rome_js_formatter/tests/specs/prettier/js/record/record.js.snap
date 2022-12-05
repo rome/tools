@@ -23,6 +23,7 @@ assert(record1?.a === 1);
 assert(record1?.d === undefined);
 assert(record1?.d ?? 5 === 5);
 assert(record1.d?.a === undefined);
+
 ```
 
 
@@ -78,7 +79,6 @@ assert(record1?.d === undefined);
 assert(record1?.d ?? 5 === 5);
 assert(record1.d?.a === undefined);
 ```
-
 
 # Errors
 ```

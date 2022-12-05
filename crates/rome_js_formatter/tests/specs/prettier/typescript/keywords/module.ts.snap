@@ -19,6 +19,7 @@ module Y3 {
       export private static readonly [x: any]: any;
   }
 }
+
 ```
 
 
@@ -83,7 +84,6 @@ module Y3 {
   }
 }
 ```
-
 
 # Errors
 ```

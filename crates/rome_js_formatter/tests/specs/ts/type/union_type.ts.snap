@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: union_type.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/type/union_type.ts
 ---
 
 # Input
 
-```js
+```ts
 type ShortUnion =
     | A
     | B
@@ -270,7 +271,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 type ShortUnion = A | B;
 
 type LongUnion =

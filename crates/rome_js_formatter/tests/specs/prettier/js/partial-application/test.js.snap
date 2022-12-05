@@ -17,6 +17,7 @@ addTen(2); // 12
 let newScore = player.score
   |> add(7, ?)
   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
+
 ```
 
 
@@ -49,7 +50,6 @@ let newScore = player.score
   |> add(7, ?)
   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
 ```
-
 
 # Errors
 ```
@@ -159,4 +159,5 @@ test.js:10:20 parse ━━━━━━━━━━━━━━━━━━━━
 ```
    10:   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
 ```
+
 

@@ -16,6 +16,7 @@ assert(a === 1);
 assert(typeof rest === "object");
 assert(rest.b === 2);
 assert(rest.c === 3);
+
 ```
 
 
@@ -66,7 +67,6 @@ assert(typeof rest === "object");
 assert(rest.b === 2);
 assert(rest.c === 3);
 ```
-
 
 # Errors
 ```

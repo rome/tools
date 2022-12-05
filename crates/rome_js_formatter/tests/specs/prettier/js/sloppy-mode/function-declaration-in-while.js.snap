@@ -8,6 +8,7 @@ info:
 
 ```js
 while (false) function foo(){}
+
 ```
 
 
@@ -26,7 +27,6 @@ while (false) function foo(){}
 ```js
 while (false) function foo(){}
 ```
-
 
 # Errors
 ```

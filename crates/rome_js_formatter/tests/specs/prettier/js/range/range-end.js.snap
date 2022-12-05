@@ -15,7 +15,8 @@ call(
 
 call(
   1, 2,3
-);```
+);
+```
 
 
 # Prettier differences
@@ -46,6 +47,5 @@ call(
 
 
 call(1, 2, 3);```
-
 
 

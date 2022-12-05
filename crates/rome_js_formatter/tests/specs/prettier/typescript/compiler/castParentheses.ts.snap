@@ -18,6 +18,7 @@ var b = (<any>a.b()).c;
 var b = (<any>new a);
 var b = (<any>new a.b);
 var b = (<any>new a).b
+
 ```
 
 
@@ -49,6 +50,5 @@ var b = <any>new a();
 var b = <any>new a.b();
 var b = (<any>new a()).b;
 ```
-
 
 

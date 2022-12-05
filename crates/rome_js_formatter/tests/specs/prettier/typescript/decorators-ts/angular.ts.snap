@@ -15,6 +15,7 @@ export class HeroButtonComponent {
   @Output() change = new EventEmitter<any>();
   @Input() label: string;
 }
+
 ```
 
 
@@ -46,6 +47,5 @@ export class HeroButtonComponent {
   @Input() label: string;
 }
 ```
-
 
 

@@ -32,9 +32,9 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
     };
 
     let options = JsFormatOptions::new(source_type).with_indent_style(IndentStyle::Space(2));
-    let language = language::JsTestFormatLanguage::new(options);
+    let language = language::JsTestFormatLanguage::new(source_type);
 
-    let snapshot = PrettierSnapshot::new(test_file, language);
+    let snapshot = PrettierSnapshot::new(test_file, language, options);
 
     snapshot.test()
 }

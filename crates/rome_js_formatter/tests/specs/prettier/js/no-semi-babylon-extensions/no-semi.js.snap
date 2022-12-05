@@ -18,6 +18,7 @@ class A {
   a = b;
   instanceof(){}
 }
+
 ```
 
 
@@ -50,7 +51,6 @@ class A {
   instanceof() {}
 }
 ```
-
 
 # Errors
 ```

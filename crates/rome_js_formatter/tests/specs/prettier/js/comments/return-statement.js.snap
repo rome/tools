@@ -128,6 +128,7 @@ function inlineComment() {
     /* hi */ 42
   ) || 42
 }
+
 ```
 
 
@@ -281,6 +282,5 @@ function inlineComment() {
   return /* hi */ 42 || 42;
 }
 ```
-
 
 

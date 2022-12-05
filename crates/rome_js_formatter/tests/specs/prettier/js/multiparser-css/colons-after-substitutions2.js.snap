@@ -30,6 +30,7 @@ const Icon3 = styled.div`
     fill: rebeccapurple;
   }
 `;
+
 ```
 
 
@@ -76,6 +77,5 @@ const Icon3 = styled.div`
   }
 `;
 ```
-
 
 

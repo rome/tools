@@ -42,6 +42,7 @@ const Steps2 = styled.div`
     }
   }
 `;
+
 ```
 
 
@@ -100,6 +101,5 @@ const Steps2 = styled.div`
   }
 `;
 ```
-
 
 

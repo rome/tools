@@ -39,6 +39,7 @@ var eleUnion23 = unionTuple2[idx0]; // string | number | boolean
 var eleUnion24 = unionTuple2[idx1]; // string | number | boolean
 var eleUnion25 = unionTuple2["0"]; // boolean
 var eleUnion26 = unionTuple2["1"]; // string | number
+
 ```
 
 
@@ -91,6 +92,5 @@ var eleUnion24 = unionTuple2[idx1]; // string | number | boolean
 var eleUnion25 = unionTuple2["0"]; // boolean
 var eleUnion26 = unionTuple2["1"]; // string | number
 ```
-
 
 

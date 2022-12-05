@@ -11,6 +11,7 @@ info:
 {
     function foo() {}
 }
+
 ```
 
 
@@ -33,6 +34,5 @@ namespace hello.hi.world {
   function foo() {}
 }
 ```
-
 
 

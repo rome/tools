@@ -61,6 +61,7 @@ function foo() {
     obj[key];
   }
 };
+
 ```
 
 
@@ -232,7 +233,6 @@ do {
   }
 };
 ```
-
 
 # Errors
 ```

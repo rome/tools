@@ -18,6 +18,7 @@ loop: for (;;) {
   continue /* comment */ loop;
   continue loop /* comment */;
 }
+
 ```
 
 
@@ -56,6 +57,5 @@ loop: for (;;) {
   continue loop; /* comment */
 }
 ```
-
 
 

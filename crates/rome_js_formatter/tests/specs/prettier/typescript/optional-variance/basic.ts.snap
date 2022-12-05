@@ -68,6 +68,7 @@ declare class StateNode<TContext, in out TEvent extends { type: string }> {
     _action: ActionObject<TEvent>;
     _state: StateNode<TContext, any>;
 }
+
 ```
 
 
@@ -233,7 +234,6 @@ declare class StateNode<TContext, in out TEvent extends { type: string }> {
     _state: StateNode<TContext, any>;
 }
 ```
-
 
 # Errors
 ```

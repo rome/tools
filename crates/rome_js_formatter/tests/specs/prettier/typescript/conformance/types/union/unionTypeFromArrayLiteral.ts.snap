@@ -30,6 +30,7 @@ var arr6 = [c, d];  // (C | D)[]
 var arr7 = [c, d, e]; // (C | D)[]
 var arr8 = [c, e]; // C[]
 var arr9 = [e, f]; // (E|F)[]
+
 ```
 
 
@@ -81,7 +82,6 @@ var arr7 = [c, d, e]; // (C | D)[]
 var arr8 = [c, e]; // C[]
 var arr9 = [e, f]; // (E|F)[]
 ```
-
 
 # Lines exceeding max width of 80 characters
 ```

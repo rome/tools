@@ -47,6 +47,7 @@ type K = { [k in /* commentK */ K]: string }
 type L = { [l in L /* commentL */]: string }
 
 type M = { [m in M] /* commentG */: string }
+
 ```
 
 
@@ -116,6 +117,5 @@ type L = { [l in L /* commentL */]: string };
 
 type M = { [m in M] /* commentG */ : string };
 ```
-
 
 

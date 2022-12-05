@@ -23,8 +23,8 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
 
     let test_file = PrettierTestFile::new(input, root_path);
     let options = JsonFormatOptions::default().with_indent_style(IndentStyle::Space(2));
-    let language = language::JsonTestFormatLanguage::new(options);
-    let snapshot = PrettierSnapshot::new(test_file, language);
+    let language = language::JsonTestFormatLanguage::default();
+    let snapshot = PrettierSnapshot::new(test_file, language, options);
 
     snapshot.test()
 }

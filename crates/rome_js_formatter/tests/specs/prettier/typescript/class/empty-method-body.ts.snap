@@ -17,6 +17,7 @@ class foo1 {
 class Test {
   foo (/* 2 */) /* 3 */;
 }
+
 ```
 
 
@@ -54,6 +55,5 @@ class Test {
   foo(/* 2 */) /* 3 */;
 }
 ```
-
 
 

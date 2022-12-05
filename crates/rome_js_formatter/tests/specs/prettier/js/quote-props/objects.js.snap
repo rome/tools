@@ -104,6 +104,7 @@ Object.entries({
   "-1": null,
   "-1.5": null,
 }
+
 ```
 
 
@@ -276,7 +277,6 @@ Object.entries({
   "-1.5": null,
 };
 ```
-
 
 # Lines exceeding max width of 80 characters
 ```

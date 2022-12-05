@@ -10,6 +10,7 @@ info:
 class C extends HTMLElement {
   accessor clicked = false;
 }
+
 ```
 
 
@@ -34,7 +35,6 @@ class C extends HTMLElement {
   clicked = false;
 }
 ```
-
 
 # Errors
 ```

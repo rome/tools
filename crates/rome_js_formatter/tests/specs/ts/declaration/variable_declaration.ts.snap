@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: variable_declaration.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/declaration/variable_declaration.ts
 ---
 
 # Input
 
-```js
+```ts
 //break left-hand side layout
 const map: Map<Function, Map<string | void, { value: UnloadedDescriptor }>> =
     new Map();
@@ -112,7 +113,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 //break left-hand side layout
 const map: Map<
 	Function,
@@ -236,10 +237,10 @@ let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 	this<A & B>().ewqeqewqweqweqweqweqweqweqw;
 let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
 	this()[dsadsadsadsadsadsadsa]<{}>().ewqoewqoeiowqieopwqie;
+```
 
-
-## Lines exceeding width of 80 characters
-
+# Lines exceeding max width of 80 characters
+```
    71: 	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn<number>();
    80: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
    82: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
@@ -251,5 +252,4 @@ let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
   120: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
   122: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
 ```
-
 

@@ -41,6 +41,7 @@ newScore //=> 57
 
 // As opposed to:
 let newScore = boundScore(0, 100, add(7, double(person.score)));
+
 ```
 
 
@@ -132,7 +133,6 @@ newScore; //=> 57
 // As opposed to:
 let newScore = boundScore(0, 100, add(7, double(person.score)));
 ```
-
 
 # Errors
 ```

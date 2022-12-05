@@ -90,6 +90,7 @@ a = () => ({}?.b() && a);
 new (foo?.bar)();
 new (foo?.bar())();
 new (foo?.())();
+
 ```
 
 
@@ -279,6 +280,5 @@ new (foo?.bar)();
 new (foo?.bar())();
 new (foo?.())();
 ```
-
 
 
