@@ -4,7 +4,7 @@ expression: content
 ---
 example.js format  INTERNAL  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Poor layout: The formatter wasn't able to pick a good layout for your document.
+  × Invalid document: Expected start tag of kind Align but found start tag of kind ConditionalContent.
   
   ! This diagnostic was derived from an internal Rome error. Potential bug, please report it if necessary.
   

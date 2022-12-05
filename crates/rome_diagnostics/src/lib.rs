@@ -37,6 +37,9 @@ pub use crate::error::{Error, Result};
 pub use crate::location::{
     FileId, FilePath, LineIndex, LineIndexBuf, Location, Resource, SourceCode,
 };
+use rome_console::fmt::{Formatter, Termcolor};
+use rome_console::markup;
+use std::fmt::Write;
 
 pub mod prelude {
     //! Anonymously re-exports all the traits declared by this module, this is
@@ -68,16 +71,8 @@ impl DiagnosticTag {
 
 pub const MAXIMUM_DISPLAYABLE_DIAGNOSTICS: u16 = 200;
 
-#[cfg(debug_assertions)]
-use rome_console::fmt::{Formatter, Termcolor};
-#[cfg(debug_assertions)]
-use rome_console::markup;
-#[cfg(debug_assertions)]
-use std::fmt::Write;
-
 /// Utility function for testing purpose. The function will print an [Error]
 /// to a string, which is then returned by the function.
-#[cfg(debug_assertions)]
 pub fn print_diagnostic_to_string(diagnostic: Error) -> String {
     let mut buffer = termcolor::Buffer::no_color();
 

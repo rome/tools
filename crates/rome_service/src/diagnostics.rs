@@ -19,7 +19,7 @@ use std::path::PathBuf;
 pub enum RomeError {
     /// The project contains uncommitted changes
     DirtyWorkspace,
-    /// The file does not exist in the [Workspace]
+    /// The file does not exist in the [crate::Workspace]
     NotFound,
     /// A file is not supported. It contains the language and path of the file
     /// Use this error if Rome is trying to process a file that Rome can't understand

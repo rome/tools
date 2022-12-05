@@ -207,7 +207,7 @@ impl<'a> SnapshotBuilder<'a> {
             prepend_module_to_snapshot => false,
             snapshot_path => self.input_file.parent().unwrap(),
             omit_expression => true,
-            info => &info
+            raw_info => &info.test_file.into()
         }, {
             insta::assert_snapshot!(file_name, self.snapshot);
         });
