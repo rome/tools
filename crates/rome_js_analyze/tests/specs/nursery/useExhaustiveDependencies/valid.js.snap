@@ -120,6 +120,20 @@ function MyComponent9() {
       console.log(outside);
     });
 }
+
+// Memoized Components
+const MyComponent10 = React.memo(function () {
+    useEffect(() => {
+        console.log(outside);
+    });
+});
+
+const MyComponent11 = React.memo(() => {
+    useEffect(() => {
+        console.log(outside);
+    });
+});
+
 ```
 
 

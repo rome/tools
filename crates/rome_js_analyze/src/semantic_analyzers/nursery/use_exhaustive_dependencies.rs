@@ -21,7 +21,7 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// function f() {
+    /// function component() {
     ///     let a = 1;
     ///     useEffect(() => {
     ///         console.log(a);
@@ -30,7 +30,7 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// function f() {
+    /// function component() {
     ///     let b = 1;
     ///     useEffect(() => {
     ///     }, [b]);
@@ -38,7 +38,7 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// function f() {
+    /// function component() {
     ///     const [name, setName] = useState();
     ///     useEffect(() => {
     ///         console.log(name);
@@ -48,7 +48,7 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// function f() {
+    /// function component() {
     ///     let a = 1;
     ///     const b = a + 1;
     ///     useEffect(() => {
@@ -60,7 +60,7 @@ declare_rule! {
     /// ## Valid
     ///
     /// ```js
-    /// function f() {
+    /// function component() {
     ///     let a = 1;
     ///     useEffect(() => {
     ///         console.log(a);
@@ -69,7 +69,7 @@ declare_rule! {
     /// ```
     ///
     /// ```js
-    /// function f() {
+    /// function component() {
     ///     const a = 1;
     ///     useEffect(() => {
     ///         console.log(a);
@@ -78,7 +78,7 @@ declare_rule! {
     /// ```
     ///
     /// ```js
-    /// function f() {
+    /// function component() {
     ///     const [name, setName] = useState();
     ///     useEffect(() => {
     ///         console.log(name);
@@ -241,19 +241,36 @@ fn capture_needs_to_be_in_the_dependency_list(
         | AnyJsBindingDeclaration::JsFunctionExpression(_)
         | AnyJsBindingDeclaration::TsDeclareFunctionDeclaration(_)
         | AnyJsBindingDeclaration::JsClassExpression(_)
-        | AnyJsBindingDeclaration::JsImportDefaultClause(_)
+        | AnyJsBindingDeclaration::JsClassExportDefaultDeclaration(_)
+        | AnyJsBindingDeclaration::JsFunctionExportDefaultDeclaration(_)
+        | AnyJsBindingDeclaration::TsDeclareFunctionExportDefaultDeclaration(_)
+        | AnyJsBindingDeclaration::JsCatchDeclaration(_) => Some(capture),
+
+        // This should not be unreachable because of the test
+        // if the capture is imported
+        AnyJsBindingDeclaration::JsImportDefaultClause(_)
         | AnyJsBindingDeclaration::JsImportNamespaceClause(_)
         | AnyJsBindingDeclaration::JsShorthandNamedImportSpecifier(_)
         | AnyJsBindingDeclaration::JsNamedImportSpecifier(_)
         | AnyJsBindingDeclaration::JsBogusNamedImportSpecifier(_)
         | AnyJsBindingDeclaration::JsDefaultImportSpecifier(_)
         | AnyJsBindingDeclaration::JsNamespaceImportSpecifier(_)
-        | AnyJsBindingDeclaration::TsImportEqualsDeclaration(_)
-        | AnyJsBindingDeclaration::JsClassExportDefaultDeclaration(_)
-        | AnyJsBindingDeclaration::JsFunctionExportDefaultDeclaration(_)
-        | AnyJsBindingDeclaration::TsDeclareFunctionExportDefaultDeclaration(_)
-        | AnyJsBindingDeclaration::JsCatchDeclaration(_) => Some(capture),
+        | AnyJsBindingDeclaration::TsImportEqualsDeclaration(_) => {
+            unreachable!()
+        }
+
     }
+}
+
+// Find the function that is calling the hook
+fn function_of_hook_call(call: &JsCallExpression) -> Option<JsSyntaxNode> {
+    call.syntax()
+        .ancestors()
+        .find(|x| matches!(x.kind(), 
+            JsSyntaxKind::JS_FUNCTION_DECLARATION
+            | JsSyntaxKind::JS_FUNCTION_EXPRESSION
+            | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
+        ))
 }
 
 impl Rule for UseExhaustiveDependencies {
@@ -271,14 +288,9 @@ impl Rule for UseExhaustiveDependencies {
         if let Some(result) = react_hook_with_dependency(call, &options.hooks_config) {
             let model = ctx.model();
 
-            let Some(component_function) = call
-                .syntax()
-                .ancestors()
-                .find(|x| matches!(x.kind(), JsSyntaxKind::JS_FUNCTION_DECLARATION))
-            else {
+            let Some(component_function) = function_of_hook_call(call) else {
                 return vec![]
             };
-
             let component_function_range = component_function.text_range();
 
             let captures: Vec<_> = result
