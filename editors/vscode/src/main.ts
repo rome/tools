@@ -4,6 +4,7 @@ import { promisify } from "util";
 import {
 	ExtensionContext,
 	languages,
+	OutputChannel,
 	TextEditor,
 	Uri,
 	window,
@@ -48,12 +49,14 @@ export async function activate(context: ExtensionContext) {
 
 	const statusBar = new StatusBar();
 
+	const outputChannel = window.createOutputChannel("Rome");
+	const traceOutputChannel = window.createOutputChannel("Rome Trace");
+
 	const serverOptions: ServerOptions = createMessageTransports.bind(
 		undefined,
+		outputChannel,
 		command,
 	);
-
-	const traceOutputChannel = window.createOutputChannel("Rome Trace");
 
 	const documentSelector: DocumentFilter[] = [
 		{ language: "javascript" },
@@ -64,6 +67,7 @@ export async function activate(context: ExtensionContext) {
 
 	const clientOptions: LanguageClientOptions = {
 		documentSelector,
+		outputChannel,
 		traceOutputChannel,
 	};
 
@@ -243,7 +247,10 @@ async function fileExists(path: Uri) {
 	}
 }
 
-function getSocket(command: string): Promise<string> {
+function getSocket(
+	outputChannel: OutputChannel,
+	command: string,
+): Promise<string> {
 	return new Promise((resolve, reject) => {
 		const process = spawn(command, ["__print_socket"], {
 			stdio: "pipe",
@@ -251,15 +258,16 @@ function getSocket(command: string): Promise<string> {
 
 		process.on("error", reject);
 
-		let pipeName = "";
+		let output = "";
 		process.stdout.on("data", (data) => {
-			pipeName += data.toString("utf-8");
+			output += data.toString("utf-8");
 		});
 
 		process.on("exit", (code) => {
 			if (code === 0) {
-				console.log(`"${pipeName}"`);
-				resolve(pipeName.trimEnd());
+				const pipeName = output.trimEnd();
+				outputChannel.appendLine(`Connecting to "${pipeName}" ...`);
+				resolve(pipeName);
 			} else {
 				reject(code);
 			}
@@ -267,13 +275,25 @@ function getSocket(command: string): Promise<string> {
 	});
 }
 
-async function createMessageTransports(command: string): Promise<StreamInfo> {
-	const path = await getSocket(command);
+async function createMessageTransports(
+	outputChannel: OutputChannel,
+	command: string,
+): Promise<StreamInfo> {
+	const path = await getSocket(outputChannel, command);
 	const socket = connect(path);
 
 	await new Promise((resolve, reject) => {
-		socket.once("error", reject);
 		socket.once("ready", resolve);
+		socket.once("error", (err) => {
+			reject(
+				Object.assign(
+					new Error(
+						`Could not connect to the Rome server at "${path}": ${err.message}`,
+					),
+					{ name: err.name, stack: err.stack },
+				),
+			);
+		});
 	});
 
 	return { writer: socket, reader: socket };
