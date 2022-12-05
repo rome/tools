@@ -11,7 +11,7 @@
 #### Other changes
 
 - The `init` command now adds the `$schema` property to the generated `rome.json` file
-  if `rome` is installed inside the `node_modules` folder. Follow [this guide] to add the `$schema` property
+  if `rome` is installed inside the `node_modules` folder. Follow [this guide](https://docs.rome.tools/configuration#schema) to add the `$schema` property
   manually in a project with an existing `rome.json` file.
 - A new `--semicolons` option that configures if the formatter prints semicolons at the end of every statement (default) or at the beginning of statements when necessary to prevent ASI failures.
 - Rome exists with an error code if it doesn't process any file.
@@ -47,7 +47,7 @@
 
 #### Other changes
 
-- Added support for omitting semicolons.
+- Added [support](https://docs.rome.tools/configuration/#javascriptformattersemicolon) for omitting semicolons.
 
 
 ### Linter
