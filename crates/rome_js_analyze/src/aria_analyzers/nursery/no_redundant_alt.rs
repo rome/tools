@@ -95,14 +95,13 @@ impl Rule for NoRedundantAlt {
             AnyJsxAttributeValue::AnyJsxTag(_) => None,
             AnyJsxAttributeValue::JsxExpressionAttributeValue(ref value) => {
                 match value.expression().ok()? {
-                    AnyJsExpression::AnyJsLiteralExpression(expr) => match expr {
-                        AnyJsLiteralExpression::JsStringLiteralExpression(string_literal_expr) => {
-                            let token = string_literal_expr.value_token().ok()?;
+                    AnyJsExpression::AnyJsLiteralExpression(
+                        AnyJsLiteralExpression::JsStringLiteralExpression(expr),
+                    ) => {
+                        let token = expr.value_token().ok()?;
 
-                            is_redundant_alt(trim_quote(&token)).map(|_| alt)
-                        }
-                        _ => None,
-                    },
+                        is_redundant_alt(trim_quote(&token)).map(|_| alt)
+                    }
                     AnyJsExpression::JsTemplateExpression(expr) => {
                         let contain_redundant_alt = expr.elements().into_iter().any(|x| match x {
                             AnyJsTemplateElement::JsTemplateChunkElement(node) => {
