@@ -67,9 +67,10 @@ The following rules have been stabilized:
 - `nusery/noExplicitAny` -> `suspicious/noExplicitAny`
 - `nusery/noConstAssign` -> `correctness/noConstAssign`
 
-These rules are all recommended, so they will be enabled by default. If you had enabled them manually from the `nursery` group, you can simply remove those entries from your configuration file.
+These rules are all recommended, so they will be enabled by default. You can simply remove those entries from your configuration file if you had enabled them manually from the `nursery` group.
 
 The following rules have been renamed:
+- `a11y/useBlankTarget` -> `a11y/noBlankTarget`
 - `correctness/noMultipleSpacesInRegularExpressionLiterals` -> `complexity/noMultipleSpacesInRegularExpressionLiterals`
 - `style/useOptionalChain` -> `complexity/useOptionalChain`
 - `correctness/noUselessFragments` -> `complexity/noUselessFragments`
@@ -143,7 +144,7 @@ Finally, the following new rules have been introduced to the nursery group in th
 - [`nursery/noVar`](https://docs.rome.tools/lint/rules/noVar)
 - [`nursery/useConst`](https://docs.rome.tools/lint/rules/useConst)
 
-Feel free to try them out by manually enabling them in you configuration to help us debug potential issues with these new rules.
+Please give them a try by manually enabling them in your configuration and please share your feedback on the rule, diagnostics, and code fixes.
 
 ### Parser
 
