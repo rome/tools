@@ -4974,7 +4974,7 @@ pub fn ts_indexed_access_type(
         ],
     ))
 }
-pub fn ts_infer_type(infer_token: SyntaxToken, type_parameter: TsTypeParameterName) -> TsInferType {
+pub fn ts_infer_type(infer_token: SyntaxToken, type_parameter: TsTypeParameter) -> TsInferType {
     TsInferType::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_INFER_TYPE,
         [

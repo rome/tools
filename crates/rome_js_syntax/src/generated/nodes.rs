@@ -9433,7 +9433,7 @@ impl TsInferType {
     pub fn infer_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn type_parameter(&self) -> SyntaxResult<TsTypeParameterName> {
+    pub fn type_parameter(&self) -> SyntaxResult<TsTypeParameter> {
         support::required_node(&self.syntax, 1usize)
     }
 }
@@ -9449,7 +9449,7 @@ impl Serialize for TsInferType {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsInferTypeFields {
     pub infer_token: SyntaxResult<SyntaxToken>,
-    pub type_parameter: SyntaxResult<TsTypeParameterName>,
+    pub type_parameter: SyntaxResult<TsTypeParameter>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsInstantiationExpression {

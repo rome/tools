@@ -1833,7 +1833,7 @@ TsTypeOperatorType =
 //      ^^^^^^^     ^^^^^^^
 TsInferType =
 	'infer'
-	type_parameter: TsTypeParameterName
+	type_parameter: TsTypeParameter
 
 TsFunctionType =
 	type_parameters: TsTypeParameters?
