@@ -5,7 +5,7 @@ use crate::check_reformat::{CheckReformat, CheckReformatParams};
 use crate::snapshot_builder::{SnapshotBuilder, SnapshotOutput};
 use crate::utils::{get_prettier_diff, strip_prettier_placeholders, PrettierDiff};
 use crate::TestFormatLanguage;
-use rome_formatter::{format_node, format_range, FormatLanguage, FormatOptions};
+use rome_formatter::FormatOptions;
 use rome_parser::AnyParse;
 
 const PRETTIER_IGNORE: &str = "prettier-ignore";
@@ -119,16 +119,18 @@ where
                     return None;
                 }
 
-                format_range(
+                self.language.format_range(
+                    self.language.format_options(),
                     &syntax,
                     TextRange::new(
                         TextSize::try_from(start).unwrap(),
                         TextSize::try_from(end).unwrap(),
                     ),
-                    self.language.format_language(),
                 )
             }
-            _ => format_node(&syntax, self.language.format_language())
+            _ => self
+                .language
+                .format_node(self.language.format_options(), &syntax)
                 .map(|formatted| formatted.print().unwrap()),
         };
 
@@ -188,12 +190,7 @@ where
             .with_output(SnapshotOutput::new(&formatted))
             .with_errors(&parsed, &self.test_file().parse_input);
 
-        let max_width = self
-            .language
-            .format_language()
-            .options()
-            .line_width()
-            .value() as usize;
+        let max_width = self.language.format_options().line_width().value() as usize;
         builder = builder.with_lines_exceeding_max_width(&formatted, max_width);
 
         builder.finish(relative_file_name);

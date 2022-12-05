@@ -3,12 +3,12 @@ use rome_diagnostics::console::fmt::{Formatter, Termcolor};
 use rome_diagnostics::console::markup;
 use rome_diagnostics::termcolor;
 use rome_diagnostics::{DiagnosticExt, PrintDiagnostic};
-use rome_formatter::{format_node, FormatLanguage};
+use rome_formatter::FormatLanguage;
 use rome_rowan::SyntaxNode;
 
 pub struct CheckReformatParams<'a, L>
 where
-    L: FormatLanguage + Clone + 'static,
+    L: FormatLanguage + 'static,
 {
     root: &'a SyntaxNode<L::SyntaxLanguage>,
     text: &'a str,
@@ -17,7 +17,7 @@ where
 
 impl<'a, L> CheckReformatParams<'a, L>
 where
-    L: FormatLanguage + Clone + 'static,
+    L: FormatLanguage + 'static,
 {
     pub fn new(root: &'a SyntaxNode<L::SyntaxLanguage>, text: &'a str, file_name: &'a str) -> Self {
         CheckReformatParams {
@@ -54,7 +54,6 @@ where
             file_name,
         } = self.params;
 
-        let format_language = self.language.format_language();
         let re_parse = self.language.parse(text);
 
         // Panic if the result from the formatter has syntax errors
@@ -79,11 +78,17 @@ where
             )
         }
 
-        let formatted = format_node(&re_parse.syntax(), format_language.clone()).unwrap();
+        let formatted = self
+            .language
+            .format_node(self.language.format_options(), &re_parse.syntax())
+            .unwrap();
         let printed = formatted.print().unwrap();
 
         if text != printed.as_code() {
-            let input_format_element = format_node(root, format_language).unwrap();
+            let input_format_element = self
+                .language
+                .format_node(self.language.format_options(), root)
+                .unwrap();
             let pretty_input_ir = format!("{}", formatted.into_document());
             let pretty_reformat_ir = format!("{}", input_format_element.into_document());
 

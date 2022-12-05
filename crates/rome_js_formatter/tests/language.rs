@@ -1,13 +1,16 @@
 use rome_diagnostics::location::FileId;
-use rome_formatter::{FormatLanguage, IndentStyle, LineWidth};
+use rome_formatter::{FormatContext, FormatResult, Formatted, IndentStyle, LineWidth, Printed};
 use rome_formatter_test::TestFormatLanguage;
-use rome_fs::RomePath;
 use rome_js_formatter::context::trailing_comma::TrailingComma;
-use rome_js_formatter::context::{JsFormatOptions, QuoteProperties, QuoteStyle, Semicolons};
-use rome_js_formatter::JsFormatLanguage;
+use rome_js_formatter::context::{
+    JsFormatContext, JsFormatOptions, QuoteProperties, QuoteStyle, Semicolons,
+};
+use rome_js_formatter::{format_node, format_range, JsFormatLanguage};
 use rome_js_parser::parse;
-use rome_js_syntax::SourceType;
+use rome_js_syntax::{JsLanguage, SourceType};
 use rome_parser::AnyParse;
+use rome_rowan::SyntaxNode;
+use rome_text_size::TextRange;
 use serde::{Deserialize, Serialize};
 
 pub struct JsTestFormatLanguage {
@@ -21,32 +24,51 @@ impl JsTestFormatLanguage {
 }
 
 impl TestFormatLanguage for JsTestFormatLanguage {
+    type SyntaxLanguage = JsLanguage;
+    type Options = JsFormatOptions;
+    type Context = JsFormatContext;
     type FormatLanguage = JsFormatLanguage;
+
+    fn from_format_options(format_options: &Self::Options) -> Self {
+        JsTestFormatLanguage::new(format_options.clone())
+    }
 
     fn parse(&self, text: &str) -> AnyParse {
         parse(text, FileId::zero(), self.options.source_type()).into()
     }
 
-    fn format_language(&self) -> Self::FormatLanguage {
-        JsFormatLanguage::new(self.options.clone())
+    fn format_options(&self) -> Self::Options {
+        self.options.clone()
     }
 
-    fn read_format_languages_from_file(&self, path: &mut RomePath) -> Vec<Self::FormatLanguage> {
-        let test_options: TestOptions =
-            serde_json::from_str(path.get_buffer_from_file().as_str()).unwrap();
+    fn deserialize_format_options(
+        &self,
+        options: &str,
+    ) -> Vec<<Self::Context as FormatContext>::Options> {
+        let test_options: TestOptions = serde_json::from_str(options).unwrap();
 
         test_options
             .cases
             .into_iter()
-            .map(|case| {
-                let options = case.into_format_options(self.options.source_type());
-                JsFormatLanguage::new(options)
-            })
+            .map(|case| case.into_format_options(self.options.source_type()))
             .collect()
     }
 
-    fn from_format_language(format_language: &Self::FormatLanguage) -> Self {
-        JsTestFormatLanguage::new(format_language.options().clone())
+    fn format_node(
+        &self,
+        options: Self::Options,
+        node: &SyntaxNode<Self::SyntaxLanguage>,
+    ) -> FormatResult<Formatted<Self::Context>> {
+        format_node(options, node)
+    }
+
+    fn format_range(
+        &self,
+        options: Self::Options,
+        node: &SyntaxNode<Self::SyntaxLanguage>,
+        range: TextRange,
+    ) -> FormatResult<Printed> {
+        format_range(options, node, range)
     }
 }
 

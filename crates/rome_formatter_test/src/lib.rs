@@ -1,6 +1,9 @@
-use rome_formatter::FormatLanguage;
-use rome_fs::RomePath;
+use rome_formatter::{
+    CstFormatContext, FormatContext, FormatLanguage, FormatOptions, FormatResult, Formatted,
+    Printed,
+};
 use rome_parser::AnyParse;
+use rome_rowan::{Language, SyntaxNode, TextRange};
 
 pub mod check_reformat;
 pub mod diff_report;
@@ -10,13 +13,33 @@ pub mod test_prettier_snapshot;
 pub mod utils;
 
 pub trait TestFormatLanguage {
-    type FormatLanguage: FormatLanguage + Clone + 'static;
+    type SyntaxLanguage: Language + 'static;
+    type Options: FormatOptions;
+    type Context: CstFormatContext<Options = Self::Options>;
+    type FormatLanguage: FormatLanguage<Context = Self::Context, SyntaxLanguage = Self::SyntaxLanguage>
+        + 'static;
+
+    fn from_format_options(format_options: &Self::Options) -> Self;
 
     fn parse(&self, text: &str) -> AnyParse;
 
-    fn format_language(&self) -> Self::FormatLanguage;
+    fn format_options(&self) -> Self::Options;
 
-    fn read_format_languages_from_file(&self, path: &mut RomePath) -> Vec<Self::FormatLanguage>;
+    fn deserialize_format_options(
+        &self,
+        options: &str,
+    ) -> Vec<<Self::Context as FormatContext>::Options>;
 
-    fn from_format_language(format_language: &Self::FormatLanguage) -> Self;
+    fn format_node(
+        &self,
+        options: Self::Options,
+        node: &SyntaxNode<Self::SyntaxLanguage>,
+    ) -> FormatResult<Formatted<Self::Context>>;
+
+    fn format_range(
+        &self,
+        options: Self::Options,
+        node: &SyntaxNode<Self::SyntaxLanguage>,
+        range: TextRange,
+    ) -> FormatResult<Printed>;
 }

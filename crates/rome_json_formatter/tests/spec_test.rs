@@ -26,10 +26,7 @@ mod language {
 pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, _file_type: &str) {
     let root_path = Path::new(concat!(env!("CARGO_MANIFEST_DIR"), "/tests/specs/"));
 
-    let test_file = match SpecTestFile::new(spec_input_file, root_path) {
-        Some(test_file) => test_file,
-        None => return,
-    };
+    let Some(test_file) = SpecTestFile::try_from_file(spec_input_file, root_path) else { return; };
 
     let options = JsonFormatOptions::default();
     let language = language::JsonTestFormatLanguage::new(options);

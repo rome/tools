@@ -1,11 +1,12 @@
 use rome_diagnostics::location::FileId;
-use rome_formatter::{FormatLanguage, IndentStyle, LineWidth};
+use rome_formatter::{FormatContext, FormatResult, Formatted, IndentStyle, LineWidth, Printed};
 use rome_formatter_test::TestFormatLanguage;
-use rome_fs::RomePath;
-use rome_json_formatter::context::JsonFormatOptions;
-use rome_json_formatter::JsonFormatLanguage;
+use rome_json_formatter::context::{JsonFormatContext, JsonFormatOptions};
+use rome_json_formatter::{format_node, format_range, JsonFormatLanguage};
 use rome_json_parser::parse_json;
+use rome_json_syntax::JsonLanguage;
 use rome_parser::AnyParse;
+use rome_rowan::{SyntaxNode, TextRange};
 use serde::{Deserialize, Serialize};
 
 pub struct JsonTestFormatLanguage {
@@ -19,29 +20,51 @@ impl JsonTestFormatLanguage {
 }
 
 impl TestFormatLanguage for JsonTestFormatLanguage {
+    type SyntaxLanguage = JsonLanguage;
+    type Options = JsonFormatOptions;
+    type Context = JsonFormatContext;
     type FormatLanguage = JsonFormatLanguage;
+
+    fn from_format_options(format_options: &Self::Options) -> Self {
+        JsonTestFormatLanguage::new(format_options.clone())
+    }
 
     fn parse(&self, text: &str) -> AnyParse {
         parse_json(text, FileId::zero()).into()
     }
 
-    fn format_language(&self) -> Self::FormatLanguage {
-        JsonFormatLanguage::new(self.options.clone())
+    fn format_options(&self) -> Self::Options {
+        self.options.clone()
     }
 
-    fn read_format_languages_from_file(&self, path: &mut RomePath) -> Vec<Self::FormatLanguage> {
-        let test_options: TestOptions =
-            serde_json::from_str(path.get_buffer_from_file().as_str()).unwrap();
+    fn deserialize_format_options(
+        &self,
+        options: &str,
+    ) -> Vec<<Self::Context as FormatContext>::Options> {
+        let test_options: TestOptions = serde_json::from_str(options).unwrap();
 
         test_options
             .cases
             .into_iter()
-            .map(|case| JsonFormatLanguage::new(case.into()))
+            .map(|case| case.into())
             .collect()
     }
 
-    fn from_format_language(format_language: &Self::FormatLanguage) -> Self {
-        JsonTestFormatLanguage::new(format_language.options().clone())
+    fn format_node(
+        &self,
+        options: Self::Options,
+        node: &SyntaxNode<Self::SyntaxLanguage>,
+    ) -> FormatResult<Formatted<Self::Context>> {
+        format_node(options, node)
+    }
+
+    fn format_range(
+        &self,
+        options: Self::Options,
+        node: &SyntaxNode<Self::SyntaxLanguage>,
+        range: TextRange,
+    ) -> FormatResult<Printed> {
+        format_range(options, node, range)
     }
 }
 

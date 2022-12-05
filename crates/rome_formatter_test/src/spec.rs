@@ -2,7 +2,7 @@ use crate::check_reformat::{CheckReformat, CheckReformatParams};
 use crate::snapshot_builder::{SnapshotBuilder, SnapshotOutput};
 use crate::TestFormatLanguage;
 use rome_diagnostics::FileId;
-use rome_formatter::{format_node, FormatContext, FormatLanguage, FormatOptions};
+use rome_formatter::{FormatContext, FormatLanguage, FormatOptions};
 use rome_fs::RomePath;
 use rome_service::workspace::{FeatureName, SupportsFeatureParams};
 use rome_service::App;
@@ -16,7 +16,7 @@ pub struct SpecTestFile<'a> {
 }
 
 impl<'a> SpecTestFile<'a> {
-    pub fn new(input_file: &'a str, root_path: &'a Path) -> Option<SpecTestFile<'a>> {
+    pub fn try_from_file(input_file: &'a str, root_path: &'a Path) -> Option<SpecTestFile<'a>> {
         let app = App::default();
         let file_path = &input_file;
         let spec_input_file = Path::new(input_file);
@@ -110,7 +110,10 @@ where
         let has_errors = parsed.has_errors();
         let root = parsed.syntax();
 
-        let formatted = format_node(&root, self.language.format_language()).unwrap();
+        let formatted = self
+            .language
+            .format_node(self.language.format_options(), &root)
+            .unwrap();
         let printed = formatted.print().unwrap();
 
         if !has_errors {
@@ -121,17 +124,12 @@ where
             check_reformat.check_reformat();
         }
 
-        let max_width = self
-            .language
-            .format_language()
-            .options()
-            .line_width()
-            .value() as usize;
+        let max_width = self.language.format_options().line_width().value() as usize;
 
         snapshot_builder = snapshot_builder
             .with_output_and_options(
                 SnapshotOutput::new(printed.as_code()).with_index(1),
-                self.language.format_language().options(),
+                self.language.format_options(),
             )
             .with_unimplemented(&printed)
             .with_lines_exceeding_max_width(printed.as_code(), max_width);
@@ -141,14 +139,15 @@ where
             let mut options_path = RomePath::new(&options_path, FileId::zero());
 
             // SAFETY: we checked its existence already, we assume we have rights to read it
-            let test_languages = self
+            let test_options = self
                 .language
-                .read_format_languages_from_file(&mut options_path);
+                .deserialize_format_options(options_path.get_buffer_from_file().as_str());
 
-            for (index, test_language) in test_languages.iter().enumerate() {
-                let formatted = format_node(&root, test_language.clone()).unwrap();
+            for (index, options) in test_options.into_iter().enumerate() {
+                let language = L::from_format_options(&options);
+
+                let formatted = language.format_node(options, &root).unwrap();
                 let printed = formatted.print().unwrap();
-                let language = L::from_format_language(test_language);
 
                 if !has_errors {
                     let check_reformat = CheckReformat::new(
@@ -162,12 +161,12 @@ where
                     check_reformat.check_reformat();
                 }
 
-                let max_width = language.format_language().options().line_width().value() as usize;
+                let max_width = language.format_options().line_width().value() as usize;
 
                 snapshot_builder = snapshot_builder
                     .with_output_and_options(
                         SnapshotOutput::new(printed.as_code()).with_index(index + 2),
-                        language.format_language().options(),
+                        language.format_options(),
                     )
                     .with_unimplemented(&printed)
                     .with_lines_exceeding_max_width(printed.as_code(), max_width);
