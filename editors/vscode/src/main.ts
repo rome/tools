@@ -259,7 +259,7 @@ function collectStream(stream: Readable) {
 		stream.on("end", () => {
 			resolve(buffer);
 		});
-	})
+	});
 }
 
 async function getSocket(
