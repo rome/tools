@@ -15,9 +15,9 @@
   manually update this property to an existing project.
 - Added `--semicolons` argument to the `rome format`, where users can specify whether
   they want semicolons or not in their source code.
-- Rome now exists with an error code if it doesn't process any file.
+- Rome exists with an error code if it doesn't process any file.
 - Fixed how the maximum number of diagnostics is calculated [#3869](https://github.com/rome/tools/pull/3869).
-- Rome now prints the total number of files that caused errors.
+  Rome now prints the total number of errors caused in the files.
 - Rome now correctly traverses symbolic links, it correctly detects possible loops and
   doesn't stop the traversal;
 - the new global argument `--colors` now accepts `force`, useful to force colors when
@@ -28,7 +28,6 @@
 - Added a `$schema` property, where users can add the JSON schema. This feature provides
   auto-completion and descriptions of all fields of the configuration file.
 - Added a new `files.ignore` option where users can ignore files across the board.
--
 
 ### Editors
 
@@ -43,7 +42,7 @@
 - Fixed incompatibility issues with Prettier [#3531](https://github.com/rome/tools/issues/3531)
   - [#3686](https://github.com/rome/tools/pull/3686)
   - [#3732](https://github.com/rome/tools/pull/3732)
-  - [#3824](https://github.com/rome/tools/pull/3824)
+  - [#3842](https://github.com/rome/tools/pull/3842)
 - Fixed an issue where infinite parentheses were wrongly inserted [#3735](https://github.com/rome/tools/issues/3735)
 - Better formatting for `jestEach` templates
 
