@@ -14,7 +14,7 @@ pub mod utils;
 
 pub trait TestFormatLanguage {
     type SyntaxLanguage: Language + 'static;
-    type Options: FormatOptions;
+    type Options: FormatOptions + std::fmt::Display;
     type Context: CstFormatContext<Options = Self::Options>;
     type FormatLanguage: FormatLanguage<Context = Self::Context, SyntaxLanguage = Self::SyntaxLanguage>
         + 'static;

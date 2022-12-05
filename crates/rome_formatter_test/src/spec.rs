@@ -2,7 +2,7 @@ use crate::check_reformat::{CheckReformat, CheckReformatParams};
 use crate::snapshot_builder::{SnapshotBuilder, SnapshotOutput};
 use crate::TestFormatLanguage;
 use rome_diagnostics::FileId;
-use rome_formatter::{FormatContext, FormatLanguage, FormatOptions};
+use rome_formatter::FormatOptions;
 use rome_fs::RomePath;
 use rome_service::workspace::{FeatureName, SupportsFeatureParams};
 use rome_service::App;
@@ -97,7 +97,7 @@ where
         }
     }
 
-    pub fn test(self) where <<<L as TestFormatLanguage>::FormatLanguage as FormatLanguage>::Context as FormatContext>::Options: std::fmt::Display{
+    pub fn test(self) {
         let input_file = self.test_file().input_file().as_path();
 
         let mut snapshot_builder = SnapshotBuilder::new(input_file)
