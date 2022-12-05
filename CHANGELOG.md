@@ -14,7 +14,7 @@
   if `rome` is installed inside the `node_modules` folder. Follow [this guide](https://docs.rome.tools/configuration#schema) to add the `$schema` property
   manually in a project with an existing `rome.json` file.
 - A new `--semicolons` option that configures if the formatter prints semicolons at the end of every statement (default) or at the beginning of statements when necessary to prevent ASI failures.
-- Rome exists with an error code if it doesn't process any file.
+- Rome exits with an error code if it doesn't process any file.
 - Fixed how the maximum number of diagnostics is calculated [#3869](https://github.com/rome/tools/pull/3869).
   Rome now prints the total number of errors caused in the files.
 - Rome now traverses symbolic links and emits warnings if it detects loops, and continues processing the next file during the directory traversal.
