@@ -452,6 +452,10 @@ export interface Nursery {
 	 */
 	useConst?: RuleConfiguration;
 	/**
+	 * Enforce default function parameters and optional parameters to be last.
+	 */
+	useDefaultParameterLast?: RuleConfiguration;
+	/**
 	 * Enforce default clauses in switch statements to be last
 	 */
 	useDefaultSwitchClauseLast?: RuleConfiguration;
@@ -705,6 +709,7 @@ export type Category =
 	| "lint/nursery/noVoidTypeReturn"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useConst"
+	| "lint/nursery/useDefaultParameterLast"
 	| "lint/nursery/useDefaultSwitchClauseLast"
 	| "lint/nursery/useEnumInitializers"
 	| "lint/nursery/useExhaustiveDependencies"
