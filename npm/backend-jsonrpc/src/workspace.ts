@@ -456,6 +456,10 @@ export interface Nursery {
 	 */
 	useDefaultSwitchClauseLast?: RuleConfiguration;
 	/**
+	 * Require that each enum member value be explicitly initialized.
+	 */
+	useEnumInitializers?: RuleConfiguration;
+	/**
 	 * Enforce all dependencies are correctly specified.
 	 */
 	useExhaustiveDependencies?: RuleConfiguration;
@@ -698,6 +702,7 @@ export type Category =
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useConst"
 	| "lint/nursery/useDefaultSwitchClauseLast"
+	| "lint/nursery/useEnumInitializers"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useFlatMap"
 	| "lint/nursery/useNumericLiterals"

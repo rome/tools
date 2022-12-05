@@ -1046,6 +1046,17 @@
             }
           ]
         },
+        "useEnumInitializers": {
+          "description": "Require that each enum member value be explicitly initialized.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useExhaustiveDependencies": {
           "description": "Enforce all dependencies are correctly specified.",
           "anyOf": [

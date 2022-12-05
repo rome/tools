@@ -1,0 +1,220 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 74
+expression: invalid.ts
+---
+# Input
+```js
+export enum Status {
+	Close,
+	MidClose = 1,
+	MidOpen = 10,
+	/* implicit */ Open /* 11 */,
+}
+
+export enum ComputedFlags {
+	Flag1 = 1,
+	Flag2 = 1 << 1,
+	Flag3,
+}
+
+export enum Direction {
+	Down,
+	Left,
+	Right,
+	Up,
+}
+
+export enum Color {
+	Red = "Red",
+	Green = "Green",
+	Blue,
+}
+
+export enum IndexedColor {
+	Red = "0",
+	Green = "1",
+	Blue,
+}
+```
+
+# Diagnostics
+```
+invalid.ts:2:2 lint/nursery/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized.
+  
+    1 │ export enum Status {
+  > 2 │ 	Close,
+      │ 	^^^^^
+    3 │ 	MidClose = 1,
+    4 │ 	MidOpen = 10,
+  
+  i Allowing implicit values for enum members can cause bugs if enum declarations are modified over time.
+  
+  i Suggested fix: 
+  
+    2 │ → Close·=·0,
+      │        ++++ 
+
+```
+
+```
+invalid.ts:5:17 lint/nursery/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized.
+  
+    3 │ 	MidClose = 1,
+    4 │ 	MidOpen = 10,
+  > 5 │ 	/* implicit */ Open /* 11 */,
+      │ 	               ^^^^
+    6 │ }
+    7 │ 
+  
+  i Allowing implicit values for enum members can cause bugs if enum declarations are modified over time.
+  
+  i Suggested fix: 
+  
+    5 │ → /*·implicit·*/·Open·/*·11·*/·=·11,
+      │                               +++++ 
+
+```
+
+```
+invalid.ts:11:2 lint/nursery/useEnumInitializers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized.
+  
+     9 │ 	Flag1 = 1,
+    10 │ 	Flag2 = 1 << 1,
+  > 11 │ 	Flag3,
+       │ 	^^^^^
+    12 │ }
+    13 │ 
+  
+  i Allowing implicit values for enum members can cause bugs if enum declarations are modified over time.
+  
+
+```
+
+```
+invalid.ts:15:2 lint/nursery/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized.
+  
+    14 │ export enum Direction {
+  > 15 │ 	Down,
+       │ 	^^^^
+    16 │ 	Left,
+    17 │ 	Right,
+  
+  i Allowing implicit values for enum members can cause bugs if enum declarations are modified over time.
+  
+  i Suggested fix: 
+  
+    15 │ → Down·=·0,
+       │       ++++ 
+
+```
+
+```
+invalid.ts:16:2 lint/nursery/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized.
+  
+    14 │ export enum Direction {
+    15 │ 	Down,
+  > 16 │ 	Left,
+       │ 	^^^^
+    17 │ 	Right,
+    18 │ 	Up,
+  
+  i Allowing implicit values for enum members can cause bugs if enum declarations are modified over time.
+  
+  i Suggested fix: 
+  
+    16 │ → Left·=·1,
+       │       ++++ 
+
+```
+
+```
+invalid.ts:17:2 lint/nursery/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized.
+  
+    15 │ 	Down,
+    16 │ 	Left,
+  > 17 │ 	Right,
+       │ 	^^^^^
+    18 │ 	Up,
+    19 │ }
+  
+  i Allowing implicit values for enum members can cause bugs if enum declarations are modified over time.
+  
+  i Suggested fix: 
+  
+    17 │ → Right·=·2,
+       │        ++++ 
+
+```
+
+```
+invalid.ts:18:2 lint/nursery/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized.
+  
+    16 │ 	Left,
+    17 │ 	Right,
+  > 18 │ 	Up,
+       │ 	^^
+    19 │ }
+    20 │ 
+  
+  i Allowing implicit values for enum members can cause bugs if enum declarations are modified over time.
+  
+  i Suggested fix: 
+  
+    18 │ → Up·=·3,
+       │     ++++ 
+
+```
+
+```
+invalid.ts:24:2 lint/nursery/useEnumInitializers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized.
+  
+    22 │ 	Red = "Red",
+    23 │ 	Green = "Green",
+  > 24 │ 	Blue,
+       │ 	^^^^
+    25 │ }
+    26 │ 
+  
+  i Allowing implicit values for enum members can cause bugs if enum declarations are modified over time.
+  
+  i Suggested fix: 
+  
+    24 │ → Blue·=·"Blue",
+       │       +++++++++ 
+
+```
+
+```
+invalid.ts:30:2 lint/nursery/useEnumInitializers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum member should be initialized.
+  
+    28 │ 	Red = "0",
+    29 │ 	Green = "1",
+  > 30 │ 	Blue,
+       │ 	^^^^
+    31 │ }
+  
+  i Allowing implicit values for enum members can cause bugs if enum declarations are modified over time.
+  
+
+```
+
+
