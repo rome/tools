@@ -1,5 +1,5 @@
 import { spawn } from "child_process";
-import { connect } from "net";
+import { connect, type Socket } from "net";
 import { promisify } from "util";
 import {
 	ExtensionContext,
@@ -258,21 +258,42 @@ function getSocket(
 
 		process.on("error", reject);
 
-		let output = "";
+		let stdout = "";
 		process.stdout.on("data", (data) => {
-			output += data.toString("utf-8");
+			stdout += data.toString("utf-8");
+		});
+
+		let stderr = "";
+		process.stderr.on("data", (data) => {
+			stderr += data.toString("utf-8");
 		});
 
 		process.on("exit", (code) => {
-			if (code === 0) {
-				const pipeName = output.trimEnd();
-				outputChannel.appendLine(`Connecting to "${pipeName}" ...`);
-				resolve(pipeName);
-			} else {
-				reject(code);
+			const pipeName = stdout.trimEnd();
+
+			if (code !== 0 || pipeName.length === 0) {
+				let message = `Command "${command} __print_socket" exited with code ${code}`;
+				if (stderr.length > 0) {
+					message += `\nOutput:\n${stderr}`;
+				}
+
+				reject(new Error(message));
+				return;
 			}
+
+			outputChannel.appendLine(`Connecting to "${pipeName}" ...`);
+			resolve(pipeName);
 		});
 	});
+}
+
+function wrapConnectionError(err: Error, path: string): Error {
+	return Object.assign(
+		new Error(
+			`Could not connect to the Rome server at "${path}": ${err.message}`,
+		),
+		{ name: err.name, stack: err.stack },
+	);
 }
 
 async function createMessageTransports(
@@ -280,19 +301,18 @@ async function createMessageTransports(
 	command: string,
 ): Promise<StreamInfo> {
 	const path = await getSocket(outputChannel, command);
-	const socket = connect(path);
+
+	let socket: Socket;
+	try {
+		socket = connect(path);
+	} catch (err) {
+		throw wrapConnectionError(err, path);
+	}
 
 	await new Promise((resolve, reject) => {
 		socket.once("ready", resolve);
 		socket.once("error", (err) => {
-			reject(
-				Object.assign(
-					new Error(
-						`Could not connect to the Rome server at "${path}": ${err.message}`,
-					),
-					{ name: err.name, stack: err.stack },
-				),
-			);
+			reject(wrapConnectionError(err, path));
 		});
 	});
 
