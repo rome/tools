@@ -18,6 +18,7 @@ a = function f() {} || b;
 (function() {} && a);
 a + function() {};
 new function() {};
+
 ```
 
 
@@ -57,6 +58,5 @@ a = function f() {} || b;
 a + function () {};
 new (function () {})();
 ```
-
 
 

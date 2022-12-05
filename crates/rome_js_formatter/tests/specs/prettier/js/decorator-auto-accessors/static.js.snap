@@ -10,6 +10,7 @@ info:
 class Foo {
   static accessor bar;
 }
+
 ```
 
 
@@ -34,7 +35,6 @@ class Foo {
   bar;
 }
 ```
-
 
 # Errors
 ```

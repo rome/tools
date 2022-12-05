@@ -18,7 +18,7 @@ import x from "y";
 x = 1;
 ```
 
-<pre class="language-text"><code class="language-text">correctness/noImportAssign.js:2:1 <a href="https://docs.rome.tools/lint/rules/noImportAssign">lint/correctness/noImportAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noImportAssign.js:2:1 <a href="https://docs.rome.tools/lint/rules/noImportAssign">lint/suspicious/noImportAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>x</strong></span><span style="color: Tomato;"> is read-only</span>
   
@@ -43,7 +43,7 @@ import y from "y";
 [y] = 1;
 ```
 
-<pre class="language-text"><code class="language-text">correctness/noImportAssign.js:2:2 <a href="https://docs.rome.tools/lint/rules/noImportAssign">lint/correctness/noImportAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noImportAssign.js:2:2 <a href="https://docs.rome.tools/lint/rules/noImportAssign">lint/suspicious/noImportAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>y</strong></span><span style="color: Tomato;"> is read-only</span>
   
@@ -71,7 +71,7 @@ import a from "y";
 [...a] = 1;
 ```
 
-<pre class="language-text"><code class="language-text">correctness/noImportAssign.js:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noImportAssign.js:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">unterminated template literal</span>
   
@@ -91,7 +91,7 @@ import b from "y";
 ({ ...b } = 1);
 ```
 
-<pre class="language-text"><code class="language-text">correctness/noImportAssign.js:2:7 <a href="https://docs.rome.tools/lint/rules/noImportAssign">lint/correctness/noImportAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noImportAssign.js:2:7 <a href="https://docs.rome.tools/lint/rules/noImportAssign">lint/suspicious/noImportAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>b</strong></span><span style="color: Tomato;"> is read-only</span>
   
@@ -116,7 +116,7 @@ import c from "y";
 for (c in y) {};
 ```
 
-<pre class="language-text"><code class="language-text">correctness/noImportAssign.js:2:6 <a href="https://docs.rome.tools/lint/rules/noImportAssign">lint/correctness/noImportAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noImportAssign.js:2:6 <a href="https://docs.rome.tools/lint/rules/noImportAssign">lint/suspicious/noImportAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>c</strong></span><span style="color: Tomato;"> is read-only</span>
   
@@ -141,7 +141,7 @@ import d from "y";
 d += 1;
 ```
 
-<pre class="language-text"><code class="language-text">correctness/noImportAssign.js:2:1 <a href="https://docs.rome.tools/lint/rules/noImportAssign">lint/correctness/noImportAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noImportAssign.js:2:1 <a href="https://docs.rome.tools/lint/rules/noImportAssign">lint/suspicious/noImportAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>d</strong></span><span style="color: Tomato;"> is read-only</span>
   
@@ -166,7 +166,7 @@ import * as e from "y";
 e = 1;
 ```
 
-<pre class="language-text"><code class="language-text">correctness/noImportAssign.js:2:1 <a href="https://docs.rome.tools/lint/rules/noImportAssign">lint/correctness/noImportAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noImportAssign.js:2:1 <a href="https://docs.rome.tools/lint/rules/noImportAssign">lint/suspicious/noImportAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;"> is read-only</span>
   

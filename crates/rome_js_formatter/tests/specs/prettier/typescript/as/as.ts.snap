@@ -47,6 +47,7 @@ const value5 = thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLong
 
 const iter1 = createIterator(this.controller, child, this.tag as SyncFunctionComponent);
 const iter2 = createIterator(self.controller, child, self.tag as SyncFunctionComponent);
+
 ```
 
 
@@ -147,7 +148,6 @@ const iter2 = createIterator(
   self.tag as SyncFunctionComponent,
 );
 ```
-
 
 # Lines exceeding max width of 80 characters
 ```

@@ -75,6 +75,7 @@ type a= {
     /* prettier-ignore */
     [A in B]: C  |  D
   }
+
 ```
 
 
@@ -203,6 +204,5 @@ type a = {
     [A in B]: C  |  D
   };
 ```
-
 
 

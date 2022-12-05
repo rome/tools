@@ -33,6 +33,7 @@ it("does something really long and complicated so I have to write a very long na
 * no errors are thrown when calling isTestCall(parent)
 */
 function x() { inject(() => {}) }
+
 ```
 
 
@@ -88,10 +89,10 @@ function x() {
 }
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
    13: it("does something really long and complicated so I have to write a very long name for the test", inject(() => {
    17: it("does something really long and complicated so I have to write a very long name for the test", inject(($fooServiceLongName, $barServiceLongName) => {
 ```
+
 

@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: type_member.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/expression/type_member.ts
 ---
 
 # Input
 
-```js
+```ts
 type A =
     {    [   a: string   ] :       number      }
 
@@ -71,7 +72,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 type A = { [a: string]: number };
 
 type B = {

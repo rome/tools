@@ -10,7 +10,8 @@ info:
 class C {
     readonly readonly x: number;
     constructor(readonly readonly y: number) {}
-}```
+}
+```
 
 
 # Prettier differences
@@ -35,7 +36,6 @@ class C {
   constructor(readonly readonly y: number) {}
 }
 ```
-
 
 # Errors
 ```

@@ -33,6 +33,7 @@ let x = async do {
   let tmp = f();
   tmp * tmp + 1
 };
+
 ```
 
 
@@ -128,7 +129,6 @@ do {
   tmp * tmp + 1
 };
 ```
-
 
 # Errors
 ```

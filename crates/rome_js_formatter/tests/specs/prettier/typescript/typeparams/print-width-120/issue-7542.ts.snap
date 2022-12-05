@@ -26,6 +26,7 @@ users.map((user: User): User => {
 users.map((user: User): User => {
   // comment
 })
+
 ```
 
 
@@ -80,7 +81,6 @@ users.map((user: User): User => {
   // comment
 });
 ```
-
 
 # Errors
 ```

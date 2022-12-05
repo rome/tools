@@ -25,11 +25,13 @@ expression: content
             }
         },
         "correctness": {
+            "noUnreachable": "off"
+        },
+        "suspicious": {
             "noCatchAssign": "error",
             "noLabelVar": {
                 "level": "warn"
-            },
-            "noUnreachable": "off"
+            }
         }
     }
   },

@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # useValidForDirection (since v10.0.0)
 
+> This rule is recommended by Rome.
+
 Enforce "for" loop update clause moving the counter in the right direction.
 
 A for loop with a stop condition that can never be reached,
@@ -21,7 +23,7 @@ for (var i = 0; i < 10; i--) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useValidForDirection.js:1:5 <a href="https://docs.rome.tools/lint/rules/useValidForDirection">lint/nursery/useValidForDirection</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/useValidForDirection.js:1:5 <a href="https://docs.rome.tools/lint/rules/useValidForDirection">lint/correctness/useValidForDirection</a> ━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The update clause in this loop moves the variable in the wrong direction.</span>
   
@@ -37,7 +39,7 @@ for (var i = 10; i >= 0; i++) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useValidForDirection.js:1:5 <a href="https://docs.rome.tools/lint/rules/useValidForDirection">lint/nursery/useValidForDirection</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/useValidForDirection.js:1:5 <a href="https://docs.rome.tools/lint/rules/useValidForDirection">lint/correctness/useValidForDirection</a> ━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The update clause in this loop moves the variable in the wrong direction.</span>
   
@@ -53,7 +55,7 @@ for (var i = 0; i > 10; i++) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useValidForDirection.js:1:5 <a href="https://docs.rome.tools/lint/rules/useValidForDirection">lint/nursery/useValidForDirection</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/useValidForDirection.js:1:5 <a href="https://docs.rome.tools/lint/rules/useValidForDirection">lint/correctness/useValidForDirection</a> ━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The update clause in this loop moves the variable in the wrong direction.</span>
   

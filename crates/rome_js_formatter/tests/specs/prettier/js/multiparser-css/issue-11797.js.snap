@@ -19,6 +19,7 @@ const paragraph2 = css`
 const paragraph3 = css`
   transform: ${expr} (30px);
 `;
+
 ```
 
 
@@ -55,9 +56,9 @@ const paragraph3 = css`
 `;
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
     3:   transform: ${vert ? "translateY" : "translateX"}(${translation + handleOffset}px);
 ```
+
 

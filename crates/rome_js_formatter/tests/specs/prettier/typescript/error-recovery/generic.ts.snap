@@ -26,6 +26,7 @@ interface f6<> {
 class f7<> {
     test<>() {}
 }
+
 ```
 
 
@@ -75,7 +76,6 @@ class f7<> {
     test<>() {}
 }
 ```
-
 
 # Errors
 ```

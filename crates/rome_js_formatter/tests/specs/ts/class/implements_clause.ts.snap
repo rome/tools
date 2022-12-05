@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: implements_clause.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/class/implements_clause.ts
 ---
 
 # Input
 
-```js
+```ts
 class ClassName implements Interface { }
 
 class LongClassName implements Interface1, Interface2, Interface3, Interface4, Interface5 { }
@@ -27,7 +28,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 class ClassName implements Interface {}
 
 class LongClassName

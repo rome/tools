@@ -17,6 +17,7 @@ export default function include_photoswipe(
 			);
 		</script>`;
 }
+
 ```
 
 
@@ -53,6 +54,5 @@ export default function include_photoswipe(gallery_selector = ".my-gallery") {
 		</script>`;
 }
 ```
-
 
 

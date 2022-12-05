@@ -1,5 +1,6 @@
 import { spawn } from "child_process";
-import { connect } from "net";
+import type { Readable } from "stream";
+import { connect, type Socket } from "net";
 import { promisify } from "util";
 import {
 	ExtensionContext,
@@ -247,32 +248,61 @@ async function fileExists(path: Uri) {
 	}
 }
 
-function getSocket(
+function collectStream(stream: Readable) {
+	return new Promise<string>((resolve, reject) => {
+		let buffer = "";
+		stream.on("data", (data) => {
+			buffer += data.toString("utf-8");
+		});
+
+		stream.on("error", reject);
+		stream.on("end", () => {
+			resolve(buffer);
+		});
+	});
+}
+
+async function getSocket(
 	outputChannel: OutputChannel,
 	command: string,
 ): Promise<string> {
-	return new Promise((resolve, reject) => {
-		const process = spawn(command, ["__print_socket"], {
-			stdio: "pipe",
-		});
-
-		process.on("error", reject);
-
-		let output = "";
-		process.stdout.on("data", (data) => {
-			output += data.toString("utf-8");
-		});
-
-		process.on("exit", (code) => {
-			if (code === 0) {
-				const pipeName = output.trimEnd();
-				outputChannel.appendLine(`Connecting to "${pipeName}" ...`);
-				resolve(pipeName);
-			} else {
-				reject(code);
-			}
-		});
+	const process = spawn(command, ["__print_socket"], {
+		stdio: "pipe",
 	});
+
+	const exitCode = new Promise<number>((resolve, reject) => {
+		process.on("error", reject);
+		process.on("exit", resolve);
+	});
+
+	const [stdout, stderr, code] = await Promise.all([
+		collectStream(process.stdout),
+		collectStream(process.stderr),
+		exitCode,
+	]);
+
+	const pipeName = stdout.trimEnd();
+
+	if (code !== 0 || pipeName.length === 0) {
+		let message = `Command "${command} __print_socket" exited with code ${code}`;
+		if (stderr.length > 0) {
+			message += `\nOutput:\n${stderr}`;
+		}
+
+		throw new Error(message);
+	} else {
+		outputChannel.appendLine(`Connecting to "${pipeName}" ...`);
+		return pipeName;
+	}
+}
+
+function wrapConnectionError(err: Error, path: string): Error {
+	return Object.assign(
+		new Error(
+			`Could not connect to the Rome server at "${path}": ${err.message}`,
+		),
+		{ name: err.name, stack: err.stack },
+	);
 }
 
 async function createMessageTransports(
@@ -280,19 +310,18 @@ async function createMessageTransports(
 	command: string,
 ): Promise<StreamInfo> {
 	const path = await getSocket(outputChannel, command);
-	const socket = connect(path);
+
+	let socket: Socket;
+	try {
+		socket = connect(path);
+	} catch (err) {
+		throw wrapConnectionError(err, path);
+	}
 
 	await new Promise((resolve, reject) => {
 		socket.once("ready", resolve);
 		socket.once("error", (err) => {
-			reject(
-				Object.assign(
-					new Error(
-						`Could not connect to the Rome server at "${path}": ${err.message}`,
-					),
-					{ name: err.name, stack: err.stack },
-				),
-			);
+			reject(wrapConnectionError(err, path));
 		});
 	});
 

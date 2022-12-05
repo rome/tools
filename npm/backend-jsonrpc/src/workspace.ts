@@ -137,12 +137,14 @@ export interface Rules {
 	complexity?: Complexity;
 	correctness?: Correctness;
 	nursery?: Nursery;
+	performance?: Performance;
 	/**
 	 * It enables the lint rules recommended by Rome. `true` by default.
 	 */
 	recommended?: boolean;
 	security?: Security;
 	style?: Style;
+	suspicious?: Suspicious;
 }
 export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
@@ -156,6 +158,10 @@ export interface A11y {
 	 * Avoid the autoFocus attribute
 	 */
 	noAutofocus?: RuleConfiguration;
+	/**
+	 * Disallow target="_blank" attribute without rel="noreferrer"
+	 */
+	noBlankTarget?: RuleConfiguration;
 	/**
 	 * Prevent the usage of positive integers on tabIndex property
 	 */
@@ -172,10 +178,6 @@ export interface A11y {
 	 * Enforce that anchor elements have content and that the content is accessible to screen readers.
 	 */
 	useAnchorContent?: RuleConfiguration;
-	/**
-	 * Disallow target="_blank" attribute without rel="noreferrer"
-	 */
-	useBlankTarget?: RuleConfiguration;
 	/**
 	 * Enforces the usage of the attribute type for the element button
 	 */
@@ -202,9 +204,25 @@ export interface Complexity {
 	 */
 	noExtraBooleanCast?: RuleConfiguration;
 	/**
+	 * Disallow unclear usage of multiple space characters in regular expression literals
+	 */
+	noMultipleSpacesInRegularExpressionLiterals?: RuleConfiguration;
+	/**
+	 * Disallow unnecessary fragments
+	 */
+	noUselessFragments?: RuleConfiguration;
+	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	/**
+	 * Promotes the use of .flatMap() when map().flat() are used together.
+	 */
+	useFlatMap?: RuleConfiguration;
+	/**
+	 * Enforce using concise optional chain instead of chained logical expressions.
+	 */
+	useOptionalChain?: RuleConfiguration;
 	/**
 	 * Discard redundant terms from logical expressions.
 	 */
@@ -215,69 +233,17 @@ export interface Complexity {
  */
 export interface Correctness {
 	/**
-	 * Disallow the use of arguments
-	 */
-	noArguments?: RuleConfiguration;
-	/**
-	 * Discourage the usage of Array index in keys.
-	 */
-	noArrayIndexKey?: RuleConfiguration;
-	/**
-	 * Disallows using an async function as a Promise executor.
-	 */
-	noAsyncPromiseExecutor?: RuleConfiguration;
-	/**
-	 * Disallow reassigning exceptions in catch clauses
-	 */
-	noCatchAssign?: RuleConfiguration;
-	/**
 	 * Prevent passing of children as props.
 	 */
 	noChildrenProp?: RuleConfiguration;
 	/**
-	 * Prevent comments from being inserted as text nodes
+	 * Prevents from having const variables being re-assigned.
 	 */
-	noCommentText?: RuleConfiguration;
-	/**
-	 * Disallow comparing against -0
-	 */
-	noCompareNegZero?: RuleConfiguration;
-	/**
-	 * Disallow the use of debugger
-	 */
-	noDebugger?: RuleConfiguration;
-	/**
-	 * Disallow the use of the delete operator
-	 */
-	noDelete?: RuleConfiguration;
-	/**
-	 * Require the use of === and !==
-	 */
-	noDoubleEquals?: RuleConfiguration;
-	/**
-	 * Disallow duplicate function arguments name.
-	 */
-	noDupeArgs?: RuleConfiguration;
+	noConstAssign?: RuleConfiguration;
 	/**
 	 * Disallows empty destructuring patterns.
 	 */
 	noEmptyPattern?: RuleConfiguration;
-	/**
-	 * Disallow reassigning function declarations.
-	 */
-	noFunctionAssign?: RuleConfiguration;
-	/**
-	 * Disallow assigning to imported bindings
-	 */
-	noImportAssign?: RuleConfiguration;
-	/**
-	 * Disallow labels that share a name with a variable
-	 */
-	noLabelVar?: RuleConfiguration;
-	/**
-	 * Disallow unclear usage of multiple space characters in regular expression literals
-	 */
-	noMultipleSpacesInRegularExpressionLiterals?: RuleConfiguration;
 	/**
 	 * Disallow new operators with the Symbol object
 	 */
@@ -286,18 +252,6 @@ export interface Correctness {
 	 * Prevent the usage of the return value of React.render.
 	 */
 	noRenderReturnValue?: RuleConfiguration;
-	/**
-	 * This rule allows you to specify global variable names that you don’t want to use in your application.
-	 */
-	noRestrictedGlobals?: RuleConfiguration;
-	/**
-	 * Disallow identifiers from shadowing restricted names.
-	 */
-	noShadowRestrictedNames?: RuleConfiguration;
-	/**
-	 * Disallow sparse arrays
-	 */
-	noSparseArray?: RuleConfiguration;
 	/**
 	 * Prevents the usage of variables that haven't been declared inside the document
 	 */
@@ -311,17 +265,9 @@ export interface Correctness {
 	 */
 	noUnreachable?: RuleConfiguration;
 	/**
-	 * Disallow using unsafe negation.
-	 */
-	noUnsafeNegation?: RuleConfiguration;
-	/**
 	 * Disallow unused variables.
 	 */
 	noUnusedVariables?: RuleConfiguration;
-	/**
-	 * Disallow unnecessary fragments
-	 */
-	noUselessFragments?: RuleConfiguration;
 	/**
 	 * This rules prevents void elements (AKA self-closing elements) from having children.
 	 */
@@ -331,17 +277,9 @@ export interface Correctness {
 	 */
 	recommended?: boolean;
 	/**
-	 * Enforces case clauses have a single statement, emits a quick fix wrapping the statements in a block
+	 * Enforce "for" loop update clause moving the counter in the right direction.
 	 */
-	useSingleCaseStatement?: RuleConfiguration;
-	/**
-	 * This rule verifies the result of typeof $expr unary expressions is being compared to valid values, either string literals containing valid type names or other typeof expressions
-	 */
-	useValidTypeof?: RuleConfiguration;
-	/**
-	 * Enforce the use of while loops instead of for loops when the initializer and update expressions are not needed
-	 */
-	useWhile?: RuleConfiguration;
+	useValidForDirection?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
@@ -360,10 +298,6 @@ export interface Nursery {
 	 */
 	noConditionalAssignment?: RuleConfiguration;
 	/**
-	 * Prevents from having const variables being re-assigned.
-	 */
-	noConstAssign?: RuleConfiguration;
-	/**
 	 * Disallow TypeScript const enum
 	 */
 	noConstEnum?: RuleConfiguration;
@@ -378,15 +312,11 @@ export interface Nursery {
 	/**
 	 * Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
 	 */
-	noDupeKeys?: RuleConfiguration;
+	noDuplicateObjectKeys?: RuleConfiguration;
 	/**
 	 * Disallow the declaration of empty interfaces.
 	 */
 	noEmptyInterface?: RuleConfiguration;
-	/**
-	 * Disallow the any type usage
-	 */
-	noExplicitAny?: RuleConfiguration;
 	/**
 	 * Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.
 	 */
@@ -411,6 +341,10 @@ export interface Nursery {
 	 * Prevents from having redundant "use strict".
 	 */
 	noRedundantUseStrict?: RuleConfiguration;
+	/**
+	 * This rule allows you to specify global variable names that you don’t want to use in your application.
+	 */
+	noRestrictedGlobals?: RuleConfiguration;
 	/**
 	 * Disallow returning a value from a setter
 	 */
@@ -472,17 +406,22 @@ export interface Nursery {
 	 */
 	useExponentiationOperator?: RuleConfiguration;
 	/**
-	 * Promotes the use of .flatMap() when map().flat() are used together.
-	 */
-	useFlatMap?: RuleConfiguration;
-	/**
 	 * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
 	 */
 	useNumericLiterals?: RuleConfiguration;
+}
+/**
+ * A list of rules that belong to this group
+ */
+export interface Performance {
 	/**
-	 * Enforce "for" loop update clause moving the counter in the right direction.
+	 * Disallow the use of the delete operator
 	 */
-	useValidForDirection?: RuleConfiguration;
+	noDelete?: RuleConfiguration;
+	/**
+	 * It enables the recommended rules for this group
+	 */
+	recommended?: boolean;
 }
 /**
  * A list of rules that belong to this group
@@ -505,6 +444,10 @@ export interface Security {
  * A list of rules that belong to this group
  */
 export interface Style {
+	/**
+	 * Disallow the use of arguments
+	 */
+	noArguments?: RuleConfiguration;
 	/**
 	 * Disallow implicit true values on JSX boolean attributes
 	 */
@@ -534,10 +477,6 @@ export interface Style {
 	 */
 	useFragmentSyntax?: RuleConfiguration;
 	/**
-	 * Enforce using concise optional chain instead of chained logical expressions.
-	 */
-	useOptionalChain?: RuleConfiguration;
-	/**
 	 * Prevent extra closing tags for components without children
 	 */
 	useSelfClosingElements?: RuleConfiguration;
@@ -546,6 +485,10 @@ export interface Style {
 	 */
 	useShorthandArrayType?: RuleConfiguration;
 	/**
+	 * Enforces case clauses have a single statement, emits a quick fix wrapping the statements in a block
+	 */
+	useSingleCaseStatement?: RuleConfiguration;
+	/**
 	 * Disallow multiple variable declarations in the same variable statement
 	 */
 	useSingleVarDeclarator?: RuleConfiguration;
@@ -553,6 +496,83 @@ export interface Style {
 	 * Template literals are preferred over string concatenation.
 	 */
 	useTemplate?: RuleConfiguration;
+	/**
+	 * Enforce the use of while loops instead of for loops when the initializer and update expressions are not needed
+	 */
+	useWhile?: RuleConfiguration;
+}
+/**
+ * A list of rules that belong to this group
+ */
+export interface Suspicious {
+	/**
+	 * Discourage the usage of Array index in keys.
+	 */
+	noArrayIndexKey?: RuleConfiguration;
+	/**
+	 * Disallows using an async function as a Promise executor.
+	 */
+	noAsyncPromiseExecutor?: RuleConfiguration;
+	/**
+	 * Disallow reassigning exceptions in catch clauses
+	 */
+	noCatchAssign?: RuleConfiguration;
+	/**
+	 * Prevent comments from being inserted as text nodes
+	 */
+	noCommentText?: RuleConfiguration;
+	/**
+	 * Disallow comparing against -0
+	 */
+	noCompareNegZero?: RuleConfiguration;
+	/**
+	 * Disallow the use of debugger
+	 */
+	noDebugger?: RuleConfiguration;
+	/**
+	 * Require the use of === and !==
+	 */
+	noDoubleEquals?: RuleConfiguration;
+	/**
+	 * Disallow duplicate function arguments name.
+	 */
+	noDuplicateParameters?: RuleConfiguration;
+	/**
+	 * Disallow the any type usage
+	 */
+	noExplicitAny?: RuleConfiguration;
+	/**
+	 * Disallow reassigning function declarations.
+	 */
+	noFunctionAssign?: RuleConfiguration;
+	/**
+	 * Disallow assigning to imported bindings
+	 */
+	noImportAssign?: RuleConfiguration;
+	/**
+	 * Disallow labels that share a name with a variable
+	 */
+	noLabelVar?: RuleConfiguration;
+	/**
+	 * Disallow identifiers from shadowing restricted names.
+	 */
+	noShadowRestrictedNames?: RuleConfiguration;
+	/**
+	 * Disallow sparse arrays
+	 */
+	noSparseArray?: RuleConfiguration;
+	/**
+	 * Disallow using unsafe negation.
+	 */
+	noUnsafeNegation?: RuleConfiguration;
+	/**
+	 * It enables the recommended rules for this group
+	 */
+	recommended?: boolean;
+	/**
+	 * This rule verifies the result of typeof $expr unary expressions is being compared to valid values, either string literals containing valid type names or other typeof expressions
+	 */
+	useValidTypeof?: RuleConfiguration;
 }
 export type RuleConfiguration = RulePlainConfiguration | RuleWithOptions;
 export type RulePlainConfiguration = "warn" | "error" | "off";
@@ -632,81 +652,54 @@ export interface Advices {
 	advices: Advice[];
 }
 export type Category =
-	| "lint/correctness/noArguments"
-	| "lint/correctness/noAsyncPromiseExecutor"
-	| "lint/correctness/noCatchAssign"
-	| "lint/correctness/noCommentText"
-	| "lint/correctness/noCompareNegZero"
-	| "lint/correctness/noDelete"
-	| "lint/correctness/noDoubleEquals"
-	| "lint/correctness/noDupeArgs"
-	| "lint/correctness/noEmptyPattern"
-	| "lint/correctness/noFunctionAssign"
-	| "lint/correctness/noImportAssign"
-	| "lint/correctness/noLabelVar"
-	| "lint/correctness/noMultipleSpacesInRegularExpressionLiterals"
-	| "lint/correctness/noShadowRestrictedNames"
-	| "lint/correctness/noSparseArray"
-	| "lint/correctness/noUnnecessaryContinue"
-	| "lint/correctness/noUnsafeNegation"
-	| "lint/correctness/useSingleCaseStatement"
-	| "lint/correctness/useWhile"
-	| "lint/correctness/noNewSymbol"
-	| "lint/correctness/noUselessFragments"
-	| "lint/correctness/noUnusedVariables"
-	| "lint/correctness/noUnreachable"
-	| "lint/correctness/noRestrictedGlobals"
-	| "lint/correctness/noUndeclaredVariables"
-	| "lint/correctness/useValidTypeof"
-	| "lint/correctness/noVoidElementsWithChildren"
-	| "lint/correctness/noArrayIndexKey"
-	| "lint/correctness/noChildrenProp"
-	| "lint/correctness/noRenderReturnValue"
-	| "lint/correctness/noDebugger"
-	| "lint/style/noNegationElse"
-	| "lint/style/noShoutyConstants"
-	| "lint/style/useSelfClosingElements"
-	| "lint/style/useShorthandArrayType"
-	| "lint/style/useFragmentSyntax"
-	| "lint/style/useTemplate"
-	| "lint/style/useSingleVarDeclarator"
-	| "lint/style/useOptionalChain"
-	| "lint/style/useBlockStatements"
-	| "lint/style/noImplicitBoolean"
-	| "lint/style/noUnusedTemplateLiteral"
-	| "lint/complexity/useSimplifiedLogicExpression"
-	| "lint/complexity/noExtraBooleanCast"
 	| "lint/a11y/noAutofocus"
+	| "lint/a11y/noBlankTarget"
 	| "lint/a11y/noPositiveTabindex"
-	| "lint/a11y/useKeyWithMouseEvents"
-	| "lint/a11y/useAnchorContent"
-	| "lint/a11y/useBlankTarget"
-	| "lint/a11y/useValidAnchor"
-	| "lint/a11y/useKeyWithClickEvents"
-	| "lint/a11y/useButtonType"
 	| "lint/a11y/useAltText"
-	| "lint/security/noDangerouslySetInnerHtml"
-	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
+	| "lint/a11y/useAnchorContent"
+	| "lint/a11y/useButtonType"
+	| "lint/a11y/useKeyWithClickEvents"
+	| "lint/a11y/useKeyWithMouseEvents"
+	| "lint/a11y/useValidAnchor"
+	| "lint/complexity/noExtraBooleanCast"
+	| "lint/complexity/noMultipleSpacesInRegularExpressionLiterals"
+	| "lint/complexity/noUselessFragments"
+	| "lint/complexity/useFlatMap"
+	| "lint/complexity/useOptionalChain"
+	| "lint/complexity/useSimplifiedLogicExpression"
+	| "lint/correctness/noChildrenProp"
+	| "lint/correctness/noConstAssign"
+	| "lint/correctness/noEmptyPattern"
+	| "lint/correctness/noNewSymbol"
+	| "lint/correctness/noRenderReturnValue"
+	| "lint/correctness/noUndeclaredVariables"
+	| "lint/correctness/noUnnecessaryContinue"
+	| "lint/correctness/noUnreachable"
+	| "lint/correctness/noUnusedVariables"
+	| "lint/correctness/noVoidElementsWithChildren"
+	| "lint/correctness/useValidForDirection"
 	| "lint/nursery/noAccessKey"
 	| "lint/nursery/noBannedTypes"
 	| "lint/nursery/noConditionalAssignment"
-	| "lint/nursery/noConstAssign"
 	| "lint/nursery/noConstEnum"
 	| "lint/nursery/noConstructorReturn"
 	| "lint/nursery/noDistractingElements"
-	| "lint/nursery/noDupeKeys"
+	| "lint/nursery/noDuplicateObjectKeys"
 	| "lint/nursery/noEmptyInterface"
-	| "lint/nursery/noExplicitAny"
 	| "lint/nursery/noExtraNonNullAssertion"
 	| "lint/nursery/noHeaderScope"
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noNonNullAssertion"
 	| "lint/nursery/noPrecisionLoss"
+	| "lint/nursery/noRedundantUseStrict"
+	| "lint/nursery/noRestrictedGlobals"
 	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnsafeFinally"
 	| "lint/nursery/noVar"
 	| "lint/nursery/noVoidTypeReturn"
+	| "lint/nursery/useAriaPropsForRole"
+	| "lint/nursery/useAriaPropTypes"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useConst"
 	| "lint/nursery/useDefaultParameterLast"
@@ -714,12 +707,40 @@ export type Category =
 	| "lint/nursery/useEnumInitializers"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useExponentiationOperator"
-	| "lint/nursery/useFlatMap"
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/useValidForDirection"
-	| "lint/nursery/useAriaPropsForRole"
-	| "lint/nursery/useAriaPropTypes"
-	| "lint/nursery/noRedundantUseStrict"
+	| "lint/performance/noDelete"
+	| "lint/security/noDangerouslySetInnerHtml"
+	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
+	| "lint/style/noArguments"
+	| "lint/style/noImplicitBoolean"
+	| "lint/style/noNegationElse"
+	| "lint/style/noShoutyConstants"
+	| "lint/style/noUnusedTemplateLiteral"
+	| "lint/style/useBlockStatements"
+	| "lint/style/useFragmentSyntax"
+	| "lint/style/useSelfClosingElements"
+	| "lint/style/useShorthandArrayType"
+	| "lint/style/useSingleCaseStatement"
+	| "lint/style/useSingleVarDeclarator"
+	| "lint/style/useTemplate"
+	| "lint/style/useWhile"
+	| "lint/suspicious/noArrayIndexKey"
+	| "lint/suspicious/noAsyncPromiseExecutor"
+	| "lint/suspicious/noCatchAssign"
+	| "lint/suspicious/noCommentText"
+	| "lint/suspicious/noCompareNegZero"
+	| "lint/suspicious/noDebugger"
+	| "lint/suspicious/noDoubleEquals"
+	| "lint/suspicious/noDuplicateParameters"
+	| "lint/suspicious/noExplicitAny"
+	| "lint/suspicious/noFunctionAssign"
+	| "lint/suspicious/noImportAssign"
+	| "lint/suspicious/noLabelVar"
+	| "lint/suspicious/noShadowRestrictedNames"
+	| "lint/suspicious/noSparseArray"
+	| "lint/suspicious/noUnsafeNegation"
+	| "lint/suspicious/useValidTypeof"
 	| "files/missingHandler"
 	| "format"
 	| "internalError/io"
@@ -728,12 +749,14 @@ export type Category =
 	| "parse"
 	| "parse/noSuperWithoutExtends"
 	| "lint"
-	| "lint/correctness"
-	| "lint/style"
-	| "lint/complexity"
 	| "lint/a11y"
-	| "lint/security"
+	| "lint/complexity"
+	| "lint/correctness"
 	| "lint/nursery"
+	| "lint/performance"
+	| "lint/security"
+	| "lint/style"
+	| "lint/suspicious"
 	| "lint/configuration"
 	| "suppressions/parse"
 	| "suppressions/unknownGroup"

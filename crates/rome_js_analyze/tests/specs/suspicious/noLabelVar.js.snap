@@ -1,0 +1,75 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noLabelVar.js
+---
+# Input
+```js
+// invalid
+const x1 = "test";
+x1: expr;
+// nested scope 
+function test() {
+  {
+    x1: for (let i = 0; i < 10; i++) {
+    }
+  }
+}
+
+// valid
+const x = "test";
+z: expr;
+
+```
+
+# Diagnostics
+```
+noLabelVar.js:3:1 lint/suspicious/noLabelVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not use the x1 variable name as a label
+  
+    1 │ // invalid
+    2 │ const x1 = "test";
+  > 3 │ x1: expr;
+      │ ^^
+    4 │ // nested scope·
+    5 │ function test() {
+  
+  i The variable is declared here
+  
+    1 │ // invalid
+  > 2 │ const x1 = "test";
+      │       ^^
+    3 │ x1: expr;
+    4 │ // nested scope·
+  
+  i Creating a label with the same name as an in-scope variable leads to confusion.
+  
+
+```
+
+```
+noLabelVar.js:7:5 lint/suspicious/noLabelVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not use the x1 variable name as a label
+  
+    5 │ function test() {
+    6 │   {
+  > 7 │     x1: for (let i = 0; i < 10; i++) {
+      │     ^^
+    8 │     }
+    9 │   }
+  
+  i The variable is declared here
+  
+    1 │ // invalid
+  > 2 │ const x1 = "test";
+      │       ^^
+    3 │ x1: expr;
+    4 │ // nested scope·
+  
+  i Creating a label with the same name as an in-scope variable leads to confusion.
+  
+
+```
+
+

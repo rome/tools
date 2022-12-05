@@ -73,6 +73,7 @@ interface ExtendsManyWithGenerics
   }
 
 export interface ExtendsLongOneWithGenerics extends Bar< SomeLongTypeSomeLongTypeSomeLongTypeSomeLongType,  ToBreakLineToBreakLineToBreakLine> {}
+
 ```
 
 
@@ -215,7 +216,6 @@ export interface ExtendsLongOneWithGenerics
     ToBreakLineToBreakLineToBreakLine
   > {}
 ```
-
 
 # Errors
 ```

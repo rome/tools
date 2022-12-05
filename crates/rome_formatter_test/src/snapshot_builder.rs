@@ -2,14 +2,35 @@ use rome_diagnostics::console::fmt::{Formatter, Termcolor};
 use rome_diagnostics::console::markup;
 use rome_diagnostics::PrintDiagnostic;
 use rome_diagnostics::{termcolor, DiagnosticExt};
+use rome_formatter::Printed;
 use rome_parser::AnyParse;
 use std::ffi::OsStr;
+use std::fmt;
 use std::fmt::Write;
 use std::path::Path;
 
 #[derive(serde::Serialize)]
 struct TestInfo {
     test_file: String,
+}
+
+pub struct SnapshotOutput<'a> {
+    content: &'a str,
+    index: Option<usize>,
+}
+
+impl<'a> SnapshotOutput<'a> {
+    pub fn new(content: &'a str) -> Self {
+        SnapshotOutput {
+            content,
+            index: None,
+        }
+    }
+
+    pub fn with_index(mut self, index: usize) -> Self {
+        self.index = Some(index);
+        self
+    }
 }
 
 pub struct SnapshotBuilder<'a> {
@@ -31,8 +52,16 @@ impl<'a> SnapshotBuilder<'a> {
         writeln!(self.snapshot).unwrap();
         self.write_extension();
         self.snapshot.push_str(input);
+        writeln!(self.snapshot).unwrap();
         writeln!(self.snapshot, "```").unwrap();
         writeln!(self.snapshot).unwrap();
+        writeln!(self.snapshot).unwrap();
+
+        self
+    }
+
+    pub fn with_separator(mut self) -> Self {
+        writeln!(self.snapshot, "=============================").unwrap();
         writeln!(self.snapshot).unwrap();
 
         self
@@ -49,14 +78,59 @@ impl<'a> SnapshotBuilder<'a> {
         self
     }
 
-    pub fn with_output(mut self, output: &str) -> Self {
-        writeln!(self.snapshot, "# Output").unwrap();
+    pub fn with_multiple_outputs(mut self) -> Self {
+        writeln!(self.snapshot, "# Outputs").unwrap();
         writeln!(self.snapshot).unwrap();
+
+        self
+    }
+
+    pub fn with_output_and_options<T>(mut self, output: SnapshotOutput, options: T) -> Self
+    where
+        T: fmt::Display,
+    {
+        self.write_output_header(&output);
+
+        writeln!(self.snapshot).unwrap();
+
+        writeln!(self.snapshot, "-----").unwrap();
+        write!(self.snapshot, "{}", options).unwrap();
+        writeln!(self.snapshot, "-----").unwrap();
+        writeln!(self.snapshot).unwrap();
+
         self.write_extension();
-        self.snapshot.push_str(output);
+        self.snapshot.push_str(output.content);
         writeln!(self.snapshot, "```").unwrap();
         writeln!(self.snapshot).unwrap();
+
+        self
+    }
+
+    pub fn with_output(mut self, output: SnapshotOutput) -> Self {
+        self.write_output_header(&output);
+
         writeln!(self.snapshot).unwrap();
+
+        self.write_extension();
+        self.snapshot.push_str(output.content);
+        writeln!(self.snapshot, "```").unwrap();
+        writeln!(self.snapshot).unwrap();
+
+        self
+    }
+
+    pub fn with_unimplemented(mut self, formatted: &Printed) -> Self {
+        if !formatted.verbatim_ranges().is_empty() {
+            writeln!(self.snapshot).unwrap();
+            writeln!(self.snapshot).unwrap();
+            self.snapshot.push_str("## Unimplemented nodes/tokens");
+            writeln!(self.snapshot).unwrap();
+            writeln!(self.snapshot).unwrap();
+
+            for (range, text) in formatted.verbatim() {
+                writeln!(self.snapshot, "{:?} => {:?}", text, range).unwrap();
+            }
+        }
 
         self
     }
@@ -116,6 +190,7 @@ impl<'a> SnapshotBuilder<'a> {
                 writeln!(self.snapshot, "{line_number:>5}: {line}").unwrap();
             }
             writeln!(self.snapshot, "```").unwrap();
+            writeln!(self.snapshot).unwrap();
         }
 
         self
@@ -143,5 +218,13 @@ impl SnapshotBuilder<'_> {
     fn write_extension(&mut self) {
         let file_extension = self.input_file.extension().unwrap().to_str().unwrap();
         writeln!(self.snapshot, "```{file_extension}").unwrap();
+    }
+
+    fn write_output_header(&mut self, output: &SnapshotOutput) {
+        if let Some(index) = output.index {
+            writeln!(self.snapshot, "## Output {index}").unwrap();
+        } else {
+            writeln!(self.snapshot, "# Output").unwrap();
+        }
     }
 }

@@ -1,5 +1,5 @@
 ---
-source: crates/rome_json_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: json/json/key-value.json
 ---
@@ -12,6 +12,7 @@ info:
     "stringstringstringstringstringstringstringstring": "stringstringstringstringstringstringstringstring",
     "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring": "string"
 }
+
 ```
 
 
@@ -41,11 +42,11 @@ info:
 }
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
     2:     "string": "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring",
     3:     "stringstringstringstringstringstringstringstring": "stringstringstringstringstringstringstringstring",
     4:     "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring": "string"
 ```
+
 

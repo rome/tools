@@ -17,6 +17,7 @@ position:relative;
 top: ${p => p.overlap === 'next' && 0};
 }
 `
+
 ```
 
 
@@ -58,7 +59,6 @@ top: ${(p) => p.overlap === "next" && 0};
 }
 `;
 ```
-
 
 # Lines exceeding max width of 80 characters
 ```

@@ -59,6 +59,7 @@ async function * f () {
     |> (a.b?.(%))
     |> a.b?.(%);
 }
+
 ```
 
 
@@ -216,7 +217,6 @@ async function* f() {
     |> a.b?.(%)
 }
 ```
-
 
 # Errors
 ```

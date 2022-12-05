@@ -14,6 +14,7 @@ const t1 = {
 } satisfies
 // Comment
 Record<string, number>;
+
 ```
 
 
@@ -44,6 +45,5 @@ const t1 = {
   // Comment
   Record<string, number>;
 ```
-
 
 

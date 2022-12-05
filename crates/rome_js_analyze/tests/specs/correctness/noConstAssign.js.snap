@@ -1,0 +1,370 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noConstAssign.js
+---
+# Input
+```js
+const a = 1;
+a = 2;
+
+const b = 2,
+	c = 43;
+b = 4;
+++b;
+b += 45;
+b--;
+function f() {
+	b++;
+}
+function f(d) {
+	b++;
+}
+const fn = (val) => {
+	val = 0;
+};
+
+const e = () => {
+	try {
+		foo();
+	} catch (err) {
+		err = 4;
+	}
+};
+
+const f = (...rest) => {
+	rest = 4;
+};
+
+const g = class bar {};
+bar = 1;
+
+const h = function foo() {
+	foo = 1;
+};
+
+const {
+	i,
+	j: { l },
+} = { i: 1, j: { l: 2 } };
+i = 4;
+l = 4;
+
+for (const k in [1, 2]) {
+	k = 4;
+}
+
+const [p, { q }] = [1, { q: 2 }];
+p = 3;
+q = 4;
+
+const { r, ...rest } = s;
+r = 4;
+
+```
+
+# Diagnostics
+```
+noConstAssign.js:2:1 lint/correctness/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign a because it's a constant
+  
+    1 │ const a = 1;
+  > 2 │ a = 2;
+      │ ^
+    3 │ 
+    4 │ const b = 2,
+  
+  i This is where the variable is defined as constant
+  
+  > 1 │ const a = 1;
+      │       ^
+    2 │ a = 2;
+    3 │ 
+  
+
+```
+
+```
+noConstAssign.js:6:1 lint/correctness/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign b because it's a constant
+  
+    4 │ const b = 2,
+    5 │ 	c = 43;
+  > 6 │ b = 4;
+      │ ^
+    7 │ ++b;
+    8 │ b += 45;
+  
+  i This is where the variable is defined as constant
+  
+    2 │ a = 2;
+    3 │ 
+  > 4 │ const b = 2,
+      │       ^
+    5 │ 	c = 43;
+    6 │ b = 4;
+  
+
+```
+
+```
+noConstAssign.js:7:3 lint/correctness/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign b because it's a constant
+  
+    5 │ 	c = 43;
+    6 │ b = 4;
+  > 7 │ ++b;
+      │   ^
+    8 │ b += 45;
+    9 │ b--;
+  
+  i This is where the variable is defined as constant
+  
+    2 │ a = 2;
+    3 │ 
+  > 4 │ const b = 2,
+      │       ^
+    5 │ 	c = 43;
+    6 │ b = 4;
+  
+
+```
+
+```
+noConstAssign.js:8:1 lint/correctness/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign b because it's a constant
+  
+     6 │ b = 4;
+     7 │ ++b;
+   > 8 │ b += 45;
+       │ ^
+     9 │ b--;
+    10 │ function f() {
+  
+  i This is where the variable is defined as constant
+  
+    2 │ a = 2;
+    3 │ 
+  > 4 │ const b = 2,
+      │       ^
+    5 │ 	c = 43;
+    6 │ b = 4;
+  
+
+```
+
+```
+noConstAssign.js:9:1 lint/correctness/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign b because it's a constant
+  
+     7 │ ++b;
+     8 │ b += 45;
+   > 9 │ b--;
+       │ ^
+    10 │ function f() {
+    11 │ 	b++;
+  
+  i This is where the variable is defined as constant
+  
+    2 │ a = 2;
+    3 │ 
+  > 4 │ const b = 2,
+      │       ^
+    5 │ 	c = 43;
+    6 │ b = 4;
+  
+
+```
+
+```
+noConstAssign.js:11:2 lint/correctness/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign b because it's a constant
+  
+     9 │ b--;
+    10 │ function f() {
+  > 11 │ 	b++;
+       │ 	^
+    12 │ }
+    13 │ function f(d) {
+  
+  i This is where the variable is defined as constant
+  
+    2 │ a = 2;
+    3 │ 
+  > 4 │ const b = 2,
+      │       ^
+    5 │ 	c = 43;
+    6 │ b = 4;
+  
+
+```
+
+```
+noConstAssign.js:14:2 lint/correctness/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign b because it's a constant
+  
+    12 │ }
+    13 │ function f(d) {
+  > 14 │ 	b++;
+       │ 	^
+    15 │ }
+    16 │ const fn = (val) => {
+  
+  i This is where the variable is defined as constant
+  
+    2 │ a = 2;
+    3 │ 
+  > 4 │ const b = 2,
+      │       ^
+    5 │ 	c = 43;
+    6 │ b = 4;
+  
+
+```
+
+```
+noConstAssign.js:43:1 lint/correctness/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign i because it's a constant
+  
+    41 │ 	j: { l },
+    42 │ } = { i: 1, j: { l: 2 } };
+  > 43 │ i = 4;
+       │ ^
+    44 │ l = 4;
+    45 │ 
+  
+  i This is where the variable is defined as constant
+  
+    39 │ const {
+  > 40 │ 	i,
+       │ 	^
+    41 │ 	j: { l },
+    42 │ } = { i: 1, j: { l: 2 } };
+  
+
+```
+
+```
+noConstAssign.js:44:1 lint/correctness/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign l because it's a constant
+  
+    42 │ } = { i: 1, j: { l: 2 } };
+    43 │ i = 4;
+  > 44 │ l = 4;
+       │ ^
+    45 │ 
+    46 │ for (const k in [1, 2]) {
+  
+  i This is where the variable is defined as constant
+  
+    39 │ const {
+    40 │ 	i,
+  > 41 │ 	j: { l },
+       │ 	     ^
+    42 │ } = { i: 1, j: { l: 2 } };
+    43 │ i = 4;
+  
+
+```
+
+```
+noConstAssign.js:47:2 lint/correctness/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign k because it's a constant
+  
+    46 │ for (const k in [1, 2]) {
+  > 47 │ 	k = 4;
+       │ 	^
+    48 │ }
+    49 │ 
+  
+  i This is where the variable is defined as constant
+  
+    44 │ l = 4;
+    45 │ 
+  > 46 │ for (const k in [1, 2]) {
+       │            ^
+    47 │ 	k = 4;
+    48 │ }
+  
+
+```
+
+```
+noConstAssign.js:51:1 lint/correctness/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign p because it's a constant
+  
+    50 │ const [p, { q }] = [1, { q: 2 }];
+  > 51 │ p = 3;
+       │ ^
+    52 │ q = 4;
+    53 │ 
+  
+  i This is where the variable is defined as constant
+  
+    48 │ }
+    49 │ 
+  > 50 │ const [p, { q }] = [1, { q: 2 }];
+       │        ^
+    51 │ p = 3;
+    52 │ q = 4;
+  
+
+```
+
+```
+noConstAssign.js:52:1 lint/correctness/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign q because it's a constant
+  
+    50 │ const [p, { q }] = [1, { q: 2 }];
+    51 │ p = 3;
+  > 52 │ q = 4;
+       │ ^
+    53 │ 
+    54 │ const { r, ...rest } = s;
+  
+  i This is where the variable is defined as constant
+  
+    48 │ }
+    49 │ 
+  > 50 │ const [p, { q }] = [1, { q: 2 }];
+       │             ^
+    51 │ p = 3;
+    52 │ q = 4;
+  
+
+```
+
+```
+noConstAssign.js:55:1 lint/correctness/noConstAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Can't assign r because it's a constant
+  
+    54 │ const { r, ...rest } = s;
+  > 55 │ r = 4;
+       │ ^
+    56 │ 
+  
+  i This is where the variable is defined as constant
+  
+    52 │ q = 4;
+    53 │ 
+  > 54 │ const { r, ...rest } = s;
+       │         ^
+    55 │ r = 4;
+    56 │ 
+  
+
+```
+
+

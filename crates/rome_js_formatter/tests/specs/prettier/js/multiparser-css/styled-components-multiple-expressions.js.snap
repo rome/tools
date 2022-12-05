@@ -28,6 +28,7 @@ styled.div`${foo}-0-idle { }`
 styled.div`
 font-family: "${a}", "${b}";
 `
+
 ```
 
 
@@ -98,6 +99,5 @@ styled.div`
 font-family: "${a}", "${b}";
 `;
 ```
-
 
 

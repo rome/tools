@@ -1,6 +1,7 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: arrow_chain_comments.js
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: js/module/arrow/arrow_chain_comments.js
 ---
 
 # Input

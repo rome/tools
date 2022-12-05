@@ -56,6 +56,7 @@ class Bar {
 class MyContainerComponent {
   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
 }
+
 ```
 
 
@@ -160,9 +161,9 @@ class MyContainerComponent {
 }
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
    47:   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
 ```
+
 

@@ -49,6 +49,7 @@ class Something3 {
     // comment
     abstract method(): Array<string>
 }
+
 ```
 
 
@@ -121,7 +122,6 @@ class Something3 {
     abstract method(): Array<string>
 }
 ```
-
 
 # Errors
 ```

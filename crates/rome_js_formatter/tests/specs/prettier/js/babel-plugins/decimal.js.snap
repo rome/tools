@@ -33,6 +33,7 @@ info:
 typeof 1m === "bigdecimal";
 typeof 1m === "decimal128";
 
+
 ```
 
 
@@ -140,7 +141,6 @@ typeof 1m === "decimal128";
 typeof 1m === "bigdecimal";
 typeof 1m === "decimal128";
 ```
-
 
 # Errors
 ```

@@ -23,6 +23,7 @@ const {
   longKeySoThisWillGoOnMultipleLines3,
   ...rest,
 } = something;
+
 ```
 
 
@@ -59,7 +60,6 @@ const {
   ...rest,
 } = something;
 ```
-
 
 # Errors
 ```

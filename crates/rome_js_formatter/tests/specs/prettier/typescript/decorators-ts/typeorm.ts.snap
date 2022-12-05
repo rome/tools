@@ -29,6 +29,7 @@ export class Board {
     topics: Topic[]
 
 }
+
 ```
 
 
@@ -71,6 +72,5 @@ export class Board {
   topics: Topic[];
 }
 ```
-
 
 

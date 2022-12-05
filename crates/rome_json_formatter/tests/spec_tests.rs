@@ -1,3 +1,4 @@
+mod quick_test;
 mod spec_test;
 
 mod formatter {
