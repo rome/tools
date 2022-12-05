@@ -1079,6 +1079,17 @@
             }
           ]
         },
+        "useExponentiationOperator": {
+          "description": "Disallow the use of Math.pow in favor of the ** operator.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useFlatMap": {
           "description": "Promotes the use of .flatMap() when map().flat() are used together.",
           "anyOf": [
