@@ -10,8 +10,9 @@ use rome_js_syntax::{
 use rome_rowan::{AstNode};
 
 declare_rule! {
-    /// Enforce `img` alt prop does not contain the word "image", "picture", or "photo"
-    /// 
+    /// Enforce `img` alt prop does not contain the word "image", "picture", or "photo".
+    /// The rule will first check if aria-hidden is true to determine whether to enforce the rule. If the image is 
+    /// hidden, then rule will always succeed.
     /// Examples
     /// 
     /// ### Invalid
@@ -19,8 +20,13 @@ declare_rule! {
     /// ```jsx,expect_diagnostic
     /// <img src="src" alt="photo content" />;
     /// ```
+    /// 
     /// ```jsx,expect_diagnostic
-    /// <img src="src" alt="picture content" />;
+    /// <img alt={`picture doing ${things}`} {...this.props} />;
+    /// ```
+    /// 
+    /// ```jsx,expect_diagnostic
+    /// <img alt="picture of cool person" aria-hidden={false} />;
     /// ```
     /// 
     /// ### Valid
@@ -28,7 +34,7 @@ declare_rule! {
     /// ```jsx
     /// <img src="src" alt="alt" />;
     /// <img src="src" alt={photo} />;
-    /// <img src="src" alt="content" />;
+    /// <img src="bar" aria-hidden alt="Picture of me taking a photo of an image" />
     /// ```
     ///
     pub(crate) NoRedundantAlt {
