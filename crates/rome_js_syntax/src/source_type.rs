@@ -237,13 +237,12 @@ fn compute_source_type_from_path_or_extension(
     let source_type = if file_name.ends_with(".d.ts") || file_name.ends_with(".d.mts") {
         SourceType::d_ts()
     } else if file_name.ends_with(".d.cts") {
-        SourceType::d_ts().with_module_kind(ModuleKind::Script)
+        SourceType::d_ts()
     } else {
         match extension {
             "cjs" => SourceType::js_module().with_module_kind(ModuleKind::Script),
             "js" | "mjs" | "jsx" => SourceType::jsx(),
-            "ts" | "mts" => SourceType::ts(),
-            "cts" => SourceType::ts().with_module_kind(ModuleKind::Script),
+            "ts" | "mts" | "cts" => SourceType::ts(),
             "tsx" => SourceType::tsx(),
             _ => return Err(SourceTypeError::UnknownExtension(extension.into())),
         }

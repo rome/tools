@@ -423,11 +423,8 @@ impl FromStr for CodeBlockTest {
                 "js" | "mjs" | "jsx" => {
                     test.source_type = SourceType::jsx();
                 }
-                "ts" | "mts" => {
+                "ts" | "mts" | "cts" => {
                     test.source_type = SourceType::ts();
-                }
-                "cts" => {
-                    test.source_type = SourceType::ts().with_module_kind(ModuleKind::Script);
                 }
                 "tsx" => {
                     test.source_type = SourceType::tsx();

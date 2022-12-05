@@ -288,7 +288,7 @@ export function isJSXFilename(filename: string): boolean {
 }
 
 export function isScriptFilename(filename: string): boolean {
-	return filename.endsWith(".cjs") || filename.endsWith(".cts");
+	return filename.endsWith(".cjs");
 }
 
 export function isModuleFilename(filename: string): boolean {
@@ -296,7 +296,8 @@ export function isModuleFilename(filename: string): boolean {
 		filename.endsWith(".mjs") ||
 		filename.endsWith(".mts") ||
 		filename.endsWith(".js") ||
-		filename.endsWith(".ts")
+		filename.endsWith(".ts") ||
+		filename.endsWith(".cts")
 	);
 }
 
