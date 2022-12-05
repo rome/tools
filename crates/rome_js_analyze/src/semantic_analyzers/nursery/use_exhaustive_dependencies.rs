@@ -258,19 +258,19 @@ fn capture_needs_to_be_in_the_dependency_list(
         | AnyJsBindingDeclaration::TsImportEqualsDeclaration(_) => {
             unreachable!()
         }
-
     }
 }
 
 // Find the function that is calling the hook
 fn function_of_hook_call(call: &JsCallExpression) -> Option<JsSyntaxNode> {
-    call.syntax()
-        .ancestors()
-        .find(|x| matches!(x.kind(), 
+    call.syntax().ancestors().find(|x| {
+        matches!(
+            x.kind(),
             JsSyntaxKind::JS_FUNCTION_DECLARATION
-            | JsSyntaxKind::JS_FUNCTION_EXPRESSION
-            | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
-        ))
+                | JsSyntaxKind::JS_FUNCTION_EXPRESSION
+                | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
+        )
+    })
 }
 
 impl Rule for UseExhaustiveDependencies {
