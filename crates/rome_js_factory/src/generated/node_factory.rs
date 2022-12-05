@@ -3865,15 +3865,36 @@ pub fn ts_array_type(
     element_type: AnyTsType,
     l_brack_token: SyntaxToken,
     r_brack_token: SyntaxToken,
-) -> TsArrayType {
-    TsArrayType::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::TS_ARRAY_TYPE,
-        [
-            Some(SyntaxElement::Node(element_type.into_syntax())),
-            Some(SyntaxElement::Token(l_brack_token)),
-            Some(SyntaxElement::Token(r_brack_token)),
-        ],
-    ))
+) -> TsArrayTypeBuilder {
+    TsArrayTypeBuilder {
+        element_type,
+        l_brack_token,
+        r_brack_token,
+        readonly_token: None,
+    }
+}
+pub struct TsArrayTypeBuilder {
+    element_type: AnyTsType,
+    l_brack_token: SyntaxToken,
+    r_brack_token: SyntaxToken,
+    readonly_token: Option<SyntaxToken>,
+}
+impl TsArrayTypeBuilder {
+    pub fn with_readonly_token(mut self, readonly_token: SyntaxToken) -> Self {
+        self.readonly_token = Some(readonly_token);
+        self
+    }
+    pub fn build(self) -> TsArrayType {
+        TsArrayType::unwrap_cast(SyntaxNode::new_detached(
+            JsSyntaxKind::TS_ARRAY_TYPE,
+            [
+                self.readonly_token.map(|token| SyntaxElement::Token(token)),
+                Some(SyntaxElement::Node(self.element_type.into_syntax())),
+                Some(SyntaxElement::Token(self.l_brack_token)),
+                Some(SyntaxElement::Token(self.r_brack_token)),
+            ],
+        ))
+    }
 }
 pub fn ts_as_assignment(
     assignment: AnyJsAssignment,

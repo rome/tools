@@ -7509,19 +7509,21 @@ impl TsArrayType {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> TsArrayTypeFields {
         TsArrayTypeFields {
+            readonly_token: self.readonly_token(),
             element_type: self.element_type(),
             l_brack_token: self.l_brack_token(),
             r_brack_token: self.r_brack_token(),
         }
     }
+    pub fn readonly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn element_type(&self) -> SyntaxResult<AnyTsType> {
-        support::required_node(&self.syntax, 0usize)
+        support::required_node(&self.syntax, 1usize)
     }
     pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 1usize)
+        support::required_token(&self.syntax, 2usize)
     }
     pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
+        support::required_token(&self.syntax, 3usize)
     }
 }
 #[cfg(feature = "serde")]
@@ -7535,6 +7537,7 @@ impl Serialize for TsArrayType {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsArrayTypeFields {
+    pub readonly_token: Option<SyntaxToken>,
     pub element_type: SyntaxResult<AnyTsType>,
     pub l_brack_token: SyntaxResult<SyntaxToken>,
     pub r_brack_token: SyntaxResult<SyntaxToken>,
@@ -21006,6 +21009,10 @@ impl AstNode for TsArrayType {
 impl std::fmt::Debug for TsArrayType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsArrayType")
+            .field(
+                "readonly_token",
+                &support::DebugOptionalElement(self.readonly_token()),
+            )
             .field(
                 "element_type",
                 &support::DebugSyntaxResult(self.element_type()),
