@@ -35,9 +35,9 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
     }
 
     let options = JsFormatOptions::new(source_type);
-    let language = language::JsTestFormatLanguage::new(options);
+    let language = language::JsTestFormatLanguage::new(source_type);
 
-    let snapshot = SpecSnapshot::new(test_file, test_directory, language);
+    let snapshot = SpecSnapshot::new(test_file, test_directory, language, options);
 
     snapshot.test()
 }

@@ -14,16 +14,12 @@ pub mod utils;
 
 pub trait TestFormatLanguage {
     type SyntaxLanguage: Language + 'static;
-    type Options: FormatOptions + std::fmt::Display;
+    type Options: FormatOptions + std::fmt::Display + Clone;
     type Context: CstFormatContext<Options = Self::Options>;
     type FormatLanguage: FormatLanguage<Context = Self::Context, SyntaxLanguage = Self::SyntaxLanguage>
         + 'static;
 
-    fn from_format_options(format_options: &Self::Options) -> Self;
-
     fn parse(&self, text: &str) -> AnyParse;
-
-    fn format_options(&self) -> Self::Options;
 
     fn deserialize_format_options(
         &self,

@@ -29,10 +29,11 @@ fn quick_test() {
         .unwrap();
 
     let root = &parse.syntax();
-    let language = language::JsonTestFormatLanguage::new(options);
+    let language = language::JsonTestFormatLanguage::default();
     let check_reformat = CheckReformat::new(
         CheckReformatParams::new(root, result.as_code(), "quick_test"),
         &language,
+        options,
     );
     check_reformat.check_reformat();
 

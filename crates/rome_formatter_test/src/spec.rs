@@ -77,23 +77,33 @@ impl<'a> SpecTestFile<'a> {
     }
 }
 
-pub struct SpecSnapshot<'a, L> {
+pub struct SpecSnapshot<'a, L>
+where
+    L: TestFormatLanguage,
+{
     test_file: SpecTestFile<'a>,
     test_directory: PathBuf,
     language: L,
+    options: L::Options,
 }
 
 impl<'a, L> SpecSnapshot<'a, L>
 where
     L: TestFormatLanguage,
 {
-    pub fn new(test_file: SpecTestFile<'a>, test_directory: &str, language: L) -> Self {
+    pub fn new(
+        test_file: SpecTestFile<'a>,
+        test_directory: &str,
+        language: L,
+        options: L::Options,
+    ) -> Self {
         let test_directory = PathBuf::from(test_directory);
 
         SpecSnapshot {
             test_file,
             test_directory,
             language,
+            options,
         }
     }
 
@@ -112,7 +122,7 @@ where
 
         let formatted = self
             .language
-            .format_node(self.language.format_options(), &root)
+            .format_node(self.options.clone(), &root)
             .unwrap();
         let printed = formatted.print().unwrap();
 
@@ -120,16 +130,17 @@ where
             let check_reformat = CheckReformat::new(
                 CheckReformatParams::new(&root, printed.as_code(), self.test_file.file_name()),
                 &self.language,
+                self.options.clone(),
             );
             check_reformat.check_reformat();
         }
 
-        let max_width = self.language.format_options().line_width().value() as usize;
+        let max_width = self.options.line_width().value() as usize;
 
         snapshot_builder = snapshot_builder
             .with_output_and_options(
                 SnapshotOutput::new(printed.as_code()).with_index(1),
-                self.language.format_options(),
+                self.options.clone(),
             )
             .with_unimplemented(&printed)
             .with_lines_exceeding_max_width(printed.as_code(), max_width);
@@ -144,9 +155,7 @@ where
                 .deserialize_format_options(options_path.get_buffer_from_file().as_str());
 
             for (index, options) in test_options.into_iter().enumerate() {
-                let language = L::from_format_options(&options);
-
-                let formatted = language.format_node(options, &root).unwrap();
+                let formatted = self.language.format_node(options.clone(), &root).unwrap();
                 let printed = formatted.print().unwrap();
 
                 if !has_errors {
@@ -156,17 +165,18 @@ where
                             printed.as_code(),
                             self.test_file.file_name(),
                         ),
-                        &language,
+                        &self.language,
+                        options.clone(),
                     );
                     check_reformat.check_reformat();
                 }
 
-                let max_width = language.format_options().line_width().value() as usize;
+                let max_width = options.line_width().value() as usize;
 
                 snapshot_builder = snapshot_builder
                     .with_output_and_options(
                         SnapshotOutput::new(printed.as_code()).with_index(index + 2),
-                        language.format_options(),
+                        options,
                     )
                     .with_unimplemented(&printed)
                     .with_lines_exceeding_max_width(printed.as_code(), max_width);

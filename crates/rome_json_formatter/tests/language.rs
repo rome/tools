@@ -9,15 +9,8 @@ use rome_parser::AnyParse;
 use rome_rowan::{SyntaxNode, TextRange};
 use serde::{Deserialize, Serialize};
 
-pub struct JsonTestFormatLanguage {
-    pub options: JsonFormatOptions,
-}
-
-impl JsonTestFormatLanguage {
-    pub fn new(options: JsonFormatOptions) -> Self {
-        JsonTestFormatLanguage { options }
-    }
-}
+#[derive(Default)]
+pub struct JsonTestFormatLanguage;
 
 impl TestFormatLanguage for JsonTestFormatLanguage {
     type SyntaxLanguage = JsonLanguage;
@@ -25,16 +18,8 @@ impl TestFormatLanguage for JsonTestFormatLanguage {
     type Context = JsonFormatContext;
     type FormatLanguage = JsonFormatLanguage;
 
-    fn from_format_options(format_options: &Self::Options) -> Self {
-        JsonTestFormatLanguage::new(format_options.clone())
-    }
-
     fn parse(&self, text: &str) -> AnyParse {
         parse_json(text, FileId::zero()).into()
-    }
-
-    fn format_options(&self) -> Self::Options {
-        self.options.clone()
     }
 
     fn deserialize_format_options(

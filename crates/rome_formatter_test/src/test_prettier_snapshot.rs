@@ -89,19 +89,24 @@ impl<'a> PrettierTestFile<'a> {
     }
 }
 
-pub struct PrettierSnapshot<'a, L> {
+pub struct PrettierSnapshot<'a, L>
+where
+    L: TestFormatLanguage,
+{
     test_file: PrettierTestFile<'a>,
     language: L,
+    options: L::Options,
 }
 
 impl<'a, L> PrettierSnapshot<'a, L>
 where
     L: TestFormatLanguage,
 {
-    pub fn new(test_file: PrettierTestFile<'a>, language: L) -> Self {
+    pub fn new(test_file: PrettierTestFile<'a>, language: L, options: L::Options) -> Self {
         PrettierSnapshot {
             test_file,
             language,
+            options,
         }
     }
 
@@ -120,7 +125,7 @@ where
                 }
 
                 self.language.format_range(
-                    self.language.format_options(),
+                    self.options.clone(),
                     &syntax,
                     TextRange::new(
                         TextSize::try_from(start).unwrap(),
@@ -130,7 +135,7 @@ where
             }
             _ => self
                 .language
-                .format_node(self.language.format_options(), &syntax)
+                .format_node(self.options.clone(), &syntax)
                 .map(|formatted| formatted.print().unwrap()),
         };
 
@@ -153,6 +158,7 @@ where
                     let check_reformat = CheckReformat::new(
                         CheckReformatParams::new(&syntax, &formatted, self.test_file.file_name()),
                         &self.language,
+                        self.options.clone(),
                     );
                     check_reformat.check_reformat();
                 }
@@ -190,7 +196,7 @@ where
             .with_output(SnapshotOutput::new(&formatted))
             .with_errors(&parsed, &self.test_file().parse_input);
 
-        let max_width = self.language.format_options().line_width().value() as usize;
+        let max_width = self.options.line_width().value() as usize;
         builder = builder.with_lines_exceeding_max_width(&formatted, max_width);
 
         builder.finish(relative_file_name);

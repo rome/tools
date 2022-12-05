@@ -37,14 +37,23 @@ where
 {
     params: CheckReformatParams<'a, L::FormatLanguage>,
     language: &'b L,
+    options: L::Options,
 }
 
 impl<'a, 'b, L> CheckReformat<'a, 'b, L>
 where
     L: TestFormatLanguage,
 {
-    pub fn new(params: CheckReformatParams<'a, L::FormatLanguage>, language: &'b L) -> Self {
-        CheckReformat { params, language }
+    pub fn new(
+        params: CheckReformatParams<'a, L::FormatLanguage>,
+        language: &'b L,
+        options: L::Options,
+    ) -> Self {
+        CheckReformat {
+            params,
+            language,
+            options,
+        }
     }
 
     pub fn check_reformat(&self) {
@@ -80,14 +89,14 @@ where
 
         let formatted = self
             .language
-            .format_node(self.language.format_options(), &re_parse.syntax())
+            .format_node(self.options.clone(), &re_parse.syntax())
             .unwrap();
         let printed = formatted.print().unwrap();
 
         if text != printed.as_code() {
             let input_format_element = self
                 .language
-                .format_node(self.language.format_options(), root)
+                .format_node(self.options.clone(), root)
                 .unwrap();
             let pretty_input_ir = format!("{}", formatted.into_document());
             let pretty_reformat_ir = format!("{}", input_format_element.into_document());

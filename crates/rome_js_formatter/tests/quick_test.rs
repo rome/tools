@@ -27,10 +27,11 @@ declare module 'x' {
         .unwrap();
 
     let root = &tree.syntax();
-    let language = language::JsTestFormatLanguage::new(options);
+    let language = language::JsTestFormatLanguage::new(SourceType::tsx());
     let check_reformat = CheckReformat::new(
         CheckReformatParams::new(root, result.as_code(), "quick_test"),
         &language,
+        options,
     );
     check_reformat.check_reformat();
 

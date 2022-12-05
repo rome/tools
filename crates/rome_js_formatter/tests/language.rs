@@ -14,12 +14,12 @@ use rome_text_size::TextRange;
 use serde::{Deserialize, Serialize};
 
 pub struct JsTestFormatLanguage {
-    options: JsFormatOptions,
+    source_type: SourceType,
 }
 
 impl JsTestFormatLanguage {
-    pub fn new(options: JsFormatOptions) -> Self {
-        JsTestFormatLanguage { options }
+    pub fn new(source_type: SourceType) -> Self {
+        JsTestFormatLanguage { source_type }
     }
 }
 
@@ -29,16 +29,8 @@ impl TestFormatLanguage for JsTestFormatLanguage {
     type Context = JsFormatContext;
     type FormatLanguage = JsFormatLanguage;
 
-    fn from_format_options(format_options: &Self::Options) -> Self {
-        JsTestFormatLanguage::new(format_options.clone())
-    }
-
     fn parse(&self, text: &str) -> AnyParse {
-        parse(text, FileId::zero(), self.options.source_type()).into()
-    }
-
-    fn format_options(&self) -> Self::Options {
-        self.options.clone()
+        parse(text, FileId::zero(), self.source_type).into()
     }
 
     fn deserialize_format_options(
@@ -50,7 +42,7 @@ impl TestFormatLanguage for JsTestFormatLanguage {
         test_options
             .cases
             .into_iter()
-            .map(|case| case.into_format_options(self.options.source_type()))
+            .map(|case| case.into_format_options(self.source_type))
             .collect()
     }
 

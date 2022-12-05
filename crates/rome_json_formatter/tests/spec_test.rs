@@ -29,9 +29,9 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, _f
     let Some(test_file) = SpecTestFile::try_from_file(spec_input_file, root_path) else { return; };
 
     let options = JsonFormatOptions::default();
-    let language = language::JsonTestFormatLanguage::new(options);
+    let language = language::JsonTestFormatLanguage::default();
 
-    let snapshot = SpecSnapshot::new(test_file, test_directory, language);
+    let snapshot = SpecSnapshot::new(test_file, test_directory, language, options);
 
     snapshot.test()
 }
