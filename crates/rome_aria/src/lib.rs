@@ -1,17 +1,13 @@
 use std::str::FromStr;
 
-#[rustfmt::skip]
-mod generated;
-
-pub mod constants;
 mod macros;
 pub mod properties;
 pub mod roles;
 
-use crate::generated::{AriaPropertiesEnum, AriaPropertyTypeEnum};
 pub use properties::AriaProperties;
 pub(crate) use roles::AriaRoleDefinition;
 pub use roles::AriaRoles;
+use rome_aria_metadata::{AriaPropertiesEnum, AriaPropertyTypeEnum};
 
 /// It checks if an ARIA property is valid
 ///

@@ -1,41 +1,8 @@
-use crate::generated::{
-    AriaAbstractRolesEnum, AriaDocumentStructureRolesEnum, AriaPropertiesEnum, AriaWidgetRolesEnum,
-};
 use crate::{define_role, is_aria_property_valid};
+use rome_aria_metadata::AriaPropertiesEnum;
 use std::fmt::Debug;
 use std::slice::Iter;
 use std::str::FromStr;
-
-#[derive(Debug)]
-pub enum AriaRole {
-    Widget(AriaWidgetRolesEnum),
-    Document(AriaDocumentStructureRolesEnum),
-    Abstract(AriaAbstractRolesEnum),
-}
-
-impl From<AriaRole> for &str {
-    fn from(s: AriaRole) -> Self {
-        match s {
-            AriaRole::Widget(widget) => widget.into(),
-            AriaRole::Document(document) => document.into(),
-            AriaRole::Abstract(abs) => abs.into(),
-        }
-    }
-}
-
-impl FromStr for AriaRole {
-    type Err = String;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        AriaWidgetRolesEnum::from_str(s)
-            .map(Self::Widget)
-            .or_else(|_| {
-                AriaAbstractRolesEnum::from_str(s)
-                    .map(Self::Abstract)
-                    .or_else(|_| AriaDocumentStructureRolesEnum::from_str(s).map(Self::Document))
-            })
-    }
-}
 
 pub trait AriaRoleDefinition: Debug {
     /// It returns an iterator over the properties of the current role

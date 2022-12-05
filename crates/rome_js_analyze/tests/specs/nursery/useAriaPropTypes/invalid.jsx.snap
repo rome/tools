@@ -1,0 +1,156 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```js
+var a = <span role="checkbox" aria-checked="test" ></span>;
+var a = <span aria-autocomplete="test" ></span>;
+var a = <span aria-invalid="foo"></span>;
+var a = <span aria-errormessage="" ></span>;
+var a = <span aria-relevant="fancy" ></span>;
+var a = <span aria-labelledby="" ></span>;
+var a = <span aria-labelledby={``} ></span>;
+var a = <span aria-details=""></span>;
+
+```
+
+# Diagnostics
+```
+invalid.jsx:1:31 lint/nursery/useAriaPropTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The value of the ARIA attribute aria-checked is not correct.
+  
+  > 1 │ var a = <span role="checkbox" aria-checked="test" ></span>;
+      │                               ^^^^^^^^^^^^^^^^^^^
+    2 │ var a = <span aria-autocomplete="test" ></span>;
+    3 │ var a = <span aria-invalid="foo"></span>;
+  
+
+```
+
+```
+invalid.jsx:2:15 lint/nursery/useAriaPropTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The value of the ARIA attribute aria-autocomplete is not correct.
+  
+    1 │ var a = <span role="checkbox" aria-checked="test" ></span>;
+  > 2 │ var a = <span aria-autocomplete="test" ></span>;
+      │               ^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ var a = <span aria-invalid="foo"></span>;
+    4 │ var a = <span aria-errormessage="" ></span>;
+  
+  i The supported values for the aria-autocomplete attribute are:
+  
+  - inline
+  - list
+  - both
+  - none
+  
+
+```
+
+```
+invalid.jsx:3:15 lint/nursery/useAriaPropTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The value of the ARIA attribute aria-invalid is not correct.
+  
+    1 │ var a = <span role="checkbox" aria-checked="test" ></span>;
+    2 │ var a = <span aria-autocomplete="test" ></span>;
+  > 3 │ var a = <span aria-invalid="foo"></span>;
+      │               ^^^^^^^^^^^^^^^^^^
+    4 │ var a = <span aria-errormessage="" ></span>;
+    5 │ var a = <span aria-relevant="fancy" ></span>;
+  
+  i The supported values for the aria-invalid attribute are:
+  
+  - grammar
+  - false
+  - spelling
+  - true
+  
+
+```
+
+```
+invalid.jsx:4:15 lint/nursery/useAriaPropTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The value of the ARIA attribute aria-errormessage is not correct.
+  
+    2 │ var a = <span aria-autocomplete="test" ></span>;
+    3 │ var a = <span aria-invalid="foo"></span>;
+  > 4 │ var a = <span aria-errormessage="" ></span>;
+      │               ^^^^^^^^^^^^^^^^^^^^
+    5 │ var a = <span aria-relevant="fancy" ></span>;
+    6 │ var a = <span aria-labelledby="" ></span>;
+  
+
+```
+
+```
+invalid.jsx:5:15 lint/nursery/useAriaPropTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The value of the ARIA attribute aria-relevant is not correct.
+  
+    3 │ var a = <span aria-invalid="foo"></span>;
+    4 │ var a = <span aria-errormessage="" ></span>;
+  > 5 │ var a = <span aria-relevant="fancy" ></span>;
+      │               ^^^^^^^^^^^^^^^^^^^^^
+    6 │ var a = <span aria-labelledby="" ></span>;
+    7 │ var a = <span aria-labelledby={``} ></span>;
+  
+  i The supported values for the aria-relevant attribute are:
+  
+  - additions
+  - all
+  - removals
+  - text
+  
+
+```
+
+```
+invalid.jsx:6:15 lint/nursery/useAriaPropTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The value of the ARIA attribute aria-labelledby is not correct.
+  
+    4 │ var a = <span aria-errormessage="" ></span>;
+    5 │ var a = <span aria-relevant="fancy" ></span>;
+  > 6 │ var a = <span aria-labelledby="" ></span>;
+      │               ^^^^^^^^^^^^^^^^^^
+    7 │ var a = <span aria-labelledby={``} ></span>;
+    8 │ var a = <span aria-details=""></span>;
+  
+
+```
+
+```
+invalid.jsx:7:15 lint/nursery/useAriaPropTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The value of the ARIA attribute aria-labelledby is not correct.
+  
+    5 │ var a = <span aria-relevant="fancy" ></span>;
+    6 │ var a = <span aria-labelledby="" ></span>;
+  > 7 │ var a = <span aria-labelledby={``} ></span>;
+      │               ^^^^^^^^^^^^^^^^^^^^
+    8 │ var a = <span aria-details=""></span>;
+    9 │ 
+  
+
+```
+
+```
+invalid.jsx:8:15 lint/nursery/useAriaPropTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The value of the ARIA attribute aria-details is not correct.
+  
+    6 │ var a = <span aria-labelledby="" ></span>;
+    7 │ var a = <span aria-labelledby={``} ></span>;
+  > 8 │ var a = <span aria-details=""></span>;
+      │               ^^^^^^^^^^^^^^^
+    9 │ 
+  
+
+```
+
+
