@@ -61,34 +61,91 @@
 - Fixed false positives emitted by `noUnusedVariables` [#3779](https://github.com/rome/tools/issues/3779)
 - Fixed `noUndeclaredVariables` where some cases were not detected [#3798](https://github.com/rome/tools/issues/3798)
 
-#### New rules
+#### Rules
 
-- [noAccessKey](https://docs.rome.tools/lint/rules/noAccessKey)
-- [noBannedTypes](https://docs.rome.tools/lint/rules/noBannedTypes)
-- [noConditionalAssignment](https://docs.rome.tools/lint/rules/noConditionalAssignment)
-- [noConstAssign](https://docs.rome.tools/lint/rules/noConstAssign)
-- [noConstEnum](https://docs.rome.tools/lint/rules/noConstEnum)
-- [noConstructorReturn](https://docs.rome.tools/lint/rules/noConstructorReturn)
-- [noDistractingElements](https://docs.rome.tools/lint/rules/noDistractingElements)
-- [noDupeKeys](https://docs.rome.tools/lint/rules/noDupeKeys)
-- [noEmptyInterface](https://docs.rome.tools/lint/rules/noEmptyInterface)
-- [noExplicitAny](https://docs.rome.tools/lint/rules/noExplicitAny)
-- [noExtraNonNullAssertion](https://docs.rome.tools/lint/rules/noExtraNonNullAssertion)
-- [noHeaderScope](https://docs.rome.tools/lint/rules/noHeaderScope)
-- [noInvalidConstructorSuper](https://docs.rome.tools/lint/rules/noInvalidConstructorSuper)
-- [noNonNullAssertion](https://docs.rome.tools/lint/rules/noNonNullAssertion)
-- [noPrecisionLoss](https://docs.rome.tools/lint/rules/noPrecisionLoss)
-- [noSetterReturn](https://docs.rome.tools/lint/rules/noSetterReturn)
-- [noStringCaseMismatch](https://docs.rome.tools/lint/rules/noStringCaseMismatch)
-- [noUnsafeFinally](https://docs.rome.tools/lint/rules/noUnsafeFinally)
-- [noVar](https://docs.rome.tools/lint/rules/noVar)
-- [noVoidTypeReturn](https://docs.rome.tools/lint/rules/noVoidTypeReturn)
-- [useConst](https://docs.rome.tools/lint/rules/useConst)
-- [useDefaultSwitchClauseLast](https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast)
-- [useFlatMap](https://docs.rome.tools/lint/rules/useFlatMap)
-- [useNumericLiterals](https://docs.rome.tools/lint/rules/useNumericLiterals)
-- [useAriaPropsForRole](https://docs.rome.tools/lint/rules/useAriaPropsForRole)
-- [useAriaPropTypes](https://docs.rome.tools/lint/rules/useAriaPropTypes)
+The following rules have been stabilized:
+- `nusery/useFlatMap` -> `complexity/useFlatMap`
+- `nusery/useValidForDirection` -> `correctness/useValidForDirection`
+- `nusery/noExplicitAny` -> `suspicious/noExplicitAny`
+- `nusery/noConstAssign` -> `correctness/noConstAssign`
+
+These rules are all recommended, so they will be enabled by default. If you had enabled them manually from the `nursery` group, you can simply remove those entries from your configuration file.
+
+The following rules have been renamed:
+- `correctness/noMultipleSpacesInRegularExpressionLiterals` -> `complexity/noMultipleSpacesInRegularExpressionLiterals`
+- `style/useOptionalChain` -> `complexity/useOptionalChain`
+- `correctness/noUselessFragments` -> `complexity/noUselessFragments`
+- `correctness/noDelete` -> `performance/noDelete`
+- `correctness/useSingleCaseStatement` -> `style/useSingleCaseStatement`
+- `correctness/useWhile` -> `style/useWhile`
+- `correctness/noArguments` -> `style/noArguments`
+- `correctness/noAsyncPromiseExecutor` -> `suspicious/noAsyncPromiseExecutor`
+- `correctness/noCommentText` -> `suspicious/noCommentText`
+- `correctness/noCompareNegZero` -> `suspicious/noCompareNegZero`
+- `correctness/noDebugger` -> `suspicious/noDebugger`
+- `correctness/noDoubleEquals` -> `suspicious/noDoubleEquals`
+- `correctness/noShadowRestrictedNames` -> `suspicious/noShadowRestrictedNames`
+- `correctness/noSparseArray` -> `suspicious/noSparseArray`
+- `correctness/noUnsafeNegation` -> `suspicious/noUnsafeNegation`
+- `correctness/useValidTypeof` -> `suspicious/useValidTypeof`
+- `correctness/noArrayIndexKey` -> `suspicious/noArrayIndexKey`
+- `correctness/noCatchAssign` -> `suspicious/noCatchAssign`
+- `correctness/noDupeArgs` -> `suspicious/noDuplicateParameters`
+- `correctness/noFunctionAssign` -> `suspicious/noFunctionAssign`
+- `correctness/noImportAssign` -> `suspicious/noImportAssign`
+- `correctness/noLabelVar` -> `suspicious/noLabelVar`
+- `correctness/noRestrictedGlobals` -> `nursery/noRestrictedGlobals`
+- `nursery/noDupeKeys` -> `nursery/noDuplicateObjectKeys`
+
+If you were not changing the severity level of any of these rules in your configuration file, or suppressing a diagnostic emitted by those rules using suppression comments, you do not have to do anything. But if you did, Rome will now emit diagnostics for the parts of your configuration or suppression comments you need to update.
+
+The following rules are no longer recommended:
+- `style/noImplicitBoolean`
+- `style/noNegationElse`
+- `style/useBlockStatements`
+- `style/useShorthandArrayType`
+- `correctness/useSingleCaseStatement` / `style/useSingleCaseStatement`
+- `style/noShoutyConstants`
+
+The styling decisions imposed by these rules were not deemed to be idiomatic enough in the JavaScript ecosystem to be enabled by default. If you do want to enforce those rules in your project, you will have to enable them manually in you configuration file:
+
+```json
+{
+  "linter": {
+    "rules": {
+        "style": {
+            "useBlockStatements": "warn"
+        }
+    }
+  }
+}
+```
+
+Finally, the following new rules have been introduced to the nursery group in this release:
+- [`nursery/noAccessKey`](https://docs.rome.tools/lint/rules/noAccessKey)
+- [`nursery/noConditionalAssignment`](https://docs.rome.tools/lint/rules/noConditionalAssignment)
+- [`nursery/noConstEnum`](https://docs.rome.tools/lint/rules/noConstEnum)
+- [`nursery/noConstructorReturn`](https://docs.rome.tools/lint/rules/noConstructorReturn)
+- [`nursery/noDistractingElements`](https://docs.rome.tools/lint/rules/noDistractingElements)
+- [`nursery/noDuplicateObjectKeys`](https://docs.rome.tools/lint/rules/noDuplicateObjectKeys)
+- [`nursery/noEmptyInterface`](https://docs.rome.tools/lint/rules/noEmptyInterface)
+- [`nursery/noExtraNonNullAssertion`](https://docs.rome.tools/lint/rules/noExtraNonNullAssertion)
+- [`nursery/noHeaderScope`](https://docs.rome.tools/lint/rules/noHeaderScope)
+- [`nursery/noNonNullAssertion`](https://docs.rome.tools/lint/rules/noNonNullAssertion)
+- [`nursery/noPrecisionLoss`](https://docs.rome.tools/lint/rules/noPrecisionLoss)
+- [`nursery/noRedundantUseStrict`](https://docs.rome.tools/lint/rules/noRedundantUseStrict)
+- [`nursery/noSetterReturn`](https://docs.rome.tools/lint/rules/noSetterReturn)
+- [`nursery/noStringCaseMismatch`](https://docs.rome.tools/lint/rules/noStringCaseMismatch)
+- [`nursery/noUnsafeFinally`](https://docs.rome.tools/lint/rules/noUnsafeFinally)
+- [`nursery/noVoidTypeReturn`](https://docs.rome.tools/lint/rules/noVoidTypeReturn)
+- [`nursery/useDefaultSwitchClauseLast`](https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast)
+- [`nursery/useNumericLiterals`](https://docs.rome.tools/lint/rules/useNumericLiterals)
+- [`nursery/useAriaPropTypes`](https://docs.rome.tools/lint/rules/useAriaPropTypes)
+- [`nursery/useAriaPropsForRole`](https://docs.rome.tools/lint/rules/useAriaPropsForRole)
+- [`nursery/noVar`](https://docs.rome.tools/lint/rules/noVar)
+- [`nursery/useConst`](https://docs.rome.tools/lint/rules/useConst)
+
+Feel free to try them out by manually enabling them in you configuration to help us debug potential issues with these new rules.
 
 ### Parser
 
