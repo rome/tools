@@ -34,6 +34,7 @@
 - The extension is published [Open VSX](https://open-vsx.org/) too.
 - The extension now correctly resolves the version installed via the `node_modules` folder
 - Fixed an issue where diagnostics were not updated after a change to the configuration file (#3724)[https://github.com/rome/tools/pull/3724]
+- The LSP emits a new action where the user can suppress a rule.
 
 ### Formatter
 
@@ -160,16 +161,15 @@ Feel free to try them out by manually enabling them in you configuration to help
 
 ### JavaScript APIs
 
-#### Other changes
-
-- The package has been marked as unstable and in alpha state.
-
 #### Breaking change
 
 - The concept of `backend` has been removed, in favor of the concept of `distribution`.
 - Removed the possibility to connect to the daemon, for the time being.
 - The APIs are asynchronous anymore.
 
+#### Other changes
+
+- The package has been marked as unstable and in alpha state.
 
 ## 10.0.1
 
