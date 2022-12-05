@@ -159,6 +159,10 @@ export interface A11y {
 	 */
 	noAutofocus?: RuleConfiguration;
 	/**
+	 * Disallow target="_blank" attribute without rel="noreferrer"
+	 */
+	noBlankTarget?: RuleConfiguration;
+	/**
 	 * Prevent the usage of positive integers on tabIndex property
 	 */
 	noPositiveTabindex?: RuleConfiguration;
@@ -174,10 +178,6 @@ export interface A11y {
 	 * Enforce that anchor elements have content and that the content is accessible to screen readers.
 	 */
 	useAnchorContent?: RuleConfiguration;
-	/**
-	 * Disallow target="_blank" attribute without rel="noreferrer"
-	 */
-	useBlankTarget?: RuleConfiguration;
 	/**
 	 * Enforces the usage of the attribute type for the element button
 	 */
@@ -653,10 +653,10 @@ export interface Advices {
 }
 export type Category =
 	| "lint/a11y/noAutofocus"
+	| "lint/a11y/noBlankTarget"
 	| "lint/a11y/noPositiveTabindex"
 	| "lint/a11y/useAltText"
 	| "lint/a11y/useAnchorContent"
-	| "lint/a11y/useBlankTarget"
 	| "lint/a11y/useButtonType"
 	| "lint/a11y/useKeyWithClickEvents"
 	| "lint/a11y/useKeyWithMouseEvents"

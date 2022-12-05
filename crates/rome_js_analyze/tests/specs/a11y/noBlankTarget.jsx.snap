@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-expression: useBlankTarget.jsx
+expression: noBlankTarget.jsx
 ---
 # Input
 ```js
@@ -26,7 +26,7 @@ expression: useBlankTarget.jsx
 
 # Diagnostics
 ```
-useBlankTarget.jsx:3:36 lint/a11y/useBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noBlankTarget.jsx:3:36 lint/a11y/noBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid using target="_blank" without rel="noreferrer".
   
@@ -47,7 +47,7 @@ useBlankTarget.jsx:3:36 lint/a11y/useBlankTarget  FIXABLE  ━━━━━━━
 ```
 
 ```
-useBlankTarget.jsx:4:36 lint/a11y/useBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noBlankTarget.jsx:4:36 lint/a11y/noBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid using target="_blank" without rel="noreferrer".
   
@@ -68,7 +68,7 @@ useBlankTarget.jsx:4:36 lint/a11y/useBlankTarget  FIXABLE  ━━━━━━━
 ```
 
 ```
-useBlankTarget.jsx:5:27 lint/a11y/useBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noBlankTarget.jsx:5:27 lint/a11y/noBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid using target="_blank" without rel="noreferrer".
   
@@ -89,7 +89,7 @@ useBlankTarget.jsx:5:27 lint/a11y/useBlankTarget  FIXABLE  ━━━━━━━
 ```
 
 ```
-useBlankTarget.jsx:6:36 lint/a11y/useBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noBlankTarget.jsx:6:36 lint/a11y/noBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid using target="_blank" without rel="noreferrer".
   
@@ -110,7 +110,7 @@ useBlankTarget.jsx:6:36 lint/a11y/useBlankTarget  FIXABLE  ━━━━━━━
 ```
 
 ```
-useBlankTarget.jsx:7:36 lint/a11y/useBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noBlankTarget.jsx:7:36 lint/a11y/noBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid using target="_blank" without rel="noreferrer".
   
@@ -131,7 +131,7 @@ useBlankTarget.jsx:7:36 lint/a11y/useBlankTarget  FIXABLE  ━━━━━━━
 ```
 
 ```
-useBlankTarget.jsx:8:48 lint/a11y/useBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noBlankTarget.jsx:8:48 lint/a11y/noBlankTarget  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid using target="_blank" without rel="noreferrer".
   

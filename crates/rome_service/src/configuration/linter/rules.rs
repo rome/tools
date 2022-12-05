@@ -367,14 +367,14 @@ pub struct A11y {
 struct A11ySchema {
     #[doc = "Avoid the autoFocus attribute"]
     no_autofocus: Option<RuleConfiguration>,
+    #[doc = "Disallow target=\"_blank\" attribute without rel=\"noreferrer\""]
+    no_blank_target: Option<RuleConfiguration>,
     #[doc = "Prevent the usage of positive integers on tabIndex property"]
     no_positive_tabindex: Option<RuleConfiguration>,
     #[doc = "It asserts that alternative text to images or areas, help to rely on to screen readers to understand the purpose and the context of the image."]
     use_alt_text: Option<RuleConfiguration>,
     #[doc = "Enforce that anchor elements have content and that the content is accessible to screen readers."]
     use_anchor_content: Option<RuleConfiguration>,
-    #[doc = "Disallow target=\"_blank\" attribute without rel=\"noreferrer\""]
-    use_blank_target: Option<RuleConfiguration>,
     #[doc = "Enforces the usage of the attribute type for the element button"]
     use_button_type: Option<RuleConfiguration>,
     #[doc = "Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event."]
@@ -388,10 +388,10 @@ impl A11y {
     const CATEGORY_NAME: &'static str = "a11y";
     pub(crate) const CATEGORY_RULES: [&'static str; 9] = [
         "noAutofocus",
+        "noBlankTarget",
         "noPositiveTabindex",
         "useAltText",
         "useAnchorContent",
-        "useBlankTarget",
         "useButtonType",
         "useKeyWithClickEvents",
         "useKeyWithMouseEvents",
@@ -399,10 +399,10 @@ impl A11y {
     ];
     const RECOMMENDED_RULES: [&'static str; 9] = [
         "noAutofocus",
+        "noBlankTarget",
         "noPositiveTabindex",
         "useAltText",
         "useAnchorContent",
-        "useBlankTarget",
         "useButtonType",
         "useKeyWithClickEvents",
         "useKeyWithMouseEvents",

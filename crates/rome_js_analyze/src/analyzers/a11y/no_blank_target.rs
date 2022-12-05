@@ -49,36 +49,36 @@ declare_rule! {
     /// let a = <a href='http://external.link' rel='noreferrer' target='_blank'>child</a>;
     /// let a = <a href='http://external.link' target='_blank' rel="noopener" {...props}>child</a>;
     /// ```
-    pub(crate) UseBlankTarget {
+    pub(crate) NoBlankTarget {
         version: "10.0.0",
-        name: "useBlankTarget",
+        name: "noBlankTarget",
         recommended: true,
     }
 }
 
 declare_node_union! {
-    pub(crate) UseBlankTargetQuery = JsxElement | JsxSelfClosingElement
+    pub(crate) NoBlankTargetQuery = JsxElement | JsxSelfClosingElement
 }
 
-impl UseBlankTargetQuery {
+impl NoBlankTargetQuery {
     fn has_trailing_spread_attribute(
         &self,
         current_attribute: impl Into<AnyJsxAttribute>,
     ) -> Option<bool> {
         Some(match self {
-            UseBlankTargetQuery::JsxElement(element) => element
+            NoBlankTargetQuery::JsxElement(element) => element
                 .opening_element()
                 .ok()?
                 .has_trailing_spread_prop(current_attribute),
-            UseBlankTargetQuery::JsxSelfClosingElement(element) => {
+            NoBlankTargetQuery::JsxSelfClosingElement(element) => {
                 element.has_trailing_spread_prop(current_attribute)
             }
         })
     }
 }
 
-impl Rule for UseBlankTarget {
-    type Query = Ast<UseBlankTargetQuery>;
+impl Rule for NoBlankTarget {
+    type Query = Ast<NoBlankTargetQuery>;
     /// Two attributes:
     /// 1. The attribute `target=`
     /// 2. The attribute `rel=`, if present
@@ -89,7 +89,7 @@ impl Rule for UseBlankTarget {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
         let (target_attribute, rel_attribute) = match node {
-            UseBlankTargetQuery::JsxElement(element) => {
+            NoBlankTargetQuery::JsxElement(element) => {
                 let opening_element = element.opening_element().ok()?;
                 if opening_element.name().ok()?.text() != "a"
                     || opening_element
@@ -105,7 +105,7 @@ impl Rule for UseBlankTarget {
                     opening_element.find_attribute_by_name("rel").ok()?,
                 )
             }
-            UseBlankTargetQuery::JsxSelfClosingElement(element) => {
+            NoBlankTargetQuery::JsxSelfClosingElement(element) => {
                 if element.name().ok()?.text() != "a"
                     || element.find_attribute_by_name("href").ok().is_none()
                 {

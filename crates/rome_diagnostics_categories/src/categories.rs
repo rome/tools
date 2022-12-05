@@ -11,10 +11,10 @@ define_dategories! {
     // Lint categories
     // a11y group
     "lint/a11y/noAutofocus": "https://docs.rome.tools/lint/rules/noAutofocus",
+    "lint/a11y/noBlankTarget": "https://docs.rome.tools/lint/rules/noBlankTarget",
     "lint/a11y/noPositiveTabindex": "https://docs.rome.tools/lint/rules/noPositiveTabindex",
     "lint/a11y/useAltText": "https://docs.rome.tools/lint/rules/useAltText",
     "lint/a11y/useAnchorContent": "https://docs.rome.tools/lint/rules/useAnchorContent",
-    "lint/a11y/useBlankTarget": "https://docs.rome.tools/lint/rules/useBlankTarget",
     "lint/a11y/useButtonType": "https://docs.rome.tools/lint/rules/useButtonType",
     "lint/a11y/useKeyWithClickEvents": "https://docs.rome.tools/lint/rules/useKeyWithClickEvents",
     "lint/a11y/useKeyWithMouseEvents": "https://docs.rome.tools/lint/rules/useKeyWithMouseEvents",

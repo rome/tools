@@ -73,6 +73,17 @@
             }
           ]
         },
+        "noBlankTarget": {
+          "description": "Disallow target=\"_blank\" attribute without rel=\"noreferrer\"",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noPositiveTabindex": {
           "description": "Prevent the usage of positive integers on tabIndex property",
           "anyOf": [
@@ -104,17 +115,6 @@
         },
         "useAnchorContent": {
           "description": "Enforce that anchor elements have content and that the content is accessible to screen readers.",
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useBlankTarget": {
-          "description": "Disallow target=\"_blank\" attribute without rel=\"noreferrer\"",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
