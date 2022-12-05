@@ -114,7 +114,7 @@ impl Rule for NoRedundantUseStrict {
             if &outer_most == node.syntax() {
                 return None;
             }
-            return Some(outer_most.into());
+            return Some(outer_most);
         }
 
         None
@@ -140,6 +140,7 @@ impl Rule for NoRedundantUseStrict {
                 markup! {"All parts of a class's body are already in strict mode."},
             );
         } else {
+            // for redundant directive
             diag= diag.detail(
                 state.text_range(),
                 markup! {"This outer "<Emphasis>{"use strict"}</Emphasis>" directive already enables strict mode."},
