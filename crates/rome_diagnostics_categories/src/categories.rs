@@ -100,6 +100,7 @@ define_dategories! {
     "lint/nursery/useDefaultSwitchClauseLast":"https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast",
     "lint/nursery/useEnumInitializers":"https://docs.rome.tools/lint/rules/useEnumInitializers",
     "lint/nursery/useExhaustiveDependencies": "https://docs.rome.tools/lint/rules/useExhaustiveDependencies",
+    "lint/nursery/useExponentiationOperator": "https://docs.rome.tools/lint/rules/useExponentiationOperator",
     "lint/nursery/useFlatMap": "https://docs.rome.tools/lint/rules/useFlatMap",
     "lint/nursery/useNumericLiterals": "https://docs.rome.tools/lint/rules/useNumericLiterals",
     "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",

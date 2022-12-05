@@ -785,6 +785,8 @@ struct NurserySchema {
     use_enum_initializers: Option<RuleConfiguration>,
     #[doc = "Enforce all dependencies are correctly specified."]
     use_exhaustive_dependencies: Option<RuleConfiguration>,
+    #[doc = "Disallow the use of Math.pow in favor of the ** operator."]
+    use_exponentiation_operator: Option<RuleConfiguration>,
     #[doc = "Promotes the use of .flatMap() when map().flat() are used together."]
     use_flat_map: Option<RuleConfiguration>,
     #[doc = "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals"]
@@ -794,7 +796,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 31] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 32] = [
         "noAccessKey",
         "noBannedTypes",
         "noConditionalAssignment",
@@ -823,6 +825,7 @@ impl Nursery {
         "useDefaultSwitchClauseLast",
         "useEnumInitializers",
         "useExhaustiveDependencies",
+        "useExponentiationOperator",
         "useFlatMap",
         "useNumericLiterals",
         "useValidForDirection",
@@ -879,9 +882,9 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[25]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[26]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[27]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[28]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[29]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[30]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[31]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
