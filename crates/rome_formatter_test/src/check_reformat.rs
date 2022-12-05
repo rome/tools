@@ -8,7 +8,7 @@ use rome_rowan::SyntaxNode;
 /// Perform a second pass of formatting on a file, printing a diff if the
 /// output doesn't match the input
 ///
-pub struct CheckReformat<'a, 'b, L>
+pub struct CheckReformat<'a, L>
 where
     L: TestFormatLanguage,
 {
@@ -16,11 +16,11 @@ where
     text: &'a str,
     file_name: &'a str,
 
-    language: &'b L,
+    language: &'a L,
     options: L::Options,
 }
 
-impl<'a, 'b, L> CheckReformat<'a, 'b, L>
+impl<'a, L> CheckReformat<'a, L>
 where
     L: TestFormatLanguage,
 {
@@ -29,7 +29,7 @@ where
         text: &'a str,
         file_name: &'a str,
 
-        language: &'b L,
+        language: &'a L,
         options: L::Options,
     ) -> Self {
         CheckReformat {
