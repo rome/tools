@@ -39,3 +39,4 @@ schemars = ["dep:schemars", "rome_formatter/serde", "rome_js_factory", "rome_tex
 
 [dev-dependencies]
 insta = { workspace = true }
+tests_macros = { path = "../tests_macros" }

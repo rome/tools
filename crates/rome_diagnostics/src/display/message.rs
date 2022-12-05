@@ -1,5 +1,6 @@
 use rome_console::fmt::{Formatter, Termcolor};
 use rome_console::{markup, MarkupBuf};
+use serde::{Deserialize, Serialize};
 use termcolor::NoColor;
 
 /// Convenient type that can be used when message and descriptions match, and they need to be
@@ -17,7 +18,7 @@ use termcolor::NoColor;
 ///     message: MessageAndDescription
 /// }
 /// ```
-#[derive(Clone)]
+#[derive(Clone, Deserialize, Serialize)]
 pub struct MessageAndDescription {
     /// Shown when medium supports custom markup
     message: MarkupBuf,

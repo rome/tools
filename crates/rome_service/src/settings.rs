@@ -229,7 +229,7 @@ impl TryFrom<FilesConfiguration> for FilesSettings {
         if let Some(ignore) = config.ignore {
             for pattern in ignore {
                 matcher.add_pattern(&pattern).map_err(|err| {
-                    WorkspaceError::Configuration(ConfigurationError::InvalidIgnorePattern(
+                    WorkspaceError::Configuration(ConfigurationError::new_invalid_ignore_pattern(
                         pattern.to_string(),
                         err.msg.to_string(),
                     ))

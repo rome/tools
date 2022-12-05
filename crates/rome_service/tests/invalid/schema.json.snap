@@ -1,0 +1,24 @@
+---
+source: crates/rome_service/tests/spec_tests.rs
+expression: schema.json
+---
+schema.json:2:2 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Found an extraneous key $schema
+  
+    1 │ {
+  > 2 │ 	"$schema": false
+      │ 	^^^^^^^^^
+    3 │ }
+    4 │ 
+  
+  i Accepted keys
+  
+  - files
+  - linter
+  - formatter
+  - javascript
+  - schema
+  
+
+

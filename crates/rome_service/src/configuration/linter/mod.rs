@@ -33,6 +33,10 @@ pub struct LinterConfiguration {
     pub ignore: Option<IndexSet<String>>,
 }
 
+impl LinterConfiguration {
+    pub(crate) const KNOWN_KEYS: &'static [&'static str] = &["enabled", "rules", "ignore"];
+}
+
 impl Default for LinterConfiguration {
     fn default() -> Self {
         Self {
@@ -55,7 +59,7 @@ impl TryFrom<LinterConfiguration> for LinterSettings {
         if let Some(ignore) = conf.ignore {
             for pattern in ignore {
                 matcher.add_pattern(&pattern).map_err(|err| {
-                    WorkspaceError::Configuration(ConfigurationError::InvalidIgnorePattern(
+                    WorkspaceError::Configuration(ConfigurationError::new_invalid_ignore_pattern(
                         pattern.to_string(),
                         err.msg.to_string(),
                     ))

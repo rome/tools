@@ -1,0 +1,70 @@
+use crate::configuration::parse::json::{
+    has_only_known_keys, with_only_known_variants, VisitConfigurationAsJson,
+};
+use crate::configuration::visitor::VisitConfigurationNode;
+use crate::configuration::{FormatterConfiguration, PlainIndentStyle};
+use crate::ConfigurationError;
+use rome_formatter::LineWidth;
+use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
+use rome_rowan::{AstNode, SyntaxNode};
+
+impl VisitConfigurationAsJson for FormatterConfiguration {}
+
+impl VisitConfigurationNode<JsonLanguage> for FormatterConfiguration {
+    fn visit_member_name(&mut self, node: &JsonSyntaxNode) -> Result<(), ConfigurationError> {
+        has_only_known_keys(node, FormatterConfiguration::KNOWN_KEYS)
+    }
+
+    fn visit_map(
+        &mut self,
+        key: &SyntaxNode<JsonLanguage>,
+        value: &SyntaxNode<JsonLanguage>,
+    ) -> Result<(), ConfigurationError> {
+        let (name, value) = self.get_key_and_value(key, value)?;
+        let name_text = name.text();
+        match name_text {
+            "formatWithErrors" => {
+                self.format_with_errors = self.map_to_boolean(&value, name_text)?;
+            }
+            "enabled" => {
+                self.enabled = self.map_to_boolean(&value, name_text)?;
+            }
+            "ignore" => {
+                self.ignore = self.map_to_index_set_string(&value, name_text)?;
+            }
+            "indentStyle" => {
+                let mut indent_style = PlainIndentStyle::default();
+                self.map_to_known_string(&value, name_text, &mut indent_style)?;
+                self.indent_style = indent_style;
+            }
+            "indentSize" => {
+                self.indent_size = self.map_to_u8(&value, name_text)?;
+            }
+            "lineWidth" => {
+                let line_width = self.map_to_u16(&value, name_text)?;
+                self.line_width = LineWidth::try_from(line_width).map_err(|err| {
+                    ConfigurationError::new_deserialization_error(err.to_string())
+                        .with_span(value.range())
+                })?;
+            }
+            _ => {}
+        }
+
+        Ok(())
+    }
+}
+
+impl VisitConfigurationNode<JsonLanguage> for PlainIndentStyle {
+    fn visit_member_value(
+        &mut self,
+        node: &SyntaxNode<JsonLanguage>,
+    ) -> Result<(), ConfigurationError> {
+        let node = with_only_known_variants(node, PlainIndentStyle::KNOWN_VALUES)?;
+        if node.value_token()?.text() == "space" {
+            *self = PlainIndentStyle::Space;
+        } else {
+            *self = PlainIndentStyle::Tab;
+        }
+        Ok(())
+    }
+}

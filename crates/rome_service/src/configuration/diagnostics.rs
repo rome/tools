@@ -1,10 +1,16 @@
-use rome_diagnostics::{category, Category, Diagnostic, LineIndexBuf, Location};
-use rome_rowan::{TextRange, TextSize};
-use std::fmt::{Debug, Display, Formatter};
+use rome_console::fmt::Display;
+use rome_console::{markup, MarkupBuf};
+use rome_diagnostics::location::AsSpan;
+use rome_diagnostics::{
+    Advices, Diagnostic, LineIndexBuf, LogCategory, MessageAndDescription, Visit,
+};
+use rome_rowan::{SyntaxError, TextRange, TextSize};
+use serde::{Deserialize, Serialize};
+use std::fmt::{Debug, Formatter};
 
 /// Series of errors that can be thrown while computing the configuration
 #[derive(serde::Serialize, serde::Deserialize)]
-pub enum ConfigurationError {
+pub enum ConfigurationErrorKind {
     /// Thrown when the program can't serialize the configuration, while saving it
     SerializationError,
 
@@ -16,27 +22,172 @@ pub enum ConfigurationError {
     /// - incorrect fields
     /// - incorrect values
     DeserializationError {
-        message: String,
         text_range: Option<TextRange>,
-        input: String,
     },
 
+    /// Thrown when an unknown rule is found
+    UnknownRule,
+
     /// Thrown when the pattern inside the `ignore` field errors
-    InvalidIgnorePattern(String, String),
+    InvalidIgnorePattern,
+
+    UnexpectedContent,
+
+    SyntaxError,
+}
+
+#[derive(Diagnostic, Serialize, Deserialize)]
+#[diagnostic(category = "configuration", severity = Error)]
+pub struct ConfigurationError {
+    #[message]
+    message: MessageAndDescription,
+
+    kind: ConfigurationErrorKind,
+
+    #[location(span)]
+    span: Option<TextRange>,
+
+    #[advice]
+    advices: ConfigurationAdvices,
+}
+
+impl From<SyntaxError> for ConfigurationError {
+    fn from(_: SyntaxError) -> Self {
+        ConfigurationError::new_syntax_error()
+    }
+}
+
+impl ConfigurationError {
+    fn new(message: impl Display, kind: ConfigurationErrorKind) -> Self {
+        Self {
+            message: MessageAndDescription::from(markup! { {{message}} }.to_owned()),
+            span: None,
+            kind,
+            advices: ConfigurationAdvices::default(),
+        }
+    }
+
+    pub(crate) fn new_unknown_rule(message: impl Display) -> Self {
+        Self::new(
+            markup! {
+              "invalid rule name `"{{message}}"`"
+            },
+            ConfigurationErrorKind::UnknownRule,
+        )
+    }
+
+    pub(crate) fn new_deserialization_error(message: impl Display) -> Self {
+        Self::new(
+            markup! {
+                "Rome couldn't load the configuration file, here's why: \n"{{message}}
+            },
+            ConfigurationErrorKind::DeserializationError { text_range: None },
+        )
+    }
+
+    pub(crate) fn unknown_member(key_name: impl Display) -> Self {
+        Self::new(
+            markup!("Found an extraneous key "<Emphasis>{{ key_name }}</Emphasis> ),
+            ConfigurationErrorKind::DeserializationError { text_range: None },
+        )
+    }
+
+    pub(crate) fn unknown_variant(variant_name: impl Display) -> Self {
+        Self::new(
+            markup!("Found an extraneous variant "<Emphasis>{{ variant_name }}</Emphasis> ),
+            ConfigurationErrorKind::DeserializationError { text_range: None },
+        )
+    }
+
+    pub(crate) fn new_serialization_error() -> Self {
+        Self::new(
+            "Failed to serialize",
+            ConfigurationErrorKind::SerializationError,
+        )
+    }
+
+    pub(crate) fn incorrect_type_for_value(
+        key_name: impl Display,
+        expected_type: impl Display,
+    ) -> Self {
+        Self::new(
+            markup! {
+                "The value of key "<Emphasis>{{key_name}}</Emphasis>" is incorrect. Expected "<Emphasis>{{expected_type}}</Emphasis>
+            },
+            ConfigurationErrorKind::DeserializationError { text_range: None },
+        )
+    }
+
+    pub(crate) fn incorrect_type(expected_type: impl Display) -> Self {
+        Self::new(
+            markup! {
+                "Incorrect type, expected a "<Emphasis>{{expected_type}}</Emphasis>
+            },
+            ConfigurationErrorKind::DeserializationError { text_range: None },
+        )
+    }
+
+    pub(crate) fn new_invalid_ignore_pattern(pattern: impl Display, reason: impl Display) -> Self {
+        Self::new(
+            markup! { "Couldn't parse the pattern "<Emphasis>{{pattern}}</Emphasis>", reason: "<Emphasis>{{reason}}</Emphasis>"" },
+            ConfigurationErrorKind::InvalidIgnorePattern,
+        )
+    }
+
+    pub(crate) fn new_already_exists() -> Self {
+        Self::new(
+            "It seems that a configuration file already exists",
+            ConfigurationErrorKind::ConfigAlreadyExists,
+        )
+    }
+
+    pub(crate) fn unexpected(span: impl AsSpan) -> Self {
+        Self::new(
+            "Unexpected content inside the configuration file",
+            ConfigurationErrorKind::UnexpectedContent,
+        )
+        .with_span(span)
+    }
+
+    pub(crate) fn with_span(mut self, span: impl AsSpan) -> Self {
+        self.span = span.as_span();
+        self
+    }
+
+    pub(crate) fn new_syntax_error() -> Self {
+        Self::new("Syntax error", ConfigurationErrorKind::SyntaxError)
+    }
+
+    pub(crate) fn with_suggested_list(
+        mut self,
+        message: impl Display,
+        list: &[&(impl Display + ?Sized)],
+    ) -> Self {
+        self.advices.known_keys = Some((
+            markup! { {message} }.to_owned(),
+            list.iter()
+                .map(|msg| markup! { {msg} }.to_owned())
+                .collect(),
+        ));
+        self
+    }
 }
 
 impl Debug for ConfigurationError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            ConfigurationError::SerializationError => std::fmt::Display::fmt(self, f),
-            ConfigurationError::DeserializationError { .. } => std::fmt::Display::fmt(self, f),
-            ConfigurationError::ConfigAlreadyExists => std::fmt::Display::fmt(self, f),
-            ConfigurationError::InvalidIgnorePattern(_, _) => std::fmt::Display::fmt(self, f),
+        match &self.kind {
+            ConfigurationErrorKind::SerializationError => std::fmt::Display::fmt(self, f),
+            ConfigurationErrorKind::DeserializationError { .. } => std::fmt::Display::fmt(self, f),
+            ConfigurationErrorKind::ConfigAlreadyExists => std::fmt::Display::fmt(self, f),
+            ConfigurationErrorKind::UnknownRule => std::fmt::Display::fmt(self, f),
+            ConfigurationErrorKind::InvalidIgnorePattern => std::fmt::Display::fmt(self, f),
+            ConfigurationErrorKind::UnexpectedContent => std::fmt::Display::fmt(self, f),
+            ConfigurationErrorKind::SyntaxError => std::fmt::Display::fmt(self, f),
         }
     }
 }
 
-impl Display for ConfigurationError {
+impl std::fmt::Display for ConfigurationError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
             ConfigurationError::SerializationError => {
@@ -122,6 +273,26 @@ pub(crate) fn from_serde_error_to_range(
     })
 }
 
+#[derive(Debug, Serialize, Deserialize, Default)]
+pub struct ConfigurationAdvices {
+    known_keys: Option<(MarkupBuf, Vec<MarkupBuf>)>,
+}
+
+impl Advices for ConfigurationAdvices {
+    fn record(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
+        if let Some((message, known_keys)) = self.known_keys.as_ref() {
+            visitor.record_log(LogCategory::Info, message)?;
+            let list: Vec<_> = known_keys
+                .iter()
+                .map(|message| message as &dyn Display)
+                .collect();
+            visitor.record_list(&list)?;
+        }
+
+        Ok(())
+    }
+}
+
 #[cfg(test)]
 mod test {
     use crate::configuration::diagnostics::{from_serde_error_to_range, ConfigurationError};
@@ -143,7 +314,7 @@ mod test {
     fn config_already_exists() {
         snap_diagnostic(
             "config_already_exists",
-            ConfigurationError::ConfigAlreadyExists.with_file_path("rome.json"),
+            ConfigurationError::new_already_exists().with_file_path("rome.json"),
         )
     }
 
@@ -159,7 +330,7 @@ mod test {
         if let Err(error) = matcher.add_pattern(pattern) {
             snap_diagnostic(
                 "incorrect_pattern",
-                ConfigurationError::InvalidIgnorePattern(
+                ConfigurationError::new_invalid_ignore_pattern(
                     pattern.to_string(),
                     error.msg.to_string(),
                 )
@@ -174,16 +345,14 @@ mod test {
     fn deserialization_error() {
         let content = "{ \n\n\"formatter\" }";
         let result = serde_json::from_str::<Configuration>(content);
+
         if let Err(error) = result {
             snap_diagnostic(
                 "deserialization_error",
-                ConfigurationError::DeserializationError {
-                    text_range: from_serde_error_to_range(&error, content),
-                    input: content.to_string(),
-                    message: error.to_string(),
-                }
-                .with_file_path("rome.json")
-                .with_file_source_code(content),
+                ConfigurationError::new_deserialization_error(error.to_string())
+                    .with_span(from_serde_error_to_range(&error, content))
+                    .with_file_path("rome.json")
+                    .with_file_source_code(content),
             )
         } else {
             panic!("The JSON should be incorrect")
