@@ -22,6 +22,7 @@ let worker = new Worker(module {
 }, {type: "module", foo: "bar" });
 
 worker.postMessage(module { export function fn() { return "hello!" } });
+
 ```
 
 
@@ -84,7 +85,6 @@ let worker = new Worker(module {
 
 worker.postMessage(module { export function fn() { return "hello!" } });
 ```
-
 
 # Errors
 ```

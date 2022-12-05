@@ -10,6 +10,7 @@ info:
 interface Foo {
     bar: number = 5;
 }
+
 ```
 
 
@@ -32,7 +33,6 @@ interface Foo {
     bar: number = 5
 }
 ```
-
 
 # Errors
 ```

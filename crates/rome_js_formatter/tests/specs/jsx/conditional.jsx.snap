@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: conditional.jsx
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: jsx/conditional.jsx
 ---
 
 # Input
 
-```js
+```jsx
 (bifornCringerMoshedPerplexSawder ? (
 	askTrovenaBeenaDependsRowans
 ) : (
@@ -74,7 +75,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```jsx
 (
 	bifornCringerMoshedPerplexSawder
 		? askTrovenaBeenaDependsRowans

@@ -11,7 +11,8 @@ class C {
   accessor clicked = "value";
   [foo]() {}
 }
-  ```
+  
+```
 
 
 # Prettier differences
@@ -37,7 +38,6 @@ class C {
   [foo]() {}
 }
 ```
-
 
 # Errors
 ```

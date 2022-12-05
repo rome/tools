@@ -20,6 +20,7 @@ function filterTooltipWithFoo<F extends Field>(oldEncoding: Encoding<F>): {
   }
   // ...
 }
+
 ```
 
 
@@ -55,6 +56,5 @@ function filterTooltipWithFoo<F extends Field>(oldEncoding: Encoding<F>): {
   // ...
 }
 ```
-
 
 

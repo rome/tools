@@ -37,6 +37,7 @@ const car = {
 } satisfies Movable & Record<string, unknown>;
 
 var v = undefined satisfies 1;
+
 ```
 
 
@@ -90,6 +91,5 @@ const car = {
 
 var v = undefined satisfies 1;
 ```
-
 
 

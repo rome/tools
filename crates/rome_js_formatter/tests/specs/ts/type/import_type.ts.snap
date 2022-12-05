@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: import_type.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/type/import_type.ts
 ---
 
 # Input
 
-```js
+```ts
 type ImportType1 = typeof import('source');
 
 type ImportType2 = import('source');
@@ -31,7 +32,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 type ImportType1 = typeof import("source");
 
 type ImportType2 = import("source");

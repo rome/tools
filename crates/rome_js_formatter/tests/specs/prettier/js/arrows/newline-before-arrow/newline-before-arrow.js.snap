@@ -9,6 +9,7 @@ info:
 ```js
 async x
 => x
+
 ```
 
 
@@ -31,7 +32,6 @@ async;
 x;
 => x
 ```
-
 
 # Errors
 ```

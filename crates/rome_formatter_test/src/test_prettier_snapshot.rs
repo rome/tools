@@ -2,7 +2,7 @@ use rome_rowan::{TextRange, TextSize};
 use std::{ffi::OsStr, fs::read_to_string, ops::Range, path::Path};
 
 use crate::check_reformat::{CheckReformat, CheckReformatParams};
-use crate::snapshot_builder::SnapshotBuilder;
+use crate::snapshot_builder::{SnapshotBuilder, SnapshotOutput};
 use crate::utils::{get_prettier_diff, strip_prettier_placeholders, PrettierDiff};
 use crate::TestFormatLanguage;
 use rome_formatter::{format_node, format_range, FormatLanguage, FormatOptions};
@@ -25,6 +25,12 @@ pub struct PrettierTestFile<'a> {
 impl<'a> PrettierTestFile<'a> {
     pub fn new(input: &'static str, root_path: &'a Path) -> Self {
         let input_file = Path::new(input);
+
+        assert!(
+            input_file.is_file(),
+            "The input '{}' must exist and be a file.",
+            input_file.display()
+        );
 
         let mut input_code = read_to_string(input_file)
             .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
@@ -83,10 +89,7 @@ impl<'a> PrettierTestFile<'a> {
     }
 }
 
-pub struct PrettierSnapshot<'a, L>
-where
-    L: TestFormatLanguage,
-{
+pub struct PrettierSnapshot<'a, L> {
     test_file: PrettierTestFile<'a>,
     language: L,
 }
@@ -170,7 +173,7 @@ where
         };
 
         let relative_file_name = self.test_file().relative_file_name();
-        let input_file = self.test_file().input_file;
+        let input_file = self.test_file().input_file();
 
         let prettier_diff = get_prettier_diff(input_file, relative_file_name, &formatted);
 
@@ -182,7 +185,7 @@ where
         let mut builder = SnapshotBuilder::new(input_file)
             .with_input(&self.test_file().input_code)
             .with_prettier_diff(&prettier_diff)
-            .with_output(&formatted)
+            .with_output(SnapshotOutput::new(&formatted))
             .with_errors(&parsed, &self.test_file().parse_input);
 
         let max_width = self

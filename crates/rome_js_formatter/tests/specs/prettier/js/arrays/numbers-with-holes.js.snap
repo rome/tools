@@ -36,6 +36,7 @@ const numberWithHoles2 = [
   // comment after a hole 2
   0x234932436,
 ];
+
 ```
 
 
@@ -111,6 +112,5 @@ const numberWithHoles2 = [
   0x234932436,
 ];
 ```
-
 
 

@@ -28,6 +28,7 @@ interface Interface2 {
 type Type1<T> = "type1";
 
 type Type2 = Two<T>;
+
 ```
 
 
@@ -69,6 +70,5 @@ type Type1<T> = "type1";
 
 type Type2 = Two<T>;
 ```
-
 
 

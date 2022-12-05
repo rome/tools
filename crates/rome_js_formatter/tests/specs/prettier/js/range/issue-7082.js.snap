@@ -10,6 +10,7 @@ info:
 export const Button = styled.button`
 color: blue;
 `;
+
 ```
 
 
@@ -32,6 +33,5 @@ export const Button = styled.button`
 color: blue;
 `;
 ```
-
 
 

@@ -12,6 +12,7 @@ declare function foo() {}
 declare function bar() {
   // comment
 }
+
 ```
 
 
@@ -39,7 +40,6 @@ declare function bar() {
   // comment
 }
 ```
-
 
 # Errors
 ```

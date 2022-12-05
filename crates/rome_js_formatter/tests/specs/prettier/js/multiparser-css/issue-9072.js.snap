@@ -20,6 +20,7 @@ const style2 = css`
 const style3 = css`
   foo: ${foo}${bar}       ${baz};
 `;
+
 ```
 
 
@@ -63,6 +64,5 @@ const style3 = css`
   foo: ${foo}${bar}       ${baz};
 `;
 ```
-
 
 

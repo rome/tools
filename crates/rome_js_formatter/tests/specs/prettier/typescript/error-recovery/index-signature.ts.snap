@@ -26,6 +26,7 @@ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong:
 type TooLongSingleParam = {
   [looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong: string]: string;
 }
+
 ```
 
 
@@ -105,7 +106,6 @@ type TooLongSingleParam = {
   [looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong: string]: string;
 };
 ```
-
 
 # Errors
 ```
@@ -450,4 +450,5 @@ index-signature.ts:14:99 parse ━━━━━━━━━━━━━━━━�
    17:   { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string;
    22:   [looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong: string]: string;
 ```
+
 

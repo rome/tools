@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: enum_statement.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/statement/enum_statement.ts
 ---
 
 # Input
 
-```js
+```ts
 enum    A   {}
 enum B {a = "something",
 b = "something", c = "something",
@@ -37,7 +38,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 enum A {}
 enum B {
 	a = "something",

@@ -10,6 +10,7 @@ info:
 class User {
     "username": string;
 }
+
 ```
 
 
@@ -32,6 +33,5 @@ class User {
   username: string;
 }
 ```
-
 
 

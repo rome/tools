@@ -8,6 +8,7 @@ info:
 
 ```js
 export default (function() {}).toString();
+
 ```
 
 
@@ -26,6 +27,5 @@ export default (function() {}).toString();
 ```js
 export default (function () {}).toString();
 ```
-
 
 

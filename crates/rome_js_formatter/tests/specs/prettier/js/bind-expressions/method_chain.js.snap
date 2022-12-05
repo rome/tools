@@ -24,6 +24,7 @@ function test(observable) {
         )
         ::map(someFunction);
 }
+
 ```
 
 
@@ -76,7 +77,6 @@ function test(observable) {
         ::map(someFunction)
 }
 ```
-
 
 # Errors
 ```

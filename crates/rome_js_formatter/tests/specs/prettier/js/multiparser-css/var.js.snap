@@ -33,6 +33,7 @@ const v2 = css`
 export const StyledComponent = styled.div`
   grid-area:  area-${props => props.propName};
 `
+
 ```
 
 
@@ -98,6 +99,5 @@ export const StyledComponent = styled.div`
   grid-area:  area-${(props) => props.propName};
 `;
 ```
-
 
 

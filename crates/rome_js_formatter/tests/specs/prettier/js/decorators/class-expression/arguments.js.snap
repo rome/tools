@@ -9,6 +9,7 @@ info:
 ```js
 console.log(@deco class Foo {})
 console.log(@deco class {})
+
 ```
 
 
@@ -40,7 +41,6 @@ console.log(@deco class {})
 console.log(@deco class Foo {});
 console.log(@deco class {});
 ```
-
 
 # Errors
 ```

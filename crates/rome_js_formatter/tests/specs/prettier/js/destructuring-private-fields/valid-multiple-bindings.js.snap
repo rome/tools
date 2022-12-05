@@ -13,6 +13,7 @@ class C {
     const {#x: x1, #x: x2 = x1 } = this;
   }
 }
+
 ```
 
 
@@ -41,7 +42,6 @@ class C {
   }
 }
 ```
-
 
 # Errors
 ```

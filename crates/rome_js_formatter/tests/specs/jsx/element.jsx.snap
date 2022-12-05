@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: element.jsx
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: jsx/element.jsx
 ---
 
 # Input
 
-```js
+```jsx
 // Single string attribute
 <div tooltip="A very long tooltip text that would otherwise make the attribute break onto the same line but it is not because of the single string layout"></div>;
 
@@ -355,7 +356,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```jsx
 // Single string attribute
 <div tooltip="A very long tooltip text that would otherwise make the attribute break onto the same line but it is not because of the single string layout"></div>;
 
@@ -753,10 +754,10 @@ function Component() {
 		</div>
 	);
 }
+```
 
-
-## Lines exceeding width of 80 characters
-
+# Lines exceeding max width of 80 characters
+```
     2: <div tooltip="A very long tooltip text that would otherwise make the attribute break onto the same line but it is not because of the single string layout"></div>;
     7: 		tooltip="A very long tooltip text that would otherwise make the attribute break
    14: 	<ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent></ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent>
@@ -766,5 +767,4 @@ function Component() {
   238: 				<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
   287: 		Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul{" "}
 ```
-
 

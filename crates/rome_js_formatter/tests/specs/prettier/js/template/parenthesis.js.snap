@@ -61,6 +61,7 @@ b.c``;
 function* d() {
   (yield 1)``;
 }
+
 ```
 
 
@@ -147,6 +148,5 @@ function* d() {
   (yield 1)``;
 }
 ```
-
 
 

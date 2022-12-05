@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: definite_variable.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/binding/definite_variable.ts
 ---
 
 # Input
 
-```js
+```ts
 let definiteVariable!: TypeName;
 
 ```
@@ -26,7 +27,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 let definiteVariable!: TypeName;
 ```
 

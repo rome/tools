@@ -465,6 +465,7 @@ let myDiv = ReactTestUtils.renderIntoDocument(
     <div key="theBird" className="bird" />
   </div>
 );
+
 ```
 
 
@@ -1076,7 +1077,6 @@ let myDiv = ReactTestUtils.renderIntoDocument(
 );
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
    69:     before {stuff} after {stuff} after {stuff} after {stuff} after {stuff} after{" "}
@@ -1085,4 +1085,5 @@ let myDiv = ReactTestUtils.renderIntoDocument(
   231:         "Enough text to make this element wrap on to multiple lines when formatting"
   387:     ENDS IN <div>text text text text text text text text text text text</div>{" "}
 ```
+
 

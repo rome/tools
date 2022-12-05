@@ -33,6 +33,7 @@ const TestComponent = ({ children, ...props }) => (
     {children}
   </div>
 );
+
 ```
 
 
@@ -115,9 +116,9 @@ const TestComponent = ({ children, ...props }) => (
 );
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
     2:   // Create styles as if you're calling css and the class will be applied to the component
 ```
+
 

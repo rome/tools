@@ -10,6 +10,7 @@ info:
 /* comment */{
   "foo": "bar"
 }
+
 ```
 
 
@@ -32,7 +33,6 @@ info:
   "foo": "bar"
 }
 ```
-
 
 # Errors
 ```

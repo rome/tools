@@ -10,6 +10,7 @@ info:
 const durabilityMetricsSelectable: Immutable.OrderedSet<
   SomeReportingMetric,
 > = myExperienceSelectable.concat(otherDurabilityMetricsSelectable);
+
 ```
 
 
@@ -33,7 +34,6 @@ const durabilityMetricsSelectable: Immutable.OrderedSet<
   SomeReportingMetric,
 > = myExperienceSelectable.concat(otherDurabilityMetricsSelectable);
 ```
-
 
 # Errors
 ```

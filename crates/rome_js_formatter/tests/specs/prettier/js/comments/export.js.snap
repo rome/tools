@@ -47,6 +47,7 @@ export {
   barrrr as  // comment
 		 bazz,
 }
+
 ```
 
 
@@ -106,6 +107,5 @@ export {
   barrrr as bazz,
 };
 ```
-
 
 

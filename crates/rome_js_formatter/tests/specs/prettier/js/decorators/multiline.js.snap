@@ -23,6 +23,7 @@ class Foo {
   @decorator({
   }) method() {}
 }
+
 ```
 
 
@@ -73,6 +74,5 @@ class Foo {
   }) method() {}
 }
 ```
-
 
 
