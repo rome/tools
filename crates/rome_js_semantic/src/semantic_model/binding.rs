@@ -1,5 +1,5 @@
 use super::*;
-use rome_js_syntax::{TextRange, AnyJsBinding, binding_ext::AnyJsIdentifierBinding};
+use rome_js_syntax::{binding_ext::AnyJsIdentifierBinding, AnyJsBinding, TextRange};
 
 /// Internal type with all the semantic data of a specific binding
 #[derive(Debug)]
