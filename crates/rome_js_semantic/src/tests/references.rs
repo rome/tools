@@ -181,6 +181,11 @@ f()",
             return s;
         }
         overloaded/*READ C*/();",
+    ok_function_overloading_2,
+        "function a/*#A*/() {}
+        a/*READ A*/();
+        function add(a: string, b: string): string;
+        console.log(a/*READ A*/);",
 }
 
 // Imports

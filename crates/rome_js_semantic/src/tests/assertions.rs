@@ -639,7 +639,7 @@ impl SemanticAssertions {
                     panic!("error_scope_assertion_not_attached_to_a_scope_event");
                 }
             } else {
-                panic!("error_scope_assertion_not_attached_to_a_scope_event");
+                panic!("No scope event found: assertion: {assertion:?}");
             }
         }
 
@@ -676,12 +676,13 @@ impl SemanticAssertions {
                     error_scope_end_assertion_points_to_the_wrong_scope_start(
                         code,
                         &scope_end_assertion.range,
-                        &scope_start_assertions_range,
+                        events,
                         test_name,
                     );
                 }
             } else {
-                panic!("error_scope_assertion_not_attached_to_a_scope_event");
+                dbg!(events_by_pos);
+                panic!("No scope event found. Assertion: {scope_end_assertion:?}");
             }
         }
 
@@ -829,19 +830,16 @@ fn error_scope_end_assertion_points_to_non_existing_scope_start_assertion(
 fn error_scope_end_assertion_points_to_the_wrong_scope_start(
     code: &str,
     range: &TextRange,
-    same_name_range: &TextRange,
+    events: &[SemanticEvent],
     file_name: &str,
 ) {
-    let mut diagnostic = TestSemanticDiagnostic::new("Wrong scope start", range);
-    diagnostic.push_advice(
-        range,
-        "This scope end assertion points to a non-existing scope start assertion.",
-    );
-    diagnostic.push_advice(
-        range,
-        "This scope end assertion points to the wrong scope start.",
-    );
-    diagnostic.push_advice(same_name_range, "This assertion has the same label");
+    let mut diagnostic =
+        TestSemanticDiagnostic::new("The scope end found here do not match the assertion", range);
+
+    for e in events {
+        diagnostic.push_advice(e.range(), format!("This event was found: {e:?}"));
+    }
+
     let error = diagnostic
         .with_file_path((file_name.to_string(), FileId::zero()))
         .with_file_source_code(code);

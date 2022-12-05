@@ -269,6 +269,7 @@ impl SemanticEventExtractor {
             ),
 
             JS_FUNCTION_DECLARATION
+            | TS_DECLARE_FUNCTION_DECLARATION
             | JS_FUNCTION_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
             | JS_CONSTRUCTOR_CLASS_MEMBER
@@ -394,20 +395,29 @@ impl SemanticEventExtractor {
                 self.push_binding_into_scope(None, &name_token);
                 self.export_class_expression(node, &parent);
             }
-            JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
+            JS_BINDING_PATTERN_WITH_DEFAULT
+            | JS_OBJECT_BINDING_PATTERN
+            | JS_OBJECT_BINDING_PATTERN_REST
             | JS_OBJECT_BINDING_PATTERN_PROPERTY
-            | JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST => {
+            | JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST
+            | JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
+            | JS_ARRAY_BINDING_PATTERN
+            | JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST
+            | JS_ARRAY_BINDING_PATTERN_REST_ELEMENT => {
                 self.push_binding_into_scope(None, &name_token);
 
                 let possible_declarator = parent.ancestors().find(|x| {
                     !matches!(
                         x.kind(),
-                        JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
-                            | JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST
-                            | JS_OBJECT_BINDING_PATTERN_PROPERTY
+                        JS_BINDING_PATTERN_WITH_DEFAULT
                             | JS_OBJECT_BINDING_PATTERN
-                            | JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST
+                            | JS_OBJECT_BINDING_PATTERN_REST
+                            | JS_OBJECT_BINDING_PATTERN_PROPERTY
+                            | JS_OBJECT_BINDING_PATTERN_PROPERTY_LIST
+                            | JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
                             | JS_ARRAY_BINDING_PATTERN
+                            | JS_ARRAY_BINDING_PATTERN_ELEMENT_LIST
+                            | JS_ARRAY_BINDING_PATTERN_REST_ELEMENT
                     )
                 })?;
 
@@ -526,6 +536,7 @@ impl SemanticEventExtractor {
         match node.kind() {
             JS_MODULE | JS_SCRIPT => self.pop_scope(node.text_range()),
             JS_FUNCTION_DECLARATION
+            | TS_DECLARE_FUNCTION_DECLARATION
             | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
             | JS_FUNCTION_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
