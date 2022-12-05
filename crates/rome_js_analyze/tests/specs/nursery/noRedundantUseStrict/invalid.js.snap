@@ -1,147 +1,107 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 83
+assertion_line: 86
 expression: invalid.js
 ---
 # Input
 ```js
-"use strict";
-"use strict";
-
-function test() {
+// js module
+function foo() {
 	"use strict";
-	function inner_a() {
-		"use strict"; // redundant directive
-	}
-	function inner_b() {
-		function inner_inner() {
-			"use strict"; // additional redundant directive
-		}
+}
+
+class C1 {
+	// All code here is evaluated in strict mode
+	test() {
+		"use strict";
 	}
 }
+
+const C2 = class {
+	// All code here is evaluated in strict mode
+	test() {
+		"use strict";
+	}
+};
 
 ```
 
 # Diagnostics
 ```
-invalid.js:2:1 lint/nursery/noRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:3:2 lint/nursery/noRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Redundant use strict directive.
   
-    1 │ "use strict";
-  > 2 │ "use strict";
-      │ ^^^^^^^^^^^^^
-    3 │ 
-    4 │ function test() {
-  
-  i This outer use strict directive already enables strict mode.
-  
-  > 1 │ "use strict";
-      │ ^^^^^^^^^^^^^
-    2 │ "use strict";
-    3 │ 
-  
-  i Safe fix: Remove the redundant "use strict" directive
-  
-     1  1 │   "use strict";
-     2    │ - "use·strict";
-     3  2 │   
-     4  3 │   function test() {
-  
-
-```
-
-```
-invalid.js:5:2 lint/nursery/noRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Redundant use strict directive.
-  
-    4 │ function test() {
-  > 5 │ 	"use strict";
+    1 │ // js module
+    2 │ function foo() {
+  > 3 │ 	"use strict";
       │ 	^^^^^^^^^^^^^
-    6 │ 	function inner_a() {
-    7 │ 		"use strict"; // redundant directive
+    4 │ }
+    5 │ 
   
-  i This outer use strict directive already enables strict mode.
-  
-  > 1 │ "use strict";
-      │ ^^^^^^^^^^^^^
-    2 │ "use strict";
-    3 │ 
+  i The entire contents of JavaScript modules are automatically in strict mode, with no statement needed to initiate it.
   
   i Safe fix: Remove the redundant "use strict" directive
   
-     3  3 │   
-     4  4 │   function test() {
-     5    │ - → "use·strict";
-     6    │ - → function·inner_a()·{
-        5 │ + → function·inner_a()·{
-     7  6 │   		"use strict"; // redundant directive
-     8  7 │   	}
+     1  1 │   // js module
+     2  2 │   function foo() {
+     3    │ - → "use·strict";
+     4  3 │   }
+     5  4 │   
   
 
 ```
 
 ```
-invalid.js:7:3 lint/nursery/noRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:9:3 lint/nursery/noRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Redundant use strict directive.
   
-    5 │ 	"use strict";
-    6 │ 	function inner_a() {
-  > 7 │ 		"use strict"; // redundant directive
-      │ 		^^^^^^^^^^^^^
-    8 │ 	}
-    9 │ 	function inner_b() {
+     7 │ 	// All code here is evaluated in strict mode
+     8 │ 	test() {
+   > 9 │ 		"use strict";
+       │ 		^^^^^^^^^^^^^
+    10 │ 	}
+    11 │ }
   
-  i This outer use strict directive already enables strict mode.
-  
-  > 1 │ "use strict";
-      │ ^^^^^^^^^^^^^
-    2 │ "use strict";
-    3 │ 
+  i The entire contents of JavaScript modules are automatically in strict mode, with no statement needed to initiate it.
   
   i Safe fix: Remove the redundant "use strict" directive
   
-     5  5 │   	"use strict";
-     6  6 │   	function inner_a() {
-     7    │ - → → "use·strict";·//·redundant·directive
-     8    │ - → }
-        7 │ + → }
-     9  8 │   	function inner_b() {
-    10  9 │   		function inner_inner() {
+     7  7 │   	// All code here is evaluated in strict mode
+     8  8 │   	test() {
+     9    │ - → → "use·strict";
+    10    │ - → }
+        9 │ + → }
+    11 10 │   }
+    12 11 │   
   
 
 ```
 
 ```
-invalid.js:11:4 lint/nursery/noRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:16:3 lint/nursery/noRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Redundant use strict directive.
   
-     9 │ 	function inner_b() {
-    10 │ 		function inner_inner() {
-  > 11 │ 			"use strict"; // additional redundant directive
-       │ 			^^^^^^^^^^^^^
-    12 │ 		}
-    13 │ 	}
+    14 │ 	// All code here is evaluated in strict mode
+    15 │ 	test() {
+  > 16 │ 		"use strict";
+       │ 		^^^^^^^^^^^^^
+    17 │ 	}
+    18 │ };
   
-  i This outer use strict directive already enables strict mode.
-  
-  > 1 │ "use strict";
-      │ ^^^^^^^^^^^^^
-    2 │ "use strict";
-    3 │ 
+  i The entire contents of JavaScript modules are automatically in strict mode, with no statement needed to initiate it.
   
   i Safe fix: Remove the redundant "use strict" directive
   
-     9  9 │   	function inner_b() {
-    10 10 │   		function inner_inner() {
-    11    │ - → → → "use·strict";·//·additional·redundant·directive
-    12    │ - → → }
-       11 │ + → → }
-    13 12 │   	}
-    14 13 │   }
+    14 14 │   	// All code here is evaluated in strict mode
+    15 15 │   	test() {
+    16    │ - → → "use·strict";
+    17    │ - → }
+       16 │ + → }
+    18 17 │   };
+    19 18 │   
   
 
 ```

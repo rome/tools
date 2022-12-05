@@ -1,0 +1,102 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 86
+expression: invalidClass.cjs
+---
+# Input
+```js
+class C1 {
+	// All code here is evaluated in strict mode
+	test() {
+		"use strict";
+	}
+}
+
+const C2 = class {
+	// All code here is evaluated in strict mode
+	test() {
+		"use strict";
+	}
+};
+
+```
+
+# Diagnostics
+```
+invalidClass.cjs:4:3 lint/nursery/noRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Redundant use strict directive.
+  
+    2 │ 	// All code here is evaluated in strict mode
+    3 │ 	test() {
+  > 4 │ 		"use strict";
+      │ 		^^^^^^^^^^^^^
+    5 │ 	}
+    6 │ }
+  
+  i All parts of a class's body are already in strict mode.
+  
+  > 1 │ class C1 {
+      │ ^^^^^^^^^^
+  > 2 │ 	// All code here is evaluated in strict mode
+  > 3 │ 	test() {
+  > 4 │ 		"use strict";
+  > 5 │ 	}
+  > 6 │ }
+      │ ^
+    7 │ 
+    8 │ const C2 = class {
+  
+  i Safe fix: Remove the redundant "use strict" directive
+  
+     2  2 │   	// All code here is evaluated in strict mode
+     3  3 │   	test() {
+     4    │ - → → "use·strict";
+     5    │ - → }
+        4 │ + → }
+     6  5 │   }
+     7  6 │   
+  
+
+```
+
+```
+invalidClass.cjs:11:3 lint/nursery/noRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Redundant use strict directive.
+  
+     9 │ 	// All code here is evaluated in strict mode
+    10 │ 	test() {
+  > 11 │ 		"use strict";
+       │ 		^^^^^^^^^^^^^
+    12 │ 	}
+    13 │ };
+  
+  i All parts of a class's body are already in strict mode.
+  
+     6 │ }
+     7 │ 
+   > 8 │ const C2 = class {
+       │            ^^^^^^^
+   > 9 │ 	// All code here is evaluated in strict mode
+  > 10 │ 	test() {
+  > 11 │ 		"use strict";
+  > 12 │ 	}
+  > 13 │ };
+       │ ^
+    14 │ 
+  
+  i Safe fix: Remove the redundant "use strict" directive
+  
+     9  9 │   	// All code here is evaluated in strict mode
+    10 10 │   	test() {
+    11    │ - → → "use·strict";
+    12    │ - → }
+       11 │ + → }
+    13 12 │   };
+    14 13 │   
+  
+
+```
+
+
