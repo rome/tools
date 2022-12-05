@@ -37,7 +37,7 @@ declare_rule! {
     pub(crate) NoHeaderScope {
         version: "11.0.0",
         name: "noHeaderScope",
-        recommended: false,
+        recommended: true,
     }
 }
 

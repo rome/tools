@@ -75,7 +75,7 @@ declare_rule! {
     pub(crate) UseExhaustiveDependencies {
         version: "10.0.0",
         name: "useExhaustiveDependencies",
-        recommended: false,
+        recommended: true,
     }
 }
 

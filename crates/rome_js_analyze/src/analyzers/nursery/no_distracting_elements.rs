@@ -35,7 +35,7 @@ declare_rule! {
     pub(crate) NoDistractingElements {
         version: "11.0.0",
         name: "noDistractingElements",
-        recommended: false,
+        recommended: true,
     }
 }
 

@@ -110,7 +110,7 @@ class Manager {
 		}
 
 		// Calculate when this heading ends. It's either at the beginning of the next heading, or page bottom.
-		let start = this.getHeadingTop(heading);
+		const start = this.getHeadingTop(heading);
 		let end;
 
 		const nextHeading = headingElements[i + 1];
@@ -245,7 +245,6 @@ class Manager {
 			return false;
 		}
 
-		// rome-ignore lint/style/useOptionalChain: netlify's node version does not support optional call expressions
 		if (callback !== undefined) {
 			callback();
 		}
@@ -269,13 +268,11 @@ class Manager {
 		window.location.hash = hash;
 		this.scrollToHeading(hash);
 
-		// rome-ignore lint/style/useOptionalChain: netlify's node version does not support optional call expressions
 		if (navigator.clipboard !== undefined) {
 			navigator.clipboard.writeText(window.location.href);
 		}
 
 		// Only another copied text can appear here so delete it if it exists
-		// rome-ignore lint/style/useOptionalChain: netlify's node version does not support optional call expressions
 		if (target.nextElementSibling != null) {
 			target.nextElementSibling.remove();
 		}
@@ -299,7 +296,7 @@ class Manager {
 	 * just scroll.
 	 */
 	handleAnchorClick(event: MouseEvent, target: HTMLElement) {
-		let maybeHref = target.getAttribute("href");
+		const maybeHref = target.getAttribute("href");
 		if (maybeHref == null) {
 			return;
 		}

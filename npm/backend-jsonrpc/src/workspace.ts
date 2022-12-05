@@ -440,7 +440,7 @@ export interface Nursery {
 	 */
 	useAriaPropTypes?: RuleConfiguration;
 	/**
-	 * Enforce that elements with ARIA roles must have all required attributes for that role
+	 * Enforce that elements with ARIA roles must have all required ARIA attributes for that role.
 	 */
 	useAriaPropsForRole?: RuleConfiguration;
 	/**
@@ -455,6 +455,10 @@ export interface Nursery {
 	 * Enforce default clauses in switch statements to be last
 	 */
 	useDefaultSwitchClauseLast?: RuleConfiguration;
+	/**
+	 * Require that each enum member value be explicitly initialized.
+	 */
+	useEnumInitializers?: RuleConfiguration;
 	/**
 	 * Enforce all dependencies are correctly specified.
 	 */
@@ -702,6 +706,7 @@ export type Category =
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useConst"
 	| "lint/nursery/useDefaultSwitchClauseLast"
+	| "lint/nursery/useEnumInitializers"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useExponentiationOperator"
 	| "lint/nursery/useFlatMap"

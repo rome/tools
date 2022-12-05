@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/trailing-comma/arrow-functions.tsx
 ---
 
 # Input
 
-```js
+```tsx
 const f1 = <T,>() => 1;
 const f2 = <
   Tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
@@ -29,7 +29,7 @@ const f2 = <
 
 # Output
 
-```js
+```tsx
 const f1 = <T,>() => 1;
 const f2 = <
   Tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,

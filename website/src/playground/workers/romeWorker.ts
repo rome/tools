@@ -99,25 +99,36 @@ self.addEventListener("message", async (e) => {
 				},
 			};
 
-			if (lintRules === LintRules.All) {
-				configuration.linter = {
-					enabled: enabledLinting,
-					rules: {
+			switch (lintRules) {
+				case LintRules.Recommended: {
+					configuration.linter!.rules = {
+						nursery: {
+							recommended: false,
+						},
+					};
+					break;
+				}
+				case LintRules.All: {
+					configuration.linter!.rules = {
 						correctness: {
-							noRestrictedGlobals: "error",
-							noUndeclaredVariables: "error",
-							noUnusedVariables: "error",
-							noUselessFragments: "error",
+							noRestrictedGlobals: "warn",
+							noUndeclaredVariables: "warn",
+							noUnusedVariables: "warn",
+							noUselessFragments: "warn",
 						},
 						style: {
-							useFragmentSyntax: "error",
+							useFragmentSyntax: "warn",
 						},
 						nursery: {
-							noConstAssign: "error",
-							useExhaustiveDependencies: "error",
+							noNonNullAssertion: "warn",
+							noPrecisionLoss: "warn",
+							noRedundantUseStrict: "warn",
+							useAriaPropTypes: "warn",
+							useCamelCase: "warn",
 						},
-					},
-				};
+					};
+					break;
+				}
 			}
 
 			workspace.updateSettings({

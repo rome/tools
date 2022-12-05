@@ -20,7 +20,7 @@ if (x = 0) {
 
 <pre class="language-text"><code class="language-text">nursery/noConditionalAssignment.js:2:5 <a href="https://docs.rome.tools/lint/rules/noConditionalAssignment">lint/nursery/noConditionalAssignment</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Expected a conditional expression and instead saw an assignment.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Expected a conditional expression and instead saw an assignment.</span>
   
     <strong>1 │ </strong>var x;
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>if (x = 0) {
@@ -45,7 +45,7 @@ function setHeight(someNode) {
 
 <pre class="language-text"><code class="language-text">nursery/noConditionalAssignment.js:5:14 <a href="https://docs.rome.tools/lint/rules/noConditionalAssignment">lint/nursery/noConditionalAssignment</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Expected a conditional expression and instead saw an assignment.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Expected a conditional expression and instead saw an assignment.</span>
   
     <strong>3 │ </strong>    do {
     <strong>4 │ </strong>        someNode.height = &quot;100px&quot;;

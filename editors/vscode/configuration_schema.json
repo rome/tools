@@ -1003,7 +1003,7 @@
           ]
         },
         "useAriaPropsForRole": {
-          "description": "Enforce that elements with ARIA roles must have all required attributes for that role",
+          "description": "Enforce that elements with ARIA roles must have all required ARIA attributes for that role.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -1037,6 +1037,17 @@
         },
         "useDefaultSwitchClauseLast": {
           "description": "Enforce default clauses in switch statements to be last",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useEnumInitializers": {
+          "description": "Require that each enum member value be explicitly initialized.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

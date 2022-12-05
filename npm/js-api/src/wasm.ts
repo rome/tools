@@ -11,18 +11,18 @@ export enum Distribution {
 	/**
 	 * Use this if you want to communicate with the WebAssembly client built for bundlers
 	 */
-	BUNDLER,
+	BUNDLER = 0,
 	/**
 	 * Use this if you want to communicate with the WebAssembly client built for Node.JS
 	 */
-	NODE,
+	NODE = 1,
 	/**
 	 * Use this if you want to communicate with the WebAssembly client built for the Web
 	 */
-	WEB,
+	WEB = 2,
 }
 
-let isInitialized = {
+const isInitialized = {
 	[Distribution.BUNDLER]: false,
 	[Distribution.NODE]: false,
 	[Distribution.WEB]: false,
@@ -71,7 +71,7 @@ class WasmError extends Error {
 		this.stackTrace = stackTrace;
 	}
 
-	static fromError(e: any): WasmError {
+	static fromError(e: unknown): WasmError {
 		return new WasmError(e as string);
 	}
 }
@@ -81,6 +81,6 @@ class WasmError extends Error {
  *
  * @param e
  */
-export function wrapError(e: any): WasmError {
+export function wrapError(e: unknown): WasmError {
 	return WasmError.fromError(e);
 }

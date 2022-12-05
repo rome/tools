@@ -22,18 +22,24 @@ pub trait JsBatchMutation {
     fn remove_js_object_member(&mut self, parameter: &AnyJsObjectMember) -> bool;
 
     /// It attempts to add a new element after the given element
-    fn add_jsx_element_after_element(
+    ///
+    /// The function appends the elements at the end if `after_element` isn't found
+    fn add_jsx_elements_after_element<I>(
         &mut self,
         after_element: &AnyJsxChild,
-        new_element: &AnyJsxChild,
-    ) -> bool;
+        new_element: I,
+    ) -> bool
+    where
+        I: IntoIterator<Item = AnyJsxChild>;
 
-    /// It attempts to add a new element before the given element
-    fn add_jsx_element_before_element(
+    /// It attempts to add a new element before the given element.
+    fn add_jsx_elements_before_element<I>(
         &mut self,
         after_element: &AnyJsxChild,
-        new_element: &AnyJsxChild,
-    ) -> bool;
+        new_elements: I,
+    ) -> bool
+    where
+        I: IntoIterator<Item = AnyJsxChild>;
 }
 
 fn remove_js_formal_parameter_from_js_parameter_list(
@@ -209,52 +215,74 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
             .unwrap_or(false)
     }
 
-    fn add_jsx_element_after_element(
+    fn add_jsx_elements_after_element<I>(
         &mut self,
         after_element: &AnyJsxChild,
-        new_element: &AnyJsxChild,
-    ) -> bool {
+        new_elements: I,
+    ) -> bool
+    where
+        I: IntoIterator<Item = AnyJsxChild>,
+    {
         let old_list = after_element.parent::<JsxChildList>();
         if let Some(old_list) = &old_list {
             let jsx_child_list = {
                 let mut new_items = vec![];
-                for element in old_list {
-                    new_items.push(element.clone());
-                    if element == *after_element {
-                        new_items.push(new_element.clone());
+                let mut old_elements = old_list.into_iter();
+
+                for old_element in old_elements.by_ref() {
+                    let is_needle = old_element == *after_element;
+
+                    new_items.push(old_element.clone());
+                    if is_needle {
+                        break;
                     }
                 }
+
+                new_items.extend(new_elements);
+                new_items.extend(old_elements);
 
                 jsx_child_list(new_items)
             };
 
-            self.replace_node(old_list.clone(), jsx_child_list);
+            self.replace_node_discard_trivia(old_list.clone(), jsx_child_list);
             true
         } else {
             false
         }
     }
 
-    fn add_jsx_element_before_element(
+    fn add_jsx_elements_before_element<I>(
         &mut self,
-        after_element: &AnyJsxChild,
-        new_element: &AnyJsxChild,
-    ) -> bool {
-        let old_list = after_element.syntax().parent().and_then(JsxChildList::cast);
+        before_element: &AnyJsxChild,
+        new_elements: I,
+    ) -> bool
+    where
+        I: IntoIterator<Item = AnyJsxChild>,
+    {
+        let old_list = before_element
+            .syntax()
+            .parent()
+            .and_then(JsxChildList::cast);
         if let Some(old_list) = &old_list {
             let jsx_child_list = {
                 let mut new_items = vec![];
-                for element in old_list {
-                    if element == *after_element {
-                        new_items.push(new_element.clone());
+                let mut old_elements = old_list.into_iter().peekable();
+
+                while let Some(next_element) = old_elements.peek() {
+                    if next_element == before_element {
+                        break;
                     }
-                    new_items.push(element.clone());
+                    new_items.push(next_element.clone());
+                    old_elements.next();
                 }
+
+                new_items.extend(new_elements);
+                new_items.extend(old_elements);
 
                 jsx_child_list(new_items)
             };
 
-            self.replace_node(old_list.clone(), jsx_child_list);
+            self.replace_node_discard_trivia(old_list.clone(), jsx_child_list);
             true
         } else {
             false

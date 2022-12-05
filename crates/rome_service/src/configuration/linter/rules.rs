@@ -163,7 +163,7 @@ impl Rules {
         let mut enabled_rules = IndexSet::new();
         let mut disabled_rules = IndexSet::new();
         if let Some(group) = self.a11y.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(A11y::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -172,7 +172,7 @@ impl Rules {
             enabled_rules.extend(A11y::recommended_rules_as_filters());
         }
         if let Some(group) = self.complexity.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(Complexity::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -181,7 +181,7 @@ impl Rules {
             enabled_rules.extend(Complexity::recommended_rules_as_filters());
         }
         if let Some(group) = self.correctness.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(Correctness::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -190,16 +190,16 @@ impl Rules {
             enabled_rules.extend(Correctness::recommended_rules_as_filters());
         }
         if let Some(group) = self.nursery.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() && rome_flags::is_unstable() || group.is_recommended() {
                 enabled_rules.extend(Nursery::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
             disabled_rules.extend(&group.get_disabled_rules());
-        } else if self.is_recommended() {
+        } else if self.is_recommended() && rome_flags::is_unstable() {
             enabled_rules.extend(Nursery::recommended_rules_as_filters());
         }
         if let Some(group) = self.security.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(Security::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -208,7 +208,7 @@ impl Rules {
             enabled_rules.extend(Security::recommended_rules_as_filters());
         }
         if let Some(group) = self.style.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(Style::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -217,7 +217,7 @@ impl Rules {
             enabled_rules.extend(Style::recommended_rules_as_filters());
         }
         if let Some(group) = self.a11y.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(A11y::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -226,7 +226,7 @@ impl Rules {
             enabled_rules.extend(A11y::recommended_rules_as_filters());
         }
         if let Some(group) = self.complexity.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(Complexity::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -235,7 +235,7 @@ impl Rules {
             enabled_rules.extend(Complexity::recommended_rules_as_filters());
         }
         if let Some(group) = self.correctness.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(Correctness::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -244,16 +244,16 @@ impl Rules {
             enabled_rules.extend(Correctness::recommended_rules_as_filters());
         }
         if let Some(group) = self.nursery.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() && rome_flags::is_unstable() || group.is_recommended() {
                 enabled_rules.extend(Nursery::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
             disabled_rules.extend(&group.get_disabled_rules());
-        } else if self.is_recommended() {
+        } else if self.is_recommended() && rome_flags::is_unstable() {
             enabled_rules.extend(Nursery::recommended_rules_as_filters());
         }
         if let Some(group) = self.security.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(Security::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -262,7 +262,7 @@ impl Rules {
             enabled_rules.extend(Security::recommended_rules_as_filters());
         }
         if let Some(group) = self.style.as_ref() {
-            if self.is_recommended() && group.is_recommended() {
+            if self.is_recommended() || group.is_recommended() {
                 enabled_rules.extend(Style::recommended_rules_as_filters());
             }
             enabled_rules.extend(&group.get_enabled_rules());
@@ -773,7 +773,7 @@ struct NurserySchema {
     no_void_type_return: Option<RuleConfiguration>,
     #[doc = "Enforce that ARIA state and property values are valid."]
     use_aria_prop_types: Option<RuleConfiguration>,
-    #[doc = "Enforce that elements with ARIA roles must have all required attributes for that role"]
+    #[doc = "Enforce that elements with ARIA roles must have all required ARIA attributes for that role."]
     use_aria_props_for_role: Option<RuleConfiguration>,
     #[doc = "Enforce camel case naming convention."]
     use_camel_case: Option<RuleConfiguration>,
@@ -781,6 +781,8 @@ struct NurserySchema {
     use_const: Option<RuleConfiguration>,
     #[doc = "Enforce default clauses in switch statements to be last"]
     use_default_switch_clause_last: Option<RuleConfiguration>,
+    #[doc = "Require that each enum member value be explicitly initialized."]
+    use_enum_initializers: Option<RuleConfiguration>,
     #[doc = "Enforce all dependencies are correctly specified."]
     use_exhaustive_dependencies: Option<RuleConfiguration>,
     #[doc = "Disallow the use of Math.pow in favor of the ** operator."]
@@ -821,15 +823,69 @@ impl Nursery {
         "useCamelCase",
         "useConst",
         "useDefaultSwitchClauseLast",
+        "useEnumInitializers",
         "useExhaustiveDependencies",
         "useExponentiationOperator",
         "useFlatMap",
         "useNumericLiterals",
         "useValidForDirection",
     ];
-    const RECOMMENDED_RULES: [&'static str; 1] = ["noAccessKey"];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 1] =
-        [RuleFilter::Rule("nursery", Self::CATEGORY_RULES[0])];
+    const RECOMMENDED_RULES: [&'static str; 26] = [
+        "noAccessKey",
+        "noBannedTypes",
+        "noConditionalAssignment",
+        "noConstAssign",
+        "noConstEnum",
+        "noConstructorReturn",
+        "noDistractingElements",
+        "noDupeKeys",
+        "noEmptyInterface",
+        "noExplicitAny",
+        "noExtraNonNullAssertion",
+        "noHeaderScope",
+        "noInvalidConstructorSuper",
+        "noSetterReturn",
+        "noStringCaseMismatch",
+        "noUnsafeFinally",
+        "noVar",
+        "noVoidTypeReturn",
+        "useAriaPropsForRole",
+        "useConst",
+        "useDefaultSwitchClauseLast",
+        "useEnumInitializers",
+        "useExhaustiveDependencies",
+        "useFlatMap",
+        "useNumericLiterals",
+        "useValidForDirection",
+    ];
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 26] = [
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[0]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[3]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[4]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[5]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[6]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[7]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[8]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[9]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[10]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[11]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[12]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[16]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[17]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[18]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[19]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[20]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[22]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[24]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[25]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[26]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[27]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[28]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[29]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[30]),
+    ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
@@ -855,7 +911,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 1] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 26] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }

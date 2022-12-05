@@ -44,7 +44,7 @@ declare_rule! {
     pub(crate) NoEmptyInterface {
         version: "11.0.0",
         name: "noEmptyInterface",
-        recommended: false,
+        recommended: true,
     }
 }
 

@@ -248,7 +248,8 @@ use crate::token_source::{BumpWithContext, NthToken, TokenSource};
 use rome_console::fmt::Display;
 use rome_diagnostics::location::AsSpan;
 use rome_diagnostics::FileId;
-use rome_rowan::{SyntaxKind, TextRange, TextSize};
+use rome_rowan::{AstNode, Language, SendNode, SyntaxKind, SyntaxNode, TextRange, TextSize};
+use std::any::type_name;
 
 pub mod diagnostic;
 pub mod event;
@@ -264,6 +265,7 @@ pub mod tree_sink;
 use crate::parsed_syntax::ParsedSyntax;
 use crate::parsed_syntax::ParsedSyntax::{Absent, Present};
 pub use marker::{CompletedMarker, Marker};
+use rome_diagnostics::serde::Diagnostic;
 pub use token_set::TokenSet;
 
 pub struct ParserContext<K: SyntaxKind> {
@@ -391,7 +393,7 @@ pub trait Parser: Sized {
 
     /// Returns `true` if the parser is trying to parse some syntax but only if it has no errors.
     ///
-    /// Returning `true` disables more involved error recovery.  
+    /// Returning `true` disables more involved error recovery.
     fn is_speculative_parsing(&self) -> bool {
         false
     }
@@ -775,5 +777,59 @@ pub trait SyntaxFeature: Sized {
                 syntax
             }
         })
+    }
+}
+
+/// Language-independent cache entry for a parsed file
+///
+/// This struct holds a handle to the root node of the parsed syntax tree,
+/// along with the list of diagnostics emitted by the parser while generating
+/// this entry.
+///
+/// It can be dynamically downcast into a concrete [SyntaxNode] or [AstNode] of
+/// the corresponding language, generally through a language-specific capability
+#[derive(Clone)]
+pub struct AnyParse {
+    pub(crate) root: SendNode,
+    pub(crate) diagnostics: Vec<ParseDiagnostic>,
+}
+
+impl AnyParse {
+    pub fn new(root: SendNode, diagnostics: Vec<ParseDiagnostic>) -> AnyParse {
+        AnyParse { root, diagnostics }
+    }
+
+    pub fn syntax<L>(&self) -> SyntaxNode<L>
+    where
+        L: Language + 'static,
+    {
+        self.root.clone().into_node().unwrap_or_else(|| {
+            panic!(
+                "could not downcast root node to language {}",
+                type_name::<L>()
+            )
+        })
+    }
+
+    pub fn tree<N>(&self) -> N
+    where
+        N: AstNode,
+        N::Language: 'static,
+    {
+        N::unwrap_cast(self.syntax::<N::Language>())
+    }
+
+    /// This function transforms diagnostics coming from the parser into serializable diagnostics
+    pub fn into_diagnostics(self) -> Vec<Diagnostic> {
+        self.diagnostics.into_iter().map(Diagnostic::new).collect()
+    }
+
+    /// Get the diagnostics which occurred when parsing
+    pub fn diagnostics(&self) -> &[ParseDiagnostic] {
+        &self.diagnostics
+    }
+
+    pub fn has_errors(&self) -> bool {
+        self.diagnostics.iter().any(|diag| diag.is_error())
     }
 }

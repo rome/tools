@@ -30,7 +30,7 @@ switch (foo) {
 
 <pre class="language-text"><code class="language-text">nursery/useDefaultSwitchClauseLast.js:2:5 <a href="https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast">lint/nursery/useDefaultSwitchClauseLast</a> ━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The </span><span style="color: Orange;"><strong>default</strong></span><span style="color: Orange;"> clause should be the last </span><span style="color: Orange;"><strong>switch</strong></span><span style="color: Orange;"> clause.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>default</strong></span><span style="color: Tomato;"> clause should be the last </span><span style="color: Tomato;"><strong>switch</strong></span><span style="color: Tomato;"> clause.</span>
   
     <strong>1 │ </strong>switch (foo) {
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>    default:
@@ -66,7 +66,7 @@ switch (foo) {
 
 <pre class="language-text"><code class="language-text">nursery/useDefaultSwitchClauseLast.js:2:5 <a href="https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast">lint/nursery/useDefaultSwitchClauseLast</a> ━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The </span><span style="color: Orange;"><strong>default</strong></span><span style="color: Orange;"> clause should be the last </span><span style="color: Orange;"><strong>switch</strong></span><span style="color: Orange;"> clause.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>default</strong></span><span style="color: Tomato;"> clause should be the last </span><span style="color: Tomato;"><strong>switch</strong></span><span style="color: Tomato;"> clause.</span>
   
     <strong>1 │ </strong>switch (foo) {
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>    default:
@@ -103,7 +103,7 @@ switch (foo) {
 
 <pre class="language-text"><code class="language-text">nursery/useDefaultSwitchClauseLast.js:4:5 <a href="https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast">lint/nursery/useDefaultSwitchClauseLast</a> ━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The </span><span style="color: Orange;"><strong>default</strong></span><span style="color: Orange;"> clause should be the last </span><span style="color: Orange;"><strong>switch</strong></span><span style="color: Orange;"> clause.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>default</strong></span><span style="color: Tomato;"> clause should be the last </span><span style="color: Tomato;"><strong>switch</strong></span><span style="color: Tomato;"> clause.</span>
   
     <strong>2 │ </strong>    case 0:
     <strong>3 │ </strong>        break;

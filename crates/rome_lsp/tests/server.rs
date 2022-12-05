@@ -699,14 +699,16 @@ async fn pull_quick_fixes() -> Result<()> {
             range: lsp::Range {
                 start: lsp::Position {
                     line: 0,
-                    character: 3,
+                    character: 0,
                 },
                 end: lsp::Position {
                     line: 0,
-                    character: 3,
+                    character: 0,
                 },
             },
-            new_text: String::from("\n// rome-ignore lint/correctness/noCompareNegZero \n"),
+            new_text: String::from(
+                "// rome-ignore lint/correctness/noCompareNegZero: <explanation>\n",
+            ),
         }],
     );
 

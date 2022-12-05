@@ -38,7 +38,7 @@ declare_rule! {
     pub(crate) NoConstEnum {
         version: "11.0.0",
         name: "noConstEnum",
-        recommended: false,
+        recommended: true,
     }
 }
 
