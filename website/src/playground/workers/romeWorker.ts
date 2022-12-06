@@ -15,6 +15,7 @@ import {
 	RomeOutput,
 	Semicolons,
 } from "../types";
+import { isJSONFilename } from "/playground/utils";
 
 let workspace: Workspace | null = null;
 let fileCounter = 0;
@@ -189,10 +190,12 @@ self.addEventListener("message", async (e) => {
 				path,
 			});
 
-			const controlFlowGraph = workspace.getControlFlowGraph({
-				path,
-				cursor: cursorPosition,
-			});
+			const controlFlowGraph = !isJSONFilename(filename)
+				? workspace.getControlFlowGraph({
+						path,
+						cursor: cursorPosition,
+				  })
+				: "";
 
 			const formatterIr = workspace.getFormatterIr({
 				path,

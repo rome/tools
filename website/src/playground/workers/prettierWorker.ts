@@ -1,7 +1,23 @@
-import { formatWithPrettier, isTypeScriptFilename } from "../utils";
+import {
+	formatWithPrettier,
+	isTypeScriptFilename,
+	isJSONFilename,
+} from "../utils";
 import { defaultPlaygroundState, PlaygroundSettings } from "../types";
 
 let settings = defaultPlaygroundState.settings;
+
+function inferLanguage(filename): string {
+	if (isJSONFilename(filename)) {
+		return "json";
+	}
+
+	if (isTypeScriptFilename(filename)) {
+		return "ts";
+	}
+
+	return "js";
+}
 
 self.addEventListener("message", (e) => {
 	switch (e.data.type) {
@@ -27,7 +43,7 @@ self.addEventListener("message", (e) => {
 				lineWidth,
 				indentStyle,
 				indentWidth,
-				language: isTypeScriptFilename(filename) ? "ts" : "js",
+				filepath: filename,
 				quoteStyle,
 				quoteProperties,
 				trailingComma,

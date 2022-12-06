@@ -68,7 +68,7 @@ impl ExtensionHandler for JsonFileHandler {
     }
 }
 
-#[cfg(debug_assertions)]
+#[cfg(any(debug_assertions, target_family = "wasm"))]
 fn formatter_capabilities() -> FormatterCapabilities {
     FormatterCapabilities {
         format: Some(format),
@@ -77,7 +77,7 @@ fn formatter_capabilities() -> FormatterCapabilities {
     }
 }
 
-#[cfg(not(debug_assertions))]
+#[cfg(all(not(debug_assertions), not(target_family = "wasm")))]
 fn formatter_capabilities() -> FormatterCapabilities {
     FormatterCapabilities::default()
 }

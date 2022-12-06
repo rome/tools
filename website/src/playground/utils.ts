@@ -153,7 +153,7 @@ export function formatWithPrettier(
 		lineWidth: number;
 		indentStyle: IndentStyle;
 		indentWidth: number;
-		language: "js" | "ts";
+		filepath: string;
 		quoteStyle: QuoteStyle;
 		quoteProperties: QuoteProperties;
 		trailingComma: TrailingComma;
@@ -165,7 +165,7 @@ export function formatWithPrettier(
 			useTabs: options.indentStyle === IndentStyle.Tab,
 			tabWidth: options.indentWidth,
 			printWidth: options.lineWidth,
-			parser: getPrettierParser(options.language),
+			filepath: options.filepath,
 			plugins: [parserBabel],
 			singleQuote: options.quoteStyle === QuoteStyle.Single,
 			quoteProps: options.quoteProperties,
@@ -205,15 +205,6 @@ export function formatWithPrettier(
 				stack: (err as Error).stack ?? "",
 			};
 		}
-	}
-}
-
-function getPrettierParser(language: "js" | "ts"): string {
-	switch (language) {
-		case "js":
-			return "babel";
-		case "ts":
-			return "babel-ts";
 	}
 }
 
@@ -300,6 +291,10 @@ export function isModuleFilename(filename: string): boolean {
 	);
 }
 
+export function isJSONFilename(filename: string): boolean {
+	return filename.endsWith(".json");
+}
+
 export function modifyFilename(
 	filename: string,
 	opts: ExtensionOptions,
@@ -344,7 +339,8 @@ export function isValidExtension(filename: string): boolean {
 		isScriptFilename(filename) ||
 		isModuleFilename(filename) ||
 		isTypeScriptFilename(filename) ||
-		isJSXFilename(filename)
+		isJSXFilename(filename) ||
+		isJSONFilename(filename)
 	);
 }
 
