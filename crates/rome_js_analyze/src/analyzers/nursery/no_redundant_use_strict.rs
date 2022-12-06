@@ -3,8 +3,8 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_syntax::{
-    JsClassDeclaration, JsClassExpression, JsDirective, JsDirectiveList, JsFunctionBody,
-    JsLanguage, JsModule, JsScript,
+    AnyJsClass, JsClassDeclaration, JsClassExpression, JsDirective, JsDirectiveList,
+    JsFunctionBody, JsLanguage, JsModule, JsScript,
 };
 
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt, SyntaxNode};
@@ -82,36 +82,42 @@ impl AnyNodeWithDirectives {
         }
     }
 }
-declare_node_union! { JsModuleOrClass = JsClassDeclaration | JsClassExpression| JsModule  }
+declare_node_union! { pub(crate) AnyJsStrictModeNode = AnyJsClass| JsModule | JsDirective  }
 
 impl Rule for NoRedundantUseStrict {
     type Query = Ast<JsDirective>;
-    type State = SyntaxNode<JsLanguage>;
+    type State = AnyJsStrictModeNode;
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        let mut outer_most: Option<SyntaxNode<JsLanguage>> = None;
-        for n in node.syntax().ancestors() {
-            if let Some(parent) = AnyNodeWithDirectives::cast_ref(&n) {
-                for directive in parent.directives() {
-                    if directive.value_token().map_or(false, |t| {
-                        matches!(t.text_trimmed(), "'use strict'" | "\"use strict\"")
-                    }) {
-                        outer_most = Some(directive.into());
-                        break; // continue with next parent
+        let mut outer_most: Option<AnyJsStrictModeNode> = None;
+        let root = ctx.root();
+        match root {
+            rome_js_syntax::AnyJsRoot::JsModule(js_module) => outer_most = Some(js_module.into()),
+            _ => {
+                for n in node.syntax().ancestors() {
+                    if let Some(parent) = AnyNodeWithDirectives::cast_ref(&n) {
+                        for directive in parent.directives() {
+                            if directive.value_token().map_or(false, |t| {
+                                matches!(t.text_trimmed(), "'use strict'" | "\"use strict\"")
+                            }) {
+                                outer_most = Some(directive.into());
+                                break; // continue with next parent
+                            }
+                        }
+                    }
+                    if let Some(module_or_class) = AnyJsClass::cast_ref(&n) {
+                        outer_most = Some(module_or_class.into());
                     }
                 }
-            }
-            if let Some(module_or_class) = JsModuleOrClass::cast_ref(&n) {
-                outer_most = Some(module_or_class.into());
             }
         }
 
         if let Some(outer_most) = outer_most {
             // skip itself
-            if &outer_most == node.syntax() {
+            if outer_most.syntax() == node.syntax() {
                 return None;
             }
             return Some(outer_most);
@@ -128,23 +134,18 @@ impl Rule for NoRedundantUseStrict {
             },
         );
 
-        if JsModule::can_cast(state.kind()) {
-            diag= diag.note(
-                markup! {"The entire contents of "<Emphasis>{"JavaScript modules are automatically"}</Emphasis>" in strict mode, with no statement needed to initiate it."},
-            );
-        } else if JsClassDeclaration::can_cast(state.kind())
-            || JsClassExpression::can_cast(state.kind())
-        {
-            diag = diag.detail(
-                state.text_range(),
+        match state {
+            AnyJsStrictModeNode::AnyJsClass(js_class) =>  diag = diag.detail(
+                js_class.range(),
                 markup! {"All parts of a class's body are already in strict mode."},
-            );
-        } else {
-            // for redundant directive
-            diag= diag.detail(
-                state.text_range(),
+            ) ,
+            AnyJsStrictModeNode::JsModule(_js_module) => diag= diag.note(
+                markup! {"The entire contents of "<Emphasis>{"JavaScript modules are automatically"}</Emphasis>" in strict mode, with no statement needed to initiate it."},
+            ),
+            AnyJsStrictModeNode::JsDirective(js_directive) => diag= diag.detail(
+                js_directive.range(),
                 markup! {"This outer "<Emphasis>{"use strict"}</Emphasis>" directive already enables strict mode."},
-            );
+            ),
         }
 
         Some(diag)

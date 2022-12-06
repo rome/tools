@@ -27,8 +27,7 @@ invalidFunction.cjs:3:2 lint/nursery/noRedundantUseStrict  FIXABLE  ━━━━
   
   i This outer use strict directive already enables strict mode.
   
-  > 1 │ function test() {
-      │                  
+    1 │ function test() {
   > 2 │ 	"use strict";
       │ 	^^^^^^^^^^^^^
     3 │ 	"use strict";
