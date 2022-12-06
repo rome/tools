@@ -108,6 +108,7 @@ define_dategories! {
     "lint/nursery/useAriaPropsForRole": "https://docs.rome.tools/lint/rules/useAriaPropsForRole",
     "lint/nursery/useAriaPropTypes": "https://docs.rome.tools/lint/rules/useAriaPropTypes",
     "lint/nursery/noRedundantUseStrict": "https://docs.rome.tools/lint/rules/noRedundantUseStrict",
+    "lint/nursery/noConstantCondition": "https://docs.rome.tools/lint/rules/noConstantCondition",
 
     ;
 
