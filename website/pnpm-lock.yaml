@@ -870,6 +870,7 @@ packages:
     dependencies:
       '@lezer/highlight': 1.1.2
       '@lezer/lr': 1.2.4
+    dev: false
 
   /@lezer/lr/1.2.4:
     resolution: {integrity: sha512-L/52/oMJBFXXx8qBYF4UgktLP2geQ/qn5Fd8+5L/mqlLLCB9+qdKktFAtejd9FdFMaFx6lrP5rmLz4sN3Kplcg==}

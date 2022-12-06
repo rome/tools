@@ -7,8 +7,7 @@ use crate::settings::{
 use crate::workspace::GetSyntaxTreeResult;
 use crate::RomeError;
 #[cfg(any(debug_assertions, target_family = "wasm"))]
-use rome_formatter::FormatError;
-use rome_formatter::Printed;
+use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
@@ -16,7 +15,6 @@ use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 use rome_parser::AnyParse;
 #[cfg(any(debug_assertions, target_family = "wasm"))]
 use rome_rowan::{TextRange, TextSize, TokenAtOffset};
-use tracing::debug;
 
 impl Language for JsonLanguage {
     type FormatterSettings = ();
@@ -121,7 +119,7 @@ fn format(
 ) -> Result<Printed, RomeError> {
     let options = settings.format_options::<JsonLanguage>(rome_path);
 
-    debug!("Format with the following options: \n{}", options);
+    tracing::debug!("Format with the following options: \n{}", options);
 
     let tree = parse.syntax();
     let formatted = format_node(options, &tree)?;
