@@ -68,7 +68,7 @@ Rome respects VS Code's _Format on Save_ setting. To enable format on save, open
 
 The Rome VS Code extension has experimental support for imports sorting through the "Organize Imports" code action. By default this action can be run using the <kbd title="Shift">⇧</kbd>+<kbd>Alt</kbd>+<kbd>O</kbd> keyboard shortcut, or is accessible through the _Command Palette_ (<kbd>Ctrl</kbd>/<kbd title="Cmd">⌘</kbd>+<kbd title="Shift">⇧</kbd>+<kbd>P</kbd>) by selecting _Organize Imports_.
 
-If you want this action to be run automatically when you save instead of having to call it manually, you can add the following to your editor configuration:
+You can add the following to your editor configuration if you want the action to run automatically on save instead of calling it manually:
 
 ```json
 {
