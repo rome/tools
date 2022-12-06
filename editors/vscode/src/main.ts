@@ -1,5 +1,4 @@
-import { spawn } from "child_process";
-import type { Readable } from "stream";
+import { type ChildProcess, spawn } from "child_process";
 import { connect, type Socket } from "net";
 import { promisify } from "util";
 import {
@@ -248,18 +247,49 @@ async function fileExists(path: Uri) {
 	}
 }
 
-function collectStream(stream: Readable) {
-	return new Promise<string>((resolve, reject) => {
-		let buffer = "";
-		stream.on("data", (data) => {
-			buffer += data.toString("utf-8");
+interface MutableBuffer {
+	content: string;
+}
+
+function collectStream(
+	outputChannel: OutputChannel,
+	process: ChildProcess,
+	key: "stdout" | "stderr",
+	buffer: MutableBuffer,
+) {
+	return new Promise<void>((resolve, reject) => {
+		const stream = process[key];
+		stream.setEncoding("utf-8");
+
+		stream.on("error", (err) => {
+			outputChannel.appendLine(`[cli-${key}] error`);
+			reject(err);
+		});
+		stream.on("close", () => {
+			outputChannel.appendLine(`[cli-${key}] close`);
+			resolve();
+		});
+		stream.on("finish", () => {
+			outputChannel.appendLine(`[cli-${key}] finish`);
+			resolve();
+		});
+		stream.on("end", () => {
+			outputChannel.appendLine(`[cli-${key}] end`);
+			resolve();
 		});
 
-		stream.on("error", reject);
-		stream.on("end", () => {
-			resolve(buffer);
+		stream.on("data", (data) => {
+			outputChannel.appendLine(`[cli-${key}] data ${data.length}`);
+			buffer.content += data;
 		});
 	});
+}
+
+function withTimeout(promise: Promise<void>, duration: number) {
+	return Promise.race([
+		promise,
+		new Promise<void>((resolve) => setTimeout(resolve, duration)),
+	]);
 }
 
 async function getSocket(
@@ -267,26 +297,38 @@ async function getSocket(
 	command: string,
 ): Promise<string> {
 	const process = spawn(command, ["__print_socket"], {
-		stdio: "pipe",
+		stdio: [null, "pipe", "pipe"],
 	});
 
-	const exitCode = new Promise<number>((resolve, reject) => {
+	const stdout = { content: "" };
+	const stderr = { content: "" };
+
+	const stdoutPromise = collectStream(outputChannel, process, "stdout", stdout);
+	const stderrPromise = collectStream(outputChannel, process, "stderr", stderr);
+
+	const exitCode = await new Promise<number>((resolve, reject) => {
 		process.on("error", reject);
-		process.on("exit", resolve);
+		process.on("exit", (code) => {
+			outputChannel.appendLine(`[cli] exit ${code}`);
+			resolve(code);
+		});
+		process.on("close", (code) => {
+			outputChannel.appendLine(`[cli] close ${code}`);
+			resolve(code);
+		});
 	});
 
-	const [stdout, stderr, code] = await Promise.all([
-		collectStream(process.stdout),
-		collectStream(process.stderr),
-		exitCode,
+	await Promise.all([
+		withTimeout(stdoutPromise, 1000),
+		withTimeout(stderrPromise, 1000),
 	]);
 
-	const pipeName = stdout.trimEnd();
+	const pipeName = stdout.content.trimEnd();
 
-	if (code !== 0 || pipeName.length === 0) {
-		let message = `Command "${command} __print_socket" exited with code ${code}`;
-		if (stderr.length > 0) {
-			message += `\nOutput:\n${stderr}`;
+	if (exitCode !== 0 || pipeName.length === 0) {
+		let message = `Command "${command} __print_socket" exited with code ${exitCode}`;
+		if (stderr.content.length > 0) {
+			message += `\nOutput:\n${stderr.content}`;
 		}
 
 		throw new Error(message);
