@@ -175,6 +175,14 @@ test(lint): add more cases to handle invalid rules
 
 When creating a new pull request, it's preferable to use a conventional commit-formatted title, as this title will be used as the default commit message on the squashed commit after merging.
 
+Please use the template provided.
+
+If you PR requires some update on the website (new features, breaking changes, etc.), a new follow-up
+PR should be created against the "release" PR. If you can't create a new PR, please let the team know,
+the template should help to give all the information to the team.
+
+The team will prepare a new PR after each new release, just search for "release" among the opened pull requests.
+
 Here are some other scripts that you might find useful.
 
 #### If you are a core contributor
