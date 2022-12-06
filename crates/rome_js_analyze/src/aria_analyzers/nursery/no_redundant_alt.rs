@@ -1,6 +1,5 @@
-use crate::aria_services::Aria;
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
+use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::jsx_ext::AnyJsxElement;
 use rome_js_syntax::{
@@ -35,7 +34,7 @@ declare_rule! {
     /// ```jsx
     /// <img src="src" alt="alt" />;
     /// <img src="src" alt={photo} />;
-    /// <img src="bar" aria-hidden alt="Picture of me taking a photo of an image" />
+    /// <img src="bar" aria-hidden alt="Picture of me taking a photo of an image" />;
     /// ```
     ///
     pub(crate) NoRedundantAlt {
@@ -46,7 +45,7 @@ declare_rule! {
 }
 
 impl Rule for NoRedundantAlt {
-    type Query = Aria<AnyJsxElement>;
+    type Query = Ast<AnyJsxElement>;
     type State = AnyJsxAttributeValue;
     type Signals = Option<Self::State>;
     type Options = ();

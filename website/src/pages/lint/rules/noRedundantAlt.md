@@ -66,6 +66,6 @@ hidden, then rule will always succeed.
 ```jsx
 <img src="src" alt="alt" />;
 <img src="src" alt={photo} />;
-<img src="bar" aria-hidden alt="Picture of me taking a photo of an image" />
+<img src="bar" aria-hidden alt="Picture of me taking a photo of an image" />;
 ```
 
