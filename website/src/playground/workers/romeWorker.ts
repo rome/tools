@@ -15,7 +15,7 @@ import {
 	RomeOutput,
 	Semicolons,
 } from "../types";
-import { isJSONFilename } from "/playground/utils";
+import { isJSONFilename } from "../utils";
 
 let workspace: Workspace | null = null;
 let fileCounter = 0;
