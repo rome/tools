@@ -3,11 +3,10 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_syntax::{
-    AnyJsClass, JsClassDeclaration, JsClassExpression, JsDirective, JsDirectiveList,
-    JsFunctionBody, JsLanguage, JsModule, JsScript,
+    AnyJsClass, JsDirective, JsDirectiveList, JsFunctionBody, JsModule, JsScript,
 };
 
-use rome_rowan::{declare_node_union, AstNode, BatchMutationExt, SyntaxNode};
+use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 
 declare_rule! {
  /// Prevents from having redundant `"use strict"`.
@@ -107,8 +106,7 @@ impl Rule for NoRedundantUseStrict {
                                 break; // continue with next parent
                             }
                         }
-                    }
-                    if let Some(module_or_class) = AnyJsClass::cast_ref(&n) {
+                    } else if let Some(module_or_class) = AnyJsClass::cast_ref(&n) {
                         outer_most = Some(module_or_class.into());
                     }
                 }
