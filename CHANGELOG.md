@@ -63,10 +63,10 @@
 #### Rules
 
 The following rules have been stabilized:
-- `nusery/useFlatMap` -> `complexity/useFlatMap`
-- `nusery/useValidForDirection` -> `correctness/useValidForDirection`
-- `nusery/noExplicitAny` -> `suspicious/noExplicitAny`
-- `nusery/noConstAssign` -> `correctness/noConstAssign`
+- `nursery/useFlatMap` -> `complexity/useFlatMap`
+- `nursery/useValidForDirection` -> `correctness/useValidForDirection`
+- `nursery/noExplicitAny` -> `suspicious/noExplicitAny`
+- `nursery/noConstAssign` -> `correctness/noConstAssign`
 
 These rules are all recommended, so they will be enabled by default. You can simply remove those entries from your configuration file if you had enabled them manually from the `nursery` group.
 
