@@ -8,7 +8,8 @@ parent: lint/rules/index
 Enforce `img` alt prop does not contain the word "image", "picture", or "photo".
 The rule will first check if aria-hidden is true to determine whether to enforce the rule. If the image is
 hidden, then rule will always succeed.
-Examples
+
+## Examples
 
 ### Invalid
 

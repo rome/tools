@@ -749,7 +749,7 @@ struct NurserySchema {
     no_non_null_assertion: Option<RuleConfiguration>,
     #[doc = "Disallow literal numbers that lose precision"]
     no_precision_loss: Option<RuleConfiguration>,
-    #[doc = "Enforce img alt prop does not contain the word \"image\", \"picture\", or \"photo\". The rule will first check if aria-hidden is true to determine whether to enforce the rule. If the image is hidden, then rule will always succeed. Examples"]
+    #[doc = "Enforce img alt prop does not contain the word \"image\", \"picture\", or \"photo\". The rule will first check if aria-hidden is true to determine whether to enforce the rule. If the image is hidden, then rule will always succeed."]
     no_redundant_alt: Option<RuleConfiguration>,
     #[doc = "Prevents from having redundant \"use strict\"."]
     no_redundant_use_strict: Option<RuleConfiguration>,
