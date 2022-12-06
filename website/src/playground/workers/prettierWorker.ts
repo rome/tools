@@ -7,18 +7,6 @@ import { defaultPlaygroundState, PlaygroundSettings } from "../types";
 
 let settings = defaultPlaygroundState.settings;
 
-function inferLanguage(filename): string {
-	if (isJSONFilename(filename)) {
-		return "json";
-	}
-
-	if (isTypeScriptFilename(filename)) {
-		return "ts";
-	}
-
-	return "js";
-}
-
 self.addEventListener("message", (e) => {
 	switch (e.data.type) {
 		case "updateSettings": {
