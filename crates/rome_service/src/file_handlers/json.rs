@@ -6,7 +6,7 @@ use crate::settings::{
 };
 use crate::workspace::GetSyntaxTreeResult;
 use crate::RomeError;
-#[cfg(debug_assertions)]
+#[cfg(any(debug_assertions, target_family = "wasm"))]
 use rome_formatter::FormatError;
 use rome_formatter::Printed;
 use rome_fs::RomePath;
@@ -14,7 +14,7 @@ use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
 use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 use rome_parser::AnyParse;
-#[cfg(debug_assertions)]
+#[cfg(any(debug_assertions, target_family = "wasm"))]
 use rome_rowan::{TextRange, TextSize, TokenAtOffset};
 use tracing::debug;
 
@@ -112,6 +112,7 @@ fn debug_formatter_ir(
     Ok(root_element.to_string())
 }
 
+#[cfg(any(debug_assertions, target_family = "wasm"))]
 #[tracing::instrument(level = "debug", skip(parse))]
 fn format(
     rome_path: &RomePath,
@@ -131,7 +132,7 @@ fn format(
     }
 }
 
-#[cfg(debug_assertions)]
+#[cfg(any(debug_assertions, target_family = "wasm"))]
 fn format_range(
     rome_path: &RomePath,
     parse: AnyParse,
@@ -145,7 +146,7 @@ fn format_range(
     Ok(printed)
 }
 
-#[cfg(debug_assertions)]
+#[cfg(any(debug_assertions, target_family = "wasm"))]
 fn format_on_type(
     rome_path: &RomePath,
     parse: AnyParse,
