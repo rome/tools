@@ -1,17 +1,17 @@
-import prettier, { Options as PrettierOptions } from "prettier";
 import {
 	IndentStyle,
-	QuoteStyle,
-	QuoteProperties,
-	TrailingComma,
-	Semicolons,
-	PrettierOutput,
-	defaultPlaygroundState,
 	PlaygroundSettings,
+	PrettierOutput,
+	QuoteProperties,
+	QuoteStyle,
+	Semicolons,
+	TrailingComma,
+	defaultPlaygroundState,
 } from "../types";
-// @ts-ignore
+import { isJSONFilename, isTypeScriptFilename } from "../utils";
+import prettier, { Options as PrettierOptions } from "prettier";
+// @ts-expect-error
 import parserBabel from "prettier/esm/parser-babel";
-import { isTypeScriptFilename } from "../utils";
 
 let settings = defaultPlaygroundState.settings;
 
@@ -87,7 +87,7 @@ function formatWithPrettier(
 			semi: options.semicolons === Semicolons.Always,
 		};
 
-		// @ts-ignore
+		// @ts-expect-error
 		const debug = prettier.__debug;
 		const document = debug.printToDoc(code, prettierOptions);
 
@@ -125,6 +125,8 @@ function formatWithPrettier(
 function getPrettierParser(filename: string): string {
 	if (isTypeScriptFilename(filename)) {
 		return "babel-ts";
+	} else if (isJSONFilename(filename)) {
+		return "json5";
 	} else {
 		return "babel";
 	}
