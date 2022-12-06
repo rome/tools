@@ -7,7 +7,7 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsIdentifierAssignment, JsReferenceIdentifier, JsxReferenceIdentifier, TextRange,
+    JsIdentifierAssignment, JsReferenceIdentifier, JsSyntaxKind, JsxReferenceIdentifier, TextRange,
 };
 use rome_rowan::{declare_node_union, AstNode};
 
@@ -43,6 +43,8 @@ impl Rule for NoUndeclaredVariables {
             .all_unresolved_references()
             .filter_map(|reference| {
                 let node = reference.syntax().clone();
+                let node_parent = node.parent();
+
                 let node = AnyIdentifier::unwrap_cast(node);
                 let token = match node {
                     AnyIdentifier::JsReferenceIdentifier(node) => node.value_token(),
@@ -52,6 +54,17 @@ impl Rule for NoUndeclaredVariables {
 
                 let token = token.ok()?;
                 let text = token.text_trimmed();
+
+                // Typescript Const Assertion
+                if text == "const"
+                    && matches!(
+                        node_parent,
+                        Some(parent) if parent.kind() == JsSyntaxKind::TS_REFERENCE_TYPE
+                    )
+                {
+                    return None;
+                }
+
                 if is_global(text) {
                     return None;
                 }

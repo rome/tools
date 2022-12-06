@@ -8,5 +8,8 @@ export type NestedContextDefault<S extends NestedContextDefault = ''> = '' | `($
 export type Whatever<S extends number> = `Hello ${S}`
 export type WhateverDefault<S extends number = 2> = `Hello ${S}`
 
+// Const assertions are valid
+const fruits = ["banana"] as const;
+
 // Invalid
 export type Invalid<S extends number> = `Hello ${T}`
