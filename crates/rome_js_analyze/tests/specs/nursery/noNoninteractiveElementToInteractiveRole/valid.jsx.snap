@@ -1,0 +1,11 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: valid.jsx
+---
+# Input
+```js
+let a = <span role="button"></span>;
+
+```
+
+
