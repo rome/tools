@@ -33,6 +33,7 @@
 - The extension now resolves the Rome version installed in the `node_modules` folder.
 - Fixed an issue where diagnostics were not updated after a change to the configuration file (#3724)[https://github.com/rome/tools/pull/3724]
 - The LSP emits a new action where the user can suppress a rule.
+- The extension now allows [sort imports](https://github.com/rome/tools/blob/main/editors/vscode/README.md#imports-sorting-experimental)
 
 ### Formatter
 
