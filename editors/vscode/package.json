@@ -3,7 +3,7 @@
 	"publisher": "rome",
 	"displayName": "Rome",
 	"description": "Rome LSP VS Code Extension",
-	"version": "0.18.1",
+	"version": "0.19.0",
 	"icon": "icon.png",
 	"activationEvents": [
 		"onLanguage:javascript",
