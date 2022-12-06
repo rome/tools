@@ -41,12 +41,15 @@ USAGE:
 OPTIONS:
     --write                                  Edit the files in place (beware!) instead of printing the diff to the console
     --skip-errors                            Skip over files containing syntax errors instead of emitting an error diagnostic.
-    --indent-style <tab|space>               Change the indention character (default: tab)
+    --max-diagnostics                        Cap the amount of diagnostics displayed (default: 50)
+    --verbose                                Print additional verbose advices on diagnostics
+    --indent-style <tabs|space>              Change the indention character (default: tabs)
     --indent-size <number>                   If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
     --line-width <number>                    Change how many characters the formatter is allowed to print in a single line (default: 80)
-    --quote-style <single|double>            Changes the quotation character for strings (default: ")
+    --quote-style <single|double>            Changes the quotation character for strings (default: double)
     --quote-properties <as-needed|preserve>  Changes when properties in object should be quoted (default: as-needed)
     --trailing-comma <all|es5|none>          Changes trailing commas in multi-line comma-separated syntactic structures (default: all)
+    --semicolons <always|as-needed>          Changes when to print semicolons for statements (default: always)
     --stdin-file-path <string>               A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js
 ```
 

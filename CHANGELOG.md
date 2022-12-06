@@ -1,5 +1,177 @@
 # Rome changelog
 
+## 11.0.0
+
+### CLI
+
+#### BREAKING CHANGES
+
+- the argument `--no-colors` has been removed, in favor of `--color=off`
+
+#### Other changes
+
+- The `init` command now adds the `$schema` property to the generated `rome.json` file
+  if `rome` is installed inside the `node_modules` folder. Follow [this guide](https://docs.rome.tools/configuration#schema) to add the `$schema` property
+  manually in a project with an existing `rome.json` file.
+- A new `--semicolons` option that configures if the formatter prints semicolons at the end of every statement (default) or at the beginning of statements when necessary to prevent ASI failures.
+- Rome exits with an error code if it doesn't process any file.
+- Fixed how the maximum number of diagnostics is calculated [#3869](https://github.com/rome/tools/pull/3869).
+  Rome now prints the total number of errors caused in the files.
+- Rome now traverses symbolic links and emits warnings if it detects loops, and continues processing the next file during the directory traversal.
+- You can force color output using the new global `--colors` option with the value `force`. Forcing color output can be useful if you spawn Rome as a subprocess.
+  Rome is spawned as a process;
+
+### Configuration
+
+- Added the JSON schema `$schema` property. The schema enables auto-completion by editors and...
+  auto-completion and descriptions of all fields of the configuration file.
+- Added a new `files.ignore` option where users can ignore files across tools.
+
+### Editors
+
+- We also publish Rome to [Open VSX](https://open-vsx.org/).
+- The extension now resolves the Rome version installed in the `node_modules` folder.
+- Fixed an issue where diagnostics were not updated after a change to the configuration file (#3724)[https://github.com/rome/tools/pull/3724]
+- The LSP emits a new action where the user can suppress a rule.
+
+### Formatter
+
+#### BREAKING CHANGES
+
+- Fixed incompatibility issues with Prettier [#3531](https://github.com/rome/tools/issues/3531)
+  - [#3686](https://github.com/rome/tools/pull/3686)
+  - [#3732](https://github.com/rome/tools/pull/3732)
+  - [#3842](https://github.com/rome/tools/pull/3842)
+- Fixed an issue where infinite parentheses were wrongly inserted [#3735](https://github.com/rome/tools/issues/3735)
+- Better formatting for `jestEach` templates
+
+#### Other changes
+
+- Added [support](https://docs.rome.tools/configuration/#javascriptformattersemicolon) for omitting semicolons.
+
+
+### Linter
+
+- Fixed false positives emitted by `noUselessFragments` [#3668](https://github.com/rome/tools/issues/3668)
+- Fixed `noArrayIndexKey` where some cases were not detected [#3670](https://github.com/rome/tools/issues/3670)
+- Fixed false positives emitted by `noConstAssign` [#3728](https://github.com/rome/tools/issues/3728)
+- Fixed false positives emitted by `noShoutyConstants` [#3867](https://github.com/rome/tools/issues/3867)
+- Fixed false positives emitted by `noUnusedVariables` [#3779](https://github.com/rome/tools/issues/3779)
+- Fixed `noUndeclaredVariables` where some cases were not detected [#3798](https://github.com/rome/tools/issues/3798)
+- Fixed `noUndeclaredVariables` where types were incorrectly detected [#3669](https://github.com/rome/tools/issues/3669)
+
+#### Rules
+
+The following rules have been stabilized:
+- `nursery/useFlatMap` -> `complexity/useFlatMap`
+- `nursery/useValidForDirection` -> `correctness/useValidForDirection`
+- `nursery/noExplicitAny` -> `suspicious/noExplicitAny`
+- `nursery/noConstAssign` -> `correctness/noConstAssign`
+
+These rules are all recommended, so they will be enabled by default. You can simply remove those entries from your configuration file if you had enabled them manually from the `nursery` group.
+
+The following rules have been renamed:
+- `a11y/useBlankTarget` -> `a11y/noBlankTarget`
+- `correctness/noMultipleSpacesInRegularExpressionLiterals` -> `complexity/noMultipleSpacesInRegularExpressionLiterals`
+- `style/useOptionalChain` -> `complexity/useOptionalChain`
+- `correctness/noUselessFragments` -> `complexity/noUselessFragments`
+- `correctness/noDelete` -> `performance/noDelete`
+- `correctness/useSingleCaseStatement` -> `style/useSingleCaseStatement`
+- `correctness/useWhile` -> `style/useWhile`
+- `correctness/noArguments` -> `style/noArguments`
+- `correctness/noAsyncPromiseExecutor` -> `suspicious/noAsyncPromiseExecutor`
+- `correctness/noCommentText` -> `suspicious/noCommentText`
+- `correctness/noCompareNegZero` -> `suspicious/noCompareNegZero`
+- `correctness/noDebugger` -> `suspicious/noDebugger`
+- `correctness/noDoubleEquals` -> `suspicious/noDoubleEquals`
+- `correctness/noShadowRestrictedNames` -> `suspicious/noShadowRestrictedNames`
+- `correctness/noSparseArray` -> `suspicious/noSparseArray`
+- `correctness/noUnsafeNegation` -> `suspicious/noUnsafeNegation`
+- `correctness/useValidTypeof` -> `suspicious/useValidTypeof`
+- `correctness/noArrayIndexKey` -> `suspicious/noArrayIndexKey`
+- `correctness/noCatchAssign` -> `suspicious/noCatchAssign`
+- `correctness/noDupeArgs` -> `suspicious/noDuplicateParameters`
+- `correctness/noFunctionAssign` -> `suspicious/noFunctionAssign`
+- `correctness/noImportAssign` -> `suspicious/noImportAssign`
+- `correctness/noLabelVar` -> `suspicious/noLabelVar`
+- `correctness/noRestrictedGlobals` -> `nursery/noRestrictedGlobals`
+- `nursery/noDupeKeys` -> `nursery/noDuplicateObjectKeys`
+
+If you were not changing the severity level of any of these rules in your configuration file, or suppressing a diagnostic emitted by those rules using suppression comments, you do not have to do anything. But if you did, Rome will now emit diagnostics for the parts of your configuration or suppression comments you need to update.
+
+The following rules are no longer recommended:
+- `style/noImplicitBoolean`
+- `style/noNegationElse`
+- `style/useBlockStatements`
+- `style/useShorthandArrayType`
+- `correctness/useSingleCaseStatement` / `style/useSingleCaseStatement`
+- `style/noShoutyConstants`
+
+The styling decisions imposed by these rules were not deemed to be idiomatic enough in the JavaScript ecosystem to be enabled by default. If you do want to enforce those rules in your project, you will have to enable them manually in you configuration file:
+
+```json
+{
+  "linter": {
+    "rules": {
+        "style": {
+            "useBlockStatements": "warn"
+        }
+    }
+  }
+}
+```
+
+Finally, the following new rules have been introduced to the nursery group in this release:
+- [`nursery/noAccessKey`](https://docs.rome.tools/lint/rules/noAccessKey)
+- [`nursery/noConditionalAssignment`](https://docs.rome.tools/lint/rules/noConditionalAssignment)
+- [`nursery/noConstEnum`](https://docs.rome.tools/lint/rules/noConstEnum)
+- [`nursery/noConstructorReturn`](https://docs.rome.tools/lint/rules/noConstructorReturn)
+- [`nursery/noDistractingElements`](https://docs.rome.tools/lint/rules/noDistractingElements)
+- [`nursery/noDuplicateObjectKeys`](https://docs.rome.tools/lint/rules/noDuplicateObjectKeys)
+- [`nursery/noEmptyInterface`](https://docs.rome.tools/lint/rules/noEmptyInterface)
+- [`nursery/noExtraNonNullAssertion`](https://docs.rome.tools/lint/rules/noExtraNonNullAssertion)
+- [`nursery/noHeaderScope`](https://docs.rome.tools/lint/rules/noHeaderScope)
+- [`nursery/noNonNullAssertion`](https://docs.rome.tools/lint/rules/noNonNullAssertion)
+- [`nursery/noPrecisionLoss`](https://docs.rome.tools/lint/rules/noPrecisionLoss)
+- [`nursery/noRedundantUseStrict`](https://docs.rome.tools/lint/rules/noRedundantUseStrict)
+- [`nursery/noSetterReturn`](https://docs.rome.tools/lint/rules/noSetterReturn)
+- [`nursery/noStringCaseMismatch`](https://docs.rome.tools/lint/rules/noStringCaseMismatch)
+- [`nursery/noUnsafeFinally`](https://docs.rome.tools/lint/rules/noUnsafeFinally)
+- [`nursery/noVoidTypeReturn`](https://docs.rome.tools/lint/rules/noVoidTypeReturn)
+- [`nursery/useDefaultSwitchClauseLast`](https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast)
+- [`nursery/useNumericLiterals`](https://docs.rome.tools/lint/rules/useNumericLiterals)
+- [`nursery/useAriaPropTypes`](https://docs.rome.tools/lint/rules/useAriaPropTypes)
+- [`nursery/useAriaPropsForRole`](https://docs.rome.tools/lint/rules/useAriaPropsForRole)
+- [`nursery/noVar`](https://docs.rome.tools/lint/rules/noVar)
+- [`nursery/useConst`](https://docs.rome.tools/lint/rules/useConst)
+
+Please give them a try by manually enabling them in your configuration and please share your feedback on the rule, diagnostics, and code fixes.
+
+### Parser
+
+- Added support for `JSON`;
+- Added support `satisfies` keyword;
+- Fixed parse for `async` used as label [#3612](https://github.com/rome/tools/issues/3612)
+- Fixed parse of `export default function` in `d.ts` files [#3485](https://github.com/rome/tools/issues/3485)
+- Improved the parsing of `await` in non-async contexts [#2479](https://github.com/rome/tools/issues/2479)
+
+### VSCode
+
+- Removed the "preview" label from the extension.
+- Improved logging when the extension can't connect to the server. [#3920](https://github.com/rome/tools/issues/3920)
+
+### JavaScript APIs
+
+#### Breaking change
+
+- The concept of `backend` has been removed, in favor of the concept of `distribution`.
+- Removed the possibility to connect to the daemon, for the time being.
+- The APIs are asynchronous anymore.
+
+#### Other changes
+
+- The package has been marked as unstable and in alpha state.
+
 ## 10.0.1
 
 ### CLI
@@ -33,7 +205,7 @@
 - Added a new argument `--linter-enabled` to the command `rome ci`.
 - Added the new `format` option `--trailing-comma` to configure where to add trailing commas.
 - Correctly show the supported options for `rome ci`, closes [#3456](https://github.com/rome/tools/issues/3456).
-- Fixed the command `rome ci` command to run the linter even if the formatter is disabled, closes [#3495](https://github.com/rome/tools/issues/3495). 
+- Fixed the command `rome ci` command to run the linter even if the formatter is disabled, closes [#3495](https://github.com/rome/tools/issues/3495).
 - Fixed the messaging of some diagnostics, [#3460](https://github.com/rome/tools/pull/3460).
 
 ### Configuration
@@ -94,7 +266,7 @@
 
 - Make the "rename" command opt-in and use the VS Code provided "rename" feature that offers whole project renaming instead.
 - Added the new command `Restart LSP Server`
-- The LSP server is now able to listen to changes of `rome.json` and apply the new configuration 
+- The LSP server is now able to listen to changes of `rome.json` and apply the new configuration
 
 
 
@@ -182,14 +354,14 @@ when editing the `rome.json` for the [`rules`](https://rome.tools/#linterrulesco
 
 ## 0.9.2
 
-### CLI 
+### CLI
 
 - Fixes an issue where arguments were not correctly picked up and applied to the formatter [#3175](https://github.com/rome/tools/issues/3175)
 
 ## 0.9.1
 
 ### CLI
- 
+
 - Fixes a regression where the arguments passed via CLI were ignored [#3175](https://github.com/rome/tools/issues/3175)
 - Fixes a regression where the command `rome ci` was not correctly reading the configuration [#3167](https://github.com/rome/tools/issues/3167)
 
@@ -208,10 +380,10 @@ echo "function f() { return {} }" | rome format --stdin-file-path example.js
 the argument  `--stdin-file-path` is mandatory when formatting from standard in. The path should represent a
 file name with its extension.
 - Added `--apply-suggested` argument to the `rome check` command, to apply suggested and safe fixes.
-Suggested fixes should be considered **unstable** and applied with care. 
-- Added the `rome start` and `rome stop` commands to control the Rome daemon server process. 
+Suggested fixes should be considered **unstable** and applied with care.
+- Added the `rome start` and `rome stop` commands to control the Rome daemon server process.
 - Added the `--use-server` global flag to the command line to make the CLI connect to a running instance of the
-Rome daemon server. 
+Rome daemon server.
 
 ### Configuration
 

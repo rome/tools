@@ -37,6 +37,22 @@ Here's an example:
 
 This configuration file enables the formatter and sets the preferred indent style and width. The linter is disabled.
 
+## `$schema`
+
+Allows to pass a path to a JSON schema file.
+
+Since version `11.0.0`, a JSON schema file for the `rome.json` is published.
+
+You can specify a relative path to the schema of the `rome` npm package if `rome` is installed in the `node_modules` folder:
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "$schema": "./node_modules/rome/configuration_schema.json"
+}
+```
+
 ## `files`
 
 ### `files.maxSize`
@@ -45,6 +61,21 @@ The maximum allowed size for source code files in bytes. Files above
 this limit will be ignored for performance reason.
 
 > Default: 1024*1024 (1MB)
+
+ ### `files.ignore`
+
+A list of Unix shell style patterns. Rome ignores files and folders that
+match these patterns.
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "files": {
+    "ignore": ["scripts/*.js"]
+  }
+}
+```
 
 ## `linter`
 
@@ -125,6 +156,22 @@ An array of Unix shell style patterns.
 }
 ```
 
+### `formatter.formatWithErrors`
+
+Allows to format a document that has syntax errors.
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "formatter": {
+    "formatWithErrors": true
+  }
+}
+```
+
+> Default: `false`
+
 ### `formatter.indentStyle`
 
 The style of the indentation. It can be `"tab"` or `"space"`.
@@ -167,3 +214,25 @@ Print trailing commas wherever possible in multi-line comma-separated syntactic 
 - `none`, trailing commas are never added
 
 > Default: `all`
+
+### `javascript.formatter.semicolon`
+
+It configures where the formatter prints semicolons:
+- `always`, the semicolons is always added at the end of each statement;
+- `asNeeded`, the semicolons are added only in places where it's needed, to protect from [ASI](https://en.wikibooks.org/wiki/JavaScript/Automatic_semicolon_insertion)
+
+> Default: `always`
+
+Example:
+
+<CodeBlockHeader filename="rome.json" />
+
+```json
+{
+  "javascript": {
+    "formatter": {
+      "semicolons": "asNeeded"
+    }
+  }
+}
+```
