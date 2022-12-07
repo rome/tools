@@ -10,8 +10,9 @@ use rome_rowan::AstNode;
 
 declare_rule! {
     /// Enforce `img` alt prop does not contain the word "image", "picture", or "photo".
-    /// The rule will first check if aria-hidden is true to determine whether to enforce the rule. If the image is
-    /// hidden, then rule will always succeed.
+    ///
+    /// The rule will first check if `aria-hidden` is truthy to determine whether to enforce the rule. If the image is
+    /// hidden, then the rule will always succeed.
     ///
     /// ## Examples
     ///
