@@ -194,8 +194,16 @@ assert_semantics! {
 }
 
 assert_semantics! {
-    ok_unmatched_reference, r#"a/*?*/"#,
-    ok_function_expression_read,"let f/*#F*/ = function g/*#G*/(){}; g/*?*/();",
+    ok_unresolved_reference, r#"a/*?*/"#,
+    ok_unresolved_function_expression_read,"let f/*#F*/ = function g/*#G*/(){}; g/*?*/();",
+    ok_unresolved_reference_arguments,
+        r#"function f() {
+            console.log(arguments/*?*/);
+        
+            for(let i = 0;i < arguments/*?*/.length; ++i) {
+                console.log(arguments/*?*/[i]);
+            }
+        }"#,
 }
 
 // Exports
