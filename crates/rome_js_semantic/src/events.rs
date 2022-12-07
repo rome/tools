@@ -606,7 +606,7 @@ impl SemanticEventExtractor {
 
         if let Some(scope) = self.scopes.pop() {
             // Match references and declarations
-            for (name, references) in scope.references {
+            for (name, mut references) in scope.references {
                 // If we know the declaration of these reference push the correct events...
                 if let Some(declaration_at) = self.bindings.get(&name) {
                     for reference in references {
@@ -647,7 +647,8 @@ impl SemanticEventExtractor {
                     }
                 } else if let Some(parent) = self.scopes.last_mut() {
                     // ... if not, promote these references to the parent scope ...
-                    parent.references.insert(name, references);
+                    let parent_references = parent.references.entry(name).or_default();
+                    parent_references.append(&mut references);
                 } else {
                     // ... or raise UnresolvedReference if this is the global scope.
                     for reference in references {
