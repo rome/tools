@@ -1,4 +1,4 @@
-function MyComponent() {
+function MyComponent1() {
     let a = 1;
     const b = a + 1;
     useEffect(() => {
@@ -64,9 +64,21 @@ function MyComponent5() {
 
 // Capturing an object property
 
-function MyComponent1() {
+function MyComponent6() {
   let someObj = getObj();
   useEffect(() => {
       console.log(someObj.name)
   });
 }
+
+const MyComponent7 = React.memo(function ({ a }) {
+  useEffect(() => {
+      console.log(a);
+  });
+});
+
+const MyComponent8 = React.memo(({ a }) => {
+  useEffect(() => {
+      console.log(a);
+  });
+});

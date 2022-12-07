@@ -65,10 +65,18 @@ impl Binding {
         }
     }
 
-    /// Returns the syntax node associated with the binding.
+    /// Returns the syntax node associated with this binding.
     pub fn syntax(&self) -> &JsSyntaxNode {
         let binding = self.data.binding(self.index);
         &self.data.node_by_range[&binding.range]
+    }
+
+    /// Returns the typed AST node associated with this binding.
+    pub fn tree(&self) -> AnyJsIdentifierBinding {
+        let node = self.syntax();
+        let binding = AnyJsIdentifierBinding::cast_ref(node);
+        debug_assert!(binding.is_some());
+        binding.unwrap()
     }
 
     /// Returns an iterator to all references of this binding.
@@ -107,6 +115,10 @@ impl Binding {
                 index: reference.index,
             });
         std::iter::successors(first, Reference::find_next_write)
+    }
+
+    pub fn is_imported(&self) -> bool {
+        super::is_imported(self.syntax())
     }
 }
 

@@ -1,6 +1,8 @@
+/* should not generate diagnostics */
+
+import useEffect from 'react';
 
 // capturing declarations
-function overloaded(): number;
 function overloaded(s: string): string;
 function overloaded(s?: string) {
   return s;
@@ -8,20 +10,22 @@ function overloaded(s?: string) {
 
 enum A { B = 1 }
 abstract class C { static D = 1 }
-class D {}
-
-export type E = D;
+class D {
+    constructor() {
+        
+    }
+}
 
 declare module M {
-    function m1();
+    function f();
 }
 
 function MyComponent() {
     useEffect(() => {
-        overloaded();
+        overloaded("");
         console.log(A.B);
         console.log(C.D);
-        console.log(new E());
-        console.log(m1());
+        console.log(new D());
+        console.log(M.f());
     }, []);
 }

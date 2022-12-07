@@ -1,5 +1,7 @@
 use crate::assert_semantics;
 
+// functions
+
 assert_semantics! {
     ok_function_declaration, "function f/*#F*/ () {}",
     ok_function_call, "function f/*#F*/ () {} f/*READ F*/();",
@@ -21,4 +23,14 @@ assert_semantics! {
             g/*READ G*/()
           }
         f()",
+}
+
+// modules
+
+assert_semantics! {
+    ok_function_inside_module,
+      "declare module M {
+        function f/*#F*/();
+      }
+      console.log(f/*?*/());",
 }

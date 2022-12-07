@@ -269,7 +269,6 @@ impl SemanticEventExtractor {
             ),
 
             JS_FUNCTION_DECLARATION
-            | TS_DECLARE_FUNCTION_DECLARATION
             | JS_FUNCTION_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
             | JS_CONSTRUCTOR_CLASS_MEMBER
@@ -291,10 +290,12 @@ impl SemanticEventExtractor {
             | JS_CLASS_EXPORT_DEFAULT_DECLARATION
             | JS_CLASS_EXPRESSION
             | JS_FUNCTION_BODY
+            | TS_MODULE_DECLARATION
             | TS_INTERFACE_DECLARATION
             | TS_ENUM_DECLARATION
             | TS_TYPE_ALIAS_DECLARATION
-            | TS_FUNCTION_TYPE => {
+            | TS_FUNCTION_TYPE
+            | TS_DECLARE_FUNCTION_DECLARATION => {
                 self.push_scope(
                     node.text_range(),
                     ScopeHoisting::DontHoistDeclarationsToParent,
@@ -536,7 +537,6 @@ impl SemanticEventExtractor {
         match node.kind() {
             JS_MODULE | JS_SCRIPT => self.pop_scope(node.text_range()),
             JS_FUNCTION_DECLARATION
-            | TS_DECLARE_FUNCTION_DECLARATION
             | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
             | JS_FUNCTION_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
@@ -551,16 +551,18 @@ impl SemanticEventExtractor {
             | JS_GETTER_OBJECT_MEMBER
             | JS_SETTER_OBJECT_MEMBER
             | JS_FUNCTION_BODY
-            | TS_INTERFACE_DECLARATION
-            | TS_ENUM_DECLARATION
-            | TS_TYPE_ALIAS_DECLARATION
-            | TS_FUNCTION_TYPE
             | JS_BLOCK_STATEMENT
             | JS_FOR_STATEMENT
             | JS_FOR_OF_STATEMENT
             | JS_FOR_IN_STATEMENT
             | JS_SWITCH_STATEMENT
-            | JS_CATCH_CLAUSE => {
+            | JS_CATCH_CLAUSE
+            | TS_DECLARE_FUNCTION_DECLARATION
+            | TS_FUNCTION_TYPE
+            | TS_INTERFACE_DECLARATION
+            | TS_ENUM_DECLARATION
+            | TS_TYPE_ALIAS_DECLARATION
+            | TS_MODULE_DECLARATION => {
                 self.pop_scope(node.text_range());
             }
             _ => {}

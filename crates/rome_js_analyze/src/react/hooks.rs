@@ -2,8 +2,8 @@ use std::collections::{HashMap, HashSet};
 
 use rome_js_semantic::{Capture, ClosureExtensions, SemanticModel};
 use rome_js_syntax::{
-    AnyJsExpression, JsArrayBindingPattern, JsArrayBindingPatternElementList, JsCallExpression,
-    JsIdentifierBinding, JsVariableDeclarator, TextRange,
+    binding_ext::AnyJsIdentifierBinding, AnyJsExpression, JsArrayBindingPattern,
+    JsArrayBindingPatternElementList, JsCallExpression, JsVariableDeclarator, TextRange,
 };
 use rome_rowan::AstNode;
 use serde::{Deserialize, Serialize};
@@ -138,11 +138,11 @@ impl StableReactHookConfiguration {
 /// }, [name]);
 /// ```
 pub fn is_binding_react_stable(
-    binding: &JsIdentifierBinding,
+    binding: &AnyJsIdentifierBinding,
     stable_config: &HashSet<StableReactHookConfiguration>,
 ) -> bool {
     fn array_binding_declarator_index(
-        binding: &JsIdentifierBinding,
+        binding: &AnyJsIdentifierBinding,
     ) -> Option<(JsVariableDeclarator, Option<usize>)> {
         let index = binding.syntax().index() / 2;
         let declarator = binding
@@ -153,7 +153,7 @@ pub fn is_binding_react_stable(
     }
 
     fn assignment_declarator(
-        binding: &JsIdentifierBinding,
+        binding: &AnyJsIdentifierBinding,
     ) -> Option<(JsVariableDeclarator, Option<usize>)> {
         let declarator = binding.parent::<JsVariableDeclarator>()?;
         Some((declarator, None))
@@ -191,7 +191,6 @@ mod test {
     use super::*;
     use rome_diagnostics::FileId;
     use rome_js_syntax::SourceType;
-    use rome_rowan::SyntaxNodeCast;
 
     #[test]
     pub fn ok_react_stable_captures() {
@@ -206,7 +205,7 @@ mod test {
             .filter(|x| x.text_trimmed() == "ref")
             .last()
             .unwrap();
-        let set_name = node.cast::<JsIdentifierBinding>().unwrap();
+        let set_name = AnyJsIdentifierBinding::cast(node).unwrap();
 
         let config = HashSet::from_iter([
             StableReactHookConfiguration::new("useRef", None),
