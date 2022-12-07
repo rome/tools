@@ -170,10 +170,7 @@ impl RenameSymbolExtensions for BatchMutation<JsLanguage> {
         node: impl RenamableNode,
         new_name: &str,
     ) -> bool {
-        let prev_binding = match node
-            .binding(model)
-            .and_then(|node| node.cast::<JsIdentifierBinding>())
-        {
+        let prev_binding = match node.binding(model).and_then(AnyJsIdentifierBinding::cast) {
             Some(prev_binding) => prev_binding,
             None => return false,
         };
@@ -234,13 +231,14 @@ impl RenameSymbolExtensions for BatchMutation<JsLanguage> {
 
         // Now it is safe to push changes to the batch mutation
         // Rename binding
+        let Ok(prev_name_token) = prev_binding.name_token() else {
+            return false;
+        };
 
         let next_name_token = token_with_new_text(&name_token, new_name);
-        let next_binding = prev_binding.clone().with_name_token(next_name_token);
-        self.replace_node(prev_binding, next_binding);
+        self.replace_token(prev_name_token, next_name_token);
 
         // Rename all references
-
         for (prev_token, next_token) in changes {
             self.replace_token(prev_token, next_token);
         }
@@ -257,6 +255,9 @@ mod tests {
         ok_rename_declaration,
             "let a;",
             "let b;",
+        ok_rename_declaration_with_multiple_declarators,
+            "let a1, a2;",
+            "let b1, b2;",
         ok_rename_declaration_inner_scope,
             "let b; if (true) { let a; }",
             "let b; if (true) { let b; }",

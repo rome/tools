@@ -159,33 +159,6 @@ let a; function foo() { bar(++a); }
 
 # Input
 ```js
-/*exported a*/ let a = 1
-```
-
-# Diagnostics
-```
-valid.jsonc:1:16 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ /*exported a*/ let a = 1
-      │                ^^^
-  
-  i 'a' is never re-assigned.
-  
-  > 1 │ /*exported a*/ let a = 1
-      │                    ^
-  
-  i Suggested fix: Use 'const' instead.
-  
-  - /*exported·a*/·let·a·=·1
-  + /*exported·a*/·const·a·=·1
-  
-
-```
-
-# Input
-```js
 let a; if (true) a = 0; foo(a);
 ```
 
@@ -249,87 +222,14 @@ let x; for (x of array) { x; }
 let {a, b} = obj; b = 0;
 ```
 
-# Diagnostics
-```
-valid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ let {a, b} = obj; b = 0;
-      │ ^^^
-  
-  i 'a' is never re-assigned.
-  
-  > 1 │ let {a, b} = obj; b = 0;
-      │      ^
-  
-
-```
-
 # Input
 ```js
 let a, b; ({a, b} = obj); b++;
 ```
 
-# Diagnostics
-```
-valid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ let a, b; ({a, b} = obj); b++;
-      │ ^^^
-  
-  i 'a' is never re-assigned.
-  
-  > 1 │ let a, b; ({a, b} = obj); b++;
-      │     ^
-  
-
-```
-
 # Input
 ```js
 let { name, ...otherStuff } = obj; otherStuff = {};
-```
-
-# Diagnostics
-```
-valid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ let { name, ...otherStuff } = obj; otherStuff = {};
-      │ ^^^
-  
-  i 'name' is never re-assigned.
-  
-  > 1 │ let { name, ...otherStuff } = obj; otherStuff = {};
-      │       ^^^^
-  
-
-```
-
-# Input
-```js
-let { name, ...otherStuff } = obj; otherStuff = {};
-```
-
-# Diagnostics
-```
-valid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ let { name, ...otherStuff } = obj; otherStuff = {};
-      │ ^^^
-  
-  i 'name' is never re-assigned.
-  
-  > 1 │ let { name, ...otherStuff } = obj; otherStuff = {};
-      │       ^^^^
-  
-
 ```
 
 # Input
@@ -389,28 +289,6 @@ let a; const b = {}; ({ a, c: b.c } = func());
 
 # Input
 ```js
-let x; function foo() { bar(x); } x = 0;
-```
-
-# Diagnostics
-```
-valid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ let x; function foo() { bar(x); } x = 0;
-      │ ^^^
-  
-  i 'x' is never re-assigned.
-  
-  > 1 │ let x; function foo() { bar(x); } x = 0;
-      │     ^
-  
-
-```
-
-# Input
-```js
 const x = [1,2]; let y; [,y] = x; y = 0;
 ```
 
@@ -461,34 +339,77 @@ class C { static { a++; } foo() { a++ } } let a = 1;
 
 # Input
 ```js
-class C { static { () => a; let a = 1; } };
-```
-
-# Diagnostics
-```
-valid.jsonc:1:29 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ class C { static { () => a; let a = 1; } };
-      │                             ^^^
-  
-  i 'a' is never re-assigned.
-  
-  > 1 │ class C { static { () => a; let a = 1; } };
-      │                                 ^
-  
-  i Suggested fix: Use 'const' instead.
-  
-  - class·C·{·static·{·()·=>·a;·let·a·=·1;·}·};
-  + class·C·{·static·{·()·=>·a;·const·a·=·1;·}·};
-  
-
+let b; { let e; ({ a: { b, e } } = foo()); }
 ```
 
 # Input
 ```js
-let b; { let e; ({ a: { b, e } } = foo()); }
+let [x = -1, y] = [1,2]; y = 0;
+```
+
+# Input
+```js
+let {a: x = -1, b: y} = {a:1,b:2}; y = 0;
+```
+
+# Input
+```js
+(function() { let [x = -1, y] = [1,2]; y = 0; })();
+```
+
+# Input
+```js
+(function() { let {a: x = -1, b: y} = {a:1,b:2}; y = 0; })();
+```
+
+# Input
+```js
+let {a = 0, b} = obj; b = 0; foo(a, b);
+```
+
+# Input
+```js
+let {a: {b, c}} = {a: {b: 1, c: 2}}; b = 3;
+```
+
+# Input
+```js
+let a, b; ({a = 0, b} = obj); b = 0; foo(a, b);
+```
+
+# Input
+```js
+let {a = 0, b} = obj, c = a; b = a;
+```
+
+# Input
+```js
+let x = 'x', y = 'y'; x = 1
+```
+
+# Input
+```js
+let {a, b} = c, d;
+```
+
+# Input
+```js
+let {a, b, c} = {}, e, f;
+```
+
+# Input
+```js
+function a() { let foo = 0, bar = 1; foo = 1; } function b() { let foo = 0, bar = 2; foo = 2; }
+```
+
+# Input
+```js
+let { itemId, list } = {}, obj = [], total = 0; total = 9; console.log(itemId, list, obj, total);
+```
+
+# Input
+```js
+let [ itemId, list ] = [], total = 0; total = 9; console.log(itemId, list, total);
 ```
 
 

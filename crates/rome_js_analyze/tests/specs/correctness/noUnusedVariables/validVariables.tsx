@@ -9,3 +9,7 @@ console.log(a, b, c);
 let value;
 function Button() {}
 console.log(<Button att={value}/>);
+
+// object assignment pattern
+let d, e; 
+({d, e} = {d: 1, e: 2});
