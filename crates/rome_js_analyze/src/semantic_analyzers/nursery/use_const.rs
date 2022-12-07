@@ -42,17 +42,17 @@ declare_rule! {
     /// }
     /// ```
     ///
-    /// ```js,expect_diagnostic
-    /// let a = 1, b = 2;
-    /// b = 3;
-    /// ```
-    ///
     /// ## Valid
     ///
     /// ```js
     /// let a = 2;
     /// a = 3;
     /// console.log(a);
+    /// ```
+    /// 
+    /// ```js
+    /// let a = 1, b = 2;
+    /// b = 3;
     /// ```
     pub(crate) UseConst {
         version: "11.0.0",
