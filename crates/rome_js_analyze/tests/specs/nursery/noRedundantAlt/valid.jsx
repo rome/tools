@@ -1,6 +1,7 @@
 let a = <img alt="foo" />;
 let a = <img alt="picture of me taking a photo of an image" aria-hidden />;
 let a = <img aria-hidden alt="photo of image" />;
+let a = <img aria-hidden="true" alt="photo of image" />;
 let a = <img ALt="foo" />;
 let a = <img {...this.props} alt="foo" />;
 let a = <img {...this.props} alt={"foo"} />;

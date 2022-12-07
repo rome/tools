@@ -14,6 +14,7 @@ let a = <img alt="imAGE of friend." />;
 let a = <img alt="photo of cool person" aria-hidden={false} />;
 let a = <img alt="picture of cool person" aria-hidden={false} />;
 let a = <img alt="image of cool person" aria-hidden={false} />;
+let a = <img alt="image of cool person" aria-hidden="false" />;
 let a = <img alt="photo" {...this.props} />;
 let a = <img alt="image" {...this.props} />;
 let a = <img alt="picture" {...this.props} />;
@@ -30,7 +31,7 @@ let a = <img alt={`image doing ${image}`} {...this.props} />;
 ```
 invalid.jsx:1:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
   > 1 │ let a = <img alt="Photo of friend." />;
       │                  ^^^^^^^^^^^^^^^^^^
@@ -45,7 +46,7 @@ invalid.jsx:1:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:2:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
     1 │ let a = <img alt="Photo of friend." />;
   > 2 │ let a = <img alt="Picture of friend." />;
@@ -61,7 +62,7 @@ invalid.jsx:2:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:3:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
     1 │ let a = <img alt="Photo of friend." />;
     2 │ let a = <img alt="Picture of friend." />;
@@ -78,7 +79,7 @@ invalid.jsx:3:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:4:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
     2 │ let a = <img alt="Picture of friend." />;
     3 │ let a = <img alt="Image of friend." />;
@@ -95,7 +96,7 @@ invalid.jsx:4:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:5:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
     3 │ let a = <img alt="Image of friend." />;
     4 │ let a = <img alt="PhOtO of friend." />;
@@ -112,7 +113,7 @@ invalid.jsx:5:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:6:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
     4 │ let a = <img alt="PhOtO of friend." />;
     5 │ let a = <img alt={"photo"} />;
@@ -129,7 +130,7 @@ invalid.jsx:6:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:7:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
     5 │ let a = <img alt={"photo"} />;
     6 │ let a = <img alt="piCTUre of friend." />;
@@ -146,7 +147,7 @@ invalid.jsx:7:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:8:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
      6 │ let a = <img alt="piCTUre of friend." />;
      7 │ let a = <img alt="imAGE of friend." />;
@@ -163,14 +164,14 @@ invalid.jsx:8:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:9:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
      7 │ let a = <img alt="imAGE of friend." />;
      8 │ let a = <img alt="photo of cool person" aria-hidden={false} />;
    > 9 │ let a = <img alt="picture of cool person" aria-hidden={false} />;
        │                  ^^^^^^^^^^^^^^^^^^^^^^^^
     10 │ let a = <img alt="image of cool person" aria-hidden={false} />;
-    11 │ let a = <img alt="photo" {...this.props} />;
+    11 │ let a = <img alt="image of cool person" aria-hidden="false" />;
   
   i Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.
   
@@ -180,14 +181,14 @@ invalid.jsx:9:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:10:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
      8 │ let a = <img alt="photo of cool person" aria-hidden={false} />;
      9 │ let a = <img alt="picture of cool person" aria-hidden={false} />;
   > 10 │ let a = <img alt="image of cool person" aria-hidden={false} />;
        │                  ^^^^^^^^^^^^^^^^^^^^^^
-    11 │ let a = <img alt="photo" {...this.props} />;
-    12 │ let a = <img alt="image" {...this.props} />;
+    11 │ let a = <img alt="image of cool person" aria-hidden="false" />;
+    12 │ let a = <img alt="photo" {...this.props} />;
   
   i Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.
   
@@ -197,14 +198,14 @@ invalid.jsx:10:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:11:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
      9 │ let a = <img alt="picture of cool person" aria-hidden={false} />;
     10 │ let a = <img alt="image of cool person" aria-hidden={false} />;
-  > 11 │ let a = <img alt="photo" {...this.props} />;
-       │                  ^^^^^^^
-    12 │ let a = <img alt="image" {...this.props} />;
-    13 │ let a = <img alt="picture" {...this.props} />;
+  > 11 │ let a = <img alt="image of cool person" aria-hidden="false" />;
+       │                  ^^^^^^^^^^^^^^^^^^^^^^
+    12 │ let a = <img alt="photo" {...this.props} />;
+    13 │ let a = <img alt="image" {...this.props} />;
   
   i Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.
   
@@ -214,14 +215,14 @@ invalid.jsx:11:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:12:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
     10 │ let a = <img alt="image of cool person" aria-hidden={false} />;
-    11 │ let a = <img alt="photo" {...this.props} />;
-  > 12 │ let a = <img alt="image" {...this.props} />;
+    11 │ let a = <img alt="image of cool person" aria-hidden="false" />;
+  > 12 │ let a = <img alt="photo" {...this.props} />;
        │                  ^^^^^^^
-    13 │ let a = <img alt="picture" {...this.props} />;
-    14 │ let a = <img alt={`picture doing ${things}`} {...this.props} />;
+    13 │ let a = <img alt="image" {...this.props} />;
+    14 │ let a = <img alt="picture" {...this.props} />;
   
   i Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.
   
@@ -231,14 +232,14 @@ invalid.jsx:12:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:13:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
-    11 │ let a = <img alt="photo" {...this.props} />;
-    12 │ let a = <img alt="image" {...this.props} />;
-  > 13 │ let a = <img alt="picture" {...this.props} />;
-       │                  ^^^^^^^^^
-    14 │ let a = <img alt={`picture doing ${things}`} {...this.props} />;
-    15 │ let a = <img alt={`photo doing ${things}`} {...this.props} />;
+    11 │ let a = <img alt="image of cool person" aria-hidden="false" />;
+    12 │ let a = <img alt="photo" {...this.props} />;
+  > 13 │ let a = <img alt="image" {...this.props} />;
+       │                  ^^^^^^^
+    14 │ let a = <img alt="picture" {...this.props} />;
+    15 │ let a = <img alt={`picture doing ${things}`} {...this.props} />;
   
   i Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.
   
@@ -248,14 +249,14 @@ invalid.jsx:13:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:14:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
-    12 │ let a = <img alt="image" {...this.props} />;
-    13 │ let a = <img alt="picture" {...this.props} />;
-  > 14 │ let a = <img alt={`picture doing ${things}`} {...this.props} />;
-       │                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    15 │ let a = <img alt={`photo doing ${things}`} {...this.props} />;
-    16 │ let a = <img alt={`image doing ${things}`} {...this.props} />;
+    12 │ let a = <img alt="photo" {...this.props} />;
+    13 │ let a = <img alt="image" {...this.props} />;
+  > 14 │ let a = <img alt="picture" {...this.props} />;
+       │                  ^^^^^^^^^
+    15 │ let a = <img alt={`picture doing ${things}`} {...this.props} />;
+    16 │ let a = <img alt={`photo doing ${things}`} {...this.props} />;
   
   i Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.
   
@@ -265,14 +266,14 @@ invalid.jsx:14:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:15:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
-    13 │ let a = <img alt="picture" {...this.props} />;
-    14 │ let a = <img alt={`picture doing ${things}`} {...this.props} />;
-  > 15 │ let a = <img alt={`photo doing ${things}`} {...this.props} />;
-       │                  ^^^^^^^^^^^^^^^^^^^^^^^^^
-    16 │ let a = <img alt={`image doing ${things}`} {...this.props} />;
-    17 │ let a = <img alt={`picture doing ${picture}`} {...this.props} />;
+    13 │ let a = <img alt="image" {...this.props} />;
+    14 │ let a = <img alt="picture" {...this.props} />;
+  > 15 │ let a = <img alt={`picture doing ${things}`} {...this.props} />;
+       │                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    16 │ let a = <img alt={`photo doing ${things}`} {...this.props} />;
+    17 │ let a = <img alt={`image doing ${things}`} {...this.props} />;
   
   i Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.
   
@@ -282,14 +283,14 @@ invalid.jsx:15:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:16:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
-    14 │ let a = <img alt={`picture doing ${things}`} {...this.props} />;
-    15 │ let a = <img alt={`photo doing ${things}`} {...this.props} />;
-  > 16 │ let a = <img alt={`image doing ${things}`} {...this.props} />;
+    14 │ let a = <img alt="picture" {...this.props} />;
+    15 │ let a = <img alt={`picture doing ${things}`} {...this.props} />;
+  > 16 │ let a = <img alt={`photo doing ${things}`} {...this.props} />;
        │                  ^^^^^^^^^^^^^^^^^^^^^^^^^
-    17 │ let a = <img alt={`picture doing ${picture}`} {...this.props} />;
-    18 │ let a = <img alt={`photo doing ${photo}`} {...this.props} />;
+    17 │ let a = <img alt={`image doing ${things}`} {...this.props} />;
+    18 │ let a = <img alt={`picture doing ${picture}`} {...this.props} />;
   
   i Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.
   
@@ -299,14 +300,14 @@ invalid.jsx:16:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:17:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
-    15 │ let a = <img alt={`photo doing ${things}`} {...this.props} />;
-    16 │ let a = <img alt={`image doing ${things}`} {...this.props} />;
-  > 17 │ let a = <img alt={`picture doing ${picture}`} {...this.props} />;
-       │                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    18 │ let a = <img alt={`photo doing ${photo}`} {...this.props} />;
-    19 │ let a = <img alt={`image doing ${image}`} {...this.props} />;
+    15 │ let a = <img alt={`picture doing ${things}`} {...this.props} />;
+    16 │ let a = <img alt={`photo doing ${things}`} {...this.props} />;
+  > 17 │ let a = <img alt={`image doing ${things}`} {...this.props} />;
+       │                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+    18 │ let a = <img alt={`picture doing ${picture}`} {...this.props} />;
+    19 │ let a = <img alt={`photo doing ${photo}`} {...this.props} />;
   
   i Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.
   
@@ -316,14 +317,14 @@ invalid.jsx:17:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:18:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
-    16 │ let a = <img alt={`image doing ${things}`} {...this.props} />;
-    17 │ let a = <img alt={`picture doing ${picture}`} {...this.props} />;
-  > 18 │ let a = <img alt={`photo doing ${photo}`} {...this.props} />;
-       │                  ^^^^^^^^^^^^^^^^^^^^^^^^
-    19 │ let a = <img alt={`image doing ${image}`} {...this.props} />;
-    20 │ 
+    16 │ let a = <img alt={`photo doing ${things}`} {...this.props} />;
+    17 │ let a = <img alt={`image doing ${things}`} {...this.props} />;
+  > 18 │ let a = <img alt={`picture doing ${picture}`} {...this.props} />;
+       │                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    19 │ let a = <img alt={`photo doing ${photo}`} {...this.props} />;
+    20 │ let a = <img alt={`image doing ${image}`} {...this.props} />;
   
   i Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.
   
@@ -333,13 +334,30 @@ invalid.jsx:18:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━�
 ```
 invalid.jsx:19:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Avoid the words "image", "picture", or "photo" inimg element alt text.
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
   
-    17 │ let a = <img alt={`picture doing ${picture}`} {...this.props} />;
-    18 │ let a = <img alt={`photo doing ${photo}`} {...this.props} />;
-  > 19 │ let a = <img alt={`image doing ${image}`} {...this.props} />;
+    17 │ let a = <img alt={`image doing ${things}`} {...this.props} />;
+    18 │ let a = <img alt={`picture doing ${picture}`} {...this.props} />;
+  > 19 │ let a = <img alt={`photo doing ${photo}`} {...this.props} />;
        │                  ^^^^^^^^^^^^^^^^^^^^^^^^
-    20 │ 
+    20 │ let a = <img alt={`image doing ${image}`} {...this.props} />;
+    21 │ 
+  
+  i Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.
+  
+
+```
+
+```
+invalid.jsx:20:18 lint/nursery/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the words "image", "picture", or "photo" in img element alt text.
+  
+    18 │ let a = <img alt={`picture doing ${picture}`} {...this.props} />;
+    19 │ let a = <img alt={`photo doing ${photo}`} {...this.props} />;
+  > 20 │ let a = <img alt={`image doing ${image}`} {...this.props} />;
+       │                  ^^^^^^^^^^^^^^^^^^^^^^^^
+    21 │ 
   
   i Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.
   

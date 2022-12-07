@@ -4,7 +4,6 @@ use rome_console::markup;
 use rome_js_syntax::jsx_ext::AnyJsxElement;
 use rome_js_syntax::{
     AnyJsExpression, AnyJsLiteralExpression, AnyJsTemplateElement, AnyJsxAttributeValue,
-    JsSyntaxToken,
 };
 use rome_rowan::AstNode;
 
@@ -55,34 +54,29 @@ impl Rule for NoRedundantAlt {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        if node
-            .name()
-            .ok()?
-            .as_jsx_name()?
-            .value_token()
-            .ok()?
-            .text_trimmed()
-            != "img"
-        {
+        if node.name_value_token()?.text_trimmed() != "img" {
             return None;
         }
-        let hidden = node.find_attribute_by_name("aria-hidden");
+        let aria_hidden_attribute = node.find_attribute_by_name("aria-hidden");
+        if let Some(aria_hidden) = aria_hidden_attribute {
+            let is_false = match aria_hidden.initializer()?.value().ok()? {
+                AnyJsxAttributeValue::AnyJsxTag(_) => false,
+                AnyJsxAttributeValue::JsxExpressionAttributeValue(aria_hidden) => {
+                    aria_hidden
+                        .expression()
+                        .ok()?
+                        .as_any_js_literal_expression()?
+                        .as_js_boolean_literal_expression()?
+                        .value_token()
+                        .ok()?
+                        .text_trimmed()
+                        == "false"
+                }
+                AnyJsxAttributeValue::JsxString(aria_hidden) => {
+                    aria_hidden.inner_string_text().ok()? == "false"
+                }
+            };
 
-        if hidden.is_some() {
-            let is_false = hidden
-                .unwrap()
-                .initializer()?
-                .value()
-                .ok()?
-                .as_jsx_expression_attribute_value()?
-                .expression()
-                .ok()?
-                .as_any_js_literal_expression()?
-                .as_js_boolean_literal_expression()?
-                .value_token()
-                .ok()?
-                .text_trimmed()
-                == "false";
             if !is_false {
                 return None;
             }
@@ -101,27 +95,22 @@ impl Rule for NoRedundantAlt {
                     AnyJsExpression::AnyJsLiteralExpression(
                         AnyJsLiteralExpression::JsStringLiteralExpression(expr),
                     ) => {
-                        let token = expr.value_token().ok()?;
-
-                        is_redundant_alt(trim_quote(&token)).map(|_| alt)
+                        is_redundant_alt(expr.inner_string_text().ok()?.to_string()).then_some(alt)
                     }
                     AnyJsExpression::JsTemplateExpression(expr) => {
-                        let contain_redundant_alt = expr.elements().into_iter().any(|x| match x {
-                            AnyJsTemplateElement::JsTemplateChunkElement(node) => {
-                                node.template_chunk_token().ok().map_or(false, |token| {
-                                    is_redundant_alt(token.text_trimmed().to_string())
-                                        .map(|_| true)
-                                        .unwrap_or(false)
-                                })
-                            }
-                            AnyJsTemplateElement::JsTemplateElement(_) => false,
-                        });
+                        let contain_redundant_alt =
+                            expr.elements().into_iter().any(|template_element| {
+                                match template_element {
+                                    AnyJsTemplateElement::JsTemplateChunkElement(node) => {
+                                        node.template_chunk_token().ok().map_or(false, |token| {
+                                            is_redundant_alt(token.text_trimmed().to_string())
+                                        })
+                                    }
+                                    AnyJsTemplateElement::JsTemplateElement(_) => false,
+                                }
+                            });
 
-                        if contain_redundant_alt {
-                            Some(alt)
-                        } else {
-                            None
-                        }
+                        contain_redundant_alt.then_some(alt)
                     }
 
                     _ => None,
@@ -129,7 +118,7 @@ impl Rule for NoRedundantAlt {
             }
             AnyJsxAttributeValue::JsxString(ref value) => {
                 let text = value.inner_string_text().ok()?.to_string();
-                is_redundant_alt(text).map(|_| alt)
+                is_redundant_alt(text).then_some(alt)
             }
         }
     }
@@ -152,20 +141,8 @@ impl Rule for NoRedundantAlt {
 
 const REDUNDANT_WORDS: [&str; 3] = ["image", "photo", "picture"];
 
-fn is_redundant_alt(alt: String) -> Option<()> {
-    let is_redundant = REDUNDANT_WORDS
+fn is_redundant_alt(alt: String) -> bool {
+    REDUNDANT_WORDS
         .into_iter()
-        .any(|word| alt.split_whitespace().any(|x| x.to_lowercase() == word));
-
-    if is_redundant {
-        Some(())
-    } else {
-        None
-    }
-}
-
-fn trim_quote(token: &JsSyntaxToken) -> String {
-    let trimmed_string = token.text_trimmed().to_string();
-
-    trimmed_string[1..trimmed_string.len() - 1].to_string()
+        .any(|word| alt.split_whitespace().any(|x| x.to_lowercase() == word))
 }

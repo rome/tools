@@ -8,6 +8,7 @@ let a = <img alt="imAGE of friend." />;
 let a = <img alt="photo of cool person" aria-hidden={false} />;
 let a = <img alt="picture of cool person" aria-hidden={false} />;
 let a = <img alt="image of cool person" aria-hidden={false} />;
+let a = <img alt="image of cool person" aria-hidden="false" />;
 let a = <img alt="photo" {...this.props} />;
 let a = <img alt="image" {...this.props} />;
 let a = <img alt="picture" {...this.props} />;
