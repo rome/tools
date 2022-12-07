@@ -29,3 +29,4 @@ let a = <img alt={imageAlt?.name} />;
 let a = <img alt="Doing cool things" aria-hidden={foo?.bar} />;
 let a = <img alt="Photography" />;
 let a = <img alt="ImageMagick" />;
+let a = <img alt="photo image picture" aria-hidden={foo?.bar} />;
