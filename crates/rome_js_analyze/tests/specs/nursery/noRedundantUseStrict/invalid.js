@@ -1,4 +1,6 @@
 // js module
+"use strict";
+
 function foo() {
 	"use strict";
 }
