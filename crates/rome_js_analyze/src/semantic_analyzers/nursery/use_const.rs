@@ -49,7 +49,7 @@ declare_rule! {
     /// a = 3;
     /// console.log(a);
     /// ```
-    /// 
+    ///
     /// ```js
     /// let a = 1, b = 2;
     /// b = 3;
