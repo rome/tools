@@ -610,17 +610,6 @@
             }
           ]
         },
-        "noConditionalAssignment": {
-          "description": "Disallow assignment operators in conditional expressions.",
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "noConstEnum": {
           "description": "Disallow TypeScript const enum",
           "anyOf": [
