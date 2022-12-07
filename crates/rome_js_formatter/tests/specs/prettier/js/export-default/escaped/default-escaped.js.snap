@@ -8,7 +8,8 @@ info:
 
 ```js
 // export asyn\u{63} from "async";
-export n\u{63} from "async";```
+export n\u{63} from "async";
+```
 
 
 # Prettier differences
@@ -34,7 +35,6 @@ n\u{63};
 from;
 ("async");
 ```
-
 
 # Errors
 ```

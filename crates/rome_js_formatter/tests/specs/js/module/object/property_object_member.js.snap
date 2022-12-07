@@ -1,6 +1,7 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: property_object_member.js
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: js/module/object/property_object_member.js
 ---
 
 # Input
@@ -269,10 +270,10 @@ const fluidObject = {
 		skipNext: true,
 	},
 };
+```
 
-
-## Lines exceeding width of 80 characters
-
+# Lines exceeding max width of 80 characters
+```
     2: 	"this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-1": require(),
     3: 	x: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
     4: 	url: "http://example.com/12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
@@ -290,5 +291,4 @@ const fluidObject = {
    75: 			.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp ===
    78: 		longLongLongLongLongLongLongLongLonlongLongLongLongLongLongLongLongLongTooLongPropgLongLongLongLongTooLongVar ||
 ```
-
 

@@ -8,6 +8,7 @@ info:
 
 ```ts
 type Foo<T> = T extends ((...a: any[]) => infer R extends string) ? R : never;
+
 ```
 
 
@@ -26,7 +27,6 @@ type Foo<T> = T extends ((...a: any[]) => infer R extends string) ? R : never;
 ```ts
 type Foo<T> = T extends ((...a: any[]) => infer R extends string) ? R : never;
 ```
-
 
 # Errors
 ```

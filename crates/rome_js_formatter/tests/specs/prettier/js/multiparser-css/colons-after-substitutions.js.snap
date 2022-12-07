@@ -23,6 +23,7 @@ const Icon = styled.div`
 
   ${media.smallDown}::before {}
 `
+
 ```
 
 
@@ -74,6 +75,5 @@ const Icon = styled.div`
   ${media.smallDown}::before {}
 `;
 ```
-
 
 

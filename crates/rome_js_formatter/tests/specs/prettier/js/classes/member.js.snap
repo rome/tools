@@ -9,6 +9,7 @@ info:
 ```js
 (class {})[1];
 (class {}).a;
+
 ```
 
 
@@ -30,6 +31,5 @@ info:
 (class {})[1];
 (class {}).a;
 ```
-
 
 

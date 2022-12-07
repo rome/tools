@@ -11,6 +11,7 @@ class C {
   accessor clicked = "value";
   *foo() {}
 }
+
 ```
 
 
@@ -37,7 +38,6 @@ class C {
   *foo() {}
 }
 ```
-
 
 # Errors
 ```

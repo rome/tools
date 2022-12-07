@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: as_assignment.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/assignment/as_assignment.ts
 ---
 
 # Input
 
-```js
+```ts
 let binding;
 
 (binding as boolean) = true;
@@ -30,7 +31,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 let binding;
 
 (binding as boolean) = true;

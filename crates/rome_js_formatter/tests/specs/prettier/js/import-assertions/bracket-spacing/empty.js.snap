@@ -7,7 +7,8 @@ info:
 # Input
 
 ```js
-export * as bar from "bar.json" assert { }```
+export * as bar from "bar.json" assert { }
+```
 
 
 # Prettier differences
@@ -25,6 +26,5 @@ export * as bar from "bar.json" assert { }```
 ```js
 export * as bar from "bar.json" assert {};
 ```
-
 
 

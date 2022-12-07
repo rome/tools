@@ -9,6 +9,7 @@ info:
 ```ts
 //@target: ES5
 for (var of of) { }
+
 ```
 
 
@@ -30,7 +31,6 @@ for (var of of) { }
 //@target: ES5
 for (var of of) { }
 ```
-
 
 # Errors
 ```

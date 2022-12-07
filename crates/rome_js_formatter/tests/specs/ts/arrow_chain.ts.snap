@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: arrow_chain.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/arrow_chain.ts
 ---
 
 # Input
 
-```js
+```ts
 // chain is-callee
 const x = ((a) => (b) => c)(test);
 
@@ -36,7 +37,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 // chain is-callee
 const x = (
 	(a) => (b) =>

@@ -31,6 +31,7 @@ const a3 = {
   someKey:
     (longLongLongLongLongLongLongLongLongLongLongLongLongLongName, longLongLongLongLongLongLongLongLongLongLongLongLongLongName, longLongLongLongLongLongLongLongLongLongLongLongLongLongName)
 };
+
 ```
 
 
@@ -92,7 +93,6 @@ const a3 = {
     longLongLongLongLongLongLongLongLongLongLongLongLongLongName),
 };
 ```
-
 
 # Errors
 ```

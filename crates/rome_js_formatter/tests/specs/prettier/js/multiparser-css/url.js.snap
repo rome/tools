@@ -8,6 +8,7 @@ info:
 
 ```js
 styled.div`color:red;background: url(http://example.com?q=${foo})`
+
 ```
 
 
@@ -29,6 +30,5 @@ styled.div`color:red;background: url(http://example.com?q=${foo})`
 ```js
 styled.div`color:red;background: url(http://example.com?q=${foo})`;
 ```
-
 
 

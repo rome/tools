@@ -17,6 +17,7 @@ class Yo {
 
   @anotherDecoratorWithALongName("another very long string, but now inline") async plip() {}
 }
+
 ```
 
 
@@ -49,9 +50,9 @@ class Yo {
 }
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
     8:   @anotherDecoratorWithALongName("another very long string, but now inline") async plip() {}
 ```
+
 

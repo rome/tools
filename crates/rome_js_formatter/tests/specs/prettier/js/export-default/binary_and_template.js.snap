@@ -8,6 +8,7 @@ info:
 
 ```js
 export default (function() {} + foo)``;
+
 ```
 
 
@@ -26,6 +27,5 @@ export default (function() {} + foo)``;
 ```js
 export default ((function () {}) + foo)``;
 ```
-
 
 

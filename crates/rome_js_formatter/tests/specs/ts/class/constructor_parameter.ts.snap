@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: constructor_parameter.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/class/constructor_parameter.ts
 ---
 
 # Input
 
-```js
+```ts
 class B {
     constructor(
         private a: string
@@ -60,7 +61,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 class B {
 	constructor(private a: string) {}
 }

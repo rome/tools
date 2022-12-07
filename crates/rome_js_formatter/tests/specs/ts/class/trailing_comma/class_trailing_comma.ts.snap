@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: class_trailing_comma.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/class/trailing_comma/class_trailing_comma.ts
 ---
 
 # Input
 
-```js
+```ts
 // class method
 class C<    	longlonglonglonglonglonglongT1,
 	longlonglonglonglonglonglongT2,
@@ -36,7 +37,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 // class method
 class C<
 	longlonglonglonglonglonglongT1,
@@ -75,7 +76,7 @@ Trailing comma: ES5
 Semicolons: Always
 -----
 
-```js
+```ts
 // class method
 class C<
 	longlonglonglonglonglonglongT1,
@@ -114,7 +115,7 @@ Trailing comma: None
 Semicolons: Always
 -----
 
-```js
+```ts
 // class method
 class C<
 	longlonglonglonglonglonglongT1,

@@ -109,6 +109,7 @@ html`<div style="   color : red;
 ${ foo}:${bar};
             display    :inline ">
   </div>`
+
 ```
 
 
@@ -357,9 +358,9 @@ ${foo}:${bar};
   </div>`;
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
    81: const closingScriptTag2 = /* HTML */ `<script>const  scriptTag='<\\/script>'; <\/script>`;
 ```
+
 

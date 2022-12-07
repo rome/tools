@@ -215,6 +215,7 @@ import( (argument1) =>
       const foo = "foo";
       return foo + "bar";
     });
+
 ```
 
 
@@ -591,6 +592,5 @@ import((argument1) =>
     return foo + "bar";
   });
 ```
-
 
 

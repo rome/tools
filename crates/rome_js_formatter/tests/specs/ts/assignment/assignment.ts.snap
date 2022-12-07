@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: assignment.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/assignment/assignment.ts
 ---
 
 # Input
 
-```js
+```ts
 //break after operator layout
 loooooooooooooooooooooooooong1 = "looooooooooooooooooooooooooooooooooooooooooog"!;
 loooooooooooooooooooooooooong2 = void void "looooooooooooooooooooooooooooooooooooooooooog"!;
@@ -38,7 +39,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 //break after operator layout
 loooooooooooooooooooooooooong1 =
 	"looooooooooooooooooooooooooooooooooooooooooog"!;

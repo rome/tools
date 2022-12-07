@@ -56,7 +56,8 @@ abstract class G {
 
 class H {
     abstract baz() : number;
-}```
+}
+```
 
 
 # Prettier differences
@@ -132,7 +133,6 @@ class H {
   abstract baz() : number;
 }
 ```
-
 
 # Errors
 ```

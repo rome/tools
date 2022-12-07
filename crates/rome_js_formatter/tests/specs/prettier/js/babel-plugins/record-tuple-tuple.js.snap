@@ -8,6 +8,7 @@ info:
 
 ```js
 const tuple1 = #[1, 2, 3];
+
 ```
 
 
@@ -28,7 +29,6 @@ const tuple1 = #[1, 2, 3];
 const tuple1 = #;
 [1, 2, 3];
 ```
-
 
 # Errors
 ```

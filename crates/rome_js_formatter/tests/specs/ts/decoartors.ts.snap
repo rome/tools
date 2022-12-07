@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: decoartors.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/decoartors.ts
 ---
 
 # Input
 
-```js
+```ts
 @sealed
 class Test {
 	@readonly
@@ -71,7 +72,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 @sealed
 class Test {
 	@readonly
@@ -110,6 +111,8 @@ class Test2 {
 	// leading comment
 	prop: string;
 }
+```
+
 
 
 ## Unimplemented nodes/tokens
@@ -125,6 +128,4 @@ class Test2 {
 "@sealed" => 272..279
 "@test" => 338..343
 "\t@test /* trailing multiline comment\n\t for decorator */ @anotherDecorator(" => 449..523
-```
-
 

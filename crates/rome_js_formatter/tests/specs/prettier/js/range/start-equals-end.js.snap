@@ -9,6 +9,7 @@ info:
 ```js
 foo = 1.0000;bar = 1.0000;baz=1.0000;
 // The range will be 13~13, should not format anything
+
 ```
 
 
@@ -31,6 +32,5 @@ foo = 1.0000;bar = 1.0000;baz=1.0000;
 foo = 1.0000;bar = 1.0000;baz=1.0000;
 // The range will be 13~13, should not format anything
 ```
-
 
 

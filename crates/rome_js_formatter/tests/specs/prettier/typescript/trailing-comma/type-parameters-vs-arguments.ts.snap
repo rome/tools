@@ -22,6 +22,7 @@ const instance = new FooClass<
 	number,
 	string, // [ts] Trailing comma not allowed.
 	>();
+
 ```
 
 
@@ -59,6 +60,5 @@ const instance = new FooClass<
 	string, // [ts] Trailing comma not allowed.
 	>();
 ```
-
 
 

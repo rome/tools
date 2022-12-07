@@ -236,7 +236,7 @@ mod tests {
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
-        let rule_filter = RuleFilter::Rule("correctness", "noArrayIndexKey");
+        let rule_filter = RuleFilter::Rule("suspicious", "noArrayIndexKey");
         analyze(
             FileId::zero(),
             &parsed.tree(),
@@ -275,38 +275,38 @@ mod tests {
         const SOURCE: &str = "
             function checkSuppressions1(a, b) {
                 a == b;
-                // rome-ignore lint/correctness:whole group
+                // rome-ignore lint/suspicious:whole group
                 a == b;
-                // rome-ignore lint/correctness/noDoubleEquals: single rule
+                // rome-ignore lint/suspicious/noDoubleEquals: single rule
                 a == b;
-                /* rome-ignore lint/correctness/useWhile: multiple block comments */ /* rome-ignore lint/correctness/noDoubleEquals: multiple block comments */
+                /* rome-ignore lint/style/useWhile: multiple block comments */ /* rome-ignore lint/suspicious/noDoubleEquals: multiple block comments */
                 a == b;
-                // rome-ignore lint/correctness/useWhile: multiple line comments
-                // rome-ignore lint/correctness/noDoubleEquals: multiple line comments
+                // rome-ignore lint/style/useWhile: multiple line comments
+                // rome-ignore lint/suspicious/noDoubleEquals: multiple line comments
                 a == b;
                 a == b;
             }
 
-            // rome-ignore lint/correctness/noDoubleEquals: do not suppress warning for the whole function
+            // rome-ignore lint/suspicious/noDoubleEquals: do not suppress warning for the whole function
             function checkSuppressions2(a, b) {
                 a == b;
             }
 
             function checkSuppressions3(a, b) {
                 a == b;
-                // rome-ignore lint(correctness): whole group
+                // rome-ignore lint(suspicious): whole group
                 a == b;
-                // rome-ignore lint(correctness/noDoubleEquals): single rule
+                // rome-ignore lint(suspicious/noDoubleEquals): single rule
                 a == b;
-                /* rome-ignore lint(correctness/useWhile): multiple block comments */ /* rome-ignore lint(correctness/noDoubleEquals): multiple block comments */
+                /* rome-ignore lint(style/useWhile): multiple block comments */ /* rome-ignore lint(suspicious/noDoubleEquals): multiple block comments */
                 a == b;
-                // rome-ignore lint(correctness/useWhile): multiple line comments
-                // rome-ignore lint(correctness/noDoubleEquals): multiple line comments
+                // rome-ignore lint(style/useWhile): multiple line comments
+                // rome-ignore lint(suspicious/noDoubleEquals): multiple line comments
                 a == b;
                 a == b;
             }
 
-            // rome-ignore lint(correctness/noDoubleEquals): do not suppress warning for the whole function
+            // rome-ignore lint(suspicious/noDoubleEquals): do not suppress warning for the whole function
             function checkSuppressions4(a, b) {
                 a == b;
             }
@@ -340,7 +340,7 @@ mod tests {
                         .with_file_source_code(SOURCE);
 
                     let code = error.category().unwrap();
-                    if code == category!("lint/correctness/noDoubleEquals") {
+                    if code == category!("lint/suspicious/noDoubleEquals") {
                         lint_ranges.push(span.unwrap());
                     }
 
@@ -362,34 +362,34 @@ mod tests {
             lint_ranges.as_slice(),
             &[
                 TextRange::new(TextSize::from(67), TextSize::from(69)),
-                TextRange::new(TextSize::from(651), TextSize::from(653)),
-                TextRange::new(TextSize::from(845), TextSize::from(847)),
-                TextRange::new(TextSize::from(932), TextSize::from(934)),
-                TextRange::new(TextSize::from(1523), TextSize::from(1525)),
-                TextRange::new(TextSize::from(1718), TextSize::from(1720)),
+                TextRange::new(TextSize::from(635), TextSize::from(637)),
+                TextRange::new(TextSize::from(828), TextSize::from(830)),
+                TextRange::new(TextSize::from(915), TextSize::from(917)),
+                TextRange::new(TextSize::from(1490), TextSize::from(1492)),
+                TextRange::new(TextSize::from(1684), TextSize::from(1686)),
             ]
         );
 
         assert_eq!(
             parse_ranges.as_slice(),
             &[
-                TextRange::new(TextSize::from(1821), TextSize::from(1832)),
-                TextRange::new(TextSize::from(1871), TextSize::from(1872)),
-                TextRange::new(TextSize::from(1904), TextSize::from(1905)),
-                TextRange::new(TextSize::from(1956), TextSize::from(1963)),
+                TextRange::new(TextSize::from(1787), TextSize::from(1798)),
+                TextRange::new(TextSize::from(1837), TextSize::from(1838)),
+                TextRange::new(TextSize::from(1870), TextSize::from(1871)),
+                TextRange::new(TextSize::from(1922), TextSize::from(1929)),
             ]
         );
 
         assert_eq!(
             warn_ranges.as_slice(),
             &[
-                TextRange::new(TextSize::from(954), TextSize::from(999)),
-                TextRange::new(TextSize::from(1040), TextSize::from(1100)),
-                TextRange::new(TextSize::from(1141), TextSize::from(1210)),
-                TextRange::new(TextSize::from(1211), TextSize::from(1286)),
-                TextRange::new(TextSize::from(1327), TextSize::from(1392)),
-                TextRange::new(TextSize::from(1409), TextSize::from(1480)),
-                TextRange::new(TextSize::from(1556), TextSize::from(1651)),
+                TextRange::new(TextSize::from(937), TextSize::from(981)),
+                TextRange::new(TextSize::from(1022), TextSize::from(1081)),
+                TextRange::new(TextSize::from(1122), TextSize::from(1185)),
+                TextRange::new(TextSize::from(1186), TextSize::from(1260)),
+                TextRange::new(TextSize::from(1301), TextSize::from(1360)),
+                TextRange::new(TextSize::from(1377), TextSize::from(1447)),
+                TextRange::new(TextSize::from(1523), TextSize::from(1617)),
             ]
         );
     }
@@ -397,7 +397,7 @@ mod tests {
     #[test]
     fn suppression_syntax() {
         const SOURCE: &str = "
-            // rome-ignore lint/correctness/noDoubleEquals: single rule
+            // rome-ignore lint/suspicious/noDoubleEquals: single rule
             a == b;
         ";
 

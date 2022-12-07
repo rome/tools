@@ -9,7 +9,8 @@ info:
 ```js
 <!--
 alert(1)
--->```
+-->
+```
 
 
 # Prettier differences
@@ -31,7 +32,6 @@ alert(1)
 alert(1)
 -->
 ```
-
 
 # Errors
 ```

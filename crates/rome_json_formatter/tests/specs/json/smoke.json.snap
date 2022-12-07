@@ -1,6 +1,7 @@
 ---
-source: crates/rome_json_formatter/tests/spec_test.rs
-expression: smoke.json
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: json/smoke.json
 ---
 
 # Input
@@ -36,11 +37,11 @@ Line width: 80
 	"d": true,
 	"e": false
 }
+```
+
 
 
 ## Unimplemented nodes/tokens
 
 "{\n\t\"a\": 5,\n\t\"b\": [1, 2, 3, 4],\n\t\"c\": null,\n\t\"d\": true,\n\t\"e\": false\n}" => 0..68
-```
-
 

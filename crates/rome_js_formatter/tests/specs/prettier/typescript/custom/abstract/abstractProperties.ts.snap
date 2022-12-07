@@ -15,6 +15,7 @@ abstract class Foo {
     private abstract ['h'];
     static abstract ['i'];
 }
+
 ```
 
 
@@ -50,7 +51,6 @@ abstract class Foo {
   static abstract ['i'];
 }
 ```
-
 
 # Errors
 ```

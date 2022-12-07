@@ -14,6 +14,7 @@ class c3 {
   not_constructor(public arg: number = 10) {
   }
 }
+
 ```
 
 
@@ -43,7 +44,6 @@ class c3 {
   }
 }
 ```
-
 
 # Errors
 ```

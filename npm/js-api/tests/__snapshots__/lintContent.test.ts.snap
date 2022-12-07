@@ -115,7 +115,7 @@ exports[`Rome WebAssembly lintContent > should lint content > lint diagnostics 1
         },
       ],
     },
-    "category": "lint/correctness/noDoubleEquals",
+    "category": "lint/suspicious/noDoubleEquals",
     "description": "Use === instead of ==.
 == is only allowed when comparing against \`null\`",
     "location": {

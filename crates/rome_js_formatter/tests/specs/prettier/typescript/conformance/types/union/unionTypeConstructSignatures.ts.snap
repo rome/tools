@@ -77,6 +77,7 @@ strOrNum = new unionWithRestParameter3('hello', 10); // error no call signature
 strOrNum = new unionWithRestParameter3('hello', 10, 11); // error no call signature
 strOrNum = new unionWithRestParameter3('hello', "hello"); // error no call signature
 strOrNum = new unionWithRestParameter3(); // error no call signature
+
 ```
 
 
@@ -190,7 +191,6 @@ strOrNum = new unionWithRestParameter3("hello", "hello"); // error no call signa
 strOrNum = new unionWithRestParameter3(); // error no call signature
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
     5: // If each type in U has construct signatures and the sets of construct signatures are identical ignoring return types,
@@ -206,4 +206,5 @@ strOrNum = new unionWithRestParameter3(); // error no call signature
    90: strOrNum = new unionWithRestParameter3("hello", 10, 11); // error no call signature
    91: strOrNum = new unionWithRestParameter3("hello", "hello"); // error no call signature
 ```
+
 

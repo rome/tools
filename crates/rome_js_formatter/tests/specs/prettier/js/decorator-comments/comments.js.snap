@@ -12,6 +12,7 @@ class Something {
     // comment
     static property: Array<string>;
 }
+
 ```
 
 
@@ -39,7 +40,6 @@ class Something {
     static property: Array<string>;
 }
 ```
-
 
 # Errors
 ```

@@ -48,6 +48,7 @@ expect(
     bar;
   }
 ).toThrow(ReferenceError);
+
 ```
 
 
@@ -166,7 +167,6 @@ bar;
 }
 ).toThrow(ReferenceError)
 ```
-
 
 # Errors
 ```

@@ -12,6 +12,7 @@ call(1,2,3)
 function f() {
   call(1,2,3)
 }
+
 ```
 
 
@@ -37,6 +38,5 @@ function f() {
   call(1, 2, 3);
 }
 ```
-
 
 

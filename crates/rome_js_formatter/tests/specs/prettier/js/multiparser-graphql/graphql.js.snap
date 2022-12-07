@@ -13,6 +13,7 @@ mutation     MarkReadNotificationMutation(
     : MarkReadNotificationData!
   )
 { markReadNotification(data: $input ) { notification {seenState} } }`)
+
 ```
 
 
@@ -54,6 +55,5 @@ mutation     MarkReadNotificationMutation(
 { markReadNotification(data: $input ) { notification {seenState} } }`,
 );
 ```
-
 
 

@@ -3,59 +3,47 @@ use rome_diagnostics::console::fmt::{Formatter, Termcolor};
 use rome_diagnostics::console::markup;
 use rome_diagnostics::termcolor;
 use rome_diagnostics::{DiagnosticExt, PrintDiagnostic};
-use rome_formatter::{format_node, FormatLanguage};
 use rome_rowan::SyntaxNode;
-
-pub struct CheckReformatParams<'a, L>
-where
-    L: FormatLanguage + Clone + 'static,
-{
-    root: &'a SyntaxNode<L::SyntaxLanguage>,
-    text: &'a str,
-    file_name: &'a str,
-}
-
-impl<'a, L> CheckReformatParams<'a, L>
-where
-    L: FormatLanguage + Clone + 'static,
-{
-    pub fn new(root: &'a SyntaxNode<L::SyntaxLanguage>, text: &'a str, file_name: &'a str) -> Self {
-        CheckReformatParams {
-            root,
-            text,
-            file_name,
-        }
-    }
-}
 
 /// Perform a second pass of formatting on a file, printing a diff if the
 /// output doesn't match the input
 ///
-pub struct CheckReformat<'a, 'b, L>
+pub struct CheckReformat<'a, L>
 where
     L: TestFormatLanguage,
 {
-    params: CheckReformatParams<'a, L::FormatLanguage>,
-    language: &'b L,
+    root: &'a SyntaxNode<L::SyntaxLanguage>,
+    text: &'a str,
+    file_name: &'a str,
+
+    language: &'a L,
+    options: L::Options,
 }
 
-impl<'a, 'b, L> CheckReformat<'a, 'b, L>
+impl<'a, L> CheckReformat<'a, L>
 where
     L: TestFormatLanguage,
 {
-    pub fn new(params: CheckReformatParams<'a, L::FormatLanguage>, language: &'b L) -> Self {
-        CheckReformat { params, language }
-    }
+    pub fn new(
+        root: &'a SyntaxNode<L::SyntaxLanguage>,
+        text: &'a str,
+        file_name: &'a str,
 
-    pub fn check_reformat(&self) {
-        let CheckReformatParams {
+        language: &'a L,
+        options: L::Options,
+    ) -> Self {
+        CheckReformat {
             root,
             text,
             file_name,
-        } = self.params;
 
-        let format_language = self.language.format_language();
-        let re_parse = self.language.parse(text);
+            language,
+            options,
+        }
+    }
+
+    pub fn check_reformat(&self) {
+        let re_parse = self.language.parse(self.text);
 
         // Panic if the result from the formatter has syntax errors
         if re_parse.has_errors() {
@@ -64,8 +52,8 @@ where
             for diagnostic in re_parse.diagnostics() {
                 let error = diagnostic
                     .clone()
-                    .with_file_path(file_name)
-                    .with_file_source_code(text.to_string());
+                    .with_file_path(self.file_name)
+                    .with_file_source_code(self.text.to_string());
                 Formatter::new(&mut Termcolor(&mut buffer))
                     .write_markup(markup! {
                         {PrintDiagnostic::verbose(&error)}
@@ -79,11 +67,17 @@ where
             )
         }
 
-        let formatted = format_node(&re_parse.syntax(), format_language.clone()).unwrap();
+        let formatted = self
+            .language
+            .format_node(self.options.clone(), &re_parse.syntax())
+            .unwrap();
         let printed = formatted.print().unwrap();
 
-        if text != printed.as_code() {
-            let input_format_element = format_node(root, format_language).unwrap();
+        if self.text != printed.as_code() {
+            let input_format_element = self
+                .language
+                .format_node(self.options.clone(), self.root)
+                .unwrap();
             let pretty_input_ir = format!("{}", formatted.into_document());
             let pretty_reformat_ir = format!("{}", input_format_element.into_document());
 
@@ -97,7 +91,7 @@ where
 
             println!("{diff}");
 
-            similar_asserts::assert_eq!(text, printed.as_code());
+            similar_asserts::assert_eq!(self.text, printed.as_code());
         }
     }
 }

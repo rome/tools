@@ -32,6 +32,7 @@ info:
 <div {//comment
   ...a // comment
 }/>;
+
 ```
 
 
@@ -110,6 +111,5 @@ info:
   }
 />;
 ```
-
 
 

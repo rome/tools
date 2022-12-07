@@ -626,19 +626,19 @@ fn range_match(filter: Option<TextRange>, range: TextRange) -> bool {
 ///
 /// - `// rome-ignore format` -> `vec![]`
 /// - `// rome-ignore lint` -> `vec![Everything]`
-/// - `// rome-ignore lint/correctness/useWhile` -> `vec![Rule("correctness/useWhile")]`
-/// - `// rome-ignore lint/correctness/useWhile lint/nursery/noUnreachable` -> `vec![Rule("correctness/useWhile"), Rule("nursery/noUnreachable")]`
-/// - `// rome-ignore lint(correctness/useWhile)` -> `vec![MaybeLegacy("correctness/useWhile")]`
-/// - `// rome-ignore lint(correctness/useWhile) lint(nursery/noUnreachable)` -> `vec![MaybeLegacy("correctness/useWhile"), MaybeLegacy("nursery/noUnreachable")]`
+/// - `// rome-ignore lint/style/useWhile` -> `vec![Rule("style/useWhile")]`
+/// - `// rome-ignore lint/style/useWhile lint/nursery/noUnreachable` -> `vec![Rule("style/useWhile"), Rule("nursery/noUnreachable")]`
+/// - `// rome-ignore lint(style/useWhile)` -> `vec![MaybeLegacy("style/useWhile")]`
+/// - `// rome-ignore lint(style/useWhile) lint(nursery/noUnreachable)` -> `vec![MaybeLegacy("style/useWhile"), MaybeLegacy("nursery/noUnreachable")]`
 type SuppressionParser<D> = fn(&str) -> Vec<Result<SuppressionKind, D>>;
 
 /// This enum is used to categorize what is disabled by a suppression comment and with what syntax
 pub enum SuppressionKind<'a> {
     /// A suppression disabling all lints eg. `// rome-ignore lint`
     Everything,
-    /// A suppression disabling a specific rule eg. `// rome-ignore lint/correctness/useWhile`
+    /// A suppression disabling a specific rule eg. `// rome-ignore lint/style/useWhile`
     Rule(&'a str),
-    /// A suppression using the legacy syntax to disable a specific rule eg. `// rome-ignore lint(correctness/useWhile)`
+    /// A suppression using the legacy syntax to disable a specific rule eg. `// rome-ignore lint(style/useWhile)`
     MaybeLegacy(&'a str),
 }
 

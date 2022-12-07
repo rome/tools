@@ -10,6 +10,7 @@ info:
 export @decorator class Foo {}
 
 export default @decorator class {}
+
 ```
 
 
@@ -39,7 +40,6 @@ export
 export default
 @decorator class {}
 ```
-
 
 # Errors
 ```

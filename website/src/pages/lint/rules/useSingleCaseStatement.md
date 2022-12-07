@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # useSingleCaseStatement (since v0.7.0)
 
-> This rule is recommended by Rome.
-
 Enforces case clauses have a single statement, emits a quick fix wrapping
 the statements in a block
 
@@ -23,9 +21,9 @@ switch (foo) {
 }
 ```
 
-<pre class="language-text"><code class="language-text">correctness/useSingleCaseStatement.js:4:9 <a href="https://docs.rome.tools/lint/rules/useSingleCaseStatement">lint/correctness/useSingleCaseStatement</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
+<pre class="language-text"><code class="language-text">style/useSingleCaseStatement.js:4:9 <a href="https://docs.rome.tools/lint/rules/useSingleCaseStatement">lint/style/useSingleCaseStatement</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">A switch case should only have a single statement. If you want more, then wrap it in a block.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">A switch case should only have a single statement. If you want more, then wrap it in a block.</span>
   
     <strong>2 │ </strong>    case true:
     <strong>3 │ </strong>    case false:

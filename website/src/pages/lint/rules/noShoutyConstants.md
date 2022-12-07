@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noShoutyConstants (since v0.7.0)
 
-> This rule is recommended by Rome.
-
 Disallow the use of constants which its value is the upper-case version of its name.
 
 ## Examples
@@ -20,7 +18,7 @@ console.log(FOO);
 
 <pre class="language-text"><code class="language-text">style/noShoutyConstants.js:1:7 <a href="https://docs.rome.tools/lint/rules/noShoutyConstants">lint/style/noShoutyConstants</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Redundant constant declaration.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Redundant constant declaration.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>const FOO = &quot;FOO&quot;;
    <strong>   │ </strong>      <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>

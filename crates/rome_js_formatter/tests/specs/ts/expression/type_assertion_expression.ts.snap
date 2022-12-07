@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: type_assertion_expression.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/expression/type_assertion_expression.ts
 ---
 
 # Input
 
-```js
+```ts
 let x = <
     const
     >"hello";
@@ -31,7 +32,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 let x = <const>"hello";
 let y = <string>x;
 var d = <Error>{ name: "foo", message: "bar" };

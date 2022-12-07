@@ -16,9 +16,7 @@ rome_rowan = { path = "../rome_rowan" }
 [dev-dependencies]
 rome_parser = { path = "../rome_parser" }
 rome_formatter_test = {path = "../rome_formatter_test"}
-rome_console = { path = "../rome_console" }
 rome_fs = { path = "../rome_fs" }
-rome_service = { path = "../rome_service" }
 rome_json_parser = { path = "../rome_json_parser" }
 rome_json_factory = { path = "../rome_json_factory" }
 serde = { version = "1", features = ["derive"] }

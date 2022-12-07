@@ -26,6 +26,7 @@ declare class C { f(...superSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSu
 [veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong, ...a] = [];
 var {veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong, ...a} = {};
 
+
 ```
 
 
@@ -90,7 +91,6 @@ var {
 } = {};
 ```
 
-
 # Errors
 ```
 trailing-commas.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -121,4 +121,5 @@ trailing-commas.js:13:1 parse ━━━━━━━━━━━━━━━━�
    13: declare class C { f(...superSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperLong): void; }
    16:   superSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperLong,
 ```
+
 
