@@ -363,14 +363,11 @@ impl SemanticModel {
     /// assert_eq!(2, all_calls_to_f.count());
     /// ```
     pub fn all_calls(&self, function: &JsFunctionDeclaration) -> AllCallsIter {
-        let references = function.id()
+        let references = function
+            .id()
             .map(|id| id.all_reads(self))
-            .unwrap_or_else(|_| {
-                std::iter::successors(None, Reference::find_next_read)
-            });
+            .unwrap_or_else(|_| std::iter::successors(None, Reference::find_next_read));
 
-        AllCallsIter {
-            references
-        }   
+        AllCallsIter { references }
     }
 }

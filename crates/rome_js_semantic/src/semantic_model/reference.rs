@@ -104,14 +104,12 @@ impl Reference {
 
     /// Returns this reference as a [Call] if possible
     pub fn as_call(&self) -> Option<FunctionCall> {
-        let call = self.syntax()
-            .ancestors()
-            .find(|x| {
-                !matches!(
-                    x.kind(),
-                    JsSyntaxKind::JS_REFERENCE_IDENTIFIER | JsSyntaxKind::JS_IDENTIFIER_EXPRESSION
-                )
-            });
+        let call = self.syntax().ancestors().find(|x| {
+            !matches!(
+                x.kind(),
+                JsSyntaxKind::JS_REFERENCE_IDENTIFIER | JsSyntaxKind::JS_IDENTIFIER_EXPRESSION
+            )
+        });
 
         match call {
             Some(node) if node.kind() == JsSyntaxKind::JS_CALL_EXPRESSION => Some(FunctionCall {
@@ -159,14 +157,14 @@ impl FunctionCall {
 }
 
 pub struct AllCallsIter {
-    pub(crate) references: AllBindingReadReferencesIter
+    pub(crate) references: AllBindingReadReferencesIter,
 }
 
 impl Iterator for AllCallsIter {
     type Item = FunctionCall;
 
     fn next(&mut self) -> Option<Self::Item> {
-        while let Some(reference) = self.references.next() {
+        for reference in self.references.by_ref() {
             if let Some(call) = reference.as_call() {
                 return Some(call);
             }
@@ -241,7 +239,6 @@ pub trait ReferencesExtensions {
 }
 
 impl<T: IsBindingAstNode> ReferencesExtensions for T {}
-
 
 pub trait CallsExtensions {
     fn all_calls(&self, model: &SemanticModel) -> AllCallsIter;
