@@ -368,6 +368,10 @@ export interface Nursery {
 	 */
 	noConstEnum?: RuleConfiguration;
 	/**
+	 * Disallow constant expressions in conditions
+	 */
+	noConstantCondition?: RuleConfiguration;
+	/**
 	 * Disallow returning a value from a constructor
 	 */
 	noConstructorReturn?: RuleConfiguration;
@@ -720,6 +724,7 @@ export type Category =
 	| "lint/nursery/useAriaPropsForRole"
 	| "lint/nursery/useAriaPropTypes"
 	| "lint/nursery/noRedundantUseStrict"
+	| "lint/nursery/noConstantCondition"
 	| "files/missingHandler"
 	| "format"
 	| "internalError/io"

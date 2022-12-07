@@ -54,110 +54,105 @@ if (`${a}`);
 if (`${foo()}`);
 if (`${a === 'b' && b === 'a'}`);
 if (`foo${a}` === 'fooa');
-// if (tag`a`);
-// if (tag`${a}`);
-// if (+(a || true));
-// if (-(a || true));
-// if (~(a || 1));
-// if (+(a && 0) === +(b && 0));
-// while (~!a);
-// while (a = b);
-// while (`${a}`);
-// for (; x < 10;);
-// for (; ;);
-// for (; `${a}`;);
-// do { } while (x)
-// q > 0 ? 1 : 2;
-// `${a}` === a ? 1 : 2
-//   `foo${a}` === a ? 1 : 2
-// tag`a` === a ? 1 : 2
-// tag`${a}` === a ? 1 : 2
-// while (x += 3) { }
-// while (tag`a`) { }
-// while (tag`${a}`) { }
+if (tag`a`);
+if (tag`${a}`);
+if (+(a || true));
+if (-(a || true));
+if (~(a || 1));
+if (+(a && 0) === +(b && 0));
+while (~!a);
+while (a = b);
+while (`${a}`);
+for (; x < 10;);
+for (; ;);
+for (; `${a}`;);
+do { } while (x)
+q > 0 ? 1 : 2;
+`${a}` === a ? 1 : 2;
+`foo${a}` === a ? 1 : 2;
+tag`a` === a ? 1 : 2;
+tag`${a}` === a ? 1 : 2;
+while (x += 3) { };
+while (tag`a`) { };
+while (tag`${a}`) { };
 // while (`\\\n${a}`) { }
 
-// // typeof conditions
-// if (typeof x === 'undefined') { }
-// if (`${typeof x}` === 'undefined') { }
-// if (a === 'str' && typeof b) { }
-// typeof a == typeof b
-// typeof 'a' === 'string' || typeof b === 'string'
-//   `${typeof 'a'}` === 'string' || `${typeof b}` === 'string'
+// typeof conditions
+if (typeof x === 'undefined') { };
+if (`${typeof x}` === 'undefined') { };
+if (a === 'str' && typeof b) { };
+typeof a == typeof b;
+typeof 'a' === 'string' || typeof b === 'string';
+`${typeof 'a'}` === 'string' || `${typeof b}` === 'string';
 
-// // void conditions
-// if (void a || a);
-// if (a || void a);
-// if (xyz === 'str1' && abc === 'str2') { }
-// if (xyz === 'str1' || abc === 'str2') { }
-// if (xyz === 'str1' || abc === 'str2' && pqr === 5) { }
-// if (typeof abc === 'string' && abc === 'str2') { }
-// if (false || abc === 'str') { }
-// if (true && abc === 'str') { }
-// if (typeof 'str' && abc === 'str') { }
-// if (abc === 'str' || false || def === 'str') { }
-// if (true && abc === 'str' || def === 'str') { }
-// if (true && typeof abc === 'string') { }
+// void conditions
+if (void a || a);
+if (a || void a);
 
-// // string literals
-// if ('str1' && a) { }
-// if (a && 'str') { }
-// if ((foo || true) === 'baz') { }
-// if ((foo || 'bar') === 'baz') { }
-// if ((foo || 'bar') !== 'baz') { }
-// if ((foo || 'bar') == 'baz') { }
-// if ((foo || 'bar') != 'baz') { }
-// if ((foo || 233) > 666) { }
-// if ((foo || 233) < 666) { }
-// if ((foo || 233) >= 666) { }
-// if ((foo || 233) <= 666) { }
-// if ((key || 'k') in obj) { }
-// if ((foo || {}) instanceof obj) { }
-// if ((foo || 'bar' || 'bar') === 'bar');
+if (xyz === 'str1' && abc === 'str2') { }
+if (xyz === 'str1' || abc === 'str2') { }
+if (xyz === 'str1' || abc === 'str2' && pqr === 5) { }
+if (typeof abc === 'string' && abc === 'str2') { }
+if (false || abc === 'str') { }
+if (true && abc === 'str') { }
+if (typeof 'str' && abc === 'str') { }
+if (abc === 'str' || false || def === 'str') { }
+if (true && abc === 'str' || def === 'str') { }
+if (true && typeof abc === 'string') { }
 
-// if ((foo || 1n) === 'baz') { }
-// if (a && 0n || b);
-// if (1n && a) { };
+// string literals
+if ('str1' && a) { }
+if (a && 'str') { }
+if ((foo || true) === 'baz') { }
+if ((foo || 'bar') === 'baz') { }
+if ((foo || 'bar') !== 'baz') { }
+if ((foo || 'bar') == 'baz') { }
+if ((foo || 'bar') != 'baz') { }
+if ((foo || 233) > 666) { }
+if ((foo || 233) < 666) { }
+if ((foo || 233) >= 666) { }
+if ((foo || 233) <= 666) { }
+if ((key || 'k') in obj) { }
+if ((foo || {}) instanceof obj) { }
+if ((foo || 'bar' || 'bar') === 'bar');
 
-// if ('' + [y] === '' + [ty]) { }
-// if ('a' === '' + [ty]) { }
-// if ('' + [y, m, d] === 'a') { }
-// if ('' + [y, 'm'] === '' + [ty, 'tm']) { }
-// if ('' + [y, 'm'] === '' + ['ty']) { }
-// if ([,] in ($2)); else;
-// if ([...x] + '' === 'y') { }
+if ((foo || 1n) === 'baz') { }
+if (a && 0n || b);
+if (1n && a) { };
 
-// // { checkLoops: false }
-// // { code: "while(true);", options: [{ checkLoops: false }] },
-// // { code: "for(;true;);", options: [{ checkLoops: false }] },
-// // { code: "do{}while(true)", options: [{ checkLoops: false }] },
+if ('' + [y] === '' + [ty]) { }
+if ('a' === '' + [ty]) { }
+if ('' + [y, m, d] === 'a') { }
+if ('' + [y, 'm'] === '' + [ty, 'tm']) { }
+if ('' + [y, 'm'] === '' + ['ty']) { }
+if ([,] in ($2)); else;
+if ([...x] + '' === 'y') { }
 
 // function* foo() { while (true) { yield 'foo'; } }
 // function* foo() { for (; true;) { yield 'foo'; } }
 // function* foo() { do { yield 'foo'; } while (true) }
 // function* foo() { while (true) { while (true) { yield; } } }
-// function* foo() { for (; yield;) { } }
-// function* foo() { for (; ; yield) { } }
+function* foo() { for (; yield;) { } }
+function* foo() { for (; ; yield) { } }
 // function* foo() { while (true) { function* foo() { yield; } yield; } }
-// function* foo() { for (let x = yield; x < 10; x++) { yield; } yield; }
-// function* foo() { for (let x = yield; ; x++) { yield; } }
-// if (new Number(x) + 1 === 2) { }
+function* foo() { for (let x = yield; x < 10; x++) { yield; } yield; }
+function* foo() { for (let x = yield; ; x++) { yield; } }
+if (new Number(x) + 1 === 2) { }
 
-// if ([a] == [b]) { }
-// if (+[...a]) { }
-// if (+[...[...a]]) { }
-// if (`${[...a]}`) { }
-// if (`${[a]}`) { }
-// if (+[a]) { }
-// if (0 - [a]) { }
-// if (1 * [a]) { }
+if ([a] == [b]) { }
+if (+[...a]) { }
+if (+[...[...a]]) { }
+if (`${[...a]}`) { }
+if (`${[a]}`) { }
+if (+[a]) { }
+if (0 - [a]) { }
+if (1 * [a]) { }
 
-// // Boolean function
-// if (Boolean(a)) { }
-// if (Boolean(...args)) { }
-// if (foo.Boolean(1)) { }
+// Boolean function
+if (Boolean(a)) { }
+if (Boolean(...args)) { }
+if (foo.Boolean(1)) { }
+// TODO need to use semantic model
 // function foo(Boolean) { if (Boolean(1)) { } }
 // const Boolean = () => { }; if (Boolean(1)) { }
-//   // { code: "if (Boolean()) {}", globals: { Boolean: "off" } },
-//   // "const undefined = 'lol'; if (undefined) {}",
-//   // { code: "if (undefined) {}", globals: { undefined: "off" } }
+// const undefined = 'lol'; if (undefined) { }

@@ -808,6 +808,17 @@
             }
           ]
         },
+        "noConstantCondition": {
+          "description": "Disallow constant expressions in conditions",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noConstructorReturn": {
           "description": "Disallow returning a value from a constructor",
           "anyOf": [
