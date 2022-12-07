@@ -32,9 +32,11 @@ declare_rule! {
     /// ### Valid
     ///
     /// ```jsx
-    /// <img src="src" alt="alt" />;
-    /// <img src="src" alt={photo} />;
-    /// <img src="bar" aria-hidden alt="Picture of me taking a photo of an image" />;
+    /// <>
+    /// 	<img src="src" alt="alt" />
+    /// 	<img src="src" alt={photo} />
+    /// 	<img src="bar" aria-hidden alt="Picture of me taking a photo of an image" />
+    /// </>
     /// ```
     ///
     pub(crate) NoRedundantAlt {
