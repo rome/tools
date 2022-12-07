@@ -622,7 +622,7 @@
           ]
         },
         "noConstructorReturn": {
-          "description": "Disallow returning a value from a constructor",
+          "description": "Disallow returning a value from a constructor.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

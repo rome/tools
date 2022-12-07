@@ -302,7 +302,7 @@ export interface Nursery {
 	 */
 	noConstEnum?: RuleConfiguration;
 	/**
-	 * Disallow returning a value from a constructor
+	 * Disallow returning a value from a constructor.
 	 */
 	noConstructorReturn?: RuleConfiguration;
 	/**

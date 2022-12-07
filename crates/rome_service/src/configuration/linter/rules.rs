@@ -731,7 +731,7 @@ struct NurserySchema {
     no_conditional_assignment: Option<RuleConfiguration>,
     #[doc = "Disallow TypeScript const enum"]
     no_const_enum: Option<RuleConfiguration>,
-    #[doc = "Disallow returning a value from a constructor"]
+    #[doc = "Disallow returning a value from a constructor."]
     no_constructor_return: Option<RuleConfiguration>,
     #[doc = "Enforces that no distracting elements are used."]
     no_distracting_elements: Option<RuleConfiguration>,
