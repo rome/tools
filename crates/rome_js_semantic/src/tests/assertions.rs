@@ -335,9 +335,11 @@ impl SemanticAssertion {
                 range: token.parent().unwrap().text_range(),
             }))
         } else if assertion_text.contains("/*?") {
-            Some(SemanticAssertion::UnresolvedReference(UnresolvedReferenceAssertion {
-                range: token.parent().unwrap().text_range(),
-            }))
+            Some(SemanticAssertion::UnresolvedReference(
+                UnresolvedReferenceAssertion {
+                    range: token.parent().unwrap().text_range(),
+                },
+            ))
         } else {
             None
         }
@@ -719,7 +721,8 @@ impl SemanticAssertions {
         }
 
         // Check every unresolved_reference assertion
-        let is_unresolved_reference = |e: &SemanticEvent| matches!(e, SemanticEvent::UnresolvedReference { .. });
+        let is_unresolved_reference =
+            |e: &SemanticEvent| matches!(e, SemanticEvent::UnresolvedReference { .. });
 
         for unresolved_reference in self.unresolved_references.iter() {
             match events_by_pos.get(&unresolved_reference.range.start()) {
@@ -729,26 +732,36 @@ impl SemanticAssertions {
                         .any(|e| matches!(e, SemanticEvent::UnresolvedReference { .. }));
                     if !ok {
                         show_all_events(test_name, code, events_by_pos, is_unresolved_reference);
-                        show_unmatched_assertion(test_name, code, unresolved_reference, unresolved_reference.range);
+                        show_unmatched_assertion(
+                            test_name,
+                            code,
+                            unresolved_reference,
+                            unresolved_reference.range,
+                        );
                         panic!("No UnresolvedReference event found");
                     }
                 }
                 None => {
                     show_all_events(test_name, code, events_by_pos, is_unresolved_reference);
-                    show_unmatched_assertion(test_name, code, unresolved_reference, unresolved_reference.range);
+                    show_unmatched_assertion(
+                        test_name,
+                        code,
+                        unresolved_reference,
+                        unresolved_reference.range,
+                    );
                     panic!("No UnresolvedReference event found");
-
                 }
             }
         }
     }
 }
 
-fn show_unmatched_assertion( test_name: &str,
+fn show_unmatched_assertion(
+    test_name: &str,
     code: &str,
     assertion: &impl std::fmt::Debug,
-    assertion_range: TextRange)
-{
+    assertion_range: TextRange,
+) {
     let diagnostic = TestSemanticDiagnostic::new(
         format!("This assertion was not matched: {assertion:?}"),
         assertion_range,
@@ -767,10 +780,9 @@ fn show_all_events<F>(
     test_name: &str,
     code: &str,
     events_by_pos: HashMap<TextSize, Vec<SemanticEvent>>,
-    f: F
-) 
-where 
-    F: Fn(&SemanticEvent) -> bool
+    f: F,
+) where
+    F: Fn(&SemanticEvent) -> bool,
 {
     let mut console = EnvConsole::default();
     let mut all_events = vec![];
@@ -782,17 +794,14 @@ where
         }
     }
 
-    all_events.sort_by(|l,r| l.range().start().cmp(&r.range().start()));
+    all_events.sort_by_key(|l| l.range().start());
 
     for e in all_events {
-        let diagnostic = TestSemanticDiagnostic::new(
-            format!("{e:?}"),
-            e.range(),
-        );
+        let diagnostic = TestSemanticDiagnostic::new(format!("{e:?}"), e.range());
         let error = diagnostic
             .with_file_path((test_name.to_string(), FileId::zero()))
             .with_file_source_code(code);
-    
+
         console.log(markup! {
             {PrintDiagnostic::verbose(&error)}
         });
