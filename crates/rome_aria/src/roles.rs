@@ -652,7 +652,15 @@ impl<'a> AriaRoles {
     }
 
     /// Given the name of element, the function tell whether it's interactive
-    pub fn is_element_interactive(&self, element_name: &str) -> bool {
+    pub fn is_not_interactive_element(&self, element_name: &str) -> bool {
+        // <header> elements do not technically have semantics, unless the
+        // element is a direct descendant of <body>, and this plugin cannot
+        // reliably test that.
+        //
+        // Check: https://www.w3.org/TR/wai-aria-practices/examples/landmarks/banner.html
+        if element_name == "header" {
+            return false;
+        }
         for element in Self::ROLE_WITH_CONCEPTS {
             let role = match *element {
                 "checkbox" => &CheckboxRole as &dyn AriaRoleDefinitionWithConcepts,
@@ -691,12 +699,14 @@ impl<'a> AriaRoles {
             };
             if let Some(mut concepts) = role.concepts_by_element_name(element_name) {
                 if concepts.any(|(name, _)| *name == element_name) {
-                    return role.is_interactive();
+                    if !role.is_interactive() {
+                        return true;
+                    }
                 }
             }
         }
 
-        true
+        false
     }
 }
 
@@ -720,12 +730,12 @@ mod test {
     fn should_be_interactive() {
         let aria_roles = AriaRoles {};
 
-        assert!(aria_roles.is_element_interactive("input"));
-        assert!(aria_roles.is_element_interactive("option"));
-        assert!(aria_roles.is_element_interactive("select"));
-        assert!(aria_roles.is_element_interactive("button"));
-        assert!(aria_roles.is_element_interactive("td"));
-        assert!(aria_roles.is_element_interactive("tr"));
-        assert!(aria_roles.is_element_interactive("hr"));
+        assert!(!aria_roles.is_not_interactive_element("header"));
+        assert!(aria_roles.is_not_interactive_element("h1"));
+        assert!(aria_roles.is_not_interactive_element("h2"));
+        assert!(aria_roles.is_not_interactive_element("h3"));
+        assert!(aria_roles.is_not_interactive_element("h4"));
+        assert!(aria_roles.is_not_interactive_element("h5"));
+        assert!(aria_roles.is_not_interactive_element("h6"));
     }
 }

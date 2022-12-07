@@ -91,7 +91,7 @@ impl Rule for NoNoninteractiveElementToInteractiveRole {
                 _ => None,
             }?;
             let element_name = node.name().ok()?.as_jsx_name()?.value_token().ok()?;
-            if !aria_roles.is_element_interactive(element_name.text_trimmed())
+            if aria_roles.is_not_interactive_element(element_name.text_trimmed())
                 && aria_roles.is_role_interactive(role_attribute_value.text())
             {
                 return Some(RuleState {

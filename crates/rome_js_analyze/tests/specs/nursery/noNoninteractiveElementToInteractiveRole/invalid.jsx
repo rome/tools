@@ -5,3 +5,4 @@ var a = <h1 role="combobox"></h1>;
 var a = <h1 role="scrollbar"></h1>;
 var a = <h1 role={"scrollbar"}></h1>;
 var a = <h1 role={`scrollbar`}></h1>;
+	var a = <ol role="menuitem" />;

@@ -11,6 +11,7 @@ var a = <h1 role="combobox"></h1>;
 var a = <h1 role="scrollbar"></h1>;
 var a = <h1 role={"scrollbar"}></h1>;
 var a = <h1 role={`scrollbar`}></h1>;
+	var a = <ol role="menuitem" />;
 
 ```
 
@@ -107,7 +108,7 @@ invalid.jsx:6:13 lint/nursery/noNoninteractiveElementToInteractiveRole ━━━
   > 6 │ var a = <h1 role={"scrollbar"}></h1>;
       │             ^^^^^^^^^^^^^^^^^^
     7 │ var a = <h1 role={`scrollbar`}></h1>;
-    8 │ 
+    8 │ 	var a = <ol role="menuitem" />;
   
   i Replace h1 with a div or a span.
   
@@ -123,7 +124,8 @@ invalid.jsx:7:13 lint/nursery/noNoninteractiveElementToInteractiveRole ━━━
     6 │ var a = <h1 role={"scrollbar"}></h1>;
   > 7 │ var a = <h1 role={`scrollbar`}></h1>;
       │             ^^^^^^^^^^^^^^^^^^
-    8 │ 
+    8 │ 	var a = <ol role="menuitem" />;
+    9 │ 
   
   i Replace h1 with a div or a span.
   
