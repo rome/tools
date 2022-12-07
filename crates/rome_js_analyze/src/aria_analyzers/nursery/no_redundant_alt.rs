@@ -140,7 +140,7 @@ impl Rule for NoRedundantAlt {
                 rule_category!(),
                 state.range(),
                 markup! {
-                    "Avoid the words \"image\", \"picture\", or \"photo\" in" <Emphasis>"img"</Emphasis>" element alt text."
+                    "Avoid the words \"image\", \"picture\", or \"photo\" in " <Emphasis>"img"</Emphasis>" element alt text."
                 },
             )
             .note(markup! {
