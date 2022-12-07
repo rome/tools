@@ -1,8 +1,9 @@
 use crate::{react::hooks::react_hook_configuration, semantic_services::Semantic};
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
+use rome_js_semantic::CallsExtensions;
 use rome_js_syntax::{
-    JsCallExpression, JsFunctionBody, JsFunctionDeclaration, JsSyntaxKind, JsSyntaxNode, TextRange,
+    JsCallExpression, JsFunctionBody, JsFunctionDeclaration, JsSyntaxKind, TextRange,
 };
 use rome_rowan::AstNode;
 
@@ -48,8 +49,12 @@ pub enum Suggestion {
     },
 }
 
-fn is_top_level(node: &JsSyntaxNode) -> Option<JsFunctionDeclaration> {
-    let next = node.ancestors().find(|x| {
+// Verify if the call expression is at the top level
+// of the component
+fn enclosing_function_if_call_is_at_top_level(
+    call: &JsCallExpression,
+) -> Option<JsFunctionDeclaration> {
+    let next = call.syntax().ancestors().find(|x| {
         !matches!(
             x.kind(),
             JsSyntaxKind::JS_STATEMENT_LIST
@@ -92,16 +97,20 @@ impl Rule for UseHookAtTopLevel {
                 path: vec![],
             };
             let mut calls = vec![root];
+
             while let Some(CallPath { call, path }) = calls.pop() {
                 let range = call.syntax().text_range();
+
                 let mut path = path.clone();
                 path.push(range);
 
-                if let Some(f) = is_top_level(call.syntax()) {
-                    for call in model.all_calls(&f) {
-                        let node = call.tree();
-                        let path = path.clone();
-                        calls.push(CallPath { call: node, path });
+                if let Some(enclosing_function) = enclosing_function_if_call_is_at_top_level(&call)
+                {
+                    for call in enclosing_function.all_calls(model) {
+                        calls.push(CallPath {
+                            call: call.tree(),
+                            path: path.clone(),
+                        });
                     }
                 } else {
                     return Some(Suggestion::None {
@@ -128,7 +137,7 @@ impl Rule for UseHookAtTopLevel {
                         rule_category!(),
                         hook_name_range,
                         markup! {
-                            "This hook is not necessarily being called from the Top Level of the component function."
+                            "This hook is being called conditionally, but all hooks must be called in the exact same order in every component render."
                         },
                     )
                 } else {
@@ -136,7 +145,7 @@ impl Rule for UseHookAtTopLevel {
                         rule_category!(),
                         hook_name_range,
                         markup! {
-                            "This hook is being called indirectly and it is not necessarily being called from the Top Level of the component function."
+                            "This hook is being called indirectly and conditionally, but all hooks must be called in the exact same order in every component render."
                         },
                     )
                 };
@@ -155,7 +164,7 @@ impl Rule for UseHookAtTopLevel {
 
                 let diag = diag.note(
                     markup! {
-                        "For React to preserve state between calls, hooks needs to be called always in the same order."
+                        "For React to preserve state between calls, hooks needs to be called unconditionally and always in the same order."
                     },
                 ).note(
                     markup! {
