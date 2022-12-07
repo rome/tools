@@ -338,6 +338,10 @@ export interface Nursery {
 	 */
 	noPrecisionLoss?: RuleConfiguration;
 	/**
+	 * Enforce img alt prop does not contain the word "image", "picture", or "photo".
+	 */
+	noRedundantAlt?: RuleConfiguration;
+	/**
 	 * Prevents from having redundant "use strict".
 	 */
 	noRedundantUseStrict?: RuleConfiguration;
@@ -691,6 +695,7 @@ export type Category =
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noNonNullAssertion"
 	| "lint/nursery/noPrecisionLoss"
+	| "lint/nursery/noRedundantAlt"
 	| "lint/nursery/noRedundantUseStrict"
 	| "lint/nursery/noRestrictedGlobals"
 	| "lint/nursery/noSetterReturn"

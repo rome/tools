@@ -55,6 +55,7 @@ define_dategories! {
     "lint/nursery/noInvalidConstructorSuper": "https://docs.rome.tools/lint/rules/noInvalidConstructorSuper",
     "lint/nursery/noNonNullAssertion": "https://docs.rome.tools/lint/rules/noNonNullAssertion",
     "lint/nursery/noPrecisionLoss": "https://docs.rome.tools/lint/rules/noPrecisionLoss",
+    "lint/nursery/noRedundantAlt": "https://docs.rome.tools/lint/rules/noRedundantAlt",
     "lint/nursery/noRedundantUseStrict": "https://docs.rome.tools/lint/rules/noRedundantUseStrict",
     "lint/nursery/noRestrictedGlobals": "https://docs.rome.tools/lint/rules/noRestrictedGlobals",
     "lint/nursery/noSetterReturn": "https://docs.rome.tools/lint/rules/noSetterReturn",
