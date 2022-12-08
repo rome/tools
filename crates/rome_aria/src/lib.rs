@@ -7,7 +7,7 @@ pub mod roles;
 pub use properties::AriaProperties;
 pub(crate) use roles::AriaRoleDefinition;
 pub use roles::AriaRoles;
-use rome_aria_metadata::{AriaPropertiesEnum, AriaPropertyTypeEnum};
+pub use rome_aria_metadata::{AriaPropertiesEnum, AriaPropertyTypeEnum};
 
 /// It checks if an ARIA property is valid
 ///

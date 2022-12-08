@@ -14,11 +14,11 @@ macro_rules! define_role {
         }
 
         impl $crate::AriaRoleDefinition for $id {
-            fn properties<'a>(&self) -> std::slice::Iter<'a, (&str, bool)> {
+            fn properties(&self) -> std::slice::Iter<(&str, bool)> {
                 $id::PROPS.iter()
             }
 
-            fn roles<'a>(&self) -> std::slice::Iter<'a, &str> {
+            fn roles(&self) -> std::slice::Iter<&str> {
                 $id::ROLES.iter()
             }
         }
@@ -40,11 +40,11 @@ macro_rules! define_property {
         }
 
         impl AriaPropertyDefinition for $id {
-            fn values<'a>(&self) -> std::slice::Iter<'a, &str> {
+            fn values(&self) -> std::slice::Iter<&'static str> {
                 $id::VALUES.iter()
             }
 
-            fn property_type<'a>(&self) -> $crate::AriaPropertyTypeEnum {
+            fn property_type(&self) -> $crate::AriaPropertyTypeEnum {
                 // SAFETY: PROPERTY_TYPE is internal and should not contain extraneous properties
                 $crate::AriaPropertyTypeEnum::from_str($id::PROPERTY_TYPE).unwrap()
             }

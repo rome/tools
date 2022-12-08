@@ -1,12 +1,14 @@
 use crate::aria_services::Aria;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
+use rome_aria::AriaPropertyTypeEnum;
 use rome_console::markup;
 use rome_js_syntax::{
     AnyJsExpression, AnyJsLiteralExpression, AnyJsxAttributeValue, JsSyntaxToken, JsxAttribute,
     TextRange,
 };
 use rome_rowan::{AstNode, AstNodeList};
+use std::slice::Iter;
 
 declare_rule! {
     /// Enforce that ARIA state and property values are valid.
@@ -22,6 +24,14 @@ declare_rule! {
     ///
     /// ```jsx, expect_diagnostic
     /// <span aria-labelledby="" >some text</span>
+    /// ```
+    ///
+    /// ```jsx, expect_diagnostic
+    /// <span aria-valuemax="hey">some text</span>
+    /// ```
+    ///
+    /// ```jsx, expect_diagnostic
+    /// <span aria-orientation="hey">some text</span>
     /// ```
     ///
     /// ### Valid
@@ -48,8 +58,9 @@ declare_rule! {
 
 pub(crate) struct UseAriaProptypesState {
     attribute_value_range: TextRange,
-    allowed_values: Vec<String>,
+    allowed_values: Iter<'static, &'static str>,
     attribute_name: JsSyntaxToken,
+    property_type: AriaPropertyTypeEnum,
 }
 
 impl Rule for UseAriaPropTypes {
@@ -76,15 +87,21 @@ impl Rule for UseAriaPropTypes {
                                 // Early error, the template literal is empty
                                 return Some(UseAriaProptypesState {
                                     attribute_value_range,
-                                    allowed_values: aria_property
-                                        .values()
-                                        .map(|value| value.to_string())
-                                        .collect::<Vec<_>>(),
+                                    allowed_values: aria_property.values(),
                                     attribute_name,
+                                    property_type: aria_property.property_type(),
                                 });
-                            } else {
-                                None
                             }
+                            template
+                                .elements()
+                                .iter()
+                                .next()
+                                .and_then(|chunk| {
+                                    chunk
+                                        .as_js_template_chunk_element()
+                                        .and_then(|t| t.template_chunk_token().ok())
+                                })
+                                .map(|t| t.token_text_trimmed())
                         }
                         AnyJsExpression::AnyJsLiteralExpression(
                             AnyJsLiteralExpression::JsStringLiteralExpression(string),
@@ -98,11 +115,9 @@ impl Rule for UseAriaPropTypes {
             if !aria_property.contains_correct_value(attribute_text.text()) {
                 return Some(UseAriaProptypesState {
                     attribute_value_range,
-                    allowed_values: aria_property
-                        .values()
-                        .map(|value| value.to_string())
-                        .collect::<Vec<_>>(),
+                    allowed_values: aria_property.values(),
                     attribute_name,
+                    property_type: aria_property.property_type(),
                 });
             }
         }
@@ -112,19 +127,73 @@ impl Rule for UseAriaPropTypes {
 
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let attribute_name = state.attribute_name.text_trimmed();
-        Some(
-            RuleDiagnostic::new(
-                rule_category!(),
-                state.attribute_value_range,
-                markup! {
+        let diagnostic = RuleDiagnostic::new(
+            rule_category!(),
+            state.attribute_value_range,
+            markup! {
                 "The value of the ARIA attribute "<Emphasis>{attribute_name}</Emphasis>" is not correct."
             },
-            ).footer_list(
-        markup!{
-                    "The supported values for the "<Emphasis>{attribute_name}</Emphasis>" attribute are:"
+        );
+
+        let diagnostic = match state.property_type {
+            AriaPropertyTypeEnum::Boolean => {
+                diagnostic.footer_list(
+                    markup!{
+                        "The only supported values for the "<Emphasis>{attribute_name}</Emphasis>" is one of the following:"
+                    },
+                    &["true", "false"]
+                )
+            }
+            AriaPropertyTypeEnum::Integer => {
+                diagnostic.note(
+                    markup!{
+                        "The only value supported is a number without fractional components."
+                    }
+                )
+            }
+            AriaPropertyTypeEnum::Id |
+            AriaPropertyTypeEnum::Idlist |
+            AriaPropertyTypeEnum::String => {
+                diagnostic.note(
+                    markup!{
+                        "The only supported value is text."
+                    }
+                )
+            }
+
+            AriaPropertyTypeEnum::Number => {
+                diagnostic.note(
+                    markup!{
+                        "The only supported value is number."
+                    }
+                )
+            }
+            AriaPropertyTypeEnum::Token => {
+                diagnostic.footer_list(
+                    markup!{
+                    "The only supported value for the "<Emphasis>{attribute_name}</Emphasis>" is one of the following:"
                 },
-            &state.allowed_values
-            )
-        )
+                    state.allowed_values.as_slice()
+                )
+            }
+            AriaPropertyTypeEnum::Tokenlist => {
+                diagnostic.footer_list(
+                    markup!{
+                    "The values supported for "<Emphasis>{attribute_name}</Emphasis>" are one or more of the following:"
+                },
+                    state.allowed_values.as_slice()
+                )
+            }
+            AriaPropertyTypeEnum::Tristate => {
+                diagnostic.footer_list(
+                    markup!{
+                        "The only supported value for the "<Emphasis>{attribute_name}</Emphasis>" one of the following:"
+                    },
+                    &["true", "false", "mixed"]
+                )
+            }
+        };
+
+        Some(diagnostic)
     }
 }

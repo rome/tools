@@ -18,10 +18,10 @@ pub trait AriaRoleDefinition: Debug {
     /// let properties = checkbox_role.properties();
     /// assert_eq!(properties.len(), 2);
     /// ```
-    fn properties<'a>(&self) -> Iter<'a, (&str, bool)>;
+    fn properties(&self) -> Iter<(&str, bool)>;
 
     /// It returns an iterator over the possible roles of this definition
-    fn roles<'a>(&self) -> Iter<'a, &str>;
+    fn roles(&self) -> Iter<&str>;
 
     /// Given a [aria property](ARIA_PROPERTIES) as input, it checks if it's required
     /// for the current role.
@@ -45,7 +45,7 @@ pub trait AriaRoleDefinition: Debug {
         if is_aria_property_valid(property_to_check) {
             let property_to_check = AriaPropertiesEnum::from_str(property_to_check);
             if let Ok(property_to_check) = property_to_check {
-                for (property, required) in self.properties().as_ref() {
+                for (property, required) in self.properties() {
                     let property = AriaPropertiesEnum::from_str(property).unwrap();
                     if property == property_to_check {
                         return *required;

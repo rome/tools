@@ -97,7 +97,7 @@ define_property! {
 
 define_property! {
     AriaDropeffect {
-        PROPERTY_TYPE: "id",
+        PROPERTY_TYPE: "tokenlist",
         VALUES: ["copy", "execute", "link", "move", "none", "popup"],
     }
 }
@@ -342,7 +342,7 @@ define_property! {
 pub struct AriaProperties;
 
 impl AriaProperties {
-    pub fn get_property(&self, property_name: &str) -> Option<&dyn AriaPropertyDefinition> {
+    pub fn get_property<'a>(&self, property_name: &str) -> Option<&'a dyn AriaPropertyDefinition> {
         Some(match property_name {
             "aria-activedescendant" => &AriaActivedescendant as &dyn AriaPropertyDefinition,
             "aria-autocomplete" => &AriaAutocomplete as &dyn AriaPropertyDefinition,
@@ -398,7 +398,7 @@ impl AriaProperties {
 
 pub trait AriaPropertyDefinition: Debug {
     /// Returns the allowed values by this property
-    fn values<'a>(&self) -> Iter<'a, &str>;
+    fn values(&self) -> Iter<&str>;
 
     /// Returns the property type
     fn property_type(&self) -> AriaPropertyTypeEnum;
