@@ -74,6 +74,7 @@ define_dategories! {
     "lint/nursery/useExponentiationOperator": "https://docs.rome.tools/lint/rules/useExponentiationOperator",
     "lint/nursery/useNumericLiterals": "https://docs.rome.tools/lint/rules/useNumericLiterals",
     "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
+    "lint/nursery/useHookAtTopLevel": "https://docs.rome.tools/lint/rules/useHookAtTopLevel",
 
     // performance
     "lint/performance/noDelete": "https://docs.rome.tools/lint/rules/noDelete",

@@ -410,6 +410,10 @@ export interface Nursery {
 	 */
 	useExponentiationOperator?: RuleConfiguration;
 	/**
+	 * Enforce that all React hooks are being called from the Top Level component functions.
+	 */
+	useHookAtTopLevel?: RuleConfiguration;
+	/**
 	 * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
 	 */
 	useNumericLiterals?: RuleConfiguration;
@@ -714,6 +718,7 @@ export type Category =
 	| "lint/nursery/useExponentiationOperator"
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/useValidForDirection"
+	| "lint/nursery/useHookAtTopLevel"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
