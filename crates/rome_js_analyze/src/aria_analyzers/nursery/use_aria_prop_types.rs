@@ -19,11 +19,11 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```jsx, expect_diagnostic
-    /// <span role="checkbox" aria-checked="test" >some text</span>
+    /// <span role="checkbox" aria-checked="test">some text</span>
     /// ```
     ///
     /// ```jsx, expect_diagnostic
-    /// <span aria-labelledby="" >some text</span>
+    /// <span aria-labelledby="">some text</span>
     /// ```
     ///
     /// ```jsx, expect_diagnostic
