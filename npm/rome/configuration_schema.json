@@ -599,6 +599,17 @@
             }
           ]
         },
+        "noCommaOperator": {
+          "description": "Disallow comma operator.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noConditionalAssignment": {
           "description": "Disallow assignment operators in conditional expressions.",
           "anyOf": [

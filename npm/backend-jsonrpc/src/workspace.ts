@@ -294,6 +294,10 @@ export interface Nursery {
 	 */
 	noBannedTypes?: RuleConfiguration;
 	/**
+	 * Disallow comma operator.
+	 */
+	noCommaOperator?: RuleConfiguration;
+	/**
 	 * Disallow assignment operators in conditional expressions.
 	 */
 	noConditionalAssignment?: RuleConfiguration;
@@ -698,6 +702,7 @@ export type Category =
 	| "lint/nursery/noRedundantAlt"
 	| "lint/nursery/noRedundantUseStrict"
 	| "lint/nursery/noRestrictedGlobals"
+	| "lint/nursery/noCommaOperator"
 	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnsafeFinally"

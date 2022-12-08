@@ -13,7 +13,7 @@ export function g(a, b /* before */ = /* mid */ 0/* after */) {}
 
 export function g(
 	a,
-	b /* before */ = /* mid */ 0/* after */,/* after coma */
+	b /* before */ = /* mid */ 0/* after */,/* after comma */
 	c
 ) {}
 ```
@@ -82,7 +82,7 @@ invalid.js:9:2 lint/nursery/useDefaultParameterLast  FIXABLE  ━━━━━━
   
      7 │ export function g(
      8 │ 	a,
-   > 9 │ 	b /* before */ = /* mid */ 0/* after */,/* after coma */
+   > 9 │ 	b /* before */ = /* mid */ 0/* after */,/* after comma */
        │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     10 │ 	c
     11 │ ) {}
@@ -90,7 +90,7 @@ invalid.js:9:2 lint/nursery/useDefaultParameterLast  FIXABLE  ━━━━━━
   i The required parameter is here:
   
      8 │ 	a,
-     9 │ 	b /* before */ = /* mid */ 0/* after */,/* after coma */
+     9 │ 	b /* before */ = /* mid */ 0/* after */,/* after comma */
   > 10 │ 	c
        │ 	^
     11 │ ) {}
