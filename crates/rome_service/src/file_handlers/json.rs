@@ -6,17 +6,15 @@ use crate::settings::{
 };
 use crate::workspace::GetSyntaxTreeResult;
 use crate::RomeError;
-#[cfg(debug_assertions)]
-use rome_formatter::FormatError;
-use rome_formatter::Printed;
+#[cfg(any(debug_assertions, target_family = "wasm"))]
+use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
 use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 use rome_parser::AnyParse;
-#[cfg(debug_assertions)]
+#[cfg(any(debug_assertions, target_family = "wasm"))]
 use rome_rowan::{TextRange, TextSize, TokenAtOffset};
-use tracing::debug;
 
 impl Language for JsonLanguage {
     type FormatterSettings = ();
@@ -68,7 +66,7 @@ impl ExtensionHandler for JsonFileHandler {
     }
 }
 
-#[cfg(debug_assertions)]
+#[cfg(any(debug_assertions, target_family = "wasm"))]
 fn formatter_capabilities() -> FormatterCapabilities {
     FormatterCapabilities {
         format: Some(format),
@@ -77,7 +75,7 @@ fn formatter_capabilities() -> FormatterCapabilities {
     }
 }
 
-#[cfg(not(debug_assertions))]
+#[cfg(all(not(debug_assertions), not(target_family = "wasm")))]
 fn formatter_capabilities() -> FormatterCapabilities {
     FormatterCapabilities::default()
 }
@@ -112,6 +110,7 @@ fn debug_formatter_ir(
     Ok(root_element.to_string())
 }
 
+#[cfg(any(debug_assertions, target_family = "wasm"))]
 #[tracing::instrument(level = "debug", skip(parse))]
 fn format(
     rome_path: &RomePath,
@@ -120,7 +119,7 @@ fn format(
 ) -> Result<Printed, RomeError> {
     let options = settings.format_options::<JsonLanguage>(rome_path);
 
-    debug!("Format with the following options: \n{}", options);
+    tracing::debug!("Format with the following options: \n{}", options);
 
     let tree = parse.syntax();
     let formatted = format_node(options, &tree)?;
@@ -131,7 +130,7 @@ fn format(
     }
 }
 
-#[cfg(debug_assertions)]
+#[cfg(any(debug_assertions, target_family = "wasm"))]
 fn format_range(
     rome_path: &RomePath,
     parse: AnyParse,
@@ -145,7 +144,7 @@ fn format_range(
     Ok(printed)
 }
 
-#[cfg(debug_assertions)]
+#[cfg(any(debug_assertions, target_family = "wasm"))]
 fn format_on_type(
     rome_path: &RomePath,
     parse: AnyParse,
