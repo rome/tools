@@ -2,15 +2,15 @@ use crate::{JsIdentifierAssignment, JsReferenceIdentifier, JsSyntaxToken, JsxRef
 use rome_rowan::{declare_node_union, SyntaxResult};
 
 declare_node_union! {
-    pub AnyReferenceIdentifier = JsReferenceIdentifier | JsIdentifierAssignment | JsxReferenceIdentifier
+    pub AnyJsIdentifierUsage = JsReferenceIdentifier | JsIdentifierAssignment | JsxReferenceIdentifier
 }
 
-impl AnyReferenceIdentifier {
+impl AnyJsIdentifierUsage {
     pub fn value_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            AnyReferenceIdentifier::JsReferenceIdentifier(node) => node.value_token(),
-            AnyReferenceIdentifier::JsIdentifierAssignment(node) => node.name_token(),
-            AnyReferenceIdentifier::JsxReferenceIdentifier(node) => node.value_token(),
+            AnyJsIdentifierUsage::JsReferenceIdentifier(node) => node.value_token(),
+            AnyJsIdentifierUsage::JsIdentifierAssignment(node) => node.name_token(),
+            AnyJsIdentifierUsage::JsxReferenceIdentifier(node) => node.value_token(),
         }
     }
 }

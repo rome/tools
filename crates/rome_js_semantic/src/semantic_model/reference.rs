@@ -1,4 +1,4 @@
-use rome_js_syntax::AnyReferenceIdentifier;
+use rome_js_syntax::AnyJsIdentifierUsage;
 
 use super::*;
 use std::sync::Arc;
@@ -119,8 +119,8 @@ impl UnresolvedReference {
         &self.data.node_by_range[&reference.range]
     }
 
-    pub fn tree(&self) -> AnyReferenceIdentifier {
-        AnyReferenceIdentifier::unwrap_cast(self.syntax().clone())
+    pub fn tree(&self) -> AnyJsIdentifierUsage {
+        AnyJsIdentifierUsage::unwrap_cast(self.syntax().clone())
     }
 
     pub fn range(&self) -> &TextRange {
