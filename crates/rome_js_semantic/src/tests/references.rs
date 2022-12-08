@@ -125,6 +125,8 @@ assert_semantics! {
 }
 f(1);"#,
     ok_reference_write_expression, "let a/*#A*/ = 1; let b = a/*WRITE A*/ = 2;",
+    ok_reference_write_object_assignment_pattern,
+        "let a/*#A*/, b/*#B*/; ({a/*WRITE A*/, b/*WRITE B*/} = obj);",
 }
 
 // Write Hoisting
@@ -213,7 +215,6 @@ assert_semantics! {
 }
 
 // Classes
-
 assert_semantics! {
     ok_class_reference,
         "class A/*#A*/ {} new A/*READ A*/();",
@@ -222,6 +223,8 @@ assert_semantics! {
     //https://github.com/rome/tools/issues/3779
     ok_class_expression_2,
         "const A/*#A1*/ = print(class A/*#A2*/ {}); console.log(A/*READ A1*/);",
+    ok_class_static_init,
+        "class C { static { () => a/*READ A*/; let a/*#A*/ = 1; } };",
 }
 
 // Typescript types

@@ -85,50 +85,6 @@ invalid.jsonc:1:6 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━
 
 # Input
 ```js
-let [x = -1, y] = [1,2]; y = 0;
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ let [x = -1, y] = [1,2]; y = 0;
-      │ ^^^
-  
-  i 'x' is never re-assigned.
-  
-  > 1 │ let [x = -1, y] = [1,2]; y = 0;
-      │      ^
-  
-
-```
-
-# Input
-```js
-let {a: x = -1, b: y} = {a:1,b:2}; y = 0;
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ let {a: x = -1, b: y} = {a:1,b:2}; y = 0;
-      │ ^^^
-  
-  i 'x' is never re-assigned.
-  
-  > 1 │ let {a: x = -1, b: y} = {a:1,b:2}; y = 0;
-      │         ^
-  
-
-```
-
-# Input
-```js
 (function() { let x = 1; foo(x); })();
 ```
 
@@ -210,28 +166,6 @@ invalid.jsonc:1:20 lint/nursery/useConst  FIXABLE  ━━━━━━━━━�
 
 # Input
 ```js
-(function() { let [x = -1, y] = [1,2]; y = 0; })();
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:15 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ (function() { let [x = -1, y] = [1,2]; y = 0; })();
-      │               ^^^
-  
-  i 'x' is never re-assigned.
-  
-  > 1 │ (function() { let [x = -1, y] = [1,2]; y = 0; })();
-      │                    ^
-  
-
-```
-
-# Input
-```js
 let f = (function() { let g = x; })(); f = 1;
 ```
 
@@ -253,28 +187,6 @@ invalid.jsonc:1:23 lint/nursery/useConst  FIXABLE  ━━━━━━━━━�
   
   - let·f·=·(function()·{·let·g·=·x;·})();·f·=·1;
   + let·f·=·(function()·{·const·g·=·x;·})();·f·=·1;
-  
-
-```
-
-# Input
-```js
-(function() { let {a: x = -1, b: y} = {a:1,b:2}; y = 0; })();
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:15 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ (function() { let {a: x = -1, b: y} = {a:1,b:2}; y = 0; })();
-      │               ^^^
-  
-  i 'x' is never re-assigned.
-  
-  > 1 │ (function() { let {a: x = -1, b: y} = {a:1,b:2}; y = 0; })();
-      │                       ^
   
 
 ```
@@ -493,50 +405,6 @@ invalid.jsonc:1:15 lint/nursery/useConst ━━━━━━━━━━━━━
 
 # Input
 ```js
-let {a = 0, b} = obj; b = 0; foo(a, b);
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ let {a = 0, b} = obj; b = 0; foo(a, b);
-      │ ^^^
-  
-  i 'a' is never re-assigned.
-  
-  > 1 │ let {a = 0, b} = obj; b = 0; foo(a, b);
-      │      ^
-  
-
-```
-
-# Input
-```js
-let {a: {b, c}} = {a: {b: 1, c: 2}}; b = 3;
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ let {a: {b, c}} = {a: {b: 1, c: 2}}; b = 3;
-      │ ^^^
-  
-  i 'c' is never re-assigned.
-  
-  > 1 │ let {a: {b, c}} = {a: {b: 1, c: 2}}; b = 3;
-      │             ^
-  
-
-```
-
-# Input
-```js
 let {a: {b, c}} = {a: {b: 1, c: 2}}
 ```
 
@@ -563,28 +431,6 @@ invalid.jsonc:1:1 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━
   
   - let·{a:·{b,·c}}·=·{a:·{b:·1,·c:·2}}
   + const·{a:·{b,·c}}·=·{a:·{b:·1,·c:·2}}
-  
-
-```
-
-# Input
-```js
-let a, b; ({a = 0, b} = obj); b = 0; foo(a, b);
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ let a, b; ({a = 0, b} = obj); b = 0; foo(a, b);
-      │ ^^^
-  
-  i 'a' is never re-assigned.
-  
-  > 1 │ let a, b; ({a = 0, b} = obj); b = 0; foo(a, b);
-      │     ^
   
 
 ```
@@ -698,104 +544,6 @@ invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━�
   
   > 1 │ let a, b; ({a = 0, b} = obj); foo(a, b);
       │        ^
-  
-
-```
-
-# Input
-```js
-let {a = 0, b} = obj, c = a; b = a;
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares some variables which are never re-assigned.
-  
-  > 1 │ let {a = 0, b} = obj, c = a; b = a;
-      │ ^^^
-  
-  i 'a' is never re-assigned.
-  
-  > 1 │ let {a = 0, b} = obj, c = a; b = a;
-      │      ^
-  
-  i 'c' is never re-assigned.
-  
-  > 1 │ let {a = 0, b} = obj, c = a; b = a;
-      │                       ^
-  
-
-```
-
-# Input
-```js
-let {a = 0, b} = obj, c = a; b = a;
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares some variables which are never re-assigned.
-  
-  > 1 │ let {a = 0, b} = obj, c = a; b = a;
-      │ ^^^
-  
-  i 'a' is never re-assigned.
-  
-  > 1 │ let {a = 0, b} = obj, c = a; b = a;
-      │      ^
-  
-  i 'c' is never re-assigned.
-  
-  > 1 │ let {a = 0, b} = obj, c = a; b = a;
-      │                       ^
-  
-
-```
-
-# Input
-```js
-let { name, ...otherStuff } = obj; otherStuff = {};
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ let { name, ...otherStuff } = obj; otherStuff = {};
-      │ ^^^
-  
-  i 'name' is never re-assigned.
-  
-  > 1 │ let { name, ...otherStuff } = obj; otherStuff = {};
-      │       ^^^^
-  
-
-```
-
-# Input
-```js
-let { name, ...otherStuff } = obj; otherStuff = {};
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ let { name, ...otherStuff } = obj; otherStuff = {};
-      │ ^^^
-  
-  i 'name' is never re-assigned.
-  
-  > 1 │ let { name, ...otherStuff } = obj; otherStuff = {};
-      │       ^^^^
   
 
 ```
@@ -1067,28 +815,6 @@ invalid.jsonc:1:1 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━
 
 # Input
 ```js
-let x = 'x', y = 'y'; x = 1
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ let x = 'x', y = 'y'; x = 1
-      │ ^^^
-  
-  i 'y' is never re-assigned.
-  
-  > 1 │ let x = 'x', y = 'y'; x = 1
-      │              ^
-  
-
-```
-
-# Input
-```js
 let x = 1, y = 'y'; let z = 1;
 ```
 
@@ -1173,27 +899,6 @@ invalid.jsonc:1:1 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━
   
   - let·{·a,·b,·c}·=·obj;·let·{·x,·y,·z}·=·anotherObj;·x·=·2;
   + const·{·a,·b,·c}·=·obj;·let·{·x,·y,·z}·=·anotherObj;·x·=·2;
-  
-
-```
-
-```
-invalid.jsonc:1:23 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares some variables which are never re-assigned.
-  
-  > 1 │ let { a, b, c} = obj; let { x, y, z} = anotherObj; x = 2;
-      │                       ^^^
-  
-  i 'y' is never re-assigned.
-  
-  > 1 │ let { a, b, c} = obj; let { x, y, z} = anotherObj; x = 2;
-      │                                ^
-  
-  i 'z' is never re-assigned.
-  
-  > 1 │ let { a, b, c} = obj; let { x, y, z} = anotherObj; x = 2;
-      │                                   ^
   
 
 ```
@@ -1305,103 +1010,6 @@ invalid.jsonc:1:24 lint/nursery/useConst  FIXABLE  ━━━━━━━━━�
   
   - let·someFunc·=·()·=>·{·let·a·=·1,·b·=·2;·foo(a,·b)·}
   + let·someFunc·=·()·=>·{·const·a·=·1,·b·=·2;·foo(a,·b)·}
-  
-
-```
-
-# Input
-```js
-let {a, b} = c, d;
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares some variables which are never re-assigned.
-  
-  > 1 │ let {a, b} = c, d;
-      │ ^^^
-  
-  i 'a' is never re-assigned.
-  
-  > 1 │ let {a, b} = c, d;
-      │      ^
-  
-  i 'b' is never re-assigned.
-  
-  > 1 │ let {a, b} = c, d;
-      │         ^
-  
-
-```
-
-# Input
-```js
-let {a, b, c} = {}, e, f;
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares some variables which are never re-assigned.
-  
-  > 1 │ let {a, b, c} = {}, e, f;
-      │ ^^^
-  
-  i 'a' is never re-assigned.
-  
-  > 1 │ let {a, b, c} = {}, e, f;
-      │      ^
-  
-  i 'b' is never re-assigned.
-  
-  > 1 │ let {a, b, c} = {}, e, f;
-      │         ^
-  
-  i 'c' is never re-assigned.
-  
-  > 1 │ let {a, b, c} = {}, e, f;
-      │            ^
-  
-
-```
-
-# Input
-```js
-function a() { let foo = 0, bar = 1; foo = 1; } function b() { let foo = 0, bar = 2; foo = 2; }
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:16 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ function a() { let foo = 0, bar = 1; foo = 1; } function b() { let foo = 0, bar = 2; foo = 2; }
-      │                ^^^
-  
-  i 'bar' is never re-assigned.
-  
-  > 1 │ function a() { let foo = 0, bar = 1; foo = 1; } function b() { let foo = 0, bar = 2; foo = 2; }
-      │                             ^^^
-  
-
-```
-
-```
-invalid.jsonc:1:64 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares a variable which is never re-assigned.
-  
-  > 1 │ function a() { let foo = 0, bar = 1; foo = 1; } function b() { let foo = 0, bar = 2; foo = 2; }
-      │                                                                ^^^
-  
-  i 'bar' is never re-assigned.
-  
-  > 1 │ function a() { let foo = 0, bar = 1; foo = 1; } function b() { let foo = 0, bar = 2; foo = 2; }
-      │                                                                             ^^^
   
 
 ```
@@ -1733,38 +1341,6 @@ invalid.jsonc:1:20 lint/nursery/useConst ━━━━━━━━━━━━━
 
 # Input
 ```js
-let { itemId, list } = {}, obj = [], total = 0; total = 9; console.log(itemId, list, obj, total);
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares some variables which are never re-assigned.
-  
-  > 1 │ let { itemId, list } = {}, obj = [], total = 0; total = 9; console.log(itemId, list, obj, total);
-      │ ^^^
-  
-  i 'itemId' is never re-assigned.
-  
-  > 1 │ let { itemId, list } = {}, obj = [], total = 0; total = 9; console.log(itemId, list, obj, total);
-      │       ^^^^^^
-  
-  i 'list' is never re-assigned.
-  
-  > 1 │ let { itemId, list } = {}, obj = [], total = 0; total = 9; console.log(itemId, list, obj, total);
-      │               ^^^^
-  
-  i 'obj' is never re-assigned.
-  
-  > 1 │ let { itemId, list } = {}, obj = [], total = 0; total = 9; console.log(itemId, list, obj, total);
-      │                            ^^^
-  
-
-```
-
-# Input
-```js
 let { itemId, list } = {}, obj = []; console.log(itemId, list, obj);
 ```
 
@@ -1802,33 +1378,6 @@ invalid.jsonc:1:1 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━
 
 # Input
 ```js
-let [ itemId, list ] = [], total = 0; total = 9; console.log(itemId, list, total);
-```
-
-# Diagnostics
-```
-invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This 'let' declares some variables which are never re-assigned.
-  
-  > 1 │ let [ itemId, list ] = [], total = 0; total = 9; console.log(itemId, list, total);
-      │ ^^^
-  
-  i 'itemId' is never re-assigned.
-  
-  > 1 │ let [ itemId, list ] = [], total = 0; total = 9; console.log(itemId, list, total);
-      │       ^^^^^^
-  
-  i 'list' is never re-assigned.
-  
-  > 1 │ let [ itemId, list ] = [], total = 0; total = 9; console.log(itemId, list, total);
-      │               ^^^^
-  
-
-```
-
-# Input
-```js
 let [ itemId, list ] = [], obj = []; console.log(itemId, list, obj);
 ```
 
@@ -1860,6 +1409,55 @@ invalid.jsonc:1:1 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━
   
   - let·[·itemId,·list·]·=·[],·obj·=·[];·console.log(itemId,·list,·obj);
   + const·[·itemId,·list·]·=·[],·obj·=·[];·console.log(itemId,·list,·obj);
+  
+
+```
+
+# Input
+```js
+class C { static { () => a; let a = 1; } };
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:29 lint/nursery/useConst  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This 'let' declares a variable which is never re-assigned.
+  
+  > 1 │ class C { static { () => a; let a = 1; } };
+      │                             ^^^
+  
+  i 'a' is never re-assigned.
+  
+  > 1 │ class C { static { () => a; let a = 1; } };
+      │                                 ^
+  
+  i Suggested fix: Use 'const' instead.
+  
+  - class·C·{·static·{·()·=>·a;·let·a·=·1;·}·};
+  + class·C·{·static·{·()·=>·a;·const·a·=·1;·}·};
+  
+
+```
+
+# Input
+```js
+let x; function foo() { bar(x); } x = 0;
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:1 lint/nursery/useConst ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This 'let' declares a variable which is never re-assigned.
+  
+  > 1 │ let x; function foo() { bar(x); } x = 0;
+      │ ^^^
+  
+  i 'x' is never re-assigned.
+  
+  > 1 │ let x; function foo() { bar(x); } x = 0;
+      │     ^
   
 
 ```

@@ -11,29 +11,40 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
 
-/// Search and renames a binding named "a" to "b".
+/// Search and renames alls bindings where the name contains "a" replacing it to "b".
 /// Asserts the renaming worked.
 pub fn assert_rename_binding_a_to_b_ok(before: &str, expected: &str) {
     let r = rome_js_parser::parse(before, FileId::zero(), SourceType::js_module());
     let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
-    let binding_a = r
+    let bindings: Vec<JsIdentifierBinding> = r
         .syntax()
         .descendants()
-        .filter_map(|x| x.cast::<JsIdentifierBinding>())
-        .find(|x| x.text() == "a")
-        .unwrap();
+        .filter_map(JsIdentifierBinding::cast)
+        .filter(|x| x.text().contains('a'))
+        .collect();
 
     let mut batch = r.tree().begin();
-    assert!(batch.rename_node_declaration(&model, binding_a, "b"));
-    let root = batch.commit();
+    for binding in bindings {
+        let new_name = binding
+            .name_token()
+            .unwrap()
+            .text_trimmed()
+            .replace('a', "b");
+        assert!(batch.rename_node_declaration(&model, binding, &new_name));
+    }
 
+    let root = batch.commit();
     let after = root.to_string();
     assert_eq!(expected, after.as_str());
+
+    assert!(!rome_js_parser::test_utils::has_bogus_nodes_or_empty_slots(
+        &root
+    ));
 }
 
-/// Search and renames a binding named "a" to "b".
-/// Asserts the renaming to fail.
+/// Search and renames one binding named "a" to "b".
+/// Asserts the renaming fails.
 pub fn assert_rename_binding_a_to_b_nok(before: &str) {
     let r = rome_js_parser::parse(before, FileId::zero(), SourceType::js_module());
     let model = semantic_model(&r.tree(), SemanticModelOptions::default());
