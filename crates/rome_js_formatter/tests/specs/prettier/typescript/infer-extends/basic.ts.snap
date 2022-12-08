@@ -23,196 +23,77 @@ type X9<U, T> = T extends (infer U extends number ? U : T) ? U : T;
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,15 +1,8 @@
- type X3<T> = T extends [infer U extends number] ? MustBeNumber<U> : never;
--type X4<T> = T extends [infer U extends number, infer U extends number]
--  ? MustBeNumber<U>
--  : never;
--type X5<T> = T extends [infer U extends number, infer U]
--  ? MustBeNumber<U>
--  : never;
--type X6<T> = T extends [infer U, infer U extends number]
--  ? MustBeNumber<U>
--  : never;
--type X7<T> = T extends [infer U extends string, infer U extends number]
--  ? U
--  : never;
--type X8<U, T> = T extends infer U extends number ? U : T;
-+type X4<T> = T extends [infer U extends number, infer U extends number] ? MustBeNumber<U> : never;
-+type X5<T> = T extends [infer U extends number, infer U] ? MustBeNumber<U> : never;
-+type X6<T> = T extends [infer U, infer U extends number] ? MustBeNumber<U> : never;
-+type X7<T> = T extends [infer U extends string, infer U extends number] ? U : never;
-+type X8<U, T> = T extends infer U extends number
-+? U : T
- type X9<U, T> = T extends (infer U extends number ? U : T) ? U : T;
+@@ -12,4 +12,5 @@
+   ? U
+   : never;
+ type X8<U, T> = T extends infer U extends number ? U : T;
+-type X9<U, T> = T extends (infer U extends number ? U : T) ? U : T;
++type X9<U, T> = T extends (infer U extends number ? U : T
++) ? U : T
 ```
 
 # Output
 
 ```ts
 type X3<T> = T extends [infer U extends number] ? MustBeNumber<U> : never;
-type X4<T> = T extends [infer U extends number, infer U extends number] ? MustBeNumber<U> : never;
-type X5<T> = T extends [infer U extends number, infer U] ? MustBeNumber<U> : never;
-type X6<T> = T extends [infer U, infer U extends number] ? MustBeNumber<U> : never;
-type X7<T> = T extends [infer U extends string, infer U extends number] ? U : never;
-type X8<U, T> = T extends infer U extends number
-? U : T
-type X9<U, T> = T extends (infer U extends number ? U : T) ? U : T;
+type X4<T> = T extends [infer U extends number, infer U extends number]
+  ? MustBeNumber<U>
+  : never;
+type X5<T> = T extends [infer U extends number, infer U]
+  ? MustBeNumber<U>
+  : never;
+type X6<T> = T extends [infer U, infer U extends number]
+  ? MustBeNumber<U>
+  : never;
+type X7<T> = T extends [infer U extends string, infer U extends number]
+  ? U
+  : never;
+type X8<U, T> = T extends infer U extends number ? U : T;
+type X9<U, T> = T extends (infer U extends number ? U : T
+) ? U : T
 ```
 
 # Errors
 ```
-basic.ts:1:47 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+basic.ts:7:51 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × expected `?` but instead found `]`
+  × expected `)` but instead found `?`
   
-  > 1 │ type X3<T> = T extends [infer U extends number] ? MustBeNumber<U> : never;
-      │                                               ^
-    2 │ type X4<T> = T extends [infer U extends number, infer U extends number] ? MustBeNumber<U> : never;
-    3 │ type X5<T> = T extends [infer U extends number, infer U] ? MustBeNumber<U> : never;
-  
-  i Remove ]
-  
-basic.ts:2:47 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `?` but instead found `,`
-  
-    1 │ type X3<T> = T extends [infer U extends number] ? MustBeNumber<U> : never;
-  > 2 │ type X4<T> = T extends [infer U extends number, infer U extends number] ? MustBeNumber<U> : never;
-      │                                               ^
-    3 │ type X5<T> = T extends [infer U extends number, infer U] ? MustBeNumber<U> : never;
-    4 │ type X6<T> = T extends [infer U, infer U extends number] ? MustBeNumber<U> : never;
-  
-  i Remove ,
-  
-basic.ts:2:71 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `?` but instead found `]`
-  
-    1 │ type X3<T> = T extends [infer U extends number] ? MustBeNumber<U> : never;
-  > 2 │ type X4<T> = T extends [infer U extends number, infer U extends number] ? MustBeNumber<U> : never;
-      │                                                                       ^
-    3 │ type X5<T> = T extends [infer U extends number, infer U] ? MustBeNumber<U> : never;
-    4 │ type X6<T> = T extends [infer U, infer U extends number] ? MustBeNumber<U> : never;
-  
-  i Remove ]
-  
-basic.ts:3:47 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `?` but instead found `,`
-  
-    1 │ type X3<T> = T extends [infer U extends number] ? MustBeNumber<U> : never;
-    2 │ type X4<T> = T extends [infer U extends number, infer U extends number] ? MustBeNumber<U> : never;
-  > 3 │ type X5<T> = T extends [infer U extends number, infer U] ? MustBeNumber<U> : never;
-      │                                               ^
-    4 │ type X6<T> = T extends [infer U, infer U extends number] ? MustBeNumber<U> : never;
-    5 │ type X7<T> = T extends [infer U extends string, infer U extends number] ? U : never;
-  
-  i Remove ,
-  
-basic.ts:4:56 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `?` but instead found `]`
-  
-    2 │ type X4<T> = T extends [infer U extends number, infer U extends number] ? MustBeNumber<U> : never;
-    3 │ type X5<T> = T extends [infer U extends number, infer U] ? MustBeNumber<U> : never;
-  > 4 │ type X6<T> = T extends [infer U, infer U extends number] ? MustBeNumber<U> : never;
-      │                                                        ^
     5 │ type X7<T> = T extends [infer U extends string, infer U extends number] ? U : never;
     6 │ type X8<U, T> = T extends infer U extends number ? U : T;
-  
-  i Remove ]
-  
-basic.ts:5:47 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `?` but instead found `,`
-  
-    3 │ type X5<T> = T extends [infer U extends number, infer U] ? MustBeNumber<U> : never;
-    4 │ type X6<T> = T extends [infer U, infer U extends number] ? MustBeNumber<U> : never;
-  > 5 │ type X7<T> = T extends [infer U extends string, infer U extends number] ? U : never;
-      │                                               ^
-    6 │ type X8<U, T> = T extends infer U extends number ? U : T;
-    7 │ type X9<U, T> = T extends (infer U extends number ? U : T) ? U : T;
-  
-  i Remove ,
-  
-basic.ts:5:71 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `?` but instead found `]`
-  
-    3 │ type X5<T> = T extends [infer U extends number, infer U] ? MustBeNumber<U> : never;
-    4 │ type X6<T> = T extends [infer U, infer U extends number] ? MustBeNumber<U> : never;
-  > 5 │ type X7<T> = T extends [infer U extends string, infer U extends number] ? U : never;
-      │                                                                       ^
-    6 │ type X8<U, T> = T extends infer U extends number ? U : T;
-    7 │ type X9<U, T> = T extends (infer U extends number ? U : T) ? U : T;
-  
-  i Remove ]
-  
-basic.ts:6:35 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `?` but instead found `extends`
-  
-    4 │ type X6<T> = T extends [infer U, infer U extends number] ? MustBeNumber<U> : never;
-    5 │ type X7<T> = T extends [infer U extends string, infer U extends number] ? U : never;
-  > 6 │ type X8<U, T> = T extends infer U extends number ? U : T;
-      │                                   ^^^^^^^
-    7 │ type X9<U, T> = T extends (infer U extends number ? U : T) ? U : T;
+  > 7 │ type X9<U, T> = T extends (infer U extends number ? U : T) ? U : T;
+      │                                                   ^
     8 │ 
   
-  i Remove extends
+  i Remove ?
   
-basic.ts:6:43 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × expected `:` but instead found `number`
-  
-    4 │ type X6<T> = T extends [infer U, infer U extends number] ? MustBeNumber<U> : never;
-    5 │ type X7<T> = T extends [infer U extends string, infer U extends number] ? U : never;
-  > 6 │ type X8<U, T> = T extends infer U extends number ? U : T;
-      │                                           ^^^^^^
-    7 │ type X9<U, T> = T extends (infer U extends number ? U : T) ? U : T;
-    8 │ 
-  
-  i Remove number
-  
-basic.ts:6:50 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+basic.ts:7:58 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-    4 │ type X6<T> = T extends [infer U, infer U extends number] ? MustBeNumber<U> : never;
     5 │ type X7<T> = T extends [infer U extends string, infer U extends number] ? U : never;
-  > 6 │ type X8<U, T> = T extends infer U extends number ? U : T;
-      │                                                  ^
-    7 │ type X9<U, T> = T extends (infer U extends number ? U : T) ? U : T;
+    6 │ type X8<U, T> = T extends infer U extends number ? U : T;
+  > 7 │ type X9<U, T> = T extends (infer U extends number ? U : T) ? U : T;
+      │                                                          ^
     8 │ 
   
   i An explicit or implicit semicolon is expected here...
   
-    4 │ type X6<T> = T extends [infer U, infer U extends number] ? MustBeNumber<U> : never;
     5 │ type X7<T> = T extends [infer U extends string, infer U extends number] ? U : never;
-  > 6 │ type X8<U, T> = T extends infer U extends number ? U : T;
-      │                                                  ^
-    7 │ type X9<U, T> = T extends (infer U extends number ? U : T) ? U : T;
+    6 │ type X8<U, T> = T extends infer U extends number ? U : T;
+  > 7 │ type X9<U, T> = T extends (infer U extends number ? U : T) ? U : T;
+      │                                                          ^
     8 │ 
   
   i ...Which is required to end this statement
   
-    4 │ type X6<T> = T extends [infer U, infer U extends number] ? MustBeNumber<U> : never;
     5 │ type X7<T> = T extends [infer U extends string, infer U extends number] ? U : never;
-  > 6 │ type X8<U, T> = T extends infer U extends number ? U : T;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    7 │ type X9<U, T> = T extends (infer U extends number ? U : T) ? U : T;
+    6 │ type X8<U, T> = T extends infer U extends number ? U : T;
+  > 7 │ type X9<U, T> = T extends (infer U extends number ? U : T) ? U : T;
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     8 │ 
   
 
-```
-
-# Lines exceeding max width of 80 characters
-```
-    2: type X4<T> = T extends [infer U extends number, infer U extends number] ? MustBeNumber<U> : never;
-    3: type X5<T> = T extends [infer U extends number, infer U] ? MustBeNumber<U> : never;
-    4: type X6<T> = T extends [infer U, infer U extends number] ? MustBeNumber<U> : never;
-    5: type X7<T> = T extends [infer U extends string, infer U extends number] ? U : never;
 ```
 
 

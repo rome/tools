@@ -230,6 +230,7 @@ fn parse_ts_type_impl(p: &mut JsParser, conditional_type: ConditionalType) -> Pa
                 // type A = number;
                 // type B = string extends number ? string : number;
                 // type C = A extends (B extends A ? number : string) ? void : number;
+                // type D<T> = T extends [infer S extends string, ...unknown[]] ? S : never;
                 if !p.has_preceding_line_break() && p.at(T![extends]) {
                     let m = left.precede(p);
                     p.expect(T![extends]);
@@ -360,7 +361,7 @@ fn parse_ts_primary_type(p: &mut JsParser) -> ParsedSyntax {
     if p.at(T![infer]) {
         let m = p.start();
         p.expect(T![infer]);
-        parse_ts_type_parameter_name(p).or_add_diagnostic(p, expected_identifier);
+        parse_ts_type_parameter(p).or_add_diagnostic(p, expected_identifier);
         return Present(m.complete(p, TS_INFER_TYPE));
     }
 
