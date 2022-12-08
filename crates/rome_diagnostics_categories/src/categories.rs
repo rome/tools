@@ -145,6 +145,8 @@ define_dategories! {
     "suppressions/unused",
     "suppressions/deprecatedSyntax",
 
+    "configuration",
+
     // Used in tests and examples
     "args/fileNotFound",
     "flags/invalid",

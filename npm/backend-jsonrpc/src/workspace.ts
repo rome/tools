@@ -768,6 +768,7 @@ export type Category =
 	| "suppressions/unknownRule"
 	| "suppressions/unused"
 	| "suppressions/deprecatedSyntax"
+	| "configuration"
 	| "args/fileNotFound"
 	| "flags/invalid"
 	| "semanticTests";

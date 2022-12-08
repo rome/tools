@@ -520,6 +520,7 @@ fn rename(
         .and_then(|token| token.parent())
     {
         let original_name = node.text_trimmed();
+        let range = node.text_range();
         match node.try_into() {
             Ok(node) => {
                 let mut batch = root.begin();
@@ -527,6 +528,7 @@ fn rename(
                 if !result {
                     Err(RomeError::RenameError(RenameError::CannotBeRenamed {
                         original_name: original_name.to_string(),
+                        original_range: range,
                         new_name,
                     }))
                 } else {
@@ -537,7 +539,9 @@ fn rename(
             Err(err) => Err(RomeError::RenameError(err)),
         }
     } else {
-        Err(RomeError::RenameError(RenameError::CannotFindDeclaration))
+        Err(RomeError::RenameError(RenameError::CannotFindDeclaration(
+            new_name,
+        )))
     }
 }
 
