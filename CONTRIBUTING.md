@@ -218,12 +218,11 @@ Internally, we use [`insta`](https://insta.rs/) for snapshot tests. This means t
 follow their [installation instructions](https://insta.rs/docs/cli/) to update/accept
 the new snapshot tests.
 
-
 ### Using just
 
 A lot of the commands above are mor easily acessible using our Just recipes. For example:
 
-```
+```ignore
 ❯ just
 just --list -u
 Available recipes:
@@ -236,12 +235,12 @@ Available recipes:
 
 All the necessary `codegen` can be called using
 
-```
+```ignore
 > just codegen
 ```
 
 After all changes are done, the code can be checked if is ready to be pushed with
 
-```
+```ignore
 > just check-ready
 ```

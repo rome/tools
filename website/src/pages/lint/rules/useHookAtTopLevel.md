@@ -24,7 +24,7 @@ function Component1({ a }) {
 
 <pre class="language-text"><code class="language-text">nursery/useHookAtTopLevel.js:3:9 <a href="https://docs.rome.tools/lint/rules/useHookAtTopLevel">lint/nursery/useHookAtTopLevel</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This hook is not necessarily being called from the Top Level of the component function.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This hook is being called conditionally, but all hooks must be called in the exact same order in every component render.</span>
   
     <strong>1 │ </strong>function Component1({ a }) {
     <strong>2 │ </strong>    if (a == 1) {
@@ -33,7 +33,7 @@ function Component1({ a }) {
     <strong>4 │ </strong>    }
     <strong>5 │ </strong>}
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">For React to preserve state between calls, hooks needs to be called always in the same order.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">For React to preserve state between calls, hooks needs to be called unconditionally and always in the same order.</span>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">See https://reactjs.org/docs/hooks-rules.html#only-call-hooks-at-the-top-level</span>
   
