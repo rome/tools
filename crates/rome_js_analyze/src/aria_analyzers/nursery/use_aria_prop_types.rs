@@ -92,16 +92,15 @@ impl Rule for UseAriaPropTypes {
                                     property_type: aria_property.property_type(),
                                 });
                             }
-                            template
-                                .elements()
-                                .iter()
-                                .next()
-                                .and_then(|chunk| {
+                            template.elements().iter().next().and_then(|chunk| {
+                                Some(
                                     chunk
-                                        .as_js_template_chunk_element()
-                                        .and_then(|t| t.template_chunk_token().ok())
-                                })
-                                .map(|t| t.token_text_trimmed())
+                                        .as_js_template_chunk_element()?
+                                        .template_chunk_token()
+                                        .ok()?
+                                        .token_text_trimmed(),
+                                )
+                            })
                         }
                         AnyJsExpression::AnyJsLiteralExpression(
                             AnyJsLiteralExpression::JsStringLiteralExpression(string),
@@ -139,7 +138,7 @@ impl Rule for UseAriaPropTypes {
             AriaPropertyTypeEnum::Boolean => {
                 diagnostic.footer_list(
                     markup!{
-                        "The only supported values for the "<Emphasis>{attribute_name}</Emphasis>" is one of the following:"
+                        "The only supported values for the "<Emphasis>{attribute_name}</Emphasis>" property is one of the following:"
                     },
                     &["true", "false"]
                 )
@@ -171,7 +170,7 @@ impl Rule for UseAriaPropTypes {
             AriaPropertyTypeEnum::Token => {
                 diagnostic.footer_list(
                     markup!{
-                    "The only supported value for the "<Emphasis>{attribute_name}</Emphasis>" is one of the following:"
+                    "The only supported value for the "<Emphasis>{attribute_name}</Emphasis>" property is one of the following:"
                 },
                     state.allowed_values.as_slice()
                 )
@@ -179,7 +178,7 @@ impl Rule for UseAriaPropTypes {
             AriaPropertyTypeEnum::Tokenlist => {
                 diagnostic.footer_list(
                     markup!{
-                    "The values supported for "<Emphasis>{attribute_name}</Emphasis>" are one or more of the following:"
+                    "The values supported for "<Emphasis>{attribute_name}</Emphasis>" property are one or more of the following:"
                 },
                     state.allowed_values.as_slice()
                 )
@@ -187,7 +186,7 @@ impl Rule for UseAriaPropTypes {
             AriaPropertyTypeEnum::Tristate => {
                 diagnostic.footer_list(
                     markup!{
-                        "The only supported value for the "<Emphasis>{attribute_name}</Emphasis>" one of the following:"
+                        "The only supported value for the "<Emphasis>{attribute_name}</Emphasis>" property one of the following:"
                     },
                     &["true", "false", "mixed"]
                 )

@@ -33,7 +33,7 @@ invalid.jsx:1:31 lint/nursery/useAriaPropTypes ━━━━━━━━━━━
     2 │ var a = <span aria-autocomplete="test"></span>;
     3 │ var a = <span aria-invalid="foo"></span>;
   
-  i The only supported value for the aria-checked one of the following:
+  i The only supported value for the aria-checked property one of the following:
   
   - true
   - false
@@ -53,7 +53,7 @@ invalid.jsx:2:15 lint/nursery/useAriaPropTypes ━━━━━━━━━━━
     3 │ var a = <span aria-invalid="foo"></span>;
     4 │ var a = <span aria-invalid={`foo` ></span>;
   
-  i The only supported value for the aria-autocomplete is one of the following:
+  i The only supported value for the aria-autocomplete property is one of the following:
   
   - inline
   - list
@@ -75,7 +75,7 @@ invalid.jsx:3:15 lint/nursery/useAriaPropTypes ━━━━━━━━━━━
     4 │ var a = <span aria-invalid={`foo` ></span>;
     5 │ var a = <span aria-invalid={"foo"}></span>;
   
-  i The only supported value for the aria-invalid is one of the following:
+  i The only supported value for the aria-invalid property is one of the following:
   
   - grammar
   - false
@@ -97,7 +97,7 @@ invalid.jsx:5:15 lint/nursery/useAriaPropTypes ━━━━━━━━━━━
     6 │ var a = <span aria-errormessage=""></span>;
     7 │ var a = <span aria-relevant="fancy"></span>;
   
-  i The only supported value for the aria-invalid is one of the following:
+  i The only supported value for the aria-invalid property is one of the following:
   
   - grammar
   - false
@@ -136,7 +136,7 @@ invalid.jsx:7:15 lint/nursery/useAriaPropTypes ━━━━━━━━━━━
     8 │ var a = <span aria-labelledby=""></span>;
     9 │ var a = <span aria-labelledby={``}></span>;
   
-  i The values supported for aria-relevant are one or more of the following:
+  i The values supported for aria-relevant property are one or more of the following:
   
   - additions
   - all
@@ -260,7 +260,7 @@ invalid.jsx:14:15 lint/nursery/useAriaPropTypes ━━━━━━━━━━�
     15 │ var a = <span aria-orientation="hey"></span>;
     16 │ 
   
-  i The values supported for aria-dropeffect are one or more of the following:
+  i The values supported for aria-dropeffect property are one or more of the following:
   
   - copy
   - execute
@@ -283,7 +283,7 @@ invalid.jsx:15:15 lint/nursery/useAriaPropTypes ━━━━━━━━━━�
        │               ^^^^^^^^^^^^^^^^^^^^^^
     16 │ 
   
-  i The only supported value for the aria-orientation is one of the following:
+  i The only supported value for the aria-orientation property is one of the following:
   
   - vertical
   - undefined
