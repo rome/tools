@@ -1,17 +1,18 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/declare/declare_function_with_body.ts
 ---
 
 # Input
 
-```js
+```ts
 // Invalid, but recoverable
 declare function foo() {}
 declare function bar() {
   // comment
 }
+
 ```
 
 
@@ -32,14 +33,13 @@ declare function bar() {
 
 # Output
 
-```js
+```ts
 // Invalid, but recoverable
 declare function foo() {}
 declare function bar() {
   // comment
 }
 ```
-
 
 # Errors
 ```

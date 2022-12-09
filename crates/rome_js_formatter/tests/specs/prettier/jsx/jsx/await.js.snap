@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: jsx/jsx/await.js
 ---
@@ -42,6 +42,7 @@ async function testFunction() {
     </IncongruousCooperate>)}
   </>
 }
+
 ```
 
 
@@ -145,7 +146,6 @@ async function testFunction() {
 }
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
    18:           hierarchyCriticismIncongruousCooperateMaterialEducationOriginalArticulateParameter,
@@ -153,4 +153,5 @@ async function testFunction() {
    30:         hierarchyCriticismIncongruousCooperateMaterialEducationOriginalArticulateParameter,
    37:         hierarchyCriticismIncongruousCooperateMaterialEducationOriginalArticulateParameter
 ```
+
 

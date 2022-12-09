@@ -88,7 +88,7 @@ declare_rule! {
     pub(crate) NoVoidTypeReturn {
         version: "11.0.0",
         name: "noVoidTypeReturn",
-        recommended: false,
+        recommended: true,
     }
 }
 

@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/module-blocks/comments.js
 ---
@@ -17,6 +17,7 @@ const m = /*A1*/ module /*A2*/ { /*A3*/
 const m2 = module/* B1 */{
   /* B2 */
 };
+
 ```
 
 
@@ -64,7 +65,6 @@ const m2 = module; /* B1 */
   /* B2 */
 }
 ```
-
 
 # Errors
 ```

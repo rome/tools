@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/conformance/types/union/unionTypeCallSignatures3.ts
 ---
 
 # Input
 
-```js
+```ts
 ﻿function f1(s: string) { }
 function f2(s?: string) { }
 function f3(...s: string[]) { }
@@ -18,6 +18,7 @@ function f7(s: string, ...sRest: string[]) { }
 var fUnion: typeof f1 | typeof f2 | typeof f3 | typeof f4 | typeof f5 | typeof f6 | typeof f7;
 
 fUnion(""); // All constituents can be called by passing a single string.
+
 ```
 
 
@@ -36,7 +37,7 @@ fUnion(""); // All constituents can be called by passing a single string.
 
 # Output
 
-```js
+```ts
 function f1(s: string) {}
 function f2(s?: string) {}
 function f3(...s: string[]) {}
@@ -56,6 +57,5 @@ var fUnion:
 
 fUnion(""); // All constituents can be called by passing a single string.
 ```
-
 
 

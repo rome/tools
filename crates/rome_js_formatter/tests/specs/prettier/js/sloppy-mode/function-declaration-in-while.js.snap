@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/sloppy-mode/function-declaration-in-while.js
 ---
@@ -8,6 +8,7 @@ info:
 
 ```js
 while (false) function foo(){}
+
 ```
 
 
@@ -26,7 +27,6 @@ while (false) function foo(){}
 ```js
 while (false) function foo(){}
 ```
-
 
 # Errors
 ```

@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/comments-closure-typecast/styled-components.js
 ---
@@ -17,6 +17,7 @@ position:relative;
 top: ${p => p.overlap === 'next' && 0};
 }
 `
+
 ```
 
 
@@ -58,7 +59,6 @@ top: ${(p) => p.overlap === "next" && 0};
 }
 `;
 ```
-
 
 # Lines exceeding max width of 80 characters
 ```

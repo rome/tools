@@ -18,7 +18,7 @@ some errors were emitted while running checks
 # Emitted Messages
 
 ```block
-check.js:1:1 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check.js:1:1 lint/style/useWhile  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Use while loops instead of for loops.
   
@@ -30,24 +30,6 @@ check.js:1:1 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━�
   
     1   │ - for(;true;);
       1 │ + while·(true);
-    2 2 │   
-  
-
-```
-
-```block
-check.js:1:1 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Block statements are preferred in this position.
-  
-  > 1 │ for(;true;);
-      │ ^^^^^^^^^^^^
-    2 │ 
-  
-  i Suggested fix: Wrap the statement with a `JsBlockStatement`
-  
-    1   │ - for(;true;);
-      1 │ + for(;true;)·{}
     2 2 │   
   
 

@@ -8,6 +8,8 @@ use rome_js_syntax::{
 };
 use rome_parser::event::Event;
 use rome_parser::token_source::Trivia;
+use rome_parser::AnyParse;
+
 use rome_rowan::AstNode;
 use std::marker::PhantomData;
 
@@ -83,6 +85,23 @@ impl<T> Parse<T> {
     /// Returns [true] if the parser encountered some errors during the parsing.
     pub fn has_errors(&self) -> bool {
         self.errors.iter().any(|diagnostic| diagnostic.is_error())
+    }
+}
+
+impl<T> From<Parse<T>> for AnyParse
+where
+    T: AstNode,
+    T::Language: 'static,
+{
+    fn from(parse: Parse<T>) -> Self {
+        let root = parse.syntax();
+        let diagnostics = parse.into_diagnostics();
+
+        AnyParse::new(
+            // SAFETY: the parser should always return a root node
+            root.as_send().unwrap(),
+            diagnostics,
+        )
     }
 }
 

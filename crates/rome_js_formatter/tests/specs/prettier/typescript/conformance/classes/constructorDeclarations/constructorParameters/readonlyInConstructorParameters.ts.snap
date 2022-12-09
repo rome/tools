@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/conformance/classes/constructorDeclarations/constructorParameters/readonlyInConstructorParameters.ts
 ---
 
 # Input
 
-```js
+```ts
 class C {
     constructor(readonly x: number) {}
 }
@@ -19,7 +19,8 @@ class E {
 class F {
     constructor(private readonly x: number) {}
 }
-new F(1).x;```
+new F(1).x;
+```
 
 
 # Prettier differences
@@ -40,7 +41,7 @@ new F(1).x;```
 
 # Output
 
-```js
+```ts
 class C {
   constructor(readonly x: number) {}
 }
@@ -55,7 +56,6 @@ class F {
 }
 new F(1).x;
 ```
-
 
 # Errors
 ```

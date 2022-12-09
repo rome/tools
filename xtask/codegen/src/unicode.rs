@@ -28,9 +28,7 @@ pub fn generate_tables() -> Result<()> {
                     #(#ranges),*
                 ];
 
-                pub fn #fn_ident(c: char) -> bool {
-                    super::bsearch_range_table(c, #table_ident)
-                }
+                pub fn #fn_ident(c: char) -> bool { super::bsearch_range_table(c, #table_ident) }
             })
         })
         .collect::<Result<Vec<_>, _>>()?;

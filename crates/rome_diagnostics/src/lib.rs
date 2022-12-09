@@ -37,6 +37,9 @@ pub use crate::error::{Error, Result};
 pub use crate::location::{
     FileId, FilePath, LineIndex, LineIndexBuf, Location, Resource, SourceCode,
 };
+use rome_console::fmt::{Formatter, Termcolor};
+use rome_console::markup;
+use std::fmt::Write;
 
 pub mod prelude {
     //! Anonymously re-exports all the traits declared by this module, this is
@@ -67,3 +70,25 @@ impl DiagnosticTag {
 }
 
 pub const MAXIMUM_DISPLAYABLE_DIAGNOSTICS: u16 = 200;
+
+/// Utility function for testing purpose. The function will print an [Error]
+/// to a string, which is then returned by the function.
+pub fn print_diagnostic_to_string(diagnostic: Error) -> String {
+    let mut buffer = termcolor::Buffer::no_color();
+
+    Formatter::new(&mut Termcolor(&mut buffer))
+        .write_markup(markup! {
+            {PrintDiagnostic::verbose(&diagnostic)}
+        })
+        .expect("failed to emit diagnostic");
+
+    let mut content = String::new();
+    writeln!(
+        content,
+        "{}",
+        std::str::from_utf8(buffer.as_slice()).expect("non utf8 in error buffer")
+    )
+    .unwrap();
+
+    content
+}

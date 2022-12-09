@@ -1159,6 +1159,38 @@ fn does_not_format_ignored_directories() {
 }
 
 #[test]
+fn fs_error_read_only() {
+    let mut fs = MemoryFileSystem::new_read_only();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("test.js");
+    fs.insert(file_path.into(), *b"content");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--write"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    // Do not store the content of the file in the snapshot
+    fs.remove(file_path);
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "fs_error_read_only",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
 fn file_too_large() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();

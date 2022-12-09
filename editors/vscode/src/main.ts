@@ -1,9 +1,10 @@
-import { spawn } from "child_process";
-import { connect } from "net";
+import { type ChildProcess, spawn } from "child_process";
+import { connect, type Socket } from "net";
 import { promisify } from "util";
 import {
 	ExtensionContext,
 	languages,
+	OutputChannel,
 	TextEditor,
 	Uri,
 	window,
@@ -48,12 +49,14 @@ export async function activate(context: ExtensionContext) {
 
 	const statusBar = new StatusBar();
 
+	const outputChannel = window.createOutputChannel("Rome");
+	const traceOutputChannel = window.createOutputChannel("Rome Trace");
+
 	const serverOptions: ServerOptions = createMessageTransports.bind(
 		undefined,
+		outputChannel,
 		command,
 	);
-
-	const traceOutputChannel = window.createOutputChannel("Rome Trace");
 
 	const documentSelector: DocumentFilter[] = [
 		{ language: "javascript" },
@@ -64,6 +67,7 @@ export async function activate(context: ExtensionContext) {
 
 	const clientOptions: LanguageClientOptions = {
 		documentSelector,
+		outputChannel,
 		traceOutputChannel,
 	};
 
@@ -243,37 +247,124 @@ async function fileExists(path: Uri) {
 	}
 }
 
-function getSocket(command: string): Promise<string> {
-	return new Promise((resolve, reject) => {
-		const process = spawn(command, ["__print_socket"], {
-			stdio: "pipe",
+interface MutableBuffer {
+	content: string;
+}
+
+function collectStream(
+	outputChannel: OutputChannel,
+	process: ChildProcess,
+	key: "stdout" | "stderr",
+	buffer: MutableBuffer,
+) {
+	return new Promise<void>((resolve, reject) => {
+		const stream = process[key];
+		stream.setEncoding("utf-8");
+
+		stream.on("error", (err) => {
+			outputChannel.appendLine(`[cli-${key}] error`);
+			reject(err);
+		});
+		stream.on("close", () => {
+			outputChannel.appendLine(`[cli-${key}] close`);
+			resolve();
+		});
+		stream.on("finish", () => {
+			outputChannel.appendLine(`[cli-${key}] finish`);
+			resolve();
+		});
+		stream.on("end", () => {
+			outputChannel.appendLine(`[cli-${key}] end`);
+			resolve();
 		});
 
-		process.on("error", reject);
-
-		let pipeName = "";
-		process.stdout.on("data", (data) => {
-			pipeName += data.toString("utf-8");
-		});
-
-		process.on("exit", (code) => {
-			if (code === 0) {
-				console.log(`"${pipeName}"`);
-				resolve(pipeName.trimEnd());
-			} else {
-				reject(code);
-			}
+		stream.on("data", (data) => {
+			outputChannel.appendLine(`[cli-${key}] data ${data.length}`);
+			buffer.content += data;
 		});
 	});
 }
 
-async function createMessageTransports(command: string): Promise<StreamInfo> {
-	const path = await getSocket(command);
-	const socket = connect(path);
+function withTimeout(promise: Promise<void>, duration: number) {
+	return Promise.race([
+		promise,
+		new Promise<void>((resolve) => setTimeout(resolve, duration)),
+	]);
+}
+
+async function getSocket(
+	outputChannel: OutputChannel,
+	command: string,
+): Promise<string> {
+	const process = spawn(command, ["__print_socket"], {
+		stdio: [null, "pipe", "pipe"],
+	});
+
+	const stdout = { content: "" };
+	const stderr = { content: "" };
+
+	const stdoutPromise = collectStream(outputChannel, process, "stdout", stdout);
+	const stderrPromise = collectStream(outputChannel, process, "stderr", stderr);
+
+	const exitCode = await new Promise<number>((resolve, reject) => {
+		process.on("error", reject);
+		process.on("exit", (code) => {
+			outputChannel.appendLine(`[cli] exit ${code}`);
+			resolve(code);
+		});
+		process.on("close", (code) => {
+			outputChannel.appendLine(`[cli] close ${code}`);
+			resolve(code);
+		});
+	});
+
+	await Promise.all([
+		withTimeout(stdoutPromise, 1000),
+		withTimeout(stderrPromise, 1000),
+	]);
+
+	const pipeName = stdout.content.trimEnd();
+
+	if (exitCode !== 0 || pipeName.length === 0) {
+		let message = `Command "${command} __print_socket" exited with code ${exitCode}`;
+		if (stderr.content.length > 0) {
+			message += `\nOutput:\n${stderr.content}`;
+		}
+
+		throw new Error(message);
+	} else {
+		outputChannel.appendLine(`Connecting to "${pipeName}" ...`);
+		return pipeName;
+	}
+}
+
+function wrapConnectionError(err: Error, path: string): Error {
+	return Object.assign(
+		new Error(
+			`Could not connect to the Rome server at "${path}": ${err.message}`,
+		),
+		{ name: err.name, stack: err.stack },
+	);
+}
+
+async function createMessageTransports(
+	outputChannel: OutputChannel,
+	command: string,
+): Promise<StreamInfo> {
+	const path = await getSocket(outputChannel, command);
+
+	let socket: Socket;
+	try {
+		socket = connect(path);
+	} catch (err) {
+		throw wrapConnectionError(err, path);
+	}
 
 	await new Promise((resolve, reject) => {
-		socket.once("error", reject);
 		socket.once("ready", resolve);
+		socket.once("error", (err) => {
+			reject(wrapConnectionError(err, path));
+		});
 	});
 
 	return { writer: socket, reader: socket };

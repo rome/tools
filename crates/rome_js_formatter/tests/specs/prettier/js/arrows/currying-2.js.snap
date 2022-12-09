@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/arrows/currying-2.js
 ---
@@ -21,7 +21,8 @@ request.get('https://preview-9992--prettier.netlify.app', head => body => mody =
 
 request.get('https://preview-9992--prettier.netlify.app', head => body => modyLoremIpsumDolorAbstractProviderFactoryServiceModule => {
   console.log(head, body);
-});```
+});
+```
 
 
 # Prettier differences
@@ -81,6 +82,5 @@ request.get("https://preview-9992--prettier.netlify.app", (head) =>
     console.log(head, body);
   });
 ```
-
 
 

@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/conformance/types/tuple/contextualTypeWithTuple.ts
 ---
 
 # Input
 
-```js
+```ts
 ﻿// no error
 var numStrTuple: [number, string] = [5, "hello"];
 var numStrTuple2: [number, string] = [5, "foo", true];
@@ -32,6 +32,7 @@ unionTuple = unionTuple1;
 unionTuple = unionTuple2;
 unionTuple2 = unionTuple;
 numStrTuple = unionTuple3;
+
 ```
 
 
@@ -50,7 +51,7 @@ numStrTuple = unionTuple3;
 
 # Output
 
-```js
+```ts
 // no error
 var numStrTuple: [number, string] = [5, "hello"];
 var numStrTuple2: [number, string] = [5, "foo", true];
@@ -77,6 +78,5 @@ unionTuple = unionTuple2;
 unionTuple2 = unionTuple;
 numStrTuple = unionTuple3;
 ```
-
 
 

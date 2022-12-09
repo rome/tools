@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/test-declarations/test_declarations.js
 ---
@@ -169,6 +169,7 @@ it(
   () => new Promise(resolve => setTimeout(resolve, 10)),
   250
 );
+
 ```
 
 
@@ -424,7 +425,6 @@ it(
 );
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
     3: it("does something really long and complicated so I have to write a very long name for the test", () => {
@@ -477,4 +477,5 @@ it(
   158:   "does something really long and complicated so I have to write a very long name for the test",
   167:   does something really long and complicated so I have to write a very long name for the test`, () => {
 ```
+
 

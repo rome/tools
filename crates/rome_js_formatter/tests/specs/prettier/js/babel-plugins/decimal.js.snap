@@ -1,7 +1,7 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
-  test_file: "js\\babel-plugins\\decimal.js"
+  test_file: js/babel-plugins/decimal.js
 ---
 
 # Input
@@ -32,6 +32,7 @@ info:
 -0m;
 typeof 1m === "bigdecimal";
 typeof 1m === "decimal128";
+
 
 ```
 
@@ -140,7 +141,6 @@ typeof 1m === "decimal128";
 typeof 1m === "bigdecimal";
 typeof 1m === "decimal128";
 ```
-
 
 # Errors
 ```

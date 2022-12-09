@@ -4,11 +4,13 @@ use std::str::FromStr;
 mod generated;
 
 pub mod constants;
+mod macros;
 pub mod properties;
 pub mod roles;
 
 use crate::generated::{AriaPropertiesEnum, AriaPropertyTypeEnum};
 pub use properties::AriaProperties;
+pub(crate) use roles::AriaRoleDefinition;
 pub use roles::AriaRoles;
 
 /// It checks if an ARIA property is valid

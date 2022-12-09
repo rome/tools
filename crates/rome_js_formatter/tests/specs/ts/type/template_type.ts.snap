@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: template_type.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/type/template_type.ts
 ---
 
 # Input
 
-```js
+```ts
 type TemplateType = `
     text
     ${'lorem'| 'ipsum' |'dolor'| 'sit' |'amet'| 'consectetur' |'adipiscing'| 'elit' |'sed'}
@@ -28,7 +29,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 type TemplateType = `
     text
     ${

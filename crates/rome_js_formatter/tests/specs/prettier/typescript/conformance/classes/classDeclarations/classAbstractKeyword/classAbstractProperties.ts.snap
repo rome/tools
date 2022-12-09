@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/conformance/classes/classDeclarations/classAbstractKeyword/classAbstractProperties.ts
 ---
 
 # Input
 
-```js
+```ts
 abstract class A {
     abstract x : number;
     public abstract y : number;
@@ -19,7 +19,8 @@ abstract class A {
     public abstract foo_y() : number;
     protected abstract foo_z() : number;
     private abstract foo_w() : number;
-}```
+}
+```
 
 
 # Prettier differences
@@ -46,7 +47,7 @@ abstract class A {
 
 # Output
 
-```js
+```ts
 abstract class A {
   abstract x: number;
   public abstract y: number;
@@ -61,7 +62,6 @@ abstract class A {
   private abstract foo_w() : number;
 }
 ```
-
 
 # Errors
 ```

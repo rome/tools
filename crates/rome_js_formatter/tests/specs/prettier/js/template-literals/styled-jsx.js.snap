@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/template-literals/styled-jsx.js
 ---
@@ -88,6 +88,7 @@ margin: 0;
 	left: 0;right: 0;
 }
 `;
+
 ```
 
 
@@ -327,6 +328,5 @@ margin: 0;
 }
 `;
 ```
-
 
 

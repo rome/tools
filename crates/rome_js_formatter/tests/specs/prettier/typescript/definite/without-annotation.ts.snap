@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/definite/without-annotation.ts
 ---
 
 # Input
 
-```js
+```ts
 class Foo {
   a!
   #b!
@@ -19,6 +19,7 @@ let a! = x
 const b! = x
 var c/* */! = x
 export const d! = x
+
 ```
 
 
@@ -53,7 +54,7 @@ export const d! = x
 
 # Output
 
-```js
+```ts
 class Foo {
   a!
   #b!
@@ -67,7 +68,6 @@ const b! = x
 var c/* */! = x
 export const d! = x
 ```
-
 
 # Errors
 ```

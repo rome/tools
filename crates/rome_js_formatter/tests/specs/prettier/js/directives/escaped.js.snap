@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/directives/escaped.js
 ---
@@ -42,6 +42,7 @@ info:
 '
 'escaped \u2028 \ '
 'escaped \u2029 \ '
+
 ```
 
 
@@ -119,9 +120,9 @@ info:
 "escaped \u2029 \ ";
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
    25: // Commented out to avoid `SyntaxError: Octal literals are not allowed in strict mode.`
 ```
+
 

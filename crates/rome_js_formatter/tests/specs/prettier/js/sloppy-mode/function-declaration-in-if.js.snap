@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/sloppy-mode/function-declaration-in-if.js
 ---
@@ -8,6 +8,7 @@ info:
 
 ```js
 if (false) function foo(){}
+
 ```
 
 
@@ -26,7 +27,6 @@ if (false) function foo(){}
 ```js
 if (false) function foo(){}
 ```
-
 
 # Errors
 ```

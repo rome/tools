@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/multiparser-css/issue-9072.js
 ---
@@ -20,6 +20,7 @@ const style2 = css`
 const style3 = css`
   foo: ${foo}${bar}       ${baz};
 `;
+
 ```
 
 
@@ -63,6 +64,5 @@ const style3 = css`
   foo: ${foo}${bar}       ${baz};
 `;
 ```
-
 
 

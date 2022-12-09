@@ -23,6 +23,17 @@ Inside the folders, we will have folders for each group that Rome supports.
 When implementing **new rules**, they have to be implemented under the group `nursery`. New rules should
 always be considered unstable/not exhaustive.
 
+In addition to selecting a group, rules may be flagged as `recommended` if they
+should be part of the set of rules that are run in the default configuration of the
+Rome linter. As a general principle, rules should be recommended if they catch actual
+programming errors (for instance detecting a coding pattern that will throw an
+exception at runtime), while the more pedantic rules that check for certain unwanted
+patterns but may have high false positive rates (for instance style-related rules)
+are left off from the recommended set, and the final user should enable them
+explicitly in their configuration. Rules intended to be recommended should be
+flagged as such even if they are still part of the `nursery` group, as unstable rules
+are only enabled by default on unstable builds.
+
 ## Lint rules
 
 This gives to the project time to test the rule, find edge cases, etc.
@@ -376,3 +387,26 @@ If this the rule can retrieve its option with
 ```rust,ignore
 let options = ctx.options();
 ```
+
+# Using Just
+
+It is also possible to do all the steps above using our `Just` automation. For example, we can create
+a rule calling
+
+```ignore
+> just new-lintrule crates/rome_js_analyze/src/analyzers/nursery myRuleName
+```
+
+Once we are happy with our implementation we can call
+
+```ignore
+> just test-lintrule myRuleName
+```
+
+And at the end, to test our commits are ready to be push we can call
+
+```ignore
+> just check-ready
+```
+
+For more details on the available automations, look at our `justfile` at the root of the repository.

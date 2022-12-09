@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/decorators/class-expression/arguments.js
 ---
@@ -9,6 +9,7 @@ info:
 ```js
 console.log(@deco class Foo {})
 console.log(@deco class {})
+
 ```
 
 
@@ -40,7 +41,6 @@ console.log(@deco class {})
 console.log(@deco class Foo {});
 console.log(@deco class {});
 ```
-
 
 # Errors
 ```

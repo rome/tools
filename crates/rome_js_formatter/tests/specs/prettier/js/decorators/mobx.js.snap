@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/decorators/mobx.js
 ---
@@ -43,6 +43,7 @@ import {observable} from "mobx";
   
   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
 }
+
 ```
 
 
@@ -131,7 +132,6 @@ import { observable } from "mobx";
 }
 ```
 
-
 # Errors
 ```
 mobx.js:4:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -194,4 +194,5 @@ mobx.js:35:35 parse ━━━━━━━━━━━━━━━━━━━━
    33:   @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
    35:   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
 ```
+
 

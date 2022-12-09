@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/arrows/issue-1389-curry.js
 ---
@@ -29,6 +29,7 @@ const makeSomeFunction2 =
   }) =>
     (a, b, c) =>
       services.logger(a, b, c)
+
 ```
 
 
@@ -85,6 +86,5 @@ const makeSomeFunction2 =
   (a, b, c) =>
     services.logger(a, b, c);
 ```
-
 
 

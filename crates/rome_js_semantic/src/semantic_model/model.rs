@@ -1,5 +1,5 @@
 use super::*;
-use rome_js_syntax::AnyJsRoot;
+use rome_js_syntax::{AnyJsRoot, JsFunctionDeclaration};
 
 #[derive(Copy, Clone, Debug)]
 pub(crate) struct BindingIndex(usize);
@@ -336,5 +336,38 @@ impl SemanticModel {
             data: self.data.clone(),
             index: (*id).into(),
         }
+    }
+
+    /// Returns all [Call] of a [JsFunctionDeclaration].
+    ///
+    /// ```rust
+    /// use rome_rowan::{AstNode, SyntaxNodeCast};
+    /// use rome_js_syntax::{SourceType, JsFunctionDeclaration};
+    /// use rome_js_semantic::{semantic_model, CallsExtensions, SemanticModelOptions};
+    /// use rome_diagnostics::FileId;
+    ///
+    /// let r = rome_js_parser::parse("function f(){} f() f()", FileId::zero(), SourceType::js_module());
+    /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
+    ///
+    /// let f_declaration = r
+    ///     .syntax()
+    ///     .descendants()
+    ///     .filter_map(JsFunctionDeclaration::cast)
+    ///     .next()
+    ///     .unwrap();
+    ///
+    /// let all_calls_to_f = model.all_calls(&f_declaration);
+    /// assert_eq!(2, all_calls_to_f.count());
+    /// // or
+    /// let all_calls_to_f = f_declaration.all_calls(&model);
+    /// assert_eq!(2, all_calls_to_f.count());
+    /// ```
+    pub fn all_calls(&self, function: &JsFunctionDeclaration) -> AllCallsIter {
+        let references = function
+            .id()
+            .map(|id| id.all_reads(self))
+            .unwrap_or_else(|_| std::iter::successors(None, Reference::find_next_read));
+
+        AllCallsIter { references }
     }
 }

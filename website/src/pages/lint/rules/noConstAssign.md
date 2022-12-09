@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noConstAssign (since v10.0.0)
 
+> This rule is recommended by Rome.
+
 Prevents from having `const` variables being re-assigned.
 
 Trying to assign a value to a `const` will cause an `TypeError` when the code is executed.
@@ -18,9 +20,9 @@ const a = 1;
 a = 4;
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noConstAssign.js:2:1 <a href="https://docs.rome.tools/lint/rules/noConstAssign">lint/nursery/noConstAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noConstAssign.js:2:1 <a href="https://docs.rome.tools/lint/rules/noConstAssign">lint/correctness/noConstAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Can't assign </span><span style="color: Orange;"><strong>a</strong></span><span style="color: Orange;"> because it's a constant</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Can't assign </span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"> because it's a constant</span>
   
     <strong>1 │ </strong>const a = 1;
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>a = 4;
@@ -41,9 +43,9 @@ const a = 2;
 a += 1;
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noConstAssign.js:2:1 <a href="https://docs.rome.tools/lint/rules/noConstAssign">lint/nursery/noConstAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noConstAssign.js:2:1 <a href="https://docs.rome.tools/lint/rules/noConstAssign">lint/correctness/noConstAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Can't assign </span><span style="color: Orange;"><strong>a</strong></span><span style="color: Orange;"> because it's a constant</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Can't assign </span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"> because it's a constant</span>
   
     <strong>1 │ </strong>const a = 2;
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>a += 1;
@@ -64,9 +66,9 @@ const a = 1;
 ++a;
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noConstAssign.js:2:3 <a href="https://docs.rome.tools/lint/rules/noConstAssign">lint/nursery/noConstAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noConstAssign.js:2:3 <a href="https://docs.rome.tools/lint/rules/noConstAssign">lint/correctness/noConstAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Can't assign </span><span style="color: Orange;"><strong>a</strong></span><span style="color: Orange;"> because it's a constant</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Can't assign </span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"> because it's a constant</span>
   
     <strong>1 │ </strong>const a = 1;
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>++a;
@@ -88,9 +90,9 @@ const a = 1, b = 2;
 a = 2;
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noConstAssign.js:3:1 <a href="https://docs.rome.tools/lint/rules/noConstAssign">lint/nursery/noConstAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/noConstAssign.js:3:1 <a href="https://docs.rome.tools/lint/rules/noConstAssign">lint/correctness/noConstAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Can't assign </span><span style="color: Orange;"><strong>a</strong></span><span style="color: Orange;"> because it's a constant</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Can't assign </span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"> because it's a constant</span>
   
     <strong>1 │ </strong>const a = 1, b = 2;
     <strong>2 │ </strong>

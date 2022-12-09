@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/arrow/comments.ts
 ---
 
 # Input
 
-```js
+```ts
 const fn1 = () => {
   return;
 } /* foo */;
@@ -17,6 +17,7 @@ const fn2 = () => {
 
 // foo
 ;
+
 ```
 
 
@@ -37,7 +38,7 @@ const fn2 = () => {
 
 # Output
 
-```js
+```ts
 const fn1 = () => {
   return;
 } /* foo */;
@@ -48,6 +49,5 @@ const fn2 = () => {
 
 // foo
 ```
-
 
 

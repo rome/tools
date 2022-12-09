@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/comments/method_types.ts
 ---
 
 # Input
 
-```js
+```ts
 interface foo1 {
   bar3/* foo */ (/* baz */) // bat
   bar/* foo */ ? /* bar */ (/* baz */) /* bat */;
@@ -46,6 +46,7 @@ abstract class Test {
 
   abstract foo13 /* foo */ (/* bar */) /* baz */
 }
+
 ```
 
 
@@ -99,7 +100,7 @@ abstract class Test {
 
 # Output
 
-```js
+```ts
 interface foo1 {
   bar3 /* foo */(/* baz */); // bat
   bar /* foo */?/* bar */ (/* baz */) /* bat */;
@@ -140,6 +141,5 @@ abstract class Test {
   abstract foo13 /* foo */(/* bar */); /* baz */
 }
 ```
-
 
 

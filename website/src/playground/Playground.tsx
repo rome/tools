@@ -4,6 +4,7 @@ import CodeMirror from "./CodeMirror";
 import type { ViewUpdate } from "@codemirror/view";
 import * as codeMirrorLangRomeAST from "codemirror-lang-rome-ast";
 import { javascript } from "@codemirror/lang-javascript";
+import { json } from "@codemirror/lang-json";
 import SettingsPane from "./components/SettingsPane";
 import {
 	createRef,
@@ -21,6 +22,7 @@ import FormatterIRTab from "./tabs/FormatterIRTab";
 import {
 	getCurrentCode,
 	getFileState,
+	isJSONFilename,
 	isJSXFilename,
 	isTypeScriptFilename,
 	useWindowSize,
@@ -45,29 +47,32 @@ export default function PlaygroundLoader({
 	const romeOutput = file.rome;
 	const prettierOutput = file.prettier;
 
-	const codeMirrorExtensions = useMemo(
-		() => [
-			javascript({
-				jsx: isJSXFilename(playgroundState.currentFile),
-				typescript: isTypeScriptFilename(playgroundState.currentFile),
-			}),
-		],
-		[
-			isJSXFilename(playgroundState.currentFile),
-			isTypeScriptFilename(playgroundState.currentFile),
-		],
-	);
+	// rome-ignore lint/nursery/useExhaustiveDependencies: dynamic dependencies
+	const codeMirrorExtensions = useMemo(() => {
+		if (isJSONFilename(playgroundState.currentFile)) {
+			return [json()];
+		} else {
+			return [
+				javascript({
+					jsx: isJSXFilename(playgroundState.currentFile),
+					typescript: isTypeScriptFilename(playgroundState.currentFile),
+				}),
+			];
+		}
+	}, [playgroundState.currentFile]);
 
 	const romeAstSyntacticDataRef = useRef<RomeAstSyntacticData | null>(null);
 
 	const astPanelCodeMirrorRef = useRef<null | ReactCodeMirrorRef>(null);
 
+	// rome-ignore lint/nursery/useExhaustiveDependencies: dynamic dependencies
 	useEffect(() => {
 		if (clipboardStatus !== "normal") {
 			setClipboardStatus("normal");
 		}
 	}, [romeOutput.formatter.ir]);
 
+	// rome-ignore lint/nursery/useExhaustiveDependencies: dynamic dependencies
 	const onUpdate = useCallback((viewUpdate: ViewUpdate) => {
 		const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
 		setPlaygroundState((state) =>
@@ -87,8 +92,8 @@ export default function PlaygroundLoader({
 	// We update the syntactic data of `RomeJsAst` only AstSource(`Display` string of our original AstRepresentation) changed.
 	useEffect(() => {
 		const ast = romeOutput.syntax.ast;
-		let tree = codeMirrorLangRomeAST.parser.parse(ast);
-		let rangeMap = new Map();
+		const tree = codeMirrorLangRomeAST.parser.parse(ast);
+		const rangeMap = new Map();
 		romeAstSyntacticDataRef.current = {
 			ast: tree,
 			rangeMap,
@@ -96,7 +101,7 @@ export default function PlaygroundLoader({
 		tree.iterate({
 			enter(node) {
 				if (node.type.name === "SyntaxToken") {
-					let range = node.node.getChild("Range");
+					const range = node.node.getChild("Range");
 					if (!range) {
 						return;
 					}
@@ -110,11 +115,11 @@ export default function PlaygroundLoader({
 					}
 
 					const children = range.node.getChildren("Number");
-					let first = children.at(0)?.node;
-					let second = children.at(1)?.node;
+					const first = children.at(0)?.node;
+					const second = children.at(1)?.node;
 					if (first && second) {
-						let start = +ast.slice(first.from, first.to);
-						let end = +ast.slice(second.from, second.to);
+						const start = +ast.slice(first.from, first.to);
+						const end = +ast.slice(second.from, second.to);
 						rangeMap.set([start, end], [node.from, node.to]);
 					}
 				}
@@ -122,6 +127,7 @@ export default function PlaygroundLoader({
 		});
 	}, [romeOutput.syntax.ast]);
 
+	// rome-ignore lint/nursery/useExhaustiveDependencies: dynamic dependencies
 	const onChange = useCallback((value: string) => {
 		setPlaygroundState((state) => ({
 			...state,
@@ -285,7 +291,7 @@ export default function PlaygroundLoader({
 		const view = astPanelCodeMirrorRef.current.view;
 		const rangeMap = romeAstSyntacticDataRef.current.rangeMap;
 
-		for (let [sourceRange, displaySourceRange] of rangeMap.entries()) {
+		for (const [sourceRange, displaySourceRange] of rangeMap.entries()) {
 			if (
 				cursorPosition >= sourceRange[0] &&
 				cursorPosition <= sourceRange[1]

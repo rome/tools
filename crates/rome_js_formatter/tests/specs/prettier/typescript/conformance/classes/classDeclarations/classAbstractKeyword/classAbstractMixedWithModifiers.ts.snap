@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/conformance/classes/classDeclarations/classAbstractKeyword/classAbstractMixedWithModifiers.ts
 ---
 
 # Input
 
-```js
+```ts
 abstract class A {
     abstract foo_a();
     
@@ -21,7 +21,8 @@ abstract class A {
     abstract static foo_d();
     
     static abstract foo_e();
-}```
+}
+```
 
 
 # Prettier differences
@@ -49,7 +50,7 @@ abstract class A {
 
 # Output
 
-```js
+```ts
 abstract class A {
   abstract foo_a();
 
@@ -66,7 +67,6 @@ abstract class A {
   static abstract foo_e();
 }
 ```
-
 
 # Errors
 ```

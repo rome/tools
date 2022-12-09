@@ -1,16 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import prettier, { Options as PrettierOptions } from "prettier";
 import type { ThemeName } from "../frontend-scripts/util";
-// @ts-ignore
-import parserBabel from "prettier/esm/parser-babel";
 import {
-	IndentStyle,
 	PlaygroundState,
-	QuoteStyle,
-	QuoteProperties,
-	TrailingComma,
-	Semicolons,
-	PrettierOutput,
 	PlaygroundSettings,
 	emptyPrettierOutput,
 	emptyRomeOutput,
@@ -147,76 +138,6 @@ export function createPlaygroundSettingsSetter<
 	};
 }
 
-export function formatWithPrettier(
-	code: string,
-	options: {
-		lineWidth: number;
-		indentStyle: IndentStyle;
-		indentWidth: number;
-		language: "js" | "ts";
-		quoteStyle: QuoteStyle;
-		quoteProperties: QuoteProperties;
-		trailingComma: TrailingComma;
-		semicolons: Semicolons;
-	},
-): PrettierOutput {
-	try {
-		const prettierOptions: PrettierOptions = {
-			useTabs: options.indentStyle === IndentStyle.Tab,
-			tabWidth: options.indentWidth,
-			printWidth: options.lineWidth,
-			parser: getPrettierParser(options.language),
-			plugins: [parserBabel],
-			singleQuote: options.quoteStyle === QuoteStyle.Single,
-			quoteProps: options.quoteProperties,
-			trailingComma: options.trailingComma,
-			semi: options.semicolons === Semicolons.Always,
-		};
-
-		// @ts-ignore
-		const debug = prettier.__debug;
-		const document = debug.printToDoc(code, prettierOptions);
-
-		// formatDoc must be before printDocToString because printDocToString mutates the document and breaks the ir
-		const ir = debug.formatDoc(document, {
-			parser: "babel",
-			plugins: [parserBabel],
-		});
-
-		const formattedCode = debug.printDocToString(
-			document,
-			prettierOptions,
-		).formatted;
-
-		return {
-			type: "SUCCESS",
-			code: formattedCode,
-			ir,
-		};
-	} catch (err: any) {
-		if (err instanceof SyntaxError) {
-			return {
-				type: "ERROR",
-				stack: err.message,
-			};
-		} else {
-			return {
-				type: "ERROR",
-				stack: err.stack,
-			};
-		}
-	}
-}
-
-function getPrettierParser(language: "js" | "ts"): string {
-	switch (language) {
-		case "js":
-			return "babel";
-		case "ts":
-			return "babel-ts";
-	}
-}
-
 // See https://developer.mozilla.org/en-US/docs/Web/API/btoa#unicode_strings
 export function encodeCode(code: string): string {
 	return btoa(toBinary(code));
@@ -300,6 +221,10 @@ export function isModuleFilename(filename: string): boolean {
 	);
 }
 
+export function isJSONFilename(filename: string): boolean {
+	return filename.endsWith(".json");
+}
+
 export function modifyFilename(
 	filename: string,
 	opts: ExtensionOptions,
@@ -344,7 +269,8 @@ export function isValidExtension(filename: string): boolean {
 		isScriptFilename(filename) ||
 		isModuleFilename(filename) ||
 		isTypeScriptFilename(filename) ||
-		isJSXFilename(filename)
+		isJSXFilename(filename) ||
+		isJSONFilename(filename)
 	);
 }
 

@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/decorators/class-expression/member-expression.js
 ---
@@ -9,6 +9,7 @@ info:
 ```js
 (@deco class Foo {}).name;
 (@deco class {}).name;
+
 ```
 
 
@@ -44,7 +45,6 @@ info:
 @deco class {}
 ).name
 ```
-
 
 # Errors
 ```

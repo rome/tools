@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/conformance/types/union/unionTypeEquivalence.ts
 ---
 
 # Input
 
-```js
+```ts
 ﻿// A | B is equivalent to A if B is a subtype of A
 class C { }
 class D extends C { foo() { } }
@@ -25,6 +25,7 @@ var AB : string | number;
 var BC : number | boolean;
 var z1: typeof AB | boolean;
 var z1: string | typeof BC;
+
 ```
 
 
@@ -43,7 +44,7 @@ var z1: string | typeof BC;
 
 # Output
 
-```js
+```ts
 // A | B is equivalent to A if B is a subtype of A
 class C {}
 class D extends C {
@@ -65,6 +66,5 @@ var BC: number | boolean;
 var z1: typeof AB | boolean;
 var z1: string | typeof BC;
 ```
-
 
 

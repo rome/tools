@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/optional-chaining/chaining.js
 ---
@@ -90,6 +90,7 @@ a = () => ({}?.b() && a);
 new (foo?.bar)();
 new (foo?.bar())();
 new (foo?.())();
+
 ```
 
 
@@ -279,6 +280,5 @@ new (foo?.bar)();
 new (foo?.bar())();
 new (foo?.())();
 ```
-
 
 

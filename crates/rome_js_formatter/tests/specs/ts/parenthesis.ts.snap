@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: parenthesis.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/parenthesis.ts
 ---
 
 # Input
 
-```js
+```ts
 const a = (c && b) as boolean;
 const a = <any>(c && b) as boolean;
 const a = !(c && b) as boolean;
@@ -27,7 +28,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 const a = (c && b) as boolean;
 const a = (<any>(c && b)) as boolean;
 const a = !(c && b) as boolean;

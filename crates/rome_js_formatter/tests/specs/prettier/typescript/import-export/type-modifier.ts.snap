@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/import-export/type-modifier.ts
 ---
 
 # Input
 
-```js
+```ts
 export type { SomeThing };
 export type { A as B };
 export type { B as C } from './a';
@@ -22,6 +22,7 @@ import type { foo as bar } from 'baz';
 import type * as foo from './bar';
 import type foo from 'bar';
 import type foo, { bar } from 'bar';
+
 ```
 
 
@@ -40,7 +41,7 @@ import type foo, { bar } from 'bar';
 
 # Output
 
-```js
+```ts
 export type { SomeThing };
 export type { A as B };
 export type { B as C } from "./a";
@@ -57,7 +58,6 @@ import type * as foo from "./bar";
 import type foo from "bar";
 import type foo, { bar } from 'bar';
 ```
-
 
 # Errors
 ```

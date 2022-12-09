@@ -7,11 +7,41 @@ use rome_js_syntax::JsxAttribute;
 use rome_rowan::AstNode;
 
 declare_rule! {
-    /// Enforce that elements with ARIA roles must have all required attributes for that role
+    /// Enforce that elements with ARIA roles must have all required ARIA attributes for that role.
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```jsx,expect_diagnostic
+    /// <span role="checkbox"></span>
+    /// ```
+    ///
+    /// ```jsx,expect_diagnostic
+    /// <span role="heading"></span>
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```jsx
+    /// <span role="checkbox" aria-checked="true"></span>
+    /// ```
+    ///
+    /// ```jsx
+    /// <span role="heading" aria-level="1"></span>
+    /// ```
+    ///
+    ///
+    /// ## Accessibility guidelines
+    /// - [WCAG 4.1.2](https://www.w3.org/WAI/WCAG21/Understanding/name-role-value)
+    ///
+    /// ### Resources
+    /// - [ARIA Spec, Roles](https://www.w3.org/TR/wai-aria/#roles)
+    /// - [Chrome Audit Rules, AX_ARIA_03](https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#ax_aria_03)
     pub(crate) UseAriaPropsForRole {
         version: "11.0.0",
         name: "useAriaPropsForRole",
-        recommended: false,
+        recommended: true,
     }
 }
 
@@ -28,7 +58,7 @@ impl UseAriaPropsForRoleState {
         }
         self.attribute.as_ref().map(|(attribute, role_name)| {
             let joined_attributes = &self.missing_aria_props.join(", "); 
-            let description = format!("The element with the {role_name} ARIA role does not have the required ARIA attributes: {} ", joined_attributes);
+            let description = format!("The element with the {role_name} ARIA role does not have the required ARIA attributes: {}.", joined_attributes);
             RuleDiagnostic::new(
                 rule_category!(),
                 attribute.range(),
@@ -37,7 +67,7 @@ impl UseAriaPropsForRoleState {
                 },
             )
             .description(description)
-            .footer_list(markup! { "Missing aria props" }, &self.missing_aria_props)
+            .footer_list(markup! { "Missing ARIA prop(s):" }, &self.missing_aria_props)
         })
     }
 }
@@ -51,36 +81,54 @@ impl Rule for UseAriaPropsForRole {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
         let roles = ctx.aria_roles();
-
-        let role_attribute = node.find_attribute_by_name("role")?;
-
-        let name = role_attribute
-            .initializer()?
-            .value()
-            .ok()?
-            .as_jsx_string()?
-            .inner_string_text()
-            .ok()?;
-
-        let role = roles.get_role(name.text());
-        let mut missing_aria_props = vec![];
-        if let Some(role) = role {
-            let properties = role.properties();
-            for (property_name, required) in properties {
-                if *required {
-                    let attribute = node.find_attribute_by_name(property_name);
-                    if attribute.is_none() {
-                        missing_aria_props.push(property_name.to_string());
-                    }
-                }
-            }
-            Some(UseAriaPropsForRoleState {
-                attribute: Some((role_attribute, name.text().to_string())),
-                missing_aria_props,
+        let is_inside_element = node
+            .syntax()
+            .ancestors()
+            .find_map(|ancestor| {
+                AnyJsxElement::cast(ancestor)
+                    .map(|element| Some(element.is_element()))
+                    .unwrap_or(None)
             })
-        } else {
-            Some(UseAriaPropsForRoleState::default())
+            .unwrap_or(false);
+
+        if is_inside_element {
+            let role_attribute = node.find_attribute_by_name("role")?;
+
+            let name = role_attribute
+                .initializer()?
+                .value()
+                .ok()?
+                .as_jsx_string()?
+                .inner_string_text()
+                .ok()?;
+
+            let role = roles.get_role(name.text());
+            let missing_aria_props: Vec<_> = role
+                .into_iter()
+                .flat_map(|role| role.properties())
+                .filter_map(|(property_name, required)| {
+                    if *required {
+                        let attribute = node.find_attribute_by_name(property_name);
+                        if attribute.is_none() {
+                            Some(property_name.to_string())
+                        } else {
+                            None
+                        }
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+
+            if !missing_aria_props.is_empty() {
+                return Some(UseAriaPropsForRoleState {
+                    attribute: Some((role_attribute, name.text().to_string())),
+                    missing_aria_props,
+                });
+            }
         }
+
+        None
     }
 
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {

@@ -20,7 +20,7 @@ class A extends B {
 
 <pre class="language-text"><code class="language-text">nursery/noInvalidConstructorSuper.js:1:9 <a href="https://docs.rome.tools/lint/rules/noInvalidConstructorSuper">lint/nursery/noInvalidConstructorSuper</a> ━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This class extends another class and a </span><span style="color: Orange;"><strong>super()</strong></span><span style="color: Orange;"> call is expected.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This class extends another class and a </span><span style="color: Tomato;"><strong>super()</strong></span><span style="color: Tomato;"> call is expected.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>class A extends B {
    <strong>   │ </strong>        <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -39,7 +39,7 @@ class A {
 
 <pre class="language-text"><code class="language-text">nursery/noInvalidConstructorSuper.js:3:9 <a href="https://docs.rome.tools/lint/rules/noInvalidConstructorSuper">lint/nursery/noInvalidConstructorSuper</a> ━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This class should not have a </span><span style="color: Orange;"><strong>super()</strong></span><span style="color: Orange;"> call. You should remove it.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This class should not have a </span><span style="color: Tomato;"><strong>super()</strong></span><span style="color: Tomato;"> call. You should remove it.</span>
   
     <strong>1 │ </strong>class A {
     <strong>2 │ </strong>    constructor() {

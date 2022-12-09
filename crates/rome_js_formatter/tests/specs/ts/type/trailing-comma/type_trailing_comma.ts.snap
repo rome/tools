@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: type_trailing_comma.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/type/trailing-comma/type_trailing_comma.ts
 ---
 
 # Input
 
-```js
+```ts
 
 type A = [
 	adsadasdasdasdasdasdasdasdasdasdas,
@@ -37,7 +38,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 type A = [
 	adsadasdasdasdasdasdasdasdasdasdas,
 	dsadsadasdasdasdasdasdasdasd,
@@ -62,7 +63,7 @@ Trailing comma: ES5
 Semicolons: Always
 -----
 
-```js
+```ts
 type A = [
 	adsadasdasdasdasdasdasdasdasdasdas,
 	dsadsadasdasdasdasdasdasdasd,
@@ -87,7 +88,7 @@ Trailing comma: None
 Semicolons: Always
 -----
 
-```js
+```ts
 type A = [
 	adsadasdasdasdasdasdasdasdasdasdas,
 	dsadsadasdasdasdasdasdasdasd,

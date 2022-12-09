@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/tuple/tuple.js
 ---
@@ -24,6 +24,7 @@ assert(tuple4 === #[1, 2, 2, 3, 4]);
 assert(tuple4.first() === 1);
 const tuple5 = tuple4.popped();
 assert(tuple5 === #[2, 2, 3, 4]);
+
 ```
 
 
@@ -74,7 +75,6 @@ assert(tuple4.first() === 1);
 const tuple5 = tuple4.popped();
 assert(tuple5 === #[2, 2, 3, 4]);
 ```
-
 
 # Errors
 ```

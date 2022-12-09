@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/satisfies-operators/satisfies.ts
 ---
 
 # Input
 
-```js
+```ts
 ({}) satisfies {};
 ({}) satisfies X;
 () => ({}) satisfies X;
@@ -29,6 +29,7 @@ var x = (v => v) satisfies (x: number) => string;
 foo satisfies unknown satisfies Bar;
 foo satisfies unknown as Bar;
 foo as unknown satisfies Bar;
+
 ```
 
 
@@ -51,7 +52,7 @@ foo as unknown satisfies Bar;
 
 # Output
 
-```js
+```ts
 ({}) satisfies {};
 ({}) satisfies X;
 () => ({}) satisfies X;
@@ -75,6 +76,5 @@ foo satisfies unknown satisfies Bar;
 foo satisfies unknown as Bar;
 foo as unknown satisfies Bar;
 ```
-
 
 

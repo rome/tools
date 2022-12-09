@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/conformance/types/union/unionTypeCallSignatures.ts
 ---
 
 # Input
 
-```js
+```ts
 ﻿var numOrDate: number | Date;
 var strOrBoolean: string | boolean;
 var strOrNum: string | number;
@@ -81,6 +81,7 @@ strOrNum = unionWithRestParameter3(); // error no call signature
 var unionWithRestParameter4: { (...a: string[]): string; } | { (a: string, b: string): number; };
 strOrNum = unionWithRestParameter4("hello"); // error supplied parameters do not match any call signature
 strOrNum = unionWithRestParameter4("hello", "world");
+
 ```
 
 
@@ -99,7 +100,7 @@ strOrNum = unionWithRestParameter4("hello", "world");
 
 # Output
 
-```js
+```ts
 var numOrDate: number | Date;
 var strOrBoolean: string | boolean;
 var strOrNum: string | number;
@@ -198,7 +199,6 @@ strOrNum = unionWithRestParameter4("hello"); // error supplied parameters do not
 strOrNum = unionWithRestParameter4("hello", "world");
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
     5: // If each type in U has call signatures and the sets of call signatures are identical ignoring return types,
@@ -208,4 +208,5 @@ strOrNum = unionWithRestParameter4("hello", "world");
    62: strOrNum = unionWithOptionalParameter3("hello", "hello"); // error no call signature
    95: strOrNum = unionWithRestParameter4("hello"); // error supplied parameters do not match any call signature
 ```
+
 

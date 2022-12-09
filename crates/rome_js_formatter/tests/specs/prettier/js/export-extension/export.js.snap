@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/export-extension/export.js
 ---
@@ -15,6 +15,7 @@ export * as d, { bar } from 'mod';
 export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
 export Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr } from "barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
 export { foooooooooooooooooooooooooooooooooooooooooooooo, fooooooooooooooooooooooooooooooooooooooooooooooo  } from "fooooooooooooooooooooooooooooo";
+
 ```
 
 
@@ -96,7 +97,6 @@ export {
   fooooooooooooooooooooooooooooooooooooooooooooooo,
 } from "fooooooooooooooooooooooooooooo";
 ```
-
 
 # Errors
 ```
@@ -489,4 +489,5 @@ export.js:7:68 parse ━━━━━━━━━━━━━━━━━━━�
 ```
    22: export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
 ```
+
 

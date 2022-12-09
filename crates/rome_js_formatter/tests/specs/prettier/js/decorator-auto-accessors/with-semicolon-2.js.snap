@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/decorator-auto-accessors/with-semicolon-2.js
 ---
@@ -11,6 +11,7 @@ class C {
   accessor clicked = "value";
   *foo() {}
 }
+
 ```
 
 
@@ -37,7 +38,6 @@ class C {
   *foo() {}
 }
 ```
-
 
 # Errors
 ```

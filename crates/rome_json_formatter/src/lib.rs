@@ -44,12 +44,13 @@ where
     }
 }
 
-pub(crate) struct JsonFormatLanguage {
+#[derive(Debug, Default, Clone)]
+pub struct JsonFormatLanguage {
     options: JsonFormatOptions,
 }
 
 impl JsonFormatLanguage {
-    fn new(options: JsonFormatOptions) -> Self {
+    pub fn new(options: JsonFormatOptions) -> Self {
         Self { options }
     }
 }

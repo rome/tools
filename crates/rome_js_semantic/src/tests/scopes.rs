@@ -23,6 +23,12 @@ assert_semantics! {
     ok_scope_function_expression, ";var a = function/*START A*/ f() {}/*END A*/",
     ok_scope_arrow_function, ";(/*START A*/) => {}/*END A*/",
     ok_scope_js_function_export_default_declaration, "export default function/*START A*/ () {}/*END A*/",
+    ok_scope_overloaded_functions, "
+        function/*START A*/ add(a:string, b:string):string;/*END A*/
+        function/*START B*/ add(a:number, b:number):number;/*END B*/
+        function/*START C*/ add(a: any, b:any): any {
+            return a + b;
+        }/*END C*/;",
 }
 
 // Classes
@@ -45,6 +51,11 @@ assert_semantics! {
             [`on${ Event /*READ Event */ }`]: (event: Event /*READ Event */, data: unknown) => void;
         } /*END A*/
     ",
+}
+
+// modules
+assert_semantics! {
+    ok_scope_module, "module/*START M*/ M {}/*END M*/;",
 }
 
 // Others

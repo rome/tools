@@ -13,7 +13,7 @@ use crate::configs::{
     CONFIG_FILE_SIZE_LIMIT, CONFIG_LINTER_AND_FILES_IGNORE, CONFIG_LINTER_DISABLED,
     CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC, CONFIG_LINTER_IGNORED_FILES,
     CONFIG_LINTER_SUPPRESSED_GROUP, CONFIG_LINTER_SUPPRESSED_RULE,
-    CONFIG_LINTER_UPGRADE_DIAGNOSTIC,
+    CONFIG_LINTER_UPGRADE_DIAGNOSTIC, CONFIG_RECOMMENDED_GROUP,
 };
 use crate::snap_test::SnapshotPayload;
 use crate::{assert_cli_snapshot, run_cli, FORMATTED, LINT_ERROR, PARSE_ERROR};
@@ -33,6 +33,7 @@ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
 "#;
 
 const NO_DEBUGGER: &str = "debugger;";
+const NEW_SYMBOL: &str = "new Symbol(\"\");";
 
 const FIX_BEFORE: &str = "
 if(a != -0) {}
@@ -46,7 +47,7 @@ debugger;
 console.log(a);
 ";
 
-const APPLY_SUGGESTED_AFTER: &str = "let a = 4;\nconsole.log(a);\n";
+const APPLY_SUGGESTED_AFTER: &str = "const a = 4;\nconsole.log(a);\n";
 
 const NO_DEBUGGER_BEFORE: &str = "debugger;";
 const NO_DEBUGGER_AFTER: &str = "debugger;";
@@ -68,9 +69,28 @@ const UPGRADE_SEVERITY_CODE: &str = r#"class A extends B {
     constructor() {}
 }"#;
 
+const NURSERY_UNSTABLE: &str = r#"if(a = b) {}"#;
+
 #[test]
 fn ok() {
     let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("check.js");
+    fs.insert(file_path.into(), FORMATTED.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+}
+
+#[test]
+fn ok_read_only() {
+    let mut fs = MemoryFileSystem::new_read_only();
     let mut console = BufferConsole::default();
 
     let file_path = Path::new("check.js");
@@ -154,6 +174,8 @@ fn maximum_diagnostics() {
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
+    println!("{console:#?}");
+
     assert!(result.is_err(), "run_cli returned {result:?}");
 
     let messages = &console.out_buffer;
@@ -173,7 +195,7 @@ fn maximum_diagnostics() {
             let content = format!("{:?}", m.content);
             content.contains("The number of diagnostics exceeds the number allowed by Rome")
                 && content.contains("Diagnostics not shown")
-                && content.contains("76")
+                && content.contains("28")
         }));
 
     assert_cli_snapshot(SnapshotPayload::new(
@@ -519,7 +541,7 @@ fn downgrade_severity() {
             .filter(|m| m.level == LogLevel::Error)
             .filter(|m| {
                 let content = format!("{:#?}", m.content);
-                content.contains("correctness/noDebugger")
+                content.contains("suspicious/noDebugger")
             })
             .count(),
         1
@@ -794,6 +816,38 @@ fn fs_error_infinite_symlink_exapansion() {
 }
 
 #[test]
+fn fs_error_read_only() {
+    let mut fs = MemoryFileSystem::new_read_only();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("test.js");
+    fs.insert(file_path.into(), *b"content");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("check"),
+            OsString::from("--apply"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    // Do not store the content of the file in the snapshot
+    fs.remove(file_path);
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "fs_error_read_only",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
 fn fs_error_unknown() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
@@ -941,7 +995,7 @@ fn max_diagnostics_default() {
     let mut console = BufferConsole::default();
 
     // Creates 40 diagnostics.
-    for i in 0..20 {
+    for i in 0..40 {
         let file_path = PathBuf::from(format!("src/file_{i}.js"));
         fs.insert(file_path, LINT_ERROR.as_bytes());
     }
@@ -991,7 +1045,7 @@ fn max_diagnostics() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    for i in 0..10 {
+    for i in 0..20 {
         let file_path = PathBuf::from(format!("src/file_{i}.js"));
         fs.insert(file_path, LINT_ERROR.as_bytes());
     }
@@ -1071,7 +1125,7 @@ fn deprecated_suppression_comment() {
     let file_path = Path::new("file.js");
     fs.insert(
         file_path.into(),
-        *b"// rome-ignore lint(correctness/noDoubleEquals): test
+        *b"// rome-ignore lint(suspicious/noDoubleEquals): test
 a == b;",
     );
 
@@ -1177,6 +1231,67 @@ fn suppression_syntax_error() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "suppression_syntax_error",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn config_recommended_group() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("rome.json");
+    fs.insert(file_path.into(), CONFIG_RECOMMENDED_GROUP.as_bytes());
+
+    let file_path = Path::new("check.js");
+    fs.insert(file_path.into(), NEW_SYMBOL.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+    );
+
+    match result {
+        Ok(()) => {}
+        Err(Termination::CheckError) => {}
+        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "config_recommended_group",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn nursery_unstable() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("check.js");
+    fs.insert(file_path.into(), NURSERY_UNSTABLE.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+    );
+
+    match result {
+        Ok(()) => {}
+        Err(Termination::CheckError) => {}
+        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "nursery_unstable",
         fs,
         console,
         result,

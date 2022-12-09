@@ -3,7 +3,7 @@ import { Commands } from "./commands";
 import { LanguageClient } from "vscode-languageclient/node";
 import { isRomeEditor, RomeEditor } from "./utils";
 
-export type Command = (...args: any[]) => unknown;
+export type Command = (...args: unknown[]) => unknown;
 
 /**
  * Client session of the LSP
@@ -18,7 +18,7 @@ export class Session {
 	}
 
 	registerCommand(name: Commands, factory: Command) {
-		let disposable = commands.registerCommand(name, factory);
+		const disposable = commands.registerCommand(name, factory);
 		this.context.subscriptions.push(disposable);
 	}
 

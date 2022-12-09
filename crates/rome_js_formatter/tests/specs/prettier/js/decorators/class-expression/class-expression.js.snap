@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/decorators/class-expression/class-expression.js
 ---
@@ -21,6 +21,7 @@ const b2 = []
 
 // This is not a `ClassExpression` but `ClassDeclaration`
 @deco class Foo {}
+
 ```
 
 
@@ -112,7 +113,6 @@ const b2 = [];
 // This is not a `ClassExpression` but `ClassDeclaration`
 @deco class Foo {}
 ```
-
 
 # Errors
 ```

@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/arrows/curried.js
 ---
@@ -215,6 +215,7 @@ import( (argument1) =>
       const foo = "foo";
       return foo + "bar";
     });
+
 ```
 
 
@@ -591,6 +592,5 @@ import((argument1) =>
     return foo + "bar";
   });
 ```
-
 
 

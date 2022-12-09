@@ -1,0 +1,114 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: json/with-comment/line-comment.json
+---
+
+# Input
+
+```json
+{
+  //comment
+  "K":"V"
+}
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,4 +1,4 @@
+ {
+   //comment
+-  "K": "V"
++  "K":"V"
+ }
+```
+
+# Output
+
+```json
+{
+  //comment
+  "K":"V"
+}
+```
+
+# Errors
+```
+line-comment.json:2:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a property but instead found '//comment'
+  
+    1 │ {
+  > 2 │   //comment
+      │   ^^^^^^^^^
+    3 │   "K":"V"
+    4 │ }
+  
+  i Expected a property here
+  
+    1 │ {
+  > 2 │   //comment
+      │   ^^^^^^^^^
+    3 │   "K":"V"
+    4 │ }
+  
+line-comment.json:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × End of file expected
+  
+    1 │ {
+    2 │   //comment
+  > 3 │   "K":"V"
+      │   ^^^
+    4 │ }
+    5 │ 
+  
+  i Use an array for a sequence of values: `[1, 2]`
+  
+line-comment.json:3:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × End of file expected
+  
+    1 │ {
+    2 │   //comment
+  > 3 │   "K":"V"
+      │      ^
+    4 │ }
+    5 │ 
+  
+  i Use an array for a sequence of values: `[1, 2]`
+  
+line-comment.json:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × End of file expected
+  
+    1 │ {
+    2 │   //comment
+  > 3 │   "K":"V"
+      │       ^^^
+    4 │ }
+    5 │ 
+  
+  i Use an array for a sequence of values: `[1, 2]`
+  
+line-comment.json:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × End of file expected
+  
+    2 │   //comment
+    3 │   "K":"V"
+  > 4 │ }
+      │ ^
+    5 │ 
+  
+  i Use an array for a sequence of values: `[1, 2]`
+  
+
+```
+
+

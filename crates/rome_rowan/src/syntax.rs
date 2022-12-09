@@ -1,5 +1,6 @@
 mod element;
 mod node;
+mod rewriter;
 mod token;
 mod trivia;
 
@@ -10,13 +11,14 @@ pub use node::{
     Preorder, PreorderWithTokens, SendNode, SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren,
     SyntaxNodeOptionExt, SyntaxSlot,
 };
+pub use rewriter::{SyntaxRewriter, VisitNodeSignal};
 use std::fmt;
 use std::fmt::Debug;
 pub use token::SyntaxToken;
 pub use trivia::{
-    SyntaxTrivia, SyntaxTriviaPiece, SyntaxTriviaPieceComments, SyntaxTriviaPieceNewline,
-    SyntaxTriviaPieceSkipped, SyntaxTriviaPieceWhitespace, SyntaxTriviaPiecesIterator, TriviaPiece,
-    TriviaPieceKind,
+    chain_trivia_pieces, ChainTriviaPiecesIterator, SyntaxTrivia, SyntaxTriviaPiece,
+    SyntaxTriviaPieceComments, SyntaxTriviaPieceNewline, SyntaxTriviaPieceSkipped,
+    SyntaxTriviaPieceWhitespace, SyntaxTriviaPiecesIterator, TriviaPiece, TriviaPieceKind,
 };
 
 /// Type tag for each node or token of a language

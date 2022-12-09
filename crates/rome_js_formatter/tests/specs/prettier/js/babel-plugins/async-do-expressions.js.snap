@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/babel-plugins/async-do-expressions.js
 ---
@@ -8,6 +8,7 @@ info:
 
 ```js
 async do { await requestAPI().json() };
+
 ```
 
 
@@ -30,7 +31,6 @@ async do { await requestAPI().json() };
 async;
 do { await requestAPI().json() };
 ```
-
 
 # Errors
 ```

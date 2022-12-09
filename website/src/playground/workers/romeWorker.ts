@@ -15,6 +15,7 @@ import {
 	RomeOutput,
 	Semicolons,
 } from "../types";
+import { isJSONFilename } from "../utils";
 
 let workspace: Workspace | null = null;
 let fileCounter = 0;
@@ -99,25 +100,45 @@ self.addEventListener("message", async (e) => {
 				},
 			};
 
-			if (lintRules === LintRules.All) {
-				configuration.linter = {
-					enabled: enabledLinting,
-					rules: {
+			switch (lintRules) {
+				case LintRules.Recommended: {
+					configuration.linter!.rules = {
+						nursery: {
+							recommended: false,
+						},
+					};
+					break;
+				}
+				case LintRules.All: {
+					configuration.linter!.rules = {
 						correctness: {
-							noRestrictedGlobals: "error",
-							noUndeclaredVariables: "error",
-							noUnusedVariables: "error",
-							noUselessFragments: "error",
+							noUndeclaredVariables: "warn",
+							noUnusedVariables: "warn",
+						},
+						complexity: {
+							noUselessFragments: "warn",
 						},
 						style: {
-							useFragmentSyntax: "error",
+							noImplicitBoolean: "warn",
+							noNegationElse: "warn",
+							useBlockStatements: "warn",
+							useShorthandArrayType: "warn",
+							useSingleCaseStatement: "warn",
+							noShoutyConstants: "warn",
+							useFragmentSyntax: "warn",
 						},
 						nursery: {
-							noConstAssign: "error",
-							useExhaustiveDependencies: "error",
+							noAccessKey: "warn",
+							noNonNullAssertion: "warn",
+							noPrecisionLoss: "warn",
+							noRedundantUseStrict: "warn",
+							useAriaPropTypes: "warn",
+							noRestrictedGlobals: "warn",
+							useCamelCase: "warn",
 						},
-					},
-				};
+					};
+					break;
+				}
 			}
 
 			workspace.updateSettings({
@@ -169,10 +190,12 @@ self.addEventListener("message", async (e) => {
 				path,
 			});
 
-			const controlFlowGraph = workspace.getControlFlowGraph({
-				path,
-				cursor: cursorPosition,
-			});
+			const controlFlowGraph = !isJSONFilename(filename)
+				? workspace.getControlFlowGraph({
+						path,
+						cursor: cursorPosition,
+				  })
+				: "";
 
 			const formatterIr = workspace.getFormatterIr({
 				path,

@@ -69,7 +69,7 @@ declare_rule! {
     pub(crate) NoSetterReturn {
         version: "11.0.0",
         name: "noSetterReturn",
-        recommended: false,
+        recommended: true,
     }
 }
 

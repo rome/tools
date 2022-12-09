@@ -47,7 +47,7 @@ declare_rule! {
     pub(crate) UseNumericLiterals {
         version: "11.0.0",
         name: "useNumericLiterals",
-        recommended: false,
+        recommended: true,
     }
 }
 

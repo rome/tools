@@ -258,13 +258,13 @@ dependencies = [
 
 [[package]]
 name = "console"
-version = "0.15.1"
+version = "0.15.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "89eab4d20ce20cea182308bca13088fecea9c05f6776cf287205d41a0ed3c847"
+checksum = "c050367d967ced717c04b65d8c619d863ef9292ce0c5760028655a2fb298718c"
 dependencies = [
  "encode_unicode",
+ "lazy_static",
  "libc",
- "once_cell",
  "terminal_size",
  "unicode-width",
  "winapi",
@@ -842,15 +842,14 @@ dependencies = [
 
 [[package]]
 name = "insta"
-version = "1.18.2"
+version = "1.21.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "57a9aec10c9a062ef0454fd49ebaefa59239f836d1b30891d9cc2289978dd970"
+checksum = "261bf85ed492cd1c47c9ba675e48649682a9d2d2e77f515c5386d7726fb0ba76"
 dependencies = [
  "console",
  "globset",
+ "lazy_static",
  "linked-hash-map",
- "once_cell",
- "serde",
  "similar",
  "walkdir",
  "yaml-rust",
@@ -1630,9 +1629,6 @@ dependencies = [
 [[package]]
 name = "rome_flags"
 version = "0.0.0"
-dependencies = [
- "once_cell",
-]
 
 [[package]]
 name = "rome_formatter"
@@ -1642,6 +1638,8 @@ dependencies = [
  "countme",
  "drop_bomb",
  "indexmap",
+ "insta",
+ "rome_console",
  "rome_diagnostics",
  "rome_js_parser",
  "rome_js_syntax",
@@ -1651,6 +1649,24 @@ dependencies = [
  "serde",
  "tracing",
  "unicode-width",
+]
+
+[[package]]
+name = "rome_formatter_test"
+version = "0.1.0"
+dependencies = [
+ "insta",
+ "rome_console",
+ "rome_diagnostics",
+ "rome_formatter",
+ "rome_fs",
+ "rome_parser",
+ "rome_rowan",
+ "rome_service",
+ "serde",
+ "serde_json",
+ "similar",
+ "similar-asserts",
 ]
 
 [[package]]
@@ -1713,22 +1729,20 @@ dependencies = [
  "insta",
  "quickcheck",
  "quickcheck_macros",
- "rome_console",
  "rome_diagnostics",
  "rome_diagnostics_categories",
  "rome_formatter",
+ "rome_formatter_test",
  "rome_fs",
  "rome_js_factory",
  "rome_js_parser",
  "rome_js_syntax",
+ "rome_parser",
  "rome_rowan",
- "rome_service",
  "rome_text_size",
  "schemars",
  "serde",
  "serde_json",
- "similar",
- "similar-asserts",
  "tests_macros",
  "tracing",
  "unicode-width",
@@ -1799,11 +1813,20 @@ dependencies = [
 name = "rome_json_formatter"
 version = "0.0.0"
 dependencies = [
+ "countme",
+ "insta",
  "rome_diagnostics",
  "rome_formatter",
+ "rome_formatter_test",
+ "rome_fs",
+ "rome_json_factory",
  "rome_json_parser",
  "rome_json_syntax",
+ "rome_parser",
  "rome_rowan",
+ "serde",
+ "serde_json",
+ "tests_macros",
 ]
 
 [[package]]
@@ -1899,9 +1922,11 @@ version = "0.0.0"
 dependencies = [
  "dashmap",
  "indexmap",
+ "insta",
  "rome_analyze",
  "rome_console",
  "rome_diagnostics",
+ "rome_flags",
  "rome_formatter",
  "rome_fs",
  "rome_js_analyze",

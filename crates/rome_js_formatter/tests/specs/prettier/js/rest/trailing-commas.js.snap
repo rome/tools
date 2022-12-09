@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/rest/trailing-commas.js
 ---
@@ -25,6 +25,7 @@ declare class C { f(...superSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSu
 
 [veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong, ...a] = [];
 var {veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLong, ...a} = {};
+
 
 ```
 
@@ -90,7 +91,6 @@ var {
 } = {};
 ```
 
-
 # Errors
 ```
 trailing-commas.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -121,4 +121,5 @@ trailing-commas.js:13:1 parse ━━━━━━━━━━━━━━━━�
    13: declare class C { f(...superSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperLong): void; }
    16:   superSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperSuperLong,
 ```
+
 

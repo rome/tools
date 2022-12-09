@@ -5,11 +5,14 @@ parent: lint/rules/index
 
 # noConstructorReturn (since v11.0.0)
 
-Disallow returning a value from a constructor
+Disallow returning a value from a `constructor`.
 
-While returning a value from a constructor does not produce an error, the returned value is being ignored. Therefore, returning a value from a constructor is either unnecessary or a possible error.
+Returning a value from a `constructor` of a class is a possible error.
+Forbidding this pattern prevents errors resulting from unfamiliarity with JavaScript or a copy-paste error.
 
 Only returning without a value is allowed, as it’s a control flow statement.
+
+Source: https://eslint.org/docs/latest/rules/no-constructor-return
 
 ## Examples
 
@@ -25,7 +28,7 @@ class A {
 
 <pre class="language-text"><code class="language-text">nursery/noConstructorReturn.js:3:9 <a href="https://docs.rome.tools/lint/rules/noConstructorReturn">lint/nursery/noConstructorReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The </span><span style="color: Orange;"><strong>constructor</strong></span><span style="color: Orange;"> should not </span><span style="color: Orange;"><strong>return</strong></span><span style="color: Orange;"> a value.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>constructor</strong></span><span style="color: Tomato;"> should not </span><span style="color: Tomato;"><strong>return</strong></span><span style="color: Tomato;"> a value.</span>
   
     <strong>1 │ </strong>class A {
     <strong>2 │ </strong>    constructor() {

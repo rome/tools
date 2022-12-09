@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/custom/abstract/abstractProperties.ts
 ---
 
 # Input
 
-```js
+```ts
 abstract class Foo {
     abstract private a: 1;
     private abstract b: 2;
@@ -15,6 +15,7 @@ abstract class Foo {
     private abstract ['h'];
     static abstract ['i'];
 }
+
 ```
 
 
@@ -40,7 +41,7 @@ abstract class Foo {
 
 # Output
 
-```js
+```ts
 abstract class Foo {
   abstract private a: 1;
   private abstract b: 2;
@@ -50,7 +51,6 @@ abstract class Foo {
   static abstract ['i'];
 }
 ```
-
 
 # Errors
 ```

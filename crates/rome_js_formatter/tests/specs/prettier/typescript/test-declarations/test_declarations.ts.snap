@@ -1,15 +1,16 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/test-declarations/test_declarations.ts
 ---
 
 # Input
 
-```js
+```ts
 test("does something really long and complicated so I have to write a very long name for the test", <T>(done) => {
   console.log("hello!");
 });
+
 ```
 
 
@@ -29,14 +30,13 @@ test("does something really long and complicated so I have to write a very long 
 
 # Output
 
-```js
+```ts
 test("does something really long and complicated so I have to write a very long name for the test", <
   T,
 >(done) => {
   console.log("hello!");
 });
 ```
-
 
 # Lines exceeding max width of 80 characters
 ```

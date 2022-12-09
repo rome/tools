@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/throw_expressions/throw_expression.js
 ---
@@ -24,6 +24,7 @@ class Product {
   get id() { return this._id; }
   set id(value) { this._id = value || throw new Error("Invalid value"); }
 }
+
 ```
 
 
@@ -102,7 +103,6 @@ class Product {
   }
 }
 ```
-
 
 # Errors
 ```

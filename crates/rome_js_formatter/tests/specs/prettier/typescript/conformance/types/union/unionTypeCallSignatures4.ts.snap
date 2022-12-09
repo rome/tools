@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/conformance/types/union/unionTypeCallSignatures4.ts
 ---
 
 # Input
 
-```js
+```ts
 ﻿type F1 = (a: string, b?: string) => void;
 type F2 = (a: string, b?: string, c?: string) => void;
 type F3 = (a: string, ...rest: string[]) => void;
@@ -32,6 +32,7 @@ var f12345: F1 | F2 | F3 | F4 | F5;
 f12345("a");  // error
 f12345("a", "b");
 f12345("a", "b", "c");  // error
+
 ```
 
 
@@ -50,7 +51,7 @@ f12345("a", "b", "c");  // error
 
 # Output
 
-```js
+```ts
 type F1 = (a: string, b?: string) => void;
 type F2 = (a: string, b?: string, c?: string) => void;
 type F3 = (a: string, ...rest: string[]) => void;
@@ -77,6 +78,5 @@ f12345("a"); // error
 f12345("a", "b");
 f12345("a", "b", "c"); // error
 ```
-
 
 

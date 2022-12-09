@@ -171,8 +171,6 @@ mod prelude;
 mod ts;
 pub mod utils;
 
-#[cfg(test)]
-mod check_reformat;
 #[rustfmt::skip]
 mod generated;
 mod builders;
@@ -309,11 +307,12 @@ impl IntoFormat<JsFormatContext> for JsSyntaxToken {
     }
 }
 
-struct JsFormatLanguage {
+#[derive(Debug, Clone)]
+pub struct JsFormatLanguage {
     options: JsFormatOptions,
 }
 impl JsFormatLanguage {
-    fn new(options: JsFormatOptions) -> Self {
+    pub fn new(options: JsFormatOptions) -> Self {
         Self { options }
     }
 }
@@ -406,16 +405,14 @@ pub fn format_sub_tree(options: JsFormatOptions, root: &JsSyntaxNode) -> FormatR
 #[cfg(test)]
 mod tests {
 
-    use super::{format_node, format_range};
+    use super::format_range;
 
-    use crate::context::{JsFormatOptions, Semicolons};
+    use crate::context::JsFormatOptions;
     use rome_diagnostics::location::FileId;
     use rome_formatter::IndentStyle;
     use rome_js_parser::{parse, parse_script};
     use rome_js_syntax::SourceType;
     use rome_rowan::{TextRange, TextSize};
-
-    use crate::check_reformat::{check_reformat, CheckReformatParams};
 
     #[test]
     fn test_range_formatting() {
@@ -623,40 +620,6 @@ function() {
             result.range(),
             Some(TextRange::new(TextSize::from(30), TextSize::from(41)))
         )
-    }
-
-    #[ignore]
-    #[test]
-    // use this test check if your snippet prints as you wish, without using a snapshot
-    fn quick_test() {
-        let src = r#"
-declare module 'x' {
-  export default function (option: any): void
-}
-"#;
-        let syntax = SourceType::tsx();
-        let tree = parse(src, FileId::zero(), syntax);
-        let options = JsFormatOptions::new(syntax).with_semicolons(Semicolons::AsNeeded);
-        let result = format_node(options.clone(), &tree.syntax())
-            .unwrap()
-            .print()
-            .unwrap();
-        check_reformat(CheckReformatParams {
-            root: &tree.syntax(),
-            text: result.as_code(),
-            source_type: syntax,
-            file_name: "quick_test",
-            options,
-        });
-        assert_eq!(
-            result.as_code(),
-            r#"[
-	5,
-	7234932436,
-    // comment 3
-];
-"#
-        );
     }
 
     #[test]

@@ -56,7 +56,9 @@ export default function Resizable({
 	const [isResizing, setIsResizing] = useState(false);
 	const [canResize, setCanResize] = useState(false);
 
-	let [rawSize, setSize] = useState<number | undefined>(sizeStore.getNumber());
+	const [rawSize, setSize] = useState<number | undefined>(
+		sizeStore.getNumber(),
+	);
 
 	const size =
 		rawSize === undefined ? undefined : Math.max(MINIMUM_SIZE, rawSize);
@@ -65,8 +67,9 @@ export default function Resizable({
 
 	const handler = handlers[direction];
 
-	let cursor = canResize || isResizing ? handler.resizingCursor : undefined;
+	const cursor = canResize || isResizing ? handler.resizingCursor : undefined;
 
+	// rome-ignore lint/nursery/useExhaustiveDependencies: no dependencies
 	useEffect(() => {
 		function onMouseMove(event: MouseEvent) {
 			const container = ref.current;

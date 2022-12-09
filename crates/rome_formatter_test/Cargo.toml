@@ -1,0 +1,25 @@
+[package]
+name = "rome_formatter_test"
+version = "0.1.0"
+edition = "2021"
+authors = ["Rome Tools Developers and Contributors"]
+repository = "https://github.com/rome/tools"
+license = "MIT"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rome_parser = { path = "../rome_parser" }
+rome_diagnostics = { path = "../rome_diagnostics" }
+rome_formatter = { path = "../rome_formatter" }
+rome_rowan = { path = "../rome_rowan" }
+rome_console = { path = "../../crates/rome_console" }
+rome_fs = { path = "../rome_fs" }
+rome_service = { path = "../rome_service" }
+similar = "2.1.0"
+similar-asserts = "1.2.0"
+insta = { workspace = true, features = ["glob"] }
+
+[dev-dependencies]

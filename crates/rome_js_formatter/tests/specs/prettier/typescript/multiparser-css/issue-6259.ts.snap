@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/multiparser-css/issue-6259.ts
 ---
 
 # Input
 
-```js
+```ts
 const yesFrame = (
     ...args: Interpolation<ThemedStyledProps<{}, Theme>>[]
 ) => css`
@@ -14,6 +14,7 @@ const yesFrame = (
         ${css({}, ...args)}
     }
 `
+
 ```
 
 
@@ -37,7 +38,7 @@ const yesFrame = (
 
 # Output
 
-```js
+```ts
 const yesFrame = (
   ...args: Interpolation<ThemedStyledProps<{}, Theme>>[]
 ) => css`
@@ -46,6 +47,5 @@ const yesFrame = (
     }
 `;
 ```
-
 
 

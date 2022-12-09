@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/destructuring-private-fields/valid-multiple-bindings.js
 ---
@@ -13,6 +13,7 @@ class C {
     const {#x: x1, #x: x2 = x1 } = this;
   }
 }
+
 ```
 
 
@@ -41,7 +42,6 @@ class C {
   }
 }
 ```
-
 
 # Errors
 ```

@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/as/as.ts
 ---
 
 # Input
 
-```js
+```ts
 const name = (description as DescriptionObject).name || (description as string);
 this.isTabActionBar((e.target || e.srcElement) as HTMLElement);
 (originalError ? wrappedError(errMsg, originalError) : Error(errMsg)) as InjectionError;
@@ -47,6 +47,7 @@ const value5 = thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLong
 
 const iter1 = createIterator(this.controller, child, this.tag as SyncFunctionComponent);
 const iter2 = createIterator(self.controller, child, self.tag as SyncFunctionComponent);
+
 ```
 
 
@@ -78,7 +79,7 @@ const iter2 = createIterator(self.controller, child, self.tag as SyncFunctionCom
 
 # Output
 
-```js
+```ts
 const name = (description as DescriptionObject).name || (description as string);
 this.isTabActionBar((e.target || e.srcElement) as HTMLElement);
 (originalError
@@ -147,7 +148,6 @@ const iter2 = createIterator(
   self.tag as SyncFunctionComponent,
 );
 ```
-
 
 # Lines exceeding max width of 80 characters
 ```

@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: jsx/jsx/quotes.js
 ---
@@ -49,6 +49,7 @@ info:
   restart. This has been reported to the team, but if youencounter this121312331
   repeatedly please report this issue to the GitHub 12312312312312313{'  '}{' '}
 </p>
+
 ```
 
 
@@ -136,6 +137,5 @@ info:
   repeatedly please report this issue to the GitHub 12312312312312313{"  "}{" "}
 </p>;
 ```
-
 
 

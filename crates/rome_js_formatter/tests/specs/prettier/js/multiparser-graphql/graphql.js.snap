@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/multiparser-graphql/graphql.js
 ---
@@ -13,6 +13,7 @@ mutation     MarkReadNotificationMutation(
     : MarkReadNotificationData!
   )
 { markReadNotification(data: $input ) { notification {seenState} } }`)
+
 ```
 
 
@@ -54,6 +55,5 @@ mutation     MarkReadNotificationMutation(
 { markReadNotification(data: $input ) { notification {seenState} } }`,
 );
 ```
-
 
 

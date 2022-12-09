@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/comments/export.js
 ---
@@ -47,6 +47,7 @@ export {
   barrrr as  // comment
 		 bazz,
 }
+
 ```
 
 
@@ -106,6 +107,5 @@ export {
   barrrr as bazz,
 };
 ```
-
 
 

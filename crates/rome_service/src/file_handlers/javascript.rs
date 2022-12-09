@@ -7,8 +7,8 @@ use crate::file_handlers::{FixAllParams, Language as LanguageId};
 use crate::{
     settings::{FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle},
     workspace::{
-        server::AnyParse, CodeAction, FixAction, FixFileMode, FixFileResult, GetSyntaxTreeResult,
-        PullActionsResult, RenameResult,
+        CodeAction, FixAction, FixFileMode, FixFileResult, GetSyntaxTreeResult, PullActionsResult,
+        RenameResult,
     },
     RomeError, Rules,
 };
@@ -26,11 +26,11 @@ use rome_js_formatter::context::{
     trailing_comma::TrailingComma, QuoteProperties, QuoteStyle, Semicolons,
 };
 use rome_js_formatter::{context::JsFormatOptions, format_node};
-use rome_js_parser::Parse;
 use rome_js_semantic::{semantic_model, SemanticModelOptions};
 use rome_js_syntax::{
     AnyJsRoot, JsLanguage, JsSyntaxNode, SourceType, TextRange, TextSize, TokenAtOffset,
 };
+use rome_parser::AnyParse;
 use rome_rowan::{AstNode, BatchMutationExt, Direction};
 use std::borrow::Cow;
 use std::fmt::Debug;
@@ -127,23 +127,6 @@ fn parse(rome_path: &RomePath, language_hint: LanguageId, text: &str) -> AnyPars
 
     let parse = rome_js_parser::parse(text, file_id, source_type);
     AnyParse::from(parse)
-}
-
-impl<T> From<Parse<T>> for AnyParse
-where
-    T: AstNode,
-    T::Language: 'static,
-{
-    fn from(parse: Parse<T>) -> Self {
-        let root = parse.syntax();
-        let diagnostics = parse.into_diagnostics();
-
-        Self {
-            // SAFETY: the parser should always return a root node
-            root: root.as_send().unwrap(),
-            diagnostics,
-        }
-    }
 }
 
 fn debug_syntax_tree(_rome_path: &RomePath, parse: AnyParse) -> GetSyntaxTreeResult {
@@ -537,6 +520,7 @@ fn rename(
         .and_then(|token| token.parent())
     {
         let original_name = node.text_trimmed();
+        let range = node.text_range();
         match node.try_into() {
             Ok(node) => {
                 let mut batch = root.begin();
@@ -544,6 +528,7 @@ fn rename(
                 if !result {
                     Err(RomeError::RenameError(RenameError::CannotBeRenamed {
                         original_name: original_name.to_string(),
+                        original_range: range,
                         new_name,
                     }))
                 } else {
@@ -554,7 +539,9 @@ fn rename(
             Err(err) => Err(RomeError::RenameError(err)),
         }
     } else {
-        Err(RomeError::RenameError(RenameError::CannotFindDeclaration))
+        Err(RomeError::RenameError(RenameError::CannotFindDeclaration(
+            new_name,
+        )))
     }
 }
 

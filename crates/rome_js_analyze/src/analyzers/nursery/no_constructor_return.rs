@@ -7,11 +7,14 @@ use rome_rowan::AstNode;
 use crate::control_flow::AnyJsControlFlowRoot;
 
 declare_rule! {
-    /// Disallow returning a value from a constructor
+    /// Disallow returning a value from a `constructor`.
     ///
-    /// While returning a value from a constructor does not produce an error, the returned value is being ignored. Therefore, returning a value from a constructor is either unnecessary or a possible error.
+    /// Returning a value from a `constructor` of a class is a possible error.
+    /// Forbidding this pattern prevents errors resulting from unfamiliarity with JavaScript or a copy-paste error.
     ///
     /// Only returning without a value is allowed, as it’s a control flow statement.
+    ///
+    /// Source: https://eslint.org/docs/latest/rules/no-constructor-return
     ///
     /// ## Examples
     ///
@@ -45,7 +48,7 @@ declare_rule! {
     pub(crate) NoConstructorReturn {
         version: "11.0.0",
         name: "noConstructorReturn",
-        recommended: false,
+        recommended: true,
     }
 }
 

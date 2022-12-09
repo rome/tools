@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/error-recovery/jsdoc_only_types.ts
 ---
 
 # Input
 
-```js
+```ts
 let a: *;
 function b(x: ?) {}
 let c: ?string;
@@ -15,6 +15,7 @@ let e: ?(string | number);
 let f: !string;
 let g: string!;
 let h: !(string | number);
+
 ```
 
 
@@ -50,7 +51,7 @@ let h: !(string | number);
 
 # Output
 
-```js
+```ts
 let a:
 *
 function b(x: ?) {}
@@ -67,7 +68,6 @@ let g: string;
 let h:
 !(string | number);
 ```
-
 
 # Errors
 ```

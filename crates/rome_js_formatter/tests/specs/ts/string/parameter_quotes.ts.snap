@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: parameter_quotes.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/string/parameter_quotes.ts
 ---
 
 # Input
 
-```js
+```ts
 import * as f from "f";
 
 type X = {
@@ -60,7 +61,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 import * as f from "f";
 
 type X = {
@@ -109,16 +110,16 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 import * as f from 'f';
 
 type X = {
 	member: string;
 	// you stay like this
 	'member-member': number;
-	4: number;
+	'4': number;
 	with_underscore: number;
-	0197: number;
+	'0197': number;
 	'3n': number;
 	'3p': number;
 	p9: number;
@@ -130,9 +131,9 @@ interface Y {
 	member: string;
 	// you stay like this
 	'member-member': number;
-	4: number;
+	'4': number;
 	with_underscore: number;
-	0197: number;
+	'0197': number;
 	'3n': number;
 	'3p': number;
 	p9: number;
@@ -141,7 +142,7 @@ interface Y {
 }
 
 const Y = {
-	123: false,
+	'123': false,
 	'3n': false,
 	12334: false,
 };
@@ -158,7 +159,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 import * as f from "f";
 
 type X = {

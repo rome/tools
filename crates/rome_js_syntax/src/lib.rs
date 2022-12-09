@@ -4,7 +4,9 @@
 
 #[macro_use]
 mod generated;
+pub mod binding_ext;
 pub mod expr_ext;
+pub mod identifier_ext;
 pub mod import_ext;
 pub mod jsx_ext;
 pub mod modifier_ext;
@@ -17,6 +19,7 @@ mod union_ext;
 
 pub use self::generated::*;
 pub use expr_ext::*;
+pub use identifier_ext::*;
 pub use modifier_ext::*;
 pub use rome_rowan::{
     SyntaxNodeText, TextLen, TextRange, TextSize, TokenAtOffset, TriviaPieceKind, WalkEvent,

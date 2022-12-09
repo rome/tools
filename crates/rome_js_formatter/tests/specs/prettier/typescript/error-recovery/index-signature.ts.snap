@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
-  test_file: "typescript\\error-recovery\\index-signature.ts"
+  test_file: typescript/error-recovery/index-signature.ts
 ---
 
 # Input
 
-```js
+```ts
 type A = { [key: string] };
 
 type TwoParams = {
@@ -26,6 +26,7 @@ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong:
 type TooLongSingleParam = {
   [looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong: string]: string;
 }
+
 ```
 
 
@@ -80,7 +81,7 @@ type TooLongSingleParam = {
 
 # Output
 
-```js
+```ts
 type A = { [key: string] };
 
 type TwoParams = {
@@ -105,7 +106,6 @@ type TooLongSingleParam = {
   [looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong: string]: string;
 };
 ```
-
 
 # Errors
 ```
@@ -450,4 +450,5 @@ index-signature.ts:14:99 parse ━━━━━━━━━━━━━━━━�
    17:   { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string;
    22:   [looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong: string]: string;
 ```
+
 

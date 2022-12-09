@@ -549,7 +549,7 @@ async fn pull_diagnostics() -> Result<()> {
                     },
                     severity: Some(lsp::DiagnosticSeverity::ERROR),
                     code: Some(lsp::NumberOrString::String(String::from(
-                        "lint/correctness/noDoubleEquals",
+                        "lint/suspicious/noDoubleEquals",
                     ))),
                     code_description: None,
                     source: Some(String::from("rome")),
@@ -598,7 +598,7 @@ fn fixable_diagnostic(line: u32) -> Result<lsp::Diagnostic> {
         },
         severity: Some(lsp::DiagnosticSeverity::ERROR),
         code: Some(lsp::NumberOrString::String(String::from(
-            "lint/correctness/noCompareNegZero",
+            "lint/suspicious/noCompareNegZero",
         ))),
         code_description: None,
         source: Some(String::from("rome")),
@@ -678,7 +678,7 @@ async fn pull_quick_fixes() -> Result<()> {
     let expected_code_action = lsp::CodeActionOrCommand::CodeAction(lsp::CodeAction {
         title: String::from("Replace -0 with 0"),
         kind: Some(lsp::CodeActionKind::new(
-            "quickfix.rome.correctness.noCompareNegZero",
+            "quickfix.rome.suspicious.noCompareNegZero",
         )),
         diagnostics: Some(vec![fixable_diagnostic(0)?]),
         edit: Some(lsp::WorkspaceEdit {
@@ -699,21 +699,23 @@ async fn pull_quick_fixes() -> Result<()> {
             range: lsp::Range {
                 start: lsp::Position {
                     line: 0,
-                    character: 3,
+                    character: 0,
                 },
                 end: lsp::Position {
                     line: 0,
-                    character: 3,
+                    character: 0,
                 },
             },
-            new_text: String::from("\n// rome-ignore lint/correctness/noCompareNegZero \n"),
+            new_text: String::from(
+                "// rome-ignore lint/suspicious/noCompareNegZero: <explanation>\n",
+            ),
         }],
     );
 
     let expected_suppression_action = lsp::CodeActionOrCommand::CodeAction(lsp::CodeAction {
-        title: String::from("Suppress rule lint/correctness/noCompareNegZero"),
+        title: String::from("Suppress rule lint/suspicious/noCompareNegZero"),
         kind: Some(lsp::CodeActionKind::new(
-            "quickfix.suppressRule.rome.correctness.noCompareNegZero",
+            "quickfix.suppressRule.rome.suspicious.noCompareNegZero",
         )),
         diagnostics: Some(vec![fixable_diagnostic(0)?]),
         edit: Some(lsp::WorkspaceEdit {

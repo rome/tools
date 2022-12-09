@@ -1,15 +1,16 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/class/quoted-property.ts
 ---
 
 # Input
 
-```js
+```ts
 class User {
     "username": string;
 }
+
 ```
 
 
@@ -27,11 +28,10 @@ class User {
 
 # Output
 
-```js
+```ts
 class User {
   username: string;
 }
 ```
-
 
 

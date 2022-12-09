@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/do/call-arguments.js
 ---
@@ -48,6 +48,7 @@ expect(
     bar;
   }
 ).toThrow(ReferenceError);
+
 ```
 
 
@@ -166,7 +167,6 @@ bar;
 }
 ).toThrow(ReferenceError)
 ```
-
 
 # Errors
 ```

@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
-  test_file: "typescript\\satisfies-operators\\comments-unstable.ts"
+  test_file: typescript/satisfies-operators/comments-unstable.ts
 ---
 
 # Input
 
-```js
+```ts
 const t1 = {
     prop1: 1,
     prop2: 2,
@@ -14,6 +14,7 @@ const t1 = {
 } satisfies
 // Comment
 Record<string, number>;
+
 ```
 
 
@@ -35,7 +36,7 @@ Record<string, number>;
 
 # Output
 
-```js
+```ts
 const t1 = {
   prop1: 1,
   prop2: 2,
@@ -44,6 +45,5 @@ const t1 = {
   // Comment
   Record<string, number>;
 ```
-
 
 

@@ -1,0 +1,54 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: json/with-comment/block-comment.json
+---
+
+# Input
+
+```json
+{/*comment*/"K":"V"}
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1 @@
+-{ /*comment*/ "K": "V" }
++{/*comment*/"K":"V"}
+```
+
+# Output
+
+```json
+{/*comment*/"K":"V"}
+```
+
+# Errors
+```
+block-comment.json:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × JSON standard does not allow comments.
+  
+  > 1 │ {/*comment*/"K":"V"}
+      │  ^^^^^^^^^^^
+    2 │ 
+  
+block-comment.json:1:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `,` but instead found `"K"`
+  
+  > 1 │ {/*comment*/"K":"V"}
+      │             ^^^
+    2 │ 
+  
+  i Remove "K"
+  
+
+```
+
+

@@ -22,7 +22,7 @@ const bar = foo!!.bar;
 
 <pre class="language-text"><code class="language-text">nursery/noExtraNonNullAssertion.js:1:13 <a href="https://docs.rome.tools/lint/rules/noExtraNonNullAssertion">lint/nursery/noExtraNonNullAssertion</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Forbidden extra non-null assertion.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Forbidden extra non-null assertion.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>const bar = foo!!.bar;
    <strong>   │ </strong>            <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -42,7 +42,7 @@ function fn(bar?: { n: number }) {
 
 <pre class="language-text"><code class="language-text">nursery/noExtraNonNullAssertion.js:2:10 <a href="https://docs.rome.tools/lint/rules/noExtraNonNullAssertion">lint/nursery/noExtraNonNullAssertion</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Forbidden extra non-null assertion.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Forbidden extra non-null assertion.</span>
   
     <strong>1 │ </strong>function fn(bar?: { n: number }) {
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>  return bar!?.n;
@@ -64,7 +64,7 @@ function fn(bar?: { n: number }) {
 
 <pre class="language-text"><code class="language-text">nursery/noExtraNonNullAssertion.js:2:12 <a href="https://docs.rome.tools/lint/rules/noExtraNonNullAssertion">lint/nursery/noExtraNonNullAssertion</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Forbidden extra non-null assertion.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Forbidden extra non-null assertion.</span>
   
     <strong>1 │ </strong>function fn(bar?: { n: number }) {
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>  return ((bar!))?.();

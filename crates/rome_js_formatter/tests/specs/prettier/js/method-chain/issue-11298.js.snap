@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/method-chain/issue-11298.js
 ---
@@ -10,6 +10,7 @@ info:
 foo1(/𠮟𠮟𠮟/).foo2(bar).foo3(baz);
 
 foo1(/叱叱叱/).foo2(bar).foo3(baz);
+
 ```
 
 
@@ -37,6 +38,5 @@ foo1(/𠮟𠮟𠮟/).foo2(bar).foo3(baz);
 
 foo1(/叱叱叱/).foo2(bar).foo3(baz);
 ```
-
 
 

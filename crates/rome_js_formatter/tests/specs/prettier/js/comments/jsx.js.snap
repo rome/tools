@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/comments/jsx.js
 ---
@@ -127,6 +127,7 @@ onClick={() => {}}>
   {}
   <Component />
 </Wrapper>
+
 ```
 
 
@@ -260,10 +261,10 @@ onClick={() => {}}>
 </Wrapper>;
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
    53:     // Some very v  ery very very merry (xmas) very very long line to break line width limit
    58:   {/*<div>  Some very v  ery very very long line to break line width limit </div>*/}
 ```
+
 

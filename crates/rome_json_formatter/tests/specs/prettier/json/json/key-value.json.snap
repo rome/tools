@@ -1,0 +1,52 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: json/json/key-value.json
+---
+
+# Input
+
+```json
+{
+    "string": "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring",
+    "stringstringstringstringstringstringstringstring": "stringstringstringstringstringstringstringstring",
+    "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring": "string"
+}
+
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,5 +1,5 @@
+ {
+-  "string": "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring",
+-  "stringstringstringstringstringstringstringstring": "stringstringstringstringstringstringstringstring",
+-  "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring": "string"
++    "string": "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring",
++    "stringstringstringstringstringstringstringstring": "stringstringstringstringstringstringstringstring",
++    "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring": "string"
+ }
+```
+
+# Output
+
+```json
+{
+    "string": "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring",
+    "stringstringstringstringstringstringstringstring": "stringstringstringstringstringstringstringstring",
+    "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring": "string"
+}
+```
+
+# Lines exceeding max width of 80 characters
+```
+    2:     "string": "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring",
+    3:     "stringstringstringstringstringstringstringstring": "stringstringstringstringstringstringstringstring",
+    4:     "stringstringstringstringstringstringstringstringstringstringstringstringstringstringstring": "string"
+```
+
+

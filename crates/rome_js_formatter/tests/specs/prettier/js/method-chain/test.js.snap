@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/method-chain/test.js
 ---
@@ -13,6 +13,7 @@ method().then(x => x)
 
 ({}.a().b());
 ({}).a().b();
+
 ```
 
 
@@ -42,6 +43,5 @@ method()
 ({}).a().b();
 ({}).a().b();
 ```
-
 
 

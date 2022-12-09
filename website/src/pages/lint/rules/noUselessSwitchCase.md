@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noUselessSwitchCase (since v12.0.0)
 
-> This rule is recommended by Rome.
-
 Disallow useless `case` in `switch` statements.
 
 A `switch` statement can optionally have a `default` clause.

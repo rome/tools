@@ -5,6 +5,7 @@ mod css_kinds_src;
 mod formatter;
 mod generate_analyzer;
 mod generate_macros;
+pub mod generate_new_lintrule;
 mod generate_node_factory;
 mod generate_nodes;
 mod generate_nodes_mut;

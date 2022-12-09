@@ -1,12 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: typescript/decorators/inline-decorators.ts
 ---
 
 # Input
 
-```js
+```ts
 
 @d1
 @d2(foo)
@@ -56,6 +56,7 @@ class Bar {
 class MyContainerComponent {
   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
 }
+
 ```
 
 
@@ -109,7 +110,7 @@ class MyContainerComponent {
 
 # Output
 
-```js
+```ts
 @d1
 @d2(foo)
 @d3.bar
@@ -160,9 +161,9 @@ class MyContainerComponent {
 }
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
    47:   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
 ```
+
 

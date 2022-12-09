@@ -5,8 +5,6 @@ parent: lint/rules/index
 
 # noImplicitBoolean (since v0.7.0)
 
-> This rule is recommended by Rome.
-
 Disallow implicit `true` values on JSX boolean attributes
 
 ## Examples
@@ -19,7 +17,7 @@ Disallow implicit `true` values on JSX boolean attributes
 
 <pre class="language-text"><code class="language-text">style/noImplicitBoolean.js:1:8 <a href="https://docs.rome.tools/lint/rules/noImplicitBoolean">lint/style/noImplicitBoolean</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Use explicit boolean values for boolean JSX props.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Use explicit boolean values for boolean JSX props.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;input disabled /&gt;
    <strong>   │ </strong>       <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>

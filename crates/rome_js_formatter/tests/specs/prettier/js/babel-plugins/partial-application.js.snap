@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/babel-plugins/partial-application.js
 ---
@@ -28,6 +28,7 @@ o.f(x, ?)         // partial application from left
 o.f(?, x)         // partial application from right
 o.f(?, x, ?)      // partial application for any arg
 super.f(?)        // partial application allowed for call on |SuperProperty|
+
 ```
 
 
@@ -76,7 +77,6 @@ o.f(?, x); // partial application from right
 o.f(?, x, ?); // partial application for any arg
 super.f(?); // partial application allowed for call on |SuperProperty|
 ```
-
 
 # Errors
 ```
@@ -326,4 +326,5 @@ partial-application.js:21:9 parse ━━━━━━━━━━━━━━━�
 ```
    15:   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
 ```
+
 

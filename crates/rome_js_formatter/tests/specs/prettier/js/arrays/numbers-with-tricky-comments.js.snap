@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/arrays/numbers-with-tricky-comments.js
 ---
@@ -14,6 +14,7 @@ const lazyCatererNumbers =  [1, 2, 4, 7, 11, 16, 22, 29, 37, 46,
 821, 862, 904, 947, 991, 1036, 1082, 1129, 1177, 1226,
 // line 2
 1276, 1327, 1379];
+
 ```
 
 
@@ -53,6 +54,5 @@ const lazyCatererNumbers = [
   1327, 1379,
 ];
 ```
-
 
 

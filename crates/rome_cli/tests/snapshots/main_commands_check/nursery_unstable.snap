@@ -1,0 +1,42 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 334
+expression: content
+---
+## `check.js`
+
+```js
+if(a = b) {}
+```
+
+# Termination Message
+
+```block
+some errors were emitted while running checks
+```
+
+# Emitted Messages
+
+```block
+check.js:1:4 lint/nursery/noAssignInExpressions  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The assignment should not be in an expression.
+  
+  > 1 │ if(a = b) {}
+      │    ^^^^^
+  
+  i The use of assignments in expressions is confusing.
+    Expressions are often considered as side-effect free.
+  
+  i Suggested fix: Did you mean '==='?
+  
+    1 │ if(a·===·b)·{}
+      │       ++      
+
+```
+
+```block
+Checked 1 file(s) in <TIME>
+```
+
+

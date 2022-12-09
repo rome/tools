@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/method-chain/issue-4125.js
 ---
@@ -155,6 +155,7 @@ var l = base
     .replace(/^\w*:\/\//, '')
     .replace(/\/$/, '')
     .split('/').length
+
 
 ```
 
@@ -343,6 +344,5 @@ xyz
 
 var l = base.replace(/^\w*:\/\//, "").replace(/\/$/, "").split("/").length;
 ```
-
 
 

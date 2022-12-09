@@ -1,5 +1,5 @@
 ---
-source: crates/rome_js_formatter/tests/prettier_tests.rs
+source: crates/rome_formatter_test/src/snapshot_builder.rs
 info:
   test_file: js/comments/html-like/comment.js
 ---
@@ -9,7 +9,8 @@ info:
 ```js
 <!--
 alert(1)
--->```
+-->
+```
 
 
 # Prettier differences
@@ -31,7 +32,6 @@ alert(1)
 alert(1)
 -->
 ```
-
 
 # Errors
 ```
