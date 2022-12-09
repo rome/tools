@@ -290,13 +290,13 @@ export interface Nursery {
 	 */
 	noAccessKey?: RuleConfiguration;
 	/**
+	 * Disallow assignments in expressions.
+	 */
+	noAssignInExpressions?: RuleConfiguration;
+	/**
 	 * Disallow certain types.
 	 */
 	noBannedTypes?: RuleConfiguration;
-	/**
-	 * Disallow assignment operators in conditional expressions.
-	 */
-	noConditionalAssignment?: RuleConfiguration;
 	/**
 	 * Disallow TypeScript const enum
 	 */
@@ -687,8 +687,8 @@ export type Category =
 	| "lint/correctness/noVoidElementsWithChildren"
 	| "lint/correctness/useValidForDirection"
 	| "lint/nursery/noAccessKey"
+	| "lint/nursery/noAssignInExpressions"
 	| "lint/nursery/noBannedTypes"
-	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstEnum"
 	| "lint/nursery/noConstructorReturn"
 	| "lint/nursery/noDistractingElements"

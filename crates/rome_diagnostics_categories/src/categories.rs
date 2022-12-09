@@ -43,8 +43,8 @@ define_dategories! {
 
     // nursery
     "lint/nursery/noAccessKey": "https://docs.rome.tools/lint/rules/noAccessKey",
+    "lint/nursery/noAssignInExpressions": "https://docs.rome.tools/lint/rules/noAssignInExpressions",
     "lint/nursery/noBannedTypes":"https://docs.rome.tools/lint/rules/noBannedTypes",
-    "lint/nursery/noConditionalAssignment": "https://docs.rome.tools/lint/rules/noConditionalAssignment",
     "lint/nursery/noConstEnum": "https://docs.rome.tools/lint/rules/noConstEnum",
     "lint/nursery/noConstructorReturn": "https://docs.rome.tools/lint/rules/noConstructorReturn",
     "lint/nursery/noDistractingElements": "https://docs.rome.tools/lint/rules/noDistractingElements",

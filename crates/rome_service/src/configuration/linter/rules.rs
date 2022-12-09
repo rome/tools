@@ -725,10 +725,10 @@ pub struct Nursery {
 struct NurserySchema {
     #[doc = "Enforce that the accessKey attribute is not used on any HTML element."]
     no_access_key: Option<RuleConfiguration>,
+    #[doc = "Disallow assignments in expressions."]
+    no_assign_in_expressions: Option<RuleConfiguration>,
     #[doc = "Disallow certain types."]
     no_banned_types: Option<RuleConfiguration>,
-    #[doc = "Disallow assignment operators in conditional expressions."]
-    no_conditional_assignment: Option<RuleConfiguration>,
     #[doc = "Disallow TypeScript const enum"]
     no_const_enum: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a constructor."]
@@ -792,8 +792,8 @@ impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
     pub(crate) const CATEGORY_RULES: [&'static str; 32] = [
         "noAccessKey",
+        "noAssignInExpressions",
         "noBannedTypes",
-        "noConditionalAssignment",
         "noConstEnum",
         "noConstructorReturn",
         "noDistractingElements",
@@ -825,8 +825,8 @@ impl Nursery {
         "useNumericLiterals",
     ];
     const RECOMMENDED_RULES: [&'static str; 23] = [
+        "noAssignInExpressions",
         "noBannedTypes",
-        "noConditionalAssignment",
         "noConstEnum",
         "noConstructorReturn",
         "noDistractingElements",
