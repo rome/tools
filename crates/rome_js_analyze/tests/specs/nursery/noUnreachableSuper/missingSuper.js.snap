@@ -59,7 +59,7 @@ class E extends A {
 ```
 missingSuper.js:19:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! this constructor can return without calling `super()`
+  ! this constructor returns without calling `super()`
   
     17 │ // invalid
     18 │ class C extends A {
@@ -79,7 +79,7 @@ missingSuper.js:19:5 lint/nursery/noUnreachableSuper ━━━━━━━━━
 ```
 missingSuper.js:28:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! this constructor can return without calling `super()`
+  ! this constructor returns without calling `super()`
   
     26 │ // invalid
     27 │ class D extends A {
@@ -99,7 +99,7 @@ missingSuper.js:28:5 lint/nursery/noUnreachableSuper ━━━━━━━━━
 ```
 missingSuper.js:43:13 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! this statement can return from the constructor without having called `super()` first
+  ! this statement returns from the constructor without having called `super()` first
   
     41 │     constructor(cond) {
     42 │         if (cond) {

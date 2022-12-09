@@ -39,7 +39,8 @@ impl<L: Language> FunctionBuilder<L> {
 
     /// Finishes building the function
     pub fn finish(mut self) -> ControlFlowGraph<L> {
-        // Append an implicit return instruction at the end of the function
+        // Append the implicit return instruction that resumes execution of the
+        // parent procedure when control flow reaches the end of a function
         self.append_return();
         self.result
     }

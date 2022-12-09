@@ -235,7 +235,7 @@ impl Rule for NoUnreachableSuper {
                 RuleDiagnostic::new(
                     rule_category!(),
                     *this,
-                    "`this` can be accessed before `super()` is called",
+                    "`this` is accessed before `super()` is called",
                 )
                 .detail(super_, "`super()` is only called here"),
             ),
@@ -243,24 +243,26 @@ impl Rule for NoUnreachableSuper {
                 RuleDiagnostic::new(
                     rule_category!(),
                     second,
-                    "`super()` can be called more than once",
+                    "`super()` is called more than once",
                 )
-                .detail(first, "`super()` may have already been called here"),
+                .detail(first, "`super()` has already been called here"),
             ),
             RuleState::ThisWithoutSuper { this } => Some(RuleDiagnostic::new(
                 rule_category!(),
                 *this,
-                "`this` can accessed without calling `super()` first",
+                "`this` is accessed without calling `super()` first",
             )),
-            RuleState::ReturnWithoutSuper { return_: Some(range) } => Some(RuleDiagnostic::new(
+            RuleState::ReturnWithoutSuper {
+                return_: Some(range),
+            } => Some(RuleDiagnostic::new(
                 rule_category!(),
                 *range,
-                "this statement can return from the constructor without having called `super()` first",
+                "this statement returns from the constructor without having called `super()` first",
             )),
             RuleState::ReturnWithoutSuper { return_: None } => Some(RuleDiagnostic::new(
                 rule_category!(),
                 ctx.query().node.text_trimmed_range(),
-                "this constructor can return without calling `super()`",
+                "this constructor returns without calling `super()`",
             )),
         }
     }

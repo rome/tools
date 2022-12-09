@@ -72,7 +72,7 @@ class G extends A {
 ```
 duplicateSuper.js:16:9 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! `super()` can be called more than once
+  ! `super()` is called more than once
   
     14 │     constructor() {
     15 │         super(1);
@@ -81,7 +81,7 @@ duplicateSuper.js:16:9 lint/nursery/noUnreachableSuper ━━━━━━━━�
     17 │     }
     18 │ }
   
-  i `super()` may have already been called here
+  i `super()` has already been called here
   
     13 │ class C extends A {
     14 │     constructor() {
@@ -96,7 +96,7 @@ duplicateSuper.js:16:9 lint/nursery/noUnreachableSuper ━━━━━━━━�
 ```
 duplicateSuper.js:27:9 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! `super()` can be called more than once
+  ! `super()` is called more than once
   
     25 │         }
     26 │ 
@@ -105,7 +105,7 @@ duplicateSuper.js:27:9 lint/nursery/noUnreachableSuper ━━━━━━━━�
     28 │     }
     29 │ }
   
-  i `super()` may have already been called here
+  i `super()` has already been called here
   
     22 │     constructor(cond) {
     23 │         if (cond) {
@@ -120,7 +120,7 @@ duplicateSuper.js:27:9 lint/nursery/noUnreachableSuper ━━━━━━━━�
 ```
 duplicateSuper.js:35:13 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! `super()` can be called more than once
+  ! `super()` is called more than once
   
     33 │     constructor(cond) {
     34 │         do {
@@ -129,7 +129,7 @@ duplicateSuper.js:35:13 lint/nursery/noUnreachableSuper ━━━━━━━━
     36 │         } while (cond);
     37 │     }
   
-  i `super()` may have already been called here
+  i `super()` has already been called here
   
     33 │     constructor(cond) {
     34 │         do {
@@ -144,7 +144,7 @@ duplicateSuper.js:35:13 lint/nursery/noUnreachableSuper ━━━━━━━━
 ```
 duplicateSuper.js:47:13 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! `super()` can be called more than once
+  ! `super()` is called more than once
   
     45 │         }
     46 │         if (condB) {
@@ -153,7 +153,7 @@ duplicateSuper.js:47:13 lint/nursery/noUnreachableSuper ━━━━━━━━
     48 │         }
     49 │     }
   
-  i `super()` may have already been called here
+  i `super()` has already been called here
   
     42 │     constructor(condA, condB) {
     43 │         if (condA) {
@@ -168,7 +168,7 @@ duplicateSuper.js:47:13 lint/nursery/noUnreachableSuper ━━━━━━━━
 ```
 duplicateSuper.js:57:17 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! `super()` can be called more than once
+  ! `super()` is called more than once
   
     55 │         while (condA) {
     56 │             if (condB) {
@@ -177,7 +177,7 @@ duplicateSuper.js:57:17 lint/nursery/noUnreachableSuper ━━━━━━━━
     58 │             }
     59 │         }
   
-  i `super()` may have already been called here
+  i `super()` has already been called here
   
     55 │         while (condA) {
     56 │             if (condB) {

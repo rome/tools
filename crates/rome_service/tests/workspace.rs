@@ -7,7 +7,7 @@ use rome_service::workspace::{server, FileGuard, Language, OpenFileParams};
 fn debug_control_flow() {
     const SOURCE: &str = "function test () { return; }";
     const GRAPH: &str = "flowchart TB
-    block_0[\"<b>block_0</b><br/>Return(JS_RETURN_STATEMENT 19..26)\"]
+    block_0[\"<b>block_0</b><br/>Return(JS_RETURN_STATEMENT 19..26)<br/>Return\"]
 
 ";
 
