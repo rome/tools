@@ -1,12 +1,18 @@
+import { Commands } from "./commands";
+import { syntaxTree } from "./commands/syntaxTree";
+import { Session } from "./session";
+import { StatusBar } from "./statusBar";
+import { setContextValue } from "./utils";
 import { type ChildProcess, spawn } from "child_process";
-import { connect, type Socket } from "net";
-import { promisify, TextDecoder } from "util";
+import { type Socket, connect } from "net";
+import { isAbsolute } from "path";
+import { promisify } from "util";
 import {
 	ExtensionContext,
-	languages,
 	OutputChannel,
 	TextEditor,
 	Uri,
+	languages,
 	window,
 	workspace,
 } from "vscode";
@@ -17,12 +23,6 @@ import {
 	ServerOptions,
 	StreamInfo,
 } from "vscode-languageclient/node";
-import { isAbsolute } from "path";
-import { setContextValue } from "./utils";
-import { Session } from "./session";
-import { syntaxTree } from "./commands/syntaxTree";
-import { Commands } from "./commands";
-import { StatusBar } from "./statusBar";
 
 import resolveImpl = require("resolve/async");
 import type * as Resolve from "resolve";
@@ -118,7 +118,7 @@ export async function activate(context: ExtensionContext) {
 	);
 
 	handleActiveTextEditorChanged(window.activeTextEditor);
-	client.start();
+	await client.start();
 }
 
 type Architecture = "x64" | "arm64";
