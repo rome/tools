@@ -786,6 +786,17 @@
             }
           ]
         },
+        "noUselessSwitchCase": {
+          "description": "Disallow useless case in switch statements.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noVar": {
           "description": "Disallow the use of var",
           "anyOf": [
