@@ -9,7 +9,6 @@ use rome_console::markup;
 use rome_fs::CONFIG_NAME;
 use rome_service::workspace::{RageEntry, RageParams, RageResult};
 use rome_service::{workspace, Workspace};
-use serde_json::json;
 use std::collections::HashMap;
 use std::panic::RefUnwindSafe;
 use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
@@ -112,50 +111,45 @@ impl LSPServer {
         Ok(RageResult { entries })
     }
 
-    async fn register_capabilities(&self, registrations: Vec<Registration>) {
-        let methods = registrations
-            .iter()
-            .map(|reg| reg.method.clone())
-            .collect::<Vec<_>>()
-            .join(", ");
-
-        if let Err(e) = self.session.client.register_capability(registrations).await {
-            error!("Error registering {:?} capability: {}", methods, e);
-        }
-    }
-
-    async fn unregister_capabilities(&self, registrations: Vec<Unregistration>) {
-        let methods = registrations
-            .iter()
-            .map(|reg| reg.method.clone())
-            .collect::<Vec<_>>()
-            .join(", ");
+    async fn register_capability(&self, registration: Registration) {
+        let method = registration.method.clone();
 
         if let Err(e) = self
             .session
             .client
-            .unregister_capability(registrations)
+            .register_capability(vec![registration])
             .await
         {
-            error!("Error unregistering {:?} capability: {}", methods, e);
+            error!("Error registering {:?} capability: {}", method, e);
+        }
+    }
+
+    async fn unregister_capability(&self, unregistration: Unregistration) {
+        let method = unregistration.method.clone();
+
+        if let Err(e) = self
+            .session
+            .client
+            .unregister_capability(vec![unregistration])
+            .await
+        {
+            error!("Error unregistering {:?} capability: {}", method, e);
         }
     }
 
     async fn setup_capabilities(&self) {
         let rename = {
-            let config = self.session.extension_settings.read().ok();
+            let config = self.session.config.read().ok();
             config.and_then(|x| x.settings.rename).unwrap_or(false)
         };
 
-        let mut register = Vec::new();
-        let mut unregister = Vec::new();
-
         if self.session.can_register_did_change_configuration() {
-            register.push(Registration {
+            self.register_capability(Registration {
                 id: "workspace/didChangeConfiguration".to_string(),
                 method: "workspace/didChangeConfiguration".to_string(),
                 register_options: None,
-            });
+            })
+            .await;
         }
 
         let base_path = self.session.base_path();
@@ -167,75 +161,27 @@ impl LSPServer {
                     kind: Some(WatchKind::all()),
                 }],
             };
-            register.push(Registration {
+            self.register_capability(Registration {
                 id: "workspace/didChangeWatchedFiles".to_string(),
                 method: "workspace/didChangeWatchedFiles".to_string(),
                 register_options: Some(serde_json::to_value(registration_options).unwrap()),
-            });
-        }
-
-        if self.session.is_linting_and_formatting_disabled() {
-            unregister.extend([
-                Unregistration {
-                    id: "textDocument/formatting".to_string(),
-                    method: "textDocument/formatting".to_string(),
-                },
-                Unregistration {
-                    id: "textDocument/rangeFormatting".to_string(),
-                    method: "textDocument/rangeFormatting".to_string(),
-                },
-                Unregistration {
-                    id: "textDocument/onTypeFormatting".to_string(),
-                    method: "textDocument/onTypeFormatting".to_string(),
-                },
-            ]);
-        } else {
-            register.extend([
-                Registration {
-                    id: "textDocument/formatting".to_string(),
-                    method: "textDocument/formatting".to_string(),
-                    register_options: Some(json!(TextDocumentRegistrationOptions {
-                        document_selector: None
-                    })),
-                },
-                Registration {
-                    id: "textDocument/rangeFormatting".to_string(),
-                    method: "textDocument/rangeFormatting".to_string(),
-                    register_options: Some(json!(TextDocumentRegistrationOptions {
-                        document_selector: None
-                    })),
-                },
-                Registration {
-                    id: "textDocument/onTypeFormatting".to_string(),
-                    method: "textDocument/onTypeFormatting".to_string(),
-                    register_options: Some(json!(DocumentOnTypeFormattingRegistrationOptions {
-                        document_selector: None,
-                        first_trigger_character: String::from("}"),
-                        more_trigger_character: Some(vec![String::from("]"), String::from(")")]),
-                    })),
-                },
-            ]);
+            })
+            .await;
         }
 
         if rename {
-            register.push(Registration {
+            self.register_capability(Registration {
                 id: "textDocument/rename".to_string(),
                 method: "textDocument/rename".to_string(),
                 register_options: None,
-            });
+            })
+            .await;
         } else {
-            unregister.push(Unregistration {
+            self.unregister_capability(Unregistration {
                 id: "textDocument/rename".to_string(),
                 method: "textDocument/rename".to_string(),
-            });
-        }
-
-        if !register.is_empty() {
-            self.register_capabilities(register).await;
-        }
-
-        if !unregister.is_empty() {
-            self.unregister_capabilities(unregister).await;
+            })
+            .await;
         }
     }
 }
@@ -282,10 +228,8 @@ impl LanguageServer for LSPServer {
 
         info!("Attempting to load the configuration from 'rome.json' file");
 
-        futures::join!(
-            self.session.update_configuration(),
-            self.session.fetch_extension_settings()
-        );
+        self.session.update_configuration().await;
+        self.session.fetch_client_configuration().await;
 
         let msg = format!("Server initialized with PID: {}", std::process::id());
         self.session
@@ -303,13 +247,11 @@ impl LanguageServer for LSPServer {
         Ok(())
     }
 
-    /// Called when the user changed the editor settings.
     #[tracing::instrument(level = "debug", skip(self))]
     async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
         let _ = params;
-        self.session.fetch_extension_settings().await;
+        self.session.fetch_client_configuration().await;
         self.setup_capabilities().await;
-        self.session.update_all_diagnostics().await;
     }
 
     #[tracing::instrument(level = "debug", skip(self))]
@@ -327,7 +269,7 @@ impl LanguageServer for LSPServer {
                         if let Ok(possible_rome_json) = possible_rome_json {
                             if possible_rome_json.display().to_string() == CONFIG_NAME {
                                 self.session.update_configuration().await;
-                                self.setup_capabilities().await;
+                                self.session.fetch_client_configuration().await;
                                 self.session.update_all_diagnostics().await;
                                 // for now we are only interested to the configuration file,
                                 // so it's OK to exist the loop
@@ -403,7 +345,7 @@ impl LanguageServer for LSPServer {
         rome_diagnostics::panic::catch_unwind(move || {
             let rename_enabled = self
                 .session
-                .extension_settings
+                .config
                 .read()
                 .ok()
                 .and_then(|config| config.settings.rename)

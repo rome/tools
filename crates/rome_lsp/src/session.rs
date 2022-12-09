@@ -1,6 +1,6 @@
+use crate::config::Config;
+use crate::config::CONFIGURATION_SECTION;
 use crate::documents::Document;
-use crate::extension_settings::ExtensionSettings;
-use crate::extension_settings::CONFIGURATION_SECTION;
 use crate::url_interner::UrlInterner;
 use crate::utils;
 use futures::stream::futures_unordered::FuturesUnordered;
@@ -47,8 +47,8 @@ pub(crate) struct Session {
 
     pub(crate) client_information: Mutex<Option<ClientInformation>>,
 
-    /// The settings of the Rome extension (under the `rome` namespace)
-    pub(crate) extension_settings: RwLock<ExtensionSettings>,
+    /// the configuration of the LSP
+    pub(crate) config: RwLock<Config>,
 
     pub(crate) workspace: Arc<dyn Workspace>,
 
@@ -78,7 +78,7 @@ impl Session {
         let client_capabilities = RwLock::new(Default::default());
         let documents = Default::default();
         let url_interner = Default::default();
-        let config = RwLock::new(ExtensionSettings::new());
+        let config = RwLock::new(Config::new());
         let configuration = RwLock::new(None);
         let root_uri = RwLock::new(None);
         Self {
@@ -89,7 +89,7 @@ impl Session {
             workspace,
             documents,
             url_interner,
-            extension_settings: config,
+            config,
             fs: DynRef::Owned(Box::new(OsFileSystem)),
             configuration,
             root_uri,
@@ -144,10 +144,7 @@ impl Session {
             path: rome_path.clone(),
         })?;
 
-        let diagnostics = if self.is_linting_and_formatting_disabled() {
-            tracing::trace!("Linting disabled because Rome configuration is missing and `requireConfiguration` is true.");
-            vec![]
-        } else if let Some(reason) = unsupported_lint.reason {
+        let diagnostics = if let Some(reason) = unsupported_lint.reason {
             tracing::trace!("linting not supported: {reason:?}");
             // Sending empty vector clears published diagnostics
             vec![]
@@ -245,7 +242,7 @@ impl Session {
     }
 
     /// Requests "workspace/configuration" from client and updates Session config
-    pub(crate) async fn fetch_extension_settings(&self) {
+    pub(crate) async fn fetch_client_configuration(&self) {
         let item = lsp_types::ConfigurationItem {
             scope_uri: None,
             section: Some(String::from(CONFIGURATION_SECTION)),
@@ -258,7 +255,7 @@ impl Session {
                 .into_iter()
                 .next()
                 .and_then(|client_configuration| {
-                    let mut config = self.extension_settings.write().unwrap();
+                    let mut config = self.config.write().unwrap();
 
                     config
                         .set_workspace_settings(client_configuration)
@@ -266,6 +263,7 @@ impl Session {
                             error!("Cannot set workspace settings: {}", err);
                         })
                         .ok()?;
+                    self.update_workspace_settings();
 
                     Some(())
                 });
@@ -317,14 +315,5 @@ impl Session {
                 RageResult { entries }
             }
         }
-    }
-
-    pub(crate) fn is_linting_and_formatting_disabled(&self) -> bool {
-        self.configuration.read().unwrap().is_none()
-            && self
-                .extension_settings
-                .read()
-                .unwrap()
-                .requires_configuration()
     }
 }

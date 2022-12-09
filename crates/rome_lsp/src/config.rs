@@ -14,18 +14,14 @@ pub struct WorkspaceSettings {
 
     /// Enable rename capability
     pub rename: Option<bool>,
-
-    /// Only run Rome if a `rome.json` configuration file exists.
-    pub require_configuration: Option<bool>,
 }
 
-/// The `rome.*` extension settings
 #[derive(Debug)]
-pub(crate) struct ExtensionSettings {
+pub(crate) struct Config {
     pub(crate) settings: WorkspaceSettings,
 }
 
-impl ExtensionSettings {
+impl Config {
     pub(crate) fn new() -> Self {
         Self {
             settings: WorkspaceSettings::default(),
@@ -40,9 +36,5 @@ impl ExtensionSettings {
             self.settings
         );
         Ok(())
-    }
-
-    pub(crate) fn requires_configuration(&self) -> bool {
-        self.settings.require_configuration.unwrap_or_default()
     }
 }

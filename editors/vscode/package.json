@@ -24,14 +24,6 @@
 		"vscode": "^1.70.0",
 		"npm": "^8"
 	},
-	"capabilities": {
-		"untrustedWorkspaces": {
-			"supported": "limited",
-			"restrictedConfigurations": [
-				"rome.lspBin"
-			]
-		}
-	},
 	"contributes": {
 		"languages": [
 			{
@@ -103,11 +95,6 @@
 					],
 					"default": null,
 					"markdownDescription": "Enable/Disable Rome handling renames in the workspace. (Experimental)"
-				},
-				"rome.requireConfiguration": {
-					"type": "boolean",
-					"default": false,
-					"markdownDescription": "Require a Rome configuration file to enable formatting and linting."
 				}
 			}
 		},
