@@ -32,7 +32,7 @@ pub(crate) fn code_actions(
     params: CodeActionParams,
 ) -> Result<Option<CodeActionResponse>> {
     let url = params.text_document.uri.clone();
-    let rome_path = session.file_path(&url);
+    let rome_path = session.file_path(&url)?;
 
     let unsupported_lint = &session.workspace.supports_feature(SupportsFeatureParams {
         path: rome_path,
@@ -57,7 +57,7 @@ pub(crate) fn code_actions(
     }
 
     let url = params.text_document.uri.clone();
-    let rome_path = session.file_path(&url);
+    let rome_path = session.file_path(&url)?;
     let doc = session.document(&url)?;
 
     let diagnostics = params.context.diagnostics;

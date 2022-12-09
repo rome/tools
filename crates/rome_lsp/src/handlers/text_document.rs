@@ -18,7 +18,7 @@ pub(crate) async fn did_open(
     let content = params.text_document.text;
     let language_hint = Language::from_language_id(&params.text_document.language_id);
 
-    let rome_path = session.file_path(&url);
+    let rome_path = session.file_path(&url)?;
     let doc = Document::new(version, &content);
 
     session.workspace.open_file(OpenFileParams {
@@ -46,7 +46,7 @@ pub(crate) async fn did_change(
     let url = params.text_document.uri;
     let version = params.text_document.version;
 
-    let rome_path = session.file_path(&url);
+    let rome_path = session.file_path(&url)?;
     let doc = session.document(&url)?;
 
     let mut content = doc.content;
@@ -93,7 +93,7 @@ pub(crate) async fn did_close(
     params: lsp_types::DidCloseTextDocumentParams,
 ) -> Result<()> {
     let url = params.text_document.uri;
-    let rome_path = session.file_path(&url);
+    let rome_path = session.file_path(&url)?;
 
     session
         .workspace
