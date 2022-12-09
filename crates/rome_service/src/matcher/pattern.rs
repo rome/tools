@@ -125,8 +125,9 @@ impl Pattern {
         // A pattern is relative if it starts with "." followed by a separator
         let is_relative = matches!(chars.get(..2), Some(['.', sep]) if path::is_separator(*sep));
         if is_relative {
-            // If a pattern starts with a relative prefix, strip it from the pattern
+            // If a pattern starts with a relative prefix, strip it from the pattern and replace it with "**"
             i += 2;
+            tokens.push(AnyRecursiveSequence);
         } else {
             // A pattern is absolute if it starts with a path separator
             let mut is_absolute = chars.first().map_or(false, |c| path::is_separator(*c));
@@ -136,10 +137,9 @@ impl Pattern {
                 is_absolute = matches!(chars.get(..3), Some(['a'..='z' | 'A'..='Z', ':', sep]) if path::is_separator(*sep));
             }
 
-            // If a pattern is not absolute, insert a "**/" sequence in front
+            // If a pattern is not absolute, insert a "**" sequence in front
             if !is_absolute {
                 tokens.push(AnyRecursiveSequence);
-                tokens.push(Char('/'));
             }
         }
 

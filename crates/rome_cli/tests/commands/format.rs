@@ -1104,17 +1104,26 @@ fn does_not_format_if_files_are_listed_in_ignore_option() {
 fn does_not_format_ignored_directories() {
     let mut console = BufferConsole::default();
     let mut fs = MemoryFileSystem::default();
+
     let file_path = Path::new("rome.json");
     fs.insert(
         file_path.into(),
         CONFIG_FORMATTER_IGNORED_DIRECTORIES.as_bytes(),
     );
 
-    let ignored_file = Path::new("scripts/test.js");
-    fs.insert(ignored_file.into(), <&str>::clone(&UNFORMATTED).as_bytes());
+    const FILES: [(&str, bool); 6] = [
+        ("test.js", true),
+        ("test1.js", false),
+        ("test2.js", false),
+        ("test3/test.js", false),
+        ("test4/test.js", true),
+        ("test5/test.js", false),
+    ];
 
-    let file_to_format = Path::new("src/test.js");
-    fs.insert(file_to_format.into(), UNFORMATTED.as_bytes());
+    for (file_path, _) in FILES {
+        let file_path = Path::new(file_path);
+        fs.insert(file_path.into(), UNFORMATTED.as_bytes());
+    }
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
@@ -1128,26 +1137,26 @@ fn does_not_format_ignored_directories() {
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
 
-    let mut file = fs
-        .open(ignored_file)
-        .expect("formatting target file was removed by the CLI");
+    for (file_path, expect_formatted) in FILES {
+        let mut file = fs
+            .open(Path::new(file_path))
+            .expect("formatting target file was removed by the CLI");
 
-    let mut content = String::new();
-    file.read_to_string(&mut content)
-        .expect("failed to read file from memory FS");
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
 
-    assert_eq!(content, UNFORMATTED, "we test the file is not formatted");
-    drop(file);
-    let mut file = fs
-        .open(file_to_format)
-        .expect("formatting target file was removed by the CLI");
+        let expected = if expect_formatted {
+            FORMATTED
+        } else {
+            UNFORMATTED
+        };
 
-    let mut content = String::new();
-    file.read_to_string(&mut content)
-        .expect("failed to read file from memory FS");
-
-    assert_eq!(content, FORMATTED, "we test the file is formatted");
-    drop(file);
+        assert_eq!(
+            content, expected,
+            "content of {file_path} doesn't match the expected content"
+        );
+    }
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),

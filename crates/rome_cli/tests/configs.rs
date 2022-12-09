@@ -207,7 +207,13 @@ pub const CONFIG_FORMATTER_AND_FILES_IGNORE: &str = r#"{
 
 pub const CONFIG_FORMATTER_IGNORED_DIRECTORIES: &str = r#"{
   "formatter": {
-    "ignore": ["scripts/*"]
+    "ignore": [
+      "test1.js",
+      "./test2.js",
+      "./test3/**/*",
+      "/test4/**/*",
+      "test5/**/*"
+    ]
   }
 }
 "#;
