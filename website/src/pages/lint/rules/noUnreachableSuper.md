@@ -21,7 +21,7 @@ class A extends B {
 
 <pre class="language-text"><code class="language-text">nursery/noUnreachableSuper.js:2:5 <a href="https://rome.tools/docs/lint/rules/noUnreachableSuper">lint/nursery/noUnreachableSuper</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">this constructor can return without calling `super()`</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">this constructor returns without calling `super()`</span>
   
     <strong>1 │ </strong>class A extends B {
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>    constructor() {}
@@ -42,7 +42,7 @@ class A extends B {
 
 <pre class="language-text"><code class="language-text">nursery/noUnreachableSuper.js:3:9 <a href="https://rome.tools/docs/lint/rules/noUnreachableSuper">lint/nursery/noUnreachableSuper</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">`this` can be accessed before `super()` is called</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">`this` is accessed before `super()` is called</span>
   
     <strong>1 │ </strong>class A extends B {
     <strong>2 │ </strong>    constructor(value) {
@@ -74,7 +74,7 @@ class A extends B {
 
 <pre class="language-text"><code class="language-text">nursery/noUnreachableSuper.js:2:5 <a href="https://rome.tools/docs/lint/rules/noUnreachableSuper">lint/nursery/noUnreachableSuper</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">this constructor can return without calling `super()`</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">this constructor returns without calling `super()`</span>
   
     <strong>1 │ </strong>class A extends B {
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>    constructor(cond) {
