@@ -1,5 +1,3 @@
-#[cfg(feature = "aria")]
-mod generate_aria;
 #[cfg(feature = "schema")]
 mod generate_bindings;
 #[cfg(feature = "configuration")]
@@ -69,11 +67,6 @@ fn main() -> Result<()> {
         #[cfg(feature = "schema")]
         "bindings" => {
             generate_workspace_bindings(Mode::Overwrite)?;
-            Ok(())
-        }
-        #[cfg(feature = "aria")]
-        "aria" => {
-            generate_aria(Mode::Overwrite)?;
             Ok(())
         }
         "all" => {

@@ -1515,7 +1515,16 @@ dependencies = [
 name = "rome_aria"
 version = "0.0.0"
 dependencies = [
- "rustc-hash",
+ "rome_aria_metadata",
+]
+
+[[package]]
+name = "rome_aria_metadata"
+version = "0.0.0"
+dependencies = [
+ "case",
+ "proc-macro2",
+ "quote",
 ]
 
 [[package]]
