@@ -102,7 +102,7 @@ impl Rule for NoClassAssign {
         let mut diagnostic = RuleDiagnostic::new(
             rule_category!(),
             ctx.query().range(),
-            "Don't reassign classes",
+            "Don't reassign classes.",
         );
 
         for reference in references.iter() {
