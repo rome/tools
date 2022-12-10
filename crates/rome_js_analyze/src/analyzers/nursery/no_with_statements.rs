@@ -63,6 +63,7 @@ impl Rule for NoWithStatements {
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
+        println!("node: {:?}", node);
         Some(RuleDiagnostic::new(
             rule_category!(),
             node.range(),
@@ -84,98 +85,103 @@ impl Rule for NoWithStatements {
 
         match nodes_need_to_replaced {
             UseWithStatementsOperationType::Wrap(stmt) => {
-                let mut l_curly_token = make::token(T!['{']);
-                let r_curly_token = make::token(T!['}']);
+                // let mut l_curly_token = make::token(T!['{']);
+                // let r_curly_token = make::token(T!['}']);
 
-                // Ensure the opening curly token is separated from the previous token by at least one space
-                let has_previous_space = stmt
-                    .syntax()
-                    .first_token()
-                    .and_then(|token| token.prev_token())
-                    .map(|token| {
-                        token
-                            .trailing_trivia()
-                            .pieces()
-                            .rev()
-                            .take_while(|piece| !piece.is_newline())
-                            .any(|piece| piece.is_whitespace())
-                    })
-                    .unwrap_or(false);
+                // // Ensure the opening curly token is separated from the previous token by at least one space
+                // let has_previous_space = stmt
+                //     .syntax()
+                //     .first_token()
+                //     .and_then(|token| token.prev_token())
+                //     .map(|token| {
+                //         token
+                //             .trailing_trivia()
+                //             .pieces()
+                //             .rev()
+                //             .take_while(|piece| !piece.is_newline())
+                //             .any(|piece| piece.is_whitespace())
+                //     })
+                //     .unwrap_or(false);
 
-                if !has_previous_space {
-                    l_curly_token = l_curly_token
-                        .with_leading_trivia(iter::once((TriviaPieceKind::Whitespace, " ")));
-                }
+                // if !has_previous_space {
+                //     l_curly_token = l_curly_token
+                //         .with_leading_trivia(iter::once((TriviaPieceKind::Whitespace, " ")));
+                // }
 
-                // Clone the leading trivia of the single statement as the
-                // leading trivia of the closing curly token
-                let mut leading_trivia = stmt
-                    .syntax()
-                    .first_leading_trivia()
-                    .map(collect_to_first_newline)
-                    .unwrap_or_else(Vec::new);
+                // // Clone the leading trivia of the single statement as the
+                // // leading trivia of the closing curly token
+                // let mut leading_trivia = stmt
+                //     .syntax()
+                //     .first_leading_trivia()
+                //     .map(collect_to_first_newline)
+                //     .unwrap_or_else(Vec::new);
 
-                // If the statement has no leading trivia, add a space after
-                // the opening curly token
-                if leading_trivia.is_empty() {
-                    l_curly_token = l_curly_token
-                        .with_trailing_trivia(iter::once((TriviaPieceKind::Whitespace, " ")));
-                }
+                // // If the statement has no leading trivia, add a space after
+                // // the opening curly token
+                // if leading_trivia.is_empty() {
+                //     l_curly_token = l_curly_token
+                //         .with_trailing_trivia(iter::once((TriviaPieceKind::Whitespace, " ")));
+                // }
 
-                // If the leading trivia for the statement contains any newline,
-                // then the indentation is probably one level too deep for the
-                // closing curly token, clone the leading trivia from the
-                // parent node instead
-                if leading_trivia.iter().any(|piece| piece.is_newline()) {
-                    // Find the parent block statement node, skipping over
-                    // else-clause nodes if this statement is part of an
-                    // else-if chain
-                    let node = node.clone();
+                // // If the leading trivia for the statement contains any newline,
+                // // then the indentation is probably one level too deep for the
+                // // closing curly token, clone the leading trivia from the
+                // // parent node instead
+                // if leading_trivia.iter().any(|piece| piece.is_newline()) {
+                //     // Find the parent block statement node, skipping over
+                //     // else-clause nodes if this statement is part of an
+                //     // else-if chain
+                //     let node = node.clone();
 
-                    leading_trivia = node
-                        .syntax()
-                        .first_leading_trivia()
-                        .map(collect_to_first_newline)
-                        .unwrap_or_else(Vec::new);
-                }
+                //     leading_trivia = node
+                //         .syntax()
+                //         .first_leading_trivia()
+                //         .map(collect_to_first_newline)
+                //         .unwrap_or_else(Vec::new);
+                // }
 
-                // Apply the cloned trivia to the closing curly token, or
-                // fallback to a single space if it's still empty
-                let r_curly_token = if !leading_trivia.is_empty() {
-                    let leading_trivia = leading_trivia
-                        .iter()
-                        .rev()
-                        .map(|piece| (piece.kind(), piece.text()));
+                // // Apply the cloned trivia to the closing curly token, or
+                // // fallback to a single space if it's still empty
+                // let r_curly_token = if !leading_trivia.is_empty() {
+                //     let leading_trivia = leading_trivia
+                //         .iter()
+                //         .rev()
+                //         .map(|piece| (piece.kind(), piece.text()));
 
-                    r_curly_token.with_leading_trivia(leading_trivia)
-                } else {
-                    let has_trailing_single_line_comments = stmt
-                        .syntax()
-                        .last_trailing_trivia()
-                        .map(|trivia| {
-                            trivia
-                                .pieces()
-                                .any(|trivia| trivia.kind() == TriviaPieceKind::SingleLineComment)
-                        })
-                        .unwrap_or(false);
-                    // if the node we have to enclose has some trailing comments, then we add a new line
-                    // to the leading trivia of the right curly brace
-                    if !has_trailing_single_line_comments {
-                        r_curly_token
-                            .with_leading_trivia(iter::once((TriviaPieceKind::Whitespace, " ")))
-                    } else {
-                        r_curly_token
-                            .with_leading_trivia(iter::once((TriviaPieceKind::Newline, "\n")))
-                    }
-                };
+                //     r_curly_token.with_leading_trivia(leading_trivia)
+                // } else {
+                //     let has_trailing_single_line_comments = stmt
+                //         .syntax()
+                //         .last_trailing_trivia()
+                //         .map(|trivia| {
+                //             trivia
+                //                 .pieces()
+                //                 .any(|trivia| trivia.kind() == TriviaPieceKind::SingleLineComment)
+                //         })
+                //         .unwrap_or(false);
+                //     // if the node we have to enclose has some trailing comments, then we add a new line
+                //     // to the leading trivia of the right curly brace
+                //     if !has_trailing_single_line_comments {
+                //         r_curly_token
+                //             .with_leading_trivia(iter::once((TriviaPieceKind::Whitespace, " ")))
+                //     } else {
+                //         r_curly_token
+                //             .with_leading_trivia(iter::once((TriviaPieceKind::Newline, "\n")))
+                //     }
+                // };
+
+                // mutation.replace_node_discard_trivia(
+                //     stmt.clone(),
+                //     AnyJsStatement::JsBlockStatement(make::js_block_statement(
+                //         l_curly_token,
+                //         make::js_statement_list(iter::once(stmt.clone())),
+                //         r_curly_token,
+                //     )),
+                // );
 
                 mutation.replace_node_discard_trivia(
                     stmt.clone(),
-                    AnyJsStatement::JsBlockStatement(make::js_block_statement(
-                        l_curly_token,
-                        make::js_statement_list(iter::once(stmt.clone())),
-                        r_curly_token,
-                    )),
+                    AnyJsStatement::JsExpressionStatement(stmt.as_js_expression_statement().unwrap().clone()),
                 );
             }
             UseWithStatementsOperationType::ReplaceBody => match node {
@@ -194,19 +200,19 @@ impl Rule for NoWithStatements {
 }
 
 /// Collect newline and comment trivia pieces in reverse order up to the first newline included
-fn collect_to_first_newline(trivia: JsSyntaxTrivia) -> Vec<SyntaxTriviaPiece<JsLanguage>> {
-    let mut has_newline = false;
-    trivia
-        .pieces()
-        .rev()
-        .filter(|piece| piece.is_newline() || piece.is_whitespace())
-        .take_while(|piece| {
-            let had_newline = has_newline;
-            has_newline |= piece.is_newline();
-            !had_newline
-        })
-        .collect()
-}
+// fn collect_to_first_newline(trivia: JsSyntaxTrivia) -> Vec<SyntaxTriviaPiece<JsLanguage>> {
+//     let mut has_newline = false;
+//     trivia
+//         .pieces()
+//         .rev()
+//         .filter(|piece| piece.is_newline() || piece.is_whitespace())
+//         .take_while(|piece| {
+//             let had_newline = has_newline;
+//             has_newline |= piece.is_newline();
+//             !had_newline
+//         })
+//         .collect()
+// }
 
 pub enum UseWithStatementsOperationType {
     Wrap(AnyJsStatement),
