@@ -1,0 +1,293 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 92
+expression: noClassAssign.js
+---
+# Input
+```js
+/* Valid  */
+function case1() {
+	class A { }
+	foo(A);
+}
+
+function case2() {
+	let A = class A { };
+	foo(A);
+}
+
+function case3() {
+	class A {
+		b(A) {
+			A = 0;
+		}
+	}
+}
+
+function case4() {
+	class A {
+		b() {
+			let A;
+			A = 0;
+		}
+	}
+}
+
+function case5() {
+	let A = class {
+		b() {
+			A = 0;
+		}
+	}
+}
+
+// /* Ignores non class. */
+function case6() {
+	var x = 0;
+	x = 1;
+}
+
+function case7() {
+	let x = 0;
+	x = 1;
+}
+
+function case8() {
+	const x = 0;
+	x = 1;
+}
+
+function case9() {
+	function x() {}
+	x = 1;
+}
+
+function case10(x) {
+	x = 1;
+}
+
+function case11() {
+	try {}
+	catch (x) {
+		x = 1;
+	}
+}
+
+// /* Invalid  */
+
+function case12() {
+	class A { }
+	A = 0;
+}
+
+function case13() {
+	class B { }
+	({B} = 0);
+}
+
+function case14() {
+	class C { }
+	({b: C = 0} = {});
+}
+
+function case15() {
+	D = 0;
+	class D { }
+}
+
+function case16() {
+	class E {
+		b() {
+			E = 0;
+		}
+	}
+}
+
+function case17() {
+	let F = class F {
+		b() {
+			F = 0;
+		}
+	}
+}
+
+function case18() {
+	class G { }
+	G = 0;
+	G = 1;
+}
+
+```
+
+# Diagnostics
+```
+noClassAssign.js:72:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't reassign classes.
+  
+    71 │ function case12() {
+  > 72 │ 	class A { }
+       │ 	      ^
+    73 │ 	A = 0;
+    74 │ }
+  
+  i Reassigned here.
+  
+    71 │ function case12() {
+    72 │ 	class A { }
+  > 73 │ 	A = 0;
+       │ 	^
+    74 │ }
+    75 │ 
+  
+
+```
+
+```
+noClassAssign.js:77:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't reassign classes.
+  
+    76 │ function case13() {
+  > 77 │ 	class B { }
+       │ 	      ^
+    78 │ 	({B} = 0);
+    79 │ }
+  
+  i Reassigned here.
+  
+    76 │ function case13() {
+    77 │ 	class B { }
+  > 78 │ 	({B} = 0);
+       │ 	  ^
+    79 │ }
+    80 │ 
+  
+
+```
+
+```
+noClassAssign.js:82:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't reassign classes.
+  
+    81 │ function case14() {
+  > 82 │ 	class C { }
+       │ 	      ^
+    83 │ 	({b: C = 0} = {});
+    84 │ }
+  
+  i Reassigned here.
+  
+    81 │ function case14() {
+    82 │ 	class C { }
+  > 83 │ 	({b: C = 0} = {});
+       │ 	     ^
+    84 │ }
+    85 │ 
+  
+
+```
+
+```
+noClassAssign.js:88:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't reassign classes.
+  
+    86 │ function case15() {
+    87 │ 	D = 0;
+  > 88 │ 	class D { }
+       │ 	      ^
+    89 │ }
+    90 │ 
+  
+  i Reassigned here.
+  
+    86 │ function case15() {
+  > 87 │ 	D = 0;
+       │ 	^
+    88 │ 	class D { }
+    89 │ }
+  
+
+```
+
+```
+noClassAssign.js:92:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't reassign classes.
+  
+    91 │ function case16() {
+  > 92 │ 	class E {
+       │ 	      ^
+    93 │ 		b() {
+    94 │ 			E = 0;
+  
+  i Reassigned here.
+  
+    92 │ 	class E {
+    93 │ 		b() {
+  > 94 │ 			E = 0;
+       │ 			^
+    95 │ 		}
+    96 │ 	}
+  
+
+```
+
+```
+noClassAssign.js:100:16 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't reassign classes.
+  
+     99 │ function case17() {
+  > 100 │ 	let F = class F {
+        │ 	              ^
+    101 │ 		b() {
+    102 │ 			F = 0;
+  
+  i Reassigned here.
+  
+    100 │ 	let F = class F {
+    101 │ 		b() {
+  > 102 │ 			F = 0;
+        │ 			^
+    103 │ 		}
+    104 │ 	}
+  
+
+```
+
+```
+noClassAssign.js:108:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't reassign classes.
+  
+    107 │ function case18() {
+  > 108 │ 	class G { }
+        │ 	      ^
+    109 │ 	G = 0;
+    110 │ 	G = 1;
+  
+  i Reassigned here.
+  
+    107 │ function case18() {
+    108 │ 	class G { }
+  > 109 │ 	G = 0;
+        │ 	^
+    110 │ 	G = 1;
+    111 │ }
+  
+  i Reassigned here.
+  
+    108 │ 	class G { }
+    109 │ 	G = 0;
+  > 110 │ 	G = 1;
+        │ 	^
+    111 │ }
+    112 │ 
+  
+
+```
+
+

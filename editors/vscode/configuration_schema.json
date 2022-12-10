@@ -610,6 +610,17 @@
             }
           ]
         },
+        "noClassAssign": {
+          "description": "Disallow reassigning class members.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noCommaOperator": {
           "description": "Disallow comma operator.",
           "anyOf": [
