@@ -6,8 +6,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{
-    AnyJsStatement, JsWithStatement,
-    TriviaPieceKind, T, JsSyntaxTrivia, JsLanguage,
+    AnyJsStatement, JsLanguage, JsSyntaxTrivia, JsWithStatement, TriviaPieceKind, T,
 };
 
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt, SyntaxTriviaPiece};
@@ -18,7 +17,7 @@ use crate::{use_with_statements_diagnostic, use_with_statements_replace_body};
 declare_rule! {
     /// Disallow with statements.
     ///
-    /// The with statement is potentially problematic because it adds members of an object to the current 
+    /// The with statement is potentially problematic because it adds members of an object to the current
     /// scope, making it impossible to tell what a variable inside the block actually refers to.
     ///
     /// ## Examples
