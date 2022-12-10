@@ -4974,14 +4974,34 @@ pub fn ts_indexed_access_type(
         ],
     ))
 }
-pub fn ts_infer_type(infer_token: SyntaxToken, type_parameter: TsTypeParameter) -> TsInferType {
-    TsInferType::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::TS_INFER_TYPE,
-        [
-            Some(SyntaxElement::Token(infer_token)),
-            Some(SyntaxElement::Node(type_parameter.into_syntax())),
-        ],
-    ))
+pub fn ts_infer_type(infer_token: SyntaxToken, name: TsTypeParameterName) -> TsInferTypeBuilder {
+    TsInferTypeBuilder {
+        infer_token,
+        name,
+        constraint: None,
+    }
+}
+pub struct TsInferTypeBuilder {
+    infer_token: SyntaxToken,
+    name: TsTypeParameterName,
+    constraint: Option<TsTypeConstraintClause>,
+}
+impl TsInferTypeBuilder {
+    pub fn with_constraint(mut self, constraint: TsTypeConstraintClause) -> Self {
+        self.constraint = Some(constraint);
+        self
+    }
+    pub fn build(self) -> TsInferType {
+        TsInferType::unwrap_cast(SyntaxNode::new_detached(
+            JsSyntaxKind::TS_INFER_TYPE,
+            [
+                Some(SyntaxElement::Token(self.infer_token)),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
+                self.constraint
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+            ],
+        ))
+    }
 }
 pub fn ts_instantiation_expression(
     expression: AnyJsExpression,

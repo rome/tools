@@ -9427,14 +9427,18 @@ impl TsInferType {
     pub fn as_fields(&self) -> TsInferTypeFields {
         TsInferTypeFields {
             infer_token: self.infer_token(),
-            type_parameter: self.type_parameter(),
+            name: self.name(),
+            constraint: self.constraint(),
         }
     }
     pub fn infer_token(&self) -> SyntaxResult<SyntaxToken> {
         support::required_token(&self.syntax, 0usize)
     }
-    pub fn type_parameter(&self) -> SyntaxResult<TsTypeParameter> {
+    pub fn name(&self) -> SyntaxResult<TsTypeParameterName> {
         support::required_node(&self.syntax, 1usize)
+    }
+    pub fn constraint(&self) -> Option<TsTypeConstraintClause> {
+        support::node(&self.syntax, 2usize)
     }
 }
 #[cfg(feature = "serde")]
@@ -9449,7 +9453,8 @@ impl Serialize for TsInferType {
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsInferTypeFields {
     pub infer_token: SyntaxResult<SyntaxToken>,
-    pub type_parameter: SyntaxResult<TsTypeParameter>,
+    pub name: SyntaxResult<TsTypeParameterName>,
+    pub constraint: Option<TsTypeConstraintClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsInstantiationExpression {
@@ -22599,9 +22604,10 @@ impl std::fmt::Debug for TsInferType {
                 "infer_token",
                 &support::DebugSyntaxResult(self.infer_token()),
             )
+            .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
-                "type_parameter",
-                &support::DebugSyntaxResult(self.type_parameter()),
+                "constraint",
+                &support::DebugOptionalElement(self.constraint()),
             )
             .finish()
     }

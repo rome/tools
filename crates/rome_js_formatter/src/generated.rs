@@ -8027,37 +8027,79 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::TsEmptyExternalModuleDeclar
         FormatOwnedWithRule :: new (self , crate :: ts :: auxiliary :: empty_external_module_declaration_body :: FormatTsEmptyExternalModuleDeclarationBody :: default ())
     }
 }
-impl FormatRule<rome_js_syntax::TsTypeParameter>
-    for crate::ts::bindings::type_parameter::FormatTsTypeParameter
+impl FormatRule<rome_js_syntax::TsTypeParameterName>
+    for crate::ts::auxiliary::type_parameter_name::FormatTsTypeParameterName
 {
     type Context = JsFormatContext;
     #[inline(always)]
-    fn fmt(&self, node: &rome_js_syntax::TsTypeParameter, f: &mut JsFormatter) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::TsTypeParameter>::fmt(self, node, f)
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsTypeParameterName,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsTypeParameterName>::fmt(self, node, f)
     }
 }
-impl AsFormat<JsFormatContext> for rome_js_syntax::TsTypeParameter {
+impl AsFormat<JsFormatContext> for rome_js_syntax::TsTypeParameterName {
     type Format<'a> = FormatRefWithRule<
         'a,
-        rome_js_syntax::TsTypeParameter,
-        crate::ts::bindings::type_parameter::FormatTsTypeParameter,
+        rome_js_syntax::TsTypeParameterName,
+        crate::ts::auxiliary::type_parameter_name::FormatTsTypeParameterName,
     >;
     fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
-            crate::ts::bindings::type_parameter::FormatTsTypeParameter::default(),
+            crate::ts::auxiliary::type_parameter_name::FormatTsTypeParameterName::default(),
         )
     }
 }
-impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTypeParameter {
+impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTypeParameterName {
     type Format = FormatOwnedWithRule<
-        rome_js_syntax::TsTypeParameter,
-        crate::ts::bindings::type_parameter::FormatTsTypeParameter,
+        rome_js_syntax::TsTypeParameterName,
+        crate::ts::auxiliary::type_parameter_name::FormatTsTypeParameterName,
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule::new(
             self,
-            crate::ts::bindings::type_parameter::FormatTsTypeParameter::default(),
+            crate::ts::auxiliary::type_parameter_name::FormatTsTypeParameterName::default(),
+        )
+    }
+}
+impl FormatRule<rome_js_syntax::TsTypeConstraintClause>
+    for crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause
+{
+    type Context = JsFormatContext;
+    #[inline(always)]
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsTypeConstraintClause,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsTypeConstraintClause>::fmt(self, node, f)
+    }
+}
+impl AsFormat<JsFormatContext> for rome_js_syntax::TsTypeConstraintClause {
+    type Format<'a> = FormatRefWithRule<
+        'a,
+        rome_js_syntax::TsTypeConstraintClause,
+        crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause,
+    >;
+    fn format(&self) -> Self::Format<'_> {
+        FormatRefWithRule::new(
+            self,
+            crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause::default(),
+        )
+    }
+}
+impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTypeConstraintClause {
+    type Format = FormatOwnedWithRule<
+        rome_js_syntax::TsTypeConstraintClause,
+        crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause,
+    >;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule::new(
+            self,
+            crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause::default(),
         )
     }
 }
@@ -8175,79 +8217,37 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::TsAssertsCondition {
         )
     }
 }
-impl FormatRule<rome_js_syntax::TsTypeParameterName>
-    for crate::ts::auxiliary::type_parameter_name::FormatTsTypeParameterName
+impl FormatRule<rome_js_syntax::TsTypeParameter>
+    for crate::ts::bindings::type_parameter::FormatTsTypeParameter
 {
     type Context = JsFormatContext;
     #[inline(always)]
-    fn fmt(
-        &self,
-        node: &rome_js_syntax::TsTypeParameterName,
-        f: &mut JsFormatter,
-    ) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::TsTypeParameterName>::fmt(self, node, f)
+    fn fmt(&self, node: &rome_js_syntax::TsTypeParameter, f: &mut JsFormatter) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsTypeParameter>::fmt(self, node, f)
     }
 }
-impl AsFormat<JsFormatContext> for rome_js_syntax::TsTypeParameterName {
+impl AsFormat<JsFormatContext> for rome_js_syntax::TsTypeParameter {
     type Format<'a> = FormatRefWithRule<
         'a,
-        rome_js_syntax::TsTypeParameterName,
-        crate::ts::auxiliary::type_parameter_name::FormatTsTypeParameterName,
+        rome_js_syntax::TsTypeParameter,
+        crate::ts::bindings::type_parameter::FormatTsTypeParameter,
     >;
     fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
-            crate::ts::auxiliary::type_parameter_name::FormatTsTypeParameterName::default(),
+            crate::ts::bindings::type_parameter::FormatTsTypeParameter::default(),
         )
     }
 }
-impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTypeParameterName {
+impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTypeParameter {
     type Format = FormatOwnedWithRule<
-        rome_js_syntax::TsTypeParameterName,
-        crate::ts::auxiliary::type_parameter_name::FormatTsTypeParameterName,
+        rome_js_syntax::TsTypeParameter,
+        crate::ts::bindings::type_parameter::FormatTsTypeParameter,
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule::new(
             self,
-            crate::ts::auxiliary::type_parameter_name::FormatTsTypeParameterName::default(),
-        )
-    }
-}
-impl FormatRule<rome_js_syntax::TsTypeConstraintClause>
-    for crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause
-{
-    type Context = JsFormatContext;
-    #[inline(always)]
-    fn fmt(
-        &self,
-        node: &rome_js_syntax::TsTypeConstraintClause,
-        f: &mut JsFormatter,
-    ) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::TsTypeConstraintClause>::fmt(self, node, f)
-    }
-}
-impl AsFormat<JsFormatContext> for rome_js_syntax::TsTypeConstraintClause {
-    type Format<'a> = FormatRefWithRule<
-        'a,
-        rome_js_syntax::TsTypeConstraintClause,
-        crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause,
-    >;
-    fn format(&self) -> Self::Format<'_> {
-        FormatRefWithRule::new(
-            self,
-            crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause::default(),
-        )
-    }
-}
-impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTypeConstraintClause {
-    type Format = FormatOwnedWithRule<
-        rome_js_syntax::TsTypeConstraintClause,
-        crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause,
-    >;
-    fn into_format(self) -> Self::Format {
-        FormatOwnedWithRule::new(
-            self,
-            crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause::default(),
+            crate::ts::bindings::type_parameter::FormatTsTypeParameter::default(),
         )
     }
 }
