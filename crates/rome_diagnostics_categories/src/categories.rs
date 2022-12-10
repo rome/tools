@@ -81,6 +81,7 @@ define_dategories! {
     "lint/nursery/useExhaustiveDependencies": "https://docs.rome.tools/lint/rules/useExhaustiveDependencies",
     "lint/nursery/useExponentiationOperator": "https://docs.rome.tools/lint/rules/useExponentiationOperator",
     "lint/nursery/useIsNan": "https://docs.rome.tools/lint/rules/useIsNan",
+    "lint/nursery/useMediaCaption": "https://docs.rome.tools/lint/rules/useMediaCaption",
     "lint/nursery/useNumericLiterals": "https://docs.rome.tools/lint/rules/useNumericLiterals",
     "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
     "lint/nursery/useHookAtTopLevel": "https://docs.rome.tools/lint/rules/useHookAtTopLevel",

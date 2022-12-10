@@ -1013,6 +1013,17 @@
             }
           ]
         },
+        "useMediaCaption": {
+          "description": "Enforces that audio and video elements must have a track for captions.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useNumericLiterals": {
           "description": "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals",
           "anyOf": [
