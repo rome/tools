@@ -1897,6 +1897,10 @@ impl ClassMemberModifiers {
     //     accessor b = 1;
     //     static accessor c = 1;
     // }
+    // class Foo {
+    //     accessor
+    //     foo
+    // }
 
     // test ts ts_class_property_member_modifiers
     // class Base {

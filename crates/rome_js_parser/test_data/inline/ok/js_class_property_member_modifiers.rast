@@ -73,14 +73,46 @@ JsModule {
             ],
             r_curly_token: R_CURLY@77..79 "}" [Newline("\n")] [],
         },
+        JsClassDeclaration {
+            abstract_token: missing (optional),
+            class_token: CLASS_KW@79..86 "class" [Newline("\n")] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@86..90 "Foo" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            extends_clause: missing (optional),
+            implements_clause: missing (optional),
+            l_curly_token: L_CURLY@90..91 "{" [] [],
+            members: JsClassMemberList [
+                JsPropertyClassMember {
+                    modifiers: JsPropertyModifierList [],
+                    name: JsLiteralMemberName {
+                        value: IDENT@91..104 "accessor" [Newline("\n"), Whitespace("    ")] [],
+                    },
+                    property_annotation: missing (optional),
+                    value: missing (optional),
+                    semicolon_token: missing (optional),
+                },
+                JsPropertyClassMember {
+                    modifiers: JsPropertyModifierList [],
+                    name: JsLiteralMemberName {
+                        value: IDENT@104..112 "foo" [Newline("\n"), Whitespace("    ")] [],
+                    },
+                    property_annotation: missing (optional),
+                    value: missing (optional),
+                    semicolon_token: missing (optional),
+                },
+            ],
+            r_curly_token: R_CURLY@112..114 "}" [Newline("\n")] [],
+        },
     ],
-    eof_token: EOF@79..80 "" [Newline("\n")] [],
+    eof_token: EOF@114..115 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..80
+0: JS_MODULE@0..115
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..79
+  2: JS_MODULE_ITEM_LIST@0..114
     0: JS_CLASS_DECLARATION@0..79
       0: (empty)
       1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
@@ -130,4 +162,29 @@ JsModule {
               0: JS_NUMBER_LITERAL@75..76 "1" [] []
           4: SEMICOLON@76..77 ";" [] []
       8: R_CURLY@77..79 "}" [Newline("\n")] []
-  3: EOF@79..80 "" [Newline("\n")] []
+    1: JS_CLASS_DECLARATION@79..114
+      0: (empty)
+      1: CLASS_KW@79..86 "class" [Newline("\n")] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@86..90
+        0: IDENT@86..90 "Foo" [] [Whitespace(" ")]
+      3: (empty)
+      4: (empty)
+      5: (empty)
+      6: L_CURLY@90..91 "{" [] []
+      7: JS_CLASS_MEMBER_LIST@91..112
+        0: JS_PROPERTY_CLASS_MEMBER@91..104
+          0: JS_PROPERTY_MODIFIER_LIST@91..91
+          1: JS_LITERAL_MEMBER_NAME@91..104
+            0: IDENT@91..104 "accessor" [Newline("\n"), Whitespace("    ")] []
+          2: (empty)
+          3: (empty)
+          4: (empty)
+        1: JS_PROPERTY_CLASS_MEMBER@104..112
+          0: JS_PROPERTY_MODIFIER_LIST@104..104
+          1: JS_LITERAL_MEMBER_NAME@104..112
+            0: IDENT@104..112 "foo" [Newline("\n"), Whitespace("    ")] []
+          2: (empty)
+          3: (empty)
+          4: (empty)
+      8: R_CURLY@112..114 "}" [Newline("\n")] []
+  3: EOF@114..115 "" [Newline("\n")] []
