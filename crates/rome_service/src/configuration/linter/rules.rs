@@ -727,6 +727,8 @@ struct NurserySchema {
     no_access_key: Option<RuleConfiguration>,
     #[doc = "Disallow assignments in expressions."]
     no_assign_in_expressions: Option<RuleConfiguration>,
+    #[doc = "Disallow with statements."]
+    no_with: Option<RuleConfiguration>,
     #[doc = "Disallow certain types."]
     no_banned_types: Option<RuleConfiguration>,
     #[doc = "Disallow TypeScript const enum"]
@@ -792,9 +794,10 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 33] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 34] = [
         "noAccessKey",
         "noAssignInExpressions",
+        "noWith",
         "noBannedTypes",
         "noConstEnum",
         "noConstructorReturn",
@@ -827,8 +830,9 @@ impl Nursery {
         "useHookAtTopLevel",
         "useNumericLiterals",
     ];
-    const RECOMMENDED_RULES: [&'static str; 24] = [
+    const RECOMMENDED_RULES: [&'static str; 25] = [
         "noAssignInExpressions",
+        "noWith",
         "noBannedTypes",
         "noConstEnum",
         "noConstructorReturn",
@@ -853,7 +857,7 @@ impl Nursery {
         "useExhaustiveDependencies",
         "useNumericLiterals",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 24] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 25] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[3]),
@@ -864,6 +868,7 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[8]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[9]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[10]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[11]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[13]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[16]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[17]),
@@ -904,7 +909,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 24] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 25] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
