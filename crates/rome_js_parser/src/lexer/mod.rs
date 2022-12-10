@@ -1073,10 +1073,10 @@ impl<'src> Lexer<'src> {
             b"protected" => PROTECTED_KW,
             b"public" => PUBLIC_KW,
             b"static" => STATIC_KW,
-            b"accessor" => ACCESSOR_KW,
             b"yield" => YIELD_KW,
             // contextual keywords
             b"abstract" => ABSTRACT_KW,
+            b"accessor" => ACCESSOR_KW,
             b"as" => AS_KW,
             b"asserts" => ASSERTS_KW,
             b"assert" => ASSERT_KW,
