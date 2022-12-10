@@ -122,5 +122,5 @@ fn inner_string_text(token: &SyntaxToken<JsLanguage>) -> SyntaxTokenText {
         text = text.slice(range);
     }
 
-    return text;
+    text
 }
