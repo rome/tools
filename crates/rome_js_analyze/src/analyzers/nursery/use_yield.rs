@@ -72,7 +72,10 @@ impl Rule for UseYield {
             ),
         })?;
 
-        if start_token.is_some() && !has_yield_kw(NodeOrToken::from(function_body_syntax))? {
+        if start_token.is_some()
+            && !function_body_syntax.clone().into_list().is_empty()
+            && !has_yield_kw(NodeOrToken::from(function_body_syntax))?
+        {
             return Some(());
         }
 

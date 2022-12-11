@@ -78,50 +78,6 @@ function* foo() {
 
 # Diagnostics
 ```
-useYield.js:10:1 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This generator function does not have yield.
-  
-     8 │ }
-     9 │ 
-  > 10 │ function* foo() {}
-       │ ^^^^^^^^^^^^^^^^^^
-    11 │ 
-    12 │ (function* foo() {
-  
-
-```
-
-```
-useYield.js:16:2 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This generator function does not have yield.
-  
-    14 │ })();
-    15 │ 
-  > 16 │ (function* foo() {})();
-       │  ^^^^^^^^^^^^^^^^^^
-    17 │ 
-    18 │ const obj = {
-  
-
-```
-
-```
-useYield.js:33:2 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This generator function does not have yield.
-  
-    32 │ class A {
-  > 33 │ 	*foo() {}
-       │ 	^^^^^^^^^
-    34 │ }
-    35 │ 
-  
-
-```
-
-```
 useYield.js:37:1 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This generator function does not have yield.
