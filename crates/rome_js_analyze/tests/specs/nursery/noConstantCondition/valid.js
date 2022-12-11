@@ -152,7 +152,6 @@ if (1 * [a]) { }
 if (Boolean(a)) { }
 if (Boolean(...args)) { }
 if (foo.Boolean(1)) { }
-// TODO need to use semantic model
-// function foo(Boolean) { if (Boolean(1)) { } }
-// const Boolean = () => { }; if (Boolean(1)) { }
-// const undefined = 'lol'; if (undefined) { }
+function foo(Boolean) { if (Boolean(12)) { } }
+const Boolean = () => { }; if (Boolean(1)) { }
+const undefined = 'lol'; if (undefined) { }

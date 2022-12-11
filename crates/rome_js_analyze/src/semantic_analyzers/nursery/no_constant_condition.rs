@@ -1,12 +1,15 @@
-use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 
+use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
     AnyJsArrayElement, AnyJsExpression, AnyJsLiteralExpression, AnyJsTemplateElement,
     JsAssignmentOperator, JsConditionalExpression, JsDoWhileStatement, JsForStatement,
     JsIfStatement, JsLogicalOperator, JsUnaryOperator, JsWhileStatement,
 };
 use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
+
+use crate::{semantic_services::Semantic, utils::rename::RenamableNode};
 
 declare_rule! {
     /// Disallow constant expressions in conditions
@@ -82,15 +85,15 @@ declare_node_union! {
 }
 
 impl Rule for NoConstantCondition {
-    type Query = Ast<ConditionalStatement>;
+    type Query = Semantic<ConditionalStatement>;
     type State = AnyJsExpression;
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let test = ctx.query().test()?.omit_parentheses();
-
-        is_constant_condition(&test, true).map(|_| test)
+        let model = ctx.model();
+        is_constant_condition(&test, true, model).map(|_| test)
     }
 
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
@@ -116,7 +119,11 @@ impl ConditionalStatement {
     }
 }
 
-fn is_constant_condition(test: &AnyJsExpression, in_boolean_position: bool) -> Option<()> {
+fn is_constant_condition(
+    test: &AnyJsExpression,
+    in_boolean_position: bool,
+    model: &SemanticModel,
+) -> Option<()> {
     use AnyJsExpression::*;
 
     match test.clone().omit_parentheses() {
@@ -133,18 +140,20 @@ fn is_constant_condition(test: &AnyJsExpression, in_boolean_position: bool) -> O
                 return Some(());
             }
             if op == LogicalNot {
-                return is_constant_condition(&node.argument().ok()?, true);
+                return is_constant_condition(&node.argument().ok()?, true, model);
             }
-            is_constant_condition(&node.argument().ok()?, false)
+            is_constant_condition(&node.argument().ok()?, false, model)
         }
-        JsBinaryExpression(node) => is_constant_condition(&node.left().ok()?, false)
-            .and_then(|_| is_constant_condition(&node.right().ok()?, false)),
+        JsBinaryExpression(node) => is_constant_condition(&node.left().ok()?, false, model)
+            .and_then(|_| is_constant_condition(&node.right().ok()?, false, model)),
         JsLogicalExpression(node) => {
             let left = node.left().ok()?;
             let right = node.right().ok()?;
             let op = node.operator().ok()?;
-            let is_left_constant = is_constant_condition(&left, in_boolean_position).is_some();
-            let is_right_constant = is_constant_condition(&right, in_boolean_position).is_some();
+            let is_left_constant =
+                is_constant_condition(&left, in_boolean_position, model).is_some();
+            let is_right_constant =
+                is_constant_condition(&right, in_boolean_position, model).is_some();
             let is_left_short_circuit = if is_left_constant {
                 is_logical_identity(left, op)
             } else {
@@ -166,11 +175,14 @@ fn is_constant_condition(test: &AnyJsExpression, in_boolean_position: bool) -> O
             }
         }
         JsSequenceExpression(node) => {
-            is_constant_condition(&node.right().ok()?, in_boolean_position)
+            is_constant_condition(&node.right().ok()?, in_boolean_position, model)
         }
         JsIdentifierExpression(node) => {
+            if node.name().ok()?.binding(model).is_some() {
+                // This is a edge case. Mordern browser doesn't allow to redeclare `undefined` but ESLint handle this so we do
+                return None;
+            }
             let is_named_undefined = node.is_undefined().ok()?;
-            // TODO check if node is reference to global
             is_named_undefined.then_some(())
         }
         JsArrayExpression(node) => {
@@ -183,7 +195,7 @@ fn is_constant_condition(test: &AnyJsExpression, in_boolean_position: bool) -> O
                                 AnyJsArrayElement::JsArrayHole(_) => true,
                                 AnyJsArrayElement::JsSpread(node) => {
                                     if let Some(argument) = node.argument().ok() {
-                                        is_constant_condition(&argument, in_boolean_position)
+                                        is_constant_condition(&argument, in_boolean_position, model)
                                             .is_some()
                                     } else {
                                         false
@@ -191,7 +203,7 @@ fn is_constant_condition(test: &AnyJsExpression, in_boolean_position: bool) -> O
                                 }
                                 _ => element
                                     .as_any_js_expression()
-                                    .and_then(|node| is_constant_condition(node, false))
+                                    .and_then(|node| is_constant_condition(node, false, model))
                                     .is_some(),
                             }
                         } else {
@@ -206,12 +218,22 @@ fn is_constant_condition(test: &AnyJsExpression, in_boolean_position: bool) -> O
         JsNewExpression(_) => in_boolean_position.then_some(()),
         JsCallExpression(node) => {
             if node.has_callee("Boolean") {
+                let callee = node.callee().ok()?;
+                let ident = callee.as_js_identifier_expression()?.name().ok()?;
+                let binding = ident.binding(model);
+                if binding.is_some() {
+                    return None;
+                }
+
                 let args = node.arguments().ok()?.args();
                 if args.is_empty() {
                     return Some(());
                 }
-                // TODO check Boolean is referrenced to global.
-                return is_constant_condition(args.first()?.ok()?.as_any_js_expression()?, true);
+                return is_constant_condition(
+                    args.first()?.ok()?.as_any_js_expression()?,
+                    true,
+                    model,
+                );
             }
 
             None
@@ -221,7 +243,7 @@ fn is_constant_condition(test: &AnyJsExpression, in_boolean_position: bool) -> O
 
             let operator = node.operator().ok()?;
             if operator == Assign {
-                return is_constant_condition(&node.right().ok()?, in_boolean_position);
+                return is_constant_condition(&node.right().ok()?, in_boolean_position, model);
             }
 
             if matches!(operator, LogicalOrAssign | LogicalAndAssign) && in_boolean_position {
@@ -241,7 +263,7 @@ fn is_constant_condition(test: &AnyJsExpression, in_boolean_position: bool) -> O
             let has_truthy_quasi = !is_tag
                 && elements.clone().into_iter().any(|element| match element {
                     AnyJsTemplateElement::JsTemplateChunkElement(element) => {
-                        if let Some(quasi) = element.template_chunk_token().ok() {
+                        if let Ok(quasi) = element.template_chunk_token() {
                             quasi.text_trimmed().len() > 0
                         } else {
                             false
@@ -253,18 +275,19 @@ fn is_constant_condition(test: &AnyJsExpression, in_boolean_position: bool) -> O
                 return Some(());
             }
 
-            let are_expressions_constant = elements.into_iter().all(|element| match element {
-                AnyJsTemplateElement::JsTemplateChunkElement(_) => !is_tag,
-                AnyJsTemplateElement::JsTemplateElement(element) => {
-                    if let Some(expr) = element.expression().ok() {
-                        is_constant_condition(&expr, false).is_some()
-                    } else {
-                        false
+            elements
+                .into_iter()
+                .all(|element| match element {
+                    AnyJsTemplateElement::JsTemplateChunkElement(_) => !is_tag,
+                    AnyJsTemplateElement::JsTemplateElement(element) => {
+                        if let Ok(expr) = element.expression() {
+                            is_constant_condition(&expr, false, model).is_some()
+                        } else {
+                            false
+                        }
                     }
-                }
-            });
-
-            (are_expressions_constant).then_some(())
+                })
+                .then_some(())
         }
         _ => None,
     }
@@ -275,7 +298,7 @@ fn is_logical_identity(node: AnyJsExpression, operator: JsLogicalOperator) -> bo
     use JsLogicalOperator::*;
     match node.omit_parentheses() {
         AnyJsLiteralExpression(node) => {
-            let boolean_value = get_boolean_value(node).unwrap_or(false);
+            let boolean_value = get_boolean_value(node);
             operator == LogicalOr && boolean_value || (operator == LogicalAnd && !boolean_value)
         }
         JsUnaryExpression(node) => {
@@ -283,14 +306,14 @@ fn is_logical_identity(node: AnyJsExpression, operator: JsLogicalOperator) -> bo
                 return false;
             }
 
-            if let Some(node_operator) = node.operator().ok() {
+            if let Ok(node_operator) = node.operator() {
                 node_operator == JsUnaryOperator::Void
             } else {
                 false
             }
         }
         JsLogicalExpression(node) => {
-            if let Some(node_operator) = node.operator().ok() {
+            if let Ok(node_operator) = node.operator() {
                 // handles `a && false || b`
                 // `false` is an identity element of `&&` but not `||`
                 // so the logical identity of the whole expression can not be defined.
@@ -317,8 +340,8 @@ fn is_logical_identity(node: AnyJsExpression, operator: JsLogicalOperator) -> bo
             }
         }
         JsAssignmentExpression(node) => {
-            if let Some(node_operator) = node.operator().ok() {
-                if let Some(right) = node.right().ok() {
+            if let Ok(node_operator) = node.operator() {
+                if let Ok(right) = node.right() {
                     let is_valid_logical_assignment = match node_operator {
                         JsAssignmentOperator::LogicalAndAssign
                             if operator == JsLogicalOperator::LogicalAnd =>
@@ -345,26 +368,41 @@ fn is_logical_identity(node: AnyJsExpression, operator: JsLogicalOperator) -> bo
     }
 }
 
-fn get_boolean_value(node: AnyJsLiteralExpression) -> Option<bool> {
+fn get_boolean_value(node: AnyJsLiteralExpression) -> bool {
     use AnyJsLiteralExpression::*;
 
     match node {
         JsBigIntLiteralExpression(node) => {
-            node.value_token().ok().map(|x| x.text_trimmed() != "0n")
+            if let Ok(value_token) = node.value_token() {
+                value_token.text_trimmed() != "0n"
+            } else {
+                false
+            }
         }
         JsBooleanLiteralExpression(node) => {
-            node.value_token().ok().map(|x| x.text_trimmed() == "true")
+            if let Ok(value_token) = node.value_token() {
+                value_token.text_trimmed() != "false"
+            } else {
+                false
+            }
         }
-        JsNullLiteralExpression(_) => Some(false),
-        JsNumberLiteralExpression(node) => node
-            .value_token()
-            .ok()
-            .map(|value| value.text_trimmed() != "0"),
-        JsRegexLiteralExpression(_) => Some(true),
-        JsStringLiteralExpression(node) => node.value_token().ok().map(|value| {
-            let text_trimmed = value.text_trimmed();
-            text_trimmed != "''" && text_trimmed != "\"\""
-        }),
+        JsNullLiteralExpression(_) => false,
+        JsNumberLiteralExpression(node) => {
+            if let Ok(value_token) = node.value_token() {
+                value_token.text_trimmed() != "0"
+            } else {
+                false
+            }
+        }
+        JsRegexLiteralExpression(_) => true,
+        JsStringLiteralExpression(node) => {
+            if let Ok(value_token) = node.value_token() {
+                let text_trimmed = value_token.text_trimmed();
+                text_trimmed != "''" && text_trimmed != "\"\""
+            } else {
+                false
+            }
+        }
     }
 }
 
@@ -386,9 +424,12 @@ mod tests {
         let literal_expression = source
             .syntax()
             .descendants()
-            .find_map(|x| x.clone().cast::<AnyJsLiteralExpression>());
+            .find_map(|x| x.cast::<AnyJsLiteralExpression>());
 
-        assert_eq!(get_boolean_value(literal_expression.unwrap()), Some(value));
+        assert_eq!(
+            get_boolean_value(literal_expression.expect("Not found AnyLiteralExpression.")),
+            value
+        );
     }
     #[test]
     fn test_get_boolean_value() {

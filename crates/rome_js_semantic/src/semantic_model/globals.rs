@@ -13,6 +13,7 @@ pub struct SemanticModelGlobalReferenceData {
     pub(crate) ty: SemanticModelReferenceType,
 }
 
+#[derive(Debug)]
 pub struct GlobalReference {
     pub(crate) data: Arc<SemanticModelData>,
     pub(crate) global_id: usize,

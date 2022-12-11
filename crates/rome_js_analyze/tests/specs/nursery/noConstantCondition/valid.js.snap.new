@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 92
 expression: valid.js
 ---
 # Input
@@ -160,8 +161,7 @@ if (Boolean(...args)) { }
 if (foo.Boolean(1)) { }
 function foo(Boolean) { if (Boolean(12)) { } }
 const Boolean = () => { }; if (Boolean(1)) { }
-
-// const undefined = 'lol'; if (undefined) { }
+const undefined = 'lol'; if (undefined) { }
 
 ```
 
