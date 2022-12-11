@@ -727,8 +727,6 @@ struct NurserySchema {
     no_access_key: Option<RuleConfiguration>,
     #[doc = "Disallow assignments in expressions."]
     no_assign_in_expressions: Option<RuleConfiguration>,
-    #[doc = "Disallow with statements."]
-    no_with: Option<RuleConfiguration>,
     #[doc = "Disallow certain types."]
     no_banned_types: Option<RuleConfiguration>,
     #[doc = "Disallow TypeScript const enum"]
@@ -769,6 +767,8 @@ struct NurserySchema {
     no_var: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a function with the return type 'void'"]
     no_void_type_return: Option<RuleConfiguration>,
+    #[doc = "Disallow with statements."]
+    no_with: Option<RuleConfiguration>,
     #[doc = "Enforce that ARIA state and property values are valid."]
     use_aria_prop_types: Option<RuleConfiguration>,
     #[doc = "Enforce that elements with ARIA roles must have all required ARIA attributes for that role."]
@@ -797,7 +797,6 @@ impl Nursery {
     pub(crate) const CATEGORY_RULES: [&'static str; 34] = [
         "noAccessKey",
         "noAssignInExpressions",
-        "noWith",
         "noBannedTypes",
         "noConstEnum",
         "noConstructorReturn",
@@ -818,6 +817,7 @@ impl Nursery {
         "noUselessSwitchCase",
         "noVar",
         "noVoidTypeReturn",
+        "noWith",
         "useAriaPropTypes",
         "useAriaPropsForRole",
         "useCamelCase",
@@ -832,7 +832,6 @@ impl Nursery {
     ];
     const RECOMMENDED_RULES: [&'static str; 25] = [
         "noAssignInExpressions",
-        "noWith",
         "noBannedTypes",
         "noConstEnum",
         "noConstructorReturn",
@@ -849,6 +848,7 @@ impl Nursery {
         "noUselessSwitchCase",
         "noVar",
         "noVoidTypeReturn",
+        "noWith",
         "useAriaPropsForRole",
         "useConst",
         "useDefaultParameterLast",
@@ -868,7 +868,6 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[8]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[9]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[10]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[11]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[13]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[16]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[17]),
@@ -876,13 +875,14 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[19]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[20]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[21]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[23]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[25]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[22]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[24]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[26]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[27]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[28]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[29]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[32]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[30]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[33]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
