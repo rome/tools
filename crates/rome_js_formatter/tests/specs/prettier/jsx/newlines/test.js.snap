@@ -101,6 +101,7 @@ regression_extra_newline_2 = (
     )
   </div>
 );
+
 ```
 
 
@@ -184,7 +185,6 @@ regression_extra_newline_2 = (
   </div>
 );
 ```
-
 
 # Lines exceeding max width of 80 characters
 ```

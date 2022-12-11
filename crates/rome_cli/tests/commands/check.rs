@@ -33,6 +33,7 @@ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
 "#;
 
 const NO_DEBUGGER: &str = "debugger;";
+const NEW_SYMBOL: &str = "new Symbol(\"\");";
 
 const FIX_BEFORE: &str = "
 if(a != -0) {}
@@ -68,8 +69,7 @@ const UPGRADE_SEVERITY_CODE: &str = r#"class A extends B {
     constructor() {}
 }"#;
 
-const NURSERY_UNSTABLE: &str = r#"const array = ["split", "the text", "into words"];
-array.map(sentence => sentence.split(' ')).flat();"#;
+const NURSERY_UNSTABLE: &str = r#"if(a = b) {}"#;
 
 #[test]
 fn ok() {
@@ -174,6 +174,8 @@ fn maximum_diagnostics() {
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
+    println!("{console:#?}");
+
     assert!(result.is_err(), "run_cli returned {result:?}");
 
     let messages = &console.out_buffer;
@@ -193,7 +195,7 @@ fn maximum_diagnostics() {
             let content = format!("{:?}", m.content);
             content.contains("The number of diagnostics exceeds the number allowed by Rome")
                 && content.contains("Diagnostics not shown")
-                && content.contains("76")
+                && content.contains("28")
         }));
 
     assert_cli_snapshot(SnapshotPayload::new(
@@ -539,7 +541,7 @@ fn downgrade_severity() {
             .filter(|m| m.level == LogLevel::Error)
             .filter(|m| {
                 let content = format!("{:#?}", m.content);
-                content.contains("correctness/noDebugger")
+                content.contains("suspicious/noDebugger")
             })
             .count(),
         1
@@ -993,7 +995,7 @@ fn max_diagnostics_default() {
     let mut console = BufferConsole::default();
 
     // Creates 40 diagnostics.
-    for i in 0..20 {
+    for i in 0..40 {
         let file_path = PathBuf::from(format!("src/file_{i}.js"));
         fs.insert(file_path, LINT_ERROR.as_bytes());
     }
@@ -1043,7 +1045,7 @@ fn max_diagnostics() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    for i in 0..10 {
+    for i in 0..20 {
         let file_path = PathBuf::from(format!("src/file_{i}.js"));
         fs.insert(file_path, LINT_ERROR.as_bytes());
     }
@@ -1123,7 +1125,7 @@ fn deprecated_suppression_comment() {
     let file_path = Path::new("file.js");
     fs.insert(
         file_path.into(),
-        *b"// rome-ignore lint(correctness/noDoubleEquals): test
+        *b"// rome-ignore lint(suspicious/noDoubleEquals): test
 a == b;",
     );
 
@@ -1244,7 +1246,7 @@ fn config_recommended_group() {
     fs.insert(file_path.into(), CONFIG_RECOMMENDED_GROUP.as_bytes());
 
     let file_path = Path::new("check.js");
-    fs.insert(file_path.into(), NO_DEBUGGER.as_bytes());
+    fs.insert(file_path.into(), NEW_SYMBOL.as_bytes());
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),

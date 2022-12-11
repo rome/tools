@@ -1,11 +1,11 @@
 use rome_rowan::{TextRange, TextSize};
 use std::{ffi::OsStr, fs::read_to_string, ops::Range, path::Path};
 
-use crate::check_reformat::{CheckReformat, CheckReformatParams};
-use crate::snapshot_builder::SnapshotBuilder;
+use crate::check_reformat::CheckReformat;
+use crate::snapshot_builder::{SnapshotBuilder, SnapshotOutput};
 use crate::utils::{get_prettier_diff, strip_prettier_placeholders, PrettierDiff};
 use crate::TestFormatLanguage;
-use rome_formatter::{format_node, format_range, FormatLanguage, FormatOptions};
+use rome_formatter::FormatOptions;
 use rome_parser::AnyParse;
 
 const PRETTIER_IGNORE: &str = "prettier-ignore";
@@ -25,6 +25,12 @@ pub struct PrettierTestFile<'a> {
 impl<'a> PrettierTestFile<'a> {
     pub fn new(input: &'static str, root_path: &'a Path) -> Self {
         let input_file = Path::new(input);
+
+        assert!(
+            input_file.is_file(),
+            "The input '{}' must exist and be a file.",
+            input_file.display()
+        );
 
         let mut input_code = read_to_string(input_file)
             .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
@@ -89,16 +95,18 @@ where
 {
     test_file: PrettierTestFile<'a>,
     language: L,
+    options: L::Options,
 }
 
 impl<'a, L> PrettierSnapshot<'a, L>
 where
     L: TestFormatLanguage,
 {
-    pub fn new(test_file: PrettierTestFile<'a>, language: L) -> Self {
+    pub fn new(test_file: PrettierTestFile<'a>, language: L, options: L::Options) -> Self {
         PrettierSnapshot {
             test_file,
             language,
+            options,
         }
     }
 
@@ -116,16 +124,18 @@ where
                     return None;
                 }
 
-                format_range(
+                self.language.format_range(
+                    self.options.clone(),
                     &syntax,
                     TextRange::new(
                         TextSize::try_from(start).unwrap(),
                         TextSize::try_from(end).unwrap(),
                     ),
-                    self.language.format_language(),
                 )
             }
-            _ => format_node(&syntax, self.language.format_language())
+            _ => self
+                .language
+                .format_node(self.options.clone(), &syntax)
                 .map(|formatted| formatted.print().unwrap()),
         };
 
@@ -146,8 +156,11 @@ where
 
                 if !has_errors {
                     let check_reformat = CheckReformat::new(
-                        CheckReformatParams::new(&syntax, &formatted, self.test_file.file_name()),
+                        &syntax,
+                        &formatted,
+                        self.test_file.file_name(),
                         &self.language,
+                        self.options.clone(),
                     );
                     check_reformat.check_reformat();
                 }
@@ -170,7 +183,7 @@ where
         };
 
         let relative_file_name = self.test_file().relative_file_name();
-        let input_file = self.test_file().input_file;
+        let input_file = self.test_file().input_file();
 
         let prettier_diff = get_prettier_diff(input_file, relative_file_name, &formatted);
 
@@ -182,15 +195,10 @@ where
         let mut builder = SnapshotBuilder::new(input_file)
             .with_input(&self.test_file().input_code)
             .with_prettier_diff(&prettier_diff)
-            .with_output(&formatted)
+            .with_output(SnapshotOutput::new(&formatted))
             .with_errors(&parsed, &self.test_file().parse_input);
 
-        let max_width = self
-            .language
-            .format_language()
-            .options()
-            .line_width()
-            .value() as usize;
+        let max_width = self.options.line_width().value() as usize;
         builder = builder.with_lines_exceeding_max_width(&formatted, max_width);
 
         builder.finish(relative_file_name);

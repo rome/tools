@@ -28,6 +28,7 @@ this.previewPlayerHandle = (setInterval(async () => {
 this.intervalID = (setInterval(() => {
   self.step();
 }, 30) satisfies unknown) satisfies number;
+
 ```
 
 
@@ -73,6 +74,5 @@ this.intervalID = setInterval(() => {
   self.step();
 }, 30) satisfies unknown satisfies number;
 ```
-
 
 

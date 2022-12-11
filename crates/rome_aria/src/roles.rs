@@ -1,41 +1,8 @@
-use crate::generated::{
-    AriaAbstractRolesEnum, AriaDocumentStructureRolesEnum, AriaPropertiesEnum, AriaWidgetRolesEnum,
-};
 use crate::{define_role, is_aria_property_valid};
+use rome_aria_metadata::AriaPropertiesEnum;
 use std::fmt::Debug;
 use std::slice::Iter;
 use std::str::FromStr;
-
-#[derive(Debug)]
-pub enum AriaRole {
-    Widget(AriaWidgetRolesEnum),
-    Document(AriaDocumentStructureRolesEnum),
-    Abstract(AriaAbstractRolesEnum),
-}
-
-impl From<AriaRole> for &str {
-    fn from(s: AriaRole) -> Self {
-        match s {
-            AriaRole::Widget(widget) => widget.into(),
-            AriaRole::Document(document) => document.into(),
-            AriaRole::Abstract(abs) => abs.into(),
-        }
-    }
-}
-
-impl FromStr for AriaRole {
-    type Err = String;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        AriaWidgetRolesEnum::from_str(s)
-            .map(Self::Widget)
-            .or_else(|_| {
-                AriaAbstractRolesEnum::from_str(s)
-                    .map(Self::Abstract)
-                    .or_else(|_| AriaDocumentStructureRolesEnum::from_str(s).map(Self::Document))
-            })
-    }
-}
 
 pub trait AriaRoleDefinition: Debug {
     /// It returns an iterator over the properties of the current role
@@ -51,10 +18,10 @@ pub trait AriaRoleDefinition: Debug {
     /// let properties = checkbox_role.properties();
     /// assert_eq!(properties.len(), 2);
     /// ```
-    fn properties<'a>(&self) -> Iter<'a, (&str, bool)>;
+    fn properties(&self) -> Iter<(&str, bool)>;
 
     /// It returns an iterator over the possible roles of this definition
-    fn roles<'a>(&self) -> Iter<'a, &str>;
+    fn roles(&self) -> Iter<&str>;
 
     /// Given a [aria property](ARIA_PROPERTIES) as input, it checks if it's required
     /// for the current role.
@@ -78,7 +45,7 @@ pub trait AriaRoleDefinition: Debug {
         if is_aria_property_valid(property_to_check) {
             let property_to_check = AriaPropertiesEnum::from_str(property_to_check);
             if let Ok(property_to_check) = property_to_check {
-                for (property, required) in self.properties().as_ref() {
+                for (property, required) in self.properties() {
                     let property = AriaPropertiesEnum::from_str(property).unwrap();
                     if property == property_to_check {
                         return *required;

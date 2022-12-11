@@ -1,11 +1,12 @@
 ---
-source: crates/rome_js_formatter/tests/spec_test.rs
-expression: object_trailing_comma.ts
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info:
+  test_file: ts/object/object_trailing_comma.ts
 ---
 
 # Input
 
-```js
+```ts
 
 // object method
 const obj = {
@@ -47,7 +48,7 @@ Trailing comma: All
 Semicolons: Always
 -----
 
-```js
+```ts
 // object method
 const obj = {
 	one<
@@ -82,7 +83,7 @@ Trailing comma: ES5
 Semicolons: Always
 -----
 
-```js
+```ts
 // object method
 const obj = {
 	one<
@@ -117,7 +118,7 @@ Trailing comma: None
 Semicolons: Always
 -----
 
-```js
+```ts
 // object method
 const obj = {
 	one<

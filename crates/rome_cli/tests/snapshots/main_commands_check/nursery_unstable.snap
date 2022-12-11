@@ -1,12 +1,12 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 334
 expression: content
 ---
 ## `check.js`
 
 ```js
-const array = ["split", "the text", "into words"];
-array.map(sentence => sentence.split(' ')).flat();
+if(a = b) {}
 ```
 
 # Termination Message
@@ -18,20 +18,20 @@ some errors were emitted while running checks
 # Emitted Messages
 
 ```block
-check.js:2:1 lint/nursery/useFlatMap  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check.js:1:4 lint/nursery/noAssignInExpressions  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × The call chain .map().flat() can be replaced with a single .flatMap() call.
+  × The assignment should not be in an expression.
   
-    1 │ const array = ["split", "the text", "into words"];
-  > 2 │ array.map(sentence => sentence.split(' ')).flat();
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 1 │ if(a = b) {}
+      │    ^^^^^
   
-  i Safe fix: Replace the chain with .flatMap().
+  i The use of assignments in expressions is confusing.
+    Expressions are often considered as side-effect free.
   
-    1 1 │   const array = ["split", "the text", "into words"];
-    2   │ - array.map(sentence·=>·sentence.split('·')).flat();
-      2 │ + array.flatMap(sentence·=>·sentence.split('·'));
+  i Suggested fix: Did you mean '==='?
   
+    1 │ if(a·===·b)·{}
+      │       ++      
 
 ```
 

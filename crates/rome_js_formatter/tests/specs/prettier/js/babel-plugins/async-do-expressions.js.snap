@@ -8,6 +8,7 @@ info:
 
 ```js
 async do { await requestAPI().json() };
+
 ```
 
 
@@ -30,7 +31,6 @@ async do { await requestAPI().json() };
 async;
 do { await requestAPI().json() };
 ```
-
 
 # Errors
 ```

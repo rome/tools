@@ -15,6 +15,7 @@ return list
  |> equals(%, prefix);
 
 // (The % token isn't final; it might instead be @ or ? or #.)
+
 ```
 
 
@@ -47,7 +48,6 @@ return list
 
 // (The % token isn't final; it might instead be @ or ? or #.)
 ```
-
 
 # Errors
 ```

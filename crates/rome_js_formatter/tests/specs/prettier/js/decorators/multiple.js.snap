@@ -22,6 +22,7 @@ const dog = {
 const foo = {
   @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value"
 };
+
 ```
 
 
@@ -76,7 +77,6 @@ const foo = {
 @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value";
 }
 ```
-
 
 # Errors
 ```
@@ -181,4 +181,5 @@ multiple.js:15:1 parse ━━━━━━━━━━━━━━━━━━━
 ```
    14: @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value";
 ```
+
 

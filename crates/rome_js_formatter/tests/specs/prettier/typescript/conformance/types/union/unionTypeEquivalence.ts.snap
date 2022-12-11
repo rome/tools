@@ -25,6 +25,7 @@ var AB : string | number;
 var BC : number | boolean;
 var z1: typeof AB | boolean;
 var z1: string | typeof BC;
+
 ```
 
 
@@ -65,6 +66,5 @@ var BC: number | boolean;
 var z1: typeof AB | boolean;
 var z1: string | typeof BC;
 ```
-
 
 

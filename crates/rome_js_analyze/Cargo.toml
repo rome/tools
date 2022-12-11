@@ -27,7 +27,7 @@ natord = "1.0.9"
 tests_macros = { path = "../tests_macros" }
 rome_text_edit = { path = "../rome_text_edit" }
 rome_js_parser = { path = "../rome_js_parser", features = ["tests"] }
-insta = { version = "1.18.2", features = ["glob"] }
+insta = { workspace = true, features = ["glob"] }
 countme = { workspace = true, features = ["enable"] }
 similar = "2.1.0"
 json_comments = "0.2.1"

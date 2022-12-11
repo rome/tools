@@ -24,15 +24,13 @@ schemars = { version = "0.8.10", optional = true }
 [dev-dependencies]
 rome_parser = { path = "../rome_parser" }
 rome_formatter_test = {path = "../rome_formatter_test"}
-rome_console = { path = "../rome_console" }
 rome_fs = { path = "../rome_fs" }
-rome_service = { path = "../rome_service" }
 rome_js_parser = { path = "../rome_js_parser" }
 rome_js_factory = { path = "../rome_js_factory" }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tests_macros = { path = "../tests_macros" }
-insta = { version="1.18.2", features = ["glob"] }
+insta = { workspace = true, features = ["glob"] }
 rome_diagnostics = { path = "../rome_diagnostics" }
 countme = { workspace = true, features = ["enable"] }
 quickcheck = "1.0.3"

@@ -21,6 +21,7 @@ const b2 = []
 
 // This is not a `ClassExpression` but `ClassDeclaration`
 @deco class Foo {}
+
 ```
 
 
@@ -112,7 +113,6 @@ const b2 = [];
 // This is not a `ClassExpression` but `ClassDeclaration`
 @deco class Foo {}
 ```
-
 
 # Errors
 ```

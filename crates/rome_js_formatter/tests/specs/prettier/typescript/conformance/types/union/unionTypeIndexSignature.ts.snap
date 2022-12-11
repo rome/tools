@@ -30,6 +30,7 @@ numOrDate = unionOfDifferentReturnType1[10]; // number | Date
 var unionOfTypesWithAndWithoutStringSignature1: { [a: number]: number; } | boolean;
 anyVar = unionOfTypesWithAndWithoutStringSignature1["hello"]; // any
 anyVar = unionOfTypesWithAndWithoutStringSignature1[10]; // any
+
 ```
 
 
@@ -80,10 +81,10 @@ anyVar = unionOfTypesWithAndWithoutStringSignature1["hello"]; // any
 anyVar = unionOfTypesWithAndWithoutStringSignature1[10]; // any
 ```
 
-
 # Lines exceeding max width of 80 characters
 ```
     5: // U has a string index signature of a union type of the types of the string index signatures from each type in U.
    18: // U has a numeric index signature of a union type of the types of the numeric index signatures from each type in U.
 ```
+
 

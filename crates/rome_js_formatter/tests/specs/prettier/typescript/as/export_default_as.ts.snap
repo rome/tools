@@ -8,6 +8,7 @@ info:
 
 ```ts
 export default (function log() {} as typeof console.log)
+
 ```
 
 
@@ -26,6 +27,5 @@ export default (function log() {} as typeof console.log)
 ```ts
 export default (function log() {}) as typeof console.log;
 ```
-
 
 

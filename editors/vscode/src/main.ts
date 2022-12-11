@@ -1,9 +1,10 @@
-import { spawn } from "child_process";
-import { connect } from "net";
-import { promisify } from "util";
+import { type ChildProcess, spawn } from "child_process";
+import { connect, type Socket } from "net";
+import { promisify, TextDecoder } from "util";
 import {
 	ExtensionContext,
 	languages,
+	OutputChannel,
 	TextEditor,
 	Uri,
 	window,
@@ -35,7 +36,10 @@ let client: LanguageClient;
 const IN_ROME_PROJECT = "inRomeProject";
 
 export async function activate(context: ExtensionContext) {
-	const command = await getServerPath(context);
+	const outputChannel = window.createOutputChannel("Rome");
+	const traceOutputChannel = window.createOutputChannel("Rome Trace");
+
+	const command = await getServerPath(context, outputChannel);
 
 	if (!command) {
 		await window.showErrorMessage(
@@ -50,10 +54,9 @@ export async function activate(context: ExtensionContext) {
 
 	const serverOptions: ServerOptions = createMessageTransports.bind(
 		undefined,
+		outputChannel,
 		command,
 	);
-
-	const traceOutputChannel = window.createOutputChannel("Rome Trace");
 
 	const documentSelector: DocumentFilter[] = [
 		{ language: "javascript" },
@@ -64,6 +67,7 @@ export async function activate(context: ExtensionContext) {
 
 	const clientOptions: LanguageClientOptions = {
 		documentSelector,
+		outputChannel,
 		traceOutputChannel,
 	};
 
@@ -81,10 +85,16 @@ export async function activate(context: ExtensionContext) {
 	session.registerCommand(Commands.ServerStatus, () => {
 		traceOutputChannel.show();
 	});
-	session.registerCommand(Commands.RestartLspServer, () => {
-		client.restart().catch((error) => {
+	session.registerCommand(Commands.RestartLspServer, async () => {
+		try {
+			if (client.isRunning()) {
+				await client.restart();
+			} else {
+				await client.start();
+			}
+		} catch (error) {
 			client.error("Restarting client failed", error, "force");
-		});
+		}
 	});
 
 	context.subscriptions.push(
@@ -126,45 +136,46 @@ const PLATFORMS: PlatformTriplets = {
 	win32: {
 		x64: {
 			triplet: "x86_64-pc-windows-msvc",
-			package: "@rometools/cli-win32-x64/rome.exe",
+			package: "@rometools/cli-win32-x64",
 		},
 		arm64: {
 			triplet: "aarch64-pc-windows-msvc",
-			package: "@rometools/cli-win32-arm64/rome.exe",
+			package: "@rometools/cli-win32-arm64",
 		},
 	},
 	darwin: {
 		x64: {
 			triplet: "x86_64-apple-darwin",
-			package: "@rometools/cli-darwin-x64/rome",
+			package: "@rometools/cli-darwin-x64",
 		},
 		arm64: {
 			triplet: "aarch64-apple-darwin",
-			package: "@rometools/cli-darwin-arm64/rome",
+			package: "@rometools/cli-darwin-arm64",
 		},
 	},
 	linux: {
 		x64: {
 			triplet: "x86_64-unknown-linux-gnu",
-			package: "@rometools/cli-linux-x64/rome",
+			package: "@rometools/cli-linux-x64",
 		},
 		arm64: {
 			triplet: "aarch64-unknown-linux-gnu",
-			package: "@rometools/cli-linux-arm64/rome",
+			package: "@rometools/cli-linux-arm64",
 		},
 	},
 };
 
 async function getServerPath(
 	context: ExtensionContext,
+	outputChannel: OutputChannel,
 ): Promise<string | undefined> {
 	// Only allow the bundled Rome binary in untrusted workspaces
 	if (!workspace.isTrusted) {
-		return getBundledBinary(context);
+		return getBundledBinary(context, outputChannel);
 	}
 
 	if (process.env.DEBUG_SERVER_PATH) {
-		window.showInformationMessage(
+		outputChannel.appendLine(
 			`Rome DEBUG_SERVER_PATH detected: ${process.env.DEBUG_SERVER_PATH}`,
 		);
 		return process.env.DEBUG_SERVER_PATH;
@@ -176,7 +187,10 @@ async function getServerPath(
 		return getWorkspaceRelativePath(explicitPath);
 	}
 
-	return (await getWorkspaceDependency()) ?? getBundledBinary(context);
+	return (
+		(await getWorkspaceDependency(outputChannel)) ??
+		(await getBundledBinary(context, outputChannel))
+	);
 }
 
 // Resolve `path` as relative to the workspace root
@@ -196,18 +210,54 @@ async function getWorkspaceRelativePath(path: string) {
 }
 
 // Tries to resolve a path to `@rometools/cli-*` binary package from the root of the workspace
-async function getWorkspaceDependency(): Promise<string | undefined> {
+async function getWorkspaceDependency(
+	outputChannel: OutputChannel,
+): Promise<string | undefined> {
 	const packageName = PLATFORMS[process.platform]?.[process.arch]?.package;
+
+	const manifestName = `${packageName}/package.json`;
+	const binaryName =
+		process.platform === "win32"
+			? `${packageName}/rome.exe`
+			: `${packageName}/rome`;
 
 	for (const workspaceFolder of workspace.workspaceFolders) {
 		try {
-			const result = await resolveAsync(packageName, {
+			const options = {
 				basedir: workspaceFolder.uri.fsPath,
-			});
+			};
 
-			if (result) {
-				return result;
+			const [manifestPath, binaryPath] = await Promise.all([
+				resolveAsync(manifestName, options),
+				resolveAsync(binaryName, options),
+			]);
+
+			if (!(manifestPath && binaryPath)) {
+				continue;
 			}
+
+			// Load the package.json manifest of the resolved package
+			const manifestUri = Uri.file(manifestPath);
+			const manifestData = await workspace.fs.readFile(manifestUri);
+
+			const { version } = JSON.parse(new TextDecoder().decode(manifestData));
+			if (typeof version !== "string") {
+				continue;
+			}
+
+			// Ignore versions lower than "0.9.0" as they did not embed the language server
+			if (version.startsWith("0.")) {
+				const [minor] = version.substring(2).split(".");
+				const minorVal = parseInt(minor);
+				if (minorVal < 9) {
+					outputChannel.appendLine(
+						`Ignoring incompatible Rome version "${version}"`,
+					);
+					continue;
+				}
+			}
+
+			return binaryPath;
 		} catch {}
 	}
 
@@ -215,9 +265,15 @@ async function getWorkspaceDependency(): Promise<string | undefined> {
 }
 
 // Returns the path of the binary distribution of Rome included in the bundle of the extension
-async function getBundledBinary(context: ExtensionContext) {
+async function getBundledBinary(
+	context: ExtensionContext,
+	outputChannel: OutputChannel,
+) {
 	const triplet = PLATFORMS[process.platform]?.[process.arch]?.triplet;
 	if (!triplet) {
+		outputChannel.appendLine(
+			`Unsupported platform ${process.platform} ${process.arch}`,
+		);
 		return undefined;
 	}
 
@@ -226,8 +282,14 @@ async function getBundledBinary(context: ExtensionContext) {
 
 	const bundlePath = Uri.joinPath(context.extensionUri, "server", binaryName);
 	const bundleExists = await fileExists(bundlePath);
+	if (!bundleExists) {
+		outputChannel.appendLine(
+			"Extension bundle does not include the prebuilt binary",
+		);
+		return undefined;
+	}
 
-	return bundleExists ? bundlePath.fsPath : undefined;
+	return bundlePath.fsPath;
 }
 
 async function fileExists(path: Uri) {
@@ -235,7 +297,7 @@ async function fileExists(path: Uri) {
 		await workspace.fs.stat(path);
 		return true;
 	} catch (err) {
-		if (err.code === "ENOENT") {
+		if (err.code === "ENOENT" || err.code === "FileNotFound") {
 			return false;
 		} else {
 			throw err;
@@ -243,37 +305,124 @@ async function fileExists(path: Uri) {
 	}
 }
 
-function getSocket(command: string): Promise<string> {
-	return new Promise((resolve, reject) => {
-		const process = spawn(command, ["__print_socket"], {
-			stdio: "pipe",
+interface MutableBuffer {
+	content: string;
+}
+
+function collectStream(
+	outputChannel: OutputChannel,
+	process: ChildProcess,
+	key: "stdout" | "stderr",
+	buffer: MutableBuffer,
+) {
+	return new Promise<void>((resolve, reject) => {
+		const stream = process[key];
+		stream.setEncoding("utf-8");
+
+		stream.on("error", (err) => {
+			outputChannel.appendLine(`[cli-${key}] error`);
+			reject(err);
+		});
+		stream.on("close", () => {
+			outputChannel.appendLine(`[cli-${key}] close`);
+			resolve();
+		});
+		stream.on("finish", () => {
+			outputChannel.appendLine(`[cli-${key}] finish`);
+			resolve();
+		});
+		stream.on("end", () => {
+			outputChannel.appendLine(`[cli-${key}] end`);
+			resolve();
 		});
 
-		process.on("error", reject);
-
-		let pipeName = "";
-		process.stdout.on("data", (data) => {
-			pipeName += data.toString("utf-8");
-		});
-
-		process.on("exit", (code) => {
-			if (code === 0) {
-				console.log(`"${pipeName}"`);
-				resolve(pipeName.trimEnd());
-			} else {
-				reject(code);
-			}
+		stream.on("data", (data) => {
+			outputChannel.appendLine(`[cli-${key}] data ${data.length}`);
+			buffer.content += data;
 		});
 	});
 }
 
-async function createMessageTransports(command: string): Promise<StreamInfo> {
-	const path = await getSocket(command);
-	const socket = connect(path);
+function withTimeout(promise: Promise<void>, duration: number) {
+	return Promise.race([
+		promise,
+		new Promise<void>((resolve) => setTimeout(resolve, duration)),
+	]);
+}
+
+async function getSocket(
+	outputChannel: OutputChannel,
+	command: string,
+): Promise<string> {
+	const process = spawn(command, ["__print_socket"], {
+		stdio: [null, "pipe", "pipe"],
+	});
+
+	const stdout = { content: "" };
+	const stderr = { content: "" };
+
+	const stdoutPromise = collectStream(outputChannel, process, "stdout", stdout);
+	const stderrPromise = collectStream(outputChannel, process, "stderr", stderr);
+
+	const exitCode = await new Promise<number>((resolve, reject) => {
+		process.on("error", reject);
+		process.on("exit", (code) => {
+			outputChannel.appendLine(`[cli] exit ${code}`);
+			resolve(code);
+		});
+		process.on("close", (code) => {
+			outputChannel.appendLine(`[cli] close ${code}`);
+			resolve(code);
+		});
+	});
+
+	await Promise.all([
+		withTimeout(stdoutPromise, 1000),
+		withTimeout(stderrPromise, 1000),
+	]);
+
+	const pipeName = stdout.content.trimEnd();
+
+	if (exitCode !== 0 || pipeName.length === 0) {
+		let message = `Command "${command} __print_socket" exited with code ${exitCode}`;
+		if (stderr.content.length > 0) {
+			message += `\nOutput:\n${stderr.content}`;
+		}
+
+		throw new Error(message);
+	} else {
+		outputChannel.appendLine(`Connecting to "${pipeName}" ...`);
+		return pipeName;
+	}
+}
+
+function wrapConnectionError(err: Error, path: string): Error {
+	return Object.assign(
+		new Error(
+			`Could not connect to the Rome server at "${path}": ${err.message}`,
+		),
+		{ name: err.name, stack: err.stack },
+	);
+}
+
+async function createMessageTransports(
+	outputChannel: OutputChannel,
+	command: string,
+): Promise<StreamInfo> {
+	const path = await getSocket(outputChannel, command);
+
+	let socket: Socket;
+	try {
+		socket = connect(path);
+	} catch (err) {
+		throw wrapConnectionError(err, path);
+	}
 
 	await new Promise((resolve, reject) => {
-		socket.once("error", reject);
 		socket.once("ready", resolve);
+		socket.once("error", (err) => {
+			reject(wrapConnectionError(err, path));
+		});
 	});
 
 	return { writer: socket, reader: socket };

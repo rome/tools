@@ -1,7 +1,14 @@
 use super::*;
 use crate::{HasDeclarationAstNode, SemanticModel};
-use rome_js_syntax::{JsIdentifierBinding, JsLanguage, JsSyntaxKind};
+use rome_js_syntax::{
+    binding_ext::AnyJsIdentifierBinding, JsIdentifierBinding, JsLanguage, JsSyntaxKind,
+};
 use rome_rowan::AstNode;
+
+pub(crate) fn is_imported(node: &JsSyntaxNode) -> bool {
+    node.ancestors()
+        .any(|x| matches!(x.kind(), JsSyntaxKind::JS_IMPORT))
+}
 
 /// Marker trait that groups all "AstNode" that can be imported or
 /// exported
@@ -20,9 +27,7 @@ impl CanBeImportedExported for JsIdentifierBinding {
     }
 
     fn is_imported(&self, _: &SemanticModel) -> Self::Result {
-        self.syntax()
-            .ancestors()
-            .any(|x| matches!(x.kind(), JsSyntaxKind::JS_IMPORT))
+        is_imported(self.syntax())
     }
 }
 
@@ -35,9 +40,20 @@ impl CanBeImportedExported for TsIdentifierBinding {
     }
 
     fn is_imported(&self, _: &SemanticModel) -> Self::Result {
-        self.syntax()
-            .ancestors()
-            .any(|x| matches!(x.kind(), JsSyntaxKind::JS_IMPORT))
+        is_imported(self.syntax())
+    }
+}
+
+impl CanBeImportedExported for AnyJsIdentifierBinding {
+    type Result = bool;
+
+    fn is_exported(&self, model: &SemanticModel) -> Self::Result {
+        let range = self.syntax().text_range();
+        model.data.is_exported(range)
+    }
+
+    fn is_imported(&self, _: &SemanticModel) -> Self::Result {
+        is_imported(self.syntax())
     }
 }
 
@@ -50,11 +66,8 @@ impl<T: HasDeclarationAstNode> CanBeImportedExported for T {
     }
 
     fn is_imported(&self, model: &SemanticModel) -> Self::Result {
-        Some(
-            self.binding(model)?
-                .syntax()
-                .ancestors()
-                .any(|x| matches!(x.kind(), JsSyntaxKind::JS_IMPORT)),
-        )
+        let binding = self.binding(model)?;
+        let node = binding.syntax();
+        Some(is_imported(node))
     }
 }

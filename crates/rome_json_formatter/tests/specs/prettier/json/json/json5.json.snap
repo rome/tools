@@ -32,6 +32,7 @@ singleQuotes: 'I can use "double quotes" here',
 No \\n's!",
 }
 ]
+
 ```
 
 
@@ -117,7 +118,6 @@ No \\n's!",
 }
 ]
 ```
-
 
 # Errors
 ```

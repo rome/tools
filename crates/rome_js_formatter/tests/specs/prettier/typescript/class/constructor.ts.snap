@@ -25,6 +25,7 @@ class A {
 class B {
   constructor<>() {}
 }
+
 ```
 
 
@@ -66,7 +67,6 @@ class B {
   constructor<>() {}
 }
 ```
-
 
 # Errors
 ```

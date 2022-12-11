@@ -4,7 +4,7 @@ expression: missingDependenciesInvalid.js
 ---
 # Input
 ```js
-function MyComponent() {
+function MyComponent1() {
     let a = 1;
     const b = a + 1;
     useEffect(() => {
@@ -70,12 +70,24 @@ function MyComponent5() {
 
 // Capturing an object property
 
-function MyComponent1() {
+function MyComponent6() {
   let someObj = getObj();
   useEffect(() => {
       console.log(someObj.name)
   });
 }
+
+const MyComponent7 = React.memo(function ({ a }) {
+  useEffect(() => {
+      console.log(a);
+  });
+});
+
+const MyComponent8 = React.memo(({ a }) => {
+  useEffect(() => {
+      console.log(a);
+  });
+});
 
 ```
 
@@ -477,7 +489,7 @@ missingDependenciesInvalid.js:69:3 lint/nursery/useExhaustiveDependencies ━━
 
   ! This hook do not specify all of its dependencies.
   
-    67 │ function MyComponent1() {
+    67 │ function MyComponent6() {
     68 │   let someObj = getObj();
   > 69 │   useEffect(() => {
        │   ^^^^^^^^^
@@ -492,6 +504,52 @@ missingDependenciesInvalid.js:69:3 lint/nursery/useExhaustiveDependencies ━━
        │                   ^^^^^^^^^^^^
     71 │   });
     72 │ }
+  
+
+```
+
+```
+missingDependenciesInvalid.js:75:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This hook do not specify all of its dependencies.
+  
+    74 │ const MyComponent7 = React.memo(function ({ a }) {
+  > 75 │   useEffect(() => {
+       │   ^^^^^^^^^
+    76 │       console.log(a);
+    77 │   });
+  
+  i This dependency is not specified in the hook dependency list.
+  
+    74 │ const MyComponent7 = React.memo(function ({ a }) {
+    75 │   useEffect(() => {
+  > 76 │       console.log(a);
+       │                   ^
+    77 │   });
+    78 │ });
+  
+
+```
+
+```
+missingDependenciesInvalid.js:81:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This hook do not specify all of its dependencies.
+  
+    80 │ const MyComponent8 = React.memo(({ a }) => {
+  > 81 │   useEffect(() => {
+       │   ^^^^^^^^^
+    82 │       console.log(a);
+    83 │   });
+  
+  i This dependency is not specified in the hook dependency list.
+  
+    80 │ const MyComponent8 = React.memo(({ a }) => {
+    81 │   useEffect(() => {
+  > 82 │       console.log(a);
+       │                   ^
+    83 │   });
+    84 │ });
   
 
 ```

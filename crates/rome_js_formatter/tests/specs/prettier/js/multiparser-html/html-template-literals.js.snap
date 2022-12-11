@@ -39,6 +39,7 @@ setFoo(
   </div>`,
   secondArgument
 );
+
 ```
 
 
@@ -94,6 +95,5 @@ setFoo(
   secondArgument,
 );
 ```
-
 
 

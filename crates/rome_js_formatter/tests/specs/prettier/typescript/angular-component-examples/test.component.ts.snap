@@ -24,6 +24,7 @@ info:
 ]
 })
 class     TestComponent {}
+
 ```
 
 
@@ -87,6 +88,5 @@ class     TestComponent {}
 })
 class TestComponent {}
 ```
-
 
 

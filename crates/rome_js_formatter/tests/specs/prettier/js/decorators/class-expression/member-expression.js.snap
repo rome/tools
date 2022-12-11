@@ -9,6 +9,7 @@ info:
 ```js
 (@deco class Foo {}).name;
 (@deco class {}).name;
+
 ```
 
 
@@ -44,7 +45,6 @@ info:
 @deco class {}
 ).name
 ```
-
 
 # Errors
 ```

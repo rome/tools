@@ -18,6 +18,7 @@ function f7(s: string, ...sRest: string[]) { }
 var fUnion: typeof f1 | typeof f2 | typeof f3 | typeof f4 | typeof f5 | typeof f6 | typeof f7;
 
 fUnion(""); // All constituents can be called by passing a single string.
+
 ```
 
 
@@ -56,6 +57,5 @@ var fUnion:
 
 fUnion(""); // All constituents can be called by passing a single string.
 ```
-
 
 

@@ -36,3 +36,6 @@ tracing = { workspace = true, features = ["attributes"] }
 
 [features]
 schemars = ["dep:schemars", "rome_formatter/serde", "rome_js_factory", "rome_text_edit/schemars"]
+
+[dev-dependencies]
+insta = { workspace = true }

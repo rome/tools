@@ -10,6 +10,7 @@ info:
 abstract interface I {
 
 }
+
 ```
 
 
@@ -30,7 +31,6 @@ abstract interface I {
 abstract;
 interface I {}
 ```
-
 
 # Errors
 ```

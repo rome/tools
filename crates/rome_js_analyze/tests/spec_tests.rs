@@ -43,6 +43,10 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
 
     let (group, rule) = parse_test_path(input_file);
 
+    if rome_js_analyze::metadata().find_rule(group, rule).is_none() {
+        panic!("could not find rule {group}/{rule}");
+    }
+
     let rule_filter = RuleFilter::Rule(group, rule);
     let filter = AnalysisFilter {
         enabled_rules: Some(slice::from_ref(&rule_filter)),
@@ -52,7 +56,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     let mut snapshot = String::new();
     let extension = input_file.extension().unwrap_or_default();
 
-    if let Some(scripts) = scripts_from_json(extension, &input_code) {
+    let quantity_diagnostics = if let Some(scripts) = scripts_from_json(extension, &input_code) {
         for script in scripts {
             write_analysis_to_snapshot(
                 &mut snapshot,
@@ -62,8 +66,10 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
                 file_name,
                 input_file,
                 CheckActionType::Lint,
-            )
+            );
         }
+
+        0
     } else {
         let Ok(source_type) = input_file.try_into() else {
             return;
@@ -76,8 +82,8 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
             file_name,
             input_file,
             CheckActionType::Lint,
-        );
-    }
+        )
+    };
 
     insta::with_settings!({
         prepend_module_to_snapshot => false,
@@ -85,6 +91,10 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     }, {
         insta::assert_snapshot!(file_name, snapshot, file_name);
     });
+
+    if input_code.contains("/* should not generate diagnostics */") && quantity_diagnostics > 0 {
+        panic!("This test should not generate diagnostics");
+    }
 }
 
 enum CheckActionType {
@@ -106,7 +116,7 @@ pub(crate) fn write_analysis_to_snapshot(
     file_name: &str,
     input_file: &Path,
     check_action_type: CheckActionType,
-) {
+) -> usize {
     let parsed = parse(input_code, FileId::zero(), source_type);
     let root = parsed.tree();
 
@@ -171,7 +181,7 @@ pub(crate) fn write_analysis_to_snapshot(
 
     if !diagnostics.is_empty() {
         writeln!(snapshot, "# Diagnostics").unwrap();
-        for diagnostic in diagnostics {
+        for diagnostic in &diagnostics {
             writeln!(snapshot, "```").unwrap();
             writeln!(snapshot, "{}", diagnostic).unwrap();
             writeln!(snapshot, "```").unwrap();
@@ -188,14 +198,16 @@ pub(crate) fn write_analysis_to_snapshot(
             writeln!(snapshot).unwrap();
         }
     }
+
+    diagnostics.len()
 }
 
 /// The test runner for the analyzer is currently designed to have a
 /// one-to-one mapping between test case and analyzer rules, so each testing
 /// file will be run through the analyzer with only the rule corresponding
 /// to the file name (or the name of the parent directory if it's not "specs")
-/// enabled, eg. `correctness/useWhile.js` and `correctness/useWhile/test.js` will be analyzed with
-/// just the `correctness-ignore lint(correctness/useW/useWhile` rule
+/// enabled, eg. `style/useWhile.js` and `style/useWhile/test.js` will be analyzed with
+/// just the `style/useWhile` rule
 fn parse_test_path(file: &Path) -> (&str, &str) {
     let file_stem = file.file_stem().unwrap();
 
@@ -249,7 +261,10 @@ fn check_code_action(
     assert_eq!(new_tree.to_string(), output);
 
     if has_bogus_nodes_or_empty_slots(&new_tree) {
-        panic!("modified tree has bogus nodes or empty slots:\n{new_tree:#?}")
+        panic!(
+            "modified tree has bogus nodes or empty slots:\n{new_tree:#?} \n\n {}",
+            new_tree
+        )
     }
 
     // Checks the returned tree contains no missing children node

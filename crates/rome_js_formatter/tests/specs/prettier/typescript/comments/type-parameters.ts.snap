@@ -36,6 +36,7 @@ interface Foo {
 type T = <
   // comment
 >(arg) => any;
+
 ```
 
 
@@ -96,7 +97,6 @@ type T = <
   // comment
 >(arg) => any;
 ```
-
 
 # Errors
 ```

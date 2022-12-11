@@ -1,0 +1,5 @@
+//! Generated file, do not edit by hand, see `xtask/codegen`
+
+use rome_analyze::declare_group;
+mod no_useless_fragments;
+declare_group! { pub (crate) Complexity { name : "complexity" , rules : [self :: no_useless_fragments :: NoUselessFragments ,] } }

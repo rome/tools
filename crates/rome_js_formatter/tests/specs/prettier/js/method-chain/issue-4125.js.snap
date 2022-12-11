@@ -156,6 +156,7 @@ var l = base
     .replace(/\/$/, '')
     .split('/').length
 
+
 ```
 
 
@@ -343,6 +344,5 @@ xyz
 
 var l = base.replace(/^\w*:\/\//, "").replace(/\/$/, "").split("/").length;
 ```
-
 
 

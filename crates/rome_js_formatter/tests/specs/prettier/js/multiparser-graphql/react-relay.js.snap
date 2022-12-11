@@ -24,6 +24,7 @@ graphql.experimental`
   )
 { markReadNotification(data: $input ) { notification {seenState} } }
 `;
+
 ```
 
 
@@ -87,6 +88,5 @@ graphql.experimental`
 { markReadNotification(data: $input ) { notification {seenState} } }
 `;
 ```
-
 
 

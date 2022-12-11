@@ -8,6 +8,7 @@ info:
 
 ```js
 if (false) function foo(){}
+
 ```
 
 
@@ -26,7 +27,6 @@ if (false) function foo(){}
 ```js
 if (false) function foo(){}
 ```
-
 
 # Errors
 ```

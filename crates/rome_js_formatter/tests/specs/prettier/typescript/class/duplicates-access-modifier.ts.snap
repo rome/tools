@@ -14,6 +14,7 @@ class Foo {
   public protected d;
   public protected private e;
 }
+
 ```
 
 
@@ -48,7 +49,6 @@ class Foo {
   public protected private e;
 }
 ```
-
 
 # Errors
 ```

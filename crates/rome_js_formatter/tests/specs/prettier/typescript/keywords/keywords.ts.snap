@@ -45,6 +45,7 @@ module YYY3 {
 module YYY4 {
     static enum Color { Blue, Red }
 }
+
 ```
 
 
@@ -202,7 +203,6 @@ module YYY4 {
   }
 }
 ```
-
 
 # Errors
 ```

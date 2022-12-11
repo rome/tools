@@ -15,6 +15,7 @@ import {
 	RomeOutput,
 	Semicolons,
 } from "../types";
+import { isJSONFilename } from "../utils";
 
 let workspace: Workspace | null = null;
 let fileCounter = 0;
@@ -111,19 +112,28 @@ self.addEventListener("message", async (e) => {
 				case LintRules.All: {
 					configuration.linter!.rules = {
 						correctness: {
-							noRestrictedGlobals: "warn",
 							noUndeclaredVariables: "warn",
 							noUnusedVariables: "warn",
+						},
+						complexity: {
 							noUselessFragments: "warn",
 						},
 						style: {
+							noImplicitBoolean: "warn",
+							noNegationElse: "warn",
+							useBlockStatements: "warn",
+							useShorthandArrayType: "warn",
+							useSingleCaseStatement: "warn",
+							noShoutyConstants: "warn",
 							useFragmentSyntax: "warn",
 						},
 						nursery: {
+							noAccessKey: "warn",
 							noNonNullAssertion: "warn",
 							noPrecisionLoss: "warn",
 							noRedundantUseStrict: "warn",
 							useAriaPropTypes: "warn",
+							noRestrictedGlobals: "warn",
 							useCamelCase: "warn",
 						},
 					};
@@ -180,10 +190,12 @@ self.addEventListener("message", async (e) => {
 				path,
 			});
 
-			const controlFlowGraph = workspace.getControlFlowGraph({
-				path,
-				cursor: cursorPosition,
-			});
+			const controlFlowGraph = !isJSONFilename(filename)
+				? workspace.getControlFlowGraph({
+						path,
+						cursor: cursorPosition,
+				  })
+				: "";
 
 			const formatterIr = workspace.getFormatterIr({
 				path,

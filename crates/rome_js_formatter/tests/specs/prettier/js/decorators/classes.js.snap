@@ -22,6 +22,7 @@ const bar =
   class {
     //
   };
+
 ```
 
 
@@ -87,7 +88,6 @@ const bar =
     //
   }
 ```
-
 
 # Errors
 ```

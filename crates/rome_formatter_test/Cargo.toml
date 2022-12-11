@@ -16,8 +16,10 @@ rome_diagnostics = { path = "../rome_diagnostics" }
 rome_formatter = { path = "../rome_formatter" }
 rome_rowan = { path = "../rome_rowan" }
 rome_console = { path = "../../crates/rome_console" }
+rome_fs = { path = "../rome_fs" }
+rome_service = { path = "../rome_service" }
 similar = "2.1.0"
 similar-asserts = "1.2.0"
-insta = { version="1.18.2", features = ["glob"] }
+insta = { workspace = true, features = ["glob"] }
 
 [dev-dependencies]

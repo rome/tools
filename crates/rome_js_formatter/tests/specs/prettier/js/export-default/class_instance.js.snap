@@ -8,6 +8,7 @@ info:
 
 ```js
 export default (class {}.getInstance());
+
 ```
 
 
@@ -26,6 +27,5 @@ export default (class {}.getInstance());
 ```js
 export default (class {}).getInstance();
 ```
-
 
 

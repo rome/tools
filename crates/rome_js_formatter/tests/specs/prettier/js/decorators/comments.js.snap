@@ -38,6 +38,7 @@ export class AppModule {}
 @Bar()
 // C
 export class Bar{}
+
 ```
 
 
@@ -92,6 +93,5 @@ export class AppModule {}
 // C
 export class Bar {}
 ```
-
 
 

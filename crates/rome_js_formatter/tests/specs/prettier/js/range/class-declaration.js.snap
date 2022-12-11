@@ -13,7 +13,8 @@ class    a {
   b(   ) {}
 }
 
-let    x```
+let    x
+```
 
 
 # Prettier differences
@@ -43,6 +44,5 @@ class a {
 }
 
 let    x```
-
 
 

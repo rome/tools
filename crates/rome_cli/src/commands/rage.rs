@@ -30,6 +30,9 @@ pub(crate) fn rage(mut session: CliSession) -> Result<(), Termination> {
     {EnvVarOs("ROME_LOG_DIR")}
     {EnvVarOs("NO_COLOR")}
     {EnvVarOs("TERM")}
+    {EnvVarOs("JS_RUNTIME_VERSION")}
+    {EnvVarOs("JS_RUNTIME_NAME")}
+    {EnvVarOs("NODE_PACKAGE_MANAGER")}
 
     {RageConfiguration(&session.app.fs)}
     {WorkspaceRage(session.app.workspace.deref())}

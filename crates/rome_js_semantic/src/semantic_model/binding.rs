@@ -1,5 +1,5 @@
 use super::*;
-use rome_js_syntax::TextRange;
+use rome_js_syntax::{binding_ext::AnyJsIdentifierBinding, AnyJsBinding, TextRange};
 
 /// Internal type with all the semantic data of a specific binding
 #[derive(Debug)]
@@ -65,10 +65,18 @@ impl Binding {
         }
     }
 
-    /// Returns the syntax node associated with the binding.
+    /// Returns the syntax node associated with this binding.
     pub fn syntax(&self) -> &JsSyntaxNode {
         let binding = self.data.binding(self.index);
         &self.data.node_by_range[&binding.range]
+    }
+
+    /// Returns the typed AST node associated with this binding.
+    pub fn tree(&self) -> AnyJsIdentifierBinding {
+        let node = self.syntax();
+        let binding = AnyJsIdentifierBinding::cast_ref(node);
+        debug_assert!(binding.is_some());
+        binding.unwrap()
     }
 
     /// Returns an iterator to all references of this binding.
@@ -108,6 +116,10 @@ impl Binding {
             });
         std::iter::successors(first, Reference::find_next_write)
     }
+
+    pub fn is_imported(&self) -> bool {
+        super::is_imported(self.syntax())
+    }
 }
 
 /// Marker trait that groups all "AstNode" that are bindings
@@ -120,6 +132,8 @@ pub trait IsBindingAstNode: AstNode<Language = JsLanguage> {
 
 impl IsBindingAstNode for JsIdentifierBinding {}
 impl IsBindingAstNode for TsIdentifierBinding {}
+impl IsBindingAstNode for AnyJsIdentifierBinding {}
+impl IsBindingAstNode for AnyJsBinding {}
 
 /// Extension method to allow nodes that have declaration to easily
 /// get its binding.

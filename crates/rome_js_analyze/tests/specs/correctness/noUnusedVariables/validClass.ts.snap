@@ -1,0 +1,30 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: validClass.ts
+---
+# Input
+```js
+/* should not generate diagnostics */
+
+class A {
+    constructor(a: number) {
+        console.log(a)
+    }
+    f(a: number) {
+        console.log(a)
+    }
+}
+console.log(new A(1));
+
+// we never flag class expressions
+new (class B { })
+
+// a and b are actually properties
+class C {
+    constructor(private a1, public b2) {}
+}
+console.log(new C(1, 2));
+
+```
+
+

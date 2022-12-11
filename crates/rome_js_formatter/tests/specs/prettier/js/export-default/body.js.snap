@@ -8,6 +8,7 @@ info:
 
 ```js
 export default (class {}[1] = 1);
+
 ```
 
 
@@ -26,6 +27,5 @@ export default (class {}[1] = 1);
 ```js
 export default ((class {})[1] = 1);
 ```
-
 
 

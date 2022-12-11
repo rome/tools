@@ -8,6 +8,7 @@ info:
 
 ```js
 (class {})(class {});
+
 ```
 
 
@@ -26,6 +27,5 @@ info:
 ```js
 (class {})(class {});
 ```
-
 
 

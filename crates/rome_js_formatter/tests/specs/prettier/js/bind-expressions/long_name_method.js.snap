@@ -15,7 +15,8 @@ class X {
   testLongNameMethodAndSomethingElseLallala() {
     return true;
   }
-}```
+}
+```
 
 
 # Prettier differences
@@ -48,7 +49,6 @@ class X {
   }
 }
 ```
-
 
 # Errors
 ```
