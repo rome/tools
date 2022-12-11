@@ -138,7 +138,7 @@ impl Rule for NoRedundantUseStrict {
                 markup! {"All parts of a class's body are already in strict mode."},
             ) ,
             AnyJsStrictModeNode::JsModule(_js_module) => diag= diag.note(
-                markup! {"The entire contents of "<Emphasis>{"JavaScript modules"}</Emphasis> are automatically" in strict mode, with no statement needed to initiate it."},
+                markup! {"The entire contents of "<Emphasis>{"JavaScript modules"}</Emphasis>" are automatically in strict mode, with no statement needed to initiate it."},
             ),
             AnyJsStrictModeNode::JsDirective(js_directive) => diag= diag.detail(
                 js_directive.range(),
