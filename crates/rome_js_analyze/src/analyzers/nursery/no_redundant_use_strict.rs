@@ -99,9 +99,8 @@ impl Rule for NoRedundantUseStrict {
                 for n in node.syntax().ancestors() {
                     if let Some(parent) = AnyNodeWithDirectives::cast_ref(&n) {
                         for directive in parent.directives() {
-                            if directive.value_token().map_or(false, |t| {
-                                matches!(t.text_trimmed(), "'use strict'" | "\"use strict\"")
-                            }) {
+                            let directive_text = directive.inner_string_text().ok()?;
+                            if directive_text == "use strict" {
                                 outer_most = Some(directive.into());
                                 break; // continue with next parent
                             }
