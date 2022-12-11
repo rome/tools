@@ -48,6 +48,7 @@ define_dategories! {
     "lint/nursery/noConstEnum": "https://docs.rome.tools/lint/rules/noConstEnum",
     "lint/nursery/noConstructorReturn": "https://docs.rome.tools/lint/rules/noConstructorReturn",
     "lint/nursery/noDistractingElements": "https://docs.rome.tools/lint/rules/noDistractingElements",
+    "lint/nursery/noDuplicateCase": "https://docs.rome.tools/lint/rules/noDuplicateCase",
     "lint/nursery/noDuplicateObjectKeys":"https://docs.rome.tools/lint/rules/noDuplicateObjectKeys",
     "lint/nursery/noEmptyInterface": "https://docs.rome.tools/lint/rules/noEmptyInterface",
     "lint/nursery/noExtraNonNullAssertion":"https://docs.rome.tools/lint/rules/noExtraNonNullAssertion",
