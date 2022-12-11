@@ -4,7 +4,7 @@ use rome_console::markup;
 use rome_js_syntax::{
     JsFunctionDeclaration, JsFunctionExpression, JsLanguage, JsMethodClassMember, JsSyntaxKind,
 };
-use rome_rowan::{declare_node_union, AstNode, NodeOrToken, SyntaxNode, SyntaxToken};
+use rome_rowan::{declare_node_union, AstNode, SyntaxNode};
 
 declare_rule! {
     /// Require generator functions to contain `yield`.
@@ -74,7 +74,7 @@ impl Rule for UseYield {
 
         if start_token.is_some()
             && !function_body_syntax.clone().into_list().is_empty()
-            && !has_yield_kw(NodeOrToken::from(function_body_syntax))?
+            && !has_yield_expression(function_body_syntax)?
         {
             return Some(());
         }
@@ -91,20 +91,18 @@ impl Rule for UseYield {
     }
 }
 
-/// Traverses the syntax tree and verifies the presence of the yield keyword.
-fn has_yield_kw(
-    node: NodeOrToken<SyntaxNode<JsLanguage>, SyntaxToken<JsLanguage>>,
-) -> Option<bool> {
-    if node.kind() == JsSyntaxKind::YIELD_KW {
+/// Traverses the syntax tree and verifies the presence of n yield expression.
+fn has_yield_expression(node: SyntaxNode<JsLanguage>) -> Option<bool> {
+    if node.kind() == JsSyntaxKind::JS_YIELD_EXPRESSION {
         return Some(true);
     }
 
-    if node.kind() == JsSyntaxKind::FUNCTION_KW || node.as_token().is_some() {
+    if node.kind() == JsSyntaxKind::FUNCTION_KW {
         return Some(false);
     }
 
-    for child in node.as_node()?.children_with_tokens() {
-        if !has_yield_kw(child)? {
+    for child in node.children() {
+        if !has_yield_expression(child)? {
             continue;
         }
 
