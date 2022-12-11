@@ -34,6 +34,7 @@ declare_rule! {
     /// if (undefined) {
     ///     doSomethingUnfinished();
     /// }
+    /// ```
     ///
     /// ```js,expect_diagnostic
     /// for (;-2;) {
