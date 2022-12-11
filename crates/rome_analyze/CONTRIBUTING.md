@@ -387,3 +387,26 @@ If this the rule can retrieve its option with
 ```rust,ignore
 let options = ctx.options();
 ```
+
+# Using Just
+
+It is also possible to do all the steps above using our `Just` automation. For example, we can create
+a rule calling
+
+```ignore
+> just new-lintrule crates/rome_js_analyze/src/analyzers/nursery myRuleName
+```
+
+Once we are happy with our implementation we can call
+
+```ignore
+> just test-lintrule myRuleName
+```
+
+And at the end, to test our commits are ready to be push we can call
+
+```ignore
+> just check-ready
+```
+
+For more details on the available automations, look at our `justfile` at the root of the repository.

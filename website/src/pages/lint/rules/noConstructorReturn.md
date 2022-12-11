@@ -5,11 +5,14 @@ parent: lint/rules/index
 
 # noConstructorReturn (since v11.0.0)
 
-Disallow returning a value from a constructor
+Disallow returning a value from a `constructor`.
 
-While returning a value from a constructor does not produce an error, the returned value is being ignored. Therefore, returning a value from a constructor is either unnecessary or a possible error.
+Returning a value from a `constructor` of a class is a possible error.
+Forbidding this pattern prevents errors resulting from unfamiliarity with JavaScript or a copy-paste error.
 
 Only returning without a value is allowed, as it’s a control flow statement.
+
+Source: https://eslint.org/docs/latest/rules/no-constructor-return
 
 ## Examples
 

@@ -725,15 +725,15 @@ pub struct Nursery {
 struct NurserySchema {
     #[doc = "Enforce that the accessKey attribute is not used on any HTML element."]
     no_access_key: Option<RuleConfiguration>,
+    #[doc = "Disallow assignments in expressions."]
+    no_assign_in_expressions: Option<RuleConfiguration>,
     #[doc = "Disallow certain types."]
     no_banned_types: Option<RuleConfiguration>,
-    #[doc = "Disallow assignment operators in conditional expressions."]
-    no_conditional_assignment: Option<RuleConfiguration>,
     #[doc = "Disallow TypeScript const enum"]
     no_const_enum: Option<RuleConfiguration>,
     #[doc = "Disallow constant expressions in conditions"]
     no_constant_condition: Option<RuleConfiguration>,
-    #[doc = "Disallow returning a value from a constructor"]
+    #[doc = "Disallow returning a value from a constructor."]
     no_constructor_return: Option<RuleConfiguration>,
     #[doc = "Enforces that no distracting elements are used."]
     no_distracting_elements: Option<RuleConfiguration>,
@@ -751,6 +751,8 @@ struct NurserySchema {
     no_non_null_assertion: Option<RuleConfiguration>,
     #[doc = "Disallow literal numbers that lose precision"]
     no_precision_loss: Option<RuleConfiguration>,
+    #[doc = "Enforce img alt prop does not contain the word \"image\", \"picture\", or \"photo\"."]
+    no_redundant_alt: Option<RuleConfiguration>,
     #[doc = "Prevents from having redundant \"use strict\"."]
     no_redundant_use_strict: Option<RuleConfiguration>,
     #[doc = "This rule allows you to specify global variable names that you don’t want to use in your application."]
@@ -761,6 +763,8 @@ struct NurserySchema {
     no_string_case_mismatch: Option<RuleConfiguration>,
     #[doc = "Disallow control flow statements in finally blocks."]
     no_unsafe_finally: Option<RuleConfiguration>,
+    #[doc = "Disallow useless case in switch statements."]
+    no_useless_switch_case: Option<RuleConfiguration>,
     #[doc = "Disallow the use of var"]
     no_var: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a function with the return type 'void'"]
@@ -783,15 +787,17 @@ struct NurserySchema {
     use_exhaustive_dependencies: Option<RuleConfiguration>,
     #[doc = "Disallow the use of Math.pow in favor of the ** operator."]
     use_exponentiation_operator: Option<RuleConfiguration>,
+    #[doc = "Enforce that all React hooks are being called from the Top Level component functions."]
+    use_hook_at_top_level: Option<RuleConfiguration>,
     #[doc = "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals"]
     use_numeric_literals: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 31] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 34] = [
         "noAccessKey",
+        "noAssignInExpressions",
         "noBannedTypes",
-        "noConditionalAssignment",
         "noConstEnum",
         "noConstantCondition",
         "noConstructorReturn",
@@ -803,11 +809,13 @@ impl Nursery {
         "noInvalidConstructorSuper",
         "noNonNullAssertion",
         "noPrecisionLoss",
+        "noRedundantAlt",
         "noRedundantUseStrict",
         "noRestrictedGlobals",
         "noSetterReturn",
         "noStringCaseMismatch",
         "noUnsafeFinally",
+        "noUselessSwitchCase",
         "noVar",
         "noVoidTypeReturn",
         "useAriaPropTypes",
@@ -819,11 +827,12 @@ impl Nursery {
         "useEnumInitializers",
         "useExhaustiveDependencies",
         "useExponentiationOperator",
+        "useHookAtTopLevel",
         "useNumericLiterals",
     ];
-    const RECOMMENDED_RULES: [&'static str; 23] = [
+    const RECOMMENDED_RULES: [&'static str; 25] = [
+        "noAssignInExpressions",
         "noBannedTypes",
-        "noConditionalAssignment",
         "noConstEnum",
         "noConstantCondition",
         "noConstructorReturn",
@@ -833,9 +842,11 @@ impl Nursery {
         "noExtraNonNullAssertion",
         "noHeaderScope",
         "noInvalidConstructorSuper",
+        "noRedundantAlt",
         "noSetterReturn",
         "noStringCaseMismatch",
         "noUnsafeFinally",
+        "noUselessSwitchCase",
         "noVar",
         "noVoidTypeReturn",
         "useAriaPropsForRole",
@@ -846,7 +857,7 @@ impl Nursery {
         "useExhaustiveDependencies",
         "useNumericLiterals",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 23] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 25] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[3]),
@@ -858,18 +869,20 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[9]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[10]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[11]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[16]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[14]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[17]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[18]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[19]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[20]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[21]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[22]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[24]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[25]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[26]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[27]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[28]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[29]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[30]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[33]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -896,7 +909,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 23] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 25] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }

@@ -12,3 +12,5 @@ const [i] = [1];
 
 var [{ j }] = [{ j: 1 }]
 var { k: [l] } = { k: [1] } 
+
+let m, n;

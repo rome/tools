@@ -10,7 +10,7 @@ use rome_analyze::{
     Phases, RuleAction, RuleRegistry, ServiceBag, SuppressionKind, SyntaxVisitor,
 };
 use rome_aria::{AriaProperties, AriaRoles};
-use rome_diagnostics::{category, FileId};
+use rome_diagnostics::{category, Diagnostic, FileId};
 use rome_js_syntax::suppression::SuppressionDiagnostic;
 use rome_js_syntax::{suppression::parse_suppression_comment, JsLanguage};
 use serde::{Deserialize, Serialize};
@@ -226,17 +226,13 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"something.forEach((Element, index) => {
-    return <List
-        ><div key={index}>foo</div>
-    </List>;
-})"#;
+        const SOURCE: &str = r#"<span aria-labelledby={``} ></span>"#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
-        let rule_filter = RuleFilter::Rule("suspicious", "noArrayIndexKey");
+        let rule_filter = RuleFilter::Rule("nursery", "useAriaPropTypes");
         analyze(
             FileId::zero(),
             &parsed.tree(),
@@ -431,8 +427,31 @@ pub enum RuleError {
     },
 }
 
+impl Diagnostic for RuleError {}
+
 impl std::fmt::Display for RuleError {
     fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            RuleError::ReplacedRootWithNonRootError {
+                rule_name: Some((group, rule)),
+            } => {
+                std::write!(
+                    fmt,
+                    "the rule '{group}/{rule}' replaced the root of the file with a non-root node."
+                )
+            }
+            RuleError::ReplacedRootWithNonRootError { rule_name: None } => {
+                std::write!(
+                    fmt,
+                    "a code action replaced the root of the file with a non-root node."
+                )
+            }
+        }
+    }
+}
+
+impl rome_console::fmt::Display for RuleError {
+    fn fmt(&self, fmt: &mut rome_console::fmt::Formatter) -> std::io::Result<()> {
         match self {
             RuleError::ReplacedRootWithNonRootError {
                 rule_name: Some((group, rule)),

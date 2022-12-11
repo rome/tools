@@ -1,1 +1,0 @@
-let a = <span aria-current="invalid-value" />

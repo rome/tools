@@ -1,5 +1,9 @@
 function f() {
     console.log(arguments);
+
+    for(let i = 0;i < arguments.length; ++i) {
+        console.log(arguments[i]);
+    }
 }
 
 function f() {

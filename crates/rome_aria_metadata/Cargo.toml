@@ -1,0 +1,17 @@
+[package]
+name = "rome_aria_metadata"
+version = "0.0.0"
+edition = "2021"
+authors = ["Rome Tools Developers and Contributors"]
+repository = "https://github.com/rome/tools"
+license = "MIT"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+
+[build-dependencies]
+quote = { workspace = true }
+proc-macro2 = { version = "1.0.36", features = ["span-locations"] }
+case = "1.0.0"

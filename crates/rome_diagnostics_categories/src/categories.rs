@@ -43,8 +43,8 @@ define_dategories! {
 
     // nursery
     "lint/nursery/noAccessKey": "https://docs.rome.tools/lint/rules/noAccessKey",
+    "lint/nursery/noAssignInExpressions": "https://docs.rome.tools/lint/rules/noAssignInExpressions",
     "lint/nursery/noBannedTypes":"https://docs.rome.tools/lint/rules/noBannedTypes",
-    "lint/nursery/noConditionalAssignment": "https://docs.rome.tools/lint/rules/noConditionalAssignment",
     "lint/nursery/noConstEnum": "https://docs.rome.tools/lint/rules/noConstEnum",
     "lint/nursery/noConstructorReturn": "https://docs.rome.tools/lint/rules/noConstructorReturn",
     "lint/nursery/noDistractingElements": "https://docs.rome.tools/lint/rules/noDistractingElements",
@@ -55,11 +55,13 @@ define_dategories! {
     "lint/nursery/noInvalidConstructorSuper": "https://docs.rome.tools/lint/rules/noInvalidConstructorSuper",
     "lint/nursery/noNonNullAssertion": "https://docs.rome.tools/lint/rules/noNonNullAssertion",
     "lint/nursery/noPrecisionLoss": "https://docs.rome.tools/lint/rules/noPrecisionLoss",
+    "lint/nursery/noRedundantAlt": "https://docs.rome.tools/lint/rules/noRedundantAlt",
     "lint/nursery/noRedundantUseStrict": "https://docs.rome.tools/lint/rules/noRedundantUseStrict",
     "lint/nursery/noRestrictedGlobals": "https://docs.rome.tools/lint/rules/noRestrictedGlobals",
     "lint/nursery/noSetterReturn": "https://docs.rome.tools/lint/rules/noSetterReturn",
     "lint/nursery/noStringCaseMismatch": "https://docs.rome.tools/lint/rules/noStringCaseMismatch",
     "lint/nursery/noUnsafeFinally": "https://docs.rome.tools/lint/rules/noUnsafeFinally",
+    "lint/nursery/noUselessSwitchCase": "https://docs.rome.tools/lint/rules/noUselessSwitchCase",
     "lint/nursery/noVar": "https://docs.rome.tools/lint/rules/noVar",
     "lint/nursery/noVoidTypeReturn": "https://docs.rome.tools/lint/rules/noVoidTypeReturn",
     "lint/nursery/useAriaPropsForRole": "https://docs.rome.tools/lint/rules/useAriaPropsForRole",
@@ -73,6 +75,7 @@ define_dategories! {
     "lint/nursery/useExponentiationOperator": "https://docs.rome.tools/lint/rules/useExponentiationOperator",
     "lint/nursery/useNumericLiterals": "https://docs.rome.tools/lint/rules/useNumericLiterals",
     "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
+    "lint/nursery/useHookAtTopLevel": "https://docs.rome.tools/lint/rules/useHookAtTopLevel",
     "lint/nursery/noConstantCondition": "https://docs.rome.tools/lint/rules/noConstantCondition",
 
     // performance
@@ -144,6 +147,8 @@ define_dategories! {
     "suppressions/unknownRule",
     "suppressions/unused",
     "suppressions/deprecatedSyntax",
+
+    "configuration",
 
     // Used in tests and examples
     "args/fileNotFound",

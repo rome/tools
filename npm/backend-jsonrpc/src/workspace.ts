@@ -290,13 +290,13 @@ export interface Nursery {
 	 */
 	noAccessKey?: RuleConfiguration;
 	/**
+	 * Disallow assignments in expressions.
+	 */
+	noAssignInExpressions?: RuleConfiguration;
+	/**
 	 * Disallow certain types.
 	 */
 	noBannedTypes?: RuleConfiguration;
-	/**
-	 * Disallow assignment operators in conditional expressions.
-	 */
-	noConditionalAssignment?: RuleConfiguration;
 	/**
 	 * Disallow TypeScript const enum
 	 */
@@ -306,7 +306,7 @@ export interface Nursery {
 	 */
 	noConstantCondition?: RuleConfiguration;
 	/**
-	 * Disallow returning a value from a constructor
+	 * Disallow returning a value from a constructor.
 	 */
 	noConstructorReturn?: RuleConfiguration;
 	/**
@@ -342,6 +342,10 @@ export interface Nursery {
 	 */
 	noPrecisionLoss?: RuleConfiguration;
 	/**
+	 * Enforce img alt prop does not contain the word "image", "picture", or "photo".
+	 */
+	noRedundantAlt?: RuleConfiguration;
+	/**
 	 * Prevents from having redundant "use strict".
 	 */
 	noRedundantUseStrict?: RuleConfiguration;
@@ -361,6 +365,10 @@ export interface Nursery {
 	 * Disallow control flow statements in finally blocks.
 	 */
 	noUnsafeFinally?: RuleConfiguration;
+	/**
+	 * Disallow useless case in switch statements.
+	 */
+	noUselessSwitchCase?: RuleConfiguration;
 	/**
 	 * Disallow the use of var
 	 */
@@ -409,6 +417,10 @@ export interface Nursery {
 	 * Disallow the use of Math.pow in favor of the ** operator.
 	 */
 	useExponentiationOperator?: RuleConfiguration;
+	/**
+	 * Enforce that all React hooks are being called from the Top Level component functions.
+	 */
+	useHookAtTopLevel?: RuleConfiguration;
 	/**
 	 * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
 	 */
@@ -683,8 +695,8 @@ export type Category =
 	| "lint/correctness/noVoidElementsWithChildren"
 	| "lint/correctness/useValidForDirection"
 	| "lint/nursery/noAccessKey"
+	| "lint/nursery/noAssignInExpressions"
 	| "lint/nursery/noBannedTypes"
-	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstEnum"
 	| "lint/nursery/noConstructorReturn"
 	| "lint/nursery/noDistractingElements"
@@ -695,11 +707,13 @@ export type Category =
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noNonNullAssertion"
 	| "lint/nursery/noPrecisionLoss"
+	| "lint/nursery/noRedundantAlt"
 	| "lint/nursery/noRedundantUseStrict"
 	| "lint/nursery/noRestrictedGlobals"
 	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnsafeFinally"
+	| "lint/nursery/noUselessSwitchCase"
 	| "lint/nursery/noVar"
 	| "lint/nursery/noVoidTypeReturn"
 	| "lint/nursery/useAriaPropsForRole"
@@ -713,6 +727,7 @@ export type Category =
 	| "lint/nursery/useExponentiationOperator"
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/useValidForDirection"
+	| "lint/nursery/useHookAtTopLevel"
 	| "lint/nursery/noConstantCondition"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
@@ -768,6 +783,7 @@ export type Category =
 	| "suppressions/unknownRule"
 	| "suppressions/unused"
 	| "suppressions/deprecatedSyntax"
+	| "configuration"
 	| "args/fileNotFound"
 	| "flags/invalid"
 	| "semanticTests";

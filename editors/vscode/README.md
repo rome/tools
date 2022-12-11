@@ -64,6 +64,20 @@ To format a text range, select the text you want to format, open the _Command Pa
 
 Rome respects VS Code's _Format on Save_ setting. To enable format on save, open the settings (_File_ -> _Preferences_ -> _Settings_), search for `editor.formatOnSave`, and enable the option.
 
+### Imports Sorting [Experimental]
+
+The Rome VS Code extension has experimental support for imports sorting through the "Organize Imports" code action. By default this action can be run using the <kbd title="Shift">⇧</kbd>+<kbd>Alt</kbd>+<kbd>O</kbd> keyboard shortcut, or is accessible through the _Command Palette_ (<kbd>Ctrl</kbd>/<kbd title="Cmd">⌘</kbd>+<kbd title="Shift">⇧</kbd>+<kbd>P</kbd>) by selecting _Organize Imports_.
+
+You can add the following to your editor configuration if you want the action to run automatically on save instead of calling it manually:
+
+```json
+{
+	"editor.codeActionsOnSave":{
+		"source.organizeImports.rome": true
+	}
+}
+```
+
 ## Extension Settings
 
 ### `rome.lspBin`

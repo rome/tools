@@ -116,7 +116,10 @@ impl WorkspaceServer {
         };
 
         if ignored {
-            return Err(RomeError::FileIgnored(rome_path.to_path_buf()));
+            return Err(RomeError::FileIgnored(format!(
+                "{}",
+                rome_path.to_path_buf().display()
+            )));
         }
 
         match self.syntax.entry(rome_path) {

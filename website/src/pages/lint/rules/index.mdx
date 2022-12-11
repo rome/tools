@@ -480,16 +480,16 @@ Rules that belong to this group <strong>are not subject to semantic version</str
 Enforce that the <code>accessKey</code> attribute is not used on any HTML element.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noAssignInExpressions">
+	<a href="/lint/rules/noAssignInExpressions">noAssignInExpressions</a>
+</h3>
+Disallow assignments in expressions.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noBannedTypes">
 	<a href="/lint/rules/noBannedTypes">noBannedTypes</a>
 </h3>
 Disallow certain types.
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="noConditionalAssignment">
-	<a href="/lint/rules/noConditionalAssignment">noConditionalAssignment</a>
-</h3>
-Disallow assignment operators in conditional expressions.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noConstEnum">
@@ -507,7 +507,7 @@ Disallow constant expressions in conditions
 <h3 data-toc-exclude id="noConstructorReturn">
 	<a href="/lint/rules/noConstructorReturn">noConstructorReturn</a>
 </h3>
-Disallow returning a value from a constructor
+Disallow returning a value from a <code>constructor</code>.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noDistractingElements">
@@ -560,6 +560,12 @@ Disallow non-null assertions using the <code>!</code> postfix operator.
 Disallow literal numbers that lose precision
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noRedundantAlt">
+	<a href="/lint/rules/noRedundantAlt">noRedundantAlt</a>
+</h3>
+Enforce <code>img</code> alt prop does not contain the word &quot;image&quot;, &quot;picture&quot;, or &quot;photo&quot;.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noRedundantUseStrict">
 	<a href="/lint/rules/noRedundantUseStrict">noRedundantUseStrict</a>
 </h3>
@@ -588,6 +594,12 @@ Disallow comparison of expressions modifying the string case with non-compliant 
 	<a href="/lint/rules/noUnsafeFinally">noUnsafeFinally</a>
 </h3>
 Disallow control flow statements in finally blocks.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noUselessSwitchCase">
+	<a href="/lint/rules/noUselessSwitchCase">noUselessSwitchCase</a>
+</h3>
+Disallow useless <code>case</code> in <code>switch</code> statements.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noVar">
@@ -654,6 +666,13 @@ Enforce all dependencies are correctly specified.
 	<a href="/lint/rules/useExponentiationOperator">useExponentiationOperator</a>
 </h3>
 Disallow the use of <code>Math.pow</code> in favor of the <code>**</code> operator.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="useHookAtTopLevel">
+	<a href="/lint/rules/useHookAtTopLevel">useHookAtTopLevel</a>
+</h3>
+Enforce that all React hooks are being called from the Top Level
+component functions.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useNumericLiterals">

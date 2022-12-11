@@ -588,8 +588,8 @@
             }
           ]
         },
-        "noBannedTypes": {
-          "description": "Disallow certain types.",
+        "noAssignInExpressions": {
+          "description": "Disallow assignments in expressions.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -599,8 +599,8 @@
             }
           ]
         },
-        "noConditionalAssignment": {
-          "description": "Disallow assignment operators in conditional expressions.",
+        "noBannedTypes": {
+          "description": "Disallow certain types.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -633,7 +633,7 @@
           ]
         },
         "noConstructorReturn": {
-          "description": "Disallow returning a value from a constructor",
+          "description": "Disallow returning a value from a constructor.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -731,6 +731,17 @@
             }
           ]
         },
+        "noRedundantAlt": {
+          "description": "Enforce img alt prop does not contain the word \"image\", \"picture\", or \"photo\".",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noRedundantUseStrict": {
           "description": "Prevents from having redundant \"use strict\".",
           "anyOf": [
@@ -777,6 +788,17 @@
         },
         "noUnsafeFinally": {
           "description": "Disallow control flow statements in finally blocks.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noUselessSwitchCase": {
+          "description": "Disallow useless case in switch statements.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -905,6 +927,17 @@
         },
         "useExponentiationOperator": {
           "description": "Disallow the use of Math.pow in favor of the ** operator.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useHookAtTopLevel": {
+          "description": "Enforce that all React hooks are being called from the Top Level component functions.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

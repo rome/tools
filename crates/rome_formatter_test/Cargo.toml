@@ -20,6 +20,6 @@ rome_fs = { path = "../rome_fs" }
 rome_service = { path = "../rome_service" }
 similar = "2.1.0"
 similar-asserts = "1.2.0"
-insta = { version="1.18.2", features = ["glob"] }
+insta = { workspace = true, features = ["glob"] }
 
 [dev-dependencies]

@@ -8,12 +8,12 @@ pub use crate::trivia::{
     format_replaced, format_trailing_comments, format_trimmed_token,
 };
 
-pub use crate::verbatim::{format_bogus_node, format_suppressed_node, format_verbatim_node};
-
+pub use crate::diagnostics::FormatError;
 pub use crate::format_element::document::Document;
 pub use crate::format_element::tag::{LabelId, Tag, TagKind};
+pub use crate::verbatim::{format_bogus_node, format_suppressed_node, format_verbatim_node};
 
 pub use crate::{
     best_fitting, dbg_write, format, format_args, write, Buffer as _, BufferExtensions, Format,
-    Format as _, FormatError, FormatResult, FormatRule, FormatWithRule as _, SimpleFormatContext,
+    Format as _, FormatResult, FormatRule, FormatWithRule as _, SimpleFormatContext,
 };

@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 73
 expression: invalidScript.jsonc
 ---
 # Input
@@ -88,7 +87,7 @@ var [x = -1, y] = [1,2]; y = 0;
 
 # Diagnostics
 ```
-invalidScript.jsonc:1:1 lint/nursery/noVar  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidScript.jsonc:1:1 lint/nursery/noVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use let or const instead of var.
   
@@ -98,11 +97,6 @@ invalidScript.jsonc:1:1 lint/nursery/noVar  FIXABLE  ━━━━━━━━━
   i A variable declared with var in the global scope pollutes the global object.
   
   i See MDN web docs for more details.
-  
-  i Suggested fix: Use 'let' instead.
-  
-  - var·[x·=·-1,·y]·=·[1,2];·y·=·0;
-  + let·[x·=·-1,·y]·=·[1,2];·y·=·0;
   
 
 ```
@@ -114,7 +108,7 @@ var {a: x = -1, b: y} = {a:1,b:2}; y = 0;
 
 # Diagnostics
 ```
-invalidScript.jsonc:1:1 lint/nursery/noVar  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidScript.jsonc:1:1 lint/nursery/noVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use let or const instead of var.
   
@@ -124,11 +118,6 @@ invalidScript.jsonc:1:1 lint/nursery/noVar  FIXABLE  ━━━━━━━━━
   i A variable declared with var in the global scope pollutes the global object.
   
   i See MDN web docs for more details.
-  
-  i Suggested fix: Use 'let' instead.
-  
-  - var·{a:·x·=·-1,·b:·y}·=·{a:1,b:2};·y·=·0;
-  + let·{a:·x·=·-1,·b:·y}·=·{a:1,b:2};·y·=·0;
   
 
 ```

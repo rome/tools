@@ -42,17 +42,17 @@ declare_rule! {
     /// }
     /// ```
     ///
-    /// ```js,expect_diagnostic
-    /// let a = 1, b = 2;
-    /// b = 3;
-    /// ```
-    ///
     /// ## Valid
     ///
     /// ```js
     /// let a = 2;
     /// a = 3;
     /// console.log(a);
+    /// ```
+    ///
+    /// ```js
+    /// let a = 1, b = 2;
+    /// b = 3;
     /// ```
     pub(crate) UseConst {
         version: "11.0.0",
@@ -150,7 +150,10 @@ impl ConstBindings {
             declaration,
             VariableDeclaration::JsForVariableDeclaration(..)
         );
+        let mut bindings = 0;
         declaration.for_each_binding(|binding, declarator| {
+            bindings += 1;
+
             let has_initializer = declarator.initializer().is_some();
             let fix =
                 check_binding_can_be_const(&binding, in_for_in_or_of_loop, has_initializer, model);
@@ -163,7 +166,9 @@ impl ConstBindings {
                 None => state.can_fix = false,
             }
         });
-        if state.can_be_const.is_empty() {
+
+        // Only flag if all bindings can be const
+        if state.can_be_const.len() != bindings {
             None
         } else {
             Some(state)

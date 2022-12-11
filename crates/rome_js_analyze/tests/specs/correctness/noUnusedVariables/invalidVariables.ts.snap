@@ -19,6 +19,8 @@ const [i] = [1];
 var [{ j }] = [{ j: 1 }]
 var { k: [l] } = { k: [1] } 
 
+let m, n;
+
 ```
 
 # Diagnostics
@@ -247,6 +249,7 @@ invalidVariables.ts:14:11 lint/correctness/noUnusedVariables  FIXABLE  ━━━
   > 14 │ var { k: [l] } = { k: [1] }·
        │           ^
     15 │ 
+    16 │ let m, n;
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
@@ -257,6 +260,55 @@ invalidVariables.ts:14:11 lint/correctness/noUnusedVariables  FIXABLE  ━━━
     14    │ - var·{·k:·[l]·}·=·{·k:·[1]·}·
        14 │ + var·{·k:·[_l]·}·=·{·k:·[1]·}·
     15 15 │   
+    16 16 │   let m, n;
+  
+
+```
+
+```
+invalidVariables.ts:16:5 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This variable is unused.
+  
+    14 │ var { k: [l] } = { k: [1] }·
+    15 │ 
+  > 16 │ let m, n;
+       │     ^
+    17 │ 
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
+  i Suggested fix: If this is intentional, prepend m with an underscore.
+  
+    14 14 │   var { k: [l] } = { k: [1] }·
+    15 15 │   
+    16    │ - let·m,·n;
+       16 │ + let·_m,·n;
+    17 17 │   
+  
+
+```
+
+```
+invalidVariables.ts:16:8 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This variable is unused.
+  
+    14 │ var { k: [l] } = { k: [1] }·
+    15 │ 
+  > 16 │ let m, n;
+       │        ^
+    17 │ 
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
+  i Suggested fix: If this is intentional, prepend n with an underscore.
+  
+    14 14 │   var { k: [l] } = { k: [1] }·
+    15 15 │   
+    16    │ - let·m,·n;
+       16 │ + let·m,·_n;
+    17 17 │   
   
 
 ```
