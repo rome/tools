@@ -829,6 +829,8 @@ struct NurserySchema {
     use_valid_aria_props: Option<RuleConfiguration>,
     #[doc = "Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country."]
     use_valid_lang: Option<RuleConfiguration>,
+    #[doc = "Require generator functions to contain yield."]
+    use_yield: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
@@ -882,6 +884,7 @@ impl Nursery {
         "useNumericLiterals",
         "useValidAriaProps",
         "useValidLang",
+        "useYield",
     ];
     const RECOMMENDED_RULES: [&'static str; 40] = [
         "noAssignInExpressions",
@@ -924,6 +927,7 @@ impl Nursery {
         "useNumericLiterals",
         "useValidAriaProps",
         "useValidLang",
+        "useYield",
     ];
     const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 40] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),

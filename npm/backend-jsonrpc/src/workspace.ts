@@ -489,6 +489,10 @@ export interface Nursery {
 	 * Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.
 	 */
 	useValidLang?: RuleConfiguration;
+	/**
+	 * Require generator functions to contain yield.
+	 */
+	useYield?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
@@ -809,6 +813,7 @@ export type Category =
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useHookAtTopLevel"
 	| "lint/nursery/noDuplicateJsxProps"
+	| "lint/nursery/useYield"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

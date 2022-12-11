@@ -1,0 +1,193 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 92
+expression: useYield.js
+---
+# Input
+```js
+// Valid
+function foo() {
+	return 0;
+}
+
+function* foo() {
+	yield 0;
+}
+
+function* foo() {}
+
+(function* foo() {
+	yield 0;
+})();
+
+(function* foo() {})();
+
+const obj = {
+	*foo() {
+		yield 0;
+	},
+};
+
+const obj = { *foo() {} };
+
+class A {
+	*foo() {
+		yield 0;
+	}
+}
+
+class A {
+	*foo() {}
+}
+
+// Invalid
+function* foo() {
+	return 0;
+}
+
+(function* foo() {
+	return 0;
+})();
+
+const obj = {
+	*foo() {
+		return 0;
+	},
+};
+
+class A {
+	*foo() {
+		return 0;
+	}
+}
+
+function* foo() {
+	function* bar() {
+		yield 0;
+	}
+}
+
+function* foo() {
+	function* bar() {
+		return 0;
+	}
+	yield 0;
+}
+
+```
+
+# Diagnostics
+```
+useYield.js:10:1 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This generator function does not have yield.
+  
+     8 │ }
+     9 │ 
+  > 10 │ function* foo() {}
+       │ ^^^^^^^^^^^^^^^^^^
+    11 │ 
+    12 │ (function* foo() {
+  
+
+```
+
+```
+useYield.js:16:2 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This generator function does not have yield.
+  
+    14 │ })();
+    15 │ 
+  > 16 │ (function* foo() {})();
+       │  ^^^^^^^^^^^^^^^^^^
+    17 │ 
+    18 │ const obj = {
+  
+
+```
+
+```
+useYield.js:33:2 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This generator function does not have yield.
+  
+    32 │ class A {
+  > 33 │ 	*foo() {}
+       │ 	^^^^^^^^^
+    34 │ }
+    35 │ 
+  
+
+```
+
+```
+useYield.js:37:1 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This generator function does not have yield.
+  
+    36 │ // Invalid
+  > 37 │ function* foo() {
+       │ ^^^^^^^^^^^^^^^^^
+  > 38 │ 	return 0;
+  > 39 │ }
+       │ ^
+    40 │ 
+    41 │ (function* foo() {
+  
+
+```
+
+```
+useYield.js:41:2 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This generator function does not have yield.
+  
+    39 │ }
+    40 │ 
+  > 41 │ (function* foo() {
+       │  ^^^^^^^^^^^^^^^^^
+  > 42 │ 	return 0;
+  > 43 │ })();
+       │ ^
+    44 │ 
+    45 │ const obj = {
+  
+
+```
+
+```
+useYield.js:52:2 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This generator function does not have yield.
+  
+    51 │ class A {
+  > 52 │ 	*foo() {
+       │ 	^^^^^^^^
+  > 53 │ 		return 0;
+  > 54 │ 	}
+       │ 	^
+    55 │ }
+    56 │ 
+  
+
+```
+
+```
+useYield.js:64:2 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This generator function does not have yield.
+  
+    63 │ function* foo() {
+  > 64 │ 	function* bar() {
+       │ 	^^^^^^^^^^^^^^^^^
+  > 65 │ 		return 0;
+  > 66 │ 	}
+       │ 	^
+    67 │ 	yield 0;
+    68 │ }
+  
+
+```
+
+
