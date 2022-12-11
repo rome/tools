@@ -11,13 +11,10 @@ JsModule {
             eq_token: EQ@7..9 "=" [] [Whitespace(" ")],
             ty: TsInferType {
                 infer_token: INFER_KW@9..15 "infer" [] [Whitespace(" ")],
-                type_parameter: TsTypeParameter {
-                    name: TsTypeParameterName {
-                        ident_token: IDENT@15..16 "B" [] [],
-                    },
-                    constraint: missing (optional),
-                    default: missing (optional),
+                name: TsTypeParameterName {
+                    ident_token: IDENT@15..16 "B" [] [],
                 },
+                constraint: missing (optional),
             },
             semicolon_token: SEMICOLON@16..17 ";" [] [],
         },
@@ -41,13 +38,10 @@ JsModule {
                             colon_token: COLON@30..32 ":" [] [Whitespace(" ")],
                             ty: TsInferType {
                                 infer_token: INFER_KW@32..38 "infer" [] [Whitespace(" ")],
-                                type_parameter: TsTypeParameter {
-                                    name: TsTypeParameterName {
-                                        ident_token: IDENT@38..39 "U" [] [],
-                                    },
-                                    constraint: missing (optional),
-                                    default: missing (optional),
+                                name: TsTypeParameterName {
+                                    ident_token: IDENT@38..39 "U" [] [],
                                 },
+                                constraint: missing (optional),
                             },
                         },
                         separator_token: SEMICOLON@39..41 ";" [] [Whitespace(" ")],
@@ -62,13 +56,10 @@ JsModule {
                             colon_token: COLON@42..44 ":" [] [Whitespace(" ")],
                             ty: TsInferType {
                                 infer_token: INFER_KW@44..50 "infer" [] [Whitespace(" ")],
-                                type_parameter: TsTypeParameter {
-                                    name: TsTypeParameterName {
-                                        ident_token: IDENT@50..51 "U" [] [],
-                                    },
-                                    constraint: missing (optional),
-                                    default: missing (optional),
+                                name: TsTypeParameterName {
+                                    ident_token: IDENT@50..51 "U" [] [],
                                 },
+                                constraint: missing (optional),
                             },
                         },
                         separator_token: missing (optional),
@@ -94,11 +85,9 @@ JsModule {
       3: EQ@7..9 "=" [] [Whitespace(" ")]
       4: TS_INFER_TYPE@9..16
         0: INFER_KW@9..15 "infer" [] [Whitespace(" ")]
-        1: TS_TYPE_PARAMETER@15..16
-          0: TS_TYPE_PARAMETER_NAME@15..16
-            0: IDENT@15..16 "B" [] []
-          1: (empty)
-          2: (empty)
+        1: TS_TYPE_PARAMETER_NAME@15..16
+          0: IDENT@15..16 "B" [] []
+        2: (empty)
       5: SEMICOLON@16..17 ";" [] []
     1: TS_TYPE_ALIAS_DECLARATION@17..53
       0: TYPE_KW@17..23 "type" [Newline("\n")] [Whitespace(" ")]
@@ -118,11 +107,9 @@ JsModule {
               0: COLON@30..32 ":" [] [Whitespace(" ")]
               1: TS_INFER_TYPE@32..39
                 0: INFER_KW@32..38 "infer" [] [Whitespace(" ")]
-                1: TS_TYPE_PARAMETER@38..39
-                  0: TS_TYPE_PARAMETER_NAME@38..39
-                    0: IDENT@38..39 "U" [] []
-                  1: (empty)
-                  2: (empty)
+                1: TS_TYPE_PARAMETER_NAME@38..39
+                  0: IDENT@38..39 "U" [] []
+                2: (empty)
             4: SEMICOLON@39..41 ";" [] [Whitespace(" ")]
           1: TS_PROPERTY_SIGNATURE_TYPE_MEMBER@41..51
             0: (empty)
@@ -133,11 +120,9 @@ JsModule {
               0: COLON@42..44 ":" [] [Whitespace(" ")]
               1: TS_INFER_TYPE@44..51
                 0: INFER_KW@44..50 "infer" [] [Whitespace(" ")]
-                1: TS_TYPE_PARAMETER@50..51
-                  0: TS_TYPE_PARAMETER_NAME@50..51
-                    0: IDENT@50..51 "U" [] []
-                  1: (empty)
-                  2: (empty)
+                1: TS_TYPE_PARAMETER_NAME@50..51
+                  0: IDENT@50..51 "U" [] []
+                2: (empty)
             4: (empty)
         2: R_CURLY@51..52 "}" [] []
       5: SEMICOLON@52..53 ";" [] []

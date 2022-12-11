@@ -220,7 +220,7 @@ fn parse_ts_type_impl(p: &mut JsParser, conditional_type: ConditionalType) -> Pa
             return parse_ts_function_type(p);
         }
 
-        let left = parse_ts_union_type_or_higher(p);
+        let left = parse_ts_union_type_or_higher(p, &conditional_type);
 
         // test ts ts_conditional_type_call_signature_lhs
         // type X<V> = V extends (...args: any[]) => any ? (...args: Parameters<V>) => void : Function;
@@ -231,6 +231,8 @@ fn parse_ts_type_impl(p: &mut JsParser, conditional_type: ConditionalType) -> Pa
                 // type B = string extends number ? string : number;
                 // type C = A extends (B extends A ? number : string) ? void : number;
                 // type D<T> = T extends [infer S extends string, ...unknown[]] ? S : never;
+                // type E<U, T> = T extends (infer U extends number ? U : T ) ? U : T
+                // type F<T> = T extends { [P in infer U extends keyof T ? 1 : 0]: 1; } ? 1 : 0;
                 if !p.has_preceding_line_break() && p.at(T![extends]) {
                     let m = left.precede(p);
                     p.expect(T![extends]);
@@ -255,15 +257,21 @@ fn parse_ts_type_impl(p: &mut JsParser, conditional_type: ConditionalType) -> Pa
 // type A = string | number;
 // type B = | A | void | null;
 // type C = A & C | C;
-fn parse_ts_union_type_or_higher(p: &mut JsParser) -> ParsedSyntax {
-    parse_ts_union_or_intersection_type(p, IntersectionOrUnionType::Union)
+fn parse_ts_union_type_or_higher(
+    p: &mut JsParser,
+    conditional_type: &ConditionalType,
+) -> ParsedSyntax {
+    parse_ts_union_or_intersection_type(p, IntersectionOrUnionType::Union, conditional_type)
 }
 
 // test ts ts_intersection_type
 // type A = string & number;
 // type B = & A & void & null;
-fn parse_ts_intersection_type_or_higher(p: &mut JsParser) -> ParsedSyntax {
-    parse_ts_union_or_intersection_type(p, IntersectionOrUnionType::Intersection)
+fn parse_ts_intersection_type_or_higher(
+    p: &mut JsParser,
+    conditional_type: &ConditionalType,
+) -> ParsedSyntax {
+    parse_ts_union_or_intersection_type(p, IntersectionOrUnionType::Intersection, conditional_type)
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
@@ -298,10 +306,12 @@ impl IntersectionOrUnionType {
     }
 
     #[inline]
-    fn parse_element(&self, p: &mut JsParser) -> ParsedSyntax {
+    fn parse_element(&self, p: &mut JsParser, conditional_type: &ConditionalType) -> ParsedSyntax {
         match self {
-            IntersectionOrUnionType::Union => parse_ts_intersection_type_or_higher(p),
-            IntersectionOrUnionType::Intersection => parse_ts_primary_type(p),
+            IntersectionOrUnionType::Union => {
+                parse_ts_intersection_type_or_higher(p, conditional_type)
+            }
+            IntersectionOrUnionType::Intersection => parse_ts_primary_type(p, conditional_type),
         }
     }
 }
@@ -310,6 +320,7 @@ impl IntersectionOrUnionType {
 fn parse_ts_union_or_intersection_type(
     p: &mut JsParser,
     ty_kind: IntersectionOrUnionType,
+    conditional_type: &ConditionalType,
 ) -> ParsedSyntax {
     // Leading operator: `& A & B`
     if p.at(ty_kind.operator()) {
@@ -317,21 +328,21 @@ fn parse_ts_union_or_intersection_type(
         p.bump(ty_kind.operator());
         let list = p.start();
         ty_kind
-            .parse_element(p)
+            .parse_element(p, conditional_type)
             .or_add_diagnostic(p, expected_ts_type);
 
-        eat_ts_union_or_intersection_type_elements(p, ty_kind);
+        eat_ts_union_or_intersection_type_elements(p, ty_kind, conditional_type);
 
         list.complete(p, ty_kind.list_kind());
 
         Present(m.complete(p, ty_kind.kind()))
     } else {
-        let first = ty_kind.parse_element(p);
+        let first = ty_kind.parse_element(p, &conditional_type);
 
         if p.at(ty_kind.operator()) {
             let list = first.precede(p);
 
-            eat_ts_union_or_intersection_type_elements(p, ty_kind);
+            eat_ts_union_or_intersection_type_elements(p, ty_kind, &conditional_type);
 
             let completed_list = list.complete(p, ty_kind.list_kind());
             let m = completed_list.precede(p);
@@ -344,24 +355,31 @@ fn parse_ts_union_or_intersection_type(
 }
 
 #[inline]
-fn eat_ts_union_or_intersection_type_elements(p: &mut JsParser, ty_kind: IntersectionOrUnionType) {
+fn eat_ts_union_or_intersection_type_elements(
+    p: &mut JsParser,
+    ty_kind: IntersectionOrUnionType,
+    conditional_type: &ConditionalType,
+) {
     while p.at(ty_kind.operator()) {
         p.bump(ty_kind.operator());
 
         ty_kind
-            .parse_element(p)
+            .parse_element(p, conditional_type)
             .or_add_diagnostic(p, expected_ts_type);
     }
 }
 
-fn parse_ts_primary_type(p: &mut JsParser) -> ParsedSyntax {
+fn parse_ts_primary_type(p: &mut JsParser, conditional_type: &ConditionalType) -> ParsedSyntax {
     // test ts ts_inferred_type
     // type A = infer B;
     // type B = { a: infer U; b: infer U};
     if p.at(T![infer]) {
         let m = p.start();
         p.expect(T![infer]);
-        parse_ts_type_parameter(p).or_add_diagnostic(p, expected_identifier);
+        parse_ts_type_parameter_name(p).or_add_diagnostic(p, expected_identifier);
+        if !conditional_type.is_allowed() || !(p.nth_at(2, T![?]) || p.nth_at(3, T![?])) {
+            parse_ts_type_constraint_clause(p).ok();
+        }
         return Present(m.complete(p, TS_INFER_TYPE));
     }
 
@@ -374,7 +392,7 @@ fn parse_ts_primary_type(p: &mut JsParser) -> ParsedSyntax {
     if is_type_operator {
         let m = p.start();
         p.bump_any();
-        parse_ts_primary_type(p).or_add_diagnostic(p, expected_ts_type);
+        parse_ts_primary_type(p, conditional_type).or_add_diagnostic(p, expected_ts_type);
         return Present(m.complete(p, TS_TYPE_OPERATOR_TYPE));
     }
 
