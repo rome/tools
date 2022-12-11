@@ -427,6 +427,15 @@ pub(super) fn parse_conditional_expr(p: &mut JsParser, context: ExpressionContex
     }
 }
 
+pub(crate) fn is_at_binary_operator(p: &JsParser, context: ExpressionContext) -> bool {
+    let cur_kind = p.cur();
+
+    match cur_kind {
+        T![in] => context.is_in_included(),
+        kind => OperatorPrecedence::try_from_binary_operator(kind).is_some(),
+    }
+}
+
 /// A binary expression such as `2 + 2` or `foo * bar + 2` or a logical expression 'a || b'
 fn parse_binary_or_logical_expression(
     p: &mut JsParser,
@@ -768,7 +777,7 @@ fn parse_member_expression_rest(
             }
             T![<] | T![<<] => {
                 //  only those two possible token in cur position `parse_ts_type_arguments_in_expression` could possibly return a `Present(_)`
-                if let Present(_) = parse_ts_type_arguments_in_expression(p) {
+                if let Present(_) = parse_ts_type_arguments_in_expression(p, context) {
                     let new_marker = lhs.precede(p);
                     lhs = new_marker.complete(p, JsSyntaxKind::TS_INSTANTIATION_EXPRESSION);
                     continue;
@@ -1233,6 +1242,7 @@ pub(crate) fn is_nth_at_expression(p: &mut JsParser, n: usize) -> bool {
         | TRUE_KW
         | FALSE_KW
         | JS_NUMBER_LITERAL
+        | JS_BIG_INT_LITERAL
         | JS_STRING_LITERAL
         | NULL_KW => true,
         t => t.is_contextual_keyword() || t.is_future_reserved_keyword(),
@@ -1766,7 +1776,7 @@ fn parse_call_expression_rest(
         // a<<T>(arg: T) => number, number, string>();
 
         let type_arguments = if optional_chain_call {
-            let type_arguments = parse_ts_type_arguments_in_expression(p).ok();
+            let type_arguments = parse_ts_type_arguments_in_expression(p, context).ok();
             if p.cur() == BACKTICK {
                 // test ts ts_tagged_template_literal
                 // html<A, B>`abcd`
