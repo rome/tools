@@ -767,7 +767,7 @@ struct NurserySchema {
     no_var: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a function with the return type 'void'"]
     no_void_type_return: Option<RuleConfiguration>,
-    #[doc = "Disallow with statements."]
+    #[doc = "Disallow with statements in non-strict contexts."]
     no_with: Option<RuleConfiguration>,
     #[doc = "Enforce that ARIA state and property values are valid."]
     use_aria_prop_types: Option<RuleConfiguration>,

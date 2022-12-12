@@ -3,7 +3,7 @@ use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::JsWithStatement;
 
-use rome_rowan::{AstNode};
+use rome_rowan::AstNode;
 
 declare_rule! {
     /// Disallow `with` statements in non-strict contexts.

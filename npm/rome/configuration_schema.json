@@ -820,7 +820,7 @@
           ]
         },
         "noWith": {
-          "description": "Disallow with statements.",
+          "description": "Disallow with statements in non-strict contexts.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

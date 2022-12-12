@@ -374,7 +374,7 @@ export interface Nursery {
 	 */
 	noVoidTypeReturn?: RuleConfiguration;
 	/**
-	 * Disallow with statements.
+	 * Disallow with statements in non-strict contexts.
 	 */
 	noWith?: RuleConfiguration;
 	/**
