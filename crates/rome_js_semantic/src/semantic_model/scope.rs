@@ -125,11 +125,16 @@ impl Scope {
 
 /// Represents a refererence inside a scope.
 #[derive(Clone, Debug, Hash, PartialEq, Eq)]
-pub(crate) struct SemanticModelScopeReference {
-    // Points to [SemanticModel]::bindings vec
-    pub(crate) binding_id: usize,
-    // Points do [SemanticModelBinding]::references vec
-    pub(crate) reference_id: usize,
+pub(crate) enum SemanticModelScopeReference {
+    Bound { 
+        // Points to [SemanticModel]::bindings vec
+        binding_id: usize,
+        // Points do [SemanticModelBinding]::references vec
+        reference_id: usize,
+    },
+    This {
+        range: TextRange
+    }
 }
 
 /// Iterate all descendents scopes of the specified scope in breadth-first order.

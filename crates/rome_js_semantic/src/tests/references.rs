@@ -1,7 +1,6 @@
 use crate::assert_semantics;
 
-// Reads
-
+// Variable Reads
 assert_semantics! {
     ok_reference_read_global,
         "let a/*#A*/ = 1; let b = a/*READ A*/ + 1;",
@@ -34,8 +33,7 @@ f(1);"#,
         "const fn/*#A*/ = (callback) => { callback(fn/*READ A*/) };",
 }
 
-// Read Hoisting
-
+// Variable Read with Hoisting
 assert_semantics! {
     ok_hoisting_read_inside_function, "function f() {
     a = 2;
@@ -108,8 +106,7 @@ switch (a) {
 console.log(a/*READ A2*/);",
 }
 
-// Write
-
+// Variable Write
 assert_semantics! {
     ok_reference_write_global, "let a/*#A*/; a/*WRITE A*/ = 1;",
     ok_reference_write_inner_scope, r#"function f(a/*#A1*/) {
@@ -129,8 +126,7 @@ f(1);"#,
         "let a/*#A*/, b/*#B*/; ({a/*WRITE A*/, b/*WRITE B*/} = obj);",
 }
 
-// Write Hoisting
-
+// Variable Write with Hoisting
 assert_semantics! {
     ok_hoisting_write_inside_function, "function f() {
     a/*WRITE A*/ = 2;
@@ -195,6 +191,7 @@ assert_semantics! {
     ok_import_used_in_jsx, r#"import A/*#A*/ from 'a.js'; console.log(<A/*READ A*//>);"#,
 }
 
+// Unresolved References
 assert_semantics! {
     ok_unresolved_reference, r#"a/*?*/"#,
     ok_unresolved_function_expression_read,"let f/*#F*/ = function g/*#G*/(){}; g/*?*/();",
@@ -228,7 +225,6 @@ assert_semantics! {
 }
 
 // Typescript types
-
 assert_semantics! {
     ok_typescript_function_type,
         "function f (a/*#A1*/, b: (a/*#A2*/) => any) { return b(a/*READ A1*/); };",

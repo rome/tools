@@ -306,6 +306,10 @@ export interface Nursery {
 	 */
 	noConstructorReturn?: RuleConfiguration;
 	/**
+	 * Put your description here
+	 */
+	noDirectMutationState?: RuleConfiguration;
+	/**
 	 * Enforces that no distracting elements are used.
 	 */
 	noDistractingElements?: RuleConfiguration;
@@ -724,6 +728,7 @@ export type Category =
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useHookAtTopLevel"
+	| "lint/nursery/noDirectMutationState"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

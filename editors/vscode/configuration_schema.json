@@ -632,6 +632,17 @@
             }
           ]
         },
+        "noDirectMutationState": {
+          "description": "Put your description here",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noDistractingElements": {
           "description": "Enforces that no distracting elements are used.",
           "anyOf": [

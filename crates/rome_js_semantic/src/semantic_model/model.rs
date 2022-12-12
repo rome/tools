@@ -1,5 +1,5 @@
 use super::*;
-use rome_js_syntax::{AnyJsRoot, JsFunctionDeclaration};
+use rome_js_syntax::{AnyJsClassMember, AnyJsRoot, JsFunctionDeclaration, JsImport, JsThisExpression};
 
 #[derive(Copy, Clone, Debug)]
 pub(crate) struct BindingIndex(usize);
@@ -51,6 +51,8 @@ pub(crate) struct SemanticModelData {
     pub(crate) unresolved_references: Vec<SemanticModelUnresolvedReference>,
     /// All globals references
     pub(crate) globals: Vec<SemanticModelGlobalBindingData>,
+
+    pub(crate) imports: Vec<JsImport>,
 }
 
 impl SemanticModelData {
@@ -319,7 +321,7 @@ impl SemanticModel {
     }
 
     /// Returns the [Closure] associated with the node.
-    pub fn closure(&self, node: &impl HasClosureAstNode) -> Closure {
+    pub fn closure<T: HasClosureAstNode>(&self, node: &T) -> <T as HasClosureAstNode>::Result<Closure> {
         Closure::from_node(self.data.clone(), node)
     }
 
@@ -370,4 +372,108 @@ impl SemanticModel {
 
         AllCallsIter { references }
     }
+
+    pub fn import(&self, source: impl AsRef<str>) -> Option<Import> {
+        let source = source.as_ref();
+        self.data
+            .imports
+            .iter()
+            .filter_map(|x| x.source_is(source).ok()?.then_some(x))
+            .map(|x| Import {
+                data: self.data.clone(),
+                node: x.clone(),
+            })
+            .next()
+    }
+
+    pub fn all_references_to_this(&self, node: AnyJsClassMember) -> AllThisReferenceIter {
+        let scope = self.scope(node.syntax());
+        let scope = &self.data.scopes[scope.id];
+
+        let scopes = Vec::from_iter(scope.children.iter().cloned());
+
+        let mut references = Vec::from_iter(scope.read_references.iter().cloned());
+        references.extend(scope.write_references.iter().cloned());
+
+        AllThisReferenceIter {
+            data: self.data.clone(),
+            scopes,
+            references,
+        }
+    }
 }
+
+#[derive(Debug)]
+pub struct Import {
+    data: Arc<SemanticModelData>,
+    node: JsImport,
+}
+
+impl Import {
+    pub fn binding_importing(&self, export: impl AsRef<str>) -> Option<Binding> {
+        let export = export.as_ref();
+        let binding = self.node.syntax().descendants().find(|x| {
+            x.kind() == JsSyntaxKind::JS_IDENTIFIER_BINDING && x.text_trimmed() == export
+        })?;
+        let id = &self.data.bindings_by_range[&binding.text_range()];
+        Some(Binding {
+            data: self.data.clone(),
+            index: (*id).into(),
+        })
+    }
+}
+
+pub struct ThisReference {
+    data: Arc<SemanticModelData>,
+    range: TextRange
+}
+
+impl ThisReference {
+    pub fn tree(&self) -> JsThisExpression {
+        let node = &self.data.node_by_range[&self.range];
+        JsThisExpression::unwrap_cast(node.clone())
+    }
+}
+
+pub struct AllThisReferenceIter {
+    data: Arc<SemanticModelData>,
+    scopes: Vec<usize>,
+    references: Vec<SemanticModelScopeReference>,
+}
+
+impl Iterator for AllThisReferenceIter {
+    type Item = ThisReference;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        'references: loop {
+            while let Some(reference) = self.references.pop() {
+                if let SemanticModelScopeReference::This { range } = reference {
+                    return Some(ThisReference {
+                        data: self.data.clone(),
+                        range
+                    });
+                }
+            }
+
+            'scopes: while let Some(scope_id) = self.scopes.pop() {
+                let scope = &self.data.scopes[scope_id];
+
+                if scope.is_closure {
+                    continue 'scopes;
+                } else {
+                    self.references.clear();
+                    self.references
+                        .extend(scope.read_references.iter().cloned());
+                    self.references
+                        .extend(scope.write_references.iter().cloned());
+                    self.scopes.extend(scope.children.iter());
+                    continue 'references;
+                }
+            }
+
+            return None;
+        }
+    }
+}
+
+impl FusedIterator for AllThisReferenceIter {}

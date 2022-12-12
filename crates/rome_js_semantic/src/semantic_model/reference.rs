@@ -73,6 +73,12 @@ impl Reference {
         &self.data.node_by_range[self.range()]
     }
 
+     /// Returns the AstNode of this reference
+     pub fn tree(&self) -> AnyJsIdentifierUsage {
+        let node = &self.data.node_by_range[self.range()];
+        AnyJsIdentifierUsage::unwrap_cast(node.clone())
+    }
+
     /// Returns the binding of this reference
     pub fn binding(&self) -> Option<Binding> {
         Some(Binding {

@@ -6,7 +6,6 @@ codegen:
   cargo codegen-configuration
   cargo codegen-schema
   cargo codegen-bindings
-  cargo codegen-aria
   
 documentation:
   cargo lintdoc
@@ -14,6 +13,7 @@ documentation:
 
 new-lintrule path name:
   cargo run -p xtask_codegen -- newlintrule --path={{path}} --name={{name}}
+  cargo fmt
   just codegen
   just documentation
 

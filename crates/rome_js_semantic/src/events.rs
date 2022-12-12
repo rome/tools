@@ -7,8 +7,9 @@ use rome_js_syntax::{
     AnyJsAssignment, AnyJsAssignmentPattern, AnyJsExpression, JsAssignmentExpression,
     JsCallExpression, JsForVariableDeclaration, JsIdentifierAssignment, JsIdentifierBinding,
     JsLanguage, JsParenthesizedExpression, JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode,
-    JsSyntaxToken, JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList,
-    JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding, TsTypeParameter,
+    JsSyntaxToken, JsThisExpression, JsVariableDeclaration, JsVariableDeclarator,
+    JsVariableDeclaratorList, JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
+    TsTypeParameter,
 };
 use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast, SyntaxNodeOptionExt, SyntaxTokenText};
 
@@ -68,6 +69,11 @@ pub enum SemanticEvent {
         scope_id: usize,
     },
 
+    This {
+        range: TextRange,
+        scope_id: usize
+    },
+
     /// Tracks references that do no have any matching binding
     /// Generated for:
     /// - Unmatched reference identifiers
@@ -110,6 +116,7 @@ impl SemanticEvent {
             SemanticEvent::HoistedRead { range, .. } => range,
             SemanticEvent::Write { range, .. } => range,
             SemanticEvent::HoistedWrite { range, .. } => range,
+            SemanticEvent::This { range, .. } => range,
             SemanticEvent::UnresolvedReference { range, .. } => range,
             SemanticEvent::Exported { range } => range,
         }
@@ -174,17 +181,19 @@ struct Binding {
 enum Reference {
     Read { range: TextRange, is_exported: bool },
     Write { range: TextRange },
+    This { range: TextRange },
 }
 
 impl Reference {
     fn is_read(&self) -> bool {
-        matches!(self, Reference::Read { .. })
+        matches!(self, Reference::Read { .. } | Reference::This { .. })
     }
 
     pub fn range(&self) -> &TextRange {
         match self {
             Reference::Read { range, .. } => range,
             Reference::Write { range } => range,
+            Reference::This { range } => range,
         }
     }
 }
@@ -310,6 +319,20 @@ impl SemanticEventExtractor {
                     ScopeHoisting::HoistDeclarationsToParent,
                     false,
                 );
+            }
+
+            JS_THIS_EXPRESSION => {
+                let this_text = JsThisExpression::unwrap_cast(node.clone());
+
+                let current_scope = self.current_scope_mut();
+                let references = current_scope
+                    .references
+                    .entry(this_text.this_token().unwrap().token_text_trimmed())
+                    .or_default();
+
+                references.push(Reference::This {
+                    range: node.text_range(),
+                });
             }
 
             _ => {}
@@ -609,8 +632,15 @@ impl SemanticEventExtractor {
         if let Some(scope) = self.scopes.pop() {
             // Match references and declarations
             for (name, mut references) in scope.references {
-                // If we know the declaration of these reference push the correct events...
-                if let Some(declaration_at) = self.bindings.get(&name) {
+                if name == "this" {
+                    for reference in references {
+                        self.stash.push_back(SemanticEvent::This {
+                            range: *reference.range(),
+                            scope_id: scope.scope_id,
+                        });
+                    }                    
+                } else if let Some(declaration_at) = self.bindings.get(&name) {
+                    // If we know the declaration of these reference push the correct events...
                     for reference in references {
                         let declaration_before_reference =
                             declaration_at.start() < reference.range().start();
@@ -635,6 +665,7 @@ impl SemanticEventExtractor {
                                 declared_at: *declaration_at,
                                 scope_id: scope.scope_id,
                             },
+                            (_, Reference::This { .. }) => continue
                         };
                         self.stash.push_back(e);
 

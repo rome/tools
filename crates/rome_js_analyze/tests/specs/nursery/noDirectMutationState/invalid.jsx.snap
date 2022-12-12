@@ -1,0 +1,34 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```js
+import { Component } from 'react';
+
+class A extends Component {
+    render() {
+        this.state = 1;
+    }
+}
+```
+
+# Diagnostics
+```
+invalid.jsx:5:9 lint/nursery/noDirectMutationState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not mutate React components state directly
+  
+    3 │ class A extends Component {
+    4 │     render() {
+  > 5 │         this.state = 1;
+      │         ^^^^^^^^^^
+    6 │     }
+    7 │ }
+  
+  i See React dpcumentation
+  
+
+```
+
+

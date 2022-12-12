@@ -2,23 +2,26 @@ use super::*;
 use rome_js_syntax::{
     JsArrowFunctionExpression, JsConstructorClassMember, JsFunctionDeclaration,
     JsFunctionExpression, JsGetterClassMember, JsGetterObjectMember, JsLanguage,
-    JsMethodClassMember, JsMethodObjectMember, JsSetterClassMember, JsSetterObjectMember,
+    JsMethodClassMember, JsMethodObjectMember, JsSetterClassMember, JsSetterObjectMember, AnyJsClassMember,
 };
 use rome_rowan::{AstNode, SyntaxNode, SyntaxNodeCast};
 use std::sync::Arc;
 
 /// Marker trait that groups all "AstNode" that have closure
 pub trait HasClosureAstNode {
-    fn node_text_range(&self) -> TextRange;
+    type Result<T>;
+    fn map_text_range<T, F: FnOnce(TextRange) -> T>(&self, f: F) -> Self::Result<T>;
 }
 
 macro_rules! SyntaxTextRangeHasClosureAstNode {
     ($($kind:tt => $node:tt,)*) => {
         $(
             impl HasClosureAstNode for $node {
+                type Result<T> = T;
+
                 #[inline(always)]
-                fn node_text_range(&self) -> TextRange {
-                    self.syntax().text_range()
+                fn map_text_range<T, F: FnOnce(TextRange) -> T>(&self, f: F) -> Self::Result<T> {
+                    f(self.syntax().text_range())
                 }
             }
         )*
@@ -46,13 +49,16 @@ macro_rules! SyntaxTextRangeHasClosureAstNode {
         }
 
         impl HasClosureAstNode for AnyHasClosureNode {
+            type Result<T> = T;
+
             #[inline(always)]
-            fn node_text_range(&self) -> TextRange {
-                match self {
+            fn map_text_range<T, F: FnOnce(TextRange) -> T>(&self, f: F) -> Self::Result<T> {
+                let node = match self {
                     $(
                         AnyHasClosureNode::$node(node) => node.syntax().text_range(),
                     )*
-                }
+                };
+                f(node)
             }
         }
     };
@@ -70,6 +76,16 @@ SyntaxTextRangeHasClosureAstNode! {
     JS_GETTER_OBJECT_MEMBER => JsGetterObjectMember,
     JS_SETTER_OBJECT_MEMBER => JsSetterObjectMember,
 }
+
+impl HasClosureAstNode for AnyJsClassMember {
+    type Result<T> = Option<T>;
+    fn map_text_range<T, F: FnOnce(TextRange) -> T>(&self, f: F) -> Self::Result<T>
+    {
+        let node = AnyHasClosureNode::from_node(self.syntax())?;
+        Some(node.map_text_range(f))
+    }
+}
+
 
 #[derive(Clone)]
 pub enum CaptureType {
@@ -130,9 +146,14 @@ impl Iterator for AllCapturesIter {
     fn next(&mut self) -> Option<Self::Item> {
         'references: loop {
             while let Some(reference) = self.references.pop() {
-                let binding = &self.data.bindings[reference.binding_id];
+                let (binding_id, reference_id) = match reference {
+                    SemanticModelScopeReference::Bound { binding_id, reference_id } => (binding_id, reference_id),
+                    // this is never a capture
+                    SemanticModelScopeReference::This { range } => continue,
+                };
+                let binding = &self.data.bindings[binding_id];
                 if self.closure_range.intersect(binding.range).is_none() {
-                    let reference = &binding.references[reference.reference_id];
+                    let reference = &binding.references[reference_id];
                     return Some(Capture {
                         data: self.data.clone(),
                         node: self.data.node_by_range[&reference.range].clone(), // TODO change node to store the range
@@ -231,18 +252,18 @@ pub struct Closure {
 }
 
 impl Closure {
-    pub(super) fn from_node(
+    pub(super) fn from_node<T: HasClosureAstNode>(
         data: Arc<SemanticModelData>,
-        node: &impl HasClosureAstNode,
-    ) -> Closure {
-        let closure_range = node.node_text_range();
-        let scope_id = data.scope(&closure_range);
-
-        Closure {
-            data,
-            scope_id,
-            closure_range,
-        }
+        node: &T,
+    ) -> <T as HasClosureAstNode>::Result<Closure> {
+        node.map_text_range(move |closure_range| {
+            let scope_id = data.scope(&closure_range);
+            Closure {
+                data,
+                scope_id,
+                closure_range,
+            }
+        })        
     }
 
     pub(super) fn from_scope(
@@ -346,7 +367,7 @@ impl Closure {
 }
 
 pub trait ClosureExtensions {
-    fn closure(&self, model: &SemanticModel) -> Closure
+    fn closure(&self, model: &SemanticModel) -> <Self as HasClosureAstNode>::Result<Closure>
     where
         Self: HasClosureAstNode + Sized,
     {

@@ -1,5 +1,5 @@
 use super::*;
-use rome_js_syntax::{AnyJsRoot, JsSyntaxNode, TextRange};
+use rome_js_syntax::{AnyJsRoot, JsSyntaxNode, TextRange, JsImport};
 use rustc_hash::{FxHashMap, FxHashSet};
 use std::collections::hash_map::Entry;
 
@@ -24,6 +24,7 @@ pub struct SemanticModelBuilder {
     declared_at_by_range: FxHashMap<TextRange, usize>,
     exported: FxHashSet<TextRange>,
     unresolved_references: Vec<SemanticModelUnresolvedReference>,
+    imports: Vec<JsImport>
 }
 
 impl SemanticModelBuilder {
@@ -40,7 +41,8 @@ impl SemanticModelBuilder {
             bindings_by_range: FxHashMap::default(),
             declared_at_by_range: FxHashMap::default(),
             exported: FxHashSet::default(),
-            unresolved_references: Vec::new(),
+            unresolved_references: vec![],
+            imports: vec![]
         }
     }
 
@@ -85,6 +87,15 @@ impl SemanticModelBuilder {
             | JS_FOR_IN_STATEMENT
             | JS_SWITCH_STATEMENT
             | JS_CATCH_CLAUSE => {
+                self.node_by_range.insert(node.text_range(), node.clone());
+            }
+
+            JS_IMPORT => {
+                self.imports.push(JsImport::unwrap_cast(node.clone()));
+                self.node_by_range.insert(node.text_range(), node.clone());
+            }
+
+            JS_THIS_EXPRESSION => {
                 self.node_by_range.insert(node.text_range(), node.clone());
             }
             _ => {}
@@ -193,7 +204,7 @@ impl SemanticModelBuilder {
                 });
 
                 let scope = &mut self.scopes[scope_id];
-                scope.read_references.push(SemanticModelScopeReference {
+                scope.read_references.push(SemanticModelScopeReference::Bound {
                     binding_id,
                     reference_id: reference_index,
                 });
@@ -216,7 +227,7 @@ impl SemanticModelBuilder {
                 });
 
                 let scope = &mut self.scopes[scope_id];
-                scope.read_references.push(SemanticModelScopeReference {
+                scope.read_references.push(SemanticModelScopeReference::Bound {
                     binding_id,
                     reference_id: reference_index,
                 });
@@ -239,7 +250,7 @@ impl SemanticModelBuilder {
                 });
 
                 let scope = &mut self.scopes[scope_id];
-                scope.read_references.push(SemanticModelScopeReference {
+                scope.read_references.push(SemanticModelScopeReference::Bound {
                     binding_id,
                     reference_id: reference_index,
                 });
@@ -262,12 +273,18 @@ impl SemanticModelBuilder {
                 });
 
                 let scope = &mut self.scopes[scope_id];
-                scope.read_references.push(SemanticModelScopeReference {
+                scope.read_references.push(SemanticModelScopeReference::Bound {
                     binding_id,
                     reference_id: reference_index,
                 });
 
                 self.declared_at_by_range.insert(range, binding_id);
+            }
+            This { range, scope_id } => {
+                let scope = &mut self.scopes[scope_id];
+                scope.read_references.push(SemanticModelScopeReference::This {
+                    range,
+                });
             }
             UnresolvedReference { is_read, range } => {
                 let ty = if is_read {
@@ -331,6 +348,7 @@ impl SemanticModelBuilder {
             exported: self.exported,
             unresolved_references: self.unresolved_references,
             globals: self.globals,
+            imports: self.imports
         };
         SemanticModel::new(data)
     }

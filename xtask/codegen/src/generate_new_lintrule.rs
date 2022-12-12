@@ -22,41 +22,41 @@ use crate::semantic_services::Semantic;
 use rome_js_syntax::JsCallExpression;
 
 declare_rule! {{
-/// Put your description here
-///
-/// ## Examples
-///
-/// ### Invalid
-///
-/// ```js,expect_diagnostic
-/// ```
-///
-/// ## Valid
-///
-/// ```js
-/// ```
-///
-pub(crate) {rule_name_upper_camel} {{
-version: "12.0.0",
-name: "{rule_name_lower_camel}",
-recommended: false,
-}}
+    /// Put your description here
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// ```
+    ///
+    /// ## Valid
+    ///
+    /// ```js
+    /// ```
+    ///
+    pub(crate) {rule_name_upper_camel} {{
+        version: "vNext",
+        name: "{rule_name_lower_camel}",
+        recommended: false,
+    }}
 }}
 
 impl Rule for {rule_name_upper_camel} {{
-type Query = Semantic<JsCallExpression>;
-type State = ();
-type Signals = Vec<Self::State>;
-type Options = ();
+    type Query = Semantic<JsCallExpression>;
+    type State = ();
+    type Signals = Vec<Self::State>;
+    type Options = ();
 
-fn run(_: &RuleContext<Self>) -> Vec<Self::State> {{
-let mut signals = vec![];
-signals
-}}
+    fn run(_: &RuleContext<Self>) -> Vec<Self::State> {{
+        let mut signals = vec![];
+        signals
+    }}
 
-fn diagnostic(_: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {{
-None
-}}
+    fn diagnostic(_: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {{
+        None
+    }}
 }}
 "#
     );
@@ -65,18 +65,11 @@ None
 
     let categories_path = "crates/rome_diagnostics_categories/src/categories.rs";
     let categories = std::fs::read_to_string(categories_path).unwrap();
-    let insertion_point = r#"
-    
-    ;
-
-    // General categories"#;
+    let insertion_point = r#"    // Insert new nursery rule here"#;
     debug_assert!(categories.contains(insertion_point));
-    let categories = categories.replace(insertion_point, &format!(r#"
-    "lint/nursery/{rule_name_lower_camel}": "https://docs.rome.tools/lint/rules/{rule_name_lower_camel}",
-    
-    ;
-
-    // General categories"#));
+    let categories = categories.replace(insertion_point, &format!(
+    r#"    "lint/nursery/{rule_name_lower_camel}": "https://docs.rome.tools/lint/rules/{rule_name_lower_camel}",
+{insertion_point}"#));
     debug_assert!(categories.contains(&rule_name_lower_camel));
     std::fs::write(categories_path, categories).unwrap();
 }
