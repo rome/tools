@@ -37,6 +37,7 @@ pub mod printed_tokens;
 pub mod printer;
 mod source_map;
 pub mod trivia;
+pub mod utils;
 mod verbatim;
 
 use crate::formatter::Formatter;

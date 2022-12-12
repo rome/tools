@@ -1,6 +1,6 @@
 use crate::prelude::*;
-use crate::utils::node_has_leading_newline;
 use crate::JsFormatContext;
+use rome_formatter::utils::node_has_leading_newline;
 use rome_formatter::write;
 use rome_formatter::{Format, FormatResult};
 use rome_js_syntax::{JsObjectExpression, JsSyntaxToken, TsObjectType};
