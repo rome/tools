@@ -1,0 +1,84 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: useAriaProps.jsx
+---
+# Input
+```js
+// invalid
+var a = <input className="" aria-labell="" />;
+var a = <div aria-="foobar" />;
+var a = <div aria-labeledby="foobar" />;
+var a = <div aria-skldjfaria-klajsd="foobar" />;
+
+// valid
+var a = <div />;
+var a = <div></div>;
+var a = <div aria="wee"></div>;
+var a = <div abcARIAdef="true"></div>;
+var a = <div fooaria-foobar="true"></div>;
+var a = <div fooaria-hidden="true"></div>;
+var a = <input type="text" aria-errormessage="foobar" />;
+
+```
+
+# Diagnostics
+```
+useAriaProps.jsx:2:29 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! aria-labell is not a valid ARIA attribute.
+  
+    1 │ // invalid
+  > 2 │ var a = <input className="" aria-labell="" />;
+      │                             ^^^^^^^^^^^^^^
+    3 │ var a = <div aria-="foobar" />;
+    4 │ var a = <div aria-labeledby="foobar" />;
+  
+
+```
+
+```
+useAriaProps.jsx:3:14 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! aria- is not a valid ARIA attribute.
+  
+    1 │ // invalid
+    2 │ var a = <input className="" aria-labell="" />;
+  > 3 │ var a = <div aria-="foobar" />;
+      │              ^^^^^^^^^^^^^^
+    4 │ var a = <div aria-labeledby="foobar" />;
+    5 │ var a = <div aria-skldjfaria-klajsd="foobar" />;
+  
+
+```
+
+```
+useAriaProps.jsx:4:14 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! aria-labeledby is not a valid ARIA attribute.
+  
+    2 │ var a = <input className="" aria-labell="" />;
+    3 │ var a = <div aria-="foobar" />;
+  > 4 │ var a = <div aria-labeledby="foobar" />;
+      │              ^^^^^^^^^^^^^^^^^^^^^^^
+    5 │ var a = <div aria-skldjfaria-klajsd="foobar" />;
+    6 │ 
+  
+
+```
+
+```
+useAriaProps.jsx:5:14 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! aria-skldjfaria-klajsd is not a valid ARIA attribute.
+  
+    3 │ var a = <div aria-="foobar" />;
+    4 │ var a = <div aria-labeledby="foobar" />;
+  > 5 │ var a = <div aria-skldjfaria-klajsd="foobar" />;
+      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │ 
+    7 │ // valid
+  
+
+```
+
+

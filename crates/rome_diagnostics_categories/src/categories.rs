@@ -78,6 +78,7 @@ define_dategories! {
     "lint/nursery/useDefaultParameterLast":"https://docs.rome.tools/lint/rules/useDefaultParameterLast",
     "lint/nursery/useDefaultSwitchClauseLast":"https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast",
     "lint/nursery/useEnumInitializers":"https://docs.rome.tools/lint/rules/useEnumInitializers",
+    "lint/nursery/useAriaProps":"https://docs.rome.tools/lint/rules/useAriaProps",
     "lint/nursery/useExhaustiveDependencies": "https://docs.rome.tools/lint/rules/useExhaustiveDependencies",
     "lint/nursery/useExponentiationOperator": "https://docs.rome.tools/lint/rules/useExponentiationOperator",
     "lint/nursery/useIsNan": "https://docs.rome.tools/lint/rules/useIsNan",
