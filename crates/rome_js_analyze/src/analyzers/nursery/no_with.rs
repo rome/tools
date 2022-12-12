@@ -9,25 +9,21 @@ use rome_rowan::{AstNode, BatchMutationExt};
 use crate::JsRuleAction;
 
 declare_rule! {
-    /// Disallow with statements.
+    /// Disallow `with` statements in non-strict contexts.
     ///
-    /// The with statement is potentially problematic because it adds members of an object to the current
+    /// The `with` statement is potentially problematic because it adds members of an object to the current
     /// scope, making it impossible to tell what a variable inside the block actually refers to.
     ///
     /// ## Examples
     ///
     /// ### Invalid
     ///
-    /// ```ts,expect_diagnostic
-    /// with (point) {
-    ///   r = Math.sqrt(x * x + y * y); // is r a member of point?
+    /// ```cjs,expect_diagnostic
+    /// function f() {
+    ///   with (point) {
+    ///     r = Math.sqrt(x * x + y * y); // is r a member of point?
+    ///   }
     /// }
-    /// ```
-    ///
-    /// ### Valid
-    ///
-    /// ```ts
-    /// const r = ({x, y}) => Math.sqrt(x * x + y * y);
     /// ```
     pub(crate) NoWith {
         version: "12.0.0",
@@ -57,16 +53,5 @@ impl Rule for NoWith {
         ).note(
             "The with statement is potentially problematic because it adds members of an object to the current\nscope, making it impossible to tell what a variable inside the block actually refers to."
         ))
-    }
-
-    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let mutation = ctx.root().begin();
-
-        Some(JsRuleAction {
-            category: ActionCategory::QuickFix,
-            applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Unwrap the the body of statement `with`" }.to_owned(),
-            mutation,
-        })
     }
 }
