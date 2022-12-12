@@ -2,9 +2,10 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsFunctionDeclaration, JsFunctionExpression, JsLanguage, JsMethodClassMember, JsSyntaxKind,
+    AnyJsClass, AnyJsFunction, JsLanguage, JsMethodClassMember, JsMethodObjectMember,
+    JsStatementList, JsSyntaxKind, WalkEvent,
 };
-use rome_rowan::{declare_node_union, AstNode, SyntaxNode};
+use rome_rowan::{declare_node_union, AstNode, AstNodeList, SyntaxNode};
 
 declare_rule! {
     /// Require generator functions to contain `yield`.
@@ -45,36 +46,52 @@ declare_rule! {
 }
 
 declare_node_union! {
-    pub(crate) AnyFunction = JsFunctionDeclaration | JsFunctionExpression | JsMethodClassMember
+    pub(crate) AnyFunctionLike = AnyJsFunction | JsMethodObjectMember | JsMethodClassMember
+}
+
+impl AnyFunctionLike {
+    fn is_generator(&self) -> bool {
+        match self {
+            AnyFunctionLike::AnyJsFunction(any_js_function) => any_js_function.is_generator(),
+            AnyFunctionLike::JsMethodClassMember(method_class_member) => {
+                method_class_member.star_token().is_some()
+            }
+            AnyFunctionLike::JsMethodObjectMember(method_obj_member) => {
+                method_obj_member.star_token().is_some()
+            }
+        }
+    }
+
+    fn statements(&self) -> Option<JsStatementList> {
+        Some(match self {
+            AnyFunctionLike::AnyJsFunction(any_js_function) => any_js_function
+                .body()
+                .ok()?
+                .as_js_function_body()?
+                .statements(),
+            AnyFunctionLike::JsMethodClassMember(method_class_member) => {
+                method_class_member.body().ok()?.statements()
+            }
+            AnyFunctionLike::JsMethodObjectMember(method_obj_member) => {
+                method_obj_member.body().ok()?.statements()
+            }
+        })
+    }
 }
 
 impl Rule for UseYield {
-    type Query = Ast<AnyFunction>;
+    type Query = Ast<AnyFunctionLike>;
     type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
+        let function_body_statements = node.statements()?;
 
-        let (start_token, function_body_syntax) = Some(match node {
-            AnyFunction::JsFunctionDeclaration(func_declaration) => (
-                func_declaration.star_token(),
-                func_declaration.body().ok()?.statements().into_syntax(),
-            ),
-            AnyFunction::JsFunctionExpression(func_expression) => (
-                func_expression.star_token(),
-                func_expression.body().ok()?.statements().into_syntax(),
-            ),
-            AnyFunction::JsMethodClassMember(class_method) => (
-                class_method.star_token(),
-                class_method.body().ok()?.statements().into_syntax(),
-            ),
-        })?;
-
-        if start_token.is_some()
-            && !function_body_syntax.clone().into_list().is_empty()
-            && !has_yield_expression(function_body_syntax)?
+        if node.is_generator()
+            && !function_body_statements.is_empty()
+            && !has_yield_expression(function_body_statements.syntax())
         {
             return Some(());
         }
@@ -91,23 +108,26 @@ impl Rule for UseYield {
     }
 }
 
-/// Traverses the syntax tree and verifies the presence of n yield expression.
-fn has_yield_expression(node: SyntaxNode<JsLanguage>) -> Option<bool> {
-    if node.kind() == JsSyntaxKind::JS_YIELD_EXPRESSION {
-        return Some(true);
+/// Traverses the syntax tree and verifies the presence of a yield expression.
+fn has_yield_expression(node: &SyntaxNode<JsLanguage>) -> bool {
+    let mut iter = node.preorder();
+
+    while let Some(event) = iter.next() {
+        match event {
+            WalkEvent::Enter(enter) => {
+                let kind = enter.kind();
+
+                if kind == JsSyntaxKind::JS_YIELD_EXPRESSION {
+                    return true;
+                }
+
+                if AnyJsClass::can_cast(kind) || AnyFunctionLike::can_cast(kind) {
+                    iter.skip_subtree();
+                }
+            }
+            WalkEvent::Leave(_) => {}
+        };
     }
 
-    if node.kind() == JsSyntaxKind::FUNCTION_KW {
-        return Some(false);
-    }
-
-    for child in node.children() {
-        if !has_yield_expression(child)? {
-            continue;
-        }
-
-        return Some(true);
-    }
-
-    Some(false)
+    return false;
 }
