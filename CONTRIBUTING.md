@@ -228,7 +228,22 @@ the new snapshot tests.
 
 ### Using just
 
-A lot of the commands above are mor easily acessible using our Just recipes. For example:
+A lot of the commands above are mor easily accessible using our [Just](https://just.systems/man/en/) recipes. For example:
+
+### Install just
+
+You can install `just` using cargo:
+
+```shell
+cargo install just
+```
+
+Or, using different methods, like explained in their [documentation](https://just.systems/man/en/chapter_4.html).
+
+It's advised to install `just` using a package manager, so
+you can run `just` as a binary.
+
+### Usage
 
 ```ignore
 ❯ just

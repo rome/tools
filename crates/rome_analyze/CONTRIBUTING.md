@@ -1,7 +1,7 @@
 # Analyzer
 
 The analyzer is a generic crate aimed to implement a visitor-like infrastructure, where
-it's possible to inspect a piece of AST and emit diagnostics or actions based on a 
+it's possible to inspect a piece of AST and emit diagnostics or actions based on a
 static check.
 
 # Folder structure
@@ -11,8 +11,9 @@ is going to be implemented for the JavaScript language (and its super languages)
 will be implemented inside the `rome_js_analyze` crate.
 
 Rules are divided by capabilities:
-- `analyzers/` folder contains rules that don't require any particular capabilities;
-- `semantic_analyzer/` folder contains rules that require the use of the semantic model;
+- `analyzers/` folder contains rules that don't require any particular capabilities, via the `Ast<>` query type;
+- `semantic_analyzer/` folder contains rules that require the use of the semantic model, via `Semantic<>` query type;
+- `aria_analyzers/` folder contains rules that require the use ARIA metadata, via `Aria<>` query type;
 - `assists/` folder contains rules that contribute to refactor code, with not associated diagnostics;
 these are rules that are usually meant for editors/IDEs;
 
@@ -52,10 +53,10 @@ inside the `semantic_analyzers` folder
 3. from there, use the [`declare_rule`](#declare_rule) macro to create a new type
    ```rust,ignore
    use rome_analyze::declare_rule;
-    
+
    declare_rule! {
      /// Promotes the use of awesome tricks
-     /// 
+     ///
      /// ## Examples
      ///
      /// ### Invalid
@@ -72,20 +73,20 @@ inside the `semantic_analyzers` folder
    use rome_analyze::{Rule, RuleCategory};
    use rome_js_syntax::JsAnyExpression;
    use rome_analyze::context::RuleContext;
-   
+
    impl Rule for UseAwesomeTricks {
         const CATEGORY: RuleCategory = RuleCategory::Lint;
         type Query = Semantic<JsAnyExpression>;
         type State = String;
         type Signals = Option<Self::State>;
         type Options = ();
-   
+
         fn run(ctx: &RuleContext<Self>) -> Self::Signals {}
    }
    ```
 5. the const `CATEGORY` must be `RuleCategory::Lint` otherwise it won't work
 6. the `Query` needs to have the `Semantic` type, because we want to have access to the semantic model.
-`Query` tells the engine on which AST node we want to trigger the rule. 
+`Query` tells the engine on which AST node we want to trigger the rule.
 7. The `State` type doesn't have to be used, so it can be considered optional, but it has
 be defined as `type State = ()`
 8. The `run` function must be implemented. This function is called every time the analyzer
@@ -99,7 +100,7 @@ finds a match for the query specified by the rule, and may return zero or more "
     ```
     While implementing the diagnostic, please keep [Rome's technical principals](https://rome.tools/#technical) in mind.
     This function is called of every signal emitted by the `run` function, and it may return
-    zero or one diagnostic. 
+    zero or one diagnostic.
 
     You will have to manually update the file `rome_diagnostics_categories/src/categories.rs` and add a new category
     for the new rule you're about to create.
@@ -225,9 +226,9 @@ declare_rule! {
 use rome_analyze::declare_rule;
  declare_rule! {
      ///  Disallow the use of `var`
-     /// 
+     ///
      ///  ### Invalid
-     /// 
+     ///
      ///  ```js,expect_diagnostic
      ///  var a, b;
      ///  ```
@@ -255,9 +256,9 @@ use rome_analyze::declare_rule;
 
  declare_rule! {
       /// Disallow the use of `var`
-      /// 
+      ///
       /// ### Invalid
-      /// 
+      ///
       /// ```js,expect_diagnostic
       /// var a, b;
       /// ```
