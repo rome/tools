@@ -4,7 +4,8 @@ expression: formatter_line_width_too_high.json
 ---
 formatter_line_width_too_high.json:3:16 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × number too large to fit in target type
+  × Rome couldn't load the configuration file, here's why: 
+    number too large to fit in target type
   
     1 │ {
     2 │ 	"formatter": {

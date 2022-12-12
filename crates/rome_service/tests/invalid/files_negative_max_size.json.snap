@@ -4,7 +4,8 @@ expression: files_negative_max_size.json
 ---
 files_negative_max_size.json:3:14 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × invalid digit found in string
+  × Rome couldn't load the configuration file, here's why: 
+    invalid digit found in string
   
     1 │ {
     2 │ 	"files": {
