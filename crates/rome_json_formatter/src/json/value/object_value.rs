@@ -1,5 +1,4 @@
 use crate::prelude::*;
-use rome_formatter::utils::node_has_leading_newline;
 use rome_formatter::write;
 use rome_json_syntax::JsonObjectValue;
 use rome_rowan::AstNode;
@@ -11,7 +10,7 @@ impl FormatNodeRule<JsonObjectValue> for FormatJsonObjectValue {
     fn fmt_fields(&self, node: &JsonObjectValue, f: &mut JsonFormatter) -> FormatResult<()> {
         write!(f, [node.l_curly_token().format(),])?;
 
-        let should_expand = node_has_leading_newline(node.json_member_list().syntax());
+        let should_expand = node.json_member_list().syntax().has_leading_newline();
 
         write!(
             f,

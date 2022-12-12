@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use crate::utils::FormatStatementSemicolon;
-use rome_formatter::utils::node_has_leading_newline;
 use rome_formatter::write;
 
 use rome_js_syntax::JsExportNamedFromClause;
@@ -43,7 +42,7 @@ impl FormatNodeRule<JsExportNamedFromClause> for FormatJsExportNamedFromClause {
                 write!(f, [space()])?;
             }
             _ => {
-                if node_has_leading_newline(specifiers.syntax()) {
+                if specifiers.syntax().has_leading_newline() {
                     write!(f, [block_indent(&specifiers.format()),])?;
                 } else {
                     write!(

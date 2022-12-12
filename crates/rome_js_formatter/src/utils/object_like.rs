@@ -1,6 +1,5 @@
 use crate::prelude::*;
 use crate::JsFormatContext;
-use rome_formatter::utils::node_has_leading_newline;
 use rome_formatter::write;
 use rome_formatter::{Format, FormatResult};
 use rome_js_syntax::{JsObjectExpression, JsSyntaxToken, TsObjectType};
@@ -25,8 +24,8 @@ impl JsObjectLike {
 
     fn members_have_leading_newline(&self) -> bool {
         match self {
-            JsObjectLike::JsObjectExpression(oe) => node_has_leading_newline(oe.members().syntax()),
-            JsObjectLike::TsObjectType(ot) => node_has_leading_newline(ot.members().syntax()),
+            JsObjectLike::JsObjectExpression(oe) => oe.members().syntax().has_leading_newline(),
+            JsObjectLike::TsObjectType(ot) => ot.members().syntax().has_leading_newline(),
         }
     }
 
