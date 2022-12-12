@@ -20,7 +20,13 @@
 
 ## Documentation
 
-<!-- Tick the checkboxes if your PR requires some documentation, and if you will follow up with that -->
+<!--
+
+Read the following paragraph for more information: https://github.com/rome/tools/blob/main/CONTRIBUTING.md#write-documentation
+
+Tick the checkboxes if your PR requires some documentation, and if you will follow up with that
+
+-->
 
 - [ ] The PR requires documentation
 - [ ] I will create a new PR to update the documentation

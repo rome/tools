@@ -177,11 +177,17 @@ When creating a new pull request, it's preferable to use a conventional commit-f
 
 Please use the template provided.
 
-If you PR requires some update on the website (new features, breaking changes, etc.), a new follow-up
-PR should be created against the "release" PR. If you can't create a new PR, please let the team know,
-the template should help to give all the information to the team.
+#### Write documentation
 
-The team will prepare a new PR after each new release, just search for "release" among the opened pull requests.
+If your PR requires some update on the website (new features, breaking changes, etc.), you should create a new PR once the previous PR is successfully merged.
+
+Go to the issues section and check the pinned issues.
+You will find a _**pinned issue**_ that starts with "Documentation and Focus". Inside, you will find the details of:
+- the name of the branch where to point the PR that updates the documentation;
+- the PR that we will merge when the release is ready;
+
+If you can't create a new PR, please let the team know.
+The template should help to give all the information to the team.
 
 Here are some other scripts that you might find useful.
 
