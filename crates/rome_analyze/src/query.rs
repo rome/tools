@@ -4,7 +4,7 @@ use rome_rowan::{AstNode, Language, SyntaxKindSet, SyntaxNode, TextRange};
 use crate::{
     registry::{NodeLanguage, Phase},
     services::FromServices,
-    ServiceBag,
+    Phases, ServiceBag, SyntaxVisitor, Visitor,
 };
 
 /// Trait implemented for all types, for example lint rules can query them to emit diagnostics or code actions.
@@ -12,6 +12,11 @@ pub trait Queryable: Sized {
     type Output;
     type Language: Language;
     type Services: FromServices + Phase;
+
+    fn build_visitor(
+        analyzer: &mut impl AddVisitor<Self::Language>,
+        root: &<Self::Language as Language>::Root,
+    );
 
     /// Statically declares which [QueryMatch] variant is matched by this
     /// [Queryable] type. For instance the [Ast] queryable matches on
@@ -24,6 +29,12 @@ pub trait Queryable: Sized {
     ///
     /// If the [QueryMatch] variant of `query` doesn't match `Self::KEY`
     fn unwrap_match(services: &ServiceBag, query: &QueryMatch<Self::Language>) -> Self::Output;
+}
+
+pub trait AddVisitor<L: Language> {
+    fn add_visitor<V>(&mut self, phase: Phases, visitor: V)
+    where
+        V: Visitor<Language = L> + 'static;
 }
 
 /// Enumerate all the types of [Queryable] analyzer visitors may emit
@@ -63,6 +74,13 @@ where
     type Language = NodeLanguage<N>;
     type Services = ();
 
+    fn build_visitor(
+        analyzer: &mut impl AddVisitor<Self::Language>,
+        _: &<Self::Language as Language>::Root,
+    ) {
+        analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default());
+    }
+
     /// Match on [QueryMatch::Syntax] if the kind of the syntax node matches
     /// the kind set of `N`
     const KEY: QueryKey<Self::Language> = QueryKey::Syntax(N::KIND_SET);
@@ -70,21 +88,6 @@ where
     fn unwrap_match(_: &ServiceBag, query: &QueryMatch<Self::Language>) -> Self::Output {
         match query {
             QueryMatch::Syntax(node) => N::unwrap_cast(node.clone()),
-            _ => panic!("tried to unwrap unsupported QueryMatch kind, expected Syntax"),
-        }
-    }
-}
-
-impl<L: Language> Queryable for ControlFlowGraph<L> {
-    type Output = Self;
-    type Language = L;
-    type Services = ();
-
-    const KEY: QueryKey<Self::Language> = QueryKey::ControlFlowGraph;
-
-    fn unwrap_match(_: &ServiceBag, query: &QueryMatch<Self::Language>) -> Self::Output {
-        match query {
-            QueryMatch::ControlFlowGraph(cfg, _) => cfg.clone(),
             _ => panic!("tried to unwrap unsupported QueryMatch kind, expected Syntax"),
         }
     }

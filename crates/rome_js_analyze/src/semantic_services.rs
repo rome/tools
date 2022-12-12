@@ -1,6 +1,6 @@
 use rome_analyze::{
-    FromServices, MissingServicesDiagnostic, Phase, Phases, QueryKey, QueryMatch, Queryable,
-    RuleKey, ServiceBag, Visitor, VisitorContext, VisitorFinishContext,
+    AddVisitor, FromServices, MissingServicesDiagnostic, Phase, Phases, QueryKey, QueryMatch,
+    Queryable, RuleKey, ServiceBag, SyntaxVisitor, Visitor, VisitorContext, VisitorFinishContext,
 };
 use rome_js_semantic::{SemanticEventExtractor, SemanticModel, SemanticModelBuilder};
 use rome_js_syntax::{AnyJsRoot, JsLanguage, WalkEvent};
@@ -43,6 +43,11 @@ impl Queryable for SemanticServices {
     type Language = JsLanguage;
     type Services = Self;
 
+    fn build_visitor(analyzer: &mut impl AddVisitor<JsLanguage>, root: &AnyJsRoot) {
+        analyzer.add_visitor(Phases::Syntax, SemanticModelBuilderVisitor::new(root));
+        analyzer.add_visitor(Phases::Semantic, SemanticModelVisitor);
+    }
+
     const KEY: QueryKey<Self::Language> = QueryKey::SemanticModel;
 
     fn unwrap_match(services: &ServiceBag, query: &QueryMatch<Self::Language>) -> Self::Output {
@@ -68,6 +73,11 @@ where
     type Language = JsLanguage;
     type Services = SemanticServices;
 
+    fn build_visitor(analyzer: &mut impl AddVisitor<JsLanguage>, root: &AnyJsRoot) {
+        analyzer.add_visitor(Phases::Syntax, SemanticModelBuilderVisitor::new(root));
+        analyzer.add_visitor(Phases::Semantic, SyntaxVisitor::default());
+    }
+
     /// Match on [QueryMatch::Syntax] if the kind of the syntax node matches
     /// the kind set of `N`
     const KEY: QueryKey<Self::Language> = QueryKey::Syntax(N::KIND_SET);
@@ -80,13 +90,13 @@ where
     }
 }
 
-pub(crate) struct SemanticModelBuilderVisitor {
+struct SemanticModelBuilderVisitor {
     extractor: SemanticEventExtractor,
     builder: SemanticModelBuilder,
 }
 
 impl SemanticModelBuilderVisitor {
-    pub(crate) fn new(root: &AnyJsRoot) -> Self {
+    fn new(root: &AnyJsRoot) -> Self {
         Self {
             extractor: SemanticEventExtractor::default(),
             builder: SemanticModelBuilder::new(root.clone()),
@@ -123,7 +133,7 @@ impl Visitor for SemanticModelBuilderVisitor {
     }
 }
 
-pub(crate) struct SemanticModelVisitor;
+pub struct SemanticModelVisitor;
 
 impl Visitor for SemanticModelVisitor {
     type Language = JsLanguage;

@@ -1,9 +1,9 @@
 use rome_analyze::{
-    FromServices, MissingServicesDiagnostic, Phase, Phases, QueryKey, QueryMatch, Queryable,
-    RuleKey, ServiceBag,
+    AddVisitor, FromServices, MissingServicesDiagnostic, Phase, Phases, QueryKey, QueryMatch,
+    Queryable, RuleKey, ServiceBag, SyntaxVisitor,
 };
 use rome_aria::{AriaProperties, AriaRoles};
-use rome_js_syntax::JsLanguage;
+use rome_js_syntax::{AnyJsRoot, JsLanguage};
 use rome_rowan::AstNode;
 use std::sync::Arc;
 
@@ -58,6 +58,10 @@ where
     type Output = N;
     type Language = JsLanguage;
     type Services = AriaServices;
+
+    fn build_visitor(analyzer: &mut impl AddVisitor<JsLanguage>, _: &AnyJsRoot) {
+        analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default());
+    }
 
     /// Match on [QueryMatch::Syntax] if the kind of the syntax node matches
     /// the kind set of `N`

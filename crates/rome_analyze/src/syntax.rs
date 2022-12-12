@@ -2,7 +2,6 @@ use rome_rowan::{Language, SyntaxNode, WalkEvent};
 
 use crate::{QueryMatch, Visitor, VisitorContext};
 
-#[derive(Default)]
 /// The [SyntaxVisitor] is the simplest form of visitor implemented for the
 /// analyzer, it simply broadcast each [WalkEvent::Enter] as a query match
 /// event for the [SyntaxNode] being entered
@@ -12,6 +11,12 @@ pub struct SyntaxVisitor<L: Language> {
     /// of that subtree. The visitor will then ignore all events until it
     /// receives a [WalkEvent::Leave] for the `skip_subtree` node
     skip_subtree: Option<SyntaxNode<L>>,
+}
+
+impl<L: Language> Default for SyntaxVisitor<L> {
+    fn default() -> Self {
+        Self { skip_subtree: None }
+    }
 }
 
 impl<L: Language> Visitor for SyntaxVisitor<L> {
@@ -116,7 +121,7 @@ mod tests {
             &mut emit_signal,
         );
 
-        analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default());
+        analyzer.add_visitor(Phases::Syntax, Box::new(SyntaxVisitor::default()));
 
         let ctx: AnalyzerContext<RawLanguage> = AnalyzerContext {
             file_id: FileId::zero(),

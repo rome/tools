@@ -1,20 +1,21 @@
-use std::{borrow, collections::BTreeSet};
+use std::{any::TypeId, borrow, collections::BTreeSet};
 
 use crate::{
-    context::RuleContext,
+    context::{RuleContext, ServiceBagRuleOptionsWrapper},
     matcher::{GroupKey, MatchQueryParams},
+    options::OptionsDeserializationDiagnostic,
     query::{QueryKey, QueryMatch, Queryable},
     signals::RuleSignal,
-    AnalysisFilter, GroupCategory, QueryMatcher, Rule, RuleGroup, RuleKey, RuleMetadata,
-    SignalEntry,
+    AddVisitor, AnalysisFilter, AnalyzerOptions, DeserializableRuleOptions, GroupCategory,
+    QueryMatcher, Rule, RuleGroup, RuleKey, RuleMetadata, ServiceBag, SignalEntry, Visitor,
 };
 use rome_diagnostics::Error;
 use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
-use rustc_hash::FxHashSet;
+use rustc_hash::{FxHashMap, FxHashSet};
 
 /// Defines all the phases that the [RuleRegistry] supports.
 #[repr(usize)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum Phases {
     Syntax = 0,
     Semantic = 1,
@@ -103,12 +104,21 @@ pub struct RuleRegistry<L: Language> {
 }
 
 impl<L: Language + Default> RuleRegistry<L> {
-    pub fn builder<'a>(filter: &'a AnalysisFilter<'a>) -> RuleRegistryBuilder<'a, L> {
+    pub fn builder<'a>(
+        filter: &'a AnalysisFilter<'a>,
+        options: &'a AnalyzerOptions,
+        root: &'a L::Root,
+    ) -> RuleRegistryBuilder<'a, L> {
         RuleRegistryBuilder {
+            filter,
+            options,
+            root,
             registry: RuleRegistry {
                 phase_rules: Default::default(),
             },
-            filter,
+            visitors: FxHashMap::default(),
+            services: ServiceBag::default(),
+            diagnostics: Vec::new(),
         }
     }
 }
@@ -126,8 +136,16 @@ struct PhaseRules<L: Language> {
 }
 
 pub struct RuleRegistryBuilder<'a, L: Language> {
-    registry: RuleRegistry<L>,
     filter: &'a AnalysisFilter<'a>,
+    options: &'a AnalyzerOptions,
+    root: &'a L::Root,
+    // Rule Registry
+    registry: RuleRegistry<L>,
+    // Analyzer Visitors
+    visitors: FxHashMap<(Phases, TypeId), Box<dyn Visitor<Language = L>>>,
+    // Service Bag
+    services: ServiceBag,
+    diagnostics: Vec<OptionsDeserializationDiagnostic>,
 }
 
 impl<L: Language + Default> RegistryVisitor<L> for RuleRegistryBuilder<'_, L> {
@@ -189,12 +207,57 @@ impl<L: Language + Default> RegistryVisitor<L> for RuleRegistryBuilder<'_, L> {
         }
 
         phase.rule_states.push(RuleState::default());
+
+        let rule_key = RuleKey::rule::<R>();
+        let options = if let Some(options) = self.options.configuration.rules.get_rule(&rule_key) {
+            let value = options.value();
+            match <R::Options as DeserializableRuleOptions>::try_from(value.clone()) {
+                Ok(result) => Ok(result),
+                Err(error) => Err(OptionsDeserializationDiagnostic::new(
+                    rule_key.rule_name(),
+                    value.to_string(),
+                    error,
+                )),
+            }
+        } else {
+            Ok(<R::Options as Default>::default())
+        };
+
+        match options {
+            Ok(options) => self
+                .services
+                .insert_service(ServiceBagRuleOptionsWrapper::<R>(options)),
+            Err(err) => self.diagnostics.push(err),
+        }
+
+        <R::Query as Queryable>::build_visitor(&mut self.visitors, self.root);
     }
 }
 
+impl<L: Language> AddVisitor<L> for FxHashMap<(Phases, TypeId), Box<dyn Visitor<Language = L>>> {
+    fn add_visitor<V>(&mut self, phase: Phases, visitor: V)
+    where
+        V: Visitor<Language = L> + 'static,
+    {
+        self.insert((phase, TypeId::of::<V>()), Box::new(visitor));
+    }
+}
+
+type BuilderResult<L> = (
+    RuleRegistry<L>,
+    ServiceBag,
+    Vec<OptionsDeserializationDiagnostic>,
+    FxHashMap<(Phases, TypeId), Box<dyn Visitor<Language = L>>>,
+);
+
 impl<L: Language> RuleRegistryBuilder<'_, L> {
-    pub fn build(self) -> RuleRegistry<L> {
-        self.registry
+    pub fn build(self) -> BuilderResult<L> {
+        (
+            self.registry,
+            self.services,
+            self.diagnostics,
+            self.visitors,
+        )
     }
 }
 

@@ -28,7 +28,7 @@ pub use crate::diagnostics::AnalyzerDiagnostic;
 use crate::diagnostics::SuppressionDiagnostic;
 pub use crate::matcher::{InspectMatcher, MatchQueryParams, QueryMatcher, RuleKey, SignalEntry};
 pub use crate::options::{AnalyzerConfiguration, AnalyzerOptions, AnalyzerRules};
-pub use crate::query::{Ast, QueryKey, QueryMatch, Queryable};
+pub use crate::query::{AddVisitor, Ast, QueryKey, QueryMatch, Queryable};
 pub use crate::registry::{
     LanguageRoot, MetadataRegistry, Phase, Phases, RegistryRuleMetadata, RegistryVisitor,
     RuleRegistry, RuleRegistryBuilder, RuleSuppressions,
@@ -107,14 +107,12 @@ where
         }
     }
 
-    pub fn add_visitor<V>(&mut self, phase: Phases, visitor: V)
-    where
-        V: Visitor<Language = L> + 'analyzer,
-    {
-        self.phases
-            .entry(phase)
-            .or_default()
-            .push(Box::new(visitor));
+    pub fn add_visitor(
+        &mut self,
+        phase: Phases,
+        visitor: Box<dyn Visitor<Language = L> + 'analyzer>,
+    ) {
+        self.phases.entry(phase).or_default().push(visitor);
     }
 
     pub fn run(self, mut ctx: AnalyzerContext<L>) -> Option<Break> {
