@@ -27,7 +27,7 @@ impl VisitConfigurationNode<JsonLanguage> for FilesConfiguration {
         let name_text = name.text();
         match name_text {
             "maxSize" => {
-                self.max_size = NonZeroU64::new(self.map_to_u64(&value, name_text)?);
+                self.max_size = NonZeroU64::new(self.map_to_u64(&value, name_text, u64::MAX)?);
             }
             "ignore" => {
                 self.ignore = self.map_to_index_set_string(&value, name_text)?;

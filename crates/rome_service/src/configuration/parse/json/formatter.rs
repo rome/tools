@@ -4,6 +4,7 @@ use crate::configuration::parse::json::{
 use crate::configuration::visitor::VisitConfigurationNode;
 use crate::configuration::{FormatterConfiguration, PlainIndentStyle};
 use crate::ConfigurationDiagnostic;
+use rome_console::markup;
 use rome_formatter::LineWidth;
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::{AstNode, SyntaxNode};
@@ -38,13 +39,14 @@ impl VisitConfigurationNode<JsonLanguage> for FormatterConfiguration {
                 self.indent_style = indent_style;
             }
             "indentSize" => {
-                self.indent_size = self.map_to_u8(&value, name_text)?;
+                self.indent_size = self.map_to_u8(&value, name_text, u8::MAX)?;
             }
             "lineWidth" => {
-                let line_width = self.map_to_u16(&value, name_text)?;
+                let line_width = self.map_to_u16(&value, name_text, LineWidth::MAX)?;
                 self.line_width = LineWidth::try_from(line_width).map_err(|err| {
                     ConfigurationDiagnostic::new_deserialization_error(err.to_string())
                         .with_span(value.range())
+                        .with_hint(markup! {"Maximum value accepted is "{{LineWidth::MAX}}})
                 })?;
             }
             _ => {}

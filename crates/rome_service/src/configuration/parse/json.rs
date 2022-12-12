@@ -9,11 +9,13 @@ mod linter;
 use crate::configuration::visitor::VisitConfigurationNode;
 use crate::ConfigurationDiagnostic;
 use indexmap::IndexSet;
+use rome_console::markup;
 use rome_json_syntax::{
     AnyJsonValue, JsonArrayValue, JsonBooleanValue, JsonLanguage, JsonMemberName, JsonNumberValue,
     JsonObjectValue, JsonRoot, JsonStringValue, JsonSyntaxNode,
 };
-use rome_rowan::{AstNode, AstSeparatedList, SyntaxNodeCast, SyntaxTokenText};
+use rome_rowan::{AstNode, AstSeparatedList, SyntaxNodeCast, SyntaxTokenText, TextRange};
+use std::num::ParseIntError;
 
 pub fn parse_configuration_from_json(
     root: JsonRoot,
@@ -165,14 +167,24 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
     /// It will fail if:
     /// - `value` can't be cast to [JsonNumberValue]
     /// - the value of the node can't be parsed to [u8]
-    fn map_to_u8(&self, value: &AnyJsonValue, name: &str) -> Result<u8, ConfigurationDiagnostic> {
+    fn map_to_u8(
+        &self,
+        value: &AnyJsonValue,
+        name: &str,
+        maximum: u8,
+    ) -> Result<u8, ConfigurationDiagnostic> {
         let value = JsonNumberValue::cast_ref(value.syntax()).ok_or_else(|| {
             ConfigurationDiagnostic::new_incorrect_type_for_value(name, "number")
                 .with_span(value.range())
         })?;
-        value.value_token()?.text().parse::<u8>().map_err(|err| {
-            ConfigurationDiagnostic::new_deserialization_error(err.to_string())
-                .with_span(value.range())
+        let value = value.value_token()?;
+        value.text_trimmed().parse::<u8>().map_err(|err| {
+            emit_diagnostic_form_number(
+                err,
+                value.text_trimmed(),
+                value.text_trimmed_range(),
+                maximum,
+            )
         })
     }
 
@@ -183,14 +195,25 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
     /// It will fail if:
     /// - `value` can't be cast to [JsonNumberValue]
     /// - the value of the node can't be parsed to [u16]
-    fn map_to_u16(&self, value: &AnyJsonValue, name: &str) -> Result<u16, ConfigurationDiagnostic> {
+    fn map_to_u16(
+        &self,
+        value: &AnyJsonValue,
+        name: &str,
+        maximum: u16,
+    ) -> Result<u16, ConfigurationDiagnostic> {
         let value = JsonNumberValue::cast_ref(value.syntax()).ok_or_else(|| {
             ConfigurationDiagnostic::new_incorrect_type_for_value(name, "number")
                 .with_span(value.range())
         })?;
-        value.value_token()?.text().parse::<u16>().map_err(|err| {
-            ConfigurationDiagnostic::new_deserialization_error(err.to_string())
-                .with_span(value.range())
+        let value = value.value_token()?;
+
+        value.text_trimmed().parse::<u16>().map_err(|err| {
+            emit_diagnostic_form_number(
+                err,
+                value.text_trimmed(),
+                value.text_trimmed_range(),
+                maximum,
+            )
         })
     }
 
@@ -201,14 +224,25 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
     /// It will fail if:
     /// - `value` can't be cast to [JsonNumberValue]
     /// - the value of the node can't be parsed to [u64]
-    fn map_to_u64(&self, value: &AnyJsonValue, name: &str) -> Result<u64, ConfigurationDiagnostic> {
+    fn map_to_u64(
+        &self,
+        value: &AnyJsonValue,
+        name: &str,
+        maximum: u64,
+    ) -> Result<u64, ConfigurationDiagnostic> {
         let value = JsonNumberValue::cast_ref(value.syntax()).ok_or_else(|| {
             ConfigurationDiagnostic::new_incorrect_type_for_value(name, "number")
                 .with_span(value.range())
         })?;
-        value.value_token()?.text().parse::<u64>().map_err(|err| {
-            ConfigurationDiagnostic::new_deserialization_error(err.to_string())
-                .with_span(value.range())
+        let value = value.value_token()?;
+
+        value.text_trimmed().parse::<u64>().map_err(|err| {
+            emit_diagnostic_form_number(
+                err,
+                value.text_trimmed(),
+                value.text_trimmed_range(),
+                maximum,
+            )
         })
     }
 
@@ -294,5 +328,22 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
             visitor.visit_map(element.name()?.syntax(), element.value()?.syntax())?;
         }
         Ok(())
+    }
+}
+
+fn emit_diagnostic_form_number(
+    parse_error: ParseIntError,
+    value_text: &str,
+    value_range: TextRange,
+    maximum: impl rome_console::fmt::Display,
+) -> ConfigurationDiagnostic {
+    if value_text.starts_with("-") {
+        ConfigurationDiagnostic::new_deserialization_error(parse_error.to_string())
+            .with_span(value_range)
+            .with_hint(markup! {"Value can't be negative"})
+    } else {
+        ConfigurationDiagnostic::new_deserialization_error(parse_error.to_string())
+            .with_span(value_range)
+            .with_hint(markup! {"Maximum value accepted is "{{maximum}}})
     }
 }

@@ -177,6 +177,12 @@ impl ConfigurationDiagnostic {
         ));
         self
     }
+
+    /// It adds an hint message after the main diagnostic message
+    pub(crate) fn with_hint(mut self, message: impl Display) -> Self {
+        self.advices.hint = Some(markup! {{message}}.to_owned());
+        self
+    }
 }
 
 impl Debug for ConfigurationDiagnostic {
@@ -281,11 +287,16 @@ pub(crate) fn from_serde_error_to_range(
 
 #[derive(Debug, Serialize, Deserialize, Default)]
 pub struct ConfigurationAdvices {
+    hint: Option<MarkupBuf>,
     known_keys: Option<(MarkupBuf, Vec<MarkupBuf>)>,
 }
 
 impl Advices for ConfigurationAdvices {
     fn record(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
+        if let Some(hint) = self.hint.as_ref() {
+            visitor.record_log(LogCategory::Info, hint)?;
+        }
+
         if let Some((message, known_keys)) = self.known_keys.as_ref() {
             visitor.record_log(LogCategory::Info, message)?;
             let list: Vec<_> = known_keys
