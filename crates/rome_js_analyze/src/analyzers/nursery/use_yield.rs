@@ -129,5 +129,5 @@ fn has_yield_expression(node: &SyntaxNode<JsLanguage>) -> bool {
         };
     }
 
-    return false;
+    false
 }
