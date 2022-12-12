@@ -75,7 +75,6 @@ inside the `semantic_analyzers` folder
    use rome_analyze::context::RuleContext;
 
    impl Rule for UseAwesomeTricks {
-        const CATEGORY: RuleCategory = RuleCategory::Lint;
         type Query = Semantic<JsAnyExpression>;
         type State = String;
         type Signals = Option<Self::State>;
@@ -84,14 +83,13 @@ inside the `semantic_analyzers` folder
         fn run(ctx: &RuleContext<Self>) -> Self::Signals {}
    }
    ```
-5. the const `CATEGORY` must be `RuleCategory::Lint` otherwise it won't work
-6. the `Query` needs to have the `Semantic` type, because we want to have access to the semantic model.
+5. the `Query` needs to have the `Semantic` type, because we want to have access to the semantic model.
 `Query` tells the engine on which AST node we want to trigger the rule.
-7. The `State` type doesn't have to be used, so it can be considered optional, but it has
+6. The `State` type doesn't have to be used, so it can be considered optional, but it has
 be defined as `type State = ()`
-8. The `run` function must be implemented. This function is called every time the analyzer
+7. The `run` function must be implemented. This function is called every time the analyzer
 finds a match for the query specified by the rule, and may return zero or more "signals".
-9. Implement the optional `diagnostic` function, to tell the user where's the error and why:
+8. Implement the optional `diagnostic` function, to tell the user where's the error and why:
     ```rust,ignore
     impl Rule for UseAwesomeTricks {
         // .. code
@@ -104,7 +102,7 @@ finds a match for the query specified by the rule, and may return zero or more "
 
     You will have to manually update the file `rome_diagnostics_categories/src/categories.rs` and add a new category
     for the new rule you're about to create.
-10. Implement the optional `action` function, if we are able to provide automatic code fix to the rule:
+9. Implement the optional `action` function, if we are able to provide automatic code fix to the rule:
     ```rust,ignore
     impl Rule for UseAwesomeTricks {
         // .. code
