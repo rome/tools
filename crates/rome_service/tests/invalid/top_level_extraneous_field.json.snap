@@ -18,7 +18,7 @@ top_level_extraneous_field.json:2:2 configuration ━━━━━━━━━━
   - linter
   - formatter
   - javascript
-  - schema
+  - $schema
   
 
 

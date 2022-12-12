@@ -77,7 +77,7 @@ impl Default for Configuration {
 
 impl Configuration {
     const KNOWN_KEYS: &'static [&'static str] =
-        &["files", "linter", "formatter", "javascript", "schema"];
+        &["files", "linter", "formatter", "javascript", "$schema"];
 }
 
 impl Configuration {
