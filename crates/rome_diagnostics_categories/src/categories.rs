@@ -108,6 +108,7 @@ define_dategories! {
     "lint/nursery/noSvgWithoutTitle": "https://docs.rome.tools/lint/rules/noSvgWithoutTitle",
     "lint/nursery/noUselessCatch": "https://docs.rome.tools/lint/rules/noUselessCatch",
     // Insert new nursery rule here
+    "lint/nursery/noRedeclaration": "https://docs.rome.tools/lint/rules/noRedeclaration",
 
     // performance
     "lint/performance/noDelete": "https://docs.rome.tools/lint/rules/noDelete",
