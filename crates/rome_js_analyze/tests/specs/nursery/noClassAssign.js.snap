@@ -74,7 +74,6 @@ function case11() {
 }
 
 // /* Invalid  */
-
 function case12() {
 	class A { }
 	A = 0;
@@ -121,171 +120,101 @@ function case18() {
 
 # Diagnostics
 ```
-noClassAssign.js:72:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noClassAssign.js:71:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Don't reassign classes.
   
-    71 │ function case12() {
-  > 72 │ 	class A { }
+    69 │ // /* Invalid  */
+    70 │ function case12() {
+  > 71 │ 	class A { }
        │ 	      ^
-    73 │ 	A = 0;
-    74 │ }
-  
-  i Reassigned here.
-  
-    71 │ function case12() {
-    72 │ 	class A { }
-  > 73 │ 	A = 0;
-       │ 	^
-    74 │ }
-    75 │ 
+    72 │ 	A = 0;
+    73 │ }
   
 
 ```
 
 ```
-noClassAssign.js:77:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noClassAssign.js:76:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Don't reassign classes.
   
-    76 │ function case13() {
-  > 77 │ 	class B { }
+    75 │ function case13() {
+  > 76 │ 	class B { }
        │ 	      ^
-    78 │ 	({B} = 0);
-    79 │ }
-  
-  i Reassigned here.
-  
-    76 │ function case13() {
-    77 │ 	class B { }
-  > 78 │ 	({B} = 0);
-       │ 	  ^
-    79 │ }
-    80 │ 
+    77 │ 	({B} = 0);
+    78 │ }
   
 
 ```
 
 ```
-noClassAssign.js:82:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noClassAssign.js:81:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Don't reassign classes.
   
-    81 │ function case14() {
-  > 82 │ 	class C { }
+    80 │ function case14() {
+  > 81 │ 	class C { }
        │ 	      ^
-    83 │ 	({b: C = 0} = {});
-    84 │ }
-  
-  i Reassigned here.
-  
-    81 │ function case14() {
-    82 │ 	class C { }
-  > 83 │ 	({b: C = 0} = {});
-       │ 	     ^
-    84 │ }
-    85 │ 
+    82 │ 	({b: C = 0} = {});
+    83 │ }
   
 
 ```
 
 ```
-noClassAssign.js:88:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noClassAssign.js:87:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Don't reassign classes.
   
-    86 │ function case15() {
-    87 │ 	D = 0;
-  > 88 │ 	class D { }
+    85 │ function case15() {
+    86 │ 	D = 0;
+  > 87 │ 	class D { }
        │ 	      ^
-    89 │ }
-    90 │ 
-  
-  i Reassigned here.
-  
-    86 │ function case15() {
-  > 87 │ 	D = 0;
-       │ 	^
-    88 │ 	class D { }
-    89 │ }
+    88 │ }
+    89 │ 
   
 
 ```
 
 ```
-noClassAssign.js:92:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noClassAssign.js:91:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Don't reassign classes.
   
-    91 │ function case16() {
-  > 92 │ 	class E {
+    90 │ function case16() {
+  > 91 │ 	class E {
        │ 	      ^
-    93 │ 		b() {
-    94 │ 			E = 0;
-  
-  i Reassigned here.
-  
-    92 │ 	class E {
-    93 │ 		b() {
-  > 94 │ 			E = 0;
-       │ 			^
-    95 │ 		}
-    96 │ 	}
+    92 │ 		b() {
+    93 │ 			E = 0;
   
 
 ```
 
 ```
-noClassAssign.js:100:16 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noClassAssign.js:99:16 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Don't reassign classes.
   
-     99 │ function case17() {
-  > 100 │ 	let F = class F {
+     98 │ function case17() {
+   > 99 │ 	let F = class F {
         │ 	              ^
-    101 │ 		b() {
-    102 │ 			F = 0;
-  
-  i Reassigned here.
-  
-    100 │ 	let F = class F {
-    101 │ 		b() {
-  > 102 │ 			F = 0;
-        │ 			^
-    103 │ 		}
-    104 │ 	}
+    100 │ 		b() {
+    101 │ 			F = 0;
   
 
 ```
 
 ```
-noClassAssign.js:108:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noClassAssign.js:107:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Don't reassign classes.
   
-    107 │ function case18() {
-  > 108 │ 	class G { }
+    106 │ function case18() {
+  > 107 │ 	class G { }
         │ 	      ^
-    109 │ 	G = 0;
-    110 │ 	G = 1;
-  
-  i Reassigned here.
-  
-    107 │ function case18() {
-    108 │ 	class G { }
-  > 109 │ 	G = 0;
-        │ 	^
-    110 │ 	G = 1;
-    111 │ }
-  
-  i Reassigned here.
-  
-    108 │ 	class G { }
-    109 │ 	G = 0;
-  > 110 │ 	G = 1;
-        │ 	^
-    111 │ }
-    112 │ 
+    108 │ 	G = 0;
+    109 │ 	G = 1;
   
 
 ```

@@ -67,7 +67,6 @@ function case11() {
 }
 
 // /* Invalid  */
-
 function case12() {
 	class A { }
 	A = 0;

@@ -1,8 +1,8 @@
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
-use rome_js_semantic::{Reference, ReferencesExtensions};
-use rome_js_syntax::{JsClassDeclaration, JsClassExpression, JsIdentifierBinding};
-use rome_rowan::{declare_node_union, AstNode};
+use rome_js_semantic::ReferencesExtensions;
+use rome_js_syntax::{AnyJsClass, JsIdentifierBinding};
+use rome_rowan::AstNode;
 
 use crate::semantic_services::Semantic;
 
@@ -72,44 +72,30 @@ declare_rule! {
     }
 }
 
-declare_node_union! {
-    pub(crate) AnyClass = JsClassDeclaration | JsClassExpression
-}
-
 impl Rule for NoClassAssign {
-    type Query = Semantic<JsIdentifierBinding>;
-    type State = Vec<Reference>;
+    type Query = Semantic<AnyJsClass>;
+    type State = JsIdentifierBinding;
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-        let binding = ctx.query();
+        let node = ctx.query();
         let model = ctx.model();
+        let binding = node.id().ok()??;
+        let binding = binding.as_js_identifier_binding()?;
 
-        // ensures that we only verifies class bindings
-        binding.parent::<AnyClass>()?;
-
-        let all_writes: Vec<Reference> = binding.all_writes(model).collect();
-
-        if all_writes.is_empty() {
-            None
+        if binding.all_writes(model).count() > 0 {
+            Some(binding.clone())
         } else {
-            Some(all_writes)
+            None
         }
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, references: &Self::State) -> Option<RuleDiagnostic> {
-        let mut diagnostic = RuleDiagnostic::new(
+    fn diagnostic(_: &RuleContext<Self>, class_id: &Self::State) -> Option<RuleDiagnostic> {
+        Some(RuleDiagnostic::new(
             rule_category!(),
-            ctx.query().range(),
+            class_id.range(),
             "Don't reassign classes.",
-        );
-
-        for reference in references.iter() {
-            diagnostic =
-                diagnostic.detail(reference.syntax().text_trimmed_range(), "Reassigned here.");
-        }
-
-        Some(diagnostic)
+        ))
     }
 }
