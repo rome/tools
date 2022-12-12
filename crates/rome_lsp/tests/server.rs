@@ -48,6 +48,10 @@ use tower_lsp::lsp_types::WorkDoneProgressParams;
 use tower_lsp::LspService;
 use tower_lsp::{jsonrpc::Request, lsp_types::InitializeParams};
 
+/// Statically build an [lsp::Url] instance that points to the file at `$path`
+/// within the workspace. The filesystem path contained in the return URI is
+/// guaranteed to be a valid path for the underlying operating system, but
+/// doesn't have to refer to an existing file on the host machine.
 macro_rules! url {
     ($path:literal) => {
         if cfg!(windows) {

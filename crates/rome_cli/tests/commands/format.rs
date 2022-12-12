@@ -1111,13 +1111,16 @@ fn does_not_format_ignored_directories() {
         CONFIG_FORMATTER_IGNORED_DIRECTORIES.as_bytes(),
     );
 
-    const FILES: [(&str, bool); 6] = [
+    const FILES: [(&str, bool); 9] = [
         ("test.js", true),
         ("test1.js", false),
         ("test2.js", false),
         ("test3/test.js", false),
         ("test4/test.js", true),
         ("test5/test.js", false),
+        ("test6/test.js", false),
+        ("test/test.test7.js", false),
+        ("test.test7.js", false),
     ];
 
     for (file_path, _) in FILES {

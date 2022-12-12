@@ -12,7 +12,9 @@ expression: content
       "./test2.js",
       "./test3/**/*",
       "/test4/**/*",
-      "test5/**/*"
+      "test5/**/*",
+      "**/test6/*.js",
+      "*.test7.js"
     ]
   }
 }
@@ -24,6 +26,18 @@ expression: content
 ```js
 statement();
 
+```
+
+## `test.test7.js`
+
+```js
+  statement(  )  
+```
+
+## `test/test.test7.js`
+
+```js
+  statement(  )  
 ```
 
 ## `test1.js`
@@ -52,6 +66,12 @@ statement();
 ```
 
 ## `test5/test.js`
+
+```js
+  statement(  )  
+```
+
+## `test6/test.js`
 
 ```js
   statement(  )  
