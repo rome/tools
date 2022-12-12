@@ -55,7 +55,7 @@ fn has_only_known_keys(
                     .with_known_keys("Accepted keys", allowed_keys))
             }
         })
-        .unwrap_or(Err(ConfigurationDiagnostic::new_syntax_error()))
+        .unwrap_or_else(|| Err(ConfigurationDiagnostic::new_syntax_error()))
 }
 
 /// Convenient function that returns a [JsonStringValue] from a generic node, and checks
@@ -81,7 +81,7 @@ fn with_only_known_variants(
                 )
             }
         })
-        .unwrap_or(Err(ConfigurationDiagnostic::new_syntax_error()))
+        .unwrap_or_else(|| Err(ConfigurationDiagnostic::new_syntax_error()))
 }
 
 /// Convenient trait that contains utility functions to work with [JsonLanguage]
@@ -105,13 +105,13 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
         let member = key
             .clone()
             .cast::<JsonMemberName>()
-            .ok_or(ConfigurationDiagnostic::new_syntax_error())?;
+            .ok_or_else(ConfigurationDiagnostic::new_syntax_error)?;
         self.visit_member_name(member.syntax())?;
         let name = member.inner_string_text()?;
         let value = value
             .clone()
             .cast::<AnyJsonValue>()
-            .ok_or(ConfigurationDiagnostic::new_syntax_error())?;
+            .ok_or_else(ConfigurationDiagnostic::new_syntax_error)?;
 
         Ok((name, value))
     }
@@ -132,10 +132,10 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
     where
         T: VisitConfigurationNode<JsonLanguage>,
     {
-        let value = JsonStringValue::cast_ref(value.syntax()).ok_or(
+        let value = JsonStringValue::cast_ref(value.syntax()).ok_or_else(|| {
             ConfigurationDiagnostic::new_incorrect_type_for_value(name, "string")
-                .with_span(value.range()),
-        )?;
+                .with_span(value.range())
+        })?;
 
         visitor.visit_member_value(value.syntax())?;
         Ok(())
@@ -151,10 +151,10 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
         value: &AnyJsonValue,
         name: &str,
     ) -> Result<String, ConfigurationDiagnostic> {
-        let value = JsonStringValue::cast_ref(value.syntax()).ok_or(
+        let value = JsonStringValue::cast_ref(value.syntax()).ok_or_else(|| {
             ConfigurationDiagnostic::new_incorrect_type_for_value(name, "string")
-                .with_span(value.range()),
-        )?;
+                .with_span(value.range())
+        })?;
         Ok(value.text())
     }
 
@@ -166,10 +166,10 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
     /// - `value` can't be cast to [JsonNumberValue]
     /// - the value of the node can't be parsed to [u8]
     fn map_to_u8(&self, value: &AnyJsonValue, name: &str) -> Result<u8, ConfigurationDiagnostic> {
-        let value = JsonNumberValue::cast_ref(value.syntax()).ok_or(
+        let value = JsonNumberValue::cast_ref(value.syntax()).ok_or_else(|| {
             ConfigurationDiagnostic::new_incorrect_type_for_value(name, "number")
-                .with_span(value.range()),
-        )?;
+                .with_span(value.range())
+        })?;
         value.value_token()?.text().parse::<u8>().map_err(|err| {
             ConfigurationDiagnostic::new_deserialization_error(err.to_string())
                 .with_span(value.range())
@@ -184,10 +184,10 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
     /// - `value` can't be cast to [JsonNumberValue]
     /// - the value of the node can't be parsed to [u16]
     fn map_to_u16(&self, value: &AnyJsonValue, name: &str) -> Result<u16, ConfigurationDiagnostic> {
-        let value = JsonNumberValue::cast_ref(value.syntax()).ok_or(
+        let value = JsonNumberValue::cast_ref(value.syntax()).ok_or_else(|| {
             ConfigurationDiagnostic::new_incorrect_type_for_value(name, "number")
-                .with_span(value.range()),
-        )?;
+                .with_span(value.range())
+        })?;
         value.value_token()?.text().parse::<u16>().map_err(|err| {
             ConfigurationDiagnostic::new_deserialization_error(err.to_string())
                 .with_span(value.range())
@@ -202,10 +202,10 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
     /// - `value` can't be cast to [JsonNumberValue]
     /// - the value of the node can't be parsed to [u64]
     fn map_to_u64(&self, value: &AnyJsonValue, name: &str) -> Result<u64, ConfigurationDiagnostic> {
-        let value = JsonNumberValue::cast_ref(value.syntax()).ok_or(
+        let value = JsonNumberValue::cast_ref(value.syntax()).ok_or_else(|| {
             ConfigurationDiagnostic::new_incorrect_type_for_value(name, "number")
-                .with_span(value.range()),
-        )?;
+                .with_span(value.range())
+        })?;
         value.value_token()?.text().parse::<u64>().map_err(|err| {
             ConfigurationDiagnostic::new_deserialization_error(err.to_string())
                 .with_span(value.range())
@@ -222,10 +222,10 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
         value: &AnyJsonValue,
         name: &str,
     ) -> Result<bool, ConfigurationDiagnostic> {
-        let value = JsonBooleanValue::cast_ref(value.syntax()).ok_or(
+        let value = JsonBooleanValue::cast_ref(value.syntax()).ok_or_else(|| {
             ConfigurationDiagnostic::new_incorrect_type_for_value(name, "boolean")
-                .with_span(value.range()),
-        )?;
+                .with_span(value.range())
+        })?;
         Ok(value.value_token()?.text() == "true")
     }
 
@@ -241,10 +241,10 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
         value: &AnyJsonValue,
         name: &str,
     ) -> Result<Option<IndexSet<String>>, ConfigurationDiagnostic> {
-        let array = JsonArrayValue::cast_ref(value.syntax()).ok_or(
+        let array = JsonArrayValue::cast_ref(value.syntax()).ok_or_else(|| {
             ConfigurationDiagnostic::new_incorrect_type_for_value(name, "array")
-                .with_span(value.range()),
-        )?;
+                .with_span(value.range())
+        })?;
         let mut elements = IndexSet::new();
         if array.elements().is_empty() {
             return Ok(None);
@@ -285,10 +285,10 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
     where
         T: VisitConfigurationNode<JsonLanguage>,
     {
-        let value = JsonObjectValue::cast_ref(value.syntax()).ok_or(
+        let value = JsonObjectValue::cast_ref(value.syntax()).ok_or_else(|| {
             ConfigurationDiagnostic::new_incorrect_type_for_value(name, "object")
-                .with_span(value.range()),
-        )?;
+                .with_span(value.range())
+        })?;
         for element in value.json_member_list() {
             let element = element?;
             visitor.visit_map(element.name()?.syntax(), element.value()?.syntax())?;

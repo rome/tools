@@ -5,11 +5,15 @@ use rome_rowan::{Language, SyntaxNode};
 pub trait VisitConfigurationNode<L: Language> {
     /// Called when visiting the key of a member
     fn visit_member_name(&mut self, node: &SyntaxNode<L>) -> Result<(), ConfigurationDiagnostic> {
-        Err(ConfigurationDiagnostic::unexpected(node.text_trimmed_range()))
+        Err(ConfigurationDiagnostic::unexpected(
+            node.text_trimmed_range(),
+        ))
     }
     /// Called when visiting the value of a member
     fn visit_member_value(&mut self, node: &SyntaxNode<L>) -> Result<(), ConfigurationDiagnostic> {
-        Err(ConfigurationDiagnostic::unexpected(node.text_trimmed_range()))
+        Err(ConfigurationDiagnostic::unexpected(
+            node.text_trimmed_range(),
+        ))
     }
 
     /// Called when visiting a list of key-value.

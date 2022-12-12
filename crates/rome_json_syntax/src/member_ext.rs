@@ -6,7 +6,7 @@ impl JsonMemberName {
         let value = self.value_token()?;
         let mut text = value.token_text_trimmed();
 
-        static QUOTES: [char; 2] = ['"', '\''];
+        static QUOTES: [char; 1] = ['"'];
 
         if text.starts_with(QUOTES) {
             let range = text.range().add_start(TextSize::from(1));

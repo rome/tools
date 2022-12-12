@@ -7,7 +7,6 @@ use std::path::Path;
 tests_macros::gen_tests! {"tests/invalid/*.{json}", crate::run_invalid_configurations, "module"}
 
 fn run_invalid_configurations(input: &'static str, _: &str, _: &str, _: &str) {
-    dbg!(&input);
     let input_file = Path::new(input);
     let file_name = input_file.file_name().and_then(OsStr::to_str).unwrap();
     let extension = input_file.extension().and_then(OsStr::to_str).unwrap();
