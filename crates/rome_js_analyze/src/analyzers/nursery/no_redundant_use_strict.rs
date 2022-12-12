@@ -2,7 +2,9 @@ use crate::JsRuleAction;
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{JsDirective, JsDirectiveList, JsFunctionBody, JsModule, JsScript};
+use rome_js_syntax::{
+    AnyJsClass, JsDirective, JsDirectiveList, JsFunctionBody, JsModule, JsScript,
+};
 
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 
@@ -12,13 +14,13 @@ declare_rule! {
  /// ## Examples
  ///
  /// ### Invalid
- /// ```js,expect_diagnostic
+ /// ```cjs,expect_diagnostic
  /// "use strict";
  /// function foo() {
  ///  	"use strict";
  /// }
  /// ```
- /// ```js,expect_diagnostic
+ /// ```cjs,expect_diagnostic
  /// "use strict";
  /// "use strict";
  ///
@@ -26,19 +28,34 @@ declare_rule! {
  ///
  /// }
  /// ```
- /// ```js,expect_diagnostic
+ /// ```cjs,expect_diagnostic
  /// function foo() {
  /// "use strict";
  /// "use strict";
  /// }
+ /// ```
+ /// ```cjs,expect_diagnostic
+ /// class C1 {
+ /// 	test() {
+ /// 		"use strict";
+ /// 	}
+ /// }
+ /// ```
+ /// ```cjs,expect_diagnostic
+ /// const C2 = class {
+ /// 	test() {
+ /// 		"use strict";
+ /// 	}
+ /// };
+ ///
  /// ```
  /// ### Valid
- /// ```js
+ /// ```cjs
  /// function foo() {
  ///
  /// }
  ///```
- /// ```js
+ /// ```cjs
  ///  function foo() {
  ///     "use strict";
  /// }
@@ -55,44 +72,49 @@ declare_rule! {
     }
 }
 
-declare_node_union! { AnyNodeWithDirectives = JsFunctionBody | JsModule | JsScript }
+declare_node_union! { AnyNodeWithDirectives = JsFunctionBody | JsScript }
 impl AnyNodeWithDirectives {
     fn directives(&self) -> JsDirectiveList {
         match self {
             AnyNodeWithDirectives::JsFunctionBody(node) => node.directives(),
             AnyNodeWithDirectives::JsScript(script) => script.directives(),
-            AnyNodeWithDirectives::JsModule(module) => module.directives(),
         }
     }
 }
+declare_node_union! { pub(crate) AnyJsStrictModeNode = AnyJsClass| JsModule | JsDirective  }
 
 impl Rule for NoRedundantUseStrict {
     type Query = Ast<JsDirective>;
-    type State = JsDirective;
+    type State = AnyJsStrictModeNode;
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        let mut outer_most: Option<JsDirective> = None;
-        for parent in node
-            .syntax()
-            .ancestors()
-            .filter_map(AnyNodeWithDirectives::cast)
-        {
-            for directive in parent.directives() {
-                if directive.value_token().map_or(false, |t| {
-                    matches!(t.text_trimmed(), "'use strict'" | "\"use strict\"")
-                }) {
-                    outer_most = Some(directive);
-                    break; // continue with next parent
+        let mut outer_most: Option<AnyJsStrictModeNode> = None;
+        let root = ctx.root();
+        match root {
+            rome_js_syntax::AnyJsRoot::JsModule(js_module) => outer_most = Some(js_module.into()),
+            _ => {
+                for n in node.syntax().ancestors() {
+                    if let Some(parent) = AnyNodeWithDirectives::cast_ref(&n) {
+                        for directive in parent.directives() {
+                            let directive_text = directive.inner_string_text().ok()?;
+                            if directive_text == "use strict" {
+                                outer_most = Some(directive.into());
+                                break; // continue with next parent
+                            }
+                        }
+                    } else if let Some(module_or_class) = AnyJsClass::cast_ref(&n) {
+                        outer_most = Some(module_or_class.into());
+                    }
                 }
             }
         }
 
         if let Some(outer_most) = outer_most {
             // skip itself
-            if &outer_most == node {
+            if outer_most.syntax() == node.syntax() {
                 return None;
             }
             return Some(outer_most);
@@ -101,17 +123,27 @@ impl Rule for NoRedundantUseStrict {
         None
     }
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let diag = RuleDiagnostic::new(
+        let mut diag = RuleDiagnostic::new(
             rule_category!(),
             ctx.query().range(),
             markup! {
                 "Redundant "<Emphasis>{"use strict"}</Emphasis>" directive."
             },
-        )
-        .detail(
-            state.range(),
-            markup! {"This outer "<Emphasis>{"use strict"}</Emphasis>" directive already enables strict mode."},
         );
+
+        match state {
+            AnyJsStrictModeNode::AnyJsClass(js_class) =>  diag = diag.detail(
+                js_class.range(),
+                markup! {"All parts of a class's body are already in strict mode."},
+            ) ,
+            AnyJsStrictModeNode::JsModule(_js_module) => diag= diag.note(
+                markup! {"The entire contents of "<Emphasis>{"JavaScript modules"}</Emphasis>" are automatically in strict mode, with no statement needed to initiate it."},
+            ),
+            AnyJsStrictModeNode::JsDirective(js_directive) => diag= diag.detail(
+                js_directive.range(),
+                markup! {"This outer "<Emphasis>{"use strict"}</Emphasis>" directive already enables strict mode."},
+            ),
+        }
 
         Some(diag)
     }
