@@ -1,5 +1,5 @@
 use crate::file_handlers::Language;
-use crate::ConfigurationError;
+use crate::ConfigurationDiagnostic;
 use rome_console::fmt::Bytes;
 use rome_console::markup;
 use rome_diagnostics::{category, Category, Diagnostic, DiagnosticTags, Location, Severity};
@@ -39,7 +39,7 @@ pub enum WorkspaceError {
     /// Thrown when Rome can't read a generic file
     CantReadFile(String),
     /// Error thrown when validating the configuration. Once deserialized, further checks have to be done.
-    Configuration(ConfigurationError),
+    Configuration(ConfigurationDiagnostic),
     /// Error thrown when Rome cannot rename a symbol.
     RenameError(RenameError),
     /// Error emitted by the underlying transport layer for a remote Workspace

@@ -3,7 +3,7 @@ use crate::configuration::visitor::VisitConfigurationNode;
 use crate::configuration::{
     FilesConfiguration, FormatterConfiguration, JavascriptConfiguration, LinterConfiguration,
 };
-use crate::{Configuration, ConfigurationError};
+use crate::{Configuration, ConfigurationDiagnostic};
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::SyntaxNode;
 use std::num::NonZeroU64;
@@ -14,7 +14,7 @@ impl VisitConfigurationNode<JsonLanguage> for FilesConfiguration {
     fn visit_member_name(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
-    ) -> Result<(), ConfigurationError> {
+    ) -> Result<(), ConfigurationDiagnostic> {
         has_only_known_keys(node, FilesConfiguration::KNOWN_KEYS)
     }
 
@@ -22,7 +22,7 @@ impl VisitConfigurationNode<JsonLanguage> for FilesConfiguration {
         &mut self,
         key: &SyntaxNode<JsonLanguage>,
         value: &SyntaxNode<JsonLanguage>,
-    ) -> Result<(), ConfigurationError> {
+    ) -> Result<(), ConfigurationDiagnostic> {
         let (name, value) = self.get_key_and_value(key, value)?;
         let name_text = name.text();
         match name_text {
@@ -41,7 +41,7 @@ impl VisitConfigurationNode<JsonLanguage> for FilesConfiguration {
 impl VisitConfigurationAsJson for Configuration {}
 
 impl VisitConfigurationNode<JsonLanguage> for Configuration {
-    fn visit_member_name(&mut self, node: &JsonSyntaxNode) -> Result<(), ConfigurationError> {
+    fn visit_member_name(&mut self, node: &JsonSyntaxNode) -> Result<(), ConfigurationDiagnostic> {
         has_only_known_keys(node, Configuration::KNOWN_KEYS)
     }
 
@@ -49,7 +49,7 @@ impl VisitConfigurationNode<JsonLanguage> for Configuration {
         &mut self,
         key: &SyntaxNode<JsonLanguage>,
         value: &SyntaxNode<JsonLanguage>,
-    ) -> Result<(), ConfigurationError> {
+    ) -> Result<(), ConfigurationDiagnostic> {
         let (name, value) = self.get_key_and_value(key, value)?;
         let name_text = name.text();
         match name_text {

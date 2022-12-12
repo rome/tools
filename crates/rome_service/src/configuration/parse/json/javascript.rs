@@ -5,14 +5,14 @@ use crate::configuration::parse::json::VisitConfigurationAsJson;
 use crate::configuration::parse::json::{has_only_known_keys, with_only_known_variants};
 use crate::configuration::visitor::VisitConfigurationNode;
 use crate::configuration::{JavascriptConfiguration, JavascriptFormatter};
-use crate::ConfigurationError;
+use crate::ConfigurationDiagnostic;
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::SyntaxNode;
 
 impl VisitConfigurationAsJson for JavascriptConfiguration {}
 
 impl VisitConfigurationNode<JsonLanguage> for JavascriptConfiguration {
-    fn visit_member_name(&mut self, node: &JsonSyntaxNode) -> Result<(), ConfigurationError> {
+    fn visit_member_name(&mut self, node: &JsonSyntaxNode) -> Result<(), ConfigurationDiagnostic> {
         has_only_known_keys(node, JavascriptConfiguration::KNOWN_KEYS)
     }
 
@@ -20,7 +20,7 @@ impl VisitConfigurationNode<JsonLanguage> for JavascriptConfiguration {
         &mut self,
         key: &SyntaxNode<JsonLanguage>,
         value: &SyntaxNode<JsonLanguage>,
-    ) -> Result<(), ConfigurationError> {
+    ) -> Result<(), ConfigurationDiagnostic> {
         let (name, value) = self.get_key_and_value(key, value)?;
         let name_text = name.text();
 
@@ -42,7 +42,7 @@ impl VisitConfigurationNode<JsonLanguage> for JavascriptConfiguration {
 
 impl VisitConfigurationAsJson for JavascriptFormatter {}
 impl VisitConfigurationNode<JsonLanguage> for JavascriptFormatter {
-    fn visit_member_name(&mut self, node: &JsonSyntaxNode) -> Result<(), ConfigurationError> {
+    fn visit_member_name(&mut self, node: &JsonSyntaxNode) -> Result<(), ConfigurationDiagnostic> {
         has_only_known_keys(node, JavascriptFormatter::KNOWN_KEYS)
     }
 
@@ -50,7 +50,7 @@ impl VisitConfigurationNode<JsonLanguage> for JavascriptFormatter {
         &mut self,
         key: &SyntaxNode<JsonLanguage>,
         value: &SyntaxNode<JsonLanguage>,
-    ) -> Result<(), ConfigurationError> {
+    ) -> Result<(), ConfigurationDiagnostic> {
         let (name, value) = self.get_key_and_value(key, value)?;
         let name_text = name.text();
         match name_text {
@@ -85,7 +85,7 @@ impl VisitConfigurationNode<JsonLanguage> for PlainQuoteStyle {
     fn visit_member_value(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
-    ) -> Result<(), ConfigurationError> {
+    ) -> Result<(), ConfigurationDiagnostic> {
         let node = with_only_known_variants(node, PlainQuoteStyle::KNOWN_VALUES)?;
         if node.value_token()?.text() == "single" {
             *self = PlainQuoteStyle::Single;
@@ -100,7 +100,7 @@ impl VisitConfigurationNode<JsonLanguage> for PlainQuoteProperties {
     fn visit_member_value(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
-    ) -> Result<(), ConfigurationError> {
+    ) -> Result<(), ConfigurationDiagnostic> {
         let node = with_only_known_variants(node, PlainQuoteProperties::KNOWN_VALUES)?;
         if node.value_token()?.text() == "asNeeded" {
             *self = PlainQuoteProperties::AsNeeded;
@@ -115,7 +115,7 @@ impl VisitConfigurationNode<JsonLanguage> for PlainTrailingComma {
     fn visit_member_value(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
-    ) -> Result<(), ConfigurationError> {
+    ) -> Result<(), ConfigurationDiagnostic> {
         let node = with_only_known_variants(node, PlainTrailingComma::KNOWN_VALUES)?;
         match node.value_token()?.text() {
             "all" => {
@@ -137,7 +137,7 @@ impl VisitConfigurationNode<JsonLanguage> for PlainSemicolons {
     fn visit_member_value(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
-    ) -> Result<(), ConfigurationError> {
+    ) -> Result<(), ConfigurationDiagnostic> {
         let node = with_only_known_variants(node, PlainSemicolons::KNOWN_VALUES)?;
         if node.value_token()?.text() == "asNeeded" {
             *self = PlainSemicolons::AsNeeded;

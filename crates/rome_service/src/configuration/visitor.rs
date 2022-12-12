@@ -1,15 +1,15 @@
-use crate::ConfigurationError;
+use crate::ConfigurationDiagnostic;
 use rome_rowan::{Language, SyntaxNode};
 
 /// Generic trait to implement when resolving the configuration from a generic language
 pub trait VisitConfigurationNode<L: Language> {
     /// Called when visiting the key of a member
-    fn visit_member_name(&mut self, node: &SyntaxNode<L>) -> Result<(), ConfigurationError> {
-        Err(ConfigurationError::unexpected(node.text_trimmed_range()))
+    fn visit_member_name(&mut self, node: &SyntaxNode<L>) -> Result<(), ConfigurationDiagnostic> {
+        Err(ConfigurationDiagnostic::unexpected(node.text_trimmed_range()))
     }
     /// Called when visiting the value of a member
-    fn visit_member_value(&mut self, node: &SyntaxNode<L>) -> Result<(), ConfigurationError> {
-        Err(ConfigurationError::unexpected(node.text_trimmed_range()))
+    fn visit_member_value(&mut self, node: &SyntaxNode<L>) -> Result<(), ConfigurationDiagnostic> {
+        Err(ConfigurationDiagnostic::unexpected(node.text_trimmed_range()))
     }
 
     /// Called when visiting a list of key-value.
@@ -20,8 +20,8 @@ pub trait VisitConfigurationNode<L: Language> {
         &mut self,
         key: &SyntaxNode<L>,
         value: &SyntaxNode<L>,
-    ) -> Result<(), ConfigurationError> {
-        Err(ConfigurationError::unexpected(
+    ) -> Result<(), ConfigurationDiagnostic> {
+        Err(ConfigurationDiagnostic::unexpected(
             key.text_trimmed_range().start()..value.text_trimmed_range().end(),
         ))
     }

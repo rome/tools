@@ -24,7 +24,7 @@ mod parse;
 mod visitor;
 
 use crate::configuration::diagnostics::from_serde_error_to_range;
-pub use crate::configuration::diagnostics::ConfigurationError;
+pub use crate::configuration::diagnostics::ConfigurationDiagnostic;
 pub use crate::configuration::parse::parse_configuration_from_json;
 use crate::settings::{LanguagesSettings, LinterSettings};
 pub use formatter::{FormatterConfiguration, PlainIndentStyle};
@@ -89,7 +89,8 @@ impl Configuration {
         self.linter.as_ref().map(|f| !f.enabled).unwrap_or(false)
     }
 
-    pub fn from_json_ast(root: JsonRoot) -> Result<Self, ConfigurationError> {
+    /// It creates a new [Configuration] from a JSON AST
+    pub fn from_json_ast(root: JsonRoot) -> Result<Self, ConfigurationDiagnostic> {
         let mut configuration = Configuration::default();
         parse_configuration_from_json(root, &mut configuration)?;
         Ok(configuration)
@@ -147,7 +148,7 @@ pub fn load_config(
 
             let configuration: Configuration = serde_json::from_str(&buffer).map_err(|err| {
                 WorkspaceError::Configuration(
-                    ConfigurationError::new_deserialization_error(err.to_string())
+                    ConfigurationDiagnostic::new_deserialization_error(err.to_string())
                         .with_span(from_serde_error_to_range(&err, &buffer)),
                 )
             })?;
@@ -191,7 +192,7 @@ pub fn create_config(
 
     let mut config_file = fs.open_with_options(&path, options).map_err(|err| {
         if err.kind() == ErrorKind::AlreadyExists {
-            WorkspaceError::Configuration(ConfigurationError::new_already_exists())
+            WorkspaceError::Configuration(ConfigurationDiagnostic::new_already_exists())
         } else {
             WorkspaceError::CantReadFile(format!("{}", path.display()))
         }

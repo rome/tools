@@ -1,5 +1,5 @@
 use crate::settings::FormatSettings;
-use crate::{ConfigurationError, MatchOptions, Matcher, WorkspaceError};
+use crate::{ConfigurationDiagnostic, MatchOptions, Matcher, WorkspaceError};
 use indexmap::IndexSet;
 use rome_formatter::{IndentStyle, LineWidth};
 use serde::{Deserialize, Serialize};
@@ -78,10 +78,12 @@ impl TryFrom<FormatterConfiguration> for FormatSettings {
         if let Some(ignore) = conf.ignore {
             for pattern in ignore {
                 matcher.add_pattern(&pattern).map_err(|err| {
-                    WorkspaceError::Configuration(ConfigurationError::new_invalid_ignore_pattern(
-                        pattern.to_string(),
-                        err.msg.to_string(),
-                    ))
+                    WorkspaceError::Configuration(
+                        ConfigurationDiagnostic::new_invalid_ignore_pattern(
+                            pattern.to_string(),
+                            err.msg.to_string(),
+                        ),
+                    )
                 })?;
             }
         }

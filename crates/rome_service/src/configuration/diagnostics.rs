@@ -21,9 +21,7 @@ pub enum ConfigurationErrorKind {
     /// - syntax error
     /// - incorrect fields
     /// - incorrect values
-    DeserializationError {
-        text_range: Option<TextRange>,
-    },
+    DeserializationError { text_range: Option<TextRange> },
 
     /// Thrown when an unknown rule is found
     UnknownRule,
@@ -31,33 +29,39 @@ pub enum ConfigurationErrorKind {
     /// Thrown when the pattern inside the `ignore` field errors
     InvalidIgnorePattern,
 
+    /// Error emitted when some content in not correctly parsed/validated by our internal infrastructure
     UnexpectedContent,
 
+    /// A syntax error, an error forwarded from [SyntaxError]
     SyntaxError,
 }
 
 #[derive(Diagnostic, Serialize, Deserialize)]
 #[diagnostic(category = "configuration", severity = Error)]
-pub struct ConfigurationError {
+pub struct ConfigurationDiagnostic {
+    /// The message of the diagnostic
     #[message]
     message: MessageAndDescription,
 
+    /// What kind of error occurred
     kind: ConfigurationErrorKind,
 
+    /// Where the error occurred
     #[location(span)]
     span: Option<TextRange>,
 
+    /// Additional advice
     #[advice]
     advices: ConfigurationAdvices,
 }
 
-impl From<SyntaxError> for ConfigurationError {
+impl From<SyntaxError> for ConfigurationDiagnostic {
     fn from(_: SyntaxError) -> Self {
-        ConfigurationError::new_syntax_error()
+        ConfigurationDiagnostic::new_syntax_error()
     }
 }
 
-impl ConfigurationError {
+impl ConfigurationDiagnostic {
     fn new(message: impl Display, kind: ConfigurationErrorKind) -> Self {
         Self {
             message: MessageAndDescription::from(markup! { {{message}} }.to_owned()),
@@ -85,14 +89,14 @@ impl ConfigurationError {
         )
     }
 
-    pub(crate) fn unknown_member(key_name: impl Display) -> Self {
+    pub(crate) fn new_unknown_member(key_name: impl Display) -> Self {
         Self::new(
             markup!("Found an extraneous key "<Emphasis>{{ key_name }}</Emphasis> ),
             ConfigurationErrorKind::DeserializationError { text_range: None },
         )
     }
 
-    pub(crate) fn unknown_variant(variant_name: impl Display) -> Self {
+    pub(crate) fn new_unknown_variant(variant_name: impl Display) -> Self {
         Self::new(
             markup!("Found an extraneous variant "<Emphasis>{{ variant_name }}</Emphasis> ),
             ConfigurationErrorKind::DeserializationError { text_range: None },
@@ -106,7 +110,7 @@ impl ConfigurationError {
         )
     }
 
-    pub(crate) fn incorrect_type_for_value(
+    pub(crate) fn new_incorrect_type_for_value(
         key_name: impl Display,
         expected_type: impl Display,
     ) -> Self {
@@ -118,7 +122,7 @@ impl ConfigurationError {
         )
     }
 
-    pub(crate) fn incorrect_type(expected_type: impl Display) -> Self {
+    pub(crate) fn new_incorrect_type(expected_type: impl Display) -> Self {
         Self::new(
             markup! {
                 "Incorrect type, expected a "<Emphasis>{{expected_type}}</Emphasis>
@@ -149,16 +153,18 @@ impl ConfigurationError {
         .with_span(span)
     }
 
+    pub(crate) fn new_syntax_error() -> Self {
+        Self::new("Syntax error", ConfigurationErrorKind::SyntaxError)
+    }
+
+    /// It adds a span to the diagnostic, useful when the position of the error is known
     pub(crate) fn with_span(mut self, span: impl AsSpan) -> Self {
         self.span = span.as_span();
         self
     }
 
-    pub(crate) fn new_syntax_error() -> Self {
-        Self::new("Syntax error", ConfigurationErrorKind::SyntaxError)
-    }
-
-    pub(crate) fn with_suggested_list(
+    /// It adds a suggestion with a list of known keys when an invalid key is found
+    pub(crate) fn with_known_keys(
         mut self,
         message: impl Display,
         list: &[&(impl Display + ?Sized)],
@@ -173,7 +179,7 @@ impl ConfigurationError {
     }
 }
 
-impl Debug for ConfigurationError {
+impl Debug for ConfigurationDiagnostic {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match &self.kind {
             ConfigurationErrorKind::SerializationError => std::fmt::Display::fmt(self, f),
@@ -187,7 +193,7 @@ impl Debug for ConfigurationError {
     }
 }
 
-impl std::fmt::Display for ConfigurationError {
+impl std::fmt::Display for ConfigurationDiagnostic {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
             ConfigurationError::SerializationError => {
@@ -214,7 +220,7 @@ impl std::fmt::Display for ConfigurationError {
     }
 }
 
-impl Diagnostic for ConfigurationError {
+impl Diagnostic for ConfigurationDiagnostic {
     fn category(&self) -> Option<&'static Category> {
         Some(category!("configuration"))
     }
@@ -295,7 +301,7 @@ impl Advices for ConfigurationAdvices {
 
 #[cfg(test)]
 mod test {
-    use crate::configuration::diagnostics::{from_serde_error_to_range, ConfigurationError};
+    use crate::configuration::diagnostics::{from_serde_error_to_range, ConfigurationDiagnostic};
     use crate::{Configuration, MatchOptions, Matcher};
     use rome_diagnostics::{print_diagnostic_to_string, DiagnosticExt, Error};
 
@@ -314,7 +320,7 @@ mod test {
     fn config_already_exists() {
         snap_diagnostic(
             "config_already_exists",
-            ConfigurationError::new_already_exists().with_file_path("rome.json"),
+            ConfigurationDiagnostic::new_already_exists().with_file_path("rome.json"),
         )
     }
 
@@ -330,7 +336,7 @@ mod test {
         if let Err(error) = matcher.add_pattern(pattern) {
             snap_diagnostic(
                 "incorrect_pattern",
-                ConfigurationError::new_invalid_ignore_pattern(
+                ConfigurationDiagnostic::new_invalid_ignore_pattern(
                     pattern.to_string(),
                     error.msg.to_string(),
                 )
@@ -349,7 +355,7 @@ mod test {
         if let Err(error) = result {
             snap_diagnostic(
                 "deserialization_error",
-                ConfigurationError::new_deserialization_error(error.to_string())
+                ConfigurationDiagnostic::new_deserialization_error(error.to_string())
                     .with_span(from_serde_error_to_range(&error, content))
                     .with_file_path("rome.json")
                     .with_file_source_code(content),

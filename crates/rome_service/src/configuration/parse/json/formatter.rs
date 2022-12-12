@@ -3,7 +3,7 @@ use crate::configuration::parse::json::{
 };
 use crate::configuration::visitor::VisitConfigurationNode;
 use crate::configuration::{FormatterConfiguration, PlainIndentStyle};
-use crate::ConfigurationError;
+use crate::ConfigurationDiagnostic;
 use rome_formatter::LineWidth;
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::{AstNode, SyntaxNode};
@@ -11,7 +11,7 @@ use rome_rowan::{AstNode, SyntaxNode};
 impl VisitConfigurationAsJson for FormatterConfiguration {}
 
 impl VisitConfigurationNode<JsonLanguage> for FormatterConfiguration {
-    fn visit_member_name(&mut self, node: &JsonSyntaxNode) -> Result<(), ConfigurationError> {
+    fn visit_member_name(&mut self, node: &JsonSyntaxNode) -> Result<(), ConfigurationDiagnostic> {
         has_only_known_keys(node, FormatterConfiguration::KNOWN_KEYS)
     }
 
@@ -19,7 +19,7 @@ impl VisitConfigurationNode<JsonLanguage> for FormatterConfiguration {
         &mut self,
         key: &SyntaxNode<JsonLanguage>,
         value: &SyntaxNode<JsonLanguage>,
-    ) -> Result<(), ConfigurationError> {
+    ) -> Result<(), ConfigurationDiagnostic> {
         let (name, value) = self.get_key_and_value(key, value)?;
         let name_text = name.text();
         match name_text {
@@ -43,7 +43,7 @@ impl VisitConfigurationNode<JsonLanguage> for FormatterConfiguration {
             "lineWidth" => {
                 let line_width = self.map_to_u16(&value, name_text)?;
                 self.line_width = LineWidth::try_from(line_width).map_err(|err| {
-                    ConfigurationError::new_deserialization_error(err.to_string())
+                    ConfigurationDiagnostic::new_deserialization_error(err.to_string())
                         .with_span(value.range())
                 })?;
             }
@@ -58,7 +58,7 @@ impl VisitConfigurationNode<JsonLanguage> for PlainIndentStyle {
     fn visit_member_value(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
-    ) -> Result<(), ConfigurationError> {
+    ) -> Result<(), ConfigurationDiagnostic> {
         let node = with_only_known_variants(node, PlainIndentStyle::KNOWN_VALUES)?;
         if node.value_token()?.text() == "space" {
             *self = PlainIndentStyle::Space;

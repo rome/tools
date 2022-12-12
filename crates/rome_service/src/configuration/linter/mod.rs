@@ -3,7 +3,7 @@ mod rules;
 
 pub use crate::configuration::linter::rules::Rules;
 use crate::settings::LinterSettings;
-use crate::{ConfigurationError, MatchOptions, Matcher, WorkspaceError};
+use crate::{ConfigurationDiagnostic, MatchOptions, Matcher, WorkspaceError};
 use indexmap::IndexSet;
 use rome_diagnostics::Severity;
 pub use rules::*;
@@ -59,10 +59,12 @@ impl TryFrom<LinterConfiguration> for LinterSettings {
         if let Some(ignore) = conf.ignore {
             for pattern in ignore {
                 matcher.add_pattern(&pattern).map_err(|err| {
-                    WorkspaceError::Configuration(ConfigurationError::new_invalid_ignore_pattern(
-                        pattern.to_string(),
-                        err.msg.to_string(),
-                    ))
+                    WorkspaceError::Configuration(
+                        ConfigurationDiagnostic::new_invalid_ignore_pattern(
+                            pattern.to_string(),
+                            err.msg.to_string(),
+                        ),
+                    )
                 })?;
             }
         }
