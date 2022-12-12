@@ -6,9 +6,9 @@ expression: content
 
 ```json
 {
-  "formatter": {
-    "ignore": ["scripts/*"]
-  }
+	"formatter": {
+		"ignore": ["scripts/*"]
+	}
 }
 
 ```
