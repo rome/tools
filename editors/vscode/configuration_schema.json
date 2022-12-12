@@ -819,6 +819,17 @@
             }
           ]
         },
+        "noWith": {
+          "description": "Disallow with statements in non-strict contexts.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "recommended": {
           "description": "It enables the recommended rules for this group",
           "type": [

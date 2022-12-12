@@ -374,6 +374,10 @@ export interface Nursery {
 	 */
 	noVoidTypeReturn?: RuleConfiguration;
 	/**
+	 * Disallow with statements in non-strict contexts.
+	 */
+	noWith?: RuleConfiguration;
+	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
@@ -692,6 +696,7 @@ export type Category =
 	| "lint/correctness/useValidForDirection"
 	| "lint/nursery/noAccessKey"
 	| "lint/nursery/noAssignInExpressions"
+	| "lint/nursery/noWith"
 	| "lint/nursery/noBannedTypes"
 	| "lint/nursery/noConstEnum"
 	| "lint/nursery/noConstructorReturn"

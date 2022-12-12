@@ -6,7 +6,6 @@ codegen:
   cargo codegen-configuration
   cargo codegen-schema
   cargo codegen-bindings
-  cargo codegen-aria
   
 documentation:
   cargo lintdoc
