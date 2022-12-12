@@ -9,7 +9,7 @@ use rome_analyze::{
     DeserializableRuleOptions, InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry,
     Phases, RuleAction, RuleRegistry, ServiceBag, SuppressionKind, SyntaxVisitor,
 };
-use rome_aria::{AriaProperties, AriaRoles};
+use rome_aria::{AriaIso, AriaProperties, AriaRoles};
 use rome_diagnostics::{category, Diagnostic, FileId};
 use rome_js_syntax::suppression::SuppressionDiagnostic;
 use rome_js_syntax::{suppression::parse_suppression_comment, JsLanguage};
@@ -174,6 +174,7 @@ where
 
     services.insert_service(Arc::new(AriaRoles::default()));
     services.insert_service(Arc::new(AriaProperties::default()));
+    services.insert_service(Arc::new(AriaIso::default()));
     analyzer.run(AnalyzerContext {
         file_id,
         root: root.clone(),
@@ -226,7 +227,7 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"<span aria-labelledby={``} ></span>"#;
+        const SOURCE: &str = r#" <span aria-labelledby={``}></span>;"#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
 

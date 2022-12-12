@@ -2,7 +2,8 @@ use rome_analyze::{
     FromServices, MissingServicesDiagnostic, Phase, Phases, QueryKey, QueryMatch, Queryable,
     RuleKey, ServiceBag,
 };
-use rome_aria::{AriaProperties, AriaRoles};
+use rome_aria::iso::{countries, is_valid_country, is_valid_language, languages};
+use rome_aria::{AriaIso, AriaProperties, AriaRoles};
 use rome_js_syntax::JsLanguage;
 use rome_rowan::AstNode;
 use std::sync::Arc;
@@ -21,6 +22,22 @@ impl AriaServices {
     pub fn aria_properties(&self) -> &AriaProperties {
         &self.properties
     }
+
+    pub fn is_valid_iso_language(&self, language: &str) -> bool {
+        is_valid_language(language)
+    }
+
+    pub fn is_valid_iso_country(&self, country: &str) -> bool {
+        is_valid_country(country)
+    }
+
+    pub fn iso_country_list(&self) -> &'static [&'static str] {
+        countries()
+    }
+
+    pub fn iso_language_list(&self) -> &'static [&'static str] {
+        languages()
+    }
 }
 
 impl FromServices for AriaServices {
@@ -34,9 +51,13 @@ impl FromServices for AriaServices {
         let properties: &Arc<AriaProperties> = services.get_service().ok_or_else(|| {
             MissingServicesDiagnostic::new(rule_key.rule_name(), &["AriaProperties"])
         })?;
+        let iso: &Arc<AriaIso> = services
+            .get_service()
+            .ok_or_else(|| MissingServicesDiagnostic::new(rule_key.rule_name(), &["AriaIso"]))?;
         Ok(Self {
             roles: roles.clone(),
             properties: properties.clone(),
+            iso: iso.clone(),
         })
     }
 }

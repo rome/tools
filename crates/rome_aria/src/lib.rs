@@ -1,9 +1,11 @@
 use std::str::FromStr;
 
+pub mod iso;
 mod macros;
 pub mod properties;
 pub mod roles;
 
+pub use iso::AriaIso;
 pub use properties::AriaProperties;
 pub(crate) use roles::AriaRoleDefinition;
 pub use roles::AriaRoles;
