@@ -1,12 +1,9 @@
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
+use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_diagnostics::Applicability;
 use rome_js_syntax::JsWithStatement;
 
-use rome_rowan::{AstNode, BatchMutationExt};
-
-use crate::JsRuleAction;
+use rome_rowan::{AstNode};
 
 declare_rule! {
     /// Disallow `with` statements in non-strict contexts.
