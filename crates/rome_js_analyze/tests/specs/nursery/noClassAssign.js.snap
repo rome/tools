@@ -120,9 +120,18 @@ function case18() {
 
 # Diagnostics
 ```
-noClassAssign.js:71:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noClassAssign.js:72:2 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't reassign classes.
+  ! 'A' is a class.
+  
+    70 │ function case12() {
+    71 │ 	class A { }
+  > 72 │ 	A = 0;
+       │ 	^
+    73 │ }
+    74 │ 
+  
+  i 'A' is defined here.
   
     69 │ // /* Invalid  */
     70 │ function case12() {
@@ -135,9 +144,18 @@ noClassAssign.js:71:8 lint/nursery/noClassAssign ━━━━━━━━━━�
 ```
 
 ```
-noClassAssign.js:76:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noClassAssign.js:77:4 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't reassign classes.
+  ! 'B' is a class.
+  
+    75 │ function case13() {
+    76 │ 	class B { }
+  > 77 │ 	({B} = 0);
+       │ 	  ^
+    78 │ }
+    79 │ 
+  
+  i 'B' is defined here.
   
     75 │ function case13() {
   > 76 │ 	class B { }
@@ -149,9 +167,18 @@ noClassAssign.js:76:8 lint/nursery/noClassAssign ━━━━━━━━━━�
 ```
 
 ```
-noClassAssign.js:81:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noClassAssign.js:82:7 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't reassign classes.
+  ! 'C' is a class.
+  
+    80 │ function case14() {
+    81 │ 	class C { }
+  > 82 │ 	({b: C = 0} = {});
+       │ 	     ^
+    83 │ }
+    84 │ 
+  
+  i 'C' is defined here.
   
     80 │ function case14() {
   > 81 │ 	class C { }
@@ -163,9 +190,17 @@ noClassAssign.js:81:8 lint/nursery/noClassAssign ━━━━━━━━━━�
 ```
 
 ```
-noClassAssign.js:87:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noClassAssign.js:86:2 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't reassign classes.
+  ! 'D' is a class.
+  
+    85 │ function case15() {
+  > 86 │ 	D = 0;
+       │ 	^
+    87 │ 	class D { }
+    88 │ }
+  
+  i 'D' is defined here.
   
     85 │ function case15() {
     86 │ 	D = 0;
@@ -178,9 +213,18 @@ noClassAssign.js:87:8 lint/nursery/noClassAssign ━━━━━━━━━━�
 ```
 
 ```
-noClassAssign.js:91:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noClassAssign.js:93:4 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't reassign classes.
+  ! 'E' is a class.
+  
+    91 │ 	class E {
+    92 │ 		b() {
+  > 93 │ 			E = 0;
+       │ 			^
+    94 │ 		}
+    95 │ 	}
+  
+  i 'E' is defined here.
   
     90 │ function case16() {
   > 91 │ 	class E {
@@ -192,9 +236,18 @@ noClassAssign.js:91:8 lint/nursery/noClassAssign ━━━━━━━━━━�
 ```
 
 ```
-noClassAssign.js:99:16 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noClassAssign.js:101:4 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't reassign classes.
+  ! 'F' is a class.
+  
+     99 │ 	let F = class F {
+    100 │ 		b() {
+  > 101 │ 			F = 0;
+        │ 			^
+    102 │ 		}
+    103 │ 	}
+  
+  i 'F' is defined here.
   
      98 │ function case17() {
    > 99 │ 	let F = class F {
@@ -206,9 +259,41 @@ noClassAssign.js:99:16 lint/nursery/noClassAssign ━━━━━━━━━━
 ```
 
 ```
-noClassAssign.js:107:8 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noClassAssign.js:108:2 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't reassign classes.
+  ! 'G' is a class.
+  
+    106 │ function case18() {
+    107 │ 	class G { }
+  > 108 │ 	G = 0;
+        │ 	^
+    109 │ 	G = 1;
+    110 │ }
+  
+  i 'G' is defined here.
+  
+    106 │ function case18() {
+  > 107 │ 	class G { }
+        │ 	      ^
+    108 │ 	G = 0;
+    109 │ 	G = 1;
+  
+
+```
+
+```
+noClassAssign.js:109:2 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'G' is a class.
+  
+    107 │ 	class G { }
+    108 │ 	G = 0;
+  > 109 │ 	G = 1;
+        │ 	^
+    110 │ }
+    111 │ 
+  
+  i 'G' is defined here.
   
     106 │ function case18() {
   > 107 │ 	class G { }

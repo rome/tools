@@ -1,8 +1,8 @@
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
-use rome_js_semantic::ReferencesExtensions;
-use rome_js_syntax::{AnyJsClass, JsIdentifierBinding};
-use rome_rowan::AstNode;
+use rome_console::markup;
+use rome_js_semantic::{Reference, ReferencesExtensions};
+use rome_js_syntax::AnyJsClass;
 
 use crate::semantic_services::Semantic;
 
@@ -74,28 +74,43 @@ declare_rule! {
 
 impl Rule for NoClassAssign {
     type Query = Semantic<AnyJsClass>;
-    type State = JsIdentifierBinding;
-    type Signals = Option<Self::State>;
+    type State = Reference;
+    type Signals = Vec<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
         let model = ctx.model();
-        let binding = node.id().ok()??;
-        let binding = binding.as_js_identifier_binding()?;
 
-        if binding.all_writes(model).count() > 0 {
-            Some(binding.clone())
-        } else {
-            None
+        if let Ok(Some(id)) = node.id() {
+            if let Some(id_binding) = id.as_js_identifier_binding() {
+                return id_binding.all_writes(model).collect();
+            }
         }
+
+        Vec::new()
     }
 
-    fn diagnostic(_: &RuleContext<Self>, class_id: &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic::new(
-            rule_category!(),
-            class_id.range(),
-            "Don't reassign classes.",
-        ))
+    fn diagnostic(ctx: &RuleContext<Self>, reference: &Self::State) -> Option<RuleDiagnostic> {
+        let binding = ctx
+            .query()
+            .id()
+            .ok()??
+            .as_js_identifier_binding()?
+            .name_token()
+            .ok()?;
+        let class_name = binding.text_trimmed();
+
+        Some(
+            RuleDiagnostic::new(
+                rule_category!(),
+                reference.syntax().text_trimmed_range(),
+                markup! {"'"{class_name}"' is a class."},
+            )
+            .detail(
+                binding.text_trimmed_range(),
+                markup! {"'"{class_name}"' is defined here."},
+            ),
+        )
     }
 }
