@@ -48,11 +48,11 @@ impl Rule for UseMediaCaption {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
 
-        let has_video = node.name_value_token()?.text_trimmed() == "video";
-        let has_audio = node.name_value_token()?.text_trimmed() == "audio";
+        let has_audio_or_video =
+            matches!(node.name_value_token()?.text_trimmed(), "video" | "audio");
         let has_muted = node.find_attribute_by_name("muted").is_some();
 
-        if !(has_video || has_audio) || has_muted {
+        if !has_audio_or_video || has_muted {
             return None;
         }
 
