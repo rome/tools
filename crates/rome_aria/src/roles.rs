@@ -698,10 +698,8 @@ impl<'a> AriaRoles {
                 _ => return false,
             };
             if let Some(mut concepts) = role.concepts_by_element_name(element_name) {
-                if concepts.any(|(name, _)| *name == element_name) {
-                    if !role.is_interactive() {
-                        return true;
-                    }
+                if concepts.any(|(name, _)| *name == element_name) && !role.is_interactive() {
+                    return true;
                 }
             }
         }

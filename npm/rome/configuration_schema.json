@@ -754,6 +754,7 @@
           ]
         },
         "noNoninteractiveElementToInteractiveRole": {
+          "description": "Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
