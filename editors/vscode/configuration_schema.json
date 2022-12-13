@@ -904,7 +904,7 @@
           ]
         },
         "useAriaProps": {
-          "description": "Enforce that ARIA state and property values are valid.",
+          "description": "Ensures that ARIA properties aria-* are all valid.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

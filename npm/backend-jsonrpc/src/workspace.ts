@@ -406,6 +406,10 @@ export interface Nursery {
 	 */
 	useAriaPropTypes?: RuleConfiguration;
 	/**
+	 * Ensures that ARIA properties aria-* are all valid.
+	 */
+	useAriaProps?: RuleConfiguration;
+	/**
 	 * Enforce that elements with ARIA roles must have all required ARIA attributes for that role.
 	 */
 	useAriaPropsForRole?: RuleConfiguration;
@@ -762,6 +766,7 @@ export type Category =
 	| "lint/nursery/useDefaultParameterLast"
 	| "lint/nursery/useDefaultSwitchClauseLast"
 	| "lint/nursery/useEnumInitializers"
+	| "lint/nursery/useAriaProps"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useExponentiationOperator"
 	| "lint/nursery/useIsNan"
