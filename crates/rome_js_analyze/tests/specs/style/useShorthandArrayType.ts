@@ -27,10 +27,10 @@ type valid10<T> = { [K in keyof T]: T[K] };
 let readonlyValid1: ReadonlyArray<Foo | Bar>;
 let readonlyValid2: ReadonlyArray<keyof Bar>;
 let readonlyValid3: ReadonlyArray<foo | bar>;
-let readonlyValid5: ReadonlyArray<string & number>;
-let readonlyValid6: ReadonlyArray<() => string>;
-type readonlyValid7<T> = ReadonlyArray<T extends string ? string : number>
-type readonlyValid8 = ReadonlyArray<new (string, number) => string>
+let readonlyValid4: ReadonlyArray<string & number>;
+let readonlyValid5: ReadonlyArray<() => string>;
+type readonlyValid6<T> = ReadonlyArray<T extends string ? string : number>
+type readonlyValid7 = ReadonlyArray<new (string, number) => string>
 let readonlyValid8: ReadonlyArray<(string & number)>;
 type readonlyValid9<T> = T extends ReadonlyArray<infer R> ? R : any;
 type readonlyValid10<T> = { [K in keyof T]: T[K] };
