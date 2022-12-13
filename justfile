@@ -1,12 +1,12 @@
 _default:
   just --list -u
-  
+
 codegen:
   cargo codegen all
   cargo codegen-configuration
   cargo codegen-schema
   cargo codegen-bindings
-  
+
 documentation:
   cargo lintdoc
   cargo documentation
