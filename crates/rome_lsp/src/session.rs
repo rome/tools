@@ -42,6 +42,8 @@ pub(crate) struct Session {
 
     /// The LSP client for this session.
     pub(crate) client: tower_lsp::Client,
+
+    /// The parameters provided by the client in the "initialize" request
     initialize_params: OnceCell<InitializeParams>,
 
     /// the configuration of the LSP
@@ -58,6 +60,7 @@ pub(crate) struct Session {
     pub(crate) cancellation: Arc<Notify>,
 }
 
+/// The parameters provided by the client in the "initialize" request
 struct InitializeParams {
     /// The capabilities provided by the client as part of [`lsp_types::InitializeParams`]
     client_capabilities: lsp_types::ClientCapabilities,
@@ -282,7 +285,7 @@ impl Session {
         let client_configurations = match self.client.configuration(vec![item]).await {
             Ok(client_configurations) => client_configurations,
             Err(err) => {
-                error!("Cannot read configuration from the client: {err}");
+                error!("Couldn't read configuration from the client: {err}");
                 return;
             }
         };
@@ -294,7 +297,7 @@ impl Session {
 
             let mut config = self.config.write().unwrap();
             if let Err(err) = config.set_workspace_settings(client_configuration) {
-                error!("Cannot set client configuration: {}", err);
+                error!("Couldn't set client configuration: {}", err);
             }
         } else {
             info!("Client did not return any configuration");
