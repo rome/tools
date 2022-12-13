@@ -895,4 +895,33 @@ mod test {
                 .matches_path(Path::new("\\\\?\\C:/a/b")));
         }
     }
+
+    #[test]
+    fn test_pattern_glob() {
+        assert!(Pattern::new("*.js")
+            .unwrap()
+            .matches_path(Path::new("b/c.js")));
+
+        assert!(Pattern::new("**/*.js")
+            .unwrap()
+            .matches_path(Path::new("b/c.js")));
+
+        assert!(Pattern::new("*.js")
+            .unwrap()
+            .matches_path(Path::new("/a/b/c.js")));
+
+        assert!(Pattern::new("**/*.js")
+            .unwrap()
+            .matches_path(Path::new("/a/b/c.js")));
+
+        if cfg!(windows) {
+            assert!(Pattern::new("*.js")
+                .unwrap()
+                .matches_path(Path::new("C:\\a\\b\\c.js")));
+
+            assert!(Pattern::new("**/*.js")
+                .unwrap()
+                .matches_path(Path::new("\\\\?\\C:\\a\\b\\c.js")));
+        }
+    }
 }
