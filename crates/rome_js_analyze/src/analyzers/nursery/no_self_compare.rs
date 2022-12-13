@@ -100,20 +100,17 @@ fn is_node_equal(a_node: &JsSyntaxNode, b_node: &JsSyntaxNode) -> bool {
         let a_token = a_event.as_token();
         let b_token = b_event.as_token();
 
-        // both are nodes
-        if a_token.is_none() && b_token.is_none() {
-            continue;
-        }
-
-        // one of them is a node
-        if a_token.is_none() && b_token.is_some() || a_token.is_some() && b_token.is_none() {
-            return false;
-        }
-
-        // both are tokens
-        if let (Some(a_token), Some(b_token)) = (a_token, b_token) {
-            if !is_token_text_equal(a_token, b_token) {
-                return false;
+        match (a_token, b_token) {
+            // both are nodes
+            (None, None) => continue,
+            // one of them is a node
+            (None, Some(_)) | (Some(_), None) => return false,
+            // both are tokens
+            (Some(a), Some(b)) => {
+                if !is_token_text_equal(a, b) {
+                    return false;
+                }
+                continue;
             }
         }
     }
