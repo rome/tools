@@ -177,7 +177,7 @@ When creating a new pull request, it's preferable to use a conventional commit-f
 
 Please use the template provided.
 
-#### Write documentation
+#### Documentation
 
 If your PR requires some update on the website (new features, breaking changes, etc.), you should create a new PR once the previous PR is successfully merged.
 

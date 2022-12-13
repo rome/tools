@@ -22,7 +22,7 @@
 
 <!--
 
-Read the following paragraph for more information: https://github.com/rome/tools/blob/main/CONTRIBUTING.md#write-documentation
+Read the following paragraph for more information: https://github.com/rome/tools/blob/main/CONTRIBUTING.md#documentation
 
 Tick the checkboxes if your PR requires some documentation, and if you will follow up with that
 
