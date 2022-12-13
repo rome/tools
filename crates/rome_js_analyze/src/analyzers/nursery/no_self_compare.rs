@@ -1,7 +1,9 @@
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
-use rome_js_syntax::{JsBinaryExpression, JsBinaryOperator, JsLanguage, TextSize};
-use rome_rowan::{AstNode, SyntaxNode, SyntaxToken, SyntaxTokenText};
+use rome_js_syntax::{
+    JsBinaryExpression, JsBinaryOperator, JsSyntaxNode, JsSyntaxToken, WalkEvent,
+};
+use rome_rowan::{AstNode, Direction};
 use std::iter;
 
 declare_rule! {
@@ -32,17 +34,6 @@ declare_rule! {
     }
 }
 
-static COMPARISON_OPERATORS: [JsBinaryOperator; 8] = [
-    JsBinaryOperator::Equality,
-    JsBinaryOperator::Inequality,
-    JsBinaryOperator::GreaterThan,
-    JsBinaryOperator::GreaterThanOrEqual,
-    JsBinaryOperator::LessThan,
-    JsBinaryOperator::LessThanOrEqual,
-    JsBinaryOperator::StrictEquality,
-    JsBinaryOperator::StrictInequality,
-];
-
 impl Rule for NoSelfCompare {
     type Query = Ast<JsBinaryExpression>;
     type State = ();
@@ -52,14 +43,24 @@ impl Rule for NoSelfCompare {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
 
-        if !COMPARISON_OPERATORS.contains(&node.operator().ok()?) {
+        if !matches!(
+            &node.operator(),
+            Ok(JsBinaryOperator::Equality
+                | JsBinaryOperator::Inequality
+                | JsBinaryOperator::GreaterThan
+                | JsBinaryOperator::GreaterThanOrEqual
+                | JsBinaryOperator::LessThan
+                | JsBinaryOperator::LessThanOrEqual
+                | JsBinaryOperator::StrictEquality
+                | JsBinaryOperator::StrictInequality)
+        ) {
             return None;
         }
 
         let left = node.left().ok()?;
         let right = node.right().ok()?;
 
-        if is_node_equal(&left.into_syntax(), &right.into_syntax())? {
+        if is_node_equal(&left.into_syntax(), &right.into_syntax()) {
             return Some(());
         }
 
@@ -75,52 +76,59 @@ impl Rule for NoSelfCompare {
     }
 }
 
-/// Verifies recursively that both nodes are equal by checking their kinds and their children nodes
+/// Verifies that both nodes are equal by checking their descendants (nodes included) kinds
 /// and tokens (same kind and inner token text).
-fn is_node_equal(a_node: &SyntaxNode<JsLanguage>, b_node: &SyntaxNode<JsLanguage>) -> Option<bool> {
-    if a_node.kind() != b_node.kind() {
-        return Some(false);
-    }
+fn is_node_equal(a_node: &JsSyntaxNode, b_node: &JsSyntaxNode) -> bool {
+    let a_tree = a_node.preorder_with_tokens(Direction::Next);
+    let b_tree = b_node.preorder_with_tokens(Direction::Next);
 
-    let mut is_equal = true;
-    let a_children = a_node.children_with_tokens();
-    let b_children = b_node.children_with_tokens();
+    for (a_child, b_child) in iter::zip(a_tree, b_tree) {
+        let a_event = match a_child {
+            WalkEvent::Enter(event) => event,
+            WalkEvent::Leave(event) => event,
+        };
 
-    for (a_child, b_child) in iter::zip(a_children, b_children) {
-        if let (Some(a_token), Some(b_token)) = (a_child.as_token(), b_child.as_token()) {
-            if !is_token_equal(a_token, b_token) {
-                return Some(false);
-            } else {
-                continue;
-            }
+        let b_event = match b_child {
+            WalkEvent::Enter(event) => event,
+            WalkEvent::Leave(event) => event,
+        };
+
+        if a_event.kind() != b_event.kind() {
+            return false;
         }
 
-        is_equal &= is_node_equal(a_child.as_node()?, b_child.as_node()?)?
+        let a_token = a_event.as_token();
+        let b_token = b_event.as_token();
+
+        // both are nodes
+        if a_token.is_none() && b_token.is_none() {
+            continue;
+        }
+
+        // one of them is a node
+        if a_token.is_none() && b_token.is_some() || a_token.is_some() && b_token.is_none() {
+            return false;
+        }
+
+        // both are tokens
+        if let (Some(a_token), Some(b_token)) = (a_token, b_token) {
+            if !is_token_text_equal(a_token, b_token) {
+                return false;
+            }
+        }
     }
 
-    Some(is_equal)
+    true
 }
 
-/// Verify that tokens are equal, by checking if they have the same kind and inner text.
-fn is_token_equal(a: &SyntaxToken<JsLanguage>, b: &SyntaxToken<JsLanguage>) -> bool {
-    a.kind() == b.kind() && inner_string_text(a).text() == inner_string_text(b).text()
-}
-
-/// Get the inner text of a string not including the quotes
-fn inner_string_text(token: &SyntaxToken<JsLanguage>) -> SyntaxTokenText {
-    let mut text = token.token_text_trimmed();
-
+/// Verify that tokens' inner text are equal
+fn is_token_text_equal(a: &JsSyntaxToken, b: &JsSyntaxToken) -> bool {
     static QUOTES: [char; 2] = ['"', '\''];
 
-    if text.starts_with(QUOTES) {
-        let range = text.range().add_start(TextSize::from(1));
-        text = text.slice(range);
-    }
-
-    if text.ends_with(QUOTES) {
-        let range = text.range().sub_end(TextSize::from(1));
-        text = text.slice(range);
-    }
-
-    text
+    a.token_text_trimmed()
+        .trim_start_matches(QUOTES)
+        .trim_end_matches(QUOTES)
+        == b.token_text_trimmed()
+            .trim_start_matches(QUOTES)
+            .trim_end_matches(QUOTES)
 }
