@@ -3,6 +3,7 @@ use crate::config::CONFIGURATION_SECTION;
 use crate::documents::Document;
 use crate::url_interner::UrlInterner;
 use crate::utils;
+use anyhow::{anyhow, Result};
 use futures::stream::futures_unordered::FuturesUnordered;
 use futures::StreamExt;
 use rome_analyze::RuleCategories;
@@ -141,17 +142,33 @@ impl Session {
         self.url_interner.write().unwrap().intern(url)
     }
 
-    pub(crate) fn file_path(&self, url: &lsp_types::Url) -> RomePath {
+    pub(crate) fn file_path(&self, url: &lsp_types::Url) -> Result<RomePath> {
         let file_id = self.file_id(url.clone());
-        RomePath::new(url.path(), file_id)
+        let mut path_to_file = url
+            .to_file_path()
+            .map_err(|()| anyhow!("failed to convert {url} to a filesystem path"))?;
+
+        let relative_path = {
+            let root_uri = self.root_uri.read().unwrap();
+            root_uri.as_ref().and_then(|root_uri| {
+                let root_path = root_uri.to_file_path().ok()?;
+                path_to_file.strip_prefix(&root_path).ok()
+            })
+        };
+
+        if let Some(relative_path) = relative_path {
+            path_to_file = relative_path.into();
+        }
+
+        Ok(RomePath::new(path_to_file, file_id))
     }
 
     /// Computes diagnostics for the file matching the provided url and publishes
     /// them to the client. Called from [`handlers::text_document`] when a file's
     /// contents changes.
     #[tracing::instrument(level = "debug", skip_all, fields(url = display(&url), diagnostic_count), err)]
-    pub(crate) async fn update_diagnostics(&self, url: lsp_types::Url) -> anyhow::Result<()> {
-        let rome_path = self.file_path(&url);
+    pub(crate) async fn update_diagnostics(&self, url: lsp_types::Url) -> Result<()> {
+        let rome_path = self.file_path(&url)?;
         let doc = self.document(&url)?;
         let unsupported_lint = self.workspace.supports_feature(SupportsFeatureParams {
             feature: FeatureName::Lint,
