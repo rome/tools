@@ -148,13 +148,11 @@ impl Session {
             .to_file_path()
             .map_err(|()| anyhow!("failed to convert {url} to a filesystem path"))?;
 
-        let relative_path = {
-            let root_uri = self.root_uri.read().unwrap();
-            root_uri.as_ref().and_then(|root_uri| {
-                let root_path = root_uri.to_file_path().ok()?;
-                path_to_file.strip_prefix(&root_path).ok()
-            })
-        };
+        let relative_path = self.initialize_params.get().and_then(|initialize_params| {
+            let root_uri = initialize_params.root_uri.as_ref()?;
+            let root_path = root_uri.to_file_path().ok()?;
+            path_to_file.strip_prefix(&root_path).ok()
+        });
 
         if let Some(relative_path) = relative_path {
             path_to_file = relative_path.into();
