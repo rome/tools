@@ -377,6 +377,8 @@ struct A11ySchema {
     use_anchor_content: Option<RuleConfiguration>,
     #[doc = "Enforces the usage of the attribute type for the element button"]
     use_button_type: Option<RuleConfiguration>,
+    #[doc = "Enforce that html element has lang attribute. html element must have a valid lang attribute or correspond to a valid language code in order to provide a language preference for multilingual screen reader users. This allows users to choose a language other than the default."]
+    use_html_lang: Option<RuleConfiguration>,
     #[doc = "Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event."]
     use_key_with_click_events: Option<RuleConfiguration>,
     #[doc = "Enforce that onMouseOver/onMouseOut are accompanied by onFocus/onBlur for keyboard-only users. It is important to take into account users with physical disabilities who cannot use a mouse, who use assistive technology or screenreader."]
@@ -386,29 +388,31 @@ struct A11ySchema {
 }
 impl A11y {
     const CATEGORY_NAME: &'static str = "a11y";
-    pub(crate) const CATEGORY_RULES: [&'static str; 9] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 10] = [
         "noAutofocus",
         "noBlankTarget",
         "noPositiveTabindex",
         "useAltText",
         "useAnchorContent",
         "useButtonType",
+        "useHtmlLang",
         "useKeyWithClickEvents",
         "useKeyWithMouseEvents",
         "useValidAnchor",
     ];
-    const RECOMMENDED_RULES: [&'static str; 9] = [
+    const RECOMMENDED_RULES: [&'static str; 10] = [
         "noAutofocus",
         "noBlankTarget",
         "noPositiveTabindex",
         "useAltText",
         "useAnchorContent",
         "useButtonType",
+        "useHtmlLang",
         "useKeyWithClickEvents",
         "useKeyWithMouseEvents",
         "useValidAnchor",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 9] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 10] = [
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[2]),
@@ -418,6 +422,7 @@ impl A11y {
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[6]),
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[7]),
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[8]),
+        RuleFilter::Rule("a11y", Self::CATEGORY_RULES[9]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -444,7 +449,7 @@ impl A11y {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 9] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 10] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }

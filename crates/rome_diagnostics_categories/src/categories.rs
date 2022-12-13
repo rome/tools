@@ -19,6 +19,7 @@ define_dategories! {
     "lint/a11y/useKeyWithClickEvents": "https://docs.rome.tools/lint/rules/useKeyWithClickEvents",
     "lint/a11y/useKeyWithMouseEvents": "https://docs.rome.tools/lint/rules/useKeyWithMouseEvents",
     "lint/a11y/useValidAnchor": "https://docs.rome.tools/lint/rules/useValidAnchor",
+    "lint/a11y/useHtmlLang": "https://docs.rome.tools/lint/rules/useHtmlLang",
 
     // complexity
     "lint/complexity/noExtraBooleanCast": "https://docs.rome.tools/lint/rules/noExtraBooleanCast",

@@ -183,6 +183,10 @@ export interface A11y {
 	 */
 	useButtonType?: RuleConfiguration;
 	/**
+	 * Enforce that html element has lang attribute. html element must have a valid lang attribute or correspond to a valid language code in order to provide a language preference for multilingual screen reader users. This allows users to choose a language other than the default.
+	 */
+	useHtmlLang?: RuleConfiguration;
+	/**
 	 * Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event.
 	 */
 	useKeyWithClickEvents?: RuleConfiguration;
@@ -673,6 +677,7 @@ export type Category =
 	| "lint/a11y/useKeyWithClickEvents"
 	| "lint/a11y/useKeyWithMouseEvents"
 	| "lint/a11y/useValidAnchor"
+	| "lint/a11y/useHtmlLang"
 	| "lint/complexity/noExtraBooleanCast"
 	| "lint/complexity/noMultipleSpacesInRegularExpressionLiterals"
 	| "lint/complexity/noUselessFragments"
