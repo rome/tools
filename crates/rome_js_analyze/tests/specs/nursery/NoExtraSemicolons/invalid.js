@@ -1,17 +1,23 @@
-const x = 5;;
+{
+  const x = 5;;
+}
 
-function foo() {
-    // code
-};
+{
+  function foo() {
+      // code
+  };
+}
 
-class C {
-    field;;
-
-    method() {
-        // code
-    };
-
-    static {
-        // code
-    };
-};
+{
+  class C {
+      field;;
+  
+      method() {
+          // code
+      };
+  
+      static {
+          // code
+      };
+  };
+}

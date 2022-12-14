@@ -17,13 +17,15 @@ declare_rule! {
     ///
     /// ### Invalid
     ///
-    /// ```js,expect_diagnostic
+    ///```js,expect_diagnostic
     ///  const x = 5;;
-    /// 
+    ///```
+    ///```js,expect_diagnostic
     ///  function foo() {
     ///    // code
     ///  };
-    ///
+    /// ```
+    ///```js,expect_diagnostic
     ///    class C {
     ///      field;;
     ///
