@@ -1,29 +1,21 @@
-{
-  const x = 5;
+const x = 5;
+
+function foo() {
+    // code
 }
 
-{
-  function foo() {
-      // code
-  }
-}
+const bar = function() {
+    // code
+};
 
-{
-  const bar = function() {
-      // code
-  };
-}
+class C {
+    field;
 
-{
-  class C {
-      field;
-  
-      method() {
-          // code
-      }
-  
-      static {
-          // code
-      }
-  }
+    method() {
+        // code
+    }
+
+    static {
+        // code
+    }
 }

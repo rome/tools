@@ -1,7 +1,7 @@
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{JsEmptyStatement, JsEmptyClassMember, JsSyntaxKind, T};
+use rome_js_syntax::{JsEmptyClassMember, JsEmptyStatement, JsSyntaxKind, T};
 
 use rome_rowan::{declare_node_union, AstNode};
 
@@ -36,7 +36,7 @@ declare_rule! {
     ///      }
     ///    }
     /// ```
-    /// 
+    ///
     /// ```js,expect_diagnostic
     ///    class C {
     ///      field;
@@ -50,7 +50,7 @@ declare_rule! {
     ///      }
     ///    }
     /// ```
-    /// 
+    ///
     /// ```js,expect_diagnostic
     ///    class C {
     ///      field;
@@ -64,7 +64,7 @@ declare_rule! {
     ///      };
     ///    }
     /// ```
-    /// 
+    ///
     /// ```js,expect_diagnostic
     ///    class C {
     ///      field;
@@ -101,8 +101,7 @@ impl Rule for NoExtraSemicolons {
         match node {
             AnyJsExtraSemicolon::JsEmptyStatement(stmt) => {
                 let parent = stmt.syntax().parent()?;
-                let has_last_entity_in_parent =
-                    parent.kind() == JsSyntaxKind::JS_MODULE_ITEM_LIST;
+                let has_last_entity_in_parent = parent.kind() == JsSyntaxKind::JS_MODULE_ITEM_LIST;
                 let has_empty_statements_in_list = parent
                     .children_with_tokens()
                     .into_iter()
@@ -125,7 +124,7 @@ impl Rule for NoExtraSemicolons {
                 } else {
                     None
                 }
-            },
+            }
             AnyJsExtraSemicolon::JsEmptyClassMember(stmt) => {
                 let has_first_semicolon_in_node = stmt.syntax().first_token()?.kind() == T![;];
 

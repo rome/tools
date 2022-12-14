@@ -1,65 +1,53 @@
-{
-  const x = 5;;
+const x = 5;;
+
+function foo() {
+    // code
+};
+
+class C {
+    field;;
+
+    method() {
+        // code
+    }
+
+    static {
+        // code
+    }
 }
 
-{
-  function foo() {
-      // code
-  };
+class C {
+    field;
+
+    method() {
+        // code
+    };
+
+    static {
+        // code
+    }
 }
 
-{
-  class C {
-      field;;
-  
-      method() {
-          // code
-      }
-  
-      static {
-          // code
-      }
-  }
+class C {
+    field;
+
+    method() {
+        // code
+    }
+
+    static {
+        // code
+    };
 }
 
-{
-  class C {
-      field;
-  
-      method() {
-          // code
-      };
-  
-      static {
-          // code
-      }
-  }
-}
+class C {
+    field;
 
-{
-  class C {
-      field;
-  
-      method() {
-          // code
-      }
-  
-      static {
-          // code
-      };
-  }
-}
+    method() {
+        // code
+    }
 
-{
-  class C {
-      field;
-  
-      method() {
-          // code
-      }
-  
-      static {
-          // code
-      }
-  };
-}
+    static {
+        // code
+    }
+};
