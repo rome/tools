@@ -14,10 +14,38 @@
   
       method() {
           // code
+      }
+  
+      static {
+          // code
+      }
+  }
+}
+
+{
+  class C {
+      field;
+  
+      method() {
+          // code
       };
   
       static {
           // code
-      };
+      }
+  }
+}
+
+{
+  class C {
+      field;
+  
+      method() {
+          // code
+      }
+  
+      static {
+          // code
+      }
   };
 }
