@@ -56,18 +56,14 @@ impl Rule for NoExtraSemicolons {
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();
 
-        match node {
-          stmt => {
-            if let Some(semicolon) = stmt.syntax().first_token() {
-              if semicolon.kind() == T![;] {
-                Some(())
-              } else {
-                None
-              }
-            } else {
-              None
-            }
+        if let Some(semicolon) = node.syntax().first_token() {
+          if semicolon.kind() == T![;] {
+            Some(())
+          } else {
+            None
           }
+        } else {
+          None
         }
     }
 
