@@ -1,18 +1,16 @@
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{
-    JsEmptyStatement, T,
-};
+use rome_js_syntax::{JsEmptyStatement, T, JsSyntaxKind};
 
-use rome_rowan::{AstNode};
+use rome_rowan::AstNode;
 
 declare_rule! {
-    /// Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. 
+    /// Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary.
     /// While not technically an error, extra semicolons can cause confusion when reading code.
     ///
     /// This rule disallows unnecessary semicolons.
-    /// 
+    ///
     /// ## Examples
     ///
     /// ### Invalid
@@ -56,14 +54,16 @@ impl Rule for NoExtraSemicolons {
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();
 
-        if let Some(semicolon) = node.syntax().first_token() {
-          if semicolon.kind() == T![;] {
+        let parent = node.syntax().parent()?;
+        println!("parent: {:?}", parent);
+        println!("node: {:?}", node.syntax().kind());
+        let has_last_entity_in_parent = parent.prev_sibling_or_token()?.kind() == JsSyntaxKind::JS_MODULE_ITEM_LIST;
+        let has_first_semicolon_in_node = node.syntax().first_token()?.kind() == T![;];
+
+        if !has_last_entity_in_parent && has_first_semicolon_in_node {
             Some(())
-          } else {
-            None
-          }
         } else {
-          None
+            None
         }
     }
 
@@ -73,7 +73,7 @@ impl Rule for NoExtraSemicolons {
             rule_category!(),
             node.range(),
             markup! {
-                "Unnecessary semicolons."
+                "Unnecessary semicolon."
             },
         ))
     }

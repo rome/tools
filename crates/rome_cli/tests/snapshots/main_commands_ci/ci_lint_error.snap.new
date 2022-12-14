@@ -1,0 +1,55 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 334
+expression: content
+---
+## `ci.js`
+
+```js
+for(;true;);
+
+```
+
+# Termination Message
+
+```block
+some errors were emitted while running checks
+```
+
+# Emitted Messages
+
+```block
+ci.js:1:1 lint/style/useWhile  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Use while loops instead of for loops.
+  
+  > 1 │ for(;true;);
+      │ ^^^^^^^^^^^
+    2 │ 
+  
+  i Suggested fix: Use a while loop
+  
+    1   │ - for(;true;);
+      1 │ + while·(true);
+    2 2 │   
+  
+
+```
+
+```block
+ci.js:1:12 lint/nursery/noExtraSemicolons ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Unnecessary semicolons.
+  
+  > 1 │ for(;true;);
+      │            ^
+    2 │ 
+  
+
+```
+
+```block
+Checked 1 file(s) in <TIME>
+```
+
+
