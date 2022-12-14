@@ -1,14 +1,12 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    AnyJsxAttribute, AnyJsxAttributeValue, JsxAttribute, JsxOpeningElement, TextRange,
+    jsx_ext::AnyJsxElement, AnyJsxAttribute, AnyJsxAttributeValue, JsxAttribute, TextRange,
 };
 use rome_rowan::AstNode;
 
 declare_rule! {
     /// Enforce that `html` element has `lang` attribute.
-    /// `html` element must have a valid `lang` attribute or correspond to a valid language code
-    /// in order to provide a language preference for multilingual screen reader users.
     /// This allows users to choose a language other than the default.
     /// ## Examples
     ///
@@ -16,6 +14,10 @@ declare_rule! {
     ///
     /// ```jsx,expect_diagnostic
     /// <html></html>
+    /// ```
+    ///
+    /// ```jsx,expect_diagnostic
+    /// <html lang={""}></html>
     /// ```
     ///
     /// ```jsx,expect_diagnostic
@@ -44,6 +46,10 @@ declare_rule! {
     /// <html {...props}></html>
     /// ```
     ///
+    /// ```jsx
+    /// <html lang={""} {...props}></html>
+    /// ```
+    ///
     /// ## Accessibility guidelines
     ///
     /// [WCAG 3.1.1](https://www.w3.org/WAI/WCAG21/Understanding/language-of-page)
@@ -55,7 +61,7 @@ declare_rule! {
 }
 
 impl Rule for UseHtmlLang {
-    type Query = Ast<JsxOpeningElement>;
+    type Query = Ast<AnyJsxElement>;
     type State = TextRange;
     type Signals = Option<Self::State>;
     type Options = ();
@@ -66,7 +72,7 @@ impl Rule for UseHtmlLang {
         let name = name.as_jsx_name()?.value_token().ok()?;
         let name_trimmed = name.text_trimmed();
         if name_trimmed == "html" {
-            if let Some(lang_attribute) = element.find_attribute_by_name("lang").ok()? {
+            if let Some(lang_attribute) = element.find_attribute_by_name("lang") {
                 if element.has_trailing_spread_prop(lang_attribute.clone())
                     || is_valid_lang_attribute(lang_attribute).is_some()
                 {
@@ -97,7 +103,7 @@ used by screen readers when no user default is specified."
     }
 }
 
-fn is_valid_lang_attribute(attr: JsxAttribute) -> Option<bool> {
+fn is_valid_lang_attribute(attr: JsxAttribute) -> Option<()> {
     if attr.is_value_undefined_or_null() {
         return None;
     }
@@ -109,7 +115,7 @@ fn is_valid_lang_attribute(attr: JsxAttribute) -> Option<bool> {
 
         if let Some(identifier_expression) = expression.as_js_identifier_expression() {
             if !identifier_expression.text().is_empty() {
-                return Some(true);
+                return Some(());
             }
             return None;
         }
@@ -129,17 +135,17 @@ fn is_valid_lang_attribute(attr: JsxAttribute) -> Option<bool> {
             return None;
         }
 
-        return Some(true);
+        return Some(());
     }
     let string_text = attribute_value.as_jsx_string()?.inner_string_text().ok()?;
     if string_text.is_empty() {
         return None;
     }
 
-    Some(true)
+    Some(())
 }
 
-fn has_spread_prop(element: &JsxOpeningElement) -> bool {
+fn has_spread_prop(element: &AnyJsxElement) -> bool {
     element
         .attributes()
         .into_iter()

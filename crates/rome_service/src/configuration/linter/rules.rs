@@ -377,7 +377,7 @@ struct A11ySchema {
     use_anchor_content: Option<RuleConfiguration>,
     #[doc = "Enforces the usage of the attribute type for the element button"]
     use_button_type: Option<RuleConfiguration>,
-    #[doc = "Enforce that html element has lang attribute. html element must have a valid lang attribute or correspond to a valid language code in order to provide a language preference for multilingual screen reader users. This allows users to choose a language other than the default."]
+    #[doc = "Enforce that html element has lang attribute. This allows users to choose a language other than the default."]
     use_html_lang: Option<RuleConfiguration>,
     #[doc = "Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event."]
     use_key_with_click_events: Option<RuleConfiguration>,

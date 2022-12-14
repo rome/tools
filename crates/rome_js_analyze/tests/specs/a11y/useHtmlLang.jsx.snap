@@ -6,9 +6,11 @@ expression: useHtmlLang.jsx
 ```js
 <>
     {/* invalid */}
+    <html />
     <html></html>
     <html lang=""></html>
     <html lang={""}></html>
+    <html lang={``}></html>
     <html lang={true}></html>
     <html lang={false}></html>
     <html lang={undefined}></html>
@@ -31,10 +33,10 @@ useHtmlLang.jsx:3:5 lint/a11y/useHtmlLang ━━━━━━━━━━━━�
   
     1 │ <>
     2 │     {/* invalid */}
-  > 3 │     <html></html>
-      │     ^^^^^^
-    4 │     <html lang=""></html>
-    5 │     <html lang={""}></html>
+  > 3 │     <html />
+      │     ^^^^^^^^
+    4 │     <html></html>
+    5 │     <html lang=""></html>
   
   i Setting a lang attribute on HTML document elements configures the language
     used by screen readers when no user default is specified.
@@ -48,11 +50,11 @@ useHtmlLang.jsx:4:5 lint/a11y/useHtmlLang ━━━━━━━━━━━━�
   ! Provide a lang attribute when using the html element.
   
     2 │     {/* invalid */}
-    3 │     <html></html>
-  > 4 │     <html lang=""></html>
-      │     ^^^^^^^^^^^^^^
-    5 │     <html lang={""}></html>
-    6 │     <html lang={true}></html>
+    3 │     <html />
+  > 4 │     <html></html>
+      │     ^^^^^^
+    5 │     <html lang=""></html>
+    6 │     <html lang={""}></html>
   
   i Setting a lang attribute on HTML document elements configures the language
     used by screen readers when no user default is specified.
@@ -65,12 +67,12 @@ useHtmlLang.jsx:5:5 lint/a11y/useHtmlLang ━━━━━━━━━━━━�
 
   ! Provide a lang attribute when using the html element.
   
-    3 │     <html></html>
-    4 │     <html lang=""></html>
-  > 5 │     <html lang={""}></html>
-      │     ^^^^^^^^^^^^^^^^
-    6 │     <html lang={true}></html>
-    7 │     <html lang={false}></html>
+    3 │     <html />
+    4 │     <html></html>
+  > 5 │     <html lang=""></html>
+      │     ^^^^^^^^^^^^^^
+    6 │     <html lang={""}></html>
+    7 │     <html lang={``}></html>
   
   i Setting a lang attribute on HTML document elements configures the language
     used by screen readers when no user default is specified.
@@ -83,12 +85,12 @@ useHtmlLang.jsx:6:5 lint/a11y/useHtmlLang ━━━━━━━━━━━━�
 
   ! Provide a lang attribute when using the html element.
   
-    4 │     <html lang=""></html>
-    5 │     <html lang={""}></html>
-  > 6 │     <html lang={true}></html>
-      │     ^^^^^^^^^^^^^^^^^^
-    7 │     <html lang={false}></html>
-    8 │     <html lang={undefined}></html>
+    4 │     <html></html>
+    5 │     <html lang=""></html>
+  > 6 │     <html lang={""}></html>
+      │     ^^^^^^^^^^^^^^^^
+    7 │     <html lang={``}></html>
+    8 │     <html lang={true}></html>
   
   i Setting a lang attribute on HTML document elements configures the language
     used by screen readers when no user default is specified.
@@ -101,12 +103,12 @@ useHtmlLang.jsx:7:5 lint/a11y/useHtmlLang ━━━━━━━━━━━━�
 
   ! Provide a lang attribute when using the html element.
   
-    5 │     <html lang={""}></html>
-    6 │     <html lang={true}></html>
-  > 7 │     <html lang={false}></html>
-      │     ^^^^^^^^^^^^^^^^^^^
-    8 │     <html lang={undefined}></html>
-    9 │     <html lang={null}></html>
+    5 │     <html lang=""></html>
+    6 │     <html lang={""}></html>
+  > 7 │     <html lang={``}></html>
+      │     ^^^^^^^^^^^^^^^^
+    8 │     <html lang={true}></html>
+    9 │     <html lang={false}></html>
   
   i Setting a lang attribute on HTML document elements configures the language
     used by screen readers when no user default is specified.
@@ -119,12 +121,12 @@ useHtmlLang.jsx:8:5 lint/a11y/useHtmlLang ━━━━━━━━━━━━�
 
   ! Provide a lang attribute when using the html element.
   
-     6 │     <html lang={true}></html>
-     7 │     <html lang={false}></html>
-   > 8 │     <html lang={undefined}></html>
-       │     ^^^^^^^^^^^^^^^^^^^^^^^
-     9 │     <html lang={null}></html>
-    10 │     <html {...props} lang=""></html>
+     6 │     <html lang={""}></html>
+     7 │     <html lang={``}></html>
+   > 8 │     <html lang={true}></html>
+       │     ^^^^^^^^^^^^^^^^^^
+     9 │     <html lang={false}></html>
+    10 │     <html lang={undefined}></html>
   
   i Setting a lang attribute on HTML document elements configures the language
     used by screen readers when no user default is specified.
@@ -137,12 +139,12 @@ useHtmlLang.jsx:9:5 lint/a11y/useHtmlLang ━━━━━━━━━━━━�
 
   ! Provide a lang attribute when using the html element.
   
-     7 │     <html lang={false}></html>
-     8 │     <html lang={undefined}></html>
-   > 9 │     <html lang={null}></html>
-       │     ^^^^^^^^^^^^^^^^^^
-    10 │     <html {...props} lang=""></html>
-    11 │     {/* valid */}
+     7 │     <html lang={``}></html>
+     8 │     <html lang={true}></html>
+   > 9 │     <html lang={false}></html>
+       │     ^^^^^^^^^^^^^^^^^^^
+    10 │     <html lang={undefined}></html>
+    11 │     <html lang={null}></html>
   
   i Setting a lang attribute on HTML document elements configures the language
     used by screen readers when no user default is specified.
@@ -155,12 +157,48 @@ useHtmlLang.jsx:10:5 lint/a11y/useHtmlLang ━━━━━━━━━━━━�
 
   ! Provide a lang attribute when using the html element.
   
-     8 │     <html lang={undefined}></html>
-     9 │     <html lang={null}></html>
-  > 10 │     <html {...props} lang=""></html>
+     8 │     <html lang={true}></html>
+     9 │     <html lang={false}></html>
+  > 10 │     <html lang={undefined}></html>
+       │     ^^^^^^^^^^^^^^^^^^^^^^^
+    11 │     <html lang={null}></html>
+    12 │     <html {...props} lang=""></html>
+  
+  i Setting a lang attribute on HTML document elements configures the language
+    used by screen readers when no user default is specified.
+  
+
+```
+
+```
+useHtmlLang.jsx:11:5 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a lang attribute when using the html element.
+  
+     9 │     <html lang={false}></html>
+    10 │     <html lang={undefined}></html>
+  > 11 │     <html lang={null}></html>
+       │     ^^^^^^^^^^^^^^^^^^
+    12 │     <html {...props} lang=""></html>
+    13 │     {/* valid */}
+  
+  i Setting a lang attribute on HTML document elements configures the language
+    used by screen readers when no user default is specified.
+  
+
+```
+
+```
+useHtmlLang.jsx:12:5 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a lang attribute when using the html element.
+  
+    10 │     <html lang={undefined}></html>
+    11 │     <html lang={null}></html>
+  > 12 │     <html {...props} lang=""></html>
        │     ^^^^^^^^^^^^^^^^^^^^^^^^^
-    11 │     {/* valid */}
-    12 │     <html lang="en"></html>
+    13 │     {/* valid */}
+    14 │     <html lang="en"></html>
   
   i Setting a lang attribute on HTML document elements configures the language
     used by screen readers when no user default is specified.

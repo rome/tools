@@ -183,7 +183,7 @@ export interface A11y {
 	 */
 	useButtonType?: RuleConfiguration;
 	/**
-	 * Enforce that html element has lang attribute. html element must have a valid lang attribute or correspond to a valid language code in order to provide a language preference for multilingual screen reader users. This allows users to choose a language other than the default.
+	 * Enforce that html element has lang attribute. This allows users to choose a language other than the default.
 	 */
 	useHtmlLang?: RuleConfiguration;
 	/**
