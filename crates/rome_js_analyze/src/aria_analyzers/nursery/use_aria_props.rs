@@ -3,8 +3,8 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::jsx_ext::AnyJsxElement;
-use rome_js_syntax::JsxAttribute;
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, TextRange};
+
 declare_rule! {
     /// Ensures that ARIA properties `aria-*` are all valid.
     ///
@@ -26,39 +26,39 @@ declare_rule! {
 }
 
 impl Rule for UseAriaProps {
-    type Query = Aria<JsxAttribute>;
-    type State = ();
+    type Query = Aria<AnyJsxElement>;
+    type State = (TextRange, String);
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
         let aria_properties = ctx.aria_properties();
-        let parent_element = node.syntax().ancestors().find_map(AnyJsxElement::cast)?;
 
         // check attributes that belong only to HTML elements
-        if parent_element.is_element() {
-            let attribute_name = node.name().ok()?.as_jsx_name()?.value_token().ok()?;
-            if attribute_name.text_trimmed().starts_with("aria-")
-                && aria_properties
-                    .get_property(attribute_name.text_trimmed())
-                    .is_none()
-            {
-                return Some(());
+        if node.is_element() {
+            for attribute in node.attributes() {
+                let attribute = attribute.as_jsx_attribute()?;
+                let attribute_name = attribute.name().ok()?.as_jsx_name()?.value_token().ok()?;
+                if attribute_name.text_trimmed().starts_with("aria-")
+                    && aria_properties
+                        .get_property(attribute_name.text_trimmed())
+                        .is_none()
+                {
+                    return Some((attribute.range(), attribute_name.to_string()));
+                }
             }
         }
 
         None
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query();
-        let attribute_name = node.name().ok()?.as_jsx_name()?.value_token().ok()?;
+    fn diagnostic(_ctx: &RuleContext<Self>, (range, name): &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::new(
             rule_category!(),
-            node.range(),
+            range,
             markup! {
-                <Emphasis>{{attribute_name.text_trimmed()}}</Emphasis>" is not a valid ARIA attribute."
+                <Emphasis>{{name}}</Emphasis>" is not a valid ARIA attribute."
             },
         ))
     }
