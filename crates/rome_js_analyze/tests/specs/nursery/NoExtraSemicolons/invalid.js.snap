@@ -4,143 +4,115 @@ expression: invalid.js
 ---
 # Input
 ```js
-const x = 5;;
-
-function foo() {
-    // code
-};
-
-class C {
-    field;;
-
-    method() {
-        // code
-    }
-
-    static {
-        // code
-    }
+{
+  const x = 5;;
 }
 
-class C {
-    field;
-
-    method() {
-        // code
-    };
-
-    static {
-        // code
-    }
+{
+  function foo() {
+      // code
+  };
 }
 
-class C {
-    field;
-
-    method() {
-        // code
-    }
-
-    static {
-        // code
-    };
+{
+  class C {
+      field;;
+  
+      method() {
+          // code
+      }
+  
+      static {
+          // code
+      }
+  }
 }
 
-class C {
-    field;
+{
+  class C {
+      field;
+  
+      method() {
+          // code
+      };
+  
+      static {
+          // code
+      }
+  }
+}
 
-    method() {
-        // code
-    }
+{
+  class C {
+      field;
+  
+      method() {
+          // code
+      }
+  
+      static {
+          // code
+      };
+  }
+}
 
-    static {
-        // code
-    }
-};
+{
+  class C {
+      field;
+  
+      method() {
+          // code
+      }
+  
+      static {
+          // code
+      }
+  };
+}
 ```
 
 # Diagnostics
 ```
-invalid.js:1:13 lint/nursery/noExtraSemicolons ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:13:13 lint/nursery/noExtraSemicolons ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
-  > 1 │ const x = 5;;
-      │             ^
-    2 │ 
-    3 │ function foo() {
+    11 │ {
+    12 │   class C {
+  > 13 │       field;;
+       │             ^
+    14 │   
+    15 │       method() {
   
 
 ```
 
 ```
-invalid.js:5:2 lint/nursery/noExtraSemicolons ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:31:8 lint/nursery/noExtraSemicolons ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
-    3 │ function foo() {
-    4 │     // code
-  > 5 │ };
-      │  ^
-    6 │ 
-    7 │ class C {
+    29 │       method() {
+    30 │           // code
+  > 31 │       };
+       │        ^
+    32 │   
+    33 │       static {
   
 
 ```
 
 ```
-invalid.js:8:11 lint/nursery/noExtraSemicolons ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:49:8 lint/nursery/noExtraSemicolons ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
-     7 │ class C {
-   > 8 │     field;;
-       │           ^
-     9 │ 
-    10 │     method() {
-  
-
-```
-
-```
-invalid.js:24:6 lint/nursery/noExtraSemicolons ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Unnecessary semicolon.
-  
-    22 │     method() {
-    23 │         // code
-  > 24 │     };
-       │      ^
-    25 │ 
-    26 │     static {
-  
-
-```
-
-```
-invalid.js:40:6 lint/nursery/noExtraSemicolons ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Unnecessary semicolon.
-  
-    38 │     static {
-    39 │         // code
-  > 40 │     };
-       │      ^
-    41 │ }
-    42 │ 
-  
-
-```
-
-```
-invalid.js:53:2 lint/nursery/noExtraSemicolons ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Unnecessary semicolon.
-  
-    51 │         // code
-    52 │     }
-  > 53 │ };
-       │  ^
+    47 │       static {
+    48 │           // code
+  > 49 │       };
+       │        ^
+    50 │   }
+    51 │ }
   
 
 ```
