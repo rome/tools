@@ -1,4 +1,8 @@
 {
+  for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);;
+}
+
+{
   const x = 5;;
 }
 
