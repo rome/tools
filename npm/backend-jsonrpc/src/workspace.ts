@@ -322,6 +322,10 @@ export interface Nursery {
 	 */
 	noExtraNonNullAssertion?: RuleConfiguration;
 	/**
+	 * Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary.  While not technically an error, extra semicolons can cause confusion when reading code.
+	 */
+	noExtraSemicolons?: RuleConfiguration;
+	/**
 	 * Check that the scope attribute is only used on th elements.
 	 */
 	noHeaderScope?: RuleConfiguration;
@@ -697,6 +701,7 @@ export type Category =
 	| "lint/nursery/noAccessKey"
 	| "lint/nursery/noAssignInExpressions"
 	| "lint/nursery/noWith"
+	| "lint/nursery/noExtraSemicolons"
 	| "lint/nursery/noBannedTypes"
 	| "lint/nursery/noConstEnum"
 	| "lint/nursery/noConstructorReturn"
