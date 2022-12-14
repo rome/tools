@@ -1,7 +1,7 @@
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{JsEmptyStatement, T, JsSyntaxKind};
+use rome_js_syntax::{JsEmptyStatement, JsSyntaxKind, T};
 
 use rome_rowan::AstNode;
 
@@ -55,7 +55,8 @@ impl Rule for NoExtraSemicolons {
         let node = ctx.query();
 
         let parent = node.syntax().parent()?;
-        let has_last_entity_in_parent = parent.prev_sibling_or_token()?.kind() == JsSyntaxKind::JS_MODULE_ITEM_LIST;
+        let has_last_entity_in_parent =
+            parent.prev_sibling_or_token()?.kind() == JsSyntaxKind::JS_MODULE_ITEM_LIST;
         let has_first_semicolon_in_node = node.syntax().first_token()?.kind() == T![;];
 
         if !has_last_entity_in_parent && has_first_semicolon_in_node {
