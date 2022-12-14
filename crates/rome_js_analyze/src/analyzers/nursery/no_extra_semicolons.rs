@@ -3,7 +3,7 @@ use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{JsEmptyStatement, JsSyntaxKind, T};
 
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode};
 
 declare_rule! {
     /// Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary.
@@ -55,11 +55,23 @@ impl Rule for NoExtraSemicolons {
         let node = ctx.query();
 
         let parent = node.syntax().parent()?;
+        let has_empty_statements_in_list = parent
+            .children_with_tokens()
+            .into_iter()
+            .filter(|child| child.kind() == JsSyntaxKind::JS_EMPTY_STATEMENT)
+            .map(|child| {
+                let child = child.into_node().unwrap();
+                let child = JsEmptyStatement::cast(child).unwrap();
+                child.syntax().first_token().unwrap().kind() == T![;]
+            })
+            .filter(|value| *value)
+            .count() > 0;
         let has_last_entity_in_parent =
             parent.prev_sibling_or_token()?.kind() == JsSyntaxKind::JS_MODULE_ITEM_LIST;
         let has_first_semicolon_in_node = node.syntax().first_token()?.kind() == T![;];
+        let has_empty_statements = !has_last_entity_in_parent && has_empty_statements_in_list && has_first_semicolon_in_node;
 
-        if !has_last_entity_in_parent && has_first_semicolon_in_node {
+        if has_empty_statements {
             Some(())
         } else {
             None
