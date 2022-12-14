@@ -29,11 +29,53 @@ declare_rule! {
     ///
     ///      method() {
     ///          // code
+    ///      }
+    ///
+    ///      static {
+    ///          // code
+    ///      }
+    ///    }
+    /// ```
+    /// 
+    /// ```js,expect_diagnostic
+    ///    class C {
+    ///      field;
+    ///
+    ///      method() {
+    ///          // code
     ///      };
     ///
     ///      static {
     ///          // code
+    ///      }
+    ///    }
+    /// ```
+    /// 
+    /// ```js,expect_diagnostic
+    ///    class C {
+    ///      field;
+    ///
+    ///      method() {
+    ///          // code
+    ///      }
+    ///
+    ///      static {
+    ///          // code
     ///      };
+    ///    }
+    /// ```
+    /// 
+    /// ```js,expect_diagnostic
+    ///    class C {
+    ///      field;
+    ///
+    ///      method() {
+    ///          // code
+    ///      }
+    ///
+    ///      static {
+    ///          // code
+    ///      }
     ///    };
     /// ```
     pub(crate) NoExtraSemicolons {
