@@ -16,35 +16,35 @@ declare_rule! {
     ///
     /// ### Invalid
     /// ```ts,expect_diagnostic
-    /// let incorrect: Array<foo>;
+    /// let invalid: Array<foo>;
     /// ```
     ///
     /// ```ts,expect_diagnostic
-    /// let incorrect: Promise<Array<string>>;
+    /// let invalid: Promise<Array<string>>;
     /// ```
     ///
     /// ```ts,expect_diagnostic
-    /// let incorrect: Array<Foo<Bar>>;
+    /// let invalid: Array<Foo<Bar>>;
     /// ```
     ///
     /// ```ts,expect_diagnostic
-    /// let incorrect: Array<[number, number]>;
+    /// let invalid: Array<[number, number]>;
     /// ```
     ///
     /// ```ts,expect_diagnostic
-    /// let incorrect: Array<[number, number]>;
+    /// let invalid: Array<[number, number]>;
     /// ```
     ///
     /// ```ts,expect_diagnostic
-    /// let incorrect: ReadonlyArray<string>;
+    /// let invalid: ReadonlyArray<string>;
     /// ```
     ///
     /// ### Valid
     ///
     /// ```ts
-    /// let correct: Array<Foo | Bar>;
-    /// let correct: Array<keyof Bar>;
-    /// let correct: Array<foo | bar>;
+    /// let valid: Array<Foo | Bar>;
+    /// let valid: Array<keyof Bar>;
+    /// let valid: Array<foo | bar>;
     /// ```
     pub(crate) UseShorthandArrayType  {
         version: "0.7.0",
