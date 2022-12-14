@@ -741,7 +741,7 @@ struct NurserySchema {
     no_empty_interface: Option<RuleConfiguration>,
     #[doc = "Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files."]
     no_extra_non_null_assertion: Option<RuleConfiguration>,
-    #[doc = "Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary.  While not technically an error, extra semicolons can cause confusion when reading code."]
+    #[doc = "Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. While not technically an error, extra semicolons can cause confusion when reading code."]
     no_extra_semicolons: Option<RuleConfiguration>,
     #[doc = "Check that the scope attribute is only used on th elements."]
     no_header_scope: Option<RuleConfiguration>,

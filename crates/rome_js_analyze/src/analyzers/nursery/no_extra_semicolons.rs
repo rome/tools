@@ -55,8 +55,6 @@ impl Rule for NoExtraSemicolons {
         let node = ctx.query();
 
         let parent = node.syntax().parent()?;
-        println!("parent: {:?}", parent);
-        println!("node: {:?}", node.syntax().kind());
         let has_last_entity_in_parent = parent.prev_sibling_or_token()?.kind() == JsSyntaxKind::JS_MODULE_ITEM_LIST;
         let has_first_semicolon_in_node = node.syntax().first_token()?.kind() == T![;];
 

@@ -322,7 +322,7 @@ export interface Nursery {
 	 */
 	noExtraNonNullAssertion?: RuleConfiguration;
 	/**
-	 * Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary.  While not technically an error, extra semicolons can cause confusion when reading code.
+	 * Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. While not technically an error, extra semicolons can cause confusion when reading code.
 	 */
 	noExtraSemicolons?: RuleConfiguration;
 	/**
