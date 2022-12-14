@@ -52,18 +52,20 @@ fn get_code_point_from_hex_character(it: &mut Peekable<Chars>) -> Option<(String
 
 fn get_code_point_from_escape_character(it: &mut Peekable<Chars>) -> Option<(String, i64)> {
     let mut digits = Vec::new();
-
-    if let Some(&c) = it.peek() {
-        for _ in 1..=4 {
-            digits.push(it.next()?);
+    for _ in 1..=4 {
+        if let Some(&c) = it.peek() {
+            match c {
+                '0'..='9' => digits.push(it.next()?),
+                'a'..='f' => digits.push(it.next()?),
+                'A'..='F' => digits.push(it.next()?),
+                _ => {}
+            }
         }
-
-        let s: String = digits.into_iter().collect();
-        let cp = i64::from_str_radix(s.as_str(), 16).ok()?;
-        return Some((s, cp));
     }
 
-    None
+    let s: String = digits.into_iter().collect();
+    let cp = i64::from_str_radix(s.as_str(), 16).ok()?;
+    Some((s, cp))
 }
 
 fn get_code_point_from_code_point_character(it: &mut Peekable<Chars>) -> Option<(String, i64)> {
