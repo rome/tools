@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 223
 expression: content
 ---
 ## `ci.js`
@@ -13,7 +12,15 @@ statement2();
 # Termination Message
 
 ```block
-failed to parse argument '--files-max-size': failed to parse '-1': invalid digit found in string
+flags/invalid  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Cannot parse the argument --files-max-size
+    
+    Caused by:
+      failed to parse '-1': invalid digit found in string
+  
+
+
 ```
 
 

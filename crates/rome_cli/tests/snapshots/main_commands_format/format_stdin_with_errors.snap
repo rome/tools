@@ -5,7 +5,14 @@ expression: content
 # Termination Message
 
 ```block
-missing argument 'stdin'. Type 'rome format --help' for more information.
+flags/invalid  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Missing argument stdin
+  
+  i Type rome format --help for more information.
+  
+
+
 ```
 
 

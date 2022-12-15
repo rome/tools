@@ -5,7 +5,15 @@ expression: content
 # Termination Message
 
 ```block
-failed to parse argument '--quote-properties': failed to parse 'As-needed': Value not supported for QuoteProperties
+flags/invalid  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Cannot parse the argument --quote-properties
+    
+    Caused by:
+      failed to parse 'As-needed': Value not supported for QuoteProperties
+  
+
+
 ```
 
 

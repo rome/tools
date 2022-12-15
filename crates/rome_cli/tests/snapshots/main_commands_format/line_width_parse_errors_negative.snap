@@ -5,7 +5,15 @@ expression: content
 # Termination Message
 
 ```block
-failed to parse argument '--line-width': failed to parse '-1': ParseError(ParseIntError { kind: InvalidDigit })
+flags/invalid  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Cannot parse the argument --line-width
+    
+    Caused by:
+      failed to parse '-1': ParseError(ParseIntError { kind: InvalidDigit })
+  
+
+
 ```
 
 

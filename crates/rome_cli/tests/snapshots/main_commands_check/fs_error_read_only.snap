@@ -1,20 +1,26 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 334
 expression: content
 ---
 # Termination Message
 
 ```block
-no files were processed in the specified paths.
+flags/invalid  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × No files were processed in the specified paths.
+  
+
+
 ```
 
 # Emitted Messages
 
 ```block
-test.js internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+test.js internalError/io  INTERNAL  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × cannot acquire write access to file in read-only filesystem
+  
+  ! This diagnostic was derived from an internal Rome error. Potential bug, please report it if necessary.
   
 
 ```

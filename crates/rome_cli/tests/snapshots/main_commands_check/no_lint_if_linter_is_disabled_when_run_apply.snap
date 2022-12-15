@@ -23,7 +23,12 @@ if(a != -0) {}
 # Termination Message
 
 ```block
-no files were processed in the specified paths.
+flags/invalid  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × No files were processed in the specified paths.
+  
+
+
 ```
 
 # Emitted Messages

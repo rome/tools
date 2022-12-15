@@ -29,8 +29,13 @@ statement(    ) ; let a = !b || !c;
 # Termination Message
 
 ```block
-The combination of configuration and arguments is invalid: 
- Formatter and Linter are both disabled, can't perform the command. This probably and error.
+flags/invalid  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The combination of configuration and arguments is invalid: 
+     Formatter and Linter are both disabled, can't perform the command. This is probably and error.
+  
+
+
 ```
 
 

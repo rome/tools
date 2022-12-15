@@ -15,9 +15,14 @@ expression: content
 # Termination Message
 
 ```block
-Rome couldn't load the configuration file, here's why: 
-The line width exceeds the maximum value (320)
- at line 4 column 3
+configuration  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Rome couldn't load the configuration file, here's why: 
+    The line width exceeds the maximum value (320)
+     at line 4 column 3
+  
+
+
 ```
 
 

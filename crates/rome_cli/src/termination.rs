@@ -7,7 +7,7 @@ use rome_diagnostics::{
 };
 use rome_service::RomeError;
 use rome_text_size::TextRange;
-use std::{env, env::current_exe, fmt::Debug};
+use std::{env::current_exe, fmt::Debug};
 
 fn command_name() -> String {
     current_exe()
@@ -16,27 +16,10 @@ fn command_name() -> String {
         .unwrap_or_else(|| String::from("rome"))
 }
 
-// Termination implements Debug by redirecting to Display instead of deriving
-// a "canonical" debug implementation as it it is returned as a Result in the
-// main function and gets printed by the standard library, which uses Debug but
-// we want to show the actual error message to the user in case of an error
-impl Debug for TerminationKind {
-    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
-        std::fmt::Display::fmt(self, fmt)
-    }
-}
-
-impl std::fmt::Display for TerminationKind {
-    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(fmt, "{}", self)
-    }
-}
-
 #[derive(Debug)]
 pub struct TerminationDiagnostic {
     span: Option<TextRange>,
     path: Resource<&'static str>,
-    source: String,
     message: MessageAndDescription,
     advices: TerminationAdvice,
     source: Option<Error>,
@@ -62,13 +45,10 @@ impl Advices for TerminationAdvice {
 
 impl TerminationDiagnostic {
     pub fn new(category: &'static Category, message: impl Display) -> Self {
-        let source: Vec<String> = env::args().collect();
-        let source = source.join(" ");
         Self {
             category,
             span: None,
             path: Resource::Memory,
-            source,
             message: MessageAndDescription::from(
                 markup! {
                     {message}

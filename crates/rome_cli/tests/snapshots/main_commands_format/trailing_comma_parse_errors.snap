@@ -5,7 +5,15 @@ expression: content
 # Termination Message
 
 ```block
-failed to parse argument '--trailing-comma': failed to parse 'NONE': Value not supported for TrailingComma
+flags/invalid  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Cannot parse the argument --trailing-comma
+    
+    Caused by:
+      failed to parse 'NONE': Value not supported for TrailingComma
+  
+
+
 ```
 
 

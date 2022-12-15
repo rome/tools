@@ -11,7 +11,12 @@ statement(    ) ; let a = !b || !c;
 # Termination Message
 
 ```block
-some errors were emitted while running checks
+internalError/io  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
+  
+
+
 ```
 
 # Emitted Messages

@@ -1,7 +1,7 @@
 use crate::check_reformat::CheckReformat;
 use crate::snapshot_builder::{SnapshotBuilder, SnapshotOutput};
 use crate::TestFormatLanguage;
-use rome_console::{BufferConsole, EnvConsole};
+use rome_console::EnvConsole;
 use rome_diagnostics::FileId;
 use rome_formatter::FormatOptions;
 use rome_fs::RomePath;

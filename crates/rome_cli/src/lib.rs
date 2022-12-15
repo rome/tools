@@ -142,7 +142,6 @@ pub fn color_from_arguments(args: &mut Arguments) -> Result<ColorMode, Terminati
     let colors = args
         .opt_value_from_str("--colors")
         .map_err(|source| TerminationDiagnostic::new_parse("--colors", source))?;
-    dbg!("here");
     Ok(match colors {
         Some(ColorsArg::Off) => ColorMode::Disabled,
         Some(ColorsArg::Force) => ColorMode::Enabled,
