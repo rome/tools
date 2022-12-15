@@ -15,7 +15,7 @@ pub fn generate_new_lintrule(path: &str, rule_name: &str) {
     let rule_name_snake = rule_name.to_snake();
     let rule_name_lower_camel = rule_name_snake.to_camel_lowercase();
 
-    // Generate rule code 
+    // Generate rule code
     let code = format!(
         r#"use crate::semantic_services::Semantic;
 use rome_analyze::{{
@@ -102,12 +102,17 @@ impl Rule for {rule_name_upper_camel} {{
     let tests_path = format!("crates/rome_js_analyze/tests/specs/nursery/{rule_name_lower_camel}");
     let _ = std::fs::create_dir_all(tests_path);
 
-    let test_file = format!("crates/rome_js_analyze/tests/specs/nursery/{rule_name_lower_camel}/valid.js");
+    let test_file =
+        format!("crates/rome_js_analyze/tests/specs/nursery/{rule_name_lower_camel}/valid.js");
     if std::fs::File::open(&test_file).is_err() {
-        let _ = std::fs::write(test_file, "/* should not generate diagnostics */\n\n var a = 1;");
+        let _ = std::fs::write(
+            test_file,
+            "/* should not generate diagnostics */\n\n var a = 1;",
+        );
     }
-    
-    let test_file = format!("crates/rome_js_analyze/tests/specs/nursery/{rule_name_lower_camel}/invalid.js");
+
+    let test_file =
+        format!("crates/rome_js_analyze/tests/specs/nursery/{rule_name_lower_camel}/invalid.js");
     if std::fs::File::open(&test_file).is_err() {
         let _ = std::fs::write(test_file, "\n\n var a = 1;\na = 2;\n a = 3;");
     }
