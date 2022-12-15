@@ -27,6 +27,9 @@ Environment:
   ROME_LOG_DIR:         **PLACEHOLDER**
   NO_COLOR:             **PLACEHOLDER**
   TERM:                 **PLACEHOLDER**
+  JS_RUNTIME_VERSION:   unset
+  JS_RUNTIME_NAME:      unset
+  NODE_PACKAGE_MANAGER: unset
 
 Rome Configuration:
   Status:               loaded

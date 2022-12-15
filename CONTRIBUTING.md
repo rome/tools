@@ -175,6 +175,20 @@ test(lint): add more cases to handle invalid rules
 
 When creating a new pull request, it's preferable to use a conventional commit-formatted title, as this title will be used as the default commit message on the squashed commit after merging.
 
+Please use the template provided.
+
+#### Documentation
+
+If your PR requires some update on the website (new features, breaking changes, etc.), you should create a new PR once the previous PR is successfully merged.
+
+Go to the issues section and check the pinned issues.
+You will find a _**pinned issue**_ that starts with "Documentation and Focus". Inside, you will find the details of:
+- the name of the branch where to point the PR that updates the documentation;
+- the PR that we will merge when the release is ready;
+
+If you can't create a new PR, please let the team know.
+The template should help to give all the information to the team.
+
 Here are some other scripts that you might find useful.
 
 #### If you are a core contributor
@@ -217,3 +231,45 @@ Even minor versions are dedicated to official releases, e.g. `*.6.*`.
 Internally, we use [`insta`](https://insta.rs/) for snapshot tests. This means that you
 follow their [installation instructions](https://insta.rs/docs/cli/) to update/accept
 the new snapshot tests.
+
+### Using just
+
+A lot of the commands above are mor easily accessible using our [Just](https://just.systems/man/en/) recipes. For example:
+
+### Install just
+
+You can install `just` using cargo:
+
+```shell
+cargo install just
+```
+
+Or, using different methods, like explained in their [documentation](https://just.systems/man/en/chapter_4.html).
+
+It's advised to install `just` using a package manager, so
+you can run `just` as a binary.
+
+### Usage
+
+```ignore
+❯ just
+just --list -u
+Available recipes:
+    codegen
+    documentation
+    new-lintrule path name
+    test-lintrule name
+    check-ready
+```
+
+All the necessary `codegen` can be called using
+
+```ignore
+> just codegen
+```
+
+After all changes are done, the code can be checked if is ready to be pushed with
+
+```ignore
+> just check-ready
+```

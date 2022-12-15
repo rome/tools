@@ -15,7 +15,7 @@ pub(crate) fn format(
     params: DocumentFormattingParams,
 ) -> Result<Option<Vec<TextEdit>>> {
     let url = params.text_document.uri;
-    let rome_path = session.file_path(&url);
+    let rome_path = session.file_path(&url)?;
 
     let doc = session.document(&url)?;
 
@@ -56,7 +56,7 @@ pub(crate) fn format_range(
     params: DocumentRangeFormattingParams,
 ) -> Result<Option<Vec<TextEdit>>> {
     let url = params.text_document.uri;
-    let rome_path = session.file_path(&url);
+    let rome_path = session.file_path(&url)?;
     let doc = session.document(&url)?;
 
     let start_index = utils::offset(&doc.line_index, params.range.start).with_context(|| {
@@ -119,7 +119,7 @@ pub(crate) fn format_on_type(
     let url = params.text_document_position.text_document.uri;
     let position = params.text_document_position.position;
 
-    let rome_path = session.file_path(&url);
+    let rome_path = session.file_path(&url)?;
     let doc = session.document(&url)?;
 
     let offset = utils::offset(&doc.line_index, position)

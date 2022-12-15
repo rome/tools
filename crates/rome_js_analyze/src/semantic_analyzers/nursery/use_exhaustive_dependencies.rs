@@ -96,8 +96,8 @@ declare_rule! {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ReactExtensiveDependenciesOptions {
-    hooks_config: HashMap<String, ReactHookConfiguration>,
-    stable_config: HashSet<StableReactHookConfiguration>,
+    pub(crate) hooks_config: HashMap<String, ReactHookConfiguration>,
+    pub(crate) stable_config: HashSet<StableReactHookConfiguration>,
 }
 
 impl Default for ReactExtensiveDependenciesOptions {
@@ -109,6 +109,27 @@ impl Default for ReactExtensiveDependenciesOptions {
             ("useCallback".to_string(), (0, 1).into()),
             ("useMemo".to_string(), (0, 1).into()),
             ("useImperativeHandle".to_string(), (1, 2).into()),
+            ("useState".to_string(), ReactHookConfiguration::default()),
+            ("useContext".to_string(), ReactHookConfiguration::default()),
+            ("useReducer".to_string(), ReactHookConfiguration::default()),
+            ("useRef".to_string(), ReactHookConfiguration::default()),
+            (
+                "useDebugValue".to_string(),
+                ReactHookConfiguration::default(),
+            ),
+            (
+                "useDeferredValue".to_string(),
+                ReactHookConfiguration::default(),
+            ),
+            (
+                "useTransition".to_string(),
+                ReactHookConfiguration::default(),
+            ),
+            ("useId".to_string(), ReactHookConfiguration::default()),
+            (
+                "useSyncExternalStore".to_string(),
+                ReactHookConfiguration::default(),
+            ),
         ]);
 
         let stable_config: HashSet<StableReactHookConfiguration> = HashSet::from_iter([
@@ -134,7 +155,7 @@ impl DeserializableRuleOptions for ReactExtensiveDependenciesOptions {
         #[serde(deny_unknown_fields)]
         struct Options {
             #[serde(default)]
-            hooks: Vec<(String, usize, usize)>,
+            hooks: Vec<(String, Option<usize>, Option<usize>)>,
             #[serde(default)]
             stables: HashSet<StableReactHookConfiguration>,
         }

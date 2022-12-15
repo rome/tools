@@ -46,19 +46,36 @@ impl ReactCallWithDependencyResult {
     }
 }
 
-#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
+#[derive(Default, Debug, Copy, Clone, Serialize, Deserialize)]
 pub struct ReactHookConfiguration {
-    pub closure_index: usize,
-    pub dependencies_index: usize,
+    pub closure_index: Option<usize>,
+    pub dependencies_index: Option<usize>,
 }
 
 impl From<(usize, usize)> for ReactHookConfiguration {
     fn from((closure, dependencies): (usize, usize)) -> Self {
         Self {
-            closure_index: closure,
-            dependencies_index: dependencies,
+            closure_index: Some(closure),
+            dependencies_index: Some(dependencies),
         }
     }
+}
+
+pub(crate) fn react_hook_configuration<'a>(
+    call: &JsCallExpression,
+    hooks: &'a HashMap<String, ReactHookConfiguration>,
+) -> Option<&'a ReactHookConfiguration> {
+    let name = call
+        .callee()
+        .ok()?
+        .as_js_identifier_expression()?
+        .name()
+        .ok()?
+        .value_token()
+        .ok()?;
+    let name = name.text_trimmed();
+
+    hooks.get(name)
 }
 
 /// Returns the [TextRange] of the hook name; the node of the
@@ -91,8 +108,10 @@ pub(crate) fn react_hook_with_dependency(
     let name = name.text_trimmed();
 
     let hook = hooks.get(name)?;
+    let closure_index = hook.closure_index?;
+    let dependencies_index = hook.dependencies_index?;
 
-    let mut indices = [hook.closure_index, hook.dependencies_index];
+    let mut indices = [closure_index, dependencies_index];
     indices.sort();
     let [closure_node, dependencies_node] = call.get_arguments_by_index(indices);
 

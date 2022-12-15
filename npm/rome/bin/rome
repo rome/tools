@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { platform, arch } = process;
+const { platform, arch, env, version, release } = process;
 
 const PLATFORMS = {
 	win32: {
@@ -21,7 +21,16 @@ if (binPath) {
 	const result = require("child_process").spawnSync(
 		require.resolve(binPath),
 		process.argv.slice(2),
-		{ shell: false, stdio: "inherit" },
+		{
+			shell: false,
+			stdio: "inherit",
+			env: {
+				...env,
+				JS_RUNTIME_VERSION: version,
+				JS_RUNTIME_NAME: release.name,
+				NODE_PACKAGE_MANAGER: detectPackageManager(),
+			},
+		},
 	);
 
 	if (result.error) {
@@ -36,4 +45,23 @@ if (binPath) {
 			"and follow the instructions there to build the CLI for your platform.",
 	);
 	process.exitCode = 1;
+}
+
+/**
+ * NPM, Yarn, and other package manager set the `npm_config_user_agent`. It has the following format:
+ *
+ * ```
+ * "npm/8.3.0 node/v16.13.2 win32 x64 workspaces/false
+ * ```
+ *
+ * @returns The package manager string (`npm/8.3.0`) or null if the user agent string isn't set.
+ */
+function detectPackageManager() {
+	const userAgent = env.npm_config_user_agent;
+
+	if (userAgent == null) {
+		return null;
+	}
+
+	return userAgent.split(" ")[0];
 }

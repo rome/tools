@@ -43,11 +43,24 @@ use tower_lsp::lsp_types::TextDocumentContentChangeEvent;
 use tower_lsp::lsp_types::TextDocumentIdentifier;
 use tower_lsp::lsp_types::TextDocumentItem;
 use tower_lsp::lsp_types::TextEdit;
-use tower_lsp::lsp_types::Url;
 use tower_lsp::lsp_types::VersionedTextDocumentIdentifier;
 use tower_lsp::lsp_types::WorkDoneProgressParams;
 use tower_lsp::LspService;
 use tower_lsp::{jsonrpc::Request, lsp_types::InitializeParams};
+
+/// Statically build an [lsp::Url] instance that points to the file at `$path`
+/// within the workspace. The filesystem path contained in the return URI is
+/// guaranteed to be a valid path for the underlying operating system, but
+/// doesn't have to refer to an existing file on the host machine.
+macro_rules! url {
+    ($path:literal) => {
+        if cfg!(windows) {
+            lsp::Url::parse(concat!("file:///z%3A/workspace/", $path)).unwrap()
+        } else {
+            lsp::Url::parse(concat!("file:///workspace/", $path)).unwrap()
+        }
+    };
+}
 
 struct Server {
     service: Timeout<LspService<LSPServer>>,
@@ -137,7 +150,7 @@ impl Server {
                 InitializeParams {
                     process_id: None,
                     root_path: None,
-                    root_uri: None,
+                    root_uri: Some(url!("")),
                     initialization_options: None,
                     capabilities: ClientCapabilities::default(),
                     trace: None,
@@ -182,7 +195,7 @@ impl Server {
             "textDocument/didOpen",
             DidOpenTextDocumentParams {
                 text_document: TextDocumentItem {
-                    uri: Url::parse("test://workspace/document.js")?,
+                    uri: url!("document.js"),
                     language_id: String::from("javascript"),
                     version: 0,
                     text: text.to_string(),
@@ -201,7 +214,7 @@ impl Server {
             "textDocument/didChange",
             DidChangeTextDocumentParams {
                 text_document: VersionedTextDocumentIdentifier {
-                    uri: Url::parse("test://workspace/document.js")?,
+                    uri: url!("document.js"),
                     version,
                 },
                 content_changes,
@@ -215,7 +228,7 @@ impl Server {
             "textDocument/didClose",
             DidCloseTextDocumentParams {
                 text_document: TextDocumentIdentifier {
-                    uri: Url::parse("test://workspace/document.js")?,
+                    uri: url!("document.js"),
                 },
             },
         )
@@ -378,7 +391,7 @@ async fn document_lifecycle() -> Result<()> {
             "rome/get_syntax_tree",
             "get_syntax_tree",
             GetSyntaxTreeParams {
-                path: RomePath::new("/document.js", FileId::zero()),
+                path: RomePath::new("document.js", FileId::zero()),
             },
         )
         .await?
@@ -455,7 +468,7 @@ async fn document_no_extension() -> Result<()> {
             "textDocument/didOpen",
             DidOpenTextDocumentParams {
                 text_document: TextDocumentItem {
-                    uri: Url::parse("test://workspace/document")?,
+                    uri: url!("document"),
                     language_id: String::from("javascript"),
                     version: 0,
                     text: String::from("statement()"),
@@ -470,7 +483,7 @@ async fn document_no_extension() -> Result<()> {
             "formatting",
             DocumentFormattingParams {
                 text_document: TextDocumentIdentifier {
-                    uri: Url::parse("test://workspace/document")?,
+                    uri: url!("document"),
                 },
                 options: FormattingOptions {
                     tab_size: 4,
@@ -496,7 +509,7 @@ async fn document_no_extension() -> Result<()> {
             "textDocument/didClose",
             DidCloseTextDocumentParams {
                 text_document: TextDocumentIdentifier {
-                    uri: Url::parse("test://workspace/document")?,
+                    uri: url!("document"),
                 },
             },
         )
@@ -534,7 +547,7 @@ async fn pull_diagnostics() -> Result<()> {
         notification,
         Some(ServerNotification::PublishDiagnostics(
             PublishDiagnosticsParams {
-                uri: Url::parse("test://workspace/document.js")?,
+                uri: url!("document.js"),
                 version: Some(0),
                 diagnostics: vec![lsp::Diagnostic {
                     range: lsp::Range {
@@ -558,7 +571,7 @@ async fn pull_diagnostics() -> Result<()> {
                     ),
                     related_information: Some(vec![lsp::DiagnosticRelatedInformation {
                         location: lsp::Location {
-                            uri: lsp::Url::parse("test://workspace/document.js")?,
+                            uri: url!("document.js"),
                             range: lsp::Range {
                                 start: lsp::Position {
                                     line: 0,
@@ -630,7 +643,7 @@ async fn pull_quick_fixes() -> Result<()> {
             "pull_code_actions",
             lsp::CodeActionParams {
                 text_document: lsp::TextDocumentIdentifier {
-                    uri: lsp::Url::parse("test://workspace/document.js")?,
+                    uri: url!("document.js"),
                 },
                 range: lsp::Range {
                     start: lsp::Position {
@@ -659,7 +672,7 @@ async fn pull_quick_fixes() -> Result<()> {
 
     let mut changes = HashMap::default();
     changes.insert(
-        lsp::Url::parse("test://workspace/document.js")?,
+        url!("document.js"),
         vec![lsp::TextEdit {
             range: lsp::Range {
                 start: lsp::Position {
@@ -694,7 +707,7 @@ async fn pull_quick_fixes() -> Result<()> {
 
     let mut suppression_changes = HashMap::default();
     suppression_changes.insert(
-        lsp::Url::parse("test://workspace/document.js")?,
+        url!("document.js"),
         vec![lsp::TextEdit {
             range: lsp::Range {
                 start: lsp::Position {
@@ -762,7 +775,7 @@ async fn pull_refactors() -> Result<()> {
             "pull_code_actions",
             lsp::CodeActionParams {
                 text_document: lsp::TextDocumentIdentifier {
-                    uri: lsp::Url::parse("test://workspace/document.js")?,
+                    uri: url!("document.js"),
                 },
                 range: lsp::Range {
                     start: lsp::Position {
@@ -792,7 +805,7 @@ async fn pull_refactors() -> Result<()> {
     let mut changes = HashMap::default();
 
     changes.insert(
-        lsp::Url::parse("test://workspace/document.js")?,
+        url!("document.js"),
         vec![
             lsp::TextEdit {
                 range: lsp::Range {
@@ -873,7 +886,7 @@ async fn pull_fix_all() -> Result<()> {
             "pull_code_actions",
             lsp::CodeActionParams {
                 text_document: lsp::TextDocumentIdentifier {
-                    uri: lsp::Url::parse("test://workspace/document.js")?,
+                    uri: url!("document.js"),
                 },
                 range: lsp::Range {
                     start: lsp::Position {
@@ -907,7 +920,7 @@ async fn pull_fix_all() -> Result<()> {
     let mut changes = HashMap::default();
 
     changes.insert(
-        lsp::Url::parse("test://workspace/document.js")?,
+        url!("document.js"),
         vec![lsp::TextEdit {
             range: lsp::Range {
                 start: lsp::Position {
@@ -973,7 +986,7 @@ async fn format_with_syntax_errors() -> Result<()> {
             "formatting",
             DocumentFormattingParams {
                 text_document: TextDocumentIdentifier {
-                    uri: Url::parse("test://workspace/document.js")?,
+                    uri: url!("document.js"),
                 },
                 options: FormattingOptions {
                     tab_size: 4,

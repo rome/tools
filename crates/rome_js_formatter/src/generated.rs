@@ -4209,6 +4209,44 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::JsStaticModifier {
         )
     }
 }
+impl FormatRule<rome_js_syntax::JsAccessorModifier>
+    for crate::js::auxiliary::accessor_modifier::FormatJsAccessorModifier
+{
+    type Context = JsFormatContext;
+    #[inline(always)]
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::JsAccessorModifier,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::JsAccessorModifier>::fmt(self, node, f)
+    }
+}
+impl AsFormat<JsFormatContext> for rome_js_syntax::JsAccessorModifier {
+    type Format<'a> = FormatRefWithRule<
+        'a,
+        rome_js_syntax::JsAccessorModifier,
+        crate::js::auxiliary::accessor_modifier::FormatJsAccessorModifier,
+    >;
+    fn format(&self) -> Self::Format<'_> {
+        FormatRefWithRule::new(
+            self,
+            crate::js::auxiliary::accessor_modifier::FormatJsAccessorModifier::default(),
+        )
+    }
+}
+impl IntoFormat<JsFormatContext> for rome_js_syntax::JsAccessorModifier {
+    type Format = FormatOwnedWithRule<
+        rome_js_syntax::JsAccessorModifier,
+        crate::js::auxiliary::accessor_modifier::FormatJsAccessorModifier,
+    >;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule::new(
+            self,
+            crate::js::auxiliary::accessor_modifier::FormatJsAccessorModifier::default(),
+        )
+    }
+}
 impl FormatRule<rome_js_syntax::TsDeclareModifier>
     for crate::ts::auxiliary::declare_modifier::FormatTsDeclareModifier
 {

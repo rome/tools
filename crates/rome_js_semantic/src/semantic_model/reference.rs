@@ -1,4 +1,4 @@
-use rome_js_syntax::AnyJsIdentifierUsage;
+use rome_js_syntax::{AnyJsIdentifierUsage, JsCallExpression, JsFunctionDeclaration};
 
 use super::*;
 use std::sync::Arc;
@@ -53,6 +53,7 @@ impl Reference {
         None
     }
 
+    /// Returns the range of this reference
     pub fn range(&self) -> &TextRange {
         let reference = self.data.reference(self.index);
         &reference.range
@@ -99,6 +100,77 @@ impl Reference {
     pub fn is_write(&self) -> bool {
         let reference = self.data.reference(self.index);
         matches!(reference.ty, SemanticModelReferenceType::Write { .. })
+    }
+
+    /// Returns this reference as a [Call] if possible
+    pub fn as_call(&self) -> Option<FunctionCall> {
+        let call = self.syntax().ancestors().find(|x| {
+            !matches!(
+                x.kind(),
+                JsSyntaxKind::JS_REFERENCE_IDENTIFIER | JsSyntaxKind::JS_IDENTIFIER_EXPRESSION
+            )
+        });
+
+        match call {
+            Some(node) if node.kind() == JsSyntaxKind::JS_CALL_EXPRESSION => Some(FunctionCall {
+                data: self.data.clone(),
+                index: self.index,
+            }),
+            _ => None,
+        }
+    }
+}
+
+/// Provides all information regarding a specific function or method call.
+#[derive(Debug)]
+pub struct FunctionCall {
+    pub(crate) data: Arc<SemanticModelData>,
+    pub(crate) index: ReferenceIndex,
+}
+
+impl FunctionCall {
+    /// Returns the range of this reference
+    pub fn range(&self) -> &TextRange {
+        let reference = self.data.reference(self.index);
+        &reference.range
+    }
+
+    /// Returns the node of this reference
+    pub fn syntax(&self) -> &JsSyntaxNode {
+        &self.data.node_by_range[self.range()]
+    }
+
+    /// Returns the typed AST node of this reference
+    pub fn tree(&self) -> JsCallExpression {
+        let node = self.syntax();
+        let call = node.ancestors().find(|x| {
+            !matches!(
+                x.kind(),
+                JsSyntaxKind::JS_REFERENCE_IDENTIFIER | JsSyntaxKind::JS_IDENTIFIER_EXPRESSION
+            )
+        });
+        debug_assert!(matches!(&call,
+            Some(call) if call.kind() == JsSyntaxKind::JS_CALL_EXPRESSION
+        ));
+        JsCallExpression::unwrap_cast(call.unwrap())
+    }
+}
+
+pub struct AllCallsIter {
+    pub(crate) references: AllBindingReadReferencesIter,
+}
+
+impl Iterator for AllCallsIter {
+    type Item = FunctionCall;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        for reference in self.references.by_ref() {
+            if let Some(call) = reference.as_call() {
+                return Some(call);
+            }
+        }
+
+        None
     }
 }
 
@@ -167,3 +239,13 @@ pub trait ReferencesExtensions {
 }
 
 impl<T: IsBindingAstNode> ReferencesExtensions for T {}
+
+pub trait CallsExtensions {
+    fn all_calls(&self, model: &SemanticModel) -> AllCallsIter;
+}
+
+impl CallsExtensions for JsFunctionDeclaration {
+    fn all_calls(&self, model: &SemanticModel) -> AllCallsIter {
+        model.all_calls(self)
+    }
+}

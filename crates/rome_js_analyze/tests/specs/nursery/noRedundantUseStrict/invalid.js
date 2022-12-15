@@ -1,14 +1,20 @@
-"use strict";
+// js module
 "use strict";
 
-function test() {
+function foo() {
 	"use strict";
-	function inner_a() {
-		"use strict"; // redundant directive
-	}
-	function inner_b() {
-		function inner_inner() {
-			"use strict"; // additional redundant directive
-		}
+}
+
+class C1 {
+	// All code here is evaluated in strict mode
+	test() {
+		"use strict";
 	}
 }
+
+const C2 = class {
+	// All code here is evaluated in strict mode
+	test() {
+		"use strict";
+	}
+};

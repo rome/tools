@@ -290,6 +290,10 @@ export interface Nursery {
 	 */
 	noAccessKey?: RuleConfiguration;
 	/**
+	 * Disallow assignments in expressions.
+	 */
+	noAssignInExpressions?: RuleConfiguration;
+	/**
 	 * Disallow certain types.
 	 */
 	noBannedTypes?: RuleConfiguration;
@@ -297,10 +301,6 @@ export interface Nursery {
 	 * Disallow comma operator.
 	 */
 	noCommaOperator?: RuleConfiguration;
-	/**
-	 * Disallow assignment operators in conditional expressions.
-	 */
-	noConditionalAssignment?: RuleConfiguration;
 	/**
 	 * Disallow TypeScript const enum
 	 */
@@ -366,6 +366,10 @@ export interface Nursery {
 	 */
 	noUnsafeFinally?: RuleConfiguration;
 	/**
+	 * Disallow useless case in switch statements.
+	 */
+	noUselessSwitchCase?: RuleConfiguration;
+	/**
 	 * Disallow the use of var
 	 */
 	noVar?: RuleConfiguration;
@@ -373,6 +377,10 @@ export interface Nursery {
 	 * Disallow returning a value from a function with the return type 'void'
 	 */
 	noVoidTypeReturn?: RuleConfiguration;
+	/**
+	 * Disallow with statements in non-strict contexts.
+	 */
+	noWith?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
@@ -413,6 +421,10 @@ export interface Nursery {
 	 * Disallow the use of Math.pow in favor of the ** operator.
 	 */
 	useExponentiationOperator?: RuleConfiguration;
+	/**
+	 * Enforce that all React hooks are being called from the Top Level component functions.
+	 */
+	useHookAtTopLevel?: RuleConfiguration;
 	/**
 	 * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
 	 */
@@ -687,8 +699,9 @@ export type Category =
 	| "lint/correctness/noVoidElementsWithChildren"
 	| "lint/correctness/useValidForDirection"
 	| "lint/nursery/noAccessKey"
+	| "lint/nursery/noAssignInExpressions"
+	| "lint/nursery/noWith"
 	| "lint/nursery/noBannedTypes"
-	| "lint/nursery/noConditionalAssignment"
 	| "lint/nursery/noConstEnum"
 	| "lint/nursery/noConstructorReturn"
 	| "lint/nursery/noDistractingElements"
@@ -706,6 +719,7 @@ export type Category =
 	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnsafeFinally"
+	| "lint/nursery/noUselessSwitchCase"
 	| "lint/nursery/noVar"
 	| "lint/nursery/noVoidTypeReturn"
 	| "lint/nursery/useAriaPropsForRole"
@@ -719,6 +733,7 @@ export type Category =
 	| "lint/nursery/useExponentiationOperator"
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/useValidForDirection"
+	| "lint/nursery/useHookAtTopLevel"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
