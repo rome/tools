@@ -1,9 +1,12 @@
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
+use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic, RuleAction, ActionCategory};
 use rome_console::markup;
+use rome_diagnostics::Applicability;
 use rome_js_syntax::{JsEmptyClassMember, JsEmptyStatement, JsSyntaxKind, T};
 
-use rome_rowan::{declare_node_union, AstNode};
+use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
+
+use crate::JsRuleAction;
 
 declare_rule! {
     /// Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary.
@@ -106,20 +109,17 @@ impl Rule for NoExtraSemicolons {
                     .children_with_tokens()
                     .into_iter()
                     .filter(|child| child.kind() == JsSyntaxKind::JS_EMPTY_STATEMENT)
-                    .map(|child| {
-                        let child = child.into_node().unwrap();
-                        let child = JsEmptyStatement::cast(child).unwrap();
-                        child.syntax().first_token().unwrap().kind() == T![;]
-                    })
-                    .filter(|value| *value)
                     .count()
                     > 0;
-                let has_first_semicolon_in_node = stmt.syntax().first_token()?.kind() == T![;];
-                let has_empty_statements = has_last_entity_in_parent
+                let has_first_semicolon_in_node = stmt.syntax().kind() == JsSyntaxKind::JS_EMPTY_STATEMENT;
+                let has_empty_statements_in_module_list = has_last_entity_in_parent
+                    && has_empty_statements_in_list
+                    && has_first_semicolon_in_node;
+                let has_empty_statements_not_in_module_list = !has_last_entity_in_parent
                     && has_empty_statements_in_list
                     && has_first_semicolon_in_node;
 
-                if has_empty_statements {
+                if has_empty_statements_in_module_list || has_empty_statements_not_in_module_list {
                     Some(())
                 } else {
                     None
@@ -146,5 +146,17 @@ impl Rule for NoExtraSemicolons {
                 "Unnecessary semicolon."
             },
         ))
+    }
+
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let _node = ctx.query();
+        let mutation = ctx.root().begin();
+        
+        Some(RuleAction {
+            category: ActionCategory::QuickFix,
+            applicability: Applicability::MaybeIncorrect,
+            message: markup! { "Remove unnecessary semicolon." }.to_owned(),
+            mutation,
+        })
     }
 }

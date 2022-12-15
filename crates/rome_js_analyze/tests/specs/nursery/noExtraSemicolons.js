@@ -1,4 +1,8 @@
 {
+  function baz() { ; }
+}
+
+{
   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);;
 }
 
