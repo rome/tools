@@ -1,0 +1,38 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 86
+expression: invalid.ts
+---
+# Input
+```js
+function test(): void {
+	"use strict";
+}
+
+```
+
+# Diagnostics
+```
+invalid.ts:2:2 lint/nursery/noRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Redundant use strict directive.
+  
+    1 │ function test(): void {
+  > 2 │ 	"use strict";
+      │ 	^^^^^^^^^^^^^
+    3 │ }
+    4 │ 
+  
+  i The entire contents of JavaScript modules are automatically in strict mode, with no statement needed to initiate it.
+  
+  i Safe fix: Remove the redundant "use strict" directive
+  
+    1 1 │   function test(): void {
+    2   │ - → "use·strict";
+    3 2 │   }
+    4 3 │   
+  
+
+```
+
+
