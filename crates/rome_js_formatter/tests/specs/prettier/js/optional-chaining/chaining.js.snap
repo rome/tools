@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/optional-chaining/chaining.js
+info: "js\\optional-chaining\\chaining.js"
 ---
 
 # Input

@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/comments-pipeline-own-line/pipeline_own_line.js
+info: "js\\comments-pipeline-own-line\\pipeline_own_line.js"
 ---
 
 # Input

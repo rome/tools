@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/module/object/getter_setter.js
+info: "js\\module\\object\\getter_setter.js"
 ---
 
 # Input

@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: jsx/attributes.jsx
+info: "jsx\\attributes.jsx"
 ---
 
 # Input
@@ -205,4 +204,5 @@ const a = (
    30: 			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
    85: 			veryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzzveryLongConditionZzzzzzzzzzzzzzzzz,
 ```
+
 

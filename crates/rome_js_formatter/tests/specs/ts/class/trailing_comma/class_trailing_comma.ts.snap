@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: ts/class/trailing_comma/class_trailing_comma.ts
+info: "ts\\class\\trailing_comma\\class_trailing_comma.ts"
 ---
 
 # Input

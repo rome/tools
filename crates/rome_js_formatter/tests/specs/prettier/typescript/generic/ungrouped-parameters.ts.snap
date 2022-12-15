@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: typescript/generic/ungrouped-parameters.ts
+info: "typescript\\generic\\ungrouped-parameters.ts"
 ---
 
 # Input

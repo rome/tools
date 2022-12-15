@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: ts/assignment/type_assertion_assignment.ts
+info: "ts\\assignment\\type_assertion_assignment.ts"
 ---
 
 # Input

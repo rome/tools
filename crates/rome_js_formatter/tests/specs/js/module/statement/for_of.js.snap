@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/module/statement/for_of.js
+info: "js\\module\\statement\\for_of.js"
 ---
 
 # Input
@@ -52,4 +51,5 @@ for await (const a of b) {
 ```
     7: for (const aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks of aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks) {
 ```
+
 

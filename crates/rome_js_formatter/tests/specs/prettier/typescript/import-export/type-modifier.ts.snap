@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: typescript/import-export/type-modifier.ts
+info: "typescript\\import-export\\type-modifier.ts"
 ---
 
 # Input

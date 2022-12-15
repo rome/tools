@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/range/boundary-2.js
+info: "js\\range\\boundary-2.js"
 ---
 
 # Input

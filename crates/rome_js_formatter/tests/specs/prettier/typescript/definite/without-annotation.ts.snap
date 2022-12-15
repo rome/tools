@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: typescript/definite/without-annotation.ts
+info: "typescript\\definite\\without-annotation.ts"
 ---
 
 # Input

@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/module/export/named_clause.js
+info: "js\\module\\export\\named_clause.js"
 ---
 
 # Input

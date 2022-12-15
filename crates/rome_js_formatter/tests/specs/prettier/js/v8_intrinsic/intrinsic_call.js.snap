@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/v8_intrinsic/intrinsic_call.js
+info: "js\\v8_intrinsic\\intrinsic_call.js"
 ---
 
 # Input

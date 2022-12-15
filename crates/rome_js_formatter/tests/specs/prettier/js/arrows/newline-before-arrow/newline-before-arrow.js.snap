@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/arrows/newline-before-arrow/newline-before-arrow.js
+info: "js\\arrows\\newline-before-arrow\\newline-before-arrow.js"
 ---
 
 # Input

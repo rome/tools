@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: typescript/error-recovery/generic.ts
+info: "typescript\\error-recovery\\generic.ts"
 ---
 
 # Input

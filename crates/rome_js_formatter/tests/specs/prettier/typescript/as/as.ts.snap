@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: typescript/as/as.ts
+info: "typescript\\as\\as.ts"
 ---
 
 # Input
@@ -154,4 +153,5 @@ const iter2 = createIterator(
    43:   thisIsAnIdentifier as thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyReallyLongInterface;
    53:   thisIsAReallyReallyReallyReallyReallyReallyReallyReallyReallyLongIdentifier as [
 ```
+
 

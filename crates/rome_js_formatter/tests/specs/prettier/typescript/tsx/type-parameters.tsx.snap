@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: typescript/tsx/type-parameters.tsx
+info: "typescript\\tsx\\type-parameters.tsx"
 ---
 
 # Input

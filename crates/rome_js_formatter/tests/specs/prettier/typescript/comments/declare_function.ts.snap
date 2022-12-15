@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: typescript/comments/declare_function.ts
+info: "typescript\\comments\\declare_function.ts"
 ---
 
 # Input

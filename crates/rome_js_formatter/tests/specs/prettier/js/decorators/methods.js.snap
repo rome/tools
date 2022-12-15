@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/decorators/methods.js
+info: "js\\decorators\\methods.js"
 ---
 
 # Input

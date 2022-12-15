@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: typescript/test-declarations/test_declarations.ts
+info: "typescript\\test-declarations\\test_declarations.ts"
 ---
 
 # Input
@@ -42,4 +41,5 @@ test("does something really long and complicated so I have to write a very long 
 ```
     1: test("does something really long and complicated so I have to write a very long name for the test", <
 ```
+
 

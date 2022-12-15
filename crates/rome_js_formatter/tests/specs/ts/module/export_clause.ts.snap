@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: ts/module/export_clause.ts
+info: "ts\\module\\export_clause.ts"
 ---
 
 # Input

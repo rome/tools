@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/module/import/import_specifiers.js
+info: "js\\module\\import\\import_specifiers.js"
 ---
 
 # Input

@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: typescript/infer-extends/basic.ts
+info: "typescript\\infer-extends\\basic.ts"
 ---
 
 # Input

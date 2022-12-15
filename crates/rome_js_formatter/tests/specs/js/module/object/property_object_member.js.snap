@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/module/object/property_object_member.js
+info: "js\\module\\object\\property_object_member.js"
 ---
 
 # Input
@@ -291,4 +290,5 @@ const fluidObject = {
    75: 			.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp ===
    78: 		longLongLongLongLongLongLongLongLonlongLongLongLongLongLongLongLongLongTooLongPropgLongLongLongLongTooLongVar ||
 ```
+
 

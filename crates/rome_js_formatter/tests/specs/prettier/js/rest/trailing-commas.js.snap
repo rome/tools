@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/rest/trailing-commas.js
+info: "js\\rest\\trailing-commas.js"
 ---
 
 # Input

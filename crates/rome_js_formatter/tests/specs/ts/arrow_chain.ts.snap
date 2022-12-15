@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: ts/arrow_chain.ts
+info: "ts\\arrow_chain.ts"
 ---
 
 # Input

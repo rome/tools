@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: ts/declaration/declare_function.ts
+info: "ts\\declaration\\declare_function.ts"
 ---
 
 # Input

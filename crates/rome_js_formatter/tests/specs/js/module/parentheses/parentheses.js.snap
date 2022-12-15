@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/module/parentheses/parentheses.js
+info: "js\\module\\parentheses\\parentheses.js"
 ---
 
 # Input
@@ -80,4 +79,5 @@ const a = () => ({})?.() && a;
 ```
    11: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
 ```
+
 

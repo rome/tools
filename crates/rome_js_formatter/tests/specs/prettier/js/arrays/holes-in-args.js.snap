@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/arrays/holes-in-args.js
+info: "js\\arrays\\holes-in-args.js"
 ---
 
 # Input

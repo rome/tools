@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/comments-closure-typecast/styled-components.js
+info: "js\\comments-closure-typecast\\styled-components.js"
 ---
 
 # Input
@@ -64,4 +63,5 @@ top: ${(p) => p.overlap === "next" && 0};
 ```
     2:   /** @type {import('styled-components').ThemedStyledFunction<'div',null,{overlap: boolean}>} */
 ```
+
 

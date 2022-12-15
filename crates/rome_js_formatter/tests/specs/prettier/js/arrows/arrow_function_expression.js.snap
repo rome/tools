@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/arrows/arrow_function_expression.js
+info: "js\\arrows\\arrow_function_expression.js"
 ---
 
 # Input

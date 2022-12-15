@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/module/invalid/block_stmt_err.js
+info: "js\\module\\invalid\\block_stmt_err.js"
 ---
 
 # Input

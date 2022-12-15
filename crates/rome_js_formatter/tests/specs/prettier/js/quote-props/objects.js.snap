@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/quote-props/objects.js
+info: "js\\quote-props\\objects.js"
 ---
 
 # Input
@@ -282,4 +281,5 @@ Object.entries({
 ```
    85:   1e+100: "1e+100", // 1e+100 – this one is identical, but would be inconsistent to quote.
 ```
+
 

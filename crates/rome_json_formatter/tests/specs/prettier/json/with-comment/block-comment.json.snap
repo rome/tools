@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: json/with-comment/block-comment.json
+info: "json\\with-comment\\block-comment.json"
 ---
 
 # Input

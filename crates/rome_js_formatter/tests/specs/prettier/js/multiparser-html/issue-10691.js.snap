@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: js/multiparser-html/issue-10691.js
+info: "js\\multiparser-html\\issue-10691.js"
 ---
 
 # Input
