@@ -22,6 +22,10 @@ declare_rule! {
     ///  const x = 5;;
     ///```
     ///```js,expect_diagnostic
+    /// function buzz() {
+    ///     const x = 10;;
+    /// }    
+    ///```js,expect_diagnostic
     ///  function foo() {
     ///    // code
     ///  };
