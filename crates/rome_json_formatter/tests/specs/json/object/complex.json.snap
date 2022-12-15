@@ -1,0 +1,54 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+info: json/object/complex.json
+---
+
+# Input
+
+```json
+{
+	"number": 1123123213123123123123122311231232131231231231231223,
+	"string": "some-long-long-long-long-long-long-long-string",
+	"array": [12312321, {"another-number": 12321321, "string": "some-string"}],
+	"object": {"array":  [123214123, "some-long-long-string", [12312312, "some-long-long-string"]]},
+	"null": null
+}
+
+```
+
+
+=============================
+
+# Outputs
+
+## Output 1
+
+-----
+Indent style: Tab
+Line width: 80
+-----
+
+```json
+{
+	"number": 1123123213123123123123122311231232131231231231231223,
+	"string": "some-long-long-long-long-long-long-long-string",
+	"array": [12312321, {"another-number": 12321321, "string": "some-string"}],
+	"object": {
+		"array": [123214123, "some-long-long-string", [12312312, "some-long-long-string"]]
+	},
+	"null": null
+}
+```
+
+
+
+## Unimplemented nodes/tokens
+
+" [12312321, {\"another-number\": 12321321, \"string\": \"some-string\"}" => 137..202
+" [123214123, \"some-long-long-string\", [12312312, \"some-long-long-string\"]" => 228..301
+# Lines exceeding max width of 80 characters
+```
+    6: 		"array": [123214123, "some-long-long-string", [12312312, "some-long-long-string"]]
+```
+
+

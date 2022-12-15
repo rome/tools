@@ -1,17 +1,14 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info: json/smoke.json
+info: json/object/multi_line.json
 ---
 
 # Input
 
 ```json
 {
-	"a": 5,
-	"b": [1, 2, 3, 4],
-	"c": null,
-	"d": true,
-	"e": false
+	"number": 123,
+	"string": "some-string"
 }
 
 ```
@@ -30,17 +27,9 @@ Line width: 80
 
 ```json
 {
-	"a": 5,
-	"b": [1, 2, 3, 4],
-	"c": null,
-	"d": true,
-	"e": false
+	"number": 123,
+	"string": "some-string"
 }
 ```
 
-
-
-## Unimplemented nodes/tokens
-
-" [1, 2, 3, 4" => 16..28
 

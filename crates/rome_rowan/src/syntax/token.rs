@@ -378,6 +378,13 @@ impl<L: Language> SyntaxToken<L> {
             .pieces()
             .any(|piece| piece.is_whitespace() || piece.is_newline())
     }
+
+    /// Checks if the current token has leading newline
+    pub fn has_leading_newline(&self) -> bool {
+        self.leading_trivia()
+            .pieces()
+            .any(|piece| piece.is_newline())
+    }
 }
 
 impl<L: Language> fmt::Debug for SyntaxToken<L> {

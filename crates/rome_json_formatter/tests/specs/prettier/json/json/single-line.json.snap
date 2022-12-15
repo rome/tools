@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: json/json/single-line.json
+info: json/json/single-line.json
 ---
 
 # Input
@@ -19,13 +18,13 @@ info:
 +++ Rome
 @@ -1 +1 @@
 -{ "key1": [true, false, null], "key2": { "key3": [1, 2, "3", 1e10, 1e-3] } }
-+{"key1":[true,false,null],"key2":{"key3":[1,2,"3",1e10,1e-3]}}
++{ "key1": [true,false,null], "key2": { "key3": [1,2,"3",1e10,1e-3] } }
 ```
 
 # Output
 
 ```json
-{"key1":[true,false,null],"key2":{"key3":[1,2,"3",1e10,1e-3]}}
+{ "key1": [true,false,null], "key2": { "key3": [1,2,"3",1e10,1e-3] } }
 ```
 
 
