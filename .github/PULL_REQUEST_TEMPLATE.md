@@ -17,3 +17,16 @@
 ## Test Plan
 
 <!-- Demonstrate the code is solid. Example: The exact commands you ran and their output. -->
+
+## Documentation
+
+<!--
+
+Read the following paragraph for more information: https://github.com/rome/tools/blob/main/CONTRIBUTING.md#documentation
+
+Tick the checkboxes if your PR requires some documentation, and if you will follow up with that
+
+-->
+
+- [ ] The PR requires documentation
+- [ ] I will create a new PR to update the documentation

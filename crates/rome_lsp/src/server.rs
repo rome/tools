@@ -19,7 +19,7 @@ use tokio::task::spawn_blocking;
 use tower_lsp::jsonrpc::Result as LspResult;
 use tower_lsp::{lsp_types::*, ClientSocket};
 use tower_lsp::{LanguageServer, LspService, Server};
-use tracing::{error, info, trace};
+use tracing::{error, info, trace, warn};
 
 pub struct LSPServer {
     session: SessionHandle,
@@ -95,13 +95,11 @@ impl LSPServer {
 
                     entries.extend(workspace_entries);
 
-                    if let Ok(client_information) = session.client_information.lock() {
-                        if let Some(information) = client_information.as_ref() {
-                            entries.push(RageEntry::pair("Client Name", &information.name));
+                    if let Some(information) = session.client_information() {
+                        entries.push(RageEntry::pair("Client Name", &information.name));
 
-                            if let Some(version) = &information.version {
-                                entries.push(RageEntry::pair("Client Version", version))
-                            }
+                        if let Some(version) = &information.version {
+                            entries.push(RageEntry::pair("Client Version", version))
                         }
                     }
                 }
@@ -188,28 +186,39 @@ impl LSPServer {
 
 #[tower_lsp::async_trait]
 impl LanguageServer for LSPServer {
-    #[tracing::instrument(level = "debug", skip(self))]
+    // The `root_path` field is deprecated, but we still read it so we can print a warning about it
+    #[allow(deprecated)]
+    #[tracing::instrument(
+        level = "debug",
+        skip_all,
+        fields(
+            root_uri = params.root_uri.as_ref().map(display),
+            capabilities = debug(&params.capabilities),
+            client_info = params.client_info.as_ref().map(debug),
+            root_path = params.root_path,
+            workspace_folders = params.workspace_folders.as_ref().map(debug),
+        )
+    )]
     async fn initialize(&self, params: InitializeParams) -> LspResult<InitializeResult> {
         info!("Starting Rome Language Server...");
         self.is_initialized.store(true, Ordering::Relaxed);
 
-        self.session
-            .client_capabilities
-            .write()
-            .unwrap()
-            .replace(params.capabilities);
-
-        if let Some(uri) = params.root_uri {
-            self.session.root_uri.write().unwrap().replace(uri);
-        }
-
-        if let Some(client_info) = params.client_info {
-            let mut client_information = self.session.client_information.lock().unwrap();
-            *client_information = Some(ClientInformation {
+        self.session.initialize(
+            params.capabilities,
+            params.client_info.map(|client_info| ClientInformation {
                 name: client_info.name,
                 version: client_info.version,
-            })
-        };
+            }),
+            params.root_uri,
+        );
+
+        if params.root_path.is_some() {
+            warn!("The Rome Server was initialized with the deprecated `root_path` parameter: this is not supported, use `root_uri` instead");
+        }
+
+        if params.workspace_folders.is_some() {
+            warn!("The Rome Server was initialized with the `workspace_folders` parameter: this is unsupported at the moment, use `root_uri` instead");
+        }
 
         let init = InitializeResult {
             capabilities: server_capabilities(),
@@ -228,8 +237,8 @@ impl LanguageServer for LSPServer {
 
         info!("Attempting to load the configuration from 'rome.json' file");
 
-        self.session.update_configuration().await;
-        self.session.fetch_client_configuration().await;
+        self.session.load_client_configuration().await;
+        self.session.load_workspace_settings().await;
 
         let msg = format!("Server initialized with PID: {}", std::process::id());
         self.session
@@ -250,7 +259,7 @@ impl LanguageServer for LSPServer {
     #[tracing::instrument(level = "debug", skip(self))]
     async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
         let _ = params;
-        self.session.fetch_client_configuration().await;
+        self.session.load_client_configuration().await;
         self.setup_capabilities().await;
     }
 
@@ -268,8 +277,7 @@ impl LanguageServer for LSPServer {
                         let possible_rome_json = file_path.strip_prefix(&base_path);
                         if let Ok(possible_rome_json) = possible_rome_json {
                             if possible_rome_json.display().to_string() == CONFIG_NAME {
-                                self.session.update_configuration().await;
-                                self.session.fetch_client_configuration().await;
+                                self.session.load_workspace_settings().await;
                                 self.session.update_all_diagnostics().await;
                                 // for now we are only interested to the configuration file,
                                 // so it's OK to exist the loop

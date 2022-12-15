@@ -1,5 +1,6 @@
 //! This is a generated file. Don't modify it by hand! Run 'cargo codegen formatter' to re-generate the file.
 
+pub(crate) mod accessor_modifier;
 pub(crate) mod array_hole;
 pub(crate) mod case_clause;
 pub(crate) mod catch_clause;
