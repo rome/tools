@@ -5,6 +5,12 @@
 }
 
 {
+  function buzz() {
+    const x = 10;
+  }
+}
+
+{
   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
 }
 
