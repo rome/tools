@@ -16,6 +16,10 @@ macro_rules! map_syntax_node {
     ($ node : expr , $ pattern : pat => $ body : expr) => {
         match $node {
             node => match $crate::JsSyntaxNode::kind(&node) {
+                $crate::JsSyntaxKind::JS_ACCESSOR_MODIFIER => {
+                    let $pattern = unsafe { $crate::JsAccessorModifier::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::JS_ARRAY_ASSIGNMENT_PATTERN => {
                     let $pattern = unsafe { $crate::JsArrayAssignmentPattern::new_unchecked(node) };
                     $body

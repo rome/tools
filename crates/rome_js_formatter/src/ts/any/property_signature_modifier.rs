@@ -11,6 +11,7 @@ impl FormatRule<AnyTsPropertySignatureModifier> for FormatAnyTsPropertySignature
             AnyTsPropertySignatureModifier::TsDeclareModifier(node) => node.format().fmt(f),
             AnyTsPropertySignatureModifier::TsAccessibilityModifier(node) => node.format().fmt(f),
             AnyTsPropertySignatureModifier::JsStaticModifier(node) => node.format().fmt(f),
+            AnyTsPropertySignatureModifier::JsAccessorModifier(node) => node.format().fmt(f),
             AnyTsPropertySignatureModifier::TsReadonlyModifier(node) => node.format().fmt(f),
             AnyTsPropertySignatureModifier::TsOverrideModifier(node) => node.format().fmt(f),
             AnyTsPropertySignatureModifier::TsAbstractModifier(node) => node.format().fmt(f),

@@ -185,18 +185,40 @@ JsModule {
                         SEMICOLON@204..205 ";" [] [],
                     ],
                 },
+                JsBogusMember {
+                    items: [
+                        TsPropertySignatureModifierList [
+                            TsDeclareModifier {
+                                modifier_token: DECLARE_KW@205..218 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                            },
+                            JsAccessorModifier {
+                                modifier_token: ACCESSOR_KW@218..227 "accessor" [] [Whitespace(" ")],
+                            },
+                        ],
+                        JsLiteralMemberName {
+                            value: IDENT@227..230 "foo" [] [],
+                        },
+                        TsTypeAnnotation {
+                            colon_token: COLON@230..232 ":" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@232..238 "string" [] [],
+                            },
+                        },
+                        SEMICOLON@238..239 ";" [] [],
+                    ],
+                },
             ],
-            r_curly_token: R_CURLY@205..207 "}" [Newline("\n")] [],
+            r_curly_token: R_CURLY@239..241 "}" [Newline("\n")] [],
         },
     ],
-    eof_token: EOF@207..208 "" [Newline("\n")] [],
+    eof_token: EOF@241..242 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..208
+0: JS_MODULE@0..242
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..207
-    0: JS_CLASS_DECLARATION@0..207
+  2: JS_MODULE_ITEM_LIST@0..241
+    0: JS_CLASS_DECLARATION@0..241
       0: (empty)
       1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@6..11
@@ -205,7 +227,7 @@ JsModule {
       4: (empty)
       5: (empty)
       6: L_CURLY@11..12 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@12..205
+      7: JS_CLASS_MEMBER_LIST@12..239
         0: JS_BOGUS_MEMBER@12..42
           0: JS_BOGUS@12..25
             0: TS_DECLARE_MODIFIER@12..25
@@ -308,8 +330,21 @@ JsModule {
             1: TS_STRING_TYPE@198..204
               0: STRING_KW@198..204 "string" [] []
           5: SEMICOLON@204..205 ";" [] []
-      8: R_CURLY@205..207 "}" [Newline("\n")] []
-  3: EOF@207..208 "" [Newline("\n")] []
+        5: JS_BOGUS_MEMBER@205..239
+          0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@205..227
+            0: TS_DECLARE_MODIFIER@205..218
+              0: DECLARE_KW@205..218 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+            1: JS_ACCESSOR_MODIFIER@218..227
+              0: ACCESSOR_KW@218..227 "accessor" [] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@227..230
+            0: IDENT@227..230 "foo" [] []
+          2: TS_TYPE_ANNOTATION@230..238
+            0: COLON@230..232 ":" [] [Whitespace(" ")]
+            1: TS_STRING_TYPE@232..238
+              0: STRING_KW@232..238 "string" [] []
+          3: SEMICOLON@238..239 ";" [] []
+      8: R_CURLY@239..241 "}" [Newline("\n")] []
+  3: EOF@241..242 "" [Newline("\n")] []
 --
 ts_class_declare_modifier_error.ts:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -367,7 +402,7 @@ ts_class_declare_modifier_error.ts:5:5 parse ━━━━━━━━━━━�
   > 5 │     declare set test(value: string) {}
       │     ^^^^^^^
     6 │     declare [name: string]: string;
-    7 │ }
+    7 │     declare accessor foo: string;
   
 --
 ts_class_declare_modifier_error.ts:6:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -378,8 +413,38 @@ ts_class_declare_modifier_error.ts:6:5 parse ━━━━━━━━━━━�
     5 │     declare set test(value: string) {}
   > 6 │     declare [name: string]: string;
       │     ^^^^^^^
-    7 │ }
-    8 │ 
+    7 │     declare accessor foo: string;
+    8 │ }
+  
+--
+ts_class_declare_modifier_error.ts:7:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × 'declare' cannot be used with 'accessor' modifier.
+  
+    5 │     declare set test(value: string) {}
+    6 │     declare [name: string]: string;
+  > 7 │     declare accessor foo: string;
+      │     ^^^^^^^
+    8 │ }
+    9 │ 
+  
+  i 'declare' modifier
+  
+    5 │     declare set test(value: string) {}
+    6 │     declare [name: string]: string;
+  > 7 │     declare accessor foo: string;
+      │     ^^^^^^^
+    8 │ }
+    9 │ 
+  
+  i 'accessor' modifier
+  
+    5 │     declare set test(value: string) {}
+    6 │     declare [name: string]: string;
+  > 7 │     declare accessor foo: string;
+      │             ^^^^^^^^
+    8 │ }
+    9 │ 
   
 --
 class Test {
@@ -388,4 +453,5 @@ class Test {
     declare get test() { return "a" }
     declare set test(value: string) {}
     declare [name: string]: string;
+    declare accessor foo: string;
 }
