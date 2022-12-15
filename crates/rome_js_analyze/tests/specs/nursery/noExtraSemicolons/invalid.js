@@ -1,3 +1,5 @@
+// invalid
+
 {
   function baz() { ; }
 }
