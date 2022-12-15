@@ -59,6 +59,7 @@ define_dategories! {
     "lint/nursery/noRedundantAlt": "https://docs.rome.tools/lint/rules/noRedundantAlt",
     "lint/nursery/noRedundantUseStrict": "https://docs.rome.tools/lint/rules/noRedundantUseStrict",
     "lint/nursery/noRestrictedGlobals": "https://docs.rome.tools/lint/rules/noRestrictedGlobals",
+    "lint/nursery/noCommaOperator": "https://docs.rome.tools/lint/rules/noCommaOperator",
     "lint/nursery/noSetterReturn": "https://docs.rome.tools/lint/rules/noSetterReturn",
     "lint/nursery/noStringCaseMismatch": "https://docs.rome.tools/lint/rules/noStringCaseMismatch",
     "lint/nursery/noUnsafeFinally": "https://docs.rome.tools/lint/rules/noUnsafeFinally",

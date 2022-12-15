@@ -1,0 +1,36 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 92
+expression: valid.jsonc
+---
+# Input
+```js
+let arr = [1, 2];
+```
+
+# Input
+```js
+let obj = {a: 1, b: 2};
+```
+
+# Input
+```js
+let a = 1, b = 2;
+```
+
+# Input
+```js
+foo(a, b, d);
+```
+
+# Input
+```js
+for (i = 0, j = 0; test; );
+```
+
+# Input
+```js
+for (; test; i++, j++);
+```
+
+
