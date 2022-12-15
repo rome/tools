@@ -1,7 +1,8 @@
-use rome_cli::Termination;
+use rome_cli::TerminationDiagnostic;
 use rome_console::fmt::{Formatter, Termcolor};
 use rome_console::{markup, BufferConsole, Markup};
 use rome_diagnostics::termcolor::NoColor;
+use rome_diagnostics::{print_diagnostic_to_string, Error};
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use std::borrow::Cow;
 use std::collections::BTreeMap;
@@ -24,17 +25,17 @@ pub(crate) struct CliSnapshot {
     /// messages written in console
     pub messages: Vec<String>,
     /// possible termination error of the CLI
-    pub termination: Option<Termination>,
+    pub termination: Option<Error>,
 }
 
 impl CliSnapshot {
-    pub fn from_result(result: Result<(), Termination>) -> Self {
+    pub fn from_result(result: Result<(), TerminationDiagnostic>) -> Self {
         Self {
             in_messages: InMessages::default(),
             configuration: None,
             files: BTreeMap::default(),
             messages: Vec::new(),
-            termination: result.err(),
+            termination: result.err().map(Error::from),
         }
     }
 }
@@ -78,7 +79,7 @@ impl CliSnapshot {
         }
 
         if let Some(termination) = &self.termination {
-            let message = format!("{:?}", termination);
+            let message = print_diagnostic_to_string(termination);
             content.push_str("# Termination Message\n\n");
             content.push_str("```block");
             content.push('\n');
@@ -295,7 +296,7 @@ pub struct SnapshotPayload<'a> {
     pub test_name: &'a str,
     pub fs: MemoryFileSystem,
     pub console: BufferConsole,
-    pub result: Result<(), Termination>,
+    pub result: Result<(), TerminationDiagnostic>,
 }
 
 impl<'a> SnapshotPayload<'a> {
@@ -304,7 +305,7 @@ impl<'a> SnapshotPayload<'a> {
         test_name: &'a str,
         fs: MemoryFileSystem,
         console: BufferConsole,
-        result: Result<(), Termination>,
+        result: Result<(), TerminationDiagnostic>,
     ) -> Self {
         Self {
             module_path,

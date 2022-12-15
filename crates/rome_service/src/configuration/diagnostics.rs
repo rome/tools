@@ -1,4 +1,4 @@
-use rome_diagnostics::{category, Category, Diagnostic, LineIndexBuf, Location, Severity};
+use rome_diagnostics::{category, Category, Diagnostic, DiagnosticTags, LineIndexBuf, Location};
 use rome_rowan::{TextRange, TextSize};
 use std::fmt::{Debug, Display, Formatter};
 
@@ -21,9 +21,6 @@ pub enum ConfigurationError {
         input: String,
     },
 
-    /// Thrown when an unknown rule is found
-    UnknownRule(String),
-
     /// Thrown when the pattern inside the `ignore` field errors
     InvalidIgnorePattern(String, String),
 }
@@ -34,7 +31,6 @@ impl Debug for ConfigurationError {
             ConfigurationError::SerializationError => std::fmt::Display::fmt(self, f),
             ConfigurationError::DeserializationError { .. } => std::fmt::Display::fmt(self, f),
             ConfigurationError::ConfigAlreadyExists => std::fmt::Display::fmt(self, f),
-            ConfigurationError::UnknownRule(_) => std::fmt::Display::fmt(self, f),
             ConfigurationError::InvalidIgnorePattern(_, _) => std::fmt::Display::fmt(self, f),
         }
     }
@@ -60,9 +56,6 @@ impl Display for ConfigurationError {
                 write!(f, "It seems that a configuration file already exists")
             }
 
-            ConfigurationError::UnknownRule(rule) => {
-                write!(f, "invalid rule name `{rule}`")
-            }
             ConfigurationError::InvalidIgnorePattern(pattern, reason) => {
                 write!(f, "Couldn't parse the pattern {pattern}, reason: {reason}")
             }
@@ -73,10 +66,6 @@ impl Display for ConfigurationError {
 impl Diagnostic for ConfigurationError {
     fn category(&self) -> Option<&'static Category> {
         Some(category!("configuration"))
-    }
-
-    fn severity(&self) -> Severity {
-        Severity::Error
     }
 
     fn description(&self, fmt: &mut Formatter<'_>) -> std::fmt::Result {
@@ -102,9 +91,6 @@ impl Diagnostic for ConfigurationError {
                 write!(f, "It seems that a configuration file already exists")
             }
 
-            ConfigurationError::UnknownRule(rule) => {
-                write!(f, "Invalid rule name `{rule}`")
-            }
             ConfigurationError::InvalidIgnorePattern(pattern, reason) => {
                 write!(f, "Couldn't parse the pattern {pattern}, reason: {reason}")
             }
@@ -117,6 +103,10 @@ impl Diagnostic for ConfigurationError {
         } else {
             Location::builder().build()
         }
+    }
+
+    fn tags(&self) -> DiagnosticTags {
+        DiagnosticTags::FIXABLE
     }
 }
 
@@ -143,7 +133,7 @@ mod test {
     use rome_diagnostics::{print_diagnostic_to_string, DiagnosticExt, Error};
 
     fn snap_diagnostic(test_name: &str, diagnostic: Error) {
-        let content = print_diagnostic_to_string(diagnostic);
+        let content = print_diagnostic_to_string(&diagnostic);
 
         insta::with_settings!({
             prepend_module_to_snapshot => false,
@@ -151,14 +141,6 @@ mod test {
             insta::assert_snapshot!(test_name, content);
 
         });
-    }
-
-    #[test]
-    fn unknown_rule() {
-        snap_diagnostic(
-            "unknown_rule",
-            ConfigurationError::UnknownRule("foo_bar".to_string()).with_file_path("rome.json"),
-        )
     }
 
     #[test]

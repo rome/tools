@@ -75,7 +75,7 @@ impl rome_console::fmt::Display for MessageAndDescription {
 }
 
 /// Utility function to transform a [MarkupBuf] into a [String]
-fn markup_to_string(markup: &MarkupBuf) -> String {
+pub fn markup_to_string(markup: &MarkupBuf) -> String {
     let mut buffer = Vec::new();
     let mut write = Termcolor(NoColor::new(&mut buffer));
     let mut fmt = Formatter::new(&mut write);

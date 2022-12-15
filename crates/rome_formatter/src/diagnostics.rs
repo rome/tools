@@ -228,7 +228,7 @@ mod test {
     use rome_js_syntax::TextRange;
 
     fn snap_diagnostic(test_name: &str, diagnostic: Error) {
-        let content = print_diagnostic_to_string(diagnostic);
+        let content = print_diagnostic_to_string(&diagnostic);
 
         insta::with_settings!({
             prepend_module_to_snapshot => false,

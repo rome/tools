@@ -19,6 +19,7 @@ use rome_diagnostics::{serde::Diagnostic as SerdeDiagnostic, Diagnostic, Diagnos
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_parser::AnyParse;
+use std::ffi::OsStr;
 use std::{panic::RefUnwindSafe, sync::RwLock};
 
 pub(super) struct WorkspaceServer {
@@ -87,7 +88,15 @@ impl WorkspaceServer {
                 .unwrap_or_default();
 
             let language = Features::get_language(path).or(language_hint);
-            RomeError::SourceFileNotSupported(language, path.clone())
+            RomeError::SourceFileNotSupported {
+                language,
+                path: path.clone().display().to_string(),
+                extension: path
+                    .clone()
+                    .extension()
+                    .and_then(OsStr::to_str)
+                    .map(|s| s.to_string()),
+            }
         }
     }
 
@@ -144,7 +153,7 @@ impl WorkspaceServer {
                 let size = document.content.as_bytes().len();
                 if size >= size_limit {
                     return Err(RomeError::FileTooLarge {
-                        path: rome_path.to_path_buf(),
+                        path: rome_path.to_path_buf().display().to_string(),
                         size,
                         limit: size_limit,
                     });

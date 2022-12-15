@@ -16,6 +16,8 @@
 //! instances of an object (the main use case for this would be implementing
 //! `Clone` for `Error` since `dyn Clone` is not allowed in Rust)
 
+use std::ops::Deref;
+use std::process::{ExitCode, Termination};
 use std::{
     fmt::{Debug, Formatter},
     io,
@@ -130,6 +132,20 @@ impl AsDiagnostic for Error {
     }
 }
 
+impl AsRef<dyn Diagnostic + 'static> for Error {
+    fn as_ref(&self) -> &(dyn Diagnostic + 'static) {
+        self.as_diagnostic()
+    }
+}
+
+impl Deref for Error {
+    type Target = dyn Diagnostic + 'static;
+
+    fn deref(&self) -> &Self::Target {
+        self.as_diagnostic()
+    }
+}
+
 // Defer the implementation of `Debug` and `Drop` to the wrapped type
 impl Debug for Error {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -223,6 +239,17 @@ fn drop_error<D: Diagnostic>(this: NonNull<ErrorImpl>) {
 
 /// Alias of [std::result::Result] with the `Err` type defaulting to [Error].
 pub type Result<T, E = Error> = std::result::Result<T, E>;
+
+impl Termination for Error {
+    fn report(self) -> ExitCode {
+        let severity = self.severity();
+        if severity >= Severity::Error {
+            ExitCode::FAILURE
+        } else {
+            ExitCode::SUCCESS
+        }
+    }
+}
 
 #[cfg(test)]
 mod tests {

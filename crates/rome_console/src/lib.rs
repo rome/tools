@@ -63,6 +63,7 @@ pub struct EnvConsole {
     r#in: Stdin,
 }
 
+#[derive(Debug, Clone)]
 pub enum ColorMode {
     /// Always print color using either ANSI or the Windows Console API
     Enabled,

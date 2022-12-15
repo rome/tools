@@ -86,6 +86,6 @@ impl Report {
     }
 
     pub fn as_serialized_reports(&self) -> Result<String, RomeError> {
-        serde_json::to_string(&self).map_err(|_| RomeError::NotFound)
+        serde_json::to_string(&self).map_err(|_| RomeError::ReportNotSerializable)
     }
 }

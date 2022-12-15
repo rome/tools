@@ -1,6 +1,7 @@
 use crate::check_reformat::CheckReformat;
 use crate::snapshot_builder::{SnapshotBuilder, SnapshotOutput};
 use crate::TestFormatLanguage;
+use rome_console::{BufferConsole, EnvConsole};
 use rome_diagnostics::FileId;
 use rome_formatter::FormatOptions;
 use rome_fs::RomePath;
@@ -17,7 +18,8 @@ pub struct SpecTestFile<'a> {
 
 impl<'a> SpecTestFile<'a> {
     pub fn try_from_file(input_file: &'a str, root_path: &'a Path) -> Option<SpecTestFile<'a>> {
-        let app = App::default();
+        let mut console = EnvConsole::default();
+        let app = App::with_console(&mut console);
         let file_path = &input_file;
         let spec_input_file = Path::new(input_file);
 

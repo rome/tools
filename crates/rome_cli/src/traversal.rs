@@ -1,6 +1,7 @@
 use crate::{
     CliSession, Execution, FormatterReportFileDetail, FormatterReportSummary, Report,
-    ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind, Termination, TraversalMode,
+    ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind, TerminationDiagnostic,
+    TraversalMode,
 };
 use crossbeam::{
     channel::{unbounded, Receiver, Sender},
@@ -54,7 +55,10 @@ impl fmt::Display for CheckResult {
     }
 }
 
-pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<(), Termination> {
+pub(crate) fn traverse(
+    execution: Execution,
+    mut session: CliSession,
+) -> Result<(), TerminationDiagnostic> {
     init_thread_pool();
 
     let verbose = session.args.contains("--verbose");
@@ -71,20 +75,20 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
             }
             // `--<some character>` or `-<some character>`
             if without_dashes != input {
-                return Err(Termination::UnexpectedArgument {
-                    subcommand: execution.traversal_mode_subcommand(),
-                    argument: input,
-                });
+                return Err(TerminationDiagnostic::new_unexpected_argument(
+                    format!("{:?}", input),
+                    execution.traversal_mode_subcommand(),
+                ));
             }
         }
         inputs.push(input);
     }
 
     if inputs.is_empty() && execution.as_stdin_file().is_none() {
-        return Err(Termination::MissingArgument {
-            subcommand: execution.traversal_mode_subcommand(),
-            argument: "<INPUT>",
-        });
+        return Err(TerminationDiagnostic::new_missing_argument(
+            "<INPUT>",
+            execution.traversal_mode_subcommand(),
+        ));
     }
 
     let (interner, recv_files) = PathInterner::new();
@@ -208,9 +212,9 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
 
     // Processing emitted error diagnostics, exit with a non-zero code
     if count.saturating_sub(skipped) == 0 {
-        Err(Termination::NoFilesWereProcessed)
+        Err(TerminationDiagnostic::new_no_files_processed())
     } else if errors > 0 {
-        Err(Termination::CheckError)
+        Err(TerminationDiagnostic::new_check())
     } else {
         Ok(())
     }

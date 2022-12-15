@@ -9,7 +9,7 @@ use snap_test::assert_cli_snapshot;
 use std::{ffi::OsString, path::Path};
 
 use pico_args::Arguments;
-use rome_cli::{CliSession, Termination};
+use rome_cli::{CliSession, TerminationDiagnostic};
 use rome_console::{BufferConsole, Console};
 use rome_fs::{FileSystem, MemoryFileSystem};
 use rome_service::{App, DynRef};
@@ -36,23 +36,17 @@ mod help {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
+            &mut console,
             Arguments::from_vec(vec![OsString::from("unknown"), OsString::from("--help")]),
         );
 
-        match result {
-            Err(Termination::UnknownCommandHelp { command }) => assert_eq!(command, "unknown"),
-            _ => {
-                panic!("run_cli returned {result:?} for an unknown command help, expected an error")
-            }
-        }
+        assert!(result.is_err(), "run_cli returned {result:?}");
     }
 }
 
 mod main {
     use super::*;
-    use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
-    use rome_service::workspace;
+    use rome_cli::color_from_arguments;
 
     #[test]
     fn unknown_command() {
@@ -61,14 +55,10 @@ mod main {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
+            &mut console,
             Arguments::from_vec(vec![OsString::from("unknown")]),
         );
-
-        match result {
-            Err(Termination::UnknownCommand { command }) => assert_eq!(command, "unknown"),
-            _ => panic!("run_cli returned {result:?} for an unknown command, expected an error"),
-        }
+        assert!(result.is_err(), "run_cli returned {result:?}");
     }
 
     #[test]
@@ -78,7 +68,7 @@ mod main {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
+            &mut console,
             Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--unknown"),
@@ -86,16 +76,7 @@ mod main {
             ]),
         );
 
-        match result {
-            Err(Termination::UnexpectedArgument {
-                subcommand,
-                argument,
-            }) => {
-                assert_eq!(subcommand, "format");
-                assert_eq!(argument, OsString::from("--unknown"))
-            }
-            _ => panic!("run_cli returned {result:?} for an unknown argument, expected an error"),
-        }
+        assert!(result.is_err(), "run_cli returned {result:?}");
     }
 
     #[test]
@@ -105,14 +86,11 @@ mod main {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
+            &mut console,
             Arguments::from_vec(vec![OsString::from("format")]),
         );
 
-        match result {
-            Err(Termination::EmptyArguments) => {}
-            _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-        }
+        assert!(result.is_err(), "run_cli returned {result:?}");
     }
 
     #[test]
@@ -122,20 +100,10 @@ mod main {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
+            &mut console,
             Arguments::from_vec(vec![OsString::from("format"), OsString::from("--write")]),
         );
-
-        match result {
-            Err(Termination::MissingArgument {
-                subcommand,
-                argument,
-            }) => {
-                assert_eq!(subcommand, "format");
-                assert_eq!(argument, "<INPUT>")
-            }
-            _ => panic!("run_cli returned {result:?} for a missing argument, expected an error"),
-        }
+        assert!(result.is_err(), "run_cli returned {result:?}");
     }
 
     #[test]
@@ -145,19 +113,14 @@ mod main {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
+            &mut console,
             Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--max-diagnostics=foo"),
             ]),
         );
 
-        match result {
-            Err(Termination::ParseError { argument, .. }) => {
-                assert_eq!(argument, "--max-diagnostics");
-            }
-            _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
-        }
+        assert!(result.is_err(), "run_cli returned {result:?}");
     }
 
     #[test]
@@ -167,53 +130,37 @@ mod main {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
+            &mut console,
             Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--max-diagnostics=500"),
             ]),
         );
 
-        match result {
-            Err(Termination::OverflowNumberArgument(argument, limit)) => {
-                assert_eq!(argument, "--max-diagnostics");
-                assert_eq!(limit, MAXIMUM_DISPLAYABLE_DIAGNOSTICS);
-            }
-            _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
-        }
+        assert!(result.is_err(), "run_cli returned {result:?}");
     }
 
     #[test]
     fn no_colors() {
-        let workspace = workspace::server();
-        let args = Arguments::from_vec(vec![OsString::from("--colors=off")]);
-        let result = CliSession::new(&*workspace, args).and_then(|session| session.run());
+        let mut args = Arguments::from_vec(vec![OsString::from("--colors=off")]);
+        let result = color_from_arguments(&mut args);
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
     }
 
     #[test]
     fn force_colors() {
-        let workspace = workspace::server();
-        let args = Arguments::from_vec(vec![OsString::from("--colors=force")]);
-        let result = CliSession::new(&*workspace, args).and_then(|session| session.run());
+        let mut args = Arguments::from_vec(vec![OsString::from("--colors=force")]);
+        let result = color_from_arguments(&mut args);
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
     }
 
     #[test]
     fn invalid_colors() {
-        let workspace = workspace::server();
-        let args = Arguments::from_vec(vec![OsString::from("--colors=other")]);
-
-        let result = CliSession::new(&*workspace, args).and_then(|session| session.run());
-
-        match result {
-            Err(Termination::ParseError { argument, .. }) => {
-                assert_eq!(argument, "--colors");
-            }
-            _ => panic!("run_cli returned {result:?} for a malformed, expected an error"),
-        }
+        let mut args = Arguments::from_vec(vec![OsString::from("--colors=other")]);
+        let result = color_from_arguments(&mut args);
+        assert!(result.is_err(), "run_cli returned {result:?}");
     }
 }
 
@@ -240,7 +187,7 @@ mod configuration {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
+            &mut console,
             Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
         );
 
@@ -265,7 +212,7 @@ mod configuration {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
+            &mut console,
             Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
         );
 
@@ -290,7 +237,7 @@ mod configuration {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
+            &mut console,
             Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
         );
 
@@ -315,7 +262,7 @@ mod configuration {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
+            &mut console,
             Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
         );
 
@@ -343,7 +290,7 @@ mod configuration {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
+            &mut console,
             Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
         );
 
@@ -368,7 +315,7 @@ mod reporter_json {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
+            &mut console,
             Arguments::from_vec(vec![
                 std::ffi::OsString::from("format"),
                 std::ffi::OsString::from("--json"),
@@ -412,7 +359,7 @@ mod reporter_json {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
+            &mut console,
             Arguments::from_vec(vec![
                 std::ffi::OsString::from("format"),
                 std::ffi::OsString::from("--write"),
@@ -451,9 +398,9 @@ mod reporter_json {
 /// instance, and using an in-process "remote" instance of the workspace
 pub(crate) fn run_cli<'app>(
     fs: DynRef<'app, dyn FileSystem>,
-    console: DynRef<'app, dyn Console>,
+    console: &'app mut dyn Console,
     args: Arguments,
-) -> Result<(), Termination> {
+) -> Result<(), TerminationDiagnostic> {
     use rome_cli::SocketTransport;
     use rome_lsp::ServerFactory;
     use rome_service::{workspace, WorkspaceRef};

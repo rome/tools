@@ -9,7 +9,7 @@
 use std::str::FromStr;
 
 pub use pico_args::Arguments;
-use rome_console::{ColorMode, EnvConsole};
+use rome_console::{ColorMode, Console};
 use rome_fs::OsFileSystem;
 use rome_service::{App, DynRef, Workspace, WorkspaceRef};
 
@@ -30,7 +30,7 @@ pub use reports::{
     Report, ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind,
 };
 pub use service::{open_transport, SocketTransport};
-pub use termination::Termination;
+pub use termination::TerminationDiagnostic;
 
 pub(crate) const VERSION: &str = match option_env!("ROME_VERSION") {
     Some(version) => version,
@@ -46,43 +46,15 @@ pub struct CliSession<'app> {
 }
 
 impl<'app> CliSession<'app> {
-    pub fn new(workspace: &'app dyn Workspace, mut args: Arguments) -> Result<Self, Termination> {
-        enum ColorsArg {
-            Off,
-            Force,
-        }
-
-        impl FromStr for ColorsArg {
-            type Err = String;
-
-            fn from_str(s: &str) -> Result<Self, Self::Err> {
-                match s {
-                    "off" => Ok(Self::Off),
-                    "force" => Ok(Self::Force),
-                    _ => Err(format!(
-                        "value {s:?} is not valid for the --colors argument"
-                    )),
-                }
-            }
-        }
-
-        let colors =
-            args.opt_value_from_str("--colors")
-                .map_err(|source| Termination::ParseError {
-                    argument: "--colors",
-                    source,
-                })?;
-
-        let colors = match colors {
-            Some(ColorsArg::Off) => ColorMode::Disabled,
-            Some(ColorsArg::Force) => ColorMode::Enabled,
-            None => ColorMode::Auto,
-        };
-
+    pub fn new(
+        workspace: &'app dyn Workspace,
+        args: Arguments,
+        console: &'app mut dyn Console,
+    ) -> Result<Self, TerminationDiagnostic> {
         Ok(Self {
             app: App::new(
                 DynRef::Owned(Box::new(OsFileSystem)),
-                DynRef::Owned(Box::new(EnvConsole::new(colors))),
+                console,
                 WorkspaceRef::Borrowed(workspace),
             ),
             args,
@@ -90,7 +62,7 @@ impl<'app> CliSession<'app> {
     }
 
     /// Main function to run Rome CLI
-    pub fn run(mut self) -> Result<(), Termination> {
+    pub fn run(mut self) -> Result<(), TerminationDiagnostic> {
         let has_metrics = self.args.contains("--show-metrics");
         if has_metrics {
             crate::metrics::init_metrics();
@@ -100,10 +72,7 @@ impl<'app> CliSession<'app> {
         let subcommand = self
             .args
             .subcommand()
-            .map_err(|source| Termination::ParseError {
-                argument: "<command>",
-                source,
-            })?;
+            .map_err(|source| TerminationDiagnostic::new_parse("<command>", source))?;
 
         // True if the command line did not contain any arguments beside the subcommand
         let is_empty = self.args.clone().finish().is_empty();
@@ -127,7 +96,7 @@ impl<'app> CliSession<'app> {
             // Print the help for known commands called without any arguments, and exit with an error
             Some(cmd @ ("check" | "ci" | "format")) => {
                 commands::help::help(self, Some(cmd))?;
-                Err(Termination::EmptyArguments)
+                Err(TerminationDiagnostic::new_empty_arguments())
             }
 
             Some("init") => commands::init::init(self),
@@ -139,9 +108,7 @@ impl<'app> CliSession<'app> {
             // Print the general help if no subcommand was specified / the subcommand is `help`
             None | Some("help") => commands::help::help(self, None),
 
-            Some(cmd) => Err(Termination::UnknownCommand {
-                command: cmd.into(),
-            }),
+            Some(cmd) => Err(TerminationDiagnostic::new_unknown_command(cmd)),
         };
 
         if has_metrics {
@@ -150,4 +117,35 @@ impl<'app> CliSession<'app> {
 
         result
     }
+}
+
+enum ColorsArg {
+    Off,
+    Force,
+}
+
+impl FromStr for ColorsArg {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "off" => Ok(Self::Off),
+            "force" => Ok(Self::Force),
+            _ => Err(format!(
+                "value {s:?} is not valid for the --colors argument"
+            )),
+        }
+    }
+}
+
+pub fn color_from_arguments(args: &mut Arguments) -> Result<ColorMode, TerminationDiagnostic> {
+    let colors = args
+        .opt_value_from_str("--colors")
+        .map_err(|source| TerminationDiagnostic::new_parse("--colors", source))?;
+    dbg!("here");
+    Ok(match colors {
+        Some(ColorsArg::Off) => ColorMode::Disabled,
+        Some(ColorsArg::Force) => ColorMode::Enabled,
+        None => ColorMode::Auto,
+    })
 }

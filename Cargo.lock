@@ -1548,6 +1548,7 @@ dependencies = [
  "rome_lsp",
  "rome_service",
  "rome_text_edit",
+ "rome_text_size",
  "serde",
  "serde_json",
  "thiserror",
@@ -1601,6 +1602,7 @@ version = "0.0.0"
 dependencies = [
  "backtrace",
  "bitflags",
+ "pico-args",
  "rome_console",
  "rome_diagnostics_categories",
  "rome_diagnostics_macros",
