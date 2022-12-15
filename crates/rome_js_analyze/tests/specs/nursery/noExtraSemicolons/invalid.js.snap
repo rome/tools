@@ -1,0 +1,233 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: invalid.js
+---
+# Input
+```js
+// invalid
+
+{
+  function baz() { ; }
+}
+
+{
+  for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);;
+}
+
+{
+  const x = 5;;
+}
+
+{
+  function foo() {
+      // code
+  };
+}
+
+{
+  class C {
+      field;;
+  
+      method() {
+          // code
+      }
+  
+      static {
+          // code
+      }
+  }
+}
+
+{
+  class C {
+      field;
+  
+      method() {
+          // code
+      };
+  
+      static {
+          // code
+      }
+  }
+}
+
+{
+  class C {
+      field;
+  
+      method() {
+          // code
+      }
+  
+      static {
+          // code
+      };
+  }
+}
+
+{
+  class C {
+      field;
+  
+      method() {
+          // code
+      }
+  
+      static {
+          // code
+      }
+  };
+}
+```
+
+# Diagnostics
+```
+invalid.js:4:20 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unnecessary semicolon.
+  
+    3 │ {
+  > 4 │   function baz() { ; }
+      │                    ^
+    5 │ }
+    6 │ 
+  
+  i Suggested fix: Remove unnecessary semicolon.
+  
+    4 │ ··function·baz()·{·;·}␍
+      │                    -- 
+
+```
+
+```
+invalid.js:8:63 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unnecessary semicolon.
+  
+     7 │ {
+   > 8 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);;
+       │                                                               ^
+     9 │ }
+    10 │ 
+  
+  i Suggested fix: Remove unnecessary semicolon.
+  
+    8 │ ··for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);;␍
+      │                                                               -
+
+```
+
+```
+invalid.js:12:15 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unnecessary semicolon.
+  
+    11 │ {
+  > 12 │   const x = 5;;
+       │               ^
+    13 │ }
+    14 │ 
+  
+  i Suggested fix: Remove unnecessary semicolon.
+  
+    12 │ ··const·x·=·5;;␍
+       │               -
+
+```
+
+```
+invalid.js:18:4 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unnecessary semicolon.
+  
+    16 │   function foo() {
+    17 │       // code
+  > 18 │   };
+       │    ^
+    19 │ }
+    20 │ 
+  
+  i Suggested fix: Remove unnecessary semicolon.
+  
+    18 │ ··};␍
+       │    -
+
+```
+
+```
+invalid.js:23:13 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unnecessary semicolon.
+  
+    21 │ {
+    22 │   class C {
+  > 23 │       field;;
+       │             ^
+    24 │   
+    25 │       method() {
+  
+  i Suggested fix: Remove unnecessary semicolon.
+  
+    23 │ ······field;;␍
+       │             -
+
+```
+
+```
+invalid.js:41:8 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unnecessary semicolon.
+  
+    39 │       method() {
+    40 │           // code
+  > 41 │       };
+       │        ^
+    42 │   
+    43 │       static {
+  
+  i Suggested fix: Remove unnecessary semicolon.
+  
+    41 │ ······};␍
+       │        -
+
+```
+
+```
+invalid.js:59:8 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unnecessary semicolon.
+  
+    57 │       static {
+    58 │           // code
+  > 59 │       };
+       │        ^
+    60 │   }
+    61 │ }
+  
+  i Suggested fix: Remove unnecessary semicolon.
+  
+    59 │ ······};␍
+       │        -
+
+```
+
+```
+invalid.js:74:4 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unnecessary semicolon.
+  
+    72 │           // code
+    73 │       }
+  > 74 │   };
+       │    ^
+    75 │ }
+  
+  i Suggested fix: Remove unnecessary semicolon.
+  
+    74 │ ··};␍
+       │    -
+
+```
+
+
