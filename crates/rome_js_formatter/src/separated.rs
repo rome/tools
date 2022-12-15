@@ -31,6 +31,12 @@ where
     }
 }
 
+type JsFormatSeparatedIter<Node> = FormatSeparatedIter<
+    AstSeparatedListElementsIterator<JsLanguage, Node>,
+    Node,
+    JsFormatSeparatedElementRule<Node>,
+>;
+
 /// AST Separated list formatting extension methods
 pub(crate) trait FormatAstSeparatedListExtension:
     AstSeparatedList<Language = JsLanguage>
@@ -41,15 +47,8 @@ pub(crate) trait FormatAstSeparatedListExtension:
     /// created by calling the `separator_factory` function.
     /// The last trailing separator in the list will only be printed
     /// if the outer group breaks.
-    fn format_separated(
-        &self,
-        separator: &'static str,
-    ) -> FormatSeparatedIter<
-        AstSeparatedListElementsIterator<JsLanguage, Self::Node>,
-        Self::Node,
-        JsFormatSeparatedElementRule<Self::Node>,
-    > {
-        FormatSeparatedIter::new(
+    fn format_separated(&self, separator: &'static str) -> JsFormatSeparatedIter<Self::Node> {
+        JsFormatSeparatedIter::new(
             self.elements(),
             separator,
             JsFormatSeparatedElementRule { node: PhantomData },

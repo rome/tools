@@ -9,11 +9,11 @@ use rome_rowan::{AstNode, AstSeparatedList, AstSeparatedListElementsIterator};
 use std::marker::PhantomData;
 
 #[derive(Clone)]
-pub(crate) struct FormatJsonSeparatedElementRule<N> {
+pub(crate) struct JsonFormatSeparatedElementRule<N> {
     node: PhantomData<N>,
 }
 
-impl<N> FormatSeparatedElementRule<N> for FormatJsonSeparatedElementRule<N>
+impl<N> FormatSeparatedElementRule<N> for JsonFormatSeparatedElementRule<N>
 where
     N: AstNode<Language = JsonLanguage> + AsFormat<JsonFormatContext> + 'static,
 {
@@ -30,6 +30,12 @@ where
     }
 }
 
+type JsonFormatSeparatedIter<Node> = FormatSeparatedIter<
+    AstSeparatedListElementsIterator<JsonLanguage, Node>,
+    Node,
+    JsonFormatSeparatedElementRule<Node>,
+>;
+
 /// AST Separated list formatting extension methods
 pub(crate) trait FormatAstSeparatedListExtension:
     AstSeparatedList<Language = JsonLanguage>
@@ -40,18 +46,11 @@ pub(crate) trait FormatAstSeparatedListExtension:
     /// created by calling the `separator_factory` function.
     /// The last trailing separator in the list will only be printed
     /// if the outer group breaks.
-    fn format_separated(
-        &self,
-        separator: &'static str,
-    ) -> FormatSeparatedIter<
-        AstSeparatedListElementsIterator<JsonLanguage, Self::Node>,
-        Self::Node,
-        FormatJsonSeparatedElementRule<Self::Node>,
-    > {
-        FormatSeparatedIter::new(
+    fn format_separated(&self, separator: &'static str) -> JsonFormatSeparatedIter<Self::Node> {
+        JsonFormatSeparatedIter::new(
             self.elements(),
             separator,
-            FormatJsonSeparatedElementRule { node: PhantomData },
+            JsonFormatSeparatedElementRule { node: PhantomData },
         )
         .with_trailing_separator(TrailingSeparator::Disallowed)
     }
