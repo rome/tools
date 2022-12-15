@@ -28,7 +28,8 @@ This rule disallows unnecessary semicolons.
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove unnecessary semicolon.</span>
   
-  
+<strong>  </strong><strong>  1 │ </strong><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span>const<span style="opacity: 0.8;">·</span>x<span style="opacity: 0.8;">·</span>=<span style="opacity: 0.8;">·</span>5;<span style="color: Tomato;">;</span>
+<strong>  </strong><strong>    │ </strong>              <span style="color: Tomato;">-</span>
 </code></pre>
 
 ```jsx
@@ -49,7 +50,8 @@ This rule disallows unnecessary semicolons.
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove unnecessary semicolon.</span>
   
-  
+<strong>  </strong><strong>  3 │ </strong><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span>}<span style="color: Tomato;">;</span>
+<strong>  </strong><strong>    │ </strong>   <span style="color: Tomato;">-</span>
 </code></pre>
 
 ```jsx
@@ -78,7 +80,8 @@ This rule disallows unnecessary semicolons.
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove unnecessary semicolon.</span>
   
-  
+<strong>  </strong><strong>  2 │ </strong><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span>field;<span style="color: Tomato;">;</span>
+<strong>  </strong><strong>    │ </strong>            <span style="color: Tomato;">-</span>
 </code></pre>
 
 ```jsx
@@ -108,7 +111,8 @@ This rule disallows unnecessary semicolons.
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove unnecessary semicolon.</span>
   
-  
+<strong>  </strong><strong>  6 │ </strong><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span>}<span style="color: Tomato;">;</span>
+<strong>  </strong><strong>    │ </strong>      <span style="color: Tomato;">-</span>
 </code></pre>
 
 ```jsx
@@ -138,7 +142,8 @@ This rule disallows unnecessary semicolons.
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove unnecessary semicolon.</span>
   
-  
+<strong>  </strong><strong>  10 │ </strong><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span>}<span style="color: Tomato;">;</span>
+<strong>  </strong><strong>     │ </strong>      <span style="color: Tomato;">-</span>
 </code></pre>
 
 ```jsx
@@ -167,6 +172,7 @@ This rule disallows unnecessary semicolons.
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove unnecessary semicolon.</span>
   
-  
+<strong>  </strong><strong>  11 │ </strong><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span>}<span style="color: Tomato;">;</span>
+<strong>  </strong><strong>     │ </strong>    <span style="color: Tomato;">-</span>
 </code></pre>
 
