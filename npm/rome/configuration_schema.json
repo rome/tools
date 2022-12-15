@@ -1002,6 +1002,17 @@
             }
           ]
         },
+        "useIsNan": {
+          "description": "Require calls to isNaN() when checking for NaN.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useNumericLiterals": {
           "description": "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals",
           "anyOf": [
