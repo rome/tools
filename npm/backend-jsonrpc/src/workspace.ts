@@ -298,6 +298,10 @@ export interface Nursery {
 	 */
 	noBannedTypes?: RuleConfiguration;
 	/**
+	 * Disallow comma operator.
+	 */
+	noCommaOperator?: RuleConfiguration;
+	/**
 	 * Disallow TypeScript const enum
 	 */
 	noConstEnum?: RuleConfiguration;
@@ -716,6 +720,7 @@ export type Category =
 	| "lint/nursery/noRedundantAlt"
 	| "lint/nursery/noRedundantUseStrict"
 	| "lint/nursery/noRestrictedGlobals"
+	| "lint/nursery/noCommaOperator"
 	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnsafeFinally"

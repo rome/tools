@@ -610,6 +610,17 @@
             }
           ]
         },
+        "noCommaOperator": {
+          "description": "Disallow comma operator.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noConstEnum": {
           "description": "Disallow TypeScript const enum",
           "anyOf": [

@@ -729,6 +729,8 @@ struct NurserySchema {
     no_assign_in_expressions: Option<RuleConfiguration>,
     #[doc = "Disallow certain types."]
     no_banned_types: Option<RuleConfiguration>,
+    #[doc = "Disallow comma operator."]
+    no_comma_operator: Option<RuleConfiguration>,
     #[doc = "Disallow TypeScript const enum"]
     no_const_enum: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a constructor."]
@@ -800,6 +802,7 @@ impl Nursery {
         "noAccessKey",
         "noAssignInExpressions",
         "noBannedTypes",
+        "noCommaOperator",
         "noConstEnum",
         "noConstructorReturn",
         "noDistractingElements",
@@ -836,6 +839,7 @@ impl Nursery {
     const RECOMMENDED_RULES: [&'static str; 26] = [
         "noAssignInExpressions",
         "noBannedTypes",
+        "noCommaOperator",
         "noConstEnum",
         "noConstructorReturn",
         "noDistractingElements",

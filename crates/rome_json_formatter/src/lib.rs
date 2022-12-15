@@ -3,6 +3,7 @@ mod cst;
 mod generated;
 mod json;
 mod prelude;
+mod separated;
 
 pub(crate) use crate::context::JsonFormatContext;
 use crate::context::JsonFormatOptions;
@@ -170,21 +171,10 @@ mod tests {
 "#;
         let parse = parse_json(src, FileId::zero());
         let options = JsonFormatOptions::default();
-        let result = format_node(options, &parse.syntax())
-            .unwrap()
-            .print()
-            .unwrap();
-
+        let formatted = format_node(options, &parse.syntax()).unwrap();
         assert_eq!(
-            result.as_code(),
-            r#"{
-    "a": 5,
-    "b": [1, 2, 3, 4],
-    "c": null,
-    "d": true,
-    "e": false
-}
-"#
+            formatted.print().unwrap().as_code(),
+            "{\n\t\"a\": 5,\n\t\"b\": [1, 2, 3, 4],\n\t\"c\": null,\n\t\"d\": true,\n\t\"e\": false\n}\n"
         );
     }
 }

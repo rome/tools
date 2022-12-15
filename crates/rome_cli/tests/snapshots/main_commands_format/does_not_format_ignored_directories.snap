@@ -6,8 +6,8 @@ expression: content
 
 ```json
 {
-  "formatter": {
-    "ignore": [
+	"formatter": {
+		"ignore": [
       "test1.js",
       "./test2.js",
       "./test3/**/*",
@@ -16,7 +16,7 @@ expression: content
       "**/test6/*.js",
       "*.test7.js"
     ]
-  }
+	}
 }
 
 ```
