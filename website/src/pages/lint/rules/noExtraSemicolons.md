@@ -18,13 +18,16 @@ This rule disallows unnecessary semicolons.
   const x = 5;;
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noExtraSemicolons.js:1:15 <a href="https://docs.rome.tools/lint/rules/noExtraSemicolons">lint/nursery/noExtraSemicolons</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noExtraSemicolons.js:1:15 <a href="https://docs.rome.tools/lint/rules/noExtraSemicolons">lint/nursery/noExtraSemicolons</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unnecessary semicolon.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>  const x = 5;;
    <strong>   │ </strong>              <strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove unnecessary semicolon.</span>
+  
   
 </code></pre>
 
@@ -34,7 +37,7 @@ This rule disallows unnecessary semicolons.
   };
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noExtraSemicolons.js:3:4 <a href="https://docs.rome.tools/lint/rules/noExtraSemicolons">lint/nursery/noExtraSemicolons</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noExtraSemicolons.js:3:4 <a href="https://docs.rome.tools/lint/rules/noExtraSemicolons">lint/nursery/noExtraSemicolons</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unnecessary semicolon.</span>
   
@@ -43,6 +46,9 @@ This rule disallows unnecessary semicolons.
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>3 │ </strong>  };
    <strong>   │ </strong>   <strong><span style="color: Tomato;">^</span></strong>
     <strong>4 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove unnecessary semicolon.</span>
+  
   
 </code></pre>
 
@@ -60,7 +66,7 @@ This rule disallows unnecessary semicolons.
     }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noExtraSemicolons.js:2:13 <a href="https://docs.rome.tools/lint/rules/noExtraSemicolons">lint/nursery/noExtraSemicolons</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noExtraSemicolons.js:2:13 <a href="https://docs.rome.tools/lint/rules/noExtraSemicolons">lint/nursery/noExtraSemicolons</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unnecessary semicolon.</span>
   
@@ -69,6 +75,9 @@ This rule disallows unnecessary semicolons.
    <strong>   │ </strong>            <strong><span style="color: Tomato;">^</span></strong>
     <strong>3 │ </strong>
     <strong>4 │ </strong>      method() {
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove unnecessary semicolon.</span>
+  
   
 </code></pre>
 
@@ -86,7 +95,7 @@ This rule disallows unnecessary semicolons.
    }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noExtraSemicolons.js:6:7 <a href="https://docs.rome.tools/lint/rules/noExtraSemicolons">lint/nursery/noExtraSemicolons</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noExtraSemicolons.js:6:7 <a href="https://docs.rome.tools/lint/rules/noExtraSemicolons">lint/nursery/noExtraSemicolons</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unnecessary semicolon.</span>
   
@@ -97,6 +106,9 @@ This rule disallows unnecessary semicolons.
     <strong>7 │ </strong>
     <strong>8 │ </strong>     static {
   
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove unnecessary semicolon.</span>
+  
+  
 </code></pre>
 
 ```jsx
@@ -113,7 +125,7 @@ This rule disallows unnecessary semicolons.
    }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noExtraSemicolons.js:10:7 <a href="https://docs.rome.tools/lint/rules/noExtraSemicolons">lint/nursery/noExtraSemicolons</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noExtraSemicolons.js:10:7 <a href="https://docs.rome.tools/lint/rules/noExtraSemicolons">lint/nursery/noExtraSemicolons</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unnecessary semicolon.</span>
   
@@ -123,6 +135,9 @@ This rule disallows unnecessary semicolons.
     <strong>   │ </strong>      <strong><span style="color: Tomato;">^</span></strong>
     <strong>11 │ </strong>   }
     <strong>12 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove unnecessary semicolon.</span>
+  
   
 </code></pre>
 
@@ -140,7 +155,7 @@ This rule disallows unnecessary semicolons.
    };
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noExtraSemicolons.js:11:5 <a href="https://docs.rome.tools/lint/rules/noExtraSemicolons">lint/nursery/noExtraSemicolons</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noExtraSemicolons.js:11:5 <a href="https://docs.rome.tools/lint/rules/noExtraSemicolons">lint/nursery/noExtraSemicolons</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Unnecessary semicolon.</span>
   
@@ -149,6 +164,9 @@ This rule disallows unnecessary semicolons.
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>11 │ </strong>   };
     <strong>   │ </strong>    <strong><span style="color: Tomato;">^</span></strong>
     <strong>12 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove unnecessary semicolon.</span>
+  
   
 </code></pre>
 

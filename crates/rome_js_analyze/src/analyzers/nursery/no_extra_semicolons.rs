@@ -1,5 +1,5 @@
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic, RuleAction, ActionCategory};
+use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleAction, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_syntax::{JsEmptyClassMember, JsEmptyStatement, JsSyntaxKind, T};
@@ -111,12 +111,13 @@ impl Rule for NoExtraSemicolons {
                     .filter(|child| child.kind() == JsSyntaxKind::JS_EMPTY_STATEMENT)
                     .count()
                     > 0;
-                let has_first_semicolon_in_node = stmt.syntax().kind() == JsSyntaxKind::JS_EMPTY_STATEMENT;
+                let has_first_semicolon_in_node =
+                    stmt.syntax().kind() == JsSyntaxKind::JS_EMPTY_STATEMENT;
                 let has_empty_statements_in_module_list = has_last_entity_in_parent
                     && has_empty_statements_in_list
                     && has_first_semicolon_in_node;
                 let has_empty_statements_not_in_module_list = !has_last_entity_in_parent
-                    && has_empty_statements_in_list
+                    && !has_empty_statements_in_list
                     && has_first_semicolon_in_node;
 
                 if has_empty_statements_in_module_list || has_empty_statements_not_in_module_list {
@@ -151,7 +152,7 @@ impl Rule for NoExtraSemicolons {
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let _node = ctx.query();
         let mutation = ctx.root().begin();
-        
+
         Some(RuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
