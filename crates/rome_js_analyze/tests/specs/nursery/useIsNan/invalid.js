@@ -1,69 +1,36 @@
 123 == NaN;
-
 123 === NaN;
-
 NaN === "abc";
-
 NaN == "abc";
-
 123 != NaN;
-
 123 !== NaN;
-
 NaN !== "abc";
-
 NaN != "abc";
-
 NaN < "abc";
-
 "abc" < NaN;
-
 NaN > "abc";
-
 "abc" > NaN;
-
 NaN <= "abc";
-
 "abc" <= NaN;
-
 NaN >= "abc";
-
 "abc" >= NaN;
-
 123 == Number.NaN;
-
 123 === Number.NaN;
-
 Number.NaN === "abc";
-
 Number.NaN == "abc";
-
 123 != Number.NaN;
-
 123 !== Number.NaN;
-
 Number.NaN !== "abc";
-
 Number.NaN != "abc";
-
 Number.NaN < "abc";
-
 "abc" < Number.NaN;
-
 Number.NaN > "abc";
-
 "abc" > Number.NaN;
-
 Number.NaN <= "abc";
-
 "abc" <= Number.NaN;
-
 Number.NaN >= "abc";
-
 "abc" >= Number.NaN;
-
 x === Number?.NaN;
-
 x === Number['NaN'];
 
 // switch-case
