@@ -58,7 +58,7 @@ impl Rule for UseAriaProps {
             rule_category!(),
             range,
             markup! {
-                <Emphasis>{{name}}</Emphasis>" is not a valid ARIA attribute."
+                <Emphasis>{name}</Emphasis>" is not a valid ARIA attribute."
             },
         ))
     }
