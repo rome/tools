@@ -32,7 +32,9 @@ for(;true;);;
 
 for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);;
 
-const x = 5;;
+{
+  const x = 5;;
+}
 
 function foo() {
     // code
@@ -120,7 +122,9 @@ for(;true;);
 
 for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
 
-const x = 5;
+{
+  const x = 5;
+}
 
 const foo = function() {
     // code

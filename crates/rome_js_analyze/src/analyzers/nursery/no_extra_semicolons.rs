@@ -2,7 +2,7 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{JsEmptyClassMember, JsEmptyStatement, JsSyntaxKind};
+use rome_js_syntax::{JsEmptyClassMember, JsEmptyStatement};
 
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 
@@ -102,7 +102,7 @@ declare_node_union! {
 
 impl Rule for NoExtraSemicolons {
     type Query = Ast<AnyJsExtraSemicolon>;
-    type State = AnyJsExtraSemicolonOptionType;
+    type State = AnyJsExtraSemicolon;
     type Signals = Option<Self::State>;
     type Options = ();
 
@@ -112,19 +112,8 @@ impl Rule for NoExtraSemicolons {
         match node {
             AnyJsExtraSemicolon::JsEmptyStatement(stmt) => {
                 let parent = stmt.syntax().parent()?;
-                let allowed_parent_kinds = vec![
-                    JsSyntaxKind::JS_FOR_STATEMENT,
-                    JsSyntaxKind::JS_FOR_IN_STATEMENT,
-                    JsSyntaxKind::JS_FOR_OF_STATEMENT,
-                    JsSyntaxKind::JS_WHILE_STATEMENT,
-                    JsSyntaxKind::JS_DO_WHILE_STATEMENT,
-                    JsSyntaxKind::JS_IF_STATEMENT,
-                    JsSyntaxKind::JS_LABELED_STATEMENT,
-                    JsSyntaxKind::JS_WITH_STATEMENT,
-                ];
-                let has_allowed_parent = allowed_parent_kinds.contains(&parent.kind());
-                if !has_allowed_parent {
-                    Some(AnyJsExtraSemicolonOptionType::JsEmptyStatement(
+                if !parent.kind().is_list() {
+                    Some(AnyJsExtraSemicolon::JsEmptyStatement(
                         stmt.clone(),
                     ))
                 } else {
@@ -132,7 +121,7 @@ impl Rule for NoExtraSemicolons {
                 }
             }
             AnyJsExtraSemicolon::JsEmptyClassMember(stmt) => Some(
-                AnyJsExtraSemicolonOptionType::JsEmptyClassMember(stmt.clone()),
+                AnyJsExtraSemicolon::JsEmptyClassMember(stmt.clone()),
             ),
         }
     }
@@ -151,10 +140,10 @@ impl Rule for NoExtraSemicolons {
     fn action(ctx: &RuleContext<Self>, node_replace: &Self::State) -> Option<JsRuleAction> {
         let mut mutation = ctx.root().begin();
         match node_replace {
-            AnyJsExtraSemicolonOptionType::JsEmptyStatement(stmt) => {
+            AnyJsExtraSemicolon::JsEmptyStatement(stmt) => {
                 mutation.remove_node(stmt.clone());
             }
-            AnyJsExtraSemicolonOptionType::JsEmptyClassMember(stmt) => {
+            AnyJsExtraSemicolon::JsEmptyClassMember(stmt) => {
                 mutation.remove_node(stmt.clone());
             }
         }
@@ -165,9 +154,4 @@ impl Rule for NoExtraSemicolons {
             mutation,
         })
     }
-}
-
-pub enum AnyJsExtraSemicolonOptionType {
-    JsEmptyStatement(JsEmptyStatement),
-    JsEmptyClassMember(JsEmptyClassMember),
 }
