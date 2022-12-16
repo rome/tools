@@ -127,11 +127,9 @@ impl Rule for NoExtraSemicolons {
                     None
                 }
             }
-            AnyJsExtraSemicolon::JsEmptyClassMember(stmt) => {
-                Some(AnyJsExtraSemicolonOptionType::JsEmptyClassMember(
-                    stmt.clone(),
-                ))
-            }
+            AnyJsExtraSemicolon::JsEmptyClassMember(stmt) => Some(
+                AnyJsExtraSemicolonOptionType::JsEmptyClassMember(stmt.clone()),
+            ),
         }
     }
 
