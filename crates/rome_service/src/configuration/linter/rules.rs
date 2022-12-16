@@ -796,7 +796,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 35] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 36] = [
         "noAccessKey",
         "noAssignInExpressions",
         "noBannedTypes",
@@ -821,6 +821,7 @@ impl Nursery {
         "noVar",
         "noVoidTypeReturn",
         "noWith",
+        "noExtraSemicolons",
         "useAriaPropTypes",
         "useAriaPropsForRole",
         "useCamelCase",
@@ -833,7 +834,7 @@ impl Nursery {
         "useHookAtTopLevel",
         "useNumericLiterals",
     ];
-    const RECOMMENDED_RULES: [&'static str; 26] = [
+    const RECOMMENDED_RULES: [&'static str; 27] = [
         "noAssignInExpressions",
         "noBannedTypes",
         "noCommaOperator",
@@ -853,6 +854,7 @@ impl Nursery {
         "noVar",
         "noVoidTypeReturn",
         "noWith",
+        "noExtraSemicolons",
         "useAriaPropsForRole",
         "useConst",
         "useDefaultParameterLast",
@@ -861,7 +863,7 @@ impl Nursery {
         "useExhaustiveDependencies",
         "useNumericLiterals",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 26] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 27] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[3]),
@@ -873,6 +875,7 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[9]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[10]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[11]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[12]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[14]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[17]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[18]),
@@ -914,7 +917,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 26] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 27] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }

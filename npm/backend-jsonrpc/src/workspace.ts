@@ -382,6 +382,10 @@ export interface Nursery {
 	 */
 	noWith?: RuleConfiguration;
 	/**
+	 * Disallow unnecessary semicolons.
+	 */
+	noExtraSemicolons?: RuleConfiguration;
+	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
@@ -701,6 +705,7 @@ export type Category =
 	| "lint/nursery/noAccessKey"
 	| "lint/nursery/noAssignInExpressions"
 	| "lint/nursery/noWith"
+	| "lint/nursery/noExtraSemicolons"
 	| "lint/nursery/noBannedTypes"
 	| "lint/nursery/noConstEnum"
 	| "lint/nursery/noConstructorReturn"
