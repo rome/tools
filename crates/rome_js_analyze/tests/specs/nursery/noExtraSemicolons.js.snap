@@ -143,7 +143,6 @@ class C {
         // code
     }
 }
-
 ```
 
 # Diagnostics
@@ -161,7 +160,7 @@ noExtraSemicolons.js:6:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━�
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    6 │ };␍
+    6 │ };
       │  -
 
 ```
@@ -180,7 +179,7 @@ noExtraSemicolons.js:8:13 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━�
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    8 │ while(true);;␍
+    8 │ while(true);;
       │             -
 
 ```
@@ -199,7 +198,7 @@ noExtraSemicolons.js:10:15 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    10 │ while(true)·{};␍
+    10 │ while(true)·{};
        │               -
 
 ```
@@ -218,7 +217,7 @@ noExtraSemicolons.js:14:17 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    14 │ ··str·=·str·+·i;;␍
+    14 │ ··str·=·str·+·i;;
        │                 -
 
 ```
@@ -237,7 +236,7 @@ noExtraSemicolons.js:15:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━�
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    15 │ };␍
+    15 │ };
        │  -
 
 ```
@@ -256,7 +255,7 @@ noExtraSemicolons.js:23:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━�
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    23 │ };␍
+    23 │ };
        │  -
 
 ```
@@ -275,7 +274,7 @@ noExtraSemicolons.js:25:18 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    25 │ function·baz()·{·;·}␍
+    25 │ function·baz()·{·;·}
        │                  -- 
 
 ```
@@ -293,7 +292,7 @@ noExtraSemicolons.js:28:16 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    28 │ ··const·x·=·10;;␍
+    28 │ ··const·x·=·10;;
        │                -
 
 ```
@@ -312,7 +311,7 @@ noExtraSemicolons.js:31:13 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    31 │ for(;true;);;␍
+    31 │ for(;true;);;
        │             -
 
 ```
@@ -331,7 +330,7 @@ noExtraSemicolons.js:33:61 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    33 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);;␍
+    33 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);;
        │                                                             -
 
 ```
@@ -350,7 +349,7 @@ noExtraSemicolons.js:35:13 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    35 │ const·x·=·5;;␍
+    35 │ const·x·=·5;;
        │             -
 
 ```
@@ -369,7 +368,7 @@ noExtraSemicolons.js:39:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━�
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    39 │ };␍
+    39 │ };
        │  -
 
 ```
@@ -387,7 +386,7 @@ noExtraSemicolons.js:42:11 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    42 │ ····field;;␍
+    42 │ ····field;;
        │           -
 
 ```
@@ -406,7 +405,7 @@ noExtraSemicolons.js:58:6 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━�
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    58 │ ····};␍
+    58 │ ····};
        │      -
 
 ```
@@ -425,7 +424,7 @@ noExtraSemicolons.js:74:6 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━�
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    74 │ ····};␍
+    74 │ ····};
        │      -
 
 ```
@@ -444,7 +443,7 @@ noExtraSemicolons.js:87:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━�
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    87 │ };␍
+    87 │ };
        │  -
 
 ```
@@ -463,7 +462,7 @@ noExtraSemicolons.js:94:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━�
   
   i Suggested fix: Remove unnecessary semicolon.
   
-    94 │ };␍
+    94 │ };
        │  -
 
 ```
