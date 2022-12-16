@@ -2,8 +2,13 @@ use std::{iter::Peekable, str::Chars};
 
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{JsNewExpression, JsRegexLiteralExpression};
-use rome_rowan::{declare_node_union, AstNode};
+use rome_js_syntax::{
+    JsCallExpression, JsIdentifierExpression, JsNewExpression, JsRegexLiteralExpression,
+    JsStringLiteralExpression,
+};
+use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
+
+use crate::utils::escape_string;
 
 declare_rule! {
  /// Prevents from having control characters and some escape sequences that match control characters in regular expressions.
@@ -38,7 +43,7 @@ declare_rule! {
 }
 
 declare_node_union! {
-  pub(crate) PossibleRegexExpression = JsNewExpression | JsRegexLiteralExpression
+  pub(crate) PossibleRegexExpression = JsNewExpression | JsCallExpression |JsRegexLiteralExpression
 }
 fn get_code_point_from_hex_character(it: &mut Peekable<Chars>) -> Option<(String, i64)> {
     let mut digits = Vec::new();
@@ -89,8 +94,9 @@ fn get_code_point_from_code_point_character(it: &mut Peekable<Chars>) -> Option<
 
     None
 }
-fn collect_control_characters(pattern: String, flags: String) -> Option<Vec<String>> {
+fn collect_control_characters(pattern: String, flags: Option<String>) -> Option<Vec<String>> {
     let mut control_characters: Vec<String> = Vec::new();
+    let is_unicode = flags.unwrap_or_default().contains("u");
 
     let mut it = pattern.chars().peekable();
 
@@ -122,7 +128,7 @@ fn collect_control_characters(pattern: String, flags: String) -> Option<Vec<Stri
                         }
                         'u' => {
                             it.next();
-                            if flags.contains('u') {
+                            if is_unicode {
                                 check_control_character(
                                     "\\u",
                                     &mut it,
@@ -165,9 +171,46 @@ impl Rule for NoControlCharactersInRegex {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        let ele = JsRegexLiteralExpression::cast(node.syntax().clone()).unwrap();
-        let pattern = ele.pattern().unwrap();
-        collect_control_characters(pattern, ele.flags().unwrap())
+        match node {
+            PossibleRegexExpression::JsNewExpression(js_new_expression) => {
+                if let Some(js_identifier) =
+                    JsIdentifierExpression::cast_ref(js_new_expression.callee().ok()?.syntax())
+                {
+                    if js_identifier.name().ok()?.has_name("RegExp") {
+                        let mut args = js_new_expression.arguments()?.args().iter();
+
+                        let pattern = escape_string(
+                            args.next()
+                                .and_then(|arg| arg.ok())
+                                .and_then(|arg| JsStringLiteralExpression::cast_ref(arg.syntax()))
+                                .and_then(|js_string_literal| {
+                                    js_string_literal.inner_string_text().ok()
+                                })?
+                                .to_string()
+                                .as_str(),
+                        )
+                        .ok()?;
+
+                        let flags = args
+                            .next()
+                            .and_then(|arg| arg.ok())
+                            .and_then(|arg| JsStringLiteralExpression::cast_ref(arg.syntax()))
+                            .and_then(|js_string_literal| Some(js_string_literal.text()));
+
+                        return collect_control_characters(pattern, flags);
+                    }
+                }
+            }
+            PossibleRegexExpression::JsCallExpression(_) => !todo!(),
+            PossibleRegexExpression::JsRegexLiteralExpression(js_regex_literal_expression) => {
+                return collect_control_characters(
+                    js_regex_literal_expression.pattern().ok()?,
+                    js_regex_literal_expression.flags().ok(),
+                )
+            }
+        }
+
+        None
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {

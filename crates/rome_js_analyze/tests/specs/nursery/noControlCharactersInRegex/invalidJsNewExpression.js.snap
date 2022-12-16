@@ -1,0 +1,133 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 92
+expression: invalidJsNewExpression.js
+---
+# Input
+```js
+var regex1 = new RegExp("\\x1f\\x1e");
+var regex2 = new RegExp("\\x1fFOO\\x00");
+var regex3 = new RegExp("FOO\\x1fFOO\\x1f");
+var regex4 = new RegExp("\\x1f");
+var regex5 = new RegExp("\\u001F", flags);
+var regex6 = new RegExp("\\u{1111}*\\x1F", "u");
+var regex7 = new RegExp("\\u{1F}", "u");
+var regex8 = new RegExp("\\u{1F}", "gui");
+```
+
+# Diagnostics
+```
+invalidJsNewExpression.js:1:14 lint/nursery/noControlCharactersInRegex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected control character(s) in regular expression: \x1f, \x1e
+  
+  > 1 │ var regex1 = new RegExp("\\x1f\\x1e");
+      │              ^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ var regex2 = new RegExp("\\x1fFOO\\x00");
+    3 │ var regex3 = new RegExp("FOO\\x1fFOO\\x1f");
+  
+
+```
+
+```
+invalidJsNewExpression.js:2:14 lint/nursery/noControlCharactersInRegex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected control character(s) in regular expression: \x1f, \x00
+  
+    1 │ var regex1 = new RegExp("\\x1f\\x1e");
+  > 2 │ var regex2 = new RegExp("\\x1fFOO\\x00");
+      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ var regex3 = new RegExp("FOO\\x1fFOO\\x1f");
+    4 │ var regex4 = new RegExp("\\x1f");
+  
+
+```
+
+```
+invalidJsNewExpression.js:3:14 lint/nursery/noControlCharactersInRegex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected control character(s) in regular expression: \x1f, \x1f
+  
+    1 │ var regex1 = new RegExp("\\x1f\\x1e");
+    2 │ var regex2 = new RegExp("\\x1fFOO\\x00");
+  > 3 │ var regex3 = new RegExp("FOO\\x1fFOO\\x1f");
+      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ var regex4 = new RegExp("\\x1f");
+    5 │ var regex5 = new RegExp("\\u001F", flags);
+  
+
+```
+
+```
+invalidJsNewExpression.js:4:14 lint/nursery/noControlCharactersInRegex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected control character(s) in regular expression: \x1f
+  
+    2 │ var regex2 = new RegExp("\\x1fFOO\\x00");
+    3 │ var regex3 = new RegExp("FOO\\x1fFOO\\x1f");
+  > 4 │ var regex4 = new RegExp("\\x1f");
+      │              ^^^^^^^^^^^^^^^^^^^
+    5 │ var regex5 = new RegExp("\\u001F", flags);
+    6 │ var regex6 = new RegExp("\\u{1111}*\\x1F", "u");
+  
+
+```
+
+```
+invalidJsNewExpression.js:5:14 lint/nursery/noControlCharactersInRegex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected control character(s) in regular expression: \u001F
+  
+    3 │ var regex3 = new RegExp("FOO\\x1fFOO\\x1f");
+    4 │ var regex4 = new RegExp("\\x1f");
+  > 5 │ var regex5 = new RegExp("\\u001F", flags);
+      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │ var regex6 = new RegExp("\\u{1111}*\\x1F", "u");
+    7 │ var regex7 = new RegExp("\\u{1F}", "u");
+  
+
+```
+
+```
+invalidJsNewExpression.js:6:14 lint/nursery/noControlCharactersInRegex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected control character(s) in regular expression: \x1F
+  
+    4 │ var regex4 = new RegExp("\\x1f");
+    5 │ var regex5 = new RegExp("\\u001F", flags);
+  > 6 │ var regex6 = new RegExp("\\u{1111}*\\x1F", "u");
+      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    7 │ var regex7 = new RegExp("\\u{1F}", "u");
+    8 │ var regex8 = new RegExp("\\u{1F}", "gui");
+  
+
+```
+
+```
+invalidJsNewExpression.js:7:14 lint/nursery/noControlCharactersInRegex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected control character(s) in regular expression: \u{1F}
+  
+    5 │ var regex5 = new RegExp("\\u001F", flags);
+    6 │ var regex6 = new RegExp("\\u{1111}*\\x1F", "u");
+  > 7 │ var regex7 = new RegExp("\\u{1F}", "u");
+      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ var regex8 = new RegExp("\\u{1F}", "gui");
+  
+
+```
+
+```
+invalidJsNewExpression.js:8:14 lint/nursery/noControlCharactersInRegex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected control character(s) in regular expression: \u{1F}
+  
+    6 │ var regex6 = new RegExp("\\u{1111}*\\x1F", "u");
+    7 │ var regex7 = new RegExp("\\u{1F}", "u");
+  > 8 │ var regex8 = new RegExp("\\u{1F}", "gui");
+      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+
+```
+
+
