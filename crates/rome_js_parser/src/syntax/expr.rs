@@ -939,6 +939,24 @@ fn parse_static_member_expression(
     lhs: CompletedMarker,
     operator: JsSyntaxKind,
 ) -> ParsedSyntax {
+    // test ts ts_instantiation_expression_property_access
+    // f<b>?.(c);
+    // f<b>?.[c];
+    // (f<b>).c;
+    // (f<b>)?.c;
+    // (f<b>)?.[c];
+    if lhs.kind(p) == TS_INSTANTIATION_EXPRESSION {
+        // test_err ts ts_instantiation_expression_property_access
+        // f<b>.c;
+        // f<b>?.c;
+        // a?.f<c>.d;
+        // f<a>.g<b>;
+        p.error(p.err_builder(
+            "An instantiation expression cannot be followed by a property access.",
+            lhs.range(p),
+        ).hint("You can either wrap the instantiation expression in parentheses, or delete the type arguments."));
+    }
+
     let m = lhs.precede(p);
     p.expect(operator);
 
