@@ -306,6 +306,10 @@ export interface Nursery {
 	 */
 	noConstructorReturn?: RuleConfiguration;
 	/**
+	 * Prevents from having control characters and some escape sequences that match control characters in regular expressions.
+	 */
+	noControlCharactersInRegex?: RuleConfiguration;
+	/**
 	 * Enforces that no distracting elements are used.
 	 */
 	noDistractingElements?: RuleConfiguration;
@@ -724,6 +728,7 @@ export type Category =
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useHookAtTopLevel"
+	| "lint/nursery/noControlCharactersInRegex"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

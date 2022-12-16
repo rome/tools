@@ -1,0 +1,40 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 92
+expression: invalidCallExpression.js
+---
+# Input
+```js
+var regex = RegExp("\\x1f");
+var regex2 = RegExp("\\u{1111}*\\x1F", "u");
+
+```
+
+# Diagnostics
+```
+invalidCallExpression.js:1:13 lint/nursery/noControlCharactersInRegex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected control character(s) in regular expression: \x1f
+  
+  > 1 │ var regex = RegExp("\\x1f");
+      │             ^^^^^^^^^^^^^^^
+    2 │ var regex2 = RegExp("\\u{1111}*\\x1F", "u");
+    3 │ 
+  
+
+```
+
+```
+invalidCallExpression.js:2:14 lint/nursery/noControlCharactersInRegex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected control character(s) in regular expression: \x1F
+  
+    1 │ var regex = RegExp("\\x1f");
+  > 2 │ var regex2 = RegExp("\\u{1111}*\\x1F", "u");
+      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ 
+  
+
+```
+
+

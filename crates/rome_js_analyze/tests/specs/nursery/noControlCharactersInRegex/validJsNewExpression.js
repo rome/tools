@@ -5,3 +5,7 @@ var regex3 = new RegExp("\\u{20}", "u");
 var regex4 = new RegExp("\\u{1F}");
 var regex5 = new RegExp("\\u{1F}", "g");
 var regex6 = new RegExp("\\u{1F}", uflags);
+var regex7 = /\t/;
+var regex8 = /\n/;
+var regex9 = new RegExp("\t");
+var regex10 = new RegExp("\n");

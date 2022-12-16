@@ -3,10 +3,10 @@ use std::{iter::Peekable, str::Chars};
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsCallExpression, JsIdentifierExpression, JsNewExpression, JsRegexLiteralExpression,
-    JsStringLiteralExpression,
+    JsCallArguments, JsCallExpression, JsIdentifierExpression, JsLanguage, JsNewExpression,
+    JsRegexLiteralExpression, JsStringLiteralExpression,
 };
-use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
+use rome_rowan::{declare_node_union, AstNode, AstSeparatedList, SyntaxNode};
 
 use crate::utils::escape_string;
 
@@ -45,6 +45,7 @@ declare_rule! {
 declare_node_union! {
   pub(crate) PossibleRegexExpression = JsNewExpression | JsCallExpression |JsRegexLiteralExpression
 }
+
 fn get_code_point_from_hex_character(it: &mut Peekable<Chars>) -> Option<(String, i64)> {
     let mut digits = Vec::new();
     for _ in 1..=2 {
@@ -162,6 +163,35 @@ fn collect_control_characters(pattern: String, flags: Option<String>) -> Option<
         None
     }
 }
+fn collect_control_characters_from_expression(
+    calee: &SyntaxNode<JsLanguage>,
+    js_call_arguments: &JsCallArguments,
+) -> Option<Vec<String>> {
+    if let Some(js_identifier) = JsIdentifierExpression::cast_ref(calee) {
+        if js_identifier.name().ok()?.has_name("RegExp") {
+            let mut args = js_call_arguments.args().iter();
+
+            let pattern = escape_string(
+                args.next()
+                    .and_then(|arg| arg.ok())
+                    .and_then(|arg| JsStringLiteralExpression::cast_ref(arg.syntax()))
+                    .and_then(|js_string_literal| js_string_literal.inner_string_text().ok())?
+                    .to_string()
+                    .as_str(),
+            )
+            .ok()?;
+
+            let flags = args
+                .next()
+                .and_then(|arg| arg.ok())
+                .and_then(|arg| JsStringLiteralExpression::cast_ref(arg.syntax()))
+                .and_then(|js_string_literal| Some(js_string_literal.text()));
+
+            return collect_control_characters(pattern, flags);
+        }
+    }
+    None
+}
 
 impl Rule for NoControlCharactersInRegex {
     type Query = Ast<PossibleRegexExpression>;
@@ -173,35 +203,17 @@ impl Rule for NoControlCharactersInRegex {
         let node = ctx.query();
         match node {
             PossibleRegexExpression::JsNewExpression(js_new_expression) => {
-                if let Some(js_identifier) =
-                    JsIdentifierExpression::cast_ref(js_new_expression.callee().ok()?.syntax())
-                {
-                    if js_identifier.name().ok()?.has_name("RegExp") {
-                        let mut args = js_new_expression.arguments()?.args().iter();
-
-                        let pattern = escape_string(
-                            args.next()
-                                .and_then(|arg| arg.ok())
-                                .and_then(|arg| JsStringLiteralExpression::cast_ref(arg.syntax()))
-                                .and_then(|js_string_literal| {
-                                    js_string_literal.inner_string_text().ok()
-                                })?
-                                .to_string()
-                                .as_str(),
-                        )
-                        .ok()?;
-
-                        let flags = args
-                            .next()
-                            .and_then(|arg| arg.ok())
-                            .and_then(|arg| JsStringLiteralExpression::cast_ref(arg.syntax()))
-                            .and_then(|js_string_literal| Some(js_string_literal.text()));
-
-                        return collect_control_characters(pattern, flags);
-                    }
-                }
+                return collect_control_characters_from_expression(
+                    js_new_expression.callee().ok()?.syntax(),
+                    &js_new_expression.arguments()?,
+                );
             }
-            PossibleRegexExpression::JsCallExpression(_) => !todo!(),
+            PossibleRegexExpression::JsCallExpression(js_call_expression) => {
+                return collect_control_characters_from_expression(
+                    js_call_expression.callee().ok()?.syntax(),
+                    &js_call_expression.arguments().ok()?,
+                );
+            }
             PossibleRegexExpression::JsRegexLiteralExpression(js_regex_literal_expression) => {
                 return collect_control_characters(
                     js_regex_literal_expression.pattern().ok()?,
@@ -209,8 +221,6 @@ impl Rule for NoControlCharactersInRegex {
                 )
             }
         }
-
-        None
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
