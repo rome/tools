@@ -298,6 +298,10 @@ export interface Nursery {
 	 */
 	noBannedTypes?: RuleConfiguration;
 	/**
+	 * Disallow reassigning class members.
+	 */
+	noClassAssign?: RuleConfiguration;
+	/**
 	 * Disallow comma operator.
 	 */
 	noCommaOperator?: RuleConfiguration;
@@ -711,6 +715,7 @@ export type Category =
 	| "lint/nursery/noWith"
 	| "lint/nursery/noExtraSemicolons"
 	| "lint/nursery/noBannedTypes"
+	| "lint/nursery/noClassAssign"
 	| "lint/nursery/noCommaOperator"
 	| "lint/nursery/noConstEnum"
 	| "lint/nursery/noConstructorReturn"
