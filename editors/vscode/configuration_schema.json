@@ -775,6 +775,17 @@
             }
           ]
         },
+        "noSelfCompare": {
+          "description": "Disallow comparisons where both sides are exactly the same.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noSetterReturn": {
           "description": "Disallow returning a value from a setter",
           "anyOf": [

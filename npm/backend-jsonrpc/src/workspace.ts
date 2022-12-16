@@ -358,6 +358,10 @@ export interface Nursery {
 	 */
 	noRestrictedGlobals?: RuleConfiguration;
 	/**
+	 * Disallow comparisons where both sides are exactly the same.
+	 */
+	noSelfCompare?: RuleConfiguration;
+	/**
 	 * Disallow returning a value from a setter
 	 */
 	noSetterReturn?: RuleConfiguration;
@@ -707,6 +711,7 @@ export type Category =
 	| "lint/nursery/noWith"
 	| "lint/nursery/noExtraSemicolons"
 	| "lint/nursery/noBannedTypes"
+	| "lint/nursery/noCommaOperator"
 	| "lint/nursery/noConstEnum"
 	| "lint/nursery/noConstructorReturn"
 	| "lint/nursery/noDistractingElements"
@@ -720,7 +725,7 @@ export type Category =
 	| "lint/nursery/noRedundantAlt"
 	| "lint/nursery/noRedundantUseStrict"
 	| "lint/nursery/noRestrictedGlobals"
-	| "lint/nursery/noCommaOperator"
+	| "lint/nursery/noSelfCompare"
 	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnsafeFinally"
