@@ -6,8 +6,9 @@ use rome_rowan::{Language, TextRange};
 use std::{any::Any, cmp::Ordering, collections::BinaryHeap};
 
 /// The [QueryMatcher] trait is responsible of running lint rules on
-/// [QueryMatch] instances emitted by the various [Visitor](crate::Visitor)
-/// and push signals wrapped in [SignalEntry] to the signal queue
+/// [QueryMatch](crate::QueryMatch) instances emitted by the various
+/// [Visitor](crate::Visitor) and push signals wrapped in [SignalEntry]
+/// to the signal queue
 pub trait QueryMatcher<L: Language> {
     /// Execute a single query match
     fn match_query(&mut self, params: MatchQueryParams<L>);
