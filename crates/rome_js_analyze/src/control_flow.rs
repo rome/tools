@@ -32,7 +32,7 @@ impl Queryable for ControlFlowGraph {
     type Services = ();
 
     fn build_visitor(analyzer: &mut impl AddVisitor<JsLanguage>, _: &AnyJsRoot) {
-        analyzer.add_visitor(Phases::Syntax, make_visitor());
+        analyzer.add_visitor(Phases::Syntax, make_visitor);
     }
 
     fn unwrap_match(_: &ServiceBag, query: &ControlFlowGraph) -> Self::Output {

@@ -30,8 +30,9 @@ pub trait Queryable: Sized {
 }
 
 pub trait AddVisitor<L: Language> {
-    fn add_visitor<V>(&mut self, phase: Phases, visitor: V)
+    fn add_visitor<F, V>(&mut self, phase: Phases, visitor: F)
     where
+        F: FnOnce() -> V,
         V: Visitor<Language = L> + 'static;
 }
 

@@ -62,7 +62,7 @@ where
     type Services = AriaServices;
 
     fn build_visitor(analyzer: &mut impl AddVisitor<JsLanguage>, _: &AnyJsRoot) {
-        analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default());
+        analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default);
     }
 
     fn key() -> QueryKey<Self::Language> {

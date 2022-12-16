@@ -23,7 +23,7 @@ where
         analyzer: &mut impl AddVisitor<Self::Language>,
         _: &<Self::Language as Language>::Root,
     ) {
-        analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default());
+        analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default);
     }
 
     fn key() -> QueryKey<Self::Language> {

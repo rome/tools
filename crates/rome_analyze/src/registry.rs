@@ -1,4 +1,8 @@
-use std::{any::TypeId, borrow, collections::BTreeSet};
+use std::{
+    any::TypeId,
+    borrow,
+    collections::{BTreeMap, BTreeSet},
+};
 
 use crate::{
     context::{RuleContext, ServiceBagRuleOptionsWrapper},
@@ -116,7 +120,7 @@ impl<L: Language + Default> RuleRegistry<L> {
             registry: RuleRegistry {
                 phase_rules: Default::default(),
             },
-            visitors: FxHashMap::default(),
+            visitors: BTreeMap::default(),
             services: ServiceBag::default(),
             diagnostics: Vec::new(),
         }
@@ -143,7 +147,7 @@ pub struct RuleRegistryBuilder<'a, L: Language> {
     // Rule Registry
     registry: RuleRegistry<L>,
     // Analyzer Visitors
-    visitors: FxHashMap<(Phases, TypeId), Box<dyn Visitor<Language = L>>>,
+    visitors: BTreeMap<(Phases, TypeId), Box<dyn Visitor<Language = L>>>,
     // Service Bag
     services: ServiceBag,
     diagnostics: Vec<OptionsDeserializationDiagnostic>,
@@ -244,12 +248,14 @@ impl<L: Language + Default + 'static> RegistryVisitor<L> for RuleRegistryBuilder
     }
 }
 
-impl<L: Language> AddVisitor<L> for FxHashMap<(Phases, TypeId), Box<dyn Visitor<Language = L>>> {
-    fn add_visitor<V>(&mut self, phase: Phases, visitor: V)
+impl<L: Language> AddVisitor<L> for BTreeMap<(Phases, TypeId), Box<dyn Visitor<Language = L>>> {
+    fn add_visitor<F, V>(&mut self, phase: Phases, visitor: F)
     where
+        F: FnOnce() -> V,
         V: Visitor<Language = L> + 'static,
     {
-        self.insert((phase, TypeId::of::<V>()), Box::new(visitor));
+        self.entry((phase, TypeId::of::<V>()))
+            .or_insert_with(move || Box::new((visitor)()));
     }
 }
 
@@ -257,7 +263,7 @@ type BuilderResult<L> = (
     RuleRegistry<L>,
     ServiceBag,
     Vec<OptionsDeserializationDiagnostic>,
-    FxHashMap<(Phases, TypeId), Box<dyn Visitor<Language = L>>>,
+    BTreeMap<(Phases, TypeId), Box<dyn Visitor<Language = L>>>,
 );
 
 impl<L: Language> RuleRegistryBuilder<'_, L> {

@@ -46,8 +46,8 @@ impl Queryable for SemanticServices {
     type Services = Self;
 
     fn build_visitor(analyzer: &mut impl AddVisitor<JsLanguage>, root: &AnyJsRoot) {
-        analyzer.add_visitor(Phases::Syntax, SemanticModelBuilderVisitor::new(root));
-        analyzer.add_visitor(Phases::Semantic, SemanticModelVisitor);
+        analyzer.add_visitor(Phases::Syntax, || SemanticModelBuilderVisitor::new(root));
+        analyzer.add_visitor(Phases::Semantic, || SemanticModelVisitor);
     }
 
     fn unwrap_match(services: &ServiceBag, _: &SemanticModelEvent) -> Self::Output {
@@ -73,8 +73,8 @@ where
     type Services = SemanticServices;
 
     fn build_visitor(analyzer: &mut impl AddVisitor<JsLanguage>, root: &AnyJsRoot) {
-        analyzer.add_visitor(Phases::Syntax, SemanticModelBuilderVisitor::new(root));
-        analyzer.add_visitor(Phases::Semantic, SyntaxVisitor::default());
+        analyzer.add_visitor(Phases::Syntax, || SemanticModelBuilderVisitor::new(root));
+        analyzer.add_visitor(Phases::Semantic, SyntaxVisitor::default);
     }
 
     fn key() -> QueryKey<Self::Language> {
