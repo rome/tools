@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-expression: noExtraSemicolonsInvalid.js
+expression: noExtraSemicolons.js
 ---
 # Input
 ```js
@@ -92,11 +92,63 @@ class C {
     }
 };
 
+// valid
+
+const x = 10;
+if (x > 5) {
+  x = 5;
+};
+
+while(true);
+
+while(true) {}
+
+loop1:
+for (let i = 0; i < 5; i++) {
+  str = str + i;
+}
+
+loop1:
+for (let i = 0; i < 5; i++) {
+  if (i === 1) {
+    continue loop1;
+  }
+  str = str + i;
+}
+
+function baz() {}
+
+function buzz() {
+  const x = 10;
+}
+
+for(;true;);
+
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+const x = 5;
+
+const foo = function() {
+    // code
+};
+
+class C {
+    field;
+
+    method() {
+        // code
+    }
+
+    static {
+        // code
+    }
+}
+
 ```
 
 # Diagnostics
 ```
-noExtraSemicolonsInvalid.js:6:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noExtraSemicolons.js:6:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
@@ -115,7 +167,7 @@ noExtraSemicolonsInvalid.js:6:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━�
 ```
 
 ```
-noExtraSemicolonsInvalid.js:8:13 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+noExtraSemicolons.js:8:13 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
@@ -134,7 +186,7 @@ noExtraSemicolonsInvalid.js:8:13 lint/nursery/noExtraSemicolons  FIXABLE  ━━
 ```
 
 ```
-noExtraSemicolonsInvalid.js:10:15 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+noExtraSemicolons.js:10:15 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
@@ -153,7 +205,7 @@ noExtraSemicolonsInvalid.js:10:15 lint/nursery/noExtraSemicolons  FIXABLE  ━�
 ```
 
 ```
-noExtraSemicolonsInvalid.js:14:17 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+noExtraSemicolons.js:14:17 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
@@ -172,7 +224,7 @@ noExtraSemicolonsInvalid.js:14:17 lint/nursery/noExtraSemicolons  FIXABLE  ━�
 ```
 
 ```
-noExtraSemicolonsInvalid.js:15:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+noExtraSemicolons.js:15:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
@@ -191,7 +243,7 @@ noExtraSemicolonsInvalid.js:15:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━
 ```
 
 ```
-noExtraSemicolonsInvalid.js:23:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+noExtraSemicolons.js:23:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
@@ -210,7 +262,7 @@ noExtraSemicolonsInvalid.js:23:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━
 ```
 
 ```
-noExtraSemicolonsInvalid.js:25:18 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+noExtraSemicolons.js:25:18 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
@@ -229,7 +281,7 @@ noExtraSemicolonsInvalid.js:25:18 lint/nursery/noExtraSemicolons  FIXABLE  ━�
 ```
 
 ```
-noExtraSemicolonsInvalid.js:28:16 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+noExtraSemicolons.js:28:16 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
@@ -247,7 +299,7 @@ noExtraSemicolonsInvalid.js:28:16 lint/nursery/noExtraSemicolons  FIXABLE  ━�
 ```
 
 ```
-noExtraSemicolonsInvalid.js:31:13 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+noExtraSemicolons.js:31:13 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
@@ -266,7 +318,7 @@ noExtraSemicolonsInvalid.js:31:13 lint/nursery/noExtraSemicolons  FIXABLE  ━�
 ```
 
 ```
-noExtraSemicolonsInvalid.js:33:61 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+noExtraSemicolons.js:33:61 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
@@ -285,7 +337,7 @@ noExtraSemicolonsInvalid.js:33:61 lint/nursery/noExtraSemicolons  FIXABLE  ━�
 ```
 
 ```
-noExtraSemicolonsInvalid.js:35:13 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+noExtraSemicolons.js:35:13 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
@@ -304,7 +356,7 @@ noExtraSemicolonsInvalid.js:35:13 lint/nursery/noExtraSemicolons  FIXABLE  ━�
 ```
 
 ```
-noExtraSemicolonsInvalid.js:39:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+noExtraSemicolons.js:39:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
@@ -323,7 +375,7 @@ noExtraSemicolonsInvalid.js:39:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━
 ```
 
 ```
-noExtraSemicolonsInvalid.js:42:11 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━
+noExtraSemicolons.js:42:11 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
@@ -341,7 +393,7 @@ noExtraSemicolonsInvalid.js:42:11 lint/nursery/noExtraSemicolons  FIXABLE  ━�
 ```
 
 ```
-noExtraSemicolonsInvalid.js:58:6 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+noExtraSemicolons.js:58:6 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
@@ -360,7 +412,7 @@ noExtraSemicolonsInvalid.js:58:6 lint/nursery/noExtraSemicolons  FIXABLE  ━━
 ```
 
 ```
-noExtraSemicolonsInvalid.js:74:6 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+noExtraSemicolons.js:74:6 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
@@ -379,7 +431,7 @@ noExtraSemicolonsInvalid.js:74:6 lint/nursery/noExtraSemicolons  FIXABLE  ━━
 ```
 
 ```
-noExtraSemicolonsInvalid.js:87:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+noExtraSemicolons.js:87:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Unnecessary semicolon.
   
@@ -388,10 +440,30 @@ noExtraSemicolonsInvalid.js:87:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━
   > 87 │ };
        │  ^
     88 │ 
+    89 │ // valid
   
   i Suggested fix: Remove unnecessary semicolon.
   
     87 │ };␍
+       │  -
+
+```
+
+```
+noExtraSemicolons.js:94:2 lint/nursery/noExtraSemicolons  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unnecessary semicolon.
+  
+    92 │ if (x > 5) {
+    93 │   x = 5;
+  > 94 │ };
+       │  ^
+    95 │ 
+    96 │ while(true);
+  
+  i Suggested fix: Remove unnecessary semicolon.
+  
+    94 │ };␍
        │  -
 
 ```
