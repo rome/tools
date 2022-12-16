@@ -17,6 +17,10 @@ expression: valid.js
 }
 
 {
+  for(;true;);
+}
+
+{
   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
 }
 
