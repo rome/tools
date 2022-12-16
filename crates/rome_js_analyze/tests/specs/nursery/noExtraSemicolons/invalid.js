@@ -1,117 +1,87 @@
 // invalid
 
-{
-  const x = 10;
-  if (x > 5) {
-    x = 5;
-  };
+const x = 10;
+if (x > 5) {
+  x = 5;
+};
+
+while(true);;
+
+while(true) {};
+
+loop1:
+for (let i = 0; i < 5; i++) {
+  str = str + i;;
+};
+
+loop1:
+for (let i = 0; i < 5; i++) {
+  if (i === 1) {
+    continue loop1;
+  }
+  str = str + i;
+};
+
+function baz() { ; }
+
+function buzz() {
+  const x = 10;;
 }
 
-{
-  while(true);;
-}
+for(;true;);;
 
-{
-  while(true) {};
-}
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);;
 
-{
-  loop1:
-  for (let i = 0; i < 5; i++) {
-    str = str + i;;
-  };
-}
+const x = 5;;
 
-{
-  loop1:
-  for (let i = 0; i < 5; i++) {
-    if (i === 1) {
-      continue loop1;
+function foo() {
+    // code
+};
+
+class C {
+    field;;
+
+    method() {
+        // code
     }
-    str = str + i;
-  };
+
+    static {
+        // code
+    }
 }
 
-{
-  function baz() { ; }
+class C {
+    field;
+
+    method() {
+        // code
+    };
+
+    static {
+        // code
+    }
 }
 
-{
-  function buzz() {
-    const x = 10;;
-  }
+class C {
+    field;
+
+    method() {
+        // code
+    }
+
+    static {
+        // code
+    };
 }
 
-{
-  for(;true;);;
-}
+class C {
+    field;
 
-{
-  for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);;
-}
+    method() {
+        // code
+    }
 
-{
-  const x = 5;;
-}
-
-{
-  function foo() {
-      // code
-  };
-}
-
-{
-  class C {
-      field;;
-  
-      method() {
-          // code
-      }
-  
-      static {
-          // code
-      }
-  }
-}
-
-{
-  class C {
-      field;
-  
-      method() {
-          // code
-      };
-  
-      static {
-          // code
-      }
-  }
-}
-
-{
-  class C {
-      field;
-  
-      method() {
-          // code
-      }
-  
-      static {
-          // code
-      };
-  }
-}
-
-{
-  class C {
-      field;
-  
-      method() {
-          // code
-      }
-  
-      static {
-          // code
-      }
-  };
-}
+    static {
+        // code
+    }
+};
