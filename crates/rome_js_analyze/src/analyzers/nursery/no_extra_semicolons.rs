@@ -112,7 +112,7 @@ impl Rule for NoExtraSemicolons {
         match node {
             AnyJsExtraSemicolon::JsEmptyStatement(stmt) => {
                 let parent = stmt.syntax().parent()?;
-                if !parent.kind().is_list() {
+                if parent.kind().is_list() {
                     Some(AnyJsExtraSemicolon::JsEmptyStatement(
                         stmt.clone(),
                     ))
