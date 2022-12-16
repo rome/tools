@@ -326,6 +326,10 @@ export interface Nursery {
 	 */
 	noExtraNonNullAssertion?: RuleConfiguration;
 	/**
+	 * Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. While not technically an error, extra semicolons can cause confusion when reading code.
+	 */
+	noExtraSemicolons?: RuleConfiguration;
+	/**
 	 * Check that the scope attribute is only used on th elements.
 	 */
 	noHeaderScope?: RuleConfiguration;
@@ -381,10 +385,6 @@ export interface Nursery {
 	 * Disallow with statements in non-strict contexts.
 	 */
 	noWith?: RuleConfiguration;
-	/**
-	 * Disallow unnecessary semicolons.
-	 */
-	noExtraSemicolons?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
