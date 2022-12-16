@@ -175,15 +175,15 @@ fn convert_to_array_type(
                         make::token(T!['[']),
                         make::token(T![']']),
                     );
-                    let readonly_token = JsSyntaxToken::new_detached(
-                        JsSyntaxKind::TS_READONLY_MODIFIER,
-                        "readonly ",
-                        [],
-                        [TriviaPiece::new(TriviaPieceKind::Whitespace, 1)],
-                    );
                     match array_kind {
                         TsArrayKind::Simple => AnyTsType::TsArrayType(array_type),
                         TsArrayKind::Readonly => {
+                            let readonly_token = JsSyntaxToken::new_detached(
+                                JsSyntaxKind::TS_READONLY_MODIFIER,
+                                "readonly ",
+                                [],
+                                [TriviaPiece::new(TriviaPieceKind::Whitespace, 1)],
+                            );
                             AnyTsType::TsTypeOperatorType(make::ts_type_operator_type(
                                 readonly_token,
                                 AnyTsType::TsArrayType(array_type),
