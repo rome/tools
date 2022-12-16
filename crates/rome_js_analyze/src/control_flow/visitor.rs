@@ -1,12 +1,14 @@
 use std::any::TypeId;
 
-use rome_analyze::{merge_node_visitors, QueryMatch, Visitor, VisitorContext};
+use rome_analyze::{merge_node_visitors, Visitor, VisitorContext};
 use rome_js_syntax::{
     AnyJsFunction, JsConstructorClassMember, JsGetterClassMember, JsGetterObjectMember, JsLanguage,
     JsMethodClassMember, JsMethodObjectMember, JsModule, JsScript, JsSetterClassMember,
     JsSetterObjectMember,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxError, SyntaxResult};
+
+use crate::ControlFlowGraph;
 
 use super::{nodes::*, FunctionBuilder};
 
@@ -188,10 +190,10 @@ impl rome_analyze::NodeVisitor<ControlFlowVisitor> for FunctionVisitor {
         _: &mut ControlFlowVisitor,
     ) {
         if let Some(builder) = self.builder {
-            ctx.match_query(QueryMatch::ControlFlowGraph(
-                builder.finish(),
-                node.syntax().text_trimmed_range(),
-            ));
+            ctx.match_query(ControlFlowGraph {
+                graph: builder.finish(),
+                range: node.syntax().text_trimmed_range(),
+            });
         }
     }
 }

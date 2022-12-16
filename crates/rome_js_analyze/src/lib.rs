@@ -1,4 +1,3 @@
-pub use crate::registry::visit_registry;
 use crate::suppression_action::apply_suppression_comment;
 use rome_analyze::{
     AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal, ControlFlow,
@@ -27,6 +26,9 @@ mod semantic_services;
 mod suppression_action;
 mod syntax;
 pub mod utils;
+
+pub use crate::control_flow::ControlFlowGraph;
+pub use crate::registry::visit_registry;
 
 pub(crate) type JsRuleAction = RuleAction<JsLanguage>;
 

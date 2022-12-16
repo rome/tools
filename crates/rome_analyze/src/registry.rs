@@ -4,7 +4,7 @@ use crate::{
     context::{RuleContext, ServiceBagRuleOptionsWrapper},
     matcher::{GroupKey, MatchQueryParams},
     options::OptionsDeserializationDiagnostic,
-    query::{QueryKey, QueryMatch, Queryable},
+    query::{QueryKey, Queryable},
     signals::RuleSignal,
     AddVisitor, AnalysisFilter, AnalyzerOptions, DeserializableRuleOptions, GroupCategory,
     QueryMatcher, Rule, RuleGroup, RuleKey, RuleMetadata, ServiceBag, SignalEntry, Visitor,
@@ -126,13 +126,14 @@ impl<L: Language + Default> RuleRegistry<L> {
 /// Holds a collection of rules for each phase.
 #[derive(Default)]
 struct PhaseRules<L: Language> {
-    /// Holds a collection of rules for each [SyntaxKind] node type that has
-    /// lint rules associated with it
-    ast_rules: Vec<SyntaxKindRules<L>>,
-    control_flow: Vec<RegistryRule<L>>,
-    semantic_model: Vec<RegistryRule<L>>,
+    type_rules: FxHashMap<TypeId, TypeRules<L>>,
     /// Holds a list of states for all the rules in this phase
     rule_states: Vec<RuleState<L>>,
+}
+
+enum TypeRules<L: Language> {
+    SyntaxRules { rules: Vec<SyntaxKindRules<L>> },
+    TypeRules { rules: Vec<RegistryRule<L>> },
 }
 
 pub struct RuleRegistryBuilder<'a, L: Language> {
@@ -148,7 +149,7 @@ pub struct RuleRegistryBuilder<'a, L: Language> {
     diagnostics: Vec<OptionsDeserializationDiagnostic>,
 }
 
-impl<L: Language + Default> RegistryVisitor<L> for RuleRegistryBuilder<'_, L> {
+impl<L: Language + Default + 'static> RegistryVisitor<L> for RuleRegistryBuilder<'_, L> {
     fn record_category<C: GroupCategory<Language = L>>(&mut self) {
         if self.filter.match_category::<C>() {
             C::record_groups(self);
@@ -177,8 +178,14 @@ impl<L: Language + Default> RegistryVisitor<L> for RuleRegistryBuilder<'_, L> {
 
         let rule = RegistryRule::new::<R>(phase.rule_states.len());
 
-        match <R::Query as Queryable>::KEY {
+        match <R::Query as Queryable>::key() {
             QueryKey::Syntax(key) => {
+                let TypeRules::SyntaxRules { rules } = phase
+                    .type_rules
+                    .entry(TypeId::of::<SyntaxNode<L>>())
+                    .or_insert_with(|| TypeRules::SyntaxRules { rules: Vec::new() })
+                    else { unreachable!() };
+
                 // Iterate on all the SyntaxKind variants this node can match
                 for kind in key.iter() {
                     // Convert the numerical value of `kind` to an index in the
@@ -188,21 +195,24 @@ impl<L: Language + Default> RegistryVisitor<L> for RuleRegistryBuilder<'_, L> {
 
                     // Ensure the vector has enough capacity by inserting empty
                     // `SyntaxKindRules` as required
-                    if phase.ast_rules.len() <= index {
-                        phase.ast_rules.resize_with(index + 1, SyntaxKindRules::new);
+                    if rules.len() <= index {
+                        rules.resize_with(index + 1, SyntaxKindRules::new);
                     }
 
                     // Insert a handle to the rule `R` into the `SyntaxKindRules` entry
                     // corresponding to the SyntaxKind index
-                    let node = &mut phase.ast_rules[index];
+                    let node = &mut rules[index];
                     node.rules.push(rule);
                 }
             }
-            QueryKey::ControlFlowGraph => {
-                phase.control_flow.push(rule);
-            }
-            QueryKey::SemanticModel => {
-                phase.semantic_model.push(rule);
+            QueryKey::TypeId(key) => {
+                let TypeRules::TypeRules { rules } = phase
+                    .type_rules
+                    .entry(key)
+                    .or_insert_with(|| TypeRules::TypeRules { rules: Vec::new() })
+                    else { unreachable!() };
+
+                rules.push(rule);
             }
         }
 
@@ -261,25 +271,28 @@ impl<L: Language> RuleRegistryBuilder<'_, L> {
     }
 }
 
-impl<L: Language> QueryMatcher<L> for RuleRegistry<L> {
+impl<L: Language + 'static> QueryMatcher<L> for RuleRegistry<L> {
     fn match_query(&mut self, mut params: MatchQueryParams<L>) {
         let phase = &mut self.phase_rules[params.phase as usize];
 
-        let rules = match &params.query {
-            QueryMatch::Syntax(node) => {
+        let Some(rules) = phase.type_rules.get(&params.query.type_id()) else { return };
+
+        let rules = match rules {
+            TypeRules::SyntaxRules { rules } => {
+                let node = params.query.downcast_ref::<SyntaxNode<L>>().unwrap();
+
                 // Convert the numerical value of the SyntaxKind to an index in the
                 // `syntax` vector
                 let RawSyntaxKind(kind) = node.kind().to_raw();
                 let kind = usize::from(kind);
 
                 // Lookup the syntax entry corresponding to the SyntaxKind index
-                match phase.ast_rules.get_mut(kind) {
-                    Some(entry) => &mut entry.rules,
+                match rules.get(kind) {
+                    Some(entry) => &entry.rules,
                     None => return,
                 }
             }
-            QueryMatch::ControlFlowGraph(..) => &mut phase.control_flow,
-            QueryMatch::SemanticModel(..) => &mut phase.semantic_model,
+            TypeRules::TypeRules { rules } => rules,
         };
 
         // Run all the rules registered to this QueryMatch
@@ -397,7 +410,7 @@ impl<L: Language + Default> RegistryRule<L> {
             R::Query: 'static,
             <R::Query as Queryable>::Output: Clone,
         {
-            if let QueryMatch::Syntax(node) = &params.query {
+            if let Some(node) = params.query.downcast_ref::<SyntaxNode<RuleLanguage<R>>>() {
                 if state.suppressions.inner.contains(node) {
                     return Ok(());
                 }
@@ -405,16 +418,16 @@ impl<L: Language + Default> RegistryRule<L> {
 
             // SAFETY: The rule should never get executed in the first place
             // if the query doesn't match
-            let query_result =
-                <R::Query as Queryable>::unwrap_match(params.services, &params.query);
+            let query_result = params.query.downcast_ref().unwrap();
+            let query_result = <R::Query as Queryable>::unwrap_match(params.services, query_result);
+
             let ctx = match RuleContext::new(&query_result, params.root, params.services) {
                 Ok(ctx) => ctx,
                 Err(error) => return Err(error),
             };
 
             for result in R::run(&ctx) {
-                let text_range =
-                    R::text_range(&ctx, &result).unwrap_or_else(|| params.query.text_range());
+                let text_range = R::text_range(&ctx, &result).unwrap_or(params.text_range);
 
                 R::suppressed_nodes(&ctx, &result, &mut state.suppressions);
 

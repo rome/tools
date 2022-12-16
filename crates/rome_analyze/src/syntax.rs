@@ -1,6 +1,45 @@
-use rome_rowan::{Language, SyntaxNode, WalkEvent};
+use rome_rowan::{AstNode, Language, SyntaxNode, WalkEvent};
 
-use crate::{QueryMatch, Visitor, VisitorContext};
+use crate::{
+    registry::NodeLanguage, AddVisitor, Phases, QueryKey, QueryMatch, Queryable, ServiceBag,
+    Visitor, VisitorContext,
+};
+
+/// Query type usable by lint rules to match on specific [AstNode] types
+#[derive(Clone)]
+pub struct Ast<N>(pub N);
+
+impl<N> Queryable for Ast<N>
+where
+    N: AstNode + 'static,
+{
+    type Input = SyntaxNode<NodeLanguage<N>>;
+    type Output = N;
+
+    type Language = NodeLanguage<N>;
+    type Services = ();
+
+    fn build_visitor(
+        analyzer: &mut impl AddVisitor<Self::Language>,
+        _: &<Self::Language as Language>::Root,
+    ) {
+        analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default());
+    }
+
+    fn key() -> QueryKey<Self::Language> {
+        QueryKey::Syntax(N::KIND_SET)
+    }
+
+    fn unwrap_match(_: &ServiceBag, node: &Self::Input) -> Self::Output {
+        N::unwrap_cast(node.clone())
+    }
+}
+
+impl<L: Language + 'static> QueryMatch for SyntaxNode<L> {
+    fn text_range(&self) -> rome_rowan::TextRange {
+        self.text_trimmed_range()
+    }
+}
 
 /// The [SyntaxVisitor] is the simplest form of visitor implemented for the
 /// analyzer, it simply broadcast each [WalkEvent::Enter] as a query match
@@ -19,7 +58,7 @@ impl<L: Language> Default for SyntaxVisitor<L> {
     }
 }
 
-impl<L: Language> Visitor for SyntaxVisitor<L> {
+impl<L: Language + 'static> Visitor for SyntaxVisitor<L> {
     type Language = L;
 
     fn visit(&mut self, event: &WalkEvent<SyntaxNode<Self::Language>>, mut ctx: VisitorContext<L>) {
@@ -47,7 +86,7 @@ impl<L: Language> Visitor for SyntaxVisitor<L> {
             }
         }
 
-        ctx.match_query(QueryMatch::Syntax(node.clone()));
+        ctx.match_query(node.clone());
     }
 }
 
@@ -59,12 +98,12 @@ mod tests {
     use rome_diagnostics::location::FileId;
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
-        AstNode,
+        AstNode, SyntaxNode,
     };
 
     use crate::{
         matcher::MatchQueryParams, registry::Phases, Analyzer, AnalyzerContext, AnalyzerOptions,
-        AnalyzerSignal, ControlFlow, MetadataRegistry, Never, QueryMatch, QueryMatcher, ServiceBag,
+        AnalyzerSignal, ControlFlow, MetadataRegistry, Never, QueryMatcher, ServiceBag,
         SyntaxVisitor,
     };
 
@@ -75,12 +114,13 @@ mod tests {
 
     impl<'a> QueryMatcher<RawLanguage> for &'a mut BufferMatcher {
         fn match_query(&mut self, params: MatchQueryParams<RawLanguage>) {
-            match params.query {
-                QueryMatch::Syntax(node) => {
-                    self.nodes.push(node.kind());
-                }
-                _ => unreachable!(),
-            }
+            self.nodes.push(
+                params
+                    .query
+                    .downcast::<SyntaxNode<RawLanguage>>()
+                    .unwrap()
+                    .kind(),
+            );
         }
     }
 

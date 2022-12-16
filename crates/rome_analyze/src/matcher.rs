@@ -1,10 +1,9 @@
 use crate::{
-    AnalyzerSignal, Phases, QueryMatch, Rule, RuleFilter, RuleGroup, ServiceBag,
-    SuppressionCommentEmitter,
+    AnalyzerSignal, Phases, Rule, RuleFilter, RuleGroup, ServiceBag, SuppressionCommentEmitter,
 };
 use rome_diagnostics::FileId;
 use rome_rowan::{Language, TextRange};
-use std::{cmp::Ordering, collections::BinaryHeap};
+use std::{any::Any, cmp::Ordering, collections::BinaryHeap};
 
 /// The [QueryMatcher] trait is responsible of running lint rules on
 /// [QueryMatch] instances emitted by the various [Visitor](crate::Visitor)
@@ -19,7 +18,8 @@ pub struct MatchQueryParams<'phase, 'query, L: Language> {
     pub phase: Phases,
     pub file_id: FileId,
     pub root: &'phase L::Root,
-    pub query: QueryMatch<L>,
+    pub text_range: TextRange,
+    pub query: Box<dyn Any>,
     pub services: &'phase ServiceBag,
     pub signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
     pub apply_suppression_comment: SuppressionCommentEmitter<L>,
@@ -158,14 +158,14 @@ mod tests {
     use rome_diagnostics::{Diagnostic, Severity};
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
-        AstNode, TextRange, TextSize, TriviaPiece, TriviaPieceKind,
+        AstNode, SyntaxNode, TextRange, TextSize, TriviaPiece, TriviaPieceKind,
     };
 
     use crate::SuppressionKind;
     use crate::{
         signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal,
-        ControlFlow, MetadataRegistry, Never, Phases, QueryMatch, QueryMatcher, RuleKey,
-        ServiceBag, SignalEntry, SyntaxVisitor,
+        ControlFlow, MetadataRegistry, Never, Phases, QueryMatcher, RuleKey, ServiceBag,
+        SignalEntry, SyntaxVisitor,
     };
 
     use super::MatchQueryParams;
@@ -184,10 +184,7 @@ mod tests {
     impl QueryMatcher<RawLanguage> for SuppressionMatcher {
         /// Emits a warning diagnostic for all literal expressions
         fn match_query(&mut self, params: MatchQueryParams<RawLanguage>) {
-            let node = match params.query {
-                QueryMatch::Syntax(node) => node,
-                _ => unreachable!(),
-            };
+            let node = params.query.downcast::<SyntaxNode<RawLanguage>>().unwrap();
 
             if node.kind() != RawLanguageKind::LITERAL_EXPRESSION {
                 return;

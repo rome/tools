@@ -14,14 +14,16 @@ use crate::{
 };
 use indexmap::IndexSet;
 use rome_analyze::{
-    AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Never, QueryMatch,
-    RegistryVisitor, RuleCategories, RuleCategory, RuleFilter, RuleGroup,
+    AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Never, RegistryVisitor,
+    RuleCategories, RuleCategory, RuleFilter, RuleGroup,
 };
 use rome_diagnostics::{category, Applicability, Diagnostic, DiagnosticExt, Severity};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::utils::rename::{RenameError, RenameSymbolExtensions};
-use rome_js_analyze::{analyze, analyze_with_inspect_matcher, visit_registry, RuleError};
+use rome_js_analyze::{
+    analyze, analyze_with_inspect_matcher, visit_registry, ControlFlowGraph, RuleError,
+};
 use rome_js_formatter::context::{
     trailing_comma::TrailingComma, QuoteProperties, QuoteStyle, Semicolons,
 };
@@ -153,22 +155,22 @@ fn debug_control_flow(rome_path: &RomePath, parse: AnyParse, cursor: TextSize) -
         &parse.tree(),
         filter,
         |match_params| {
-            let (cfg, range) = match &match_params.query {
-                QueryMatch::ControlFlowGraph(cfg, node) => (cfg, node),
+            let cfg = match match_params.query.downcast_ref::<ControlFlowGraph>() {
+                Some(cfg) => cfg,
                 _ => return,
             };
 
-            if !range.contains(cursor) {
+            if !cfg.range.contains(cursor) {
                 return;
             }
 
             match &control_flow_graph {
                 None => {
-                    control_flow_graph = Some((cfg.to_string(), *range));
+                    control_flow_graph = Some((cfg.graph.to_string(), cfg.range));
                 }
                 Some((_, prev_range)) => {
-                    if range.len() < prev_range.len() {
-                        control_flow_graph = Some((cfg.to_string(), *range));
+                    if cfg.range.len() < prev_range.len() {
+                        control_flow_graph = Some((cfg.graph.to_string(), cfg.range));
                     }
                 }
             }

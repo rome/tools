@@ -28,7 +28,7 @@ pub use crate::diagnostics::AnalyzerDiagnostic;
 use crate::diagnostics::SuppressionDiagnostic;
 pub use crate::matcher::{InspectMatcher, MatchQueryParams, QueryMatcher, RuleKey, SignalEntry};
 pub use crate::options::{AnalyzerConfiguration, AnalyzerOptions, AnalyzerRules};
-pub use crate::query::{AddVisitor, Ast, QueryKey, QueryMatch, Queryable};
+pub use crate::query::{AddVisitor, QueryKey, QueryMatch, Queryable};
 pub use crate::registry::{
     LanguageRoot, MetadataRegistry, Phase, Phases, RegistryRuleMetadata, RegistryVisitor,
     RuleRegistry, RuleRegistryBuilder, RuleSuppressions,
@@ -40,7 +40,7 @@ pub use crate::rule::{
 pub use crate::services::{FromServices, MissingServicesDiagnostic, ServiceBag};
 use crate::signals::DiagnosticSignal;
 pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
-pub use crate::syntax::SyntaxVisitor;
+pub use crate::syntax::{Ast, SyntaxVisitor};
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
 pub use rule::DeserializableRuleOptions;
 

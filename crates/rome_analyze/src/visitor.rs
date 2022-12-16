@@ -22,12 +22,13 @@ pub struct VisitorContext<'phase, 'query, L: Language> {
 }
 
 impl<'phase, 'query, L: Language> VisitorContext<'phase, 'query, L> {
-    pub fn match_query(&mut self, query: QueryMatch<L>) {
+    pub fn match_query<T: QueryMatch>(&mut self, query: T) {
         self.query_matcher.match_query(MatchQueryParams {
             phase: self.phase,
             file_id: self.file_id,
             root: self.root,
-            query,
+            text_range: query.text_range(),
+            query: Box::new(query),
             services: self.services,
             signal_queue: self.signal_queue,
             apply_suppression_comment: self.apply_suppression_comment,
