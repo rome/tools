@@ -3,7 +3,7 @@ use rome_analyze::{
     RuleKey, ServiceBag,
 };
 use rome_aria::iso::{countries, is_valid_country, is_valid_language, languages};
-use rome_aria::{AriaIso, AriaProperties, AriaRoles};
+use rome_aria::{AriaProperties, AriaRoles};
 use rome_js_syntax::JsLanguage;
 use rome_rowan::AstNode;
 use std::sync::Arc;
@@ -51,13 +51,9 @@ impl FromServices for AriaServices {
         let properties: &Arc<AriaProperties> = services.get_service().ok_or_else(|| {
             MissingServicesDiagnostic::new(rule_key.rule_name(), &["AriaProperties"])
         })?;
-        let iso: &Arc<AriaIso> = services
-            .get_service()
-            .ok_or_else(|| MissingServicesDiagnostic::new(rule_key.rule_name(), &["AriaIso"]))?;
         Ok(Self {
             roles: roles.clone(),
             properties: properties.clone(),
-            iso: iso.clone(),
         })
     }
 }

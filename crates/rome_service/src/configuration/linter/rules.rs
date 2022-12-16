@@ -729,8 +729,6 @@ struct NurserySchema {
     no_assign_in_expressions: Option<RuleConfiguration>,
     #[doc = "Disallow certain types."]
     no_banned_types: Option<RuleConfiguration>,
-    #[doc = "Disallow reassigning class members."]
-    no_class_assign: Option<RuleConfiguration>,
     #[doc = "Disallow comma operator."]
     no_comma_operator: Option<RuleConfiguration>,
     #[doc = "Disallow TypeScript const enum"]
@@ -759,8 +757,6 @@ struct NurserySchema {
     no_redundant_use_strict: Option<RuleConfiguration>,
     #[doc = "This rule allows you to specify global variable names that you don’t want to use in your application."]
     no_restricted_globals: Option<RuleConfiguration>,
-    #[doc = "Disallow comparisons where both sides are exactly the same."]
-    no_self_compare: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a setter"]
     no_setter_return: Option<RuleConfiguration>,
     #[doc = "Disallow comparison of expressions modifying the string case with non-compliant value."]
@@ -797,14 +793,15 @@ struct NurserySchema {
     use_hook_at_top_level: Option<RuleConfiguration>,
     #[doc = "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals"]
     use_numeric_literals: Option<RuleConfiguration>,
+    #[doc = "Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country."]
+    use_valid_lang: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 37] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 36] = [
         "noAccessKey",
         "noAssignInExpressions",
         "noBannedTypes",
-        "noClassAssign",
         "noCommaOperator",
         "noConstEnum",
         "noConstructorReturn",
@@ -819,7 +816,6 @@ impl Nursery {
         "noRedundantAlt",
         "noRedundantUseStrict",
         "noRestrictedGlobals",
-        "noSelfCompare",
         "noSetterReturn",
         "noStringCaseMismatch",
         "noUnsafeFinally",
@@ -838,11 +834,11 @@ impl Nursery {
         "useExponentiationOperator",
         "useHookAtTopLevel",
         "useNumericLiterals",
+        "useValidLang",
     ];
-    const RECOMMENDED_RULES: [&'static str; 28] = [
+    const RECOMMENDED_RULES: [&'static str; 27] = [
         "noAssignInExpressions",
         "noBannedTypes",
-        "noClassAssign",
         "noCommaOperator",
         "noConstEnum",
         "noConstructorReturn",
@@ -853,7 +849,6 @@ impl Nursery {
         "noHeaderScope",
         "noInvalidConstructorSuper",
         "noRedundantAlt",
-        "noSelfCompare",
         "noSetterReturn",
         "noStringCaseMismatch",
         "noUnsafeFinally",
@@ -868,8 +863,9 @@ impl Nursery {
         "useEnumInitializers",
         "useExhaustiveDependencies",
         "useNumericLiterals",
+        "useValidLang",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 28] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 27] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[3]),
@@ -881,23 +877,22 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[9]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[10]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[11]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[12]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[15]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[14]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[17]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[18]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[19]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[20]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[21]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[22]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[23]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[24]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[25]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[27]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[28]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[29]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[30]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[31]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[32]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[33]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[36]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[34]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[35]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -924,7 +919,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 28] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 27] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }

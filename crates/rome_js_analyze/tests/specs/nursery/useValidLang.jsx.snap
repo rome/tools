@@ -7,6 +7,7 @@ expression: useValidLang.jsx
 // invalid
 let a = <html lang="lorem" />;
 let a = <html lang="en-babab" />;
+let a = <html lang="en-GB-something" />;
 
 // valid
 let a = <Html lang="en-babab" />;
@@ -26,7 +27,7 @@ useValidLang.jsx:2:20 lint/nursery/useValidLang ━━━━━━━━━━�
   > 2 │ let a = <html lang="lorem" />;
       │                    ^^^^^^^
     3 │ let a = <html lang="en-babab" />;
-    4 │ 
+    4 │ let a = <html lang="en-GB-something" />;
   
   i Some of valid languages:
   
@@ -58,8 +59,8 @@ useValidLang.jsx:3:20 lint/nursery/useValidLang ━━━━━━━━━━�
     2 │ let a = <html lang="lorem" />;
   > 3 │ let a = <html lang="en-babab" />;
       │                    ^^^^^^^^^^
-    4 │ 
-    5 │ // valid
+    4 │ let a = <html lang="en-GB-something" />;
+    5 │ 
   
   i Some of valid countries:
   
@@ -78,6 +79,21 @@ useValidLang.jsx:3:20 lint/nursery/useValidLang ━━━━━━━━━━�
   - AU
   - AT
   - AZ
+  
+
+```
+
+```
+useValidLang.jsx:4:20 lint/nursery/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid value for the lang attribute.
+  
+    2 │ let a = <html lang="lorem" />;
+    3 │ let a = <html lang="en-babab" />;
+  > 4 │ let a = <html lang="en-GB-something" />;
+      │                    ^^^^^^^^^^^^^^^^^
+    5 │ 
+    6 │ // valid
   
 
 ```

@@ -19,6 +19,10 @@ declare_rule! {
     /// <html lang="en-babab" />
     /// ```
     ///
+    /// ```jsx,expect_diagnostic
+    /// <html lang="en-GB-typo" />
+    /// ```
+    ///
     /// ### Valid
     ///
     /// ```jsx
@@ -31,14 +35,14 @@ declare_rule! {
     }
 }
 
-enum ErrorKind {
-    InvalidLanguage,
-    InvalidCountry,
-    InvalidValue,
+enum InvalidKind {
+    Language,
+    Country,
+    Value,
 }
 
 pub(crate) struct UseValidLangState {
-    error_kind: ErrorKind,
+    invalid_kind: InvalidKind,
     attribute_range: TextRange,
 }
 
@@ -58,35 +62,33 @@ impl Rule for UseValidLang {
             let mut split_value = attribute_text.text().split('-');
             match (split_value.next(), split_value.next()) {
                 (Some(language), Some(country)) => {
-                    if !ctx.is_valid_language(language) {
+                    if !ctx.is_valid_iso_language(language) {
                         return Some(UseValidLangState {
                             attribute_range: attribute_value.range(),
-                            error_kind: ErrorKind::InvalidLanguage,
+                            invalid_kind: InvalidKind::Language,
                         });
-                    } else if !ctx.is_valid_country(country) {
+                    } else if !ctx.is_valid_iso_country(country) {
                         return Some(UseValidLangState {
                             attribute_range: attribute_value.range(),
-                            error_kind: ErrorKind::InvalidCountry,
+                            invalid_kind: InvalidKind::Country,
+                        });
+                    } else if split_value.next().is_some() {
+                        return Some(UseValidLangState {
+                            attribute_range: attribute_value.range(),
+                            invalid_kind: InvalidKind::Value,
                         });
                     }
                 }
 
                 (Some(language), None) => {
-                    if !ctx.is_valid_language(language) {
+                    if !ctx.is_valid_iso_language(language) {
                         return Some(UseValidLangState {
                             attribute_range: attribute_value.range(),
-                            error_kind: ErrorKind::InvalidLanguage,
+                            invalid_kind: InvalidKind::Language,
                         });
                     }
                 }
-                _ => {
-                    if split_value.next().is_some() {
-                        return Some(UseValidLangState {
-                            attribute_range: attribute_value.range(),
-                            error_kind: ErrorKind::InvalidValue,
-                        });
-                    }
-                }
+                _ => {}
             }
         }
 
@@ -101,8 +103,8 @@ impl Rule for UseValidLang {
                 "Provide a valid value for the "<Emphasis>"lang"</Emphasis>" attribute."
             },
         );
-        diagnostic = match state.error_kind {
-            ErrorKind::InvalidLanguage => {
+        diagnostic = match state.invalid_kind {
+            InvalidKind::Language => {
                 let languages = ctx.iso_language_list();
                 let languages = if languages.len() > 15 {
                     &languages[..15]
@@ -112,7 +114,7 @@ impl Rule for UseValidLang {
 
                 diagnostic.footer_list("Some of valid languages:", languages)
             }
-            ErrorKind::InvalidCountry => {
+            InvalidKind::Country => {
                 let countries = ctx.iso_country_list();
                 let countries = if countries.len() > 15 {
                     &countries[..15]
@@ -122,8 +124,8 @@ impl Rule for UseValidLang {
 
                 diagnostic.footer_list("Some of valid countries:", countries)
             }
-            ErrorKind::InvalidValue => diagnostic,
-        };y
+            InvalidKind::Value => diagnostic,
+        };
         Some(diagnostic)
     }
 }
