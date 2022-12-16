@@ -1076,6 +1076,7 @@ impl<'src> Lexer<'src> {
             b"yield" => YIELD_KW,
             // contextual keywords
             b"abstract" => ABSTRACT_KW,
+            b"accessor" => ACCESSOR_KW,
             b"as" => AS_KW,
             b"asserts" => ASSERTS_KW,
             b"assert" => ASSERT_KW,

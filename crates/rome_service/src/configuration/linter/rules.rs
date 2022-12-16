@@ -184,7 +184,9 @@ impl Rules {
             None
         }
     }
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     #[doc = r" It returns a tuple of filters. The first element of the tuple are the enabled rules,"]
     #[doc = r" while the second element are the disabled rules."]
     #[doc = r""]
@@ -419,7 +421,9 @@ impl A11y {
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[7]),
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[8]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -439,7 +443,9 @@ impl A11y {
         }))
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::CATEGORY_RULES.contains(&rule_name) }
+    pub(crate) fn has_rule(rule_name: &str) -> bool {
+        Self::CATEGORY_RULES.contains(&rule_name)
+    }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -525,7 +531,9 @@ impl Complexity {
         RuleFilter::Rule("complexity", Self::CATEGORY_RULES[4]),
         RuleFilter::Rule("complexity", Self::CATEGORY_RULES[5]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -545,7 +553,9 @@ impl Complexity {
         }))
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::CATEGORY_RULES.contains(&rule_name) }
+    pub(crate) fn has_rule(rule_name: &str) -> bool {
+        Self::CATEGORY_RULES.contains(&rule_name)
+    }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -654,7 +664,9 @@ impl Correctness {
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[9]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[10]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -674,7 +686,9 @@ impl Correctness {
         }))
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::CATEGORY_RULES.contains(&rule_name) }
+    pub(crate) fn has_rule(rule_name: &str) -> bool {
+        Self::CATEGORY_RULES.contains(&rule_name)
+    }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -729,14 +743,16 @@ struct NurserySchema {
     no_assign_in_expressions: Option<RuleConfiguration>,
     #[doc = "Disallow certain types."]
     no_banned_types: Option<RuleConfiguration>,
+    #[doc = "Disallow reassigning class members."]
+    no_class_assign: Option<RuleConfiguration>,
+    #[doc = "Disallow comma operator."]
+    no_comma_operator: Option<RuleConfiguration>,
     #[doc = "Disallow TypeScript const enum"]
     no_const_enum: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a constructor."]
     no_constructor_return: Option<RuleConfiguration>,
     #[doc = "Enforces that no distracting elements are used."]
     no_distracting_elements: Option<RuleConfiguration>,
-    #[doc = "Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression."]
-    no_duplicate_case: Option<RuleConfiguration>,
     #[doc = "Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake."]
     no_duplicate_object_keys: Option<RuleConfiguration>,
     #[doc = "Disallow the declaration of empty interfaces."]
@@ -757,6 +773,8 @@ struct NurserySchema {
     no_redundant_use_strict: Option<RuleConfiguration>,
     #[doc = "This rule allows you to specify global variable names that you don’t want to use in your application."]
     no_restricted_globals: Option<RuleConfiguration>,
+    #[doc = "Disallow comparisons where both sides are exactly the same."]
+    no_self_compare: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a setter"]
     no_setter_return: Option<RuleConfiguration>,
     #[doc = "Disallow comparison of expressions modifying the string case with non-compliant value."]
@@ -769,6 +787,8 @@ struct NurserySchema {
     no_var: Option<RuleConfiguration>,
     #[doc = "Disallow returning a value from a function with the return type 'void'"]
     no_void_type_return: Option<RuleConfiguration>,
+    #[doc = "Disallow with statements in non-strict contexts."]
+    no_with: Option<RuleConfiguration>,
     #[doc = "Enforce that ARIA state and property values are valid."]
     use_aria_prop_types: Option<RuleConfiguration>,
     #[doc = "Enforce that elements with ARIA roles must have all required ARIA attributes for that role."]
@@ -794,14 +814,15 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 34] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 37] = [
         "noAccessKey",
         "noAssignInExpressions",
         "noBannedTypes",
+        "noClassAssign",
+        "noCommaOperator",
         "noConstEnum",
         "noConstructorReturn",
         "noDistractingElements",
-        "noDuplicateCase",
         "noDuplicateObjectKeys",
         "noEmptyInterface",
         "noExtraNonNullAssertion",
@@ -812,12 +833,14 @@ impl Nursery {
         "noRedundantAlt",
         "noRedundantUseStrict",
         "noRestrictedGlobals",
+        "noSelfCompare",
         "noSetterReturn",
         "noStringCaseMismatch",
         "noUnsafeFinally",
         "noUselessSwitchCase",
         "noVar",
         "noVoidTypeReturn",
+        "noWith",
         "useAriaPropTypes",
         "useAriaPropsForRole",
         "useCamelCase",
@@ -830,25 +853,28 @@ impl Nursery {
         "useHookAtTopLevel",
         "useNumericLiterals",
     ];
-    const RECOMMENDED_RULES: [&'static str; 25] = [
+    const RECOMMENDED_RULES: [&'static str; 28] = [
         "noAssignInExpressions",
         "noBannedTypes",
+        "noClassAssign",
+        "noCommaOperator",
         "noConstEnum",
         "noConstructorReturn",
         "noDistractingElements",
-        "noDuplicateCase",
         "noDuplicateObjectKeys",
         "noEmptyInterface",
         "noExtraNonNullAssertion",
         "noHeaderScope",
         "noInvalidConstructorSuper",
         "noRedundantAlt",
+        "noSelfCompare",
         "noSetterReturn",
         "noStringCaseMismatch",
         "noUnsafeFinally",
         "noUselessSwitchCase",
         "noVar",
         "noVoidTypeReturn",
+        "noWith",
         "useAriaPropsForRole",
         "useConst",
         "useDefaultParameterLast",
@@ -857,7 +883,7 @@ impl Nursery {
         "useExhaustiveDependencies",
         "useNumericLiterals",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 25] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 28] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[3]),
@@ -869,22 +895,27 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[9]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[10]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[11]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[14]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[17]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[12]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[15]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[18]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[19]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[20]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[21]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[22]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[23]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[24]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[26]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[25]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[27]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[28]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[29]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[30]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[31]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[32]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[33]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[36]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -904,12 +935,14 @@ impl Nursery {
         }))
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::CATEGORY_RULES.contains(&rule_name) }
+    pub(crate) fn has_rule(rule_name: &str) -> bool {
+        Self::CATEGORY_RULES.contains(&rule_name)
+    }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 25] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 28] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
@@ -962,7 +995,9 @@ impl Performance {
     const RECOMMENDED_RULES: [&'static str; 1] = ["noDelete"];
     const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 1] =
         [RuleFilter::Rule("performance", Self::CATEGORY_RULES[0])];
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -982,7 +1017,9 @@ impl Performance {
         }))
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::CATEGORY_RULES.contains(&rule_name) }
+    pub(crate) fn has_rule(rule_name: &str) -> bool {
+        Self::CATEGORY_RULES.contains(&rule_name)
+    }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -1050,7 +1087,9 @@ impl Security {
         RuleFilter::Rule("security", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("security", Self::CATEGORY_RULES[1]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -1070,7 +1109,9 @@ impl Security {
         }))
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::CATEGORY_RULES.contains(&rule_name) }
+    pub(crate) fn has_rule(rule_name: &str) -> bool {
+        Self::CATEGORY_RULES.contains(&rule_name)
+    }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -1179,7 +1220,9 @@ impl Style {
         RuleFilter::Rule("style", Self::CATEGORY_RULES[11]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[12]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -1199,7 +1242,9 @@ impl Style {
         }))
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::CATEGORY_RULES.contains(&rule_name) }
+    pub(crate) fn has_rule(rule_name: &str) -> bool {
+        Self::CATEGORY_RULES.contains(&rule_name)
+    }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -1337,7 +1382,9 @@ impl Suspicious {
         RuleFilter::Rule("suspicious", Self::CATEGORY_RULES[14]),
         RuleFilter::Rule("suspicious", Self::CATEGORY_RULES[15]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -1357,7 +1404,9 @@ impl Suspicious {
         }))
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::CATEGORY_RULES.contains(&rule_name) }
+    pub(crate) fn has_rule(rule_name: &str) -> bool {
+        Self::CATEGORY_RULES.contains(&rule_name)
+    }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)

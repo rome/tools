@@ -1,0 +1,277 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 92
+expression: noSelfCompare.js
+---
+# Input
+```js
+// valid
+if (a || b) { }
+if (1 ^ 2) { }
+if (x === y) { }
+if (1 === 2) { }
+y=x*x
+foo.bar.baz === foo.bar.qux
+class C { #field; foo() { this.#field === this['#field']; } }
+class C { #field; foo() { this['#field'] === this.#field; } }
+
+// invalid
+if (x === x) { }
+if (x !== x) { }
+if (x > x) { }
+if ('x' > 'x') { }
+if ('x' > "x") { }
+do {} while (x === x)
+x === x
+x !== x
+x == x
+x != x
+x > x
+x < x
+x >= x
+x <= x
+foo.bar().baz.qux >= foo.bar ().baz .qux
+class C { #field; foo() { this.#field === this.#field; } }
+
+```
+
+# Diagnostics
+```
+noSelfCompare.js:12:5 lint/nursery/noSelfCompare ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Comparing to itself is potentially pointless.
+  
+    11 │ // invalid
+  > 12 │ if (x === x) { }
+       │     ^^^^^^^
+    13 │ if (x !== x) { }
+    14 │ if (x > x) { }
+  
+
+```
+
+```
+noSelfCompare.js:13:5 lint/nursery/noSelfCompare ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Comparing to itself is potentially pointless.
+  
+    11 │ // invalid
+    12 │ if (x === x) { }
+  > 13 │ if (x !== x) { }
+       │     ^^^^^^^
+    14 │ if (x > x) { }
+    15 │ if ('x' > 'x') { }
+  
+
+```
+
+```
+noSelfCompare.js:14:5 lint/nursery/noSelfCompare ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Comparing to itself is potentially pointless.
+  
+    12 │ if (x === x) { }
+    13 │ if (x !== x) { }
+  > 14 │ if (x > x) { }
+       │     ^^^^^
+    15 │ if ('x' > 'x') { }
+    16 │ if ('x' > "x") { }
+  
+
+```
+
+```
+noSelfCompare.js:15:5 lint/nursery/noSelfCompare ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Comparing to itself is potentially pointless.
+  
+    13 │ if (x !== x) { }
+    14 │ if (x > x) { }
+  > 15 │ if ('x' > 'x') { }
+       │     ^^^^^^^^^
+    16 │ if ('x' > "x") { }
+    17 │ do {} while (x === x)
+  
+
+```
+
+```
+noSelfCompare.js:16:5 lint/nursery/noSelfCompare ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Comparing to itself is potentially pointless.
+  
+    14 │ if (x > x) { }
+    15 │ if ('x' > 'x') { }
+  > 16 │ if ('x' > "x") { }
+       │     ^^^^^^^^^
+    17 │ do {} while (x === x)
+    18 │ x === x
+  
+
+```
+
+```
+noSelfCompare.js:17:14 lint/nursery/noSelfCompare ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Comparing to itself is potentially pointless.
+  
+    15 │ if ('x' > 'x') { }
+    16 │ if ('x' > "x") { }
+  > 17 │ do {} while (x === x)
+       │              ^^^^^^^
+    18 │ x === x
+    19 │ x !== x
+  
+
+```
+
+```
+noSelfCompare.js:18:1 lint/nursery/noSelfCompare ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Comparing to itself is potentially pointless.
+  
+    16 │ if ('x' > "x") { }
+    17 │ do {} while (x === x)
+  > 18 │ x === x
+       │ ^^^^^^^
+    19 │ x !== x
+    20 │ x == x
+  
+
+```
+
+```
+noSelfCompare.js:19:1 lint/nursery/noSelfCompare ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Comparing to itself is potentially pointless.
+  
+    17 │ do {} while (x === x)
+    18 │ x === x
+  > 19 │ x !== x
+       │ ^^^^^^^
+    20 │ x == x
+    21 │ x != x
+  
+
+```
+
+```
+noSelfCompare.js:20:1 lint/nursery/noSelfCompare ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Comparing to itself is potentially pointless.
+  
+    18 │ x === x
+    19 │ x !== x
+  > 20 │ x == x
+       │ ^^^^^^
+    21 │ x != x
+    22 │ x > x
+  
+
+```
+
+```
+noSelfCompare.js:21:1 lint/nursery/noSelfCompare ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Comparing to itself is potentially pointless.
+  
+    19 │ x !== x
+    20 │ x == x
+  > 21 │ x != x
+       │ ^^^^^^
+    22 │ x > x
+    23 │ x < x
+  
+
+```
+
+```
+noSelfCompare.js:22:1 lint/nursery/noSelfCompare ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Comparing to itself is potentially pointless.
+  
+    20 │ x == x
+    21 │ x != x
+  > 22 │ x > x
+       │ ^^^^^
+    23 │ x < x
+    24 │ x >= x
+  
+
+```
+
+```
+noSelfCompare.js:23:1 lint/nursery/noSelfCompare ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Comparing to itself is potentially pointless.
+  
+    21 │ x != x
+    22 │ x > x
+  > 23 │ x < x
+       │ ^^^^^
+    24 │ x >= x
+    25 │ x <= x
+  
+
+```
+
+```
+noSelfCompare.js:24:1 lint/nursery/noSelfCompare ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Comparing to itself is potentially pointless.
+  
+    22 │ x > x
+    23 │ x < x
+  > 24 │ x >= x
+       │ ^^^^^^
+    25 │ x <= x
+    26 │ foo.bar().baz.qux >= foo.bar ().baz .qux
+  
+
+```
+
+```
+noSelfCompare.js:25:1 lint/nursery/noSelfCompare ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Comparing to itself is potentially pointless.
+  
+    23 │ x < x
+    24 │ x >= x
+  > 25 │ x <= x
+       │ ^^^^^^
+    26 │ foo.bar().baz.qux >= foo.bar ().baz .qux
+    27 │ class C { #field; foo() { this.#field === this.#field; } }
+  
+
+```
+
+```
+noSelfCompare.js:26:1 lint/nursery/noSelfCompare ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Comparing to itself is potentially pointless.
+  
+    24 │ x >= x
+    25 │ x <= x
+  > 26 │ foo.bar().baz.qux >= foo.bar ().baz .qux
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    27 │ class C { #field; foo() { this.#field === this.#field; } }
+    28 │ 
+  
+
+```
+
+```
+noSelfCompare.js:27:27 lint/nursery/noSelfCompare ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Comparing to itself is potentially pointless.
+  
+    25 │ x <= x
+    26 │ foo.bar().baz.qux >= foo.bar ().baz .qux
+  > 27 │ class C { #field; foo() { this.#field === this.#field; } }
+       │                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    28 │ 
+  
+
+```
+
+

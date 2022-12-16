@@ -33,10 +33,10 @@ pub(crate) use conditional::{AnyJsConditional, ConditionalJsxChain};
 pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;
 use rome_formatter::{format_args, write, Buffer};
+use rome_js_syntax::JsSyntaxToken;
 use rome_js_syntax::{
     AnyJsExpression, AnyJsStatement, JsCallExpression, JsInitializerClause, JsLanguage, Modifiers,
 };
-use rome_js_syntax::{JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
 pub(crate) use string_utils::*;
 pub(crate) use typescript::{
@@ -140,18 +140,6 @@ impl Format<JsFormatContext> for FormatInterpreterToken<'_> {
             Ok(())
         }
     }
-}
-
-/// Returns true if this node contains newlines in trivias.
-pub(crate) fn node_has_leading_newline(node: &JsSyntaxNode) -> bool {
-    if let Some(leading_trivia) = node.first_leading_trivia() {
-        for piece in leading_trivia.pieces() {
-            if piece.is_newline() {
-                return true;
-            }
-        }
-    }
-    false
 }
 
 /// Formats the body of a statement where it can either be a single statement, an empty statement,

@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 86
 expression: invalid.js
 ---
 # Input
@@ -11,11 +10,7 @@ export function g(a, b = 0, c) {}
 
 export function g(a, b /* before */ = /* mid */ 0/* after */) {}
 
-export function g(
-	a,
-	b /* before */ = /* mid */ 0/* after */,/* after coma */
-	c
-) {}
+export function g(a, b /* before */ = /* mid */ 0 /* after */ /* after comma */, c) {}
 ```
 
 # Diagnostics
@@ -76,31 +71,31 @@ invalid.js:3:22 lint/nursery/useDefaultParameterLast  FIXABLE  ━━━━━�
 ```
 
 ```
-invalid.js:9:2 lint/nursery/useDefaultParameterLast  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.js:7:22 lint/nursery/useDefaultParameterLast  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The default parameter should follow the required parameter or should be a required parameter.
   
-     7 │ export function g(
-     8 │ 	a,
-   > 9 │ 	b /* before */ = /* mid */ 0/* after */,/* after coma */
-       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    10 │ 	c
-    11 │ ) {}
+    5 │ export function g(a, b /* before */ = /* mid */ 0/* after */) {}
+    6 │ 
+  > 7 │ export function g(a, b /* before */ = /* mid */ 0 /* after */ /* after comma */, c) {}
+      │                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   
   i The required parameter is here:
   
-     8 │ 	a,
-     9 │ 	b /* before */ = /* mid */ 0/* after */,/* after coma */
-  > 10 │ 	c
-       │ 	^
-    11 │ ) {}
+    5 │ export function g(a, b /* before */ = /* mid */ 0/* after */) {}
+    6 │ 
+  > 7 │ export function g(a, b /* before */ = /* mid */ 0 /* after */ /* after comma */, c) {}
+      │                                                                                  ^
   
   i A default parameter that precedes a required parameter cannot be omitted at call site.
   
   i Suggested fix: Turn the parameter into a required parameter.
   
-    9 │ → b·/*·before·*/·=·/*·mid·*/·0/*·after·*/,/*·after·coma·*/
-      │                  -------------                            
+    5 5 │   export function g(a, b /* before */ = /* mid */ 0/* after */) {}
+    6 6 │   
+    7   │ - export·function·g(a,·b·/*·before·*/·=·/*·mid·*/·0·/*·after·*/·/*·after·comma·*/,·c)·{}
+      7 │ + export·function·g(a,·b·/*·before·*/··/*·after·*/·/*·after·comma·*/,·c)·{}
+  
 
 ```
 

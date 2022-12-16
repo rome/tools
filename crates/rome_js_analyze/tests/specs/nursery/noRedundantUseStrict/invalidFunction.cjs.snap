@@ -1,0 +1,47 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 86
+expression: invalidFunction.cjs
+---
+# Input
+```js
+function test() {
+	"use strict";
+	"use strict";
+}
+
+```
+
+# Diagnostics
+```
+invalidFunction.cjs:3:2 lint/nursery/noRedundantUseStrict  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Redundant use strict directive.
+  
+    1 │ function test() {
+    2 │ 	"use strict";
+  > 3 │ 	"use strict";
+      │ 	^^^^^^^^^^^^^
+    4 │ }
+    5 │ 
+  
+  i This outer use strict directive already enables strict mode.
+  
+    1 │ function test() {
+  > 2 │ 	"use strict";
+      │ 	^^^^^^^^^^^^^
+    3 │ 	"use strict";
+    4 │ }
+  
+  i Safe fix: Remove the redundant "use strict" directive
+  
+    1 1 │   function test() {
+    2 2 │   	"use strict";
+    3   │ - → "use·strict";
+    4 3 │   }
+    5 4 │   
+  
+
+```
+
+

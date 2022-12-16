@@ -610,6 +610,28 @@
             }
           ]
         },
+        "noClassAssign": {
+          "description": "Disallow reassigning class members.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noCommaOperator": {
+          "description": "Disallow comma operator.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noConstEnum": {
           "description": "Disallow TypeScript const enum",
           "anyOf": [
@@ -764,6 +786,17 @@
             }
           ]
         },
+        "noSelfCompare": {
+          "description": "Disallow comparisons where both sides are exactly the same.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noSetterReturn": {
           "description": "Disallow returning a value from a setter",
           "anyOf": [
@@ -821,6 +854,17 @@
         },
         "noVoidTypeReturn": {
           "description": "Disallow returning a value from a function with the return type 'void'",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noWith": {
+          "description": "Disallow with statements in non-strict contexts.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

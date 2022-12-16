@@ -8,7 +8,7 @@ use tracing::trace;
 #[tracing::instrument(level = "debug", skip(session), err)]
 pub(crate) fn rename(session: &Session, params: RenameParams) -> Result<Option<WorkspaceEdit>> {
     let url = params.text_document_position.text_document.uri;
-    let rome_path = session.file_path(&url);
+    let rome_path = session.file_path(&url)?;
 
     trace!("Renaming...");
 

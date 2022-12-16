@@ -1,13 +1,12 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: json/range/issue-7116.json
+info: json/range/number.json
 ---
 
 # Input
 
 ```json
-{"b": 2}
+{ "b": 2, "c": 3 }
 
 ```
 
@@ -17,15 +16,17 @@ info:
 ```diff
 --- Prettier
 +++ Rome
-@@ -1 +1 @@
--{ "b": 2 }
-+{"b": 2}
+@@ -1 +1,2 @@
+-{ "b": 2, "c": 3 }
++{ "b": 2,
++"c": 3 }
 ```
 
 # Output
 
 ```json
-{"b": 2}
+{ "b": 2,
+"c": 3 }
 ```
 
 
