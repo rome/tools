@@ -2,7 +2,7 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleAction, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{JsEmptyClassMember, JsEmptyStatement, JsSyntaxKind, T};
+use rome_js_syntax::{JsEmptyClassMember, JsEmptyStatement, JsSyntaxKind};
 
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 
@@ -108,33 +108,18 @@ impl Rule for NoExtraSemicolons {
         match node {
             AnyJsExtraSemicolon::JsEmptyStatement(stmt) => {
                 let parent = stmt.syntax().parent()?;
-                let has_last_entity_in_parent = parent.kind() == JsSyntaxKind::JS_MODULE_ITEM_LIST;
-                let has_entity_in_parent = parent.kind() == JsSyntaxKind::JS_FOR_STATEMENT;
-                let empty_statements_in_list = parent
-                    .children_with_tokens()
-                    .into_iter()
-                    .filter(|child| child.kind() == JsSyntaxKind::JS_EMPTY_STATEMENT)
-                    .count();
-                let has_empty_statements_in_list = has_last_entity_in_parent
-                    && !has_entity_in_parent
-                    && empty_statements_in_list > 0;
-                let has_empty_statements_in_for_statement = !has_last_entity_in_parent
-                    && has_entity_in_parent
-                    && empty_statements_in_list > 1;
-                let has_first_semicolon_in_node =
-                    stmt.syntax().kind() == JsSyntaxKind::JS_EMPTY_STATEMENT;
-                let has_empty_statements_in_module_list =
-                    has_empty_statements_in_list && has_first_semicolon_in_node;
-                let has_empty_statements_not_in_module_list =
-                    !has_empty_statements_in_list && has_empty_statements_in_for_statement;
-                let has_empty_statement_not_in_short_cases = !has_last_entity_in_parent
-                    && !has_entity_in_parent
-                    && has_first_semicolon_in_node;
-
-                if has_empty_statements_in_module_list
-                    || has_empty_statements_not_in_module_list
-                    || has_empty_statement_not_in_short_cases
-                {
+                let allowed_parent_kinds = vec![
+                    JsSyntaxKind::JS_FOR_STATEMENT,
+                    JsSyntaxKind::JS_FOR_IN_STATEMENT,
+                    JsSyntaxKind::JS_FOR_OF_STATEMENT,
+                    JsSyntaxKind::JS_WHILE_STATEMENT,
+                    JsSyntaxKind::JS_DO_WHILE_STATEMENT,
+                    JsSyntaxKind::JS_IF_STATEMENT,
+                    JsSyntaxKind::JS_LABELED_STATEMENT,
+                    JsSyntaxKind::JS_WITH_STATEMENT,
+                ];
+                let has_allowed_parent = allowed_parent_kinds.contains(&parent.kind());
+                if !has_allowed_parent {
                     Some(AnyJsExtraSemicolonOptionType::JsEmptyStatement(
                         stmt.clone(),
                     ))
@@ -143,15 +128,9 @@ impl Rule for NoExtraSemicolons {
                 }
             }
             AnyJsExtraSemicolon::JsEmptyClassMember(stmt) => {
-                let has_first_semicolon_in_node = stmt.syntax().first_token()?.kind() == T![;];
-
-                if has_first_semicolon_in_node {
-                    Some(AnyJsExtraSemicolonOptionType::JsEmptyClassMember(
-                        stmt.clone(),
-                    ))
-                } else {
-                    None
-                }
+                Some(AnyJsExtraSemicolonOptionType::JsEmptyClassMember(
+                    stmt.clone(),
+                ))
             }
         }
     }

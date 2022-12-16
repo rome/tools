@@ -1,6 +1,38 @@
 // valid
 
 {
+  const x = 10;
+  if (x > 5) {
+    x = 5;
+  };
+}
+
+{
+  while(true);
+}
+
+{
+  while(true) {}
+}
+
+{
+  loop1:
+  for (let i = 0; i < 5; i++) {
+    str = str + i;
+  }
+}
+
+{
+  loop1:
+  for (let i = 0; i < 5; i++) {
+    if (i === 1) {
+      continue loop1;
+    }
+    str = str + i;
+  }
+}
+
+{
   function baz() {}
 }
 
