@@ -18,21 +18,43 @@ declare_rule! {
  /// ### Invalid
  /// ```cjs,expect_diagnostic
  ///  var pattern1 = /\x00/;
+ /// ```
+ /// ```cjs,expect_diagnostic
  ///  var pattern2 = /\x0C/;
+ /// ```
+ /// ```cjs,expect_diagnostic
  ///  var pattern3 = /\x1F/;
+ /// ```
+ /// ```cjs,expect_diagnostic
  ///  var pattern4 = /\u000C/;
+ /// ```
+ /// ```cjs,expect_diagnostic
  ///  var pattern5 = /\u{C}/u;
- ///  var pattern6 = new RegExp("\x0C");
+ /// ```
+ /// ```cjs,expect_diagnostic
+ ///  var pattern7 = new RegExp("\x0C");
+ /// ```
+ /// ```cjs,expect_diagnostic
  ///  var pattern7 = new RegExp("\\x0C");
  /// ```
  ///
  /// ### Valid
- /// ```cjs,expect_diagnostic
+ /// ```cjs
  /// var pattern1 = /\x20/;
+ /// ```
+ /// ```cjs
  /// var pattern2 = /\u0020/;
+ /// ```
+ /// ```cjs
  /// var pattern3 = /\u{20}/u;
+ /// ```
+ /// ```cjs
  /// var pattern4 = /\t/;
+ /// ```
+ /// ```cjs
  /// var pattern5 = /\n/;
+ /// ```
+ /// ```cjs
  /// var pattern6 = new RegExp("\x20");
  /// ```
  pub(crate) NoControlCharactersInRegex {
@@ -97,7 +119,7 @@ fn get_code_point_from_code_point_character(it: &mut Peekable<Chars>) -> Option<
 }
 fn collect_control_characters(pattern: String, flags: Option<String>) -> Option<Vec<String>> {
     let mut control_characters: Vec<String> = Vec::new();
-    let is_unicode = flags.unwrap_or_default().contains("u");
+    let is_unicode = flags.unwrap_or_default().contains('u');
 
     let mut it = pattern.chars().peekable();
 
@@ -107,7 +129,7 @@ fn collect_control_characters(pattern: String, flags: Option<String>) -> Option<
          control_characters: &mut Vec<String>,
          get_code_point: fn(&mut Peekable<Chars>) -> Option<(String, i64)>| {
             if let Some((s, cp)) = get_code_point(it) {
-                if cp >= 0 && cp < 32 {
+                if (0..32).contains(&cp) {
                     control_characters.push(format!("{}{}", prefix, s));
                 }
             }
@@ -157,7 +179,7 @@ fn collect_control_characters(pattern: String, flags: Option<String>) -> Option<
             }
         }
     }
-    if control_characters.len() > 0 {
+    if !control_characters.is_empty() {
         Some(control_characters)
     } else {
         None
@@ -170,22 +192,20 @@ fn collect_control_characters_from_expression(
     if let Some(js_identifier) = JsIdentifierExpression::cast_ref(calee) {
         if js_identifier.name().ok()?.has_name("RegExp") {
             let mut args = js_call_arguments.args().iter();
+            let raw_pattern = args
+                .next()
+                .and_then(|arg| arg.ok())
+                .and_then(|arg| JsStringLiteralExpression::cast_ref(arg.syntax()))
+                .and_then(|js_string_literal| js_string_literal.inner_string_text().ok())?
+                .to_string();
 
-            let pattern = escape_string(
-                args.next()
-                    .and_then(|arg| arg.ok())
-                    .and_then(|arg| JsStringLiteralExpression::cast_ref(arg.syntax()))
-                    .and_then(|js_string_literal| js_string_literal.inner_string_text().ok())?
-                    .to_string()
-                    .as_str(),
-            )
-            .ok()?;
+            let pattern = escape_string(&raw_pattern).map_or(raw_pattern, |p| p);
 
             let flags = args
                 .next()
                 .and_then(|arg| arg.ok())
                 .and_then(|arg| JsStringLiteralExpression::cast_ref(arg.syntax()))
-                .and_then(|js_string_literal| Some(js_string_literal.text()));
+                .map(|js_string_literal| js_string_literal.text());
 
             return collect_control_characters(pattern, flags);
         }
@@ -215,7 +235,7 @@ impl Rule for NoControlCharactersInRegex {
                 );
             }
             PossibleRegexExpression::JsRegexLiteralExpression(js_regex_literal_expression) => {
-                return collect_control_characters(
+                collect_control_characters(
                     js_regex_literal_expression.pattern().ok()?,
                     js_regex_literal_expression.flags().ok(),
                 )

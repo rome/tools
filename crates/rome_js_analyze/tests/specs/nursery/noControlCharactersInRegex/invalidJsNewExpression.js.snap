@@ -13,6 +13,9 @@ var regex5 = new RegExp("\\u001F", flags);
 var regex6 = new RegExp("\\u{1111}*\\x1F", "u");
 var regex7 = new RegExp("\\u{1F}", "u");
 var regex8 = new RegExp("\\u{1F}", "gui");
+var regex9 = new RegExp("\\x0C");
+var regex10 = new RegExp("\x0C");
+
 ```
 
 # Diagnostics
@@ -113,6 +116,7 @@ invalidJsNewExpression.js:7:14 lint/nursery/noControlCharactersInRegex ━━━
   > 7 │ var regex7 = new RegExp("\\u{1F}", "u");
       │              ^^^^^^^^^^^^^^^^^^^^^^^^^^
     8 │ var regex8 = new RegExp("\\u{1F}", "gui");
+    9 │ var regex9 = new RegExp("\\x0C");
   
 
 ```
@@ -122,10 +126,41 @@ invalidJsNewExpression.js:8:14 lint/nursery/noControlCharactersInRegex ━━━
 
   ! Unexpected control character(s) in regular expression: \u{1F}
   
-    6 │ var regex6 = new RegExp("\\u{1111}*\\x1F", "u");
-    7 │ var regex7 = new RegExp("\\u{1F}", "u");
-  > 8 │ var regex8 = new RegExp("\\u{1F}", "gui");
-      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     6 │ var regex6 = new RegExp("\\u{1111}*\\x1F", "u");
+     7 │ var regex7 = new RegExp("\\u{1F}", "u");
+   > 8 │ var regex8 = new RegExp("\\u{1F}", "gui");
+       │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │ var regex9 = new RegExp("\\x0C");
+    10 │ var regex10 = new RegExp("\x0C");
+  
+
+```
+
+```
+invalidJsNewExpression.js:9:14 lint/nursery/noControlCharactersInRegex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected control character(s) in regular expression: \x0C
+  
+     7 │ var regex7 = new RegExp("\\u{1F}", "u");
+     8 │ var regex8 = new RegExp("\\u{1F}", "gui");
+   > 9 │ var regex9 = new RegExp("\\x0C");
+       │              ^^^^^^^^^^^^^^^^^^^
+    10 │ var regex10 = new RegExp("\x0C");
+    11 │ 
+  
+
+```
+
+```
+invalidJsNewExpression.js:10:15 lint/nursery/noControlCharactersInRegex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected control character(s) in regular expression: \x0C
+  
+     8 │ var regex8 = new RegExp("\\u{1F}", "gui");
+     9 │ var regex9 = new RegExp("\\x0C");
+  > 10 │ var regex10 = new RegExp("\x0C");
+       │               ^^^^^^^^^^^^^^^^^^
+    11 │ 
   
 
 ```

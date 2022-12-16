@@ -6,3 +6,5 @@ var regex5 = new RegExp("\\u001F", flags);
 var regex6 = new RegExp("\\u{1111}*\\x1F", "u");
 var regex7 = new RegExp("\\u{1F}", "u");
 var regex8 = new RegExp("\\u{1F}", "gui");
+var regex9 = new RegExp("\\x0C");
+var regex10 = new RegExp("\x0C");
