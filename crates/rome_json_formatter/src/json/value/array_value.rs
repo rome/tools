@@ -1,10 +1,20 @@
 use crate::prelude::*;
 use rome_json_syntax::JsonArrayValue;
-use rome_rowan::AstNode;
+use rome_formatter::write;
+
 #[derive(Debug, Clone, Default)]
 pub(crate) struct FormatJsonArrayValue;
 impl FormatNodeRule<JsonArrayValue> for FormatJsonArrayValue {
     fn fmt_fields(&self, node: &JsonArrayValue, f: &mut JsonFormatter) -> FormatResult<()> {
-        format_verbatim_node(node.syntax()).fmt(f)
+		write!(f, [node.l_brack_token().format()])?;
+
+		write!(
+            f,
+            [group(&soft_block_indent(
+                &node.elements().format()
+            ))]
+        )?;
+
+		write!(f, [node.r_brack_token().format()])
     }
 }
