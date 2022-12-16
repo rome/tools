@@ -22,3 +22,21 @@ let valid8: Array<(string & number)>;
 type valid9<T> = T extends Array<infer R> ? R : any;
 // mapped type
 type valid10<T> = { [K in keyof T]: T[K] };
+
+// valid
+let readonlyValid1: ReadonlyArray<Foo | Bar>;
+let readonlyValid2: ReadonlyArray<keyof Bar>;
+let readonlyValid3: ReadonlyArray<foo | bar>;
+let readonlyValid4: ReadonlyArray<string & number>;
+let readonlyValid5: ReadonlyArray<() => string>;
+type readonlyValid6<T> = ReadonlyArray<T extends string ? string : number>
+type readonlyValid7 = ReadonlyArray<new (string, number) => string>
+let readonlyValid8: ReadonlyArray<(string & number)>;
+type readonlyValid9<T> = T extends ReadonlyArray<infer R> ? R : any;
+type readonlyValid10<T> = { [K in keyof T]: T[K] };
+
+// invalid
+let readonlyInvalid1: ReadonlyArray<foo>;
+let readonlyInvalid2: Promise<ReadonlyArray<string>>;
+let readonlyInvalid3: ReadonlyArray<Foo<Bar>>;
+let readonlyInvalid4: ReadonlyArray<[number, number]>;
