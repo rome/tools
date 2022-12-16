@@ -113,16 +113,14 @@ impl Rule for NoExtraSemicolons {
             AnyJsExtraSemicolon::JsEmptyStatement(stmt) => {
                 let parent = stmt.syntax().parent()?;
                 if parent.kind().is_list() {
-                    Some(AnyJsExtraSemicolon::JsEmptyStatement(
-                        stmt.clone(),
-                    ))
+                    Some(AnyJsExtraSemicolon::JsEmptyStatement(stmt.clone()))
                 } else {
                     None
                 }
             }
-            AnyJsExtraSemicolon::JsEmptyClassMember(stmt) => Some(
-                AnyJsExtraSemicolon::JsEmptyClassMember(stmt.clone()),
-            ),
+            AnyJsExtraSemicolon::JsEmptyClassMember(stmt) => {
+                Some(AnyJsExtraSemicolon::JsEmptyClassMember(stmt.clone()))
+            }
         }
     }
 
