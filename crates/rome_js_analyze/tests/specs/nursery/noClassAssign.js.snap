@@ -1,0 +1,307 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 92
+expression: noClassAssign.js
+---
+# Input
+```js
+/* Valid  */
+function case1() {
+	class A { }
+	foo(A);
+}
+
+function case2() {
+	let A = class A { };
+	foo(A);
+}
+
+function case3() {
+	class A {
+		b(A) {
+			A = 0;
+		}
+	}
+}
+
+function case4() {
+	class A {
+		b() {
+			let A;
+			A = 0;
+		}
+	}
+}
+
+function case5() {
+	let A = class {
+		b() {
+			A = 0;
+		}
+	}
+}
+
+// /* Ignores non class. */
+function case6() {
+	var x = 0;
+	x = 1;
+}
+
+function case7() {
+	let x = 0;
+	x = 1;
+}
+
+function case8() {
+	const x = 0;
+	x = 1;
+}
+
+function case9() {
+	function x() {}
+	x = 1;
+}
+
+function case10(x) {
+	x = 1;
+}
+
+function case11() {
+	try {}
+	catch (x) {
+		x = 1;
+	}
+}
+
+// /* Invalid  */
+function case12() {
+	class A { }
+	A = 0;
+}
+
+function case13() {
+	class B { }
+	({B} = 0);
+}
+
+function case14() {
+	class C { }
+	({b: C = 0} = {});
+}
+
+function case15() {
+	D = 0;
+	class D { }
+}
+
+function case16() {
+	class E {
+		b() {
+			E = 0;
+		}
+	}
+}
+
+function case17() {
+	let F = class F {
+		b() {
+			F = 0;
+		}
+	}
+}
+
+function case18() {
+	class G { }
+	G = 0;
+	G = 1;
+}
+
+```
+
+# Diagnostics
+```
+noClassAssign.js:72:2 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'A' is a class.
+  
+    70 │ function case12() {
+    71 │ 	class A { }
+  > 72 │ 	A = 0;
+       │ 	^
+    73 │ }
+    74 │ 
+  
+  i 'A' is defined here.
+  
+    69 │ // /* Invalid  */
+    70 │ function case12() {
+  > 71 │ 	class A { }
+       │ 	      ^
+    72 │ 	A = 0;
+    73 │ }
+  
+
+```
+
+```
+noClassAssign.js:77:4 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'B' is a class.
+  
+    75 │ function case13() {
+    76 │ 	class B { }
+  > 77 │ 	({B} = 0);
+       │ 	  ^
+    78 │ }
+    79 │ 
+  
+  i 'B' is defined here.
+  
+    75 │ function case13() {
+  > 76 │ 	class B { }
+       │ 	      ^
+    77 │ 	({B} = 0);
+    78 │ }
+  
+
+```
+
+```
+noClassAssign.js:82:7 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'C' is a class.
+  
+    80 │ function case14() {
+    81 │ 	class C { }
+  > 82 │ 	({b: C = 0} = {});
+       │ 	     ^
+    83 │ }
+    84 │ 
+  
+  i 'C' is defined here.
+  
+    80 │ function case14() {
+  > 81 │ 	class C { }
+       │ 	      ^
+    82 │ 	({b: C = 0} = {});
+    83 │ }
+  
+
+```
+
+```
+noClassAssign.js:86:2 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'D' is a class.
+  
+    85 │ function case15() {
+  > 86 │ 	D = 0;
+       │ 	^
+    87 │ 	class D { }
+    88 │ }
+  
+  i 'D' is defined here.
+  
+    85 │ function case15() {
+    86 │ 	D = 0;
+  > 87 │ 	class D { }
+       │ 	      ^
+    88 │ }
+    89 │ 
+  
+
+```
+
+```
+noClassAssign.js:93:4 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'E' is a class.
+  
+    91 │ 	class E {
+    92 │ 		b() {
+  > 93 │ 			E = 0;
+       │ 			^
+    94 │ 		}
+    95 │ 	}
+  
+  i 'E' is defined here.
+  
+    90 │ function case16() {
+  > 91 │ 	class E {
+       │ 	      ^
+    92 │ 		b() {
+    93 │ 			E = 0;
+  
+
+```
+
+```
+noClassAssign.js:101:4 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'F' is a class.
+  
+     99 │ 	let F = class F {
+    100 │ 		b() {
+  > 101 │ 			F = 0;
+        │ 			^
+    102 │ 		}
+    103 │ 	}
+  
+  i 'F' is defined here.
+  
+     98 │ function case17() {
+   > 99 │ 	let F = class F {
+        │ 	              ^
+    100 │ 		b() {
+    101 │ 			F = 0;
+  
+
+```
+
+```
+noClassAssign.js:108:2 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'G' is a class.
+  
+    106 │ function case18() {
+    107 │ 	class G { }
+  > 108 │ 	G = 0;
+        │ 	^
+    109 │ 	G = 1;
+    110 │ }
+  
+  i 'G' is defined here.
+  
+    106 │ function case18() {
+  > 107 │ 	class G { }
+        │ 	      ^
+    108 │ 	G = 0;
+    109 │ 	G = 1;
+  
+
+```
+
+```
+noClassAssign.js:109:2 lint/nursery/noClassAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! 'G' is a class.
+  
+    107 │ 	class G { }
+    108 │ 	G = 0;
+  > 109 │ 	G = 1;
+        │ 	^
+    110 │ }
+    111 │ 
+  
+  i 'G' is defined here.
+  
+    106 │ function case18() {
+  > 107 │ 	class G { }
+        │ 	      ^
+    108 │ 	G = 0;
+    109 │ 	G = 1;
+  
+
+```
+
+
