@@ -1449,6 +1449,7 @@ pub(crate) fn is_nth_at_reference_identifier(p: &mut JsParser, n: usize) -> bool
 //
 // test identifier
 // foo;
+// let accessor = 5;
 //
 // test_err identifier_err
 // yield;

@@ -16,4 +16,6 @@ abstract class Test extends Base {
     abstract async l();
     declare async m();
     declare #l;
+    declare accessor p;
+    accessor accessor r;
 }

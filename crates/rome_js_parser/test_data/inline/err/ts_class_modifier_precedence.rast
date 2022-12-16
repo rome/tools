@@ -178,80 +178,146 @@ JsModule {
                 JsBogusMember {
                     items: [
                         JsPropertyModifierList [
-                            TsOverrideModifier {
-                                modifier_token: OVERRIDE_KW@268..282 "override" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                            JsAccessorModifier {
+                                modifier_token: ACCESSOR_KW@268..282 "accessor" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                             },
                             JsStaticModifier {
                                 modifier_token: STATIC_KW@282..289 "static" [] [Whitespace(" ")],
                             },
                         ],
                         JsLiteralMemberName {
-                            value: IDENT@289..294 "base2" [] [],
+                            value: IDENT@289..290 "d" [] [],
                         },
                         TsTypeAnnotation {
-                            colon_token: COLON@294..296 ":" [] [Whitespace(" ")],
+                            colon_token: COLON@290..292 ":" [] [Whitespace(" ")],
                             ty: TsStringType {
-                                string_token: STRING_KW@296..302 "string" [] [],
+                                string_token: STRING_KW@292..298 "string" [] [],
                             },
                         },
-                        SEMICOLON@302..303 ";" [] [],
+                        SEMICOLON@298..299 ";" [] [],
                     ],
                 },
                 JsBogusMember {
                     items: [
-                        TsPropertySignatureModifierList [
+                        JsPropertyModifierList [
                             TsOverrideModifier {
-                                modifier_token: OVERRIDE_KW@303..333 "override" [Newline("\n"), Whitespace("    "), Comments("// abstract"), Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                modifier_token: OVERRIDE_KW@299..313 "override" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                             },
-                            TsAbstractModifier {
-                                modifier_token: ABSTRACT_KW@333..342 "abstract" [] [Whitespace(" ")],
+                            JsStaticModifier {
+                                modifier_token: STATIC_KW@313..320 "static" [] [Whitespace(" ")],
                             },
                         ],
                         JsLiteralMemberName {
-                            value: IDENT@342..347 "base3" [] [],
+                            value: IDENT@320..325 "base2" [] [],
                         },
                         TsTypeAnnotation {
-                            colon_token: COLON@347..349 ":" [] [Whitespace(" ")],
+                            colon_token: COLON@325..327 ":" [] [Whitespace(" ")],
                             ty: TsStringType {
-                                string_token: STRING_KW@349..355 "string" [] [],
+                                string_token: STRING_KW@327..333 "string" [] [],
                             },
                         },
-                        SEMICOLON@355..356 ";" [] [],
+                        SEMICOLON@333..334 ";" [] [],
                     ],
                 },
                 JsBogusMember {
                     items: [
                         JsPropertyModifierList [
                             TsReadonlyModifier {
-                                modifier_token: READONLY_KW@356..386 "readonly" [Newline("\n"), Whitespace("    "), Comments("// override"), Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                                modifier_token: READONLY_KW@334..364 "readonly" [Newline("\n"), Whitespace("    "), Comments("// Accessor"), Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
                             },
-                            TsOverrideModifier {
-                                modifier_token: OVERRIDE_KW@386..395 "override" [] [Whitespace(" ")],
+                            JsAccessorModifier {
+                                modifier_token: ACCESSOR_KW@364..373 "accessor" [] [Whitespace(" ")],
                             },
                         ],
                         JsLiteralMemberName {
-                            value: IDENT@395..400 "base4" [] [],
+                            value: IDENT@373..374 "e" [] [],
                         },
                         TsTypeAnnotation {
-                            colon_token: COLON@400..402 ":" [] [Whitespace(" ")],
+                            colon_token: COLON@374..376 ":" [] [Whitespace(" ")],
                             ty: TsStringType {
-                                string_token: STRING_KW@402..408 "string" [] [],
+                                string_token: STRING_KW@376..382 "string" [] [],
                             },
                         },
-                        SEMICOLON@408..409 ";" [] [],
+                        SEMICOLON@382..383 ";" [] [],
+                    ],
+                },
+                JsBogusMember {
+                    items: [
+                        JsPropertyModifierList [
+                            TsOverrideModifier {
+                                modifier_token: OVERRIDE_KW@383..397 "override" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                            },
+                            JsAccessorModifier {
+                                modifier_token: ACCESSOR_KW@397..406 "accessor" [] [Whitespace(" ")],
+                            },
+                        ],
+                        JsLiteralMemberName {
+                            value: IDENT@406..407 "f" [] [],
+                        },
+                        TsTypeAnnotation {
+                            colon_token: COLON@407..409 ":" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@409..415 "string" [] [],
+                            },
+                        },
+                        SEMICOLON@415..416 ";" [] [],
+                    ],
+                },
+                JsBogusMember {
+                    items: [
+                        TsPropertySignatureModifierList [
+                            TsOverrideModifier {
+                                modifier_token: OVERRIDE_KW@416..446 "override" [Newline("\n"), Whitespace("    "), Comments("// abstract"), Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                            },
+                            TsAbstractModifier {
+                                modifier_token: ABSTRACT_KW@446..455 "abstract" [] [Whitespace(" ")],
+                            },
+                        ],
+                        JsLiteralMemberName {
+                            value: IDENT@455..460 "base3" [] [],
+                        },
+                        TsTypeAnnotation {
+                            colon_token: COLON@460..462 ":" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@462..468 "string" [] [],
+                            },
+                        },
+                        SEMICOLON@468..469 ";" [] [],
+                    ],
+                },
+                JsBogusMember {
+                    items: [
+                        JsPropertyModifierList [
+                            TsReadonlyModifier {
+                                modifier_token: READONLY_KW@469..499 "readonly" [Newline("\n"), Whitespace("    "), Comments("// override"), Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                            },
+                            TsOverrideModifier {
+                                modifier_token: OVERRIDE_KW@499..508 "override" [] [Whitespace(" ")],
+                            },
+                        ],
+                        JsLiteralMemberName {
+                            value: IDENT@508..513 "base4" [] [],
+                        },
+                        TsTypeAnnotation {
+                            colon_token: COLON@513..515 ":" [] [Whitespace(" ")],
+                            ty: TsStringType {
+                                string_token: STRING_KW@515..521 "string" [] [],
+                            },
+                        },
+                        SEMICOLON@521..522 ";" [] [],
                     ],
                 },
             ],
-            r_curly_token: R_CURLY@409..411 "}" [Newline("\n")] [],
+            r_curly_token: R_CURLY@522..524 "}" [Newline("\n")] [],
         },
     ],
-    eof_token: EOF@411..412 "" [Newline("\n")] [],
+    eof_token: EOF@524..525 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..412
+0: JS_MODULE@0..525
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..411
+  2: JS_MODULE_ITEM_LIST@0..524
     0: JS_CLASS_DECLARATION@0..41
       0: (empty)
       1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
@@ -291,7 +357,7 @@ JsModule {
           3: (empty)
           4: SEMICOLON@39..40 ";" [] []
       8: R_CURLY@40..41 "}" [] []
-    1: JS_CLASS_DECLARATION@41..411
+    1: JS_CLASS_DECLARATION@41..524
       0: ABSTRACT_KW@41..51 "abstract" [Newline("\n")] [Whitespace(" ")]
       1: CLASS_KW@51..57 "class" [] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@57..62
@@ -305,7 +371,7 @@ JsModule {
         2: (empty)
       5: (empty)
       6: L_CURLY@75..76 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@76..409
+      7: JS_CLASS_MEMBER_LIST@76..522
         0: JS_BOGUS_MEMBER@76..129
           0: JS_PROPERTY_MODIFIER_LIST@76..119
             0: TS_READONLY_MODIFIER@76..111
@@ -367,47 +433,86 @@ JsModule {
             1: TS_STRING_TYPE@261..267
               0: STRING_KW@261..267 "string" [] []
           3: SEMICOLON@267..268 ";" [] []
-        5: JS_BOGUS_MEMBER@268..303
+        5: JS_BOGUS_MEMBER@268..299
           0: JS_PROPERTY_MODIFIER_LIST@268..289
-            0: TS_OVERRIDE_MODIFIER@268..282
-              0: OVERRIDE_KW@268..282 "override" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+            0: JS_ACCESSOR_MODIFIER@268..282
+              0: ACCESSOR_KW@268..282 "accessor" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
             1: JS_STATIC_MODIFIER@282..289
               0: STATIC_KW@282..289 "static" [] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@289..294
-            0: IDENT@289..294 "base2" [] []
-          2: TS_TYPE_ANNOTATION@294..302
-            0: COLON@294..296 ":" [] [Whitespace(" ")]
-            1: TS_STRING_TYPE@296..302
-              0: STRING_KW@296..302 "string" [] []
-          3: SEMICOLON@302..303 ";" [] []
-        6: JS_BOGUS_MEMBER@303..356
-          0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@303..342
-            0: TS_OVERRIDE_MODIFIER@303..333
-              0: OVERRIDE_KW@303..333 "override" [Newline("\n"), Whitespace("    "), Comments("// abstract"), Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-            1: TS_ABSTRACT_MODIFIER@333..342
-              0: ABSTRACT_KW@333..342 "abstract" [] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@342..347
-            0: IDENT@342..347 "base3" [] []
-          2: TS_TYPE_ANNOTATION@347..355
-            0: COLON@347..349 ":" [] [Whitespace(" ")]
-            1: TS_STRING_TYPE@349..355
-              0: STRING_KW@349..355 "string" [] []
-          3: SEMICOLON@355..356 ";" [] []
-        7: JS_BOGUS_MEMBER@356..409
-          0: JS_PROPERTY_MODIFIER_LIST@356..395
-            0: TS_READONLY_MODIFIER@356..386
-              0: READONLY_KW@356..386 "readonly" [Newline("\n"), Whitespace("    "), Comments("// override"), Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
-            1: TS_OVERRIDE_MODIFIER@386..395
-              0: OVERRIDE_KW@386..395 "override" [] [Whitespace(" ")]
-          1: JS_LITERAL_MEMBER_NAME@395..400
-            0: IDENT@395..400 "base4" [] []
-          2: TS_TYPE_ANNOTATION@400..408
-            0: COLON@400..402 ":" [] [Whitespace(" ")]
-            1: TS_STRING_TYPE@402..408
-              0: STRING_KW@402..408 "string" [] []
-          3: SEMICOLON@408..409 ";" [] []
-      8: R_CURLY@409..411 "}" [Newline("\n")] []
-  3: EOF@411..412 "" [Newline("\n")] []
+          1: JS_LITERAL_MEMBER_NAME@289..290
+            0: IDENT@289..290 "d" [] []
+          2: TS_TYPE_ANNOTATION@290..298
+            0: COLON@290..292 ":" [] [Whitespace(" ")]
+            1: TS_STRING_TYPE@292..298
+              0: STRING_KW@292..298 "string" [] []
+          3: SEMICOLON@298..299 ";" [] []
+        6: JS_BOGUS_MEMBER@299..334
+          0: JS_PROPERTY_MODIFIER_LIST@299..320
+            0: TS_OVERRIDE_MODIFIER@299..313
+              0: OVERRIDE_KW@299..313 "override" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+            1: JS_STATIC_MODIFIER@313..320
+              0: STATIC_KW@313..320 "static" [] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@320..325
+            0: IDENT@320..325 "base2" [] []
+          2: TS_TYPE_ANNOTATION@325..333
+            0: COLON@325..327 ":" [] [Whitespace(" ")]
+            1: TS_STRING_TYPE@327..333
+              0: STRING_KW@327..333 "string" [] []
+          3: SEMICOLON@333..334 ";" [] []
+        7: JS_BOGUS_MEMBER@334..383
+          0: JS_PROPERTY_MODIFIER_LIST@334..373
+            0: TS_READONLY_MODIFIER@334..364
+              0: READONLY_KW@334..364 "readonly" [Newline("\n"), Whitespace("    "), Comments("// Accessor"), Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+            1: JS_ACCESSOR_MODIFIER@364..373
+              0: ACCESSOR_KW@364..373 "accessor" [] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@373..374
+            0: IDENT@373..374 "e" [] []
+          2: TS_TYPE_ANNOTATION@374..382
+            0: COLON@374..376 ":" [] [Whitespace(" ")]
+            1: TS_STRING_TYPE@376..382
+              0: STRING_KW@376..382 "string" [] []
+          3: SEMICOLON@382..383 ";" [] []
+        8: JS_BOGUS_MEMBER@383..416
+          0: JS_PROPERTY_MODIFIER_LIST@383..406
+            0: TS_OVERRIDE_MODIFIER@383..397
+              0: OVERRIDE_KW@383..397 "override" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+            1: JS_ACCESSOR_MODIFIER@397..406
+              0: ACCESSOR_KW@397..406 "accessor" [] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@406..407
+            0: IDENT@406..407 "f" [] []
+          2: TS_TYPE_ANNOTATION@407..415
+            0: COLON@407..409 ":" [] [Whitespace(" ")]
+            1: TS_STRING_TYPE@409..415
+              0: STRING_KW@409..415 "string" [] []
+          3: SEMICOLON@415..416 ";" [] []
+        9: JS_BOGUS_MEMBER@416..469
+          0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@416..455
+            0: TS_OVERRIDE_MODIFIER@416..446
+              0: OVERRIDE_KW@416..446 "override" [Newline("\n"), Whitespace("    "), Comments("// abstract"), Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+            1: TS_ABSTRACT_MODIFIER@446..455
+              0: ABSTRACT_KW@446..455 "abstract" [] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@455..460
+            0: IDENT@455..460 "base3" [] []
+          2: TS_TYPE_ANNOTATION@460..468
+            0: COLON@460..462 ":" [] [Whitespace(" ")]
+            1: TS_STRING_TYPE@462..468
+              0: STRING_KW@462..468 "string" [] []
+          3: SEMICOLON@468..469 ";" [] []
+        10: JS_BOGUS_MEMBER@469..522
+          0: JS_PROPERTY_MODIFIER_LIST@469..508
+            0: TS_READONLY_MODIFIER@469..499
+              0: READONLY_KW@469..499 "readonly" [Newline("\n"), Whitespace("    "), Comments("// override"), Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+            1: TS_OVERRIDE_MODIFIER@499..508
+              0: OVERRIDE_KW@499..508 "override" [] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@508..513
+            0: IDENT@508..513 "base4" [] []
+          2: TS_TYPE_ANNOTATION@513..521
+            0: COLON@513..515 ":" [] [Whitespace(" ")]
+            1: TS_STRING_TYPE@515..521
+              0: STRING_KW@515..521 "string" [] []
+          3: SEMICOLON@521..522 ";" [] []
+      8: R_CURLY@522..524 "}" [Newline("\n")] []
+  3: EOF@524..525 "" [Newline("\n")] []
 --
 ts_class_modifier_precedence.ts:4:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -537,8 +642,8 @@ ts_class_modifier_precedence.ts:9:14 parse ━━━━━━━━━━━━�
      8 │     // Static
    > 9 │     readonly static c: string;
        │              ^^^^^^
-    10 │     override static base2: string;
-    11 │     // abstract
+    10 │     accessor static d: string;
+    11 │     override static base2: string;
   
   i move this modifier
   
@@ -546,8 +651,8 @@ ts_class_modifier_precedence.ts:9:14 parse ━━━━━━━━━━━━�
      8 │     // Static
    > 9 │     readonly static c: string;
        │              ^^^^^^
-    10 │     override static base2: string;
-    11 │     // abstract
+    10 │     accessor static d: string;
+    11 │     override static base2: string;
   
   i before this modifier
   
@@ -555,98 +660,188 @@ ts_class_modifier_precedence.ts:9:14 parse ━━━━━━━━━━━━�
      8 │     // Static
    > 9 │     readonly static c: string;
        │     ^^^^^^^^
-    10 │     override static base2: string;
-    11 │     // abstract
+    10 │     accessor static d: string;
+    11 │     override static base2: string;
   
 --
 ts_class_modifier_precedence.ts:10:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × 'static' must precede 'override'
+  × 'static' must precede 'accessor'
   
      8 │     // Static
      9 │     readonly static c: string;
-  > 10 │     override static base2: string;
+  > 10 │     accessor static d: string;
        │              ^^^^^^
-    11 │     // abstract
-    12 │     override abstract base3: string;
+    11 │     override static base2: string;
+    12 │     // Accessor
   
   i move this modifier
   
      8 │     // Static
      9 │     readonly static c: string;
-  > 10 │     override static base2: string;
+  > 10 │     accessor static d: string;
        │              ^^^^^^
-    11 │     // abstract
-    12 │     override abstract base3: string;
+    11 │     override static base2: string;
+    12 │     // Accessor
   
   i before this modifier
   
      8 │     // Static
      9 │     readonly static c: string;
-  > 10 │     override static base2: string;
+  > 10 │     accessor static d: string;
        │     ^^^^^^^^
-    11 │     // abstract
-    12 │     override abstract base3: string;
+    11 │     override static base2: string;
+    12 │     // Accessor
   
 --
-ts_class_modifier_precedence.ts:12:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_modifier_precedence.ts:11:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × 'abstract' must precede 'override'
+  × 'static' must precede 'override'
   
-    10 │     override static base2: string;
-    11 │     // abstract
-  > 12 │     override abstract base3: string;
-       │              ^^^^^^^^
-    13 │     // override
-    14 │     readonly override base4: string;
+     9 │     readonly static c: string;
+    10 │     accessor static d: string;
+  > 11 │     override static base2: string;
+       │              ^^^^^^
+    12 │     // Accessor
+    13 │     readonly accessor e: string;
   
   i move this modifier
   
-    10 │     override static base2: string;
-    11 │     // abstract
-  > 12 │     override abstract base3: string;
-       │              ^^^^^^^^
-    13 │     // override
-    14 │     readonly override base4: string;
+     9 │     readonly static c: string;
+    10 │     accessor static d: string;
+  > 11 │     override static base2: string;
+       │              ^^^^^^
+    12 │     // Accessor
+    13 │     readonly accessor e: string;
   
   i before this modifier
   
-    10 │     override static base2: string;
-    11 │     // abstract
-  > 12 │     override abstract base3: string;
+     9 │     readonly static c: string;
+    10 │     accessor static d: string;
+  > 11 │     override static base2: string;
        │     ^^^^^^^^
-    13 │     // override
-    14 │     readonly override base4: string;
+    12 │     // Accessor
+    13 │     readonly accessor e: string;
+  
+--
+ts_class_modifier_precedence.ts:13:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × 'accessor' must precede 'readonly'
+  
+    11 │     override static base2: string;
+    12 │     // Accessor
+  > 13 │     readonly accessor e: string;
+       │              ^^^^^^^^
+    14 │     override accessor f: string;
+    15 │     // abstract
+  
+  i move this modifier
+  
+    11 │     override static base2: string;
+    12 │     // Accessor
+  > 13 │     readonly accessor e: string;
+       │              ^^^^^^^^
+    14 │     override accessor f: string;
+    15 │     // abstract
+  
+  i before this modifier
+  
+    11 │     override static base2: string;
+    12 │     // Accessor
+  > 13 │     readonly accessor e: string;
+       │     ^^^^^^^^
+    14 │     override accessor f: string;
+    15 │     // abstract
   
 --
 ts_class_modifier_precedence.ts:14:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × 'override' must precede 'readonly'
+  × 'accessor' cannot be used with 'override' modifier.
   
-    12 │     override abstract base3: string;
-    13 │     // override
-  > 14 │     readonly override base4: string;
+    12 │     // Accessor
+    13 │     readonly accessor e: string;
+  > 14 │     override accessor f: string;
        │              ^^^^^^^^
-    15 │ }
-    16 │ 
+    15 │     // abstract
+    16 │     override abstract base3: string;
+  
+  i 'accessor' modifier
+  
+    12 │     // Accessor
+    13 │     readonly accessor e: string;
+  > 14 │     override accessor f: string;
+       │              ^^^^^^^^
+    15 │     // abstract
+    16 │     override abstract base3: string;
+  
+  i 'override' modifier
+  
+    12 │     // Accessor
+    13 │     readonly accessor e: string;
+  > 14 │     override accessor f: string;
+       │     ^^^^^^^^
+    15 │     // abstract
+    16 │     override abstract base3: string;
+  
+--
+ts_class_modifier_precedence.ts:16:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × 'abstract' must precede 'override'
+  
+    14 │     override accessor f: string;
+    15 │     // abstract
+  > 16 │     override abstract base3: string;
+       │              ^^^^^^^^
+    17 │     // override
+    18 │     readonly override base4: string;
   
   i move this modifier
   
-    12 │     override abstract base3: string;
-    13 │     // override
-  > 14 │     readonly override base4: string;
+    14 │     override accessor f: string;
+    15 │     // abstract
+  > 16 │     override abstract base3: string;
        │              ^^^^^^^^
-    15 │ }
-    16 │ 
+    17 │     // override
+    18 │     readonly override base4: string;
   
   i before this modifier
   
-    12 │     override abstract base3: string;
-    13 │     // override
-  > 14 │     readonly override base4: string;
+    14 │     override accessor f: string;
+    15 │     // abstract
+  > 16 │     override abstract base3: string;
        │     ^^^^^^^^
-    15 │ }
-    16 │ 
+    17 │     // override
+    18 │     readonly override base4: string;
+  
+--
+ts_class_modifier_precedence.ts:18:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × 'override' must precede 'readonly'
+  
+    16 │     override abstract base3: string;
+    17 │     // override
+  > 18 │     readonly override base4: string;
+       │              ^^^^^^^^
+    19 │ }
+    20 │ 
+  
+  i move this modifier
+  
+    16 │     override abstract base3: string;
+    17 │     // override
+  > 18 │     readonly override base4: string;
+       │              ^^^^^^^^
+    19 │ }
+    20 │ 
+  
+  i before this modifier
+  
+    16 │     override abstract base3: string;
+    17 │     // override
+  > 18 │     readonly override base4: string;
+       │     ^^^^^^^^
+    19 │ }
+    20 │ 
   
 --
 class Base { base1; base2; base3; base4;}
@@ -658,7 +853,11 @@ abstract class Test extends Base {
     abstract protected d: string;
     // Static
     readonly static c: string;
+    accessor static d: string;
     override static base2: string;
+    // Accessor
+    readonly accessor e: string;
+    override accessor f: string;
     // abstract
     override abstract base3: string;
     // override

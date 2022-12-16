@@ -314,17 +314,49 @@ JsModule {
                         SEMICOLON@443..444 ";" [] [],
                     ],
                 },
+                JsBogusMember {
+                    items: [
+                        TsPropertySignatureModifierList [
+                            TsDeclareModifier {
+                                modifier_token: DECLARE_KW@444..457 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                            },
+                            JsAccessorModifier {
+                                modifier_token: ACCESSOR_KW@457..466 "accessor" [] [Whitespace(" ")],
+                            },
+                        ],
+                        JsLiteralMemberName {
+                            value: IDENT@466..467 "p" [] [],
+                        },
+                        SEMICOLON@467..468 ";" [] [],
+                    ],
+                },
+                JsBogusMember {
+                    items: [
+                        JsPropertyModifierList [
+                            JsAccessorModifier {
+                                modifier_token: ACCESSOR_KW@468..482 "accessor" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")],
+                            },
+                            JsAccessorModifier {
+                                modifier_token: ACCESSOR_KW@482..491 "accessor" [] [Whitespace(" ")],
+                            },
+                        ],
+                        JsLiteralMemberName {
+                            value: IDENT@491..492 "r" [] [],
+                        },
+                        SEMICOLON@492..493 ";" [] [],
+                    ],
+                },
             ],
-            r_curly_token: R_CURLY@444..446 "}" [Newline("\n")] [],
+            r_curly_token: R_CURLY@493..495 "}" [Newline("\n")] [],
         },
     ],
-    eof_token: EOF@446..447 "" [Newline("\n")] [],
+    eof_token: EOF@495..496 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..447
+0: JS_MODULE@0..496
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..446
+  2: JS_MODULE_ITEM_LIST@0..495
     0: JS_CLASS_DECLARATION@0..28
       0: (empty)
       1: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
@@ -350,7 +382,7 @@ JsModule {
           3: (empty)
           4: SEMICOLON@25..27 ";" [] [Whitespace(" ")]
       8: R_CURLY@27..28 "}" [] []
-    1: JS_CLASS_DECLARATION@28..446
+    1: JS_CLASS_DECLARATION@28..495
       0: ABSTRACT_KW@28..38 "abstract" [Newline("\n")] [Whitespace(" ")]
       1: CLASS_KW@38..44 "class" [] [Whitespace(" ")]
       2: JS_IDENTIFIER_BINDING@44..49
@@ -364,7 +396,7 @@ JsModule {
         2: (empty)
       5: (empty)
       6: L_CURLY@62..63 "{" [] []
-      7: JS_CLASS_MEMBER_LIST@63..444
+      7: JS_CLASS_MEMBER_LIST@63..493
         0: JS_BOGUS_MEMBER@63..92
           0: JS_PROPERTY_MODIFIER_LIST@63..86
             0: TS_OVERRIDE_MODIFIER@63..77
@@ -514,8 +546,26 @@ JsModule {
             0: HASH@441..442 "#" [] []
             1: IDENT@442..443 "l" [] []
           2: SEMICOLON@443..444 ";" [] []
-      8: R_CURLY@444..446 "}" [Newline("\n")] []
-  3: EOF@446..447 "" [Newline("\n")] []
+        16: JS_BOGUS_MEMBER@444..468
+          0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@444..466
+            0: TS_DECLARE_MODIFIER@444..457
+              0: DECLARE_KW@444..457 "declare" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+            1: JS_ACCESSOR_MODIFIER@457..466
+              0: ACCESSOR_KW@457..466 "accessor" [] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@466..467
+            0: IDENT@466..467 "p" [] []
+          2: SEMICOLON@467..468 ";" [] []
+        17: JS_BOGUS_MEMBER@468..493
+          0: JS_PROPERTY_MODIFIER_LIST@468..491
+            0: JS_ACCESSOR_MODIFIER@468..482
+              0: ACCESSOR_KW@468..482 "accessor" [Newline("\n"), Whitespace("    ")] [Whitespace(" ")]
+            1: JS_ACCESSOR_MODIFIER@482..491
+              0: ACCESSOR_KW@482..491 "accessor" [] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@491..492
+            0: IDENT@491..492 "r" [] []
+          2: SEMICOLON@492..493 ";" [] []
+      8: R_CURLY@493..495 "}" [Newline("\n")] []
+  3: EOF@495..496 "" [Newline("\n")] []
 --
 ts_class_invalid_modifier_combinations.ts:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -940,7 +990,7 @@ ts_class_invalid_modifier_combinations.ts:17:5 parse ━━━━━━━━━
   > 17 │     declare async m();
        │     ^^^^^^^
     18 │     declare #l;
-    19 │ }
+    19 │     declare accessor p;
   
 --
 ts_class_invalid_modifier_combinations.ts:18:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -951,8 +1001,68 @@ ts_class_invalid_modifier_combinations.ts:18:5 parse ━━━━━━━━━
     17 │     declare async m();
   > 18 │     declare #l;
        │     ^^^^^^^
-    19 │ }
-    20 │ 
+    19 │     declare accessor p;
+    20 │     accessor accessor r;
+  
+--
+ts_class_invalid_modifier_combinations.ts:19:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × 'declare' cannot be used with 'accessor' modifier.
+  
+    17 │     declare async m();
+    18 │     declare #l;
+  > 19 │     declare accessor p;
+       │     ^^^^^^^
+    20 │     accessor accessor r;
+    21 │ }
+  
+  i 'declare' modifier
+  
+    17 │     declare async m();
+    18 │     declare #l;
+  > 19 │     declare accessor p;
+       │     ^^^^^^^
+    20 │     accessor accessor r;
+    21 │ }
+  
+  i 'accessor' modifier
+  
+    17 │     declare async m();
+    18 │     declare #l;
+  > 19 │     declare accessor p;
+       │             ^^^^^^^^
+    20 │     accessor accessor r;
+    21 │ }
+  
+--
+ts_class_invalid_modifier_combinations.ts:20:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × 'accessor' already seen
+  
+    18 │     declare #l;
+    19 │     declare accessor p;
+  > 20 │     accessor accessor r;
+       │              ^^^^^^^^
+    21 │ }
+    22 │ 
+  
+  i duplicate modifier
+  
+    18 │     declare #l;
+    19 │     declare accessor p;
+  > 20 │     accessor accessor r;
+       │              ^^^^^^^^
+    21 │ }
+    22 │ 
+  
+  i first seen here
+  
+    18 │     declare #l;
+    19 │     declare accessor p;
+  > 20 │     accessor accessor r;
+       │     ^^^^^^^^
+    21 │ }
+    22 │ 
   
 --
 class Base { base1; base2; }
@@ -973,4 +1083,6 @@ abstract class Test extends Base {
     abstract async l();
     declare async m();
     declare #l;
+    declare accessor p;
+    accessor accessor r;
 }

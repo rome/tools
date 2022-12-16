@@ -3,6 +3,14 @@
 use crate::{generated::nodes::*, JsSyntaxToken as SyntaxToken};
 use rome_rowan::AstNode;
 use std::iter::once;
+impl JsAccessorModifier {
+    pub fn with_modifier_token(self, element: SyntaxToken) -> Self {
+        Self::unwrap_cast(
+            self.syntax
+                .splice_slots(0usize..=0usize, once(Some(element.into()))),
+        )
+    }
+}
 impl JsArrayAssignmentPattern {
     pub fn with_l_brack_token(self, element: SyntaxToken) -> Self {
         Self::unwrap_cast(

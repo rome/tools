@@ -298,6 +298,14 @@ export interface Nursery {
 	 */
 	noBannedTypes?: RuleConfiguration;
 	/**
+	 * Disallow reassigning class members.
+	 */
+	noClassAssign?: RuleConfiguration;
+	/**
+	 * Disallow comma operator.
+	 */
+	noCommaOperator?: RuleConfiguration;
+	/**
 	 * Disallow TypeScript const enum
 	 */
 	noConstEnum?: RuleConfiguration;
@@ -354,6 +362,10 @@ export interface Nursery {
 	 */
 	noRestrictedGlobals?: RuleConfiguration;
 	/**
+	 * Disallow comparisons where both sides are exactly the same.
+	 */
+	noSelfCompare?: RuleConfiguration;
+	/**
 	 * Disallow returning a value from a setter
 	 */
 	noSetterReturn?: RuleConfiguration;
@@ -377,6 +389,10 @@ export interface Nursery {
 	 * Disallow returning a value from a function with the return type 'void'
 	 */
 	noVoidTypeReturn?: RuleConfiguration;
+	/**
+	 * Disallow with statements in non-strict contexts.
+	 */
+	noWith?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
@@ -696,7 +712,10 @@ export type Category =
 	| "lint/correctness/useValidForDirection"
 	| "lint/nursery/noAccessKey"
 	| "lint/nursery/noAssignInExpressions"
+	| "lint/nursery/noWith"
 	| "lint/nursery/noBannedTypes"
+	| "lint/nursery/noClassAssign"
+	| "lint/nursery/noCommaOperator"
 	| "lint/nursery/noConstEnum"
 	| "lint/nursery/noConstructorReturn"
 	| "lint/nursery/noDistractingElements"
@@ -710,6 +729,7 @@ export type Category =
 	| "lint/nursery/noRedundantAlt"
 	| "lint/nursery/noRedundantUseStrict"
 	| "lint/nursery/noRestrictedGlobals"
+	| "lint/nursery/noSelfCompare"
 	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnsafeFinally"

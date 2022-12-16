@@ -44,7 +44,10 @@ define_dategories! {
     // nursery
     "lint/nursery/noAccessKey": "https://docs.rome.tools/lint/rules/noAccessKey",
     "lint/nursery/noAssignInExpressions": "https://docs.rome.tools/lint/rules/noAssignInExpressions",
+    "lint/nursery/noWith": "https://docs.rome.tools/lint/rules/noWith",
     "lint/nursery/noBannedTypes":"https://docs.rome.tools/lint/rules/noBannedTypes",
+    "lint/nursery/noClassAssign": "https://docs.rome.tools/lint/rules/noClassAssign",
+    "lint/nursery/noCommaOperator": "https://docs.rome.tools/lint/rules/noCommaOperator",
     "lint/nursery/noConstEnum": "https://docs.rome.tools/lint/rules/noConstEnum",
     "lint/nursery/noConstructorReturn": "https://docs.rome.tools/lint/rules/noConstructorReturn",
     "lint/nursery/noDistractingElements": "https://docs.rome.tools/lint/rules/noDistractingElements",
@@ -58,6 +61,7 @@ define_dategories! {
     "lint/nursery/noRedundantAlt": "https://docs.rome.tools/lint/rules/noRedundantAlt",
     "lint/nursery/noRedundantUseStrict": "https://docs.rome.tools/lint/rules/noRedundantUseStrict",
     "lint/nursery/noRestrictedGlobals": "https://docs.rome.tools/lint/rules/noRestrictedGlobals",
+    "lint/nursery/noSelfCompare": "https://docs.rome.tools/lint/rules/noSelfCompare",
     "lint/nursery/noSetterReturn": "https://docs.rome.tools/lint/rules/noSetterReturn",
     "lint/nursery/noStringCaseMismatch": "https://docs.rome.tools/lint/rules/noStringCaseMismatch",
     "lint/nursery/noUnsafeFinally": "https://docs.rome.tools/lint/rules/noUnsafeFinally",
@@ -77,6 +81,7 @@ define_dategories! {
     "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
     "lint/nursery/useHookAtTopLevel": "https://docs.rome.tools/lint/rules/useHookAtTopLevel",
     "lint/nursery/noControlCharactersInRegex": "https://docs.rome.tools/lint/rules/noControlCharactersInRegex",
+    // Insert new nursery rule here
 
     // performance
     "lint/performance/noDelete": "https://docs.rome.tools/lint/rules/noDelete",

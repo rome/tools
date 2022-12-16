@@ -35,6 +35,7 @@ pub mod prelude;
 #[cfg(debug_assertions)]
 pub mod printed_tokens;
 pub mod printer;
+pub mod separated;
 mod source_map;
 pub mod trivia;
 mod verbatim;

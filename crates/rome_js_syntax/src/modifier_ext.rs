@@ -10,6 +10,7 @@ pub enum Modifiers {
     Accessibility,
     Declare,
     Static,
+    Accessor,
     Abstract,
     Override,
     Readonly,
@@ -49,6 +50,7 @@ impl From<&AnyJsPropertyModifier> for Modifiers {
     fn from(modifier: &AnyJsPropertyModifier) -> Self {
         match modifier {
             AnyJsPropertyModifier::JsStaticModifier(_) => Modifiers::Static,
+            AnyJsPropertyModifier::JsAccessorModifier(_) => Modifiers::Accessor,
             AnyJsPropertyModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
             AnyJsPropertyModifier::TsOverrideModifier(_) => Modifiers::Override,
             AnyJsPropertyModifier::TsReadonlyModifier(_) => Modifiers::Readonly,
@@ -72,6 +74,7 @@ impl From<&AnyTsPropertySignatureModifier> for Modifiers {
             AnyTsPropertySignatureModifier::TsAccessibilityModifier(_) => Modifiers::Accessibility,
             AnyTsPropertySignatureModifier::TsDeclareModifier(_) => Modifiers::Declare,
             AnyTsPropertySignatureModifier::JsStaticModifier(_) => Modifiers::Static,
+            AnyTsPropertySignatureModifier::JsAccessorModifier(_) => Modifiers::Accessor,
             AnyTsPropertySignatureModifier::TsAbstractModifier(_) => Modifiers::Abstract,
             AnyTsPropertySignatureModifier::TsOverrideModifier(_) => Modifiers::Override,
             AnyTsPropertySignatureModifier::TsReadonlyModifier(_) => Modifiers::Readonly,

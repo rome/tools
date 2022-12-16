@@ -6,6 +6,7 @@ pub(crate) use crate::{
     FormattedIterExt, JsFormatContext, JsFormatter,
 };
 pub use rome_formatter::prelude::*;
+pub use rome_formatter::separated::TrailingSeparator;
 pub use rome_rowan::{AstNode as _, AstNodeList as _, AstSeparatedList as _};
 
-pub use crate::separated::{FormatAstSeparatedListExtension, TrailingSeparator};
+pub(crate) use crate::separated::FormatAstSeparatedListExtension;
