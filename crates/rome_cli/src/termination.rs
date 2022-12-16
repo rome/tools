@@ -241,11 +241,6 @@ impl TerminationDiagnostic {
         self.source = Some(error);
         self
     }
-
-    fn with_tags(mut self, tags: DiagnosticTags) -> Self {
-        self.tags |= tags;
-        self
-    }
 }
 
 impl Diagnostic for TerminationDiagnostic {
