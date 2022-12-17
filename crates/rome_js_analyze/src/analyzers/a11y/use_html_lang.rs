@@ -113,24 +113,30 @@ fn is_valid_lang_attribute(attr: JsxAttribute) -> Option<()> {
     if let AnyJsxAttributeValue::JsxExpressionAttributeValue(expression) = attribute_value {
         let expression = expression.expression().ok()?;
 
-        if let Some(identifier_expression) = expression.as_js_identifier_expression() {
-            if !identifier_expression.text().is_empty() {
-                return Some(());
-            }
-            return None;
+        if expression.as_js_identifier_expression().is_some() {
+            return Some(());
         }
 
-        let bool_expression = expression
+        if let Some(template_expression) = expression.as_js_template_expression() {
+            let template_element = template_expression
+                .elements()
+                .into_iter()
+                .find(|element| element.as_js_template_chunk_element().is_some());
+
+            if template_element.is_some() {
+                return Some(());
+            };
+        }
+
+        expression
             .as_any_js_literal_expression()?
             .as_js_boolean_literal_expression();
-        if bool_expression.is_some() {
-            return None;
-        }
 
         let string_expression = expression
             .as_any_js_literal_expression()?
             .as_js_string_literal_expression()?;
         let string_expression_text = string_expression.inner_string_text().ok()?;
+
         if string_expression_text.is_empty() {
             return None;
         }
