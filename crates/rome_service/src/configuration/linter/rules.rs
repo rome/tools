@@ -2131,7 +2131,7 @@ pub struct Style {
     #[doc = "When expressing array types, this rule promotes the usage of T[] shorthand instead of Array<T>."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_shorthand_array_type: Option<RuleConfiguration>,
-    #[doc = "Enforces case clauses have a single statement, emits a quick fix wrapping the statements in a block"]
+    #[doc = "Enforces switch clauses have a single statement, emits a quick fix wrapping the statements in a block."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_single_case_statement: Option<RuleConfiguration>,
     #[doc = "Disallow multiple variable declarations in the same variable statement"]

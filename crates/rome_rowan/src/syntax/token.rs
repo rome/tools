@@ -188,20 +188,16 @@ impl<L: Language> SyntaxToken<L> {
         }
     }
 
-    /// Return the leading whitespace and newline until the first leading newline or token.
-    pub fn indentation_trivia(&self) -> Vec<SyntaxTriviaPiece<L>> {
+    /// Return whitespace and newlines that juxtapose the token until the first non-whitespace item.
+    pub fn indentation_trivia(&self) -> impl ExactSizeIterator<Item = SyntaxTriviaPiece<L>> {
         let leading_trivia = self.leading_trivia().pieces();
         let skip_count = leading_trivia.len()
             - leading_trivia
                 .rev()
-                .position(|x| x.is_newline())
+                .position(|x| !x.is_whitespace())
                 .map(|pos| pos + 1)
                 .unwrap_or(0);
-        self.leading_trivia()
-            .pieces()
-            .skip(skip_count)
-            .filter(|x| x.is_newline() || x.is_whitespace())
-            .collect::<Vec<_>>()
+        self.leading_trivia().pieces().skip(skip_count)
     }
 
     /// Return a new version of this token with its leading trivia replaced with `trivia`
