@@ -12,6 +12,7 @@ expression: invalid.jsx
 	<iframe title="" />
 	<iframe title={""} />
 	<iframe title={``} />
+	<iframe title={<span className={"token string"}></span>}></iframe>
 	<iframe title={undefined} />
 	<iframe title={false} />
 	<iframe title={true} />
@@ -24,7 +25,7 @@ expression: invalid.jsx
 ```
 invalid.jsx:3:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide an explicit title prop for the iframe element.
+  ! Provide a title attribute when using iframe elements.
   
     1 │ <>
     2 │ 	{/* invalid */}
@@ -33,13 +34,15 @@ invalid.jsx:3:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━
     4 │ 	<iframe></iframe>
     5 │ 	<iframe {...props} />
   
+  i Screen readers rely on the title set on an iframe to describe the content being displayed.
+  
 
 ```
 
 ```
 invalid.jsx:4:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide an explicit title prop for the iframe element.
+  ! Provide a title attribute when using iframe elements.
   
     2 │ 	{/* invalid */}
     3 │ 	<iframe />
@@ -48,13 +51,15 @@ invalid.jsx:4:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━
     5 │ 	<iframe {...props} />
     6 │ 	<iframe title="" />
   
+  i Screen readers rely on the title set on an iframe to describe the content being displayed.
+  
 
 ```
 
 ```
 invalid.jsx:5:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide an explicit title prop for the iframe element.
+  ! Provide a title attribute when using iframe elements.
   
     3 │ 	<iframe />
     4 │ 	<iframe></iframe>
@@ -63,13 +68,15 @@ invalid.jsx:5:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━
     6 │ 	<iframe title="" />
     7 │ 	<iframe title={""} />
   
+  i Screen readers rely on the title set on an iframe to describe the content being displayed.
+  
 
 ```
 
 ```
 invalid.jsx:6:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide a valid title prop for the iframe element.
+  ! Provide a title attribute when using iframe elements.
   
     4 │ 	<iframe></iframe>
     5 │ 	<iframe {...props} />
@@ -78,20 +85,24 @@ invalid.jsx:6:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━
     7 │ 	<iframe title={""} />
     8 │ 	<iframe title={``} />
   
+  i Screen readers rely on the title set on an iframe to describe the content being displayed.
+  
 
 ```
 
 ```
 invalid.jsx:7:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide a valid title prop for the iframe element.
+  ! Provide a title attribute when using iframe elements.
   
     5 │ 	<iframe {...props} />
     6 │ 	<iframe title="" />
   > 7 │ 	<iframe title={""} />
       │ 	^^^^^^^^^^^^^^^^^^^^^
     8 │ 	<iframe title={``} />
-    9 │ 	<iframe title={undefined} />
+    9 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
+  
+  i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
 
 ```
@@ -99,14 +110,16 @@ invalid.jsx:7:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━
 ```
 invalid.jsx:8:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide a valid title prop for the iframe element.
+  ! Provide a title attribute when using iframe elements.
   
      6 │ 	<iframe title="" />
      7 │ 	<iframe title={""} />
    > 8 │ 	<iframe title={``} />
        │ 	^^^^^^^^^^^^^^^^^^^^^
-     9 │ 	<iframe title={undefined} />
-    10 │ 	<iframe title={false} />
+     9 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
+    10 │ 	<iframe title={undefined} />
+  
+  i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
 
 ```
@@ -114,14 +127,16 @@ invalid.jsx:8:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━
 ```
 invalid.jsx:9:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide a valid title prop for the iframe element.
+  ! Provide a title attribute when using iframe elements.
   
      7 │ 	<iframe title={""} />
      8 │ 	<iframe title={``} />
-   > 9 │ 	<iframe title={undefined} />
-       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    10 │ 	<iframe title={false} />
-    11 │ 	<iframe title={true} />
+   > 9 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │ 	<iframe title={undefined} />
+    11 │ 	<iframe title={false} />
+  
+  i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
 
 ```
@@ -129,14 +144,16 @@ invalid.jsx:9:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━
 ```
 invalid.jsx:10:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide a valid title prop for the iframe element.
+  ! Provide a title attribute when using iframe elements.
   
      8 │ 	<iframe title={``} />
-     9 │ 	<iframe title={undefined} />
-  > 10 │ 	<iframe title={false} />
-       │ 	^^^^^^^^^^^^^^^^^^^^^^^^
-    11 │ 	<iframe title={true} />
-    12 │ 	<iframe title={42} />
+     9 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
+  > 10 │ 	<iframe title={undefined} />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ 	<iframe title={false} />
+    12 │ 	<iframe title={true} />
+  
+  i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
 
 ```
@@ -144,14 +161,16 @@ invalid.jsx:10:2 lint/nursery/useIframeTitle ━━━━━━━━━━━�
 ```
 invalid.jsx:11:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide a valid title prop for the iframe element.
+  ! Provide a title attribute when using iframe elements.
   
-     9 │ 	<iframe title={undefined} />
-    10 │ 	<iframe title={false} />
-  > 11 │ 	<iframe title={true} />
-       │ 	^^^^^^^^^^^^^^^^^^^^^^^
-    12 │ 	<iframe title={42} />
-    13 │ </>;
+     9 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
+    10 │ 	<iframe title={undefined} />
+  > 11 │ 	<iframe title={false} />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^^
+    12 │ 	<iframe title={true} />
+    13 │ 	<iframe title={42} />
+  
+  i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
 
 ```
@@ -159,14 +178,33 @@ invalid.jsx:11:2 lint/nursery/useIframeTitle ━━━━━━━━━━━�
 ```
 invalid.jsx:12:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide a valid title prop for the iframe element.
+  ! Provide a title attribute when using iframe elements.
   
-    10 │ 	<iframe title={false} />
-    11 │ 	<iframe title={true} />
-  > 12 │ 	<iframe title={42} />
+    10 │ 	<iframe title={undefined} />
+    11 │ 	<iframe title={false} />
+  > 12 │ 	<iframe title={true} />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^
+    13 │ 	<iframe title={42} />
+    14 │ </>;
+  
+  i Screen readers rely on the title set on an iframe to describe the content being displayed.
+  
+
+```
+
+```
+invalid.jsx:13:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a title attribute when using iframe elements.
+  
+    11 │ 	<iframe title={false} />
+    12 │ 	<iframe title={true} />
+  > 13 │ 	<iframe title={42} />
        │ 	^^^^^^^^^^^^^^^^^^^^^
-    13 │ </>;
-    14 │ 
+    14 │ </>;
+    15 │ 
+  
+  i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
 
 ```
