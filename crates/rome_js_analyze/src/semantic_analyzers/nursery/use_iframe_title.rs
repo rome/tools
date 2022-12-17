@@ -108,7 +108,7 @@ impl Rule for UseIframeTitle {
                     None
                 }
                 None => {
-                    // the title attribute is not a string (boolean, number, function, identifier...)
+                    // the title attribute is not a string
                     let expression = attribute_value
                         .as_jsx_expression_attribute_value()?
                         .expression()
@@ -119,7 +119,7 @@ impl Rule for UseIframeTitle {
                         if text.text_trimmed() == "undefined" || text.text_trimmed() == "null" {
                             return Some(UseIframeTitleState { node: node.clone() });
                         } else {
-                            // assuems identifier is a string type
+                            // we assueme the identifier is a string type
                             return None;
                         }
                     }
@@ -128,7 +128,7 @@ impl Rule for UseIframeTitle {
                 }
             }
         } else {
-            // the iframe has some attributes but no `title` attribute. e.g. <iframe {...props} />
+            // the iframe has some attributes but no `title` attribute. (e.g. <iframe {...props} />)
             Some(UseIframeTitleState { node: node.clone() })
         }
     }
