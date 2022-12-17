@@ -11,9 +11,24 @@ impl FormatNodeRule<TsInferType> for FormatTsInferType {
     fn fmt_fields(&self, node: &TsInferType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsInferTypeFields {
             infer_token,
-            type_parameter,
+            name,
+            constraint,
         } = node.as_fields();
-        write![f, [infer_token.format(), space(), type_parameter.format()]]
+
+        if constraint.is_none() {
+            write![f, [infer_token.format(), space(), name.format()]]
+        } else {
+            write![
+                f,
+                [
+                    infer_token.format(),
+                    space(),
+                    name.format(),
+                    space(),
+                    constraint.format()
+                ]
+            ]
+        }
     }
 
     fn needs_parentheses(&self, item: &TsInferType) -> bool {

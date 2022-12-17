@@ -88,6 +88,9 @@ pub(crate) struct ParserState {
     /// Stores the token positions of all syntax that looks like an arrow expressions but aren't one.
     /// Optimization to reduce the back-tracking required when parsing parenthesized and arrow function expressions.
     pub(crate) not_parenthesized_arrow: HashSet<TextSize>,
+
+    /// TODO
+    pub(crate) allow_conditional_type: bool,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -111,6 +114,7 @@ impl ParserState {
             duplicate_binding_parent: None,
             not_parenthesized_arrow: Default::default(),
             speculative_parsing: false,
+            allow_conditional_type: true,
         };
 
         if source_type.module_kind().is_module() {
