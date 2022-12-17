@@ -207,6 +207,15 @@ invalid.js:5:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━━
     6 │ 		break;
     7 │ 	case 2:
   
+  i The first similar label is here:
+  
+    1 │ var a = 1;
+    2 │ switch (a) {
+  > 3 │ 	case 1:
+      │ 	     ^
+    4 │ 		break;
+    5 │ 	case 1:
+  
 
 ```
 
@@ -221,6 +230,15 @@ invalid.js:16:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━�
        │ 	     ^^^
     17 │ 		break;
     18 │ 	case "2":
+  
+  i The first similar label is here:
+  
+    12 │ var a = "1";
+    13 │ switch (a) {
+  > 14 │ 	case "1":
+       │ 	     ^^^
+    15 │ 		break;
+    16 │ 	case "1":
   
 
 ```
@@ -237,6 +255,15 @@ invalid.js:28:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━�
     29 │ 		break;
     30 │ 	case 2:
   
+  i The first similar label is here:
+  
+    24 │ 	one = 1;
+    25 │ switch (a) {
+  > 26 │ 	case one:
+       │ 	     ^^^
+    27 │ 		break;
+    28 │ 	case one:
+  
 
 ```
 
@@ -251,6 +278,15 @@ invalid.js:40:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━�
        │ 	     ^^^^^^
     41 │ 		break;
     42 │ 	default:
+  
+  i The first similar label is here:
+  
+    36 │ 	p = { p: { p1: 1, p2: 1 } };
+    37 │ switch (a) {
+  > 38 │ 	case p.p.p1:
+       │ 	     ^^^^^^
+    39 │ 		break;
+    40 │ 	case p.p.p1:
   
 
 ```
@@ -267,6 +303,15 @@ invalid.js:52:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━�
     53 │ 		break;
     54 │ 	default:
   
+  i The first similar label is here:
+  
+    48 │ 	};
+    49 │ switch (a) {
+  > 50 │ 	case f(true).p1:
+       │ 	     ^^^^^^^^^^
+    51 │ 		break;
+    52 │ 	case f(true).p1:
+  
 
 ```
 
@@ -281,6 +326,15 @@ invalid.js:64:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━�
        │ 	     ^^^^^^^^^^^
     65 │ 		break;
     66 │ 	default:
+  
+  i The first similar label is here:
+  
+    60 │ 	};
+    61 │ switch (a) {
+  > 62 │ 	case f(a + 1).p1:
+       │ 	     ^^^^^^^^^^^
+    63 │ 		break;
+    64 │ 	case f(a + 1).p1:
   
 
 ```
@@ -297,6 +351,15 @@ invalid.js:76:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━�
     77 │ 		break;
     78 │ 	default:
   
+  i The first similar label is here:
+  
+    72 │ 	};
+    73 │ switch (a) {
+  > 74 │ 	case f(a === 1 ? 2 : 3).p1:
+       │ 	     ^^^^^^^^^^^^^^^^^^^^^
+    75 │ 		break;
+    76 │ 	case f(a === 1 ? 2 : 3).p1:
+  
 
 ```
 
@@ -311,6 +374,15 @@ invalid.js:88:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━�
        │ 	     ^^^^^^^
     89 │ 		break;
     90 │ 	default:
+  
+  i The first similar label is here:
+  
+    84 │ 	};
+    85 │ switch (a) {
+  > 86 │ 	case f1().p1:
+       │ 	     ^^^^^^^
+    87 │ 		break;
+    88 │ 	case f1().p1:
   
 
 ```
@@ -327,6 +399,15 @@ invalid.js:97:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━�
     98 │ 		break;
     99 │ 	default:
   
+  i The first similar label is here:
+  
+    93 │ var a = [1, 2];
+    94 │ switch (a.toString()) {
+  > 95 │ 	case [1, 2].toString():
+       │ 	     ^^^^^^^^^^^^^^^^^
+    96 │ 		break;
+    97 │ 	case [1, 2].toString():
+  
 
 ```
 
@@ -341,6 +422,15 @@ invalid.js:104:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━�
         │ 	     ^
     105 │ }
     106 │ switch (a) {
+  
+  i The first similar label is here:
+  
+    101 │ }
+    102 │ switch (a) {
+  > 103 │ 	case a:
+        │ 	     ^
+    104 │ 	case a:
+    105 │ }
   
 
 ```
@@ -357,6 +447,15 @@ invalid.js:111:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━�
     112 │ 		break;
     113 │ 	case c:
   
+  i The first similar label is here:
+  
+    105 │ }
+    106 │ switch (a) {
+  > 107 │ 	case a:
+        │ 	     ^
+    108 │ 		break;
+    109 │ 	case b:
+  
 
 ```
 
@@ -371,6 +470,15 @@ invalid.js:115:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━�
         │ 	     ^
     116 │ 		break;
     117 │ }
+  
+  i The first similar label is here:
+  
+    105 │ }
+    106 │ switch (a) {
+  > 107 │ 	case a:
+        │ 	     ^
+    108 │ 		break;
+    109 │ 	case b:
   
 
 ```
@@ -387,6 +495,15 @@ invalid.js:123:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━�
     124 │ 		break;
     125 │ 	default:
   
+  i The first similar label is here:
+  
+    119 │ 	p = { p: { p1: 1, p2: 1 } };
+    120 │ switch (a) {
+  > 121 │ 	case p.p.p1:
+        │ 	     ^^^^^^
+    122 │ 		break;
+    123 │ 	case p.p.p1: // comment\n
+  
 
 ```
 
@@ -401,6 +518,39 @@ invalid.js:134:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━�
         │ 	     ^^^^^^
     135 │ 		break;
     136 │ 	default:
+  
+  i The first similar label is here:
+  
+    130 │ switch (a) {
+    131 │ 	case /* comment */
+  > 132 │ 	p.p.p1:
+        │ 	^^^^^^
+    133 │ 		break;
+    134 │ 	case p.p.p1:
+  
+
+```
+
+```
+invalid.js:144:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate case label.
+  
+    142 │ 	case p.p /* comment */.p1:
+    143 │ 		break;
+  > 144 │ 	case p.p.p1: // comment
+        │ 	     ^^^^^^
+    145 │ 		break;
+    146 │ 	default:
+  
+  i The first similar label is here:
+  
+    140 │ 	p = { p: { p1: 1, p2: 1 } };
+    141 │ switch (a) {
+  > 142 │ 	case p.p /* comment */.p1:
+        │ 	     ^^^^^^^^^^^^^^^^^^^^
+    143 │ 		break;
+    144 │ 	case p.p.p1: // comment
   
 
 ```
@@ -417,6 +567,15 @@ invalid.js:154:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━�
     155 │ 		break;
     156 │ 	case /* comment */
   
+  i The first similar label is here:
+  
+    150 │ 	p = { p: { p1: 1, p2: 1 } };
+    151 │ switch (a) {
+  > 152 │ 	case p.p.p1:
+        │ 	     ^^^^^^
+    153 │ 		break;
+    154 │ 	case p.p.p1: // comment
+  
 
 ```
 
@@ -432,6 +591,15 @@ invalid.js:157:2 lint/nursery/noDuplicateCase ━━━━━━━━━━━�
     158 │ 		break;
     159 │ 	default:
   
+  i The first similar label is here:
+  
+    150 │ 	p = { p: { p1: 1, p2: 1 } };
+    151 │ switch (a) {
+  > 152 │ 	case p.p.p1:
+        │ 	     ^^^^^^
+    153 │ 		break;
+    154 │ 	case p.p.p1: // comment
+  
 
 ```
 
@@ -446,6 +614,42 @@ invalid.js:169:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━�
         │ 	     ^^^^^^^^^^^
     170 │ 		break;
     171 │ 	default:
+  
+  i The first similar label is here:
+  
+    165 │ 	};
+    166 │ switch (a) {
+  > 167 │ 	case f(a + 1).p1:
+        │ 	     ^^^^^^^^^^^
+    168 │ 		break;
+    169 │ 	case f(a + 1).p1:
+  
+
+```
+
+```
+invalid.js:183:7 lint/nursery/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate case label.
+  
+    181 │ 	).p1:
+    182 │ 		break;
+  > 183 │ 	case f(a + 1).p1:
+        │ 	     ^^^^^^^^^^^
+    184 │ 		break;
+    185 │ 	default:
+  
+  i The first similar label is here:
+  
+    177 │ 	};
+    178 │ switch (a) {
+  > 179 │ 	case f(
+        │ 	     ^^
+  > 180 │ 		a + 1 // comment
+  > 181 │ 	).p1:
+        │ 	^^^^
+    182 │ 		break;
+    183 │ 	case f(a + 1).p1:
   
 
 ```

@@ -1,9 +1,8 @@
+use crate::utils::is_node_equal;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
-use rome_js_syntax::{AnyJsSwitchClause, JsCaseClause, JsSwitchStatement};
-use rome_rowan::AstNode;
-use std::collections::hash_map::Entry;
-use std::collections::HashMap;
+use rome_js_syntax::{AnyJsExpression, AnyJsSwitchClause, JsCaseClause, JsSwitchStatement};
+use rome_rowan::{AstNode, TextRange};
 
 declare_rule! {
     /// Disallow duplicate case labels.
@@ -15,7 +14,7 @@ declare_rule! {
     ///
     /// ### Invalid
     ///
-    /// ```ts,expect_diagnostic
+    /// ```js,expect_diagnostic
     /// switch (a) {
     ///     case 1:
     ///         break;
@@ -26,7 +25,7 @@ declare_rule! {
     /// }
     /// ```
     ///
-    /// ```ts,expect_diagnostic
+    /// ```js,expect_diagnostic
     /// switch (a) {
     ///     case one:
     ///         break;
@@ -37,7 +36,7 @@ declare_rule! {
     /// }
     /// ```
     ///
-    /// ```ts,expect_diagnostic
+    /// ```js,expect_diagnostic
     /// switch (a) {
     ///     case "1":
     ///         break;
@@ -50,7 +49,7 @@ declare_rule! {
     ///
     /// ### Valid
     ///
-    /// ```ts
+    /// ```js
     /// switch (a) {
     ///     case 1:
     ///         break;
@@ -61,7 +60,7 @@ declare_rule! {
     /// }
     /// ```
     ///
-    /// ```ts
+    /// ```js
     /// switch (a) {
     ///     case one:
     ///         break;
@@ -72,7 +71,7 @@ declare_rule! {
     /// }
     /// ```
     ///
-    /// ```ts
+    /// ```js
     /// switch (a) {
     ///     case "1":
     ///         break;
@@ -83,7 +82,7 @@ declare_rule! {
     /// }
     /// ```
     pub(crate) NoDuplicateCase {
-        version: "11.0.0",
+        version: "12.0.0",
         name: "noDuplicateCase",
         recommended: true,
     }
@@ -91,27 +90,29 @@ declare_rule! {
 
 impl Rule for NoDuplicateCase {
     type Query = Ast<JsSwitchStatement>;
-    type State = JsCaseClause;
+    type State = (TextRange, JsCaseClause);
     type Signals = Vec<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
 
-        let mut defined_cases: HashMap<String, JsCaseClause> = HashMap::new();
+        let mut defined_tests: Vec<AnyJsExpression> = Vec::new();
         let mut signals = Vec::new();
 
         for case in node.cases() {
             if let AnyJsSwitchClause::JsCaseClause(case) = case {
                 if let Ok(test) = case.test() {
-                    let text = test.text();
+                    let define_test = defined_tests
+                        .iter()
+                        .find(|define_test| is_node_equal(define_test.syntax(), test.syntax()));
 
-                    match defined_cases.entry(text) {
-                        Entry::Occupied(_) => {
-                            signals.push(case);
+                    match define_test {
+                        Some(define_test) => {
+                            signals.push((define_test.range(), case));
                         }
-                        Entry::Vacant(entry) => {
-                            entry.insert(case);
+                        None => {
+                            defined_tests.push(test);
                         }
                     }
                 }
@@ -121,9 +122,11 @@ impl Rule for NoDuplicateCase {
         signals
     }
 
-    fn diagnostic(_: &RuleContext<Self>, case: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(_: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+        let (first_label_range, case) = state;
         case.test().ok().map(|test| {
             RuleDiagnostic::new(rule_category!(), test.range(), "Duplicate case label.")
+                .detail(first_label_range, "The first similar label is here:")
         })
     }
 }

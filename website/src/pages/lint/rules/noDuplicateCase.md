@@ -3,7 +3,7 @@ title: Lint Rule noDuplicateCase
 parent: lint/rules/index
 ---
 
-# noDuplicateCase (since v11.0.0)
+# noDuplicateCase (since v12.0.0)
 
 Disallow duplicate case labels.
 If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.
@@ -14,7 +14,7 @@ Source: https://eslint.org/docs/latest/rules/no-duplicate-case
 
 ### Invalid
 
-```ts
+```jsx
 switch (a) {
     case 1:
         break;
@@ -36,9 +36,17 @@ switch (a) {
     <strong>5 │ </strong>        break;
     <strong>6 │ </strong>    default:
   
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The first similar label is here:</span>
+  
+    <strong>1 │ </strong>switch (a) {
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>    case 1:
+   <strong>   │ </strong>         <strong><span style="color: Tomato;">^</span></strong>
+    <strong>3 │ </strong>        break;
+    <strong>4 │ </strong>    case 1:
+  
 </code></pre>
 
-```ts
+```jsx
 switch (a) {
     case one:
         break;
@@ -60,9 +68,17 @@ switch (a) {
     <strong>5 │ </strong>        break;
     <strong>6 │ </strong>    default:
   
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The first similar label is here:</span>
+  
+    <strong>1 │ </strong>switch (a) {
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>    case one:
+   <strong>   │ </strong>         <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>3 │ </strong>        break;
+    <strong>4 │ </strong>    case one:
+  
 </code></pre>
 
-```ts
+```jsx
 switch (a) {
     case "1":
         break;
@@ -84,11 +100,19 @@ switch (a) {
     <strong>5 │ </strong>        break;
     <strong>6 │ </strong>    default:
   
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The first similar label is here:</span>
+  
+    <strong>1 │ </strong>switch (a) {
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>    case &quot;1&quot;:
+   <strong>   │ </strong>         <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>3 │ </strong>        break;
+    <strong>4 │ </strong>    case &quot;1&quot;:
+  
 </code></pre>
 
 ### Valid
 
-```ts
+```jsx
 switch (a) {
     case 1:
         break;
@@ -99,7 +123,7 @@ switch (a) {
 }
 ```
 
-```ts
+```jsx
 switch (a) {
     case one:
         break;
@@ -110,7 +134,7 @@ switch (a) {
 }
 ```
 
-```ts
+```jsx
 switch (a) {
     case "1":
         break;
