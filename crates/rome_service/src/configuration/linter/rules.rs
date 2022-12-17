@@ -799,10 +799,18 @@ struct NurserySchema {
     use_exponentiation_operator: Option<RuleConfiguration>,
     #[doc = "Enforce that all React hooks are being called from the Top Level component functions."]
     use_hook_at_top_level: Option<RuleConfiguration>,
+<<<<<<< HEAD
     #[doc = "Require calls to isNaN() when checking for NaN."]
     use_is_nan: Option<RuleConfiguration>,
+<<<<<<< HEAD
     #[doc = "Enforces that audio and video elements must have a track for captions."]
     use_media_caption: Option<RuleConfiguration>,
+=======
+=======
+    #[doc = "Enforces the usage of the attribute title for the element iframe"]
+    use_iframe_title: Option<RuleConfiguration>,
+>>>>>>> 3b85ef65dd (feat(rome_js_analyze): useIframeTitle)
+>>>>>>> 37232c45fa (parent 5f1144170e12e78a3e7b32201dc917bff808f47b)
     #[doc = "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals"]
     use_numeric_literals: Option<RuleConfiguration>,
     #[doc = "Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country."]
@@ -849,8 +857,15 @@ impl Nursery {
         "useExhaustiveDependencies",
         "useExponentiationOperator",
         "useHookAtTopLevel",
+<<<<<<< HEAD
         "useIsNan",
+<<<<<<< HEAD
         "useMediaCaption",
+=======
+=======
+        "useIframeTitle",
+>>>>>>> 3b85ef65dd (feat(rome_js_analyze): useIframeTitle)
+>>>>>>> 37232c45fa (parent 5f1144170e12e78a3e7b32201dc917bff808f47b)
         "useNumericLiterals",
         "useValidLang",
     ];
@@ -884,8 +899,15 @@ impl Nursery {
         "useDefaultSwitchClauseLast",
         "useEnumInitializers",
         "useExhaustiveDependencies",
+<<<<<<< HEAD
         "useIsNan",
+<<<<<<< HEAD
         "useMediaCaption",
+=======
+=======
+        "useIframeTitle",
+>>>>>>> 3b85ef65dd (feat(rome_js_analyze): useIframeTitle)
+>>>>>>> 37232c45fa (parent 5f1144170e12e78a3e7b32201dc917bff808f47b)
         "useNumericLiterals",
         "useValidLang",
     ];

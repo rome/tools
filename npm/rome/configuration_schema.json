@@ -1002,8 +1002,13 @@
             }
           ]
         },
+<<<<<<< HEAD
         "useIsNan": {
           "description": "Require calls to isNaN() when checking for NaN.",
+=======
+        "useIframeTitle": {
+          "description": "Enforces the usage of the attribute title for the element iframe",
+>>>>>>> 65e94d93d0 (chore: add configurations)
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

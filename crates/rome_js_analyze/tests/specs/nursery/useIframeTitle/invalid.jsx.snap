@@ -1,0 +1,174 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```js
+<>
+	{/* invalid */}
+	<iframe />
+	<iframe></iframe>
+	<iframe {...props} />
+	<iframe title="" />
+	<iframe title={""} />
+	<iframe title={``} />
+	<iframe title={undefined} />
+	<iframe title={false} />
+	<iframe title={true} />
+	<iframe title={42} />
+</>;
+
+```
+
+# Diagnostics
+```
+invalid.jsx:3:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide an explicit title prop for the iframe element.
+  
+    1 │ <>
+    2 │ 	{/* invalid */}
+  > 3 │ 	<iframe />
+      │ 	^^^^^^^^^^
+    4 │ 	<iframe></iframe>
+    5 │ 	<iframe {...props} />
+  
+
+```
+
+```
+invalid.jsx:4:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide an explicit title prop for the iframe element.
+  
+    2 │ 	{/* invalid */}
+    3 │ 	<iframe />
+  > 4 │ 	<iframe></iframe>
+      │ 	^^^^^^^^
+    5 │ 	<iframe {...props} />
+    6 │ 	<iframe title="" />
+  
+
+```
+
+```
+invalid.jsx:5:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide an explicit title prop for the iframe element.
+  
+    3 │ 	<iframe />
+    4 │ 	<iframe></iframe>
+  > 5 │ 	<iframe {...props} />
+      │ 	^^^^^^^^^^^^^^^^^^^^^
+    6 │ 	<iframe title="" />
+    7 │ 	<iframe title={""} />
+  
+
+```
+
+```
+invalid.jsx:6:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid title prop for the iframe element.
+  
+    4 │ 	<iframe></iframe>
+    5 │ 	<iframe {...props} />
+  > 6 │ 	<iframe title="" />
+      │ 	^^^^^^^^^^^^^^^^^^^
+    7 │ 	<iframe title={""} />
+    8 │ 	<iframe title={``} />
+  
+
+```
+
+```
+invalid.jsx:7:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid title prop for the iframe element.
+  
+    5 │ 	<iframe {...props} />
+    6 │ 	<iframe title="" />
+  > 7 │ 	<iframe title={""} />
+      │ 	^^^^^^^^^^^^^^^^^^^^^
+    8 │ 	<iframe title={``} />
+    9 │ 	<iframe title={undefined} />
+  
+
+```
+
+```
+invalid.jsx:8:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid title prop for the iframe element.
+  
+     6 │ 	<iframe title="" />
+     7 │ 	<iframe title={""} />
+   > 8 │ 	<iframe title={``} />
+       │ 	^^^^^^^^^^^^^^^^^^^^^
+     9 │ 	<iframe title={undefined} />
+    10 │ 	<iframe title={false} />
+  
+
+```
+
+```
+invalid.jsx:9:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid title prop for the iframe element.
+  
+     7 │ 	<iframe title={""} />
+     8 │ 	<iframe title={``} />
+   > 9 │ 	<iframe title={undefined} />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │ 	<iframe title={false} />
+    11 │ 	<iframe title={true} />
+  
+
+```
+
+```
+invalid.jsx:10:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid title prop for the iframe element.
+  
+     8 │ 	<iframe title={``} />
+     9 │ 	<iframe title={undefined} />
+  > 10 │ 	<iframe title={false} />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ 	<iframe title={true} />
+    12 │ 	<iframe title={42} />
+  
+
+```
+
+```
+invalid.jsx:11:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid title prop for the iframe element.
+  
+     9 │ 	<iframe title={undefined} />
+    10 │ 	<iframe title={false} />
+  > 11 │ 	<iframe title={true} />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^
+    12 │ 	<iframe title={42} />
+    13 │ </>;
+  
+
+```
+
+```
+invalid.jsx:12:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid title prop for the iframe element.
+  
+    10 │ 	<iframe title={false} />
+    11 │ 	<iframe title={true} />
+  > 12 │ 	<iframe title={42} />
+       │ 	^^^^^^^^^^^^^^^^^^^^^
+    13 │ </>;
+    14 │ 
+  
+
+```
+
+

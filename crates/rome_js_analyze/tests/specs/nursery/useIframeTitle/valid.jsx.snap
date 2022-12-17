@@ -1,0 +1,15 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: valid.jsx
+---
+# Input
+```js
+<>
+	{/* valid */}
+	<iframe title="This is a unique title" />
+	<iframe title={uniqueTitle} />
+</>;
+
+```
+
+
