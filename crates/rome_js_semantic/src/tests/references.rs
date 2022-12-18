@@ -227,11 +227,10 @@ assert_semantics! {
         "class C { static { () => a/*READ A*/; let a/*#A*/ = 1; } };",
 }
 
-
 // Static Initialization Block
 assert_semantics! {
     ok_reference_static_initialization_block,
-        "const a/*#A1*/ = 1; 
+        "const a/*#A1*/ = 1;
         console.log(a/*READ A1*/); 
         
         class A { 

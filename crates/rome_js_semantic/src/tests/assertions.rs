@@ -475,9 +475,7 @@ impl SemanticAssertions {
         }
 
         // Check every read assertion is ok
-        let is_read_assertion =
-            |e: &SemanticEvent| matches!(e, 
-                SemanticEvent::Read { .. });
+        let is_read_assertion = |e: &SemanticEvent| matches!(e, SemanticEvent::Read { .. });
 
         for assertion in self.read_assertions.iter() {
             let decl = match self
@@ -497,12 +495,7 @@ impl SemanticAssertions {
                 Some(events) => events,
                 None => {
                     show_all_events(test_name, code, events_by_pos, is_read_assertion);
-                    show_unmatched_assertion(
-                        test_name,
-                        code,
-                        assertion,
-                        assertion.range,
-                    );
+                    show_unmatched_assertion(test_name, code, assertion, assertion.range);
                     panic!("No read event found at this range");
                 }
             };
@@ -601,10 +594,12 @@ impl SemanticAssertions {
             }
         }
 
-        let is_scope_event =
-        |e: &SemanticEvent| matches!(e, 
-            SemanticEvent::ScopeStarted { .. }
-            | SemanticEvent::ScopeEnded { .. });
+        let is_scope_event = |e: &SemanticEvent| {
+            matches!(
+                e,
+                SemanticEvent::ScopeStarted { .. } | SemanticEvent::ScopeEnded { .. }
+            )
+        };
 
         // Check every at scope assertion is ok
         for at_scope_assertion in self.at_scope_assertions.iter() {
@@ -613,7 +608,10 @@ impl SemanticAssertions {
                 match &events[0] {
                     SemanticEvent::DeclarationFound {
                         scope_started_at, ..
-                    } => match self.scope_start_assertions.get(&at_scope_assertion.scope_name) {
+                    } => match self
+                        .scope_start_assertions
+                        .get(&at_scope_assertion.scope_name)
+                    {
                         Some(scope_start_assertion) => {
                             if scope_start_assertion.range.start() != *scope_started_at {
                                 show_all_events(test_name, code, events_by_pos, is_scope_event);
@@ -636,7 +634,7 @@ impl SemanticAssertions {
                                 at_scope_assertion.range,
                             );
                             panic!("Assertion pointing to a wrong scope");
-                        },
+                        }
                     },
                     _ => {
                         error_assertion_not_attached_to_a_declaration(
@@ -661,12 +659,7 @@ impl SemanticAssertions {
                 }
             } else {
                 show_all_events(test_name, code, events_by_pos, is_scope_event);
-                show_unmatched_assertion(
-                    test_name,
-                    code,
-                    scope_assertion,
-                    scope_assertion.range,
-                );
+                show_unmatched_assertion(test_name, code, scope_assertion, scope_assertion.range);
                 panic!("No scope event found!");
             }
         }
@@ -788,7 +781,7 @@ fn show_unmatched_assertion(
     assertion_range: TextRange,
 ) {
     let assertion_code = &code[assertion_range];
-    
+
     // eat all trivia at the start
     let mut start: usize = assertion_range.start().into();
     for chr in assertion_code.chars() {
@@ -869,15 +862,13 @@ fn show_all_events<F>(
                 }
                 TestSemanticDiagnostic::new(format!("{e:?}"), start - 1..start)
             }
-            _ => {
-                TestSemanticDiagnostic::new(format!("{e:?}"), e.range())
-            }
+            _ => TestSemanticDiagnostic::new(format!("{e:?}"), e.range()),
         };
 
         let error = diagnostic
             .with_file_path((test_name.to_string(), FileId::zero()))
             .with_file_source_code(code);
-        
+
         console.log(markup! {
             {PrintDiagnostic::verbose(&error)}
         });
