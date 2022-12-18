@@ -475,6 +475,9 @@ impl SemanticAssertions {
         }
 
         // Check every read assertion is ok
+        let is_read_assertion =
+            |e: &SemanticEvent| matches!(e, 
+                SemanticEvent::Read { .. });
 
         for assertion in self.read_assertions.iter() {
             let decl = match self
@@ -493,8 +496,13 @@ impl SemanticAssertions {
             let events = match events_by_pos.get(&assertion.range.start()) {
                 Some(events) => events,
                 None => {
-                    println!("Assertion: {:?}", assertion);
-                    println!("Events: {:#?}", events_by_pos);
+                    show_all_events(test_name, code, events_by_pos, is_read_assertion);
+                    show_unmatched_assertion(
+                        test_name,
+                        code,
+                        assertion,
+                        assertion.range,
+                    );
                     panic!("No read event found at this range");
                 }
             };
@@ -593,35 +601,47 @@ impl SemanticAssertions {
             }
         }
 
-        // Check every at scope assertion is ok
+        let is_scope_event =
+        |e: &SemanticEvent| matches!(e, 
+            SemanticEvent::ScopeStarted { .. }
+            | SemanticEvent::ScopeEnded { .. });
 
-        for assertion in self.at_scope_assertions.iter() {
-            if let Some(events) = events_by_pos.get(&assertion.range.start()) {
+        // Check every at scope assertion is ok
+        for at_scope_assertion in self.at_scope_assertions.iter() {
+            if let Some(events) = events_by_pos.get(&at_scope_assertion.range.start()) {
                 // Needs to be a unique event for now
                 match &events[0] {
                     SemanticEvent::DeclarationFound {
                         scope_started_at, ..
-                    } => match self.scope_start_assertions.get(&assertion.scope_name) {
+                    } => match self.scope_start_assertions.get(&at_scope_assertion.scope_name) {
                         Some(scope_start_assertion) => {
                             if scope_start_assertion.range.start() != *scope_started_at {
-                                error_declaration_pointing_to_unknown_scope(
-                                    code,
-                                    assertion.range,
+                                show_all_events(test_name, code, events_by_pos, is_scope_event);
+                                show_unmatched_assertion(
                                     test_name,
+                                    code,
+                                    at_scope_assertion,
+                                    at_scope_assertion.range,
                                 );
+                                panic!("Assertion pointing to a wrong scope");
                             }
                             assert_eq!(scope_start_assertion.range.start(), *scope_started_at);
                         }
-                        None => error_declaration_pointing_to_unknown_scope(
-                            code,
-                            assertion.range,
-                            test_name,
-                        ),
+                        None => {
+                            show_all_events(test_name, code, events_by_pos, is_scope_event);
+                            show_unmatched_assertion(
+                                test_name,
+                                code,
+                                at_scope_assertion,
+                                at_scope_assertion.range,
+                            );
+                            panic!("Assertion pointing to a wrong scope");
+                        },
                     },
                     _ => {
                         error_assertion_not_attached_to_a_declaration(
                             code,
-                            assertion.range,
+                            at_scope_assertion.range,
                             test_name,
                         );
                     }
@@ -630,9 +650,8 @@ impl SemanticAssertions {
         }
 
         // Check every scope start assertion is ok
-
-        for assertion in self.scope_start_assertions.values() {
-            if let Some(events) = events_by_pos.get(&assertion.range.start()) {
+        for scope_assertion in self.scope_start_assertions.values() {
+            if let Some(events) = events_by_pos.get(&scope_assertion.range.start()) {
                 let is_at_least_one_scope_start = events
                     .iter()
                     .any(|e| matches!(e, SemanticEvent::ScopeStarted { .. }));
@@ -641,12 +660,18 @@ impl SemanticAssertions {
                     panic!("error_scope_assertion_not_attached_to_a_scope_event");
                 }
             } else {
-                panic!("No scope event found: assertion: {assertion:?}");
+                show_all_events(test_name, code, events_by_pos, is_scope_event);
+                show_unmatched_assertion(
+                    test_name,
+                    code,
+                    scope_assertion,
+                    scope_assertion.range,
+                );
+                panic!("No scope event found!");
             }
         }
 
         // Check every scope end assertion is ok
-
         for scope_end_assertion in self.scope_end_assertions.iter() {
             // Check we have a scope start with the same label.
             let scope_start_assertions_range = match self
@@ -762,9 +787,31 @@ fn show_unmatched_assertion(
     assertion: &impl std::fmt::Debug,
     assertion_range: TextRange,
 ) {
+    let assertion_code = &code[assertion_range];
+    
+    // eat all trivia at the start
+    let mut start: usize = assertion_range.start().into();
+    for chr in assertion_code.chars() {
+        if chr.is_ascii_whitespace() {
+            start += chr.len_utf8();
+        } else {
+            break;
+        }
+    }
+
+    // eat all trivia at the end
+    let mut end: usize = assertion_range.end().into();
+    for chr in assertion_code.chars().rev() {
+        if chr.is_ascii_whitespace() {
+            end -= chr.len_utf8();
+        } else {
+            break;
+        }
+    }
+
     let diagnostic = TestSemanticDiagnostic::new(
         format!("This assertion was not matched: {assertion:?}"),
-        assertion_range,
+        start..end,
     );
     let error = diagnostic
         .with_file_path((test_name.to_string(), FileId::zero()))
@@ -797,11 +844,40 @@ fn show_all_events<F>(
     all_events.sort_by_key(|l| l.range().start());
 
     for e in all_events {
-        let diagnostic = TestSemanticDiagnostic::new(format!("{e:?}"), e.range());
+        let diagnostic = match e {
+            SemanticEvent::ScopeStarted { range, .. } => {
+                let mut start: usize = range.start().into();
+                let code = &code[range];
+                for chr in code.chars() {
+                    if chr.is_ascii_whitespace() {
+                        start += chr.len_utf8();
+                    } else {
+                        break;
+                    }
+                }
+                TestSemanticDiagnostic::new(format!("{e:?}"), start..start + 1)
+            }
+            SemanticEvent::ScopeEnded { range, .. } => {
+                let mut start: usize = range.end().into();
+                let code = &code[range];
+                for chr in code.chars().rev() {
+                    if chr.is_ascii_whitespace() {
+                        start -= chr.len_utf8();
+                    } else {
+                        break;
+                    }
+                }
+                TestSemanticDiagnostic::new(format!("{e:?}"), start - 1..start)
+            }
+            _ => {
+                TestSemanticDiagnostic::new(format!("{e:?}"), e.range())
+            }
+        };
+
         let error = diagnostic
             .with_file_path((test_name.to_string(), FileId::zero()))
             .with_file_source_code(code);
-
+        
         console.log(markup! {
             {PrintDiagnostic::verbose(&error)}
         });
@@ -826,26 +902,6 @@ fn error_assertion_not_attached_to_a_declaration(
         {PrintDiagnostic::verbose(&error)}
     });
     panic!("This assertion must be attached to a SemanticEvent::DeclarationFound.");
-}
-
-fn error_declaration_pointing_to_unknown_scope(
-    code: &str,
-    assertion_range: TextRange,
-    test_name: &str,
-) {
-    let diagnostic = TestSemanticDiagnostic::new(
-        "Declaration assertions is pointing to the wrong scope",
-        assertion_range,
-    );
-
-    let error = diagnostic
-        .with_file_path((test_name.to_string(), FileId::zero()))
-        .with_file_source_code(code);
-
-    let mut console = EnvConsole::default();
-    console.log(markup! {
-        {PrintDiagnostic::verbose(&error)}
-    });
 }
 
 fn error_assertion_name_clash(
