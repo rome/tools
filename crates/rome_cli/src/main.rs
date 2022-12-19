@@ -9,9 +9,8 @@ use rome_cli::{
     TerminationDiagnostic,
 };
 use rome_console::{markup, Console, ConsoleExt, EnvConsole};
-use rome_diagnostics::{set_bottom_frame, DiagnosticExt, PrintDiagnostic};
+use rome_diagnostics::{set_bottom_frame, Error, PrintDiagnostic};
 use rome_service::workspace;
-use std::env;
 use std::process::{exit, ExitCode, Termination};
 use tokio::runtime::Runtime;
 
@@ -28,19 +27,23 @@ fn main() -> ExitCode {
     set_bottom_frame(main as usize);
 
     let mut args = Arguments::from_env();
-    let colors = match color_from_arguments(&mut args) {
-        Ok(colors) => colors,
-        Err(err) => {
-            eprintln!("{:?}", err);
-            exit(1)
+    let mut console = EnvConsole::default();
+    match color_from_arguments(&mut args) {
+        Ok(colors) => {
+            console.set_color(colors);
+        }
+        Err(termination) => {
+            let error: Error = termination.into();
+            console.error(markup! {
+                {PrintDiagnostic::verbose(&error)}
+            });
+            return error.report();
         }
     };
-    let mut console = EnvConsole::new(colors);
     let result = run_workspace(args, &mut console);
     match result {
         Err(termination) => {
-            let args: String = env::args().collect();
-            let error = termination.with_file_source_code(args);
+            let error: Error = termination.into();
             console.error(markup! {
                 {PrintDiagnostic::verbose(&error)}
             });

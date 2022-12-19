@@ -76,8 +76,8 @@ pub enum ColorMode {
 }
 
 impl EnvConsole {
-    pub fn new(colors: ColorMode) -> Self {
-        let (out_mode, err_mode) = match colors {
+    fn compute_color(colors: ColorMode) -> (ColorChoice, ColorChoice) {
+        match colors {
             ColorMode::Enabled => (ColorChoice::Always, ColorChoice::Always),
             ColorMode::Disabled => (ColorChoice::Never, ColorChoice::Never),
             ColorMode::Auto => {
@@ -95,13 +95,23 @@ impl EnvConsole {
 
                 (stdout, stderr)
             }
-        };
+        }
+    }
+
+    pub fn new(colors: ColorMode) -> Self {
+        let (out_mode, err_mode) = Self::compute_color(colors);
 
         Self {
             out: StandardStream::stdout(out_mode),
             err: StandardStream::stderr(err_mode),
             r#in: io::stdin(),
         }
+    }
+
+    pub fn set_color(&mut self, colors: ColorMode) {
+        let (out_mode, err_mode) = Self::compute_color(colors);
+        self.out = StandardStream::stdout(out_mode);
+        self.err = StandardStream::stderr(err_mode);
     }
 }
 
