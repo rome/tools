@@ -28,7 +28,6 @@ tracing-appender = "0.2"
 lazy_static = "1.4.0"
 hdrhistogram = { version = "7.5.0", default-features = false }
 crossbeam = "0.8.1"
-thiserror = "1.0.30"
 rayon = "1.5.1"
 serde = { version = "1.0.133", features = ["derive"] }
 serde_json = { version = "1.0.74" }
