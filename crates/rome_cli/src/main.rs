@@ -60,7 +60,7 @@ fn run_workspace(
         let runtime = Runtime::new()?;
         match open_transport(runtime)? {
             Some(transport) => workspace::client(transport)?,
-            None => return Err(TerminationDiagnostic::new_server_not_running()),
+            None => return Err(TerminationDiagnostic::server_not_running()),
         }
     } else {
         workspace::server()

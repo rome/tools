@@ -18,7 +18,7 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), TerminationDiagnostic
     let apply_suggested = session.args.contains("--apply-suggested");
 
     let fix_file_mode = if apply && apply_suggested {
-        return Err(TerminationDiagnostic::new_incompatible_arguments(
+        return Err(TerminationDiagnostic::incompatible_arguments(
             "--apply",
             "--apply-suggested",
         ));

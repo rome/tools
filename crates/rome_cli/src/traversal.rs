@@ -22,7 +22,7 @@ use rome_service::{
     workspace::{
         FeatureName, FileGuard, Language, OpenFileParams, RuleCategories, SupportsFeatureParams,
     },
-    RomeError, Workspace,
+    Workspace, WorkspaceError,
 };
 use rome_text_edit::TextEdit;
 use std::{
@@ -75,7 +75,7 @@ pub(crate) fn traverse(
             }
             // `--<some character>` or `-<some character>`
             if without_dashes != input {
-                return Err(TerminationDiagnostic::new_unexpected_argument(
+                return Err(TerminationDiagnostic::unexpected_argument(
                     format!("{:?}", input),
                     execution.traversal_mode_subcommand(),
                 ));
@@ -85,7 +85,7 @@ pub(crate) fn traverse(
     }
 
     if inputs.is_empty() && execution.as_stdin_file().is_none() {
-        return Err(TerminationDiagnostic::new_missing_argument(
+        return Err(TerminationDiagnostic::missing_argument(
             "<INPUT>",
             execution.traversal_mode_subcommand(),
         ));
@@ -212,9 +212,9 @@ pub(crate) fn traverse(
 
     // Processing emitted error diagnostics, exit with a non-zero code
     if count.saturating_sub(skipped) == 0 {
-        Err(TerminationDiagnostic::new_no_files_processed())
+        Err(TerminationDiagnostic::no_files_processed())
     } else if errors > 0 {
-        Err(TerminationDiagnostic::new_check())
+        Err(TerminationDiagnostic::check_error())
     } else {
         Ok(())
     }
@@ -618,7 +618,7 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
         self.messages.send(msg.into()).ok();
     }
 
-    fn can_format(&self, rome_path: &RomePath) -> Result<SupportsFeatureResult, RomeError> {
+    fn can_format(&self, rome_path: &RomePath) -> Result<SupportsFeatureResult, WorkspaceError> {
         self.workspace.supports_feature(SupportsFeatureParams {
             path: rome_path.clone(),
             feature: FeatureName::Format,
@@ -631,14 +631,14 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
             .ok();
     }
 
-    fn can_lint(&self, rome_path: &RomePath) -> Result<SupportsFeatureResult, RomeError> {
+    fn can_lint(&self, rome_path: &RomePath) -> Result<SupportsFeatureResult, WorkspaceError> {
         self.workspace.supports_feature(SupportsFeatureParams {
             path: rome_path.clone(),
             feature: FeatureName::Lint,
         })
     }
 
-    fn miss_handler_err(&self, err: RomeError, rome_path: &RomePath) {
+    fn miss_handler_err(&self, err: WorkspaceError, rome_path: &RomePath) {
         self.push_diagnostic(
             StdError::from(err)
                 .with_category(category!("files/missingHandler"))

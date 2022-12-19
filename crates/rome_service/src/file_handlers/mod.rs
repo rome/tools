@@ -3,7 +3,7 @@ use crate::workspace::FixFileMode;
 use crate::{
     settings::SettingsHandle,
     workspace::{FixFileResult, GetSyntaxTreeResult, PullActionsResult, RenameResult},
-    RomeError, Rules,
+    WorkspaceError, Rules,
 };
 pub use javascript::JsFormatterSettings;
 use rome_analyze::AnalysisFilter;
@@ -165,7 +165,7 @@ pub(crate) struct ParserCapabilities {
 
 type DebugSyntaxTree = fn(&RomePath, AnyParse) -> GetSyntaxTreeResult;
 type DebugControlFlow = fn(&RomePath, AnyParse, TextSize) -> String;
-type DebugFormatterIR = fn(&RomePath, AnyParse, SettingsHandle) -> Result<String, RomeError>;
+type DebugFormatterIR = fn(&RomePath, AnyParse, SettingsHandle) -> Result<String, WorkspaceError>;
 
 #[derive(Default)]
 pub(crate) struct DebugCapabilities {
@@ -195,8 +195,8 @@ pub(crate) struct LintResults {
 type Lint = fn(LintParams) -> LintResults;
 type CodeActions =
     fn(&RomePath, AnyParse, TextRange, Option<&Rules>, SettingsHandle) -> PullActionsResult;
-type FixAll = fn(FixAllParams) -> Result<FixFileResult, RomeError>;
-type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<RenameResult, RomeError>;
+type FixAll = fn(FixAllParams) -> Result<FixFileResult, WorkspaceError>;
+type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<RenameResult, WorkspaceError>;
 
 #[derive(Default)]
 pub(crate) struct AnalyzerCapabilities {
@@ -210,9 +210,9 @@ pub(crate) struct AnalyzerCapabilities {
     pub(crate) rename: Option<Rename>,
 }
 
-type Format = fn(&RomePath, AnyParse, SettingsHandle) -> Result<Printed, RomeError>;
-type FormatRange = fn(&RomePath, AnyParse, SettingsHandle, TextRange) -> Result<Printed, RomeError>;
-type FormatOnType = fn(&RomePath, AnyParse, SettingsHandle, TextSize) -> Result<Printed, RomeError>;
+type Format = fn(&RomePath, AnyParse, SettingsHandle) -> Result<Printed, WorkspaceError>;
+type FormatRange = fn(&RomePath, AnyParse, SettingsHandle, TextRange) -> Result<Printed, WorkspaceError>;
+type FormatOnType = fn(&RomePath, AnyParse, SettingsHandle, TextSize) -> Result<Printed, WorkspaceError>;
 
 #[derive(Default)]
 pub(crate) struct FormatterCapabilities {

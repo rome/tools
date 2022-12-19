@@ -12,7 +12,7 @@ pub(crate) fn load_configuration(
     let files_max_size = session
         .args
         .opt_value_from_str("--files-max-size")
-        .map_err(|source| TerminationDiagnostic::new_parse("--files-max-size", source))?;
+        .map_err(|source| TerminationDiagnostic::parse_error("--files-max-size", source))?;
 
     if let Some(files_max_size) = files_max_size {
         let files = configuration.files.get_or_insert_with(Default::default);

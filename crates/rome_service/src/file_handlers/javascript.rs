@@ -10,7 +10,7 @@ use crate::{
         CodeAction, FixAction, FixFileMode, FixFileResult, GetSyntaxTreeResult, PullActionsResult,
         RenameResult,
     },
-    RomeError, Rules,
+    WorkspaceError, Rules,
 };
 use indexmap::IndexSet;
 use rome_analyze::{
@@ -187,7 +187,7 @@ fn debug_formatter_ir(
     rome_path: &RomePath,
     parse: AnyParse,
     settings: SettingsHandle,
-) -> Result<String, RomeError> {
+) -> Result<String, WorkspaceError> {
     let options = settings.format_options::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
@@ -347,7 +347,7 @@ fn code_actions(
 /// If applies all the safe fixes to the given syntax tree.
 ///
 /// If `indent_style` is [Some], it means that the formatting should be applied at the end
-fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
+fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
     let FixAllParams {
         rome_path,
         parse,
@@ -411,7 +411,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
                     tree = match AnyJsRoot::cast(action.mutation.commit()) {
                         Some(tree) => tree,
                         None => {
-                            return Err(RomeError::RuleError(
+                            return Err(WorkspaceError::RuleError(
                                 RuleError::ReplacedRootWithNonRootError {
                                     rule_name: action.rule_name.map(|(group, rule)| {
                                         (Cow::Borrowed(group), Cow::Borrowed(rule))
@@ -444,7 +444,7 @@ fn format(
     rome_path: &RomePath,
     parse: AnyParse,
     settings: SettingsHandle,
-) -> Result<Printed, RomeError> {
+) -> Result<Printed, WorkspaceError> {
     let options = settings.format_options::<JsLanguage>(rome_path);
 
     debug!("Format with the following options: \n{}", options);
@@ -454,7 +454,7 @@ fn format(
 
     match formatted.print() {
         Ok(printed) => Ok(printed),
-        Err(error) => Err(RomeError::FormatError(error.into())),
+        Err(error) => Err(WorkspaceError::FormatError(error.into())),
     }
 }
 
@@ -463,7 +463,7 @@ fn format_range(
     parse: AnyParse,
     settings: SettingsHandle,
     range: TextRange,
-) -> Result<Printed, RomeError> {
+) -> Result<Printed, WorkspaceError> {
     let options = settings.format_options::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
@@ -476,14 +476,14 @@ fn format_on_type(
     parse: AnyParse,
     settings: SettingsHandle,
     offset: TextSize,
-) -> Result<Printed, RomeError> {
+) -> Result<Printed, WorkspaceError> {
     let options = settings.format_options::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
 
     let range = tree.text_range();
     if offset < range.start() || offset > range.end() {
-        return Err(RomeError::FormatError(FormatError::RangeError {
+        return Err(WorkspaceError::FormatError(FormatError::RangeError {
             input: TextRange::at(offset, TextSize::from(0)),
             tree: range,
         }));
@@ -512,7 +512,7 @@ fn rename(
     parse: AnyParse,
     symbol_at: TextSize,
     new_name: String,
-) -> Result<RenameResult, RomeError> {
+) -> Result<RenameResult, WorkspaceError> {
     let root = parse.tree();
     let model = semantic_model(&root, SemanticModelOptions::default());
 
@@ -529,7 +529,7 @@ fn rename(
                 let mut batch = root.begin();
                 let result = batch.rename_any_renamable_node(&model, node, &new_name);
                 if !result {
-                    Err(RomeError::RenameError(RenameError::CannotBeRenamed {
+                    Err(WorkspaceError::RenameError(RenameError::CannotBeRenamed {
                         original_name: original_name.to_string(),
                         original_range: range,
                         new_name,
@@ -539,10 +539,10 @@ fn rename(
                     Ok(RenameResult { range, indels })
                 }
             }
-            Err(err) => Err(RomeError::RenameError(err)),
+            Err(err) => Err(WorkspaceError::RenameError(err)),
         }
     } else {
-        Err(RomeError::RenameError(RenameError::CannotFindDeclaration(
+        Err(WorkspaceError::RenameError(RenameError::CannotFindDeclaration(
             new_name,
         )))
     }

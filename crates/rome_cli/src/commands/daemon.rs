@@ -1,6 +1,6 @@
 use rome_console::{markup, ConsoleExt};
 use rome_lsp::ServerFactory;
-use rome_service::{workspace::WorkspaceClient, RomeError, TransportError};
+use rome_service::{workspace::WorkspaceClient, WorkspaceError, TransportError};
 use std::{env, fs, path::PathBuf};
 use tokio::io;
 use tokio::runtime::Runtime;
@@ -44,7 +44,7 @@ pub(crate) fn stop(session: CliSession) -> Result<(), TerminationDiagnostic> {
         match client.shutdown() {
             // The `ChannelClosed` error is expected since the server can
             // shutdown before sending a response
-            Ok(()) | Err(RomeError::TransportError(TransportError::ChannelClosed)) => {}
+            Ok(()) | Err(WorkspaceError::TransportError(TransportError::ChannelClosed)) => {}
             Err(err) => return Err(TerminationDiagnostic::from(err)),
         };
 

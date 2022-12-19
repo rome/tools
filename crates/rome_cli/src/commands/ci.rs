@@ -14,12 +14,12 @@ pub(crate) fn ci(mut session: CliSession) -> Result<(), TerminationDiagnostic> {
     let formatter_enabled = session
         .args
         .opt_value_from_str("--formatter-enabled")
-        .map_err(|source| TerminationDiagnostic::new_parse("--formatter-enabled", source))?;
+        .map_err(|source| TerminationDiagnostic::parse_error("--formatter-enabled", source))?;
 
     let linter_enabled = session
         .args
         .opt_value_from_str("--linter-enabled")
-        .map_err(|source| TerminationDiagnostic::new_parse("--linter-enabled", source))?;
+        .map_err(|source| TerminationDiagnostic::parse_error("--linter-enabled", source))?;
 
     let formatter = configuration
         .formatter
@@ -39,7 +39,7 @@ pub(crate) fn ci(mut session: CliSession) -> Result<(), TerminationDiagnostic> {
 
     // no point in doing the traversal if all the checks have been disabled
     if configuration.is_formatter_disabled() && configuration.is_linter_disabled() {
-        return Err(TerminationDiagnostic::new_incompatible_configuration("Formatter and Linter are both disabled, can't perform the command. This is probably and error."));
+        return Err(TerminationDiagnostic::incompatible_end_configuration("Formatter and Linter are both disabled, can't perform the command. This is probably and error."));
     }
 
     if !configuration.is_formatter_disabled() {

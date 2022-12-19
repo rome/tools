@@ -133,11 +133,11 @@ pub(crate) fn execute_mode(
     let max_diagnostics: Option<u16> = session
         .args
         .opt_value_from_str("--max-diagnostics")
-        .map_err(|source| TerminationDiagnostic::new_parse("--max-diagnostics", source))?;
+        .map_err(|source| TerminationDiagnostic::parse_error("--max-diagnostics", source))?;
 
     mode.max_diagnostics = if let Some(max_diagnostics) = max_diagnostics {
         if max_diagnostics > MAXIMUM_DISPLAYABLE_DIAGNOSTICS {
-            return Err(TerminationDiagnostic::new_overflown(
+            return Err(TerminationDiagnostic::overflown_argument(
                 "--max-diagnostics",
                 MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
             ));

@@ -72,7 +72,7 @@ impl<'app> CliSession<'app> {
         let subcommand = self
             .args
             .subcommand()
-            .map_err(|source| TerminationDiagnostic::new_parse("<command>", source))?;
+            .map_err(|source| TerminationDiagnostic::parse_error("<command>", source))?;
 
         // True if the command line did not contain any arguments beside the subcommand
         let is_empty = self.args.clone().finish().is_empty();
@@ -96,7 +96,7 @@ impl<'app> CliSession<'app> {
             // Print the help for known commands called without any arguments, and exit with an error
             Some(cmd @ ("check" | "ci" | "format")) => {
                 commands::help::help(self, Some(cmd))?;
-                Err(TerminationDiagnostic::new_empty_arguments())
+                Err(TerminationDiagnostic::empty_arguments())
             }
 
             Some("init") => commands::init::init(self),
@@ -108,7 +108,7 @@ impl<'app> CliSession<'app> {
             // Print the general help if no subcommand was specified / the subcommand is `help`
             None | Some("help") => commands::help::help(self, None),
 
-            Some(cmd) => Err(TerminationDiagnostic::new_unknown_command(cmd)),
+            Some(cmd) => Err(TerminationDiagnostic::unknown_command(cmd)),
         };
 
         if has_metrics {
@@ -141,7 +141,7 @@ impl FromStr for ColorsArg {
 pub fn color_from_arguments(args: &mut Arguments) -> Result<ColorMode, TerminationDiagnostic> {
     let colors = args
         .opt_value_from_str("--colors")
-        .map_err(|source| TerminationDiagnostic::new_parse("--colors", source))?;
+        .map_err(|source| TerminationDiagnostic::parse_error("--colors", source))?;
     Ok(match colors {
         Some(ColorsArg::Off) => ColorMode::Disabled,
         Some(ColorsArg::Force) => ColorMode::Enabled,

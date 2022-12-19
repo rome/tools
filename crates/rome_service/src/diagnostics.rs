@@ -14,7 +14,7 @@ use std::process::{ExitCode, Termination};
 
 #[derive(Serialize, Deserialize)]
 /// Generic errors thrown during rome operations
-pub enum RomeError {
+pub enum WorkspaceError {
     /// Can't export the report of the CLI into a file
     ReportNotSerializable(String),
     /// The project contains uncommitted changes
@@ -54,49 +54,49 @@ pub enum RomeError {
     },
 }
 
-impl Debug for RomeError {
+impl Debug for WorkspaceError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         std::fmt::Display::fmt(self, f)
     }
 }
 
-impl Display for RomeError {
+impl Display for WorkspaceError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         Diagnostic::description(self, f)
     }
 }
 
-impl Error for RomeError {}
+impl Error for WorkspaceError {}
 
-impl Termination for RomeError {
+impl Termination for WorkspaceError {
     fn report(self) -> ExitCode {
         ExitCode::FAILURE
     }
 }
 
-impl Diagnostic for RomeError {
+impl Diagnostic for WorkspaceError {
     fn category(&self) -> Option<&'static Category> {
         match self {
-            RomeError::FormatWithErrorsDisabled => Some(category!("format")),
-            RomeError::FormatError(err) => err.category(),
-            RomeError::RuleError(error) => error.category(),
-            RomeError::Configuration(error) => error.category(),
-            RomeError::RenameError(error) => error.category(),
-            RomeError::TransportError(error) => error.category(),
-            RomeError::ReportNotSerializable(_) => Some(category!("internalError/io")),
-            RomeError::NotFound
-            | RomeError::DirtyWorkspace
-            | RomeError::SourceFileNotSupported { .. }
-            | RomeError::CantReadDirectory(_)
-            | RomeError::CantReadFile(_)
-            | RomeError::FileIgnored(_)
-            | RomeError::FileTooLarge { .. } => Some(category!("internalError/fs")),
+            WorkspaceError::FormatWithErrorsDisabled => Some(category!("format")),
+            WorkspaceError::FormatError(err) => err.category(),
+            WorkspaceError::RuleError(error) => error.category(),
+            WorkspaceError::Configuration(error) => error.category(),
+            WorkspaceError::RenameError(error) => error.category(),
+            WorkspaceError::TransportError(error) => error.category(),
+            WorkspaceError::ReportNotSerializable(_) => Some(category!("internalError/io")),
+            WorkspaceError::NotFound
+            | WorkspaceError::DirtyWorkspace
+            | WorkspaceError::SourceFileNotSupported { .. }
+            | WorkspaceError::CantReadDirectory(_)
+            | WorkspaceError::CantReadFile(_)
+            | WorkspaceError::FileIgnored(_)
+            | WorkspaceError::FileTooLarge { .. } => Some(category!("internalError/fs")),
         }
     }
 
     fn description(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            RomeError::SourceFileNotSupported {
+            WorkspaceError::SourceFileNotSupported {
                 language,
                 path,
                 extension,
@@ -118,27 +118,27 @@ impl Diagnostic for RomeError {
                 )
                 }
             }
-            RomeError::NotFound => {
+            WorkspaceError::NotFound => {
                 write!(f, "the file does not exist in the workspace")
             }
-            RomeError::FormatError(cause) => {
+            WorkspaceError::FormatError(cause) => {
                 write!(
                     f,
                     "the formatter encountered an error while formatting the file: {}",
                     cause
                 )
             }
-            RomeError::FormatWithErrorsDisabled => {
+            WorkspaceError::FormatWithErrorsDisabled => {
                 write!(f, "the file could not be formatted since it has syntax errors and `format_with_errors` is disabled")
             }
-            RomeError::CantReadDirectory(path) => {
+            WorkspaceError::CantReadDirectory(path) => {
                 write!(
                 f,
                 "Rome couldn't read the following directory, maybe for permissions reasons or it doesn't exists: {}",
                 path
                 )
             }
-            RomeError::CantReadFile(path) => {
+            WorkspaceError::CantReadFile(path) => {
                 write!(
                 f,
                 "Rome couldn't read the following file, maybe for permissions reasons or it doesn't exists: {}",
@@ -146,28 +146,28 @@ impl Diagnostic for RomeError {
                 )
             }
 
-            RomeError::Configuration(error) => fmt::Display::fmt(error, f),
-            RomeError::DirtyWorkspace => {
+            WorkspaceError::Configuration(error) => fmt::Display::fmt(error, f),
+            WorkspaceError::DirtyWorkspace => {
                 write!(f, "Uncommitted changes in repository")
             }
-            RomeError::RenameError(error) => fmt::Display::fmt(error, f),
-            RomeError::RuleError(cause) => {
+            WorkspaceError::RenameError(error) => fmt::Display::fmt(error, f),
+            WorkspaceError::RuleError(cause) => {
                 write!(
                     f,
                     "the linter encountered an error while analyzing the file: {cause}",
                 )
             }
 
-            RomeError::TransportError(err) => {
+            WorkspaceError::TransportError(err) => {
                 write!(f, "{err}",)
             }
-            RomeError::FileIgnored(path) => {
+            WorkspaceError::FileIgnored(path) => {
                 write!(f, "The file {} was ignored", path)
             }
-            RomeError::FileTooLarge { path, size, limit } => {
+            WorkspaceError::FileTooLarge { path, size, limit } => {
                 write!(f, "Size of {} is {} which exceeds configured maximum of {} for this project. The file size limit exists to prevent us inadvertently slowing down and loading large files that we shouldn't.", path, Bytes(*size), Bytes(*limit))
             }
-            RomeError::ReportNotSerializable(reason) => {
+            WorkspaceError::ReportNotSerializable(reason) => {
                 write!(f, "The report can't be serialized, here's why: \n{reason}")
             }
         }
@@ -175,13 +175,13 @@ impl Diagnostic for RomeError {
 
     fn message(&self, f: &mut rome_console::fmt::Formatter<'_>) -> std::io::Result<()> {
         match self {
-            RomeError::DirtyWorkspace => {
+            WorkspaceError::DirtyWorkspace => {
                 f.write_markup(markup! { "Uncommitted changes in repository" })
             }
-            RomeError::NotFound => {
+            WorkspaceError::NotFound => {
                 f.write_markup(markup! { "The file does not exist in the workspace." })
             }
-            RomeError::SourceFileNotSupported{ language, path, extension} => {
+            WorkspaceError::SourceFileNotSupported{ language, path, extension} => {
                 if *language != Language::Unknown {
                     f.write_markup(
                         markup! { "Rome doesn't support this feature for the language "{{language}}"" }
@@ -198,17 +198,17 @@ impl Diagnostic for RomeError {
                     )
                 }
             }
-            RomeError::FormatError(err) => {
+            WorkspaceError::FormatError(err) => {
                 f.write_markup(markup! {
                     "the formatter encountered an error while formatting the file: "
                 })?;
                 err.message(f)
             },
-            RomeError::FormatWithErrorsDisabled => f.write_markup(
+            WorkspaceError::FormatWithErrorsDisabled => f.write_markup(
                 markup!{  "The file could not be formatted since it has syntax errors and "<Emphasis>"formatWithErrors"</Emphasis>" is disabled" }
             ),
-            RomeError::RuleError(error) => error.message(f),
-            RomeError::CantReadDirectory(path) => {
+            WorkspaceError::RuleError(error) => error.message(f),
+            WorkspaceError::CantReadDirectory(path) => {
                 f.write_markup(
                     markup!{
                         "Rome couldn't read the following directory, maybe for permissions reasons or it doesn't exists: "{{path}}
@@ -216,7 +216,7 @@ impl Diagnostic for RomeError {
                     }
                 )
             }
-            RomeError::CantReadFile(path) => {
+            WorkspaceError::CantReadFile(path) => {
                 f.write_markup(
                     markup!{
                         "Rome couldn't read the following file, maybe for permissions reasons or it doesn't exists: "{{path}}
@@ -224,13 +224,13 @@ impl Diagnostic for RomeError {
                     }
                 )
             },
-            RomeError::Configuration(error) => error.message(f),
-            RomeError::RenameError(error) => error.message(f),
-            RomeError::TransportError(error) => error.message(f),
-            RomeError::FileIgnored(path) => {
+            WorkspaceError::Configuration(error) => error.message(f),
+            WorkspaceError::RenameError(error) => error.message(f),
+            WorkspaceError::TransportError(error) => error.message(f),
+            WorkspaceError::FileIgnored(path) => {
                 write!(f, "The file {} was ignored", path)
             },
-            RomeError::FileTooLarge { path, size, limit } => {
+            WorkspaceError::FileTooLarge { path, size, limit } => {
                 f.write_markup(
                     markup!{
             "Size of "{{path}}" is "{{Bytes(*size)}}" which exceeds configured maximum of "{{Bytes(*limit)}}" for this project. The file size limit exists to prevent us inadvertently slowing down and loading large files that we shouldn't."
@@ -238,7 +238,7 @@ impl Diagnostic for RomeError {
                 )
             },
 
-            RomeError::ReportNotSerializable(reason) => {
+            WorkspaceError::ReportNotSerializable(reason) => {
                 f.write_markup(
                     markup!{
                          "The report can't be serialized, here's why: \n"{{reason}}
@@ -250,73 +250,73 @@ impl Diagnostic for RomeError {
 
     fn severity(&self) -> Severity {
         match self {
-            RomeError::FormatError(err) => err.severity(),
-            RomeError::RuleError(error) => error.severity(),
-            RomeError::Configuration(error) => error.severity(),
-            RomeError::RenameError(error) => error.severity(),
-            RomeError::TransportError(error) => error.severity(),
-            RomeError::DirtyWorkspace
-            | RomeError::NotFound
-            | RomeError::ReportNotSerializable(_)
-            | RomeError::SourceFileNotSupported { .. }
-            | RomeError::FormatWithErrorsDisabled
-            | RomeError::CantReadFile(_)
-            | RomeError::CantReadDirectory(_)
-            | RomeError::FileIgnored(_)
-            | RomeError::FileTooLarge { .. } => Severity::Error,
+            WorkspaceError::FormatError(err) => err.severity(),
+            WorkspaceError::RuleError(error) => error.severity(),
+            WorkspaceError::Configuration(error) => error.severity(),
+            WorkspaceError::RenameError(error) => error.severity(),
+            WorkspaceError::TransportError(error) => error.severity(),
+            WorkspaceError::DirtyWorkspace
+            | WorkspaceError::NotFound
+            | WorkspaceError::ReportNotSerializable(_)
+            | WorkspaceError::SourceFileNotSupported { .. }
+            | WorkspaceError::FormatWithErrorsDisabled
+            | WorkspaceError::CantReadFile(_)
+            | WorkspaceError::CantReadDirectory(_)
+            | WorkspaceError::FileIgnored(_)
+            | WorkspaceError::FileTooLarge { .. } => Severity::Error,
         }
     }
 
     fn tags(&self) -> DiagnosticTags {
         match self {
-            RomeError::FormatError(err) => err.tags(),
-            RomeError::RuleError(error) => error.tags(),
-            RomeError::Configuration(error) => error.tags(),
-            RomeError::RenameError(error) => error.tags(),
-            RomeError::TransportError(error) => error.tags(),
-            RomeError::NotFound => DiagnosticTags::INTERNAL,
-            RomeError::ReportNotSerializable(_) => DiagnosticTags::INTERNAL,
+            WorkspaceError::FormatError(err) => err.tags(),
+            WorkspaceError::RuleError(error) => error.tags(),
+            WorkspaceError::Configuration(error) => error.tags(),
+            WorkspaceError::RenameError(error) => error.tags(),
+            WorkspaceError::TransportError(error) => error.tags(),
+            WorkspaceError::NotFound => DiagnosticTags::INTERNAL,
+            WorkspaceError::ReportNotSerializable(_) => DiagnosticTags::INTERNAL,
             _ => DiagnosticTags::FIXABLE,
         }
     }
 
     fn location(&self) -> Location<'_> {
         match self {
-            RomeError::FormatError(err) => err.location(),
-            RomeError::RuleError(error) => error.location(),
-            RomeError::Configuration(error) => error.location(),
-            RomeError::RenameError(error) => error.location(),
-            RomeError::TransportError(error) => error.location(),
-            RomeError::SourceFileNotSupported { path, .. } => {
+            WorkspaceError::FormatError(err) => err.location(),
+            WorkspaceError::RuleError(error) => error.location(),
+            WorkspaceError::Configuration(error) => error.location(),
+            WorkspaceError::RenameError(error) => error.location(),
+            WorkspaceError::TransportError(error) => error.location(),
+            WorkspaceError::SourceFileNotSupported { path, .. } => {
                 Location::builder().resource(path).build()
             }
-            RomeError::CantReadFile(path)
-            | RomeError::FileIgnored(path)
-            | RomeError::CantReadDirectory(path)
-            | RomeError::FileTooLarge { path, .. } => Location::builder().resource(path).build(),
+            WorkspaceError::CantReadFile(path)
+            | WorkspaceError::FileIgnored(path)
+            | WorkspaceError::CantReadDirectory(path)
+            | WorkspaceError::FileTooLarge { path, .. } => Location::builder().resource(path).build(),
             _ => Location::builder().build(),
         }
     }
 
     fn source(&self) -> Option<&dyn Diagnostic> {
         match self {
-            RomeError::FormatError(error) => Diagnostic::source(error),
-            RomeError::RuleError(error) => Diagnostic::source(error),
-            RomeError::Configuration(error) => Diagnostic::source(error),
-            RomeError::RenameError(error) => Diagnostic::source(error),
-            RomeError::TransportError(error) => Diagnostic::source(error),
+            WorkspaceError::FormatError(error) => Diagnostic::source(error),
+            WorkspaceError::RuleError(error) => Diagnostic::source(error),
+            WorkspaceError::Configuration(error) => Diagnostic::source(error),
+            WorkspaceError::RenameError(error) => Diagnostic::source(error),
+            WorkspaceError::TransportError(error) => Diagnostic::source(error),
             _ => None,
         }
     }
 }
 
-impl From<FormatError> for RomeError {
+impl From<FormatError> for WorkspaceError {
     fn from(err: FormatError) -> Self {
         Self::FormatError(err)
     }
 }
 
-impl From<TransportError> for RomeError {
+impl From<TransportError> for WorkspaceError {
     fn from(err: TransportError) -> Self {
         Self::TransportError(err)
     }
@@ -381,7 +381,7 @@ impl Diagnostic for TransportError {
 #[cfg(test)]
 mod test {
     use crate::file_handlers::Language;
-    use crate::{RomeError, TransportError};
+    use crate::{WorkspaceError, TransportError};
     use rome_diagnostics::{print_diagnostic_to_string, DiagnosticExt, Error, FileId};
     use rome_formatter::FormatError;
     use rome_fs::RomePath;
@@ -400,14 +400,14 @@ mod test {
 
     #[test]
     fn dirty_workspace() {
-        snap_diagnostic("dirty_workspace", RomeError::DirtyWorkspace.into())
+        snap_diagnostic("dirty_workspace", WorkspaceError::DirtyWorkspace.into())
     }
 
     #[test]
     fn file_ignored() {
         snap_diagnostic(
             "file_ignored",
-            RomeError::FileIgnored("example.js".to_string()).with_file_path("example.js"),
+            WorkspaceError::FileIgnored("example.js".to_string()).with_file_path("example.js"),
         )
     }
 
@@ -415,7 +415,7 @@ mod test {
     fn cant_read_directory() {
         snap_diagnostic(
             "cant_read_directory",
-            RomeError::CantReadDirectory("example/".to_string()).with_file_path("example/"),
+            WorkspaceError::CantReadDirectory("example/".to_string()).with_file_path("example/"),
         )
     }
 
@@ -423,7 +423,7 @@ mod test {
     fn cant_read_file() {
         snap_diagnostic(
             "cant_read_file",
-            RomeError::CantReadFile("example.js".to_string()).with_file_path("example.js"),
+            WorkspaceError::CantReadFile("example.js".to_string()).with_file_path("example.js"),
         )
     }
 
@@ -431,7 +431,7 @@ mod test {
     fn not_found() {
         snap_diagnostic(
             "not_found",
-            RomeError::NotFound.with_file_path("not_found.js"),
+            WorkspaceError::NotFound.with_file_path("not_found.js"),
         )
     }
 
@@ -440,7 +440,7 @@ mod test {
         let path = RomePath::new("not_supported.toml", FileId::zero());
         snap_diagnostic(
             "source_file_not_supported",
-            RomeError::SourceFileNotSupported {
+            WorkspaceError::SourceFileNotSupported {
                 language: Language::Unknown,
                 path: path.display().to_string(),
                 extension: path
@@ -456,7 +456,7 @@ mod test {
     fn file_too_large() {
         snap_diagnostic(
             "file_too_large",
-            RomeError::FileTooLarge {
+            WorkspaceError::FileTooLarge {
                 path: "example.js".to_string(),
                 limit: 100,
                 size: 500,
@@ -499,7 +499,7 @@ mod test {
     fn formatter_syntax_error() {
         snap_diagnostic(
             "formatter_syntax_error",
-            RomeError::FormatError(FormatError::SyntaxError).with_file_path("example.js"),
+            WorkspaceError::FormatError(FormatError::SyntaxError).with_file_path("example.js"),
         )
     }
 }
