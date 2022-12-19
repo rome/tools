@@ -293,7 +293,9 @@ impl Diagnostic for WorkspaceError {
             WorkspaceError::CantReadFile(path)
             | WorkspaceError::FileIgnored(path)
             | WorkspaceError::CantReadDirectory(path)
-            | WorkspaceError::FileTooLarge { path, .. } => Location::builder().resource(path).build(),
+            | WorkspaceError::FileTooLarge { path, .. } => {
+                Location::builder().resource(path).build()
+            }
             _ => Location::builder().build(),
         }
     }
@@ -381,7 +383,7 @@ impl Diagnostic for TransportError {
 #[cfg(test)]
 mod test {
     use crate::file_handlers::Language;
-    use crate::{WorkspaceError, TransportError};
+    use crate::{TransportError, WorkspaceError};
     use rome_diagnostics::{print_diagnostic_to_string, DiagnosticExt, Error, FileId};
     use rome_formatter::FormatError;
     use rome_fs::RomePath;

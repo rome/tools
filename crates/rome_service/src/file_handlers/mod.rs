@@ -3,7 +3,7 @@ use crate::workspace::FixFileMode;
 use crate::{
     settings::SettingsHandle,
     workspace::{FixFileResult, GetSyntaxTreeResult, PullActionsResult, RenameResult},
-    WorkspaceError, Rules,
+    Rules, WorkspaceError,
 };
 pub use javascript::JsFormatterSettings;
 use rome_analyze::AnalysisFilter;
@@ -211,8 +211,10 @@ pub(crate) struct AnalyzerCapabilities {
 }
 
 type Format = fn(&RomePath, AnyParse, SettingsHandle) -> Result<Printed, WorkspaceError>;
-type FormatRange = fn(&RomePath, AnyParse, SettingsHandle, TextRange) -> Result<Printed, WorkspaceError>;
-type FormatOnType = fn(&RomePath, AnyParse, SettingsHandle, TextSize) -> Result<Printed, WorkspaceError>;
+type FormatRange =
+    fn(&RomePath, AnyParse, SettingsHandle, TextRange) -> Result<Printed, WorkspaceError>;
+type FormatOnType =
+    fn(&RomePath, AnyParse, SettingsHandle, TextSize) -> Result<Printed, WorkspaceError>;
 
 #[derive(Default)]
 pub(crate) struct FormatterCapabilities {

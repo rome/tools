@@ -431,7 +431,10 @@ impl WorkspaceMethod {
     }
 
     /// Construct a [WorkspaceMethod] from a name and a function pointer
-    fn from_method<T, P, R>(name: &'static str, _func: fn(T, P) -> Result<R, WorkspaceError>) -> Self
+    fn from_method<T, P, R>(
+        name: &'static str,
+        _func: fn(T, P) -> Result<R, WorkspaceError>,
+    ) -> Self
     where
         P: JsonSchema,
         R: JsonSchema,

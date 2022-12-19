@@ -1,6 +1,6 @@
 use rome_console::{markup, ConsoleExt};
 use rome_lsp::ServerFactory;
-use rome_service::{workspace::WorkspaceClient, WorkspaceError, TransportError};
+use rome_service::{workspace::WorkspaceClient, TransportError, WorkspaceError};
 use std::{env, fs, path::PathBuf};
 use tokio::io;
 use tokio::runtime::Runtime;

@@ -10,7 +10,7 @@ use crate::{
         CodeAction, FixAction, FixFileMode, FixFileResult, GetSyntaxTreeResult, PullActionsResult,
         RenameResult,
     },
-    WorkspaceError, Rules,
+    Rules, WorkspaceError,
 };
 use indexmap::IndexSet;
 use rome_analyze::{
@@ -542,9 +542,9 @@ fn rename(
             Err(err) => Err(WorkspaceError::RenameError(err)),
         }
     } else {
-        Err(WorkspaceError::RenameError(RenameError::CannotFindDeclaration(
-            new_name,
-        )))
+        Err(WorkspaceError::RenameError(
+            RenameError::CannotFindDeclaration(new_name),
+        ))
     }
 }
 

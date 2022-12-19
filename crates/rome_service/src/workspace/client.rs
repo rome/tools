@@ -8,7 +8,7 @@ use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use serde_json::json;
 
 use crate::workspace::{RageParams, RageResult, ServerInfo, SupportsFeatureResult};
-use crate::{WorkspaceError, TransportError, Workspace};
+use crate::{TransportError, Workspace, WorkspaceError};
 
 use super::{
     ChangeFileParams, CloseFileParams, FixFileParams, FixFileResult, FormatFileParams,

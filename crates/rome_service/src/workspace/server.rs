@@ -10,7 +10,7 @@ use crate::workspace::{RageEntry, RageParams, RageResult, ServerInfo, SupportsFe
 use crate::{
     file_handlers::Features,
     settings::{SettingsHandle, WorkspaceSettings},
-    WorkspaceError, Rules, Workspace,
+    Rules, Workspace, WorkspaceError,
 };
 use dashmap::{mapref::entry::Entry, DashMap};
 use indexmap::IndexSet;
@@ -79,7 +79,10 @@ impl WorkspaceServer {
     }
 
     /// Return an error factory function for unsupported features at a given path
-    fn build_capability_error<'a>(&'a self, path: &'a RomePath) -> impl FnOnce() -> WorkspaceError + 'a {
+    fn build_capability_error<'a>(
+        &'a self,
+        path: &'a RomePath,
+    ) -> impl FnOnce() -> WorkspaceError + 'a {
         move || {
             let language_hint = self
                 .documents
@@ -135,7 +138,10 @@ impl WorkspaceServer {
             Entry::Occupied(entry) => Ok(entry.get().clone()),
             Entry::Vacant(entry) => {
                 let rome_path = entry.key();
-                let document = self.documents.get(rome_path).ok_or(WorkspaceError::NotFound)?;
+                let document = self
+                    .documents
+                    .get(rome_path)
+                    .ok_or(WorkspaceError::NotFound)?;
 
                 let capabilities = self.get_capabilities(rome_path);
                 let parse = capabilities

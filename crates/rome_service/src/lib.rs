@@ -23,7 +23,7 @@ pub use crate::workspace::Workspace;
 
 /// Exports only for this crate
 pub(crate) use crate::configuration::{deserialize_set_of_strings, serialize_set_of_strings};
-pub use crate::diagnostics::{WorkspaceError, TransportError};
+pub use crate::diagnostics::{TransportError, WorkspaceError};
 
 pub const VERSION: &str = match option_env!("ROME_VERSION") {
     Some(version) => version,

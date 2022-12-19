@@ -1,6 +1,6 @@
 use crate::{
     configuration::FilesConfiguration, Configuration, ConfigurationError, MatchOptions, Matcher,
-    WorkspaceError, Rules,
+    Rules, WorkspaceError,
 };
 use indexmap::IndexSet;
 use rome_diagnostics::Category;
