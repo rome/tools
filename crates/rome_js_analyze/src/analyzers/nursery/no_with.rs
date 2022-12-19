@@ -23,7 +23,7 @@ declare_rule! {
     /// }
     /// ```
     pub(crate) NoWith {
-        version: "12.0.0",
+        version: "next",
         name: "noWith",
         recommended: true,
     }

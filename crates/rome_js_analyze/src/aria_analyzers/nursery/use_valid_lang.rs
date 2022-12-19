@@ -29,7 +29,7 @@ declare_rule! {
     /// <Html lang="en-babab" />
     /// ```
     pub(crate) UseValidLang {
-        version: "12.0.0",
+        version: "next",
         name: "useValidLang",
         recommended: true,
     }

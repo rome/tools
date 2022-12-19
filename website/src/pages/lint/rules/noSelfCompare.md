@@ -3,7 +3,7 @@ title: Lint Rule noSelfCompare
 parent: lint/rules/index
 ---
 
-# noSelfCompare (since v12.0.0)
+# noSelfCompare (since vnext)
 
 Disallow comparisons where both sides are exactly the same.
 

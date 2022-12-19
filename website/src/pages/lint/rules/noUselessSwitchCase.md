@@ -3,7 +3,7 @@ title: Lint Rule noUselessSwitchCase
 parent: lint/rules/index
 ---
 
-# noUselessSwitchCase (since v12.0.0)
+# noUselessSwitchCase (since vnext)
 
 Disallow useless `case` in `switch` statements.
 

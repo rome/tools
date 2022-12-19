@@ -66,7 +66,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoClassAssign {
-        version: "12.0.0",
+        version: "next",
         name: "noClassAssign",
         recommended: true,
     }

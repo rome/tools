@@ -3,7 +3,7 @@ title: Lint Rule noAssignInExpressions
 parent: lint/rules/index
 ---
 
-# noAssignInExpressions (since v12.0.0)
+# noAssignInExpressions (since vnext)
 
 Disallow assignments in expressions.
 

@@ -39,7 +39,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoCommaOperator {
-        version: "12.0.0",
+        version: "next",
         name: "noCommaOperator",
         recommended: true,
     }

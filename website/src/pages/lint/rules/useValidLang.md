@@ -3,7 +3,7 @@ title: Lint Rule useValidLang
 parent: lint/rules/index
 ---
 
-# useValidLang (since v12.0.0)
+# useValidLang (since vnext)
 
 Ensure that the attribute passed to the `lang` attribute is a correct ISO language and/or country.
 

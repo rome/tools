@@ -36,7 +36,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) UseHookAtTopLevel {
-        version: "12.0.0",
+        version: "next",
         name: "useHookAtTopLevel",
         recommended: false,
     }

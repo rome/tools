@@ -60,7 +60,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoUselessSwitchCase {
-        version: "12.0.0",
+        version: "next",
         name: "noUselessSwitchCase",
         recommended: true,
     }

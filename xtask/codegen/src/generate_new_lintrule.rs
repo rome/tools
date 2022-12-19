@@ -44,7 +44,7 @@ declare_rule! {{
     /// ```
     ///
     pub(crate) {rule_name_upper_camel} {{
-        version: "12.0.0",
+        version: "next",
         name: "{rule_name_lower_camel}",
         recommended: false,
     }}
@@ -55,14 +55,14 @@ impl Rule for {rule_name_upper_camel} {{
     type State = Reference;
     type Signals = Vec<Self::State>;
     type Options = ();
-    
+
     fn run(ctx: &RuleContext<Self>) -> Vec<Self::State> {{
         let binding = ctx.query();
         let model = ctx.model();
 
         binding.all_references(model).collect()
     }}
-    
+
     fn diagnostic(_: &RuleContext<Self>, reference: &Self::State) -> Option<RuleDiagnostic> {{
         Some(
             RuleDiagnostic::new(

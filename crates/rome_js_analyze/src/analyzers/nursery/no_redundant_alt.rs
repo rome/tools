@@ -40,7 +40,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoRedundantAlt {
-        version: "12.0.0",
+        version: "next",
         name: "noRedundantAlt",
         recommended: true,
     }

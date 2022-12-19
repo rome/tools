@@ -3,7 +3,7 @@ title: Lint Rule noClassAssign
 parent: lint/rules/index
 ---
 
-# noClassAssign (since v12.0.0)
+# noClassAssign (since vnext)
 
 Disallow reassigning class members.
 

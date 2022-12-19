@@ -3,7 +3,7 @@ title: Lint Rule useHookAtTopLevel
 parent: lint/rules/index
 ---
 
-# useHookAtTopLevel (since v12.0.0)
+# useHookAtTopLevel (since vnext)
 
 Enforce that all React hooks are being called from the Top Level
 component functions.

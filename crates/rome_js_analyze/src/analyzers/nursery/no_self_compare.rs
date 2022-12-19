@@ -28,7 +28,7 @@ declare_rule! {
     /// ```
     ///
     pub(crate) NoSelfCompare {
-        version: "12.0.0",
+        version: "next",
         name: "noSelfCompare",
         recommended: true,
     }

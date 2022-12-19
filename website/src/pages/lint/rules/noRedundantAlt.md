@@ -3,7 +3,7 @@ title: Lint Rule noRedundantAlt
 parent: lint/rules/index
 ---
 
-# noRedundantAlt (since v12.0.0)
+# noRedundantAlt (since vnext)
 
 Enforce `img` alt prop does not contain the word "image", "picture", or "photo".
 

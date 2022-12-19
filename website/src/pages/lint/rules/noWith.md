@@ -3,7 +3,7 @@ title: Lint Rule noWith
 parent: lint/rules/index
 ---
 
-# noWith (since v12.0.0)
+# noWith (since vnext)
 
 Disallow `with` statements in non-strict contexts.
 
