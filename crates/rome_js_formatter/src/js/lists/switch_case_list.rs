@@ -11,7 +11,7 @@ impl FormatRule<JsSwitchCaseList> for FormatJsSwitchCaseList {
         let mut join = f.join_nodes_with_hardline();
 
         for case in node {
-            join.entry(case.syntax(), &format_or_verbatim(&case));
+            join.entry(case.syntax(), &format_or_verbatim(case.format()));
         }
 
         join.finish()

@@ -799,6 +799,8 @@ struct NurserySchema {
     use_hook_at_top_level: Option<RuleConfiguration>,
     #[doc = "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals"]
     use_numeric_literals: Option<RuleConfiguration>,
+    #[doc = "Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country."]
+    use_valid_lang: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
@@ -841,6 +843,7 @@ impl Nursery {
         "useExponentiationOperator",
         "useHookAtTopLevel",
         "useNumericLiterals",
+        "useValidLang",
     ];
     const RECOMMENDED_RULES: [&'static str; 29] = [
         "noAssignInExpressions",
@@ -872,6 +875,7 @@ impl Nursery {
         "useEnumInitializers",
         "useExhaustiveDependencies",
         "useNumericLiterals",
+        "useValidLang",
     ];
     const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 29] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),
@@ -902,6 +906,7 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[32]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[33]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[34]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[36]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[37]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }

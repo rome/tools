@@ -73,6 +73,7 @@ define_dategories! {
     "lint/nursery/useAriaPropTypes": "https://docs.rome.tools/lint/rules/useAriaPropTypes",
     "lint/nursery/useCamelCase": "https://docs.rome.tools/lint/rules/useCamelCase",
     "lint/nursery/useConst":"https://docs.rome.tools/lint/rules/useConst",
+    "lint/nursery/useValidLang":"https://docs.rome.tools/lint/rules/useValidLang",
     "lint/nursery/useDefaultParameterLast":"https://docs.rome.tools/lint/rules/useDefaultParameterLast",
     "lint/nursery/useDefaultSwitchClauseLast":"https://docs.rome.tools/lint/rules/useDefaultSwitchClauseLast",
     "lint/nursery/useEnumInitializers":"https://docs.rome.tools/lint/rules/useEnumInitializers",

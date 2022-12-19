@@ -1001,6 +1001,17 @@
               "type": "null"
             }
           ]
+        },
+        "useValidLang": {
+          "description": "Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       }
     },
