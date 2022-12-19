@@ -19,7 +19,7 @@ pub struct MatchQueryParams<'phase, 'query, L: Language> {
     pub phase: Phases,
     pub file_id: FileId,
     pub root: &'phase L::Root,
-    pub text_range: TextRange,
+    pub text_range: fn(&dyn Any) -> TextRange,
     pub query: Box<dyn Any>,
     pub services: &'phase ServiceBag,
     pub signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,

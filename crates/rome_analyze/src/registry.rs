@@ -433,7 +433,8 @@ impl<L: Language + Default> RegistryRule<L> {
             };
 
             for result in R::run(&ctx) {
-                let text_range = R::text_range(&ctx, &result).unwrap_or(params.text_range);
+                let text_range = R::text_range(&ctx, &result)
+                    .unwrap_or_else(|| (params.text_range)(&params.query));
 
                 R::suppressed_nodes(&ctx, &result, &mut state.suppressions);
 
