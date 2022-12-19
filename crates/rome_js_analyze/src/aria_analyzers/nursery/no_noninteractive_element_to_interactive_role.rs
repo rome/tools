@@ -74,16 +74,22 @@ impl Rule for NoNoninteractiveElementToInteractiveRole {
                         AnyJsExpression::AnyJsLiteralExpression(
                             AnyJsLiteralExpression::JsStringLiteralExpression(string),
                         ) => string.inner_string_text().ok(),
-                        AnyJsExpression::JsTemplateExpression(template) => template
-                            .elements()
-                            .iter()
-                            .next()
-                            .and_then(|chunk| {
-                                chunk
-                                    .as_js_template_chunk_element()
-                                    .and_then(|t| t.template_chunk_token().ok())
-                            })
-                            .map(|t| t.token_text_trimmed()),
+                        AnyJsExpression::JsTemplateExpression(template) => {
+                            if template.elements().len() == 1 {
+                                template
+                                    .elements()
+                                    .iter()
+                                    .next()
+                                    .and_then(|chunk| {
+                                        chunk
+                                            .as_js_template_chunk_element()
+                                            .and_then(|t| t.template_chunk_token().ok())
+                                    })
+                                    .map(|t| t.token_text_trimmed())
+                            } else {
+                                None
+                            }
+                        }
                         _ => None,
                     }
                 }
