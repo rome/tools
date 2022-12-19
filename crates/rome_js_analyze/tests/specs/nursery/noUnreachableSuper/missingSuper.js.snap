@@ -53,13 +53,38 @@ class E extends A {
     }
 }
 
+// valid
+class F extends A {
+    constructor(variant) {
+        switch (variant) {
+            case 0:
+            default:
+                super();
+                break;
+        }
+    }
+}
+
+// valid
+class G extends A {
+    constructor(cond) {
+        if (cond) {
+            super(true);
+        } else {
+            throw new Error();
+        }
+
+        this.field = "value";
+    }
+}
+
 ```
 
 # Diagnostics
 ```
 missingSuper.js:19:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! this constructor returns without calling `super()`
+  ! This constructor returns without calling `super()`.
   
     17 │ // invalid
     18 │ class C extends A {
@@ -79,7 +104,7 @@ missingSuper.js:19:5 lint/nursery/noUnreachableSuper ━━━━━━━━━
 ```
 missingSuper.js:28:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! this constructor returns without calling `super()`
+  ! This constructor returns without calling `super()`.
   
     26 │ // invalid
     27 │ class D extends A {
@@ -99,7 +124,7 @@ missingSuper.js:28:5 lint/nursery/noUnreachableSuper ━━━━━━━━━
 ```
 missingSuper.js:43:13 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! this statement returns from the constructor without having called `super()` first
+  ! This statement returns from the constructor without having called `super()` first.
   
     41 │     constructor(cond) {
     42 │         if (cond) {

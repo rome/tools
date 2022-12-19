@@ -63,7 +63,7 @@ class F extends A {
 ```
 thisBeforeSuper.js:25:9 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! `this` is accessed before `super()` is called
+  ! `this` is accessed before `super()` is called.
   
     23 │ class D extends A {
     24 │     constructor() {
@@ -87,7 +87,7 @@ thisBeforeSuper.js:25:9 lint/nursery/noUnreachableSuper ━━━━━━━━
 ```
 thisBeforeSuper.js:33:9 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! `this` is accessed without calling `super()` first
+  ! `this` is accessed without calling `super()` first.
   
     31 │ class E extends A {
     32 │     constructor(cond) {
@@ -102,7 +102,7 @@ thisBeforeSuper.js:33:9 lint/nursery/noUnreachableSuper ━━━━━━━━
 ```
 thisBeforeSuper.js:50:9 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! `this` is accessed without calling `super()` first
+  ! `this` is accessed without calling `super()` first.
   
     48 │         }
     49 │ 

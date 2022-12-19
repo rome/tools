@@ -46,3 +46,28 @@ class E extends A {
         super(true);
     }
 }
+
+// valid
+class F extends A {
+    constructor(variant) {
+        switch (variant) {
+            case 0:
+            default:
+                super();
+                break;
+        }
+    }
+}
+
+// valid
+class G extends A {
+    constructor(cond) {
+        if (cond) {
+            super(true);
+        } else {
+            throw new Error();
+        }
+
+        this.field = "value";
+    }
+}

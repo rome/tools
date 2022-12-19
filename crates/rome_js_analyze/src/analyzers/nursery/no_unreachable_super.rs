@@ -2,10 +2,11 @@ use std::{collections::VecDeque, iter, slice};
 
 use roaring::bitmap::RoaringBitmap;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
+use rome_console::markup;
 use rome_control_flow::InstructionKind;
 use rome_js_syntax::{
     AnyJsClass, AnyJsExpression, JsConstructorClassMember, JsSuperExpression, JsSyntaxElement,
-    JsThisExpression, TextRange, WalkEvent,
+    JsThisExpression, JsThrowStatement, TextRange, WalkEvent,
 };
 use rome_rowan::AstNode;
 
@@ -235,34 +236,44 @@ impl Rule for NoUnreachableSuper {
                 RuleDiagnostic::new(
                     rule_category!(),
                     *this,
-                    "`this` is accessed before `super()` is called",
+                    markup! { "`"<Emphasis>"this"</Emphasis>"` is accessed before `"<Emphasis>"super()"</Emphasis>"` is called." },
                 )
-                .detail(super_, "`super()` is only called here"),
+                .detail(super_, markup! { "`"<Emphasis>"super()"</Emphasis>"` is only called here" }),
+            ),
+            
+            RuleState::DuplicateSuper { first, second } if *first == *second => Some(
+                RuleDiagnostic::new(
+                    rule_category!(),
+                    second,
+                    markup! { "`"<Emphasis>"super()"</Emphasis>"` is called in a loop." },
+                ),
             ),
             RuleState::DuplicateSuper { first, second } => Some(
                 RuleDiagnostic::new(
                     rule_category!(),
                     second,
-                    "`super()` is called more than once",
+                    markup! { "`"<Emphasis>"super()"</Emphasis>"` is called more than once." },
                 )
-                .detail(first, "`super()` has already been called here"),
+                .detail(first, markup! { "`"<Emphasis>"super()"</Emphasis>"` has already been called here" }),
             ),
+
             RuleState::ThisWithoutSuper { this } => Some(RuleDiagnostic::new(
                 rule_category!(),
                 *this,
-                "`this` is accessed without calling `super()` first",
+                markup! { "`"<Emphasis>"this"</Emphasis>"` is accessed without calling `"<Emphasis>"super()"</Emphasis>"` first." },
             )),
+
             RuleState::ReturnWithoutSuper {
                 return_: Some(range),
             } => Some(RuleDiagnostic::new(
                 rule_category!(),
                 *range,
-                "this statement returns from the constructor without having called `super()` first",
+                markup! { "This statement returns from the constructor without having called `"<Emphasis>"super()"</Emphasis>"` first." },
             )),
             RuleState::ReturnWithoutSuper { return_: None } => Some(RuleDiagnostic::new(
                 rule_category!(),
                 ctx.query().node.text_trimmed_range(),
-                "this constructor returns without calling `super()`",
+                markup! { "This constructor returns without calling `"<Emphasis>"super()"</Emphasis>"`." },
             )),
         }
     }
@@ -356,7 +367,13 @@ fn inspect_block(
 
             // If the instruction is a return, store its optional text range and stop analyzing the block
             InstructionKind::Return => {
-                has_return = Some(inst.node.as_ref().map(|node| node.text_trimmed_range()));
+                if let Some(node) = &inst.node {
+                    if !JsThrowStatement::can_cast(node.kind()) {
+                        has_return = Some(Some(node.text_trimmed_range()));
+                    }
+                } else {
+                    has_return = Some(None);
+                }
                 break;
             }
         }
