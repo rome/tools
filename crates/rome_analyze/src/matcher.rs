@@ -1,9 +1,14 @@
 use crate::{
-    AnalyzerSignal, Phases, Rule, RuleFilter, RuleGroup, ServiceBag, SuppressionCommentEmitter,
+    AnalyzerSignal, Phases, QueryMatch, Rule, RuleFilter, RuleGroup, ServiceBag,
+    SuppressionCommentEmitter,
 };
 use rome_diagnostics::FileId;
 use rome_rowan::{Language, TextRange};
-use std::{any::Any, cmp::Ordering, collections::BinaryHeap};
+use std::{
+    any::{Any, TypeId},
+    cmp::Ordering,
+    collections::BinaryHeap,
+};
 
 /// The [QueryMatcher] trait is responsible of running lint rules on
 /// [QueryMatch](crate::QueryMatch) instances emitted by the various
@@ -19,11 +24,50 @@ pub struct MatchQueryParams<'phase, 'query, L: Language> {
     pub phase: Phases,
     pub file_id: FileId,
     pub root: &'phase L::Root,
-    pub text_range: fn(&dyn Any) -> TextRange,
-    pub query: Box<dyn Any>,
+    pub query: Query,
     pub services: &'phase ServiceBag,
     pub signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
     pub apply_suppression_comment: SuppressionCommentEmitter<L>,
+}
+
+/// Wrapper type for a [QueryMatch]
+///
+/// This type is functionally equivalent to `Box<dyn QueryMatch + Any>`, it
+/// emulates dynamic dispatch for both traits and allows downcasting to a
+/// reference or owned type.
+pub struct Query {
+    data: Box<dyn Any>,
+    read_text_range: fn(&dyn Any) -> TextRange,
+}
+
+impl Query {
+    /// Construct a new [Query] instance from a [QueryMatch]
+    pub fn new<T: QueryMatch>(data: T) -> Self {
+        Self {
+            data: Box::new(data),
+            read_text_range: |query| query.downcast_ref::<T>().unwrap().text_range(),
+        }
+    }
+
+    /// Attempt to downcast the query to an owned type.
+    pub fn downcast<T: QueryMatch>(self) -> Option<T> {
+        Some(*self.data.downcast::<T>().ok()?)
+    }
+
+    /// Attempt to downcast the query to a reference type.
+    pub fn downcast_ref<T: QueryMatch>(&self) -> Option<&T> {
+        self.data.downcast_ref::<T>()
+    }
+
+    /// Returns the [TypeId] of this query, equivalent to calling [Any::type_id].
+    pub(crate) fn type_id(&self) -> TypeId {
+        self.data.as_ref().type_id()
+    }
+
+    /// Returns the [TextRange] of this query, equivalent to calling [QueryMatch::text_range].
+    pub(crate) fn text_range(&self) -> TextRange {
+        (self.read_text_range)(self.data.as_ref())
+    }
 }
 
 /// Opaque identifier for a group of rule

@@ -281,7 +281,8 @@ impl<L: Language + 'static> QueryMatcher<L> for RuleRegistry<L> {
     fn match_query(&mut self, mut params: MatchQueryParams<L>) {
         let phase = &mut self.phase_rules[params.phase as usize];
 
-        let Some(rules) = phase.type_rules.get(&params.query.type_id()) else { return };
+        let query_type = params.query.type_id();
+        let Some(rules) = phase.type_rules.get(&query_type) else { return };
 
         let rules = match rules {
             TypeRules::SyntaxRules { rules } => {
@@ -433,8 +434,8 @@ impl<L: Language + Default> RegistryRule<L> {
             };
 
             for result in R::run(&ctx) {
-                let text_range = R::text_range(&ctx, &result)
-                    .unwrap_or_else(|| (params.text_range)(&params.query));
+                let text_range =
+                    R::text_range(&ctx, &result).unwrap_or_else(|| params.query.text_range());
 
                 R::suppressed_nodes(&ctx, &result, &mut state.suppressions);
 

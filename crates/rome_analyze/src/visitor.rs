@@ -1,10 +1,10 @@
-use std::{any::Any, collections::BinaryHeap};
+use std::collections::BinaryHeap;
 
 use rome_diagnostics::location::FileId;
 use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
 
 use crate::{
-    matcher::MatchQueryParams,
+    matcher::{MatchQueryParams, Query},
     registry::{NodeLanguage, Phases},
     LanguageRoot, QueryMatch, QueryMatcher, ServiceBag, SignalEntry, SuppressionCommentEmitter,
 };
@@ -27,17 +27,12 @@ impl<'phase, 'query, L: Language> VisitorContext<'phase, 'query, L> {
             phase: self.phase,
             file_id: self.file_id,
             root: self.root,
-            text_range: read_text_range::<T>,
-            query: Box::new(query),
+            query: Query::new(query),
             services: self.services,
             signal_queue: self.signal_queue,
             apply_suppression_comment: self.apply_suppression_comment,
         })
     }
-}
-
-fn read_text_range<T: QueryMatch>(query: &dyn Any) -> TextRange {
-    query.downcast_ref::<T>().unwrap().text_range()
 }
 
 /// Mutable context objects provided to the finish hook of visitors
