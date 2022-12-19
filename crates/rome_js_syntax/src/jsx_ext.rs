@@ -1,9 +1,9 @@
 use std::collections::HashSet;
 
 use crate::{
-    AnyJsExpression, AnyJsLiteralExpression, AnyJsxAttribute, AnyJsxAttributeValue,
-    AnyJsxElementName, JsSyntaxToken, JsxAttribute, JsxAttributeList, JsxName, JsxOpeningElement,
-    JsxSelfClosingElement, JsxString, TextSize,
+    AnyJsExpression, AnyJsLiteralExpression, AnyJsTemplateElement, AnyJsxAttribute,
+    AnyJsxAttributeValue, AnyJsxElementName, JsSyntaxToken, JsxAttribute, JsxAttributeList,
+    JsxName, JsxOpeningElement, JsxSelfClosingElement, JsxString, TextSize,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList, SyntaxResult, SyntaxTokenText};
 
@@ -408,6 +408,103 @@ impl JsxAttribute {
                 Some(true)
             })
             .unwrap_or(false)
+    }
+
+    /// This function checks the value of the attribute contains "truthy" value.
+    ///
+    /// ### Examples
+    ///
+    /// The following examples represents attributes that **don't have** truthy values:
+    ///
+    /// ```jsx
+    /// <span aria-hidden="">content</span>
+    /// <span aria-hidden={""}>content</span>
+    /// <span aria-hidden={``}>content</span>
+    /// <span aria-hidden={`${false}`}>content</span>
+    /// <span aria-hidden={false}>content</span>
+    /// <span aria-hidden={undefined}>content</span>
+    /// <span aria-hidden={null}>content</span>
+    /// ```
+    ///
+    /// The function attempts to extract the value of the attributes.
+    ///
+    /// Fhe function accepts a `closure` that will be used to for further check the value.
+    pub fn has_truthy_value<F>(&self, closure: F) -> SyntaxResult<bool>
+    where
+        F: FnOnce(SyntaxTokenText) -> bool,
+    {
+        if self.is_value_undefined_or_null() {
+            return Ok(false);
+        }
+
+        if let Some(initializer) = self.initializer() {
+            let value = initializer.value()?;
+
+            let result = match value {
+                AnyJsxAttributeValue::JsxExpressionAttributeValue(expression) => {
+                    let expression = expression.expression()?;
+                    match expression {
+                        AnyJsExpression::AnyJsLiteralExpression(literal_expression) => {
+                            if let AnyJsLiteralExpression::JsBooleanLiteralExpression(
+                                boolean_literal,
+                            ) = literal_expression
+                            {
+                                let text = boolean_literal.value_token()?;
+                                Some(text.token_text_trimmed())
+                            } else if let AnyJsLiteralExpression::JsStringLiteralExpression(
+                                string_literal,
+                            ) = literal_expression
+                            {
+                                let text = string_literal.inner_string_text()?;
+                                Some(text)
+                            } else {
+                                None
+                            }
+                        }
+                        AnyJsExpression::JsTemplateExpression(template) => {
+                            let mut iter = template.elements().iter();
+                            if iter.len() != 1 {
+                                return Ok(false);
+                            }
+                            match iter.next() {
+                                Some(AnyJsTemplateElement::JsTemplateChunkElement(element)) => {
+                                    let template_token = element.template_chunk_token()?;
+                                    Some(template_token.token_text())
+                                }
+                                Some(AnyJsTemplateElement::JsTemplateElement(element)) => {
+                                    let expression = element.expression()?;
+                                    if let AnyJsExpression::AnyJsLiteralExpression(
+                                        AnyJsLiteralExpression::JsBooleanLiteralExpression(
+                                            boolean_expression,
+                                        ),
+                                    ) = expression
+                                    {
+                                        let value = boolean_expression.value_token()?;
+                                        Some(value.token_text_trimmed())
+                                    } else {
+                                        None
+                                    }
+                                }
+                                _ => None,
+                            }
+                        }
+                        _ => None,
+                    }
+                }
+                AnyJsxAttributeValue::JsxString(string) => {
+                    let value = string.inner_string_text()?;
+                    Some(value)
+                }
+
+                _ => None,
+            };
+
+            Ok(result.map(|token| closure(token)).unwrap_or(true))
+        } else {
+            // values that don't have initializer get a `true` at compile time, making them
+            // truthy
+            Ok(true)
+        }
     }
 }
 

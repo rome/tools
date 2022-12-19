@@ -59,25 +59,11 @@ impl Rule for NoRedundantAlt {
         }
         let aria_hidden_attribute = node.find_attribute_by_name("aria-hidden");
         if let Some(aria_hidden) = aria_hidden_attribute {
-            let is_false = match aria_hidden.initializer()?.value().ok()? {
-                AnyJsxAttributeValue::AnyJsxTag(_) => false,
-                AnyJsxAttributeValue::JsxExpressionAttributeValue(aria_hidden) => {
-                    aria_hidden
-                        .expression()
-                        .ok()?
-                        .as_any_js_literal_expression()?
-                        .as_js_boolean_literal_expression()?
-                        .value_token()
-                        .ok()?
-                        .text_trimmed()
-                        == "false"
-                }
-                AnyJsxAttributeValue::JsxString(aria_hidden) => {
-                    aria_hidden.inner_string_text().ok()? == "false"
-                }
-            };
+            let has_truthy_value = aria_hidden
+                .has_truthy_value(|value| value.text() == "true")
+                .ok()?;
 
-            if !is_false {
+            if has_truthy_value {
                 return None;
             }
         }
