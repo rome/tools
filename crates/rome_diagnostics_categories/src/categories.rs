@@ -45,6 +45,7 @@ define_dategories! {
     "lint/nursery/noAccessKey": "https://docs.rome.tools/lint/rules/noAccessKey",
     "lint/nursery/noAssignInExpressions": "https://docs.rome.tools/lint/rules/noAssignInExpressions",
     "lint/nursery/noWith": "https://docs.rome.tools/lint/rules/noWith",
+    "lint/nursery/noExtraSemicolons": "https://docs.rome.tools/lint/rules/noExtraSemicolons",
     "lint/nursery/noBannedTypes":"https://docs.rome.tools/lint/rules/noBannedTypes",
     "lint/nursery/noClassAssign": "https://docs.rome.tools/lint/rules/noClassAssign",
     "lint/nursery/noCommaOperator": "https://docs.rome.tools/lint/rules/noCommaOperator",
