@@ -9,6 +9,7 @@ var a = <input className="" aria-labell="" />;
 var a = <div aria-="foobar" />;
 var a = <div aria-labeledby="foobar" />;
 var a = <div aria-skldjfaria-klajsd="foobar" />;
+var a = <div aria-skldjfaria-klajsd="foobar"  aria-skldjfaria-klajsd="foobar" />;
 
 // valid
 var a = <div />;
@@ -23,9 +24,17 @@ var a = <input type="text" aria-errormessage="foobar" />;
 
 # Diagnostics
 ```
-useAriaProps.jsx:2:29 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useAriaProps.jsx:2:9 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! aria-labell is not a valid ARIA attribute.
+  ! The element contains invalid ARIA attribute(s)
+  
+    1 │ // invalid
+  > 2 │ var a = <input className="" aria-labell="" />;
+      │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ var a = <div aria-="foobar" />;
+    4 │ var a = <div aria-labeledby="foobar" />;
+  
+  i aria-labell is not a valid ARIA attribute.
   
     1 │ // invalid
   > 2 │ var a = <input className="" aria-labell="" />;
@@ -37,9 +46,18 @@ useAriaProps.jsx:2:29 lint/nursery/useAriaProps ━━━━━━━━━━�
 ```
 
 ```
-useAriaProps.jsx:3:14 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useAriaProps.jsx:3:9 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! aria- is not a valid ARIA attribute.
+  ! The element contains invalid ARIA attribute(s)
+  
+    1 │ // invalid
+    2 │ var a = <input className="" aria-labell="" />;
+  > 3 │ var a = <div aria-="foobar" />;
+      │         ^^^^^^^^^^^^^^^^^^^^^^
+    4 │ var a = <div aria-labeledby="foobar" />;
+    5 │ var a = <div aria-skldjfaria-klajsd="foobar" />;
+  
+  i aria- is not a valid ARIA attribute.
   
     1 │ // invalid
     2 │ var a = <input className="" aria-labell="" />;
@@ -52,31 +70,82 @@ useAriaProps.jsx:3:14 lint/nursery/useAriaProps ━━━━━━━━━━�
 ```
 
 ```
-useAriaProps.jsx:4:14 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useAriaProps.jsx:4:9 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! aria-labeledby is not a valid ARIA attribute.
+  ! The element contains invalid ARIA attribute(s)
+  
+    2 │ var a = <input className="" aria-labell="" />;
+    3 │ var a = <div aria-="foobar" />;
+  > 4 │ var a = <div aria-labeledby="foobar" />;
+      │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │ var a = <div aria-skldjfaria-klajsd="foobar" />;
+    6 │ var a = <div aria-skldjfaria-klajsd="foobar"  aria-skldjfaria-klajsd="foobar" />;
+  
+  i aria-labeledby is not a valid ARIA attribute.
   
     2 │ var a = <input className="" aria-labell="" />;
     3 │ var a = <div aria-="foobar" />;
   > 4 │ var a = <div aria-labeledby="foobar" />;
       │              ^^^^^^^^^^^^^^^^^^^^^^^
     5 │ var a = <div aria-skldjfaria-klajsd="foobar" />;
-    6 │ 
+    6 │ var a = <div aria-skldjfaria-klajsd="foobar"  aria-skldjfaria-klajsd="foobar" />;
   
 
 ```
 
 ```
-useAriaProps.jsx:5:14 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useAriaProps.jsx:5:9 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! aria-skldjfaria-klajsd is not a valid ARIA attribute.
+  ! The element contains invalid ARIA attribute(s)
+  
+    3 │ var a = <div aria-="foobar" />;
+    4 │ var a = <div aria-labeledby="foobar" />;
+  > 5 │ var a = <div aria-skldjfaria-klajsd="foobar" />;
+      │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │ var a = <div aria-skldjfaria-klajsd="foobar"  aria-skldjfaria-klajsd="foobar" />;
+    7 │ 
+  
+  i aria-skldjfaria-klajsd is not a valid ARIA attribute.
   
     3 │ var a = <div aria-="foobar" />;
     4 │ var a = <div aria-labeledby="foobar" />;
   > 5 │ var a = <div aria-skldjfaria-klajsd="foobar" />;
       │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    6 │ 
-    7 │ // valid
+    6 │ var a = <div aria-skldjfaria-klajsd="foobar"  aria-skldjfaria-klajsd="foobar" />;
+    7 │ 
+  
+
+```
+
+```
+useAriaProps.jsx:6:9 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The element contains invalid ARIA attribute(s)
+  
+    4 │ var a = <div aria-labeledby="foobar" />;
+    5 │ var a = <div aria-skldjfaria-klajsd="foobar" />;
+  > 6 │ var a = <div aria-skldjfaria-klajsd="foobar"  aria-skldjfaria-klajsd="foobar" />;
+      │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    7 │ 
+    8 │ // valid
+  
+  i aria-skldjfaria-klajsd is not a valid ARIA attribute.
+  
+    4 │ var a = <div aria-labeledby="foobar" />;
+    5 │ var a = <div aria-skldjfaria-klajsd="foobar" />;
+  > 6 │ var a = <div aria-skldjfaria-klajsd="foobar"  aria-skldjfaria-klajsd="foobar" />;
+      │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    7 │ 
+    8 │ // valid
+  
+  i aria-skldjfaria-klajsd is not a valid ARIA attribute.
+  
+    4 │ var a = <div aria-labeledby="foobar" />;
+    5 │ var a = <div aria-skldjfaria-klajsd="foobar" />;
+  > 6 │ var a = <div aria-skldjfaria-klajsd="foobar"  aria-skldjfaria-klajsd="foobar" />;
+      │                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    7 │ 
+    8 │ // valid
   
 
 ```

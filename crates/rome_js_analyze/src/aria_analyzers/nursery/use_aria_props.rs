@@ -3,7 +3,7 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::jsx_ext::AnyJsxElement;
-use rome_rowan::{AstNode, TextRange};
+use rome_rowan::{AstNode, AstNodeList, TextRange};
 
 declare_rule! {
     /// Ensures that ARIA properties `aria-*` are all valid.
@@ -14,6 +14,10 @@ declare_rule! {
     ///
     /// ```jsx, expect_diagnostic
     /// <input className="" aria-labell="" />
+    /// ```
+    ///
+    /// ```jsx,expect_diagnostic
+    /// <div aria-lorem="foobar"  aria-ipsum="foobar" />;
     /// ```
     ///
     /// ## Accessibility guidelines
@@ -27,7 +31,7 @@ declare_rule! {
 
 impl Rule for UseAriaProps {
     type Query = Aria<AnyJsxElement>;
-    type State = (TextRange, String);
+    type State = Vec<(TextRange, String)>;
     type Signals = Option<Self::State>;
     type Options = ();
 
@@ -37,29 +41,54 @@ impl Rule for UseAriaProps {
 
         // check attributes that belong only to HTML elements
         if node.is_element() {
-            for attribute in node.attributes() {
-                let attribute = attribute.as_jsx_attribute()?;
-                let attribute_name = attribute.name().ok()?.as_jsx_name()?.value_token().ok()?;
-                if attribute_name.text_trimmed().starts_with("aria-")
-                    && aria_properties
-                        .get_property(attribute_name.text_trimmed())
-                        .is_none()
-                {
-                    return Some((attribute.range(), attribute_name.to_string()));
-                }
-            }
-        }
+            let attributes: Vec<_> = node
+                .attributes()
+                .iter()
+                .filter_map(|attribute| {
+                    let attribute = attribute.as_jsx_attribute()?;
+                    let attribute_name =
+                        attribute.name().ok()?.as_jsx_name()?.value_token().ok()?;
+                    if attribute_name.text_trimmed().starts_with("aria-")
+                        && aria_properties
+                            .get_property(attribute_name.text_trimmed())
+                            .is_none()
+                    {
+                        Some((attribute.range(), attribute_name.to_string()))
+                    } else {
+                        None
+                    }
+                })
+                .collect();
 
-        None
+            if attributes.is_empty() {
+                None
+            } else {
+                Some(attributes)
+            }
+        } else {
+            None
+        }
     }
 
-    fn diagnostic(_ctx: &RuleContext<Self>, (range, name): &Self::State) -> Option<RuleDiagnostic> {
-        Some(RuleDiagnostic::new(
+    fn diagnostic(ctx: &RuleContext<Self>, attributes: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query();
+        let mut diagnostic = RuleDiagnostic::new(
             rule_category!(),
-            range,
+            node.range(),
             markup! {
-                <Emphasis>{name}</Emphasis>" is not a valid ARIA attribute."
+                "The element contains invalid ARIA attribute(s)"
             },
-        ))
+        );
+
+        for (range, attribute_name) in attributes {
+            diagnostic = diagnostic.detail(
+                range,
+                markup! {
+                    <Emphasis>{attribute_name}</Emphasis>" is not a valid ARIA attribute."
+                },
+            );
+        }
+
+        Some(diagnostic)
     }
 }
