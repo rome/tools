@@ -85,8 +85,7 @@ impl Rule for UseIframeTitle {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
 
-        let is_iframe = matches!(node.name_value_token()?.text_trimmed(), "iframe");
-        if !is_iframe {
+        if node.name_value_token()?.text_trimmed() != "iframe" {
             return None;
         }
 
