@@ -1,6 +1,6 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{jsx_ext::AnyJsxElement, AnyJsExpression};
+use rome_js_syntax::{jsx_ext::AnyJsxElement, AnyJsExpression, AnyJsxAttributeValue};
 use rome_rowan::{AstNode, AstNodeList};
 
 declare_rule! {
@@ -93,42 +93,37 @@ impl Rule for UseIframeTitle {
             return Some(UseIframeTitleState { node: node.clone() });
         }
 
-        let title_attribute = node.find_attribute_by_name("title");
+        let Some(title_attribute) = node.find_attribute_by_name("title") else {
+            return Some(UseIframeTitleState { node: node.clone() })
+        };
 
-        if let Some(title_attribute) = title_attribute {
-            let attribute_value = title_attribute.initializer()?.value().ok()?;
-            match attribute_value.as_jsx_string() {
-                Some(text_value) => {
-                    // the title attribute is a string
-                    let text = text_value.inner_string_text().ok()?;
-                    if text.is_empty() || text == r#"``"# {
-                        return Some(UseIframeTitleState { node: node.clone() });
-                    }
-                    None
+        let attribute_value = title_attribute.initializer()?.value().ok()?;
+
+        match attribute_value {
+            AnyJsxAttributeValue::JsxString(str) => {
+                let text = str.inner_string_text().ok()?;
+                let is_valid_string = !text.is_empty() && text != r#"``"#;
+                if is_valid_string {
+                    return None;
                 }
-                None => {
-                    // the title attribute is not a string
-                    let expression = attribute_value
-                        .as_jsx_expression_attribute_value()?
-                        .expression()
-                        .ok()?;
-
-                    if let AnyJsExpression::JsIdentifierExpression(identifier) = expression {
-                        let text = identifier.name().ok()?.value_token().ok()?;
-                        if text.text_trimmed() == "undefined" || text.text_trimmed() == "null" {
-                            return Some(UseIframeTitleState { node: node.clone() });
-                        } else {
-                            // we assueme the identifier is a string type
-                            return None;
-                        }
-                    }
-
-                    Some(UseIframeTitleState { node: node.clone() })
-                }
+                Some(UseIframeTitleState { node: node.clone() })
             }
-        } else {
-            // the iframe has some attributes but no `title` attribute. (e.g. <iframe {...props} />)
-            Some(UseIframeTitleState { node: node.clone() })
+            AnyJsxAttributeValue::JsxExpressionAttributeValue(expr_attribute_value) => {
+                let expr = expr_attribute_value.expression().ok()?;
+                if let AnyJsExpression::JsIdentifierExpression(identifier) = expr {
+                    let text = identifier.name().ok()?.value_token().ok()?;
+                    let is_undefined_or_null =
+                        text.text_trimmed() == "undefined" || text.text_trimmed() == "null";
+                    if is_undefined_or_null {
+                        return Some(UseIframeTitleState { node: node.clone() });
+                    } else {
+                        // we assueme the identifier is a string type
+                        return None;
+                    }
+                }
+                Some(UseIframeTitleState { node: node.clone() })
+            }
+            AnyJsxAttributeValue::AnyJsxTag(_) => Some(UseIframeTitleState { node: node.clone() }),
         }
     }
 
