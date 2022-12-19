@@ -1,8 +1,9 @@
 use std::collections::HashSet;
 
 use crate::{
-    AnyJsxAttribute, AnyJsxElementName, JsSyntaxToken, JsxAttribute, JsxAttributeList, JsxName,
-    JsxOpeningElement, JsxSelfClosingElement, JsxString, TextSize,
+    AnyJsExpression, AnyJsLiteralExpression, AnyJsxAttribute, AnyJsxAttributeValue,
+    AnyJsxElementName, JsSyntaxToken, JsxAttribute, JsxAttributeList, JsxName, JsxOpeningElement,
+    JsxSelfClosingElement, JsxString, TextSize,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList, SyntaxResult, SyntaxTokenText};
 
@@ -407,5 +408,61 @@ impl JsxAttribute {
                 Some(true)
             })
             .unwrap_or(false)
+    }
+}
+
+impl AnyJsxAttributeValue {
+    /// Retrieves the text value of the attribute
+    ///
+    /// If the attribute is not a text or a text-like node, [Node] is returned.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make::{ident, js_string_literal_expression, jsx_attribute, jsx_attribute_initializer_clause, jsx_expression_attribute_value, jsx_name, jsx_string, token};
+    /// use rome_js_syntax::{AnyJsExpression, AnyJsLiteralExpression, AnyJsxAttributeName, AnyJsxAttributeValue, T};
+    /// let attribute = AnyJsxAttributeValue::JsxString(
+    ///     jsx_string(ident("en"))
+    /// );
+    /// assert_eq!(attribute.inner_text_value().unwrap().unwrap(), "en");
+    /// let attribute = AnyJsxAttributeValue::JsxExpressionAttributeValue(
+    ///     jsx_expression_attribute_value(
+    ///         token(T!['{']),
+    ///         AnyJsExpression::AnyJsLiteralExpression(
+    ///             AnyJsLiteralExpression::JsStringLiteralExpression(
+    ///                 js_string_literal_expression(ident("en"))
+    ///             )
+    ///         ),
+    ///        token(T!['}']),
+    ///     )
+    /// );
+    /// assert_eq!(attribute.inner_text_value().unwrap().unwrap(), "en");
+    /// ```
+    pub fn inner_text_value(&self) -> SyntaxResult<Option<SyntaxTokenText>> {
+        let result = match self {
+            AnyJsxAttributeValue::JsxString(string) => Some(string.inner_string_text()?),
+            AnyJsxAttributeValue::JsxExpressionAttributeValue(expression) => {
+                match expression.expression()? {
+                    AnyJsExpression::JsTemplateExpression(template) => {
+                        template.elements().iter().next().and_then(|chunk| {
+                            Some(
+                                chunk
+                                    .as_js_template_chunk_element()?
+                                    .template_chunk_token()
+                                    .ok()?
+                                    .token_text_trimmed(),
+                            )
+                        })
+                    }
+                    AnyJsExpression::AnyJsLiteralExpression(
+                        AnyJsLiteralExpression::JsStringLiteralExpression(string),
+                    ) => Some(string.inner_string_text()?),
+                    _ => None,
+                }
+            }
+            _ => return Ok(None),
+        };
+
+        Ok(result)
     }
 }
