@@ -442,15 +442,13 @@ export interface Nursery {
 	 */
 	useHookAtTopLevel?: RuleConfiguration;
 	/**
-<<<<<<< HEAD
-	 * Require calls to isNaN() when checking for NaN.
-	 */
-	useIsNan?: RuleConfiguration;
-=======
 	 * Enforces the usage of the attribute title for the element iframe
 	 */
 	useIframeTitle?: RuleConfiguration;
->>>>>>> 65e94d93d0 (chore: add configurations)
+	/**
+	 * Require calls to isNaN() when checking for NaN.
+	 */
+	useIsNan?: RuleConfiguration;
 	/**
 	 * Enforces that audio and video elements must have a track for captions.
 	 */
@@ -770,15 +768,9 @@ export type Category =
 	| "lint/nursery/useEnumInitializers"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useExponentiationOperator"
-<<<<<<< HEAD
 	| "lint/nursery/useIsNan"
-<<<<<<< HEAD
 	| "lint/nursery/useMediaCaption"
-=======
-=======
 	| "lint/nursery/useIframeTitle"
->>>>>>> 65e94d93d0 (chore: add configurations)
->>>>>>> 37232c45fa (parent 5f1144170e12e78a3e7b32201dc917bff808f47b)
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useHookAtTopLevel"

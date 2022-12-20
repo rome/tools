@@ -80,15 +80,9 @@ define_dategories! {
     "lint/nursery/useEnumInitializers":"https://docs.rome.tools/lint/rules/useEnumInitializers",
     "lint/nursery/useExhaustiveDependencies": "https://docs.rome.tools/lint/rules/useExhaustiveDependencies",
     "lint/nursery/useExponentiationOperator": "https://docs.rome.tools/lint/rules/useExponentiationOperator",
-<<<<<<< HEAD
     "lint/nursery/useIsNan": "https://docs.rome.tools/lint/rules/useIsNan",
-<<<<<<< HEAD
     "lint/nursery/useMediaCaption": "https://docs.rome.tools/lint/rules/useMediaCaption",
-=======
-=======
     "lint/nursery/useIframeTitle": "https://docs.rome.tools/lint/rules/useIframeTitle",
->>>>>>> 3b85ef65dd (feat(rome_js_analyze): useIframeTitle)
->>>>>>> 37232c45fa (parent 5f1144170e12e78a3e7b32201dc917bff808f47b)
     "lint/nursery/useNumericLiterals": "https://docs.rome.tools/lint/rules/useNumericLiterals",
     "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
     "lint/nursery/useHookAtTopLevel": "https://docs.rome.tools/lint/rules/useHookAtTopLevel",
