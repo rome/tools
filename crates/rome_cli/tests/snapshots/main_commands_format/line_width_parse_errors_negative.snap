@@ -10,7 +10,7 @@ flags/invalid ━━━━━━━━━━━━━━━━━━━━━━
   × Cannot parse the argument --line-width
     
     Caused by:
-      failed to parse '-1': ParseError(ParseIntError { kind: InvalidDigit })
+      failed to parse '-1': invalid digit found in string
   
 
 

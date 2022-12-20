@@ -10,7 +10,8 @@ flags/invalid ━━━━━━━━━━━━━━━━━━━━━━
   × Cannot parse the argument --line-width
     
     Caused by:
-      failed to parse '321': TryFromIntError(LineWidthFromIntError(321))
+      failed to parse '321': The line width exceeds the maximum value (320)
+  
   
 
 
