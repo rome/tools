@@ -1,8 +1,8 @@
 use crate::prelude::*;
 use crate::separated::FormatAstSeparatedListExtension;
+use rome_formatter::write;
 use rome_json_syntax::JsonArrayElementList;
 use rome_rowan::{AstNode, AstSeparatedList};
-use rome_formatter::write;
 
 #[derive(Debug, Clone, Default)]
 pub(crate) struct FormatJsonArrayElementList;
@@ -10,52 +10,45 @@ pub(crate) struct FormatJsonArrayElementList;
 impl FormatRule<JsonArrayElementList> for FormatJsonArrayElementList {
     type Context = JsonFormatContext;
     fn fmt(&self, node: &JsonArrayElementList, f: &mut JsonFormatter) -> FormatResult<()> {
-
-		let layout = if can_concisely_print_array_list(node) {
+        let layout = if can_concisely_print_array_list(node) {
             ArrayLayout::Fill
         } else {
             ArrayLayout::OnePerLine
         };
 
+        match layout {
+            ArrayLayout::Fill => {
+                let mut filler = f.fill();
 
-		match layout {
-			ArrayLayout::Fill => {
+                // Using format_separated is valid in this case as can_print_fill does not allow holes
+                for (element, formatted) in node.iter().zip(node.format_separated(",")) {
+                    filler.entry(
+                        &format_once(|f| {
+                            if get_lines_before(element?.syntax()) > 1 {
+                                write!(f, [empty_line()])
+                            } else {
+                                write!(f, [soft_line_break_or_space()])
+                            }
+                        }),
+                        &formatted,
+                    );
+                }
 
-				let mut filler = f.fill();
+                filler.finish()
+            }
 
-				// Using format_separated is valid in this case as can_print_fill does not allow holes
-				for (element, formatted) in node.iter().zip(node.format_separated(",")) {
-					filler.entry(
-						&format_once(|f| {
-							if get_lines_before(element?.syntax()) > 1 {
-								write!(f, [empty_line()])
-							} else {
-								write!(f, [soft_line_break_or_space()])
-							}
-						}),
-						&formatted,
-					);
-				}
+            ArrayLayout::OnePerLine => {
+                let mut join = f.join_nodes_with_soft_line();
 
-				filler.finish()
-			}
+                for (element, formatted) in node.elements().zip(node.format_separated(",")) {
+                    join.entry(element.node()?.syntax(), &formatted);
+                }
 
-			ArrayLayout::OnePerLine => {
-				let mut join = f.join_nodes_with_soft_line();
-
-        		for (element, formatted) in node.elements().zip(node.format_separated(",")) {
-            		join.entry(element.node()?.syntax(), &formatted);
-        		}
-
-        		join.finish()
-			}
-		}
-
-
-
+                join.finish()
+            }
+        }
     }
 }
-
 
 #[derive(Copy, Clone, Debug)]
 enum ArrayLayout {
@@ -66,7 +59,7 @@ enum ArrayLayout {
     ///     1, 2, 3,
     ///     5, 6,
     ///   ]
-	/// }
+    /// }
     /// ```
     Fill,
 
@@ -78,11 +71,10 @@ enum ArrayLayout {
     ///     4,
     ///     3,
     ///  ]
-	/// }
+    /// }
     /// ```
     OnePerLine,
 }
-
 
 /// Returns true if the provided JsArrayElementList could
 /// be "fill-printed" instead of breaking each element on
@@ -91,22 +83,23 @@ enum ArrayLayout {
 /// The underlying logic only allows lists of literal expressions
 /// with 10 or less characters, potentially wrapped in a "short"
 /// unary expression (+, -, ~ or !)
-pub(crate) fn can_concisely_print_array_list(
-    list: &JsonArrayElementList,
-) -> bool {
-
+pub(crate) fn can_concisely_print_array_list(list: &JsonArrayElementList) -> bool {
     if list.is_empty() {
         return false;
     }
 
+    // list.elements().all(|item| match item.into_node() {
+    //     Ok(rome_json_syntax::AnyJsonValue::JsonArrayValue(_)) => false,
+    //     Ok(rome_json_syntax::AnyJsonValue::JsonObjectValue(_)) => false,
+    //     Ok(rome_json_syntax::AnyJsonValue::JsonBogusValue(_)) => false,
+    //     _ => {true}
+    // })
     list.elements().all(|item| {
-        match item.into_node() {
-			Ok(rome_json_syntax::AnyJsonValue::JsonArrayValue(_)) => {false}
-			Ok(rome_json_syntax::AnyJsonValue::JsonObjectValue(_)) => {false}
-			Ok(rome_json_syntax::AnyJsonValue::JsonBogusValue(_)) => {false}
-            _ => {
-                return true;
-            }
-        }
+        !matches!(
+            item.into_node(),
+            Ok(rome_json_syntax::AnyJsonValue::JsonArrayValue(_))
+                | Ok(rome_json_syntax::AnyJsonValue::JsonObjectValue(_))
+                | Ok(rome_json_syntax::AnyJsonValue::JsonBogusValue(_))
+        )
     })
 }
