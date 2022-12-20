@@ -3,7 +3,7 @@ title: Lint Rule useIsNan
 parent: lint/rules/index
 ---
 
-# useIsNan (since v12.0.0)
+# useIsNan (since vnext)
 
 Require calls to `isNaN()` when checking for `NaN`.
 
