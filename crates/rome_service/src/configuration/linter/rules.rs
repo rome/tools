@@ -799,6 +799,8 @@ struct NurserySchema {
     use_exponentiation_operator: Option<RuleConfiguration>,
     #[doc = "Enforce that all React hooks are being called from the Top Level component functions."]
     use_hook_at_top_level: Option<RuleConfiguration>,
+    #[doc = "Require calls to isNaN() when checking for NaN."]
+    use_is_nan: Option<RuleConfiguration>,
     #[doc = "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals"]
     use_numeric_literals: Option<RuleConfiguration>,
     #[doc = "Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country."]
@@ -806,7 +808,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 40] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 41] = [
         "noAccessKey",
         "noAssignInExpressions",
         "noBannedTypes",
@@ -845,10 +847,11 @@ impl Nursery {
         "useExhaustiveDependencies",
         "useExponentiationOperator",
         "useHookAtTopLevel",
+        "useIsNan",
         "useNumericLiterals",
         "useValidLang",
     ];
-    const RECOMMENDED_RULES: [&'static str; 31] = [
+    const RECOMMENDED_RULES: [&'static str; 32] = [
         "noAssignInExpressions",
         "noBannedTypes",
         "noClassAssign",
@@ -878,10 +881,11 @@ impl Nursery {
         "useDefaultSwitchClauseLast",
         "useEnumInitializers",
         "useExhaustiveDependencies",
+        "useIsNan",
         "useNumericLiterals",
         "useValidLang",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 31] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 32] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[3]),
@@ -913,6 +917,7 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[35]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[38]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[39]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[40]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -939,7 +944,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 31] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 32] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
