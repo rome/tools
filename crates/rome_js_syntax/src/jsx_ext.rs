@@ -499,7 +499,7 @@ impl JsxAttribute {
                 _ => None,
             };
 
-            Ok(result.map(|token| closure(token)).unwrap_or(true))
+            Ok(result.map(closure).unwrap_or(true))
         } else {
             // values that don't have initializer get a `true` at compile time, making them
             // truthy
