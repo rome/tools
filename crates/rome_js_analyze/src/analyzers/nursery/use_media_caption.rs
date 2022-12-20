@@ -33,7 +33,7 @@ declare_rule! {
     /// 	<video muted {...props}></video>
     /// ```
     pub(crate) UseMediaCaption {
-        version: "12.0.0",
+        version: "next",
         name: "useMediaCaption",
         recommended: true,
     }
