@@ -1,7 +1,7 @@
 use crate::utils::is_node_equal;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
-use rome_js_syntax::{JsBinaryExpression, JsBinaryOperator};
+use rome_js_syntax::JsBinaryExpression;
 use rome_rowan::AstNode;
 
 declare_rule! {
@@ -41,17 +41,7 @@ impl Rule for NoSelfCompare {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
 
-        if !matches!(
-            &node.operator(),
-            Ok(JsBinaryOperator::Equality
-                | JsBinaryOperator::Inequality
-                | JsBinaryOperator::GreaterThan
-                | JsBinaryOperator::GreaterThanOrEqual
-                | JsBinaryOperator::LessThan
-                | JsBinaryOperator::LessThanOrEqual
-                | JsBinaryOperator::StrictEquality
-                | JsBinaryOperator::StrictInequality)
-        ) {
+        if !node.is_comparison_operator() {
             return None;
         }
 
