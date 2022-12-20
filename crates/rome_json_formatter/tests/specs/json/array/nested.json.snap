@@ -36,11 +36,8 @@ Line width: 80
 	"long": [
 		11111,
 		[
-			"nestedddddddddddd",
-			22222222222222222222222222,
-			true,
-			5555555555555555555555,
-			"indenteddddddddddddddddddddddddddddd"
+			"nestedddddddddddd", 22222222222222222222222222, true,
+			5555555555555555555555, "indenteddddddddddddddddddddddddddddd"
 		],
 		"Element"
 	]
