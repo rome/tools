@@ -3,7 +3,7 @@ title: Lint Rule noControlCharactersInRegex
 parent: lint/rules/index
 ---
 
-# noControlCharactersInRegex (since v11.0.0)
+# noControlCharactersInRegex (since vnext)
 
 Prevents from having control characters and some escape sequences that match control characters in regular expressions.
 
@@ -113,25 +113,10 @@ Prevents from having control characters and some escape sequences that match con
 
 ```js
 var pattern1 = /\x20/;
-```
-
-```js
 var pattern2 = /\u0020/;
-```
-
-```js
 var pattern3 = /\u{20}/u;
-```
-
-```js
 var pattern4 = /\t/;
-```
-
-```js
 var pattern5 = /\n/;
-```
-
-```js
 var pattern6 = new RegExp("\x20");
 ```
 

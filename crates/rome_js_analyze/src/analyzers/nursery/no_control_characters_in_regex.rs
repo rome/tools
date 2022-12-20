@@ -3,10 +3,10 @@ use std::{iter::Peekable, str::Chars};
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    AnyJsExpression, JsCallArguments, JsCallExpression, JsIdentifierExpression, JsLanguage,
-    JsNewExpression, JsRegexLiteralExpression, JsStringLiteralExpression,
+    AnyJsExpression, JsCallArguments, JsCallExpression, JsNewExpression, JsRegexLiteralExpression,
+    JsStringLiteralExpression,
 };
-use rome_rowan::{declare_node_union, AstNode, AstSeparatedList, SyntaxNode};
+use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
 
 use crate::utils::escape_string;
 
@@ -131,45 +131,42 @@ fn collect_control_characters(pattern: String, flags: Option<String>) -> Option<
     let mut iter = pattern.chars().peekable();
 
     while let Some(c) = iter.next() {
-        match c {
-            '\\' => {
-                if let Some(&c) = iter.peek() {
-                    match c {
-                        'x' => {
-                            iter.next();
+        if c == '\\' {
+            if let Some(&c) = iter.peek() {
+                match c {
+                    'x' => {
+                        iter.next();
+                        add_control_character_to_vec(
+                            "\\x",
+                            &mut iter,
+                            &mut control_characters,
+                            get_code_point_from_hex_character,
+                        );
+                    }
+                    'u' => {
+                        iter.next();
+                        if is_unicode {
                             add_control_character_to_vec(
-                                "\\x",
+                                "\\u",
                                 &mut iter,
                                 &mut control_characters,
-                                get_code_point_from_hex_character,
+                                get_code_point_from_code_point_character,
+                            );
+                        } else {
+                            add_control_character_to_vec(
+                                "\\u",
+                                &mut iter,
+                                &mut control_characters,
+                                get_code_point_from_escape_character,
                             );
                         }
-                        'u' => {
-                            iter.next();
-                            if is_unicode {
-                                add_control_character_to_vec(
-                                    "\\u",
-                                    &mut iter,
-                                    &mut control_characters,
-                                    get_code_point_from_code_point_character,
-                                );
-                            } else {
-                                add_control_character_to_vec(
-                                    "\\u",
-                                    &mut iter,
-                                    &mut control_characters,
-                                    get_code_point_from_escape_character,
-                                );
-                            }
-                        }
-                        '\\' => {
-                            iter.next();
-                        }
-                        _ => {}
                     }
+                    '\\' => {
+                        iter.next();
+                    }
+                    _ => {}
                 }
             }
-            _ => {}
         }
     }
     if !control_characters.is_empty() {
@@ -216,16 +213,16 @@ impl Rule for NoControlCharactersInRegex {
         let node = ctx.query();
         match node {
             PossibleRegexExpression::JsNewExpression(js_new_expression) => {
-                return collect_control_characters_from_expression(
+                collect_control_characters_from_expression(
                     &js_new_expression.callee().ok()?,
                     &js_new_expression.arguments()?,
-                );
+                )
             }
             PossibleRegexExpression::JsCallExpression(js_call_expression) => {
-                return collect_control_characters_from_expression(
+                collect_control_characters_from_expression(
                     &js_call_expression.callee().ok()?,
                     &js_call_expression.arguments().ok()?,
-                );
+                )
             }
             PossibleRegexExpression::JsRegexLiteralExpression(js_regex_literal_expression) => {
                 collect_control_characters(
