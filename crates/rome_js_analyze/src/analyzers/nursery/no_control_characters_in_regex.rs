@@ -119,6 +119,11 @@ fn add_control_character_to_vec(
         }
     }
 }
+/// Collecting control character for regex, the following characters in regular expression patterns are considered as control characters:
+/// Hexadecimal character escapes from \x00 to \x1F.
+/// Unicode character escapes from \u0000 to \u001F.
+/// Unicode code point escapes range from \u{0} to \u{1F}. The Unicode flag must be set as true in order for these Unicode code point escapes to work: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicode.
+/// Unescaped raw characters from U+0000 to U+001F.
 fn collect_control_characters(pattern: String, flags: Option<String>) -> Option<Vec<String>> {
     let mut control_characters: Vec<String> = Vec::new();
     let is_unicode = flags.unwrap_or_default().contains('u');
