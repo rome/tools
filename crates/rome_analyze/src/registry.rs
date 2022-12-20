@@ -130,6 +130,7 @@ impl<L: Language + Default> RuleRegistry<L> {
 /// Holds a collection of rules for each phase.
 #[derive(Default)]
 struct PhaseRules<L: Language> {
+    /// Maps the [TypeId] of known query matches types to the corresponding list of rules
     type_rules: FxHashMap<TypeId, TypeRules<L>>,
     /// Holds a list of states for all the rules in this phase
     rule_states: Vec<RuleState<L>>,
@@ -188,7 +189,7 @@ impl<L: Language + Default + 'static> RegistryVisitor<L> for RuleRegistryBuilder
                     .type_rules
                     .entry(TypeId::of::<SyntaxNode<L>>())
                     .or_insert_with(|| TypeRules::SyntaxRules { rules: Vec::new() })
-                    else { unreachable!() };
+                    else { unreachable!("the SyntaxNode type has already been registered as a TypeRules instead of a SyntaxRules, this is generally caused by an implementation of `Queryable::key` returning a `QueryKey::TypeId` with the type ID of `SyntaxNode`") };
 
                 // Iterate on all the SyntaxKind variants this node can match
                 for kind in key.iter() {
@@ -214,7 +215,7 @@ impl<L: Language + Default + 'static> RegistryVisitor<L> for RuleRegistryBuilder
                     .type_rules
                     .entry(key)
                     .or_insert_with(|| TypeRules::TypeRules { rules: Vec::new() })
-                    else { unreachable!() };
+                    else { unreachable!("the query type has already been registered as a SyntaxRules instead of a TypeRules, this is generally ca used by an implementation of `Queryable::key` returning a `QueryKey::TypeId` with the type ID of `SyntaxNode`") };
 
                 rules.push(rule);
             }

@@ -4,7 +4,7 @@ use rome_rowan::{Language, SyntaxKindSet, TextRange};
 
 use crate::{registry::Phase, services::FromServices, Phases, ServiceBag, Visitor};
 
-/// Trait implemented for all types, for example lint rules can query them to emit diagnostics or code actions.
+/// Trait implemented for types that lint rules can query in order to emit diagnostics or code actions.
 pub trait Queryable: Sized {
     type Input: QueryMatch;
     type Output;
@@ -12,11 +12,18 @@ pub trait Queryable: Sized {
     type Language: Language;
     type Services: FromServices + Phase;
 
+    /// Registers one or more [Visitor] that will emit `Self::Input` query
+    /// matches during the analyzer run
     fn build_visitor(
         analyzer: &mut impl AddVisitor<Self::Language>,
         root: &<Self::Language as Language>::Root,
     );
 
+    /// Returns the type of query matches this [Queryable] expects as inputs
+    ///
+    /// Unless your custom queryable needs to match on a specific
+    /// [SyntaxKindSet], you should not override the default implementation of
+    /// this method
     fn key() -> QueryKey<Self::Language> {
         QueryKey::TypeId(TypeId::of::<Self::Input>())
     }
@@ -29,7 +36,9 @@ pub trait Queryable: Sized {
     fn unwrap_match(services: &ServiceBag, query: &Self::Input) -> Self::Output;
 }
 
+/// This trait is implemented on all types that supports the registration of [Visitor]
 pub trait AddVisitor<L: Language> {
+    /// Registers a [Visitor] for a given `phase`
     fn add_visitor<F, V>(&mut self, phase: Phases, visitor: F)
     where
         F: FnOnce() -> V,

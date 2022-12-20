@@ -107,6 +107,7 @@ where
         }
     }
 
+    /// Registers a [Visitor] to be executed as part of a given `phase` of the analyzer run
     pub fn add_visitor(
         &mut self,
         phase: Phases,
