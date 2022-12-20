@@ -1,10 +1,10 @@
 use crate::commands::format::apply_format_settings_from_cli;
 use crate::configuration::load_configuration;
-use crate::{execute_mode, CliSession, Execution, TerminationDiagnostic, TraversalMode};
+use crate::{execute_mode, CliDiagnostic, CliSession, Execution, TraversalMode};
 use rome_service::workspace::{FixFileMode, UpdateSettingsParams};
 
 /// Handler for the "check" command of the Rome CLI
-pub(crate) fn check(mut session: CliSession) -> Result<(), TerminationDiagnostic> {
+pub(crate) fn check(mut session: CliSession) -> Result<(), CliDiagnostic> {
     let mut configuration = load_configuration(&mut session)?;
 
     apply_format_settings_from_cli(&mut session, &mut configuration)?;
@@ -18,7 +18,7 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), TerminationDiagnostic
     let apply_suggested = session.args.contains("--apply-suggested");
 
     let fix_file_mode = if apply && apply_suggested {
-        return Err(TerminationDiagnostic::incompatible_arguments(
+        return Err(CliDiagnostic::incompatible_arguments(
             "--apply",
             "--apply-suggested",
         ));

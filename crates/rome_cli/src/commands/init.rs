@@ -1,9 +1,9 @@
-use crate::{CliSession, TerminationDiagnostic};
+use crate::{CliDiagnostic, CliSession};
 use rome_console::{markup, ConsoleExt, HorizontalLine};
 use rome_service::configuration::Configuration;
 use rome_service::create_config;
 
-pub(crate) fn init(mut session: CliSession) -> Result<(), TerminationDiagnostic> {
+pub(crate) fn init(mut session: CliSession) -> Result<(), CliDiagnostic> {
     let fs = &mut session.app.fs;
     create_config(fs, Configuration::default())?;
 

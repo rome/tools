@@ -16,10 +16,10 @@ use tracing_tree::HierarchicalLayer;
 use crate::{
     open_transport,
     service::{self, ensure_daemon, open_socket, run_daemon},
-    CliSession, TerminationDiagnostic,
+    CliDiagnostic, CliSession,
 };
 
-pub(crate) fn start(session: CliSession) -> Result<(), TerminationDiagnostic> {
+pub(crate) fn start(session: CliSession) -> Result<(), CliDiagnostic> {
     let rt = Runtime::new()?;
     let did_spawn = rt.block_on(ensure_daemon(false))?;
 
@@ -36,7 +36,7 @@ pub(crate) fn start(session: CliSession) -> Result<(), TerminationDiagnostic> {
     Ok(())
 }
 
-pub(crate) fn stop(session: CliSession) -> Result<(), TerminationDiagnostic> {
+pub(crate) fn stop(session: CliSession) -> Result<(), CliDiagnostic> {
     let rt = Runtime::new()?;
 
     if let Some(transport) = open_transport(rt)? {
@@ -45,7 +45,7 @@ pub(crate) fn stop(session: CliSession) -> Result<(), TerminationDiagnostic> {
             // The `ChannelClosed` error is expected since the server can
             // shutdown before sending a response
             Ok(()) | Err(WorkspaceError::TransportError(TransportError::ChannelClosed)) => {}
-            Err(err) => return Err(TerminationDiagnostic::from(err)),
+            Err(err) => return Err(CliDiagnostic::from(err)),
         };
 
         session.app.console.log(markup! {
@@ -60,7 +60,7 @@ pub(crate) fn stop(session: CliSession) -> Result<(), TerminationDiagnostic> {
     Ok(())
 }
 
-pub(crate) fn run_server(mut session: CliSession) -> Result<(), TerminationDiagnostic> {
+pub(crate) fn run_server(mut session: CliSession) -> Result<(), CliDiagnostic> {
     setup_tracing_subscriber();
 
     let stop_on_disconnect = session.args.contains("--stop-on-disconnect");
@@ -86,13 +86,13 @@ pub(crate) fn run_server(mut session: CliSession) -> Result<(), TerminationDiagn
     })
 }
 
-pub(crate) fn print_socket() -> Result<(), TerminationDiagnostic> {
+pub(crate) fn print_socket() -> Result<(), CliDiagnostic> {
     let rt = Runtime::new()?;
     rt.block_on(service::print_socket())?;
     Ok(())
 }
 
-pub(crate) fn lsp_proxy() -> Result<(), TerminationDiagnostic> {
+pub(crate) fn lsp_proxy() -> Result<(), CliDiagnostic> {
     let rt = Runtime::new()?;
     rt.block_on(start_lsp_proxy(&rt))?;
 
@@ -102,7 +102,7 @@ pub(crate) fn lsp_proxy() -> Result<(), TerminationDiagnostic> {
 /// Start a proxy process.
 /// Receives a process via `stdin` and then copy the content to the LSP socket.
 /// Copy to the process on `stdout` when the LSP responds to a message
-async fn start_lsp_proxy(rt: &Runtime) -> Result<(), TerminationDiagnostic> {
+async fn start_lsp_proxy(rt: &Runtime) -> Result<(), CliDiagnostic> {
     ensure_daemon(true).await?;
 
     match open_socket().await? {

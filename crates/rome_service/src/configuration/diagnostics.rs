@@ -1,4 +1,4 @@
-use rome_diagnostics::{category, Category, Diagnostic, DiagnosticTags, LineIndexBuf, Location};
+use rome_diagnostics::{category, Category, Diagnostic, LineIndexBuf, Location};
 use rome_rowan::{TextRange, TextSize};
 use std::fmt::{Debug, Display, Formatter};
 
@@ -103,10 +103,6 @@ impl Diagnostic for ConfigurationError {
         } else {
             Location::builder().build()
         }
-    }
-
-    fn tags(&self) -> DiagnosticTags {
-        DiagnosticTags::FIXABLE
     }
 }
 

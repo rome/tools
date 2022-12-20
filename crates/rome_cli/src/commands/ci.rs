@@ -1,5 +1,5 @@
 use crate::{
-    configuration::load_configuration, execute_mode, CliSession, Execution, TerminationDiagnostic,
+    configuration::load_configuration, execute_mode, CliDiagnostic, CliSession, Execution,
     TraversalMode,
 };
 use rome_service::configuration::{FormatterConfiguration, LinterConfiguration};
@@ -8,18 +8,18 @@ use rome_service::workspace::UpdateSettingsParams;
 use super::format::apply_format_settings_from_cli;
 
 /// Handler for the "ci" command of the Rome CLI
-pub(crate) fn ci(mut session: CliSession) -> Result<(), TerminationDiagnostic> {
+pub(crate) fn ci(mut session: CliSession) -> Result<(), CliDiagnostic> {
     let mut configuration = load_configuration(&mut session)?;
 
     let formatter_enabled = session
         .args
         .opt_value_from_str("--formatter-enabled")
-        .map_err(|source| TerminationDiagnostic::parse_error("--formatter-enabled", source))?;
+        .map_err(|source| CliDiagnostic::parse_error("--formatter-enabled", source))?;
 
     let linter_enabled = session
         .args
         .opt_value_from_str("--linter-enabled")
-        .map_err(|source| TerminationDiagnostic::parse_error("--linter-enabled", source))?;
+        .map_err(|source| CliDiagnostic::parse_error("--linter-enabled", source))?;
 
     let formatter = configuration
         .formatter
@@ -39,7 +39,7 @@ pub(crate) fn ci(mut session: CliSession) -> Result<(), TerminationDiagnostic> {
 
     // no point in doing the traversal if all the checks have been disabled
     if configuration.is_formatter_disabled() && configuration.is_linter_disabled() {
-        return Err(TerminationDiagnostic::incompatible_end_configuration("Formatter and Linter are both disabled, can't perform the command. This is probably and error."));
+        return Err(CliDiagnostic::incompatible_end_configuration("Formatter and Linter are both disabled, can't perform the command. This is probably and error."));
     }
 
     if !configuration.is_formatter_disabled() {

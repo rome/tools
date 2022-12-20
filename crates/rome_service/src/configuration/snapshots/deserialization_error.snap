@@ -2,7 +2,7 @@
 source: crates/rome_service/src/configuration/diagnostics.rs
 expression: content
 ---
-rome.json:3:13 configuration  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+rome.json:3:13 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Rome couldn't load the configuration file, here's why: 
     expected `:` at line 3 column 13

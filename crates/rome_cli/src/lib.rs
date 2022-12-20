@@ -15,14 +15,15 @@ use rome_service::{App, DynRef, Workspace, WorkspaceRef};
 
 mod commands;
 mod configuration;
+mod diagnostics;
 mod execute;
 mod metrics;
 mod panic;
 mod reports;
 mod service;
-mod termination;
 mod traversal;
 
+pub use diagnostics::CliDiagnostic;
 pub(crate) use execute::{execute_mode, Execution, TraversalMode};
 pub use panic::setup_panic_handler;
 pub use reports::{
@@ -30,7 +31,6 @@ pub use reports::{
     Report, ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind,
 };
 pub use service::{open_transport, SocketTransport};
-pub use termination::TerminationDiagnostic;
 
 pub(crate) const VERSION: &str = match option_env!("ROME_VERSION") {
     Some(version) => version,
@@ -50,7 +50,7 @@ impl<'app> CliSession<'app> {
         workspace: &'app dyn Workspace,
         args: Arguments,
         console: &'app mut dyn Console,
-    ) -> Result<Self, TerminationDiagnostic> {
+    ) -> Result<Self, CliDiagnostic> {
         Ok(Self {
             app: App::new(
                 DynRef::Owned(Box::new(OsFileSystem)),
@@ -62,7 +62,7 @@ impl<'app> CliSession<'app> {
     }
 
     /// Main function to run Rome CLI
-    pub fn run(mut self) -> Result<(), TerminationDiagnostic> {
+    pub fn run(mut self) -> Result<(), CliDiagnostic> {
         let has_metrics = self.args.contains("--show-metrics");
         if has_metrics {
             crate::metrics::init_metrics();
@@ -72,7 +72,7 @@ impl<'app> CliSession<'app> {
         let subcommand = self
             .args
             .subcommand()
-            .map_err(|source| TerminationDiagnostic::parse_error("<command>", source))?;
+            .map_err(|source| CliDiagnostic::parse_error("<command>", source))?;
 
         // True if the command line did not contain any arguments beside the subcommand
         let is_empty = self.args.clone().finish().is_empty();
@@ -96,7 +96,7 @@ impl<'app> CliSession<'app> {
             // Print the help for known commands called without any arguments, and exit with an error
             Some(cmd @ ("check" | "ci" | "format")) => {
                 commands::help::help(self, Some(cmd))?;
-                Err(TerminationDiagnostic::empty_arguments())
+                Err(CliDiagnostic::empty_arguments())
             }
 
             Some("init") => commands::init::init(self),
@@ -108,7 +108,7 @@ impl<'app> CliSession<'app> {
             // Print the general help if no subcommand was specified / the subcommand is `help`
             None | Some("help") => commands::help::help(self, None),
 
-            Some(cmd) => Err(TerminationDiagnostic::unknown_command(cmd)),
+            Some(cmd) => Err(CliDiagnostic::unknown_command(cmd)),
         };
 
         if has_metrics {
@@ -138,10 +138,10 @@ impl FromStr for ColorsArg {
     }
 }
 
-pub fn color_from_arguments(args: &mut Arguments) -> Result<ColorMode, TerminationDiagnostic> {
+pub fn color_from_arguments(args: &mut Arguments) -> Result<ColorMode, CliDiagnostic> {
     let colors = args
         .opt_value_from_str("--colors")
-        .map_err(|source| TerminationDiagnostic::parse_error("--colors", source))?;
+        .map_err(|source| CliDiagnostic::parse_error("--colors", source))?;
     Ok(match colors {
         Some(ColorsArg::Off) => ColorMode::Disabled,
         Some(ColorsArg::Force) => ColorMode::Enabled,

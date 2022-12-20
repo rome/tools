@@ -5,13 +5,12 @@
 //! [website]: https://rome.tools
 
 use rome_cli::{
-    color_from_arguments, open_transport, setup_panic_handler, Arguments, CliSession,
-    TerminationDiagnostic,
+    color_from_arguments, open_transport, setup_panic_handler, Arguments, CliDiagnostic, CliSession,
 };
-use rome_console::{markup, Console, ConsoleExt, EnvConsole};
-use rome_diagnostics::{set_bottom_frame, Error, PrintDiagnostic};
+use rome_console::{markup, ConsoleExt, EnvConsole};
+use rome_diagnostics::{set_bottom_frame, PrintDiagnostic};
 use rome_service::workspace;
-use std::process::{exit, ExitCode, Termination};
+use std::process::{ExitCode, Termination};
 use tokio::runtime::Runtime;
 
 #[cfg(target_os = "windows")]
@@ -26,44 +25,31 @@ fn main() -> ExitCode {
     setup_panic_handler();
     set_bottom_frame(main as usize);
 
-    let mut args = Arguments::from_env();
+    let args = Arguments::from_env();
     let mut console = EnvConsole::default();
-    match color_from_arguments(&mut args) {
-        Ok(colors) => {
-            console.set_color(colors);
-        }
-        Err(termination) => {
-            let error: Error = termination.into();
-            console.error(markup! {
-                {PrintDiagnostic::verbose(&error)}
-            });
-            return error.report();
-        }
-    };
+
     let result = run_workspace(args, &mut console);
     match result {
         Err(termination) => {
-            let error: Error = termination.into();
             console.error(markup! {
-                {PrintDiagnostic::verbose(&error)}
+                {PrintDiagnostic::verbose(&termination)}
             });
-            error.report()
+            termination.report()
         }
-        Ok(_) => exit(0),
+        Ok(_) => ExitCode::SUCCESS,
     }
 }
 
-fn run_workspace(
-    mut args: Arguments,
-    console: &mut impl Console,
-) -> Result<(), TerminationDiagnostic> {
+fn run_workspace(mut args: Arguments, console: &mut EnvConsole) -> Result<(), CliDiagnostic> {
+    let colors = color_from_arguments(&mut args)?;
+    console.set_color(colors);
     // If the `--use-server` CLI flag is set, try to open a connection to an
     // existing Rome server socket
     let workspace = if args.contains("--use-server") {
         let runtime = Runtime::new()?;
         match open_transport(runtime)? {
             Some(transport) => workspace::client(transport)?,
-            None => return Err(TerminationDiagnostic::server_not_running()),
+            None => return Err(CliDiagnostic::server_not_running()),
         }
     } else {
         workspace::server()

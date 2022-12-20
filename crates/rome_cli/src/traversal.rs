@@ -1,7 +1,6 @@
 use crate::{
-    CliSession, Execution, FormatterReportFileDetail, FormatterReportSummary, Report,
-    ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind, TerminationDiagnostic,
-    TraversalMode,
+    CliDiagnostic, CliSession, Execution, FormatterReportFileDetail, FormatterReportSummary,
+    Report, ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind, TraversalMode,
 };
 use crossbeam::{
     channel::{unbounded, Receiver, Sender},
@@ -55,10 +54,7 @@ impl fmt::Display for CheckResult {
     }
 }
 
-pub(crate) fn traverse(
-    execution: Execution,
-    mut session: CliSession,
-) -> Result<(), TerminationDiagnostic> {
+pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<(), CliDiagnostic> {
     init_thread_pool();
 
     let verbose = session.args.contains("--verbose");
@@ -75,7 +71,7 @@ pub(crate) fn traverse(
             }
             // `--<some character>` or `-<some character>`
             if without_dashes != input {
-                return Err(TerminationDiagnostic::unexpected_argument(
+                return Err(CliDiagnostic::unexpected_argument(
                     format!("{:?}", input),
                     execution.traversal_mode_subcommand(),
                 ));
@@ -85,7 +81,7 @@ pub(crate) fn traverse(
     }
 
     if inputs.is_empty() && execution.as_stdin_file().is_none() {
-        return Err(TerminationDiagnostic::missing_argument(
+        return Err(CliDiagnostic::missing_argument(
             "<INPUT>",
             execution.traversal_mode_subcommand(),
         ));
@@ -212,9 +208,9 @@ pub(crate) fn traverse(
 
     // Processing emitted error diagnostics, exit with a non-zero code
     if count.saturating_sub(skipped) == 0 {
-        Err(TerminationDiagnostic::no_files_processed())
+        Err(CliDiagnostic::no_files_processed())
     } else if errors > 0 {
-        Err(TerminationDiagnostic::check_error())
+        Err(CliDiagnostic::check_error())
     } else {
         Ok(())
     }

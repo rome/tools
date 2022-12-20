@@ -1,4 +1,4 @@
-use rome_cli::TerminationDiagnostic;
+use rome_cli::CliDiagnostic;
 use rome_console::fmt::{Formatter, Termcolor};
 use rome_console::{markup, BufferConsole, Markup};
 use rome_diagnostics::termcolor::NoColor;
@@ -29,7 +29,7 @@ pub(crate) struct CliSnapshot {
 }
 
 impl CliSnapshot {
-    pub fn from_result(result: Result<(), TerminationDiagnostic>) -> Self {
+    pub fn from_result(result: Result<(), CliDiagnostic>) -> Self {
         Self {
             in_messages: InMessages::default(),
             configuration: None,
@@ -296,7 +296,7 @@ pub struct SnapshotPayload<'a> {
     pub test_name: &'a str,
     pub fs: MemoryFileSystem,
     pub console: BufferConsole,
-    pub result: Result<(), TerminationDiagnostic>,
+    pub result: Result<(), CliDiagnostic>,
 }
 
 impl<'a> SnapshotPayload<'a> {
@@ -305,7 +305,7 @@ impl<'a> SnapshotPayload<'a> {
         test_name: &'a str,
         fs: MemoryFileSystem,
         console: BufferConsole,
-        result: Result<(), TerminationDiagnostic>,
+        result: Result<(), CliDiagnostic>,
     ) -> Self {
         Self {
             module_path,

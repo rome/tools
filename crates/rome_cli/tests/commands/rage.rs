@@ -1,7 +1,7 @@
 use crate::run_cli;
 use crate::snap_test::{CliSnapshot, SnapshotPayload};
 use pico_args::Arguments;
-use rome_cli::TerminationDiagnostic;
+use rome_cli::CliDiagnostic;
 use rome_console::{BufferConsole, Console};
 use rome_fs::{FileSystem, MemoryFileSystem};
 use rome_service::DynRef;
@@ -165,7 +165,7 @@ fn run_rage<'app>(
     fs: DynRef<'app, dyn FileSystem>,
     console: &'app mut dyn Console,
     args: Arguments,
-) -> Result<(), TerminationDiagnostic> {
+) -> Result<(), CliDiagnostic> {
     let _test_dir = TestLogDir::new("rome-rage-test");
     run_cli(fs, console, args)
 }

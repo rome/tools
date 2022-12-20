@@ -5,11 +5,13 @@ expression: content
 # Termination Message
 
 ```block
-flags/invalid  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Missing argument stdin
   
-  i Type rome format --help for more information.
+  i Type the following command for more information
+  
+  $ rome format --help
   
 
 

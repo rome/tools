@@ -9,7 +9,7 @@ use snap_test::assert_cli_snapshot;
 use std::{ffi::OsString, path::Path};
 
 use pico_args::Arguments;
-use rome_cli::{CliSession, TerminationDiagnostic};
+use rome_cli::{CliDiagnostic, CliSession};
 use rome_console::{BufferConsole, Console};
 use rome_fs::{FileSystem, MemoryFileSystem};
 use rome_service::{App, DynRef};
@@ -400,7 +400,7 @@ pub(crate) fn run_cli<'app>(
     fs: DynRef<'app, dyn FileSystem>,
     console: &'app mut dyn Console,
     args: Arguments,
-) -> Result<(), TerminationDiagnostic> {
+) -> Result<(), CliDiagnostic> {
     use rome_cli::SocketTransport;
     use rome_lsp::ServerFactory;
     use rome_service::{workspace, WorkspaceRef};

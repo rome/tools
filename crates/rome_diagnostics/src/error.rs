@@ -17,7 +17,6 @@
 //! `Clone` for `Error` since `dyn Clone` is not allowed in Rust)
 
 use std::ops::Deref;
-use std::process::{ExitCode, Termination};
 use std::{
     fmt::{Debug, Formatter},
     io,
@@ -239,17 +238,6 @@ fn drop_error<D: Diagnostic>(this: NonNull<ErrorImpl>) {
 
 /// Alias of [std::result::Result] with the `Err` type defaulting to [Error].
 pub type Result<T, E = Error> = std::result::Result<T, E>;
-
-impl Termination for Error {
-    fn report(self) -> ExitCode {
-        let severity = self.severity();
-        if severity >= Severity::Error {
-            ExitCode::FAILURE
-        } else {
-            ExitCode::SUCCESS
-        }
-    }
-}
 
 #[cfg(test)]
 mod tests {

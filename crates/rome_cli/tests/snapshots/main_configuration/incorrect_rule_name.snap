@@ -23,7 +23,7 @@ expression: content
 # Termination Message
 
 ```block
-configuration  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Rome couldn't load the configuration file, here's why: 
     invalid rule name foo_rule at line 7 column 9

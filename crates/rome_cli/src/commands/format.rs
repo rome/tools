@@ -7,10 +7,10 @@ use std::path::PathBuf;
 
 use crate::configuration::load_configuration;
 use crate::execute::ReportMode;
-use crate::{execute_mode, CliSession, Execution, TerminationDiagnostic, TraversalMode};
+use crate::{execute_mode, CliDiagnostic, CliSession, Execution, TraversalMode};
 
 /// Handler for the "format" command of the Rome CLI
-pub(crate) fn format(mut session: CliSession) -> Result<(), TerminationDiagnostic> {
+pub(crate) fn format(mut session: CliSession) -> Result<(), CliDiagnostic> {
     let mut configuration = load_configuration(&mut session)?;
     apply_format_settings_from_cli(&mut session, &mut configuration)?;
 
@@ -24,7 +24,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), TerminationDiagnosti
     let stdin_file_path: Option<String> = session
         .args
         .opt_value_from_str("--stdin-file-path")
-        .map_err(|source| TerminationDiagnostic::parse_error("--stdin-file-path", source))?;
+        .map_err(|source| CliDiagnostic::parse_error("--stdin-file-path", source))?;
 
     let stdin = if let Some(stdin_file_path) = stdin_file_path {
         let console = &mut session.app.console;
@@ -34,7 +34,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), TerminationDiagnosti
             Some((path, input_code))
         } else {
             // we provided the argument without a piped stdin, we bail
-            return Err(TerminationDiagnostic::missing_argument("stdin", "format"));
+            return Err(CliDiagnostic::missing_argument("stdin", "format"));
         }
     } else {
         None
@@ -65,7 +65,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), TerminationDiagnosti
 pub(crate) fn apply_format_settings_from_cli(
     session: &mut CliSession,
     configuration: &mut Configuration,
-) -> Result<(), TerminationDiagnostic> {
+) -> Result<(), CliDiagnostic> {
     let formatter = configuration
         .formatter
         .get_or_insert_with(FormatterConfiguration::default);
@@ -73,17 +73,17 @@ pub(crate) fn apply_format_settings_from_cli(
     let size = session
         .args
         .opt_value_from_str("--indent-size")
-        .map_err(|source| TerminationDiagnostic::parse_error("--indent-size", source))?;
+        .map_err(|source| CliDiagnostic::parse_error("--indent-size", source))?;
 
     let indent_style = session
         .args
         .opt_value_from_str("--indent-style")
-        .map_err(|source| TerminationDiagnostic::parse_error("--indent-style", source))?;
+        .map_err(|source| CliDiagnostic::parse_error("--indent-style", source))?;
 
     let line_width = session
         .args
         .opt_value_from_str("--line-width")
-        .map_err(|source| TerminationDiagnostic::parse_error("--line-width", source))?;
+        .map_err(|source| CliDiagnostic::parse_error("--line-width", source))?;
 
     match indent_style {
         Some(IndentStyle::Tab) => {
@@ -103,22 +103,22 @@ pub(crate) fn apply_format_settings_from_cli(
     let quote_properties = session
         .args
         .opt_value_from_str("--quote-properties")
-        .map_err(|source| TerminationDiagnostic::parse_error("--quote-properties", source))?;
+        .map_err(|source| CliDiagnostic::parse_error("--quote-properties", source))?;
 
     let quote_style = session
         .args
         .opt_value_from_str("--quote-style")
-        .map_err(|source| TerminationDiagnostic::parse_error("--quote-style", source))?;
+        .map_err(|source| CliDiagnostic::parse_error("--quote-style", source))?;
 
     let trailing_comma = session
         .args
         .opt_value_from_str("--trailing-comma")
-        .map_err(|source| TerminationDiagnostic::parse_error("--trailing-comma", source))?;
+        .map_err(|source| CliDiagnostic::parse_error("--trailing-comma", source))?;
 
     let semicolons = session
         .args
         .opt_value_from_str("--semicolons")
-        .map_err(|source| TerminationDiagnostic::parse_error("--semicolons", source))?;
+        .map_err(|source| CliDiagnostic::parse_error("--semicolons", source))?;
 
     let javascript = configuration
         .javascript
