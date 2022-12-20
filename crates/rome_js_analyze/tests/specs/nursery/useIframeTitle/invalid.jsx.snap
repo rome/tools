@@ -8,7 +8,6 @@ expression: invalid.jsx
 	{/* invalid */}
 	<iframe />
 	<iframe></iframe>
-	<iframe {...props} />
 	<iframe title="" />
 	<iframe title={""} />
 	<iframe title={``} />
@@ -32,7 +31,7 @@ invalid.jsx:3:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━
   > 3 │ 	<iframe />
       │ 	^^^^^^^^^^
     4 │ 	<iframe></iframe>
-    5 │ 	<iframe {...props} />
+    5 │ 	<iframe title="" />
   
   i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
@@ -48,8 +47,8 @@ invalid.jsx:4:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━
     3 │ 	<iframe />
   > 4 │ 	<iframe></iframe>
       │ 	^^^^^^^^
-    5 │ 	<iframe {...props} />
-    6 │ 	<iframe title="" />
+    5 │ 	<iframe title="" />
+    6 │ 	<iframe title={""} />
   
   i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
@@ -63,10 +62,10 @@ invalid.jsx:5:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━
   
     3 │ 	<iframe />
     4 │ 	<iframe></iframe>
-  > 5 │ 	<iframe {...props} />
-      │ 	^^^^^^^^^^^^^^^^^^^^^
-    6 │ 	<iframe title="" />
-    7 │ 	<iframe title={""} />
+  > 5 │ 	<iframe title="" />
+      │ 	^^^^^^^^^^^^^^^^^^^
+    6 │ 	<iframe title={""} />
+    7 │ 	<iframe title={``} />
   
   i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
@@ -79,11 +78,11 @@ invalid.jsx:6:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━
   ! Provide a title attribute when using iframe elements.
   
     4 │ 	<iframe></iframe>
-    5 │ 	<iframe {...props} />
-  > 6 │ 	<iframe title="" />
-      │ 	^^^^^^^^^^^^^^^^^^^
-    7 │ 	<iframe title={""} />
-    8 │ 	<iframe title={``} />
+    5 │ 	<iframe title="" />
+  > 6 │ 	<iframe title={""} />
+      │ 	^^^^^^^^^^^^^^^^^^^^^
+    7 │ 	<iframe title={``} />
+    8 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
   
   i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
@@ -95,12 +94,12 @@ invalid.jsx:7:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━
 
   ! Provide a title attribute when using iframe elements.
   
-    5 │ 	<iframe {...props} />
-    6 │ 	<iframe title="" />
-  > 7 │ 	<iframe title={""} />
+    5 │ 	<iframe title="" />
+    6 │ 	<iframe title={""} />
+  > 7 │ 	<iframe title={``} />
       │ 	^^^^^^^^^^^^^^^^^^^^^
-    8 │ 	<iframe title={``} />
-    9 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
+    8 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
+    9 │ 	<iframe title={undefined} />
   
   i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
@@ -112,12 +111,12 @@ invalid.jsx:8:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━
 
   ! Provide a title attribute when using iframe elements.
   
-     6 │ 	<iframe title="" />
-     7 │ 	<iframe title={""} />
-   > 8 │ 	<iframe title={``} />
-       │ 	^^^^^^^^^^^^^^^^^^^^^
-     9 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
-    10 │ 	<iframe title={undefined} />
+     6 │ 	<iframe title={""} />
+     7 │ 	<iframe title={``} />
+   > 8 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │ 	<iframe title={undefined} />
+    10 │ 	<iframe title={false} />
   
   i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
@@ -129,12 +128,12 @@ invalid.jsx:9:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━
 
   ! Provide a title attribute when using iframe elements.
   
-     7 │ 	<iframe title={""} />
-     8 │ 	<iframe title={``} />
-   > 9 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
-       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    10 │ 	<iframe title={undefined} />
-    11 │ 	<iframe title={false} />
+     7 │ 	<iframe title={``} />
+     8 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
+   > 9 │ 	<iframe title={undefined} />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │ 	<iframe title={false} />
+    11 │ 	<iframe title={true} />
   
   i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
@@ -146,12 +145,12 @@ invalid.jsx:10:2 lint/nursery/useIframeTitle ━━━━━━━━━━━�
 
   ! Provide a title attribute when using iframe elements.
   
-     8 │ 	<iframe title={``} />
-     9 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
-  > 10 │ 	<iframe title={undefined} />
-       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    11 │ 	<iframe title={false} />
-    12 │ 	<iframe title={true} />
+     8 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
+     9 │ 	<iframe title={undefined} />
+  > 10 │ 	<iframe title={false} />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ 	<iframe title={true} />
+    12 │ 	<iframe title={42} />
   
   i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
@@ -163,12 +162,12 @@ invalid.jsx:11:2 lint/nursery/useIframeTitle ━━━━━━━━━━━�
 
   ! Provide a title attribute when using iframe elements.
   
-     9 │ 	<iframe title={<span className={"token string"}></span>}></iframe>
-    10 │ 	<iframe title={undefined} />
-  > 11 │ 	<iframe title={false} />
-       │ 	^^^^^^^^^^^^^^^^^^^^^^^^
-    12 │ 	<iframe title={true} />
-    13 │ 	<iframe title={42} />
+     9 │ 	<iframe title={undefined} />
+    10 │ 	<iframe title={false} />
+  > 11 │ 	<iframe title={true} />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^
+    12 │ 	<iframe title={42} />
+    13 │ </>;
   
   i Screen readers rely on the title set on an iframe to describe the content being displayed.
   
@@ -180,29 +179,12 @@ invalid.jsx:12:2 lint/nursery/useIframeTitle ━━━━━━━━━━━�
 
   ! Provide a title attribute when using iframe elements.
   
-    10 │ 	<iframe title={undefined} />
-    11 │ 	<iframe title={false} />
-  > 12 │ 	<iframe title={true} />
-       │ 	^^^^^^^^^^^^^^^^^^^^^^^
-    13 │ 	<iframe title={42} />
-    14 │ </>;
-  
-  i Screen readers rely on the title set on an iframe to describe the content being displayed.
-  
-
-```
-
-```
-invalid.jsx:13:2 lint/nursery/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Provide a title attribute when using iframe elements.
-  
-    11 │ 	<iframe title={false} />
-    12 │ 	<iframe title={true} />
-  > 13 │ 	<iframe title={42} />
+    10 │ 	<iframe title={false} />
+    11 │ 	<iframe title={true} />
+  > 12 │ 	<iframe title={42} />
        │ 	^^^^^^^^^^^^^^^^^^^^^
-    14 │ </>;
-    15 │ 
+    13 │ </>;
+    14 │ 
   
   i Screen readers rely on the title set on an iframe to describe the content being displayed.
   

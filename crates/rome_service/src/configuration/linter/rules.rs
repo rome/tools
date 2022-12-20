@@ -800,6 +800,7 @@ struct NurserySchema {
     #[doc = "Enforce that all React hooks are being called from the Top Level component functions."]
     use_hook_at_top_level: Option<RuleConfiguration>,
 <<<<<<< HEAD
+<<<<<<< HEAD
     #[doc = "Require calls to isNaN() when checking for NaN."]
     use_is_nan: Option<RuleConfiguration>,
 <<<<<<< HEAD
@@ -810,7 +811,14 @@ struct NurserySchema {
     #[doc = "Enforces the usage of the attribute title for the element iframe"]
     use_iframe_title: Option<RuleConfiguration>,
 >>>>>>> 3b85ef65dd (feat(rome_js_analyze): useIframeTitle)
+<<<<<<< HEAD
 >>>>>>> 37232c45fa (parent 5f1144170e12e78a3e7b32201dc917bff808f47b)
+=======
+=======
+    #[doc = "Enforces the usage of the attribute title for the element iframe"]
+    use_iframe_title: Option<RuleConfiguration>,
+>>>>>>> 2eeb525ceb (chore: codegen)
+>>>>>>> b828a968a3 (fix: ignore spread props)
     #[doc = "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals"]
     use_numeric_literals: Option<RuleConfiguration>,
     #[doc = "Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country."]
@@ -858,6 +866,7 @@ impl Nursery {
         "useExponentiationOperator",
         "useHookAtTopLevel",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "useIsNan",
 <<<<<<< HEAD
         "useMediaCaption",
@@ -865,7 +874,13 @@ impl Nursery {
 =======
         "useIframeTitle",
 >>>>>>> 3b85ef65dd (feat(rome_js_analyze): useIframeTitle)
+<<<<<<< HEAD
 >>>>>>> 37232c45fa (parent 5f1144170e12e78a3e7b32201dc917bff808f47b)
+=======
+=======
+        "useIframeTitle",
+>>>>>>> 2eeb525ceb (chore: codegen)
+>>>>>>> b828a968a3 (fix: ignore spread props)
         "useNumericLiterals",
         "useValidLang",
     ];
@@ -900,6 +915,7 @@ impl Nursery {
         "useEnumInitializers",
         "useExhaustiveDependencies",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "useIsNan",
 <<<<<<< HEAD
         "useMediaCaption",
@@ -907,7 +923,13 @@ impl Nursery {
 =======
         "useIframeTitle",
 >>>>>>> 3b85ef65dd (feat(rome_js_analyze): useIframeTitle)
+<<<<<<< HEAD
 >>>>>>> 37232c45fa (parent 5f1144170e12e78a3e7b32201dc917bff808f47b)
+=======
+=======
+        "useIframeTitle",
+>>>>>>> 2eeb525ceb (chore: codegen)
+>>>>>>> b828a968a3 (fix: ignore spread props)
         "useNumericLiterals",
         "useValidLang",
     ];

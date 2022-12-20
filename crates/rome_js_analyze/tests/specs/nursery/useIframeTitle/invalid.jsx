@@ -2,7 +2,6 @@
 	{/* invalid */}
 	<iframe />
 	<iframe></iframe>
-	<iframe {...props} />
 	<iframe title="" />
 	<iframe title={""} />
 	<iframe title={``} />

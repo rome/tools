@@ -19,10 +19,6 @@ declare_rule! {
     /// ```
     ///
     /// ```jsx,expect_diagnostic
-    ///     <iframe {...props} />
-    /// ```
-    ///
-    /// ```jsx,expect_diagnostic
     ///     <iframe title="" />
     /// ```
     ///
@@ -57,6 +53,7 @@ declare_rule! {
     ///     <>
     ///         <iframe title="This is a unique title" />
     ///         <iframe title={uniqueTitle} />
+    ///         <iframe {...props} />
     ///     </>
     /// ```
     ///
@@ -72,13 +69,9 @@ declare_rule! {
     }
 }
 
-pub(crate) struct UseIframeTitleState {
-    node: AnyJsxElement,
-}
-
 impl Rule for UseIframeTitle {
     type Query = Ast<AnyJsxElement>;
-    type State = UseIframeTitleState;
+    type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
 
@@ -90,11 +83,20 @@ impl Rule for UseIframeTitle {
         }
 
         if node.attributes().is_empty() {
-            return Some(UseIframeTitleState { node: node.clone() });
+            return Some(());
+        }
+
+        let has_jsx_spread_attribute = node
+            .attributes()
+            .iter()
+            .any(|x| x.as_jsx_spread_attribute().is_some());
+
+        if has_jsx_spread_attribute {
+            return None;
         }
 
         let Some(title_attribute) = node.find_attribute_by_name("title") else {
-            return Some(UseIframeTitleState { node: node.clone() })
+            return Some(())
         };
 
         let attribute_value = title_attribute.initializer()?.value().ok()?;
@@ -106,7 +108,7 @@ impl Rule for UseIframeTitle {
                 if is_valid_string {
                     return None;
                 }
-                Some(UseIframeTitleState { node: node.clone() })
+                Some(())
             }
             AnyJsxAttributeValue::JsxExpressionAttributeValue(expr_attribute_value) => {
                 let expr = expr_attribute_value.expression().ok()?;
@@ -115,23 +117,24 @@ impl Rule for UseIframeTitle {
                     let is_undefined_or_null =
                         text.text_trimmed() == "undefined" || text.text_trimmed() == "null";
                     if is_undefined_or_null {
-                        return Some(UseIframeTitleState { node: node.clone() });
+                        return Some(());
                     } else {
                         // we assueme the identifier is a string type
                         return None;
                     }
                 }
-                Some(UseIframeTitleState { node: node.clone() })
+                Some(())
             }
-            AnyJsxAttributeValue::AnyJsxTag(_) => Some(UseIframeTitleState { node: node.clone() }),
+            AnyJsxAttributeValue::AnyJsxTag(_) => Some(()),
         }
     }
 
-    fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
+        let node = ctx.query();
         Some(
             RuleDiagnostic::new(
                 rule_category!(),
-                state.node.syntax().text_trimmed_range(),
+                node.syntax().text_trimmed_range(),
                 markup! {
                 "Provide a "<Emphasis>"title"</Emphasis>" attribute when using "<Emphasis>"iframe"</Emphasis>" elements."
             }
