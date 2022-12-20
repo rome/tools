@@ -1,8 +1,8 @@
 use crate::format_element::tag::VerbatimKind;
 use crate::prelude::*;
 use crate::trivia::{FormatLeadingComments, FormatTrailingComments};
-use crate::{write, CstFormatContext};
-use rome_rowan::{Direction, Language, SyntaxElement, SyntaxNode, TextRange};
+use crate::{write, CstFormatContext, FormatWithRule};
+use rome_rowan::{AstNode, Direction, Language, SyntaxElement, SyntaxNode, TextRange};
 
 /// "Formats" a node according to its original formatting in the source text. Being able to format
 /// a node "as is" is useful if a node contains syntax errors. Formatting a node with syntax errors
@@ -165,5 +165,41 @@ pub fn format_suppressed_node<L: Language>(node: &SyntaxNode<L>) -> FormatVerbat
         node,
         kind: VerbatimKind::Suppressed,
         format_comments: true,
+    }
+}
+
+/// Formats an object using its [`Format`] implementation but falls back to printing the object as
+/// it is in the source document if formatting it returns an [`FormatError::SyntaxError`].
+pub const fn format_or_verbatim<F>(inner: F) -> FormatNodeOrVerbatim<F> {
+    FormatNodeOrVerbatim { inner }
+}
+
+/// Formats a node or falls back to verbatim printing if formating this node fails.
+#[derive(Copy, Clone)]
+pub struct FormatNodeOrVerbatim<F> {
+    inner: F,
+}
+
+impl<F, Context, Item> Format<Context> for FormatNodeOrVerbatim<F>
+where
+    F: FormatWithRule<Context, Item = Item>,
+    Item: AstNode,
+    Context: CstFormatContext<Language = Item::Language>,
+{
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        let snapshot = Formatter::state_snapshot(f);
+
+        match self.inner.fmt(f) {
+            Ok(result) => Ok(result),
+
+            Err(FormatError::SyntaxError) => {
+                f.restore_state_snapshot(snapshot);
+
+                // Lists that yield errors are formatted as they were suppressed nodes.
+                // Doing so, the formatter formats the nodes/tokens as is.
+                format_suppressed_node(self.inner.item().syntax()).fmt(f)
+            }
+            Err(err) => Err(err),
+        }
     }
 }

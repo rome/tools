@@ -1,0 +1,101 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: useValidLang.jsx
+---
+# Input
+```js
+// invalid
+let a = <html lang="lorem" />;
+let a = <html lang="en-babab" />;
+let a = <html lang="en-GB-something" />;
+
+// valid
+let a = <Html lang="en-babab" />;
+let a = <html lang="en-US"></html>;
+let a = <html lang="en"></html>;
+let a = <html lang={lang}></html>;
+
+```
+
+# Diagnostics
+```
+useValidLang.jsx:2:20 lint/nursery/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid value for the lang attribute.
+  
+    1 │ // invalid
+  > 2 │ let a = <html lang="lorem" />;
+      │                    ^^^^^^^
+    3 │ let a = <html lang="en-babab" />;
+    4 │ let a = <html lang="en-GB-something" />;
+  
+  i Some of valid languages:
+  
+  - ab
+  - aa
+  - af
+  - sq
+  - am
+  - ar
+  - an
+  - hy
+  - as
+  - ay
+  - az
+  - ba
+  - eu
+  - bn
+  - dz
+  
+
+```
+
+```
+useValidLang.jsx:3:20 lint/nursery/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid value for the lang attribute.
+  
+    1 │ // invalid
+    2 │ let a = <html lang="lorem" />;
+  > 3 │ let a = <html lang="en-babab" />;
+      │                    ^^^^^^^^^^
+    4 │ let a = <html lang="en-GB-something" />;
+    5 │ 
+  
+  i Some of valid countries:
+  
+  - AF
+  - AL
+  - DZ
+  - AS
+  - AD
+  - AO
+  - AI
+  - AQ
+  - AG
+  - AR
+  - AM
+  - AW
+  - AU
+  - AT
+  - AZ
+  
+
+```
+
+```
+useValidLang.jsx:4:20 lint/nursery/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid value for the lang attribute.
+  
+    2 │ let a = <html lang="lorem" />;
+    3 │ let a = <html lang="en-babab" />;
+  > 4 │ let a = <html lang="en-GB-something" />;
+      │                    ^^^^^^^^^^^^^^^^^
+    5 │ 
+    6 │ // valid
+  
+
+```
+
+

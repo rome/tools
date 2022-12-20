@@ -322,6 +322,10 @@ export interface Nursery {
 	 */
 	noDistractingElements?: RuleConfiguration;
 	/**
+	 * Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.
+	 */
+	noDuplicateCase?: RuleConfiguration;
+	/**
 	 * Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
 	 */
 	noDuplicateObjectKeys?: RuleConfiguration;
@@ -333,6 +337,10 @@ export interface Nursery {
 	 * Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.
 	 */
 	noExtraNonNullAssertion?: RuleConfiguration;
+	/**
+	 * Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. While not technically an error, extra semicolons can cause confusion when reading code.
+	 */
+	noExtraSemicolons?: RuleConfiguration;
 	/**
 	 * Check that the scope attribute is only used on th elements.
 	 */
@@ -441,6 +449,10 @@ export interface Nursery {
 	 * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
 	 */
 	useNumericLiterals?: RuleConfiguration;
+	/**
+	 * Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.
+	 */
+	useValidLang?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
@@ -713,12 +725,14 @@ export type Category =
 	| "lint/nursery/noAccessKey"
 	| "lint/nursery/noAssignInExpressions"
 	| "lint/nursery/noWith"
+	| "lint/nursery/noExtraSemicolons"
 	| "lint/nursery/noBannedTypes"
 	| "lint/nursery/noClassAssign"
 	| "lint/nursery/noCommaOperator"
 	| "lint/nursery/noConstEnum"
 	| "lint/nursery/noConstructorReturn"
 	| "lint/nursery/noDistractingElements"
+	| "lint/nursery/noDuplicateCase"
 	| "lint/nursery/noDuplicateObjectKeys"
 	| "lint/nursery/noEmptyInterface"
 	| "lint/nursery/noExtraNonNullAssertion"
@@ -740,6 +754,7 @@ export type Category =
 	| "lint/nursery/useAriaPropTypes"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useConst"
+	| "lint/nursery/useValidLang"
 	| "lint/nursery/useDefaultParameterLast"
 	| "lint/nursery/useDefaultSwitchClauseLast"
 	| "lint/nursery/useEnumInitializers"

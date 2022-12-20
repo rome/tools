@@ -14,9 +14,7 @@ mod language {
 // use this test check if your snippet prints as you wish, without using a snapshot
 fn quick_test() {
     let src = r#"
-declare module 'x' {
-  export default function (option: any): void
-}
+f<number> delete;
 "#;
     let syntax = SourceType::tsx();
     let tree = parse(src, FileId::zero(), syntax);

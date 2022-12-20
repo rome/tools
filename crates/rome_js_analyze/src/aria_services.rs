@@ -2,6 +2,7 @@ use rome_analyze::{
     FromServices, MissingServicesDiagnostic, Phase, Phases, QueryKey, QueryMatch, Queryable,
     RuleKey, ServiceBag,
 };
+use rome_aria::iso::{countries, is_valid_country, is_valid_language, languages};
 use rome_aria::{AriaProperties, AriaRoles};
 use rome_js_syntax::JsLanguage;
 use rome_rowan::AstNode;
@@ -20,6 +21,22 @@ impl AriaServices {
 
     pub fn aria_properties(&self) -> &AriaProperties {
         &self.properties
+    }
+
+    pub fn is_valid_iso_language(&self, language: &str) -> bool {
+        is_valid_language(language)
+    }
+
+    pub fn is_valid_iso_country(&self, country: &str) -> bool {
+        is_valid_country(country)
+    }
+
+    pub fn iso_country_list(&self) -> &'static [&'static str] {
+        countries()
+    }
+
+    pub fn iso_language_list(&self) -> &'static [&'static str] {
+        languages()
     }
 }
 

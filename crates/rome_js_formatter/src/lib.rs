@@ -173,7 +173,6 @@ pub mod utils;
 
 #[rustfmt::skip]
 mod generated;
-mod builders;
 pub mod comments;
 pub mod context;
 mod parentheses;
