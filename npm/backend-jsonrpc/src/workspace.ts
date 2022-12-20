@@ -318,6 +318,10 @@ export interface Nursery {
 	 */
 	noDistractingElements?: RuleConfiguration;
 	/**
+	 * Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.
+	 */
+	noDuplicateCase?: RuleConfiguration;
+	/**
 	 * Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
 	 */
 	noDuplicateObjectKeys?: RuleConfiguration;
@@ -724,6 +728,7 @@ export type Category =
 	| "lint/nursery/noConstEnum"
 	| "lint/nursery/noConstructorReturn"
 	| "lint/nursery/noDistractingElements"
+	| "lint/nursery/noDuplicateCase"
 	| "lint/nursery/noDuplicateObjectKeys"
 	| "lint/nursery/noEmptyInterface"
 	| "lint/nursery/noExtraNonNullAssertion"
