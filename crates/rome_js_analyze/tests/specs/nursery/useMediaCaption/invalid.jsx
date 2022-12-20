@@ -1,6 +1,4 @@
 <>
-	<audio {...props} />
-	<video {...props} />
 	<audio><track /></audio>
 	<audio><track kind="subtitles" /></audio>
 	<audio />

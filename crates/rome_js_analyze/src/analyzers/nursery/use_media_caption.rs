@@ -14,7 +14,7 @@ declare_rule! {
     ///
     /// ### Invalid
     /// ```jsx,expect_diagnostic
-    /// 	<video {...props} />
+    /// 	<video />
     /// ```
     ///
     /// ```jsx,expect_diagnostic
@@ -51,8 +51,12 @@ impl Rule for UseMediaCaption {
         let has_audio_or_video =
             matches!(node.name_value_token()?.text_trimmed(), "video" | "audio");
         let has_muted = node.find_attribute_by_name("muted").is_some();
+        let has_spread_prop = node
+            .attributes()
+            .into_iter()
+            .any(|attr| attr.as_jsx_spread_attribute().is_some());
 
-        if !has_audio_or_video || has_muted {
+        if !has_audio_or_video || has_muted || has_spread_prop {
             return None;
         }
 

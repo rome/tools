@@ -10,4 +10,6 @@
 	<audio muted={true}></audio>
 	<video muted={true}></video>
 	<video muted></video>
+	<audio {...props} />
+	<video {...props} />
 </>
