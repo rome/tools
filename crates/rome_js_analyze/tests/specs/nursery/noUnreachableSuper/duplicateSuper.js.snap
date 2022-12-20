@@ -70,18 +70,22 @@ class G extends A {
 
 # Diagnostics
 ```
-duplicateSuper.js:16:9 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+duplicateSuper.js:14:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! `super()` is called more than once.
+  ! This constructor has code paths where `super()` is called more than once.
   
-    14 │     constructor() {
-    15 │         super(1);
+    12 │ // invalid
+    13 │ class C extends A {
+  > 14 │     constructor() {
+       │     ^^^^^^^^^^^^^^^
+  > 15 │         super(1);
   > 16 │         super(2);
-       │         ^^^^^
-    17 │     }
+  > 17 │     }
+       │     ^
     18 │ }
+    19 │ 
   
-  i `super()` has already been called here
+  i `super()` is first called here:
   
     13 │ class C extends A {
     14 │     constructor() {
@@ -90,22 +94,36 @@ duplicateSuper.js:16:9 lint/nursery/noUnreachableSuper ━━━━━━━━�
     16 │         super(2);
     17 │     }
   
-
-```
-
-```
-duplicateSuper.js:27:9 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! `super()` is called more than once.
+  i `super()` is then called again here:
   
-    25 │         }
-    26 │ 
-  > 27 │         super();
+    14 │     constructor() {
+    15 │         super(1);
+  > 16 │         super(2);
        │         ^^^^^
-    28 │     }
-    29 │ }
+    17 │     }
+    18 │ }
   
-  i `super()` has already been called here
+
+```
+
+```
+duplicateSuper.js:22:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This constructor has code paths where `super()` is called more than once.
+  
+    20 │ // invalid
+    21 │ class D extends A {
+  > 22 │     constructor(cond) {
+       │     ^^^^^^^^^^^^^^^^^^^
+  > 23 │         if (cond) {
+        ...
+  > 27 │         super();
+  > 28 │     }
+       │     ^
+    29 │ }
+    30 │ 
+  
+  i `super()` is first called here:
   
     22 │     constructor(cond) {
     23 │         if (cond) {
@@ -114,13 +132,36 @@ duplicateSuper.js:27:9 lint/nursery/noUnreachableSuper ━━━━━━━━�
     25 │         }
     26 │ 
   
+  i `super()` is then called again here:
+  
+    25 │         }
+    26 │ 
+  > 27 │         super();
+       │         ^^^^^
+    28 │     }
+    29 │ }
+  
 
 ```
 
 ```
-duplicateSuper.js:35:13 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+duplicateSuper.js:33:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! `super()` is called in a loop.
+  ! This constructor calls `super()` in a loop.
+  
+    31 │ // invalid
+    32 │ class E extends A {
+  > 33 │     constructor(cond) {
+       │     ^^^^^^^^^^^^^^^^^^^
+  > 34 │         do {
+  > 35 │             super();
+  > 36 │         } while (cond);
+  > 37 │     }
+       │     ^
+    38 │ }
+    39 │ 
+  
+  i `super()` is called here:
   
     33 │     constructor(cond) {
     34 │         do {
@@ -133,18 +174,23 @@ duplicateSuper.js:35:13 lint/nursery/noUnreachableSuper ━━━━━━━━
 ```
 
 ```
-duplicateSuper.js:47:13 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+duplicateSuper.js:42:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! `super()` is called more than once.
+  ! This constructor has code paths where `super()` is called more than once.
   
-    45 │         }
-    46 │         if (condB) {
-  > 47 │             super(true);
-       │             ^^^^^
-    48 │         }
-    49 │     }
+    40 │ // invalid
+    41 │ class F extends A {
+  > 42 │     constructor(condA, condB) {
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 43 │         if (condA) {
+        ...
+  > 48 │         }
+  > 49 │     }
+       │     ^
+    50 │ }
+    51 │ 
   
-  i `super()` has already been called here
+  i `super()` is first called here:
   
     42 │     constructor(condA, condB) {
     43 │         if (condA) {
@@ -153,13 +199,36 @@ duplicateSuper.js:47:13 lint/nursery/noUnreachableSuper ━━━━━━━━
     45 │         }
     46 │         if (condB) {
   
+  i `super()` is then called again here:
+  
+    45 │         }
+    46 │         if (condB) {
+  > 47 │             super(true);
+       │             ^^^^^
+    48 │         }
+    49 │     }
+  
 
 ```
 
 ```
-duplicateSuper.js:57:17 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+duplicateSuper.js:54:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! `super()` is called in a loop.
+  ! This constructor calls `super()` in a loop.
+  
+    52 │ // invalid
+    53 │ class G extends A {
+  > 54 │     constructor(condA, condB) {
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 55 │         while (condA) {
+        ...
+  > 59 │         }
+  > 60 │     }
+       │     ^
+    61 │ }
+    62 │ 
+  
+  i `super()` is called here:
   
     55 │         while (condA) {
     56 │             if (condB) {

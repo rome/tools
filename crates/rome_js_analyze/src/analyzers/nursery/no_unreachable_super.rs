@@ -235,46 +235,59 @@ impl Rule for NoUnreachableSuper {
             RuleState::ThisBeforeSuper { this, super_ } => Some(
                 RuleDiagnostic::new(
                     rule_category!(),
-                    *this,
-                    markup! { "`"<Emphasis>"this"</Emphasis>"` is accessed before `"<Emphasis>"super()"</Emphasis>"` is called." },
+                    ctx.query().node.text_trimmed_range(),
+                    markup! { "This constructor has code paths accessing `"<Emphasis>"this"</Emphasis>"` before `"<Emphasis>"super()"</Emphasis>"` is called." },
                 )
-                .detail(super_, markup! { "`"<Emphasis>"super()"</Emphasis>"` is only called here" }),
+                .detail(this, markup! { "`"<Emphasis>"this"</Emphasis>"` is accessed here:" })
+                .detail(super_, markup! { "`"<Emphasis>"super()"</Emphasis>"` is only called here:" })
+                .note("If this is intentional, add an explicit throw statement in unsupported paths."),
             ),
-            
+
+            RuleState::ThisWithoutSuper { this } => Some(
+                RuleDiagnostic::new(
+                    rule_category!(),
+                    ctx.query().node.text_trimmed_range(),
+                    markup! { "This constructor has code paths accessing `"<Emphasis>"this"</Emphasis>"` without calling `"<Emphasis>"super()"</Emphasis>"` first." },
+                )
+                .detail(this, markup! { "`"<Emphasis>"this"</Emphasis>"` is accessed here:" })
+                .note("If this is intentional, add an explicit throw statement in unsupported paths."),
+            ),
+
             RuleState::DuplicateSuper { first, second } if *first == *second => Some(
                 RuleDiagnostic::new(
                     rule_category!(),
-                    second,
-                    markup! { "`"<Emphasis>"super()"</Emphasis>"` is called in a loop." },
-                ),
+                    ctx.query().node.text_trimmed_range(),
+                    markup! { "This constructor calls `"<Emphasis>"super()"</Emphasis>"` in a loop." },
+                )
+                .detail(first, markup! { "`"<Emphasis>"super()"</Emphasis>"` is called here:" }),
             ),
             RuleState::DuplicateSuper { first, second } => Some(
                 RuleDiagnostic::new(
                     rule_category!(),
-                    second,
-                    markup! { "`"<Emphasis>"super()"</Emphasis>"` is called more than once." },
+                    ctx.query().node.text_trimmed_range(),
+                    markup! { "This constructor has code paths where `"<Emphasis>"super()"</Emphasis>"` is called more than once." },
                 )
-                .detail(first, markup! { "`"<Emphasis>"super()"</Emphasis>"` has already been called here" }),
+                .detail(first, markup! { "`"<Emphasis>"super()"</Emphasis>"` is first called here:" })
+                .detail(second, markup! { "`"<Emphasis>"super()"</Emphasis>"` is then called again here:" }),
             ),
 
-            RuleState::ThisWithoutSuper { this } => Some(RuleDiagnostic::new(
-                rule_category!(),
-                *this,
-                markup! { "`"<Emphasis>"this"</Emphasis>"` is accessed without calling `"<Emphasis>"super()"</Emphasis>"` first." },
-            )),
-
-            RuleState::ReturnWithoutSuper {
-                return_: Some(range),
-            } => Some(RuleDiagnostic::new(
-                rule_category!(),
-                *range,
-                markup! { "This statement returns from the constructor without having called `"<Emphasis>"super()"</Emphasis>"` first." },
-            )),
-            RuleState::ReturnWithoutSuper { return_: None } => Some(RuleDiagnostic::new(
-                rule_category!(),
-                ctx.query().node.text_trimmed_range(),
-                markup! { "This constructor returns without calling `"<Emphasis>"super()"</Emphasis>"`." },
-            )),
+            RuleState::ReturnWithoutSuper { return_: Some(range) } => Some(
+                RuleDiagnostic::new(
+                    rule_category!(),
+                    ctx.query().node.text_trimmed_range(),
+                    markup! { "This constructor has code paths that return without calling `"<Emphasis>"super()"</Emphasis>"` first." },
+                )
+                .detail(range, markup! { "This statement returns from the constructor before `"<Emphasis>"super()"</Emphasis>"` has been called:" })
+                .note("If this is intentional, add an explicit throw statement in unsupported paths."),
+            ),
+            RuleState::ReturnWithoutSuper { return_: None } => Some(
+                RuleDiagnostic::new(
+                    rule_category!(),
+                    ctx.query().node.text_trimmed_range(),
+                    markup! { "This constructor has code paths that return without calling `"<Emphasis>"super()"</Emphasis>"`." },
+                )
+                .note("If this is intentional, add an explicit throw statement in unsupported paths."),
+            ),
         }
     }
 }

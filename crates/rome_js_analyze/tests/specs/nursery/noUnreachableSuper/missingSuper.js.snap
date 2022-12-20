@@ -84,7 +84,7 @@ class G extends A {
 ```
 missingSuper.js:19:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This constructor returns without calling `super()`.
+  ! This constructor has code paths that return without calling `super()`.
   
     17 │ // invalid
     18 │ class C extends A {
@@ -98,13 +98,15 @@ missingSuper.js:19:5 lint/nursery/noUnreachableSuper ━━━━━━━━━
     24 │ }
     25 │ 
   
+  i If this is intentional, add an explicit throw statement in unsupported paths.
+  
 
 ```
 
 ```
 missingSuper.js:28:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This constructor returns without calling `super()`.
+  ! This constructor has code paths that return without calling `super()`.
   
     26 │ // invalid
     27 │ class D extends A {
@@ -118,13 +120,29 @@ missingSuper.js:28:5 lint/nursery/noUnreachableSuper ━━━━━━━━━
     37 │ }
     38 │ 
   
+  i If this is intentional, add an explicit throw statement in unsupported paths.
+  
 
 ```
 
 ```
-missingSuper.js:43:13 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+missingSuper.js:41:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This statement returns from the constructor without having called `super()` first.
+  ! This constructor has code paths that return without calling `super()` first.
+  
+    39 │ // invalid
+    40 │ class E extends A {
+  > 41 │     constructor(cond) {
+       │     ^^^^^^^^^^^^^^^^^^^
+  > 42 │         if (cond) {
+        ...
+  > 46 │         super(true);
+  > 47 │     }
+       │     ^
+    48 │ }
+    49 │ 
+  
+  i This statement returns from the constructor before `super()` has been called:
   
     41 │     constructor(cond) {
     42 │         if (cond) {
@@ -132,6 +150,8 @@ missingSuper.js:43:13 lint/nursery/noUnreachableSuper ━━━━━━━━�
        │             ^^^^^^^
     44 │         }
     45 │ 
+  
+  i If this is intentional, add an explicit throw statement in unsupported paths.
   
 
 ```

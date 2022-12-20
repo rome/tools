@@ -61,9 +61,22 @@ class F extends A {
 
 # Diagnostics
 ```
-thisBeforeSuper.js:25:9 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+thisBeforeSuper.js:24:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! `this` is accessed before `super()` is called.
+  ! This constructor has code paths accessing `this` before `super()` is called.
+  
+    22 │ // invalid
+    23 │ class D extends A {
+  > 24 │     constructor() {
+       │     ^^^^^^^^^^^^^^^
+  > 25 │         this.field = "value";
+  > 26 │         super();
+  > 27 │     }
+       │     ^
+    28 │ }
+    29 │ 
+  
+  i `this` is accessed here:
   
     23 │ class D extends A {
     24 │     constructor() {
@@ -72,7 +85,7 @@ thisBeforeSuper.js:25:9 lint/nursery/noUnreachableSuper ━━━━━━━━
     26 │         super();
     27 │     }
   
-  i `super()` is only called here
+  i `super()` is only called here:
   
     24 │     constructor() {
     25 │         this.field = "value";
@@ -81,13 +94,29 @@ thisBeforeSuper.js:25:9 lint/nursery/noUnreachableSuper ━━━━━━━━
     27 │     }
     28 │ }
   
+  i If this is intentional, add an explicit throw statement in unsupported paths.
+  
 
 ```
 
 ```
-thisBeforeSuper.js:33:9 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+thisBeforeSuper.js:32:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! `this` is accessed without calling `super()` first.
+  ! This constructor has code paths accessing `this` without calling `super()` first.
+  
+    30 │ // invalid
+    31 │ class E extends A {
+  > 32 │     constructor(cond) {
+       │     ^^^^^^^^^^^^^^^^^^^
+  > 33 │         this.field = "value";
+        ...
+  > 39 │         }
+  > 40 │     }
+       │     ^
+    41 │ }
+    42 │ 
+  
+  i `this` is accessed here:
   
     31 │ class E extends A {
     32 │     constructor(cond) {
@@ -96,13 +125,29 @@ thisBeforeSuper.js:33:9 lint/nursery/noUnreachableSuper ━━━━━━━━
     34 │ 
     35 │         if (cond) {
   
+  i If this is intentional, add an explicit throw statement in unsupported paths.
+  
 
 ```
 
 ```
-thisBeforeSuper.js:50:9 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+thisBeforeSuper.js:45:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! `this` is accessed without calling `super()` first.
+  ! This constructor has code paths accessing `this` without calling `super()` first.
+  
+    43 │ // invalid
+    44 │ class F extends A {
+  > 45 │     constructor(cond) {
+       │     ^^^^^^^^^^^^^^^^^^^
+  > 46 │         if (cond) {
+        ...
+  > 50 │         this.field = "value";
+  > 51 │     }
+       │     ^
+    52 │ }
+    53 │ 
+  
+  i `this` is accessed here:
   
     48 │         }
     49 │ 
@@ -110,6 +155,8 @@ thisBeforeSuper.js:50:9 lint/nursery/noUnreachableSuper ━━━━━━━━
        │         ^^^^
     51 │     }
     52 │ }
+  
+  i If this is intentional, add an explicit throw statement in unsupported paths.
   
 
 ```

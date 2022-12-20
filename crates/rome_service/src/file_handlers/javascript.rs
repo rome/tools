@@ -145,7 +145,7 @@ fn debug_control_flow(rome_path: &RomePath, parse: AnyParse, cursor: TextSize) -
 
     let filter = AnalysisFilter {
         categories: RuleCategories::LINT,
-        enabled_rules: Some(&[RuleFilter::Rule("nursery", "noUnreachable")]),
+        enabled_rules: Some(&[RuleFilter::Rule("correctness", "noUnreachable")]),
         ..AnalysisFilter::default()
     };
     let options = AnalyzerOptions::default();
