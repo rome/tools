@@ -334,6 +334,10 @@ export interface Nursery {
 	 */
 	noExtraNonNullAssertion?: RuleConfiguration;
 	/**
+	 * Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. While not technically an error, extra semicolons can cause confusion when reading code.
+	 */
+	noExtraSemicolons?: RuleConfiguration;
+	/**
 	 * Check that the scope attribute is only used on th elements.
 	 */
 	noHeaderScope?: RuleConfiguration;
@@ -441,6 +445,10 @@ export interface Nursery {
 	 * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
 	 */
 	useNumericLiterals?: RuleConfiguration;
+	/**
+	 * Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.
+	 */
+	useValidLang?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
@@ -713,6 +721,7 @@ export type Category =
 	| "lint/nursery/noAccessKey"
 	| "lint/nursery/noAssignInExpressions"
 	| "lint/nursery/noWith"
+	| "lint/nursery/noExtraSemicolons"
 	| "lint/nursery/noBannedTypes"
 	| "lint/nursery/noClassAssign"
 	| "lint/nursery/noCommaOperator"
@@ -741,6 +750,7 @@ export type Category =
 	| "lint/nursery/useAriaPropTypes"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useConst"
+	| "lint/nursery/useValidLang"
 	| "lint/nursery/useDefaultParameterLast"
 	| "lint/nursery/useDefaultSwitchClauseLast"
 	| "lint/nursery/useEnumInitializers"

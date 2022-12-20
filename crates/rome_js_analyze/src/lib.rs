@@ -226,7 +226,7 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"<span aria-labelledby={``} ></span>"#;
+        const SOURCE: &str = r#" <span aria-labelledby={``}></span>;"#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
 

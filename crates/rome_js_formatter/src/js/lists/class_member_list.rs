@@ -11,7 +11,7 @@ impl FormatRule<JsClassMemberList> for FormatJsClassMemberList {
         let mut join = f.join_nodes_with_hardline();
 
         for member in node {
-            join.entry(member.syntax(), &format_or_verbatim(&member));
+            join.entry(member.syntax(), &format_or_verbatim(member.format()));
         }
 
         join.finish()
