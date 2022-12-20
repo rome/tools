@@ -3,8 +3,8 @@ use std::{iter::Peekable, str::Chars};
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsCallArguments, JsCallExpression, JsIdentifierExpression, JsLanguage, JsNewExpression,
-    JsRegexLiteralExpression, JsStringLiteralExpression,
+    AnyJsExpression, JsCallArguments, JsCallExpression, JsIdentifierExpression, JsLanguage,
+    JsNewExpression, JsRegexLiteralExpression, JsStringLiteralExpression,
 };
 use rome_rowan::{declare_node_union, AstNode, AstSeparatedList, SyntaxNode};
 
@@ -41,24 +41,14 @@ declare_rule! {
  /// ### Valid
  /// ```cjs
  /// var pattern1 = /\x20/;
- /// ```
- /// ```cjs
  /// var pattern2 = /\u0020/;
- /// ```
- /// ```cjs
  /// var pattern3 = /\u{20}/u;
- /// ```
- /// ```cjs
  /// var pattern4 = /\t/;
- /// ```
- /// ```cjs
  /// var pattern5 = /\n/;
- /// ```
- /// ```cjs
  /// var pattern6 = new RegExp("\x20");
  /// ```
  pub(crate) NoControlCharactersInRegex {
-     version: "11.0.0",
+     version: "next",
      name: "noControlCharactersInRegex",
      recommended: true,
     }
@@ -68,24 +58,24 @@ declare_node_union! {
   pub(crate) PossibleRegexExpression = JsNewExpression | JsCallExpression |JsRegexLiteralExpression
 }
 
-fn get_code_point_from_hex_character(it: &mut Peekable<Chars>) -> Option<(String, i64)> {
+fn get_code_point_from_hex_character(iter: &mut Peekable<Chars>) -> Option<(String, i64)> {
     let mut digits = Vec::new();
     for _ in 1..=2 {
-        digits.push(it.next()?);
+        digits.push(iter.next()?);
     }
     let s: String = digits.into_iter().collect();
     let cp = i64::from_str_radix(s.as_str(), 16).ok()?;
     Some((s, cp))
 }
 
-fn get_code_point_from_escape_character(it: &mut Peekable<Chars>) -> Option<(String, i64)> {
+fn get_code_point_from_escape_character(iter: &mut Peekable<Chars>) -> Option<(String, i64)> {
     let mut digits = Vec::new();
     for _ in 1..=4 {
-        if let Some(&c) = it.peek() {
+        if let Some(&c) = iter.peek() {
             match c {
-                '0'..='9' => digits.push(it.next()?),
-                'a'..='f' => digits.push(it.next()?),
-                'A'..='F' => digits.push(it.next()?),
+                '0'..='9' => digits.push(iter.next()?),
+                'a'..='f' => digits.push(iter.next()?),
+                'A'..='F' => digits.push(iter.next()?),
                 _ => {}
             }
         }
@@ -96,20 +86,20 @@ fn get_code_point_from_escape_character(it: &mut Peekable<Chars>) -> Option<(Str
     Some((s, cp))
 }
 
-fn get_code_point_from_code_point_character(it: &mut Peekable<Chars>) -> Option<(String, i64)> {
+fn get_code_point_from_code_point_character(iter: &mut Peekable<Chars>) -> Option<(String, i64)> {
     let mut digits = Vec::new();
-    if let Some(&c) = it.peek() {
+    if let Some(&c) = iter.peek() {
         if c == '{' {
-            it.next();
-            while let Some(&c) = it.peek() {
+            iter.next();
+            while let Some(&c) = iter.peek() {
                 match c {
                     '}' => {
-                        it.next();
+                        iter.next();
                         let s: String = digits.into_iter().collect();
                         let cp = i64::from_str_radix(s.as_str(), 16).ok()?;
                         return Some((format!("{{{}}}", s), cp));
                     }
-                    _ => digits.push(it.next()?),
+                    _ => digits.push(iter.next()?),
                 }
             }
         }
@@ -117,66 +107,64 @@ fn get_code_point_from_code_point_character(it: &mut Peekable<Chars>) -> Option<
 
     None
 }
+fn add_control_character_to_vec(
+    prefix: &str,
+    iter: &mut Peekable<Chars>,
+    control_characters: &mut Vec<String>,
+    get_code_point: fn(&mut Peekable<Chars>) -> Option<(String, i64)>,
+) {
+    if let Some((s, cp)) = get_code_point(iter) {
+        if (0..32).contains(&cp) {
+            control_characters.push(format!("{}{}", prefix, s));
+        }
+    }
+}
 fn collect_control_characters(pattern: String, flags: Option<String>) -> Option<Vec<String>> {
     let mut control_characters: Vec<String> = Vec::new();
     let is_unicode = flags.unwrap_or_default().contains('u');
 
-    let mut it = pattern.chars().peekable();
+    let mut iter = pattern.chars().peekable();
 
-    let check_control_character =
-        |prefix: &str,
-         it: &mut Peekable<Chars>,
-         control_characters: &mut Vec<String>,
-         get_code_point: fn(&mut Peekable<Chars>) -> Option<(String, i64)>| {
-            if let Some((s, cp)) = get_code_point(it) {
-                if (0..32).contains(&cp) {
-                    control_characters.push(format!("{}{}", prefix, s));
-                }
-            }
-        };
-    while let Some(&c) = it.peek() {
+    while let Some(c) = iter.next() {
         match c {
             '\\' => {
-                it.next();
-                if let Some(&c) = it.peek() {
+                if let Some(&c) = iter.peek() {
                     match c {
                         'x' => {
-                            it.next();
-                            check_control_character(
+                            iter.next();
+                            add_control_character_to_vec(
                                 "\\x",
-                                &mut it,
+                                &mut iter,
                                 &mut control_characters,
                                 get_code_point_from_hex_character,
                             );
                         }
                         'u' => {
-                            it.next();
+                            iter.next();
                             if is_unicode {
-                                check_control_character(
+                                add_control_character_to_vec(
                                     "\\u",
-                                    &mut it,
+                                    &mut iter,
                                     &mut control_characters,
                                     get_code_point_from_code_point_character,
                                 );
                             } else {
-                                check_control_character(
+                                add_control_character_to_vec(
                                     "\\u",
-                                    &mut it,
+                                    &mut iter,
                                     &mut control_characters,
                                     get_code_point_from_escape_character,
                                 );
                             }
                         }
                         '\\' => {
-                            it.next();
+                            iter.next();
                         }
                         _ => {}
                     }
                 }
             }
-            _ => {
-                it.next();
-            }
+            _ => {}
         }
     }
     if !control_characters.is_empty() {
@@ -186,10 +174,10 @@ fn collect_control_characters(pattern: String, flags: Option<String>) -> Option<
     }
 }
 fn collect_control_characters_from_expression(
-    calee: &SyntaxNode<JsLanguage>,
+    callee: &AnyJsExpression,
     js_call_arguments: &JsCallArguments,
 ) -> Option<Vec<String>> {
-    if let Some(js_identifier) = JsIdentifierExpression::cast_ref(calee) {
+    if let AnyJsExpression::JsIdentifierExpression(js_identifier) = callee {
         if js_identifier.name().ok()?.has_name("RegExp") {
             let mut args = js_call_arguments.args().iter();
             let raw_pattern = args
@@ -224,13 +212,13 @@ impl Rule for NoControlCharactersInRegex {
         match node {
             PossibleRegexExpression::JsNewExpression(js_new_expression) => {
                 return collect_control_characters_from_expression(
-                    js_new_expression.callee().ok()?.syntax(),
+                    &js_new_expression.callee().ok()?,
                     &js_new_expression.arguments()?,
                 );
             }
             PossibleRegexExpression::JsCallExpression(js_call_expression) => {
                 return collect_control_characters_from_expression(
-                    js_call_expression.callee().ok()?.syntax(),
+                    &js_call_expression.callee().ok()?,
                     &js_call_expression.arguments().ok()?,
                 );
             }
