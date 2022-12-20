@@ -16,7 +16,10 @@ impl FormatRule<JsModuleItemList> for FormatJsModuleItemList {
                     join.entry_no_separator(&empty.format());
                 }
                 _ => {
-                    join.entry(module_item.syntax(), &format_or_verbatim(&module_item));
+                    join.entry(
+                        module_item.syntax(),
+                        &format_or_verbatim(module_item.format()),
+                    );
                 }
             }
         }

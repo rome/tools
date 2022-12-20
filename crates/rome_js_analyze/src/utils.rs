@@ -1,10 +1,11 @@
 use rome_js_factory::make;
 use rome_js_syntax::{
-    AnyJsStatement, JsLanguage, JsModuleItemList, JsStatementList, JsVariableDeclaration,
-    JsVariableDeclarator, JsVariableDeclaratorList, JsVariableStatement, T,
+    AnyJsStatement, JsLanguage, JsModuleItemList, JsStatementList, JsSyntaxNode, JsSyntaxToken,
+    JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList, JsVariableStatement, T,
 };
-use rome_rowan::{AstNode, AstSeparatedList, BatchMutation};
+use rome_rowan::{AstNode, AstSeparatedList, BatchMutation, Direction, WalkEvent};
 use std::borrow::Cow;
+use std::iter;
 
 pub mod batch;
 pub mod escape;
@@ -190,6 +191,60 @@ pub(crate) fn remove_declarator(
     }
 
     Some(())
+}
+
+/// Verifies that both nodes are equal by checking their descendants (nodes included) kinds
+/// and tokens (same kind and inner token text).
+pub(crate) fn is_node_equal(a_node: &JsSyntaxNode, b_node: &JsSyntaxNode) -> bool {
+    let a_tree = a_node.preorder_with_tokens(Direction::Next);
+    let b_tree = b_node.preorder_with_tokens(Direction::Next);
+
+    for (a_child, b_child) in iter::zip(a_tree, b_tree) {
+        let a_event = match a_child {
+            WalkEvent::Enter(event) => event,
+            WalkEvent::Leave(event) => event,
+        };
+
+        let b_event = match b_child {
+            WalkEvent::Enter(event) => event,
+            WalkEvent::Leave(event) => event,
+        };
+
+        if a_event.kind() != b_event.kind() {
+            return false;
+        }
+
+        let a_token = a_event.as_token();
+        let b_token = b_event.as_token();
+
+        match (a_token, b_token) {
+            // both are nodes
+            (None, None) => continue,
+            // one of them is a node
+            (None, Some(_)) | (Some(_), None) => return false,
+            // both are tokens
+            (Some(a), Some(b)) => {
+                if !is_token_text_equal(a, b) {
+                    return false;
+                }
+                continue;
+            }
+        }
+    }
+
+    true
+}
+
+/// Verify that tokens' inner text are equal
+fn is_token_text_equal(a: &JsSyntaxToken, b: &JsSyntaxToken) -> bool {
+    static QUOTES: [char; 2] = ['"', '\''];
+
+    a.token_text_trimmed()
+        .trim_start_matches(QUOTES)
+        .trim_end_matches(QUOTES)
+        == b.token_text_trimmed()
+            .trim_start_matches(QUOTES)
+            .trim_end_matches(QUOTES)
 }
 
 #[test]

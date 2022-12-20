@@ -2,8 +2,8 @@
 //! when implementing a syntax formatter.
 
 pub(crate) use crate::{
-    builders::format_or_verbatim, comments::JsComments, AsFormat as _, FormatNodeRule,
-    FormattedIterExt, JsFormatContext, JsFormatter,
+    comments::JsComments, AsFormat as _, FormatNodeRule, FormattedIterExt, JsFormatContext,
+    JsFormatter,
 };
 pub use rome_formatter::prelude::*;
 pub use rome_formatter::separated::TrailingSeparator;

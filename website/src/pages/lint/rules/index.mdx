@@ -522,6 +522,13 @@ Disallow returning a value from a <code>constructor</code>.
 Enforces that no distracting elements are used.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noDuplicateCase">
+	<a href="/lint/rules/noDuplicateCase">noDuplicateCase</a>
+</h3>
+Disallow duplicate case labels.
+If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noDuplicateObjectKeys">
 	<a href="/lint/rules/noDuplicateObjectKeys">noDuplicateObjectKeys</a>
 </h3>
@@ -539,6 +546,13 @@ Disallow the declaration of empty interfaces.
 	<a href="/lint/rules/noExtraNonNullAssertion">noExtraNonNullAssertion</a>
 </h3>
 Prevents the wrong usage of the non-null assertion operator (<code>!</code>) in TypeScript files.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noExtraSemicolons">
+	<a href="/lint/rules/noExtraSemicolons">noExtraSemicolons</a>
+</h3>
+Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary.
+While not technically an error, extra semicolons can cause confusion when reading code.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noHeaderScope">
@@ -697,6 +711,12 @@ component functions.
 	<a href="/lint/rules/useNumericLiterals">useNumericLiterals</a>
 </h3>
 Disallow <code>parseInt()</code> and <code>Number.parseInt()</code> in favor of binary, octal, and hexadecimal literals
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="useValidLang">
+	<a href="/lint/rules/useValidLang">useValidLang</a>
+</h3>
+Ensure that the attribute passed to the <code>lang</code> attribute is a correct ISO language and/or country.
 </section>
 
 </div>
