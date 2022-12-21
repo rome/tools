@@ -44,7 +44,7 @@ declare_rule! {{
     /// ```
     ///
     pub(crate) {rule_name_upper_camel} {{
-        version: "12.0.0",
+        version: "next",
         name: "{rule_name_lower_camel}",
         recommended: false,
     }}
