@@ -2,107 +2,11 @@ use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic
 use rome_console::markup;
 use rome_js_syntax::{
     AnyJsArrayAssignmentPatternElement, AnyJsArrayElement, AnyJsAssignment, AnyJsAssignmentPattern,
-    AnyJsExpression, AnyJsObjectAssignmentPatternMember, AnyJsObjectMember,
-    JsArrayAssignmentPattern, JsArrayExpression, JsAssignmentExpression, JsAssignmentOperator,
-    JsIdentifierAssignment, JsIdentifierExpression, JsLanguage, JsObjectAssignmentPattern,
-    JsObjectExpression, JsReferenceIdentifier,
+    AnyJsExpression, AnyJsObjectAssignmentPatternMember, AnyJsObjectMember, JsAssignmentExpression,
+    JsAssignmentOperator, JsIdentifierAssignment, JsLanguage, JsReferenceIdentifier,
 };
-
-// fn handle_array_assignment() {}
-//
-// fn compare_elements(
-//     left: &AnyJsAssignmentPattern,
-//     right: &AnyJsExpression,
-//     incorrect_bindings: &mut Vec<(JsIdentifierAssignment, JsReferenceIdentifier)>,
-// ) -> Option<()> {
-//     match (left, right) {
-//         (
-//             AnyJsAssignmentPattern::JsArrayAssignmentPattern(left),
-//             AnyJsExpression::JsArrayExpression(right),
-//         ) => {
-//             let mut left_elements = left.elements().iter();
-//             let mut right_elements = right.elements().iter();
-//
-//             while let (Some(left_element), Some(right_element)) =
-//                 (left_elements.next(), right_elements.next())
-//             {
-//                 let left_element = left_element.ok();
-//                 let right_element = right_element.ok();
-//
-//                 match (left_element, right_element) {
-//                     (
-//                         Some(AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(left)),
-//                         Some(AnyJsArrayElement::AnyJsExpression(right)),
-//                     ) => {
-//                         if let Some((left, right)) = track_same_identifiers(&left, &right) {
-//                             incorrect_bindings.push((left, right));
-//                         }
-//                         continue 'inner;
-//                     }
-//
-//                     _ => break,
-//                 }
-//             }
-//         }
-//         (
-//             AnyJsAssignmentPattern::JsObjectAssignmentPattern(left),
-//             AnyJsExpression::JsObjectExpression(right),
-//         ) => {
-//             let mut left_elements = left.properties().iter();
-//             let mut right_elements = right.members().iter();
-//
-//             while let (Some(left_element), Some(right_element)) =
-//                 (left_elements.next(), right_elements.next())
-//             {
-//                 let left_element = left_element.ok();
-//                 let right_element = right_element.ok();
-//
-//                 match (left_element, right_element) {
-//                     (
-//                         Some(AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(left)),
-//                         Some(AnyJsObjectMember::JsShorthandPropertyObjectMember(right)),
-//                     ) => {
-//                         let left_identifier = left.identifier().ok()?;
-//                         let right_identifier = right.name().ok()?;
-//                         if let Some((left, right)) = track_same_identifiers(&left_identifier, &right_identifier) {
-//                             incorrect_bindings.push((left, right));
-//                         }
-//                         continue 'inner;
-//                     }
-//
-//                     _ => break,
-//                 }
-//             }
-//         }
-//         _ => return,
-//     };
-//
-//     Some(())
-
-// while let (Some(left_element), Some(right_element)) =
-//     (left_elements.next(), right_elements.next())
-// {
-//     let left_element = left_element.ok();
-//     let right_element = right_element.ok();
-//
-//     match (left_element, right_element) {
-//         (
-//             Some(AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(left)),
-//             Some(AnyJsArrayElement::AnyJsExpression(right)),
-//         ) => {
-//             if let Some((left, right)) = track_same_identifiers(&left, &right) {
-//                 incorrect_bindings.push((left, right));
-//             }
-//             continue 'inner;
-//         }
-//
-//         _ => break,
-//     }
-// }
-// }
-use rome_rowan::{
-    AstNode, AstSeparatedList, AstSeparatedListNodesIterator, SyntaxError, SyntaxResult,
-};
+use rome_rowan::{AstNode, AstSeparatedList, AstSeparatedListNodesIterator, SyntaxError};
+use std::collections::VecDeque;
 
 declare_rule! {
     /// Put your description here
@@ -131,7 +35,7 @@ declare_rule! {
 
 #[derive(Debug, Clone)]
 enum LeftRightKind {
-    Ignore,
+    None,
     Identifiers {
         left: JsIdentifierAssignment,
         right: JsReferenceIdentifier,
@@ -149,12 +53,8 @@ enum LeftRightKind {
 }
 
 impl LeftRightKind {
-    const fn is_identifiers(&self) -> bool {
-        matches!(self, LeftRightKind::Identifiers { .. })
-    }
-
-    const fn is_ignore(&self) -> bool {
-        matches!(self, LeftRightKind::Ignore)
+    const fn is_none(&self) -> bool {
+        matches!(self, LeftRightKind::None)
     }
 
     const fn has_sub_structures(&self) -> bool {
@@ -162,95 +62,6 @@ impl LeftRightKind {
             self,
             LeftRightKind::Arrays { .. } | LeftRightKind::Object { .. }
         )
-    }
-}
-
-struct Identifiers {
-    current_pair: LeftRightKind,
-    previous_pair: LeftRightKind,
-}
-
-impl Iterator for Identifiers {
-    type Item = (JsIdentifierAssignment, JsReferenceIdentifier);
-
-    fn next(&mut self) -> Option<Self::Item> {
-        loop {
-            let new_pair = match &mut self.current_pair {
-                LeftRightKind::Arrays { left, right } => {
-                    if let (Some(left_element), Some(right_element)) = (left.next(), right.next()) {
-                        let left_element = left_element.ok()?;
-                        let right_element = right_element.ok()?;
-
-                        match (left_element, right_element) {
-                            (
-                                AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(left),
-                                AnyJsArrayElement::AnyJsExpression(right),
-                            ) => {
-                                let new_pair = LeftRightKind::try_from((left, right)).ok()?;
-                                if new_pair.has_sub_structures() {
-                                    self.previous_pair = self.current_pair.clone();
-                                }
-                                new_pair
-                            }
-                            _ => LeftRightKind::Ignore,
-                        }
-                    } else {
-                        LeftRightKind::Ignore
-                    }
-                }
-                LeftRightKind::Object { left, right } => {
-                    if let (Some(left_element), Some(right_element)) = (left.next(), right.next()) {
-                        let left_element = left_element.ok()?;
-                        let right_element = right_element.ok()?;
-
-                        match (left_element, right_element) {
-                            (
-
-                                AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(
-                                    left
-                                ),
-                                AnyJsObjectMember::JsShorthandPropertyObjectMember(right)
-                            ) => {
-                                LeftRightKind::Identifiers {
-                                    left: left.identifier().ok()?, right: right.name().ok()?
-                                }
-                            }
-
-
-                            _ => {
-                                LeftRightKind::Ignore
-                            },
-                        }
-                    } else {
-                        LeftRightKind::Ignore
-                    }
-                }
-                _ => self.current_pair.clone(),
-            };
-
-            if self.previous_pair.is_ignore() {
-                self.current_pair = LeftRightKind::Ignore;
-            }
-            match new_pair {
-                LeftRightKind::Ignore => {
-                    if !self.previous_pair.is_ignore() {
-                        self.current_pair = self.previous_pair.clone();
-                        self.previous_pair = LeftRightKind::Ignore;
-                        continue;
-                    } else {
-                        return None;
-                    }
-                }
-                LeftRightKind::Identifiers { left, right } => {
-                    return Some((left, right));
-                }
-                LeftRightKind::Object { .. } | LeftRightKind::Arrays { .. } => {
-                    self.previous_pair = self.current_pair.clone();
-                    self.current_pair = new_pair;
-                    continue;
-                }
-            }
-        }
     }
 }
 
@@ -287,8 +98,133 @@ impl TryFrom<(AnyJsAssignmentPattern, AnyJsExpression)> for LeftRightKind {
                 right: right.name()?,
             },
 
-            _ => LeftRightKind::Ignore,
+            _ => LeftRightKind::None,
         })
+    }
+}
+
+struct Identifiers {
+    current_pair: LeftRightKind,
+    pair_queue: VecDeque<LeftRightKind>,
+}
+
+impl Iterator for Identifiers {
+    type Item = (JsIdentifierAssignment, JsReferenceIdentifier);
+
+    fn next(&mut self) -> Option<Self::Item> {
+        loop {
+            let new_pair = match &mut self.current_pair {
+                LeftRightKind::Arrays { left, right } => {
+                    if let (Some(left_element), Some(right_element)) = (left.next(), right.next()) {
+                        let left_element = left_element.ok()?;
+                        let right_element = right_element.ok()?;
+
+                        match (left_element, right_element) {
+                            // matches [a] = [a]
+                            (
+                                AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(left),
+                                AnyJsArrayElement::AnyJsExpression(right),
+                            ) => {
+                                let new_pair = LeftRightKind::try_from((left, right)).ok()?;
+                                // In case we have nested array/object structures, we save the current
+                                // pair and we restore it once this iterator is consumed
+                                if new_pair.has_sub_structures() {
+                                    self.pair_queue.push_back(self.current_pair.clone());
+                                }
+                                new_pair
+                            }
+                            _ => LeftRightKind::None,
+                        }
+                    } else {
+                        LeftRightKind::None
+                    }
+                }
+                LeftRightKind::Object { left, right } => {
+                    if let (Some(left_element), Some(right_element)) = (left.next(), right.next()) {
+                        let left_element = left_element.ok()?;
+                        let right_element = right_element.ok()?;
+
+                        match (left_element, right_element) {
+                            // matches {a} = {a}
+                            (
+
+                                AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(
+                                    left
+                                ),
+                                AnyJsObjectMember::JsShorthandPropertyObjectMember(right)
+                            ) => {
+                                LeftRightKind::Identifiers {
+                                    left: left.identifier().ok()?, right: right.name().ok()?
+                                }
+                            }
+
+                            (
+                                AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(left),
+                                AnyJsObjectMember::JsPropertyObjectMember(right)
+                            ) => {
+                                let left = left.pattern().ok()?;
+                                let right = right.value().ok()?;
+                                match (left, right) {
+                                    // matches {a: b} = {a: b}
+                                    (
+                                        AnyJsAssignmentPattern::AnyJsAssignment(
+                                            AnyJsAssignment::JsIdentifierAssignment(left)
+                                        ),
+                                        AnyJsExpression::JsIdentifierExpression(right)
+                                    ) => {
+                                        LeftRightKind::Identifiers {
+                                            left,
+                                            right: right.name().ok()?
+                                        }
+
+                                    }
+                                    // (
+                                    //     AnyJsAssignmentPattern::JsArrayAssignmentPattern(left),
+                                    //     AnyJsExpression::JsArrayExpression(right)
+                                    // ) => {
+                                        // LeftRightKind::Arrays {
+                                        //     left: left.elements().iter(),
+                                        //     right: right.elements().iter()
+                                        // }
+                                    // }
+                                    _ => LeftRightKind::None
+                                }
+                            }
+
+
+                            _ => {
+                                LeftRightKind::None
+                            },
+                        }
+                    } else {
+                        LeftRightKind::None
+                    }
+                }
+                _ => self.current_pair.clone(),
+            };
+
+            if self.pair_queue.is_empty() {
+                self.current_pair = LeftRightKind::None;
+            }
+            match new_pair {
+                LeftRightKind::None => {
+                    if let Some(pair) = self.pair_queue.pop_front() {
+                        self.current_pair = pair;
+                        continue;
+                    } else {
+                        return None;
+                    }
+                }
+                LeftRightKind::Identifiers { left, right } => {
+                    return Some((left, right));
+                }
+                LeftRightKind::Object { .. } | LeftRightKind::Arrays { .. } => {
+                    self.pair_queue.push_back(self.current_pair.clone());
+                    self.current_pair = new_pair;
+                    continue;
+                }
+            }
+        }
     }
 }
 
@@ -311,7 +247,7 @@ fn compare_self(
 ) {
     let mut identifiers = Identifiers {
         current_pair: pair_kind.clone(),
-        previous_pair: LeftRightKind::Ignore,
+        pair_queue: VecDeque::new(),
     };
 
     while let Some((left, right)) = identifiers.next() {
