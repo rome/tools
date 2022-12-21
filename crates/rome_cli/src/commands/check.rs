@@ -15,12 +15,12 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), CliDiagnostic> {
         .update_settings(UpdateSettingsParams { configuration })?;
 
     let apply = session.args.contains("--apply");
-    let apply_suggested = session.args.contains("--apply-suggested");
+    let apply_suggested = session.args.contains("--apply-unsafe");
 
     let fix_file_mode = if apply && apply_suggested {
         return Err(CliDiagnostic::incompatible_arguments(
             "--apply",
-            "--apply-suggested",
+            "--apply-unsafe",
         ));
     } else if !apply && !apply_suggested {
         None

@@ -35,7 +35,7 @@ const CHECK: Markup = markup! {
 
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--apply"</Dim>"                       Apply safe fixes
-    "<Dim>"--apply-suggested"</Dim>"             Apply safe and suggested fixes
+    "<Dim>"--apply-unsafe"</Dim>"                Apply safe and unsafe fixes
     "<Dim>"--max-diagnostics"</Dim>"             Cap the amount of diagnostics displayed (default: 20)
     "<Dim>"--verbose"</Dim>"                     Print additional verbose advices on diagnostics
 "

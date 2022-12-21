@@ -16,7 +16,7 @@ console.log(a);
 ```block
 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Incompatible arguments --apply and --apply-suggested
+  × Incompatible arguments --apply and --apply-unsafe
   
 
 
