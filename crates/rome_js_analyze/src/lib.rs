@@ -176,13 +176,13 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#" <span aria-labelledby={``}></span>;"#;
+        const SOURCE: &str = r#"(a?.b)()"#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
-        let rule_filter = RuleFilter::Rule("nursery", "useAriaPropTypes");
+        let rule_filter = RuleFilter::Rule("nursery", "noUnsafeOptionalChaining");
         analyze(
             FileId::zero(),
             &parsed.tree(),

@@ -874,6 +874,17 @@
             }
           ]
         },
+        "noUnsafeOptionalChaining": {
+          "description": "Disallow use of optional chaining in contexts where the undefined value is not allowed",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noUselessSwitchCase": {
           "description": "Disallow useless case in switch statements.",
           "anyOf": [

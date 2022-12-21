@@ -90,6 +90,7 @@ define_dategories! {
     "lint/nursery/noNoninteractiveElementToInteractiveRole": "https://docs.rome.tools/lint/rules/noNoninteractiveElementToInteractiveRole",
     "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
     "lint/nursery/useHookAtTopLevel": "https://docs.rome.tools/lint/rules/useHookAtTopLevel",
+    "lint/nursery/noUnsafeOptionalChaining": "https://docs.rome.tools/lint/rules/noUnsafeOptionalChaining",
     // Insert new nursery rule here
 
     // performance
