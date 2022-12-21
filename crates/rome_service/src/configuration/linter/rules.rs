@@ -812,7 +812,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 42] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 43] = [
         "noAccessKey",
         "noAssignInExpressions",
         "noBannedTypes",
@@ -857,7 +857,7 @@ impl Nursery {
         "useNumericLiterals",
         "useValidLang",
     ];
-    const RECOMMENDED_RULES: [&'static str; 33] = [
+    const RECOMMENDED_RULES: [&'static str; 34] = [
         "noAssignInExpressions",
         "noBannedTypes",
         "noClassAssign",
@@ -893,7 +893,7 @@ impl Nursery {
         "useNumericLiterals",
         "useValidLang",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 33] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 34] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[3]),
@@ -927,6 +927,7 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[39]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[40]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[41]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[42]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -953,7 +954,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 33] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 34] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
