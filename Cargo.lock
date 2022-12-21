@@ -1501,7 +1501,6 @@ version = "0.0.0"
 dependencies = [
  "bitflags",
  "rome_console",
- "rome_control_flow",
  "rome_diagnostics",
  "rome_rowan",
  "rustc-hash",

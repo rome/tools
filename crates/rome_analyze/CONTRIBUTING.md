@@ -387,6 +387,98 @@ If this the rule can retrieve its option with
 let options = ctx.options();
 ```
 
+#### Custom Visitors
+
+Some lint rules may need to deeply inspect the child nodes of a query match
+before deciding on whether they should emit a signal or not. These rules can be
+inefficient to implement using the query system, as they will lead to redundant
+traversal passes being executed over the same syntax tree. To make this more
+efficient, you can implement a custom `Queryable` type and and associated
+`Visitor` to emit it as part of the analyzer's main traversal pass. As an
+example, here's how this could be done to implement the `useYield` rule:
+
+```rust,ignore
+// First, create a visitor struct that holds a stack of function syntax nodes and booleans
+#[derive(Default)]
+struct MissingYieldVisitor {
+    stack: Vec<(AnyFunctionLike, bool)>,
+}
+
+// Implement the `Visitor` trait for this struct
+impl Visitor for MissingYieldVisitor {
+    fn visit(
+        &mut self,
+        event: &WalkEvent<SyntaxNode<Self::Language>>,
+        ctx: VisitorContext<Self::Language>,
+    ) {
+        match event {
+            WalkEvent::Enter(node) => {
+                // When the visitor enters a function node, push a new entry on the stack
+                if let Some(node) = AnyFunctionLike::cast_ref(node) {
+                    self.stack.push((node, false));
+                }
+                
+                if let Some((_, has_yield)) = self.stack.last_mut() {
+                    // When the visitor enters a `yield` expression, set the
+                    // `has_yield` flag for the top entry on the stack to `true`
+                    if JsYieldExpression::can_cast(node.kind()) {
+                        *has_yield = true;
+                    }
+                }
+            }
+            WalkEvent::Leave(node) => {
+                // When the visitor exits a function, if it matches the node of the top-most
+                // entry of the stack and the `has_yield` flag is `false`, emit a query match
+                if let Some(exit_node) = AnyFunctionLike::cast_ref(node) {
+                    if let Some((enter_node, has_yield)) = self.stack.pop() {
+                        assert_eq!(enter_node, exit_node);
+                        if !has_yield {
+                            ctx.match_query(MissingYield(enter_node));
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Declare a query match struct type containing a JavaScript function node
+struct MissingYield(AnyFunctionLike);
+
+// Implement the `Queryable` trait for this type
+impl Queryable for MissingYield {
+    // `Input` is the type that `ctx.match_query()` is called with in the visitor
+    type Input = Self;
+    // `Output` if the type that `ctx.query()` will return in the rule
+    type Output = AnyFunctionLike;
+    
+    fn build_visitor(
+        analyzer: &mut impl AddVisitor<Self::Language>,
+        _: &<Self::Language as Language>::Root,
+    ) {
+        // Register our custom visitor to run in the `Syntax` phase
+        analyzer.add_visitor(Phases::Syntax, MissingYieldVisitor::default());
+    }
+
+    // Extract the output object from the input type
+    fn unwrap_match(services: &ServiceBag, query: &Self::Input) -> Self::Output {
+        query.0.clone()
+    }
+}
+
+impl Rule for UseYield {
+    // Declare the custom `MissingYield` queryable as the rule's query
+    type Query = MissingYield;
+
+    fn run(ctx: &RuleContext<Self>) -> Self::Signals {
+        // Read the function's root node from the queryable output
+        let query: &AnyFunctionLike = ctx.query();
+
+        // ...
+    }
+}
+```
+
 # Using Just
 
 It is also possible to do all the steps above using our `Just` automation. For example, we can create
