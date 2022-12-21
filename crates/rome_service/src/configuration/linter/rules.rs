@@ -799,6 +799,8 @@ struct NurserySchema {
     use_exponentiation_operator: Option<RuleConfiguration>,
     #[doc = "Enforce that all React hooks are being called from the Top Level component functions."]
     use_hook_at_top_level: Option<RuleConfiguration>,
+    #[doc = "Enforces the usage of the attribute title for the element iframe"]
+    use_iframe_title: Option<RuleConfiguration>,
     #[doc = "Require calls to isNaN() when checking for NaN."]
     use_is_nan: Option<RuleConfiguration>,
     #[doc = "Enforces that audio and video elements must have a track for captions."]
@@ -851,6 +853,7 @@ impl Nursery {
         "useExhaustiveDependencies",
         "useExponentiationOperator",
         "useHookAtTopLevel",
+        "useIframeTitle",
         "useIsNan",
         "useMediaCaption",
         "useNumericLiterals",
@@ -887,6 +890,7 @@ impl Nursery {
         "useDefaultSwitchClauseLast",
         "useEnumInitializers",
         "useExhaustiveDependencies",
+        "useIframeTitle",
         "useIsNan",
         "useMediaCaption",
         "useNumericLiterals",

@@ -442,6 +442,10 @@ export interface Nursery {
 	 */
 	useHookAtTopLevel?: RuleConfiguration;
 	/**
+	 * Enforces the usage of the attribute title for the element iframe
+	 */
+	useIframeTitle?: RuleConfiguration;
+	/**
 	 * Require calls to isNaN() when checking for NaN.
 	 */
 	useIsNan?: RuleConfiguration;
@@ -771,6 +775,7 @@ export type Category =
 	| "lint/nursery/useExponentiationOperator"
 	| "lint/nursery/useIsNan"
 	| "lint/nursery/useMediaCaption"
+	| "lint/nursery/useIframeTitle"
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useHookAtTopLevel"
