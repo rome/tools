@@ -444,7 +444,7 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
         })
     }
 
-    pub fn get_control_flow_graph(&self, cursor: TextSize) -> Result<String, RomeError> {
+    pub fn get_control_flow_graph(&self, cursor: TextSize) -> Result<String, WorkspaceError> {
         self.workspace
             .get_control_flow_graph(GetControlFlowGraphParams {
                 path: self.path.clone(),
