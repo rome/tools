@@ -433,6 +433,10 @@ export interface Nursery {
 	 */
 	noUnsafeFinally?: RuleConfiguration;
 	/**
+	 * Disallow the use of optional chaining in contexts where the undefined value is not allowed.
+	 */
+	noUnsafeOptionalChaining?: RuleConfiguration;
+	/**
 	 * Disallow unused labels.
 	 */
 	noUnusedLabels?: RuleConfiguration;
@@ -853,6 +857,7 @@ export type Category =
 	| "lint/nursery/noUselessRename"
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useHookAtTopLevel"
+	| "lint/nursery/noUnsafeOptionalChaining"
 	| "lint/nursery/noDuplicateJsxProps"
 	| "lint/nursery/noDuplicateClassMembers"
 	| "lint/nursery/useYield"

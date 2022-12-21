@@ -740,6 +740,7 @@ impl VisitNode<JsonLanguage> for Nursery {
                 "noSwitchDeclarations",
                 "noUnreachableSuper",
                 "noUnsafeFinally",
+                "noUnsafeOptionalChaining",
                 "noUnusedLabels",
                 "noUselessRename",
                 "noUselessSwitchCase",
@@ -1437,6 +1438,24 @@ impl VisitNode<JsonLanguage> for Nursery {
                     let mut configuration = RuleConfiguration::default();
                     self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
                     self.no_unsafe_finally = Some(configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
+            "noUnsafeOptionalChaining" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_unsafe_optional_chaining = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_unsafe_optional_chaining = Some(configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
