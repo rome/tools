@@ -446,6 +446,14 @@ export interface Nursery {
 	 */
 	useHookAtTopLevel?: RuleConfiguration;
 	/**
+	 * Require calls to isNaN() when checking for NaN.
+	 */
+	useIsNan?: RuleConfiguration;
+	/**
+	 * Enforces that audio and video elements must have a track for captions.
+	 */
+	useMediaCaption?: RuleConfiguration;
+	/**
 	 * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
 	 */
 	useNumericLiterals?: RuleConfiguration;
@@ -760,6 +768,8 @@ export type Category =
 	| "lint/nursery/useEnumInitializers"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useExponentiationOperator"
+	| "lint/nursery/useIsNan"
+	| "lint/nursery/useMediaCaption"
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useHookAtTopLevel"
