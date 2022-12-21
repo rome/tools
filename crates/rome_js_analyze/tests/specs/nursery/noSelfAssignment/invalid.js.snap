@@ -1,0 +1,36 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: invalid.js
+---
+# Input
+```js
+a = a;
+[a] = [a];
+[a, b] = [a, b];
+[a, ...b] = [a, ...b];
+[[a], {b}] = [[a], {b}];
+
+```
+
+# Diagnostics
+```
+invalid.js:1:5 lint/nursery/noSelfAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! a is assigned to itself.
+  
+  > 1 │ a = a;
+      │     ^
+    2 │ [a] = [a];
+    3 │ [a, b] = [a, b];
+  
+  i This is where is assigned.
+  
+  > 1 │ a = a;
+      │ ^
+    2 │ [a] = [a];
+    3 │ [a, b] = [a, b];
+  
+
+```
+
+
