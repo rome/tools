@@ -53,7 +53,7 @@ impl FormatRule<JsonArrayElementList> for FormatJsonArrayElementList {
 enum ArrayLayout {
     /// Tries to fit as many array elements on a single line as possible.
     ///
-    /// ```
+    /// ```json
     /// [
     ///     1, 2, 3,
     ///     5, 6,
@@ -63,7 +63,7 @@ enum ArrayLayout {
 
     /// Prints every element on a single line if the array exceeds the line width, or any
     /// of its elements gets printed in *expanded* mode.
-    /// ```
+    /// ```json
     /// [
     ///    { "a": 3 },
     ///    4,
