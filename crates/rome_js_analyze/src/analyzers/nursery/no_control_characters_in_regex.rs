@@ -59,17 +59,16 @@ declare_node_union! {
 }
 
 fn get_code_point_from_hex_character(iter: &mut Peekable<Chars>) -> Option<(String, i64)> {
-    let mut digits = Vec::new();
+    let mut digits = String::new();
     for _ in 1..=2 {
         digits.push(iter.next()?);
     }
-    let s: String = digits.into_iter().collect();
-    let cp = i64::from_str_radix(s.as_str(), 16).ok()?;
-    Some((s, cp))
+    let cp = i64::from_str_radix(digits.as_str(), 16).ok()?;
+    Some((digits, cp))
 }
 
 fn get_code_point_from_escape_character(iter: &mut Peekable<Chars>) -> Option<(String, i64)> {
-    let mut digits = Vec::new();
+    let mut digits = String::new();
     for _ in 1..=4 {
         if let Some(&c) = iter.peek() {
             match c {
@@ -81,13 +80,12 @@ fn get_code_point_from_escape_character(iter: &mut Peekable<Chars>) -> Option<(S
         }
     }
 
-    let s: String = digits.into_iter().collect();
-    let cp = i64::from_str_radix(s.as_str(), 16).ok()?;
-    Some((s, cp))
+    let cp = i64::from_str_radix(digits.as_str(), 16).ok()?;
+    Some((digits, cp))
 }
 
 fn get_code_point_from_code_point_character(iter: &mut Peekable<Chars>) -> Option<(String, i64)> {
-    let mut digits = Vec::new();
+    let mut digits = String::new();
     if let Some(&c) = iter.peek() {
         if c == '{' {
             iter.next();
@@ -95,9 +93,8 @@ fn get_code_point_from_code_point_character(iter: &mut Peekable<Chars>) -> Optio
                 match c {
                     '}' => {
                         iter.next();
-                        let s: String = digits.into_iter().collect();
-                        let cp = i64::from_str_radix(s.as_str(), 16).ok()?;
-                        return Some((format!("{{{}}}", s), cp));
+                        let cp = i64::from_str_radix(digits.as_str(), 16).ok()?;
+                        return Some((format!("{{{}}}", digits), cp));
                     }
                     _ => digits.push(iter.next()?),
                 }
