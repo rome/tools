@@ -55,14 +55,14 @@ impl Rule for {rule_name_upper_camel} {{
     type State = Reference;
     type Signals = Vec<Self::State>;
     type Options = ();
-    
+
     fn run(ctx: &RuleContext<Self>) -> Vec<Self::State> {{
         let binding = ctx.query();
         let model = ctx.model();
 
         binding.all_references(model).collect()
     }}
-    
+
     fn diagnostic(_: &RuleContext<Self>, reference: &Self::State) -> Option<RuleDiagnostic> {{
         Some(
             RuleDiagnostic::new(
@@ -91,7 +91,7 @@ impl Rule for {rule_name_upper_camel} {{
         debug_assert!(categories.contains(insertion_point));
 
         let categories = categories.replace(insertion_point, &format!(
-        r#"lint/nursery/{rule_name_lower_camel}": "https://docs.rome.tools/lint/rules/{rule_name_lower_camel}",
+        r#""lint/nursery/{rule_name_lower_camel}": "https://docs.rome.tools/lint/rules/{rule_name_lower_camel}",
 {insertion_point}"#));
         debug_assert!(categories.contains(&rule_name_lower_camel));
 

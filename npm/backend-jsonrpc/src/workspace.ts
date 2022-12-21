@@ -454,6 +454,10 @@ export interface Nursery {
 	 */
 	useNumericLiterals?: RuleConfiguration;
 	/**
+	 * Ensures that ARIA properties aria-* are all valid.
+	 */
+	useValidAriaProps?: RuleConfiguration;
+	/**
 	 * Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.
 	 */
 	useValidLang?: RuleConfiguration;
@@ -762,6 +766,7 @@ export type Category =
 	| "lint/nursery/useDefaultParameterLast"
 	| "lint/nursery/useDefaultSwitchClauseLast"
 	| "lint/nursery/useEnumInitializers"
+	| "lint/nursery/useValidAriaProps"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useExponentiationOperator"
 	| "lint/nursery/useIsNan"

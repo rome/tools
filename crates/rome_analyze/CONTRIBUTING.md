@@ -139,13 +139,20 @@ to know how to deal with the snapshot tests.
 
 ### Code generation
 
-Run the following commands to update the generated files:
+For simplicity, use [`just`](#using-just) to run all the commands with:
+
+```shell
+just codegen-linter
+```
+
+Explanation of the commands:
 
 - `cargo codegen-configuration`, **this command must be run first** and, it will update the configuration;
 - `cargo lintdoc`, it will update the website with the documentation of the rules, check [`declare_rule`](#declare_rule)
 for more information about it;
 - `cargo codegen-bindings`, it will update the TypeScript types released inside the JS APIs;
 - `cargo codegen-schema`, it will update the JSON Schema file of the configuration, used by VSCode;
+
 
 ### Naming patterns for rules
 
@@ -417,7 +424,7 @@ impl Visitor for MissingYieldVisitor {
                 if let Some(node) = AnyFunctionLike::cast_ref(node) {
                     self.stack.push((node, false));
                 }
-                
+
                 if let Some((_, has_yield)) = self.stack.last_mut() {
                     // When the visitor enters a `yield` expression, set the
                     // `has_yield` flag for the top entry on the stack to `true`
@@ -451,7 +458,7 @@ impl Queryable for MissingYield {
     type Input = Self;
     // `Output` if the type that `ctx.query()` will return in the rule
     type Output = AnyFunctionLike;
-    
+
     fn build_visitor(
         analyzer: &mut impl AddVisitor<Self::Language>,
         _: &<Self::Language as Language>::Root,

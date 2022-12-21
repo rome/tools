@@ -1035,6 +1035,17 @@
             }
           ]
         },
+        "useValidAriaProps": {
+          "description": "Ensures that ARIA properties aria-* are all valid.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useValidLang": {
           "description": "Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.",
           "anyOf": [
