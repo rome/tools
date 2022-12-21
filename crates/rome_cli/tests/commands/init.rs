@@ -15,7 +15,7 @@ fn creates_config_file() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("init")]),
     );
     assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -52,7 +52,7 @@ fn creates_config_file_when_rome_installed_via_package_manager() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("init")]),
     );
     assert!(result.is_ok(), "run_cli returned {result:?}");

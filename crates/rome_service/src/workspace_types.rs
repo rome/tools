@@ -10,7 +10,7 @@ use schemars::{
 };
 use serde_json::Value;
 
-use crate::{workspace::*, RomeError};
+use crate::{workspace::*, WorkspaceError};
 use rome_js_factory::{
     make,
     syntax::{AnyJsObjectMemberName, AnyTsName, AnyTsType, AnyTsTypeMember, T},
@@ -431,7 +431,10 @@ impl WorkspaceMethod {
     }
 
     /// Construct a [WorkspaceMethod] from a name and a function pointer
-    fn from_method<T, P, R>(name: &'static str, _func: fn(T, P) -> Result<R, RomeError>) -> Self
+    fn from_method<T, P, R>(
+        name: &'static str,
+        _func: fn(T, P) -> Result<R, WorkspaceError>,
+    ) -> Self
     where
         P: JsonSchema,
         R: JsonSchema,

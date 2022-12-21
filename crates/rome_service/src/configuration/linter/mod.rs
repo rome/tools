@@ -3,7 +3,7 @@ mod rules;
 
 pub use crate::configuration::linter::rules::Rules;
 use crate::settings::LinterSettings;
-use crate::{ConfigurationError, MatchOptions, Matcher, RomeError};
+use crate::{ConfigurationError, MatchOptions, Matcher, WorkspaceError};
 use indexmap::IndexSet;
 use rome_diagnostics::Severity;
 pub use rules::*;
@@ -44,7 +44,7 @@ impl Default for LinterConfiguration {
 }
 
 impl TryFrom<LinterConfiguration> for LinterSettings {
-    type Error = RomeError;
+    type Error = WorkspaceError;
 
     fn try_from(conf: LinterConfiguration) -> Result<Self, Self::Error> {
         let mut matcher = Matcher::new(MatchOptions {
@@ -55,7 +55,7 @@ impl TryFrom<LinterConfiguration> for LinterSettings {
         if let Some(ignore) = conf.ignore {
             for pattern in ignore {
                 matcher.add_pattern(&pattern).map_err(|err| {
-                    RomeError::Configuration(ConfigurationError::InvalidIgnorePattern(
+                    WorkspaceError::Configuration(ConfigurationError::InvalidIgnorePattern(
                         pattern.to_string(),
                         err.msg.to_string(),
                     ))

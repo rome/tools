@@ -20,7 +20,12 @@ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
 # Termination Message
 
 ```block
-some errors were emitted while running checks
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
+  
+
+
 ```
 
 # Emitted Messages

@@ -5,7 +5,16 @@ expression: content
 # Termination Message
 
 ```block
-failed to parse argument '--line-width': failed to parse '321': TryFromIntError(LineWidthFromIntError(321))
+flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Cannot parse the argument --line-width
+    
+    Caused by:
+      failed to parse '321': The line width exceeds the maximum value (320)
+  
+  
+
+
 ```
 
 

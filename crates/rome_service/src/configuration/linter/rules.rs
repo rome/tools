@@ -1,6 +1,6 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{ConfigurationError, RomeError, RuleConfiguration};
+use crate::RuleConfiguration;
 use indexmap::{IndexMap, IndexSet};
 use rome_analyze::RuleFilter;
 use rome_diagnostics::{Category, Severity};
@@ -457,8 +457,9 @@ where
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
         if !A11y::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::UnknownRule(rule_name.to_string()),
+            return Err(serde::de::Error::custom(format!(
+                "invalid rule name {}",
+                rule_name
             )));
         }
     }
@@ -563,8 +564,9 @@ where
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
         if !Complexity::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::UnknownRule(rule_name.to_string()),
+            return Err(serde::de::Error::custom(format!(
+                "invalid rule name {}",
+                rule_name
             )));
         }
     }
@@ -692,8 +694,9 @@ where
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
         if !Correctness::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::UnknownRule(rule_name.to_string()),
+            return Err(serde::de::Error::custom(format!(
+                "invalid rule name {}",
+                rule_name
             )));
         }
     }
@@ -982,8 +985,9 @@ where
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
         if !Nursery::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::UnknownRule(rule_name.to_string()),
+            return Err(serde::de::Error::custom(format!(
+                "invalid rule name {}",
+                rule_name
             )));
         }
     }
@@ -1060,8 +1064,9 @@ where
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
         if !Performance::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::UnknownRule(rule_name.to_string()),
+            return Err(serde::de::Error::custom(format!(
+                "invalid rule name {}",
+                rule_name
             )));
         }
     }
@@ -1148,8 +1153,9 @@ where
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
         if !Security::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::UnknownRule(rule_name.to_string()),
+            return Err(serde::de::Error::custom(format!(
+                "invalid rule name {}",
+                rule_name
             )));
         }
     }
@@ -1277,8 +1283,9 @@ where
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
         if !Style::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::UnknownRule(rule_name.to_string()),
+            return Err(serde::de::Error::custom(format!(
+                "invalid rule name {}",
+                rule_name
             )));
         }
     }
@@ -1435,8 +1442,9 @@ where
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
         if !Suspicious::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::UnknownRule(rule_name.to_string()),
+            return Err(serde::de::Error::custom(format!(
+                "invalid rule name {}",
+                rule_name
             )));
         }
     }

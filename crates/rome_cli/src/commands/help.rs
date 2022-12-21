@@ -1,6 +1,6 @@
 use rome_console::{markup, ConsoleExt, Markup};
 
-use crate::{CliSession, Termination, VERSION};
+use crate::{CliDiagnostic, CliSession, VERSION};
 
 const MAIN: Markup = markup! {
 "Rome CLI v"{VERSION}"
@@ -127,7 +127,7 @@ const VERSION_HELP_TEXT: Markup = markup! {
     rome version"
 };
 
-pub(crate) fn help(mut session: CliSession, command: Option<&str>) -> Result<(), Termination> {
+pub(crate) fn help(session: CliSession, command: Option<&str>) -> Result<(), CliDiagnostic> {
     let help_text = match command {
         Some("help") | None => MAIN,
         Some("check") => CHECK,
@@ -140,11 +140,7 @@ pub(crate) fn help(mut session: CliSession, command: Option<&str>) -> Result<(),
         Some("version") => VERSION_HELP_TEXT,
         Some("rage") => RAGE,
 
-        Some(cmd) => {
-            return Err(Termination::UnknownCommandHelp {
-                command: cmd.into(),
-            })
-        }
+        Some(cmd) => return Err(CliDiagnostic::new_unknown_help(cmd)),
     };
 
     session.app.console.log(help_text);

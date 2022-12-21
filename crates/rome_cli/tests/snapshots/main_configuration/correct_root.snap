@@ -48,7 +48,12 @@ expression: content
 # Termination Message
 
 ```block
-no files were processed in the specified paths.
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × No files were processed in the specified paths.
+  
+
+
 ```
 
 # Emitted Messages

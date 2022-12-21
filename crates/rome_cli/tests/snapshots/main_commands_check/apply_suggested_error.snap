@@ -14,7 +14,12 @@ console.log(a);
 # Termination Message
 
 ```block
-incompatible arguments '--apply' and '--apply-suggested'
+flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Incompatible arguments --apply and --apply-suggested
+  
+
+
 ```
 
 

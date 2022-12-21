@@ -1,4 +1,4 @@
-use rome_console::{Console, EnvConsole};
+use rome_console::Console;
 use rome_fs::{FileSystem, OsFileSystem};
 use serde::{Deserialize, Serialize};
 use std::ops::{Deref, DerefMut};
@@ -23,7 +23,7 @@ pub use crate::workspace::Workspace;
 
 /// Exports only for this crate
 pub(crate) use crate::configuration::{deserialize_set_of_strings, serialize_set_of_strings};
-pub use crate::diagnostics::{RomeError, TransportError};
+pub use crate::diagnostics::{TransportError, WorkspaceError};
 
 pub const VERSION: &str = match option_env!("ROME_VERSION") {
     Some(version) => version,
@@ -38,23 +38,18 @@ pub struct App<'app> {
     pub workspace: WorkspaceRef<'app>,
     /// A reference to the internal console, where its buffer will be used to write messages and
     /// errors
-    pub console: DynRef<'app, dyn Console>,
-}
-
-impl Default for App<'static> {
-    fn default() -> Self {
-        Self::with_filesystem_and_console(
-            DynRef::Owned(Box::new(OsFileSystem)),
-            DynRef::Owned(Box::new(EnvConsole::default())),
-        )
-    }
+    pub console: &'app mut dyn Console,
 }
 
 impl<'app> App<'app> {
+    pub fn with_console(console: &'app mut dyn Console) -> Self {
+        Self::with_filesystem_and_console(DynRef::Owned(Box::new(OsFileSystem)), console)
+    }
+
     /// Create a new instance of the app using the specified [FileSystem] and [Console] implementation
     pub fn with_filesystem_and_console(
         fs: DynRef<'app, dyn FileSystem>,
-        console: DynRef<'app, dyn Console>,
+        console: &'app mut dyn Console,
     ) -> Self {
         Self::new(fs, console, WorkspaceRef::Owned(workspace::server()))
     }
@@ -62,7 +57,7 @@ impl<'app> App<'app> {
     /// Create a new instance of the app using the specified [FileSystem], [Console] and [Workspace] implementation
     pub fn new(
         fs: DynRef<'app, dyn FileSystem>,
-        console: DynRef<'app, dyn Console>,
+        console: &'app mut dyn Console,
         workspace: WorkspaceRef<'app>,
     ) -> Self {
         Self {

@@ -1,6 +1,6 @@
 use crate::{
-    CliSession, Execution, FormatterReportFileDetail, FormatterReportSummary, Report,
-    ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind, Termination, TraversalMode,
+    CliDiagnostic, CliSession, Execution, FormatterReportFileDetail, FormatterReportSummary,
+    Report, ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind, TraversalMode,
 };
 use crossbeam::{
     channel::{unbounded, Receiver, Sender},
@@ -21,7 +21,7 @@ use rome_service::{
     workspace::{
         FeatureName, FileGuard, Language, OpenFileParams, RuleCategories, SupportsFeatureParams,
     },
-    RomeError, Workspace,
+    Workspace, WorkspaceError,
 };
 use rome_text_edit::TextEdit;
 use std::{
@@ -54,7 +54,7 @@ impl fmt::Display for CheckResult {
     }
 }
 
-pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<(), Termination> {
+pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<(), CliDiagnostic> {
     init_thread_pool();
 
     let verbose = session.args.contains("--verbose");
@@ -71,20 +71,20 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
             }
             // `--<some character>` or `-<some character>`
             if without_dashes != input {
-                return Err(Termination::UnexpectedArgument {
-                    subcommand: execution.traversal_mode_subcommand(),
-                    argument: input,
-                });
+                return Err(CliDiagnostic::unexpected_argument(
+                    format!("{:?}", input),
+                    execution.traversal_mode_subcommand(),
+                ));
             }
         }
         inputs.push(input);
     }
 
     if inputs.is_empty() && execution.as_stdin_file().is_none() {
-        return Err(Termination::MissingArgument {
-            subcommand: execution.traversal_mode_subcommand(),
-            argument: "<INPUT>",
-        });
+        return Err(CliDiagnostic::missing_argument(
+            "<INPUT>",
+            execution.traversal_mode_subcommand(),
+        ));
     }
 
     let (interner, recv_files) = PathInterner::new();
@@ -208,9 +208,9 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
 
     // Processing emitted error diagnostics, exit with a non-zero code
     if count.saturating_sub(skipped) == 0 {
-        Err(Termination::NoFilesWereProcessed)
+        Err(CliDiagnostic::no_files_processed())
     } else if errors > 0 {
-        Err(Termination::CheckError)
+        Err(CliDiagnostic::check_error())
     } else {
         Ok(())
     }
@@ -614,7 +614,7 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
         self.messages.send(msg.into()).ok();
     }
 
-    fn can_format(&self, rome_path: &RomePath) -> Result<SupportsFeatureResult, RomeError> {
+    fn can_format(&self, rome_path: &RomePath) -> Result<SupportsFeatureResult, WorkspaceError> {
         self.workspace.supports_feature(SupportsFeatureParams {
             path: rome_path.clone(),
             feature: FeatureName::Format,
@@ -627,14 +627,14 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
             .ok();
     }
 
-    fn can_lint(&self, rome_path: &RomePath) -> Result<SupportsFeatureResult, RomeError> {
+    fn can_lint(&self, rome_path: &RomePath) -> Result<SupportsFeatureResult, WorkspaceError> {
         self.workspace.supports_feature(SupportsFeatureParams {
             path: rome_path.clone(),
             feature: FeatureName::Lint,
         })
     }
 
-    fn miss_handler_err(&self, err: RomeError, rome_path: &RomePath) {
+    fn miss_handler_err(&self, err: WorkspaceError, rome_path: &RomePath) {
         self.push_diagnostic(
             StdError::from(err)
                 .with_category(category!("files/missingHandler"))

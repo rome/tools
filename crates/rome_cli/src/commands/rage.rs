@@ -10,10 +10,10 @@ use tokio::runtime::Runtime;
 
 use crate::commands::daemon::read_most_recent_log_file;
 use crate::service::enumerate_pipes;
-use crate::{service, CliSession, Termination, VERSION};
+use crate::{service, CliDiagnostic, CliSession, VERSION};
 
 /// Handler for the `rage` command
-pub(crate) fn rage(mut session: CliSession) -> Result<(), Termination> {
+pub(crate) fn rage(session: CliSession) -> Result<(), CliDiagnostic> {
     let terminal_supports_colors = termcolor::BufferWriter::stdout(ColorChoice::Auto)
         .buffer()
         .supports_color();

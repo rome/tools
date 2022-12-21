@@ -5,7 +5,15 @@ expression: content
 # Termination Message
 
 ```block
-failed to parse argument '--indent-size': failed to parse '-1': invalid digit found in string
+flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Cannot parse the argument --indent-size
+    
+    Caused by:
+      failed to parse '-1': invalid digit found in string
+  
+
+
 ```
 
 

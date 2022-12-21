@@ -1,7 +1,7 @@
 use crate::run_cli;
 use crate::snap_test::{CliSnapshot, SnapshotPayload};
 use pico_args::Arguments;
-use rome_cli::Termination;
+use rome_cli::CliDiagnostic;
 use rome_console::{BufferConsole, Console};
 use rome_fs::{FileSystem, MemoryFileSystem};
 use rome_service::DynRef;
@@ -17,7 +17,7 @@ fn ok() {
 
     let result = run_rage(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("rage")]),
     );
 
@@ -47,7 +47,7 @@ fn with_configuration() {
 
     let result = run_rage(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("rage")]),
     );
 
@@ -77,7 +77,7 @@ fn with_malformed_configuration() {
 
     let result = run_rage(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("rage")]),
     );
 
@@ -144,7 +144,7 @@ Not most recent log file
 
         run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Borrowed(&mut console),
+            &mut console,
             Arguments::from_vec(vec![OsString::from("rage")]),
         )
     };
@@ -163,9 +163,9 @@ Not most recent log file
 /// Runs the `rage` command mocking out the log directory.
 fn run_rage<'app>(
     fs: DynRef<'app, dyn FileSystem>,
-    console: DynRef<'app, dyn Console>,
+    console: &'app mut dyn Console,
     args: Arguments,
-) -> Result<(), Termination> {
+) -> Result<(), CliDiagnostic> {
     let _test_dir = TestLogDir::new("rome-rage-test");
     run_cli(fs, console, args)
 }

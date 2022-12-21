@@ -41,17 +41,17 @@
 //!
 //! Because of the aforementioned client-server abstraction, the [Workspace]
 //! is designed to let any operation fail: all methods return a [Result] with a
-//! [RomeError] enum wrapping the underlying issue. Some common errors are:
+//! [WorkspaceError] enum wrapping the underlying issue. Some common errors are:
 //!
-//! - [RomeError::NotFound]: This error is returned when an operation is being
+//! - [WorkspaceError::NotFound]: This error is returned when an operation is being
 //! run on a path that doesn't correspond to any open document: either the
 //! document has been closed or the client didn't open it in the first place
-//! - [RomeError::SourceFileNotSupported]: This error is returned when an
+//! - [WorkspaceError::SourceFileNotSupported]: This error is returned when an
 //! operation could not be completed because the language associated with the
 //! document does not implement the required capability: for instance trying to
 //! format a file with a language that does not have a formatter
 
-use crate::{Configuration, Deserialize, RomeError, Serialize};
+use crate::{Configuration, Deserialize, Serialize, WorkspaceError};
 use rome_analyze::ActionCategory;
 pub use rome_analyze::RuleCategories;
 use rome_console::{markup, Markup, MarkupBuf};
@@ -342,64 +342,64 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
     fn supports_feature(
         &self,
         params: SupportsFeatureParams,
-    ) -> Result<SupportsFeatureResult, RomeError>;
+    ) -> Result<SupportsFeatureResult, WorkspaceError>;
 
     /// Update the global settings for this workspace
-    fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), RomeError>;
+    fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), WorkspaceError>;
 
     /// Add a new file to the workspace
-    fn open_file(&self, params: OpenFileParams) -> Result<(), RomeError>;
+    fn open_file(&self, params: OpenFileParams) -> Result<(), WorkspaceError>;
 
     // Return a textual, debug representation of the syntax tree for a given document
     fn get_syntax_tree(
         &self,
         params: GetSyntaxTreeParams,
-    ) -> Result<GetSyntaxTreeResult, RomeError>;
+    ) -> Result<GetSyntaxTreeResult, WorkspaceError>;
 
     // Return a textual, debug representation of the control flow graph at a given position in the document
     fn get_control_flow_graph(
         &self,
         params: GetControlFlowGraphParams,
-    ) -> Result<String, RomeError>;
+    ) -> Result<String, WorkspaceError>;
 
     // Return a textual, debug representation of the formatter IR for a given document
-    fn get_formatter_ir(&self, params: GetFormatterIRParams) -> Result<String, RomeError>;
+    fn get_formatter_ir(&self, params: GetFormatterIRParams) -> Result<String, WorkspaceError>;
 
     /// Change the content of an open file
-    fn change_file(&self, params: ChangeFileParams) -> Result<(), RomeError>;
+    fn change_file(&self, params: ChangeFileParams) -> Result<(), WorkspaceError>;
 
     /// Remove a file from the workspace
-    fn close_file(&self, params: CloseFileParams) -> Result<(), RomeError>;
+    fn close_file(&self, params: CloseFileParams) -> Result<(), WorkspaceError>;
 
     /// Retrieves the list of diagnostics associated to a file
     fn pull_diagnostics(
         &self,
         params: PullDiagnosticsParams,
-    ) -> Result<PullDiagnosticsResult, RomeError>;
+    ) -> Result<PullDiagnosticsResult, WorkspaceError>;
 
     /// Retrieves the list of code actions available for a given cursor
     /// position within a file
-    fn pull_actions(&self, params: PullActionsParams) -> Result<PullActionsResult, RomeError>;
+    fn pull_actions(&self, params: PullActionsParams) -> Result<PullActionsResult, WorkspaceError>;
 
     /// Runs the given file through the formatter using the provided options
     /// and returns the resulting source code
-    fn format_file(&self, params: FormatFileParams) -> Result<Printed, RomeError>;
+    fn format_file(&self, params: FormatFileParams) -> Result<Printed, WorkspaceError>;
 
     /// Runs a range of an open document through the formatter
-    fn format_range(&self, params: FormatRangeParams) -> Result<Printed, RomeError>;
+    fn format_range(&self, params: FormatRangeParams) -> Result<Printed, WorkspaceError>;
 
     /// Runs a "block" ending at the specified character of an open document
     /// through the formatter
-    fn format_on_type(&self, params: FormatOnTypeParams) -> Result<Printed, RomeError>;
+    fn format_on_type(&self, params: FormatOnTypeParams) -> Result<Printed, WorkspaceError>;
 
     /// Return the content of the file with all safe code actions applied
-    fn fix_file(&self, params: FixFileParams) -> Result<FixFileResult, RomeError>;
+    fn fix_file(&self, params: FixFileParams) -> Result<FixFileResult, WorkspaceError>;
 
     /// Return the content of the file after renaming a symbol
-    fn rename(&self, params: RenameParams) -> Result<RenameResult, RomeError>;
+    fn rename(&self, params: RenameParams) -> Result<RenameResult, WorkspaceError>;
 
     /// Returns debug information about this workspace.
-    fn rage(&self, params: RageParams) -> Result<RageResult, RomeError>;
+    fn rage(&self, params: RageParams) -> Result<RageResult, WorkspaceError>;
 
     /// Returns information about the server this workspace is connected to or `None` if the workspace isn't connected to a server.
     fn server_info(&self) -> Option<&ServerInfo>;
@@ -416,7 +416,7 @@ pub fn server_sync() -> Arc<dyn Workspace> {
 }
 
 /// Convenience function for constructing a client instance of [Workspace]
-pub fn client<T>(transport: T) -> Result<Box<dyn Workspace>, RomeError>
+pub fn client<T>(transport: T) -> Result<Box<dyn Workspace>, WorkspaceError>
 where
     T: WorkspaceTransport + RefUnwindSafe + Send + Sync + 'static,
 {
@@ -432,19 +432,19 @@ pub struct FileGuard<'app, W: Workspace + ?Sized> {
 }
 
 impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
-    pub fn open(workspace: &'app W, params: OpenFileParams) -> Result<Self, RomeError> {
+    pub fn open(workspace: &'app W, params: OpenFileParams) -> Result<Self, WorkspaceError> {
         let path = params.path.clone();
         workspace.open_file(params)?;
         Ok(Self { workspace, path })
     }
 
-    pub fn get_syntax_tree(&self) -> Result<GetSyntaxTreeResult, RomeError> {
+    pub fn get_syntax_tree(&self) -> Result<GetSyntaxTreeResult, WorkspaceError> {
         self.workspace.get_syntax_tree(GetSyntaxTreeParams {
             path: self.path.clone(),
         })
     }
 
-    pub fn get_control_flow_graph(&self, cursor: TextSize) -> Result<String, RomeError> {
+    pub fn get_control_flow_graph(&self, cursor: TextSize) -> Result<String, WorkspaceError> {
         self.workspace
             .get_control_flow_graph(GetControlFlowGraphParams {
                 path: self.path.clone(),
@@ -452,7 +452,7 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
             })
     }
 
-    pub fn change_file(&self, version: i32, content: String) -> Result<(), RomeError> {
+    pub fn change_file(&self, version: i32, content: String) -> Result<(), WorkspaceError> {
         self.workspace.change_file(ChangeFileParams {
             path: self.path.clone(),
             version,
@@ -464,7 +464,7 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
         &self,
         categories: RuleCategories,
         max_diagnostics: u64,
-    ) -> Result<PullDiagnosticsResult, RomeError> {
+    ) -> Result<PullDiagnosticsResult, WorkspaceError> {
         self.workspace.pull_diagnostics(PullDiagnosticsParams {
             path: self.path.clone(),
             categories,
@@ -472,34 +472,34 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
         })
     }
 
-    pub fn pull_actions(&self, range: TextRange) -> Result<PullActionsResult, RomeError> {
+    pub fn pull_actions(&self, range: TextRange) -> Result<PullActionsResult, WorkspaceError> {
         self.workspace.pull_actions(PullActionsParams {
             path: self.path.clone(),
             range,
         })
     }
 
-    pub fn format_file(&self) -> Result<Printed, RomeError> {
+    pub fn format_file(&self) -> Result<Printed, WorkspaceError> {
         self.workspace.format_file(FormatFileParams {
             path: self.path.clone(),
         })
     }
 
-    pub fn format_range(&self, range: TextRange) -> Result<Printed, RomeError> {
+    pub fn format_range(&self, range: TextRange) -> Result<Printed, WorkspaceError> {
         self.workspace.format_range(FormatRangeParams {
             path: self.path.clone(),
             range,
         })
     }
 
-    pub fn format_on_type(&self, offset: TextSize) -> Result<Printed, RomeError> {
+    pub fn format_on_type(&self, offset: TextSize) -> Result<Printed, WorkspaceError> {
         self.workspace.format_on_type(FormatOnTypeParams {
             path: self.path.clone(),
             offset,
         })
     }
 
-    pub fn fix_file(&self, fix_file_mode: FixFileMode) -> Result<FixFileResult, RomeError> {
+    pub fn fix_file(&self, fix_file_mode: FixFileMode) -> Result<FixFileResult, WorkspaceError> {
         self.workspace.fix_file(FixFileParams {
             path: self.path.clone(),
             fix_file_mode,

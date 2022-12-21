@@ -28,13 +28,13 @@ tracing-appender = "0.2"
 lazy_static = "1.4.0"
 hdrhistogram = { version = "7.5.0", default-features = false }
 crossbeam = "0.8.1"
-thiserror = "1.0.30"
 rayon = "1.5.1"
 serde = { version = "1.0.133", features = ["derive"] }
 serde_json = { version = "1.0.74" }
 tokio = { workspace = true, features = ["io-std", "io-util", "net", "time", "rt","sync", "rt-multi-thread", "macros"] }
 anyhow = "1.0.52"
 dashmap = { workspace = true }
+rome_text_size = { path = "../rome_text_size" }
 
 [target.'cfg(unix)'.dependencies]
 libc = "0.2.127"
