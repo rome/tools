@@ -47,7 +47,6 @@ export default function PlaygroundLoader({
 	const romeOutput = file.rome;
 	const prettierOutput = file.prettier;
 
-	// rome-ignore lint/nursery/useExhaustiveDependencies: dynamic dependencies
 	const codeMirrorExtensions = useMemo(() => {
 		if (isJSONFilename(playgroundState.currentFile)) {
 			return [json()];
@@ -65,14 +64,12 @@ export default function PlaygroundLoader({
 
 	const astPanelCodeMirrorRef = useRef<null | ReactCodeMirrorRef>(null);
 
-	// rome-ignore lint/nursery/useExhaustiveDependencies: dynamic dependencies
 	useEffect(() => {
 		if (clipboardStatus !== "normal") {
 			setClipboardStatus("normal");
 		}
 	}, [romeOutput.formatter.ir]);
 
-	// rome-ignore lint/nursery/useExhaustiveDependencies: dynamic dependencies
 	const onUpdate = useCallback((viewUpdate: ViewUpdate) => {
 		const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
 		setPlaygroundState((state) =>
@@ -127,7 +124,6 @@ export default function PlaygroundLoader({
 		});
 	}, [romeOutput.syntax.ast]);
 
-	// rome-ignore lint/nursery/useExhaustiveDependencies: dynamic dependencies
 	const onChange = useCallback((value: string) => {
 		setPlaygroundState((state) => ({
 			...state,

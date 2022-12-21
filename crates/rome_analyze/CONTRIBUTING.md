@@ -47,49 +47,27 @@ the CI will fail.
 
 Let's say we want to create a new rule called `useAwesomeTricks`, which uses the semantic model.
 
-1. create a new file under `semantic_analyzers/nursery` called `use_awesome_tricks`;
-2. run the cargo alias `cargo codegen analyzer`, this command will update the file called `nursery.rs`
-inside the `semantic_analyzers` folder
-3. from there, use the [`declare_rule`](#declare_rule) macro to create a new type
-   ```rust,ignore
-   use rome_analyze::declare_rule;
+1. run the command
+	```shell
+	> just new-lintrule crates/rome_js_analyze/src/analyzers/nursery myRuleName
+	```
+	Rules go in different folders, and the folder depend on the type of query system your rule
+	will use:
+   - `type Query = Ast<>` -> `analyzers/` folder
+   - `type Query = Semantic<>` -> `semantic_analyzers/` folder
+   - `type Query = SemanticServices` -> `semantic_analyzers/` folder
+   - `type Query = Aria<>` -> `aria_analyzers` folder
+   - `type Query = ControlFlowGraph` -> `analyzers/` folder
 
-   declare_rule! {
-     /// Promotes the use of awesome tricks
-     ///
-     /// ## Examples
-     ///
-     /// ### Invalid
-     ///
-     pub(crate) UseAwesomeTricks {
-         version: "0.10.0",
-         name: "useAwesomeTricks",
-         recommended: false,
-        }
-    }
-   ```
-4. Then you need to use the `Rule` trait to implement the rule on this new created struct
-   ```rust,ignore
-   use rome_analyze::{Rule, RuleCategory};
-   use rome_js_syntax::JsAnyExpression;
-   use rome_analyze::context::RuleContext;
-
-   impl Rule for UseAwesomeTricks {
-        type Query = Semantic<JsAnyExpression>;
-        type State = String;
-        type Signals = Option<Self::State>;
-        type Options = ();
-
-        fn run(ctx: &RuleContext<Self>) -> Self::Signals {}
-   }
-   ```
-5. the `Query` needs to have the `Semantic` type, because we want to have access to the semantic model.
+	The core team will help you out if you don't get the folder right. Using the incorrect folder
+	won't break any code.
+2. the `Query` needs to have the `Semantic` type, because we want to have access to the semantic model.
 `Query` tells the engine on which AST node we want to trigger the rule.
-6. The `State` type doesn't have to be used, so it can be considered optional, but it has
+3. The `State` type doesn't have to be used, so it can be considered optional, but it has
 be defined as `type State = ()`
-7. The `run` function must be implemented. This function is called every time the analyzer
+4. The `run` function must be implemented. This function is called every time the analyzer
 finds a match for the query specified by the rule, and may return zero or more "signals".
-8. Implement the optional `diagnostic` function, to tell the user where's the error and why:
+5. Implement the optional `diagnostic` function, to tell the user where's the error and why:
     ```rust,ignore
     impl Rule for UseAwesomeTricks {
         // .. code
@@ -102,7 +80,7 @@ finds a match for the query specified by the rule, and may return zero or more "
 
     You will have to manually update the file `rome_diagnostics_categories/src/categories.rs` and add a new category
     for the new rule you're about to create.
-9. Implement the optional `action` function, if we are able to provide automatic code fix to the rule:
+6. Implement the optional `action` function, if we are able to provide automatic code fix to the rule:
     ```rust,ignore
     impl Rule for UseAwesomeTricks {
         // .. code

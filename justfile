@@ -8,10 +8,11 @@ codegen:
   cargo codegen-bindings
 
 codegen-linter:
-	  cargo codegen-configuration
-    cargo codegen-schema
-    cargo codegen-bindings
-    cargo lintdoc
+  cargo codegen analyzer
+  cargo codegen-configuration
+  cargo codegen-schema
+  cargo codegen-bindings
+  cargo lintdoc
 
 documentation:
   cargo lintdoc

@@ -350,6 +350,10 @@ export interface Nursery {
 	 */
 	noNonNullAssertion?: RuleConfiguration;
 	/**
+	 * Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.
+	 */
+	noNoninteractiveElementToInteractiveRole?: RuleConfiguration;
+	/**
 	 * Disallow literal numbers that lose precision
 	 */
 	noPrecisionLoss?: RuleConfiguration;
@@ -782,6 +786,7 @@ export type Category =
 	| "lint/nursery/useMediaCaption"
 	| "lint/nursery/useIframeTitle"
 	| "lint/nursery/useNumericLiterals"
+	| "lint/nursery/noNoninteractiveElementToInteractiveRole"
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useHookAtTopLevel"
 	| "lint/performance/noDelete"
