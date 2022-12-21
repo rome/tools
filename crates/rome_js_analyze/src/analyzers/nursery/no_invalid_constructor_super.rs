@@ -15,13 +15,15 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// class A extends B {
-    ///     constructor() {}
+    /// class A {
+    ///     constructor() {
+    ///         super();
+    ///     }
     /// }
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// class A {
+    /// class A extends undefined {
     ///     constructor() {
     ///         super();
     ///     }
@@ -52,7 +54,6 @@ declare_rule! {
 }
 
 pub(crate) enum NoInvalidConstructorSuperState {
-    MissingSuper(TextRange),
     UnexpectedSuper(TextRange),
     BadExtends {
         extends_range: TextRange,
@@ -63,7 +64,6 @@ pub(crate) enum NoInvalidConstructorSuperState {
 impl NoInvalidConstructorSuperState {
     fn range(&self) -> &TextRange {
         match self {
-            NoInvalidConstructorSuperState::MissingSuper(range) => range,
             NoInvalidConstructorSuperState::UnexpectedSuper(range) => range,
             NoInvalidConstructorSuperState::BadExtends { super_range, .. } => super_range,
         }
@@ -71,9 +71,6 @@ impl NoInvalidConstructorSuperState {
 
     fn message(&self) -> MarkupBuf {
         match self {
-            NoInvalidConstructorSuperState::MissingSuper(_) => {
-                (markup! { "This class extends another class and a "<Emphasis>"super()"</Emphasis>" call is expected." }).to_owned()
-            }
             NoInvalidConstructorSuperState::UnexpectedSuper(_) => {
                 (markup! { "This class should not have a "<Emphasis>"super()"</Emphasis>" call. You should remove it." }).to_owned()
             }
@@ -132,16 +129,6 @@ impl Rule for NoInvalidConstructorSuper {
                     } else {
                         None
                     }
-                } else {
-                    None
-                }
-            }
-            (None, Some(extends_clause)) => {
-                let super_class = extends_clause.super_class().ok()?;
-                if !matches!(super_class, AnyJsExpression::AnyJsLiteralExpression(_,)) {
-                    Some(NoInvalidConstructorSuperState::MissingSuper(
-                        extends_clause.syntax().text_trimmed_range(),
-                    ))
                 } else {
                     None
                 }

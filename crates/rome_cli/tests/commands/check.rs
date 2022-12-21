@@ -65,9 +65,7 @@ const JS_ERRORS_AFTER: &str = "try {
 }
 ";
 
-const UPGRADE_SEVERITY_CODE: &str = r#"class A extends B {
-    constructor() {}
-}"#;
+const UPGRADE_SEVERITY_CODE: &str = r#"if(!cond) { exprA(); } else { exprB() }"#;
 
 const NURSERY_UNSTABLE: &str = r#"if(a = b) {}"#;
 
@@ -579,16 +577,19 @@ fn upgrade_severity() {
 
     let messages = &console.out_buffer;
 
+    let error_count = messages
+        .iter()
+        .filter(|m| m.level == LogLevel::Error)
+        .filter(|m| {
+            let content = format!("{:?}", m.content);
+            content.contains("style/noNegationElse")
+        })
+        .count();
+
     assert_eq!(
-        messages
-            .iter()
-            .filter(|m| m.level == LogLevel::Error)
-            .filter(|m| {
-                let content = format!("{:?}", m.content);
-                content.contains("nursery/noInvalidConstructorSuper")
-            })
-            .count(),
-        1
+        error_count, 1,
+        "expected 1 error-level message in console buffer, found {error_count:?}:\n{:?}",
+        console.out_buffer
     );
 
     assert_cli_snapshot(SnapshotPayload::new(

@@ -145,8 +145,8 @@ pub const CONFIG_LINTER_UPGRADE_DIAGNOSTIC: &str = r#"{
   "linter": {
     "rules": {
         "recommended": true,
-        "nursery": {
-            "noInvalidConstructorSuper": "error"
+        "style": {
+            "noNegationElse": "error"
         }
     }
   }

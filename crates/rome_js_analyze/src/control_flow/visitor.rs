@@ -174,25 +174,19 @@ impl rome_analyze::NodeVisitor<ControlFlowVisitor> for FunctionVisitor {
     type Node = AnyJsControlFlowRoot;
 
     fn enter(
-        _: Self::Node,
+        node: Self::Node,
         _: &mut VisitorContext<JsLanguage>,
         _: &mut ControlFlowVisitor,
     ) -> Self {
         Self {
-            builder: Some(FunctionBuilder::default()),
+            builder: Some(FunctionBuilder::new(node.into_syntax())),
         }
     }
 
-    fn exit(
-        self,
-        node: Self::Node,
-        ctx: &mut VisitorContext<JsLanguage>,
-        _: &mut ControlFlowVisitor,
-    ) {
+    fn exit(self, _: Self::Node, ctx: &mut VisitorContext<JsLanguage>, _: &mut ControlFlowVisitor) {
         if let Some(builder) = self.builder {
             ctx.match_query(ControlFlowGraph {
                 graph: builder.finish(),
-                range: node.syntax().text_trimmed_range(),
             });
         }
     }

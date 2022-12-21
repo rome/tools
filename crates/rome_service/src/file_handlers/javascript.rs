@@ -14,8 +14,8 @@ use crate::{
 };
 use indexmap::IndexSet;
 use rome_analyze::{
-    AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Never, RegistryVisitor,
-    RuleCategories, RuleCategory, RuleFilter, RuleGroup,
+    AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Never, QueryMatch,
+    RegistryVisitor, RuleCategories, RuleCategory, RuleFilter, RuleGroup,
 };
 use rome_diagnostics::{category, Applicability, Diagnostic, DiagnosticExt, Severity};
 use rome_formatter::{FormatError, Printed};
@@ -145,7 +145,7 @@ fn debug_control_flow(rome_path: &RomePath, parse: AnyParse, cursor: TextSize) -
 
     let filter = AnalysisFilter {
         categories: RuleCategories::LINT,
-        enabled_rules: Some(&[RuleFilter::Rule("js", "noDeadCode")]),
+        enabled_rules: Some(&[RuleFilter::Rule("correctness", "noUnreachable")]),
         ..AnalysisFilter::default()
     };
     let options = AnalyzerOptions::default();
@@ -160,17 +160,18 @@ fn debug_control_flow(rome_path: &RomePath, parse: AnyParse, cursor: TextSize) -
                 _ => return,
             };
 
-            if !cfg.range.contains(cursor) {
+            let range = cfg.text_range();
+            if !range.contains(cursor) {
                 return;
             }
 
             match &control_flow_graph {
                 None => {
-                    control_flow_graph = Some((cfg.graph.to_string(), cfg.range));
+                    control_flow_graph = Some((cfg.graph.to_string(), range));
                 }
                 Some((_, prev_range)) => {
-                    if cfg.range.len() < prev_range.len() {
-                        control_flow_graph = Some((cfg.graph.to_string(), cfg.range));
+                    if range.len() < prev_range.len() {
+                        control_flow_graph = Some((cfg.graph.to_string(), range));
                     }
                 }
             }

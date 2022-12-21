@@ -769,6 +769,8 @@ struct NurserySchema {
     no_setter_return: Option<RuleConfiguration>,
     #[doc = "Disallow comparison of expressions modifying the string case with non-compliant value."]
     no_string_case_mismatch: Option<RuleConfiguration>,
+    #[doc = "Ensures the super() constructor is called exactly once on every code path in a class constructor before this is accessed if the class has a superclass"]
+    no_unreachable_super: Option<RuleConfiguration>,
     #[doc = "Disallow control flow statements in finally blocks."]
     no_unsafe_finally: Option<RuleConfiguration>,
     #[doc = "Disallow useless case in switch statements."]
@@ -838,6 +840,7 @@ impl Nursery {
         "noSelfCompare",
         "noSetterReturn",
         "noStringCaseMismatch",
+        "noUnreachableSuper",
         "noUnsafeFinally",
         "noUselessSwitchCase",
         "noVar",
@@ -879,6 +882,7 @@ impl Nursery {
         "noSelfCompare",
         "noSetterReturn",
         "noStringCaseMismatch",
+        "noUnreachableSuper",
         "noUnsafeFinally",
         "noUselessSwitchCase",
         "noVar",
@@ -921,13 +925,13 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[25]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[26]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[27]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[29]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[31]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[28]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[30]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[32]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[33]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[34]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[35]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[38]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[36]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[39]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[40]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[41]),

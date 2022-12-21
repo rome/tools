@@ -378,6 +378,10 @@ export interface Nursery {
 	 */
 	noStringCaseMismatch?: RuleConfiguration;
 	/**
+	 * Ensures the super() constructor is called exactly once on every code path in a class constructor before this is accessed if the class has a superclass
+	 */
+	noUnreachableSuper?: RuleConfiguration;
+	/**
 	 * Disallow control flow statements in finally blocks.
 	 */
 	noUnsafeFinally?: RuleConfiguration;
@@ -758,6 +762,7 @@ export type Category =
 	| "lint/nursery/noSelfCompare"
 	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
+	| "lint/nursery/noUnreachableSuper"
 	| "lint/nursery/noUnsafeFinally"
 	| "lint/nursery/noUselessSwitchCase"
 	| "lint/nursery/noVar"

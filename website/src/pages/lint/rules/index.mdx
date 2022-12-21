@@ -616,6 +616,14 @@ Disallow returning a value from a setter
 Disallow comparison of expressions modifying the string case with non-compliant value.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noUnreachableSuper">
+	<a href="/lint/rules/noUnreachableSuper">noUnreachableSuper</a>
+</h3>
+Ensures the <code>super()</code> constructor is called exactly once on every code
+path in a class constructor before <code>this</code> is accessed if the class has
+a superclass
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noUnsafeFinally">
 	<a href="/lint/rules/noUnsafeFinally">noUnsafeFinally</a>
 </h3>
