@@ -2,7 +2,7 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{JsSyntaxToken, TsEnumDeclaration};
+use rome_js_syntax::TsEnumDeclaration;
 use rome_rowan::{AstNode, BatchMutationExt};
 
 use crate::JsRuleAction;
@@ -44,13 +44,13 @@ declare_rule! {
 
 impl Rule for NoConstEnum {
     type Query = Ast<TsEnumDeclaration>;
-    type State = JsSyntaxToken;
+    type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let enum_decl = ctx.query();
-        enum_decl.const_token()
+        enum_decl.const_token().and(Some(()))
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
@@ -68,9 +68,25 @@ impl Rule for NoConstEnum {
         }))
     }
 
-    fn action(ctx: &RuleContext<Self>, const_token: &Self::State) -> Option<JsRuleAction> {
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let enum_decl = ctx.query();
         let mut mutation = ctx.root().begin();
-        mutation.remove_token(const_token.to_owned());
+        let const_token = enum_decl.const_token()?;
+        let enum_token = enum_decl.enum_token().ok()?;
+        let transferred_trivia = const_token
+            .leading_trivia()
+            .pieces()
+            .chain(
+                const_token
+                    .trailing_trivia()
+                    .pieces()
+                    .skip_while(|x| x.is_whitespace() || x.is_whitespace()),
+            )
+            .chain(enum_token.leading_trivia().pieces())
+            .collect::<Vec<_>>();
+        let new_enum_token = enum_token.with_leading_trivia_pieces(transferred_trivia);
+        mutation.remove_token(const_token);
+        mutation.replace_token_discard_trivia(enum_token, new_enum_token);
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::Always,
