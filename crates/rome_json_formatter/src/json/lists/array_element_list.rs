@@ -82,12 +82,6 @@ pub(crate) fn can_concisely_print_array_list(list: &JsonArrayElementList) -> boo
         return false;
     }
 
-    // list.elements().all(|item| match item.into_node() {
-    //     Ok(rome_json_syntax::AnyJsonValue::JsonArrayValue(_)) => false,
-    //     Ok(rome_json_syntax::AnyJsonValue::JsonObjectValue(_)) => false,
-    //     Ok(rome_json_syntax::AnyJsonValue::JsonBogusValue(_)) => false,
-    //     _ => {true}
-    // })
     list.iter().all(|node| {
         matches!(
             node,
