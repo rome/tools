@@ -278,7 +278,7 @@ fn apply_suggested_error() {
         &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
-            OsString::from("--apply-suggested"),
+            OsString::from("--apply-unsafe"),
             OsString::from("--apply"),
             file_path.as_os_str().into(),
         ]),
@@ -308,7 +308,7 @@ fn apply_suggested() {
         &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
-            OsString::from("--apply-suggested"),
+            OsString::from("--apply-unsafe"),
             file_path.as_os_str().into(),
         ]),
     );

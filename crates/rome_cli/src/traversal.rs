@@ -569,7 +569,7 @@ fn process_messages(options: ProcessMessagesOptions) {
     if mode.is_check() && total_skipped_suggested_fixes > 0 {
         console.log(markup! {
             <Warn>"Skipped "{total_skipped_suggested_fixes}" suggested fixes.\n"</Warn>
-            <Info>"If you wish to apply the suggested fixes, use the command "<Emphasis>"rome check --apply-suggested\n"</Emphasis></Info>
+            <Info>"If you wish to apply the suggested (unsafe) fixes, use the command "<Emphasis>"rome check --apply-unsafe\n"</Emphasis></Info>
         })
     }
 
