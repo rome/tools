@@ -7,6 +7,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstSeparatedList, AstSeparatedListNodesIterator, SyntaxError};
 use std::collections::VecDeque;
+use std::iter::FusedIterator;
 
 declare_rule! {
     /// Put your description here
@@ -33,39 +34,47 @@ declare_rule! {
     }
 }
 
+/// Convenient type to map assignments that have similar arms
 #[derive(Debug, Clone)]
-enum LeftRightKind {
+enum AnyAssignmentLike {
+    /// No assignments
     None,
+    /// To track assignments like
+    /// ```js
+    /// a = a
+    /// ```
     Identifiers {
         left: JsIdentifierAssignment,
         right: JsReferenceIdentifier,
     },
-
+    /// To track assignments like
+    /// ```js
+    /// [a] = [a]
+    /// ```
     Arrays {
         left: AstSeparatedListNodesIterator<JsLanguage, AnyJsArrayAssignmentPatternElement>,
         right: AstSeparatedListNodesIterator<JsLanguage, AnyJsArrayElement>,
     },
-
+    /// To track assignments like
+    /// ```js
+    /// {a} = {a}
+    /// ```
     Object {
         left: AstSeparatedListNodesIterator<JsLanguage, AnyJsObjectAssignmentPatternMember>,
         right: AstSeparatedListNodesIterator<JsLanguage, AnyJsObjectMember>,
     },
 }
 
-impl LeftRightKind {
-    const fn is_none(&self) -> bool {
-        matches!(self, LeftRightKind::None)
-    }
-
+impl AnyAssignmentLike {
     const fn has_sub_structures(&self) -> bool {
         matches!(
             self,
-            LeftRightKind::Arrays { .. } | LeftRightKind::Object { .. }
+            AnyAssignmentLike::Arrays { .. } | AnyAssignmentLike::Object { .. }
         )
     }
 }
 
-impl TryFrom<(AnyJsAssignmentPattern, AnyJsExpression)> for LeftRightKind {
+impl TryFrom<(AnyJsAssignmentPattern, AnyJsExpression)> for AnyAssignmentLike {
     type Error = SyntaxError;
 
     fn try_from(
@@ -75,7 +84,7 @@ impl TryFrom<(AnyJsAssignmentPattern, AnyJsExpression)> for LeftRightKind {
             (
                 AnyJsAssignmentPattern::JsArrayAssignmentPattern(left),
                 AnyJsExpression::JsArrayExpression(right),
-            ) => LeftRightKind::Arrays {
+            ) => AnyAssignmentLike::Arrays {
                 left: left.elements().iter(),
                 right: right.elements().iter(),
             },
@@ -83,7 +92,7 @@ impl TryFrom<(AnyJsAssignmentPattern, AnyJsExpression)> for LeftRightKind {
             (
                 AnyJsAssignmentPattern::JsObjectAssignmentPattern(left),
                 AnyJsExpression::JsObjectExpression(right),
-            ) => LeftRightKind::Object {
+            ) => AnyAssignmentLike::Object {
                 left: left.properties().iter(),
                 right: right.members().iter(),
             },
@@ -93,28 +102,32 @@ impl TryFrom<(AnyJsAssignmentPattern, AnyJsExpression)> for LeftRightKind {
                     left,
                 )),
                 AnyJsExpression::JsIdentifierExpression(right),
-            ) => LeftRightKind::Identifiers {
+            ) => AnyAssignmentLike::Identifiers {
                 left,
                 right: right.name()?,
             },
 
-            _ => LeftRightKind::None,
+            _ => AnyAssignmentLike::None,
         })
     }
 }
 
-struct Identifiers {
-    current_pair: LeftRightKind,
-    pair_queue: VecDeque<LeftRightKind>,
+/// Convenient type to loop though all the identifiers that can be found
+/// inside an assignment expression.
+struct SameIdentifiers {
+    /// To current assignment like that is being inspected
+    current_assignment_like: AnyAssignmentLike,
+    /// A queue of assignments that are inspected during the traversal
+    assignment_queue: VecDeque<AnyAssignmentLike>,
 }
 
-impl Iterator for Identifiers {
+impl Iterator for SameIdentifiers {
     type Item = (JsIdentifierAssignment, JsReferenceIdentifier);
 
     fn next(&mut self) -> Option<Self::Item> {
         loop {
-            let new_pair = match &mut self.current_pair {
-                LeftRightKind::Arrays { left, right } => {
+            let new_assignment_like = match &mut self.current_assignment_like {
+                AnyAssignmentLike::Arrays { left, right } => {
                     if let (Some(left_element), Some(right_element)) = (left.next(), right.next()) {
                         let left_element = left_element.ok()?;
                         let right_element = right_element.ok()?;
@@ -125,21 +138,22 @@ impl Iterator for Identifiers {
                                 AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(left),
                                 AnyJsArrayElement::AnyJsExpression(right),
                             ) => {
-                                let new_pair = LeftRightKind::try_from((left, right)).ok()?;
+                                let new_pair = AnyAssignmentLike::try_from((left, right)).ok()?;
                                 // In case we have nested array/object structures, we save the current
                                 // pair and we restore it once this iterator is consumed
                                 if new_pair.has_sub_structures() {
-                                    self.pair_queue.push_back(self.current_pair.clone());
+                                    self.assignment_queue
+                                        .push_back(self.current_assignment_like.clone());
                                 }
                                 new_pair
                             }
-                            _ => LeftRightKind::None,
+                            _ => AnyAssignmentLike::None,
                         }
                     } else {
-                        LeftRightKind::None
+                        AnyAssignmentLike::None
                     }
                 }
-                LeftRightKind::Object { left, right } => {
+                AnyAssignmentLike::Object { left, right } => {
                     if let (Some(left_element), Some(right_element)) = (left.next(), right.next()) {
                         let left_element = left_element.ok()?;
                         let right_element = right_element.ok()?;
@@ -153,7 +167,7 @@ impl Iterator for Identifiers {
                                 ),
                                 AnyJsObjectMember::JsShorthandPropertyObjectMember(right)
                             ) => {
-                                LeftRightKind::Identifiers {
+                                AnyAssignmentLike::Identifiers {
                                     left: left.identifier().ok()?, right: right.name().ok()?
                                 }
                             }
@@ -172,55 +186,75 @@ impl Iterator for Identifiers {
                                         ),
                                         AnyJsExpression::JsIdentifierExpression(right)
                                     ) => {
-                                        LeftRightKind::Identifiers {
+                                        AnyAssignmentLike::Identifiers {
                                             left,
                                             right: right.name().ok()?
                                         }
 
                                     }
-                                    // (
-                                    //     AnyJsAssignmentPattern::JsArrayAssignmentPattern(left),
-                                    //     AnyJsExpression::JsArrayExpression(right)
-                                    // ) => {
-                                        // LeftRightKind::Arrays {
-                                        //     left: left.elements().iter(),
-                                        //     right: right.elements().iter()
-                                        // }
-                                    // }
-                                    _ => LeftRightKind::None
+                                    // matches {a: [b]} = {a: [b]}
+                                    (
+                                        AnyJsAssignmentPattern::JsArrayAssignmentPattern(left),
+                                        AnyJsExpression::JsArrayExpression(right)
+                                    ) => {
+                                        self.assignment_queue.push_back(self.current_assignment_like.clone());
+                                        AnyAssignmentLike::Arrays {
+                                            left: left.elements().iter(),
+                                            right: right.elements().iter()
+                                        }
+                                    }
+                                    // matches {a: {b}} = {a: {b}}
+                                    (
+                                        AnyJsAssignmentPattern::JsObjectAssignmentPattern(left),
+                                        AnyJsExpression::JsObjectExpression(right)
+                                    ) => {
+                                        self.assignment_queue.push_back(self.current_assignment_like.clone());
+                                        AnyAssignmentLike::Object {
+                                            left: left.properties().iter(),
+                                            right: right.members().iter()
+                                        }
+                                    }
+                                    _ => AnyAssignmentLike::None
                                 }
                             }
-
-
                             _ => {
-                                LeftRightKind::None
+                                AnyAssignmentLike::None
                             },
                         }
                     } else {
-                        LeftRightKind::None
+                        AnyAssignmentLike::None
                     }
                 }
-                _ => self.current_pair.clone(),
+                _ => self.current_assignment_like.clone(),
             };
 
-            if self.pair_queue.is_empty() {
-                self.current_pair = LeftRightKind::None;
+            // if the queue is empty, we set the current assignment to `None`,
+            // so the next iteration will stop
+            if self.assignment_queue.is_empty() {
+                self.current_assignment_like = AnyAssignmentLike::None;
             }
-            match new_pair {
-                LeftRightKind::None => {
-                    if let Some(pair) = self.pair_queue.pop_front() {
-                        self.current_pair = pair;
+            match new_assignment_like {
+                // if we are here, it's plausible that we consumed the current iterator and we have to
+                // resume the previous one
+                AnyAssignmentLike::None => {
+                    // we still have assignments like to complete, so we continue the loop
+                    if let Some(pair) = self.assignment_queue.pop_front() {
+                        self.current_assignment_like = pair;
                         continue;
+                    // the queue is empty
                     } else {
                         return None;
                     }
                 }
-                LeftRightKind::Identifiers { left, right } => {
+                AnyAssignmentLike::Identifiers { left, right } => {
                     return Some((left, right));
                 }
-                LeftRightKind::Object { .. } | LeftRightKind::Arrays { .. } => {
-                    self.pair_queue.push_back(self.current_pair.clone());
-                    self.current_pair = new_pair;
+                // we have a sub structure, which means we queue the current assignment,
+                // and inspect the sub structure
+                AnyAssignmentLike::Object { .. } | AnyAssignmentLike::Arrays { .. } => {
+                    self.assignment_queue
+                        .push_back(self.current_assignment_like.clone());
+                    self.current_assignment_like = new_assignment_like;
                     continue;
                 }
             }
@@ -228,7 +262,10 @@ impl Iterator for Identifiers {
     }
 }
 
-fn track_same_identifiers(
+impl FusedIterator for SameIdentifiers {}
+
+/// Checks if the left identifier and the right reference have the same name
+fn with_same_identifiers(
     left: &JsIdentifierAssignment,
     right: &JsReferenceIdentifier,
 ) -> Option<(JsIdentifierAssignment, JsReferenceIdentifier)> {
@@ -241,64 +278,21 @@ fn track_same_identifiers(
     None
 }
 
-fn compare_self(
-    pair_kind: LeftRightKind,
-    incorrect_bindings: &mut Vec<(JsIdentifierAssignment, JsReferenceIdentifier)>,
+/// It traverses an [AnyAssignmentLike] and tracks the identifiers that have the same name
+fn compare_assignment_like(
+    pair_kind: AnyAssignmentLike,
+    incorrect_identifiers: &mut Vec<(JsIdentifierAssignment, JsReferenceIdentifier)>,
 ) {
-    let mut identifiers = Identifiers {
-        current_pair: pair_kind.clone(),
-        pair_queue: VecDeque::new(),
+    let mut same_identifiers = SameIdentifiers {
+        current_assignment_like: pair_kind.clone(),
+        assignment_queue: VecDeque::new(),
     };
 
-    while let Some((left, right)) = identifiers.next() {
-        if let Some(pair) = track_same_identifiers(&left, &right) {
-            incorrect_bindings.push(pair);
+    while let Some((left, right)) = same_identifiers.next() {
+        if let Some(pair) = with_same_identifiers(&left, &right) {
+            incorrect_identifiers.push(pair);
         }
     }
-
-    // 'outer: loop {
-    //     match (inner_left, inner_right) {
-    //         (Some(inner_left), Some(inner_right)) => match (&outer_left, &outer_right) {
-    //             (
-    //                 AnyJsAssignmentPattern::JsArrayAssignmentPattern(left),
-    //                 AnyJsExpression::JsArrayExpression(right),
-    //             ) => {
-    //                 let mut left_elements = left.elements().iter();
-    //                 let mut right_elements = right.elements().iter();
-    //
-    //                 'inner: while let (Some(left_element), Some(right_element)) =
-    //                     (left_elements.next(), right_elements.next())
-    //                 {
-    //                     let left_element = left_element.ok();
-    //                     let right_element = right_element.ok();
-    //
-    //                     match (left_element, right_element) {
-    //                         (
-    //                             Some(AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(
-    //                                 left,
-    //                             )),
-    //                             Some(AnyJsArrayElement::AnyJsExpression(right)),
-    //                         ) => {
-    //                             if let Some((left, right)) = track_same_identifiers(&left, &right) {
-    //                                 incorrect_bindings.push((left, right));
-    //                             }
-    //                             continue 'inner;
-    //                         }
-    //
-    //                         _ => break,
-    //                     }
-    //                 }
-    //             }
-    //             _ => {}
-    //         },
-    //         (None, None) => {
-    //             if let Some(result) = track_same_identifiers(&outer_left, &outer_right) {
-    //                 incorrect_bindings.push(result);
-    //             }
-    //         }
-    //         _ => unreachable!("inner_left and inner_right need to have the same Option value"),
-    //     }
-    // }
 }
 
 impl Rule for NoSelfAssignment {
@@ -324,8 +318,8 @@ impl Rule for NoSelfAssignment {
             ) {
                 match (left, right) {
                     (Some(left), Some(right)) => {
-                        if let Ok(pair) = LeftRightKind::try_from((left, right)) {
-                            compare_self(pair, &mut state);
+                        if let Ok(pair) = AnyAssignmentLike::try_from((left, right)) {
+                            compare_assignment_like(pair, &mut state);
                         }
                     }
                     _ => {}
