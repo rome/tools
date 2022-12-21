@@ -406,10 +406,6 @@ export interface Nursery {
 	 */
 	useAriaPropTypes?: RuleConfiguration;
 	/**
-	 * Ensures that ARIA properties aria-* are all valid.
-	 */
-	useAriaProps?: RuleConfiguration;
-	/**
 	 * Enforce that elements with ARIA roles must have all required ARIA attributes for that role.
 	 */
 	useAriaPropsForRole?: RuleConfiguration;
@@ -457,6 +453,10 @@ export interface Nursery {
 	 * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
 	 */
 	useNumericLiterals?: RuleConfiguration;
+	/**
+	 * Ensures that ARIA properties aria-* are all valid.
+	 */
+	useValidAriaProps?: RuleConfiguration;
 	/**
 	 * Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.
 	 */
@@ -766,7 +766,7 @@ export type Category =
 	| "lint/nursery/useDefaultParameterLast"
 	| "lint/nursery/useDefaultSwitchClauseLast"
 	| "lint/nursery/useEnumInitializers"
-	| "lint/nursery/useAriaProps"
+	| "lint/nursery/useValidAriaProps"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useExponentiationOperator"
 	| "lint/nursery/useIsNan"

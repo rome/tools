@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-expression: useAriaProps.jsx
+expression: useValidAriaProps.jsx
 ---
 # Input
 ```js
@@ -24,7 +24,7 @@ var a = <input type="text" aria-errormessage="foobar" />;
 
 # Diagnostics
 ```
-useAriaProps.jsx:2:9 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidAriaProps.jsx:2:9 lint/nursery/useValidAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The element contains invalid ARIA attribute(s)
   
@@ -46,7 +46,7 @@ useAriaProps.jsx:2:9 lint/nursery/useAriaProps ━━━━━━━━━━━
 ```
 
 ```
-useAriaProps.jsx:3:9 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidAriaProps.jsx:3:9 lint/nursery/useValidAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The element contains invalid ARIA attribute(s)
   
@@ -70,7 +70,7 @@ useAriaProps.jsx:3:9 lint/nursery/useAriaProps ━━━━━━━━━━━
 ```
 
 ```
-useAriaProps.jsx:4:9 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidAriaProps.jsx:4:9 lint/nursery/useValidAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The element contains invalid ARIA attribute(s)
   
@@ -94,7 +94,7 @@ useAriaProps.jsx:4:9 lint/nursery/useAriaProps ━━━━━━━━━━━
 ```
 
 ```
-useAriaProps.jsx:5:9 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidAriaProps.jsx:5:9 lint/nursery/useValidAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The element contains invalid ARIA attribute(s)
   
@@ -118,7 +118,7 @@ useAriaProps.jsx:5:9 lint/nursery/useAriaProps ━━━━━━━━━━━
 ```
 
 ```
-useAriaProps.jsx:6:9 lint/nursery/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidAriaProps.jsx:6:9 lint/nursery/useValidAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The element contains invalid ARIA attribute(s)
   

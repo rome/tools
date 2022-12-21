@@ -22,14 +22,14 @@ declare_rule! {
     ///
     /// ## Accessibility guidelines
     /// - [WCAG 4.1.2](https://www.w3.org/WAI/WCAG21/Understanding/name-role-value)
-    pub(crate) UseAriaProps {
+    pub(crate) UseValidAriaProps {
         version: "12.0.0",
-        name: "useAriaProps",
+        name: "useValidAriaProps",
         recommended: true,
     }
 }
 
-impl Rule for UseAriaProps {
+impl Rule for UseValidAriaProps {
     type Query = Aria<AnyJsxElement>;
     type State = Vec<(TextRange, String)>;
     type Signals = Option<Self::State>;

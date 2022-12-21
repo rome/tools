@@ -903,17 +903,6 @@
             }
           ]
         },
-        "useAriaProps": {
-          "description": "Ensures that ARIA properties aria-* are all valid.",
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "useAriaPropsForRole": {
           "description": "Enforce that elements with ARIA roles must have all required ARIA attributes for that role.",
           "anyOf": [
@@ -1037,6 +1026,17 @@
         },
         "useNumericLiterals": {
           "description": "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useValidAriaProps": {
+          "description": "Ensures that ARIA properties aria-* are all valid.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
