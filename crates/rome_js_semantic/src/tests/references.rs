@@ -227,8 +227,24 @@ assert_semantics! {
         "class C { static { () => a/*READ A*/; let a/*#A*/ = 1; } };",
 }
 
-// Typescript types
+// Static Initialization Block
+assert_semantics! {
+    ok_reference_static_initialization_block,
+        "const a/*#A1*/ = 1;
+        console.log(a/*READ A1*/); 
+        
+        class A { 
+            static {
+                console.log(a/*READ A2*/);  
+                const a/*#A2*/ = 2; 
+                console.log(a/*READ A2*/); 
+            }  
+        };
+        
+        console.log(a/*READ A1*/);",
+}
 
+// Typescript types
 assert_semantics! {
     ok_typescript_function_type,
         "function f (a/*#A1*/, b: (a/*#A2*/) => any) { return b(a/*READ A1*/); };",

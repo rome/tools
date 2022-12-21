@@ -13,7 +13,7 @@ use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use rome_service::workspace::{FeatureName, PullDiagnosticsParams, SupportsFeatureParams};
 use rome_service::workspace::{RageEntry, RageParams, RageResult, UpdateSettingsParams};
 use rome_service::{load_config, Workspace};
-use rome_service::{DynRef, RomeError};
+use rome_service::{DynRef, WorkspaceError};
 use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::Arc;
@@ -115,13 +115,13 @@ impl Session {
     /// Get a [`Document`] matching the provided [`lsp_types::Url`]
     ///
     /// If document does not exist, result is [SessionError::DocumentNotFound]
-    pub(crate) fn document(&self, url: &lsp_types::Url) -> Result<Document, RomeError> {
+    pub(crate) fn document(&self, url: &lsp_types::Url) -> Result<Document, WorkspaceError> {
         self.documents
             .read()
             .unwrap()
             .get(url)
             .cloned()
-            .ok_or(RomeError::NotFound)
+            .ok_or(WorkspaceError::NotFound)
     }
 
     /// Set the [`Document`] for the provided [`lsp_types::Url`]

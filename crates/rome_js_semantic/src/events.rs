@@ -290,6 +290,7 @@ impl SemanticEventExtractor {
             | JS_CLASS_EXPORT_DEFAULT_DECLARATION
             | JS_CLASS_EXPRESSION
             | JS_FUNCTION_BODY
+            | JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER
             | TS_MODULE_DECLARATION
             | TS_INTERFACE_DECLARATION
             | TS_ENUM_DECLARATION
@@ -557,6 +558,7 @@ impl SemanticEventExtractor {
             | JS_FOR_IN_STATEMENT
             | JS_SWITCH_STATEMENT
             | JS_CATCH_CLAUSE
+            | JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER
             | TS_DECLARE_FUNCTION_DECLARATION
             | TS_FUNCTION_TYPE
             | TS_INTERFACE_DECLARATION

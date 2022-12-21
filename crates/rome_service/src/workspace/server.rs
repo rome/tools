@@ -10,7 +10,7 @@ use crate::workspace::{RageEntry, RageParams, RageResult, ServerInfo, SupportsFe
 use crate::{
     file_handlers::Features,
     settings::{SettingsHandle, WorkspaceSettings},
-    RomeError, Rules, Workspace,
+    Rules, Workspace, WorkspaceError,
 };
 use dashmap::{mapref::entry::Entry, DashMap};
 use indexmap::IndexSet;
@@ -19,6 +19,7 @@ use rome_diagnostics::{serde::Diagnostic as SerdeDiagnostic, Diagnostic, Diagnos
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_parser::AnyParse;
+use std::ffi::OsStr;
 use std::{panic::RefUnwindSafe, sync::RwLock};
 
 pub(super) struct WorkspaceServer {
@@ -78,7 +79,10 @@ impl WorkspaceServer {
     }
 
     /// Return an error factory function for unsupported features at a given path
-    fn build_capability_error<'a>(&'a self, path: &'a RomePath) -> impl FnOnce() -> RomeError + 'a {
+    fn build_capability_error<'a>(
+        &'a self,
+        path: &'a RomePath,
+    ) -> impl FnOnce() -> WorkspaceError + 'a {
         move || {
             let language_hint = self
                 .documents
@@ -87,7 +91,15 @@ impl WorkspaceServer {
                 .unwrap_or_default();
 
             let language = Features::get_language(path).or(language_hint);
-            RomeError::SourceFileNotSupported(language, path.clone())
+            WorkspaceError::SourceFileNotSupported {
+                language,
+                path: path.clone().display().to_string(),
+                extension: path
+                    .clone()
+                    .extension()
+                    .and_then(OsStr::to_str)
+                    .map(|s| s.to_string()),
+            }
         }
     }
 
@@ -108,7 +120,7 @@ impl WorkspaceServer {
         &self,
         rome_path: RomePath,
         feature: Option<FeatureName>,
-    ) -> Result<AnyParse, RomeError> {
+    ) -> Result<AnyParse, WorkspaceError> {
         let ignored = if let Some(feature) = feature {
             self.is_file_ignored(&rome_path, &feature)
         } else {
@@ -116,7 +128,7 @@ impl WorkspaceServer {
         };
 
         if ignored {
-            return Err(RomeError::FileIgnored(format!(
+            return Err(WorkspaceError::FileIgnored(format!(
                 "{}",
                 rome_path.to_path_buf().display()
             )));
@@ -126,7 +138,10 @@ impl WorkspaceServer {
             Entry::Occupied(entry) => Ok(entry.get().clone()),
             Entry::Vacant(entry) => {
                 let rome_path = entry.key();
-                let document = self.documents.get(rome_path).ok_or(RomeError::NotFound)?;
+                let document = self
+                    .documents
+                    .get(rome_path)
+                    .ok_or(WorkspaceError::NotFound)?;
 
                 let capabilities = self.get_capabilities(rome_path);
                 let parse = capabilities
@@ -143,8 +158,8 @@ impl WorkspaceServer {
 
                 let size = document.content.as_bytes().len();
                 if size >= size_limit {
-                    return Err(RomeError::FileTooLarge {
-                        path: rome_path.to_path_buf(),
+                    return Err(WorkspaceError::FileTooLarge {
+                        path: rome_path.to_path_buf().display().to_string(),
                         size,
                         limit: size_limit,
                     });
@@ -193,7 +208,7 @@ impl Workspace for WorkspaceServer {
     fn supports_feature(
         &self,
         params: SupportsFeatureParams,
-    ) -> Result<SupportsFeatureResult, RomeError> {
+    ) -> Result<SupportsFeatureResult, WorkspaceError> {
         let capabilities = self.get_capabilities(&params.path);
         let settings = self.settings.read().unwrap();
         let is_ignored = self.is_file_ignored(&params.path, &params.feature);
@@ -230,14 +245,14 @@ impl Workspace for WorkspaceServer {
     /// This function may panic if the internal settings mutex has been poisoned
     /// by another thread having previously panicked while holding the lock
     #[tracing::instrument(level = "debug", skip(self))]
-    fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), RomeError> {
+    fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), WorkspaceError> {
         let mut settings = self.settings.write().unwrap();
         settings.merge_with_configuration(params.configuration)?;
         Ok(())
     }
 
     /// Add a new file to the workspace
-    fn open_file(&self, params: OpenFileParams) -> Result<(), RomeError> {
+    fn open_file(&self, params: OpenFileParams) -> Result<(), WorkspaceError> {
         self.syntax.remove(&params.path);
         self.documents.insert(
             params.path,
@@ -253,7 +268,7 @@ impl Workspace for WorkspaceServer {
     fn get_syntax_tree(
         &self,
         params: GetSyntaxTreeParams,
-    ) -> Result<GetSyntaxTreeResult, RomeError> {
+    ) -> Result<GetSyntaxTreeResult, WorkspaceError> {
         let capabilities = self.get_capabilities(&params.path);
         let debug_syntax_tree = capabilities
             .debug
@@ -270,7 +285,7 @@ impl Workspace for WorkspaceServer {
     fn get_control_flow_graph(
         &self,
         params: GetControlFlowGraphParams,
-    ) -> Result<String, RomeError> {
+    ) -> Result<String, WorkspaceError> {
         let capabilities = self.get_capabilities(&params.path);
         let debug_control_flow = capabilities
             .debug
@@ -283,7 +298,7 @@ impl Workspace for WorkspaceServer {
         Ok(printed)
     }
 
-    fn get_formatter_ir(&self, params: GetFormatterIRParams) -> Result<String, RomeError> {
+    fn get_formatter_ir(&self, params: GetFormatterIRParams) -> Result<String, WorkspaceError> {
         let capabilities = self.get_capabilities(&params.path);
         let debug_formatter_ir = capabilities
             .debug
@@ -293,18 +308,18 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
-            return Err(RomeError::FormatWithErrorsDisabled);
+            return Err(WorkspaceError::FormatWithErrorsDisabled);
         }
 
         debug_formatter_ir(&params.path, parse, settings)
     }
 
     /// Change the content of an open file
-    fn change_file(&self, params: ChangeFileParams) -> Result<(), RomeError> {
+    fn change_file(&self, params: ChangeFileParams) -> Result<(), WorkspaceError> {
         let mut document = self
             .documents
             .get_mut(&params.path)
-            .ok_or(RomeError::NotFound)?;
+            .ok_or(WorkspaceError::NotFound)?;
 
         debug_assert!(params.version > document.version);
         document.version = params.version;
@@ -315,10 +330,10 @@ impl Workspace for WorkspaceServer {
     }
 
     /// Remove a file from the workspace
-    fn close_file(&self, params: CloseFileParams) -> Result<(), RomeError> {
+    fn close_file(&self, params: CloseFileParams) -> Result<(), WorkspaceError> {
         self.documents
             .remove(&params.path)
-            .ok_or(RomeError::NotFound)?;
+            .ok_or(WorkspaceError::NotFound)?;
 
         self.syntax.remove(&params.path);
         Ok(())
@@ -328,7 +343,7 @@ impl Workspace for WorkspaceServer {
     fn pull_diagnostics(
         &self,
         params: PullDiagnosticsParams,
-    ) -> Result<PullDiagnosticsResult, RomeError> {
+    ) -> Result<PullDiagnosticsResult, WorkspaceError> {
         let feature = if params.categories.is_syntax() {
             FeatureName::Format
         } else {
@@ -385,7 +400,7 @@ impl Workspace for WorkspaceServer {
 
     /// Retrieves the list of code actions available for a given cursor
     /// position within a file
-    fn pull_actions(&self, params: PullActionsParams) -> Result<PullActionsResult, RomeError> {
+    fn pull_actions(&self, params: PullActionsParams) -> Result<PullActionsResult, WorkspaceError> {
         let capabilities = self.get_capabilities(&params.path);
         let code_actions = capabilities
             .analyzer
@@ -406,7 +421,7 @@ impl Workspace for WorkspaceServer {
 
     /// Runs the given file through the formatter using the provided options
     /// and returns the resulting source code
-    fn format_file(&self, params: FormatFileParams) -> Result<Printed, RomeError> {
+    fn format_file(&self, params: FormatFileParams) -> Result<Printed, WorkspaceError> {
         let capabilities = self.get_capabilities(&params.path);
         let format = capabilities
             .formatter
@@ -416,13 +431,13 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
-            return Err(RomeError::FormatWithErrorsDisabled);
+            return Err(WorkspaceError::FormatWithErrorsDisabled);
         }
 
         format(&params.path, parse, settings)
     }
 
-    fn format_range(&self, params: FormatRangeParams) -> Result<Printed, RomeError> {
+    fn format_range(&self, params: FormatRangeParams) -> Result<Printed, WorkspaceError> {
         let capabilities = self.get_capabilities(&params.path);
         let format_range = capabilities
             .formatter
@@ -432,13 +447,13 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
-            return Err(RomeError::FormatWithErrorsDisabled);
+            return Err(WorkspaceError::FormatWithErrorsDisabled);
         }
 
         format_range(&params.path, parse, settings, params.range)
     }
 
-    fn format_on_type(&self, params: FormatOnTypeParams) -> Result<Printed, RomeError> {
+    fn format_on_type(&self, params: FormatOnTypeParams) -> Result<Printed, WorkspaceError> {
         let capabilities = self.get_capabilities(&params.path);
         let format_on_type = capabilities
             .formatter
@@ -448,13 +463,13 @@ impl Workspace for WorkspaceServer {
         let settings = self.settings();
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
-            return Err(RomeError::FormatWithErrorsDisabled);
+            return Err(WorkspaceError::FormatWithErrorsDisabled);
         }
 
         format_on_type(&params.path, parse, settings, params.offset)
     }
 
-    fn fix_file(&self, params: super::FixFileParams) -> Result<FixFileResult, RomeError> {
+    fn fix_file(&self, params: super::FixFileParams) -> Result<FixFileResult, WorkspaceError> {
         let capabilities = self.get_capabilities(&params.path);
         let fix_all = capabilities
             .analyzer
@@ -473,7 +488,7 @@ impl Workspace for WorkspaceServer {
         })
     }
 
-    fn rename(&self, params: super::RenameParams) -> Result<RenameResult, RomeError> {
+    fn rename(&self, params: super::RenameParams) -> Result<RenameResult, WorkspaceError> {
         let capabilities = self.get_capabilities(&params.path);
         let rename = capabilities
             .analyzer
@@ -486,7 +501,7 @@ impl Workspace for WorkspaceServer {
         Ok(result)
     }
 
-    fn rage(&self, _: RageParams) -> Result<RageResult, RomeError> {
+    fn rage(&self, _: RageParams) -> Result<RageResult, WorkspaceError> {
         let entries = vec![
             RageEntry::section("Workspace"),
             RageEntry::pair("Open Documents", &format!("{}", self.documents.len())),

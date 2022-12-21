@@ -13,7 +13,7 @@ fn ok() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("--version")]),
     );
 
@@ -35,7 +35,7 @@ fn full() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("version")]),
     );
 

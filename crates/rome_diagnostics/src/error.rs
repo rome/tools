@@ -16,6 +16,7 @@
 //! instances of an object (the main use case for this would be implementing
 //! `Clone` for `Error` since `dyn Clone` is not allowed in Rust)
 
+use std::ops::Deref;
 use std::{
     fmt::{Debug, Formatter},
     io,
@@ -126,6 +127,20 @@ impl AsDiagnostic for Error {
     }
 
     fn as_dyn(&self) -> &dyn Diagnostic {
+        self.as_diagnostic()
+    }
+}
+
+impl AsRef<dyn Diagnostic + 'static> for Error {
+    fn as_ref(&self) -> &(dyn Diagnostic + 'static) {
+        self.as_diagnostic()
+    }
+}
+
+impl Deref for Error {
+    type Target = dyn Diagnostic + 'static;
+
+    fn deref(&self) -> &Self::Target {
         self.as_diagnostic()
     }
 }

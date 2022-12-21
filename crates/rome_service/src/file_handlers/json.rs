@@ -5,7 +5,7 @@ use crate::settings::{
     FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle,
 };
 use crate::workspace::GetSyntaxTreeResult;
-use crate::RomeError;
+use crate::WorkspaceError;
 #[cfg(any(debug_assertions, target_family = "wasm"))]
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
@@ -100,7 +100,7 @@ fn debug_formatter_ir(
     rome_path: &RomePath,
     parse: AnyParse,
     settings: SettingsHandle,
-) -> Result<String, RomeError> {
+) -> Result<String, WorkspaceError> {
     let options = settings.format_options::<JsonLanguage>(rome_path);
 
     let tree = parse.syntax();
@@ -116,7 +116,7 @@ fn format(
     rome_path: &RomePath,
     parse: AnyParse,
     settings: SettingsHandle,
-) -> Result<Printed, RomeError> {
+) -> Result<Printed, WorkspaceError> {
     let options = settings.format_options::<JsonLanguage>(rome_path);
 
     tracing::debug!("Format with the following options: \n{}", options);
@@ -126,7 +126,7 @@ fn format(
 
     match formatted.print() {
         Ok(printed) => Ok(printed),
-        Err(error) => Err(RomeError::FormatError(error.into())),
+        Err(error) => Err(WorkspaceError::FormatError(error.into())),
     }
 }
 
@@ -136,7 +136,7 @@ fn format_range(
     parse: AnyParse,
     settings: SettingsHandle,
     range: TextRange,
-) -> Result<Printed, RomeError> {
+) -> Result<Printed, WorkspaceError> {
     let options = settings.format_options::<JsonLanguage>(rome_path);
 
     let tree = parse.syntax();
@@ -150,14 +150,14 @@ fn format_on_type(
     parse: AnyParse,
     settings: SettingsHandle,
     offset: TextSize,
-) -> Result<Printed, RomeError> {
+) -> Result<Printed, WorkspaceError> {
     let options = settings.format_options::<JsonLanguage>(rome_path);
 
     let tree = parse.syntax();
 
     let range = tree.text_range();
     if offset < range.start() || offset > range.end() {
-        return Err(RomeError::FormatError(FormatError::RangeError {
+        return Err(WorkspaceError::FormatError(FormatError::RangeError {
             input: TextRange::at(offset, TextSize::from(0)),
             tree: range,
         }));

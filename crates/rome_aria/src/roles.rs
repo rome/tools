@@ -55,6 +55,11 @@ pub trait AriaRoleDefinition: Debug {
         }
         false
     }
+
+    /// Whether the current role is interactive
+    fn is_interactive(&self) -> bool {
+        self.roles().any(|role| *role == "widget")
+    }
 }
 
 define_role! {
@@ -62,13 +67,16 @@ define_role! {
     ButtonRole {
         PROPS: [("aria-expanded", false), ("aria-expanded", false)],
         ROLES: ["roletype", "widget", "command"],
+        CONCEPTS: &[("button", &[]), ("input", &[("type", "button")])],
     }
 }
+
 define_role! {
     /// https://www.w3.org/TR/wai-aria-1.1/#checkbox
     CheckboxRole {
         PROPS: [("aria-checked", true), ("aria-readonly", false)],
         ROLES: ["switch", "menuitemcheckbox", "widget"],
+        CONCEPTS: &[("input", &[("type", "checkbox")])],
     }
 }
 define_role! {
@@ -76,6 +84,7 @@ define_role! {
     RadioRole {
         PROPS: [("aria-checked", true), ("aria-readonly", false)],
         ROLES: ["menuitemradio", "widget"],
+        CONCEPTS: &[("input", &[("type", "radio")])],
     }
 }
 define_role! {
@@ -91,6 +100,7 @@ define_role! {
     OptionRole {
         PROPS: [("aria-selected", true)],
         ROLES: ["treeitem", "widget"],
+        CONCEPTS: &[("option", &[])],
     }
 }
 
@@ -99,6 +109,7 @@ define_role! {
     ComboBoxRole {
         PROPS: [("aria-controls", true), ("aria-expanded", true)],
         ROLES: ["select", "widget"],
+        CONCEPTS: &[("select", &[])],
     }
 }
 define_role! {
@@ -106,6 +117,7 @@ define_role! {
     HeadingRole {
         PROPS:  [("aria-level", true)],
         ROLES:  ["sectionhead"],
+        CONCEPTS: &[("h1", &[]), ("h2", &[]), ("h3", &[]), ("h4", &[]), ("h5", &[]), ("h6", &[])],
     }
 }
 define_role! {
@@ -117,6 +129,7 @@ define_role! {
             ("aria-valuenow", true),
         ],
         ROLES: ["composite", "input", "range", "widget"],
+        CONCEPTS: &[("hr", &[])],
     }
 }
 define_role! {
@@ -139,6 +152,7 @@ define_role! {
             ("aria-valuenow", true),
         ],
         ROLES: ["structure", "widget"],
+        CONCEPTS: &[("hr", &[])],
     }
 }
 
@@ -161,6 +175,7 @@ define_role! {
     ArticleRole {
         PROPS: [],
         ROLES: ["document"],
+        CONCEPTS: &[("article", &[])],
     }
 }
 
@@ -169,6 +184,7 @@ define_role! {
     DialogRole {
         PROPS: [("aria-label", false), ("aria-labelledby", false)],
         ROLES: ["window"],
+        CONCEPTS: &[("dialog", &[])],
     }
 }
 
@@ -177,6 +193,7 @@ define_role! {
     AlertRole {
         PROPS: [],
         ROLES: ["section"],
+        CONCEPTS: &[("alert", &[])],
     }
 }
 define_role! {
@@ -184,6 +201,7 @@ define_role! {
     AlertDialogRole {
         PROPS: [],
         ROLES: ["structure"],
+        CONCEPTS: &[("alert", &[])],
     }
 }
 define_role! {
@@ -212,6 +230,7 @@ define_role! {
             ("aria-rowspan", false),
         ],
         ROLES: ["section"],
+        CONCEPTS: &[("td", &[])],
     }
 }
 
@@ -220,6 +239,7 @@ define_role! {
     ColumnHeaderRole {
         PROPS: [("aria-sort", false)],
         ROLES: ["cell", "gridcell", "sectionhead"],
+        CONCEPTS: &[("th", &[("scope", "col")])],
     }
 }
 
@@ -228,6 +248,7 @@ define_role! {
     DefinitionRole {
         PROPS: [("aria-labelledby", false)],
         ROLES: ["section"],
+        CONCEPTS: &[("dd", &[]), ("dfn", &[])],
     }
 }
 
@@ -244,6 +265,7 @@ define_role! {
     FigureRole {
         PROPS: [("aria-label", false), ("aria-labelledby", false)],
         ROLES: ["section"],
+        CONCEPTS: &[("figure", &[])],
     }
 }
 
@@ -252,6 +274,7 @@ define_role! {
     FormRole {
         PROPS: [("aria-label", false), ("aria-labelledby", false)],
         ROLES: ["section"],
+        CONCEPTS: &[("form", &[])],
     }
 }
 
@@ -260,6 +283,7 @@ define_role! {
     GridRole {
         PROPS: [("aria-level", false), ("aria-multiselectable", false), ("aria-readonly", false)],
         ROLES: ["composite", "table"],
+        CONCEPTS: &[("table", &[])],
     }
 }
 
@@ -268,6 +292,7 @@ define_role! {
     GridCellRole {
         PROPS: [("aria-readonly", false), ("aria-required", false), ("aria-selected", false)],
         ROLES: ["cell", "widget"],
+        CONCEPTS: &[("td", &[])],
     }
 }
 
@@ -276,6 +301,7 @@ define_role! {
     GroupRole {
         PROPS: [("aria-activedescendant", false)],
         ROLES: ["row", "select", "toolbar"],
+        CONCEPTS: &[("fieldset", &[])],
     }
 }
 
@@ -284,6 +310,7 @@ define_role! {
     ImgRole {
         PROPS: [("aria-activedescendant", false)],
         ROLES: ["section"],
+        CONCEPTS: &[("img", &[])],
     }
 }
 
@@ -292,6 +319,7 @@ define_role! {
     LinkRole {
         PROPS: [("aria-expanded", false)],
         ROLES: ["command"],
+        CONCEPTS: &[("a", &[]), ("link", &[])],
     }
 }
 
@@ -300,6 +328,7 @@ define_role! {
     ListRole {
         PROPS: [],
         ROLES: ["section"],
+        CONCEPTS: &[("ol", &[]), ("ul", &[])],
     }
 }
 
@@ -308,6 +337,7 @@ define_role! {
     ListBoxRole {
         PROPS: [],
         ROLES: ["select"],
+        CONCEPTS: &[("select", &[])],
     }
 }
 
@@ -316,6 +346,7 @@ define_role! {
     ListItemRole {
         PROPS: [],
         ROLES: ["section"],
+        CONCEPTS: &[("li", &[])],
     }
 }
 
@@ -372,6 +403,7 @@ define_role! {
     NavigationRole {
         PROPS: [],
         ROLES: ["landmark"],
+        CONCEPTS: &[("nav", &[])],
     }
 }
 
@@ -395,6 +427,7 @@ define_role! {
     RowRole {
         PROPS: [("aria-colindex", false), ("aria-level", false), ("aria-rowindex", false), ("aria-selected", false)],
         ROLES: ["group", "widget"],
+        CONCEPTS: &[("tr", &[])],
     }
 }
 
@@ -403,6 +436,7 @@ define_role! {
     RowGroupRole {
         PROPS: [],
         ROLES: ["structure"],
+        CONCEPTS: &[("tbody", &[]), ("tfoot", &[]), ("thead", &[])],
     }
 }
 
@@ -411,6 +445,7 @@ define_role! {
     RowHeaderRole {
         PROPS: [("aria-sort", false)],
         ROLES: ["cell", "gridcell", "sectionhead"],
+        CONCEPTS: &[("th", &[("scope", "row")])],
     }
 }
 
@@ -426,6 +461,7 @@ define_role! {
             ("aria-required", false),
         ],
         ROLES: ["textbox"],
+        CONCEPTS: &[("input", &[("type", "search")])],
     }
 }
 
@@ -442,6 +478,7 @@ define_role! {
     TableRole {
         PROPS: [("aria-colcount", false), ("aria-rowcount", false)],
         ROLES: ["section"],
+        CONCEPTS: &[("table", &[])],
     }
 }
 
@@ -458,6 +495,7 @@ define_role! {
     TermRole {
         PROPS: [],
         ROLES: ["section"],
+        CONCEPTS: &[("dt", &[])],
     }
 }
 
@@ -473,6 +511,7 @@ define_role! {
             ("aria-required", false),
         ],
         ROLES: ["input"],
+        CONCEPTS: &[("textarea", &[]), ("input", &[("type", "search")])],
     }
 }
 
@@ -492,7 +531,43 @@ define_role! {
     }
 }
 
-impl AriaRoles {
+impl<'a> AriaRoles {
+    /// These are roles that will contain "concepts".
+    pub(crate) const ROLE_WITH_CONCEPTS: &'a [&'a str] = &[
+        "checkbox",
+        "radio",
+        "option",
+        "combobox",
+        "heading",
+        "separator",
+        "button",
+        "article",
+        "dialog",
+        "alert",
+        "alertdialog",
+        "cell",
+        "columnheader",
+        "definition",
+        "figure",
+        "form",
+        "grid",
+        "gridcell",
+        "group",
+        "img",
+        "link",
+        "list",
+        "listbox",
+        "listitem",
+        "navigation",
+        "row",
+        "rowgroup",
+        "rowheader",
+        "searchbox",
+        "table",
+        "term",
+        "textbox",
+    ];
+
     /// It returns the metadata of a role, if it exits.
     ///
     /// ## Examples
@@ -565,8 +640,100 @@ impl AriaRoles {
         };
         Some(result)
     }
+
+    /// Given a role, it return whether this role is interactive
+    pub fn is_role_interactive(&self, role: &str) -> bool {
+        let role = self.get_role(role);
+        if let Some(role) = role {
+            role.is_interactive()
+        } else {
+            false
+        }
+    }
+
+    /// Given the name of element, the function tell whether it's interactive
+    pub fn is_not_interactive_element(&self, element_name: &str) -> bool {
+        // <header> elements do not technically have semantics, unless the
+        // element is a direct descendant of <body>, and this plugin cannot
+        // reliably test that.
+        //
+        // Check: https://www.w3.org/TR/wai-aria-practices/examples/landmarks/banner.html
+        if element_name == "header" {
+            return false;
+        }
+        for element in Self::ROLE_WITH_CONCEPTS {
+            let role = match *element {
+                "checkbox" => &CheckboxRole as &dyn AriaRoleDefinitionWithConcepts,
+                "radio" => &RadioRole as &dyn AriaRoleDefinitionWithConcepts,
+                "option" => &OptionRole as &dyn AriaRoleDefinitionWithConcepts,
+                "combobox" => &ComboBoxRole as &dyn AriaRoleDefinitionWithConcepts,
+                "heading" => &HeadingRole as &dyn AriaRoleDefinitionWithConcepts,
+                "separator" => &SeparatorRole as &dyn AriaRoleDefinitionWithConcepts,
+                "button" => &ButtonRole as &dyn AriaRoleDefinitionWithConcepts,
+                "article" => &ArticleRole as &dyn AriaRoleDefinitionWithConcepts,
+                "dialog" => &DialogRole as &dyn AriaRoleDefinitionWithConcepts,
+                "alert" => &AlertRole as &dyn AriaRoleDefinitionWithConcepts,
+                "alertdialog" => &AlertDialogRole as &dyn AriaRoleDefinitionWithConcepts,
+                "cell" => &CellRole as &dyn AriaRoleDefinitionWithConcepts,
+                "columnheader" => &ColumnHeaderRole as &dyn AriaRoleDefinitionWithConcepts,
+                "definition" => &DefinitionRole as &dyn AriaRoleDefinitionWithConcepts,
+                "figure" => &FigureRole as &dyn AriaRoleDefinitionWithConcepts,
+                "form" => &FormRole as &dyn AriaRoleDefinitionWithConcepts,
+                "grid" => &GridRole as &dyn AriaRoleDefinitionWithConcepts,
+                "gridcell" => &GridCellRole as &dyn AriaRoleDefinitionWithConcepts,
+                "group" => &GroupRole as &dyn AriaRoleDefinitionWithConcepts,
+                "img" => &ImgRole as &dyn AriaRoleDefinitionWithConcepts,
+                "link" => &LinkRole as &dyn AriaRoleDefinitionWithConcepts,
+                "list" => &ListRole as &dyn AriaRoleDefinitionWithConcepts,
+                "listbox" => &ListBoxRole as &dyn AriaRoleDefinitionWithConcepts,
+                "listitem" => &ListItemRole as &dyn AriaRoleDefinitionWithConcepts,
+                "navigation" => &NavigationRole as &dyn AriaRoleDefinitionWithConcepts,
+                "row" => &RowRole as &dyn AriaRoleDefinitionWithConcepts,
+                "rowgroup" => &RowGroupRole as &dyn AriaRoleDefinitionWithConcepts,
+                "rowheader" => &RowHeaderRole as &dyn AriaRoleDefinitionWithConcepts,
+                "searchbox" => &SearchboxRole as &dyn AriaRoleDefinitionWithConcepts,
+                "table" => &TableRole as &dyn AriaRoleDefinitionWithConcepts,
+                "term" => &TermRole as &dyn AriaRoleDefinitionWithConcepts,
+                "textbox" => &TextboxRole as &dyn AriaRoleDefinitionWithConcepts,
+                _ => return false,
+            };
+            if let Some(mut concepts) = role.concepts_by_element_name(element_name) {
+                if concepts.any(|(name, _)| *name == element_name) && !role.is_interactive() {
+                    return true;
+                }
+            }
+        }
+
+        false
+    }
+}
+
+type ElementsAndAttributes<'a> = Option<Iter<'a, (&'a str, &'a [(&'a str, &'a str)])>>;
+
+pub trait AriaRoleDefinitionWithConcepts: AriaRoleDefinition {
+    fn concepts_by_element_name<'a>(&self, _element_name: &str) -> ElementsAndAttributes<'a> {
+        None
+    }
 }
 
 /// Convenient type to retrieve metadata regarding ARIA roles
 #[derive(Debug, Default)]
 pub struct AriaRoles;
+
+#[cfg(test)]
+mod test {
+    use crate::AriaRoles;
+
+    #[test]
+    fn should_be_interactive() {
+        let aria_roles = AriaRoles {};
+
+        assert!(!aria_roles.is_not_interactive_element("header"));
+        assert!(aria_roles.is_not_interactive_element("h1"));
+        assert!(aria_roles.is_not_interactive_element("h2"));
+        assert!(aria_roles.is_not_interactive_element("h3"));
+        assert!(aria_roles.is_not_interactive_element("h4"));
+        assert!(aria_roles.is_not_interactive_element("h5"));
+        assert!(aria_roles.is_not_interactive_element("h6"));
+    }
+}

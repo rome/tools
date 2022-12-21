@@ -1,6 +1,6 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{ConfigurationError, RomeError, RuleConfiguration};
+use crate::RuleConfiguration;
 use indexmap::{IndexMap, IndexSet};
 use rome_analyze::RuleFilter;
 use rome_diagnostics::{Category, Severity};
@@ -377,6 +377,8 @@ struct A11ySchema {
     use_anchor_content: Option<RuleConfiguration>,
     #[doc = "Enforces the usage of the attribute type for the element button"]
     use_button_type: Option<RuleConfiguration>,
+    #[doc = "Enforce that html element has lang attribute. This allows users to choose a language other than the default."]
+    use_html_lang: Option<RuleConfiguration>,
     #[doc = "Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event."]
     use_key_with_click_events: Option<RuleConfiguration>,
     #[doc = "Enforce that onMouseOver/onMouseOut are accompanied by onFocus/onBlur for keyboard-only users. It is important to take into account users with physical disabilities who cannot use a mouse, who use assistive technology or screenreader."]
@@ -386,29 +388,31 @@ struct A11ySchema {
 }
 impl A11y {
     const CATEGORY_NAME: &'static str = "a11y";
-    pub(crate) const CATEGORY_RULES: [&'static str; 9] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 10] = [
         "noAutofocus",
         "noBlankTarget",
         "noPositiveTabindex",
         "useAltText",
         "useAnchorContent",
         "useButtonType",
+        "useHtmlLang",
         "useKeyWithClickEvents",
         "useKeyWithMouseEvents",
         "useValidAnchor",
     ];
-    const RECOMMENDED_RULES: [&'static str; 9] = [
+    const RECOMMENDED_RULES: [&'static str; 10] = [
         "noAutofocus",
         "noBlankTarget",
         "noPositiveTabindex",
         "useAltText",
         "useAnchorContent",
         "useButtonType",
+        "useHtmlLang",
         "useKeyWithClickEvents",
         "useKeyWithMouseEvents",
         "useValidAnchor",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 9] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 10] = [
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[2]),
@@ -418,6 +422,7 @@ impl A11y {
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[6]),
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[7]),
         RuleFilter::Rule("a11y", Self::CATEGORY_RULES[8]),
+        RuleFilter::Rule("a11y", Self::CATEGORY_RULES[9]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -444,7 +449,7 @@ impl A11y {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 9] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 10] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
@@ -457,8 +462,9 @@ where
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
         if !A11y::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::UnknownRule(rule_name.to_string()),
+            return Err(serde::de::Error::custom(format!(
+                "invalid rule name {}",
+                rule_name
             )));
         }
     }
@@ -563,8 +569,9 @@ where
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
         if !Complexity::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::UnknownRule(rule_name.to_string()),
+            return Err(serde::de::Error::custom(format!(
+                "invalid rule name {}",
+                rule_name
             )));
         }
     }
@@ -692,8 +699,9 @@ where
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
         if !Correctness::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::UnknownRule(rule_name.to_string()),
+            return Err(serde::de::Error::custom(format!(
+                "invalid rule name {}",
+                rule_name
             )));
         }
     }
@@ -757,6 +765,8 @@ struct NurserySchema {
     no_invalid_constructor_super: Option<RuleConfiguration>,
     #[doc = "Disallow non-null assertions using the ! postfix operator."]
     no_non_null_assertion: Option<RuleConfiguration>,
+    #[doc = "Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements."]
+    no_noninteractive_element_to_interactive_role: Option<RuleConfiguration>,
     #[doc = "Disallow literal numbers that lose precision"]
     no_precision_loss: Option<RuleConfiguration>,
     #[doc = "Enforce img alt prop does not contain the word \"image\", \"picture\", or \"photo\"."]
@@ -771,6 +781,8 @@ struct NurserySchema {
     no_setter_return: Option<RuleConfiguration>,
     #[doc = "Disallow comparison of expressions modifying the string case with non-compliant value."]
     no_string_case_mismatch: Option<RuleConfiguration>,
+    #[doc = "Ensures the super() constructor is called exactly once on every code path in a class constructor before this is accessed if the class has a superclass"]
+    no_unreachable_super: Option<RuleConfiguration>,
     #[doc = "Disallow control flow statements in finally blocks."]
     no_unsafe_finally: Option<RuleConfiguration>,
     #[doc = "Disallow useless case in switch statements."]
@@ -801,18 +813,22 @@ struct NurserySchema {
     use_exponentiation_operator: Option<RuleConfiguration>,
     #[doc = "Enforce that all React hooks are being called from the Top Level component functions."]
     use_hook_at_top_level: Option<RuleConfiguration>,
+    #[doc = "Enforces the usage of the attribute title for the element iframe"]
+    use_iframe_title: Option<RuleConfiguration>,
     #[doc = "Require calls to isNaN() when checking for NaN."]
     use_is_nan: Option<RuleConfiguration>,
     #[doc = "Enforces that audio and video elements must have a track for captions."]
     use_media_caption: Option<RuleConfiguration>,
     #[doc = "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals"]
     use_numeric_literals: Option<RuleConfiguration>,
+    #[doc = "Ensures that ARIA properties aria-* are all valid."]
+    use_valid_aria_props: Option<RuleConfiguration>,
     #[doc = "Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country."]
     use_valid_lang: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 43] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 47] = [
         "noAccessKey",
         "noAssignInExpressions",
         "noBannedTypes",
@@ -830,6 +846,7 @@ impl Nursery {
         "noHeaderScope",
         "noInvalidConstructorSuper",
         "noNonNullAssertion",
+        "noNoninteractiveElementToInteractiveRole",
         "noPrecisionLoss",
         "noRedundantAlt",
         "noRedundantUseStrict",
@@ -837,6 +854,7 @@ impl Nursery {
         "noSelfCompare",
         "noSetterReturn",
         "noStringCaseMismatch",
+        "noUnreachableSuper",
         "noUnsafeFinally",
         "noUselessSwitchCase",
         "noVar",
@@ -852,12 +870,14 @@ impl Nursery {
         "useExhaustiveDependencies",
         "useExponentiationOperator",
         "useHookAtTopLevel",
+        "useIframeTitle",
         "useIsNan",
         "useMediaCaption",
         "useNumericLiterals",
+        "useValidAriaProps",
         "useValidLang",
     ];
-    const RECOMMENDED_RULES: [&'static str; 34] = [
+    const RECOMMENDED_RULES: [&'static str; 38] = [
         "noAssignInExpressions",
         "noBannedTypes",
         "noClassAssign",
@@ -873,10 +893,12 @@ impl Nursery {
         "noExtraSemicolons",
         "noHeaderScope",
         "noInvalidConstructorSuper",
+        "noNoninteractiveElementToInteractiveRole",
         "noRedundantAlt",
         "noSelfCompare",
         "noSetterReturn",
         "noStringCaseMismatch",
+        "noUnreachableSuper",
         "noUnsafeFinally",
         "noUselessSwitchCase",
         "noVar",
@@ -888,12 +910,14 @@ impl Nursery {
         "useDefaultSwitchClauseLast",
         "useEnumInitializers",
         "useExhaustiveDependencies",
+        "useIframeTitle",
         "useIsNan",
         "useMediaCaption",
         "useNumericLiterals",
+        "useValidAriaProps",
         "useValidLang",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 34] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 38] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[3]),
@@ -909,8 +933,8 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[13]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[14]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[15]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[18]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[21]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[17]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[19]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[22]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[23]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[24]),
@@ -918,16 +942,20 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[26]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[27]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[28]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[29]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[30]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[32]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[33]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[34]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[35]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[36]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[39]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[40]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[37]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[38]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[41]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[42]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[43]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[44]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[45]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[46]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -954,7 +982,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 34] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 38] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
@@ -967,8 +995,9 @@ where
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
         if !Nursery::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::UnknownRule(rule_name.to_string()),
+            return Err(serde::de::Error::custom(format!(
+                "invalid rule name {}",
+                rule_name
             )));
         }
     }
@@ -1045,8 +1074,9 @@ where
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
         if !Performance::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::UnknownRule(rule_name.to_string()),
+            return Err(serde::de::Error::custom(format!(
+                "invalid rule name {}",
+                rule_name
             )));
         }
     }
@@ -1133,8 +1163,9 @@ where
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
         if !Security::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::UnknownRule(rule_name.to_string()),
+            return Err(serde::de::Error::custom(format!(
+                "invalid rule name {}",
+                rule_name
             )));
         }
     }
@@ -1262,8 +1293,9 @@ where
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
         if !Style::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::UnknownRule(rule_name.to_string()),
+            return Err(serde::de::Error::custom(format!(
+                "invalid rule name {}",
+                rule_name
             )));
         }
     }
@@ -1420,8 +1452,9 @@ where
     let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
     for rule_name in value.keys() {
         if !Suspicious::CATEGORY_RULES.contains(&rule_name.as_str()) {
-            return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::UnknownRule(rule_name.to_string()),
+            return Err(serde::de::Error::custom(format!(
+                "invalid rule name {}",
+                rule_name
             )));
         }
     }

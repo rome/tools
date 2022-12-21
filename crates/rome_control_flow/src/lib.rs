@@ -5,7 +5,7 @@ use std::{
     fmt::{self, Display, Formatter},
 };
 
-use rome_rowan::{Language, SyntaxElement};
+use rome_rowan::{Language, SyntaxElement, SyntaxNode};
 
 pub mod builder;
 
@@ -18,12 +18,15 @@ use crate::builder::BlockId;
 pub struct ControlFlowGraph<L: Language> {
     /// List of blocks that make up this function
     pub blocks: Vec<BasicBlock<L>>,
+    /// The function node this CFG was built for in the syntax tree
+    pub node: SyntaxNode<L>,
 }
 
 impl<L: Language> ControlFlowGraph<L> {
-    fn new() -> Self {
+    fn new(node: SyntaxNode<L>) -> Self {
         ControlFlowGraph {
             blocks: vec![BasicBlock::new(None, None)],
+            node,
         }
     }
 }

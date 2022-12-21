@@ -4,7 +4,7 @@ use rome_diagnostics::location::FileId;
 use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
 
 use crate::{
-    matcher::MatchQueryParams,
+    matcher::{MatchQueryParams, Query},
     registry::{NodeLanguage, Phases},
     LanguageRoot, QueryMatch, QueryMatcher, ServiceBag, SignalEntry, SuppressionCommentEmitter,
 };
@@ -22,12 +22,12 @@ pub struct VisitorContext<'phase, 'query, L: Language> {
 }
 
 impl<'phase, 'query, L: Language> VisitorContext<'phase, 'query, L> {
-    pub fn match_query(&mut self, query: QueryMatch<L>) {
+    pub fn match_query<T: QueryMatch>(&mut self, query: T) {
         self.query_matcher.match_query(MatchQueryParams {
             phase: self.phase,
             file_id: self.file_id,
             root: self.root,
-            query,
+            query: Query::new(query),
             services: self.services,
             signal_queue: self.signal_queue,
             apply_suppression_comment: self.apply_suppression_comment,

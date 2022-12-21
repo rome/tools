@@ -5,7 +5,15 @@ expression: content
 # Termination Message
 
 ```block
-failed to parse argument '--semicolons': failed to parse 'asneed': Value not supported for Semicolons. Supported values are 'as-needed' and 'always'.
+flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Cannot parse the argument --semicolons
+    
+    Caused by:
+      failed to parse 'asneed': Value not supported for Semicolons. Supported values are 'as-needed' and 'always'.
+  
+
+
 ```
 
 

@@ -3,7 +3,7 @@
 //! The configuration is divided by "tool", and then it's possible to further customise it
 //! by language. The language might further options divided by tool.
 
-use crate::{DynRef, RomeError};
+use crate::{DynRef, WorkspaceError};
 use indexmap::{IndexMap, IndexSet};
 use rome_fs::{FileSystem, OpenOptions};
 use serde::de::{SeqAccess, Visitor};
@@ -106,7 +106,7 @@ pub struct FilesConfiguration {
 pub fn load_config(
     file_system: &DynRef<dyn FileSystem>,
     base_path: Option<PathBuf>,
-) -> Result<Option<Configuration>, RomeError> {
+) -> Result<Option<Configuration>, WorkspaceError> {
     let config_name = file_system.config_name();
     let configuration_path = if let Some(base_path) = base_path {
         base_path.join(config_name)
@@ -123,11 +123,11 @@ pub fn load_config(
         Ok(mut file) => {
             let mut buffer = String::new();
             file.read_to_string(&mut buffer).map_err(|_| {
-                RomeError::CantReadFile(format!("{}", configuration_path.display()))
+                WorkspaceError::CantReadFile(format!("{}", configuration_path.display()))
             })?;
 
             let configuration: Configuration = serde_json::from_str(&buffer).map_err(|err| {
-                RomeError::Configuration(ConfigurationError::DeserializationError {
+                WorkspaceError::Configuration(ConfigurationError::DeserializationError {
                     message: err.to_string(),
                     text_range: from_serde_error_to_range(&err, &buffer),
                     input: buffer.to_string(),
@@ -141,7 +141,7 @@ pub fn load_config(
             // In case we don't fine the file, we swallow the error and we continue; not having
             // a file should not be a cause of error (for now)
             if err.kind() != ErrorKind::NotFound {
-                return Err(RomeError::CantReadFile(format!(
+                return Err(WorkspaceError::CantReadFile(format!(
                     "{}",
                     configuration_path.display()
                 )));
@@ -166,16 +166,16 @@ pub fn load_config(
 pub fn create_config(
     fs: &mut DynRef<dyn FileSystem>,
     mut configuration: Configuration,
-) -> Result<(), RomeError> {
+) -> Result<(), WorkspaceError> {
     let path = PathBuf::from(fs.config_name());
 
     let options = OpenOptions::default().write(true).create_new(true);
 
     let mut config_file = fs.open_with_options(&path, options).map_err(|err| {
         if err.kind() == ErrorKind::AlreadyExists {
-            RomeError::Configuration(ConfigurationError::ConfigAlreadyExists)
+            WorkspaceError::Configuration(ConfigurationError::ConfigAlreadyExists)
         } else {
-            RomeError::CantReadFile(format!("{}", path.display()))
+            WorkspaceError::CantReadFile(format!("{}", path.display()))
         }
     })?;
 
@@ -187,11 +187,11 @@ pub fn create_config(
     }
 
     let contents = serde_json::to_string_pretty(&configuration)
-        .map_err(|_| RomeError::Configuration(ConfigurationError::SerializationError))?;
+        .map_err(|_| WorkspaceError::Configuration(ConfigurationError::SerializationError))?;
 
     config_file
         .set_content(contents.as_bytes())
-        .map_err(|_| RomeError::CantReadFile(format!("{}", path.display())))?;
+        .map_err(|_| WorkspaceError::CantReadFile(format!("{}", path.display())))?;
 
     Ok(())
 }

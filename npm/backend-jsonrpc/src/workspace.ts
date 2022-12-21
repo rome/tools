@@ -183,6 +183,10 @@ export interface A11y {
 	 */
 	useButtonType?: RuleConfiguration;
 	/**
+	 * Enforce that html element has lang attribute. This allows users to choose a language other than the default.
+	 */
+	useHtmlLang?: RuleConfiguration;
+	/**
 	 * Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event.
 	 */
 	useKeyWithClickEvents?: RuleConfiguration;
@@ -354,6 +358,10 @@ export interface Nursery {
 	 */
 	noNonNullAssertion?: RuleConfiguration;
 	/**
+	 * Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.
+	 */
+	noNoninteractiveElementToInteractiveRole?: RuleConfiguration;
+	/**
 	 * Disallow literal numbers that lose precision
 	 */
 	noPrecisionLoss?: RuleConfiguration;
@@ -381,6 +389,10 @@ export interface Nursery {
 	 * Disallow comparison of expressions modifying the string case with non-compliant value.
 	 */
 	noStringCaseMismatch?: RuleConfiguration;
+	/**
+	 * Ensures the super() constructor is called exactly once on every code path in a class constructor before this is accessed if the class has a superclass
+	 */
+	noUnreachableSuper?: RuleConfiguration;
 	/**
 	 * Disallow control flow statements in finally blocks.
 	 */
@@ -446,6 +458,10 @@ export interface Nursery {
 	 */
 	useHookAtTopLevel?: RuleConfiguration;
 	/**
+	 * Enforces the usage of the attribute title for the element iframe
+	 */
+	useIframeTitle?: RuleConfiguration;
+	/**
 	 * Require calls to isNaN() when checking for NaN.
 	 */
 	useIsNan?: RuleConfiguration;
@@ -457,6 +473,10 @@ export interface Nursery {
 	 * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
 	 */
 	useNumericLiterals?: RuleConfiguration;
+	/**
+	 * Ensures that ARIA properties aria-* are all valid.
+	 */
+	useValidAriaProps?: RuleConfiguration;
 	/**
 	 * Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.
 	 */
@@ -713,6 +733,7 @@ export type Category =
 	| "lint/a11y/useKeyWithClickEvents"
 	| "lint/a11y/useKeyWithMouseEvents"
 	| "lint/a11y/useValidAnchor"
+	| "lint/a11y/useHtmlLang"
 	| "lint/complexity/noExtraBooleanCast"
 	| "lint/complexity/noMultipleSpacesInRegularExpressionLiterals"
 	| "lint/complexity/noUselessFragments"
@@ -754,6 +775,7 @@ export type Category =
 	| "lint/nursery/noSelfCompare"
 	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
+	| "lint/nursery/noUnreachableSuper"
 	| "lint/nursery/noUnsafeFinally"
 	| "lint/nursery/noUselessSwitchCase"
 	| "lint/nursery/noVar"
@@ -766,11 +788,14 @@ export type Category =
 	| "lint/nursery/useDefaultParameterLast"
 	| "lint/nursery/useDefaultSwitchClauseLast"
 	| "lint/nursery/useEnumInitializers"
+	| "lint/nursery/useValidAriaProps"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useExponentiationOperator"
 	| "lint/nursery/useIsNan"
 	| "lint/nursery/useMediaCaption"
+	| "lint/nursery/useIframeTitle"
 	| "lint/nursery/useNumericLiterals"
+	| "lint/nursery/noNoninteractiveElementToInteractiveRole"
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useHookAtTopLevel"
 	| "lint/nursery/noControlCharactersInRegex"

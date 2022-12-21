@@ -57,6 +57,14 @@ Enforce that anchor elements have content and that the content is accessible to 
 Enforces the usage of the attribute <code>type</code> for the element <code>button</code>
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="useHtmlLang">
+	<a href="/lint/rules/useHtmlLang">useHtmlLang</a>
+	<span class="recommended">recommended</span>
+</h3>
+Enforce that <code>html</code> element has <code>lang</code> attribute.
+This allows users to choose a language other than the default.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="useKeyWithClickEvents">
 	<a href="/lint/rules/useKeyWithClickEvents">useKeyWithClickEvents</a>
 	<span class="recommended">recommended</span>
@@ -580,6 +588,12 @@ It also checks whether a call <code>super()</code> is missing from classes that 
 Disallow non-null assertions using the <code>!</code> postfix operator.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noNoninteractiveElementToInteractiveRole">
+	<a href="/lint/rules/noNoninteractiveElementToInteractiveRole">noNoninteractiveElementToInteractiveRole</a>
+</h3>
+Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noPrecisionLoss">
 	<a href="/lint/rules/noPrecisionLoss">noPrecisionLoss</a>
 </h3>
@@ -620,6 +634,14 @@ Disallow returning a value from a setter
 	<a href="/lint/rules/noStringCaseMismatch">noStringCaseMismatch</a>
 </h3>
 Disallow comparison of expressions modifying the string case with non-compliant value.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noUnreachableSuper">
+	<a href="/lint/rules/noUnreachableSuper">noUnreachableSuper</a>
+</h3>
+Ensures the <code>super()</code> constructor is called exactly once on every code
+path in a class constructor before <code>this</code> is accessed if the class has
+a superclass
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noUnsafeFinally">
@@ -713,6 +735,12 @@ Enforce that all React hooks are being called from the Top Level
 component functions.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="useIframeTitle">
+	<a href="/lint/rules/useIframeTitle">useIframeTitle</a>
+</h3>
+Enforces the usage of the attribute <code>title</code> for the element <code>iframe</code>
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="useIsNan">
 	<a href="/lint/rules/useIsNan">useIsNan</a>
 </h3>
@@ -729,6 +757,12 @@ Enforces that <code>audio</code> and <code>video</code> elements must have a <co
 	<a href="/lint/rules/useNumericLiterals">useNumericLiterals</a>
 </h3>
 Disallow <code>parseInt()</code> and <code>Number.parseInt()</code> in favor of binary, octal, and hexadecimal literals
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="useValidAriaProps">
+	<a href="/lint/rules/useValidAriaProps">useValidAriaProps</a>
+</h3>
+Ensures that ARIA properties <code>aria-*</code> are all valid.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useValidLang">

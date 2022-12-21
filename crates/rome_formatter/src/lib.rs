@@ -43,6 +43,7 @@ mod verbatim;
 use crate::formatter::Formatter;
 use crate::group_id::UniqueGroupIdBuilder;
 use crate::prelude::TagKind;
+use std::fmt::Debug;
 
 use crate::format_element::document::Document;
 #[cfg(debug_assertions)]
@@ -147,7 +148,6 @@ impl Default for LineWidth {
 }
 
 /// Error type returned when parsing a [LineWidth] from a string fails
-#[derive(Debug)]
 pub enum ParseLineWidthError {
     /// The string could not be parsed as a valid [u16]
     ParseError(ParseIntError),
@@ -155,9 +155,18 @@ pub enum ParseLineWidthError {
     TryFromIntError(LineWidthFromIntError),
 }
 
+impl Debug for ParseLineWidthError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self, f)
+    }
+}
+
 impl std::fmt::Display for ParseLineWidthError {
     fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::write!(fmt, "{self:?}")
+        match self {
+            ParseLineWidthError::ParseError(err) => std::fmt::Display::fmt(err, fmt),
+            ParseLineWidthError::TryFromIntError(err) => std::fmt::Display::fmt(err, fmt),
+        }
     }
 }
 

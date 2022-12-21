@@ -13,23 +13,6 @@ It also checks whether a call `super()` is missing from classes that extends oth
 ### Invalid
 
 ```jsx
-class A extends B {
-    constructor() {}
-}
-```
-
-<pre class="language-text"><code class="language-text">nursery/noInvalidConstructorSuper.js:1:9 <a href="https://docs.rome.tools/lint/rules/noInvalidConstructorSuper">lint/nursery/noInvalidConstructorSuper</a> ━━━━━━━━━━━━━━━━━━━━
-
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This class extends another class and a </span><span style="color: Tomato;"><strong>super()</strong></span><span style="color: Tomato;"> call is expected.</span>
-  
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>class A extends B {
-   <strong>   │ </strong>        <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
-    <strong>2 │ </strong>    constructor() {}
-    <strong>3 │ </strong>}
-  
-</code></pre>
-
-```jsx
 class A {
     constructor() {
         super();
@@ -47,6 +30,34 @@ class A {
    <strong>   │ </strong>        <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>4 │ </strong>    }
     <strong>5 │ </strong>}
+  
+</code></pre>
+
+```jsx
+class A extends undefined {
+    constructor() {
+        super();
+    }
+}
+```
+
+<pre class="language-text"><code class="language-text">nursery/noInvalidConstructorSuper.js:3:9 <a href="https://docs.rome.tools/lint/rules/noInvalidConstructorSuper">lint/nursery/noInvalidConstructorSuper</a> ━━━━━━━━━━━━━━━━━━━━
+
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This class calls </span><span style="color: Tomato;"><strong>super()</strong></span><span style="color: Tomato;">, but the class extends from a non-constructor.</span>
+  
+    <strong>1 │ </strong>class A extends undefined {
+    <strong>2 │ </strong>    constructor() {
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>3 │ </strong>        super();
+   <strong>   │ </strong>        <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>4 │ </strong>    }
+    <strong>5 │ </strong>}
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">This is where the non-constructor is used.</span>
+  
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>class A extends undefined {
+   <strong>   │ </strong>                <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>    constructor() {
+    <strong>3 │ </strong>        super();
   
 </code></pre>
 

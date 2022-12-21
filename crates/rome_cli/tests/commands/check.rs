@@ -1,5 +1,4 @@
 use pico_args::Arguments;
-use rome_cli::Termination;
 use std::env::temp_dir;
 use std::ffi::OsString;
 use std::fs::{create_dir, create_dir_all, remove_dir_all};
@@ -65,9 +64,7 @@ const JS_ERRORS_AFTER: &str = "try {
 }
 ";
 
-const UPGRADE_SEVERITY_CODE: &str = r#"class A extends B {
-    constructor() {}
-}"#;
+const UPGRADE_SEVERITY_CODE: &str = r#"if(!cond) { exprA(); } else { exprB() }"#;
 
 const NURSERY_UNSTABLE: &str = r#"if(a = b) {}"#;
 
@@ -81,7 +78,7 @@ fn ok() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
@@ -98,7 +95,7 @@ fn ok_read_only() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
@@ -115,14 +112,10 @@ fn parse_error() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
-
-    match result {
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -143,14 +136,11 @@ fn lint_error() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
-    match result {
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -170,7 +160,7 @@ fn maximum_diagnostics() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
@@ -217,7 +207,7 @@ fn apply_ok() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
             OsString::from("--apply"),
@@ -254,7 +244,7 @@ fn apply_noop() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
             OsString::from("--apply"),
@@ -285,25 +275,16 @@ fn apply_suggested_error() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
-            OsString::from("--apply-suggested"),
+            OsString::from("--apply-unsafe"),
             OsString::from("--apply"),
             file_path.as_os_str().into(),
         ]),
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
-
-    match &result {
-        Err(error) => {
-            assert!(error
-                .to_string()
-                .contains("incompatible arguments '--apply' and '--apply-suggested"),)
-        }
-        _ => panic!("expected an error, but found none"),
-    }
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -324,10 +305,10 @@ fn apply_suggested() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
-            OsString::from("--apply-suggested"),
+            OsString::from("--apply-unsafe"),
             file_path.as_os_str().into(),
         ]),
     );
@@ -364,7 +345,7 @@ fn no_lint_if_linter_is_disabled_when_run_apply() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
             OsString::from("--apply"),
@@ -404,7 +385,7 @@ fn no_lint_if_linter_is_disabled() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
@@ -440,7 +421,7 @@ fn should_disable_a_rule() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
             OsString::from("--apply"),
@@ -483,7 +464,7 @@ fn should_disable_a_rule_group() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
             OsString::from("--apply"),
@@ -525,7 +506,7 @@ fn downgrade_severity() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
@@ -571,7 +552,7 @@ fn upgrade_severity() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
@@ -579,16 +560,19 @@ fn upgrade_severity() {
 
     let messages = &console.out_buffer;
 
+    let error_count = messages
+        .iter()
+        .filter(|m| m.level == LogLevel::Error)
+        .filter(|m| {
+            let content = format!("{:?}", m.content);
+            content.contains("style/noNegationElse")
+        })
+        .count();
+
     assert_eq!(
-        messages
-            .iter()
-            .filter(|m| m.level == LogLevel::Error)
-            .filter(|m| {
-                let content = format!("{:?}", m.content);
-                content.contains("nursery/noInvalidConstructorSuper")
-            })
-            .count(),
-        1
+        error_count, 1,
+        "expected 1 error-level message in console buffer, found {error_count:?}:\n{:?}",
+        console.out_buffer
     );
 
     assert_cli_snapshot(SnapshotPayload::new(
@@ -613,7 +597,7 @@ fn no_lint_when_file_is_ignored() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
             OsString::from("--apply"),
@@ -656,7 +640,7 @@ fn no_lint_if_files_are_listed_in_ignore_option() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
             OsString::from("--apply"),
@@ -737,7 +721,7 @@ fn fs_error_dereferenced_symlink() {
 
     let result = run_cli(
         DynRef::Owned(Box::new(OsFileSystem)),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
             OsString::from(root_path.clone()),
@@ -795,7 +779,7 @@ fn fs_error_infinite_symlink_exapansion() {
 
     let result = run_cli(
         DynRef::Owned(Box::new(OsFileSystem)),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
             OsString::from(root_path.clone()),
@@ -825,7 +809,7 @@ fn fs_error_read_only() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
             OsString::from("--apply"),
@@ -856,7 +840,7 @@ fn fs_error_unknown() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("check"), OsString::from("prefix")]),
     );
 
@@ -881,7 +865,7 @@ fn file_too_large() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
@@ -911,7 +895,7 @@ fn file_too_large_config_limit() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
@@ -936,7 +920,7 @@ fn file_too_large_cli_limit() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
             OsString::from("--files-max-size"),
@@ -966,7 +950,7 @@ fn files_max_size_parse_error() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
             OsString::from("--files-max-size"),
@@ -975,10 +959,7 @@ fn files_max_size_parse_error() {
         ]),
     );
 
-    match result {
-        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--files-max-size"),
-        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -1002,14 +983,11 @@ fn max_diagnostics_default() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("check"), OsString::from("src")]),
     );
 
-    match result {
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     let mut diagnostic_count = 0;
     let mut filtered_messages = Vec::new();
@@ -1052,7 +1030,7 @@ fn max_diagnostics() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
             OsString::from("--max-diagnostics"),
@@ -1061,11 +1039,7 @@ fn max_diagnostics() {
         ]),
     );
 
-    match result {
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
-
+    assert!(result.is_err(), "run_cli returned {result:?}");
     let mut diagnostic_count = 0;
     let mut filtered_messages = Vec::new();
 
@@ -1102,7 +1076,7 @@ fn no_supported_file_found() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![std::ffi::OsString::from("check"), ".".into()]),
     );
 
@@ -1131,7 +1105,7 @@ a == b;",
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             std::ffi::OsString::from("check"),
             file_path.as_os_str().into(),
@@ -1159,7 +1133,7 @@ fn print_verbose() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("check"),
             OsString::from("--verbose"),
@@ -1167,10 +1141,7 @@ fn print_verbose() {
         ]),
     );
 
-    match result {
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -1191,14 +1162,10 @@ fn unsupported_file() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
-
-    match result {
-        Err(Termination::NoFilesWereProcessed) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -1219,14 +1186,11 @@ fn suppression_syntax_error() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
-    match result {
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -1250,16 +1214,10 @@ fn config_recommended_group() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
-
-    match result {
-        Ok(()) => {}
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
-
+    assert!(result.is_err(), "run_cli returned {result:?}");
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "config_recommended_group",
@@ -1279,15 +1237,11 @@ fn nursery_unstable() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
     );
 
-    match result {
-        Ok(()) => {}
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),

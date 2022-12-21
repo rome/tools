@@ -7,7 +7,7 @@ use rome_fs::RomePath;
 use rome_service::workspace::{
     FeatureName, FixFileMode, FixFileParams, PullActionsParams, SupportsFeatureParams,
 };
-use rome_service::RomeError;
+use rome_service::WorkspaceError;
 use std::borrow::Cow;
 use std::collections::HashMap;
 use tower_lsp::lsp_types::{
@@ -128,7 +128,7 @@ fn fix_all(
     rome_path: RomePath,
     line_index: &LineIndex,
     diagnostics: &[lsp::Diagnostic],
-) -> Result<Option<CodeActionOrCommand>, RomeError> {
+) -> Result<Option<CodeActionOrCommand>, WorkspaceError> {
     let fixed = session.workspace.fix_file(FixFileParams {
         path: rome_path,
         fix_file_mode: FixFileMode::SafeFixes,

@@ -7,6 +7,13 @@ codegen:
   cargo codegen-schema
   cargo codegen-bindings
 
+codegen-linter:
+  cargo codegen analyzer
+  cargo codegen-configuration
+  cargo codegen-schema
+  cargo codegen-bindings
+  cargo lintdoc
+
 documentation:
   cargo lintdoc
   cargo documentation

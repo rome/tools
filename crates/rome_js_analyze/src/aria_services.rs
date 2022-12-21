@@ -1,10 +1,10 @@
 use rome_analyze::{
-    FromServices, MissingServicesDiagnostic, Phase, Phases, QueryKey, QueryMatch, Queryable,
-    RuleKey, ServiceBag,
+    AddVisitor, FromServices, MissingServicesDiagnostic, Phase, Phases, QueryKey, Queryable,
+    RuleKey, ServiceBag, SyntaxVisitor,
 };
 use rome_aria::iso::{countries, is_valid_country, is_valid_language, languages};
 use rome_aria::{AriaProperties, AriaRoles};
-use rome_js_syntax::JsLanguage;
+use rome_js_syntax::{AnyJsRoot, JsLanguage, JsSyntaxNode};
 use rome_rowan::AstNode;
 use std::sync::Arc;
 
@@ -72,18 +72,21 @@ impl<N> Queryable for Aria<N>
 where
     N: AstNode<Language = JsLanguage> + 'static,
 {
+    type Input = JsSyntaxNode;
     type Output = N;
+
     type Language = JsLanguage;
     type Services = AriaServices;
 
-    /// Match on [QueryMatch::Syntax] if the kind of the syntax node matches
-    /// the kind set of `N`
-    const KEY: QueryKey<Self::Language> = QueryKey::Syntax(N::KIND_SET);
+    fn build_visitor(analyzer: &mut impl AddVisitor<JsLanguage>, _: &AnyJsRoot) {
+        analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default);
+    }
 
-    fn unwrap_match(_: &ServiceBag, query: &QueryMatch<Self::Language>) -> Self::Output {
-        match query {
-            QueryMatch::Syntax(node) => N::unwrap_cast(node.clone()),
-            _ => panic!("tried to unwrap unsupported QueryMatch kind, expected Syntax"),
-        }
+    fn key() -> QueryKey<Self::Language> {
+        QueryKey::Syntax(N::KIND_SET)
+    }
+
+    fn unwrap_match(_: &ServiceBag, node: &Self::Input) -> Self::Output {
+        N::unwrap_cast(node.clone())
     }
 }
