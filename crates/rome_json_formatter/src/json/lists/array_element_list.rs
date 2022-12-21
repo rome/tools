@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::separated::FormatAstSeparatedListExtension;
 use rome_formatter::write;
-use rome_json_syntax::JsonArrayElementList;
+use rome_json_syntax::{AnyJsonValue, JsonArrayElementList};
 use rome_rowan::{AstNode, AstSeparatedList};
 
 #[derive(Debug, Clone, Default)]
@@ -20,7 +20,6 @@ impl FormatRule<JsonArrayElementList> for FormatJsonArrayElementList {
             ArrayLayout::Fill => {
                 let mut filler = f.fill();
 
-                // Using format_separated is valid in this case as can_print_fill does not allow holes
                 for (element, formatted) in node.iter().zip(node.format_separated(",")) {
                     filler.entry(
                         &format_once(|f| {
@@ -54,35 +53,30 @@ impl FormatRule<JsonArrayElementList> for FormatJsonArrayElementList {
 enum ArrayLayout {
     /// Tries to fit as many array elements on a single line as possible.
     ///
-    /// ```json
-    /// { list: [
+    /// ```
+    /// [
     ///     1, 2, 3,
     ///     5, 6,
-    ///   ]
-    /// }
+    /// ]
     /// ```
     Fill,
 
-    /// Prints every element on a single line if the whole array expression exceeds the line width, or any
+    /// Prints every element on a single line if the array exceeds the line width, or any
     /// of its elements gets printed in *expanded* mode.
-    /// ```json
-    /// { list: [
-    ///     a.b(),
-    ///     4,
-    ///     3,
-    ///  ]
-    /// }
+    /// ```
+    /// [
+    ///    { "a": 3 },
+    ///    4,
+    ///    3,
+    /// ]
     /// ```
     OnePerLine,
 }
 
-/// Returns true if the provided JsArrayElementList could
-/// be "fill-printed" instead of breaking each element on
+/// Returns `true` if the array can be "fill-printed" instead of breaking each element on
 /// a different line.
 ///
-/// The underlying logic only allows lists of literal expressions
-/// with 10 or less characters, potentially wrapped in a "short"
-/// unary expression (+, -, ~ or !)
+/// An array can be "fill printed" if it only contains literal elements.
 pub(crate) fn can_concisely_print_array_list(list: &JsonArrayElementList) -> bool {
     if list.is_empty() {
         return false;
@@ -94,12 +88,13 @@ pub(crate) fn can_concisely_print_array_list(list: &JsonArrayElementList) -> boo
     //     Ok(rome_json_syntax::AnyJsonValue::JsonBogusValue(_)) => false,
     //     _ => {true}
     // })
-    list.elements().all(|item| {
-        !matches!(
-            item.into_node(),
-            Ok(rome_json_syntax::AnyJsonValue::JsonArrayValue(_))
-                | Ok(rome_json_syntax::AnyJsonValue::JsonObjectValue(_))
-                | Ok(rome_json_syntax::AnyJsonValue::JsonBogusValue(_))
+    list.iter().all(|node| {
+        matches!(
+            node,
+            Ok(AnyJsonValue::JsonStringValue(_)
+                | AnyJsonValue::JsonBooleanValue(_)
+                | AnyJsonValue::JsonNullValue(_)
+                | AnyJsonValue::JsonNumberValue(_))
         )
     })
 }
