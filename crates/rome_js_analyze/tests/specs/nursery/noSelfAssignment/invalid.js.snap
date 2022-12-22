@@ -23,6 +23,7 @@ a = a;
 ({a, b} = {a, ...x, b});
 a.b = a.b;
 a.c.b = a.ZZ.b;
+a[b] = a[b];
 
 ```
 
@@ -631,7 +632,7 @@ invalid.js:18:9 lint/nursery/noSelfAssignment ━━━━━━━━━━━�
   > 18 │ a.b = a.b;
        │         ^
     19 │ a.c.b = a.ZZ.b;
-    20 │ 
+    20 │ a[b] = a[b];
   
   i This is where is assigned.
   
@@ -640,7 +641,29 @@ invalid.js:18:9 lint/nursery/noSelfAssignment ━━━━━━━━━━━�
   > 18 │ a.b = a.b;
        │   ^
     19 │ a.c.b = a.ZZ.b;
-    20 │ 
+    20 │ a[b] = a[b];
+  
+
+```
+
+```
+invalid.js:20:10 lint/nursery/noSelfAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! b is assigned to itself.
+  
+    18 │ a.b = a.b;
+    19 │ a.c.b = a.ZZ.b;
+  > 20 │ a[b] = a[b];
+       │          ^
+    21 │ 
+  
+  i This is where is assigned.
+  
+    18 │ a.b = a.b;
+    19 │ a.c.b = a.ZZ.b;
+  > 20 │ a[b] = a[b];
+       │   ^
+    21 │ 
   
 
 ```

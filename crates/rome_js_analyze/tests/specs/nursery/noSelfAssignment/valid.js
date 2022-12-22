@@ -13,3 +13,4 @@ a |= a;
 [x, a] = [...x, a];
 a.c = b.c;
 a.b.c = a.Z.c;
+a[b] = a[c];

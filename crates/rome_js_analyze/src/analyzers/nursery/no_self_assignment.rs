@@ -3,12 +3,14 @@ use rome_console::markup;
 use rome_js_syntax::{
     AnyJsArrayAssignmentPatternElement, AnyJsArrayElement, AnyJsAssignment, AnyJsAssignmentPattern,
     AnyJsExpression, AnyJsName, AnyJsObjectAssignmentPatternMember, AnyJsObjectMember,
-    JsAssignmentExpression, JsAssignmentOperator, JsIdentifierAssignment, JsLanguage, JsName,
+    JsAssignmentExpression, JsAssignmentOperator, JsComputedMemberAssignment,
+    JsComputedMemberExpression, JsIdentifierAssignment, JsIdentifierExpression, JsLanguage, JsName,
     JsPrivateName, JsReferenceIdentifier, JsStaticMemberAssignment, JsStaticMemberExpression,
     JsSyntaxToken,
 };
 use rome_rowan::{
-    AstNode, AstSeparatedList, AstSeparatedListNodesIterator, SyntaxError, TextRange,
+    declare_node_union, AstNode, AstSeparatedList, AstSeparatedListNodesIterator, SyntaxError,
+    SyntaxResult, TextRange,
 };
 use std::collections::VecDeque;
 use std::iter::FusedIterator;
@@ -21,14 +23,33 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// var a = 1;
-    /// a = 2;
+    /// a = a;
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// [a, b] = [a, b];
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// ({a: b} = {a: b});
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// a.b = a.b;
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// a[b] = a[b];
     /// ```
     ///
     /// ## Valid
     ///
     /// ```js
-    /// var a = 1;
+    /// a &= a;
+    /// var a = a;
+    /// let a = a;
+    /// const a = a;
+    /// [a, b] = [b, a];
     /// ```
     ///
     pub(crate) NoSelfAssignment {
@@ -38,26 +59,115 @@ declare_rule! {
     }
 }
 
-/// A convenient iterator that continues to return the nested [JsStaticMemberExpression]
-#[derive(Debug, Clone)]
-struct JsStaticMemberAssignmentIterator {
-    source: JsStaticMemberAssignment,
-    current_member_expression: Option<JsStaticMemberExpression>,
-    drained: bool,
-}
+impl Rule for NoSelfAssignment {
+    type Query = Ast<JsAssignmentExpression>;
+    type State = IdentifiersLike;
+    type Signals = Vec<Self::State>;
+    type Options = ();
 
-impl JsStaticMemberAssignmentIterator {
-    fn new(source: JsStaticMemberAssignment) -> Self {
-        Self {
-            source,
-            current_member_expression: None,
-            drained: false,
+    fn run(ctx: &RuleContext<Self>) -> Self::Signals {
+        let node = ctx.query();
+        let left = node.left().ok();
+        let right = node.right().ok();
+        let operator = node.operator().ok();
+
+        let mut state = vec![];
+        if let Some(operator) = operator {
+            if matches!(
+                operator,
+                JsAssignmentOperator::Assign
+                    | JsAssignmentOperator::LogicalAndAssign
+                    | JsAssignmentOperator::LogicalOrAssign
+                    | JsAssignmentOperator::NullishCoalescingAssign
+            ) {
+                match (left, right) {
+                    (Some(left), Some(right)) => {
+                        if let Ok(pair) = AnyAssignmentLike::try_from((left, right)) {
+                            compare_assignment_like(pair, &mut state);
+                        }
+                    }
+                    _ => {}
+                }
+            }
         }
+        state
+    }
+
+    fn diagnostic(_: &RuleContext<Self>, identifier_like: &Self::State) -> Option<RuleDiagnostic> {
+        let name = identifier_like.name()?;
+        Some(
+            RuleDiagnostic::new(
+                rule_category!(),
+                identifier_like.right_range(),
+                markup! {
+                    {{name.text_trimmed()}}" is assigned to itself."
+                },
+            )
+            .detail(
+                identifier_like.left_range(),
+                markup! {
+                    "This is where is assigned."
+                },
+            ),
+        )
     }
 }
 
-impl Iterator for JsStaticMemberAssignmentIterator {
-    type Item = (AnyJsName, Option<JsReferenceIdentifier>);
+/// A convenient iterator that continues to return the nested [JsStaticMemberExpression]
+#[derive(Debug, Clone)]
+struct AnyJsAssignmentExpressionLikeIterator {
+    source_member: AnyNameLike,
+    source_object: AnyJsExpression,
+    current_member_expression: Option<AnyAssignmentExpressionLike>,
+    drained: bool,
+}
+
+impl AnyJsAssignmentExpressionLikeIterator {
+    fn from_static_member_expression(source: JsStaticMemberExpression) -> SyntaxResult<Self> {
+        Ok(Self {
+            source_member: source.member().map(AnyNameLike::from)?,
+            source_object: source.object()?,
+            current_member_expression: None,
+            drained: false,
+        })
+    }
+
+    fn from_static_member_assignment(source: JsStaticMemberAssignment) -> SyntaxResult<Self> {
+        Ok(Self {
+            source_member: source.member().map(AnyNameLike::from)?,
+            source_object: source.object()?,
+            current_member_expression: None,
+            drained: false,
+        })
+    }
+
+    fn from_computed_member_assignment(source: JsComputedMemberAssignment) -> SyntaxResult<Self> {
+        Ok(Self {
+            source_member: source.member().and_then(|expression| match expression {
+                AnyJsExpression::JsIdentifierExpression(node) => Ok(AnyNameLike::from(node)),
+                _ => Err(SyntaxError::MissingRequiredChild),
+            })?,
+            source_object: source.object()?,
+            current_member_expression: None,
+            drained: false,
+        })
+    }
+
+    fn from_computed_member_expression(source: JsComputedMemberExpression) -> SyntaxResult<Self> {
+        Ok(Self {
+            source_member: source.member().and_then(|expression| match expression {
+                AnyJsExpression::JsIdentifierExpression(node) => Ok(AnyNameLike::from(node)),
+                _ => return Err(SyntaxError::MissingRequiredChild),
+            })?,
+            source_object: source.object()?,
+            current_member_expression: None,
+            drained: false,
+        })
+    }
+}
+
+impl Iterator for AnyJsAssignmentExpressionLikeIterator {
+    type Item = (AnyNameLike, Option<JsReferenceIdentifier>);
 
     fn next(&mut self) -> Option<Self::Item> {
         if self.drained {
@@ -67,20 +177,20 @@ impl Iterator for JsStaticMemberAssignmentIterator {
         let (name, object) =
             if let Some(current_member_expression) = self.current_member_expression.as_ref() {
                 (
-                    current_member_expression.member().ok(),
-                    current_member_expression.object().ok(),
+                    current_member_expression.member()?,
+                    current_member_expression.object()?,
                 )
             } else {
-                (self.source.member().ok(), self.source.object().ok())
+                (self.source_member.clone(), self.source_object.clone())
             };
 
-        let name = name?;
         let reference = match object {
-            Some(AnyJsExpression::JsStaticMemberExpression(expression)) => {
-                self.current_member_expression = Some(expression);
+            AnyJsExpression::JsStaticMemberExpression(expression) => {
+                self.current_member_expression =
+                    Some(AnyAssignmentExpressionLike::from(expression));
                 None
             }
-            Some(AnyJsExpression::JsIdentifierExpression(identifier)) => {
+            AnyJsExpression::JsIdentifierExpression(identifier) => {
                 // the left side of the static member expression is an identifier, which means that we can't
                 // go any further and we should mark the iterator and drained
                 self.drained = true;
@@ -92,61 +202,7 @@ impl Iterator for JsStaticMemberAssignmentIterator {
     }
 }
 
-impl FusedIterator for JsStaticMemberAssignmentIterator {}
-
-/// A convenient iterator that continues to return the nested [JsStaticMemberExpression]
-#[derive(Debug, Clone)]
-struct JsStaticMemberExpressionIterator {
-    source: JsStaticMemberExpression,
-    current_member_expression: Option<JsStaticMemberExpression>,
-    drained: bool,
-}
-
-impl JsStaticMemberExpressionIterator {
-    fn new(source: JsStaticMemberExpression) -> Self {
-        Self {
-            source,
-            current_member_expression: None,
-            drained: false,
-        }
-    }
-}
-
-impl Iterator for JsStaticMemberExpressionIterator {
-    type Item = (AnyJsName, Option<JsReferenceIdentifier>);
-
-    fn next(&mut self) -> Option<Self::Item> {
-        if self.drained {
-            return None;
-        }
-
-        let current_expression =
-            if let Some(current_member_expression) = self.current_member_expression.as_ref() {
-                current_member_expression
-            } else {
-                &self.source
-            };
-
-        let name = current_expression.member().ok()?;
-        let object = current_expression.object().ok();
-        let reference = match object {
-            Some(AnyJsExpression::JsStaticMemberExpression(expression)) => {
-                self.current_member_expression = Some(expression);
-                None
-            }
-            Some(AnyJsExpression::JsIdentifierExpression(identifier)) => {
-                // the left side of the static member expression is an identifier, which means that we can't
-                // go any further and we should mark the iterator and drained
-                self.drained = true;
-                Some(identifier.name().ok()?)
-            }
-            _ => return None,
-        };
-        Some((name, reference))
-    }
-}
-
-impl FusedIterator for JsStaticMemberExpressionIterator {}
+impl FusedIterator for AnyJsAssignmentExpressionLikeIterator {}
 
 /// Convenient type to map assignments that have similar arms
 #[derive(Debug, Clone)]
@@ -176,9 +232,41 @@ enum AnyAssignmentLike {
     /// a.b = a.b
     /// ```
     StaticExpression {
-        left: JsStaticMemberAssignmentIterator,
-        right: JsStaticMemberExpressionIterator,
+        left: AnyJsAssignmentExpressionLikeIterator,
+        right: AnyJsAssignmentExpressionLikeIterator,
     },
+}
+
+declare_node_union! {
+    pub(crate) AnyNameLike = AnyJsName | JsReferenceIdentifier | JsIdentifierExpression
+}
+
+declare_node_union! {
+    pub(crate) AnyAssignmentExpressionLike = JsStaticMemberExpression | JsComputedMemberExpression
+}
+
+impl AnyAssignmentExpressionLike {
+    fn member(&self) -> Option<AnyNameLike> {
+        match self {
+            AnyAssignmentExpressionLike::JsStaticMemberExpression(node) => {
+                node.member().ok().map(AnyNameLike::from)
+            }
+            AnyAssignmentExpressionLike::JsComputedMemberExpression(node) => {
+                node.member().ok().and_then(|node| {
+                    Some(AnyNameLike::from(
+                        node.as_js_identifier_expression()?.name().ok()?,
+                    ))
+                })
+            }
+        }
+    }
+
+    fn object(&self) -> Option<AnyJsExpression> {
+        match self {
+            AnyAssignmentExpressionLike::JsStaticMemberExpression(node) => node.object().ok(),
+            AnyAssignmentExpressionLike::JsComputedMemberExpression(node) => node.object().ok(),
+        }
+    }
 }
 
 impl AnyAssignmentLike {
@@ -228,10 +316,21 @@ impl TryFrom<(AnyJsAssignmentPattern, AnyJsExpression)> for AnyAssignmentLike {
                 )),
                 AnyJsExpression::JsStaticMemberExpression(right),
             ) => AnyAssignmentLike::StaticExpression {
-                left: JsStaticMemberAssignmentIterator::new(left),
-                right: JsStaticMemberExpressionIterator::new(right),
+                left: AnyJsAssignmentExpressionLikeIterator::from_static_member_assignment(left)?,
+                right: AnyJsAssignmentExpressionLikeIterator::from_static_member_expression(right)?,
             },
 
+            (
+                AnyJsAssignmentPattern::AnyJsAssignment(
+                    AnyJsAssignment::JsComputedMemberAssignment(left),
+                ),
+                AnyJsExpression::JsComputedMemberExpression(right),
+            ) => AnyAssignmentLike::StaticExpression {
+                left: AnyJsAssignmentExpressionLikeIterator::from_computed_member_assignment(left)?,
+                right: AnyJsAssignmentExpressionLikeIterator::from_computed_member_expression(
+                    right,
+                )?,
+            },
             _ => AnyAssignmentLike::None,
         })
     }
@@ -254,16 +353,31 @@ pub(crate) enum IdentifiersLike {
     PrivateName(JsPrivateName, JsPrivateName),
 }
 
-impl TryFrom<(AnyJsName, AnyJsName)> for IdentifiersLike {
-    type Error = ();
+impl TryFrom<(AnyNameLike, AnyNameLike)> for IdentifiersLike {
+    type Error = SyntaxError;
 
-    fn try_from((left, right): (AnyJsName, AnyJsName)) -> Result<Self, Self::Error> {
+    fn try_from((left, right): (AnyNameLike, AnyNameLike)) -> Result<Self, Self::Error> {
         match (left, right) {
-            (AnyJsName::JsName(left), AnyJsName::JsName(right)) => Ok(Self::Name(left, right)),
-            (AnyJsName::JsPrivateName(left), AnyJsName::JsPrivateName(right)) => {
-                Ok(Self::PrivateName(left, right))
-            }
-            _ => Err(()),
+            (
+                AnyNameLike::AnyJsName(AnyJsName::JsName(left)),
+                AnyNameLike::AnyJsName(AnyJsName::JsName(right)),
+            ) => Ok(Self::Name(left, right)),
+            (
+                AnyNameLike::AnyJsName(AnyJsName::JsPrivateName(left)),
+                AnyNameLike::AnyJsName(AnyJsName::JsPrivateName(right)),
+            ) => Ok(Self::PrivateName(left, right)),
+
+            (
+                AnyNameLike::JsReferenceIdentifier(left),
+                AnyNameLike::JsReferenceIdentifier(right),
+            ) => Ok(Self::References(left, right)),
+
+            (
+                AnyNameLike::JsIdentifierExpression(left),
+                AnyNameLike::JsIdentifierExpression(right),
+            ) => Ok(Self::References(left.name()?, right.name()?)),
+
+            _ => unreachable!("you should map the correct references"),
         }
     }
 }
@@ -454,7 +568,7 @@ impl Iterator for SameIdentifiers {
                     if let Some(pair) = self.assignment_queue.pop_front() {
                         self.current_assignment_like = pair;
                         continue;
-                    // the queue is empty
+                        // the queue is empty
                     } else {
                         return None;
                     }
@@ -526,59 +640,5 @@ fn compare_assignment_like(
         if let Some(_) = with_same_identifiers(&identifier_like) {
             incorrect_identifiers.push(identifier_like);
         }
-    }
-}
-
-impl Rule for NoSelfAssignment {
-    type Query = Ast<JsAssignmentExpression>;
-    type State = IdentifiersLike;
-    type Signals = Vec<Self::State>;
-    type Options = ();
-
-    fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-        let node = ctx.query();
-        let left = node.left().ok();
-        let right = node.right().ok();
-        let operator = node.operator().ok();
-
-        let mut state = vec![];
-        if let Some(operator) = operator {
-            if matches!(
-                operator,
-                JsAssignmentOperator::Assign
-                    | JsAssignmentOperator::LogicalAndAssign
-                    | JsAssignmentOperator::LogicalOrAssign
-                    | JsAssignmentOperator::NullishCoalescingAssign
-            ) {
-                match (left, right) {
-                    (Some(left), Some(right)) => {
-                        if let Ok(pair) = AnyAssignmentLike::try_from((left, right)) {
-                            compare_assignment_like(pair, &mut state);
-                        }
-                    }
-                    _ => {}
-                }
-            }
-        }
-        state
-    }
-
-    fn diagnostic(_: &RuleContext<Self>, identifier_like: &Self::State) -> Option<RuleDiagnostic> {
-        let name = identifier_like.name()?;
-        Some(
-            RuleDiagnostic::new(
-                rule_category!(),
-                identifier_like.right_range(),
-                markup! {
-                    {{name.text_trimmed()}}" is assigned to itself."
-                },
-            )
-            .detail(
-                identifier_like.left_range(),
-                markup! {
-                    "This is where is assigned."
-                },
-            ),
-        )
     }
 }
