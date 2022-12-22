@@ -1,0 +1,95 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```js
+<Hello name="John" name="John" />;
+
+<Hello name="John" Name="John" />;
+
+<Hello name="John" name="John" name="John" />;
+
+<label xml:lang="en-US" xml:lang="en-US"></label>
+
+```
+
+# Diagnostics
+```
+invalid.jsx:1:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Elements can not have attributes with the same name.
+  
+  > 1 │ <Hello name="John" name="John" />;
+      │        ^^^^^^^^^^^
+    2 │ 
+    3 │ <Hello name="John" Name="John" />;
+  
+  i attribute is duplicated!
+  
+  > 1 │ <Hello name="John" name="John" />;
+      │                    ^^^^^^^^^^^
+    2 │ 
+    3 │ <Hello name="John" Name="John" />;
+  
+
+```
+
+```
+invalid.jsx:3:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Elements can not have attributes with the same name.
+  
+    1 │ <Hello name="John" name="John" />;
+    2 │ 
+  > 3 │ <Hello name="John" Name="John" />;
+      │        ^^^^^^^^^^^
+    4 │ 
+    5 │ <Hello name="John" name="John" name="John" />;
+  
+  i attribute is duplicated!
+  
+    1 │ <Hello name="John" name="John" />;
+    2 │ 
+  > 3 │ <Hello name="John" Name="John" />;
+      │                    ^^^^^^^^^^^
+    4 │ 
+    5 │ <Hello name="John" name="John" name="John" />;
+  
+
+```
+
+```
+invalid.jsx:5:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Elements can not have attributes with the same name.
+  
+    3 │ <Hello name="John" Name="John" />;
+    4 │ 
+  > 5 │ <Hello name="John" name="John" name="John" />;
+      │        ^^^^^^^^^^^
+    6 │ 
+    7 │ <label xml:lang="en-US" xml:lang="en-US"></label>
+  
+  i attribute is duplicated!
+  
+    3 │ <Hello name="John" Name="John" />;
+    4 │ 
+  > 5 │ <Hello name="John" name="John" name="John" />;
+      │                    ^^^^^^^^^^^
+    6 │ 
+    7 │ <label xml:lang="en-US" xml:lang="en-US"></label>
+  
+  i attribute is duplicated!
+  
+    3 │ <Hello name="John" Name="John" />;
+    4 │ 
+  > 5 │ <Hello name="John" name="John" name="John" />;
+      │                                ^^^^^^^^^^^
+    6 │ 
+    7 │ <label xml:lang="en-US" xml:lang="en-US"></label>
+  
+
+```
+
+
