@@ -14,6 +14,7 @@ use rome_service::workspace::{FeatureName, PullDiagnosticsParams, SupportsFeatur
 use rome_service::workspace::{RageEntry, RageParams, RageResult, UpdateSettingsParams};
 use rome_service::{load_config, Workspace};
 use rome_service::{DynRef, WorkspaceError};
+use serde_json::Value;
 use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::atomic::AtomicU8;
@@ -23,6 +24,8 @@ use std::sync::RwLock;
 use tokio::sync::Notify;
 use tokio::sync::OnceCell;
 use tower_lsp::lsp_types;
+use tower_lsp::lsp_types::Registration;
+use tower_lsp::lsp_types::Unregistration;
 use tower_lsp::lsp_types::Url;
 use tracing::{error, info};
 
@@ -97,6 +100,32 @@ impl TryFrom<u8> for ConfigurationStatus {
 
 pub(crate) type SessionHandle = Arc<Session>;
 
+/// Holds the set of capabilities supported by the Language Server
+/// instance and whether they are enabled or not
+#[derive(Default)]
+pub(crate) struct CapabilitySet {
+    registry: HashMap<&'static str, (&'static str, CapabilityStatus)>,
+}
+
+/// Represents whether a capability is enabled or not, optionally holding the
+/// configuration associated with the capability
+pub(crate) enum CapabilityStatus {
+    Enable(Option<Value>),
+    Disable,
+}
+
+impl CapabilitySet {
+    /// Insert a capability in the set
+    pub(crate) fn add_capability(
+        &mut self,
+        id: &'static str,
+        method: &'static str,
+        status: CapabilityStatus,
+    ) {
+        self.registry.insert(id, (method, status));
+    }
+}
+
 impl Session {
     pub(crate) fn new(
         key: SessionKey,
@@ -136,6 +165,57 @@ impl Session {
 
         if let Err(err) = result {
             error!("Failed to initialize session: {err}");
+        }
+    }
+
+    /// Register a set of capabilities with the client
+    pub(crate) async fn register_capabilities(&self, capabilities: CapabilitySet) {
+        let mut registrations = Vec::new();
+        let mut unregistrations = Vec::new();
+
+        let mut register_methods = String::new();
+        let mut unregister_methods = String::new();
+
+        for (id, (method, status)) in capabilities.registry {
+            unregistrations.push(Unregistration {
+                id: id.to_string(),
+                method: method.to_string(),
+            });
+
+            if !unregister_methods.is_empty() {
+                unregister_methods.push_str(", ");
+            }
+
+            unregister_methods.push_str(method);
+
+            if let CapabilityStatus::Enable(register_options) = status {
+                registrations.push(Registration {
+                    id: id.to_string(),
+                    method: method.to_string(),
+                    register_options,
+                });
+
+                if !register_methods.is_empty() {
+                    register_methods.push_str(", ");
+                }
+
+                register_methods.push_str(method);
+            }
+        }
+
+        if let Err(e) = self.client.unregister_capability(unregistrations).await {
+            error!(
+                "Error unregistering {unregister_methods:?} capabilities: {}",
+                e
+            );
+        } else {
+            info!("Unregister capabilities {unregister_methods:?}");
+        }
+
+        if let Err(e) = self.client.register_capability(registrations).await {
+            error!("Error registering {register_methods:?} capabilities: {}", e);
+        } else {
+            info!("Register capabilities {register_methods:?}");
         }
     }
 

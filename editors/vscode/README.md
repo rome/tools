@@ -105,5 +105,3 @@ Rome isn't yet able to pick up the `rome.json` configuration in [multi-root work
 ### Disable Rome for workspaces without a `rome.json` configuration
 
 You can set Rome's [`rome.requireConfiguration`](#romerequireconfiguration) setting to `true` to disable Rome's formatter, linter, and syntax errors for projects without a `rome.json` file.
-
-

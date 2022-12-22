@@ -1,6 +1,8 @@
 use crate::capabilities::server_capabilities;
 use crate::requests::syntax_tree::{SyntaxTreePayload, SYNTAX_TREE_REQUEST};
-use crate::session::{ClientInformation, Session, SessionHandle, SessionKey};
+use crate::session::{
+    CapabilitySet, CapabilityStatus, ClientInformation, Session, SessionHandle, SessionKey,
+};
 use crate::utils::{into_lsp_error, panic_to_lsp_error};
 use crate::{handlers, requests};
 use futures::future::ready;
@@ -110,131 +112,82 @@ impl LSPServer {
         Ok(RageResult { entries })
     }
 
-    async fn register_capabilities(&self, registrations: Vec<Registration>) {
-        let methods = registrations
-            .iter()
-            .map(|reg| reg.method.clone())
-            .collect::<Vec<_>>()
-            .join(", ");
-
-        if let Err(e) = self.session.client.register_capability(registrations).await {
-            error!("Error registering {:?} capability: {}", methods, e);
-        }
-    }
-
-    async fn unregister_capabilities(&self, registrations: Vec<Unregistration>) {
-        let methods = registrations
-            .iter()
-            .map(|reg| reg.method.clone())
-            .collect::<Vec<_>>()
-            .join(", ");
-
-        if let Err(e) = self
-            .session
-            .client
-            .unregister_capability(registrations)
-            .await
-        {
-            error!("Error unregistering {:?} capability: {}", methods, e);
-        }
-    }
-
     async fn setup_capabilities(&self) {
+        let mut capabilities = CapabilitySet::default();
+
+        capabilities.add_capability(
+            "rome_did_change_extension_settings",
+            "workspace/didChangeConfiguration",
+            if self.session.can_register_did_change_configuration() {
+                CapabilityStatus::Enable(None)
+            } else {
+                CapabilityStatus::Disable
+            },
+        );
+
+        capabilities.add_capability(
+            "rome_did_change_workspace_settings",
+            "workspace/didChangeWatchedFiles",
+            if let Some(base_path) = self.session.base_path() {
+                CapabilityStatus::Enable(Some(json!(DidChangeWatchedFilesRegistrationOptions {
+                    watchers: vec![FileSystemWatcher {
+                        glob_pattern: format!("{}/rome.json", base_path.display()),
+                        kind: Some(WatchKind::all()),
+                    }],
+                })))
+            } else {
+                CapabilityStatus::Disable
+            },
+        );
+
+        capabilities.add_capability(
+            "rome_formatting",
+            "textDocument/formatting",
+            if self.session.is_linting_and_formatting_disabled() {
+                CapabilityStatus::Disable
+            } else {
+                CapabilityStatus::Enable(None)
+            },
+        );
+        capabilities.add_capability(
+            "rome_range_formatting",
+            "textDocument/rangeFormatting",
+            if self.session.is_linting_and_formatting_disabled() {
+                CapabilityStatus::Disable
+            } else {
+                CapabilityStatus::Enable(None)
+            },
+        );
+        capabilities.add_capability(
+            "rome_on_type_formatting",
+            "textDocument/onTypeFormatting",
+            if self.session.is_linting_and_formatting_disabled() {
+                CapabilityStatus::Disable
+            } else {
+                CapabilityStatus::Enable(Some(json!(DocumentOnTypeFormattingRegistrationOptions {
+                    document_selector: None,
+                    first_trigger_character: String::from("}"),
+                    more_trigger_character: Some(vec![String::from("]"), String::from(")")]),
+                })))
+            },
+        );
+
         let rename = {
             let config = self.session.extension_settings.read().ok();
             config.and_then(|x| x.settings.rename).unwrap_or(false)
         };
 
-        let mut register = Vec::new();
-        let mut unregister = Vec::new();
+        capabilities.add_capability(
+            "rome_rename",
+            "textDocument/rename",
+            if rename {
+                CapabilityStatus::Enable(None)
+            } else {
+                CapabilityStatus::Disable
+            },
+        );
 
-        if self.session.can_register_did_change_configuration() {
-            register.push(Registration {
-                id: "workspace/didChangeConfiguration".to_string(),
-                method: "workspace/didChangeConfiguration".to_string(),
-                register_options: None,
-            });
-        }
-
-        let base_path = self.session.base_path();
-
-        if let Some(base_path) = base_path {
-            let registration_options = DidChangeWatchedFilesRegistrationOptions {
-                watchers: vec![FileSystemWatcher {
-                    glob_pattern: format!("{}/rome.json", base_path.display()),
-                    kind: Some(WatchKind::all()),
-                }],
-            };
-            register.push(Registration {
-                id: "workspace/didChangeWatchedFiles".to_string(),
-                method: "workspace/didChangeWatchedFiles".to_string(),
-                register_options: Some(serde_json::to_value(registration_options).unwrap()),
-            });
-        }
-
-        if self.session.is_linting_and_formatting_disabled() {
-            unregister.extend([
-                Unregistration {
-                    id: "textDocument/formatting".to_string(),
-                    method: "textDocument/formatting".to_string(),
-                },
-                Unregistration {
-                    id: "textDocument/rangeFormatting".to_string(),
-                    method: "textDocument/rangeFormatting".to_string(),
-                },
-                Unregistration {
-                    id: "textDocument/onTypeFormatting".to_string(),
-                    method: "textDocument/onTypeFormatting".to_string(),
-                },
-            ]);
-        } else {
-            register.extend([
-                Registration {
-                    id: "textDocument/formatting".to_string(),
-                    method: "textDocument/formatting".to_string(),
-                    register_options: Some(json!(TextDocumentRegistrationOptions {
-                        document_selector: None
-                    })),
-                },
-                Registration {
-                    id: "textDocument/rangeFormatting".to_string(),
-                    method: "textDocument/rangeFormatting".to_string(),
-                    register_options: Some(json!(TextDocumentRegistrationOptions {
-                        document_selector: None
-                    })),
-                },
-                Registration {
-                    id: "textDocument/onTypeFormatting".to_string(),
-                    method: "textDocument/onTypeFormatting".to_string(),
-                    register_options: Some(json!(DocumentOnTypeFormattingRegistrationOptions {
-                        document_selector: None,
-                        first_trigger_character: String::from("}"),
-                        more_trigger_character: Some(vec![String::from("]"), String::from(")")]),
-                    })),
-                },
-            ]);
-        }
-
-        if rename {
-            register.push(Registration {
-                id: "textDocument/rename".to_string(),
-                method: "textDocument/rename".to_string(),
-                register_options: None,
-            });
-        } else {
-            unregister.push(Unregistration {
-                id: "textDocument/rename".to_string(),
-                method: "textDocument/rename".to_string(),
-            });
-        }
-
-        if !register.is_empty() {
-            self.register_capabilities(register).await;
-        }
-
-        if !unregister.is_empty() {
-            self.unregister_capabilities(unregister).await;
-        }
+        self.session.register_capabilities(capabilities).await;
     }
 }
 
