@@ -2,10 +2,14 @@ use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic
 use rome_console::markup;
 use rome_js_syntax::{
     AnyJsArrayAssignmentPatternElement, AnyJsArrayElement, AnyJsAssignment, AnyJsAssignmentPattern,
-    AnyJsExpression, AnyJsObjectAssignmentPatternMember, AnyJsObjectMember, JsAssignmentExpression,
-    JsAssignmentOperator, JsIdentifierAssignment, JsLanguage, JsReferenceIdentifier,
+    AnyJsExpression, AnyJsName, AnyJsObjectAssignmentPatternMember, AnyJsObjectMember,
+    JsAssignmentExpression, JsAssignmentOperator, JsIdentifierAssignment, JsLanguage, JsName,
+    JsPrivateName, JsReferenceIdentifier, JsStaticMemberAssignment, JsStaticMemberExpression,
+    JsSyntaxToken,
 };
-use rome_rowan::{AstNode, AstSeparatedList, AstSeparatedListNodesIterator, SyntaxError};
+use rome_rowan::{
+    AstNode, AstSeparatedList, AstSeparatedListNodesIterator, SyntaxError, TextRange,
+};
 use std::collections::VecDeque;
 use std::iter::FusedIterator;
 
@@ -34,19 +38,123 @@ declare_rule! {
     }
 }
 
+/// A convenient iterator that continues to return the nested [JsStaticMemberExpression]
+#[derive(Debug, Clone)]
+struct JsStaticMemberAssignmentIterator {
+    source: JsStaticMemberAssignment,
+    current_member_expression: Option<JsStaticMemberExpression>,
+    drained: bool,
+}
+
+impl JsStaticMemberAssignmentIterator {
+    fn new(source: JsStaticMemberAssignment) -> Self {
+        Self {
+            source,
+            current_member_expression: None,
+            drained: false,
+        }
+    }
+}
+
+impl Iterator for JsStaticMemberAssignmentIterator {
+    type Item = (AnyJsName, Option<JsReferenceIdentifier>);
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.drained {
+            return None;
+        }
+
+        let (name, object) =
+            if let Some(current_member_expression) = self.current_member_expression.as_ref() {
+                (
+                    current_member_expression.member().ok(),
+                    current_member_expression.object().ok(),
+                )
+            } else {
+                (self.source.member().ok(), self.source.object().ok())
+            };
+
+        let name = name?;
+        let reference = match object {
+            Some(AnyJsExpression::JsStaticMemberExpression(expression)) => {
+                self.current_member_expression = Some(expression);
+                None
+            }
+            Some(AnyJsExpression::JsIdentifierExpression(identifier)) => {
+                // the left side of the static member expression is an identifier, which means that we can't
+                // go any further and we should mark the iterator and drained
+                self.drained = true;
+                Some(identifier.name().ok()?)
+            }
+            _ => return None,
+        };
+        Some((name, reference))
+    }
+}
+
+impl FusedIterator for JsStaticMemberAssignmentIterator {}
+
+/// A convenient iterator that continues to return the nested [JsStaticMemberExpression]
+#[derive(Debug, Clone)]
+struct JsStaticMemberExpressionIterator {
+    source: JsStaticMemberExpression,
+    current_member_expression: Option<JsStaticMemberExpression>,
+    drained: bool,
+}
+
+impl JsStaticMemberExpressionIterator {
+    fn new(source: JsStaticMemberExpression) -> Self {
+        Self {
+            source,
+            current_member_expression: None,
+            drained: false,
+        }
+    }
+}
+
+impl Iterator for JsStaticMemberExpressionIterator {
+    type Item = (AnyJsName, Option<JsReferenceIdentifier>);
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.drained {
+            return None;
+        }
+
+        let current_expression =
+            if let Some(current_member_expression) = self.current_member_expression.as_ref() {
+                current_member_expression
+            } else {
+                &self.source
+            };
+
+        let name = current_expression.member().ok()?;
+        let object = current_expression.object().ok();
+        let reference = match object {
+            Some(AnyJsExpression::JsStaticMemberExpression(expression)) => {
+                self.current_member_expression = Some(expression);
+                None
+            }
+            Some(AnyJsExpression::JsIdentifierExpression(identifier)) => {
+                // the left side of the static member expression is an identifier, which means that we can't
+                // go any further and we should mark the iterator and drained
+                self.drained = true;
+                Some(identifier.name().ok()?)
+            }
+            _ => return None,
+        };
+        Some((name, reference))
+    }
+}
+
+impl FusedIterator for JsStaticMemberExpressionIterator {}
+
 /// Convenient type to map assignments that have similar arms
 #[derive(Debug, Clone)]
 enum AnyAssignmentLike {
     /// No assignments
     None,
-    /// To track assignments like
-    /// ```js
-    /// a = a
-    /// ```
-    Identifiers {
-        left: JsIdentifierAssignment,
-        right: JsReferenceIdentifier,
-    },
+    /// To track identifiers that will be compared and check if they are the same
+    Identifiers(IdentifiersLike),
     /// To track assignments like
     /// ```js
     /// [a] = [a]
@@ -62,6 +170,14 @@ enum AnyAssignmentLike {
     Object {
         left: AstSeparatedListNodesIterator<JsLanguage, AnyJsObjectAssignmentPatternMember>,
         right: AstSeparatedListNodesIterator<JsLanguage, AnyJsObjectMember>,
+    },
+    /// To track static expressions
+    /// ```js
+    /// a.b = a.b
+    /// ```
+    StaticExpression {
+        left: JsStaticMemberAssignmentIterator,
+        right: JsStaticMemberExpressionIterator,
     },
 }
 
@@ -102,9 +218,18 @@ impl TryFrom<(AnyJsAssignmentPattern, AnyJsExpression)> for AnyAssignmentLike {
                     left,
                 )),
                 AnyJsExpression::JsIdentifierExpression(right),
-            ) => AnyAssignmentLike::Identifiers {
+            ) => AnyAssignmentLike::Identifiers(IdentifiersLike::IdentifierAndReference(
                 left,
-                right: right.name()?,
+                right.name()?,
+            )),
+            (
+                AnyJsAssignmentPattern::AnyJsAssignment(AnyJsAssignment::JsStaticMemberAssignment(
+                    left,
+                )),
+                AnyJsExpression::JsStaticMemberExpression(right),
+            ) => AnyAssignmentLike::StaticExpression {
+                left: JsStaticMemberAssignmentIterator::new(left),
+                right: JsStaticMemberExpressionIterator::new(right),
             },
 
             _ => AnyAssignmentLike::None,
@@ -121,8 +246,59 @@ struct SameIdentifiers {
     assignment_queue: VecDeque<AnyAssignmentLike>,
 }
 
+#[derive(Debug, Clone)]
+pub(crate) enum IdentifiersLike {
+    IdentifierAndReference(JsIdentifierAssignment, JsReferenceIdentifier),
+    References(JsReferenceIdentifier, JsReferenceIdentifier),
+    Name(JsName, JsName),
+    PrivateName(JsPrivateName, JsPrivateName),
+}
+
+impl TryFrom<(AnyJsName, AnyJsName)> for IdentifiersLike {
+    type Error = ();
+
+    fn try_from((left, right): (AnyJsName, AnyJsName)) -> Result<Self, Self::Error> {
+        match (left, right) {
+            (AnyJsName::JsName(left), AnyJsName::JsName(right)) => Ok(Self::Name(left, right)),
+            (AnyJsName::JsPrivateName(left), AnyJsName::JsPrivateName(right)) => {
+                Ok(Self::PrivateName(left, right))
+            }
+            _ => Err(()),
+        }
+    }
+}
+
+impl IdentifiersLike {
+    fn left_range(&self) -> TextRange {
+        match self {
+            IdentifiersLike::IdentifierAndReference(left, _) => left.range(),
+            IdentifiersLike::Name(left, _) => left.range(),
+            IdentifiersLike::PrivateName(left, _) => left.range(),
+            IdentifiersLike::References(left, _) => left.range(),
+        }
+    }
+
+    fn right_range(&self) -> TextRange {
+        match self {
+            IdentifiersLike::IdentifierAndReference(_, right) => right.range(),
+            IdentifiersLike::Name(_, right) => right.range(),
+            IdentifiersLike::PrivateName(_, right) => right.range(),
+            IdentifiersLike::References(_, right) => right.range(),
+        }
+    }
+
+    fn name(&self) -> Option<JsSyntaxToken> {
+        match self {
+            IdentifiersLike::IdentifierAndReference(_, right) => right.value_token().ok(),
+            IdentifiersLike::Name(_, right) => right.value_token().ok(),
+            IdentifiersLike::PrivateName(_, right) => right.value_token().ok(),
+            IdentifiersLike::References(_, right) => right.value_token().ok(),
+        }
+    }
+}
+
 impl Iterator for SameIdentifiers {
-    type Item = (JsIdentifierAssignment, JsReferenceIdentifier);
+    type Item = IdentifiersLike;
 
     fn next(&mut self) -> Option<Self::Item> {
         loop {
@@ -167,9 +343,10 @@ impl Iterator for SameIdentifiers {
                                 ),
                                 AnyJsObjectMember::JsShorthandPropertyObjectMember(right)
                             ) => {
-                                AnyAssignmentLike::Identifiers {
-                                    left: left.identifier().ok()?, right: right.name().ok()?
-                                }
+                                AnyAssignmentLike::Identifiers(IdentifiersLike::IdentifierAndReference(
+                                    left.identifier().ok()?,
+                                    right.name().ok()?
+                                ))
                             }
 
                             (
@@ -186,10 +363,10 @@ impl Iterator for SameIdentifiers {
                                         ),
                                         AnyJsExpression::JsIdentifierExpression(right)
                                     ) => {
-                                        AnyAssignmentLike::Identifiers {
+                                        AnyAssignmentLike::Identifiers(IdentifiersLike::IdentifierAndReference(
                                             left,
-                                            right: right.name().ok()?
-                                        }
+                                            right.name().ok()?
+                                        ))
 
                                     }
                                     // matches {a: [b]} = {a: [b]}
@@ -225,7 +402,43 @@ impl Iterator for SameIdentifiers {
                         AnyAssignmentLike::None
                     }
                 }
-                _ => self.current_assignment_like.clone(),
+                AnyAssignmentLike::StaticExpression { left, right } => {
+                    if let (Some(left), Some(right)) = (left.next(), right.next()) {
+                        let (left_name, left_reference) = left;
+                        let (right_name, right_reference) = right;
+                        if let Ok(identifier_like) =
+                            IdentifiersLike::try_from((left_name, right_name))
+                        {
+                            if with_same_identifiers(&identifier_like).is_some() {
+                                if let (Some(left_reference), Some(right_reference)) =
+                                    (left_reference, right_reference)
+                                {
+                                    if with_same_identifiers(&IdentifiersLike::References(
+                                        left_reference,
+                                        right_reference,
+                                    ))
+                                    .is_some()
+                                    {
+                                        AnyAssignmentLike::Identifiers(identifier_like)
+                                    } else {
+                                        AnyAssignmentLike::None
+                                    }
+                                } else {
+                                    AnyAssignmentLike::None
+                                }
+                            } else {
+                                AnyAssignmentLike::None
+                            }
+                        } else {
+                            AnyAssignmentLike::None
+                        }
+                    } else {
+                        AnyAssignmentLike::None
+                    }
+                }
+                AnyAssignmentLike::None | AnyAssignmentLike::Identifiers { .. } => {
+                    self.current_assignment_like.clone()
+                }
             };
 
             // if the queue is empty, we set the current assignment to `None`,
@@ -246,12 +459,15 @@ impl Iterator for SameIdentifiers {
                         return None;
                     }
                 }
-                AnyAssignmentLike::Identifiers { left, right } => {
-                    return Some((left, right));
+                AnyAssignmentLike::Identifiers(identifier_like) => {
+                    return Some(identifier_like);
                 }
+
                 // we have a sub structure, which means we queue the current assignment,
                 // and inspect the sub structure
-                AnyAssignmentLike::Object { .. } | AnyAssignmentLike::Arrays { .. } => {
+                AnyAssignmentLike::StaticExpression { .. }
+                | AnyAssignmentLike::Object { .. }
+                | AnyAssignmentLike::Arrays { .. } => {
                     self.assignment_queue
                         .push_back(self.current_assignment_like.clone());
                     self.current_assignment_like = new_assignment_like;
@@ -265,39 +481,57 @@ impl Iterator for SameIdentifiers {
 impl FusedIterator for SameIdentifiers {}
 
 /// Checks if the left identifier and the right reference have the same name
-fn with_same_identifiers(
-    left: &JsIdentifierAssignment,
-    right: &JsReferenceIdentifier,
-) -> Option<(JsIdentifierAssignment, JsReferenceIdentifier)> {
-    let left_value = left.name_token().ok()?;
-    let right_value = right.value_token().ok()?;
-    if left_value.text_trimmed() == right_value.text_trimmed() {
-        return Some((left.clone(), right.clone()));
-    }
+fn with_same_identifiers(identifiers_like: &IdentifiersLike) -> Option<()> {
+    let (left_value, right_value) = match &identifiers_like {
+        IdentifiersLike::IdentifierAndReference(left, right) => {
+            let left_value = left.name_token().ok()?;
+            let right_value = right.value_token().ok()?;
+            (left_value, right_value)
+        }
+        IdentifiersLike::Name(left, right) => {
+            let left_value = left.value_token().ok()?;
+            let right_value = right.value_token().ok()?;
+            (left_value, right_value)
+        }
+        IdentifiersLike::PrivateName(left, right) => {
+            let left_value = left.value_token().ok()?;
+            let right_value = right.value_token().ok()?;
+            (left_value, right_value)
+        }
+        IdentifiersLike::References(left, right) => {
+            let left_value = left.value_token().ok()?;
+            let right_value = right.value_token().ok()?;
+            (left_value, right_value)
+        }
+    };
 
-    None
+    if left_value.text_trimmed() == right_value.text_trimmed() {
+        return Some(());
+    } else {
+        None
+    }
 }
 
 /// It traverses an [AnyAssignmentLike] and tracks the identifiers that have the same name
 fn compare_assignment_like(
     pair_kind: AnyAssignmentLike,
-    incorrect_identifiers: &mut Vec<(JsIdentifierAssignment, JsReferenceIdentifier)>,
+    incorrect_identifiers: &mut Vec<IdentifiersLike>,
 ) {
     let mut same_identifiers = SameIdentifiers {
         current_assignment_like: pair_kind.clone(),
         assignment_queue: VecDeque::new(),
     };
 
-    while let Some((left, right)) = same_identifiers.next() {
-        if let Some(pair) = with_same_identifiers(&left, &right) {
-            incorrect_identifiers.push(pair);
+    while let Some(identifier_like) = same_identifiers.next() {
+        if let Some(_) = with_same_identifiers(&identifier_like) {
+            incorrect_identifiers.push(identifier_like);
         }
     }
 }
 
 impl Rule for NoSelfAssignment {
     type Query = Ast<JsAssignmentExpression>;
-    type State = (JsIdentifierAssignment, JsReferenceIdentifier);
+    type State = IdentifiersLike;
     type Signals = Vec<Self::State>;
     type Options = ();
 
@@ -329,18 +563,18 @@ impl Rule for NoSelfAssignment {
         state
     }
 
-    fn diagnostic(_: &RuleContext<Self>, (left, right): &Self::State) -> Option<RuleDiagnostic> {
-        let name = right.value_token().ok()?;
+    fn diagnostic(_: &RuleContext<Self>, identifier_like: &Self::State) -> Option<RuleDiagnostic> {
+        let name = identifier_like.name()?;
         Some(
             RuleDiagnostic::new(
                 rule_category!(),
-                right.range(),
+                identifier_like.right_range(),
                 markup! {
                     {{name.text_trimmed()}}" is assigned to itself."
                 },
             )
             .detail(
-                left.range(),
+                identifier_like.left_range(),
                 markup! {
                     "This is where is assigned."
                 },

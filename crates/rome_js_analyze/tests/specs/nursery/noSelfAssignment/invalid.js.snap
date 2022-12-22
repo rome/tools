@@ -21,6 +21,8 @@ a = a;
 ({1: b} = {[1]: b});
 ({a: {b}, c: [d]} = {a: {b}, c: [d]});
 ({a, b} = {a, ...x, b});
+a.b = a.b;
+a.c.b = a.ZZ.b;
 
 ```
 
@@ -533,7 +535,7 @@ invalid.js:16:26 lint/nursery/noSelfAssignment ━━━━━━━━━━━
   > 16 │ ({a: {b}, c: [d]} = {a: {b}, c: [d]});
        │                          ^
     17 │ ({a, b} = {a, ...x, b});
-    18 │ 
+    18 │ a.b = a.b;
   
   i This is where is assigned.
   
@@ -542,7 +544,7 @@ invalid.js:16:26 lint/nursery/noSelfAssignment ━━━━━━━━━━━
   > 16 │ ({a: {b}, c: [d]} = {a: {b}, c: [d]});
        │       ^
     17 │ ({a, b} = {a, ...x, b});
-    18 │ 
+    18 │ a.b = a.b;
   
 
 ```
@@ -557,7 +559,7 @@ invalid.js:16:34 lint/nursery/noSelfAssignment ━━━━━━━━━━━
   > 16 │ ({a: {b}, c: [d]} = {a: {b}, c: [d]});
        │                                  ^
     17 │ ({a, b} = {a, ...x, b});
-    18 │ 
+    18 │ a.b = a.b;
   
   i This is where is assigned.
   
@@ -566,7 +568,7 @@ invalid.js:16:34 lint/nursery/noSelfAssignment ━━━━━━━━━━━
   > 16 │ ({a: {b}, c: [d]} = {a: {b}, c: [d]});
        │               ^
     17 │ ({a, b} = {a, ...x, b});
-    18 │ 
+    18 │ a.b = a.b;
   
 
 ```
@@ -581,7 +583,7 @@ invalid.js:16:34 lint/nursery/noSelfAssignment ━━━━━━━━━━━
   > 16 │ ({a: {b}, c: [d]} = {a: {b}, c: [d]});
        │                                  ^
     17 │ ({a, b} = {a, ...x, b});
-    18 │ 
+    18 │ a.b = a.b;
   
   i This is where is assigned.
   
@@ -590,7 +592,7 @@ invalid.js:16:34 lint/nursery/noSelfAssignment ━━━━━━━━━━━
   > 16 │ ({a: {b}, c: [d]} = {a: {b}, c: [d]});
        │               ^
     17 │ ({a, b} = {a, ...x, b});
-    18 │ 
+    18 │ a.b = a.b;
   
 
 ```
@@ -604,7 +606,8 @@ invalid.js:17:12 lint/nursery/noSelfAssignment ━━━━━━━━━━━
     16 │ ({a: {b}, c: [d]} = {a: {b}, c: [d]});
   > 17 │ ({a, b} = {a, ...x, b});
        │            ^
-    18 │ 
+    18 │ a.b = a.b;
+    19 │ a.c.b = a.ZZ.b;
   
   i This is where is assigned.
   
@@ -612,7 +615,32 @@ invalid.js:17:12 lint/nursery/noSelfAssignment ━━━━━━━━━━━
     16 │ ({a: {b}, c: [d]} = {a: {b}, c: [d]});
   > 17 │ ({a, b} = {a, ...x, b});
        │   ^
-    18 │ 
+    18 │ a.b = a.b;
+    19 │ a.c.b = a.ZZ.b;
+  
+
+```
+
+```
+invalid.js:18:9 lint/nursery/noSelfAssignment ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! b is assigned to itself.
+  
+    16 │ ({a: {b}, c: [d]} = {a: {b}, c: [d]});
+    17 │ ({a, b} = {a, ...x, b});
+  > 18 │ a.b = a.b;
+       │         ^
+    19 │ a.c.b = a.ZZ.b;
+    20 │ 
+  
+  i This is where is assigned.
+  
+    16 │ ({a: {b}, c: [d]} = {a: {b}, c: [d]});
+    17 │ ({a, b} = {a, ...x, b});
+  > 18 │ a.b = a.b;
+       │   ^
+    19 │ a.c.b = a.ZZ.b;
+    20 │ 
   
 
 ```

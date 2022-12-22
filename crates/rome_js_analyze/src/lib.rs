@@ -173,7 +173,7 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"[{a}, {b}] = [{a}, {b}]"#;
+        const SOURCE: &str = r#"c.b = a.b"#;
 
         let parsed = parse(SOURCE, SourceType::jsx());
 
