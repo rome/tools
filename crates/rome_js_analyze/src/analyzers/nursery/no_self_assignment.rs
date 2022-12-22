@@ -113,6 +113,271 @@ impl Rule for NoSelfAssignment {
     }
 }
 
+/// It traverses an [AnyAssignmentLike] and tracks the identifiers that have the same name
+fn compare_assignment_like(
+    any_assignment_like: AnyAssignmentLike,
+    incorrect_identifiers: &mut Vec<IdentifiersLike>,
+) {
+    let mut same_identifiers = SameIdentifiers {
+        current_assignment_like: any_assignment_like.clone(),
+        assignment_queue: VecDeque::new(),
+    };
+
+    while let Some(identifier_like) = same_identifiers.next() {
+        if let Some(_) = with_same_identifiers(&identifier_like) {
+            incorrect_identifiers.push(identifier_like);
+        }
+    }
+}
+
+/// Convenient type to iterate through all the identifiers that can be found
+/// inside an assignment expression.
+struct SameIdentifiers {
+    /// The current assignment-like that is being inspected
+    current_assignment_like: AnyAssignmentLike,
+    /// A queue of assignments-like that are inspected during the traversal.
+    ///
+    /// The queue is used to "save" the current traversal when it's needed to start a new one.
+    ///
+    /// These kind of cases happen, for example, when we have a code like
+    ///
+    /// ```js
+    /// [ a, [b, c], d ]
+    /// ```
+    ///
+    /// After `a`, we find a new assignment-like pattern that requires a new traversal, so we save the
+    /// current traversal in the queue and we start a new one. When the inner traversal is finished,
+    /// we resume the previous one.
+    assignment_queue: VecDeque<AnyAssignmentLike>,
+}
+
+impl SameIdentifiers {
+    /// Any assignment-like has a left arm and a right arm. Both arms needs to be "similar"
+    /// in order to be compared. If during the traversal part of each arm differ, they are then ignored
+    ///
+    /// The iterator logic makes sure to return the next eligible assignment-like.
+    fn next_assignment_like(&mut self) -> Option<AnyAssignmentLike> {
+        let current_assignment_like = &mut self.current_assignment_like;
+        match current_assignment_like {
+            AnyAssignmentLike::Arrays { left, right } => {
+                let new_assignment_like = Self::next_array_assignment(left, right);
+                // In case we have nested array/object structures, we save the current
+                // pair and we restore it once this iterator is consumed
+                if let Some(new_assignment_like) = new_assignment_like.as_ref() {
+                    if new_assignment_like.has_sub_structures() {
+                        self.assignment_queue
+                            .push_back(self.current_assignment_like.clone());
+                    }
+                }
+                new_assignment_like
+            }
+            AnyAssignmentLike::Object { left, right } => {
+                let new_assignment_like = Self::next_object_assignment(left, right);
+                // In case we have nested array/object structures, we save the current
+                // pair and we restore it once this iterator is consumed
+                if let Some(new_assignment_like) = new_assignment_like.as_ref() {
+                    if new_assignment_like.has_sub_structures() {
+                        self.assignment_queue
+                            .push_back(self.current_assignment_like.clone());
+                    }
+                }
+                new_assignment_like
+            }
+            AnyAssignmentLike::StaticExpression { left, right } => {
+                Self::next_static_expression(left, right)
+            }
+            AnyAssignmentLike::None | AnyAssignmentLike::Identifiers { .. } => {
+                Some(self.current_assignment_like.clone())
+            }
+        }
+    }
+
+    /// Handles cases where the assignment is something like
+    /// ```js
+    /// [a] = [a]
+    /// ```
+    fn next_array_assignment(
+        left: &mut AstSeparatedListNodesIterator<JsLanguage, AnyJsArrayAssignmentPatternElement>,
+        right: &mut AstSeparatedListNodesIterator<JsLanguage, AnyJsArrayElement>,
+    ) -> Option<AnyAssignmentLike> {
+        if let (Some(left_element), Some(right_element)) = (left.next(), right.next()) {
+            let left_element = left_element.ok()?;
+            let right_element = right_element.ok()?;
+
+            match (left_element, right_element) {
+                (
+                    AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(left),
+                    AnyJsArrayElement::AnyJsExpression(right),
+                ) => {
+                    let new_assignment_like = AnyAssignmentLike::try_from((left, right)).ok()?;
+
+                    return Some(new_assignment_like);
+                }
+                _ => {}
+            }
+        }
+        Some(AnyAssignmentLike::None)
+    }
+
+    /// Computes the next assignment like.
+    ///
+    /// It handles code like:
+    ///
+    /// ```js
+    /// {a} = {b}
+    /// ```
+    fn next_object_assignment(
+        left: &mut AstSeparatedListNodesIterator<JsLanguage, AnyJsObjectAssignmentPatternMember>,
+        right: &mut AstSeparatedListNodesIterator<JsLanguage, AnyJsObjectMember>,
+    ) -> Option<AnyAssignmentLike> {
+        let result = if let (Some(left_element), Some(right_element)) = (left.next(), right.next())
+        {
+            let left_element = left_element.ok()?;
+            let right_element = right_element.ok()?;
+
+            match (left_element, right_element) {
+                // matches {a} = {a}
+                (
+                    AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(
+                        left,
+                    ),
+                    AnyJsObjectMember::JsShorthandPropertyObjectMember(right),
+                ) => AnyAssignmentLike::Identifiers(IdentifiersLike::IdentifierAndReference(
+                    left.identifier().ok()?,
+                    right.name().ok()?,
+                )),
+
+                (
+                    AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(left),
+                    AnyJsObjectMember::JsPropertyObjectMember(right),
+                ) => {
+                    let left = left.pattern().ok()?;
+                    let right = right.value().ok()?;
+                    match (left, right) {
+                        // matches {a: b} = {a: b}
+                        (
+                            AnyJsAssignmentPattern::AnyJsAssignment(
+                                AnyJsAssignment::JsIdentifierAssignment(left),
+                            ),
+                            AnyJsExpression::JsIdentifierExpression(right),
+                        ) => AnyAssignmentLike::Identifiers(
+                            IdentifiersLike::IdentifierAndReference(left, right.name().ok()?),
+                        ),
+                        // matches {a: [b]} = {a: [b]}
+                        (
+                            AnyJsAssignmentPattern::JsArrayAssignmentPattern(left),
+                            AnyJsExpression::JsArrayExpression(right),
+                        ) => AnyAssignmentLike::Arrays {
+                            left: left.elements().iter(),
+                            right: right.elements().iter(),
+                        },
+                        // matches {a: {b}} = {a: {b}}
+                        (
+                            AnyJsAssignmentPattern::JsObjectAssignmentPattern(left),
+                            AnyJsExpression::JsObjectExpression(right),
+                        ) => AnyAssignmentLike::Object {
+                            left: left.properties().iter(),
+                            right: right.members().iter(),
+                        },
+                        _ => AnyAssignmentLike::None,
+                    }
+                }
+                _ => AnyAssignmentLike::None,
+            }
+        } else {
+            AnyAssignmentLike::None
+        };
+
+        Some(result)
+    }
+
+    /// Computes the next static expression.
+    ///
+    /// It handles codes like:
+    ///
+    /// ```js
+    /// a.b = a.b;
+    /// a[b] = a[b];
+    /// ```
+    fn next_static_expression(
+        left: &mut AnyJsAssignmentExpressionLikeIterator,
+        right: &mut AnyJsAssignmentExpressionLikeIterator,
+    ) -> Option<AnyAssignmentLike> {
+        if let (Some(left), Some(right)) = (left.next(), right.next()) {
+            let (left_name, left_reference) = left;
+            let (right_name, right_reference) = right;
+            if let Ok(identifier_like) = IdentifiersLike::try_from((left_name, right_name)) {
+                if with_same_identifiers(&identifier_like).is_some() {
+                    if let (Some(left_reference), Some(right_reference)) =
+                        (left_reference, right_reference)
+                    {
+                        if with_same_identifiers(&IdentifiersLike::References(
+                            left_reference,
+                            right_reference,
+                        ))
+                        .is_some()
+                        {
+                            return Some(AnyAssignmentLike::Identifiers(identifier_like));
+                        }
+                    }
+                }
+            }
+        }
+        Some(AnyAssignmentLike::None)
+    }
+}
+
+impl Iterator for SameIdentifiers {
+    type Item = IdentifiersLike;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if matches!(self.current_assignment_like, AnyAssignmentLike::None) {
+            return None;
+        }
+
+        loop {
+            let new_assignment_like = self.next_assignment_like()?;
+
+            // if the queue is empty, we set the current assignment to `None`,
+            // so the next iteration will stop
+            if self.assignment_queue.is_empty() {
+                self.current_assignment_like = AnyAssignmentLike::None;
+            }
+            match new_assignment_like {
+                // if we are here, it's plausible that we consumed the current iterator and we have to
+                // resume the previous one
+                AnyAssignmentLike::None => {
+                    // we still have assignments-like to complete, so we continue the loop
+                    if let Some(pair) = self.assignment_queue.pop_front() {
+                        self.current_assignment_like = pair;
+                        continue;
+                    }
+                    // the queue is empty
+                    else {
+                        return None;
+                    }
+                }
+                AnyAssignmentLike::Identifiers(identifier_like) => {
+                    return Some(identifier_like);
+                }
+
+                // we have a sub structure, which means we queue the current assignment,
+                // and inspect the sub structure
+                AnyAssignmentLike::StaticExpression { .. }
+                | AnyAssignmentLike::Object { .. }
+                | AnyAssignmentLike::Arrays { .. } => {
+                    self.assignment_queue
+                        .push_back(self.current_assignment_like.clone());
+                    self.current_assignment_like = new_assignment_like;
+                    continue;
+                }
+            }
+        }
+    }
+}
+
+impl FusedIterator for SameIdentifiers {}
+
 /// A convenient iterator that continues to return the nested [JsStaticMemberExpression]
 #[derive(Debug, Clone)]
 struct AnyJsAssignmentExpressionLikeIterator {
@@ -207,14 +472,18 @@ impl FusedIterator for AnyJsAssignmentExpressionLikeIterator {}
 /// Convenient type to map assignments that have similar arms
 #[derive(Debug, Clone)]
 enum AnyAssignmentLike {
-    /// No assignments
+    /// No assignments. This variant is used to signal that there aren't any more assignments
+    /// to inspect
     None,
-    /// To track identifiers that will be compared and check if they are the same
+    /// To track identifiers that will be compared and check if they are the same.
     Identifiers(IdentifiersLike),
-    /// To track assignments like
+    /// To track array assignment-likes
     /// ```js
     /// [a] = [a]
     /// ```
+    ///
+    /// It stores a left iterator and a right iterator. Using iterators is useful to signal when
+    /// there aren't any more elements to inspect.
     Arrays {
         left: AstSeparatedListNodesIterator<JsLanguage, AnyJsArrayAssignmentPatternElement>,
         right: AstSeparatedListNodesIterator<JsLanguage, AnyJsArrayElement>,
@@ -223,14 +492,21 @@ enum AnyAssignmentLike {
     /// ```js
     /// {a} = {a}
     /// ```
+    ///
+    /// It stores a left iterator and a right iterator. Using iterators is useful to signal when
+    /// there aren't any more elements to inspect.
     Object {
         left: AstSeparatedListNodesIterator<JsLanguage, AnyJsObjectAssignmentPatternMember>,
         right: AstSeparatedListNodesIterator<JsLanguage, AnyJsObjectMember>,
     },
     /// To track static expressions
     /// ```js
-    /// a.b = a.b
+    /// a.b = a.b;
+    /// a[b] = a[b];
     /// ```
+    ///
+    /// It stores a left iterator and a right iterator. Using iterators is useful to signal when
+    /// there aren't any more elements to inspect.
     StaticExpression {
         left: AnyJsAssignmentExpressionLikeIterator,
         right: AnyJsAssignmentExpressionLikeIterator,
@@ -336,20 +612,38 @@ impl TryFrom<(AnyJsAssignmentPattern, AnyJsExpression)> for AnyAssignmentLike {
     }
 }
 
-/// Convenient type to loop though all the identifiers that can be found
-/// inside an assignment expression.
-struct SameIdentifiers {
-    /// To current assignment like that is being inspected
-    current_assignment_like: AnyAssignmentLike,
-    /// A queue of assignments that are inspected during the traversal
-    assignment_queue: VecDeque<AnyAssignmentLike>,
-}
-
+/// Convenient type that pair possible combination of "identifiers" like that we can find.
+///
+/// Each variant has two types:
+/// - the first one is the identifier found in the left arm of the assignment;
+/// - the second one is the identifier found in the right arm of the assignment;
 #[derive(Debug, Clone)]
 pub(crate) enum IdentifiersLike {
+    /// To store identifiers found in code like:
+    ///
+    /// ```js
+    /// a = a;
+    /// [a] = [a];
+    /// {a} = {a};
+    /// ```
     IdentifierAndReference(JsIdentifierAssignment, JsReferenceIdentifier),
+    /// To store identifiers found in code like:
+    ///
+    /// ```js
+    /// a[b] = a[b];
+    /// ```
     References(JsReferenceIdentifier, JsReferenceIdentifier),
+    /// To store identifiers found in code like:
+    ///
+    /// ```js
+    /// a.b = a.b;
+    /// ```
     Name(JsName, JsName),
+    /// To store identifiers found in code like:
+    ///
+    /// ```js
+    /// a.#b = a.#b;
+    /// ```
     PrivateName(JsPrivateName, JsPrivateName),
 }
 
@@ -411,189 +705,6 @@ impl IdentifiersLike {
     }
 }
 
-impl Iterator for SameIdentifiers {
-    type Item = IdentifiersLike;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        loop {
-            let new_assignment_like = match &mut self.current_assignment_like {
-                AnyAssignmentLike::Arrays { left, right } => {
-                    if let (Some(left_element), Some(right_element)) = (left.next(), right.next()) {
-                        let left_element = left_element.ok()?;
-                        let right_element = right_element.ok()?;
-
-                        match (left_element, right_element) {
-                            // matches [a] = [a]
-                            (
-                                AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(left),
-                                AnyJsArrayElement::AnyJsExpression(right),
-                            ) => {
-                                let new_pair = AnyAssignmentLike::try_from((left, right)).ok()?;
-                                // In case we have nested array/object structures, we save the current
-                                // pair and we restore it once this iterator is consumed
-                                if new_pair.has_sub_structures() {
-                                    self.assignment_queue
-                                        .push_back(self.current_assignment_like.clone());
-                                }
-                                new_pair
-                            }
-                            _ => AnyAssignmentLike::None,
-                        }
-                    } else {
-                        AnyAssignmentLike::None
-                    }
-                }
-                AnyAssignmentLike::Object { left, right } => {
-                    if let (Some(left_element), Some(right_element)) = (left.next(), right.next()) {
-                        let left_element = left_element.ok()?;
-                        let right_element = right_element.ok()?;
-
-                        match (left_element, right_element) {
-                            // matches {a} = {a}
-                            (
-
-                                AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternShorthandProperty(
-                                    left
-                                ),
-                                AnyJsObjectMember::JsShorthandPropertyObjectMember(right)
-                            ) => {
-                                AnyAssignmentLike::Identifiers(IdentifiersLike::IdentifierAndReference(
-                                    left.identifier().ok()?,
-                                    right.name().ok()?
-                                ))
-                            }
-
-                            (
-                                AnyJsObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(left),
-                                AnyJsObjectMember::JsPropertyObjectMember(right)
-                            ) => {
-                                let left = left.pattern().ok()?;
-                                let right = right.value().ok()?;
-                                match (left, right) {
-                                    // matches {a: b} = {a: b}
-                                    (
-                                        AnyJsAssignmentPattern::AnyJsAssignment(
-                                            AnyJsAssignment::JsIdentifierAssignment(left)
-                                        ),
-                                        AnyJsExpression::JsIdentifierExpression(right)
-                                    ) => {
-                                        AnyAssignmentLike::Identifiers(IdentifiersLike::IdentifierAndReference(
-                                            left,
-                                            right.name().ok()?
-                                        ))
-
-                                    }
-                                    // matches {a: [b]} = {a: [b]}
-                                    (
-                                        AnyJsAssignmentPattern::JsArrayAssignmentPattern(left),
-                                        AnyJsExpression::JsArrayExpression(right)
-                                    ) => {
-                                        self.assignment_queue.push_back(self.current_assignment_like.clone());
-                                        AnyAssignmentLike::Arrays {
-                                            left: left.elements().iter(),
-                                            right: right.elements().iter()
-                                        }
-                                    }
-                                    // matches {a: {b}} = {a: {b}}
-                                    (
-                                        AnyJsAssignmentPattern::JsObjectAssignmentPattern(left),
-                                        AnyJsExpression::JsObjectExpression(right)
-                                    ) => {
-                                        self.assignment_queue.push_back(self.current_assignment_like.clone());
-                                        AnyAssignmentLike::Object {
-                                            left: left.properties().iter(),
-                                            right: right.members().iter()
-                                        }
-                                    }
-                                    _ => AnyAssignmentLike::None
-                                }
-                            }
-                            _ => {
-                                AnyAssignmentLike::None
-                            },
-                        }
-                    } else {
-                        AnyAssignmentLike::None
-                    }
-                }
-                AnyAssignmentLike::StaticExpression { left, right } => {
-                    if let (Some(left), Some(right)) = (left.next(), right.next()) {
-                        let (left_name, left_reference) = left;
-                        let (right_name, right_reference) = right;
-                        if let Ok(identifier_like) =
-                            IdentifiersLike::try_from((left_name, right_name))
-                        {
-                            if with_same_identifiers(&identifier_like).is_some() {
-                                if let (Some(left_reference), Some(right_reference)) =
-                                    (left_reference, right_reference)
-                                {
-                                    if with_same_identifiers(&IdentifiersLike::References(
-                                        left_reference,
-                                        right_reference,
-                                    ))
-                                    .is_some()
-                                    {
-                                        AnyAssignmentLike::Identifiers(identifier_like)
-                                    } else {
-                                        AnyAssignmentLike::None
-                                    }
-                                } else {
-                                    AnyAssignmentLike::None
-                                }
-                            } else {
-                                AnyAssignmentLike::None
-                            }
-                        } else {
-                            AnyAssignmentLike::None
-                        }
-                    } else {
-                        AnyAssignmentLike::None
-                    }
-                }
-                AnyAssignmentLike::None | AnyAssignmentLike::Identifiers { .. } => {
-                    self.current_assignment_like.clone()
-                }
-            };
-
-            // if the queue is empty, we set the current assignment to `None`,
-            // so the next iteration will stop
-            if self.assignment_queue.is_empty() {
-                self.current_assignment_like = AnyAssignmentLike::None;
-            }
-            match new_assignment_like {
-                // if we are here, it's plausible that we consumed the current iterator and we have to
-                // resume the previous one
-                AnyAssignmentLike::None => {
-                    // we still have assignments like to complete, so we continue the loop
-                    if let Some(pair) = self.assignment_queue.pop_front() {
-                        self.current_assignment_like = pair;
-                        continue;
-                        // the queue is empty
-                    } else {
-                        return None;
-                    }
-                }
-                AnyAssignmentLike::Identifiers(identifier_like) => {
-                    return Some(identifier_like);
-                }
-
-                // we have a sub structure, which means we queue the current assignment,
-                // and inspect the sub structure
-                AnyAssignmentLike::StaticExpression { .. }
-                | AnyAssignmentLike::Object { .. }
-                | AnyAssignmentLike::Arrays { .. } => {
-                    self.assignment_queue
-                        .push_back(self.current_assignment_like.clone());
-                    self.current_assignment_like = new_assignment_like;
-                    continue;
-                }
-            }
-        }
-    }
-}
-
-impl FusedIterator for SameIdentifiers {}
-
 /// Checks if the left identifier and the right reference have the same name
 fn with_same_identifiers(identifiers_like: &IdentifiersLike) -> Option<()> {
     let (left_value, right_value) = match &identifiers_like {
@@ -623,22 +734,5 @@ fn with_same_identifiers(identifiers_like: &IdentifiersLike) -> Option<()> {
         return Some(());
     } else {
         None
-    }
-}
-
-/// It traverses an [AnyAssignmentLike] and tracks the identifiers that have the same name
-fn compare_assignment_like(
-    pair_kind: AnyAssignmentLike,
-    incorrect_identifiers: &mut Vec<IdentifiersLike>,
-) {
-    let mut same_identifiers = SameIdentifiers {
-        current_assignment_like: pair_kind.clone(),
-        assignment_queue: VecDeque::new(),
-    };
-
-    while let Some(identifier_like) = same_identifiers.next() {
-        if let Some(_) = with_same_identifiers(&identifier_like) {
-            incorrect_identifiers.push(identifier_like);
-        }
     }
 }
