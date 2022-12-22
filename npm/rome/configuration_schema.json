@@ -896,6 +896,17 @@
             }
           ]
         },
+        "noUnusedLabels": {
+          "description": "Disallow unused labels.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noUselessSwitchCase": {
           "description": "Disallow useless case in switch statements.",
           "anyOf": [

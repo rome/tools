@@ -70,6 +70,7 @@ define_dategories! {
     "lint/nursery/noStringCaseMismatch": "https://docs.rome.tools/lint/rules/noStringCaseMismatch",
     "lint/nursery/noUnreachableSuper": "https://rome.tools/docs/lint/rules/noUnreachableSuper",
     "lint/nursery/noUnsafeFinally": "https://docs.rome.tools/lint/rules/noUnsafeFinally",
+    "lint/nursery/noUnusedLabels": "https://docs.rome.tools/lint/rules/noUnusedLabels",
     "lint/nursery/noUselessSwitchCase": "https://docs.rome.tools/lint/rules/noUselessSwitchCase",
     "lint/nursery/noVar": "https://docs.rome.tools/lint/rules/noVar",
     "lint/nursery/noVoidTypeReturn": "https://docs.rome.tools/lint/rules/noVoidTypeReturn",

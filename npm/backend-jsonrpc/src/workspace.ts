@@ -402,6 +402,10 @@ export interface Nursery {
 	 */
 	noUnsafeFinally?: RuleConfiguration;
 	/**
+	 * Disallow unused labels.
+	 */
+	noUnusedLabels?: RuleConfiguration;
+	/**
 	 * Disallow useless case in switch statements.
 	 */
 	noUselessSwitchCase?: RuleConfiguration;
@@ -782,6 +786,7 @@ export type Category =
 	| "lint/nursery/noStringCaseMismatch"
 	| "lint/nursery/noUnreachableSuper"
 	| "lint/nursery/noUnsafeFinally"
+	| "lint/nursery/noUnusedLabels"
 	| "lint/nursery/noUselessSwitchCase"
 	| "lint/nursery/noVar"
 	| "lint/nursery/noVoidTypeReturn"
