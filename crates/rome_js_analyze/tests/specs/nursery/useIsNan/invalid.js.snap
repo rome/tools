@@ -70,7 +70,7 @@ switch(Number.NaN) { case Number.NaN: break; }
 ```
 invalid.js:1:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
   > 1 │ 123 == NaN;
       │ ^^^^^^^^^^
@@ -83,7 +83,7 @@ invalid.js:1:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━�
 ```
 invalid.js:2:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     1 │ 123 == NaN;
   > 2 │ 123 === NaN;
@@ -97,7 +97,7 @@ invalid.js:2:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━�
 ```
 invalid.js:3:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     1 │ 123 == NaN;
     2 │ 123 === NaN;
@@ -112,7 +112,7 @@ invalid.js:3:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━�
 ```
 invalid.js:4:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     2 │ 123 === NaN;
     3 │ NaN === "abc";
@@ -127,7 +127,7 @@ invalid.js:4:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━�
 ```
 invalid.js:5:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     3 │ NaN === "abc";
     4 │ NaN == "abc";
@@ -142,7 +142,7 @@ invalid.js:5:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━�
 ```
 invalid.js:6:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     4 │ NaN == "abc";
     5 │ 123 != NaN;
@@ -157,7 +157,7 @@ invalid.js:6:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━�
 ```
 invalid.js:7:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     5 │ 123 != NaN;
     6 │ 123 !== NaN;
@@ -172,7 +172,7 @@ invalid.js:7:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━�
 ```
 invalid.js:8:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
      6 │ 123 !== NaN;
      7 │ NaN !== "abc";
@@ -187,7 +187,7 @@ invalid.js:8:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━�
 ```
 invalid.js:9:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
      7 │ NaN !== "abc";
      8 │ NaN != "abc";
@@ -202,7 +202,7 @@ invalid.js:9:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━�
 ```
 invalid.js:10:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
      8 │ NaN != "abc";
      9 │ NaN < "abc";
@@ -217,7 +217,7 @@ invalid.js:10:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:11:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
      9 │ NaN < "abc";
     10 │ "abc" < NaN;
@@ -232,7 +232,7 @@ invalid.js:11:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:12:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     10 │ "abc" < NaN;
     11 │ NaN > "abc";
@@ -247,7 +247,7 @@ invalid.js:12:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:13:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     11 │ NaN > "abc";
     12 │ "abc" > NaN;
@@ -262,7 +262,7 @@ invalid.js:13:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:14:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     12 │ "abc" > NaN;
     13 │ NaN <= "abc";
@@ -277,7 +277,7 @@ invalid.js:14:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:15:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     13 │ NaN <= "abc";
     14 │ "abc" <= NaN;
@@ -292,7 +292,7 @@ invalid.js:15:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:16:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     14 │ "abc" <= NaN;
     15 │ NaN >= "abc";
@@ -307,7 +307,7 @@ invalid.js:16:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:17:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     15 │ NaN >= "abc";
     16 │ "abc" >= NaN;
@@ -322,7 +322,7 @@ invalid.js:17:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:18:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     16 │ "abc" >= NaN;
     17 │ 123 == Number.NaN;
@@ -337,7 +337,7 @@ invalid.js:18:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:19:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     17 │ 123 == Number.NaN;
     18 │ 123 === Number.NaN;
@@ -352,7 +352,7 @@ invalid.js:19:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:20:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     18 │ 123 === Number.NaN;
     19 │ Number.NaN === "abc";
@@ -367,7 +367,7 @@ invalid.js:20:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:21:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     19 │ Number.NaN === "abc";
     20 │ Number.NaN == "abc";
@@ -382,7 +382,7 @@ invalid.js:21:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:22:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     20 │ Number.NaN == "abc";
     21 │ 123 != Number.NaN;
@@ -397,7 +397,7 @@ invalid.js:22:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:23:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     21 │ 123 != Number.NaN;
     22 │ 123 !== Number.NaN;
@@ -412,7 +412,7 @@ invalid.js:23:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:24:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     22 │ 123 !== Number.NaN;
     23 │ Number.NaN !== "abc";
@@ -427,7 +427,7 @@ invalid.js:24:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:25:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     23 │ Number.NaN !== "abc";
     24 │ Number.NaN != "abc";
@@ -442,7 +442,7 @@ invalid.js:25:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:26:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     24 │ Number.NaN != "abc";
     25 │ Number.NaN < "abc";
@@ -457,7 +457,7 @@ invalid.js:26:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:27:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     25 │ Number.NaN < "abc";
     26 │ "abc" < Number.NaN;
@@ -472,7 +472,7 @@ invalid.js:27:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:28:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     26 │ "abc" < Number.NaN;
     27 │ Number.NaN > "abc";
@@ -487,7 +487,7 @@ invalid.js:28:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:29:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     27 │ Number.NaN > "abc";
     28 │ "abc" > Number.NaN;
@@ -502,7 +502,7 @@ invalid.js:29:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:30:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     28 │ "abc" > Number.NaN;
     29 │ Number.NaN <= "abc";
@@ -517,7 +517,7 @@ invalid.js:30:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:31:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     29 │ Number.NaN <= "abc";
     30 │ "abc" <= Number.NaN;
@@ -532,7 +532,7 @@ invalid.js:31:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:32:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     30 │ "abc" <= Number.NaN;
     31 │ Number.NaN >= "abc";
@@ -547,7 +547,7 @@ invalid.js:32:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:33:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     31 │ Number.NaN >= "abc";
     32 │ "abc" >= Number.NaN;
@@ -562,7 +562,7 @@ invalid.js:33:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━
 ```
 invalid.js:34:1 lint/nursery/useIsNan ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Use the isNaN function to compare with NaN.
+  ! Use the Number.isNaN function to compare with NaN.
   
     32 │ "abc" >= Number.NaN;
     33 │ x === Number?.NaN;

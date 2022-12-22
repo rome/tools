@@ -14,7 +14,12 @@ declare_rule! {
     /// - `NaN` === `NaN` or `NaN` == `NaN` evaluate to false
     /// - `NaN` !== `NaN` or `NaN` != `NaN` evaluate to true
     ///
-    /// Therefore, use `Number.isNaN()` or global `isNaN()`	 functions to test whether a value is `NaN`.
+    /// Therefore, use `Number.isNaN()` or global `isNaN()` functions to test whether a value is `NaN`.
+    ///
+    /// Note that `Number.isNaN()` and `isNaN()` [have not the same behavior](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN#description).
+    /// When the argument to `isNaN()` is not a number, the value is first coerced to a number.
+    /// `Number.isNaN()` does not perform this coercion.
+    /// Therefore, it is a more reliable way to test whether a value is `NaN`.
     ///
     /// Source: [use-isnan](https://eslint.org/docs/latest/rules/use-isnan).
     ///
@@ -41,7 +46,7 @@ declare_rule! {
     /// ### Valid
     ///
     /// ```js
-    /// if (isNaN(123) !== true) {}
+    /// if (Number.isNaN(123) !== true) {}
     ///
     /// foo(Number.NaN / 2)
     ///
@@ -73,7 +78,7 @@ pub struct RuleState {
 impl Message {
     fn as_str(&self) -> &str {
         match self {
-			Self::BinaryExpression => "Use the isNaN function to compare with NaN.",
+			Self::BinaryExpression => "Use the Number.isNaN function to compare with NaN.",
 			Self::CaseClause => "'case NaN' can never match. Use Number.isNaN before the switch.",
 			Self::SwitchCase => "'switch(NaN)' can never match a case clause. Use Number.isNaN instead of the switch."
 		}
