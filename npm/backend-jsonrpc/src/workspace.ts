@@ -606,7 +606,7 @@ export interface Suspicious {
 	 */
 	noDuplicateParameters?: RuleConfiguration;
 	/**
-	 * Disallow the any type usage
+	 * Disallow the any type usage.
 	 */
 	noExplicitAny?: RuleConfiguration;
 	/**

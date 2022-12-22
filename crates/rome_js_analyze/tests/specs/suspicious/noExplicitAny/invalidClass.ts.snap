@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 92
 expression: invalidClass.ts
 ---
 # Input
@@ -52,6 +53,8 @@ invalidClass.ts:2:27 lint/suspicious/noExplicitAny ━━━━━━━━━�
     3 │ }
     4 │ 
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -65,6 +68,8 @@ invalidClass.ts:6:11 lint/suspicious/noExplicitAny ━━━━━━━━━�
       │ 	         ^^^
     7 │ }
     8 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -80,6 +85,8 @@ invalidClass.ts:10:17 lint/suspicious/noExplicitAny ━━━━━━━━━�
     11 │ }
     12 │ 
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -93,6 +100,8 @@ invalidClass.ts:14:11 lint/suspicious/noExplicitAny ━━━━━━━━━�
        │ 	         ^^^
     15 │ }
     16 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -108,6 +117,8 @@ invalidClass.ts:18:23 lint/suspicious/noExplicitAny ━━━━━━━━━�
     19 │ }
     20 │ 
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -121,6 +132,8 @@ invalidClass.ts:22:17 lint/suspicious/noExplicitAny ━━━━━━━━━�
        │ 	               ^^^
     23 │ }
     24 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -137,6 +150,8 @@ invalidClass.ts:25:15 lint/suspicious/noExplicitAny ━━━━━━━━━�
     26 │ 
     27 │ abstract class Foo<t = any> extends Bar<any> {}
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -151,6 +166,8 @@ invalidClass.ts:25:32 lint/suspicious/noExplicitAny ━━━━━━━━━�
        │                                ^^^
     26 │ 
     27 │ abstract class Foo<t = any> extends Bar<any> {}
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -167,6 +184,8 @@ invalidClass.ts:27:24 lint/suspicious/noExplicitAny ━━━━━━━━━�
     28 │ 
     29 │ abstract class Foo<t = any> implements Bar<any>, Baz<any> {}
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -181,6 +200,8 @@ invalidClass.ts:27:41 lint/suspicious/noExplicitAny ━━━━━━━━━�
        │                                         ^^^
     28 │ 
     29 │ abstract class Foo<t = any> implements Bar<any>, Baz<any> {}
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -197,6 +218,8 @@ invalidClass.ts:29:24 lint/suspicious/noExplicitAny ━━━━━━━━━�
     30 │ 
     31 │ new Foo<any>()
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -211,6 +234,8 @@ invalidClass.ts:29:44 lint/suspicious/noExplicitAny ━━━━━━━━━�
        │                                            ^^^
     30 │ 
     31 │ new Foo<any>()
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -227,6 +252,8 @@ invalidClass.ts:29:54 lint/suspicious/noExplicitAny ━━━━━━━━━�
     30 │ 
     31 │ new Foo<any>()
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -242,6 +269,8 @@ invalidClass.ts:31:9 lint/suspicious/noExplicitAny ━━━━━━━━━�
     32 │ 
     33 │ Foo<any>()
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -255,6 +284,8 @@ invalidClass.ts:33:5 lint/suspicious/noExplicitAny ━━━━━━━━━�
   > 33 │ Foo<any>()
        │     ^^^
     34 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```

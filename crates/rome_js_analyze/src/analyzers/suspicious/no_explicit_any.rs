@@ -5,7 +5,15 @@ use rome_js_syntax::TsAnyType;
 use rome_rowan::AstNode;
 
 declare_rule! {
-    /// Disallow the `any` type usage
+    /// Disallow the `any` type usage.
+    ///
+    /// The `any` type in TypeScript is a dangerous "escape hatch" from the type system.
+    /// Using `any` disables many type checking rules and is generally best used only as a last resort or when prototyping code.
+    ///
+    /// TypeScript's `--noImplicitAny` compiler option prevents an implied `any`,
+    /// but doesn't prevent `any` from being explicitly used the way this rule does.
+    ///
+    /// Source: https://typescript-eslint.io/rules/no-explicit-any
     ///
     /// ## Examples
     ///
@@ -66,7 +74,9 @@ impl Rule for NoExplicitAny {
             ctx.query().range(),
             markup! {"Unexpected "<Emphasis>"any"</Emphasis>". Specify a different type."}
                 .to_owned(),
-        );
+        ).note(markup! {
+            <Emphasis>"any"</Emphasis>" disables many type checking rules. Its use should be avoided."
+        });
 
         Some(diagnostic)
     }

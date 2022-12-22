@@ -1336,7 +1336,7 @@ struct SuspiciousSchema {
     no_double_equals: Option<RuleConfiguration>,
     #[doc = "Disallow duplicate function arguments name."]
     no_duplicate_parameters: Option<RuleConfiguration>,
-    #[doc = "Disallow the any type usage"]
+    #[doc = "Disallow the any type usage."]
     no_explicit_any: Option<RuleConfiguration>,
     #[doc = "Disallow reassigning function declarations."]
     no_function_assign: Option<RuleConfiguration>,

@@ -1564,7 +1564,7 @@
           ]
         },
         "noExplicitAny": {
-          "description": "Disallow the any type usage",
+          "description": "Disallow the any type usage.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
