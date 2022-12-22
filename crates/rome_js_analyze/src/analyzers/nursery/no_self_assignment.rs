@@ -80,13 +80,10 @@ impl Rule for NoSelfAssignment {
                     | JsAssignmentOperator::LogicalOrAssign
                     | JsAssignmentOperator::NullishCoalescingAssign
             ) {
-                match (left, right) {
-                    (Some(left), Some(right)) => {
-                        if let Ok(pair) = AnyAssignmentLike::try_from((left, right)) {
-                            compare_assignment_like(pair, &mut state);
-                        }
+                if let (Some(left), Some(right)) = (left, right) {
+                    if let Ok(pair) = AnyAssignmentLike::try_from((left, right)) {
+                        compare_assignment_like(pair, &mut state);
                     }
-                    _ => {}
                 }
             }
         }
@@ -118,13 +115,13 @@ fn compare_assignment_like(
     any_assignment_like: AnyAssignmentLike,
     incorrect_identifiers: &mut Vec<IdentifiersLike>,
 ) {
-    let mut same_identifiers = SameIdentifiers {
-        current_assignment_like: any_assignment_like.clone(),
+    let same_identifiers = SameIdentifiers {
+        current_assignment_like: any_assignment_like,
         assignment_queue: VecDeque::new(),
     };
 
-    while let Some(identifier_like) = same_identifiers.next() {
-        if let Some(_) = with_same_identifiers(&identifier_like) {
+    for identifier_like in same_identifiers {
+        if with_same_identifiers(&identifier_like).is_some() {
             incorrect_identifiers.push(identifier_like);
         }
     }
@@ -204,16 +201,14 @@ impl SameIdentifiers {
             let left_element = left_element.ok()?;
             let right_element = right_element.ok()?;
 
-            match (left_element, right_element) {
-                (
-                    AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(left),
-                    AnyJsArrayElement::AnyJsExpression(right),
-                ) => {
-                    let new_assignment_like = AnyAssignmentLike::try_from((left, right)).ok()?;
+            if let (
+                AnyJsArrayAssignmentPatternElement::AnyJsAssignmentPattern(left),
+                AnyJsArrayElement::AnyJsExpression(right),
+            ) = (left_element, right_element)
+            {
+                let new_assignment_like = AnyAssignmentLike::try_from((left, right)).ok()?;
 
-                    return Some(new_assignment_like);
-                }
-                _ => {}
+                return Some(new_assignment_like);
             }
         }
         Some(AnyAssignmentLike::None)
@@ -422,7 +417,7 @@ impl AnyJsAssignmentExpressionLikeIterator {
         Ok(Self {
             source_member: source.member().and_then(|expression| match expression {
                 AnyJsExpression::JsIdentifierExpression(node) => Ok(AnyNameLike::from(node)),
-                _ => return Err(SyntaxError::MissingRequiredChild),
+                _ => Err(SyntaxError::MissingRequiredChild),
             })?,
             source_object: source.object()?,
             current_member_expression: None,
@@ -731,7 +726,7 @@ fn with_same_identifiers(identifiers_like: &IdentifiersLike) -> Option<()> {
     };
 
     if left_value.text_trimmed() == right_value.text_trimmed() {
-        return Some(());
+        Some(())
     } else {
         None
     }
