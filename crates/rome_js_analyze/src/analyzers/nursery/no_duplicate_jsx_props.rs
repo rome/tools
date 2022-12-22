@@ -2,21 +2,34 @@ use std::collections::HashMap;
 
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_diagnostics::diagnostic;
 use rome_js_syntax::jsx_ext::AnyJsxElement;
-use rome_js_syntax::{
-    AnyJsxAttribute, AnyJsxAttributeName, JsxAttribute, JsxAttributeList, JsxOpeningElement,
-    JsxSelfClosingElement,
-};
-use rome_rowan::{AstNode, AstNodeList, SyntaxTokenText};
+use rome_js_syntax::{AnyJsxAttribute, JsxAttribute, SyntaxNodeText};
+use rome_rowan::AstNode;
 
 declare_rule! {
- /// Promotes the use of awesome tricks
- ///
- /// ## Examples
- ///
- /// ### Invalid
- ///
+    /// Prevents duplicate properties in JSX elements.
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// <Hello name="John" name="John" />
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// <label xml:lang="en-US" xml:lang="en-US"></label>
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// <Hello firstname="John" lastname="Doe" />
+    /// ```
+    ///
+    /// ```js
+    /// <label xml:lang="en-US" lang="en-US"></label>
+    /// ```
  pub(crate) NoDuplicateJsxProps {
      version: "13.0.0",
      name: "noDuplicateJsxProps",
@@ -24,11 +37,8 @@ declare_rule! {
     }
 }
 
-fn get_name(attr: &JsxAttribute) -> Option<SyntaxTokenText> {
-    match attr.name().ok()? {
-        AnyJsxAttributeName::JsxName(name) => Some(name.value_token().ok()?.token_text_trimmed()),
-        AnyJsxAttributeName::JsxNamespaceName(_) => None,
-    }
+fn get_name_text(attr: &JsxAttribute) -> Option<SyntaxNodeText> {
+    Some(attr.name().ok()?.syntax().text_trimmed())
 }
 
 impl Rule for NoDuplicateJsxProps {
@@ -44,9 +54,9 @@ impl Rule for NoDuplicateJsxProps {
         for attribute in node.attributes() {
             match attribute {
                 AnyJsxAttribute::JsxAttribute(attribute) => {
-                    if let Some(name) = get_name(&attribute) {
+                    if let Some(name) = get_name_text(&attribute) {
                         defined_properties
-                            .entry(name.to_lowercase())
+                            .entry(name.to_string().to_lowercase())
                             .or_default()
                             .push(attribute);
                     }
@@ -61,48 +71,24 @@ impl Rule for NoDuplicateJsxProps {
     }
 
     fn diagnostic(
-        _ctx: &rome_analyze::context::RuleContext<Self>,
-        _state: &Self::State,
+        _: &rome_analyze::context::RuleContext<Self>,
+        state: &Self::State,
     ) -> Option<rome_analyze::RuleDiagnostic> {
-        let mut diagnostic: Option<RuleDiagnostic> = None;
+        let mut attributes = state.1.iter();
 
-        for attr in _state.1.iter() {
-            match diagnostic {
-                Some(diag) => {
-                    diagnostic = Some(diag.detail(
-                        attr.syntax().text_trimmed_range(),
-                        "attribute is duplicated!",
-                    ));
-                }
-                None => {
-                    diagnostic = Some(RuleDiagnostic::new(
-                        rule_category!(),
-                        attr.syntax().text_trimmed_range(),
-                        markup!("Elements can not have attributes with the same name."),
-                    ));
-                }
-            }
+        let mut diagnostic = RuleDiagnostic::new(
+            rule_category!(),
+            attributes.next()?.syntax().text_trimmed_range(),
+            markup!("Elements can not have attributes with the same name."),
+        );
+
+        for attr in attributes {
+            diagnostic = diagnostic.detail(
+                attr.syntax().text_trimmed_range(),
+                "attribute is duplicated!",
+            )
         }
 
-        // for (_, attributes) in _state {
-        //     for attr in attributes {
-        //         match diagnostic {
-        //             Some(diag) => {
-        //                 diag.detail(
-        //                     attr.syntax().text_trimmed_range(),
-        //                     "attribute is duplicated!",
-        //                 );
-        //             }
-        //             None => {
-        //                 diagnostic = Some(RuleDiagnostic::new(
-        //                     rule_category!(),
-        //                     attr.syntax().text_trimmed_range(),
-        //                     markup!("Elements can not have attributes with the same name."),
-        //                 ));
-        //             }
-        //         }
-        //     }
-        // }
-        diagnostic
+        Some(diagnostic)
     }
 }

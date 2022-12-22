@@ -4,11 +4,17 @@ expression: invalid.jsx
 ---
 # Input
 ```js
+//Duplicate `name` property
 <Hello name="John" name="John" />;
 
+//Case insensitive case
 <Hello name="John" Name="John" />;
 
+//Case where property is repeated more than twice
 <Hello name="John" name="John" name="John" />;
+
+//Case with two duplicates
+<Hello name="John" Name="John" lastname="Doe" lastname="Doe" />;
 
 <label xml:lang="en-US" xml:lang="en-US"></label>
 
@@ -16,45 +22,23 @@ expression: invalid.jsx
 
 # Diagnostics
 ```
-invalid.jsx:1:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:2:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Elements can not have attributes with the same name.
   
-  > 1 │ <Hello name="John" name="John" />;
+    1 │ //Duplicate `name` property
+  > 2 │ <Hello name="John" name="John" />;
       │        ^^^^^^^^^^^
-    2 │ 
-    3 │ <Hello name="John" Name="John" />;
+    3 │ 
+    4 │ //Case insensitive case
   
   i attribute is duplicated!
   
-  > 1 │ <Hello name="John" name="John" />;
+    1 │ //Duplicate `name` property
+  > 2 │ <Hello name="John" name="John" />;
       │                    ^^^^^^^^^^^
-    2 │ 
-    3 │ <Hello name="John" Name="John" />;
-  
-
-```
-
-```
-invalid.jsx:3:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Elements can not have attributes with the same name.
-  
-    1 │ <Hello name="John" name="John" />;
-    2 │ 
-  > 3 │ <Hello name="John" Name="John" />;
-      │        ^^^^^^^^^^^
-    4 │ 
-    5 │ <Hello name="John" name="John" name="John" />;
-  
-  i attribute is duplicated!
-  
-    1 │ <Hello name="John" name="John" />;
-    2 │ 
-  > 3 │ <Hello name="John" Name="John" />;
-      │                    ^^^^^^^^^^^
-    4 │ 
-    5 │ <Hello name="John" name="John" name="John" />;
+    3 │ 
+    4 │ //Case insensitive case
   
 
 ```
@@ -64,30 +48,115 @@ invalid.jsx:5:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━�
 
   ! Elements can not have attributes with the same name.
   
-    3 │ <Hello name="John" Name="John" />;
-    4 │ 
-  > 5 │ <Hello name="John" name="John" name="John" />;
+    4 │ //Case insensitive case
+  > 5 │ <Hello name="John" Name="John" />;
       │        ^^^^^^^^^^^
     6 │ 
-    7 │ <label xml:lang="en-US" xml:lang="en-US"></label>
+    7 │ //Case where property is repeated more than twice
   
   i attribute is duplicated!
   
-    3 │ <Hello name="John" Name="John" />;
-    4 │ 
-  > 5 │ <Hello name="John" name="John" name="John" />;
+    4 │ //Case insensitive case
+  > 5 │ <Hello name="John" Name="John" />;
       │                    ^^^^^^^^^^^
     6 │ 
-    7 │ <label xml:lang="en-US" xml:lang="en-US"></label>
+    7 │ //Case where property is repeated more than twice
+  
+
+```
+
+```
+invalid.jsx:8:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Elements can not have attributes with the same name.
+  
+     7 │ //Case where property is repeated more than twice
+   > 8 │ <Hello name="John" name="John" name="John" />;
+       │        ^^^^^^^^^^^
+     9 │ 
+    10 │ //Case with two duplicates
   
   i attribute is duplicated!
   
-    3 │ <Hello name="John" Name="John" />;
-    4 │ 
-  > 5 │ <Hello name="John" name="John" name="John" />;
-      │                                ^^^^^^^^^^^
-    6 │ 
-    7 │ <label xml:lang="en-US" xml:lang="en-US"></label>
+     7 │ //Case where property is repeated more than twice
+   > 8 │ <Hello name="John" name="John" name="John" />;
+       │                    ^^^^^^^^^^^
+     9 │ 
+    10 │ //Case with two duplicates
+  
+  i attribute is duplicated!
+  
+     7 │ //Case where property is repeated more than twice
+   > 8 │ <Hello name="John" name="John" name="John" />;
+       │                                ^^^^^^^^^^^
+     9 │ 
+    10 │ //Case with two duplicates
+  
+
+```
+
+```
+invalid.jsx:11:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Elements can not have attributes with the same name.
+  
+    10 │ //Case with two duplicates
+  > 11 │ <Hello name="John" Name="John" lastname="Doe" lastname="Doe" />;
+       │        ^^^^^^^^^^^
+    12 │ 
+    13 │ <label xml:lang="en-US" xml:lang="en-US"></label>
+  
+  i attribute is duplicated!
+  
+    10 │ //Case with two duplicates
+  > 11 │ <Hello name="John" Name="John" lastname="Doe" lastname="Doe" />;
+       │                    ^^^^^^^^^^^
+    12 │ 
+    13 │ <label xml:lang="en-US" xml:lang="en-US"></label>
+  
+
+```
+
+```
+invalid.jsx:11:32 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Elements can not have attributes with the same name.
+  
+    10 │ //Case with two duplicates
+  > 11 │ <Hello name="John" Name="John" lastname="Doe" lastname="Doe" />;
+       │                                ^^^^^^^^^^^^^^
+    12 │ 
+    13 │ <label xml:lang="en-US" xml:lang="en-US"></label>
+  
+  i attribute is duplicated!
+  
+    10 │ //Case with two duplicates
+  > 11 │ <Hello name="John" Name="John" lastname="Doe" lastname="Doe" />;
+       │                                               ^^^^^^^^^^^^^^
+    12 │ 
+    13 │ <label xml:lang="en-US" xml:lang="en-US"></label>
+  
+
+```
+
+```
+invalid.jsx:13:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Elements can not have attributes with the same name.
+  
+    11 │ <Hello name="John" Name="John" lastname="Doe" lastname="Doe" />;
+    12 │ 
+  > 13 │ <label xml:lang="en-US" xml:lang="en-US"></label>
+       │        ^^^^^^^^^^^^^^^^
+    14 │ 
+  
+  i attribute is duplicated!
+  
+    11 │ <Hello name="John" Name="John" lastname="Doe" lastname="Doe" />;
+    12 │ 
+  > 13 │ <label xml:lang="en-US" xml:lang="en-US"></label>
+       │                         ^^^^^^^^^^^^^^^^
+    14 │ 
   
 
 ```
