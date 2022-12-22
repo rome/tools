@@ -1218,13 +1218,11 @@ fn parse_ts_return_type(p: &mut JsParser) -> ParsedSyntax {
         p.at(T![asserts]) && (is_nth_at_identifier(p, 1) || p.nth_at(1, T![this]));
     let is_is_predicate = (is_at_identifier(p) || p.at(T![this])) && p.nth_at(1, T![is]);
 
-    // p.with_state(EnterConditionalTypes::allow(), |p| {
     if !p.has_nth_preceding_line_break(1) && (is_asserts_predicate || is_is_predicate) {
         parse_ts_type_predicate(p)
     } else {
         parse_ts_type(p)
     }
-    // })
 }
 
 // test ts ts_type_predicate
