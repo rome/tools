@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::number_utils::CleanedNumberLiteralText;
+use rome_formatter::utils::number::CleanedNumberLiteralText;
 
 use crate::parentheses::{is_member_object, NeedsParentheses};
 use rome_js_syntax::JsNumberLiteralExpression;

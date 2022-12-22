@@ -1,7 +1,7 @@
 use crate::prelude::*;
+use rome_formatter::utils::number::CleanedNumberLiteralText;
 
 use crate::parentheses::NeedsParentheses;
-use crate::utils::number_utils::CleanedNumberLiteralText;
 use rome_formatter::write;
 use rome_js_syntax::{JsSyntaxNode, TsNumberLiteralType, TsNumberLiteralTypeFields};
 

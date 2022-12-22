@@ -1,23 +1,37 @@
-use crate::prelude::*;
-use crate::utils::string_utils::ToAsciiLowercaseCow;
-use crate::JsFormatContext;
-use crate::JsFormatter;
-use rome_formatter::trivia::format_replaced;
-use rome_formatter::Format;
-use rome_formatter::FormatResult;
-use rome_js_syntax::JsSyntaxKind::JS_NUMBER_LITERAL;
-use rome_js_syntax::JsSyntaxKind::TS_NUMBER_LITERAL_TYPE;
-use rome_js_syntax::JsSyntaxToken;
+use crate::utils::string::ToAsciiLowercaseCow;
+use rome_rowan::{Language, SyntaxToken};
 use std::borrow::Cow;
 use std::num::NonZeroUsize;
 
-pub(crate) struct CleanedNumberLiteralText<'token> {
-    token: &'token JsSyntaxToken,
+use crate::prelude::*;
+use crate::{CstFormatContext, Format};
+
+pub struct CleanedNumberLiteralText<'token, L>
+where
+    L: Language,
+{
+    token: &'token SyntaxToken<L>,
     text: Cow<'token, str>,
 }
 
-impl Format<JsFormatContext> for CleanedNumberLiteralText<'_> {
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+impl<'token, L> CleanedNumberLiteralText<'token, L>
+where
+    L: Language,
+{
+    pub fn from_number_literal_token(token: &'token SyntaxToken<L>) -> Self {
+        CleanedNumberLiteralText {
+            token,
+            text: format_trimmed_number(token.text_trimmed()),
+        }
+    }
+}
+
+impl<L, C> Format<C> for CleanedNumberLiteralText<'_, L>
+where
+    L: Language + 'static,
+    C: CstFormatContext<Language = L>,
+{
+    fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         format_replaced(
             self.token,
             &syntax_token_cow_slice(
@@ -30,25 +44,12 @@ impl Format<JsFormatContext> for CleanedNumberLiteralText<'_> {
     }
 }
 
-impl<'token> CleanedNumberLiteralText<'token> {
-    pub fn from_number_literal_token(token: &'token JsSyntaxToken) -> Self {
-        debug_assert!(matches!(
-            &token.kind(),
-            JS_NUMBER_LITERAL | TS_NUMBER_LITERAL_TYPE
-        ));
-        CleanedNumberLiteralText {
-            token,
-            text: format_trimmed_number(token.text_trimmed()),
-        }
-    }
-}
-
 enum FormatNumberLiteralState {
     IntegerPart,
     DecimalPart(FormatNumberLiteralDecimalPart),
     Exponent(FormatNumberLiteralExponent),
 }
-use FormatNumberLiteralState::*;
+
 struct FormatNumberLiteralDecimalPart {
     dot_index: usize,
     last_non_zero_index: Option<NonZeroUsize>,
@@ -61,6 +62,8 @@ struct FormatNumberLiteralExponent {
 }
 // Regex-free version of https://github.com/prettier/prettier/blob/ca246afacee8e6d5db508dae01730c9523bbff1d/src/common/util.js#L341-L356
 fn format_trimmed_number(text: &str) -> Cow<str> {
+    use FormatNumberLiteralState::*;
+
     let text = text.to_ascii_lowercase_cow();
     let mut copied_or_ignored_chars = 0usize;
     let mut iter = text.chars().enumerate();

@@ -38,6 +38,7 @@ pub mod printer;
 pub mod separated;
 mod source_map;
 pub mod trivia;
+pub mod utils;
 mod verbatim;
 
 use crate::formatter::Formatter;
