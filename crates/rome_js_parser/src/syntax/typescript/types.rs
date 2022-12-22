@@ -226,11 +226,9 @@ pub(crate) fn parse_ts_type(p: &mut JsParser) -> ParsedSyntax {
                     p.with_state(EnterConditionalTypes::disallow(), parse_ts_type)
                         .or_add_diagnostic(p, expected_ts_type);
                     p.expect(T![?]);
-                    p.with_state(EnterConditionalTypes::allow(), parse_ts_type)
-                        .or_add_diagnostic(p, expected_ts_type);
+                    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
                     p.expect(T![:]);
-                    p.with_state(EnterConditionalTypes::allow(), parse_ts_type)
-                        .or_add_diagnostic(p, expected_ts_type);
+                    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
                     m.complete(p, TS_CONDITIONAL_TYPE)
                 } else {
                     left
