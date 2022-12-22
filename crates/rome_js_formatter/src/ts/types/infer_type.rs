@@ -15,20 +15,13 @@ impl FormatNodeRule<TsInferType> for FormatTsInferType {
             constraint,
         } = node.as_fields();
 
-        if constraint.is_none() {
-            write![f, [infer_token.format(), space(), name.format()]]
-        } else {
-            write![
-                f,
-                [
-                    infer_token.format(),
-                    space(),
-                    name.format(),
-                    space(),
-                    constraint.format()
-                ]
-            ]
+        write!(f, [infer_token.format(), space(), name.format()])?;
+
+        if let Some(constraint) = constraint {
+            write!(f, [space(), constraint.format()])?;
         }
+
+        Ok(())
     }
 
     fn needs_parentheses(&self, item: &TsInferType) -> bool {
