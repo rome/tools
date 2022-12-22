@@ -88,6 +88,10 @@ The `rome.lspBin` option overrides the Rome binary used by the extension. The wo
 
 Enables Rome to handle renames in the workspace (experimental).
 
+### `rome.requireConfiguration`
+
+Disables formatting, linting, and syntax errors for projects without a `rome.json` file. Requires Rome 12 or newer.
+
 ## Known limitations
 
 ### Configuration per sub-directory
@@ -100,10 +104,6 @@ Rome isn't yet able to pick up the `rome.json` configuration in [multi-root work
 
 ### Disable Rome for workspaces without a `rome.json` configuration
 
-Rome's VS Code extension is active for every workspace regardless if the workspace contains a `rome.json` configuration ([issue 3506](https://github.com/rome/tools/issues/3506)). That may be surprising to you if you use other extensions like ESLint where the extension is disabled if the configuration is missing. This behavior is intentional because it's Rome's philosophy that the configuration should be optional.
+You can set Rome's [`rome.requireConfiguration`](#romerequireconfiguration) setting to `true` to disable Rome's formatter, linter, and syntax errors for projects without a `rome.json` file.
 
-You can work around this limitation by [disabling Rome per workspace](https://code.visualstudio.com/docs/editor/extension-marketplace#_disable-an-extension):
 
-- Open the _Extensions_ panel
-- Search for Rome
-- Right-click on _Rome_ and select _Disable (Workspace)_
