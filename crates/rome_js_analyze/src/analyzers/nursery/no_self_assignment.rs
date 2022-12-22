@@ -184,7 +184,9 @@ impl SameIdentifiers {
                 Self::next_static_expression(left, right)
             }
             AnyAssignmentLike::None | AnyAssignmentLike::Identifiers { .. } => {
-                Some(self.current_assignment_like.clone())
+                let new_assignment = self.current_assignment_like.clone();
+                self.current_assignment_like = AnyAssignmentLike::None;
+                Some(new_assignment)
             }
         }
     }
@@ -333,11 +335,6 @@ impl Iterator for SameIdentifiers {
         loop {
             let new_assignment_like = self.next_assignment_like()?;
 
-            // if the queue is empty, we set the current assignment to `None`,
-            // so the next iteration will stop
-            if self.assignment_queue.is_empty() {
-                self.current_assignment_like = AnyAssignmentLike::None;
-            }
             match new_assignment_like {
                 // if we are here, it's plausible that we consumed the current iterator and we have to
                 // resume the previous one
