@@ -37,6 +37,7 @@ pub mod printed_tokens;
 pub mod printer;
 pub mod separated;
 mod source_map;
+pub mod token;
 pub mod trivia;
 mod verbatim;
 

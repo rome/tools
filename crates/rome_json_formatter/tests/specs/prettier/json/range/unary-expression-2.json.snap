@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: json/range/unary-expression-2.json
+info: json/range/unary-expression-2.json
 ---
 
 # Input
@@ -21,14 +20,14 @@ info:
 @@ -1 +1,2 @@
 --2.0
 +-
-+2.00000
++2.0
 ```
 
 # Output
 
 ```json
 -
-2.00000
+2.0
 ```
 
 # Errors
