@@ -1,7 +1,6 @@
 ---
 source: crates/rome_formatter_test/src/snapshot_builder.rs
-info:
-  test_file: ts/type/union_type.ts
+info: "ts\\type\\union_type.ts"
 ---
 
 # Input
@@ -21,7 +20,7 @@ type Comments =
 trailing type */
 
 type A = [
-    /*leading comment with new line*/ 
+    /*leading comment with new line*/
     A | B,
     ];
 
@@ -253,6 +252,7 @@ type SuperLongTypeNameLoremIpsumLoremIpsumBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla =
 | Fooo1000
 | Baz2000
 | BarLoooooooooooooooooooooooooooooooooooooooooooooooooLong;
+
 ```
 
 
@@ -377,10 +377,10 @@ const fooo: SomeThingWithShortMappedType<{
 
 const fooo: SomeThingWithLongMappedType<{
 	[P in
-			| AAAAAAAAAAAAAAAAA
-			| BBBBBBBBBBBB
-			| CCCCCCCCCCCCCCCCCCCCC
-			| DDDDDDDDDDDDDDDDDDDDDDDDDDDDD]: number;
+		| AAAAAAAAAAAAAAAAA
+		| BBBBBBBBBBBB
+		| CCCCCCCCCCCCCCCCCCCCC
+		| DDDDDDDDDDDDDDDDDDDDDDDDDDDDD]: number;
 }> = {};
 
 export type A =
