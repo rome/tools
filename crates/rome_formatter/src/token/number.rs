@@ -1,4 +1,4 @@
-use crate::utils::string::ToAsciiLowercaseCow;
+use crate::token::string::ToAsciiLowercaseCow;
 use rome_rowan::{Language, SyntaxToken};
 use std::borrow::Cow;
 use std::num::NonZeroUsize;
@@ -6,24 +6,18 @@ use std::num::NonZeroUsize;
 use crate::prelude::*;
 use crate::{CstFormatContext, Format};
 
+pub fn format_number_token<L>(token: &SyntaxToken<L>) -> CleanedNumberLiteralText<L>
+where
+    L: Language,
+{
+    CleanedNumberLiteralText { token }
+}
+
 pub struct CleanedNumberLiteralText<'token, L>
 where
     L: Language,
 {
     token: &'token SyntaxToken<L>,
-    text: Cow<'token, str>,
-}
-
-impl<'token, L> CleanedNumberLiteralText<'token, L>
-where
-    L: Language,
-{
-    pub fn from_number_literal_token(token: &'token SyntaxToken<L>) -> Self {
-        CleanedNumberLiteralText {
-            token,
-            text: format_trimmed_number(token.text_trimmed()),
-        }
-    }
 }
 
 impl<L, C> Format<C> for CleanedNumberLiteralText<'_, L>
@@ -35,7 +29,7 @@ where
         format_replaced(
             self.token,
             &syntax_token_cow_slice(
-                self.text.clone(),
+                format_trimmed_number(self.token.text_trimmed()),
                 self.token,
                 self.token.text_trimmed_range().start(),
             ),
