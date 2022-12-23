@@ -346,6 +346,10 @@ export interface Nursery {
 	 */
 	noHeaderScope?: RuleConfiguration;
 	/**
+	 * Disallow function and var declarations in nested blocks.
+	 */
+	noInnerDeclarations?: RuleConfiguration;
+	/**
 	 * Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors.
 	 */
 	noInvalidConstructorSuper?: RuleConfiguration;
@@ -762,6 +766,7 @@ export type Category =
 	| "lint/nursery/noEmptyInterface"
 	| "lint/nursery/noExtraNonNullAssertion"
 	| "lint/nursery/noHeaderScope"
+	| "lint/nursery/noInnerDeclarations"
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noNonNullAssertion"
 	| "lint/nursery/noPrecisionLoss"

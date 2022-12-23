@@ -4,7 +4,7 @@ use rome_analyze::{merge_node_visitors, Visitor, VisitorContext};
 use rome_js_syntax::{
     AnyJsFunction, JsConstructorClassMember, JsGetterClassMember, JsGetterObjectMember, JsLanguage,
     JsMethodClassMember, JsMethodObjectMember, JsModule, JsScript, JsSetterClassMember,
-    JsSetterObjectMember,
+    JsSetterObjectMember, JsStaticInitializationBlockClassMember,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxError, SyntaxResult};
 
@@ -168,6 +168,7 @@ declare_node_union! {
         | JsMethodClassMember
         | JsGetterClassMember
         | JsSetterClassMember
+        | JsStaticInitializationBlockClassMember
 }
 
 impl rome_analyze::NodeVisitor<ControlFlowVisitor> for FunctionVisitor {
