@@ -109,3 +109,7 @@ let baz = (a + b) ** (c + d);
 let quux = (-1) ** n;
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

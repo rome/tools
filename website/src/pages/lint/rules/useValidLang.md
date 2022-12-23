@@ -95,3 +95,7 @@ Ensure that the attribute passed to the `lang` attribute is a correct ISO langua
 <Html lang="en-babab" />
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

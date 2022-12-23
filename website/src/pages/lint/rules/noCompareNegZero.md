@@ -37,3 +37,7 @@ Disallow comparing against `-0`
 (1 >= 0)
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

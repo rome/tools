@@ -60,3 +60,7 @@ delete 1 in [1,2];
 +1 instanceof [1,2];
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

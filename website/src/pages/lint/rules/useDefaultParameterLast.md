@@ -137,3 +137,7 @@ function f(a: number, b?: number, c = 0) {}
 function f(a: number, b = 0, c?: number) {}
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

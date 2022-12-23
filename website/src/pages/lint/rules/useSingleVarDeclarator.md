@@ -40,3 +40,7 @@ let foo, bar;
 for (let i = 0, x = 1; i < arr.length; i++) {}
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

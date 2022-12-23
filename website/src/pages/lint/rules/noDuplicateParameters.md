@@ -51,3 +51,7 @@ function l([, l]) {}
 function foo([[a, b], [c, d]]) {}
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

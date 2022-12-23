@@ -66,3 +66,7 @@ Enforce that elements with ARIA roles must have all required ARIA attributes for
 - [ARIA Spec, Roles](https://www.w3.org/TR/wai-aria/#roles)
 - [Chrome Audit Rules, AX_ARIA_03](https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#ax_aria_03)
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

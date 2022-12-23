@@ -217,3 +217,7 @@ function used_overloaded(s?: string) {
 used_overloaded();
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

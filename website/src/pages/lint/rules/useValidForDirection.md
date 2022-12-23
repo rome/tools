@@ -73,3 +73,7 @@ for (var i = 0; i < 10; i++) {
 }
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

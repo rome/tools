@@ -195,6 +195,11 @@ fn generate_rule(
 
     let summary = parse_documentation(group, rule, docs, &mut content)?;
 
+    writeln!(content, "## Related links")?;
+    writeln!(content)?;
+    writeln!(content, "- [Disable a rule](/linter/#disable-a-lint-rule)")?;
+    writeln!(content, "- [Rule options](/linter/#rule-options)")?;
+
     fs2::write(root.join(format!("{rule}.md")), content)?;
 
     Ok(summary)

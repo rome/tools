@@ -93,3 +93,7 @@ React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' } }, 'chi
   
 </code></pre>
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

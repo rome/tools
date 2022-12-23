@@ -93,3 +93,7 @@ function test(JSON) {console.log(JSON)}
   
 </code></pre>
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

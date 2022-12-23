@@ -198,3 +198,7 @@ This rule disallows unnecessary semicolons.
 <strong>  </strong><strong>     │ </strong>    <span style="color: Tomato;">-</span>
 </code></pre>
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

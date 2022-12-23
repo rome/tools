@@ -109,3 +109,7 @@ const boolExpr5 = true;
 const boolExpr6 = false;
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

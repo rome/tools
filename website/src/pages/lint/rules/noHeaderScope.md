@@ -59,3 +59,7 @@ ESLint Equivalent: [scope](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/
 <th scope="col"></th>
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

@@ -66,3 +66,7 @@ const array = ["split", "the text", "into words"];
 array.map(sentence => sentence.split(' ')).flat(2);
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

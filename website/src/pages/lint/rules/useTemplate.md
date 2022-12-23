@@ -120,3 +120,7 @@ console.log("foo" + "bar");
 console.log(foo() + "\n");
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

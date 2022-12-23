@@ -151,3 +151,7 @@ Disallow unclear usage of multiple space characters in regular expression litera
 /foo /
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

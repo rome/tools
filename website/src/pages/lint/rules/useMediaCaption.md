@@ -57,3 +57,7 @@ Enforces that `audio` and `video` elements must have a `track` for captions.
 	<video muted {...props}></video>
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)
