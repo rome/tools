@@ -194,13 +194,18 @@ impl NormalizedNumber<'_> {
     }
 
     fn to_scientific(&self) -> String {
-        format!(
-            "{}.{}{}e{}",
-            &self.digits[..1],
-            &self.digits[1..],
-            self.digits_rest,
-            self.exponent - 1
-        )
+        let fraction = &self.digits[1..];
+        if fraction.is_empty() && self.digits_rest.is_empty() {
+            format!("{}e{}", &self.digits[..1], self.exponent - 1)
+        } else {
+            format!(
+                "{}.{}{}e{}",
+                &self.digits[..1],
+                fraction,
+                self.digits_rest,
+                self.exponent - 1
+            )
+        }
     }
 
     fn precision(&self) -> usize {

@@ -753,6 +753,17 @@
             }
           ]
         },
+        "noInnerDeclarations": {
+          "description": "Disallow function and var declarations in nested blocks.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noInvalidConstructorSuper": {
           "description": "Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors.",
           "anyOf": [
@@ -1575,7 +1586,7 @@
           ]
         },
         "noExplicitAny": {
-          "description": "Disallow the any type usage",
+          "description": "Disallow the any type usage.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

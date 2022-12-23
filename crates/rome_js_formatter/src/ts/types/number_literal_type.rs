@@ -1,7 +1,7 @@
 use crate::prelude::*;
+use rome_formatter::token::number::format_number_token;
 
 use crate::parentheses::NeedsParentheses;
-use crate::utils::number_utils::CleanedNumberLiteralText;
 use rome_formatter::write;
 use rome_js_syntax::{JsSyntaxNode, TsNumberLiteralType, TsNumberLiteralTypeFields};
 
@@ -16,10 +16,7 @@ impl FormatNodeRule<TsNumberLiteralType> for FormatTsNumberLiteralType {
         } = node.as_fields();
         write![
             f,
-            [
-                minus_token.format(),
-                CleanedNumberLiteralText::from_number_literal_token(&literal_token?)
-            ]
+            [minus_token.format(), format_number_token(&literal_token?)]
         ]
     }
 
