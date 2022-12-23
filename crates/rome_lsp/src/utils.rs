@@ -220,8 +220,9 @@ pub(crate) fn diagnostic_to_lsp<D: Diagnostic>(
     let code_description = diagnostic
         .category()
         .and_then(|category| category.link())
-        .map(|link| CodeDescription {
-            href: Url::parse(link).unwrap(),
+        .and_then(|link| {
+            let href = Url::parse(link).ok()?;
+            Some(CodeDescription { href })
         });
 
     let message = PrintDescription(&diagnostic).to_string();
