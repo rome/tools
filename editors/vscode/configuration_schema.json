@@ -665,6 +665,17 @@
             }
           ]
         },
+        "noControlCharactersInRegex": {
+          "description": "Prevents from having control characters and some escape sequences that match control characters in regular expressions.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noDistractingElements": {
           "description": "Enforces that no distracting elements are used.",
           "anyOf": [

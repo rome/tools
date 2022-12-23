@@ -1,0 +1,18 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 92
+expression: validJsRegexLiteralExpression.js
+---
+# Input
+```js
+var pattern1 = /x1f/;
+var pattern2 = /\\x1f/;
+var pattern3 = /\u{20}/u;
+var pattern4 = /\u{1F}/;
+var pattern5 = /\u{1F}/g;
+var pattern6 = /\t/;
+var pattern7 = /\n/;
+
+```
+
+
