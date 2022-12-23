@@ -81,7 +81,7 @@ enum ConfigurationStatus {
     Loaded = 0,
     /// The configuration file does not exist
     Missing = 1,
-    /// The configuration file could not be loaded
+    /// The configuration file exists but could not be loaded
     Error = 2,
 }
 
