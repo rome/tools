@@ -20,6 +20,7 @@ mod no_inner_declarations;
 mod no_invalid_constructor_super;
 mod no_non_null_assertion;
 mod no_precision_loss;
+mod no_prototype_builtins;
 mod no_redundant_alt;
 mod no_redundant_use_strict;
 mod no_self_compare;

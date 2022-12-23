@@ -95,6 +95,7 @@ define_dategories! {
     "lint/nursery/noDuplicateJsxProps": "https://docs.rome.tools/lint/rules/noDuplicateJsxProps",
     "lint/nursery/useYield": "https://docs.rome.tools/lint/rules/useYield",
     "lint/nursery/noGlobalObjectCalls": "https://docs.rome.tools/lint/rules/noGlobalObjectCalls",
+    "lint/nursery/noPrototypeBuiltins": "https://docs.rome.tools/lint/rules/noPrototypeBuiltins",
     // Insert new nursery rule here
 
     // performance

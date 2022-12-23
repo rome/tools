@@ -369,6 +369,10 @@ export interface Nursery {
 	 */
 	noPrecisionLoss?: RuleConfiguration;
 	/**
+	 * Disallow direct use of Object.prototype builtins.
+	 */
+	noPrototypeBuiltins?: RuleConfiguration;
+	/**
 	 * Enforce img alt prop does not contain the word "image", "picture", or "photo".
 	 */
 	noRedundantAlt?: RuleConfiguration;
@@ -814,6 +818,7 @@ export type Category =
 	| "lint/nursery/noDuplicateJsxProps"
 	| "lint/nursery/useYield"
 	| "lint/nursery/noGlobalObjectCalls"
+	| "lint/nursery/noPrototypeBuiltins"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
@@ -1091,7 +1096,7 @@ export interface RenameResult {
 }
 export interface Workspace {
 	supportsFeature(
-		params: SupportsFeatureParams,
+		params: SupportsFeatureParams
 	): Promise<SupportsFeatureResult>;
 	updateSettings(params: UpdateSettingsParams): Promise<void>;
 	openFile(params: OpenFileParams): Promise<void>;
@@ -1101,7 +1106,7 @@ export interface Workspace {
 	getControlFlowGraph(params: GetControlFlowGraphParams): Promise<string>;
 	getFormatterIr(params: GetFormatterIRParams): Promise<string>;
 	pullDiagnostics(
-		params: PullDiagnosticsParams,
+		params: PullDiagnosticsParams
 	): Promise<PullDiagnosticsResult>;
 	pullActions(params: PullActionsParams): Promise<PullActionsResult>;
 	formatFile(params: FormatFileParams): Promise<Printed>;
