@@ -759,6 +759,8 @@ struct NurserySchema {
     no_extra_non_null_assertion: Option<RuleConfiguration>,
     #[doc = "Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. While not technically an error, extra semicolons can cause confusion when reading code."]
     no_extra_semicolons: Option<RuleConfiguration>,
+    #[doc = "Disallow calling global object properties as functions"]
+    no_global_object_calls: Option<RuleConfiguration>,
     #[doc = "Check that the scope attribute is only used on th elements."]
     no_header_scope: Option<RuleConfiguration>,
     #[doc = "Disallow function and var declarations in nested blocks."]
@@ -834,7 +836,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 50] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 51] = [
         "noAccessKey",
         "noAssignInExpressions",
         "noBannedTypes",
@@ -849,6 +851,7 @@ impl Nursery {
         "noEmptyInterface",
         "noExtraNonNullAssertion",
         "noExtraSemicolons",
+        "noGlobalObjectCalls",
         "noHeaderScope",
         "noInnerDeclarations",
         "noInvalidConstructorSuper",
@@ -886,7 +889,7 @@ impl Nursery {
         "useValidLang",
         "useYield",
     ];
-    const RECOMMENDED_RULES: [&'static str; 41] = [
+    const RECOMMENDED_RULES: [&'static str; 42] = [
         "noAssignInExpressions",
         "noBannedTypes",
         "noClassAssign",
@@ -900,6 +903,7 @@ impl Nursery {
         "noEmptyInterface",
         "noExtraNonNullAssertion",
         "noExtraSemicolons",
+        "noGlobalObjectCalls",
         "noHeaderScope",
         "noInnerDeclarations",
         "noInvalidConstructorSuper",
@@ -929,7 +933,7 @@ impl Nursery {
         "useValidLang",
         "useYield",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 41] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 42] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[3]),
@@ -946,9 +950,9 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[14]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[15]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[16]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[18]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[20]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[23]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[17]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[19]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[21]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[24]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[25]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[26]),
@@ -958,19 +962,20 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[30]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[31]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[32]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[34]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[36]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[33]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[35]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[37]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[38]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[39]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[40]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[43]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[41]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[44]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[45]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[46]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[47]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[48]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[49]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[50]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -997,7 +1002,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 41] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 42] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
