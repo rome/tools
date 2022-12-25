@@ -781,7 +781,7 @@ pub(crate) fn is_includes_inferred_return_types_with_extends_constraints(
         }
     }
 
-    return false;
+    false
 }
 
 /// Returns `true` if node is in a union or intersection type with more than one variant
