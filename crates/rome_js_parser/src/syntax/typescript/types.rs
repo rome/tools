@@ -198,11 +198,11 @@ fn is_nth_at_ts_type_parameters(p: &mut JsParser, n: usize) -> bool {
 pub(crate) fn parse_ts_type(p: &mut JsParser) -> ParsedSyntax {
     p.with_state(EnterType, |p| {
         if is_at_constructor_type(p) {
-            return parse_ts_constructor_type(p);
+            return p.with_state(EnterConditionalTypes::allow(), parse_ts_constructor_type);
         }
 
         if is_at_function_type(p) {
-            return parse_ts_function_type(p);
+            return p.with_state(EnterConditionalTypes::allow(), parse_ts_function_type);
         }
 
         let left = parse_ts_union_type_or_higher(p);
@@ -219,6 +219,9 @@ pub(crate) fn parse_ts_type(p: &mut JsParser) -> ParsedSyntax {
                 // type E<U, T> = T extends (infer U extends number ? U : T ) ? U : T
                 // type F<T> = T extends { [P in infer U extends keyof T ? 1 : 0]: 1; } ? 1 : 0;
                 // type G<T> = T extends [unknown, infer S extends string] ? S : never;
+                // type H = A extends () => B extends C ? D : E ? F : G;
+                // type I<A, B, C, D, E, F, G> = A extends (x: B extends C ? D : E) => 0 ? F : G;
+                // type J<T> = T extends ((...a: any[]) => infer R extends string) ? R : never;
                 if !p.has_preceding_line_break() && p.at(T![extends]) {
                     let m = left.precede(p);
                     p.expect(T![extends]);
@@ -364,7 +367,8 @@ fn parse_ts_primary_type(p: &mut JsParser) -> ParsedSyntax {
     if is_type_operator {
         let m = p.start();
         p.bump_any();
-        parse_ts_primary_type(p).or_add_diagnostic(p, expected_ts_type);
+        p.with_state(EnterConditionalTypes::allow(), parse_ts_primary_type)
+            .or_add_diagnostic(p, expected_ts_type);
         return Present(m.complete(p, TS_TYPE_OPERATOR_TYPE));
     }
 

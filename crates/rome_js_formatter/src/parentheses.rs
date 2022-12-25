@@ -41,12 +41,13 @@ use crate::utils::{AnyJsBinaryLikeExpression, AnyJsBinaryLikeLeftExpression};
 
 use rome_js_syntax::{
     AnyJsAssignment, AnyJsAssignmentPattern, AnyJsExpression, AnyJsFunctionBody,
-    AnyJsLiteralExpression, AnyTsType, JsArrowFunctionExpression, JsAssignmentExpression,
-    JsBinaryExpression, JsBinaryOperator, JsComputedMemberAssignment, JsComputedMemberExpression,
-    JsConditionalExpression, JsLanguage, JsParenthesizedAssignment, JsParenthesizedExpression,
-    JsPrivateName, JsSequenceExpression, JsStaticMemberAssignment, JsStaticMemberExpression,
-    JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, TsConditionalType, TsIndexedAccessType,
-    TsIntersectionTypeElementList, TsParenthesizedType, TsUnionTypeVariantList,
+    AnyJsLiteralExpression, AnyTsReturnType, AnyTsType, JsArrowFunctionExpression,
+    JsAssignmentExpression, JsBinaryExpression, JsBinaryOperator, JsComputedMemberAssignment,
+    JsComputedMemberExpression, JsConditionalExpression, JsLanguage, JsParenthesizedAssignment,
+    JsParenthesizedExpression, JsPrivateName, JsSequenceExpression, JsStaticMemberAssignment,
+    JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, TsConditionalType,
+    TsConstructorType, TsFunctionType, TsIndexedAccessType, TsIntersectionTypeElementList,
+    TsParenthesizedType, TsUnionTypeVariantList,
 };
 use rome_rowan::{declare_node_union, match_ast, AstNode, AstSeparatedList, SyntaxResult};
 
@@ -723,6 +724,64 @@ pub(crate) fn is_check_type(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool 
         }
         _ => false,
     }
+}
+
+/// Tests if `node` is the extends type of a [TsConditionalType]
+///
+/// ```javascript
+/// type s = A extends string ? boolean : number //  true for `string`, false for `A`, `boolean` and `number`
+/// ```
+fn is_extends_type(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
+    debug_assert_is_parent(node, parent);
+
+    match parent.kind() {
+        JsSyntaxKind::TS_CONDITIONAL_TYPE => {
+            let conditional = TsConditionalType::unwrap_cast(parent.clone());
+
+            conditional
+                .extends_type()
+                .map(AstNode::into_syntax)
+                .as_ref()
+                == Ok(node)
+        }
+        _ => false,
+    }
+}
+
+/// Tests if `node` includes inferred return types with extends constraints
+///
+/// ```javascript
+/// type Type<A> = A extends ((a: string) => infer B extends string) ? B : never;  // true
+/// ```
+pub(crate) fn is_includes_inferred_return_types_with_extends_constraints(
+    node: &JsSyntaxNode,
+    parent: &JsSyntaxNode,
+) -> bool {
+    if is_extends_type(node, parent) {
+        match node.kind() {
+            JsSyntaxKind::TS_FUNCTION_TYPE => {
+                let function_type = TsFunctionType::unwrap_cast(node.clone());
+                if let Ok(AnyTsReturnType::AnyTsType(AnyTsType::TsInferType(infer_type))) =
+                    function_type.return_type()
+                {
+                    if infer_type.constraint().is_some() {
+                        return true;
+                    }
+                }
+            }
+            JsSyntaxKind::TS_CONSTRUCTOR_TYPE => {
+                let constructor_type = TsConstructorType::unwrap_cast(node.clone());
+                if let Ok(AnyTsType::TsInferType(infer_type)) = constructor_type.return_type() {
+                    if infer_type.constraint().is_some() {
+                        return true;
+                    }
+                }
+            }
+            _ => (),
+        }
+    }
+
+    return false;
 }
 
 /// Returns `true` if node is in a union or intersection type with more than one variant
