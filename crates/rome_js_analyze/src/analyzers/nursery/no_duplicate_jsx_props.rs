@@ -1,10 +1,10 @@
-use std::collections::HashMap;
-
+use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::jsx_ext::AnyJsxElement;
-use rome_js_syntax::{AnyJsxAttribute, JsxAttribute, SyntaxNodeText};
+use rome_js_syntax::{AnyJsxAttribute, JsxAttribute};
 use rome_rowan::AstNode;
+use std::collections::HashMap;
 
 declare_rule! {
     /// Prevents duplicate properties in JSX elements.
@@ -37,8 +37,14 @@ declare_rule! {
     }
 }
 
-fn get_name_text(attr: &JsxAttribute) -> Option<SyntaxNodeText> {
-    Some(attr.name().ok()?.syntax().text_trimmed())
+fn push_attribute(
+    attr: JsxAttribute,
+    attributes: &mut HashMap<String, Vec<JsxAttribute>>,
+) -> Option<()> {
+    let name = attr.name().ok()?.syntax().text_trimmed();
+    let name = name.to_string().to_lowercase();
+    attributes.entry(name).or_default().push(attr);
+    Some(())
 }
 
 impl Rule for NoDuplicateJsxProps {
@@ -47,33 +53,21 @@ impl Rule for NoDuplicateJsxProps {
     type Signals = HashMap<String, Vec<JsxAttribute>>;
     type Options = ();
 
-    fn run(ctx: &rome_analyze::context::RuleContext<Self>) -> Self::Signals {
+    fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
 
-        let mut defined_properties: HashMap<String, Vec<JsxAttribute>> = HashMap::new();
+        let mut defined_attributes: HashMap<String, Vec<JsxAttribute>> = HashMap::new();
         for attribute in node.attributes() {
-            match attribute {
-                AnyJsxAttribute::JsxAttribute(attribute) => {
-                    if let Some(name) = get_name_text(&attribute) {
-                        defined_properties
-                            .entry(name.to_string().to_lowercase())
-                            .or_default()
-                            .push(attribute);
-                    }
-                }
-                AnyJsxAttribute::JsxSpreadAttribute(_) => continue,
+            if let AnyJsxAttribute::JsxAttribute(attr) = attribute {
+                let _ = push_attribute(attr, &mut defined_attributes);
             }
         }
 
-        defined_properties.retain(|_, val| val.len() > 1);
-
-        defined_properties
+        defined_attributes.retain(|_, val| val.len() > 1);
+        defined_attributes
     }
 
-    fn diagnostic(
-        _: &rome_analyze::context::RuleContext<Self>,
-        state: &Self::State,
-    ) -> Option<rome_analyze::RuleDiagnostic> {
+    fn diagnostic(_: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let mut attributes = state.1.iter();
 
         let mut diagnostic = RuleDiagnostic::new(
