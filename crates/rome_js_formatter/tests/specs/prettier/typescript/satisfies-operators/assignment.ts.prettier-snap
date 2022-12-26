@@ -3,7 +3,7 @@ const extraRendererAttrs = ((attrs.rendererAttrs &&
   Object.create(null)) satisfies FieldService.RendererAttributes;
 
 const annotate = (angular.injector satisfies any).$$annotate satisfies (
-  fn: Function
+  fn: Function,
 ) => string[];
 
 const originalPrototype = originalConstructor.prototype satisfies TComponent &
