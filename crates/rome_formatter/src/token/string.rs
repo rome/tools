@@ -37,7 +37,7 @@ impl ToAsciiLowercaseCow for String {
 
 /// This signal is used to tell to the next character what it should do
 #[derive(Eq, PartialEq)]
-enum CharSignal {
+pub enum CharSignal {
     /// There hasn't been any signal
     None,
     /// The function decided to keep the previous character
@@ -97,7 +97,7 @@ impl Quote {
 /// # Escaping
 ///
 /// The way it works is the following: we split the content by analyzing all the
-/// characters that are contained inside [CHARACTERS_THAT_COULD_KEEP_THE_ESCAPE].
+/// characters that could keep the escape.
 ///
 /// Each time we retrieve one of this character, we push inside a new string all the content
 /// found **before** the current character.
@@ -127,7 +127,7 @@ impl Quote {
 /// Then the next iteration comes along. We have the second `\`, we look ahead we find a `'`. Although,
 /// as opposed to the previous example, we have a signal that says that we should keep the current
 /// character. Then we do so. The third iteration comes along and we find `'`. We still have the
-/// [CharSignal::Keep]. We do so and then we set the signal to [CharSignal::Idle]
+/// [CharSignal::Keep]. We do so and then we set the signal to [CharSignal::None]
 ///
 /// # Newlines
 ///

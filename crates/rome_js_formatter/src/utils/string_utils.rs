@@ -304,50 +304,6 @@ impl<'token> LiteralStringNormaliser<'token> {
         }
     }
 
-    /// This function is responsible of:
-    ///
-    /// - reducing the number of escapes
-    /// - normalising the new lines
-    ///
-    /// # Escaping
-    ///
-    /// The way it works is the following: we split the content by analyzing all the
-    /// characters that are contained inside [CHARACTERS_THAT_COULD_KEEP_THE_ESCAPE].
-    ///
-    /// Each time we retrieve one of this character, we push inside a new string all the content
-    /// found **before** the current character.
-    ///
-    /// After that the function checks if the current character should be also be printed or not.
-    /// These characters (like quotes) can have an escape that might be removed. If that happens,
-    /// we use [CharSignal] to tell to the next iteration what it should do with that character.
-    ///
-    /// For example, let's take this example:
-    /// ```js
-    /// ("hello! \'")
-    /// ```
-    ///
-    /// Here, we want to remove the backslash (\) from the content. So when we encounter `\`,
-    /// the algorithm checks if after `\` there's a `'`, and if so, then we push inside the final string
-    /// only `'` and we ignore the backlash. Then we signal the next iteration with [CharSignal::AlreadyPrinted],
-    /// so when we process the next `'`, we decide to ignore it and reset the signal.
-    ///
-    /// Another example is the following:
-    ///
-    /// ```js
-    /// (" \\' ")
-    /// ```
-    ///
-    /// Here, we need to keep all the backslash. We check the first one and we look ahead. We find another
-    /// `\`, so we keep it the first and we signal the next iteration with [CharSignal::Keep].
-    /// Then the next iteration comes along. We have the second `\`, we look ahead we find a `'`. Although,
-    /// as opposed to the previous example, we have a signal that says that we should keep the current
-    /// character. Then we do so. The third iteration comes along and we find `'`. We still have the
-    /// [CharSignal::Keep]. We do so and then we set the signal to [CharSignal::Idle]
-    ///
-    /// # Newlines
-    ///
-    /// By default the formatter uses `\n` as a newline. The function replaces
-    /// `\r\n` with `\n`,
     fn normalize_string(&self, string_information: &StringInformation) -> Cow<'token, str> {
         let raw_content = self.raw_content();
 
