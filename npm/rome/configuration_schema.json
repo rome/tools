@@ -1079,6 +1079,17 @@
             }
           ]
         },
+        "useSimpleNumberKeys": {
+          "description": "Disallow use of number literal in format other than decimal as object member name",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useValidAriaProps": {
           "description": "Ensures that ARIA properties aria-* are all valid.",
           "anyOf": [

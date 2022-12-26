@@ -819,6 +819,8 @@ struct NurserySchema {
     use_media_caption: Option<RuleConfiguration>,
     #[doc = "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals"]
     use_numeric_literals: Option<RuleConfiguration>,
+    #[doc = "Disallow use of number literal in format other than decimal as object member name"]
+    use_simple_number_keys: Option<RuleConfiguration>,
     #[doc = "Ensures that ARIA properties aria-* are all valid."]
     use_valid_aria_props: Option<RuleConfiguration>,
     #[doc = "Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country."]
@@ -826,7 +828,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 46] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 47] = [
         "noAccessKey",
         "noAssignInExpressions",
         "noBannedTypes",
@@ -871,6 +873,7 @@ impl Nursery {
         "useIsNan",
         "useMediaCaption",
         "useNumericLiterals",
+        "useSimpleNumberKeys",
         "useValidAriaProps",
         "useValidLang",
     ];
@@ -949,8 +952,8 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[41]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[42]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[43]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[44]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[45]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[46]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
