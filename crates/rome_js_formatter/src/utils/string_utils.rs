@@ -1,45 +1,10 @@
 use crate::context::{JsFormatOptions, QuoteProperties, QuoteStyle};
 use crate::prelude::*;
-use crate::utils::string_utils::CharSignal::AlreadyPrinted;
+use rome_formatter::token::string::normalize_string;
 use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
 use rome_js_syntax::{JsSyntaxToken, SourceType};
 use std::borrow::Cow;
 use unicode_width::UnicodeWidthStr;
-
-pub trait ToAsciiLowercaseCow {
-    /// Returns the same value as String::to_lowercase. The only difference
-    /// is that this functions returns ```Cow``` and does not allocate
-    /// if the string is already in lowercase.
-    fn to_ascii_lowercase_cow(&self) -> Cow<str>;
-}
-
-impl ToAsciiLowercaseCow for str {
-    fn to_ascii_lowercase_cow(&self) -> Cow<str> {
-        debug_assert!(self.is_ascii());
-
-        let bytes = self.as_bytes();
-
-        for idx in 0..bytes.len() {
-            let chr = bytes[idx];
-            if chr != chr.to_ascii_lowercase() {
-                let mut s = bytes.to_vec();
-                for b in &mut s[idx..] {
-                    b.make_ascii_lowercase();
-                }
-                return Cow::Owned(unsafe { String::from_utf8_unchecked(s) });
-            }
-        }
-
-        Cow::Borrowed(self)
-    }
-}
-
-impl ToAsciiLowercaseCow for String {
-    #[inline(always)]
-    fn to_ascii_lowercase_cow(&self) -> Cow<str> {
-        self.as_str().to_ascii_lowercase_cow()
-    }
-}
 
 #[derive(Eq, PartialEq, Debug)]
 pub(crate) enum StringLiteralParentKind {
@@ -194,18 +159,6 @@ impl FormatLiteralStringToken<'_> {
     }
 }
 
-/// This signal is used to tell to the next character what it should do
-#[derive(Eq, PartialEq)]
-enum CharSignal {
-    /// There hasn't been any signal
-    None,
-    /// The function decided to keep the previous character
-    Keep,
-    /// The function has decided to print the character. Saves the character that was
-    /// already written
-    AlreadyPrinted(char),
-}
-
 /// Struct of convenience used to manipulate the string. It saves some state in order to apply
 /// the normalise process.
 struct LiteralStringNormaliser<'token> {
@@ -265,15 +218,6 @@ impl<'token> LiteralStringNormaliser<'token> {
 
     fn get_token(&self) -> &'token JsSyntaxToken {
         self.token.token()
-    }
-
-    /// A string should be manipulated only if its raw content contains backslash or quotes
-    fn should_manipulate_string(&self, string_information: &StringInformation) -> bool {
-        let preferred_quote = string_information.preferred_quote;
-        let alternate_quote = preferred_quote.other();
-        let raw_content = self.raw_content();
-        raw_content.contains(['\\', preferred_quote.as_char(), alternate_quote.as_char()])
-            || !matches!(self.token.parent_kind, StringLiteralParentKind::Directive)
     }
 
     fn normalise_directive(&mut self, string_information: &StringInformation) -> Cow<'token, str> {
@@ -407,127 +351,11 @@ impl<'token> LiteralStringNormaliser<'token> {
     fn normalize_string(&self, string_information: &StringInformation) -> Cow<'token, str> {
         let raw_content = self.raw_content();
 
-        if !self.should_manipulate_string(string_information) {
+        if matches!(self.token.parent_kind, StringLiteralParentKind::Directive) {
             return Cow::Borrowed(raw_content);
         }
-        let preferred_quote = string_information.preferred_quote;
-        let alternate_quote = preferred_quote.other();
-        let mut reduced_string = String::new();
-        let mut signal = CharSignal::None;
 
-        let mut chars = raw_content.char_indices().peekable();
-
-        while let Some((_, current_char)) = chars.next() {
-            let next_character = chars.peek();
-
-            if let AlreadyPrinted(char) = signal {
-                if char == current_char {
-                    continue;
-                }
-            }
-
-            match current_char {
-                '\\' => {
-                    let bytes = raw_content.as_bytes();
-
-                    if let Some((next_index, next_character)) = next_character {
-                        // If we encounter an alternate quote that is escaped, we have to
-                        // remove the escape from it.
-                        // This is done because of how the enclosed strings can change.
-                        // Check `computed_preferred_quote` for more details.
-                        if *next_character as u8 == alternate_quote.as_bytes()
-                                    // This check is a safety net for cases where the backslash is at the end
-                                    // of the raw content:
-                                    // ("\\")
-                                    // The second backslash is at the end.
-                                    && *next_index < bytes.len()
-                        {
-                            match signal {
-                                CharSignal::Keep => {
-                                    reduced_string.push(current_char);
-                                }
-                                _ => {
-                                    reduced_string.push(alternate_quote.as_char());
-                                    signal = AlreadyPrinted(alternate_quote.as_char());
-                                }
-                            }
-                        } else if signal == CharSignal::Keep {
-                            reduced_string.push(current_char);
-                            signal = CharSignal::None;
-                        }
-                        // The next character is another backslash, or
-                        // a character that should be kept in the next iteration
-                        else if "^\n\r\"'01234567\\bfnrtuvx\u{2028}\u{2029}"
-                            .contains(*next_character)
-                        {
-                            signal = CharSignal::Keep;
-                            // fallback, keep the backslash
-                            reduced_string.push(current_char);
-                        } else {
-                            // these, usually characters that can have their
-                            // escape removed: "\a" => "a"
-                            // So we ignore the current slash and we continue
-                            // to the next iteration
-                            continue;
-                        }
-                    } else {
-                        // fallback, keep the backslash
-                        reduced_string.push(current_char);
-                    }
-                }
-                '\n' | '\t' => {
-                    if let AlreadyPrinted(the_char) = signal {
-                        if matches!(the_char, '\n' | '\t') {
-                            signal = CharSignal::None
-                        }
-                    } else {
-                        reduced_string.push(current_char);
-                    }
-                }
-                // If the current character is \r and the
-                // next is \n, skip over the entire sequence
-                '\r' if next_character.map_or(false, |(_, c)| *c == '\n') => {
-                    reduced_string.push('\n');
-                    signal = AlreadyPrinted('\n');
-                }
-                _ => {
-                    // If we encounter a preferred quote and it's not escaped, we have to replace it with
-                    // an escaped version.
-                    // This is done because of how the enclosed strings can change.
-                    // Check `computed_preferred_quote` for more details.
-                    if current_char == preferred_quote.as_char() {
-                        let last_char = &reduced_string.chars().last();
-                        if let Some('\\') = last_char {
-                            reduced_string.push(preferred_quote.as_char());
-                        } else {
-                            reduced_string.push_str(preferred_quote.as_escaped());
-                        }
-                    } else if current_char == alternate_quote.as_char() {
-                        match signal {
-                            CharSignal::None | CharSignal::Keep => {
-                                reduced_string.push(alternate_quote.as_char());
-                            }
-                            AlreadyPrinted(_) => (),
-                        }
-                    } else {
-                        reduced_string.push(current_char);
-                    }
-                    signal = CharSignal::None;
-                }
-            }
-        }
-
-        // Don't allocate a new string of this is empty
-        if reduced_string.is_empty() {
-            Cow::Borrowed(raw_content)
-        } else {
-            // don't allocate a new string if the new string is still equals to the input string
-            if reduced_string == raw_content {
-                Cow::Borrowed(raw_content)
-            } else {
-                Cow::Owned(reduced_string)
-            }
-        }
+        normalize_string(raw_content, string_information.preferred_quote.into())
     }
 
     fn raw_content(&self) -> &'token str {
@@ -568,6 +396,7 @@ mod tests {
     use crate::utils::quickcheck_utils::*;
     use crate::utils::FormatLiteralStringToken;
     use quickcheck_macros::*;
+    use rome_formatter::token::string::ToAsciiLowercaseCow;
     use rome_js_factory::JsSyntaxTreeBuilder;
     use rome_js_syntax::JsSyntaxKind::{JS_STRING_LITERAL, JS_STRING_LITERAL_EXPRESSION};
     use rome_js_syntax::{JsStringLiteralExpression, JsSyntaxToken};

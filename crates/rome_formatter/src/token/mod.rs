@@ -1,2 +1,2 @@
 pub mod number;
-pub(crate) mod string;
+pub mod string;

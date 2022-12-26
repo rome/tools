@@ -1,8 +1,8 @@
+use rome_formatter::token::string::ToAsciiLowercaseCow;
 use rome_formatter::write;
 use std::borrow::Cow;
 
 use crate::prelude::*;
-use crate::utils::string_utils::ToAsciiLowercaseCow;
 
 use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::JsBigIntLiteralExpressionFields;
