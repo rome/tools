@@ -1,27 +1,32 @@
-use rome_analyze::{
-    context::RuleContext, declare_rule, Rule, Ast, RuleDiagnostic
-};
-use rome_js_syntax::JsLiteralMemberName;
-use rome_js_syntax::JsSyntaxKind;
-use rome_js_syntax::JsSyntaxToken;
-use rome_rowan::AstNode;
+use crate::JsRuleAction;
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
+use rome_console::markup;
+use rome_diagnostics::Applicability;
+use rome_js_factory::make;
+use rome_js_syntax::{JsLiteralMemberName, JsSyntaxKind, JsSyntaxToken};
+use rome_rowan::{AstNode, BatchMutationExt};
+use std::str::FromStr;
 
 declare_rule! {
-    /// Put your description here
+    /// Disallow number literal object member names which are not base10 or uses underscore as separator
     ///
     /// ## Examples
     ///
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// var a = 1;
-    /// a = 2;
+    /// ({ 0x1: 1 });
+    /// ({ 11_1.11: "ee" });
+    /// ({ 0o1: 1 });
+    /// ({ 1n: 1 });
+    /// ({ 11_1.11: "ee" });
     /// ```
     ///
     /// ## Valid
     ///
     /// ```js
-    /// var a = 1;
+    /// ({ 0: "zero" });
+    /// ({ 3.1e12: "12" });
     /// ```
     ///
     pub(crate) UseSimpleNumberKeys {
@@ -33,180 +38,233 @@ declare_rule! {
 
 #[derive(Clone)]
 pub enum NumberLiteral {
-	Binary{value: String, big_int: bool},
-	Decimal{value: String, big_int: bool, dashed: bool},
-	Octal{value: String, big_int: bool},
-	Hexadecimal{value: String, big_int: bool},
-	FloatingPoint{value: String, exponent: bool, dashed: bool}
+    Binary {
+        value: String,
+        big_int: bool,
+    },
+    Decimal {
+        value: String,
+        big_int: bool,
+        underscore: bool,
+    },
+    Octal {
+        value: String,
+        big_int: bool,
+    },
+    Hexadecimal {
+        value: String,
+        big_int: bool,
+    },
+    FloatingPoint {
+        value: String,
+        exponent: bool,
+        underscore: bool,
+    },
 }
 
 pub struct NumberLiteralError;
 
 impl TryFrom<JsSyntaxToken> for NumberLiteral {
+    type Error = NumberLiteralError;
 
-	type Error = NumberLiteralError;
+    fn try_from(token: JsSyntaxToken) -> Result<Self, Self::Error> {
+        match token.kind() {
+            JsSyntaxKind::JS_NUMBER_LITERAL | JsSyntaxKind::JS_BIG_INT_LITERAL => {
+                let chars: Vec<char> = token.to_string().chars().collect();
+                let mut value = String::new();
 
+                let mut is_first_char_zero: bool = false;
+                let mut is_second_char_a_letter: Option<char> = None;
+                let mut contains_dot: bool = false;
+                let mut exponent: bool = false;
+                let mut largest_digit: char = '0';
+                let mut underscore: bool = false;
+                let mut big_int: bool = false;
 
-	fn try_from(token: JsSyntaxToken) -> Result<Self, Self::Error> {
-		match token.kind() {
-			JsSyntaxKind::JS_NUMBER_LITERAL |  JsSyntaxKind::JS_BIG_INT_LITERAL =>  {
-				let chars: Vec<char> = token.to_string().chars().collect();
-				let mut value = String::new();
+                for i in 0..chars.len() {
+                    if i == 0 && chars[i] == '0' && chars.len() > 1 {
+                        is_first_char_zero = true;
+                        continue;
+                    }
 
-				let mut is_first_char_zero: bool = false;
-				let mut is_second_char_a_letter: Option<char> = None;
-				let mut contains_dot: bool = false;
-				let mut exponent: bool = false;
-				let mut largest_digit: char = '0';
-				let mut dashed: bool = false;
-				let mut big_int: bool = false;
+                    if chars[i] == 'n' {
+                        big_int = true;
+                        break;
+                    }
 
+					if chars[i] == 'e' || chars[i] == 'E' {
+                        exponent = true;
+                    }
 
-				for i in 0..chars.len() {
-					if i == 0 && chars[i] == '0' && chars.len() > 1 {
-						is_first_char_zero = true;
-						continue;
-					}
+                    if i == 1 && chars[i].is_alphabetic() && exponent == false {
+                        is_second_char_a_letter = Some(chars[i]);
+                        continue;
+                    }
 
-					if chars[i] == 'n' {
-						big_int = true;
-						break;
-					}
+                    if chars[i] == '_' {
+                        underscore = true;
+                        continue;
+                    }
 
-					if i == 1 && chars[i].is_alphabetic() {
-						is_second_char_a_letter = Some(chars[i]);
-						continue;
-					}
+                    if chars[i] == '.' {
+                        contains_dot = true;
+                    }
 
-					if chars[i] == '_' {
-						dashed = true;
-					}
+                    if largest_digit < chars[i] {
+                        largest_digit = chars[i];
+                    }
 
-					if chars[i] == '.' {
-						contains_dot = true;
-					}
+                    value.push(chars[i])
+                }
 
-					if contains_dot && (chars[i] == 'e' || chars[i] == 'E') {
-						exponent = true;
-					}
+                if contains_dot {
+                    return Ok(Self::FloatingPoint {
+                        value,
+                        exponent,
+                        underscore,
+                    });
+                };
+                if !is_first_char_zero {
+                    return Ok(Self::Decimal {
+                        value,
+                        big_int,
+                        underscore,
+                    });
+                };
 
-					if largest_digit < chars[i] {
-						largest_digit = chars[i];
-					}
+                match is_second_char_a_letter {
+                    Some('b' | 'B') => return Ok(Self::Binary { value, big_int }),
+                    Some('o' | 'O') => return Ok(Self::Octal { value, big_int }),
+                    Some('x' | 'X') => return Ok(Self::Hexadecimal { value, big_int }),
+                    _ => (),
+                }
 
-					value.push(chars[i])
-				}
+                if largest_digit < '8' {
+                    return Ok(Self::Octal { value, big_int });
+                }
 
-				if contains_dot {return Ok(Self::FloatingPoint{value, exponent, dashed})};
-				if !is_first_char_zero {return Ok(Self::Decimal{value, big_int, dashed})};
-
-				match is_second_char_a_letter {
-					Some('b' | 'B') => {return Ok(Self::Binary{value, big_int})},
-					Some('o' | 'O') => {return Ok(Self::Octal{value, big_int})},
-					Some('x' | 'X' ) => {return Ok(Self::Hexadecimal{value, big_int})},
-					_ => ()
-				}
-
-				if largest_digit < '8' {
-					return Ok(Self::Octal{value, big_int})
-				}
-
-				Ok(Self::Decimal{value, big_int, dashed})
-
-			}
-			_ => Err(NumberLiteralError)
-		}
-	}
+                Ok(Self::Decimal {
+                    value,
+                    big_int,
+                    underscore,
+                })
+            }
+            _ => Err(NumberLiteralError),
+        }
+    }
 }
 
 impl NumberLiteral {
-	fn value(self: &Self) -> &String {
-		return match self {
-			Self::Decimal { value, .. } => value,
-			Self::Binary { value, .. } => value,
-			Self::FloatingPoint { value,.. } => value,
-			Self::Octal { value, .. } => value,
-			Self::Hexadecimal { value, .. } => value
-		}
-
-	}
+    fn value(&self) -> &String {
+        match self {
+            Self::Decimal { value, .. } => value,
+            Self::Binary { value, .. } => value,
+            Self::FloatingPoint { value, .. } => value,
+            Self::Octal { value, .. } => value,
+            Self::Hexadecimal { value, .. } => value,
+        }
+    }
 }
 
 impl NumberLiteral {
-	fn to_base_ten(self: &Self) -> String {
-		let result = match self {
-			Self::Binary { value, .. } => {
-				i32::from_str_radix(value, 2).ok()
-			}
-			Self::Octal { value,.. } => {
-				i32::from_str_radix(value, 7).ok()
-			}
-			Self::Hexadecimal { value, ..} => {i32::from_str_radix(value, 16).ok()},
-			_ => None
-		};
-
-		match result {
-			Some(value) => {return value.to_string();},
-			None => {return self.value().to_string()}
-		}
-	}
+    fn to_base_ten(&self) -> Option<f64> {
+        match self {
+            Self::Binary { value, .. } => i64::from_str_radix(value, 2).map(|num| num as f64).ok(),
+            Self::Decimal { value, .. } | Self::FloatingPoint { value, .. } => {
+                f64::from_str(value).ok()
+            }
+            Self::Octal { value, .. } => i64::from_str_radix(value, 7).map(|num| num as f64).ok(),
+            Self::Hexadecimal { value, .. } => {
+                i64::from_str_radix(value, 16).map(|num| num as f64).ok()
+            }
+        }
+    }
 }
 
 impl Rule for UseSimpleNumberKeys {
     type Query = Ast<JsLiteralMemberName>;
     type State = NumberLiteral;
-    type Signals =  Vec<Self::State>;
+    type Signals = Vec<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-		let mut signals: Self::Signals = Vec::new();
-		let node = ctx.query();
+        let mut signals: Self::Signals = Vec::new();
+        let node = ctx.query();
 
-		if let Some(token) = node.value().ok() {
+        if let Ok(token) = node.value() {
+            let number_literal = NumberLiteral::try_from(token).ok();
 
-			let number_literal = NumberLiteral::try_from(token).ok();
+            if let Some(number_literal) = number_literal {
+                match number_literal {
+                    NumberLiteral::Decimal { big_int: true, .. }
+                    | NumberLiteral::Decimal {
+                        underscore: true, ..
+                    } => signals.push(number_literal),
+                    NumberLiteral::FloatingPoint {
+                        underscore: true, ..
+                    } => signals.push(number_literal),
+                    NumberLiteral::Binary { .. } => signals.push(number_literal),
+                    NumberLiteral::Hexadecimal { .. } => signals.push(number_literal),
+                    NumberLiteral::Octal { .. } => signals.push(number_literal),
+                    _ => (),
+                }
+            }
+        }
 
-			match number_literal {
-				Some(number_literal) => {
-					match number_literal {
-						NumberLiteral::Decimal {  big_int: true, .. } | NumberLiteral::Decimal {  dashed: true, .. } => {signals.push(number_literal)},
-						NumberLiteral::FloatingPoint {  dashed: true, .. } => {signals.push(number_literal)},
-						NumberLiteral::Binary { .. } => {signals.push(number_literal)}
-						NumberLiteral::Hexadecimal { .. } => {signals.push(number_literal)}
-						NumberLiteral::Octal { .. } => {signals.push(number_literal)}
-						_ => ()
-					}
-				},
-				None => (),
-			}
-		}
-
-		signals
+        signals
     }
 
-	fn diagnostic(
+    fn diagnostic(
         _ctx: &RuleContext<Self>,
-		number_literal: &Self::State
+        number_literal: &Self::State,
     ) -> Option<RuleDiagnostic> {
+        let title = match number_literal {
+            NumberLiteral::Decimal { big_int: true, .. } => "Bigint is not allowed",
+            NumberLiteral::Decimal {
+                underscore: true, ..
+            } => "Number literal with underscore is not allowed",
+            NumberLiteral::FloatingPoint {
+                underscore: true, ..
+            } => "Number literal with underscore is not allowed",
+            NumberLiteral::Binary { .. } => "Number literal in binary format is not allowed",
+            NumberLiteral::Hexadecimal { .. } => {
+                "Number literal in hexadecimal format is not allowed"
+            }
+            NumberLiteral::Octal { .. } => "Number literal in octal format is not allowed",
+            _ => "",
+        };
 
+        let diagnostic =
+            RuleDiagnostic::new(rule_category!(), _ctx.query().range(), title.to_string());
 
-		let title = match number_literal {
-			NumberLiteral::Decimal { big_int: true, .. } => { "Bigint is not allowed"},
-			NumberLiteral::Decimal { dashed: true, .. } => { "Dashed number literal is not allowed"},
-			NumberLiteral::FloatingPoint { dashed: true, .. } => { "Dashed number literal is not allowed" },
-			NumberLiteral::Binary { .. } => { "Number literal in binary format is not allowed" },
-			NumberLiteral::Hexadecimal { .. } => {  "Number literal in hexadecimal format is not allowed"},
-			NumberLiteral::Octal { .. } => { "Number literal in octal format is not allowed"},
-			_ => {""}
-		};
+        Some(diagnostic)
+    }
 
-		let diagnostic = RuleDiagnostic::new(
-            rule_category!(),
-				_ctx.query().range(),
-                format!("{}", title),
-            );
+    fn action(ctx: &RuleContext<Self>, number_literal: &Self::State) -> Option<JsRuleAction> {
+        let mut mutation = ctx.root().begin();
+        let node = ctx.query();
 
-		Some(diagnostic)
-	}
+        if let Ok(token) = node.value() {
+            match number_literal {
+                NumberLiteral::Binary { .. }
+                | NumberLiteral::Octal { .. }
+                | NumberLiteral::Hexadecimal { .. } => mutation.replace_token(
+                    token,
+                    make::js_number_literal(number_literal.to_base_ten()?),
+                ),
+                NumberLiteral::FloatingPoint { .. } | NumberLiteral::Decimal { .. } => {
+                    mutation.replace_token(token, make::js_number_literal(number_literal.value()));
+                }
+            };
 
+            return Some(JsRuleAction {
+                category: ActionCategory::QuickFix,
+                applicability: Applicability::Always,
+                message: markup! ("Remove "{ node.to_string() }).to_owned(),
+                mutation,
+            });
+        }
+
+        None
+    }
 }

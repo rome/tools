@@ -16,14 +16,6 @@
 
 // valid for now
 
-// ESLint already catches properties keyed with different-formatted number literals, we haven't implemented it yet.
-({ 0x1: 1, 1: 2 });
-({ 012: 1, 10: 2 });
-({ 0b1: 1, 1: 2 });
-({ 0o1: 1, 1: 2 });
-({ 1n: 1, 1: 2 });
-({ 1_0: 1, 10: 2 });
-
 // This particular simple computed property case with just a string literal would be easy to catch,
 // but we don't want to open Pandora's static analysis box so we have to draw a line somewhere
 ({ a: 1, ["a"]: 1 });
