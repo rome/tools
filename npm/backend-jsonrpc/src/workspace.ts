@@ -326,7 +326,7 @@ export interface Nursery {
 	 */
 	noDuplicateCase?: RuleConfiguration;
 	/**
-	 * Prevents duplicate properties in JSX elements.
+	 * Prevents JSX properties to be assigned multiple times.
 	 */
 	noDuplicateJsxProps?: RuleConfiguration;
 	/**

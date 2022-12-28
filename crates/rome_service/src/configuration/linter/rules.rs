@@ -749,7 +749,7 @@ struct NurserySchema {
     no_distracting_elements: Option<RuleConfiguration>,
     #[doc = "Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression."]
     no_duplicate_case: Option<RuleConfiguration>,
-    #[doc = "Prevents duplicate properties in JSX elements."]
+    #[doc = "Prevents JSX properties to be assigned multiple times."]
     no_duplicate_jsx_props: Option<RuleConfiguration>,
     #[doc = "Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake."]
     no_duplicate_object_keys: Option<RuleConfiguration>,

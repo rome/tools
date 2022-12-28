@@ -24,7 +24,7 @@ expression: invalid.jsx
 ```
 invalid.jsx:2:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Elements can not have attributes with the same name.
+  ! This JSX property is assigned multiple times.
   
     1 │ //Duplicate `name` property
   > 2 │ <Hello name="John" name="John" />;
@@ -32,7 +32,7 @@ invalid.jsx:2:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━�
     3 │ 
     4 │ //Case insensitive case
   
-  i attribute is duplicated!
+  i This attribute is assigned again here.
   
     1 │ //Duplicate `name` property
   > 2 │ <Hello name="John" name="John" />;
@@ -46,7 +46,7 @@ invalid.jsx:2:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━�
 ```
 invalid.jsx:5:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Elements can not have attributes with the same name.
+  ! This JSX property is assigned multiple times.
   
     4 │ //Case insensitive case
   > 5 │ <Hello name="John" Name="John" />;
@@ -54,7 +54,7 @@ invalid.jsx:5:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━�
     6 │ 
     7 │ //Case where property is repeated more than twice
   
-  i attribute is duplicated!
+  i This attribute is assigned again here.
   
     4 │ //Case insensitive case
   > 5 │ <Hello name="John" Name="John" />;
@@ -68,7 +68,7 @@ invalid.jsx:5:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━�
 ```
 invalid.jsx:8:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Elements can not have attributes with the same name.
+  ! This JSX property is assigned multiple times.
   
      7 │ //Case where property is repeated more than twice
    > 8 │ <Hello name="John" name="John" name="John" />;
@@ -76,7 +76,7 @@ invalid.jsx:8:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━�
      9 │ 
     10 │ //Case with two duplicates
   
-  i attribute is duplicated!
+  i This attribute is assigned again here.
   
      7 │ //Case where property is repeated more than twice
    > 8 │ <Hello name="John" name="John" name="John" />;
@@ -84,7 +84,7 @@ invalid.jsx:8:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━�
      9 │ 
     10 │ //Case with two duplicates
   
-  i attribute is duplicated!
+  i This attribute is assigned again here.
   
      7 │ //Case where property is repeated more than twice
    > 8 │ <Hello name="John" name="John" name="John" />;
@@ -98,7 +98,7 @@ invalid.jsx:8:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━�
 ```
 invalid.jsx:11:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Elements can not have attributes with the same name.
+  ! This JSX property is assigned multiple times.
   
     10 │ //Case with two duplicates
   > 11 │ <Hello name="John" Name="John" lastname="Doe" lastname="Doe" />;
@@ -106,7 +106,7 @@ invalid.jsx:11:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━
     12 │ 
     13 │ <label xml:lang="en-US" xml:lang="en-US"></label>
   
-  i attribute is duplicated!
+  i This attribute is assigned again here.
   
     10 │ //Case with two duplicates
   > 11 │ <Hello name="John" Name="John" lastname="Doe" lastname="Doe" />;
@@ -120,7 +120,7 @@ invalid.jsx:11:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━
 ```
 invalid.jsx:11:32 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Elements can not have attributes with the same name.
+  ! This JSX property is assigned multiple times.
   
     10 │ //Case with two duplicates
   > 11 │ <Hello name="John" Name="John" lastname="Doe" lastname="Doe" />;
@@ -128,7 +128,7 @@ invalid.jsx:11:32 lint/nursery/noDuplicateJsxProps ━━━━━━━━━�
     12 │ 
     13 │ <label xml:lang="en-US" xml:lang="en-US"></label>
   
-  i attribute is duplicated!
+  i This attribute is assigned again here.
   
     10 │ //Case with two duplicates
   > 11 │ <Hello name="John" Name="John" lastname="Doe" lastname="Doe" />;
@@ -142,7 +142,7 @@ invalid.jsx:11:32 lint/nursery/noDuplicateJsxProps ━━━━━━━━━�
 ```
 invalid.jsx:13:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Elements can not have attributes with the same name.
+  ! This JSX property is assigned multiple times.
   
     11 │ <Hello name="John" Name="John" lastname="Doe" lastname="Doe" />;
     12 │ 
@@ -150,7 +150,7 @@ invalid.jsx:13:8 lint/nursery/noDuplicateJsxProps ━━━━━━━━━━
        │        ^^^^^^^^^^^^^^^^
     14 │ 
   
-  i attribute is duplicated!
+  i This attribute is assigned again here.
   
     11 │ <Hello name="John" Name="John" lastname="Doe" lastname="Doe" />;
     12 │ 

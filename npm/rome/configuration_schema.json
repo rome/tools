@@ -688,7 +688,7 @@
           ]
         },
         "noDuplicateJsxProps": {
-          "description": "Prevents duplicate properties in JSX elements.",
+          "description": "Prevents JSX properties to be assigned multiple times.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
