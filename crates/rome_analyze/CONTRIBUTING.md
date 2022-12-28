@@ -391,10 +391,12 @@ struct MissingYieldVisitor {
 
 // Implement the `Visitor` trait for this struct
 impl Visitor for MissingYieldVisitor {
+    type Language = JsLanguage;
+
     fn visit(
         &mut self,
         event: &WalkEvent<SyntaxNode<Self::Language>>,
-        ctx: VisitorContext<Self::Language>,
+        mut ctx: VisitorContext<Self::Language>,
     ) {
         match event {
             WalkEvent::Enter(node) => {
@@ -428,21 +430,29 @@ impl Visitor for MissingYieldVisitor {
 }
 
 // Declare a query match struct type containing a JavaScript function node
-struct MissingYield(AnyFunctionLike);
+pub(crate) struct MissingYield(AnyFunctionLike);
+
+impl QueryMatch for MissingYield {
+    fn text_range(&self) -> TextRange {
+        self.0.range()
+    }
+}
 
 // Implement the `Queryable` trait for this type
 impl Queryable for MissingYield {
     // `Input` is the type that `ctx.match_query()` is called with in the visitor
     type Input = Self;
+    type Language = JsLanguage;
     // `Output` if the type that `ctx.query()` will return in the rule
     type Output = AnyFunctionLike;
+    type Services = ();
 
     fn build_visitor(
         analyzer: &mut impl AddVisitor<Self::Language>,
         _: &<Self::Language as Language>::Root,
     ) {
         // Register our custom visitor to run in the `Syntax` phase
-        analyzer.add_visitor(Phases::Syntax, MissingYieldVisitor::default());
+        analyzer.add_visitor(Phases::Syntax, MissingYieldVisitor::default);
     }
 
     // Extract the output object from the input type

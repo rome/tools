@@ -759,6 +759,8 @@ struct NurserySchema {
     no_extra_semicolons: Option<RuleConfiguration>,
     #[doc = "Check that the scope attribute is only used on th elements."]
     no_header_scope: Option<RuleConfiguration>,
+    #[doc = "Disallow function and var declarations in nested blocks."]
+    no_inner_declarations: Option<RuleConfiguration>,
     #[doc = "Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors."]
     no_invalid_constructor_super: Option<RuleConfiguration>,
     #[doc = "Disallow non-null assertions using the ! postfix operator."]
@@ -828,7 +830,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 47] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 48] = [
         "noAccessKey",
         "noAssignInExpressions",
         "noBannedTypes",
@@ -843,6 +845,7 @@ impl Nursery {
         "noExtraNonNullAssertion",
         "noExtraSemicolons",
         "noHeaderScope",
+        "noInnerDeclarations",
         "noInvalidConstructorSuper",
         "noNonNullAssertion",
         "noNoninteractiveElementToInteractiveRole",
@@ -877,7 +880,7 @@ impl Nursery {
         "useValidAriaProps",
         "useValidLang",
     ];
-    const RECOMMENDED_RULES: [&'static str; 37] = [
+    const RECOMMENDED_RULES: [&'static str; 38] = [
         "noAssignInExpressions",
         "noBannedTypes",
         "noClassAssign",
@@ -891,6 +894,7 @@ impl Nursery {
         "noExtraNonNullAssertion",
         "noExtraSemicolons",
         "noHeaderScope",
+        "noInnerDeclarations",
         "noInvalidConstructorSuper",
         "noNoninteractiveElementToInteractiveRole",
         "noRedundantAlt",
@@ -931,9 +935,9 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[12]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[13]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[14]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[16]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[18]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[21]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[15]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[17]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[19]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[22]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[23]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[24]),
@@ -942,13 +946,13 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[27]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[28]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[29]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[31]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[33]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[30]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[32]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[34]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[35]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[36]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[37]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[40]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[38]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[41]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[42]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[43]),
@@ -1339,7 +1343,7 @@ struct SuspiciousSchema {
     no_double_equals: Option<RuleConfiguration>,
     #[doc = "Disallow duplicate function arguments name."]
     no_duplicate_parameters: Option<RuleConfiguration>,
-    #[doc = "Disallow the any type usage"]
+    #[doc = "Disallow the any type usage."]
     no_explicit_any: Option<RuleConfiguration>,
     #[doc = "Disallow reassigning function declarations."]
     no_function_assign: Option<RuleConfiguration>,

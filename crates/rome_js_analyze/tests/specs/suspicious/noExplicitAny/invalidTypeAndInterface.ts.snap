@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 92
 expression: invalidTypeAndInterface.ts
 ---
 # Input
@@ -110,6 +111,8 @@ invalidTypeAndInterface.ts:2:11 lint/suspicious/noExplicitAny ━━━━━━
     3 │ }
     4 │ 
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -123,6 +126,8 @@ invalidTypeAndInterface.ts:6:17 lint/suspicious/noExplicitAny ━━━━━━
       │ 	               ^^^
     7 │ }
     8 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -138,6 +143,8 @@ invalidTypeAndInterface.ts:10:11 lint/suspicious/noExplicitAny ━━━━━�
     11 │ }
     12 │ 
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -152,6 +159,8 @@ invalidTypeAndInterface.ts:14:23 lint/suspicious/noExplicitAny ━━━━━�
     15 │ }
     16 │ 
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -165,6 +174,8 @@ invalidTypeAndInterface.ts:18:17 lint/suspicious/noExplicitAny ━━━━━�
        │ 	               ^^^
     19 │ }
     20 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -181,6 +192,8 @@ invalidTypeAndInterface.ts:21:28 lint/suspicious/noExplicitAny ━━━━━�
     22 │ 
     23 │ interface Grault5 { new (...args: any): void; }
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -195,6 +208,8 @@ invalidTypeAndInterface.ts:23:35 lint/suspicious/noExplicitAny ━━━━━�
        │                                   ^^^
     24 │ 
     25 │ interface Garply5 { f(...args: any): void; }
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -211,6 +226,8 @@ invalidTypeAndInterface.ts:25:32 lint/suspicious/noExplicitAny ━━━━━�
     26 │ 
     27 │ type obj = {
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -224,6 +241,8 @@ invalidTypeAndInterface.ts:28:11 lint/suspicious/noExplicitAny ━━━━━�
        │ 	         ^^^
     29 │ }
     30 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -239,6 +258,8 @@ invalidTypeAndInterface.ts:32:17 lint/suspicious/noExplicitAny ━━━━━�
     33 │ }
     34 │ 
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -252,6 +273,8 @@ invalidTypeAndInterface.ts:36:11 lint/suspicious/noExplicitAny ━━━━━�
        │ 	         ^^^
     37 │ }
     38 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -267,6 +290,8 @@ invalidTypeAndInterface.ts:40:23 lint/suspicious/noExplicitAny ━━━━━�
     41 │ }
     42 │ 
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -280,6 +305,8 @@ invalidTypeAndInterface.ts:44:17 lint/suspicious/noExplicitAny ━━━━━�
        │ 	               ^^^
     45 │ }
     46 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -295,6 +322,8 @@ invalidTypeAndInterface.ts:48:20 lint/suspicious/noExplicitAny ━━━━━�
     49 │ }
     50 │ 
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -308,6 +337,8 @@ invalidTypeAndInterface.ts:52:26 lint/suspicious/noExplicitAny ━━━━━�
        │ 	                        ^^^
     53 │ }
     54 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -323,6 +354,8 @@ invalidTypeAndInterface.ts:56:20 lint/suspicious/noExplicitAny ━━━━━�
     57 │ }
     58 │ 
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -336,6 +369,8 @@ invalidTypeAndInterface.ts:60:32 lint/suspicious/noExplicitAny ━━━━━�
        │ 	                              ^^^
     61 │ }
     62 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -351,6 +386,8 @@ invalidTypeAndInterface.ts:64:26 lint/suspicious/noExplicitAny ━━━━━�
     65 │ }
     66 │ 
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -364,6 +401,8 @@ invalidTypeAndInterface.ts:68:20 lint/suspicious/noExplicitAny ━━━━━�
        │ 	                  ^^^
     69 │ }
     70 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -379,6 +418,8 @@ invalidTypeAndInterface.ts:72:26 lint/suspicious/noExplicitAny ━━━━━�
     73 │ }
     74 │ 
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -392,6 +433,8 @@ invalidTypeAndInterface.ts:76:20 lint/suspicious/noExplicitAny ━━━━━�
        │ 	                  ^^^
     77 │ }
     78 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -407,6 +450,8 @@ invalidTypeAndInterface.ts:80:32 lint/suspicious/noExplicitAny ━━━━━�
     81 │ }
     82 │ 
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -420,6 +465,8 @@ invalidTypeAndInterface.ts:84:26 lint/suspicious/noExplicitAny ━━━━━�
        │ 	                        ^^^
     85 │ }
     86 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -436,6 +483,8 @@ invalidTypeAndInterface.ts:87:12 lint/suspicious/noExplicitAny ━━━━━�
     88 │ 
     89 │ type Fred5 = (...args: any) => void;
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -451,6 +500,8 @@ invalidTypeAndInterface.ts:89:24 lint/suspicious/noExplicitAny ━━━━━�
     90 │ 
     91 │ type Corge5 = new (...args: any) => void;
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -464,6 +515,8 @@ invalidTypeAndInterface.ts:91:29 lint/suspicious/noExplicitAny ━━━━━�
   > 91 │ type Corge5 = new (...args: any) => void;
        │                             ^^^
     92 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```

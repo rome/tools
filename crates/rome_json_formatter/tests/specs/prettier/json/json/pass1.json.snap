@@ -73,20 +73,7 @@ info: json/json/pass1.json
 ```diff
 --- Prettier
 +++ Rome
-@@ -9,17 +9,17 @@
-   null,
-   {
-     "integer": 1234567890,
--    "real": -9876.54321,
-+    "real": -9876.543210,
-     "e": 0.123456789e-12,
--    "E": 1.23456789e34,
--    "": 23456789012e66,
-+    "E": 1.234567890E+34,
-+    "": 23456789012E66,
-     "zero": 0,
-     "one": 1,
-     "space": " ",
+@@ -19,7 +19,7 @@
      "quote": "\"",
      "backslash": "\\",
      "controls": "\b\f\n\r\t",
@@ -95,7 +82,7 @@ info: json/json/pass1.json
      "alpha": "abcdefghijklmnopqrstuvwyz",
      "ALPHA": "ABCDEFGHIJKLMNOPQRSTUVWYZ",
      "digit": "0123456789",
-@@ -43,17 +43,18 @@
+@@ -43,11 +43,12 @@
      "compact": [1, 2, 3, 4, 5, 6, 7],
      "jsontext": "{\"object with 1 member\":[\"array with 1 element\"]}",
      "quotes": "&#34; \u0022 %22 0x22 034 &#x22;",
@@ -109,15 +96,6 @@ info: json/json/pass1.json
    1066,
    1e1,
    0.1e1,
-   1e-1,
--  1,
--  2,
--  2,
-+  1e00,
-+  2e+00,
-+  2e-00,
-   "rosebud"
- ]
 ```
 
 # Output
@@ -134,10 +112,10 @@ info: json/json/pass1.json
   null,
   {
     "integer": 1234567890,
-    "real": -9876.543210,
+    "real": -9876.54321,
     "e": 0.123456789e-12,
-    "E": 1.234567890E+34,
-    "": 23456789012E66,
+    "E": 1.23456789e34,
+    "": 23456789012e66,
     "zero": 0,
     "one": 1,
     "space": " ",
@@ -178,9 +156,9 @@ info: json/json/pass1.json
   1e1,
   0.1e1,
   1e-1,
-  1e00,
-  2e+00,
-  2e-00,
+  1,
+  2,
+  2,
   "rosebud"
 ]
 ```
