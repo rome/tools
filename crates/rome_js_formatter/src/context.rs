@@ -1,6 +1,7 @@
 use crate::comments::{FormatJsLeadingComment, JsCommentStyle, JsComments};
 use crate::context::trailing_comma::TrailingComma;
 use rome_formatter::printer::PrinterOptions;
+use rome_formatter::token::string::Quote;
 use rome_formatter::{
     CstFormatContext, FormatContext, FormatElement, FormatOptions, IndentStyle, LineWidth,
     TransformSourceMap,
@@ -322,6 +323,15 @@ impl QuoteStyle {
         match self {
             QuoteStyle::Double => QuoteStyle::Single,
             QuoteStyle::Single => QuoteStyle::Double,
+        }
+    }
+}
+
+impl From<QuoteStyle> for Quote {
+    fn from(quote: QuoteStyle) -> Self {
+        match quote {
+            QuoteStyle::Double => Quote::Double,
+            QuoteStyle::Single => Quote::Single,
         }
     }
 }

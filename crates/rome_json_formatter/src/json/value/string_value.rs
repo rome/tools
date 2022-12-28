@@ -1,3 +1,4 @@
+use crate::format_string::format_string_token;
 use crate::prelude::*;
 use rome_json_syntax::JsonStringValue;
 
@@ -6,6 +7,6 @@ pub(crate) struct FormatJsonStringValue;
 
 impl FormatNodeRule<JsonStringValue> for FormatJsonStringValue {
     fn fmt_fields(&self, node: &JsonStringValue, f: &mut JsonFormatter) -> FormatResult<()> {
-        node.value_token()?.format().fmt(f)
+        format_string_token(&node.value_token()?).fmt(f)
     }
 }
