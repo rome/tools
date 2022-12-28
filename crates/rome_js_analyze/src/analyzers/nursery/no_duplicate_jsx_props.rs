@@ -7,7 +7,7 @@ use rome_rowan::AstNode;
 use std::collections::HashMap;
 
 declare_rule! {
-    /// Prevents duplicate properties in JSX elements.
+    /// Prevents JSX properties to be assigned multiple times.
     ///
     /// ## Examples
     ///
@@ -73,13 +73,13 @@ impl Rule for NoDuplicateJsxProps {
         let mut diagnostic = RuleDiagnostic::new(
             rule_category!(),
             attributes.next()?.syntax().text_trimmed_range(),
-            markup!("Elements can not have attributes with the same name."),
+            markup!("This JSX property is assigned multiple times."),
         );
 
         for attr in attributes {
             diagnostic = diagnostic.detail(
                 attr.syntax().text_trimmed_range(),
-                "attribute is duplicated!",
+                "This attribute is assigned again here.",
             )
         }
 
