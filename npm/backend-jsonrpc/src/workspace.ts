@@ -326,6 +326,10 @@ export interface Nursery {
 	 */
 	noDuplicateCase?: RuleConfiguration;
 	/**
+	 * Prevents JSX properties to be assigned multiple times.
+	 */
+	noDuplicateJsxProps?: RuleConfiguration;
+	/**
 	 * Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
 	 */
 	noDuplicateObjectKeys?: RuleConfiguration;
@@ -799,6 +803,7 @@ export type Category =
 	| "lint/nursery/noNoninteractiveElementToInteractiveRole"
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useHookAtTopLevel"
+	| "lint/nursery/noDuplicateJsxProps"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
