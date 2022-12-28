@@ -92,11 +92,11 @@ impl TryFrom<JsSyntaxToken> for NumberLiteral {
                         break;
                     }
 
-					if chars[i] == 'e' || chars[i] == 'E' {
+                    if chars[i] == 'e' || chars[i] == 'E' {
                         exponent = true;
                     }
 
-                    if i == 1 && chars[i].is_alphabetic() && exponent == false {
+                    if i == 1 && chars[i].is_alphabetic() && !exponent {
                         is_second_char_a_letter = Some(chars[i]);
                         continue;
                     }

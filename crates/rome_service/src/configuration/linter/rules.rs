@@ -819,7 +819,7 @@ struct NurserySchema {
     use_media_caption: Option<RuleConfiguration>,
     #[doc = "Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals"]
     use_numeric_literals: Option<RuleConfiguration>,
-    #[doc = "Disallow use of number literal in format other than decimal as object member name"]
+    #[doc = "Disallow number literal object member names which are not base10 or uses underscore as separator"]
     use_simple_number_keys: Option<RuleConfiguration>,
     #[doc = "Ensures that ARIA properties aria-* are all valid."]
     use_valid_aria_props: Option<RuleConfiguration>,

@@ -470,7 +470,7 @@ export interface Nursery {
 	 */
 	useNumericLiterals?: RuleConfiguration;
 	/**
-	 * Disallow use of number literal in format other than decimal as object member name
+	 * Disallow number literal object member names which are not base10 or uses underscore as separator
 	 */
 	useSimpleNumberKeys?: RuleConfiguration;
 	/**
