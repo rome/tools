@@ -594,6 +594,8 @@ fn parse_class_member_impl(
     // Seems like we're at an async method
     if p.at(T![async])
         && !p.nth_at(1, T![?])
+        && !p.nth_at(1, T![;])
+        && !p.nth_at(1, T![=])
         && !is_at_method_class_member(p, 1)
         && !p.has_nth_preceding_line_break(1)
     {
