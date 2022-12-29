@@ -47,8 +47,8 @@ pub(crate) async fn did_change(
     let version = params.text_document.version;
 
     let rome_path = session.file_path(&url)?;
-    let doc = session.document(&url)?;
 
+    let mut doc = session.document(&url)?;
     let mut content = doc.content;
     tracing::trace!("old document: {content:?}");
 
@@ -59,6 +59,7 @@ pub(crate) async fn did_change(
                 let range = Range::<usize>::from(text_range);
                 tracing::trace!("replace range {range:?} with {:?}", change.text);
                 content.replace_range(range, &change.text);
+                doc = Document::new(version, &content);
             }
             None => {
                 tracing::trace!("replace content {:?}", change.text);
@@ -69,7 +70,7 @@ pub(crate) async fn did_change(
 
     tracing::trace!("new document: {content:?}");
 
-    let doc = Document::new(version, &content);
+    doc = Document::new(version, &content);
 
     session.workspace.change_file(ChangeFileParams {
         path: rome_path,

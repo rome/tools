@@ -966,6 +966,125 @@ async fn pull_fix_all() -> Result<()> {
 }
 
 #[tokio::test]
+async fn did_change_from_top_to_bottom() -> Result<()> {
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
+    let (stream, sink) = client.split();
+    let mut server = Server::new(service);
+
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
+    let reader = tokio::spawn(client_handler(stream, sink, sender));
+
+    server.initialize().await?;
+    server.initialized().await?;
+
+    server
+        .open_document("first_line();\nsecond_line();\nthird_line();")
+        .await?;
+
+    server
+        .change_document(
+            1,
+            vec![
+                TextDocumentContentChangeEvent {
+                    range: Some(Range {
+                        start: Position {
+                            line: 0,
+                            character: 0,
+                        },
+                        end: Position {
+                            line: 0,
+                            character: 14,
+                        },
+                    }),
+                    range_length: None,
+                    text: String::from(""),
+                },
+                TextDocumentContentChangeEvent {
+                    range: Some(Range {
+                        start: Position {
+                            line: 0,
+                            character: 7,
+                        },
+                        end: Position {
+                            line: 0,
+                            character: 11,
+                        },
+                    }),
+                    range_length: None,
+                    text: String::from("statement"),
+                },
+                TextDocumentContentChangeEvent {
+                    range: Some(Range {
+                        start: Position {
+                            line: 1,
+                            character: 6,
+                        },
+                        end: Position {
+                            line: 1,
+                            character: 10,
+                        },
+                    }),
+                    range_length: None,
+                    text: String::from("statement"),
+                },
+            ],
+        )
+        .await?;
+
+    let res: GetSyntaxTreeResult = server
+        .request(
+            "rome/get_syntax_tree",
+            "get_syntax_tree",
+            GetSyntaxTreeParams {
+                path: RomePath::new("document.js", FileId::zero()),
+            },
+        )
+        .await?
+        .expect("get_syntax_tree returned None");
+
+    const EXPECTED: &str = "0: JS_MODULE@0..38
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..38
+    0: JS_EXPRESSION_STATEMENT@0..19
+      0: JS_CALL_EXPRESSION@0..18
+        0: JS_IDENTIFIER_EXPRESSION@0..16
+          0: JS_REFERENCE_IDENTIFIER@0..16
+            0: IDENT@0..16 \"second_statement\" [] []
+        1: (empty)
+        2: (empty)
+        3: JS_CALL_ARGUMENTS@16..18
+          0: L_PAREN@16..17 \"(\" [] []
+          1: JS_CALL_ARGUMENT_LIST@17..17
+          2: R_PAREN@17..18 \")\" [] []
+      1: SEMICOLON@18..19 \";\" [] []
+    1: JS_EXPRESSION_STATEMENT@19..38
+      0: JS_CALL_EXPRESSION@19..37
+        0: JS_IDENTIFIER_EXPRESSION@19..35
+          0: JS_REFERENCE_IDENTIFIER@19..35
+            0: IDENT@19..35 \"third_statement\" [Newline(\"\\n\")] []
+        1: (empty)
+        2: (empty)
+        3: JS_CALL_ARGUMENTS@35..37
+          0: L_PAREN@35..36 \"(\" [] []
+          1: JS_CALL_ARGUMENT_LIST@36..36
+          2: R_PAREN@36..37 \")\" [] []
+      1: SEMICOLON@37..38 \";\" [] []
+  3: EOF@38..38 \"\" [] []
+";
+
+    assert_eq!(res.cst, EXPECTED);
+
+    server.close_document().await?;
+
+    server.shutdown().await?;
+    reader.abort();
+
+    Ok(())
+}
+
+#[tokio::test]
 async fn format_with_syntax_errors() -> Result<()> {
     let factory = ServerFactory::default();
     let (service, client) = factory.create().into_inner();
