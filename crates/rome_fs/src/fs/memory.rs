@@ -1,3 +1,5 @@
+use parking_lot::{lock_api::ArcMutexGuard, Mutex, RawMutex, RwLock};
+use rome_diagnostics::Error;
 use std::collections::hash_map::Entry;
 use std::collections::{hash_map::IntoIter, HashMap};
 use std::io;
@@ -6,13 +8,10 @@ use std::path::{Path, PathBuf};
 use std::str;
 use std::sync::Arc;
 
-use parking_lot::{lock_api::ArcMutexGuard, Mutex, RawMutex, RwLock};
-use rome_diagnostics::Error;
-
-use crate::fs::OpenOptions;
-use crate::{FileSystem, RomePath, TraversalContext, TraversalScope};
-
-use super::{BoxedTraversal, ErrorKind, File, FileSystemDiagnostic};
+use super::diagnostic::{ErrorKind, FileSystemDiagnostic};
+use super::traits::{BoxedTraversal, File, FileSystem, TraversalContext, TraversalScope};
+use super::OpenOptions;
+use crate::RomePath;
 
 /// Fully in-memory file system, stores the content of all known files in a hashmap
 pub struct MemoryFileSystem {
@@ -148,8 +147,8 @@ impl FileSystem for MemoryFileSystem {
 
         Ok(Box::new(MemoryFile {
             inner,
-            can_read: options.read,
-            can_write: options.write,
+            readable: options.read,
+            writeable: options.write,
         }))
     }
 
@@ -160,13 +159,13 @@ impl FileSystem for MemoryFileSystem {
 
 struct MemoryFile {
     inner: ArcMutexGuard<RawMutex, Vec<u8>>,
-    can_read: bool,
-    can_write: bool,
+    readable: bool,
+    writeable: bool,
 }
 
 impl File for MemoryFile {
     fn read_to_string(&mut self, buffer: &mut String) -> io::Result<()> {
-        if !self.can_read {
+        if !self.readable {
             return Err(io::Error::new(
                 io::ErrorKind::PermissionDenied,
                 "this file wasn't open with read access",
@@ -176,13 +175,14 @@ impl File for MemoryFile {
         // Verify the stored byte content is valid UTF-8
         let content = str::from_utf8(&self.inner)
             .map_err(|err| io::Error::new(io::ErrorKind::InvalidData, err))?;
+
         // Append the content of the file to the buffer
         buffer.push_str(content);
         Ok(())
     }
 
     fn set_content(&mut self, content: &[u8]) -> io::Result<()> {
-        if !self.can_write {
+        if !self.writeable {
             return Err(io::Error::new(
                 io::ErrorKind::PermissionDenied,
                 "this file wasn't open with write access",
@@ -258,8 +258,10 @@ mod tests {
     use parking_lot::Mutex;
     use rome_diagnostics::Error;
 
-    use crate::{fs::FileSystemExt, OpenOptions};
-    use crate::{FileSystem, MemoryFileSystem, PathInterner, RomePath, TraversalContext};
+    use crate::{
+        FileSystem, FileSystemExt, MemoryFileSystem, OpenOptions, PathInterner, RomePath,
+        TraversalContext,
+    };
     use rome_diagnostics::location::FileId;
 
     #[test]

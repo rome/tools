@@ -1,10 +1,4 @@
 //! Implementation of the [FileSystem] and related traits for the underlying OS filesystem
-use super::{BoxedTraversal, ErrorKind, File, FileSystemDiagnostic};
-use crate::fs::OpenOptions;
-use crate::{
-    fs::{TraversalContext, TraversalScope},
-    FileSystem, RomePath,
-};
 use rayon::{scope, Scope};
 use rome_diagnostics::{adapters::IoError, DiagnosticExt, Error, FileId};
 use std::fs::DirEntry;
@@ -15,6 +9,11 @@ use std::{
     mem,
     path::{Path, PathBuf},
 };
+
+use super::diagnostic::{ErrorKind, FileSystemDiagnostic};
+use super::traits::{BoxedTraversal, File, FileSystem, TraversalContext, TraversalScope};
+use crate::fs::OpenOptions;
+use crate::RomePath;
 
 /// Implementation of [FileSystem] that directly calls through to the underlying OS
 pub struct OsFileSystem;
