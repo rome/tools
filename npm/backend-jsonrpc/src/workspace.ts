@@ -305,6 +305,10 @@ export interface Nursery {
 	 */
 	noCommaOperator?: RuleConfiguration;
 	/**
+	 * Disallow labeled statements that are not loops.
+	 */
+	noConfusingLabels?: RuleConfiguration;
+	/**
 	 * Disallow TypeScript const enum
 	 */
 	noConstEnum?: RuleConfiguration;
@@ -796,6 +800,7 @@ export type Category =
 	| "lint/nursery/noHeaderScope"
 	| "lint/nursery/noInnerDeclarations"
 	| "lint/nursery/noInvalidConstructorSuper"
+	| "lint/nursery/noConfusingLabels"
 	| "lint/nursery/noNonNullAssertion"
 	| "lint/nursery/noPrecisionLoss"
 	| "lint/nursery/noRedundantAlt"
