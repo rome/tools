@@ -736,6 +736,7 @@ impl VisitNode<JsonLanguage> for Nursery {
                 "noUnreachableSuper",
                 "noUnsafeFinally",
                 "noUnusedLabels",
+                "noUselessRename",
                 "noUselessSwitchCase",
                 "noVar",
                 "noVoidTypeReturn",
@@ -1359,6 +1360,24 @@ impl VisitNode<JsonLanguage> for Nursery {
                     let mut configuration = RuleConfiguration::default();
                     self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
                     self.no_unused_labels = Some(configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            },
+            "noUselessRename" => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_useless_rename = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
+                    self.no_useless_rename = Some(configuration);
                 }
                 _ => {
                     diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
