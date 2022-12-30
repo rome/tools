@@ -1,6 +1,6 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{AnyJsExpression, JsCallExpression, JsCallExpressionFields, TextRange};
+use rome_js_syntax::{AnyJsExpression, JsCallExpression, TextRange};
 use rome_rowan::AstNodeList;
 
 declare_rule! {
