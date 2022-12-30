@@ -9,8 +9,8 @@ expression: content
   "linter": {
     "rules": {
         "recommended": true,
-        "nursery": {
-            "noInvalidConstructorSuper": "error"
+        "style": {
+            "noNegationElse": "error"
         }
     }
   }
@@ -20,28 +20,34 @@ expression: content
 ## `file.js`
 
 ```js
-class A extends B {
-    constructor() {}
-}
+if(!cond) { exprA(); } else { exprB() }
 ```
 
 # Termination Message
 
 ```block
-some errors were emitted while running checks
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks
+  
+
+
 ```
 
 # Emitted Messages
 
 ```block
-file.js:1:9 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+file.js:1:1 lint/style/noNegationElse  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × This class extends another class and a super() call is expected.
+  × Invert blocks when performing a negation test.
   
-  > 1 │ class A extends B {
-      │         ^^^^^^^^^
-    2 │     constructor() {}
-    3 │ }
+  > 1 │ if(!cond) { exprA(); } else { exprB() }
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Suggested fix: Exchange alternate and consequent of the node
+  
+  - if(!cond)·{·exprA();·}·else·{·exprB()·}
+  + if(cond)·{·exprB()·}·else·{·exprA();·}
   
 
 ```

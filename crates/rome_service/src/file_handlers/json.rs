@@ -5,18 +5,16 @@ use crate::settings::{
     FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle,
 };
 use crate::workspace::GetSyntaxTreeResult;
-use crate::RomeError;
-#[cfg(debug_assertions)]
-use rome_formatter::FormatError;
-use rome_formatter::Printed;
+use crate::WorkspaceError;
+#[cfg(any(debug_assertions, target_family = "wasm"))]
+use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
 use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 use rome_parser::AnyParse;
-#[cfg(debug_assertions)]
+#[cfg(any(debug_assertions, target_family = "wasm"))]
 use rome_rowan::{TextRange, TextSize, TokenAtOffset};
-use tracing::debug;
 
 impl Language for JsonLanguage {
     type FormatterSettings = ();
@@ -68,7 +66,7 @@ impl ExtensionHandler for JsonFileHandler {
     }
 }
 
-#[cfg(debug_assertions)]
+#[cfg(any(debug_assertions, target_family = "wasm"))]
 fn formatter_capabilities() -> FormatterCapabilities {
     FormatterCapabilities {
         format: Some(format),
@@ -77,7 +75,7 @@ fn formatter_capabilities() -> FormatterCapabilities {
     }
 }
 
-#[cfg(not(debug_assertions))]
+#[cfg(all(not(debug_assertions), not(target_family = "wasm")))]
 fn formatter_capabilities() -> FormatterCapabilities {
     FormatterCapabilities::default()
 }
@@ -102,7 +100,7 @@ fn debug_formatter_ir(
     rome_path: &RomePath,
     parse: AnyParse,
     settings: SettingsHandle,
-) -> Result<String, RomeError> {
+) -> Result<String, WorkspaceError> {
     let options = settings.format_options::<JsonLanguage>(rome_path);
 
     let tree = parse.syntax();
@@ -112,32 +110,33 @@ fn debug_formatter_ir(
     Ok(root_element.to_string())
 }
 
+#[cfg(any(debug_assertions, target_family = "wasm"))]
 #[tracing::instrument(level = "debug", skip(parse))]
 fn format(
     rome_path: &RomePath,
     parse: AnyParse,
     settings: SettingsHandle,
-) -> Result<Printed, RomeError> {
+) -> Result<Printed, WorkspaceError> {
     let options = settings.format_options::<JsonLanguage>(rome_path);
 
-    debug!("Format with the following options: \n{}", options);
+    tracing::debug!("Format with the following options: \n{}", options);
 
     let tree = parse.syntax();
     let formatted = format_node(options, &tree)?;
 
     match formatted.print() {
         Ok(printed) => Ok(printed),
-        Err(error) => Err(RomeError::FormatError(error.into())),
+        Err(error) => Err(WorkspaceError::FormatError(error.into())),
     }
 }
 
-#[cfg(debug_assertions)]
+#[cfg(any(debug_assertions, target_family = "wasm"))]
 fn format_range(
     rome_path: &RomePath,
     parse: AnyParse,
     settings: SettingsHandle,
     range: TextRange,
-) -> Result<Printed, RomeError> {
+) -> Result<Printed, WorkspaceError> {
     let options = settings.format_options::<JsonLanguage>(rome_path);
 
     let tree = parse.syntax();
@@ -145,20 +144,20 @@ fn format_range(
     Ok(printed)
 }
 
-#[cfg(debug_assertions)]
+#[cfg(any(debug_assertions, target_family = "wasm"))]
 fn format_on_type(
     rome_path: &RomePath,
     parse: AnyParse,
     settings: SettingsHandle,
     offset: TextSize,
-) -> Result<Printed, RomeError> {
+) -> Result<Printed, WorkspaceError> {
     let options = settings.format_options::<JsonLanguage>(rome_path);
 
     let tree = parse.syntax();
 
     let range = tree.text_range();
     if offset < range.start() || offset > range.end() {
-        return Err(RomeError::FormatError(FormatError::RangeError {
+        return Err(WorkspaceError::FormatError(FormatError::RangeError {
             input: TextRange::at(offset, TextSize::from(0)),
             tree: range,
         }));

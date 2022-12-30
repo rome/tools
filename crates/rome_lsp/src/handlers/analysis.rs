@@ -7,7 +7,7 @@ use rome_fs::RomePath;
 use rome_service::workspace::{
     FeatureName, FixFileMode, FixFileParams, PullActionsParams, SupportsFeatureParams,
 };
-use rome_service::RomeError;
+use rome_service::WorkspaceError;
 use std::borrow::Cow;
 use std::collections::HashMap;
 use tower_lsp::lsp_types::{
@@ -32,7 +32,7 @@ pub(crate) fn code_actions(
     params: CodeActionParams,
 ) -> Result<Option<CodeActionResponse>> {
     let url = params.text_document.uri.clone();
-    let rome_path = session.file_path(&url);
+    let rome_path = session.file_path(&url)?;
 
     let unsupported_lint = &session.workspace.supports_feature(SupportsFeatureParams {
         path: rome_path,
@@ -57,7 +57,7 @@ pub(crate) fn code_actions(
     }
 
     let url = params.text_document.uri.clone();
-    let rome_path = session.file_path(&url);
+    let rome_path = session.file_path(&url)?;
     let doc = session.document(&url)?;
 
     let diagnostics = params.context.diagnostics;
@@ -128,7 +128,7 @@ fn fix_all(
     rome_path: RomePath,
     line_index: &LineIndex,
     diagnostics: &[lsp::Diagnostic],
-) -> Result<Option<CodeActionOrCommand>, RomeError> {
+) -> Result<Option<CodeActionOrCommand>, WorkspaceError> {
     let fixed = session.workspace.fix_file(FixFileParams {
         path: rome_path,
         fix_file_mode: FixFileMode::SafeFixes,

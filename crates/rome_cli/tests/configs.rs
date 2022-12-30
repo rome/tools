@@ -145,8 +145,8 @@ pub const CONFIG_LINTER_UPGRADE_DIAGNOSTIC: &str = r#"{
   "linter": {
     "rules": {
         "recommended": true,
-        "nursery": {
-            "noInvalidConstructorSuper": "error"
+        "style": {
+            "noNegationElse": "error"
         }
     }
   }
@@ -207,7 +207,15 @@ pub const CONFIG_FORMATTER_AND_FILES_IGNORE: &str = r#"{
 
 pub const CONFIG_FORMATTER_IGNORED_DIRECTORIES: &str = r#"{
   "formatter": {
-    "ignore": ["scripts/*"]
+    "ignore": [
+      "test1.js",
+      "./test2.js",
+      "./test3/**/*",
+      "/test4/**/*",
+      "test5/**/*",
+      "**/test6/*.js",
+      "*.test7.js"
+    ]
   }
 }
 "#;

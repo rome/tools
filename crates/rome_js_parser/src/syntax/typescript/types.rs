@@ -2,10 +2,10 @@ use crate::parser::{RecoveryError, RecoveryResult};
 use crate::prelude::*;
 use crate::state::{EnterConditionalTypes, EnterType, SignatureFlags};
 use crate::syntax::expr::{
-    is_at_identifier, is_nth_at_identifier, is_nth_at_identifier_or_keyword,
-    parse_big_int_literal_expression, parse_identifier, parse_literal_expression, parse_name,
-    parse_number_literal_expression, parse_reference_identifier, parse_template_elements,
-    ExpressionContext,
+    is_at_binary_operator, is_at_expression, is_at_identifier, is_nth_at_identifier,
+    is_nth_at_identifier_or_keyword, parse_big_int_literal_expression, parse_identifier,
+    parse_literal_expression, parse_name, parse_number_literal_expression,
+    parse_reference_identifier, parse_template_elements, ExpressionContext,
 };
 use crate::syntax::function::{
     parse_formal_parameter, parse_parameter_list, skip_parameter_start, ParameterContext,
@@ -1265,8 +1265,6 @@ fn parse_ts_type_predicate(p: &mut JsParser) -> ParsedSyntax {
 // let f2 = fx<string, number>;
 // let f3 = fx['test']<string>;
 // const a2 = f.g<number>;  // () => number
-// const a3 = f<number>.g;  // <U>() => U
-// const a4 = f<number>.g<number>;  // () => number
 // const a5 = f['g']<number>;  // () => number
 // const a7 = (f<number>)['g'];
 // const a6 = f<number>['g'];  // type Error
@@ -1275,21 +1273,245 @@ fn parse_ts_type_predicate(p: &mut JsParser) -> ParsedSyntax {
 // const b4 = f<number>?.<number>();  // Type Error, expected no type arguments
 // const x1 = f<true>
 // (true);
-// // Parsed as relational expression
 // const x2 = f<true>
 // true;
-// // Parsed as instantiation expression
 // const x3 = f<true>;
 // true;
+// (f<T>)<K>;
+// (f<T>)<K>();
+// (f<T>)<K>?.();
+// (a?.f<T>)<K>();
+// new (a<T>)<K>();
+// f<<T>() => T>?.();
+// f?.<<T>() => T>();
+// f<x> ? g<y> : h<z>;
+// [f<x>];
+// { f<x> }
 
 // test ts ts_type_instantiation_expression
 // type StringBox = Box<string>;
 
-// test_err ts ts_instantiation_expressions1
+// test ts ts_instantiation_expressions_1
+// class A {
+//  constructor() {
+//    f<T> super();
+//  }
+// }
+// f<TemplateStringsArray>``;
+// f<T>(1);
+// f<T> ?? 1;
+// f<T> || 1;
+// f<T> && 1;
+// f<T> | 1;
+// f<T> ^ 1;
+// f<T> & 1;
+// f<T> == f<T>;
+// f<T> != f<T>;
+// f<T> === f<T>;
+// f<T> !== f<T>;
+// f<T> <= f<T>;
+// f<T> instanceof f<T>;
+// f<T> in {};
+// f<T> as {};
+// f<T> satisfies {};
+// f<T> * f<T>;
+// f<T> / f<T>;
+// f<T> % f<T>;
+// f<T> ** f<T>;
+// f < T > +f<T>;
+// f < T > -f<T>;
+// f < T > this;
+// f < T > null;
+// f < T > true;
+// f < T > false;
+// f < T > 1;
+// f < T > 123n;
+// f < T > [];
+// f < T > {};
+// f < T > function test() {};
+// f < T > class A {};
+// f < T > new A();
+// f<T> / 1;
+// f < T > +1;
+// f < T > -1;
+// f < T > ~1;
+// f < T > !1;
+// f < T > someIdentifier;
+// f < T > delete a[field];
+// f < T > typeof MyClass;
+// f < T > void a;
+// f<T> <= 1;
+// f < T > (await 1);
+// f < T > import.meta;
+// f < T > import("123");
+// a < b >> c;
+// f = h >>> 0 < j >>> 0;
+
+// test ts ts_instantiation_expressions_new_line
+// class A {
+//  constructor() {
+//    f<T>
+//      super();
+//  }
+// }
+// function *f() {
+//     const f = f<T>
+//     yield;
+// }
+// f<T>
+// ?? 1;
+// f<T>
+// || 1;
+// f<T>
+// && 1;
+// f<T>
+// | 1;
+// f<T>
+// ^ 1;
+// f<T>
+// & 1;
+// f<T>
+// == f<T>;
+// f<T>
+// <= f<T>;
+// f<T>
+// != f<T>;
+// f<T>
+// === f<T>;
+// f<T>
+// !== f<T>;
+// f<T>
+// instanceof f<T>;
+// f<T>
+// in {};
+// f<T>
+// * f<T>;
+// f<T>
+// / f<T>;
+// f<T>
+// % f<T>;
+// f<T>
+// ** f<T>;
+// f <T>
+// +f<T>;
+// f <T>
+// -f<T>;
+// f <T>
+// this;
+// f <T>
+// null;
+// f <T>
+// true;
+// f <T>
+// false;
+// f <T>
+// 1;
+// f <T>
+// 123n;
+// f <T>
+// {};
+// f <T>
+// function test() {};
+// f <T>
+// class A {};
+// f <T>
+// new A();
+// f<T>
+// / 1;
+// f <T>
+// +1;
+// f <T>
+// -1;
+// f <T>
+// ~1;
+// f <T>
+// !1;
+// f <T>
+// someIdentifier;
+// f <T>
+// delete a[field];
+// f <T>
+// typeof MyClass;
+// f <T>
+// void a;
+// f<T>
+// <= 1;
+// f <T>
+// (await 1);
+// f <T>
+// import.meta;
+// f <T>
+// import("123");
+
+// test ts ts_instantiation_expressions_asi
+// const x5 = f<true>
+// let yy = 0;
+// const x6 = f<true>
+// interface I {}
+// let x10 = f<true>
+// this.bar()
+// let x11 = f<true>
+// function bar() {}
+// let x12 = f<true>
+// class C {}
+// let x13 = f<true>
+// bar()
+// let x14 = f<true>
+// void bar()
+// class C1 {
+//     static specialFoo = f<string>
+//     static bar = 123
+// }
+// class C2 {
+//     public specialFoo = f<string>
+//     public bar = 123
+// }
+// class C3 {
+//     private specialFoo = f<string>
+//     private bar = 123
+// }
+// class C4 {
+//     protected specialFoo = f<string>
+//     protected bar = 123
+// }
+// class C5 {
+//     protected specialFoo = f<string>
+//     #bar = 123
+// }
+// const Bar = Foo<string>
+// const Baz = 123
+
+// test_err ts ts_instantiation_expressions_1
 // const a8 = f<number><number>;  // Relational operator error
 // const b1 = f?.<number>;  // Error, `(` expected
+// f<T> << f<T>;
+// f<T> = g<K>;
+// f<T> >> f<T>;
+// f<T> >= f<T>;
+// f<T> < f<T>;
+// f<T> > f<T>;
+// f<T> import<1>;
+// f<T> yield;
+// f<T> ++;
+// f<T> --;
+// f<T> /= 1;
+// f<T> <= f<T>;
+// f<T> << f<T>;
+// f <T>
+// [];
+// f<T>
+// as {};
+// f<T>
+// satisfies {};
+// class C5 {
+//     protected specialFoo = f<string> #bar = 123
+// }
+// for (const a = b.test<string> in []) {}
 
-pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut JsParser) -> ParsedSyntax {
+pub(crate) fn parse_ts_type_arguments_in_expression(
+    p: &mut JsParser,
+    context: ExpressionContext,
+) -> ParsedSyntax {
     // Don't parse type arguments in JS because the syntax is ambiguous
     // https://github.com/microsoft/TypeScript/issues/36662
 
@@ -1304,7 +1526,7 @@ pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut JsParser) -> ParsedS
         p.re_lex(ReLexContext::TypeArgumentLessThan);
         let arguments = parse_ts_type_arguments_impl(p, false);
 
-        if p.last() == Some(T![>]) && can_follow_type_arguments_in_expr(p.cur()) {
+        if p.last() == Some(T![>]) && can_follow_type_arguments_in_expr(p, context) {
             Ok(Present(arguments))
         } else {
             Err(())
@@ -1313,36 +1535,23 @@ pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut JsParser) -> ParsedS
     .unwrap_or(Absent)
 }
 
-#[inline]
-pub fn can_follow_type_arguments_in_expr(cur_kind: JsSyntaxKind) -> bool {
-    matches!(
-        cur_kind,
-        T!['(']
-        | BACKTICK
-         // These tokens can't follow in a call expression, nor can they start an
-        // expression. So, consider the type argument list part of an instantiation
-        // expression.
-        | T![,]
-        | T![.]
-        | T![?.]
-        | T![')']
-        | T![']']
-        | T![:]
-        | T![;]
-        | T![?]
-        | T![==]
-        | T![===]
-        | T![!=]
-        | T![!==]
-        | T![&&]
-        | T![||]
-        | T![??]
-        | T![^]
-        | T![&]
-        | T![|]
-        | T!['}']
-        | EOF
-    )
+fn can_follow_type_arguments_in_expr(p: &mut JsParser, context: ExpressionContext) -> bool {
+    let cur_kind = p.cur();
+    match cur_kind {
+        // These tokens can follow a type argument list in a call expression.
+        T!['('] | BACKTICK | EOF => true,
+        // A type argument list followed by `<` never makes sense, and a type argument list followed
+        // by `>` is ambiguous with a (re-scanned) `>>` operator, so we disqualify both. Also, in
+        // this context, `+` and `-` are unary operators, not binary operators.
+        T![<] | T![>] | T![+] | T![-] => false,
+        // We favor the type argument list interpretation when it is immediately followed by
+        // a line break, a binary operator, or something that can't start an expression.
+        _ => {
+            p.has_preceding_line_break()
+                || is_at_binary_operator(p, context)
+                || !is_at_expression(p)
+        }
+    }
 }
 
 pub(crate) fn parse_ts_type_arguments(p: &mut JsParser) -> ParsedSyntax {

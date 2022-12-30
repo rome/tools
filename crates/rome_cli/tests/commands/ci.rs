@@ -5,7 +5,6 @@ use crate::{
     UNFORMATTED,
 };
 use pico_args::Arguments;
-use rome_cli::Termination;
 use rome_console::{BufferConsole, MarkupBuf};
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use rome_service::DynRef;
@@ -40,7 +39,7 @@ fn ok() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
     );
 
@@ -81,14 +80,11 @@ fn formatting_error() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
     );
 
-    match result {
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -109,15 +105,11 @@ fn ci_parse_error() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
     );
 
-    match &result {
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
-
+    assert!(result.is_err(), "run_cli returned {result:?}");
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "ci_parse_error",
@@ -137,14 +129,11 @@ fn ci_lint_error() {
     let mut console = BufferConsole::default();
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
     );
 
-    match &result {
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -171,7 +160,7 @@ fn ci_does_not_run_formatter() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("ci"), input_file.as_os_str().into()]),
     );
 
@@ -207,7 +196,7 @@ fn ci_does_not_run_formatter_via_cli() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("ci"),
             OsString::from("--formatter-enabled=false"),
@@ -252,7 +241,7 @@ fn ci_does_not_run_linter() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
     );
 
@@ -288,7 +277,7 @@ fn ci_does_not_run_linter_via_cli() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("ci"),
             OsString::from("--linter-enabled=false"),
@@ -331,7 +320,7 @@ fn ci_errors_for_all_disabled_checks() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("ci"),
             OsString::from("--linter-enabled=false"),
@@ -372,7 +361,7 @@ fn file_too_large() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
     );
 
@@ -402,7 +391,7 @@ fn file_too_large_config_limit() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
     );
 
@@ -427,7 +416,7 @@ fn file_too_large_cli_limit() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("ci"),
             OsString::from("--files-max-size"),
@@ -457,7 +446,7 @@ fn files_max_size_parse_error() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("ci"),
             OsString::from("--files-max-size"),
@@ -466,10 +455,7 @@ fn files_max_size_parse_error() {
         ]),
     );
 
-    match result {
-        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--files-max-size"),
-        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -493,7 +479,7 @@ fn ci_runs_linter_not_formatter_issue_3495() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
     );
 
@@ -529,14 +515,11 @@ fn max_diagnostics_default() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("ci"), OsString::from("src")]),
     );
 
-    match result {
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     let mut diagnostic_count = 0;
     let mut filtered_messages = Vec::new();
@@ -585,7 +568,7 @@ fn max_diagnostics() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("ci"),
             OsString::from("--max-diagnostics"),
@@ -594,10 +577,7 @@ fn max_diagnostics() {
         ]),
     );
 
-    match result {
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     let mut diagnostic_count = 0;
     let mut filtered_messages = Vec::new();
@@ -644,7 +624,7 @@ fn print_verbose() {
     let mut console = BufferConsole::default();
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("ci"),
             OsString::from("--verbose"),
@@ -652,10 +632,7 @@ fn print_verbose() {
         ]),
     );
 
-    match &result {
-        Err(Termination::CheckError) => {}
-        _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),

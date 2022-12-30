@@ -38,6 +38,16 @@ assert_semantics! {
     ok_scope_class_setter, ";class A { set/*START A*/ name(v) {}/*END A*/ }",
 }
 
+// Static Initialization Block
+assert_semantics! {
+    ok_scope_static_initialization_block,
+        "class A {
+            static/*START A*/ {
+                const a/*@ A*/ = 2; 
+            }/*END A*/  
+        };",
+}
+
 // Type parameters
 assert_semantics! {
     ok_type_parameter, "export type /*START A*/ EventHandler<Event /*# Event */ /*@ A */ extends string> = `on${ Event /*READ Event */ }` /*END A*/",
@@ -51,6 +61,11 @@ assert_semantics! {
             [`on${ Event /*READ Event */ }`]: (event: Event /*READ Event */, data: unknown) => void;
         } /*END A*/
     ",
+}
+
+// modules
+assert_semantics! {
+    ok_scope_module, "module/*START M*/ M {}/*END M*/;",
 }
 
 // Others

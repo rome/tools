@@ -2,10 +2,11 @@
 //! when implementing a syntax formatter.
 
 pub(crate) use crate::{
-    builders::format_or_verbatim, comments::JsComments, AsFormat as _, FormatNodeRule,
-    FormattedIterExt, JsFormatContext, JsFormatter,
+    comments::JsComments, AsFormat as _, FormatNodeRule, FormattedIterExt, JsFormatContext,
+    JsFormatter,
 };
 pub use rome_formatter::prelude::*;
+pub use rome_formatter::separated::TrailingSeparator;
 pub use rome_rowan::{AstNode as _, AstNodeList as _, AstSeparatedList as _};
 
-pub use crate::separated::{FormatAstSeparatedListExtension, TrailingSeparator};
+pub(crate) use crate::separated::FormatAstSeparatedListExtension;

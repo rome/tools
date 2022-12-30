@@ -8,7 +8,6 @@ use crate::{
     assert_cli_snapshot, run_cli, CUSTOM_FORMAT_BEFORE, FORMATTED, LINT_ERROR, UNFORMATTED,
 };
 use pico_args::Arguments;
-use rome_cli::Termination;
 use rome_console::{markup, BufferConsole, MarkupBuf};
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use rome_service::DynRef;
@@ -67,7 +66,7 @@ fn print() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
     );
 
@@ -103,7 +102,7 @@ fn write() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--write"),
@@ -151,7 +150,7 @@ fn write_only_files_in_correct_base() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--write"),
@@ -201,7 +200,7 @@ fn lint_warning() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
     );
 
@@ -247,7 +246,7 @@ fn applies_custom_configuration() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--line-width"),
@@ -296,7 +295,7 @@ fn applies_custom_configuration_over_config_file() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--line-width"),
@@ -345,7 +344,7 @@ fn applies_custom_configuration_over_config_file_issue_3175_v1() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--quote-style"),
@@ -394,7 +393,7 @@ fn applies_custom_configuration_over_config_file_issue_3175_v2() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--indent-style"),
@@ -435,7 +434,7 @@ fn applies_custom_quote_style() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--quote-style"),
@@ -479,7 +478,7 @@ fn applies_custom_trailing_comma() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--trailing-comma"),
@@ -518,7 +517,7 @@ fn trailing_comma_parse_errors() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--trailing-comma"),
@@ -527,10 +526,7 @@ fn trailing_comma_parse_errors() {
         ]),
     );
 
-    match result {
-        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--trailing-comma"),
-        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -551,7 +547,7 @@ fn with_semicolons_options() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--semicolons"),
@@ -590,7 +586,7 @@ fn with_invalid_semicolons_option() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--semicolons"),
@@ -599,10 +595,7 @@ fn with_invalid_semicolons_option() {
         ]),
     );
 
-    match result {
-        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--semicolons"),
-        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -620,7 +613,7 @@ fn indent_style_parse_errors() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--indent-style"),
@@ -629,10 +622,7 @@ fn indent_style_parse_errors() {
         ]),
     );
 
-    match result {
-        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--indent-style"),
-        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -650,7 +640,7 @@ fn indent_size_parse_errors_negative() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--indent-size"),
@@ -659,10 +649,7 @@ fn indent_size_parse_errors_negative() {
         ]),
     );
 
-    match result {
-        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--indent-size"),
-        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -680,7 +667,7 @@ fn indent_size_parse_errors_overflow() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--indent-size"),
@@ -689,10 +676,7 @@ fn indent_size_parse_errors_overflow() {
         ]),
     );
 
-    match result {
-        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--indent-size"),
-        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -710,7 +694,7 @@ fn line_width_parse_errors_negative() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--line-width"),
@@ -718,11 +702,7 @@ fn line_width_parse_errors_negative() {
             OsString::from("file.js"),
         ]),
     );
-
-    match &result {
-        Err(Termination::ParseError { argument, .. }) => assert_eq!(*argument, "--line-width"),
-        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -740,7 +720,7 @@ fn line_width_parse_errors_overflow() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--line-width"),
@@ -749,10 +729,7 @@ fn line_width_parse_errors_overflow() {
         ]),
     );
 
-    match &result {
-        Err(Termination::ParseError { argument, .. }) => assert_eq!(*argument, "--line-width"),
-        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -770,7 +747,7 @@ fn quote_properties_parse_errors_letter_case() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--quote-properties"),
@@ -779,12 +756,7 @@ fn quote_properties_parse_errors_letter_case() {
         ]),
     );
 
-    match &result {
-        Err(Termination::ParseError { argument, .. }) => {
-            assert_eq!(*argument, "--quote-properties")
-        }
-        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -807,7 +779,7 @@ fn format_with_configuration() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("file.js"),
@@ -849,7 +821,7 @@ fn format_is_disabled() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("file.js"),
@@ -890,7 +862,7 @@ fn format_stdin_successfully() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--stdin-file-path"),
@@ -927,7 +899,7 @@ fn format_stdin_with_errors() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--stdin-file-path"),
@@ -936,19 +908,6 @@ fn format_stdin_with_errors() {
     );
 
     assert!(result.is_err(), "run_cli returned {result:?}");
-
-    match result {
-        Err(Termination::MissingArgument {
-            subcommand,
-            argument,
-        }) => {
-            assert_eq!(subcommand, "format");
-            assert_eq!(argument, "stdin")
-        }
-        _ => {
-            panic!("run_cli returned {result:?} for an unknown command help, expected an error")
-        }
-    }
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -973,7 +932,7 @@ fn does_not_format_if_disabled() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--stdin-file-path"),
@@ -1015,7 +974,7 @@ fn does_not_format_ignored_files() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("test.js"),
@@ -1064,7 +1023,7 @@ fn does_not_format_if_files_are_listed_in_ignore_option() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             file_path_test1.as_os_str().into(),
@@ -1104,21 +1063,33 @@ fn does_not_format_if_files_are_listed_in_ignore_option() {
 fn does_not_format_ignored_directories() {
     let mut console = BufferConsole::default();
     let mut fs = MemoryFileSystem::default();
+
     let file_path = Path::new("rome.json");
     fs.insert(
         file_path.into(),
         CONFIG_FORMATTER_IGNORED_DIRECTORIES.as_bytes(),
     );
 
-    let ignored_file = Path::new("scripts/test.js");
-    fs.insert(ignored_file.into(), <&str>::clone(&UNFORMATTED).as_bytes());
+    const FILES: [(&str, bool); 9] = [
+        ("test.js", true),
+        ("test1.js", false),
+        ("test2.js", false),
+        ("test3/test.js", false),
+        ("test4/test.js", true),
+        ("test5/test.js", false),
+        ("test6/test.js", false),
+        ("test/test.test7.js", false),
+        ("test.test7.js", false),
+    ];
 
-    let file_to_format = Path::new("src/test.js");
-    fs.insert(file_to_format.into(), UNFORMATTED.as_bytes());
+    for (file_path, _) in FILES {
+        let file_path = Path::new(file_path);
+        fs.insert(file_path.into(), UNFORMATTED.as_bytes());
+    }
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("./"),
@@ -1128,26 +1099,26 @@ fn does_not_format_ignored_directories() {
 
     assert!(result.is_ok(), "run_cli returned {result:?}");
 
-    let mut file = fs
-        .open(ignored_file)
-        .expect("formatting target file was removed by the CLI");
+    for (file_path, expect_formatted) in FILES {
+        let mut file = fs
+            .open(Path::new(file_path))
+            .expect("formatting target file was removed by the CLI");
 
-    let mut content = String::new();
-    file.read_to_string(&mut content)
-        .expect("failed to read file from memory FS");
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
 
-    assert_eq!(content, UNFORMATTED, "we test the file is not formatted");
-    drop(file);
-    let mut file = fs
-        .open(file_to_format)
-        .expect("formatting target file was removed by the CLI");
+        let expected = if expect_formatted {
+            FORMATTED
+        } else {
+            UNFORMATTED
+        };
 
-    let mut content = String::new();
-    file.read_to_string(&mut content)
-        .expect("failed to read file from memory FS");
-
-    assert_eq!(content, FORMATTED, "we test the file is formatted");
-    drop(file);
+        assert_eq!(
+            content, expected,
+            "content of {file_path} doesn't match the expected content"
+        );
+    }
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -1168,7 +1139,7 @@ fn fs_error_read_only() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--write"),
@@ -1200,7 +1171,7 @@ fn file_too_large() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             file_path.as_os_str().into(),
@@ -1234,7 +1205,7 @@ fn file_too_large_config_limit() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
     );
 
@@ -1259,7 +1230,7 @@ fn file_too_large_cli_limit() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--files-max-size"),
@@ -1289,7 +1260,7 @@ fn files_max_size_parse_error() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--files-max-size"),
@@ -1298,10 +1269,7 @@ fn files_max_size_parse_error() {
         ]),
     );
 
-    match result {
-        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--files-max-size"),
-        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
-    }
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
@@ -1324,7 +1292,7 @@ fn max_diagnostics_default() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![OsString::from("format"), OsString::from("src")]),
     );
 
@@ -1377,7 +1345,7 @@ fn max_diagnostics() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--max-diagnostics"),
@@ -1430,7 +1398,7 @@ fn no_supported_file_found() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![std::ffi::OsString::from("check"), ".".into()]),
     );
 
@@ -1455,7 +1423,7 @@ fn print_verbose() {
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
-        DynRef::Borrowed(&mut console),
+        &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
             OsString::from("--verbose"),

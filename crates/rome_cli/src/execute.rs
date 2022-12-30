@@ -1,5 +1,5 @@
 use crate::traversal::traverse;
-use crate::{CliSession, Termination};
+use crate::{CliDiagnostic, CliSession};
 use rome_console::{markup, ConsoleExt};
 use rome_diagnostics::location::FileId;
 use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
@@ -129,18 +129,15 @@ impl Execution {
 pub(crate) fn execute_mode(
     mut mode: Execution,
     mut session: CliSession,
-) -> Result<(), Termination> {
+) -> Result<(), CliDiagnostic> {
     let max_diagnostics: Option<u16> = session
         .args
         .opt_value_from_str("--max-diagnostics")
-        .map_err(|source| Termination::ParseError {
-            argument: "--max-diagnostics",
-            source,
-        })?;
+        .map_err(|source| CliDiagnostic::parse_error("--max-diagnostics", source))?;
 
     mode.max_diagnostics = if let Some(max_diagnostics) = max_diagnostics {
         if max_diagnostics > MAXIMUM_DISPLAYABLE_DIAGNOSTICS {
-            return Err(Termination::OverflowNumberArgument(
+            return Err(CliDiagnostic::overflown_argument(
                 "--max-diagnostics",
                 MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
             ));

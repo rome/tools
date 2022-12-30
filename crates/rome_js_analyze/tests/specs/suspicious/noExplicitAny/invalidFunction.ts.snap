@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 92
 expression: invalidFunction.ts
 ---
 # Input
@@ -47,6 +48,8 @@ invalidFunction.ts:1:21 lint/suspicious/noExplicitAny ━━━━━━━━�
     2 │ 
     3 │ function generic2(): Array<any> {}
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -61,6 +64,8 @@ invalidFunction.ts:3:28 lint/suspicious/noExplicitAny ━━━━━━━━�
       │                            ^^^
     4 │ 
     5 │ function generic3(): any[] {}
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -77,6 +82,8 @@ invalidFunction.ts:5:22 lint/suspicious/noExplicitAny ━━━━━━━━�
     6 │ 
     7 │ function generic4(param: Array<any>): number {}
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -91,6 +98,8 @@ invalidFunction.ts:7:32 lint/suspicious/noExplicitAny ━━━━━━━━�
       │                                ^^^
     8 │ 
     9 │ function generic5(param: any[]): number {}
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -107,6 +116,8 @@ invalidFunction.ts:9:26 lint/suspicious/noExplicitAny ━━━━━━━━�
     10 │ 
     11 │ function generic6(param: Array<any>): Array<any> {}
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -121,6 +132,8 @@ invalidFunction.ts:11:32 lint/suspicious/noExplicitAny ━━━━━━━━�
        │                                ^^^
     12 │ 
     13 │ function generic7(): Array<Array<any>> {}
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -137,6 +150,8 @@ invalidFunction.ts:11:45 lint/suspicious/noExplicitAny ━━━━━━━━�
     12 │ 
     13 │ function generic7(): Array<Array<any>> {}
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -151,6 +166,8 @@ invalidFunction.ts:13:34 lint/suspicious/noExplicitAny ━━━━━━━━�
        │                                  ^^^
     14 │ 
     15 │ function generic8(): Array<any[]> {}
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -167,6 +184,8 @@ invalidFunction.ts:15:28 lint/suspicious/noExplicitAny ━━━━━━━━�
     16 │ 
     17 │ function test<T extends Partial<any>>() {}
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -181,6 +200,8 @@ invalidFunction.ts:17:33 lint/suspicious/noExplicitAny ━━━━━━━━�
        │                                 ^^^
     18 │ 
     19 │ function foo(a: number, ...rest: any[]): void {
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -197,6 +218,8 @@ invalidFunction.ts:19:34 lint/suspicious/noExplicitAny ━━━━━━━━�
     20 │ 	return;
     21 │ }
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -211,6 +234,8 @@ invalidFunction.ts:23:24 lint/suspicious/noExplicitAny ━━━━━━━━�
        │                        ^^^
     24 │ 
     25 │ function quux5(fn: (...args: any) => void): void {}
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```
@@ -227,6 +252,8 @@ invalidFunction.ts:25:30 lint/suspicious/noExplicitAny ━━━━━━━━�
     26 │ 
     27 │ function quuz5(): ((...args: any) => void) {}
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -242,6 +269,8 @@ invalidFunction.ts:27:30 lint/suspicious/noExplicitAny ━━━━━━━━�
     28 │ 
     29 │ declare function waldo5(...args: any): void;
   
+  i any disables many type checking rules. Its use should be avoided.
+  
 
 ```
 
@@ -255,6 +284,8 @@ invalidFunction.ts:29:34 lint/suspicious/noExplicitAny ━━━━━━━━�
   > 29 │ declare function waldo5(...args: any): void;
        │                                  ^^^
     30 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
   
 
 ```

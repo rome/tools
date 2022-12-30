@@ -1,7 +1,7 @@
 # Analyzer
 
 The analyzer is a generic crate aimed to implement a visitor-like infrastructure, where
-it's possible to inspect a piece of AST and emit diagnostics or actions based on a 
+it's possible to inspect a piece of AST and emit diagnostics or actions based on a
 static check.
 
 # Folder structure
@@ -11,8 +11,9 @@ is going to be implemented for the JavaScript language (and its super languages)
 will be implemented inside the `rome_js_analyze` crate.
 
 Rules are divided by capabilities:
-- `analyzers/` folder contains rules that don't require any particular capabilities;
-- `semantic_analyzer/` folder contains rules that require the use of the semantic model;
+- `analyzers/` folder contains rules that don't require any particular capabilities, via the `Ast<>` query type;
+- `semantic_analyzer/` folder contains rules that require the use of the semantic model, via `Semantic<>` query type;
+- `aria_analyzers/` folder contains rules that require the use ARIA metadata, via `Aria<>` query type;
 - `assists/` folder contains rules that contribute to refactor code, with not associated diagnostics;
 these are rules that are usually meant for editors/IDEs;
 
@@ -46,51 +47,27 @@ the CI will fail.
 
 Let's say we want to create a new rule called `useAwesomeTricks`, which uses the semantic model.
 
-1. create a new file under `semantic_analyzers/nursery` called `use_awesome_tricks`;
-2. run the cargo alias `cargo codegen analyzer`, this command will update the file called `nursery.rs`
-inside the `semantic_analyzers` folder
-3. from there, use the [`declare_rule`](#declare_rule) macro to create a new type
-   ```rust,ignore
-   use rome_analyze::declare_rule;
-    
-   declare_rule! {
-     /// Promotes the use of awesome tricks
-     /// 
-     /// ## Examples
-     ///
-     /// ### Invalid
-     ///
-     pub(crate) UseAwesomeTricks {
-         version: "0.10.0",
-         name: "useAwesomeTricks",
-         recommended: false,
-        }
-    }
-   ```
-4. Then you need to use the `Rule` trait to implement the rule on this new created struct
-   ```rust,ignore
-   use rome_analyze::{Rule, RuleCategory};
-   use rome_js_syntax::JsAnyExpression;
-   use rome_analyze::context::RuleContext;
-   
-   impl Rule for UseAwesomeTricks {
-        const CATEGORY: RuleCategory = RuleCategory::Lint;
-        type Query = Semantic<JsAnyExpression>;
-        type State = String;
-        type Signals = Option<Self::State>;
-        type Options = ();
-   
-        fn run(ctx: &RuleContext<Self>) -> Self::Signals {}
-   }
-   ```
-5. the const `CATEGORY` must be `RuleCategory::Lint` otherwise it won't work
-6. the `Query` needs to have the `Semantic` type, because we want to have access to the semantic model.
-`Query` tells the engine on which AST node we want to trigger the rule. 
-7. The `State` type doesn't have to be used, so it can be considered optional, but it has
+1. run the command
+	```shell
+	> just new-lintrule crates/rome_js_analyze/src/analyzers/nursery myRuleName
+	```
+	Rules go in different folders, and the folder depend on the type of query system your rule
+	will use:
+   - `type Query = Ast<>` -> `analyzers/` folder
+   - `type Query = Semantic<>` -> `semantic_analyzers/` folder
+   - `type Query = SemanticServices` -> `semantic_analyzers/` folder
+   - `type Query = Aria<>` -> `aria_analyzers` folder
+   - `type Query = ControlFlowGraph` -> `analyzers/` folder
+
+	The core team will help you out if you don't get the folder right. Using the incorrect folder
+	won't break any code.
+2. the `Query` needs to have the `Semantic` type, because we want to have access to the semantic model.
+`Query` tells the engine on which AST node we want to trigger the rule.
+3. The `State` type doesn't have to be used, so it can be considered optional, but it has
 be defined as `type State = ()`
-8. The `run` function must be implemented. This function is called every time the analyzer
+4. The `run` function must be implemented. This function is called every time the analyzer
 finds a match for the query specified by the rule, and may return zero or more "signals".
-9. Implement the optional `diagnostic` function, to tell the user where's the error and why:
+5. Implement the optional `diagnostic` function, to tell the user where's the error and why:
     ```rust,ignore
     impl Rule for UseAwesomeTricks {
         // .. code
@@ -99,11 +76,11 @@ finds a match for the query specified by the rule, and may return zero or more "
     ```
     While implementing the diagnostic, please keep [Rome's technical principals](https://rome.tools/#technical) in mind.
     This function is called of every signal emitted by the `run` function, and it may return
-    zero or one diagnostic. 
+    zero or one diagnostic.
 
     You will have to manually update the file `rome_diagnostics_categories/src/categories.rs` and add a new category
     for the new rule you're about to create.
-10. Implement the optional `action` function, if we are able to provide automatic code fix to the rule:
+6. Implement the optional `action` function, if we are able to provide automatic code fix to the rule:
     ```rust,ignore
     impl Rule for UseAwesomeTricks {
         // .. code
@@ -140,13 +117,20 @@ to know how to deal with the snapshot tests.
 
 ### Code generation
 
-Run the following commands to update the generated files:
+For simplicity, use [`just`](#using-just) to run all the commands with:
+
+```shell
+just codegen-linter
+```
+
+Explanation of the commands:
 
 - `cargo codegen-configuration`, **this command must be run first** and, it will update the configuration;
 - `cargo lintdoc`, it will update the website with the documentation of the rules, check [`declare_rule`](#declare_rule)
 for more information about it;
 - `cargo codegen-bindings`, it will update the TypeScript types released inside the JS APIs;
 - `cargo codegen-schema`, it will update the JSON Schema file of the configuration, used by VSCode;
+
 
 ### Naming patterns for rules
 
@@ -225,9 +209,9 @@ declare_rule! {
 use rome_analyze::declare_rule;
  declare_rule! {
      ///  Disallow the use of `var`
-     /// 
+     ///
      ///  ### Invalid
-     /// 
+     ///
      ///  ```js,expect_diagnostic
      ///  var a, b;
      ///  ```
@@ -255,9 +239,9 @@ use rome_analyze::declare_rule;
 
  declare_rule! {
       /// Disallow the use of `var`
-      /// 
+      ///
       /// ### Invalid
-      /// 
+      ///
       /// ```js,expect_diagnostic
       /// var a, b;
       /// ```
@@ -387,3 +371,128 @@ If this the rule can retrieve its option with
 ```rust,ignore
 let options = ctx.options();
 ```
+
+#### Custom Visitors
+
+Some lint rules may need to deeply inspect the child nodes of a query match
+before deciding on whether they should emit a signal or not. These rules can be
+inefficient to implement using the query system, as they will lead to redundant
+traversal passes being executed over the same syntax tree. To make this more
+efficient, you can implement a custom `Queryable` type and and associated
+`Visitor` to emit it as part of the analyzer's main traversal pass. As an
+example, here's how this could be done to implement the `useYield` rule:
+
+```rust,ignore
+// First, create a visitor struct that holds a stack of function syntax nodes and booleans
+#[derive(Default)]
+struct MissingYieldVisitor {
+    stack: Vec<(AnyFunctionLike, bool)>,
+}
+
+// Implement the `Visitor` trait for this struct
+impl Visitor for MissingYieldVisitor {
+    type Language = JsLanguage;
+
+    fn visit(
+        &mut self,
+        event: &WalkEvent<SyntaxNode<Self::Language>>,
+        mut ctx: VisitorContext<Self::Language>,
+    ) {
+        match event {
+            WalkEvent::Enter(node) => {
+                // When the visitor enters a function node, push a new entry on the stack
+                if let Some(node) = AnyFunctionLike::cast_ref(node) {
+                    self.stack.push((node, false));
+                }
+
+                if let Some((_, has_yield)) = self.stack.last_mut() {
+                    // When the visitor enters a `yield` expression, set the
+                    // `has_yield` flag for the top entry on the stack to `true`
+                    if JsYieldExpression::can_cast(node.kind()) {
+                        *has_yield = true;
+                    }
+                }
+            }
+            WalkEvent::Leave(node) => {
+                // When the visitor exits a function, if it matches the node of the top-most
+                // entry of the stack and the `has_yield` flag is `false`, emit a query match
+                if let Some(exit_node) = AnyFunctionLike::cast_ref(node) {
+                    if let Some((enter_node, has_yield)) = self.stack.pop() {
+                        assert_eq!(enter_node, exit_node);
+                        if !has_yield {
+                            ctx.match_query(MissingYield(enter_node));
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Declare a query match struct type containing a JavaScript function node
+pub(crate) struct MissingYield(AnyFunctionLike);
+
+impl QueryMatch for MissingYield {
+    fn text_range(&self) -> TextRange {
+        self.0.range()
+    }
+}
+
+// Implement the `Queryable` trait for this type
+impl Queryable for MissingYield {
+    // `Input` is the type that `ctx.match_query()` is called with in the visitor
+    type Input = Self;
+    type Language = JsLanguage;
+    // `Output` if the type that `ctx.query()` will return in the rule
+    type Output = AnyFunctionLike;
+    type Services = ();
+
+    fn build_visitor(
+        analyzer: &mut impl AddVisitor<Self::Language>,
+        _: &<Self::Language as Language>::Root,
+    ) {
+        // Register our custom visitor to run in the `Syntax` phase
+        analyzer.add_visitor(Phases::Syntax, MissingYieldVisitor::default);
+    }
+
+    // Extract the output object from the input type
+    fn unwrap_match(services: &ServiceBag, query: &Self::Input) -> Self::Output {
+        query.0.clone()
+    }
+}
+
+impl Rule for UseYield {
+    // Declare the custom `MissingYield` queryable as the rule's query
+    type Query = MissingYield;
+
+    fn run(ctx: &RuleContext<Self>) -> Self::Signals {
+        // Read the function's root node from the queryable output
+        let query: &AnyFunctionLike = ctx.query();
+
+        // ...
+    }
+}
+```
+
+# Using Just
+
+It is also possible to do all the steps above using our `Just` automation. For example, we can create
+a rule calling
+
+```ignore
+> just new-lintrule crates/rome_js_analyze/src/analyzers/nursery myRuleName
+```
+
+Once we are happy with our implementation we can call
+
+```ignore
+> just test-lintrule myRuleName
+```
+
+And at the end, to test our commits are ready to be push we can call
+
+```ignore
+> just check-ready
+```
+
+For more details on the available automations, look at our `justfile` at the root of the repository.

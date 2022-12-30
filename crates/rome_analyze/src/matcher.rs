@@ -4,11 +4,16 @@ use crate::{
 };
 use rome_diagnostics::FileId;
 use rome_rowan::{Language, TextRange};
-use std::{cmp::Ordering, collections::BinaryHeap};
+use std::{
+    any::{Any, TypeId},
+    cmp::Ordering,
+    collections::BinaryHeap,
+};
 
 /// The [QueryMatcher] trait is responsible of running lint rules on
-/// [QueryMatch] instances emitted by the various [Visitor](crate::Visitor)
-/// and push signals wrapped in [SignalEntry] to the signal queue
+/// [QueryMatch](crate::QueryMatch) instances emitted by the various
+/// [Visitor](crate::Visitor) and push signals wrapped in [SignalEntry]
+/// to the signal queue
 pub trait QueryMatcher<L: Language> {
     /// Execute a single query match
     fn match_query(&mut self, params: MatchQueryParams<L>);
@@ -19,10 +24,50 @@ pub struct MatchQueryParams<'phase, 'query, L: Language> {
     pub phase: Phases,
     pub file_id: FileId,
     pub root: &'phase L::Root,
-    pub query: QueryMatch<L>,
+    pub query: Query,
     pub services: &'phase ServiceBag,
     pub signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
     pub apply_suppression_comment: SuppressionCommentEmitter<L>,
+}
+
+/// Wrapper type for a [QueryMatch]
+///
+/// This type is functionally equivalent to `Box<dyn QueryMatch + Any>`, it
+/// emulates dynamic dispatch for both traits and allows downcasting to a
+/// reference or owned type.
+pub struct Query {
+    data: Box<dyn Any>,
+    read_text_range: fn(&dyn Any) -> TextRange,
+}
+
+impl Query {
+    /// Construct a new [Query] instance from a [QueryMatch]
+    pub fn new<T: QueryMatch>(data: T) -> Self {
+        Self {
+            data: Box::new(data),
+            read_text_range: |query| query.downcast_ref::<T>().unwrap().text_range(),
+        }
+    }
+
+    /// Attempt to downcast the query to an owned type.
+    pub fn downcast<T: QueryMatch>(self) -> Option<T> {
+        Some(*self.data.downcast::<T>().ok()?)
+    }
+
+    /// Attempt to downcast the query to a reference type.
+    pub fn downcast_ref<T: QueryMatch>(&self) -> Option<&T> {
+        self.data.downcast_ref::<T>()
+    }
+
+    /// Returns the [TypeId] of this query, equivalent to calling [Any::type_id].
+    pub(crate) fn type_id(&self) -> TypeId {
+        self.data.as_ref().type_id()
+    }
+
+    /// Returns the [TextRange] of this query, equivalent to calling [QueryMatch::text_range].
+    pub(crate) fn text_range(&self) -> TextRange {
+        (self.read_text_range)(self.data.as_ref())
+    }
 }
 
 /// Opaque identifier for a group of rule
@@ -158,14 +203,14 @@ mod tests {
     use rome_diagnostics::{Diagnostic, Severity};
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
-        AstNode, TextRange, TextSize, TriviaPiece, TriviaPieceKind,
+        AstNode, SyntaxNode, TextRange, TextSize, TriviaPiece, TriviaPieceKind,
     };
 
     use crate::SuppressionKind;
     use crate::{
         signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal,
-        ControlFlow, MetadataRegistry, Never, Phases, QueryMatch, QueryMatcher, RuleKey,
-        ServiceBag, SignalEntry, SyntaxVisitor,
+        ControlFlow, MetadataRegistry, Never, Phases, QueryMatcher, RuleKey, ServiceBag,
+        SignalEntry, SyntaxVisitor,
     };
 
     use super::MatchQueryParams;
@@ -184,10 +229,7 @@ mod tests {
     impl QueryMatcher<RawLanguage> for SuppressionMatcher {
         /// Emits a warning diagnostic for all literal expressions
         fn match_query(&mut self, params: MatchQueryParams<RawLanguage>) {
-            let node = match params.query {
-                QueryMatch::Syntax(node) => node,
-                _ => unreachable!(),
-            };
+            let node = params.query.downcast::<SyntaxNode<RawLanguage>>().unwrap();
 
             if node.kind() != RawLanguageKind::LITERAL_EXPRESSION {
                 return;
@@ -338,7 +380,7 @@ mod tests {
             &mut emit_signal,
         );
 
-        analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default());
+        analyzer.add_visitor(Phases::Syntax, Box::new(SyntaxVisitor::default()));
 
         let ctx: AnalyzerContext<RawLanguage> = AnalyzerContext {
             file_id: FileId::zero(),

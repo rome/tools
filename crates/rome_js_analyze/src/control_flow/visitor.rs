@@ -1,12 +1,14 @@
 use std::any::TypeId;
 
-use rome_analyze::{merge_node_visitors, QueryMatch, Visitor, VisitorContext};
+use rome_analyze::{merge_node_visitors, Visitor, VisitorContext};
 use rome_js_syntax::{
     AnyJsFunction, JsConstructorClassMember, JsGetterClassMember, JsGetterObjectMember, JsLanguage,
     JsMethodClassMember, JsMethodObjectMember, JsModule, JsScript, JsSetterClassMember,
-    JsSetterObjectMember,
+    JsSetterObjectMember, JsStaticInitializationBlockClassMember,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxError, SyntaxResult};
+
+use crate::ControlFlowGraph;
 
 use super::{nodes::*, FunctionBuilder};
 
@@ -166,32 +168,27 @@ declare_node_union! {
         | JsMethodClassMember
         | JsGetterClassMember
         | JsSetterClassMember
+        | JsStaticInitializationBlockClassMember
 }
 
 impl rome_analyze::NodeVisitor<ControlFlowVisitor> for FunctionVisitor {
     type Node = AnyJsControlFlowRoot;
 
     fn enter(
-        _: Self::Node,
+        node: Self::Node,
         _: &mut VisitorContext<JsLanguage>,
         _: &mut ControlFlowVisitor,
     ) -> Self {
         Self {
-            builder: Some(FunctionBuilder::default()),
+            builder: Some(FunctionBuilder::new(node.into_syntax())),
         }
     }
 
-    fn exit(
-        self,
-        node: Self::Node,
-        ctx: &mut VisitorContext<JsLanguage>,
-        _: &mut ControlFlowVisitor,
-    ) {
+    fn exit(self, _: Self::Node, ctx: &mut VisitorContext<JsLanguage>, _: &mut ControlFlowVisitor) {
         if let Some(builder) = self.builder {
-            ctx.match_query(QueryMatch::ControlFlowGraph(
-                builder.finish(),
-                node.syntax().text_trimmed_range(),
-            ));
+            ctx.match_query(ControlFlowGraph {
+                graph: builder.finish(),
+            });
         }
     }
 }

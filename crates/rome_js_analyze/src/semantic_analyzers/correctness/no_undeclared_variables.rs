@@ -6,10 +6,8 @@ use crate::semantic_services::SemanticServices;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{
-    JsIdentifierAssignment, JsReferenceIdentifier, JsxReferenceIdentifier, TextRange,
-};
-use rome_rowan::{declare_node_union, AstNode};
+use rome_js_syntax::{TextRange, TsAsExpression, TsReferenceType};
+use rome_rowan::AstNode;
 
 declare_rule! {
     /// Prevents the usage of variables that haven't been declared inside the document
@@ -28,10 +26,6 @@ declare_rule! {
     }
 }
 
-declare_node_union! {
-    pub(crate) AnyIdentifier = JsReferenceIdentifier | JsIdentifierAssignment | JsxReferenceIdentifier
-}
-
 impl Rule for NoUndeclaredVariables {
     type Query = SemanticServices;
     type State = (TextRange, String);
@@ -42,16 +36,20 @@ impl Rule for NoUndeclaredVariables {
         ctx.query()
             .all_unresolved_references()
             .filter_map(|reference| {
-                let node = reference.syntax().clone();
-                let node = AnyIdentifier::unwrap_cast(node);
-                let token = match node {
-                    AnyIdentifier::JsReferenceIdentifier(node) => node.value_token(),
-                    AnyIdentifier::JsIdentifierAssignment(node) => node.name_token(),
-                    AnyIdentifier::JsxReferenceIdentifier(node) => node.value_token(),
-                };
+                let identifier = reference.tree();
+                let under_as_expression = identifier
+                    .parent::<TsReferenceType>()
+                    .and_then(|ty| ty.parent::<TsAsExpression>())
+                    .is_some();
 
-                let token = token.ok()?;
+                let token = identifier.value_token().ok()?;
                 let text = token.text_trimmed();
+
+                // Typescript Const Assertion
+                if text == "const" && under_as_expression {
+                    return None;
+                }
+
                 if is_global(text) {
                     return None;
                 }

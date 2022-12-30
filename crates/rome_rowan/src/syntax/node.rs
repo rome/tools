@@ -500,6 +500,12 @@ impl<L: Language> SyntaxNode<L> {
         self.first_token()
             .map_or(false, |tok| tok.has_leading_comments())
     }
+
+    /// Whether the node contains leading newlines.
+    pub fn has_leading_newline(&self) -> bool {
+        self.first_token()
+            .map_or(false, |tok| tok.has_leading_newline())
+    }
 }
 
 impl<L> SyntaxNode<L>

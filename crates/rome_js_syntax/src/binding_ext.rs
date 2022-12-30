@@ -7,7 +7,7 @@ use crate::{
     JsImportDefaultClause, JsImportNamespaceClause, JsMethodClassMember, JsMethodObjectMember,
     JsNamedImportSpecifier, JsNamespaceImportSpecifier, JsParameterList, JsParameters,
     JsRestParameter, JsSetterClassMember, JsSetterObjectMember, JsShorthandNamedImportSpecifier,
-    JsSyntaxKind, JsSyntaxNode, JsVariableDeclarator, TsCallSignatureTypeMember,
+    JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, JsVariableDeclarator, TsCallSignatureTypeMember,
     TsConstructSignatureTypeMember, TsConstructorSignatureClassMember, TsConstructorType,
     TsDeclareFunctionDeclaration, TsDeclareFunctionExportDefaultDeclaration, TsEnumDeclaration,
     TsFunctionType, TsIdentifierBinding, TsImportEqualsDeclaration, TsIndexSignatureClassMember,
@@ -15,7 +15,7 @@ use crate::{
     TsMethodSignatureTypeMember, TsModuleDeclaration, TsPropertyParameter,
     TsSetterSignatureClassMember, TsSetterSignatureTypeMember, TsTypeAliasDeclaration,
 };
-use rome_rowan::{declare_node_union, AstNode};
+use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
 declare_node_union! {
     pub AnyJsBindingDeclaration =
@@ -118,6 +118,13 @@ fn is_under_object_pattern_binding(node: &JsSyntaxNode) -> Option<bool> {
 }
 
 impl AnyJsIdentifierBinding {
+    pub fn name_token(&self) -> SyntaxResult<JsSyntaxToken> {
+        match self {
+            AnyJsIdentifierBinding::JsIdentifierBinding(binding) => binding.name_token(),
+            AnyJsIdentifierBinding::TsIdentifierBinding(binding) => binding.name_token(),
+        }
+    }
+
     pub fn declaration(&self) -> Option<AnyJsBindingDeclaration> {
         let node = match self {
             AnyJsIdentifierBinding::JsIdentifierBinding(binding) => &binding.syntax,
@@ -136,6 +143,17 @@ impl AnyJsIdentifierBinding {
 
     pub fn is_under_object_pattern_binding(&self) -> Option<bool> {
         is_under_object_pattern_binding(self.syntax())
+    }
+
+    pub fn with_name_token(self, name_token: JsSyntaxToken) -> AnyJsIdentifierBinding {
+        match self {
+            AnyJsIdentifierBinding::JsIdentifierBinding(binding) => {
+                AnyJsIdentifierBinding::JsIdentifierBinding(binding.with_name_token(name_token))
+            }
+            AnyJsIdentifierBinding::TsIdentifierBinding(binding) => {
+                AnyJsIdentifierBinding::TsIdentifierBinding(binding.with_name_token(name_token))
+            }
+        }
     }
 }
 

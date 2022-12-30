@@ -1,6 +1,8 @@
 use crate::capabilities::server_capabilities;
 use crate::requests::syntax_tree::{SyntaxTreePayload, SYNTAX_TREE_REQUEST};
-use crate::session::{ClientInformation, Session, SessionHandle, SessionKey};
+use crate::session::{
+    CapabilitySet, CapabilityStatus, ClientInformation, Session, SessionHandle, SessionKey,
+};
 use crate::utils::{into_lsp_error, panic_to_lsp_error};
 use crate::{handlers, requests};
 use futures::future::ready;
@@ -9,6 +11,7 @@ use rome_console::markup;
 use rome_fs::CONFIG_NAME;
 use rome_service::workspace::{RageEntry, RageParams, RageResult};
 use rome_service::{workspace, Workspace};
+use serde_json::json;
 use std::collections::HashMap;
 use std::panic::RefUnwindSafe;
 use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
@@ -19,7 +22,7 @@ use tokio::task::spawn_blocking;
 use tower_lsp::jsonrpc::Result as LspResult;
 use tower_lsp::{lsp_types::*, ClientSocket};
 use tower_lsp::{LanguageServer, LspService, Server};
-use tracing::{error, info, trace};
+use tracing::{error, info, trace, warn};
 
 pub struct LSPServer {
     session: SessionHandle,
@@ -95,13 +98,11 @@ impl LSPServer {
 
                     entries.extend(workspace_entries);
 
-                    if let Ok(client_information) = session.client_information.lock() {
-                        if let Some(information) = client_information.as_ref() {
-                            entries.push(RageEntry::pair("Client Name", &information.name));
+                    if let Some(information) = session.client_information() {
+                        entries.push(RageEntry::pair("Client Name", &information.name));
 
-                            if let Some(version) = &information.version {
-                                entries.push(RageEntry::pair("Client Version", version))
-                            }
+                        if let Some(version) = &information.version {
+                            entries.push(RageEntry::pair("Client Version", version))
                         }
                     }
                 }
@@ -111,105 +112,120 @@ impl LSPServer {
         Ok(RageResult { entries })
     }
 
-    async fn register_capability(&self, registration: Registration) {
-        let method = registration.method.clone();
-
-        if let Err(e) = self
-            .session
-            .client
-            .register_capability(vec![registration])
-            .await
-        {
-            error!("Error registering {:?} capability: {}", method, e);
-        }
-    }
-
-    async fn unregister_capability(&self, unregistration: Unregistration) {
-        let method = unregistration.method.clone();
-
-        if let Err(e) = self
-            .session
-            .client
-            .unregister_capability(vec![unregistration])
-            .await
-        {
-            error!("Error unregistering {:?} capability: {}", method, e);
-        }
-    }
-
     async fn setup_capabilities(&self) {
+        let mut capabilities = CapabilitySet::default();
+
+        capabilities.add_capability(
+            "rome_did_change_extension_settings",
+            "workspace/didChangeConfiguration",
+            if self.session.can_register_did_change_configuration() {
+                CapabilityStatus::Enable(None)
+            } else {
+                CapabilityStatus::Disable
+            },
+        );
+
+        capabilities.add_capability(
+            "rome_did_change_workspace_settings",
+            "workspace/didChangeWatchedFiles",
+            if let Some(base_path) = self.session.base_path() {
+                CapabilityStatus::Enable(Some(json!(DidChangeWatchedFilesRegistrationOptions {
+                    watchers: vec![FileSystemWatcher {
+                        glob_pattern: format!("{}/rome.json", base_path.display()),
+                        kind: Some(WatchKind::all()),
+                    }],
+                })))
+            } else {
+                CapabilityStatus::Disable
+            },
+        );
+
+        capabilities.add_capability(
+            "rome_formatting",
+            "textDocument/formatting",
+            if self.session.is_linting_and_formatting_disabled() {
+                CapabilityStatus::Disable
+            } else {
+                CapabilityStatus::Enable(None)
+            },
+        );
+        capabilities.add_capability(
+            "rome_range_formatting",
+            "textDocument/rangeFormatting",
+            if self.session.is_linting_and_formatting_disabled() {
+                CapabilityStatus::Disable
+            } else {
+                CapabilityStatus::Enable(None)
+            },
+        );
+        capabilities.add_capability(
+            "rome_on_type_formatting",
+            "textDocument/onTypeFormatting",
+            if self.session.is_linting_and_formatting_disabled() {
+                CapabilityStatus::Disable
+            } else {
+                CapabilityStatus::Enable(Some(json!(DocumentOnTypeFormattingRegistrationOptions {
+                    document_selector: None,
+                    first_trigger_character: String::from("}"),
+                    more_trigger_character: Some(vec![String::from("]"), String::from(")")]),
+                })))
+            },
+        );
+
         let rename = {
-            let config = self.session.config.read().ok();
+            let config = self.session.extension_settings.read().ok();
             config.and_then(|x| x.settings.rename).unwrap_or(false)
         };
 
-        if self.session.can_register_did_change_configuration() {
-            self.register_capability(Registration {
-                id: "workspace/didChangeConfiguration".to_string(),
-                method: "workspace/didChangeConfiguration".to_string(),
-                register_options: None,
-            })
-            .await;
-        }
+        capabilities.add_capability(
+            "rome_rename",
+            "textDocument/rename",
+            if rename {
+                CapabilityStatus::Enable(None)
+            } else {
+                CapabilityStatus::Disable
+            },
+        );
 
-        let base_path = self.session.base_path();
-
-        if let Some(base_path) = base_path {
-            let registration_options = DidChangeWatchedFilesRegistrationOptions {
-                watchers: vec![FileSystemWatcher {
-                    glob_pattern: format!("{}/rome.json", base_path.display()),
-                    kind: Some(WatchKind::all()),
-                }],
-            };
-            self.register_capability(Registration {
-                id: "workspace/didChangeWatchedFiles".to_string(),
-                method: "workspace/didChangeWatchedFiles".to_string(),
-                register_options: Some(serde_json::to_value(registration_options).unwrap()),
-            })
-            .await;
-        }
-
-        if rename {
-            self.register_capability(Registration {
-                id: "textDocument/rename".to_string(),
-                method: "textDocument/rename".to_string(),
-                register_options: None,
-            })
-            .await;
-        } else {
-            self.unregister_capability(Unregistration {
-                id: "textDocument/rename".to_string(),
-                method: "textDocument/rename".to_string(),
-            })
-            .await;
-        }
+        self.session.register_capabilities(capabilities).await;
     }
 }
 
 #[tower_lsp::async_trait]
 impl LanguageServer for LSPServer {
-    #[tracing::instrument(level = "debug", skip(self))]
+    // The `root_path` field is deprecated, but we still read it so we can print a warning about it
+    #[allow(deprecated)]
+    #[tracing::instrument(
+        level = "debug",
+        skip_all,
+        fields(
+            root_uri = params.root_uri.as_ref().map(display),
+            capabilities = debug(&params.capabilities),
+            client_info = params.client_info.as_ref().map(debug),
+            root_path = params.root_path,
+            workspace_folders = params.workspace_folders.as_ref().map(debug),
+        )
+    )]
     async fn initialize(&self, params: InitializeParams) -> LspResult<InitializeResult> {
         info!("Starting Rome Language Server...");
         self.is_initialized.store(true, Ordering::Relaxed);
 
-        self.session
-            .client_capabilities
-            .write()
-            .unwrap()
-            .replace(params.capabilities);
-
-        if let Some(uri) = params.root_uri {
-            self.session.root_uri.write().unwrap().replace(uri);
-        }
-
-        if let Some(client_info) = params.client_info {
-            let mut client_information = self.session.client_information.lock().unwrap();
-            *client_information = Some(ClientInformation {
+        self.session.initialize(
+            params.capabilities,
+            params.client_info.map(|client_info| ClientInformation {
                 name: client_info.name,
                 version: client_info.version,
-            })
-        };
+            }),
+            params.root_uri,
+        );
+
+        if params.root_path.is_some() {
+            warn!("The Rome Server was initialized with the deprecated `root_path` parameter: this is not supported, use `root_uri` instead");
+        }
+
+        if params.workspace_folders.is_some() {
+            warn!("The Rome Server was initialized with the `workspace_folders` parameter: this is unsupported at the moment, use `root_uri` instead");
+        }
 
         let init = InitializeResult {
             capabilities: server_capabilities(),
@@ -228,8 +244,10 @@ impl LanguageServer for LSPServer {
 
         info!("Attempting to load the configuration from 'rome.json' file");
 
-        self.session.update_configuration().await;
-        self.session.fetch_client_configuration().await;
+        futures::join!(
+            self.session.load_extension_settings(),
+            self.session.load_workspace_settings()
+        );
 
         let msg = format!("Server initialized with PID: {}", std::process::id());
         self.session
@@ -247,11 +265,13 @@ impl LanguageServer for LSPServer {
         Ok(())
     }
 
+    /// Called when the user changed the editor settings.
     #[tracing::instrument(level = "debug", skip(self))]
     async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
         let _ = params;
-        self.session.fetch_client_configuration().await;
+        self.session.load_extension_settings().await;
         self.setup_capabilities().await;
+        self.session.update_all_diagnostics().await;
     }
 
     #[tracing::instrument(level = "debug", skip(self))]
@@ -268,8 +288,8 @@ impl LanguageServer for LSPServer {
                         let possible_rome_json = file_path.strip_prefix(&base_path);
                         if let Ok(possible_rome_json) = possible_rome_json {
                             if possible_rome_json.display().to_string() == CONFIG_NAME {
-                                self.session.update_configuration().await;
-                                self.session.fetch_client_configuration().await;
+                                self.session.load_workspace_settings().await;
+                                self.setup_capabilities().await;
                                 self.session.update_all_diagnostics().await;
                                 // for now we are only interested to the configuration file,
                                 // so it's OK to exist the loop
@@ -345,7 +365,7 @@ impl LanguageServer for LSPServer {
         rome_diagnostics::panic::catch_unwind(move || {
             let rename_enabled = self
                 .session
-                .config
+                .extension_settings
                 .read()
                 .ok()
                 .and_then(|config| config.settings.rename)

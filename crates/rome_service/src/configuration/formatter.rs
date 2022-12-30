@@ -1,5 +1,5 @@
 use crate::settings::FormatSettings;
-use crate::{ConfigurationError, MatchOptions, Matcher, RomeError};
+use crate::{ConfigurationError, MatchOptions, Matcher, WorkspaceError};
 use indexmap::IndexSet;
 use rome_formatter::{IndentStyle, LineWidth};
 use serde::{Deserialize, Serialize};
@@ -52,7 +52,7 @@ impl Default for FormatterConfiguration {
 }
 
 impl TryFrom<FormatterConfiguration> for FormatSettings {
-    type Error = RomeError;
+    type Error = WorkspaceError;
 
     fn try_from(conf: FormatterConfiguration) -> Result<Self, Self::Error> {
         let indent_style = match conf.indent_style {
@@ -67,7 +67,7 @@ impl TryFrom<FormatterConfiguration> for FormatSettings {
         if let Some(ignore) = conf.ignore {
             for pattern in ignore {
                 matcher.add_pattern(&pattern).map_err(|err| {
-                    RomeError::Configuration(ConfigurationError::InvalidIgnorePattern(
+                    WorkspaceError::Configuration(ConfigurationError::InvalidIgnorePattern(
                         pattern.to_string(),
                         err.msg.to_string(),
                     ))

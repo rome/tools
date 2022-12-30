@@ -3,7 +3,7 @@ use std::borrow::Cow;
 use crate::prelude::*;
 
 use crate::parentheses::NeedsParentheses;
-use crate::utils::string_utils::ToAsciiLowercaseCow;
+use rome_formatter::token::string::ToAsciiLowercaseCow;
 use rome_formatter::write;
 use rome_js_syntax::{JsSyntaxNode, TsBigIntLiteralType, TsBigIntLiteralTypeFields};
 

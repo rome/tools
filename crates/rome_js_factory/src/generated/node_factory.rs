@@ -6,6 +6,12 @@ use rome_js_syntax::{
     JsSyntaxElement as SyntaxElement, JsSyntaxNode as SyntaxNode, JsSyntaxToken as SyntaxToken, *,
 };
 use rome_rowan::AstNode;
+pub fn js_accessor_modifier(modifier_token: SyntaxToken) -> JsAccessorModifier {
+    JsAccessorModifier::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_ACCESSOR_MODIFIER,
+        [Some(SyntaxElement::Token(modifier_token))],
+    ))
+}
 pub fn js_array_assignment_pattern(
     l_brack_token: SyntaxToken,
     elements: JsArrayAssignmentPatternElementList,

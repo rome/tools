@@ -7,7 +7,15 @@ parent: lint/rules/index
 
 > This rule is recommended by Rome.
 
-Disallow the `any` type usage
+Disallow the `any` type usage.
+
+The `any` type in TypeScript is a dangerous "escape hatch" from the type system.
+Using `any` disables many type checking rules and is generally best used only as a last resort or when prototyping code.
+
+TypeScript's `--noImplicitAny` compiler option prevents an implied `any`,
+but doesn't prevent `any` from being explicitly used the way this rule does.
+
+Source: https://typescript-eslint.io/rules/no-explicit-any
 
 ## Examples
 
@@ -24,6 +32,8 @@ let variable: any = 1;
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>let variable: any = 1;
    <strong>   │ </strong>              <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);"><strong>any</strong></span><span style="color: rgb(38, 148, 255);"> disables many type checking rules. Its use should be avoided.</span>
   
 </code></pre>
 
@@ -43,6 +53,8 @@ class SomeClass {
     <strong>3 │ </strong>}
     <strong>4 │ </strong>
   
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);"><strong>any</strong></span><span style="color: rgb(38, 148, 255);"> disables many type checking rules. Its use should be avoided.</span>
+  
 </code></pre>
 
 ```ts
@@ -56,6 +68,8 @@ function fn(param: Array<any>): void {}
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>function fn(param: Array&lt;any&gt;): void {}
    <strong>   │ </strong>                         <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);"><strong>any</strong></span><span style="color: rgb(38, 148, 255);"> disables many type checking rules. Its use should be avoided.</span>
   
 </code></pre>
 

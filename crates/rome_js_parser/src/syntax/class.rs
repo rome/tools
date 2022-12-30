@@ -452,6 +452,7 @@ impl ParseNodeList for ClassMembersList {
                     T![override],
                     T![declare],
                     T![static],
+                    T![accessor],
                     T![async],
                     T![yield],
                     T!['}'],
@@ -593,6 +594,8 @@ fn parse_class_member_impl(
     // Seems like we're at an async method
     if p.at(T![async])
         && !p.nth_at(1, T![?])
+        && !p.nth_at(1, T![;])
+        && !p.nth_at(1, T![=])
         && !is_at_method_class_member(p, 1)
         && !p.has_nth_preceding_line_break(1)
     {
@@ -1563,6 +1566,7 @@ pub(crate) fn is_nth_at_modifier(p: &mut JsParser, n: usize, constructor_paramet
             | T![private]
             | T![override]
             | T![static]
+            | T![accessor]
             | T![readonly]
             | T![abstract]
     ) {
@@ -1638,6 +1642,7 @@ fn parse_modifier(p: &mut JsParser, constructor_parameter: bool) -> Option<Class
         T![private] => ModifierKind::Private,
         T![override] => ModifierKind::Override,
         T![static] => ModifierKind::Static,
+        T![accessor] => ModifierKind::Accessor,
         T![readonly] => ModifierKind::Readonly,
         T![abstract] => ModifierKind::Abstract,
         _ => {
@@ -1671,6 +1676,7 @@ bitflags! {
         const ABSTRACT      = 1 << 6;
         const OVERRIDE      = 1 << 7;
         const PRIVATE_NAME  = 1 << 8;
+        const ACCESSOR      = 1 << 9;
 
         const ACCESSIBILITY = ModifierFlags::PRIVATE.bits | ModifierFlags::PROTECTED.bits | ModifierFlags::PUBLIC.bits;
     }
@@ -1685,13 +1691,14 @@ enum ModifierKind {
     Protected,
     Public,
     Static,
+    Accessor,
     Readonly,
     Override,
 }
 
 impl ModifierKind {
     const fn is_ts_modifier(&self) -> bool {
-        !matches!(self, ModifierKind::Static)
+        !matches!(self, ModifierKind::Static | ModifierKind::Accessor)
     }
 
     const fn as_syntax_kind(&self) -> JsSyntaxKind {
@@ -1702,6 +1709,7 @@ impl ModifierKind {
                 TS_ACCESSIBILITY_MODIFIER
             }
             ModifierKind::Static => JS_STATIC_MODIFIER,
+            ModifierKind::Accessor => JS_ACCESSOR_MODIFIER,
             ModifierKind::Readonly => TS_READONLY_MODIFIER,
             ModifierKind::Override => TS_OVERRIDE_MODIFIER,
         }
@@ -1715,6 +1723,7 @@ impl ModifierKind {
             ModifierKind::Protected => ModifierFlags::PROTECTED,
             ModifierKind::Public => ModifierFlags::PUBLIC,
             ModifierKind::Static => ModifierFlags::STATIC,
+            ModifierKind::Accessor => ModifierFlags::ACCESSOR,
             ModifierKind::Readonly => ModifierFlags::READONLY,
             ModifierKind::Override => ModifierFlags::OVERRIDE,
         }
@@ -1884,6 +1893,17 @@ impl ClassMemberModifiers {
         valid
     }
 
+    // test js_class_property_member_modifiers
+    // class Test {
+    //     static a = 1;
+    //     accessor b = 1;
+    //     static accessor c = 1;
+    // }
+    // class Foo {
+    //     accessor
+    //     foo
+    // }
+
     // test ts ts_class_property_member_modifiers
     // class Base {
     //   base1;
@@ -1899,6 +1919,8 @@ impl ClassMemberModifiers {
     //     protected readonly abstract i: string;
     //     protected abstract readonly j: string;
     //     protected override readonly base1: string;
+    //     private static accessor readonly k: string;
+    //     protected abstract accessor readonly l: string;
     // }
 
     // test_err ts ts_class_modifier_precedence
@@ -1911,7 +1933,11 @@ impl ClassMemberModifiers {
     //     abstract protected d: string;
     //     // Static
     //     readonly static c: string;
+    //     accessor static d: string;
     //     override static base2: string;
+    //     // Accessor
+    //     readonly accessor e: string;
+    //     override accessor f: string;
     //     // abstract
     //     override abstract base3: string;
     //     // override
@@ -1937,11 +1963,14 @@ impl ClassMemberModifiers {
     //     abstract async l();
     //     declare async m();
     //     declare #l;
+    //     declare accessor p;
+    //     accessor accessor r;
     // }
 
     // test_err class_invalid_modifiers
     // class A { public foo() {} }
     // class B { static static foo() {} }
+    // class C { accessor foo() {} }
     fn check_class_member_modifier(
         &self,
         p: &JsParser,
@@ -1977,6 +2006,11 @@ impl ClassMemberModifiers {
         // test_err ts ts_index_signature_class_member_cannot_be_abstract
         // abstract class A {
         //     abstract [a: number]: string;
+        // }
+
+        // test_err ts ts_index_signature_class_member_cannot_be_accessor
+        // abstract class A {
+        //     accessor [a: number]: string;
         // }
         if member_kind == TS_INDEX_SIGNATURE_CLASS_MEMBER
             && !matches!(modifier.kind, ModifierKind::Static | ModifierKind::Readonly)
@@ -2060,12 +2094,19 @@ impl ClassMemberModifiers {
                 //     declare get test() { return "a" }
                 //     declare set test(value: string) {}
                 //     declare [name: string]: string;
+                //     declare accessor foo: string;
                 // }
                 if preceding_modifiers.contains(ModifierFlags::DECLARE) {
                     return Some(modifier_already_seen(
                         p,
                         modifier.as_text_range(),
                         self.get_first_range_unchecked(ModifierKind::Declare),
+                    ));
+                } else if self.flags.contains(ModifierFlags::ACCESSOR) {
+                    return Some(modifier_cannot_be_used_with_modifier(
+                        p,
+                        modifier.as_text_range(),
+                        self.get_first_range_unchecked(ModifierKind::Accessor),
                     ));
                 } else if self.flags.contains(ModifierFlags::OVERRIDE) {
                     return Some(modifier_cannot_be_used_with_modifier(
@@ -2121,6 +2162,14 @@ impl ClassMemberModifiers {
                         modifier.as_text_range(),
                         self.get_first_range_unchecked(ModifierKind::Static),
                     ));
+                } else if preceding_modifiers.contains(ModifierFlags::ACCESSOR) {
+                    // test_err ts typescript_abstract_classes_abstract_accessor_precedence
+                    // abstract class A { accessor abstract foo: number; }
+                    return Some(modifier_must_precede_modifier(
+                        p,
+                        modifier.as_text_range(),
+                        self.get_first_range_unchecked(ModifierKind::Accessor),
+                    ));
                 } else if preceding_modifiers.contains(ModifierFlags::OVERRIDE) {
                     return Some(modifier_must_precede_modifier(
                         p,
@@ -2163,6 +2212,12 @@ impl ClassMemberModifiers {
                         modifier.as_text_range(),
                         self.get_first_range_unchecked(ModifierKind::Static),
                     ));
+                } else if preceding_modifiers.contains(ModifierFlags::ACCESSOR) {
+                    return Some(modifier_must_precede_modifier(
+                        p,
+                        modifier.as_text_range(),
+                        self.get_first_range_unchecked(ModifierKind::Accessor),
+                    ));
                 } else if preceding_modifiers.contains(ModifierFlags::READONLY) {
                     return Some(modifier_must_precede_modifier(
                         p,
@@ -2199,12 +2254,21 @@ impl ClassMemberModifiers {
                         modifier.as_text_range(),
                         self.get_first_range_unchecked(ModifierKind::Static),
                     ));
-                }
+                // test_err class_member_static_accessor_precedence
+                // class A {
+                //     accessor static foo = 1;
+                // }
+                } else if preceding_modifiers.contains(ModifierFlags::ACCESSOR) {
+                    return Some(modifier_must_precede_modifier(
+                        p,
+                        modifier.as_text_range(),
+                        self.get_first_range_unchecked(ModifierKind::Accessor),
+                    ));
                 // test_err ts ts_index_signature_class_member_static_readonly_precedence
                 // class A {
                 //     readonly static [a: number]: string;
                 // }
-                else if preceding_modifiers.contains(ModifierFlags::READONLY) {
+                } else if preceding_modifiers.contains(ModifierFlags::READONLY) {
                     return Some(modifier_must_precede_modifier(
                         p,
                         modifier.as_text_range(),
@@ -2215,6 +2279,40 @@ impl ClassMemberModifiers {
                         p,
                         modifier.as_text_range(),
                         self.get_first_range_unchecked(ModifierKind::Override),
+                    ));
+                }
+            }
+            ModifierKind::Accessor => {
+                if preceding_modifiers.contains(ModifierFlags::ACCESSOR) {
+                    return Some(modifier_already_seen(
+                        p,
+                        modifier.as_text_range(),
+                        self.get_first_range_unchecked(ModifierKind::Accessor),
+                    ));
+                }
+                // test_err ts ts_class_member_accessor_readonly_precedence
+                // class A {
+                //     readonly accessor foo: number = 1;
+                // }
+                else if preceding_modifiers.contains(ModifierFlags::READONLY) {
+                    return Some(modifier_must_precede_modifier(
+                        p,
+                        modifier.as_text_range(),
+                        self.get_first_range_unchecked(ModifierKind::Readonly),
+                    ));
+                } else if preceding_modifiers.contains(ModifierFlags::OVERRIDE) {
+                    return Some(modifier_cannot_be_used_with_modifier(
+                        p,
+                        modifier.as_text_range(),
+                        self.get_first_range_unchecked(ModifierKind::Override),
+                    ));
+                } else if !matches!(
+                    member_kind,
+                    JS_PROPERTY_CLASS_MEMBER | TS_PROPERTY_SIGNATURE_CLASS_MEMBER
+                ) {
+                    return Some(p.err_builder(
+                        "'accessor' modifier is only allowed on properties.",
+                        modifier.as_text_range(),
                     ));
                 }
             }

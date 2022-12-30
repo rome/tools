@@ -269,7 +269,6 @@ impl SemanticEventExtractor {
             ),
 
             JS_FUNCTION_DECLARATION
-            | TS_DECLARE_FUNCTION_DECLARATION
             | JS_FUNCTION_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
             | JS_CONSTRUCTOR_CLASS_MEMBER
@@ -291,10 +290,13 @@ impl SemanticEventExtractor {
             | JS_CLASS_EXPORT_DEFAULT_DECLARATION
             | JS_CLASS_EXPRESSION
             | JS_FUNCTION_BODY
+            | JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER
+            | TS_MODULE_DECLARATION
             | TS_INTERFACE_DECLARATION
             | TS_ENUM_DECLARATION
             | TS_TYPE_ALIAS_DECLARATION
-            | TS_FUNCTION_TYPE => {
+            | TS_FUNCTION_TYPE
+            | TS_DECLARE_FUNCTION_DECLARATION => {
                 self.push_scope(
                     node.text_range(),
                     ScopeHoisting::DontHoistDeclarationsToParent,
@@ -536,7 +538,6 @@ impl SemanticEventExtractor {
         match node.kind() {
             JS_MODULE | JS_SCRIPT => self.pop_scope(node.text_range()),
             JS_FUNCTION_DECLARATION
-            | TS_DECLARE_FUNCTION_DECLARATION
             | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
             | JS_FUNCTION_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
@@ -551,16 +552,19 @@ impl SemanticEventExtractor {
             | JS_GETTER_OBJECT_MEMBER
             | JS_SETTER_OBJECT_MEMBER
             | JS_FUNCTION_BODY
-            | TS_INTERFACE_DECLARATION
-            | TS_ENUM_DECLARATION
-            | TS_TYPE_ALIAS_DECLARATION
-            | TS_FUNCTION_TYPE
             | JS_BLOCK_STATEMENT
             | JS_FOR_STATEMENT
             | JS_FOR_OF_STATEMENT
             | JS_FOR_IN_STATEMENT
             | JS_SWITCH_STATEMENT
-            | JS_CATCH_CLAUSE => {
+            | JS_CATCH_CLAUSE
+            | JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER
+            | TS_DECLARE_FUNCTION_DECLARATION
+            | TS_FUNCTION_TYPE
+            | TS_INTERFACE_DECLARATION
+            | TS_ENUM_DECLARATION
+            | TS_TYPE_ALIAS_DECLARATION
+            | TS_MODULE_DECLARATION => {
                 self.pop_scope(node.text_range());
             }
             _ => {}
@@ -606,7 +610,7 @@ impl SemanticEventExtractor {
 
         if let Some(scope) = self.scopes.pop() {
             // Match references and declarations
-            for (name, references) in scope.references {
+            for (name, mut references) in scope.references {
                 // If we know the declaration of these reference push the correct events...
                 if let Some(declaration_at) = self.bindings.get(&name) {
                     for reference in references {
@@ -647,7 +651,8 @@ impl SemanticEventExtractor {
                     }
                 } else if let Some(parent) = self.scopes.last_mut() {
                     // ... if not, promote these references to the parent scope ...
-                    parent.references.insert(name, references);
+                    let parent_references = parent.references.entry(name).or_default();
+                    parent_references.append(&mut references);
                 } else {
                     // ... or raise UnresolvedReference if this is the global scope.
                     for reference in references {

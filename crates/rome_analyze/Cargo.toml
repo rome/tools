@@ -10,7 +10,6 @@ license = "MIT"
 
 [dependencies]
 rome_rowan = { path = "../rome_rowan" }
-rome_control_flow = { path = "../rome_control_flow" }
 rome_console = { path = "../rome_console" }
 rome_diagnostics = { path = "../rome_diagnostics" }
 bitflags = "1.3.2"

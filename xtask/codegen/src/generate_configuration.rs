@@ -234,9 +234,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
                 let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
                 for rule_name in value.keys() {
                     if !#group_struct_name::CATEGORY_RULES.contains(&rule_name.as_str()) {
-                        return Err(serde::de::Error::custom(RomeError::Configuration(
-                            ConfigurationError::UnknownRule(rule_name.to_string()),
-                        )));
+                        return Err(serde::de::Error::custom(format!("invalid rule name {}", rule_name)));
                     }
                 }
                 Ok(value)
@@ -293,7 +291,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         use serde::{Deserialize, Serialize};
         #[cfg(feature = "schemars")]
         use schemars::JsonSchema;
-        use crate::{ConfigurationError, RomeError, RuleConfiguration};
+        use crate::RuleConfiguration;
         use rome_analyze::RuleFilter;
         use indexmap::{IndexMap, IndexSet};
         use rome_diagnostics::{Category, Severity};

@@ -3,22 +3,26 @@
 //! The configuration is divided by "tool", and then it's possible to further customise it
 //! by language. The language might further options divided by tool.
 
-use crate::{DynRef, RomeError};
+use crate::{DynRef, WorkspaceError};
 use indexmap::{IndexMap, IndexSet};
 use rome_fs::{FileSystem, OpenOptions};
 use serde::de::{SeqAccess, Visitor};
 use serde::ser::SerializeSeq;
 use serde::{Deserialize, Serialize};
-use std::fmt::{Debug, Display, Formatter};
+use std::fmt::Debug;
 use std::io::ErrorKind;
 use std::marker::PhantomData;
 use std::num::NonZeroU64;
 use std::path::{Path, PathBuf};
 use tracing::{error, info};
 
+pub mod diagnostics;
 mod formatter;
 mod javascript;
 pub mod linter;
+
+use crate::configuration::diagnostics::from_serde_error_to_range;
+pub use crate::configuration::diagnostics::ConfigurationError;
 use crate::settings::{LanguagesSettings, LinterSettings};
 pub use formatter::{FormatterConfiguration, PlainIndentStyle};
 pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
@@ -96,77 +100,13 @@ pub struct FilesConfiguration {
     pub ignore: Option<IndexSet<String>>,
 }
 
-/// Series of errors that can be thrown while computing the configuration
-#[derive(serde::Serialize, serde::Deserialize)]
-pub enum ConfigurationError {
-    /// Thrown when the program can't serialize the configuration, while saving it
-    SerializationError,
-
-    /// Thrown when trying to **create** a new configuration file, but it exists already
-    ConfigAlreadyExists,
-
-    /// Error thrown when de-serialising the configuration from file, the issues can be many:
-    /// - syntax error
-    /// - incorrect fields
-    /// - incorrect values
-    DeserializationError(String),
-
-    /// Thrown when an unknown rule is found
-    UnknownRule(String),
-
-    /// Thrown when the pattern inside the `ignore` field errors
-    InvalidIgnorePattern(String, String),
-}
-
-impl Debug for ConfigurationError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            ConfigurationError::SerializationError => std::fmt::Display::fmt(self, f),
-            ConfigurationError::DeserializationError(_) => std::fmt::Display::fmt(self, f),
-            ConfigurationError::ConfigAlreadyExists => std::fmt::Display::fmt(self, f),
-            ConfigurationError::UnknownRule(_) => std::fmt::Display::fmt(self, f),
-            ConfigurationError::InvalidIgnorePattern(_, _) => std::fmt::Display::fmt(self, f),
-        }
-    }
-}
-
-impl Display for ConfigurationError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            ConfigurationError::SerializationError => {
-                write!(
-                    f,
-                    "couldn't save the configuration on disk, probably because of some error inside the content of the file"
-                )
-            }
-            ConfigurationError::DeserializationError(reason) => {
-                write!(
-                    f,
-                    "Rome couldn't load the configuration file, here's why: \n{}",
-                    reason
-                )
-            }
-            ConfigurationError::ConfigAlreadyExists => {
-                write!(f, "it seems that a configuration file already exists")
-            }
-
-            ConfigurationError::UnknownRule(rule) => {
-                write!(f, "invalid rule name `{rule}`")
-            }
-            ConfigurationError::InvalidIgnorePattern(pattern, reason) => {
-                write!(f, "couldn't parse the pattern {pattern}, reason: {reason}")
-            }
-        }
-    }
-}
-
 /// This function is responsible to load the rome configuration.
 ///
 /// The `file_system` will read the configuration file. A base path can be passed
 pub fn load_config(
     file_system: &DynRef<dyn FileSystem>,
     base_path: Option<PathBuf>,
-) -> Result<Option<Configuration>, RomeError> {
+) -> Result<Option<Configuration>, WorkspaceError> {
     let config_name = file_system.config_name();
     let configuration_path = if let Some(base_path) = base_path {
         base_path.join(config_name)
@@ -182,11 +122,16 @@ pub fn load_config(
     match file {
         Ok(mut file) => {
             let mut buffer = String::new();
-            file.read_to_string(&mut buffer)
-                .map_err(|_| RomeError::CantReadFile(configuration_path))?;
+            file.read_to_string(&mut buffer).map_err(|_| {
+                WorkspaceError::CantReadFile(format!("{}", configuration_path.display()))
+            })?;
 
             let configuration: Configuration = serde_json::from_str(&buffer).map_err(|err| {
-                RomeError::Configuration(ConfigurationError::DeserializationError(err.to_string()))
+                WorkspaceError::Configuration(ConfigurationError::DeserializationError {
+                    message: err.to_string(),
+                    text_range: from_serde_error_to_range(&err, &buffer),
+                    input: buffer.to_string(),
+                })
             })?;
 
             Ok(Some(configuration))
@@ -196,7 +141,10 @@ pub fn load_config(
             // In case we don't fine the file, we swallow the error and we continue; not having
             // a file should not be a cause of error (for now)
             if err.kind() != ErrorKind::NotFound {
-                return Err(RomeError::CantReadFile(configuration_path));
+                return Err(WorkspaceError::CantReadFile(format!(
+                    "{}",
+                    configuration_path.display()
+                )));
             }
             error!(
                 "Could not find the file configuration at {:?}",
@@ -218,16 +166,16 @@ pub fn load_config(
 pub fn create_config(
     fs: &mut DynRef<dyn FileSystem>,
     mut configuration: Configuration,
-) -> Result<(), RomeError> {
+) -> Result<(), WorkspaceError> {
     let path = PathBuf::from(fs.config_name());
 
     let options = OpenOptions::default().write(true).create_new(true);
 
     let mut config_file = fs.open_with_options(&path, options).map_err(|err| {
         if err.kind() == ErrorKind::AlreadyExists {
-            RomeError::Configuration(ConfigurationError::ConfigAlreadyExists)
+            WorkspaceError::Configuration(ConfigurationError::ConfigAlreadyExists)
         } else {
-            RomeError::CantReadFile(path.clone())
+            WorkspaceError::CantReadFile(format!("{}", path.display()))
         }
     })?;
 
@@ -239,11 +187,11 @@ pub fn create_config(
     }
 
     let contents = serde_json::to_string_pretty(&configuration)
-        .map_err(|_| RomeError::Configuration(ConfigurationError::SerializationError))?;
+        .map_err(|_| WorkspaceError::Configuration(ConfigurationError::SerializationError))?;
 
     config_file
         .set_content(contents.as_bytes())
-        .map_err(|_| RomeError::CantReadFile(path))?;
+        .map_err(|_| WorkspaceError::CantReadFile(format!("{}", path.display())))?;
 
     Ok(())
 }

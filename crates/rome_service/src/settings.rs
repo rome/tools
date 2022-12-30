@@ -1,6 +1,6 @@
 use crate::{
     configuration::FilesConfiguration, Configuration, ConfigurationError, MatchOptions, Matcher,
-    RomeError, Rules,
+    Rules, WorkspaceError,
 };
 use indexmap::IndexSet;
 use rome_diagnostics::Category;
@@ -42,7 +42,7 @@ impl WorkspaceSettings {
     pub fn merge_with_configuration(
         &mut self,
         configuration: Configuration,
-    ) -> Result<(), RomeError> {
+    ) -> Result<(), WorkspaceError> {
         // formatter part
         if let Some(formatter) = configuration.formatter {
             self.formatter = FormatSettings::try_from(formatter)?;
@@ -218,7 +218,7 @@ impl Default for FilesSettings {
 }
 
 impl TryFrom<FilesConfiguration> for FilesSettings {
-    type Error = RomeError;
+    type Error = WorkspaceError;
 
     fn try_from(config: FilesConfiguration) -> Result<Self, Self::Error> {
         let mut matcher = Matcher::new(MatchOptions {
@@ -229,7 +229,7 @@ impl TryFrom<FilesConfiguration> for FilesSettings {
         if let Some(ignore) = config.ignore {
             for pattern in ignore {
                 matcher.add_pattern(&pattern).map_err(|err| {
-                    RomeError::Configuration(ConfigurationError::InvalidIgnorePattern(
+                    WorkspaceError::Configuration(ConfigurationError::InvalidIgnorePattern(
                         pattern.to_string(),
                         err.msg.to_string(),
                     ))

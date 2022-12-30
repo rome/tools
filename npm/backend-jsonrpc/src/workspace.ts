@@ -183,6 +183,10 @@ export interface A11y {
 	 */
 	useButtonType?: RuleConfiguration;
 	/**
+	 * Enforce that html element has lang attribute. This allows users to choose a language other than the default.
+	 */
+	useHtmlLang?: RuleConfiguration;
+	/**
 	 * Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event.
 	 */
 	useKeyWithClickEvents?: RuleConfiguration;
@@ -290,25 +294,41 @@ export interface Nursery {
 	 */
 	noAccessKey?: RuleConfiguration;
 	/**
+	 * Disallow assignments in expressions.
+	 */
+	noAssignInExpressions?: RuleConfiguration;
+	/**
 	 * Disallow certain types.
 	 */
 	noBannedTypes?: RuleConfiguration;
 	/**
-	 * Disallow assignment operators in conditional expressions.
+	 * Disallow reassigning class members.
 	 */
-	noConditionalAssignment?: RuleConfiguration;
+	noClassAssign?: RuleConfiguration;
+	/**
+	 * Disallow comma operator.
+	 */
+	noCommaOperator?: RuleConfiguration;
 	/**
 	 * Disallow TypeScript const enum
 	 */
 	noConstEnum?: RuleConfiguration;
 	/**
-	 * Disallow returning a value from a constructor
+	 * Disallow returning a value from a constructor.
 	 */
 	noConstructorReturn?: RuleConfiguration;
 	/**
 	 * Enforces that no distracting elements are used.
 	 */
 	noDistractingElements?: RuleConfiguration;
+	/**
+	 * Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.
+	 */
+	noDuplicateCase?: RuleConfiguration;
+	/**
+	 * Prevents JSX properties to be assigned multiple times.
+	 */
+	noDuplicateJsxProps?: RuleConfiguration;
 	/**
 	 * Prevents object literals having more than one property declaration for the same name. If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
 	 */
@@ -322,9 +342,17 @@ export interface Nursery {
 	 */
 	noExtraNonNullAssertion?: RuleConfiguration;
 	/**
+	 * Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. While not technically an error, extra semicolons can cause confusion when reading code.
+	 */
+	noExtraSemicolons?: RuleConfiguration;
+	/**
 	 * Check that the scope attribute is only used on th elements.
 	 */
 	noHeaderScope?: RuleConfiguration;
+	/**
+	 * Disallow function and var declarations in nested blocks.
+	 */
+	noInnerDeclarations?: RuleConfiguration;
 	/**
 	 * Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors.
 	 */
@@ -334,9 +362,17 @@ export interface Nursery {
 	 */
 	noNonNullAssertion?: RuleConfiguration;
 	/**
+	 * Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.
+	 */
+	noNoninteractiveElementToInteractiveRole?: RuleConfiguration;
+	/**
 	 * Disallow literal numbers that lose precision
 	 */
 	noPrecisionLoss?: RuleConfiguration;
+	/**
+	 * Enforce img alt prop does not contain the word "image", "picture", or "photo".
+	 */
+	noRedundantAlt?: RuleConfiguration;
 	/**
 	 * Prevents from having redundant "use strict".
 	 */
@@ -346,6 +382,10 @@ export interface Nursery {
 	 */
 	noRestrictedGlobals?: RuleConfiguration;
 	/**
+	 * Disallow comparisons where both sides are exactly the same.
+	 */
+	noSelfCompare?: RuleConfiguration;
+	/**
 	 * Disallow returning a value from a setter
 	 */
 	noSetterReturn?: RuleConfiguration;
@@ -354,9 +394,17 @@ export interface Nursery {
 	 */
 	noStringCaseMismatch?: RuleConfiguration;
 	/**
+	 * Ensures the super() constructor is called exactly once on every code path in a class constructor before this is accessed if the class has a superclass
+	 */
+	noUnreachableSuper?: RuleConfiguration;
+	/**
 	 * Disallow control flow statements in finally blocks.
 	 */
 	noUnsafeFinally?: RuleConfiguration;
+	/**
+	 * Disallow useless case in switch statements.
+	 */
+	noUselessSwitchCase?: RuleConfiguration;
 	/**
 	 * Disallow the use of var
 	 */
@@ -365,6 +413,10 @@ export interface Nursery {
 	 * Disallow returning a value from a function with the return type 'void'
 	 */
 	noVoidTypeReturn?: RuleConfiguration;
+	/**
+	 * Disallow with statements in non-strict contexts.
+	 */
+	noWith?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
@@ -406,9 +458,33 @@ export interface Nursery {
 	 */
 	useExponentiationOperator?: RuleConfiguration;
 	/**
+	 * Enforce that all React hooks are being called from the Top Level component functions.
+	 */
+	useHookAtTopLevel?: RuleConfiguration;
+	/**
+	 * Enforces the usage of the attribute title for the element iframe
+	 */
+	useIframeTitle?: RuleConfiguration;
+	/**
+	 * Require calls to isNaN() when checking for NaN.
+	 */
+	useIsNan?: RuleConfiguration;
+	/**
+	 * Enforces that audio and video elements must have a track for captions.
+	 */
+	useMediaCaption?: RuleConfiguration;
+	/**
 	 * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
 	 */
 	useNumericLiterals?: RuleConfiguration;
+	/**
+	 * Ensures that ARIA properties aria-* are all valid.
+	 */
+	useValidAriaProps?: RuleConfiguration;
+	/**
+	 * Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.
+	 */
+	useValidLang?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
@@ -538,7 +614,7 @@ export interface Suspicious {
 	 */
 	noDuplicateParameters?: RuleConfiguration;
 	/**
-	 * Disallow the any type usage
+	 * Disallow the any type usage.
 	 */
 	noExplicitAny?: RuleConfiguration;
 	/**
@@ -661,6 +737,7 @@ export type Category =
 	| "lint/a11y/useKeyWithClickEvents"
 	| "lint/a11y/useKeyWithMouseEvents"
 	| "lint/a11y/useValidAnchor"
+	| "lint/a11y/useHtmlLang"
 	| "lint/complexity/noExtraBooleanCast"
 	| "lint/complexity/noMultipleSpacesInRegularExpressionLiterals"
 	| "lint/complexity/noUselessFragments"
@@ -679,36 +756,54 @@ export type Category =
 	| "lint/correctness/noVoidElementsWithChildren"
 	| "lint/correctness/useValidForDirection"
 	| "lint/nursery/noAccessKey"
+	| "lint/nursery/noAssignInExpressions"
+	| "lint/nursery/noWith"
+	| "lint/nursery/noExtraSemicolons"
 	| "lint/nursery/noBannedTypes"
-	| "lint/nursery/noConditionalAssignment"
+	| "lint/nursery/noClassAssign"
+	| "lint/nursery/noCommaOperator"
 	| "lint/nursery/noConstEnum"
 	| "lint/nursery/noConstructorReturn"
 	| "lint/nursery/noDistractingElements"
+	| "lint/nursery/noDuplicateCase"
 	| "lint/nursery/noDuplicateObjectKeys"
 	| "lint/nursery/noEmptyInterface"
 	| "lint/nursery/noExtraNonNullAssertion"
 	| "lint/nursery/noHeaderScope"
+	| "lint/nursery/noInnerDeclarations"
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noNonNullAssertion"
 	| "lint/nursery/noPrecisionLoss"
+	| "lint/nursery/noRedundantAlt"
 	| "lint/nursery/noRedundantUseStrict"
 	| "lint/nursery/noRestrictedGlobals"
+	| "lint/nursery/noSelfCompare"
 	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
+	| "lint/nursery/noUnreachableSuper"
 	| "lint/nursery/noUnsafeFinally"
+	| "lint/nursery/noUselessSwitchCase"
 	| "lint/nursery/noVar"
 	| "lint/nursery/noVoidTypeReturn"
 	| "lint/nursery/useAriaPropsForRole"
 	| "lint/nursery/useAriaPropTypes"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useConst"
+	| "lint/nursery/useValidLang"
 	| "lint/nursery/useDefaultParameterLast"
 	| "lint/nursery/useDefaultSwitchClauseLast"
 	| "lint/nursery/useEnumInitializers"
+	| "lint/nursery/useValidAriaProps"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useExponentiationOperator"
+	| "lint/nursery/useIsNan"
+	| "lint/nursery/useMediaCaption"
+	| "lint/nursery/useIframeTitle"
 	| "lint/nursery/useNumericLiterals"
+	| "lint/nursery/noNoninteractiveElementToInteractiveRole"
 	| "lint/nursery/useValidForDirection"
+	| "lint/nursery/useHookAtTopLevel"
+	| "lint/nursery/noDuplicateJsxProps"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
@@ -763,6 +858,7 @@ export type Category =
 	| "suppressions/unknownRule"
 	| "suppressions/unused"
 	| "suppressions/deprecatedSyntax"
+	| "configuration"
 	| "args/fileNotFound"
 	| "flags/invalid"
 	| "semanticTests";

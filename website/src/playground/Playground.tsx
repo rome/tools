@@ -4,6 +4,7 @@ import CodeMirror from "./CodeMirror";
 import type { ViewUpdate } from "@codemirror/view";
 import * as codeMirrorLangRomeAST from "codemirror-lang-rome-ast";
 import { javascript } from "@codemirror/lang-javascript";
+import { json } from "@codemirror/lang-json";
 import SettingsPane from "./components/SettingsPane";
 import {
 	createRef,
@@ -21,6 +22,7 @@ import FormatterIRTab from "./tabs/FormatterIRTab";
 import {
 	getCurrentCode,
 	getFileState,
+	isJSONFilename,
 	isJSXFilename,
 	isTypeScriptFilename,
 	useWindowSize,
@@ -45,32 +47,29 @@ export default function PlaygroundLoader({
 	const romeOutput = file.rome;
 	const prettierOutput = file.prettier;
 
-	// rome-ignore lint/nursery/useExhaustiveDependencies: dynamic dependencies
-	const codeMirrorExtensions = useMemo(
-		() => [
-			javascript({
-				jsx: isJSXFilename(playgroundState.currentFile),
-				typescript: isTypeScriptFilename(playgroundState.currentFile),
-			}),
-		],
-		[
-			isJSXFilename(playgroundState.currentFile),
-			isTypeScriptFilename(playgroundState.currentFile),
-		],
-	);
+	const codeMirrorExtensions = useMemo(() => {
+		if (isJSONFilename(playgroundState.currentFile)) {
+			return [json()];
+		} else {
+			return [
+				javascript({
+					jsx: isJSXFilename(playgroundState.currentFile),
+					typescript: isTypeScriptFilename(playgroundState.currentFile),
+				}),
+			];
+		}
+	}, [playgroundState.currentFile]);
 
 	const romeAstSyntacticDataRef = useRef<RomeAstSyntacticData | null>(null);
 
 	const astPanelCodeMirrorRef = useRef<null | ReactCodeMirrorRef>(null);
 
-	// rome-ignore lint/nursery/useExhaustiveDependencies: dynamic dependencies
 	useEffect(() => {
 		if (clipboardStatus !== "normal") {
 			setClipboardStatus("normal");
 		}
 	}, [romeOutput.formatter.ir]);
 
-	// rome-ignore lint/nursery/useExhaustiveDependencies: dynamic dependencies
 	const onUpdate = useCallback((viewUpdate: ViewUpdate) => {
 		const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
 		setPlaygroundState((state) =>
@@ -125,7 +124,6 @@ export default function PlaygroundLoader({
 		});
 	}, [romeOutput.syntax.ast]);
 
-	// rome-ignore lint/nursery/useExhaustiveDependencies: dynamic dependencies
 	const onChange = useCallback((value: string) => {
 		setPlaygroundState((state) => ({
 			...state,

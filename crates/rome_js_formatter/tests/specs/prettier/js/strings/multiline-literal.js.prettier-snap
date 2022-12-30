@@ -1,6 +1,7 @@
 // https://github.com/prettier/prettier/pull/13274
 
-const loremIpsumFooBazBar1 = "Multiline string\
+const loremIpsumFooBazBar1 =
+  "Multiline string\
          Multiline string\
 ";
 

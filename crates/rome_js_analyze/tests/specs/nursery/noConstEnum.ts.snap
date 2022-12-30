@@ -1,10 +1,18 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 74
+assertion_line: 92
 expression: noConstEnum.ts
 ---
 # Input
 ```js
+/**
+ * Doc
+ */
+const enum /* enum */ Port {
+	In,
+	Out,
+}
+
 export /* const */ const /* enum */ enum Status {
 	Open,
 	Close,
@@ -18,18 +26,20 @@ export enum Direction {
 
 # Diagnostics
 ```
-noConstEnum.ts:1:20 lint/nursery/noConstEnum  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noConstEnum.ts:4:1 lint/nursery/noConstEnum  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The enum declaration should not be const
   
-  > 1 │ export /* const */ const /* enum */ enum Status {
-      │                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  > 2 │ 	Open,
-  > 3 │ 	Close,
-  > 4 │ }
+    2 │  * Doc
+    3 │  */
+  > 4 │ const enum /* enum */ Port {
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 5 │ 	In,
+  > 6 │ 	Out,
+  > 7 │ }
       │ ^
-    5 │ 
-    6 │ export enum Direction {
+    8 │ 
+    9 │ export /* const */ const /* enum */ enum Status {
   
   i Const enums are not supported by bundlers and are incompatible with the 'isolatedModules' mode. Their use can lead to import inexistent values.
   
@@ -37,8 +47,35 @@ noConstEnum.ts:1:20 lint/nursery/noConstEnum  FIXABLE  ━━━━━━━━�
   
   i Safe fix: Turn the const enum into a regular enum.
   
-    1 │ export·/*·const·*/·const·/*·enum·*/·enum·Status·{
-      │                    -----------------             
+    4 │ const·enum·/*·enum·*/·Port·{
+      │ ------                      
+
+```
+
+```
+noConstEnum.ts:9:20 lint/nursery/noConstEnum  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The enum declaration should not be const
+  
+     7 │ }
+     8 │ 
+   > 9 │ export /* const */ const /* enum */ enum Status {
+       │                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 10 │ 	Open,
+  > 11 │ 	Close,
+  > 12 │ }
+       │ ^
+    13 │ 
+    14 │ export enum Direction {
+  
+  i Const enums are not supported by bundlers and are incompatible with the 'isolatedModules' mode. Their use can lead to import inexistent values.
+  
+  i See TypeSCript Docs for more details.
+  
+  i Safe fix: Turn the const enum into a regular enum.
+  
+    9 │ export·/*·const·*/·const·/*·enum·*/·enum·Status·{
+      │                    ------                        
 
 ```
 

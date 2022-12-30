@@ -4,9 +4,10 @@ use rome_analyze::{
     context::RuleContext, declare_rule, DeserializableRuleOptions, Rule, RuleDiagnostic,
 };
 use rome_console::markup;
+use rome_js_semantic::{Capture, SemanticModel};
 use rome_js_syntax::{
-    JsCallExpression, JsIdentifierBinding, JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode,
-    JsVariableDeclaration, JsVariableDeclarator, TextRange, TsIdentifierBinding,
+    binding_ext::AnyJsBindingDeclaration, JsCallExpression, JsStaticMemberExpression, JsSyntaxKind,
+    JsSyntaxNode, JsVariableDeclaration, TextRange,
 };
 use rome_rowan::{AstNode, SyntaxNodeCast};
 use serde::{Deserialize, Serialize};
@@ -20,56 +21,70 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// let a = 1;
-    /// useEffect(() => {
-    ///     console.log(a);
-    /// })
+    /// function component() {
+    ///     let a = 1;
+    ///     useEffect(() => {
+    ///         console.log(a);
+    ///     });
+    /// }
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// let b = 1;
-    /// useEffect(() => {
-    /// }, [b])
+    /// function component() {
+    ///     let b = 1;
+    ///     useEffect(() => {
+    ///     }, [b]);
+    /// }
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// const [name, setName] = useState();
-    /// useEffect(() => {
-    ///     console.log(name);
-    ///     setName("");
-    /// }, [name, setName])
+    /// function component() {
+    ///     const [name, setName] = useState();
+    ///     useEffect(() => {
+    ///         console.log(name);
+    ///         setName("");
+    ///     }, [name, setName]);
+    /// }
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// let a = 1;
-    /// const b = a + 1;
-    /// useEffect(() => {
-    ///     console.log(b);
-    /// })
+    /// function component() {
+    ///     let a = 1;
+    ///     const b = a + 1;
+    ///     useEffect(() => {
+    ///         console.log(b);
+    ///     });
+    /// }
     /// ```
     ///
     /// ## Valid
     ///
     /// ```js
-    /// let a = 1;
-    /// useEffect(() => {
-    ///     console.log(a);
-    /// }, [a]);
+    /// function component() {
+    ///     let a = 1;
+    ///     useEffect(() => {
+    ///         console.log(a);
+    ///     }, [a]);
+    /// }
     /// ```
     ///
     /// ```js
-    /// const a = 1;
-    /// useEffect(() => {
-    ///     console.log(a);
-    /// });
+    /// function component() {
+    ///     const a = 1;
+    ///     useEffect(() => {
+    ///         console.log(a);
+    ///     });
+    /// }
     /// ```
     ///
     /// ```js
-    /// const [name, setName] = useState();
-    /// useEffect(() => {
-    ///     console.log(name);
-    ///     setName("");
-    /// }, [name])
+    /// function component() {
+    ///     const [name, setName] = useState();
+    ///     useEffect(() => {
+    ///         console.log(name);
+    ///         setName("");
+    ///     }, [name]);
+    /// }
     /// ```
     ///
     pub(crate) UseExhaustiveDependencies {
@@ -81,8 +96,8 @@ declare_rule! {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ReactExtensiveDependenciesOptions {
-    hooks_config: HashMap<String, ReactHookConfiguration>,
-    stable_config: HashSet<StableReactHookConfiguration>,
+    pub(crate) hooks_config: HashMap<String, ReactHookConfiguration>,
+    pub(crate) stable_config: HashSet<StableReactHookConfiguration>,
 }
 
 impl Default for ReactExtensiveDependenciesOptions {
@@ -94,6 +109,27 @@ impl Default for ReactExtensiveDependenciesOptions {
             ("useCallback".to_string(), (0, 1).into()),
             ("useMemo".to_string(), (0, 1).into()),
             ("useImperativeHandle".to_string(), (1, 2).into()),
+            ("useState".to_string(), ReactHookConfiguration::default()),
+            ("useContext".to_string(), ReactHookConfiguration::default()),
+            ("useReducer".to_string(), ReactHookConfiguration::default()),
+            ("useRef".to_string(), ReactHookConfiguration::default()),
+            (
+                "useDebugValue".to_string(),
+                ReactHookConfiguration::default(),
+            ),
+            (
+                "useDeferredValue".to_string(),
+                ReactHookConfiguration::default(),
+            ),
+            (
+                "useTransition".to_string(),
+                ReactHookConfiguration::default(),
+            ),
+            ("useId".to_string(), ReactHookConfiguration::default()),
+            (
+                "useSyncExternalStore".to_string(),
+                ReactHookConfiguration::default(),
+            ),
         ]);
 
         let stable_config: HashSet<StableReactHookConfiguration> = HashSet::from_iter([
@@ -119,7 +155,7 @@ impl DeserializableRuleOptions for ReactExtensiveDependenciesOptions {
         #[serde(deny_unknown_fields)]
         struct Options {
             #[serde(default)]
-            hooks: Vec<(String, usize, usize)>,
+            hooks: Vec<(String, Option<usize>, Option<usize>)>,
             #[serde(default)]
             stables: HashSet<StableReactHookConfiguration>,
         }
@@ -167,6 +203,97 @@ fn get_whole_static_member_expression(
     root.cast()
 }
 
+// Test if a capture needs to be in the dependency list
+// of a react hook call
+fn capture_needs_to_be_in_the_dependency_list(
+    capture: Capture,
+    component_function_range: &TextRange,
+    model: &SemanticModel,
+    options: &ReactExtensiveDependenciesOptions,
+) -> Option<Capture> {
+    let binding = capture.binding();
+
+    // Ignore if imported
+    if binding.is_imported() {
+        return None;
+    }
+
+    match binding.tree().declaration()? {
+        // These declarations are always stable
+        AnyJsBindingDeclaration::JsFunctionDeclaration(_)
+        | AnyJsBindingDeclaration::JsClassDeclaration(_)
+        | AnyJsBindingDeclaration::TsEnumDeclaration(_)
+        | AnyJsBindingDeclaration::TsTypeAliasDeclaration(_)
+        | AnyJsBindingDeclaration::TsInterfaceDeclaration(_)
+        | AnyJsBindingDeclaration::TsModuleDeclaration(_) => None,
+
+        // Variable declarators are stable if ...
+        AnyJsBindingDeclaration::JsVariableDeclarator(declarator) => {
+            let declaration = declarator
+                .syntax()
+                .ancestors()
+                .filter_map(JsVariableDeclaration::cast)
+                .next()?;
+            let declaration_range = declaration.syntax().text_range();
+
+            if declaration.is_const() {
+                // ... they are `const` and declared outside of the component function
+                let _ = component_function_range.intersect(declaration_range)?;
+
+                // ... they are `const` and their initializer is constant
+                let initializer = declarator.initializer()?;
+                let expr = initializer.expression().ok()?;
+                if model.is_constant(&expr) {
+                    return None;
+                }
+            }
+
+            // ... they are assign to stable returns of another React function
+            let not_stable = !is_binding_react_stable(&binding.tree(), &options.stable_config);
+            not_stable.then_some(capture)
+        }
+
+        // all others need to be in the dependency list
+        AnyJsBindingDeclaration::JsFormalParameter(_)
+        | AnyJsBindingDeclaration::JsRestParameter(_)
+        | AnyJsBindingDeclaration::JsBogusParameter(_)
+        | AnyJsBindingDeclaration::TsIndexSignatureParameter(_)
+        | AnyJsBindingDeclaration::TsPropertyParameter(_)
+        | AnyJsBindingDeclaration::JsFunctionExpression(_)
+        | AnyJsBindingDeclaration::TsDeclareFunctionDeclaration(_)
+        | AnyJsBindingDeclaration::JsClassExpression(_)
+        | AnyJsBindingDeclaration::JsClassExportDefaultDeclaration(_)
+        | AnyJsBindingDeclaration::JsFunctionExportDefaultDeclaration(_)
+        | AnyJsBindingDeclaration::TsDeclareFunctionExportDefaultDeclaration(_)
+        | AnyJsBindingDeclaration::JsCatchDeclaration(_) => Some(capture),
+
+        // This should not be unreachable because of the test
+        // if the capture is imported
+        AnyJsBindingDeclaration::JsImportDefaultClause(_)
+        | AnyJsBindingDeclaration::JsImportNamespaceClause(_)
+        | AnyJsBindingDeclaration::JsShorthandNamedImportSpecifier(_)
+        | AnyJsBindingDeclaration::JsNamedImportSpecifier(_)
+        | AnyJsBindingDeclaration::JsBogusNamedImportSpecifier(_)
+        | AnyJsBindingDeclaration::JsDefaultImportSpecifier(_)
+        | AnyJsBindingDeclaration::JsNamespaceImportSpecifier(_)
+        | AnyJsBindingDeclaration::TsImportEqualsDeclaration(_) => {
+            unreachable!()
+        }
+    }
+}
+
+// Find the function that is calling the hook
+fn function_of_hook_call(call: &JsCallExpression) -> Option<JsSyntaxNode> {
+    call.syntax().ancestors().find(|x| {
+        matches!(
+            x.kind(),
+            JsSyntaxKind::JS_FUNCTION_DECLARATION
+                | JsSyntaxKind::JS_FUNCTION_EXPRESSION
+                | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
+        )
+    })
+}
+
 impl Rule for UseExhaustiveDependencies {
     type Query = Semantic<JsCallExpression>;
     type State = Fix;
@@ -178,63 +305,24 @@ impl Rule for UseExhaustiveDependencies {
 
         let mut signals = vec![];
 
-        let node = ctx.query();
-        if let Some(result) = react_hook_with_dependency(node, &options.hooks_config) {
+        let call = ctx.query();
+        if let Some(result) = react_hook_with_dependency(call, &options.hooks_config) {
             let model = ctx.model();
+
+            let Some(component_function) = function_of_hook_call(call) else {
+                return vec![]
+            };
+            let component_function_range = component_function.text_range();
 
             let captures: Vec<_> = result
                 .all_captures(model)
-                .into_iter()
                 .filter_map(|capture| {
-                    let binding = capture.binding();
-                    let binding_syntax = binding.syntax();
-                    let node = binding_syntax.parent()?;
-                    use JsSyntaxKind::*;
-                    match node.kind() {
-                        JS_FUNCTION_DECLARATION
-                        | JS_CLASS_DECLARATION
-                        | TS_ENUM_DECLARATION
-                        | TS_TYPE_ALIAS_DECLARATION
-                        | TS_DECLARE_FUNCTION_DECLARATION => None,
-                        _ => {
-                            // Ignore if imported
-                            if let Some(true) = binding_syntax
-                                .clone()
-                                .cast::<JsIdentifierBinding>()
-                                .map(|node| model.is_imported(&node))
-                                .or_else(|| {
-                                    Some(model.is_imported(&node.cast::<TsIdentifierBinding>()?))
-                                })
-                            {
-                                None
-                            } else {
-                                let binding =
-                                    binding.syntax().clone().cast::<JsIdentifierBinding>()?;
-
-                                // Ignore if constant
-                                if let Some(declarator) = binding.parent::<JsVariableDeclarator>() {
-                                    let declaration = declarator
-                                        .syntax()
-                                        .ancestors()
-                                        .filter_map(JsVariableDeclaration::cast)
-                                        .next()?;
-
-                                    if declaration.is_const() {
-                                        let initializer = declarator.initializer()?;
-                                        let expr = initializer.expression().ok()?;
-                                        if model.is_constant(&expr) {
-                                            return None;
-                                        }
-                                    }
-                                }
-
-                                // Ignore if stable
-                                let not_stable =
-                                    !is_binding_react_stable(&binding, &options.stable_config);
-                                not_stable.then_some(capture)
-                            }
-                        }
-                    }
+                    capture_needs_to_be_in_the_dependency_list(
+                        capture,
+                        &component_function_range,
+                        model,
+                        options,
+                    )
                 })
                 .map(|capture| {
                     let path = get_whole_static_member_expression(capture.node());
