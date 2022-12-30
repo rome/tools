@@ -1,6 +1,6 @@
 use crate::parser::{RecoveryError, RecoveryResult};
 use crate::prelude::*;
-use crate::state::{EnterType, SignatureFlags};
+use crate::state::{EnterConditionalTypes, EnterType, SignatureFlags};
 use crate::syntax::expr::{
     is_at_binary_operator, is_at_expression, is_at_identifier, is_nth_at_identifier,
     is_nth_at_identifier_or_keyword, parse_big_int_literal_expression, parse_identifier,
@@ -20,6 +20,7 @@ use crate::syntax::object::{
 use crate::syntax::stmt::optional_semi;
 use crate::syntax::typescript::try_parse;
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, expected_ts_type_parameter};
+
 use rome_parser::parse_lists::{ParseNodeList, ParseSeparatedList};
 
 use crate::lexer::{LexContext, ReLexContext};
@@ -196,21 +197,6 @@ fn is_nth_at_ts_type_parameters(p: &mut JsParser, n: usize) -> bool {
 
 #[inline(always)]
 pub(crate) fn parse_ts_type(p: &mut JsParser) -> ParsedSyntax {
-    parse_ts_type_impl(p, ConditionalType::Allowed)
-}
-
-enum ConditionalType {
-    Allowed,
-    Disallowed,
-}
-
-impl ConditionalType {
-    fn is_allowed(&self) -> bool {
-        matches!(self, ConditionalType::Allowed)
-    }
-}
-
-fn parse_ts_type_impl(p: &mut JsParser, conditional_type: ConditionalType) -> ParsedSyntax {
     p.with_state(EnterType, |p| {
         if is_at_constructor_type(p) {
             return parse_ts_constructor_type(p);
@@ -224,16 +210,23 @@ fn parse_ts_type_impl(p: &mut JsParser, conditional_type: ConditionalType) -> Pa
 
         // test ts ts_conditional_type_call_signature_lhs
         // type X<V> = V extends (...args: any[]) => any ? (...args: Parameters<V>) => void : Function;
-        if conditional_type.is_allowed() {
+        if p.state().allow_conditional_type() {
             left.map(|left| {
                 // test ts ts_conditional_type
                 // type A = number;
                 // type B = string extends number ? string : number;
                 // type C = A extends (B extends A ? number : string) ? void : number;
+                // type D<T> = T extends [infer S extends string, ...unknown[]] ? S : never;
+                // type E<U, T> = T extends (infer U extends number ? U : T ) ? U : T
+                // type F<T> = T extends { [P in infer U extends keyof T ? 1 : 0]: 1; } ? 1 : 0;
+                // type G<T> = T extends [unknown, infer S extends string] ? S : never;
+                // type H = A extends () => B extends C ? D : E ? F : G;
+                // type J<T> = T extends ((...a: any[]) => infer R extends string) ? R : never;
                 if !p.has_preceding_line_break() && p.at(T![extends]) {
                     let m = left.precede(p);
                     p.expect(T![extends]);
-                    parse_ts_type_impl(p, ConditionalType::Disallowed)
+
+                    p.with_state(EnterConditionalTypes::disallow(), parse_ts_type)
                         .or_add_diagnostic(p, expected_ts_type);
                     p.expect(T![?]);
                     parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
@@ -361,6 +354,7 @@ fn parse_ts_primary_type(p: &mut JsParser) -> ParsedSyntax {
         let m = p.start();
         p.expect(T![infer]);
         parse_ts_type_parameter_name(p).or_add_diagnostic(p, expected_identifier);
+        try_parse_constraint_of_infer_type(p).ok();
         return Present(m.complete(p, TS_INFER_TYPE));
     }
 
@@ -377,7 +371,31 @@ fn parse_ts_primary_type(p: &mut JsParser) -> ParsedSyntax {
         return Present(m.complete(p, TS_TYPE_OPERATOR_TYPE));
     }
 
-    parse_postfix_type_or_higher(p)
+    p.with_state(EnterConditionalTypes::allow(), parse_postfix_type_or_higher)
+}
+
+fn try_parse_constraint_of_infer_type(p: &mut JsParser) -> ParsedSyntax {
+    if !p.at(T![extends]) {
+        return Absent;
+    }
+
+    try_parse(p, |p| {
+        let parsed = p
+            .with_state(
+                EnterConditionalTypes::disallow(),
+                parse_ts_type_constraint_clause,
+            )
+            .expect("Type constraint clause because parser is positioned at expect clause");
+
+        // Rewind if conditional types are allowed, and the parser is at the `?` token because
+        // this should instead be parsed as a conditional type.
+        if p.state.allow_conditional_type() && p.at(T![?]) {
+            Err(())
+        } else {
+            Ok(Present(parsed))
+        }
+    })
+    .unwrap_or(Absent)
 }
 
 fn parse_postfix_type_or_higher(p: &mut JsParser) -> ParsedSyntax {
@@ -566,7 +584,8 @@ fn parse_ts_parenthesized_type(p: &mut JsParser) -> ParsedSyntax {
 
     let m = p.start();
     p.bump(T!['(']);
-    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    p.with_state(EnterConditionalTypes::allow(), parse_ts_type)
+        .or_add_diagnostic(p, expected_ts_type);
     p.expect(T![')']);
     Present(m.complete(p, TS_PARENTHESIZED_TYPE))
 }
@@ -1201,11 +1220,13 @@ fn parse_ts_return_type(p: &mut JsParser) -> ParsedSyntax {
         p.at(T![asserts]) && (is_nth_at_identifier(p, 1) || p.nth_at(1, T![this]));
     let is_is_predicate = (is_at_identifier(p) || p.at(T![this])) && p.nth_at(1, T![is]);
 
-    if !p.has_nth_preceding_line_break(1) && (is_asserts_predicate || is_is_predicate) {
-        parse_ts_type_predicate(p)
-    } else {
-        parse_ts_type(p)
-    }
+    p.with_state(EnterConditionalTypes::allow(), |p| {
+        if !p.has_nth_preceding_line_break(1) && (is_asserts_predicate || is_is_predicate) {
+            parse_ts_type_predicate(p)
+        } else {
+            parse_ts_type(p)
+        }
+    })
 }
 
 // test ts ts_type_predicate

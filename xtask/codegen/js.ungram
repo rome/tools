@@ -1836,7 +1836,8 @@ TsTypeOperatorType =
 //      ^^^^^^^     ^^^^^^^
 TsInferType =
 	'infer'
-	type_parameter: TsTypeParameterName
+	name: TsTypeParameterName
+	constraint: TsTypeConstraintClause?
 
 TsFunctionType =
 	type_parameters: TsTypeParameters?

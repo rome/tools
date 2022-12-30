@@ -93,14 +93,473 @@ JsModule {
             },
             semicolon_token: SEMICOLON@133..134 ";" [] [],
         },
+        TsTypeAliasDeclaration {
+            type_token: TYPE_KW@134..140 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@140..141 "D" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@141..142 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@142..143 "T" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: R_ANGLE@143..145 ">" [] [Whitespace(" ")],
+            },
+            eq_token: EQ@145..147 "=" [] [Whitespace(" ")],
+            ty: TsConditionalType {
+                check_type: TsReferenceType {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@147..149 "T" [] [Whitespace(" ")],
+                    },
+                    type_arguments: missing (optional),
+                },
+                extends_token: EXTENDS_KW@149..157 "extends" [] [Whitespace(" ")],
+                extends_type: TsTupleType {
+                    l_brack_token: L_BRACK@157..158 "[" [] [],
+                    elements: TsTupleTypeElementList [
+                        TsInferType {
+                            infer_token: INFER_KW@158..164 "infer" [] [Whitespace(" ")],
+                            name: TsTypeParameterName {
+                                ident_token: IDENT@164..166 "S" [] [Whitespace(" ")],
+                            },
+                            constraint: TsTypeConstraintClause {
+                                extends_token: EXTENDS_KW@166..174 "extends" [] [Whitespace(" ")],
+                                ty: TsStringType {
+                                    string_token: STRING_KW@174..180 "string" [] [],
+                                },
+                            },
+                        },
+                        COMMA@180..182 "," [] [Whitespace(" ")],
+                        TsRestTupleTypeElement {
+                            dotdotdot_token: DOT3@182..185 "..." [] [],
+                            ty: TsArrayType {
+                                element_type: TsUnknownType {
+                                    unknown_token: UNKNOWN_KW@185..192 "unknown" [] [],
+                                },
+                                l_brack_token: L_BRACK@192..193 "[" [] [],
+                                r_brack_token: R_BRACK@193..194 "]" [] [],
+                            },
+                        },
+                    ],
+                    r_brack_token: R_BRACK@194..196 "]" [] [Whitespace(" ")],
+                },
+                question_mark_token: QUESTION@196..198 "?" [] [Whitespace(" ")],
+                true_type: TsReferenceType {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@198..200 "S" [] [Whitespace(" ")],
+                    },
+                    type_arguments: missing (optional),
+                },
+                colon_token: COLON@200..202 ":" [] [Whitespace(" ")],
+                false_type: TsNeverType {
+                    never_token: NEVER_KW@202..207 "never" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@207..208 ";" [] [],
+        },
+        TsTypeAliasDeclaration {
+            type_token: TYPE_KW@208..214 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@214..215 "E" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@215..216 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@216..217 "U" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                    COMMA@217..219 "," [] [Whitespace(" ")],
+                    TsTypeParameter {
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@219..220 "T" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: R_ANGLE@220..222 ">" [] [Whitespace(" ")],
+            },
+            eq_token: EQ@222..224 "=" [] [Whitespace(" ")],
+            ty: TsConditionalType {
+                check_type: TsReferenceType {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@224..226 "T" [] [Whitespace(" ")],
+                    },
+                    type_arguments: missing (optional),
+                },
+                extends_token: EXTENDS_KW@226..234 "extends" [] [Whitespace(" ")],
+                extends_type: TsParenthesizedType {
+                    l_paren_token: L_PAREN@234..235 "(" [] [],
+                    ty: TsConditionalType {
+                        check_type: TsInferType {
+                            infer_token: INFER_KW@235..241 "infer" [] [Whitespace(" ")],
+                            name: TsTypeParameterName {
+                                ident_token: IDENT@241..243 "U" [] [Whitespace(" ")],
+                            },
+                            constraint: missing (optional),
+                        },
+                        extends_token: EXTENDS_KW@243..251 "extends" [] [Whitespace(" ")],
+                        extends_type: TsNumberType {
+                            number_token: NUMBER_KW@251..258 "number" [] [Whitespace(" ")],
+                        },
+                        question_mark_token: QUESTION@258..260 "?" [] [Whitespace(" ")],
+                        true_type: TsReferenceType {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@260..262 "U" [] [Whitespace(" ")],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                        colon_token: COLON@262..264 ":" [] [Whitespace(" ")],
+                        false_type: TsReferenceType {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@264..266 "T" [] [Whitespace(" ")],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                    },
+                    r_paren_token: R_PAREN@266..268 ")" [] [Whitespace(" ")],
+                },
+                question_mark_token: QUESTION@268..270 "?" [] [Whitespace(" ")],
+                true_type: TsReferenceType {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@270..272 "U" [] [Whitespace(" ")],
+                    },
+                    type_arguments: missing (optional),
+                },
+                colon_token: COLON@272..274 ":" [] [Whitespace(" ")],
+                false_type: TsReferenceType {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@274..275 "T" [] [],
+                    },
+                    type_arguments: missing (optional),
+                },
+            },
+            semicolon_token: missing (optional),
+        },
+        TsTypeAliasDeclaration {
+            type_token: TYPE_KW@275..281 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@281..282 "F" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@282..283 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@283..284 "T" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: R_ANGLE@284..286 ">" [] [Whitespace(" ")],
+            },
+            eq_token: EQ@286..288 "=" [] [Whitespace(" ")],
+            ty: TsConditionalType {
+                check_type: TsReferenceType {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@288..290 "T" [] [Whitespace(" ")],
+                    },
+                    type_arguments: missing (optional),
+                },
+                extends_token: EXTENDS_KW@290..298 "extends" [] [Whitespace(" ")],
+                extends_type: TsMappedType {
+                    l_curly_token: L_CURLY@298..300 "{" [] [Whitespace(" ")],
+                    readonly_modifier: missing (optional),
+                    l_brack_token: L_BRACK@300..301 "[" [] [],
+                    property_name: TsTypeParameterName {
+                        ident_token: IDENT@301..303 "P" [] [Whitespace(" ")],
+                    },
+                    in_token: IN_KW@303..306 "in" [] [Whitespace(" ")],
+                    keys_type: TsConditionalType {
+                        check_type: TsInferType {
+                            infer_token: INFER_KW@306..312 "infer" [] [Whitespace(" ")],
+                            name: TsTypeParameterName {
+                                ident_token: IDENT@312..314 "U" [] [Whitespace(" ")],
+                            },
+                            constraint: missing (optional),
+                        },
+                        extends_token: EXTENDS_KW@314..322 "extends" [] [Whitespace(" ")],
+                        extends_type: TsTypeOperatorType {
+                            operator_token: KEYOF_KW@322..328 "keyof" [] [Whitespace(" ")],
+                            ty: TsReferenceType {
+                                name: JsReferenceIdentifier {
+                                    value_token: IDENT@328..330 "T" [] [Whitespace(" ")],
+                                },
+                                type_arguments: missing (optional),
+                            },
+                        },
+                        question_mark_token: QUESTION@330..332 "?" [] [Whitespace(" ")],
+                        true_type: TsNumberLiteralType {
+                            minus_token: missing (optional),
+                            literal_token: JS_NUMBER_LITERAL@332..334 "1" [] [Whitespace(" ")],
+                        },
+                        colon_token: COLON@334..336 ":" [] [Whitespace(" ")],
+                        false_type: TsNumberLiteralType {
+                            minus_token: missing (optional),
+                            literal_token: JS_NUMBER_LITERAL@336..337 "0" [] [],
+                        },
+                    },
+                    as_clause: missing (optional),
+                    r_brack_token: R_BRACK@337..338 "]" [] [],
+                    optional_modifier: missing (optional),
+                    mapped_type: TsTypeAnnotation {
+                        colon_token: COLON@338..340 ":" [] [Whitespace(" ")],
+                        ty: TsNumberLiteralType {
+                            minus_token: missing (optional),
+                            literal_token: JS_NUMBER_LITERAL@340..341 "1" [] [],
+                        },
+                    },
+                    semicolon_token: SEMICOLON@341..343 ";" [] [Whitespace(" ")],
+                    r_curly_token: R_CURLY@343..345 "}" [] [Whitespace(" ")],
+                },
+                question_mark_token: QUESTION@345..347 "?" [] [Whitespace(" ")],
+                true_type: TsNumberLiteralType {
+                    minus_token: missing (optional),
+                    literal_token: JS_NUMBER_LITERAL@347..349 "1" [] [Whitespace(" ")],
+                },
+                colon_token: COLON@349..351 ":" [] [Whitespace(" ")],
+                false_type: TsNumberLiteralType {
+                    minus_token: missing (optional),
+                    literal_token: JS_NUMBER_LITERAL@351..352 "0" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@352..353 ";" [] [],
+        },
+        TsTypeAliasDeclaration {
+            type_token: TYPE_KW@353..359 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@359..360 "G" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@360..361 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@361..362 "T" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: R_ANGLE@362..364 ">" [] [Whitespace(" ")],
+            },
+            eq_token: EQ@364..366 "=" [] [Whitespace(" ")],
+            ty: TsConditionalType {
+                check_type: TsReferenceType {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@366..368 "T" [] [Whitespace(" ")],
+                    },
+                    type_arguments: missing (optional),
+                },
+                extends_token: EXTENDS_KW@368..376 "extends" [] [Whitespace(" ")],
+                extends_type: TsTupleType {
+                    l_brack_token: L_BRACK@376..377 "[" [] [],
+                    elements: TsTupleTypeElementList [
+                        TsUnknownType {
+                            unknown_token: UNKNOWN_KW@377..384 "unknown" [] [],
+                        },
+                        COMMA@384..386 "," [] [Whitespace(" ")],
+                        TsInferType {
+                            infer_token: INFER_KW@386..392 "infer" [] [Whitespace(" ")],
+                            name: TsTypeParameterName {
+                                ident_token: IDENT@392..394 "S" [] [Whitespace(" ")],
+                            },
+                            constraint: TsTypeConstraintClause {
+                                extends_token: EXTENDS_KW@394..402 "extends" [] [Whitespace(" ")],
+                                ty: TsStringType {
+                                    string_token: STRING_KW@402..408 "string" [] [],
+                                },
+                            },
+                        },
+                    ],
+                    r_brack_token: R_BRACK@408..410 "]" [] [Whitespace(" ")],
+                },
+                question_mark_token: QUESTION@410..412 "?" [] [Whitespace(" ")],
+                true_type: TsReferenceType {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@412..414 "S" [] [Whitespace(" ")],
+                    },
+                    type_arguments: missing (optional),
+                },
+                colon_token: COLON@414..416 ":" [] [Whitespace(" ")],
+                false_type: TsNeverType {
+                    never_token: NEVER_KW@416..421 "never" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@421..422 ";" [] [],
+        },
+        TsTypeAliasDeclaration {
+            type_token: TYPE_KW@422..428 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@428..430 "H" [] [Whitespace(" ")],
+            },
+            type_parameters: missing (optional),
+            eq_token: EQ@430..432 "=" [] [Whitespace(" ")],
+            ty: TsConditionalType {
+                check_type: TsReferenceType {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@432..434 "A" [] [Whitespace(" ")],
+                    },
+                    type_arguments: missing (optional),
+                },
+                extends_token: EXTENDS_KW@434..442 "extends" [] [Whitespace(" ")],
+                extends_type: TsFunctionType {
+                    type_parameters: missing (optional),
+                    parameters: JsParameters {
+                        l_paren_token: L_PAREN@442..443 "(" [] [],
+                        items: JsParameterList [],
+                        r_paren_token: R_PAREN@443..445 ")" [] [Whitespace(" ")],
+                    },
+                    fat_arrow_token: FAT_ARROW@445..448 "=>" [] [Whitespace(" ")],
+                    return_type: TsConditionalType {
+                        check_type: TsReferenceType {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@448..450 "B" [] [Whitespace(" ")],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                        extends_token: EXTENDS_KW@450..458 "extends" [] [Whitespace(" ")],
+                        extends_type: TsReferenceType {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@458..460 "C" [] [Whitespace(" ")],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                        question_mark_token: QUESTION@460..462 "?" [] [Whitespace(" ")],
+                        true_type: TsReferenceType {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@462..464 "D" [] [Whitespace(" ")],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                        colon_token: COLON@464..466 ":" [] [Whitespace(" ")],
+                        false_type: TsReferenceType {
+                            name: JsReferenceIdentifier {
+                                value_token: IDENT@466..468 "E" [] [Whitespace(" ")],
+                            },
+                            type_arguments: missing (optional),
+                        },
+                    },
+                },
+                question_mark_token: QUESTION@468..470 "?" [] [Whitespace(" ")],
+                true_type: TsReferenceType {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@470..472 "F" [] [Whitespace(" ")],
+                    },
+                    type_arguments: missing (optional),
+                },
+                colon_token: COLON@472..474 ":" [] [Whitespace(" ")],
+                false_type: TsReferenceType {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@474..475 "G" [] [],
+                    },
+                    type_arguments: missing (optional),
+                },
+            },
+            semicolon_token: SEMICOLON@475..476 ";" [] [],
+        },
+        TsTypeAliasDeclaration {
+            type_token: TYPE_KW@476..482 "type" [Newline("\n")] [Whitespace(" ")],
+            binding_identifier: TsIdentifierBinding {
+                name_token: IDENT@482..483 "J" [] [],
+            },
+            type_parameters: TsTypeParameters {
+                l_angle_token: L_ANGLE@483..484 "<" [] [],
+                items: TsTypeParameterList [
+                    TsTypeParameter {
+                        name: TsTypeParameterName {
+                            ident_token: IDENT@484..485 "T" [] [],
+                        },
+                        constraint: missing (optional),
+                        default: missing (optional),
+                    },
+                ],
+                r_angle_token: R_ANGLE@485..487 ">" [] [Whitespace(" ")],
+            },
+            eq_token: EQ@487..489 "=" [] [Whitespace(" ")],
+            ty: TsConditionalType {
+                check_type: TsReferenceType {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@489..491 "T" [] [Whitespace(" ")],
+                    },
+                    type_arguments: missing (optional),
+                },
+                extends_token: EXTENDS_KW@491..499 "extends" [] [Whitespace(" ")],
+                extends_type: TsParenthesizedType {
+                    l_paren_token: L_PAREN@499..500 "(" [] [],
+                    ty: TsFunctionType {
+                        type_parameters: missing (optional),
+                        parameters: JsParameters {
+                            l_paren_token: L_PAREN@500..501 "(" [] [],
+                            items: JsParameterList [
+                                JsRestParameter {
+                                    dotdotdot_token: DOT3@501..504 "..." [] [],
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@504..505 "a" [] [],
+                                    },
+                                    type_annotation: TsTypeAnnotation {
+                                        colon_token: COLON@505..507 ":" [] [Whitespace(" ")],
+                                        ty: TsArrayType {
+                                            element_type: TsAnyType {
+                                                any_token: ANY_KW@507..510 "any" [] [],
+                                            },
+                                            l_brack_token: L_BRACK@510..511 "[" [] [],
+                                            r_brack_token: R_BRACK@511..512 "]" [] [],
+                                        },
+                                    },
+                                },
+                            ],
+                            r_paren_token: R_PAREN@512..514 ")" [] [Whitespace(" ")],
+                        },
+                        fat_arrow_token: FAT_ARROW@514..517 "=>" [] [Whitespace(" ")],
+                        return_type: TsInferType {
+                            infer_token: INFER_KW@517..523 "infer" [] [Whitespace(" ")],
+                            name: TsTypeParameterName {
+                                ident_token: IDENT@523..525 "R" [] [Whitespace(" ")],
+                            },
+                            constraint: TsTypeConstraintClause {
+                                extends_token: EXTENDS_KW@525..533 "extends" [] [Whitespace(" ")],
+                                ty: TsStringType {
+                                    string_token: STRING_KW@533..539 "string" [] [],
+                                },
+                            },
+                        },
+                    },
+                    r_paren_token: R_PAREN@539..541 ")" [] [Whitespace(" ")],
+                },
+                question_mark_token: QUESTION@541..543 "?" [] [Whitespace(" ")],
+                true_type: TsReferenceType {
+                    name: JsReferenceIdentifier {
+                        value_token: IDENT@543..545 "R" [] [Whitespace(" ")],
+                    },
+                    type_arguments: missing (optional),
+                },
+                colon_token: COLON@545..547 ":" [] [Whitespace(" ")],
+                false_type: TsNeverType {
+                    never_token: NEVER_KW@547..552 "never" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@552..553 ";" [] [],
+        },
     ],
-    eof_token: EOF@134..135 "" [Newline("\n")] [],
+    eof_token: EOF@553..554 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..135
+0: JS_MODULE@0..554
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..134
+  2: JS_MODULE_ITEM_LIST@0..553
     0: TS_TYPE_ALIAS_DECLARATION@0..16
       0: TYPE_KW@0..5 "type" [] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@5..7
@@ -167,4 +626,331 @@ JsModule {
         6: TS_NUMBER_TYPE@127..133
           0: NUMBER_KW@127..133 "number" [] []
       5: SEMICOLON@133..134 ";" [] []
-  3: EOF@134..135 "" [Newline("\n")] []
+    3: TS_TYPE_ALIAS_DECLARATION@134..208
+      0: TYPE_KW@134..140 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@140..141
+        0: IDENT@140..141 "D" [] []
+      2: TS_TYPE_PARAMETERS@141..145
+        0: L_ANGLE@141..142 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@142..143
+          0: TS_TYPE_PARAMETER@142..143
+            0: TS_TYPE_PARAMETER_NAME@142..143
+              0: IDENT@142..143 "T" [] []
+            1: (empty)
+            2: (empty)
+        2: R_ANGLE@143..145 ">" [] [Whitespace(" ")]
+      3: EQ@145..147 "=" [] [Whitespace(" ")]
+      4: TS_CONDITIONAL_TYPE@147..207
+        0: TS_REFERENCE_TYPE@147..149
+          0: JS_REFERENCE_IDENTIFIER@147..149
+            0: IDENT@147..149 "T" [] [Whitespace(" ")]
+          1: (empty)
+        1: EXTENDS_KW@149..157 "extends" [] [Whitespace(" ")]
+        2: TS_TUPLE_TYPE@157..196
+          0: L_BRACK@157..158 "[" [] []
+          1: TS_TUPLE_TYPE_ELEMENT_LIST@158..194
+            0: TS_INFER_TYPE@158..180
+              0: INFER_KW@158..164 "infer" [] [Whitespace(" ")]
+              1: TS_TYPE_PARAMETER_NAME@164..166
+                0: IDENT@164..166 "S" [] [Whitespace(" ")]
+              2: TS_TYPE_CONSTRAINT_CLAUSE@166..180
+                0: EXTENDS_KW@166..174 "extends" [] [Whitespace(" ")]
+                1: TS_STRING_TYPE@174..180
+                  0: STRING_KW@174..180 "string" [] []
+            1: COMMA@180..182 "," [] [Whitespace(" ")]
+            2: TS_REST_TUPLE_TYPE_ELEMENT@182..194
+              0: DOT3@182..185 "..." [] []
+              1: TS_ARRAY_TYPE@185..194
+                0: TS_UNKNOWN_TYPE@185..192
+                  0: UNKNOWN_KW@185..192 "unknown" [] []
+                1: L_BRACK@192..193 "[" [] []
+                2: R_BRACK@193..194 "]" [] []
+          2: R_BRACK@194..196 "]" [] [Whitespace(" ")]
+        3: QUESTION@196..198 "?" [] [Whitespace(" ")]
+        4: TS_REFERENCE_TYPE@198..200
+          0: JS_REFERENCE_IDENTIFIER@198..200
+            0: IDENT@198..200 "S" [] [Whitespace(" ")]
+          1: (empty)
+        5: COLON@200..202 ":" [] [Whitespace(" ")]
+        6: TS_NEVER_TYPE@202..207
+          0: NEVER_KW@202..207 "never" [] []
+      5: SEMICOLON@207..208 ";" [] []
+    4: TS_TYPE_ALIAS_DECLARATION@208..275
+      0: TYPE_KW@208..214 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@214..215
+        0: IDENT@214..215 "E" [] []
+      2: TS_TYPE_PARAMETERS@215..222
+        0: L_ANGLE@215..216 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@216..220
+          0: TS_TYPE_PARAMETER@216..217
+            0: TS_TYPE_PARAMETER_NAME@216..217
+              0: IDENT@216..217 "U" [] []
+            1: (empty)
+            2: (empty)
+          1: COMMA@217..219 "," [] [Whitespace(" ")]
+          2: TS_TYPE_PARAMETER@219..220
+            0: TS_TYPE_PARAMETER_NAME@219..220
+              0: IDENT@219..220 "T" [] []
+            1: (empty)
+            2: (empty)
+        2: R_ANGLE@220..222 ">" [] [Whitespace(" ")]
+      3: EQ@222..224 "=" [] [Whitespace(" ")]
+      4: TS_CONDITIONAL_TYPE@224..275
+        0: TS_REFERENCE_TYPE@224..226
+          0: JS_REFERENCE_IDENTIFIER@224..226
+            0: IDENT@224..226 "T" [] [Whitespace(" ")]
+          1: (empty)
+        1: EXTENDS_KW@226..234 "extends" [] [Whitespace(" ")]
+        2: TS_PARENTHESIZED_TYPE@234..268
+          0: L_PAREN@234..235 "(" [] []
+          1: TS_CONDITIONAL_TYPE@235..266
+            0: TS_INFER_TYPE@235..243
+              0: INFER_KW@235..241 "infer" [] [Whitespace(" ")]
+              1: TS_TYPE_PARAMETER_NAME@241..243
+                0: IDENT@241..243 "U" [] [Whitespace(" ")]
+              2: (empty)
+            1: EXTENDS_KW@243..251 "extends" [] [Whitespace(" ")]
+            2: TS_NUMBER_TYPE@251..258
+              0: NUMBER_KW@251..258 "number" [] [Whitespace(" ")]
+            3: QUESTION@258..260 "?" [] [Whitespace(" ")]
+            4: TS_REFERENCE_TYPE@260..262
+              0: JS_REFERENCE_IDENTIFIER@260..262
+                0: IDENT@260..262 "U" [] [Whitespace(" ")]
+              1: (empty)
+            5: COLON@262..264 ":" [] [Whitespace(" ")]
+            6: TS_REFERENCE_TYPE@264..266
+              0: JS_REFERENCE_IDENTIFIER@264..266
+                0: IDENT@264..266 "T" [] [Whitespace(" ")]
+              1: (empty)
+          2: R_PAREN@266..268 ")" [] [Whitespace(" ")]
+        3: QUESTION@268..270 "?" [] [Whitespace(" ")]
+        4: TS_REFERENCE_TYPE@270..272
+          0: JS_REFERENCE_IDENTIFIER@270..272
+            0: IDENT@270..272 "U" [] [Whitespace(" ")]
+          1: (empty)
+        5: COLON@272..274 ":" [] [Whitespace(" ")]
+        6: TS_REFERENCE_TYPE@274..275
+          0: JS_REFERENCE_IDENTIFIER@274..275
+            0: IDENT@274..275 "T" [] []
+          1: (empty)
+      5: (empty)
+    5: TS_TYPE_ALIAS_DECLARATION@275..353
+      0: TYPE_KW@275..281 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@281..282
+        0: IDENT@281..282 "F" [] []
+      2: TS_TYPE_PARAMETERS@282..286
+        0: L_ANGLE@282..283 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@283..284
+          0: TS_TYPE_PARAMETER@283..284
+            0: TS_TYPE_PARAMETER_NAME@283..284
+              0: IDENT@283..284 "T" [] []
+            1: (empty)
+            2: (empty)
+        2: R_ANGLE@284..286 ">" [] [Whitespace(" ")]
+      3: EQ@286..288 "=" [] [Whitespace(" ")]
+      4: TS_CONDITIONAL_TYPE@288..352
+        0: TS_REFERENCE_TYPE@288..290
+          0: JS_REFERENCE_IDENTIFIER@288..290
+            0: IDENT@288..290 "T" [] [Whitespace(" ")]
+          1: (empty)
+        1: EXTENDS_KW@290..298 "extends" [] [Whitespace(" ")]
+        2: TS_MAPPED_TYPE@298..345
+          0: L_CURLY@298..300 "{" [] [Whitespace(" ")]
+          1: (empty)
+          2: L_BRACK@300..301 "[" [] []
+          3: TS_TYPE_PARAMETER_NAME@301..303
+            0: IDENT@301..303 "P" [] [Whitespace(" ")]
+          4: IN_KW@303..306 "in" [] [Whitespace(" ")]
+          5: TS_CONDITIONAL_TYPE@306..337
+            0: TS_INFER_TYPE@306..314
+              0: INFER_KW@306..312 "infer" [] [Whitespace(" ")]
+              1: TS_TYPE_PARAMETER_NAME@312..314
+                0: IDENT@312..314 "U" [] [Whitespace(" ")]
+              2: (empty)
+            1: EXTENDS_KW@314..322 "extends" [] [Whitespace(" ")]
+            2: TS_TYPE_OPERATOR_TYPE@322..330
+              0: KEYOF_KW@322..328 "keyof" [] [Whitespace(" ")]
+              1: TS_REFERENCE_TYPE@328..330
+                0: JS_REFERENCE_IDENTIFIER@328..330
+                  0: IDENT@328..330 "T" [] [Whitespace(" ")]
+                1: (empty)
+            3: QUESTION@330..332 "?" [] [Whitespace(" ")]
+            4: TS_NUMBER_LITERAL_TYPE@332..334
+              0: (empty)
+              1: JS_NUMBER_LITERAL@332..334 "1" [] [Whitespace(" ")]
+            5: COLON@334..336 ":" [] [Whitespace(" ")]
+            6: TS_NUMBER_LITERAL_TYPE@336..337
+              0: (empty)
+              1: JS_NUMBER_LITERAL@336..337 "0" [] []
+          6: (empty)
+          7: R_BRACK@337..338 "]" [] []
+          8: (empty)
+          9: TS_TYPE_ANNOTATION@338..341
+            0: COLON@338..340 ":" [] [Whitespace(" ")]
+            1: TS_NUMBER_LITERAL_TYPE@340..341
+              0: (empty)
+              1: JS_NUMBER_LITERAL@340..341 "1" [] []
+          10: SEMICOLON@341..343 ";" [] [Whitespace(" ")]
+          11: R_CURLY@343..345 "}" [] [Whitespace(" ")]
+        3: QUESTION@345..347 "?" [] [Whitespace(" ")]
+        4: TS_NUMBER_LITERAL_TYPE@347..349
+          0: (empty)
+          1: JS_NUMBER_LITERAL@347..349 "1" [] [Whitespace(" ")]
+        5: COLON@349..351 ":" [] [Whitespace(" ")]
+        6: TS_NUMBER_LITERAL_TYPE@351..352
+          0: (empty)
+          1: JS_NUMBER_LITERAL@351..352 "0" [] []
+      5: SEMICOLON@352..353 ";" [] []
+    6: TS_TYPE_ALIAS_DECLARATION@353..422
+      0: TYPE_KW@353..359 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@359..360
+        0: IDENT@359..360 "G" [] []
+      2: TS_TYPE_PARAMETERS@360..364
+        0: L_ANGLE@360..361 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@361..362
+          0: TS_TYPE_PARAMETER@361..362
+            0: TS_TYPE_PARAMETER_NAME@361..362
+              0: IDENT@361..362 "T" [] []
+            1: (empty)
+            2: (empty)
+        2: R_ANGLE@362..364 ">" [] [Whitespace(" ")]
+      3: EQ@364..366 "=" [] [Whitespace(" ")]
+      4: TS_CONDITIONAL_TYPE@366..421
+        0: TS_REFERENCE_TYPE@366..368
+          0: JS_REFERENCE_IDENTIFIER@366..368
+            0: IDENT@366..368 "T" [] [Whitespace(" ")]
+          1: (empty)
+        1: EXTENDS_KW@368..376 "extends" [] [Whitespace(" ")]
+        2: TS_TUPLE_TYPE@376..410
+          0: L_BRACK@376..377 "[" [] []
+          1: TS_TUPLE_TYPE_ELEMENT_LIST@377..408
+            0: TS_UNKNOWN_TYPE@377..384
+              0: UNKNOWN_KW@377..384 "unknown" [] []
+            1: COMMA@384..386 "," [] [Whitespace(" ")]
+            2: TS_INFER_TYPE@386..408
+              0: INFER_KW@386..392 "infer" [] [Whitespace(" ")]
+              1: TS_TYPE_PARAMETER_NAME@392..394
+                0: IDENT@392..394 "S" [] [Whitespace(" ")]
+              2: TS_TYPE_CONSTRAINT_CLAUSE@394..408
+                0: EXTENDS_KW@394..402 "extends" [] [Whitespace(" ")]
+                1: TS_STRING_TYPE@402..408
+                  0: STRING_KW@402..408 "string" [] []
+          2: R_BRACK@408..410 "]" [] [Whitespace(" ")]
+        3: QUESTION@410..412 "?" [] [Whitespace(" ")]
+        4: TS_REFERENCE_TYPE@412..414
+          0: JS_REFERENCE_IDENTIFIER@412..414
+            0: IDENT@412..414 "S" [] [Whitespace(" ")]
+          1: (empty)
+        5: COLON@414..416 ":" [] [Whitespace(" ")]
+        6: TS_NEVER_TYPE@416..421
+          0: NEVER_KW@416..421 "never" [] []
+      5: SEMICOLON@421..422 ";" [] []
+    7: TS_TYPE_ALIAS_DECLARATION@422..476
+      0: TYPE_KW@422..428 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@428..430
+        0: IDENT@428..430 "H" [] [Whitespace(" ")]
+      2: (empty)
+      3: EQ@430..432 "=" [] [Whitespace(" ")]
+      4: TS_CONDITIONAL_TYPE@432..475
+        0: TS_REFERENCE_TYPE@432..434
+          0: JS_REFERENCE_IDENTIFIER@432..434
+            0: IDENT@432..434 "A" [] [Whitespace(" ")]
+          1: (empty)
+        1: EXTENDS_KW@434..442 "extends" [] [Whitespace(" ")]
+        2: TS_FUNCTION_TYPE@442..468
+          0: (empty)
+          1: JS_PARAMETERS@442..445
+            0: L_PAREN@442..443 "(" [] []
+            1: JS_PARAMETER_LIST@443..443
+            2: R_PAREN@443..445 ")" [] [Whitespace(" ")]
+          2: FAT_ARROW@445..448 "=>" [] [Whitespace(" ")]
+          3: TS_CONDITIONAL_TYPE@448..468
+            0: TS_REFERENCE_TYPE@448..450
+              0: JS_REFERENCE_IDENTIFIER@448..450
+                0: IDENT@448..450 "B" [] [Whitespace(" ")]
+              1: (empty)
+            1: EXTENDS_KW@450..458 "extends" [] [Whitespace(" ")]
+            2: TS_REFERENCE_TYPE@458..460
+              0: JS_REFERENCE_IDENTIFIER@458..460
+                0: IDENT@458..460 "C" [] [Whitespace(" ")]
+              1: (empty)
+            3: QUESTION@460..462 "?" [] [Whitespace(" ")]
+            4: TS_REFERENCE_TYPE@462..464
+              0: JS_REFERENCE_IDENTIFIER@462..464
+                0: IDENT@462..464 "D" [] [Whitespace(" ")]
+              1: (empty)
+            5: COLON@464..466 ":" [] [Whitespace(" ")]
+            6: TS_REFERENCE_TYPE@466..468
+              0: JS_REFERENCE_IDENTIFIER@466..468
+                0: IDENT@466..468 "E" [] [Whitespace(" ")]
+              1: (empty)
+        3: QUESTION@468..470 "?" [] [Whitespace(" ")]
+        4: TS_REFERENCE_TYPE@470..472
+          0: JS_REFERENCE_IDENTIFIER@470..472
+            0: IDENT@470..472 "F" [] [Whitespace(" ")]
+          1: (empty)
+        5: COLON@472..474 ":" [] [Whitespace(" ")]
+        6: TS_REFERENCE_TYPE@474..475
+          0: JS_REFERENCE_IDENTIFIER@474..475
+            0: IDENT@474..475 "G" [] []
+          1: (empty)
+      5: SEMICOLON@475..476 ";" [] []
+    8: TS_TYPE_ALIAS_DECLARATION@476..553
+      0: TYPE_KW@476..482 "type" [Newline("\n")] [Whitespace(" ")]
+      1: TS_IDENTIFIER_BINDING@482..483
+        0: IDENT@482..483 "J" [] []
+      2: TS_TYPE_PARAMETERS@483..487
+        0: L_ANGLE@483..484 "<" [] []
+        1: TS_TYPE_PARAMETER_LIST@484..485
+          0: TS_TYPE_PARAMETER@484..485
+            0: TS_TYPE_PARAMETER_NAME@484..485
+              0: IDENT@484..485 "T" [] []
+            1: (empty)
+            2: (empty)
+        2: R_ANGLE@485..487 ">" [] [Whitespace(" ")]
+      3: EQ@487..489 "=" [] [Whitespace(" ")]
+      4: TS_CONDITIONAL_TYPE@489..552
+        0: TS_REFERENCE_TYPE@489..491
+          0: JS_REFERENCE_IDENTIFIER@489..491
+            0: IDENT@489..491 "T" [] [Whitespace(" ")]
+          1: (empty)
+        1: EXTENDS_KW@491..499 "extends" [] [Whitespace(" ")]
+        2: TS_PARENTHESIZED_TYPE@499..541
+          0: L_PAREN@499..500 "(" [] []
+          1: TS_FUNCTION_TYPE@500..539
+            0: (empty)
+            1: JS_PARAMETERS@500..514
+              0: L_PAREN@500..501 "(" [] []
+              1: JS_PARAMETER_LIST@501..512
+                0: JS_REST_PARAMETER@501..512
+                  0: DOT3@501..504 "..." [] []
+                  1: JS_IDENTIFIER_BINDING@504..505
+                    0: IDENT@504..505 "a" [] []
+                  2: TS_TYPE_ANNOTATION@505..512
+                    0: COLON@505..507 ":" [] [Whitespace(" ")]
+                    1: TS_ARRAY_TYPE@507..512
+                      0: TS_ANY_TYPE@507..510
+                        0: ANY_KW@507..510 "any" [] []
+                      1: L_BRACK@510..511 "[" [] []
+                      2: R_BRACK@511..512 "]" [] []
+              2: R_PAREN@512..514 ")" [] [Whitespace(" ")]
+            2: FAT_ARROW@514..517 "=>" [] [Whitespace(" ")]
+            3: TS_INFER_TYPE@517..539
+              0: INFER_KW@517..523 "infer" [] [Whitespace(" ")]
+              1: TS_TYPE_PARAMETER_NAME@523..525
+                0: IDENT@523..525 "R" [] [Whitespace(" ")]
+              2: TS_TYPE_CONSTRAINT_CLAUSE@525..539
+                0: EXTENDS_KW@525..533 "extends" [] [Whitespace(" ")]
+                1: TS_STRING_TYPE@533..539
+                  0: STRING_KW@533..539 "string" [] []
+          2: R_PAREN@539..541 ")" [] [Whitespace(" ")]
+        3: QUESTION@541..543 "?" [] [Whitespace(" ")]
+        4: TS_REFERENCE_TYPE@543..545
+          0: JS_REFERENCE_IDENTIFIER@543..545
+            0: IDENT@543..545 "R" [] [Whitespace(" ")]
+          1: (empty)
+        5: COLON@545..547 ":" [] [Whitespace(" ")]
+        6: TS_NEVER_TYPE@547..552
+          0: NEVER_KW@547..552 "never" [] []
+      5: SEMICOLON@552..553 ";" [] []
+  3: EOF@553..554 "" [Newline("\n")] []
