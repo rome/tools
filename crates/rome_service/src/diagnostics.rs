@@ -7,6 +7,7 @@ use rome_formatter::FormatError;
 use rome_js_analyze::utils::rename::RenameError;
 use rome_js_analyze::RuleError;
 use serde::{Deserialize, Serialize};
+use std::error::Error;
 use std::fmt;
 use std::fmt::{Debug, Display, Formatter};
 use std::process::{ExitCode, Termination};
@@ -77,7 +78,15 @@ impl WorkspaceError {
             extension,
         })
     }
+
+    pub fn report_not_serializable(reason: impl Into<String>) -> Self {
+        Self::ReportNotSerializable(ReportNotSerializable {
+            reason: reason.into(),
+        })
+    }
 }
+
+impl Error for WorkspaceError {}
 
 impl Debug for WorkspaceError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -120,8 +129,8 @@ impl Diagnostic for WorkspaceError {
     fn description(&self, fmt: &mut Formatter<'_>) -> fmt::Result {
         match self {
             WorkspaceError::FormatWithErrorsDisabled(error) => error.description(fmt),
-            WorkspaceError::FormatError(err) => err.description(fmt),
-            WorkspaceError::RuleError(error) => error.description(fmt),
+            WorkspaceError::FormatError(error) => Diagnostic::description(error, fmt),
+            WorkspaceError::RuleError(error) => Diagnostic::description(error, fmt),
             WorkspaceError::Configuration(error) => error.description(fmt),
             WorkspaceError::RenameError(error) => error.description(fmt),
             WorkspaceError::TransportError(error) => error.description(fmt),

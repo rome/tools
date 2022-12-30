@@ -228,7 +228,7 @@ impl Session {
             .unwrap()
             .get(url)
             .cloned()
-            .ok_or(WorkspaceError::not_found())
+            .ok_or_else(WorkspaceError::not_found)
     }
 
     /// Set the [`Document`] for the provided [`lsp_types::Url`]

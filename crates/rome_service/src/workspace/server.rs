@@ -140,7 +140,7 @@ impl WorkspaceServer {
                 let document = self
                     .documents
                     .get(rome_path)
-                    .ok_or(WorkspaceError::not_found())?;
+                    .ok_or_else(WorkspaceError::not_found)?;
 
                 let capabilities = self.get_capabilities(rome_path);
                 let parse = capabilities
@@ -318,7 +318,7 @@ impl Workspace for WorkspaceServer {
         let mut document = self
             .documents
             .get_mut(&params.path)
-            .ok_or(WorkspaceError::not_found())?;
+            .ok_or_else(WorkspaceError::not_found)?;
 
         debug_assert!(params.version > document.version);
         document.version = params.version;
@@ -332,7 +332,7 @@ impl Workspace for WorkspaceServer {
     fn close_file(&self, params: CloseFileParams) -> Result<(), WorkspaceError> {
         self.documents
             .remove(&params.path)
-            .ok_or(WorkspaceError::not_found())?;
+            .ok_or_else(WorkspaceError::not_found)?;
 
         self.syntax.remove(&params.path);
         Ok(())

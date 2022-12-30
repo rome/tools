@@ -2,8 +2,8 @@ use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
 use rome_diagnostics::location::AsSpan;
 use rome_diagnostics::{
-    Advices, Category, Diagnostic, DiagnosticTags, LineIndexBuf, Location, LogCategory,
-    MessageAndDescription, Severity, Visit,
+    Advices, Category, Diagnostic, DiagnosticTags, LineIndexBuf, Location, LogCategory, Severity,
+    Visit,
 };
 use rome_rowan::{SyntaxError, TextRange, TextSize};
 use serde::{Deserialize, Serialize};
@@ -33,16 +33,16 @@ impl From<SyntaxError> for ConfigurationDiagnostic {
         ConfigurationDiagnostic::Deserialization(Deserialization {
             deserialization_advice: DeserializationAdvice::default(),
             range: None,
-            reason: MessageAndDescription::from("Syntax Error".to_string()),
+            reason: markup! {"Syntax Error"}.to_owned(),
         })
     }
 }
 
 impl ConfigurationDiagnostic {
-    pub(crate) fn new_deserialization_error(reason: impl Into<String>, span: impl AsSpan) -> Self {
+    pub(crate) fn new_deserialization_error(reason: impl Display, span: impl AsSpan) -> Self {
         Self::Deserialization(Deserialization {
             range: span.as_span(),
-            reason: MessageAndDescription::from(reason.into()),
+            reason: markup! {{reason}}.to_owned(),
             deserialization_advice: DeserializationAdvice::default(),
         })
     }
@@ -54,14 +54,14 @@ impl ConfigurationDiagnostic {
     ) -> Self {
         Self::Deserialization(Deserialization {
             range: range.as_span(),
-            reason: MessageAndDescription::from(
-                markup!("Found an extraneous key "<Emphasis>{{ key_name }}</Emphasis> ).to_owned(),
-            ),
+            reason: markup!("Found an extraneous key "<Emphasis>{{ key_name }}</Emphasis> )
+                .to_owned(),
+
             deserialization_advice: DeserializationAdvice {
                 known_keys: Some((
                     markup! { "Accepted keys" }.to_owned(),
                     known_members
-                        .into_iter()
+                        .iter()
                         .map(|message| markup! {{message}}.to_owned())
                         .collect::<Vec<_>>(),
                 )),
@@ -76,16 +76,14 @@ impl ConfigurationDiagnostic {
         known_variants: &[&str],
     ) -> Self {
         Self::Deserialization(Deserialization {
-            reason: MessageAndDescription::from(
-                markup!("Found an extraneous variant "<Emphasis>{{ variant_name }}</Emphasis> )
-                    .to_owned(),
-            ),
+            reason: markup!("Found an extraneous variant "<Emphasis>{{ variant_name }}</Emphasis> )
+                .to_owned(),
             range: range.as_span(),
             deserialization_advice: DeserializationAdvice {
                 known_keys: Some((
                     markup! { "Accepted values" }.to_owned(),
                     known_variants
-                        .into_iter()
+                        .iter()
                         .map(|message| markup! {{message}}.to_owned())
                         .collect::<Vec<_>>(),
                 )),
@@ -105,9 +103,9 @@ impl ConfigurationDiagnostic {
     ) -> Self {
         Self::Deserialization(Deserialization {
             range: range.as_span(),
-            reason: MessageAndDescription::from( markup! {
+            reason: markup! {
                 "The value of key "<Emphasis>{{key_name}}</Emphasis>" is incorrect. Expected "<Emphasis>{{expected_type}}</Emphasis>
-            }.to_owned()),
+            }.to_owned(),
             deserialization_advice: DeserializationAdvice::default(),
         })
     }
@@ -115,21 +113,20 @@ impl ConfigurationDiagnostic {
     pub(crate) fn new_incorrect_type(expected_type: impl Display, range: impl AsSpan) -> Self {
         Self::Deserialization(Deserialization {
             range: range.as_span(),
-            reason: MessageAndDescription::from(
-                markup! {
-                    "Incorrect type, expected a "<Emphasis>{{expected_type}}</Emphasis>
-                }
-                .to_owned(),
-            ),
+            reason: markup! {
+                "Incorrect type, expected a "<Emphasis>{{expected_type}}</Emphasis>
+            }
+            .to_owned(),
+
             deserialization_advice: DeserializationAdvice::default(),
         })
     }
 
     pub(crate) fn new_invalid_ignore_pattern(pattern: impl Display, reason: impl Display) -> Self {
         Self::Deserialization(Deserialization {
-            reason: MessageAndDescription::from(
+            reason:
                 markup! { "Couldn't parse the pattern "<Emphasis>{{pattern}}</Emphasis>", reason: "<Emphasis>{{reason}}</Emphasis>"" }.to_owned()
-            ),
+            ,
             range: None,
             deserialization_advice: DeserializationAdvice::default()
         })
@@ -137,9 +134,7 @@ impl ConfigurationDiagnostic {
 
     pub(crate) fn new_already_exists() -> Self {
         Self::Deserialization(Deserialization {
-            reason: MessageAndDescription::from(
-                "It seems that a configuration file already exists".to_string(),
-            ),
+            reason: markup!("It seems that a configuration file already exists").to_owned(),
             range: None,
             deserialization_advice: DeserializationAdvice::default(),
         })
@@ -147,9 +142,8 @@ impl ConfigurationDiagnostic {
 
     pub(crate) fn unexpected(span: impl AsSpan) -> Self {
         Self::Deserialization(Deserialization {
-            reason: MessageAndDescription::from(
-                "Unexpected content inside the configuration file".to_string(),
-            ),
+            reason: markup!("Unexpected content inside the configuration file").to_owned(),
+
             range: span.as_span(),
             deserialization_advice: DeserializationAdvice::default(),
         })
@@ -328,7 +322,7 @@ pub struct InvalidIgnorePattern {
 )]
 pub struct Deserialization {
     #[message]
-    pub(crate) reason: MessageAndDescription,
+    pub(crate) reason: MarkupBuf,
     #[location(span)]
     pub(crate) range: Option<TextRange>,
     #[advice]
@@ -381,8 +375,8 @@ mod test {
 
     #[test]
     fn diagnostic_size() {
-        assert_eq!(std::mem::size_of::<ConfigurationDiagnostic>(), 136);
-        assert_eq!(std::mem::size_of::<Deserialization>(), 136);
+        assert_eq!(std::mem::size_of::<ConfigurationDiagnostic>(), 112);
+        assert_eq!(std::mem::size_of::<Deserialization>(), 112);
         assert_eq!(std::mem::size_of::<DeserializationAdvice>(), 72);
     }
 

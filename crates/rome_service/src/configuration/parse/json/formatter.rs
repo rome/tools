@@ -6,7 +6,6 @@ use crate::configuration::visitor::VisitConfigurationNode;
 use crate::configuration::{FormatterConfiguration, PlainIndentStyle};
 use crate::ConfigurationDiagnostic;
 use rome_console::markup;
-use rome_diagnostics::MessageAndDescription;
 use rome_formatter::LineWidth;
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::{AstNode, SyntaxNode};
@@ -47,7 +46,7 @@ impl VisitConfigurationNode<JsonLanguage> for FormatterConfiguration {
                 let line_width = self.map_to_u16(&value, name_text, LineWidth::MAX)?;
                 self.line_width = LineWidth::try_from(line_width).map_err(|err| {
                     ConfigurationDiagnostic::Deserialization(Deserialization {
-                        reason: MessageAndDescription::from(err.to_string()),
+                        reason: markup! {{err.to_string()}}.to_owned(),
                         range: Some(value.range()),
                         deserialization_advice: DeserializationAdvice {
                             hint: Some(

@@ -11,7 +11,6 @@ use crate::configuration::visitor::VisitConfigurationNode;
 use crate::ConfigurationDiagnostic;
 use indexmap::IndexSet;
 use rome_console::markup;
-use rome_diagnostics::MessageAndDescription;
 use rome_json_syntax::{
     AnyJsonValue, JsonArrayValue, JsonBooleanValue, JsonLanguage, JsonMemberName, JsonNumberValue,
     JsonObjectValue, JsonRoot, JsonStringValue, JsonSyntaxNode,
@@ -335,10 +334,10 @@ fn emit_diagnostic_form_number(
     value_range: TextRange,
     maximum: impl rome_console::fmt::Display,
 ) -> ConfigurationDiagnostic {
-    if value_text.starts_with("-") {
+    if value_text.starts_with('-') {
         ConfigurationDiagnostic::Deserialization(Deserialization {
             range: Some(value_range),
-            reason: MessageAndDescription::from(parse_error.to_string()),
+            reason: markup! {{parse_error.to_string()}}.to_owned(),
             deserialization_advice: DeserializationAdvice {
                 known_keys: None,
                 hint: Some(markup! {"Value can't be negative"}.to_owned()),
@@ -347,7 +346,7 @@ fn emit_diagnostic_form_number(
     } else {
         ConfigurationDiagnostic::Deserialization(Deserialization {
             range: Some(value_range),
-            reason: MessageAndDescription::from(parse_error.to_string()),
+            reason: markup! {{parse_error.to_string()}}.to_owned(),
             deserialization_advice: DeserializationAdvice {
                 known_keys: None,
                 hint: Some(markup! {"Maximum value accepted is "{{maximum}}}.to_owned()),

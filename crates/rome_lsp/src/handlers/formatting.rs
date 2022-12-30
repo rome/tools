@@ -26,7 +26,7 @@ pub(crate) fn format(
 
     let printed = match result {
         Ok(printed) => printed,
-        Err(WorkspaceError.format_with_errors_disabled()) | Err(WorkspaceError::FileIgnored(_)) => {
+        Err(WorkspaceError::FormatWithErrorsDisabled(_)) | Err(WorkspaceError::FileIgnored(_)) => {
             return Ok(None)
         }
         Err(err) => return Err(Error::from(err)),
@@ -80,7 +80,7 @@ pub(crate) fn format_range(
 
     let formatted = match result {
         Ok(formatted) => formatted,
-        Err(WorkspaceError.format_with_errors_disabled()) | Err(WorkspaceError::FileIgnored(_)) => {
+        Err(WorkspaceError::FormatWithErrorsDisabled(_)) | Err(WorkspaceError::FileIgnored(_)) => {
             return Ok(None)
         }
         Err(err) => return Err(Error::from(err)),
@@ -132,7 +132,7 @@ pub(crate) fn format_on_type(
 
     let formatted = match result {
         Ok(formatted) => formatted,
-        Err(WorkspaceError.format_with_errors_disabled()) | Err(WorkspaceError::FileIgnored(_)) => {
+        Err(WorkspaceError::FormatWithErrorsDisabled(_)) | Err(WorkspaceError::FileIgnored(_)) => {
             return Ok(None)
         }
         Err(err) => return Err(Error::from(err)),

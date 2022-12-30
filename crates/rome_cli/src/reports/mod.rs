@@ -87,6 +87,6 @@ impl Report {
 
     pub fn as_serialized_reports(&self) -> Result<String, WorkspaceError> {
         serde_json::to_string(&self)
-            .map_err(|err| WorkspaceError::ReportNotSerializable(err.to_string()))
+            .map_err(|err| WorkspaceError::report_not_serializable(err.to_string()))
     }
 }
