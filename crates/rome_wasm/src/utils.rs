@@ -56,7 +56,8 @@ impl DiagnosticPrinter {
         diagnostic: IDiagnostic,
         printer: fn(&rome_diagnostics::Error) -> PrintDiagnostic<rome_diagnostics::Error>,
     ) -> Result<(), Error> {
-        let diag: Diagnostic = diagnostic.into_serde().map_err(into_error)?;
+        let diag: Diagnostic =
+            serde_wasm_bindgen::from_value(diagnostic.into()).map_err(into_error)?;
         let err = diag
             .with_file_path(&self.file_name)
             .with_file_source_code(&self.file_source);
