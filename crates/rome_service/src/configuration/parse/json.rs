@@ -6,10 +6,12 @@ mod formatter;
 mod javascript;
 mod linter;
 
+use crate::configuration::diagnostics::{Deserialization, DeserializationAdvice};
 use crate::configuration::visitor::VisitConfigurationNode;
 use crate::ConfigurationDiagnostic;
 use indexmap::IndexSet;
 use rome_console::markup;
+use rome_diagnostics::MessageAndDescription;
 use rome_json_syntax::{
     AnyJsonValue, JsonArrayValue, JsonBooleanValue, JsonLanguage, JsonMemberName, JsonNumberValue,
     JsonObjectValue, JsonRoot, JsonStringValue, JsonSyntaxNode,
@@ -34,8 +36,8 @@ pub fn parse_configuration_from_json(
         }
         _ => Err(ConfigurationDiagnostic::new_deserialization_error(
             "The configuration should be an object",
-        )
-        .with_span(root.range())),
+            root.range(),
+        )),
     }
 }
 
@@ -52,9 +54,11 @@ fn has_only_known_keys(
             if allowed_keys.contains(&key_name.text()) {
                 Ok(())
             } else {
-                Err(ConfigurationDiagnostic::new_unknown_member(key_name.text())
-                    .with_span(node.range())
-                    .with_known_keys("Accepted keys", allowed_keys))
+                Err(ConfigurationDiagnostic::new_unknown_member(
+                    key_name.text(),
+                    node.range(),
+                    allowed_keys,
+                ))
             }
         })
         .unwrap_or_else(|| Err(ConfigurationDiagnostic::new_syntax_error()))
@@ -76,11 +80,11 @@ fn with_only_known_variants(
             if allowed_keys.contains(&key_name.text_trimmed()) {
                 Ok(node)
             } else {
-                Err(
-                    ConfigurationDiagnostic::new_unknown_variant(key_name.text_trimmed())
-                        .with_span(node.range())
-                        .with_known_keys("Accepted variants", allowed_keys),
-                )
+                Err(ConfigurationDiagnostic::new_unknown_variant(
+                    key_name.text_trimmed(),
+                    node.range(),
+                    allowed_keys,
+                ))
             }
         })
         .unwrap_or_else(|| Err(ConfigurationDiagnostic::new_syntax_error()))
@@ -135,8 +139,7 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
         T: VisitConfigurationNode<JsonLanguage>,
     {
         let value = JsonStringValue::cast_ref(value.syntax()).ok_or_else(|| {
-            ConfigurationDiagnostic::new_incorrect_type_for_value(name, "string")
-                .with_span(value.range())
+            ConfigurationDiagnostic::new_incorrect_type_for_value(name, "string", value.range())
         })?;
 
         visitor.visit_member_value(value.syntax())?;
@@ -154,8 +157,7 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
         name: &str,
     ) -> Result<String, ConfigurationDiagnostic> {
         let value = JsonStringValue::cast_ref(value.syntax()).ok_or_else(|| {
-            ConfigurationDiagnostic::new_incorrect_type_for_value(name, "string")
-                .with_span(value.range())
+            ConfigurationDiagnostic::new_incorrect_type_for_value(name, "string", value.range())
         })?;
         Ok(value.text())
     }
@@ -174,8 +176,7 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
         maximum: u8,
     ) -> Result<u8, ConfigurationDiagnostic> {
         let value = JsonNumberValue::cast_ref(value.syntax()).ok_or_else(|| {
-            ConfigurationDiagnostic::new_incorrect_type_for_value(name, "number")
-                .with_span(value.range())
+            ConfigurationDiagnostic::new_incorrect_type_for_value(name, "number", value.range())
         })?;
         let value = value.value_token()?;
         value.text_trimmed().parse::<u8>().map_err(|err| {
@@ -202,8 +203,7 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
         maximum: u16,
     ) -> Result<u16, ConfigurationDiagnostic> {
         let value = JsonNumberValue::cast_ref(value.syntax()).ok_or_else(|| {
-            ConfigurationDiagnostic::new_incorrect_type_for_value(name, "number")
-                .with_span(value.range())
+            ConfigurationDiagnostic::new_incorrect_type_for_value(name, "number", value.range())
         })?;
         let value = value.value_token()?;
 
@@ -231,8 +231,7 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
         maximum: u64,
     ) -> Result<u64, ConfigurationDiagnostic> {
         let value = JsonNumberValue::cast_ref(value.syntax()).ok_or_else(|| {
-            ConfigurationDiagnostic::new_incorrect_type_for_value(name, "number")
-                .with_span(value.range())
+            ConfigurationDiagnostic::new_incorrect_type_for_value(name, "number", value.range())
         })?;
         let value = value.value_token()?;
 
@@ -257,8 +256,7 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
         name: &str,
     ) -> Result<bool, ConfigurationDiagnostic> {
         let value = JsonBooleanValue::cast_ref(value.syntax()).ok_or_else(|| {
-            ConfigurationDiagnostic::new_incorrect_type_for_value(name, "boolean")
-                .with_span(value.range())
+            ConfigurationDiagnostic::new_incorrect_type_for_value(name, "boolean", value.range())
         })?;
         Ok(value.value_token()?.text() == "true")
     }
@@ -276,8 +274,7 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
         name: &str,
     ) -> Result<Option<IndexSet<String>>, ConfigurationDiagnostic> {
         let array = JsonArrayValue::cast_ref(value.syntax()).ok_or_else(|| {
-            ConfigurationDiagnostic::new_incorrect_type_for_value(name, "array")
-                .with_span(value.range())
+            ConfigurationDiagnostic::new_incorrect_type_for_value(name, "array", value.range())
         })?;
         let mut elements = IndexSet::new();
         if array.elements().is_empty() {
@@ -290,8 +287,10 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
                     elements.insert(value.value_token()?.to_string());
                 }
                 _ => {
-                    return Err(ConfigurationDiagnostic::new_incorrect_type("string")
-                        .with_span(element.range()))
+                    return Err(ConfigurationDiagnostic::new_incorrect_type(
+                        "string",
+                        element.range(),
+                    ))
                 }
             }
         }
@@ -320,8 +319,7 @@ pub(crate) trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> 
         T: VisitConfigurationNode<JsonLanguage>,
     {
         let value = JsonObjectValue::cast_ref(value.syntax()).ok_or_else(|| {
-            ConfigurationDiagnostic::new_incorrect_type_for_value(name, "object")
-                .with_span(value.range())
+            ConfigurationDiagnostic::new_incorrect_type_for_value(name, "object", value.range())
         })?;
         for element in value.json_member_list() {
             let element = element?;
@@ -338,12 +336,22 @@ fn emit_diagnostic_form_number(
     maximum: impl rome_console::fmt::Display,
 ) -> ConfigurationDiagnostic {
     if value_text.starts_with("-") {
-        ConfigurationDiagnostic::new_deserialization_error(parse_error.to_string())
-            .with_span(value_range)
-            .with_hint(markup! {"Value can't be negative"})
+        ConfigurationDiagnostic::Deserialization(Deserialization {
+            range: Some(value_range),
+            reason: MessageAndDescription::from(parse_error.to_string()),
+            deserialization_advice: DeserializationAdvice {
+                known_keys: None,
+                hint: Some(markup! {"Value can't be negative"}.to_owned()),
+            },
+        })
     } else {
-        ConfigurationDiagnostic::new_deserialization_error(parse_error.to_string())
-            .with_span(value_range)
-            .with_hint(markup! {"Maximum value accepted is "{{maximum}}})
+        ConfigurationDiagnostic::Deserialization(Deserialization {
+            range: Some(value_range),
+            reason: MessageAndDescription::from(parse_error.to_string()),
+            deserialization_advice: DeserializationAdvice {
+                known_keys: None,
+                hint: Some(markup! {"Maximum value accepted is "{{maximum}}}.to_owned()),
+            },
+        })
     }
 }

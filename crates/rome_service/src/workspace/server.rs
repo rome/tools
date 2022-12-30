@@ -91,15 +91,14 @@ impl WorkspaceServer {
                 .unwrap_or_default();
 
             let language = Features::get_language(path).or(language_hint);
-            WorkspaceError::SourceFileNotSupported {
+            WorkspaceError::source_file_not_supported(
                 language,
-                path: path.clone().display().to_string(),
-                extension: path
-                    .clone()
+                path.clone().display().to_string(),
+                path.clone()
                     .extension()
                     .and_then(OsStr::to_str)
                     .map(|s| s.to_string()),
-            }
+            )
         }
     }
 
@@ -128,7 +127,7 @@ impl WorkspaceServer {
         };
 
         if ignored {
-            return Err(WorkspaceError::FileIgnored(format!(
+            return Err(WorkspaceError::file_ignored(format!(
                 "{}",
                 rome_path.to_path_buf().display()
             )));
@@ -141,7 +140,7 @@ impl WorkspaceServer {
                 let document = self
                     .documents
                     .get(rome_path)
-                    .ok_or(WorkspaceError::NotFound)?;
+                    .ok_or(WorkspaceError::not_found())?;
 
                 let capabilities = self.get_capabilities(rome_path);
                 let parse = capabilities
@@ -158,11 +157,11 @@ impl WorkspaceServer {
 
                 let size = document.content.as_bytes().len();
                 if size >= size_limit {
-                    return Err(WorkspaceError::FileTooLarge {
-                        path: rome_path.to_path_buf().display().to_string(),
+                    return Err(WorkspaceError::file_too_large(
+                        rome_path.to_path_buf().display().to_string(),
                         size,
-                        limit: size_limit,
-                    });
+                        size_limit,
+                    ));
                 }
 
                 let parsed = parse(rome_path, document.language_hint, &document.content);
@@ -308,7 +307,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
-            return Err(WorkspaceError::FormatWithErrorsDisabled);
+            return Err(WorkspaceError::format_with_errors_disabled());
         }
 
         debug_formatter_ir(&params.path, parse, settings)
@@ -319,7 +318,7 @@ impl Workspace for WorkspaceServer {
         let mut document = self
             .documents
             .get_mut(&params.path)
-            .ok_or(WorkspaceError::NotFound)?;
+            .ok_or(WorkspaceError::not_found())?;
 
         debug_assert!(params.version > document.version);
         document.version = params.version;
@@ -333,7 +332,7 @@ impl Workspace for WorkspaceServer {
     fn close_file(&self, params: CloseFileParams) -> Result<(), WorkspaceError> {
         self.documents
             .remove(&params.path)
-            .ok_or(WorkspaceError::NotFound)?;
+            .ok_or(WorkspaceError::not_found())?;
 
         self.syntax.remove(&params.path);
         Ok(())
@@ -431,7 +430,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
-            return Err(WorkspaceError::FormatWithErrorsDisabled);
+            return Err(WorkspaceError::format_with_errors_disabled());
         }
 
         format(&params.path, parse, settings)
@@ -447,7 +446,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
-            return Err(WorkspaceError::FormatWithErrorsDisabled);
+            return Err(WorkspaceError::format_with_errors_disabled());
         }
 
         format_range(&params.path, parse, settings, params.range)
@@ -463,7 +462,7 @@ impl Workspace for WorkspaceServer {
         let settings = self.settings();
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
-            return Err(WorkspaceError::FormatWithErrorsDisabled);
+            return Err(WorkspaceError::format_with_errors_disabled());
         }
 
         format_on_type(&params.path, parse, settings, params.offset)

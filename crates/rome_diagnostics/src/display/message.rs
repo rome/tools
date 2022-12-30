@@ -85,3 +85,13 @@ pub fn markup_to_string(markup: &MarkupBuf) -> String {
 
     String::from_utf8(buffer).expect("to have convert a buffer into a String")
 }
+
+#[cfg(test)]
+mod test {
+    use crate::MessageAndDescription;
+
+    #[test]
+    fn message_size() {
+        assert_eq!(std::mem::size_of::<MessageAndDescription>(), 48);
+    }
+}

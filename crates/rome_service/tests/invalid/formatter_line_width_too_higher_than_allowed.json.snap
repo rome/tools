@@ -4,8 +4,7 @@ expression: formatter_line_width_too_higher_than_allowed.json
 ---
 formatter_line_width_too_higher_than_allowed.json:3:16 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Rome couldn't load the configuration file, here's why: 
-    The line width exceeds the maximum value (320)
+  × The line width exceeds the maximum value (320)
   
   
     1 │ {

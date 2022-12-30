@@ -29,7 +29,7 @@ fn run_invalid_configurations(input: &'static str, _: &str, _: &str, _: &str) {
     );
     if let Err(diagnostics) = result {
         let result = print_diagnostic_to_string(
-            diagnostics
+            &diagnostics
                 .with_file_path(file_name)
                 .with_file_source_code(input_code.as_str()),
         );

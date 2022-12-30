@@ -4,8 +4,7 @@ expression: content
 ---
 rome.json:3:13 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Rome couldn't load the configuration file, here's why: 
-    expected `:` at line 3 column 13
+  × expected `:` at line 3 column 13
   
     1 │ {·
     2 │ 

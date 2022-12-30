@@ -4,6 +4,8 @@ pub use pattern::{MatchOptions, Pattern, PatternError};
 use std::collections::HashMap;
 use std::path::Path;
 use std::sync::RwLock;
+use rome_console::markup;
+use rome_diagnostics::Diagnostic;
 
 /// A data structure to use when there's need to match a string or a path a against
 /// a unix shell style patterns
@@ -86,6 +88,16 @@ impl Matcher {
         }
 
         matches
+    }
+}
+
+impl Diagnostic for PatternError {
+    fn description(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(fmt, "{}", self.msg)
+    }
+
+    fn message(&self, fmt: &mut rome_console::fmt::Formatter<'_>) -> std::io::Result<()> {
+        fmt.write_markup(markup!({ self.msg }))
     }
 }
 

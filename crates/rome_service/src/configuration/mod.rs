@@ -143,14 +143,14 @@ pub fn load_config(
         Ok(mut file) => {
             let mut buffer = String::new();
             file.read_to_string(&mut buffer).map_err(|_| {
-                WorkspaceError::CantReadFile(format!("{}", configuration_path.display()))
+                WorkspaceError::cant_read_file(format!("{}", configuration_path.display()))
             })?;
 
             let configuration: Configuration = serde_json::from_str(&buffer).map_err(|err| {
-                WorkspaceError::Configuration(
-                    ConfigurationDiagnostic::new_deserialization_error(err.to_string())
-                        .with_span(from_serde_error_to_range(&err, &buffer)),
-                )
+                WorkspaceError::Configuration(ConfigurationDiagnostic::new_deserialization_error(
+                    err.to_string(),
+                    from_serde_error_to_range(&err, &buffer),
+                ))
             })?;
 
             Ok(Some(configuration))
@@ -160,7 +160,7 @@ pub fn load_config(
             // In case we don't fine the file, we swallow the error and we continue; not having
             // a file should not be a cause of error (for now)
             if err.kind() != ErrorKind::NotFound {
-                return Err(WorkspaceError::CantReadFile(format!(
+                return Err(WorkspaceError::cant_read_file(format!(
                     "{}",
                     configuration_path.display()
                 )));
@@ -194,7 +194,7 @@ pub fn create_config(
         if err.kind() == ErrorKind::AlreadyExists {
             WorkspaceError::Configuration(ConfigurationDiagnostic::new_already_exists())
         } else {
-            WorkspaceError::CantReadFile(format!("{}", path.display()))
+            WorkspaceError::cant_read_file(format!("{}", path.display()))
         }
     })?;
 
@@ -206,12 +206,12 @@ pub fn create_config(
     }
 
     let contents = serde_json::to_string_pretty(&configuration).map_err(|_| {
-        WorkspaceError::Configuration(ConfigurationError::new_serialization_error())
+        WorkspaceError::Configuration(ConfigurationDiagnostic::new_serialization_error())
     })?;
 
     config_file
         .set_content(contents.as_bytes())
-        .map_err(|_| WorkspaceError::CantReadFile(format!("{}", path.display())))?;
+        .map_err(|_| WorkspaceError::cant_read_file(format!("{}", path.display())))?;
 
     Ok(())
 }
