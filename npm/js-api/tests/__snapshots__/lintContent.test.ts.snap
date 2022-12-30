@@ -30,8 +30,8 @@ exports[`Rome WebAssembly lintContent > should lint content > lint diagnostics 1
         },
         {
           "Frame": {
-            "path": null,
-            "source_code": null,
+            "path": undefined,
+            "source_code": undefined,
             "span": [
               6,
               8,
@@ -124,7 +124,7 @@ exports[`Rome WebAssembly lintContent > should lint content > lint diagnostics 1
           "Path": "example.js",
         },
       },
-      "source_code": null,
+      "source_code": undefined,
       "span": [
         6,
         8,
@@ -153,7 +153,7 @@ exports[`Rome WebAssembly lintContent > should lint content > lint diagnostics 1
       },
     ],
     "severity": "Error",
-    "source": null,
+    "source": undefined,
     "tags": [
       "Fixable",
     ],

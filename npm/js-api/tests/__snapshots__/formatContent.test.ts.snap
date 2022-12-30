@@ -17,7 +17,7 @@ exports[`Rome WebAssembly formatContent > should not format and have diagnostics
           },
         },
       },
-      "source_code": null,
+      "source_code": undefined,
       "span": [
         11,
         12,
@@ -30,7 +30,7 @@ exports[`Rome WebAssembly formatContent > should not format and have diagnostics
       },
     ],
     "severity": "Error",
-    "source": null,
+    "source": undefined,
     "tags": [],
     "verbose_advices": {
       "advices": [],

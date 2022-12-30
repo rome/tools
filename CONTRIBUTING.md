@@ -88,7 +88,7 @@ The npm module npm/rome contains Rome's Node JS API that supports different back
 For testing and developing, you need to build these packages, following the steps:
 1. install [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/) globally;
 2. run the `build` command inside the package `backend-jsonrpc`;
-3. run the `build:wasm-node-dev` command inside the package `js-api` (folder `npm/js-api`);
+3. run the `build` and `build:wasm-node-dev` commands inside the package `js-api` (folder `npm/js-api`);
 4. run `pnpm i` inside the package `js-api` (folder `npm/js-api`), this will link the WebAssembly bindings and the
 JSON-RPC bindings;
 
