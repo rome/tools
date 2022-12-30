@@ -26,7 +26,7 @@ pub(crate) fn ts_member_cannot_be(
     modifier_name: &str,
 ) -> ParseDiagnostic {
     let msg = format!("{} members cannot be {}", member_type_name, modifier_name);
-    p.err_builder(&msg, range)
+    p.err_builder(msg, range)
 }
 
 pub(crate) fn ts_modifier_cannot_appear_on_a_constructor_declaration(

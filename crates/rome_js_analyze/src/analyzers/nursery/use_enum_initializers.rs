@@ -113,7 +113,7 @@ impl Rule for UseEnumInitializers {
                 AnyJsLiteralExpression::JsNumberLiteralExpression(expr) => {
                     Some(AnyJsLiteralExpression::JsNumberLiteralExpression(
                         make::js_number_literal_expression(make::js_number_literal(
-                            expr.as_number()? + f64::from(count as i32),
+                            expr.as_number()? + f64::from(count),
                         )),
                     ))
                 }

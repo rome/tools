@@ -392,7 +392,7 @@ impl<P: Parser> ToDiagnostic<P> for ExpectedNodeDiagnosticBuilder {
             )
         };
 
-        let diag = p.err_builder(&msg, self.range);
+        let diag = p.err_builder(msg, self.range);
         diag.detail(self.range, format!("Expected {} here", self.names))
     }
 }

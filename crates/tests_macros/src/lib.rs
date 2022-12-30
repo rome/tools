@@ -159,7 +159,7 @@ impl Arguments {
             syn::Lit::Str(v) => v.value(),
             _ => return Err("Only string literals supported"),
         };
-        let walker = GlobWalkerBuilder::new(base, &glob)
+        let walker = GlobWalkerBuilder::new(base, glob)
             .build()
             .map_err(|_| "Cannot walk the requested glob")?;
 
@@ -210,7 +210,7 @@ impl Arguments {
                 test_full_path,
                 test_expected_fullpath,
                 test_directory,
-            } = Arguments::get_variables(&file).ok_or("Cannot generate variables for this file")?;
+            } = Arguments::get_variables(file).ok_or("Cannot generate variables for this file")?;
 
             let test_name = transform_file_name(&test_name);
 

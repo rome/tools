@@ -625,7 +625,7 @@ impl NodeModuleInformation {
             .join("src")
             .join(self.dialect.as_str())
             .join(self.concept.as_str())
-            .join(&format!("{}.rs", self.name))
+            .join(format!("{}.rs", self.name))
     }
 }
 

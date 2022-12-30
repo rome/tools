@@ -209,7 +209,7 @@ impl CompletedMarker {
         }
         new_pos.child_idx = Some(self.start_pos as usize);
         new_pos.start = self.offset;
-        new_pos.old_start(self.old_start as u32)
+        new_pos.old_start(self.old_start)
     }
 
     /// Undo this completion and turns into a `Marker`

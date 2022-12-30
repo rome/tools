@@ -89,7 +89,7 @@ fn generate_category(
         },
     );
 
-    let (modules, paths): (Vec<_>, Vec<_>) = groups.into_iter().map(|(_, tokens)| tokens).unzip();
+    let (modules, paths): (Vec<_>, Vec<_>) = groups.into_values().unzip();
     let tokens = xtask::reformat(quote! {
         #( #modules )*
         ::rome_analyze::declare_category! {
@@ -148,8 +148,7 @@ fn generate_group(category: &'static str, group: &str) -> Result<()> {
 
     let group_name = format_ident!("{}", to_camel_case(group)?);
 
-    let (rule_imports, rule_names): (Vec<_>, Vec<_>) =
-        rules.into_iter().map(|(_, tokens)| tokens).unzip();
+    let (rule_imports, rule_names): (Vec<_>, Vec<_>) = rules.into_values().unzip();
 
     let tokens = xtask::reformat(quote! {
         use rome_analyze::declare_group;

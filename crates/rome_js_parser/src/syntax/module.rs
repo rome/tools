@@ -1128,7 +1128,7 @@ fn parse_export_default_clause(p: &mut JsParser) -> ParsedSyntax {
                     )
                     .detail(clause.range(p), "multiple default exports are erroneous")
                     .detail(
-                        &existing_default_item.range.to_owned(),
+                        existing_default_item.range.to_owned(),
                         "the module's default export is first defined here",
                     );
 

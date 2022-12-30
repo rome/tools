@@ -38,8 +38,8 @@ pub(crate) fn range(line_index: &LineIndex, range: TextRange) -> Result<lsp::Ran
 
 pub(crate) fn offset(line_index: &LineIndex, position: lsp::Position) -> Result<TextSize> {
     let line_col = LineCol {
-        line: position.line as u32,
-        col: position.character as u32,
+        line: position.line,
+        col: position.character,
     };
 
     line_index

@@ -124,10 +124,10 @@ pub fn run(
     json: bool,
     detail_level: SummaryDetailLevel,
 ) {
-    let mut reporters = MulticastTestReporter::new(Box::new(DefaultReporter::default()));
+    let mut reporters = MulticastTestReporter::new(Box::<DefaultReporter>::default());
 
     let output_target = if json {
-        reporters.add(Box::new(JsonReporter::default()));
+        reporters.add(Box::<JsonReporter>::default());
         OutputTarget::stderr()
     } else {
         OutputTarget::stdout()
