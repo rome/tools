@@ -59,20 +59,7 @@ impl Rule for NoPrototypeBuiltins {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let call_expr = ctx.query();
-        let mut callee = call_expr.callee().ok()?;
-
-        // We need to handle a parenthesized expression case e.g. `(foo?.hasOwnProperty)("bar");`
-        if let AnyJsExpression::JsParenthesizedExpression(expr) = callee {
-            callee = match expr.expression().ok()? {
-                AnyJsExpression::JsStaticMemberExpression(expr) => {
-                    AnyJsExpression::JsStaticMemberExpression(expr)
-                }
-                AnyJsExpression::JsComputedMemberExpression(expr) => {
-                    AnyJsExpression::JsComputedMemberExpression(expr)
-                }
-                _ => return None,
-            }
-        }
+        let callee = call_expr.callee().ok()?.omit_parentheses();
 
         match callee {
             AnyJsExpression::JsComputedMemberExpression(expr) => {
@@ -142,6 +129,8 @@ impl Rule for NoPrototypeBuiltins {
 
 /// Chekcks if the `Object.prototype` builtins called directly.
 fn is_prototype_builtins(token_text: &str) -> bool {
-return matches!(token_text, "hasOwnProperty" | "isPrototypeOf" | "propertyIsEnumerable")
-    disallowed_methods.contains(&token_text)
+    matches!(
+        token_text,
+        "hasOwnProperty" | "isPrototypeOf" | "propertyIsEnumerable"
+    )
 }

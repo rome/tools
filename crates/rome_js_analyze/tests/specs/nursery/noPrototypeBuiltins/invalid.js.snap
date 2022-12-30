@@ -28,9 +28,9 @@ invalid.js:1:5 lint/nursery/noPrototypeBuiltins ━━━━━━━━━━�
     2 │ foo.isPrototypeOf(bar);
     3 │ foo.propertyIsEnumerable("bar");
   
-  i Recommended using Object.hasOwn() over direct use of `Object.prototype` builtins and using Object.hasOwnProperty().
+  i It's recommended using Object.hasOwn() instead of using Object.hasOwnProperty().
   
-  i See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn
+  i See MDN web docs for more details.
   
 
 ```
@@ -76,9 +76,9 @@ invalid.js:4:9 lint/nursery/noPrototypeBuiltins ━━━━━━━━━━�
     5 │ foo.bar.baz.isPrototypeOf("bar");
     6 │ foo["hasOwnProperty"]("bar");
   
-  i Recommended using Object.hasOwn() over direct use of `Object.prototype` builtins and using Object.hasOwnProperty().
+  i It's recommended using Object.hasOwn() instead of using Object.hasOwnProperty().
   
-  i See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn
+  i See MDN web docs for more details.
   
 
 ```
@@ -110,9 +110,9 @@ invalid.js:6:5 lint/nursery/noPrototypeBuiltins ━━━━━━━━━━�
     7 │ foo[`isPrototypeOf`]("bar").baz;
     8 │ foo?.hasOwnProperty(bar);
   
-  i Recommended using Object.hasOwn() over direct use of `Object.prototype` builtins and using Object.hasOwnProperty().
+  i It's recommended using Object.hasOwn() instead of using Object.hasOwnProperty().
   
-  i See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn
+  i See MDN web docs for more details.
   
 
 ```
@@ -144,9 +144,9 @@ invalid.js:8:6 lint/nursery/noPrototypeBuiltins ━━━━━━━━━━�
      9 │ (foo?.hasOwnProperty)("bar");
     10 │ foo?.["hasOwnProperty"]("bar");
   
-  i Recommended using Object.hasOwn() over direct use of `Object.prototype` builtins and using Object.hasOwnProperty().
+  i It's recommended using Object.hasOwn() instead of using Object.hasOwnProperty().
   
-  i See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn
+  i See MDN web docs for more details.
   
 
 ```
@@ -163,9 +163,9 @@ invalid.js:9:7 lint/nursery/noPrototypeBuiltins ━━━━━━━━━━�
     10 │ foo?.["hasOwnProperty"]("bar");
     11 │ (foo?.[`hasOwnProperty`])("bar");
   
-  i Recommended using Object.hasOwn() over direct use of `Object.prototype` builtins and using Object.hasOwnProperty().
+  i It's recommended using Object.hasOwn() instead of using Object.hasOwnProperty().
   
-  i See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn
+  i See MDN web docs for more details.
   
 
 ```
@@ -181,9 +181,9 @@ invalid.js:10:7 lint/nursery/noPrototypeBuiltins ━━━━━━━━━━�
        │       ^^^^^^^^^^^^^^^^
     11 │ (foo?.[`hasOwnProperty`])("bar");
   
-  i Recommended using Object.hasOwn() over direct use of `Object.prototype` builtins and using Object.hasOwnProperty().
+  i It's recommended using Object.hasOwn() instead of using Object.hasOwnProperty().
   
-  i See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn
+  i See MDN web docs for more details.
   
 
 ```
@@ -198,9 +198,9 @@ invalid.js:11:9 lint/nursery/noPrototypeBuiltins ━━━━━━━━━━�
   > 11 │ (foo?.[`hasOwnProperty`])("bar");
        │         ^^^^^^^^^^^^^^
   
-  i Recommended using Object.hasOwn() over direct use of `Object.prototype` builtins and using Object.hasOwnProperty().
+  i It's recommended using Object.hasOwn() instead of using Object.hasOwnProperty().
   
-  i See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn
+  i See MDN web docs for more details.
   
 
 ```

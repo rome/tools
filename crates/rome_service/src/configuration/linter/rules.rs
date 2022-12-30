@@ -852,7 +852,11 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
+<<<<<<< HEAD
     pub(crate) const CATEGORY_RULES: [&'static str; 51] = [
+=======
+    pub(crate) const CATEGORY_RULES: [&'static str; 49] = [
+>>>>>>> 7d3e8a3a3b (chore: just codegen)
         "noAccessKey",
         "noAssignInExpressions",
         "noBannedTypes",
@@ -974,6 +978,7 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[21]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[22]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[23]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[21]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[24]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[25]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[26]),
@@ -985,11 +990,14 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[32]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[33]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[35]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[34]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[36]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[37]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[38]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[39]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[40]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[41]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[43]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[44]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[45]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[46]),
