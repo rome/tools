@@ -1987,6 +1987,7 @@ dependencies = [
  "rome_rowan",
  "rome_service",
  "schemars",
+ "serde",
  "serde-wasm-bindgen",
  "serde_json",
  "wasm-bindgen",
