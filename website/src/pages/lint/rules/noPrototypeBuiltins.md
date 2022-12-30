@@ -7,15 +7,14 @@ parent: lint/rules/index
 
 Disallow direct use of `Object.prototype` builtins.
 
-ECMAScript 5.1 added `Object.create` which allows creation of object with a custom prototype.
-This pattern is often used for objects used as Maps. However this pattern can lead to errors
+ECMAScript 5.1 added `Object.create` which allows the creation of an object with a custom prototype.
+This pattern is often used for objects used as Maps. However, this pattern can lead to errors
 if something else relies on prototype properties/methods.
 Moreover, the methods could be shadowed, this can lead to random bugs and denial of service
-vulnerabilities. For example, calling `hasOwnProperty` directly on parsed json like `{"hasOwnProperty": 1}` could lead to vulnerabilities.
+vulnerabilities. For example, calling `hasOwnProperty` directly on parsed JSON like `{"hasOwnProperty": 1}` could lead to vulnerabilities.
 To avoid subtle bugs like this, you should call these methods from `Object.prototype`.
 For example, `foo.isPrototypeof(bar)` should be replaced with `Object.prototype.isPrototypeof.call(foo, "bar")`
-As for the `hasOwnProperty` method, `foo.hasOwnProperty("bar")` should be replaced with `Object.hasOwn(foo, "bar")`.
-`Object.hasOwn()` is native replacement for `Object.prototype.hasOwnProperty()`. Refer to [the Object.hasOwn() documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn).
+As for the `hasOwn` method, `foo.hasOwn("bar")` should be replaced with `Object.hasOwn(foo, "bar")`.
 
 ## Examples
 
@@ -33,9 +32,9 @@ var invalid = foo.hasOwnProperty("bar");
    <strong>   │ </strong>                  <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Recommended using </span><span style="color: rgb(38, 148, 255);"><strong>Object.hasOwn()</strong></span><span style="color: rgb(38, 148, 255);"> over direct use of `Object.prototype` builtins and using </span><span style="color: rgb(38, 148, 255);"><strong>Object.hasOwnProperty()</strong></span><span style="color: rgb(38, 148, 255);">.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">It's recommended using </span><span style="color: rgb(38, 148, 255);"><strong>Object.hasOwn()</strong></span><span style="color: rgb(38, 148, 255);"> instead of using </span><span style="color: rgb(38, 148, 255);"><strong>Object.hasOwnProperty()</strong></span><span style="color: rgb(38, 148, 255);">.</span>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn">MDN web docs</a></span><span style="color: rgb(38, 148, 255);"> for more details.</span>
   
 </code></pre>
 
