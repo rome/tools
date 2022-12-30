@@ -59,8 +59,7 @@ impl Rule for NoPrototypeBuiltins {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let call_expr = ctx.query();
-        let JsCallExpressionFields { callee, .. } = call_expr.as_fields();
-        let mut callee = callee.ok()?;
+        let mut callee = call_expr.callee().ok()?;
 
         // We need to handle a parenthesized expression case e.g. `(foo?.hasOwnProperty)("bar");`
         if let AnyJsExpression::JsParenthesizedExpression(expr) = callee {
@@ -132,7 +131,7 @@ impl Rule for NoPrototypeBuiltins {
                     "It's recommended using "<Emphasis>"Object.hasOwn()"</Emphasis>" instead of using "<Emphasis>"Object.hasOwnProperty()"</Emphasis>"."
                 })
                 .note(markup! {
-                    "See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn"
+                    "See "<Hyperlink href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn">"MDN web docs"</Hyperlink>" for more details."
                 }),
             )
         } else {
