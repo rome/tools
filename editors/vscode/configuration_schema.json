@@ -1150,10 +1150,21 @@
       }
     },
     "PlainIndentStyle": {
-      "type": "string",
-      "enum": [
-        "tab",
-        "space"
+      "oneOf": [
+        {
+          "description": "Tab",
+          "type": "string",
+          "enum": [
+            "tab"
+          ]
+        },
+        {
+          "description": "Space",
+          "type": "string",
+          "enum": [
+            "space"
+          ]
+        }
       ]
     },
     "QuoteProperties": {

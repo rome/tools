@@ -1007,8 +1007,8 @@ export type RefactorKind =
  * The sub-category of a source code action
  */
 export type SourceActionKind =
-	| "None"
 	| "FixAll"
+	| "None"
 	| "OrganizeImports"
 	| { Other: string };
 /**
