@@ -758,30 +758,31 @@ pub(crate) fn is_includes_inferred_return_types_with_extends_constraints(
     parent: &JsSyntaxNode,
 ) -> bool {
     if is_extends_type(node, parent) {
-        match node.kind() {
+        let return_type = match node.kind() {
             JsSyntaxKind::TS_FUNCTION_TYPE => {
-                let function_type = TsFunctionType::unwrap_cast(node.clone());
-                if let Ok(AnyTsReturnType::AnyTsType(AnyTsType::TsInferType(infer_type))) =
-                    function_type.return_type()
-                {
-                    if infer_type.constraint().is_some() {
-                        return true;
+                match TsFunctionType::unwrap_cast(node.clone()).return_type() {
+                    Ok(AnyTsReturnType::AnyTsType(any)) => Ok(any),
+                    _ => {
+                        return false;
                     }
                 }
             }
             JsSyntaxKind::TS_CONSTRUCTOR_TYPE => {
-                let constructor_type = TsConstructorType::unwrap_cast(node.clone());
-                if let Ok(AnyTsType::TsInferType(infer_type)) = constructor_type.return_type() {
-                    if infer_type.constraint().is_some() {
-                        return true;
-                    }
-                }
+                TsConstructorType::unwrap_cast(node.clone()).return_type()
             }
-            _ => (),
-        }
-    }
 
-    false
+            _ => {
+                return false;
+            }
+        };
+
+        match return_type {
+            Ok(AnyTsType::TsInferType(infer_type)) => infer_type.constraint().is_some(),
+            _ => false,
+        }
+    } else {
+        false
+    }
 }
 
 /// Returns `true` if node is in a union or intersection type with more than one variant

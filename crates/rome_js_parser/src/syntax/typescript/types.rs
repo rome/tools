@@ -20,6 +20,7 @@ use crate::syntax::object::{
 use crate::syntax::stmt::optional_semi;
 use crate::syntax::typescript::try_parse;
 use crate::syntax::typescript::ts_parse_error::{expected_ts_type, expected_ts_type_parameter};
+
 use rome_parser::parse_lists::{ParseNodeList, ParseSeparatedList};
 
 use crate::lexer::{LexContext, ReLexContext};
@@ -198,11 +199,11 @@ fn is_nth_at_ts_type_parameters(p: &mut JsParser, n: usize) -> bool {
 pub(crate) fn parse_ts_type(p: &mut JsParser) -> ParsedSyntax {
     p.with_state(EnterType, |p| {
         if is_at_constructor_type(p) {
-            return p.with_state(EnterConditionalTypes::allow(), parse_ts_constructor_type);
+            return parse_ts_constructor_type(p);
         }
 
         if is_at_function_type(p) {
-            return p.with_state(EnterConditionalTypes::allow(), parse_ts_function_type);
+            return parse_ts_function_type(p);
         }
 
         let left = parse_ts_union_type_or_higher(p);
@@ -220,7 +221,6 @@ pub(crate) fn parse_ts_type(p: &mut JsParser) -> ParsedSyntax {
                 // type F<T> = T extends { [P in infer U extends keyof T ? 1 : 0]: 1; } ? 1 : 0;
                 // type G<T> = T extends [unknown, infer S extends string] ? S : never;
                 // type H = A extends () => B extends C ? D : E ? F : G;
-                // type I<A, B, C, D, E, F, G> = A extends (x: B extends C ? D : E) => 0 ? F : G;
                 // type J<T> = T extends ((...a: any[]) => infer R extends string) ? R : never;
                 if !p.has_preceding_line_break() && p.at(T![extends]) {
                     let m = left.precede(p);
@@ -367,8 +367,7 @@ fn parse_ts_primary_type(p: &mut JsParser) -> ParsedSyntax {
     if is_type_operator {
         let m = p.start();
         p.bump_any();
-        p.with_state(EnterConditionalTypes::allow(), parse_ts_primary_type)
-            .or_add_diagnostic(p, expected_ts_type);
+        parse_ts_primary_type(p).or_add_diagnostic(p, expected_ts_type);
         return Present(m.complete(p, TS_TYPE_OPERATOR_TYPE));
     }
 
@@ -585,7 +584,8 @@ fn parse_ts_parenthesized_type(p: &mut JsParser) -> ParsedSyntax {
 
     let m = p.start();
     p.bump(T!['(']);
-    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    p.with_state(EnterConditionalTypes::allow(), parse_ts_type)
+        .or_add_diagnostic(p, expected_ts_type);
     p.expect(T![')']);
     Present(m.complete(p, TS_PARENTHESIZED_TYPE))
 }
@@ -1220,11 +1220,13 @@ fn parse_ts_return_type(p: &mut JsParser) -> ParsedSyntax {
         p.at(T![asserts]) && (is_nth_at_identifier(p, 1) || p.nth_at(1, T![this]));
     let is_is_predicate = (is_at_identifier(p) || p.at(T![this])) && p.nth_at(1, T![is]);
 
-    if !p.has_nth_preceding_line_break(1) && (is_asserts_predicate || is_is_predicate) {
-        parse_ts_type_predicate(p)
-    } else {
-        parse_ts_type(p)
-    }
+    p.with_state(EnterConditionalTypes::allow(), |p| {
+        if !p.has_nth_preceding_line_break(1) && (is_asserts_predicate || is_is_predicate) {
+            parse_ts_type_predicate(p)
+        } else {
+            parse_ts_type(p)
+        }
+    })
 }
 
 // test ts ts_type_predicate
