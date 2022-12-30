@@ -101,7 +101,7 @@ fn with_server_logs() {
         let log_dir = TestLogDir::new("rome-test-logs");
         fs::create_dir_all(&log_dir.path).expect("Failed to create test log directory");
 
-        fs::write(&log_dir.path.join("server.log.2022-10-14-16"), r#"
+        fs::write(log_dir.path.join("server.log.2022-10-14-16"), r#"
 ┐rome_cli::commands::daemon::Running Server{pid=195434}
 ├─2547ms INFO rome_lsp::server Starting Rome Language Server...
 ├─15333ms INFO rome_lsp::server Starting Rome Language Server...
@@ -135,7 +135,7 @@ INFO rome_cli::commands::daemon Received shutdown signal
         ).expect("Failed to write log file");
 
         fs::write(
-            &log_dir.path.join("server.log.2022-10-14-15"),
+            log_dir.path.join("server.log.2022-10-14-15"),
             r#"
 Not most recent log file
 "#,

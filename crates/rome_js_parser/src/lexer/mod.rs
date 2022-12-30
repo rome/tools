@@ -776,7 +776,7 @@ impl<'src> Lexer<'src> {
                     self.diagnostics.push(diagnostic);
                     return false;
                 }
-                Some(b) if !(b as u8).is_ascii_hexdigit() => {
+                Some(b) if !b.is_ascii_hexdigit() => {
                     self.diagnostics.push(diagnostic);
                     return false;
                 }
@@ -1975,7 +1975,7 @@ impl<'src> Lexer<'src> {
                     } else {
                         let err = ParseDiagnostic::new(
                             self.file_id,
-                            format!("Unexpected token `{}`", chr as char),
+                            format!("Unexpected token `{}`", chr),
                             start..self.position + 1,
                         );
                         self.diagnostics.push(err);

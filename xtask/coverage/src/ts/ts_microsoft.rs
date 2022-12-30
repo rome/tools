@@ -221,7 +221,7 @@ fn should_error(name: &str, run_options: &[String]) -> bool {
             .map(|name| format!("{name}({option}).errors.txt"))
             .unwrap();
 
-        let path = Path::new(REFERENCE_PATH).join(&errors_file_name);
+        let path = Path::new(REFERENCE_PATH).join(errors_file_name);
 
         path.exists()
     })

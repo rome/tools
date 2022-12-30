@@ -182,7 +182,7 @@ impl SyntaxNode {
                 SyntaxToken::new(
                     token,
                     self.clone(),
-                    child.slot() as u32,
+                    child.slot(),
                     self.offset() + child.rel_offset(),
                 )
             })
@@ -195,7 +195,7 @@ impl SyntaxNode {
                 SyntaxNode::new_child(
                     green,
                     self.clone(),
-                    child.slot() as u32,
+                    child.slot(),
                     self.offset() + child.rel_offset(),
                 )
             })

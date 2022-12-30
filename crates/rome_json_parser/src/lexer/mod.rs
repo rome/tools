@@ -517,7 +517,7 @@ impl<'src> Lexer<'src> {
                                     ParseDiagnostic::new(
                                         self.file_id,
                                         "Invalid escape sequence",
-                                        escape_start..self.text_position() + (c as char).text_len(),
+                                        escape_start..self.text_position() + c.text_len(),
                                     )
                                         .hint(r#"Valid escape sequences are: `\\`, `\/`, `/"`, `\b\`, `\f`, `\n`, `\r`, `\t` or any unicode escape sequence `\uXXXX` where X is hexedecimal number. "#),
                                 );
