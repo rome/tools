@@ -13,11 +13,11 @@ will be implemented inside the `rome_js_analyze` crate.
 Rules are divided by capabilities:
 - `analyzers/` folder contains rules that don't require any particular capabilities, via the `Ast<>` query type;
 - `semantic_analyzer/` folder contains rules that require the use of the semantic model, via `Semantic<>` query type;
-- `aria_analyzers/` folder contains rules that require the use ARIA metadata, via `Aria<>` query type;
+- `aria_analyzers/` folder contains rules that require the use of ARIA metadata, via `Aria<>` query type;
 - `assists/` folder contains rules that contribute to refactor code, with not associated diagnostics;
 these are rules that are usually meant for editors/IDEs;
 
-Most of the rules will go under `semantic_analyzer/` or  `analyzers/` folders.
+Most of the rules will go under `semantic_analyzer/` or `analyzers/` folders.
 
 Inside the folders, we will have folders for each group that Rome supports.
 
@@ -47,7 +47,7 @@ the CI will fail.
 
 Let's say we want to create a new rule called `useAwesomeTricks`, which uses the semantic model.
 
-1. run the command
+1. Run the command
 	```shell
 	> just new-lintrule crates/rome_js_analyze/src/analyzers/nursery myRuleName
 	```
@@ -61,7 +61,7 @@ Let's say we want to create a new rule called `useAwesomeTricks`, which uses the
 
 	The core team will help you out if you don't get the folder right. Using the incorrect folder
 	won't break any code.
-2. the `Query` needs to have the `Semantic` type, because we want to have access to the semantic model.
+2. The `Query` needs to have the `Semantic` type, because we want to have access to the semantic model.
 `Query` tells the engine on which AST node we want to trigger the rule.
 3. The `State` type doesn't have to be used, so it can be considered optional, but it has
 be defined as `type State = ()`
@@ -187,7 +187,9 @@ use rome_analyze::declare_rule;
  ```rust,ignore
 use rome_analyze::declare_rule;
 declare_rule! {
-     /// Disallow the use of `var`
+     /// Disallow the use of `var`.
+     ///
+     /// ## Examples
      ///
      /// ### Valid
      ///
@@ -195,7 +197,7 @@ declare_rule! {
      /// let a, b;
      /// ```
      pub(crate) NoVar {
-         version: "0.7.0",
+         version: "next",
          name: "noVar",
          recommended: false,
      }
@@ -208,15 +210,17 @@ declare_rule! {
  ```rust,ignore
 use rome_analyze::declare_rule;
  declare_rule! {
-     ///  Disallow the use of `var`
+     ///  Disallow the use of `var`.
      ///
-     ///  ### Invalid
+     /// ## Examples
      ///
-     ///  ```js,expect_diagnostic
-     ///  var a, b;
-     ///  ```
+     /// ### Invalid
+     ///
+     /// ```js,expect_diagnostic
+     /// var a, b;
+     /// ```
      pub(crate) NoVar {
-         version: "0.7.0",
+         version: "next",
          name: "noVar",
          recommended: false,
      }
@@ -230,15 +234,17 @@ use rome_analyze::declare_rule;
 #### Deprecation
 
  There are occasions when a rule must be deprecated, to avoid breaking changes. The reason
- of deprecations can be multiples.
+ of deprecation can be multiple.
 
- In order to do, the macro allows to add additional field to add the reason for deprecation
+ In order to do, the macro allows adding additional field to add the reason for deprecation
 
  ```rust,ignore
 use rome_analyze::declare_rule;
 
  declare_rule! {
-      /// Disallow the use of `var`
+      /// Disallow the use of `var`.
+     ///
+     /// ## Examples
       ///
       /// ### Invalid
       ///
@@ -262,14 +268,14 @@ use rome_analyze::declare_rule;
  has one. Using this macro instead of getting the category for a diagnostic
  by dynamically parsing its string name has the advantage of statically
  injecting the category at compile time and checking that it is correctly
- registered to the `rome_diagnostics` library
+ registered to the `rome_diagnostics` library.
 
  ```rust,ignore
  declare_rule! {
      /// Documentation
      pub(crate) ExampleRule {
-         version: "0.7.0",
-         name: "ruleName"
+         version: "next",
+         name: "ruleName",
      }
  }
 
@@ -286,7 +292,7 @@ use rome_analyze::declare_rule;
 
 #### Rule configuration
 
-Some rules may allow customization using configuration. The first step is to setup a struct to represent the rule configuartion.
+Some rules may allow customization using configuration. The first step is to setup a struct to represent the rule configuration.
 
 ```rust,ignore
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -305,7 +311,7 @@ impl Rule for UseExhaustiveDependencies {
 }
 ```
 
-This allow the rule to be configured inside "rome.json" file like:
+This allows the rule to be configured inside "rome.json" file like:
 
 ```json
 {
@@ -328,9 +334,9 @@ This allow the rule to be configured inside "rome.json" file like:
 ```
 
 In this specific case, we don't want the configuration to replace all the standard React hooks configuration,
-so to have more control on the options deserialization, we can implement the trait `DeserializableRuleOptions`.
+so to have more control on the deserialization of options, we can implement the trait `DeserializableRuleOptions`.
 
-In the example below we also deserialize to a struct with a more user friendly schema.
+In the example below we also deserialize to a struct with a more user-friendly schema.
 
 This code run only once when the analyzer is first called.
 
@@ -378,7 +384,7 @@ Some lint rules may need to deeply inspect the child nodes of a query match
 before deciding on whether they should emit a signal or not. These rules can be
 inefficient to implement using the query system, as they will lead to redundant
 traversal passes being executed over the same syntax tree. To make this more
-efficient, you can implement a custom `Queryable` type and and associated
+efficient, you can implement a custom `Queryable` type and associated
 `Visitor` to emit it as part of the analyzer's main traversal pass. As an
 example, here's how this could be done to implement the `useYield` rule:
 
