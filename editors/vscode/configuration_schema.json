@@ -687,8 +687,8 @@
             }
           ]
         },
-        "noDuplicateJsxProps": {
-          "description": "Prevents JSX properties to be assigned multiple times.",
+        "noDuplicateClassMembers": {
+          "description": "Put your description here",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

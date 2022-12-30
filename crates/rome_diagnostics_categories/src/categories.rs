@@ -93,6 +93,7 @@ define_dategories! {
     "lint/nursery/useValidForDirection": "https://docs.rome.tools/lint/rules/useValidForDirection",
     "lint/nursery/useHookAtTopLevel": "https://docs.rome.tools/lint/rules/useHookAtTopLevel",
     "lint/nursery/noDuplicateJsxProps": "https://docs.rome.tools/lint/rules/noDuplicateJsxProps",
+    "lint/nursery/noDuplicateClassMembers": "https://docs.rome.tools/lint/rules/noDuplicateClassMembers",
     // Insert new nursery rule here
 
     // performance
