@@ -5,27 +5,85 @@ use rome_js_semantic::{Reference, ReferencesExtensions};
 use rome_js_syntax::JsIdentifierBinding;
 
 declare_rule! {
-    /// Put your description here
+    /// Disallow duplicate class members.
+    ///
+    /// If there are declarations of the same name in class members,
+    /// the last declaration overwrites other declarations silently.
+    /// It can cause unexpected behaviors.
     ///
     /// ## Examples
     ///
     /// ### Invalid
     ///
     /// ```js,expect_diagnostic
-    /// var a = 1;
-    /// a = 2;
+    /// class Foo {
+    ///   bar() { }
+    ///   bar() { }
+    /// }
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// class Foo {
+    ///   bar() { }
+    ///   get bar() { }
+    /// }
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// class Foo {
+    ///   bar;
+    ///   bar() { }
+    /// }
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// class Foo {
+    ///   static bar() { }
+    ///   static bar() { }
+    /// }
     /// ```
     ///
     /// ## Valid
     ///
     /// ```js
-    /// var a = 1;
+    /// class Foo {
+    ///   bar() { }
+    ///   qux() { }
+    /// }
+    /// ```
+    ///
+    /// ```js
+    /// class Foo {
+    ///   set bar(value) { }
+    ///   get bar() { }
+    /// }
+    /// ```
+    ///
+    /// ```js
+    /// class Foo {
+    ///   bar;
+    ///   qux;
+    /// }
+    /// ```
+    ///
+    /// ```js
+    /// class Foo {
+    ///   bar;
+    ///   qux() { }
+    /// }
+    /// ```
+    ///
+    /// ```js
+    /// class Foo {
+    ///   static bar() { }
+    ///   bar() { }
+    /// }
     /// ```
     ///
     pub(crate) NoDuplicateClassMembers {
         version: "next",
         name: "noDuplicateClassMembers",
-        recommended: false,
+        recommended: true,
     }
 }
 

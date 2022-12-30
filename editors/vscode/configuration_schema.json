@@ -688,7 +688,18 @@
           ]
         },
         "noDuplicateClassMembers": {
-          "description": "Put your description here",
+          "description": "Disallow duplicate class members.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noDuplicateJsxProps": {
+          "description": "Prevents JSX properties to be assigned multiple times.",
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

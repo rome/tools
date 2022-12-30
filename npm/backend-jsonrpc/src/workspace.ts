@@ -89,7 +89,7 @@ export interface JavascriptConfiguration {
 	/**
 	* A list of global bindings that should be ignored by the analyzers
 
-If defined here, they should not emit diagnostics.
+If defined here, they should not emit diagnostics. 
 	 */
 	globals?: string[];
 }
@@ -111,7 +111,7 @@ export type PlainIndentStyle = "tab" | "space";
 /**
 	* Validated value for the `line_width` formatter options
 
-The allowed range of values is 1..=320
+The allowed range of values is 1..=320 
 	 */
 export type LineWidth = number;
 export interface JavascriptFormatter {
@@ -325,6 +325,10 @@ export interface Nursery {
 	 * Disallow duplicate case labels. If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.
 	 */
 	noDuplicateCase?: RuleConfiguration;
+	/**
+	 * Disallow duplicate class members.
+	 */
+	noDuplicateClassMembers?: RuleConfiguration;
 	/**
 	 * Prevents JSX properties to be assigned multiple times.
 	 */
@@ -808,11 +812,8 @@ export type Category =
 	| "lint/nursery/noNoninteractiveElementToInteractiveRole"
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useHookAtTopLevel"
-<<<<<<< HEAD
 	| "lint/nursery/noDuplicateJsxProps"
-=======
 	| "lint/nursery/noDuplicateClassMembers"
->>>>>>> 49cfe4a8c4 (feat: init lint rule)
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
@@ -885,7 +886,7 @@ export type DiagnosticTags = DiagnosticTag[];
 /**
 	* Serializable representation of a [Diagnostic](super::Diagnostic) advice
 
-See the [Visitor] trait for additional documentation on all the supported advice types.
+See the [Visitor] trait for additional documentation on all the supported advice types. 
 	 */
 export type Advice =
 	| { Log: [LogCategory, MarkupBuf] }
@@ -983,7 +984,7 @@ export interface CodeAction {
 /**
 	* The category of a code action, this type maps directly to the [CodeActionKind] type in the Language Server Protocol specification
 
-[CodeActionKind]: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#codeActionKind
+[CodeActionKind]: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#codeActionKind 
 	 */
 export type ActionCategory =
 	| "QuickFix"
