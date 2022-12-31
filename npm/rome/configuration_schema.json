@@ -480,6 +480,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noExtraLabels": {
+					"description": "Disallow unnecessary labels.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noExtraNonNullAssertion": {
 					"description": "Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.",
 					"anyOf": [

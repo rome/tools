@@ -337,6 +337,10 @@ export interface Nursery {
 	 */
 	noEmptyInterface?: RuleConfiguration;
 	/**
+	 * Disallow unnecessary labels.
+	 */
+	noExtraLabels?: RuleConfiguration;
+	/**
 	 * Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.
 	 */
 	noExtraNonNullAssertion?: RuleConfiguration;
@@ -783,6 +787,7 @@ export type Category =
 	| "lint/nursery/noDuplicateCase"
 	| "lint/nursery/noDuplicateObjectKeys"
 	| "lint/nursery/noEmptyInterface"
+	| "lint/nursery/noExtraLabels"
 	| "lint/nursery/noExtraNonNullAssertion"
 	| "lint/nursery/noHeaderScope"
 	| "lint/nursery/noInnerDeclarations"

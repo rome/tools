@@ -56,6 +56,7 @@ define_dategories! {
     "lint/nursery/noDuplicateCase": "https://docs.rome.tools/lint/rules/noDuplicateCase",
     "lint/nursery/noDuplicateObjectKeys":"https://docs.rome.tools/lint/rules/noDuplicateObjectKeys",
     "lint/nursery/noEmptyInterface": "https://docs.rome.tools/lint/rules/noEmptyInterface",
+    "lint/nursery/noExtraLabels":"https://docs.rome.tools/lint/rules/noExtraLabels",
     "lint/nursery/noExtraNonNullAssertion":"https://docs.rome.tools/lint/rules/noExtraNonNullAssertion",
     "lint/nursery/noHeaderScope": "https://docs.rome.tools/lint/rules/noHeaderScope",
     "lint/nursery/noInnerDeclarations": "https://docs.rome.tools/lint/rules/noInnerDeclarations",
