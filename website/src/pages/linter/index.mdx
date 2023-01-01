@@ -9,7 +9,7 @@ import PackageManagerRomeCommand from "/components/PackageManagerRomeCommand.ast
 
 # Linter
 
-Rome's linter statically analyzes your code to catch common errors and help you write more idiomatic code.
+Rome's linter statically analyzes your code to catch common errors and to help writing idiomatic code.
 
 ## Use the linter via CLI
 
@@ -36,35 +36,35 @@ OPTIONS:
 
 ## Code fixes
 
-Lint rules may provide automatic code fixes. Rome distinguishes between two types of fixes:
+Lint rules may provide automatic code fixes.
+Rome distinguishes between two types of fixes:
 
 - safe fixes
 - suggested fixes
 
-Safe fixes are guaranteed to not change the semantics of your code,
-and can be applied without explicit review.
+Safe fixes are guaranteed to not change the semantic of your code.
+They can be applied without explicit review.
 
-Suggested fixes may change the semantics of your program, and it's,
-therefore, advised to manually review the changes.
+Suggested fixes may change the semantic of your program.
+Therefore, it's advised to manually review the changes.
 
 ## Ignoring Code
 
 There are times when a developer wants to ignore a lint rule for a specific line of the code.
-
-You can achieve this by adding a suppression comment above the line that is triggering the lint diagnostic.
+You can achieve this by adding a suppression comment above the line that emits the lint diagnostic.
 
 Suppression comments have the following format:
 
 ```js
 // rome-ignore lint: <explanation>
-// rome-ignore lint/correctness/noDebugger: <explanation>
+// rome-ignore lint/suspicious/noDebugger: <explanation>
 ```
 
 Where
 
 - `rome-ignore` is the start of a suppression comment;
-- `lint:` suppresses the linter;
-- `(correctness/noDebugger)`: **optional**, group and name of the rule you want to suppress;
+- `lint` suppresses the linter;
+- `/suspicious/noDebugger`: **optional**, group and name of the rule you want to suppress;
 - `<explanation>` explanation why the rule is disabled
 
 Here's an example:
@@ -72,7 +72,7 @@ Here's an example:
 ```ts
 // rome-ignore lint: reason
 debugger;
-// rome-ignore lint/correctness/noDebugger: reason
+// rome-ignore lint/suspicious/noDebugger: reason
 debugger;
 ```
 
@@ -81,21 +81,21 @@ debugger;
 
 ### Enable a lint rule
 
-Rules that are recommended are enabled by default and emit diagnostics with
-the error severity. Rules that are not recommended are not enabled by default,
-but they can be enabled via configuration. The diagnostics emitted by these
-rules are displayed with the warning severity in the documentation.
+Recommended rules are enabled by default and emit diagnostics with the error severity.
+Rules that are not recommended are disabled by default, but they can be enabled via configuration.
+The diagnostics emitted by these rules are displayed with the warning severity in the documentation.
 
-To enable rules, you need to change their diagnostics severity based on your needs:
+To enable rules, you need to change their diagnostic severity based on your needs:
 
 ```json
 {
   "linter": {
     "enabled": true,
     "rules": {
-      "correctness": {
-        "noDebugger": "error",
-        "noSparseArray": "warn"
+      "style": {
+        "useBlockStatements": "error",
+        "useShorthandArrayType": "error",
+        "noShoutyConstants": "warn"
       }
     }
   }
@@ -111,11 +111,11 @@ Just add `"off"` as value inside its configuration. For example:
   "linter": {
     "enabled": true,
     "rules": {
-      "correctness": {
+      "suspicious": {
         "noCommentText": "off"
       },
       "style": {
-        "noNegationElse": "off"
+        "noUnusedTemplateLiteral": "off"
       }
     }
   }
@@ -132,24 +132,20 @@ Just add `"warn"` as value of the rule. Example:
   "linter": {
     "enabled": true,
     "rules": {
-      "correctness": {
+      "suspicious": {
         "noCommentText": "warn"
-      },
-      "style": {
-        "noNegationElse": "error"
       }
     }
   }
 }
 ```
 
-This is useful in cases there's being a refactor going on and there's need to make the
-CI passing.
+This is useful in cases there's being a refactor going on and there's need to make the CI passing.
 
 ## Rule options
 
-Not all the rules require options, but when they do _accept_ some, you can pass them
-by shaping the value of the rule in a different way.
+A few rules have options.
+When they do _accept_ some, you can pass them by shaping the value of the rule differently.
 
 ```json
 {
@@ -168,4 +164,4 @@ by shaping the value of the rule in a different way.
 ```
 
 - `level` will indicate the severity of the diagnostic, valid values are: `"off"`, `"warn"` and `"error"`;
-- `options` is a wildcard value, meaning that will change based on the rule;
+- `options` will change based on the rule.
