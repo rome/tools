@@ -23,6 +23,10 @@ pub struct JavascriptConfiguration {
 }
 
 impl JavascriptConfiguration {
+    pub(crate) const KNOWN_KEYS: &'static [&'static str] = &["formatter", "global"];
+}
+
+impl JavascriptConfiguration {
     pub fn with_formatter() -> Self {
         Self {
             formatter: Some(JavascriptFormatter::default()),
@@ -49,6 +53,15 @@ pub struct JavascriptFormatter {
     pub semicolons: Semicolons,
 }
 
+impl JavascriptFormatter {
+    pub(crate) const KNOWN_KEYS: &'static [&'static str] = &[
+        "quoteStyle",
+        "quoteProperties",
+        "trailingComma",
+        "semicolons",
+    ];
+}
+
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Default)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", remote = "QuoteStyle")]
@@ -58,6 +71,19 @@ pub enum PlainQuoteStyle {
     Single,
 }
 
+impl From<PlainQuoteStyle> for QuoteStyle {
+    fn from(variant: PlainQuoteStyle) -> Self {
+        match variant {
+            PlainQuoteStyle::Double => QuoteStyle::Double,
+            PlainQuoteStyle::Single => QuoteStyle::Single,
+        }
+    }
+}
+
+impl PlainQuoteStyle {
+    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["double", "single"];
+}
+
 #[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", remote = "QuoteProperties")]
@@ -65,6 +91,19 @@ pub enum PlainQuoteProperties {
     #[default]
     AsNeeded,
     Preserve,
+}
+
+impl From<PlainQuoteProperties> for QuoteProperties {
+    fn from(variant: PlainQuoteProperties) -> Self {
+        match variant {
+            PlainQuoteProperties::AsNeeded => QuoteProperties::AsNeeded,
+            PlainQuoteProperties::Preserve => QuoteProperties::Preserve,
+        }
+    }
+}
+
+impl PlainQuoteProperties {
+    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["preserve", "asNeeded"];
 }
 
 #[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq)]
@@ -77,6 +116,20 @@ pub enum PlainTrailingComma {
     None,
 }
 
+impl From<PlainTrailingComma> for TrailingComma {
+    fn from(variant: PlainTrailingComma) -> Self {
+        match variant {
+            PlainTrailingComma::All => TrailingComma::All,
+            PlainTrailingComma::ES5 => TrailingComma::ES5,
+            PlainTrailingComma::None => TrailingComma::None,
+        }
+    }
+}
+
+impl PlainTrailingComma {
+    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["all", "es5", "none"];
+}
+
 #[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", remote = "Semicolons")]
@@ -84,4 +137,17 @@ pub enum PlainSemicolons {
     #[default]
     Always,
     AsNeeded,
+}
+
+impl From<PlainSemicolons> for Semicolons {
+    fn from(variant: PlainSemicolons) -> Self {
+        match variant {
+            PlainSemicolons::Always => Semicolons::Always,
+            PlainSemicolons::AsNeeded => Semicolons::AsNeeded,
+        }
+    }
+}
+
+impl PlainSemicolons {
+    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["always", "asNeeded"];
 }

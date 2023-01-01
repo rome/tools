@@ -1,0 +1,17 @@
+---
+source: crates/rome_service/tests/spec_tests.rs
+expression: files_ignore_incorrect_type.json
+---
+files_ignore_incorrect_type.json:3:13 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The value of key ignore is incorrect. Expected array
+  
+    1 │ {
+    2 │ 	"files": {
+  > 3 │ 		"ignore": "something"
+      │ 		          ^^^^^^^^^^^
+    4 │ 	}
+    5 │ }
+  
+
+

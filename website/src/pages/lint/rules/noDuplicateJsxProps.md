@@ -61,3 +61,7 @@ Prevents JSX properties to be assigned multiple times.
 <label xml:lang="en-US" lang="en-US"></label>
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

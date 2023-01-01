@@ -1,0 +1,10 @@
+---
+source: crates/rome_service/tests/spec_tests.rs
+expression: formatter_syntax_error.json
+---
+formatter_syntax_error.json configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Syntax Error
+  
+
+

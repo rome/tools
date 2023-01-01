@@ -1,5 +1,6 @@
 use rome_console::fmt::{Formatter, Termcolor};
 use rome_console::{markup, MarkupBuf};
+use serde::{Deserialize, Serialize};
 use termcolor::NoColor;
 
 /// Convenient type that can be used when message and descriptions match, and they need to be
@@ -17,7 +18,7 @@ use termcolor::NoColor;
 ///     message: MessageAndDescription
 /// }
 /// ```
-#[derive(Clone)]
+#[derive(Clone, Deserialize, Serialize)]
 pub struct MessageAndDescription {
     /// Shown when medium supports custom markup
     message: MarkupBuf,
@@ -83,4 +84,14 @@ pub fn markup_to_string(markup: &MarkupBuf) -> String {
         .expect("to have written in the buffer");
 
     String::from_utf8(buffer).expect("to have convert a buffer into a String")
+}
+
+#[cfg(test)]
+mod test {
+    use crate::MessageAndDescription;
+
+    #[test]
+    fn message_size() {
+        assert_eq!(std::mem::size_of::<MessageAndDescription>(), 48);
+    }
 }

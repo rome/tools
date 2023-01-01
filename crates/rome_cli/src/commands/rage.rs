@@ -175,7 +175,7 @@ impl Display for RageConfiguration<'_, '_> {
             Err(err) => {
                 markup! (
                     {KeyValuePair("Status", markup!(<Error>"Failed to load"</Error>))}
-                    {KeyValuePair("Error", markup!({format!("{err:?}")}))}
+                    {KeyValuePair("Error", markup!({format!("{err}")}))}
                 ).fmt(fmt)?
             }
         }

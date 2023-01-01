@@ -20,15 +20,19 @@ pub mod diagnostics;
 mod formatter;
 mod javascript;
 pub mod linter;
+mod parse;
+mod visitor;
 
 use crate::configuration::diagnostics::from_serde_error_to_range;
-pub use crate::configuration::diagnostics::ConfigurationError;
+pub use crate::configuration::diagnostics::ConfigurationDiagnostic;
+pub use crate::configuration::parse::parse_configuration_from_json;
 use crate::settings::{LanguagesSettings, LinterSettings};
 pub use formatter::{FormatterConfiguration, PlainIndentStyle};
 pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
 pub use linter::{LinterConfiguration, RuleConfiguration, Rules};
 use rome_analyze::{AnalyzerConfiguration, AnalyzerRules, MetadataRegistry};
 use rome_js_analyze::metadata;
+use rome_json_syntax::JsonRoot;
 
 /// The configuration that is contained inside the file `rome.json`
 #[derive(Debug, Deserialize, Serialize)]
@@ -72,12 +76,24 @@ impl Default for Configuration {
 }
 
 impl Configuration {
+    const KNOWN_KEYS: &'static [&'static str] =
+        &["files", "linter", "formatter", "javascript", "$schema"];
+}
+
+impl Configuration {
     pub fn is_formatter_disabled(&self) -> bool {
         self.formatter.as_ref().map(|f| !f.enabled).unwrap_or(false)
     }
 
     pub fn is_linter_disabled(&self) -> bool {
         self.linter.as_ref().map(|f| !f.enabled).unwrap_or(false)
+    }
+
+    /// It creates a new [Configuration] from a JSON AST
+    pub fn from_json_ast(root: JsonRoot) -> Result<Self, ConfigurationDiagnostic> {
+        let mut configuration = Configuration::default();
+        parse_configuration_from_json(root, &mut configuration)?;
+        Ok(configuration)
     }
 }
 
@@ -98,6 +114,10 @@ pub struct FilesConfiguration {
         serialize_with = "crate::serialize_set_of_strings"
     )]
     pub ignore: Option<IndexSet<String>>,
+}
+
+impl FilesConfiguration {
+    const KNOWN_KEYS: &'static [&'static str] = &["maxSize", "ignore"];
 }
 
 /// This function is responsible to load the rome configuration.
@@ -123,15 +143,14 @@ pub fn load_config(
         Ok(mut file) => {
             let mut buffer = String::new();
             file.read_to_string(&mut buffer).map_err(|_| {
-                WorkspaceError::CantReadFile(format!("{}", configuration_path.display()))
+                WorkspaceError::cant_read_file(format!("{}", configuration_path.display()))
             })?;
 
             let configuration: Configuration = serde_json::from_str(&buffer).map_err(|err| {
-                WorkspaceError::Configuration(ConfigurationError::DeserializationError {
-                    message: err.to_string(),
-                    text_range: from_serde_error_to_range(&err, &buffer),
-                    input: buffer.to_string(),
-                })
+                WorkspaceError::Configuration(ConfigurationDiagnostic::new_deserialization_error(
+                    err.to_string(),
+                    from_serde_error_to_range(&err, &buffer),
+                ))
             })?;
 
             Ok(Some(configuration))
@@ -141,7 +160,7 @@ pub fn load_config(
             // In case we don't fine the file, we swallow the error and we continue; not having
             // a file should not be a cause of error (for now)
             if err.kind() != ErrorKind::NotFound {
-                return Err(WorkspaceError::CantReadFile(format!(
+                return Err(WorkspaceError::cant_read_file(format!(
                     "{}",
                     configuration_path.display()
                 )));
@@ -173,9 +192,9 @@ pub fn create_config(
 
     let mut config_file = fs.open_with_options(&path, options).map_err(|err| {
         if err.kind() == ErrorKind::AlreadyExists {
-            WorkspaceError::Configuration(ConfigurationError::ConfigAlreadyExists)
+            WorkspaceError::Configuration(ConfigurationDiagnostic::new_already_exists())
         } else {
-            WorkspaceError::CantReadFile(format!("{}", path.display()))
+            WorkspaceError::cant_read_file(format!("{}", path.display()))
         }
     })?;
 
@@ -186,12 +205,13 @@ pub fn create_config(
         configuration.schema = schema_path.to_str().map(String::from);
     }
 
-    let contents = serde_json::to_string_pretty(&configuration)
-        .map_err(|_| WorkspaceError::Configuration(ConfigurationError::SerializationError))?;
+    let contents = serde_json::to_string_pretty(&configuration).map_err(|_| {
+        WorkspaceError::Configuration(ConfigurationDiagnostic::new_serialization_error())
+    })?;
 
     config_file
         .set_content(contents.as_bytes())
-        .map_err(|_| WorkspaceError::CantReadFile(format!("{}", path.display())))?;
+        .map_err(|_| WorkspaceError::cant_read_file(format!("{}", path.display())))?;
 
     Ok(())
 }

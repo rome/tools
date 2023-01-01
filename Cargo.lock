@@ -1953,6 +1953,7 @@ dependencies = [
  "schemars",
  "serde",
  "serde_json",
+ "tests_macros",
  "tracing",
 ]
 
