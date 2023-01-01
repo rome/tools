@@ -6,7 +6,7 @@ mod formatter;
 mod javascript;
 mod linter;
 
-use crate::configuration::diagnostics::{Deserialization, DeserializationAdvice};
+use crate::configuration::diagnostics::{DeserializationAdvice, DeserializationDiagnostic};
 use crate::configuration::visitor::VisitConfigurationNode;
 use crate::ConfigurationDiagnostic;
 use indexmap::IndexSet;
@@ -334,23 +334,17 @@ fn emit_diagnostic_form_number(
     value_range: TextRange,
     maximum: impl rome_console::fmt::Display,
 ) -> ConfigurationDiagnostic {
-    if value_text.starts_with('-') {
-        ConfigurationDiagnostic::Deserialization(Deserialization {
-            range: Some(value_range),
-            reason: markup! {{parse_error.to_string()}}.to_owned(),
-            deserialization_advice: DeserializationAdvice {
-                known_keys: None,
-                hint: Some(markup! {"Value can't be negative"}.to_owned()),
-            },
-        })
+    let mut diagnostic =
+        DeserializationDiagnostic::new(parse_error.to_string()).with_range(value_range);
+    diagnostic = if value_text.starts_with('-') {
+        diagnostic
+            .with_advice(DeserializationAdvice::default().note(markup! {"Value can't be negative"}))
     } else {
-        ConfigurationDiagnostic::Deserialization(Deserialization {
-            range: Some(value_range),
-            reason: markup! {{parse_error.to_string()}}.to_owned(),
-            deserialization_advice: DeserializationAdvice {
-                known_keys: None,
-                hint: Some(markup! {"Maximum value accepted is "{{maximum}}}.to_owned()),
-            },
-        })
-    }
+        diagnostic.with_advice(
+            DeserializationAdvice::default()
+                .note(markup! {"Maximum value accepted is "{{maximum}}}),
+        )
+    };
+
+    ConfigurationDiagnostic::Deserialization(diagnostic)
 }

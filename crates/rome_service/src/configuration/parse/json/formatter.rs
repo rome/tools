@@ -1,4 +1,4 @@
-use crate::configuration::diagnostics::{Deserialization, DeserializationAdvice};
+use crate::configuration::diagnostics::{DeserializationAdvice, DeserializationDiagnostic};
 use crate::configuration::parse::json::{
     has_only_known_keys, with_only_known_variants, VisitConfigurationAsJson,
 };
@@ -45,16 +45,14 @@ impl VisitConfigurationNode<JsonLanguage> for FormatterConfiguration {
             "lineWidth" => {
                 let line_width = self.map_to_u16(&value, name_text, LineWidth::MAX)?;
                 self.line_width = LineWidth::try_from(line_width).map_err(|err| {
-                    ConfigurationDiagnostic::Deserialization(Deserialization {
-                        reason: markup! {{err.to_string()}}.to_owned(),
-                        range: Some(value.range()),
-                        deserialization_advice: DeserializationAdvice {
-                            hint: Some(
-                                markup! {"Maximum value accepted is "{{LineWidth::MAX}}}.to_owned(),
+                    ConfigurationDiagnostic::Deserialization(
+                        DeserializationDiagnostic::new(err.to_string())
+                            .with_range(value.range())
+                            .with_advice(
+                                DeserializationAdvice::default()
+                                    .note(markup! {"Maximum value accepted is "{{LineWidth::MAX}}}),
                             ),
-                            ..DeserializationAdvice::default()
-                        },
-                    })
+                    )
                 })?;
             }
             _ => {}

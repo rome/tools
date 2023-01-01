@@ -2,8 +2,8 @@ use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
 use rome_diagnostics::location::AsSpan;
 use rome_diagnostics::{
-    Advices, Category, Diagnostic, DiagnosticTags, LineIndexBuf, Location, LogCategory, Severity,
-    Visit,
+    Advices, Category, Diagnostic, DiagnosticTags, LineIndexBuf, Location, LogCategory,
+    MessageAndDescription, Severity, Visit,
 };
 use rome_rowan::{SyntaxError, TextRange, TextSize};
 use serde::{Deserialize, Serialize};
@@ -22,7 +22,7 @@ pub enum ConfigurationDiagnostic {
     /// - syntax error
     /// - incorrect fields
     /// - incorrect values
-    Deserialization(Deserialization),
+    Deserialization(DeserializationDiagnostic),
 
     /// Thrown when the pattern inside the `ignore` field errors
     InvalidIgnorePattern(InvalidIgnorePattern),
@@ -30,19 +30,19 @@ pub enum ConfigurationDiagnostic {
 
 impl From<SyntaxError> for ConfigurationDiagnostic {
     fn from(_: SyntaxError) -> Self {
-        ConfigurationDiagnostic::Deserialization(Deserialization {
+        ConfigurationDiagnostic::Deserialization(DeserializationDiagnostic {
             deserialization_advice: DeserializationAdvice::default(),
             range: None,
-            reason: markup! {"Syntax Error"}.to_owned(),
+            reason: markup! {"Syntax Error"}.to_owned().into(),
         })
     }
 }
 
 impl ConfigurationDiagnostic {
     pub(crate) fn new_deserialization_error(reason: impl Display, span: impl AsSpan) -> Self {
-        Self::Deserialization(Deserialization {
+        Self::Deserialization(DeserializationDiagnostic {
             range: span.as_span(),
-            reason: markup! {{reason}}.to_owned(),
+            reason: MessageAndDescription::from(markup! {{reason}}.to_owned()),
             deserialization_advice: DeserializationAdvice::default(),
         })
     }
@@ -52,21 +52,14 @@ impl ConfigurationDiagnostic {
         range: impl AsSpan,
         known_members: &[&str],
     ) -> Self {
-        Self::Deserialization(Deserialization {
+        Self::Deserialization(DeserializationDiagnostic {
             range: range.as_span(),
             reason: markup!("Found an extraneous key "<Emphasis>{{ key_name }}</Emphasis> )
-                .to_owned(),
+                .to_owned()
+                .into(),
 
-            deserialization_advice: DeserializationAdvice {
-                known_keys: Some((
-                    markup! { "Accepted keys" }.to_owned(),
-                    known_members
-                        .iter()
-                        .map(|message| markup! {{message}}.to_owned())
-                        .collect::<Vec<_>>(),
-                )),
-                ..DeserializationAdvice::default()
-            },
+            deserialization_advice: DeserializationAdvice::default()
+                .note_with_list("Accepted keys", known_members),
         })
     }
 
@@ -75,20 +68,13 @@ impl ConfigurationDiagnostic {
         range: impl AsSpan,
         known_variants: &[&str],
     ) -> Self {
-        Self::Deserialization(Deserialization {
+        Self::Deserialization(DeserializationDiagnostic {
             reason: markup!("Found an extraneous variant "<Emphasis>{{ variant_name }}</Emphasis> )
-                .to_owned(),
+                .to_owned()
+                .into(),
             range: range.as_span(),
-            deserialization_advice: DeserializationAdvice {
-                known_keys: Some((
-                    markup! { "Accepted values" }.to_owned(),
-                    known_variants
-                        .iter()
-                        .map(|message| markup! {{message}}.to_owned())
-                        .collect::<Vec<_>>(),
-                )),
-                ..DeserializationAdvice::default()
-            },
+            deserialization_advice: DeserializationAdvice::default()
+                .note_with_list("Accepted values", known_variants),
         })
     }
 
@@ -101,31 +87,32 @@ impl ConfigurationDiagnostic {
         expected_type: impl Display,
         range: impl AsSpan,
     ) -> Self {
-        Self::Deserialization(Deserialization {
+        Self::Deserialization(DeserializationDiagnostic {
             range: range.as_span(),
             reason: markup! {
                 "The value of key "<Emphasis>{{key_name}}</Emphasis>" is incorrect. Expected "<Emphasis>{{expected_type}}</Emphasis>
-            }.to_owned(),
+            }.to_owned().into(),
             deserialization_advice: DeserializationAdvice::default(),
         })
     }
 
     pub(crate) fn new_incorrect_type(expected_type: impl Display, range: impl AsSpan) -> Self {
-        Self::Deserialization(Deserialization {
+        Self::Deserialization(DeserializationDiagnostic {
             range: range.as_span(),
             reason: markup! {
                 "Incorrect type, expected a "<Emphasis>{{expected_type}}</Emphasis>
             }
-            .to_owned(),
+            .to_owned()
+            .into(),
 
             deserialization_advice: DeserializationAdvice::default(),
         })
     }
 
     pub(crate) fn new_invalid_ignore_pattern(pattern: impl Display, reason: impl Display) -> Self {
-        Self::Deserialization(Deserialization {
+        Self::Deserialization(DeserializationDiagnostic {
             reason:
-                markup! { "Couldn't parse the pattern "<Emphasis>{{pattern}}</Emphasis>", reason: "<Emphasis>{{reason}}</Emphasis>"" }.to_owned()
+                markup! { "Couldn't parse the pattern "<Emphasis>{{pattern}}</Emphasis>", reason: "<Emphasis>{{reason}}</Emphasis>"" }.to_owned().into()
             ,
             range: None,
             deserialization_advice: DeserializationAdvice::default()
@@ -133,16 +120,20 @@ impl ConfigurationDiagnostic {
     }
 
     pub(crate) fn new_already_exists() -> Self {
-        Self::Deserialization(Deserialization {
-            reason: markup!("It seems that a configuration file already exists").to_owned(),
+        Self::Deserialization(DeserializationDiagnostic {
+            reason: markup!("It seems that a configuration file already exists")
+                .to_owned()
+                .into(),
             range: None,
             deserialization_advice: DeserializationAdvice::default(),
         })
     }
 
     pub(crate) fn unexpected(span: impl AsSpan) -> Self {
-        Self::Deserialization(Deserialization {
-            reason: markup!("Unexpected content inside the configuration file").to_owned(),
+        Self::Deserialization(DeserializationDiagnostic {
+            reason: markup!("Unexpected content inside the configuration file")
+                .to_owned()
+                .into(),
 
             range: span.as_span(),
             deserialization_advice: DeserializationAdvice::default(),
@@ -320,34 +311,70 @@ pub struct InvalidIgnorePattern {
     category = "configuration",
     severity = Error
 )]
-pub struct Deserialization {
+pub struct DeserializationDiagnostic {
     #[message]
-    pub(crate) reason: MarkupBuf,
+    #[description]
+    reason: MessageAndDescription,
     #[location(span)]
-    pub(crate) range: Option<TextRange>,
+    range: Option<TextRange>,
     #[advice]
-    pub(crate) deserialization_advice: DeserializationAdvice,
+    deserialization_advice: DeserializationAdvice,
+}
+
+impl DeserializationDiagnostic {
+    pub(crate) fn new(reason: impl Display) -> Self {
+        Self {
+            reason: markup! {{reason}}.to_owned().into(),
+            range: None,
+            deserialization_advice: DeserializationAdvice::default(),
+        }
+    }
+
+    pub(crate) fn with_range(mut self, span: impl AsSpan) -> Self {
+        self.range = span.as_span();
+        self
+    }
+
+    pub(crate) fn with_advice(mut self, advice: DeserializationAdvice) -> Self {
+        self.deserialization_advice = advice;
+        self
+    }
 }
 
 #[derive(Debug, Default, Deserialize, Serialize)]
 pub struct DeserializationAdvice {
-    pub(crate) hint: Option<MarkupBuf>,
-    pub(crate) known_keys: Option<(MarkupBuf, Vec<MarkupBuf>)>,
+    pub(crate) notes: Vec<(MarkupBuf, Vec<MarkupBuf>)>,
+}
+
+impl DeserializationAdvice {
+    pub(crate) fn note(mut self, message: impl Display) -> Self {
+        self.notes
+            .push((markup! {{message}}.to_owned(), Vec::new()));
+        self
+    }
+
+    pub(crate) fn note_with_list(mut self, message: impl Display, list: &[impl Display]) -> Self {
+        self.notes.push((
+            markup! {{message}}.to_owned(),
+            list.iter()
+                .map(|message| markup! {{message}}.to_owned())
+                .collect::<Vec<_>>(),
+        ));
+        self
+    }
 }
 
 impl Advices for DeserializationAdvice {
     fn record(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
-        if let Some(hint) = self.hint.as_ref() {
-            visitor.record_log(LogCategory::Info, hint)?;
-        }
-
-        if let Some((message, known_keys)) = self.known_keys.as_ref() {
+        for (message, known_keys) in &self.notes {
             visitor.record_log(LogCategory::Info, message)?;
-            let list: Vec<_> = known_keys
-                .iter()
-                .map(|message| message as &dyn Display)
-                .collect();
-            visitor.record_list(&list)?;
+            if !known_keys.is_empty() {
+                let list: Vec<_> = known_keys
+                    .iter()
+                    .map(|message| message as &dyn Display)
+                    .collect();
+                visitor.record_list(&list)?;
+            }
         }
 
         Ok(())
@@ -357,7 +384,8 @@ impl Advices for DeserializationAdvice {
 #[cfg(test)]
 mod test {
     use crate::configuration::diagnostics::{
-        from_serde_error_to_range, ConfigurationDiagnostic, Deserialization, DeserializationAdvice,
+        from_serde_error_to_range, ConfigurationDiagnostic, DeserializationAdvice,
+        DeserializationDiagnostic,
     };
     use crate::{Configuration, MatchOptions, Matcher};
     use rome_diagnostics::{print_diagnostic_to_string, DiagnosticExt, Error};
@@ -375,9 +403,9 @@ mod test {
 
     #[test]
     fn diagnostic_size() {
-        assert_eq!(std::mem::size_of::<ConfigurationDiagnostic>(), 112);
-        assert_eq!(std::mem::size_of::<Deserialization>(), 112);
-        assert_eq!(std::mem::size_of::<DeserializationAdvice>(), 72);
+        assert_eq!(std::mem::size_of::<ConfigurationDiagnostic>(), 88);
+        assert_eq!(std::mem::size_of::<DeserializationDiagnostic>(), 88);
+        assert_eq!(std::mem::size_of::<DeserializationAdvice>(), 24);
     }
 
     #[test]

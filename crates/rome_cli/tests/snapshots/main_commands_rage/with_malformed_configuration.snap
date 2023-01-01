@@ -33,8 +33,7 @@ Environment:
 
 Rome Configuration:
   Status:               Failed to load
-  Error:                Rome couldn't load the configuration file, here's why: 
-expected value at line 4 column 3
+  Error:                expected value at line 4 column 3
 
 Server:
   Version:              0.0.0

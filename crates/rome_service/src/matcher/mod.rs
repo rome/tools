@@ -1,11 +1,11 @@
 pub mod pattern;
 
 pub use pattern::{MatchOptions, Pattern, PatternError};
+use rome_console::markup;
+use rome_diagnostics::Diagnostic;
 use std::collections::HashMap;
 use std::path::Path;
 use std::sync::RwLock;
-use rome_console::markup;
-use rome_diagnostics::Diagnostic;
 
 /// A data structure to use when there's need to match a string or a path a against
 /// a unix shell style patterns
