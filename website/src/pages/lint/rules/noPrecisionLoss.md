@@ -119,3 +119,7 @@ const x = 9007199254740991
 const x = 9007_1992547409_91
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

@@ -157,3 +157,7 @@ let a = 1, b = 2;
 b = 3;
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

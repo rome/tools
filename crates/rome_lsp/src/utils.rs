@@ -16,7 +16,7 @@ use std::collections::HashMap;
 use std::fmt::{Debug, Display};
 use std::io;
 use tower_lsp::jsonrpc::Error as LspError;
-use tower_lsp::lsp_types::{self as lsp};
+use tower_lsp::lsp_types::{self as lsp, CodeDescription, Url};
 use tracing::error;
 
 pub(crate) fn position(line_index: &LineIndex, offset: TextSize) -> Result<lsp::Position> {
@@ -217,6 +217,14 @@ pub(crate) fn diagnostic_to_lsp<D: Diagnostic>(
         .category()
         .map(|category| lsp::NumberOrString::String(category.name().to_string()));
 
+    let code_description = diagnostic
+        .category()
+        .and_then(|category| category.link())
+        .and_then(|link| {
+            let href = Url::parse(link).ok()?;
+            Some(CodeDescription { href })
+        });
+
     let message = PrintDescription(&diagnostic).to_string();
     ensure!(!message.is_empty(), "diagnostic description is empty");
 
@@ -248,7 +256,7 @@ pub(crate) fn diagnostic_to_lsp<D: Diagnostic>(
         }
     };
 
-    Ok(lsp::Diagnostic::new(
+    let mut diagnostic = lsp::Diagnostic::new(
         span,
         Some(severity),
         code,
@@ -256,7 +264,9 @@ pub(crate) fn diagnostic_to_lsp<D: Diagnostic>(
         message,
         related_information,
         tags,
-    ))
+    );
+    diagnostic.code_description = code_description;
+    Ok(diagnostic)
 }
 
 struct RelatedInformationVisitor<'a> {

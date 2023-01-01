@@ -69,3 +69,7 @@ new Promise(async function foo(resolve, reject) {})
   new Foo((( (resolve, reject) => {} )))
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

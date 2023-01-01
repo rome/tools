@@ -81,3 +81,7 @@ this rule suggests users remove the `accessKey` attribute on elements.
 - [WebAIM: Keyboard Accessibility - Accesskey](https://webaim.org/techniques/keyboard/accesskey#spec)
 - [MDN `accesskey` documentation](https://developer.mozilla.org/docs/Web/HTML/Global_attributes/accesskey)
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

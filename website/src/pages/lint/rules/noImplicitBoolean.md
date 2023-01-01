@@ -51,3 +51,7 @@ Disallow implicit `true` values on JSX boolean attributes
 <input disabled='false' />
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

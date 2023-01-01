@@ -65,3 +65,7 @@ It asserts that alternative text to images or areas, help to rely on to screen r
 <input type="image" src="image.png" aria-labelledby="someId" />
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

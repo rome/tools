@@ -121,3 +121,7 @@ This allows users to choose a language other than the default.
 
 [WCAG 3.1.1](https://www.w3.org/WAI/WCAG21/Understanding/language-of-page)
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

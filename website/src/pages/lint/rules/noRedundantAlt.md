@@ -72,3 +72,7 @@ hidden, then the rule will always succeed.
 </>
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

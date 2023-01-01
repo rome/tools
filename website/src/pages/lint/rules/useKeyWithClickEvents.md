@@ -76,3 +76,7 @@ Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, o
 <button onClick={() => console.log("test")}>Submit</button>
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

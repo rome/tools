@@ -71,3 +71,7 @@ Number.parseInt(foo);
 Number.parseInt(foo, 2);
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

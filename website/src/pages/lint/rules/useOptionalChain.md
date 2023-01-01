@@ -160,3 +160,7 @@ foo || foo.bar;
 foo["some long"] && foo["some long string"].baz
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

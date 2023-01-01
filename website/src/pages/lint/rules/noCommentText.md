@@ -79,3 +79,7 @@ const a1 = <div>{/** comment */}</div>;
 const a2 = <div className={"cls" /* comment */}></div>;
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

@@ -99,3 +99,7 @@ Prevent extra closing tags for components without children
 <Foo.bar>child</Foo.bar>
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)
