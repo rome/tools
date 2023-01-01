@@ -64,7 +64,7 @@ impl Rule for NoConstEnum {
         ).note(
             "Const enums are not supported by bundlers and are incompatible with the 'isolatedModules' mode. Their use can lead to import inexistent values."
         ).note(markup! {
-            "See "<Hyperlink href="https://www.typescriptlang.org/docs/handbook/enums.html#const-enum-pitfalls">"TypeSCript Docs"</Hyperlink>" for more details."
+            "See "<Hyperlink href="https://www.typescriptlang.org/docs/handbook/enums.html#const-enum-pitfalls">"TypeScript Docs"</Hyperlink>" for more details."
         }))
     }
 

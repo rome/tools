@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 92
 expression: noConstEnum.ts
 ---
 # Input
@@ -43,7 +42,7 @@ noConstEnum.ts:4:1 lint/nursery/noConstEnum  FIXABLE  ━━━━━━━━�
   
   i Const enums are not supported by bundlers and are incompatible with the 'isolatedModules' mode. Their use can lead to import inexistent values.
   
-  i See TypeSCript Docs for more details.
+  i See TypeScript Docs for more details.
   
   i Safe fix: Turn the const enum into a regular enum.
   
@@ -70,7 +69,7 @@ noConstEnum.ts:9:20 lint/nursery/noConstEnum  FIXABLE  ━━━━━━━━�
   
   i Const enums are not supported by bundlers and are incompatible with the 'isolatedModules' mode. Their use can lead to import inexistent values.
   
-  i See TypeSCript Docs for more details.
+  i See TypeScript Docs for more details.
   
   i Safe fix: Turn the const enum into a regular enum.
   
