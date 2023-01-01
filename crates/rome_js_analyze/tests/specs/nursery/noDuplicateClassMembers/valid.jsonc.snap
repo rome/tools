@@ -1,0 +1,246 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 92
+expression: valid.jsonc
+---
+# Input
+```js
+class A { foo() {} bar() {} }
+```
+
+# Input
+```js
+class A { static foo() {} foo() {} }
+```
+
+# Input
+```js
+class A { get foo() {} set foo(value) {} }
+```
+
+# Input
+```js
+class A { static foo() {} get foo() {} set foo(value) {} }
+```
+
+# Input
+```js
+class A { foo() { } } class B { foo() { } }
+```
+
+# Input
+```js
+class A { [foo]() {} foo() {} }
+```
+
+# Input
+```js
+class A { 'foo'() {} 'bar'() {} baz() {} }
+```
+
+# Input
+```js
+class A { *'foo'() {} *'bar'() {} *baz() {} }
+```
+
+# Input
+```js
+class A { get 'foo'() {} get 'bar'() {} get baz() {} }
+```
+
+# Input
+```js
+class A { 1() {} 2() {} }
+```
+
+# Input
+```js
+class A { ['foo']() {} ['bar']() {} }
+```
+
+# Input
+```js
+class A { [`foo`]() {} [`bar`]() {} }
+```
+
+# Input
+```js
+class A { [12]() {} [123]() {} }
+```
+
+# Input
+```js
+class A { [1.0]() {} ['1.0']() {} }
+```
+
+# Input
+```js
+class A { [0x1]() {} [`0x1`]() {} }
+```
+
+# Input
+```js
+class A { [null]() {} ['']() {} }
+```
+
+# Input
+```js
+class A { get ['foo']() {} set ['foo'](value) {} }
+```
+
+# Input
+```js
+class A { ['foo']() {} static ['foo']() {} }
+```
+
+# Input
+```js
+class A { ['constructor']() {} constructor() {} }
+```
+
+# Input
+```js
+class A { 'constructor'() {} [`constructor`]() {} }
+```
+
+# Input
+```js
+class A { constructor() {} get [`constructor`]() {} }
+```
+
+# Input
+```js
+class A { 'constructor'() {} set ['constructor'](value) {} }
+```
+
+# Input
+```js
+class A { ['foo' + '']() {} ['foo']() {} }
+```
+
+# Input
+```js
+class A { [`foo${''}`]() {} [`foo`]() {} }
+```
+
+# Input
+```js
+class A { [-1]() {} ['-1']() {} }
+```
+
+# Input
+```js
+class A { [foo]() {} [foo]() {} }
+```
+
+# Input
+```js
+class A { 10() {} 1e1() {} }
+```
+
+# Input
+```js
+class A { ['foo']() {} ['foo']() {} }
+```
+
+# Input
+```js
+class A { static ['foo']() {} static foo() {} }
+```
+
+# Input
+```js
+class A { [`foo`]() {} [`foo`]() {} }
+```
+
+# Input
+```js
+class A { get [`foo`]() {} 'foo'() {} }
+```
+
+# Input
+```js
+class A { static [`constructor`]() {} static constructor() {} }
+```
+
+# Input
+```js
+class A { [123]() {} [123]() {} }
+```
+
+# Input
+```js
+class A { [0x10]() {} 16() {} }
+```
+
+# Input
+```js
+class A { [100]() {} [1e2]() {} }
+```
+
+# Input
+```js
+class A { [123.00]() {} [`123`]() {} }
+```
+
+# Input
+```js
+class A { [123n]() {} 123() {} }
+```
+
+# Input
+```js
+class A { [null]() {} 'null'() {} }
+```
+
+# Input
+```js
+class A { set 'foo'(value) {} set ['foo'](val) {} }
+```
+
+# Input
+```js
+class A { ''() {} ['']() {} }
+```
+
+# Input
+```js
+class A { static get [`foo`]() {} static get ['foo']() {} }
+```
+
+# Input
+```js
+class A { foo() {} [`foo`]() {} }
+```
+
+# Input
+```js
+class A { static 'foo'() {} static [`foo`]() {} }
+```
+
+# Input
+```js
+class A { ['constructor']() {} ['constructor']() {} }
+```
+
+# Input
+```js
+class A { static '65'() {} static [0o101]() {} }
+```
+
+# Input
+```js
+class A { foo; static foo; }
+```
+
+# Input
+```js
+class A { foo; #foo; }
+```
+
+# Input
+```js
+class A { '#foo'; #foo; }
+```
+
+

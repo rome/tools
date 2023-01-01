@@ -1,0 +1,392 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 92
+expression: invalid.jsonc
+---
+# Input
+```js
+class A { foo() {} foo() {} }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:11 lint/nursery/noDuplicateClassMembers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class member is later overwritten by another class member.
+  
+  > 1 │ class A { foo() {} foo() {} }
+      │           ^^^^^^^^
+  
+  i Overwritten with this class member:
+  
+  > 1 │ class A { foo() {} foo() {} }
+      │                    ^^^^^^^^
+  
+  i If a class member with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the class and previous definitions are ignored.
+  
+  i Suggested fix: Remove the overwritten class member.
+  
+    1 │ class·A·{·foo()·{}·foo()·{}·}
+      │                    --------- 
+
+```
+
+# Input
+```js
+const C = class A { foo() {} foo() {} };
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:21 lint/nursery/noDuplicateClassMembers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class member is later overwritten by another class member.
+  
+  > 1 │ const C = class A { foo() {} foo() {} };
+      │                     ^^^^^^^^
+  
+  i Overwritten with this class member:
+  
+  > 1 │ const C = class A { foo() {} foo() {} };
+      │                              ^^^^^^^^
+  
+  i If a class member with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the class and previous definitions are ignored.
+  
+  i Suggested fix: Remove the overwritten class member.
+  
+    1 │ const·C·=·class·A·{·foo()·{}·foo()·{}·};
+      │                              ---------  
+
+```
+
+# Input
+```js
+class A { 'foo'() {} 'foo'() {} }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:11 lint/nursery/noDuplicateClassMembers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class member is later overwritten by another class member.
+  
+  > 1 │ class A { 'foo'() {} 'foo'() {} }
+      │           ^^^^^^^^^^
+  
+  i Overwritten with this class member:
+  
+  > 1 │ class A { 'foo'() {} 'foo'() {} }
+      │                      ^^^^^^^^^^
+  
+  i If a class member with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the class and previous definitions are ignored.
+  
+  i Suggested fix: Remove the overwritten class member.
+  
+    1 │ class·A·{·'foo'()·{}·'foo'()·{}·}
+      │                      ----------- 
+
+```
+
+# Input
+```js
+class A { static constructor() {} static 'constructor'() {} }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:11 lint/nursery/noDuplicateClassMembers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class member is later overwritten by another class member.
+  
+  > 1 │ class A { static constructor() {} static 'constructor'() {} }
+      │           ^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Overwritten with this class member:
+  
+  > 1 │ class A { static constructor() {} static 'constructor'() {} }
+      │                                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i If a class member with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the class and previous definitions are ignored.
+  
+  i Suggested fix: Remove the overwritten class member.
+  
+    1 │ class·A·{·static·constructor()·{}·static·'constructor'()·{}·}
+      │                  ------------------------                    
+
+```
+
+# Input
+```js
+class A { foo() {} foo() {} foo() {} }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:11 lint/nursery/noDuplicateClassMembers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class member is later overwritten by another class member.
+  
+  > 1 │ class A { foo() {} foo() {} foo() {} }
+      │           ^^^^^^^^
+  
+  i Overwritten with this class member:
+  
+  > 1 │ class A { foo() {} foo() {} foo() {} }
+      │                             ^^^^^^^^
+  
+  i If a class member with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the class and previous definitions are ignored.
+  
+  i Suggested fix: Remove the overwritten class member.
+  
+    1 │ class·A·{·foo()·{}·foo()·{}·foo()·{}·}
+      │                             --------- 
+
+```
+
+```
+invalid.jsonc:1:20 lint/nursery/noDuplicateClassMembers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class member is later overwritten by another class member.
+  
+  > 1 │ class A { foo() {} foo() {} foo() {} }
+      │                    ^^^^^^^^
+  
+  i Overwritten with this class member:
+  
+  > 1 │ class A { foo() {} foo() {} foo() {} }
+      │                             ^^^^^^^^
+  
+  i If a class member with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the class and previous definitions are ignored.
+  
+  i Suggested fix: Remove the overwritten class member.
+  
+    1 │ class·A·{·foo()·{}·foo()·{}·foo()·{}·}
+      │                             --------- 
+
+```
+
+# Input
+```js
+class A { static foo() {} static foo() {} }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:11 lint/nursery/noDuplicateClassMembers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class member is later overwritten by another class member.
+  
+  > 1 │ class A { static foo() {} static foo() {} }
+      │           ^^^^^^^^^^^^^^^
+  
+  i Overwritten with this class member:
+  
+  > 1 │ class A { static foo() {} static foo() {} }
+      │                           ^^^^^^^^^^^^^^^
+  
+  i If a class member with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the class and previous definitions are ignored.
+  
+  i Suggested fix: Remove the overwritten class member.
+  
+    1 │ class·A·{·static·foo()·{}·static·foo()·{}·}
+      │                           ---------------- 
+
+```
+
+# Input
+```js
+class A { foo() {} get foo() {} }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:11 lint/nursery/noDuplicateClassMembers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class member is later overwritten by another class member.
+  
+  > 1 │ class A { foo() {} get foo() {} }
+      │           ^^^^^^^^
+  
+  i Overwritten with this class member:
+  
+  > 1 │ class A { foo() {} get foo() {} }
+      │                    ^^^^^^^^^^^^
+  
+  i If a class member with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the class and previous definitions are ignored.
+  
+  i Suggested fix: Remove the overwritten class member.
+  
+    1 │ class·A·{·foo()·{}·get·foo()·{}·}
+      │           ---------              
+
+```
+
+# Input
+```js
+class A { set foo(value) {} foo() {} }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:11 lint/nursery/noDuplicateClassMembers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class member is later overwritten by another class member.
+  
+  > 1 │ class A { set foo(value) {} foo() {} }
+      │           ^^^^^^^^^^^^^^^^^
+  
+  i Overwritten with this class member:
+  
+  > 1 │ class A { set foo(value) {} foo() {} }
+      │                             ^^^^^^^^
+  
+  i If a class member with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the class and previous definitions are ignored.
+  
+  i Suggested fix: Remove the overwritten class member.
+  
+    1 │ class·A·{·set·foo(value)·{}·foo()·{}·}
+      │           ------------------          
+
+```
+
+# Input
+```js
+class A { get foo() {} foo() {} set foo(value) {} }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:24 lint/nursery/noDuplicateClassMembers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class member is later overwritten by another class member.
+  
+  > 1 │ class A { get foo() {} foo() {} set foo(value) {} }
+      │                        ^^^^^^^^
+  
+  i Overwritten with this class member:
+  
+  > 1 │ class A { get foo() {} foo() {} set foo(value) {} }
+      │                                 ^^^^^^^^^^^^^^^^^
+  
+  i If a class member with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the class and previous definitions are ignored.
+  
+  i Suggested fix: Remove the overwritten class member.
+  
+    1 │ class·A·{·get·foo()·{}·foo()·{}·set·foo(value)·{}·}
+      │                        ---------                   
+
+```
+
+# Input
+```js
+class A { foo; foo; }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:11 lint/nursery/noDuplicateClassMembers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class member is later overwritten by another class member.
+  
+  > 1 │ class A { foo; foo; }
+      │           ^^^^
+  
+  i Overwritten with this class member:
+  
+  > 1 │ class A { foo; foo; }
+      │                ^^^^
+  
+  i If a class member with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the class and previous definitions are ignored.
+  
+  i Suggested fix: Remove the overwritten class member.
+  
+    1 │ class·A·{·foo;·foo;·}
+      │                ----- 
+
+```
+
+# Input
+```js
+class A { foo; accessor foo; }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:11 lint/nursery/noDuplicateClassMembers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class member is later overwritten by another class member.
+  
+  > 1 │ class A { foo; accessor foo; }
+      │           ^^^^
+  
+  i Overwritten with this class member:
+  
+  > 1 │ class A { foo; accessor foo; }
+      │                ^^^^^^^^^^^^^
+  
+  i If a class member with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the class and previous definitions are ignored.
+  
+  i Suggested fix: Remove the overwritten class member.
+  
+    1 │ class·A·{·foo;·accessor·foo;·}
+      │           -----               
+
+```
+
+# Input
+```js
+class A { get foo () {} accessor foo; }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:11 lint/nursery/noDuplicateClassMembers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class member is later overwritten by another class member.
+  
+  > 1 │ class A { get foo () {} accessor foo; }
+      │           ^^^^^^^^^^^^^
+  
+  i Overwritten with this class member:
+  
+  > 1 │ class A { get foo () {} accessor foo; }
+      │                         ^^^^^^^^^^^^^
+  
+  i If a class member with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the class and previous definitions are ignored.
+  
+  i Suggested fix: Remove the overwritten class member.
+  
+    1 │ class·A·{·get·foo·()·{}·accessor·foo;·}
+      │           --------------               
+
+```
+
+# Input
+```js
+class A { set foo () {} accessor foo; }
+```
+
+# Diagnostics
+```
+invalid.jsonc:1:11 lint/nursery/noDuplicateClassMembers  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class member is later overwritten by another class member.
+  
+  > 1 │ class A { set foo () {} accessor foo; }
+      │           ^^^^^^^^^^^^^
+  
+  i Overwritten with this class member:
+  
+  > 1 │ class A { set foo () {} accessor foo; }
+      │                         ^^^^^^^^^^^^^
+  
+  i If a class member with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the class and previous definitions are ignored.
+  
+  i Suggested fix: Remove the overwritten class member.
+  
+    1 │ class·A·{·set·foo·()·{}·accessor·foo;·}
+      │           --------------               
+
+```
+
+
