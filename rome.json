@@ -1,15 +1,14 @@
 {
+	"files": {
+		"ignore": [
+			"website/build",
+			"dist",
+			"target"
+		]
+	},
 	"linter": {
 		"rules": {
 			"recommended": true
-		},
-		"ignore": [
-			"website/build"
-		]
-	},
-	"formatter": {
-		"ignore": [
-			"website/build"
-		]
+		}
 	}
 }

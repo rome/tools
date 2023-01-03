@@ -6,14 +6,12 @@ use crate::settings::{
 };
 use crate::workspace::GetSyntaxTreeResult;
 use crate::WorkspaceError;
-#[cfg(any(debug_assertions, target_family = "wasm"))]
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
 use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 use rome_parser::AnyParse;
-#[cfg(any(debug_assertions, target_family = "wasm"))]
 use rome_rowan::{TextRange, TextSize, TokenAtOffset};
 
 impl Language for JsonLanguage {
@@ -61,23 +59,13 @@ impl ExtensionHandler for JsonFileHandler {
                 debug_formatter_ir: Some(debug_formatter_ir),
             },
             analyzer: Default::default(),
-            formatter: formatter_capabilities(),
+            formatter: FormatterCapabilities {
+                format: Some(format),
+                format_range: Some(format_range),
+                format_on_type: Some(format_on_type),
+            },
         }
     }
-}
-
-#[cfg(any(debug_assertions, target_family = "wasm"))]
-fn formatter_capabilities() -> FormatterCapabilities {
-    FormatterCapabilities {
-        format: Some(format),
-        format_range: Some(format_range),
-        format_on_type: Some(format_on_type),
-    }
-}
-
-#[cfg(all(not(debug_assertions), not(target_family = "wasm")))]
-fn formatter_capabilities() -> FormatterCapabilities {
-    FormatterCapabilities::default()
 }
 
 fn parse(_: &RomePath, _: LanguageId, text: &str) -> AnyParse {
@@ -108,7 +96,6 @@ fn debug_formatter_ir(
     Ok(root_element.to_string())
 }
 
-#[cfg(any(debug_assertions, target_family = "wasm"))]
 #[tracing::instrument(level = "debug", skip(parse))]
 fn format(
     rome_path: &RomePath,
@@ -128,7 +115,6 @@ fn format(
     }
 }
 
-#[cfg(any(debug_assertions, target_family = "wasm"))]
 fn format_range(
     rome_path: &RomePath,
     parse: AnyParse,
@@ -142,7 +128,6 @@ fn format_range(
     Ok(printed)
 }
 
-#[cfg(any(debug_assertions, target_family = "wasm"))]
 fn format_on_type(
     rome_path: &RomePath,
     parse: AnyParse,
