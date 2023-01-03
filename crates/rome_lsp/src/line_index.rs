@@ -3,8 +3,9 @@
 //!
 //! Copied from rust-analyzer
 
-use std::cmp::Ordering;
+use std::{cmp::Ordering, ops::Range};
 
+use anyhow::{Context, Result};
 use rome_rowan::{TextRange, TextSize};
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -23,7 +24,9 @@ pub(crate) struct LineCol {
 }
 
 impl LineIndex {
-    pub(crate) fn new(text: &str) -> LineIndex {
+    pub(crate) fn new(text: impl Into<String>) -> LineIndex {
+        let text = text.into();
+
         let mut newlines = vec![0.into()];
 
         for (offset, c) in text.char_indices() {
@@ -33,10 +36,7 @@ impl LineIndex {
             }
         }
 
-        LineIndex {
-            text: text.into(),
-            newlines,
-        }
+        LineIndex { text, newlines }
     }
 
     pub(crate) fn line_col(&self, offset: TextSize) -> Option<LineCol> {
@@ -141,11 +141,84 @@ impl LineIndex {
     pub(crate) fn len(&self) -> u32 {
         self.newlines.len().try_into().unwrap_or(u32::MAX)
     }
+
+    /// Modify this [LineIndex] in place to remove the specified range, and replace it with the given string
+    pub(crate) fn replace_range(&mut self, range: TextRange, replace_with: &str) -> Result<()> {
+        let start = self.line_col(range.start()).with_context(|| {
+            format!(
+                "byte offset {:?} is larger than the document text length of {}",
+                range.start(),
+                self.text.len()
+            )
+        })?;
+
+        let end = self.line_col(range.end()).with_context(|| {
+            format!(
+                "byte offset {:?} is larger than the document text length of {}",
+                range.end(),
+                self.text.len()
+            )
+        })?;
+
+        let mut line_index = usize::try_from(start.line)? + 1;
+        let mut prev_end = usize::try_from(end.line)? + 1;
+
+        let mut text = replace_with;
+        let mut position = range.start();
+
+        while let Some(offset) = text.find('\n') {
+            let offset = offset + 1;
+            text = &text[offset..];
+
+            let offset = TextSize::try_from(offset)?;
+            position += offset;
+
+            if line_index < prev_end {
+                self.newlines[line_index] = position;
+            } else {
+                self.newlines.insert(line_index, position);
+            }
+
+            line_index += 1;
+        }
+
+        while line_index < prev_end {
+            self.newlines.remove(line_index);
+            prev_end -= 1;
+        }
+
+        let prev_len = range.len();
+        let next_len = TextSize::of(replace_with);
+
+        match prev_len.cmp(&next_len) {
+            Ordering::Less => {
+                while line_index < self.newlines.len() {
+                    self.newlines[line_index] += next_len - prev_len;
+                    line_index += 1;
+                }
+            }
+            Ordering::Equal => {}
+            Ordering::Greater => {
+                while line_index < self.newlines.len() {
+                    self.newlines[line_index] -= prev_len - next_len;
+                    line_index += 1;
+                }
+            }
+        }
+
+        let range: Range<usize> = range.into();
+        self.text.replace_range(range, replace_with);
+
+        Ok(())
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use rome_rowan::TextSize;
+    use std::ops::Range;
+
+    use proptest::prelude::*;
+    use rome_rowan::{TextRange, TextSize};
 
     use super::{LineCol, LineIndex};
 
@@ -213,5 +286,103 @@ mod tests {
         check_conversion!(line_index: LineCol { line: 0, col: 15 } => TextSize::from(21));
         check_conversion!(line_index: LineCol { line: 0, col: 26 } => TextSize::from(32));
         check_conversion!(line_index: LineCol { line: 0, col: 27 } => TextSize::from(33));
+    }
+
+    #[test]
+    fn replace_range_insert_line_1() {
+        let mut line_index = LineIndex::new("line 0\nline 1\nline2");
+
+        line_index
+            .replace_range(
+                TextRange::new(TextSize::from(7), TextSize::from(13)),
+                "line 1.1\nline 1.2",
+            )
+            .unwrap();
+
+        assert_eq!(
+            line_index,
+            LineIndex::new("line 0\nline 1.1\nline 1.2\nline2")
+        );
+    }
+
+    #[test]
+    fn replace_range_insert_line_2() {
+        let mut line_index = LineIndex::new("line 0\nline 1\nline2\nline 3");
+
+        line_index
+            .replace_range(
+                TextRange::new(TextSize::from(7), TextSize::from(19)),
+                "line 1.1\nline 1.2\nline 2.1\nline 2.2",
+            )
+            .unwrap();
+
+        assert_eq!(
+            line_index,
+            LineIndex::new("line 0\nline 1.1\nline 1.2\nline 2.1\nline 2.2\nline 3")
+        );
+    }
+
+    #[test]
+    fn replace_range_remove_line_1() {
+        let mut line_index = LineIndex::new("line 0\nline 1\nline2");
+
+        line_index
+            .replace_range(TextRange::new(TextSize::from(6), TextSize::from(13)), "")
+            .unwrap();
+
+        assert_eq!(line_index, LineIndex::new("line 0\nline2"));
+    }
+
+    #[test]
+    fn replace_range_remove_line_2() {
+        let mut line_index = LineIndex::new("line 0\nline 1\nline2");
+
+        line_index
+            .replace_range(TextRange::new(TextSize::from(7), TextSize::from(14)), "")
+            .unwrap();
+
+        assert_eq!(line_index, LineIndex::new("line 0\nline2"));
+    }
+
+    /// Property testing strategy that generates an arbitrary string, along with a valid text range within that string
+    fn text_with_range() -> impl Strategy<Value = (String, TextRange)> {
+        any::<String>()
+            .prop_flat_map(|text| {
+                let len = text.len().max(1);
+                (Just(text), 0..len)
+            })
+            .prop_flat_map(|(text, start)| {
+                let len = text.len().max(1);
+                (Just(text), Just(start), start..len)
+            })
+            .prop_filter_map(
+                "start and end are valid char indices",
+                |(text, start, end)| {
+                    if !text.is_char_boundary(start) {
+                        return None;
+                    }
+
+                    if !text.is_char_boundary(end) {
+                        return None;
+                    }
+
+                    let start = TextSize::try_from(start).ok()?;
+                    let end = TextSize::try_from(end).ok()?;
+                    Some((text, TextRange::new(start, end)))
+                },
+            )
+    }
+
+    proptest! {
+        #[test]
+        fn property_test((mut text, range) in text_with_range(), replace_with in any::<String>()) {
+            let mut actual = LineIndex::new(&text);
+            actual.replace_range(range, &replace_with).unwrap();
+
+            text.replace_range(Range::<usize>::from(range), &replace_with);
+
+            let expected = LineIndex::new(text);
+            prop_assert_eq!(actual, expected);
+        }
     }
 }
