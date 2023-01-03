@@ -8,7 +8,7 @@ use crate::{
 };
 use rome_console::MarkupBuf;
 use rome_diagnostics::{
-    advice::CodeSuggestionAdvice, location::FileId, Applicability, CodeSuggestion, Error, FileSpan,
+    advice::CodeSuggestionAdvice, Applicability, CodeSuggestion, Error, FileSpan,
 };
 use rome_rowan::{BatchMutation, Language};
 use std::borrow::Cow;
@@ -89,7 +89,6 @@ where
 #[derive(Debug, Clone)]
 pub struct AnalyzerAction<L: Language> {
     pub rule_name: Option<(&'static str, &'static str)>,
-    pub file_id: FileId,
     pub category: ActionCategory,
     pub applicability: Applicability,
     pub message: MarkupBuf,
@@ -133,10 +132,7 @@ impl<L: Language> From<AnalyzerAction<L>> for CodeSuggestionItem {
             rule_name: action.rule_name,
             category: action.category,
             suggestion: CodeSuggestion {
-                span: FileSpan {
-                    file: action.file_id,
-                    range,
-                },
+                span: FileSpan { range },
                 applicability: action.applicability,
                 msg: action.message,
                 suggestion,
@@ -243,7 +239,6 @@ impl<L: Language> AnalyzerActionIter<L> {
 
 /// Analyzer-internal implementation of [AnalyzerSignal] for a specific [Rule](crate::registry::Rule)
 pub(crate) struct RuleSignal<'phase, R: Rule> {
-    file_id: FileId,
     root: &'phase RuleRoot<R>,
     query_result: <<R as Rule>::Query as Queryable>::Output,
     state: R::State,
@@ -257,7 +252,6 @@ where
     R: Rule + 'static,
 {
     pub(crate) fn new(
-        file_id: FileId,
         root: &'phase RuleRoot<R>,
         query_result: <<R as Rule>::Query as Queryable>::Output,
         state: R::State,
@@ -267,7 +261,6 @@ where
         >,
     ) -> Self {
         Self {
-            file_id,
             root,
             query_result,
             state,
@@ -294,7 +287,6 @@ where
             if let Some(action) = R::action(&ctx, &self.state) {
                 actions.push(AnalyzerAction {
                     rule_name: Some((<R::Group as RuleGroup>::NAME, R::METADATA.name)),
-                    file_id: self.file_id,
                     category: action.category,
                     applicability: action.applicability,
                     mutation: action.mutation,
@@ -307,7 +299,6 @@ where
                 {
                     let action = AnalyzerAction {
                         rule_name: Some((<R::Group as RuleGroup>::NAME, R::METADATA.name)),
-                        file_id: self.file_id,
                         category: ActionCategory::Other(Cow::Borrowed(SUPPRESSION_ACTION_CATEGORY)),
                         applicability: Applicability::Always,
                         mutation: suppression_action.mutation,

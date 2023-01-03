@@ -456,7 +456,7 @@ mod test {
     };
     use crate::file_handlers::Language;
     use crate::{TransportError, WorkspaceError};
-    use rome_diagnostics::{print_diagnostic_to_string, DiagnosticExt, Error, FileId};
+    use rome_diagnostics::{print_diagnostic_to_string, DiagnosticExt, Error};
     use rome_formatter::FormatError;
     use rome_fs::RomePath;
     use std::ffi::OsStr;
@@ -528,7 +528,7 @@ mod test {
 
     #[test]
     fn source_file_not_supported() {
-        let path = RomePath::new("not_supported.toml", FileId::zero());
+        let path = RomePath::new("not_supported.toml");
         snap_diagnostic(
             "source_file_not_supported",
             WorkspaceError::SourceFileNotSupported(SourceFileNotSupported {

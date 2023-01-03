@@ -139,7 +139,6 @@ impl rome_console::fmt::Display for Mime {
 }
 
 pub struct FixAllParams<'a> {
-    pub(crate) rome_path: &'a RomePath,
     pub(crate) parse: AnyParse,
     pub(crate) rules: Option<&'a Rules>,
     pub(crate) fix_file_mode: FixFileMode,
@@ -164,7 +163,7 @@ pub(crate) struct ParserCapabilities {
 }
 
 type DebugSyntaxTree = fn(&RomePath, AnyParse) -> GetSyntaxTreeResult;
-type DebugControlFlow = fn(&RomePath, AnyParse, TextSize) -> String;
+type DebugControlFlow = fn(AnyParse, TextSize) -> String;
 type DebugFormatterIR = fn(&RomePath, AnyParse, SettingsHandle) -> Result<String, WorkspaceError>;
 
 #[derive(Default)]
@@ -178,7 +177,6 @@ pub(crate) struct DebugCapabilities {
 }
 
 pub(crate) struct LintParams<'a> {
-    pub(crate) rome_path: &'a RomePath,
     pub(crate) parse: AnyParse,
     pub(crate) filter: AnalysisFilter<'a>,
     pub(crate) rules: Option<&'a Rules>,
@@ -193,8 +191,7 @@ pub(crate) struct LintResults {
 }
 
 type Lint = fn(LintParams) -> LintResults;
-type CodeActions =
-    fn(&RomePath, AnyParse, TextRange, Option<&Rules>, SettingsHandle) -> PullActionsResult;
+type CodeActions = fn(AnyParse, TextRange, Option<&Rules>, SettingsHandle) -> PullActionsResult;
 type FixAll = fn(FixAllParams) -> Result<FixFileResult, WorkspaceError>;
 type Rename = fn(&RomePath, AnyParse, TextSize, String) -> Result<RenameResult, WorkspaceError>;
 

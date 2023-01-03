@@ -247,7 +247,6 @@ use crate::event::Event::Token;
 use crate::token_source::{BumpWithContext, NthToken, TokenSource};
 use rome_console::fmt::Display;
 use rome_diagnostics::location::AsSpan;
-use rome_diagnostics::FileId;
 use rome_rowan::{AstNode, Language, SendNode, SyntaxKind, SyntaxNode, TextRange, TextSize};
 use std::any::type_name;
 
@@ -269,16 +268,20 @@ use rome_diagnostics::serde::Diagnostic;
 pub use token_set::TokenSet;
 
 pub struct ParserContext<K: SyntaxKind> {
-    file_id: FileId,
     events: Vec<Event<K>>,
     skipping: bool,
     diagnostics: Vec<ParseDiagnostic>,
 }
 
+impl<K: SyntaxKind> Default for ParserContext<K> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<K: SyntaxKind> ParserContext<K> {
-    pub fn new(file_id: FileId) -> Self {
+    pub fn new() -> Self {
         Self {
-            file_id,
             skipping: false,
             events: Vec::new(),
             diagnostics: Vec::new(),
@@ -579,15 +582,13 @@ pub trait Parser: Sized {
 
         // Don't report another diagnostic if the last diagnostic is at the same position of the current one
         if let Some(previous) = self.context().diagnostics.last() {
-            if previous.file_id == err.file_id {
-                match (&err.diagnostic_range(), &previous.diagnostic_range()) {
-                    (Some(err_range), Some(previous_range))
-                        if err_range.start() == previous_range.start() =>
-                    {
-                        return;
-                    }
-                    _ => {}
+            match (&err.diagnostic_range(), &previous.diagnostic_range()) {
+                (Some(err_range), Some(previous_range))
+                    if err_range.start() == previous_range.start() =>
+                {
+                    return;
                 }
+                _ => {}
             }
         }
         self.context_mut().diagnostics.push(err)
@@ -596,7 +597,7 @@ pub trait Parser: Sized {
     /// Creates a new diagnostic. Pass the message and the range where the error occurred
     #[must_use]
     fn err_builder(&self, message: impl Display, span: impl AsSpan) -> ParseDiagnostic {
-        ParseDiagnostic::new(self.context().file_id, message, span)
+        ParseDiagnostic::new(message, span)
     }
 
     /// Bump and add an error event

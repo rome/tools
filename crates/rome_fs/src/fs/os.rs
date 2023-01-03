@@ -6,7 +6,7 @@ use crate::{
     FileSystem, RomePath,
 };
 use rayon::{scope, Scope};
-use rome_diagnostics::{adapters::IoError, DiagnosticExt, Error, FileId};
+use rome_diagnostics::{adapters::IoError, DiagnosticExt, Error};
 use std::fs::DirEntry;
 use std::{
     ffi::OsStr,
@@ -128,18 +128,18 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
             return self.spawn(ctx, path);
         };
 
-        let (file_id, _) = ctx.interner().intern_path(path.clone());
+        let _ = ctx.interner().intern_path(path.clone());
 
         if file_type.is_file() {
             self.scope.spawn(move |_| {
-                ctx.handle_file(&path, file_id);
+                ctx.handle_file(&path);
             });
             return;
         }
 
         if file_type.is_dir() {
             self.scope.spawn(move |scope| {
-                handle_dir(scope, ctx, &path, file_id);
+                handle_dir(scope, ctx, &path);
             });
             return;
         }
@@ -157,12 +157,7 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
 const DEFAULT_IGNORE: &[&str; 5] = &[".git", ".svn", ".hg", ".yarn", "node_modules"];
 
 /// Traverse a single directory
-fn handle_dir<'scope>(
-    scope: &Scope<'scope>,
-    ctx: &'scope dyn TraversalContext,
-    path: &Path,
-    file_id: FileId,
-) {
+fn handle_dir<'scope>(scope: &Scope<'scope>, ctx: &'scope dyn TraversalContext, path: &Path) {
     if let Some(file_name) = path.file_name().and_then(OsStr::to_str) {
         if DEFAULT_IGNORE.contains(&file_name) {
             return;
@@ -172,7 +167,7 @@ fn handle_dir<'scope>(
     let iter = match fs::read_dir(path) {
         Ok(iter) => iter,
         Err(err) => {
-            ctx.push_diagnostic(IoError::from(err).with_file_path(file_id));
+            ctx.push_diagnostic(IoError::from(err).with_file_path(path.display().to_string()));
             return;
         }
     };
@@ -181,7 +176,7 @@ fn handle_dir<'scope>(
         let entry = match entry {
             Ok(entry) => entry,
             Err(err) => {
-                ctx.push_diagnostic(IoError::from(err).with_file_path(file_id));
+                ctx.push_diagnostic(IoError::from(err).with_file_path(path.display().to_string()));
                 continue;
             }
         };
@@ -242,7 +237,7 @@ fn handle_dir_entry<'scope>(
         path = target_path;
     };
 
-    let (file_id, inserted) = ctx.interner().intern_path(path.clone());
+    let inserted = ctx.interner().intern_path(path.clone());
 
     // Determine whether an equivalent path already exists
     if !inserted {
@@ -256,7 +251,7 @@ fn handle_dir_entry<'scope>(
 
     if file_type.is_dir() {
         scope.spawn(move |scope| {
-            handle_dir(scope, ctx, &path, file_id);
+            handle_dir(scope, ctx, &path);
         });
         return;
     }
@@ -266,13 +261,13 @@ fn handle_dir_entry<'scope>(
         // files entirely, as well as silently ignore unsupported files when
         // doing a directory traversal, but printing an error message if the
         // user explicitly requests an unsupported file to be handled
-        let rome_path = RomePath::new(&path, file_id);
+        let rome_path = RomePath::new(&path);
         if !ctx.can_handle(&rome_path) {
             return;
         }
 
         scope.spawn(move |_| {
-            ctx.handle_file(&path, file_id);
+            ctx.handle_file(&path);
         });
         return;
     }

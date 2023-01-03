@@ -93,10 +93,6 @@ impl Resource<&'_ str> {
 pub enum FilePath<P> {
     /// The path is represented as a string path.
     Path(P),
-    /// The path is represented as a [FileId].
-    FileId(FileId),
-    /// The path is represented as both a string path and a [FileId].
-    PathAndId { path: P, file_id: FileId },
 }
 
 impl<P> FilePath<P> {
@@ -104,17 +100,6 @@ impl<P> FilePath<P> {
     pub fn path(self) -> Option<P> {
         match self {
             FilePath::Path(path) => Some(path),
-            FilePath::FileId(_) => None,
-            FilePath::PathAndId { path, .. } => Some(path),
-        }
-    }
-
-    /// Returns the [FileId] of this [FilePath] if it has one.
-    pub fn file_id(self) -> Option<FileId> {
-        match self {
-            FilePath::Path(_) => None,
-            FilePath::FileId(file_id) => Some(file_id),
-            FilePath::PathAndId { file_id, .. } => Some(file_id),
         }
     }
 
@@ -125,43 +110,16 @@ impl<P> FilePath<P> {
     {
         match self {
             FilePath::Path(path) => FilePath::Path(path),
-            FilePath::FileId(file_id) => FilePath::FileId(*file_id),
-            FilePath::PathAndId { path, file_id } => FilePath::PathAndId {
-                path,
-                file_id: *file_id,
-            },
         }
     }
 
-    /// Returns the "logical or" of `self` and `other`, trying to merge the
-    /// [FilePath::Path] and [FilePath::FileId] variants into [FilePath::PathAndId].
+    /// Returns the "logical or" of `self` and `other`
     pub(crate) fn or(self, other: Self) -> Self
     where
         P: PartialEq,
     {
-        match (self, other) {
-            (FilePath::Path(path), FilePath::FileId(file_id)) => {
-                FilePath::PathAndId { path, file_id }
-            }
-
-            (FilePath::FileId(file_id), FilePath::Path(path)) => {
-                FilePath::PathAndId { path, file_id }
-            }
-
-            (FilePath::Path(inner_path), FilePath::PathAndId { path, file_id })
-                if inner_path == path =>
-            {
-                FilePath::PathAndId { path, file_id }
-            }
-
-            (FilePath::FileId(inner_id), FilePath::PathAndId { path, file_id })
-                if inner_id == file_id =>
-            {
-                FilePath::PathAndId { path, file_id }
-            }
-
-            (file, _) => file,
-        }
+        let (file, _) = (self, other);
+        file
     }
 }
 
@@ -170,35 +128,7 @@ impl FilePath<&'_ str> {
     pub fn to_owned(self) -> FilePath<String> {
         match self {
             FilePath::Path(path) => FilePath::Path(path.to_string()),
-            FilePath::FileId(file_id) => FilePath::FileId(file_id),
-            FilePath::PathAndId { path, file_id } => FilePath::PathAndId {
-                path: path.to_string(),
-                file_id,
-            },
         }
-    }
-}
-
-#[derive(Debug, Clone, Copy, Eq, PartialEq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
-#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
-/// An id that points into a file database.
-pub struct FileId(usize);
-
-impl FileId {
-    pub const fn zero() -> Self {
-        Self(0)
-    }
-}
-
-impl From<usize> for FileId {
-    fn from(input: usize) -> Self {
-        Self(input)
-    }
-}
-
-impl From<FileId> for usize {
-    fn from(input: FileId) -> Self {
-        input.0
     }
 }
 
@@ -364,19 +294,6 @@ impl<T: Deref<Target = str>> AsResource for FilePath<T> {
     }
 }
 
-// Returns the equivalent of A || B, primarily intended for writing the path of
-// a diagnostic as `(String, FileId)`
-impl<A: AsResource, B: AsResource> AsResource for (A, B) {
-    fn as_resource(&self) -> Option<Resource<&'_ str>> {
-        match (self.0.as_resource(), self.1.as_resource()) {
-            (Some(Resource::File(a)), Some(Resource::File(b))) => Some(Resource::File(a.or(b))),
-            (Some(a), Some(_b)) => Some(a),
-            (Some(path), None) | (None, Some(path)) => Some(path),
-            (None, None) => None,
-        }
-    }
-}
-
 impl AsResource for String {
     fn as_resource(&self) -> Option<Resource<&'_ str>> {
         Some(Resource::File(FilePath::Path(self)))
@@ -386,12 +303,6 @@ impl AsResource for String {
 impl AsResource for str {
     fn as_resource(&self) -> Option<Resource<&'_ str>> {
         Some(Resource::File(FilePath::Path(self)))
-    }
-}
-
-impl AsResource for FileId {
-    fn as_resource(&self) -> Option<Resource<&'_ str>> {
-        Some(Resource::File(FilePath::FileId(*self)))
     }
 }
 

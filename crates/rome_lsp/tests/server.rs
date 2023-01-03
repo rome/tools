@@ -7,7 +7,6 @@ use futures::Sink;
 use futures::SinkExt;
 use futures::Stream;
 use futures::StreamExt;
-use rome_diagnostics::FileId;
 use rome_fs::RomePath;
 use rome_lsp::LSPServer;
 use rome_lsp::ServerFactory;
@@ -391,7 +390,7 @@ async fn document_lifecycle() -> Result<()> {
             "rome/get_syntax_tree",
             "get_syntax_tree",
             GetSyntaxTreeParams {
-                path: RomePath::new("document.js", FileId::zero()),
+                path: RomePath::new("document.js"),
             },
         )
         .await?

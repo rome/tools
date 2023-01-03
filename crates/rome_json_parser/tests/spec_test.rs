@@ -3,7 +3,6 @@ use rome_console::markup;
 use rome_diagnostics::display::PrintDiagnostic;
 use rome_diagnostics::termcolor;
 use rome_diagnostics::DiagnosticExt;
-use rome_diagnostics::FileId;
 use rome_json_parser::parse_json;
 use rome_rowan::SyntaxKind;
 use std::fmt::Write;
@@ -36,7 +35,7 @@ pub fn run(test_case: &str, _snapshot_name: &str, test_directory: &str, outcome:
     let content = fs::read_to_string(test_case_path)
         .expect("Expected test path to be a readable file in UTF8 encoding");
 
-    let parsed = parse_json(&content, FileId::zero());
+    let parsed = parse_json(&content);
     let formatted_ast = format!("{:#?}", parsed.tree());
 
     let mut snapshot = String::new();
@@ -50,7 +49,7 @@ pub fn run(test_case: &str, _snapshot_name: &str, test_directory: &str, outcome:
 {formatted_ast}
 ```
 
-## CST 
+## CST
 
 ```
 {:#?}

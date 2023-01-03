@@ -3,8 +3,8 @@ use crate::reporters::TestReporter;
 use rome_diagnostics::console::fmt::{Formatter, Termcolor};
 use rome_diagnostics::console::markup;
 use rome_diagnostics::termcolor::Buffer;
+use rome_diagnostics::Error;
 use rome_diagnostics::PrintDiagnostic;
-use rome_diagnostics::{Error, FileId};
 use rome_js_parser::{parse, Parse};
 use rome_js_syntax::{AnyJsRoot, JsSyntaxNode, SourceType};
 use rome_rowan::SyntaxKind;
@@ -78,21 +78,15 @@ pub(crate) struct TestCaseFile {
 
     /// The source type used to parse the file
     source_type: SourceType,
-
-    id: FileId,
 }
 
 impl TestCaseFile {
     pub(crate) fn parse(&self) -> Parse<AnyJsRoot> {
-        parse(&self.code, self.id, self.source_type)
+        parse(&self.code, self.source_type)
     }
 
     pub(crate) fn name(&self) -> &str {
         &self.name
-    }
-
-    pub(crate) fn id(&self) -> FileId {
-        self.id
     }
 
     pub(crate) fn code(&self) -> &str {
@@ -100,13 +94,9 @@ impl TestCaseFile {
     }
 }
 
-pub(crate) fn create_bogus_node_in_tree_diagnostic(
-    file_id: FileId,
-    node: JsSyntaxNode,
-) -> ParseDiagnostic {
+pub(crate) fn create_bogus_node_in_tree_diagnostic(node: JsSyntaxNode) -> ParseDiagnostic {
     assert!(node.kind().is_bogus());
     ParseDiagnostic::new(
-        file_id,
         "There are no parse errors but the parsed tree contains bogus nodes.",
         node.text_trimmed_range()
     )
@@ -125,7 +115,6 @@ impl TestCaseFiles {
                 name,
                 code,
                 source_type,
-                id: FileId::zero(),
             }],
         }
     }
@@ -139,7 +128,6 @@ impl TestCaseFiles {
             name,
             code,
             source_type,
-            id: FileId::from(self.files.len()),
         })
     }
 

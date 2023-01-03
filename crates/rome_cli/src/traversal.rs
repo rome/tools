@@ -9,9 +9,7 @@ use crossbeam::{
 use rome_console::{fmt, markup, Console, ConsoleExt};
 use rome_diagnostics::{
     adapters::{IoError, StdError},
-    category,
-    location::FileId,
-    Advices, Category, Diagnostic, DiagnosticExt, Error, FilePath, PrintDescription,
+    category, Advices, Category, Diagnostic, DiagnosticExt, Error, FilePath, PrintDescription,
     PrintDiagnostic, Resource, Severity, Visit,
 };
 use rome_fs::{FileSystem, OpenOptions, PathInterner, RomePath};
@@ -24,8 +22,8 @@ use rome_service::{
     Workspace, WorkspaceError,
 };
 use rome_text_edit::TextEdit;
+use std::collections::HashSet;
 use std::{
-    collections::HashMap,
     ffi::OsString,
     io,
     panic::catch_unwind,
@@ -251,7 +249,7 @@ struct ProcessMessagesOptions<'ctx> {
     /// Receiver channel for reporting statistics
     recv_reports: Receiver<ReportKind>,
     /// Receiver channel that expects info when a file is processed
-    recv_files: Receiver<(FileId, PathBuf)>,
+    recv_files: Receiver<PathBuf>,
     /// Receiver channel that expects info when a message is sent
     recv_msgs: Receiver<Message>,
     /// The maximum number of diagnostics the console thread is allowed to print
@@ -336,7 +334,7 @@ fn process_messages(options: ProcessMessagesOptions) {
         verbose,
     } = options;
 
-    let mut paths = HashMap::new();
+    let mut paths: HashSet<String> = HashSet::new();
     let mut printed_diagnostics: u16 = 0;
     let mut not_printed_diagnostics = 0;
     let mut total_skipped_suggested_fixes = 0;
@@ -375,17 +373,18 @@ fn process_messages(options: ProcessMessagesOptions) {
 
             Message::Error(mut err) => {
                 let location = err.location();
-                if let Some(Resource::File(FilePath::FileId(file_id))) = &location.resource {
+                if let Some(Resource::File(FilePath::Path(file_path))) = location.resource.as_ref()
+                {
                     // Retrieves the file name from the file ID cache, if it's a miss
                     // flush entries from the interner channel until it's found
-                    let file_name = match paths.get(file_id) {
+                    let file_name = match paths.get(*file_path) {
                         Some(path) => Some(path),
                         None => loop {
                             match recv_files.recv() {
-                                Ok((id, path)) => {
-                                    paths.insert(id, path.display().to_string());
-                                    if id == *file_id {
-                                        break Some(&paths[file_id]);
+                                Ok(path) => {
+                                    paths.insert(path.display().to_string());
+                                    if path.display().to_string() == *file_path {
+                                        break paths.get(&path.display().to_string());
                                     }
                                 }
                                 // In case the channel disconnected without sending
@@ -397,10 +396,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                     };
 
                     if let Some(path) = file_name {
-                        err = err.with_file_path(FilePath::PathAndId {
-                            path: path.as_str(),
-                            file_id: *file_id,
-                        });
+                        err = err.with_file_path(path.as_str());
                     }
                 }
 
@@ -638,7 +634,7 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
         self.push_diagnostic(
             StdError::from(err)
                 .with_category(category!("files/missingHandler"))
-                .with_file_path(rome_path.file_id()),
+                .with_file_path(rome_path.display().to_string()),
         );
     }
 }
@@ -682,16 +678,16 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
         }
     }
 
-    fn handle_file(&self, path: &Path, file_id: FileId) {
-        handle_file(self, path, file_id)
+    fn handle_file(&self, path: &Path) {
+        handle_file(self, path)
     }
 }
 
 /// This function wraps the [process_file] function implementing the traversal
 /// in a [catch_unwind] block and emit diagnostics in case of error (either the
 /// traversal function returns Err or panics)
-fn handle_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) {
-    match catch_unwind(move || process_file(ctx, path, file_id)) {
+fn handle_file(ctx: &TraversalOptions, path: &Path) {
+    match catch_unwind(move || process_file(ctx, path)) {
         Ok(Ok(FileStatus::Success)) => {}
         Ok(Ok(FileStatus::Message(msg))) => {
             ctx.push_message(msg);
@@ -710,7 +706,9 @@ fn handle_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) {
                 },
             };
 
-            ctx.push_message(PanicDiagnostic { message }.with_file_path(file_id));
+            ctx.push_message(
+                PanicDiagnostic { message }.with_file_path(path.display().to_string()),
+            );
         }
     }
 }
@@ -737,17 +735,19 @@ type FileResult = Result<FileStatus, Message>;
 /// diagnostics were emitted, or compare the formatted code with the original
 /// content of the file and emit a diff or write the new content to the disk if
 /// write mode is enabled
-fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileResult {
+fn process_file(ctx: &TraversalOptions, path: &Path) -> FileResult {
     tracing::trace_span!("process_file", path = ?path).in_scope(move || {
-        let rome_path = RomePath::new(path, file_id);
+        let rome_path = RomePath::new(path);
 
-        let supported_format = ctx
-            .can_format(&rome_path)
-            .with_file_id_and_code(file_id, category!("files/missingHandler"))?;
+        let supported_format = ctx.can_format(&rome_path).with_file_path_and_code(
+            path.display().to_string(),
+            category!("files/missingHandler"),
+        )?;
 
-        let supported_lint = ctx
-            .can_lint(&rome_path)
-            .with_file_id_and_code(file_id, category!("files/missingHandler"))?;
+        let supported_lint = ctx.can_lint(&rome_path).with_file_path_and_code(
+            path.display().to_string(),
+            category!("files/missingHandler"),
+        )?;
 
         let unsupported_reason = match ctx.execution.traversal_mode() {
             TraversalMode::Check { .. } => supported_lint.reason.as_ref(),
@@ -760,9 +760,9 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 
         if let Some(reason) = unsupported_reason {
             return match reason {
-                UnsupportedReason::FileNotSupported => {
-                    Err(Message::from(UnhandledDiagnostic.with_file_path(file_id)))
-                }
+                UnsupportedReason::FileNotSupported => Err(Message::from(
+                    UnhandledDiagnostic.with_file_path(path.display().to_string()),
+                )),
                 UnsupportedReason::FeatureNotEnabled | UnsupportedReason::Ignored => {
                     Ok(FileStatus::Ignored)
                 }
@@ -780,10 +780,11 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         let mut file = ctx
             .fs
             .open_with_options(path, open_options)
-            .with_file_id(file_id)?;
+            .with_file_path(path.display().to_string())?;
 
         let mut input = String::new();
-        file.read_to_string(&mut input).with_file_id(file_id)?;
+        file.read_to_string(&mut input)
+            .with_file_path(path.display().to_string())?;
         ctx.increment_processed();
 
         let file_guard = FileGuard::open(
@@ -795,12 +796,12 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
                 language_hint: Language::default(),
             },
         )
-        .with_file_id_and_code(file_id, category!("internalError/fs"))?;
+        .with_file_path_and_code(path.display().to_string(), category!("internalError/fs"))?;
 
         if let Some(fix_mode) = ctx.execution.as_fix_file_mode() {
             let fixed = file_guard
                 .fix_file(*fix_mode)
-                .with_file_id_and_code(file_id, category!("lint"))?;
+                .with_file_path_and_code(path.display().to_string(), category!("lint"))?;
 
             ctx.push_message(Message::SkippedFixes {
                 skipped_suggested_fixes: fixed.skipped_suggested_fixes,
@@ -808,7 +809,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 
             if fixed.code != input {
                 file.set_content(fixed.code.as_bytes())
-                    .with_file_id(file_id)?;
+                    .with_file_path(path.display().to_string())?;
             }
 
             return Ok(FileStatus::Success);
@@ -823,14 +824,14 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         let max_diagnostics = ctx.remaining_diagnostics.load(Ordering::Relaxed);
         let result = file_guard
             .pull_diagnostics(categories, max_diagnostics.into())
-            .with_file_id_and_code(file_id, category!("lint"))?;
+            .with_file_path_and_code(path.display().to_string(), category!("lint"))?;
 
         // In formatting mode, abort immediately if the file has errors
         let errors = result.errors;
         match ctx.execution.traversal_mode() {
             TraversalMode::Format { ignore_errors, .. } if errors > 0 => {
                 return Err(if *ignore_errors {
-                    Message::from(SkippedDiagnostic.with_file_path(file_id))
+                    Message::from(SkippedDiagnostic.with_file_path(path.display().to_string()))
                 } else {
                     Message::Diagnostics {
                         name: path.display().to_string(),
@@ -886,12 +887,13 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 
             let printed = file_guard
                 .format_file()
-                .with_file_id_and_code(file_id, category!("format"))?;
+                .with_file_path_and_code(path.display().to_string(), category!("format"))?;
 
             let output = printed.into_code();
             if output != input {
                 if write {
-                    file.set_content(output.as_bytes()).with_file_id(file_id)?;
+                    file.set_content(output.as_bytes())
+                        .with_file_path(path.display().to_string())?;
                 } else {
                     if !ctx.execution.should_report_to_terminal() {
                         ctx.push_format_stat(
@@ -969,9 +971,9 @@ struct SkippedDiagnostic;
 /// Extension trait for turning [Display]-able error types into [TraversalError]
 trait ResultExt {
     type Result;
-    fn with_file_id_and_code(
+    fn with_file_path_and_code(
         self,
-        file_id: FileId,
+        file_path: String,
         code: &'static Category,
     ) -> Result<Self::Result, Error>;
 }
@@ -982,26 +984,26 @@ where
 {
     type Result = T;
 
-    fn with_file_id_and_code(
+    fn with_file_path_and_code(
         self,
-        file_id: FileId,
+        file_path: String,
         code: &'static Category,
     ) -> Result<Self::Result, Error> {
         self.map_err(move |err| {
             StdError::from(err)
                 .with_category(code)
-                .with_file_path(file_id)
+                .with_file_path(file_path)
         })
     }
 }
 
 /// Extension trait for turning [io::Error] into [Error]
 trait ResultIoExt: ResultExt {
-    fn with_file_id(self, file_id: FileId) -> Result<Self::Result, Error>;
+    fn with_file_path(self, file_path: String) -> Result<Self::Result, Error>;
 }
 
 impl<T> ResultIoExt for io::Result<T> {
-    fn with_file_id(self, file_id: FileId) -> Result<Self::Result, Error> {
-        self.map_err(|error| IoError::from(error).with_file_path(file_id))
+    fn with_file_path(self, file_path: String) -> Result<Self::Result, Error> {
+        self.map_err(|error| IoError::from(error).with_file_path(file_path))
     }
 }

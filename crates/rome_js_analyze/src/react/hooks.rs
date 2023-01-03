@@ -16,7 +16,7 @@ pub(crate) struct ReactCallWithDependencyResult {
 }
 
 impl ReactCallWithDependencyResult {
-    /// Returns all [Reference] captured by the closure argument of the React hook.  
+    /// Returns all [Reference] captured by the closure argument of the React hook.
     /// See [react_hook_with_dependency].
     pub fn all_captures(&self, model: &SemanticModel) -> impl Iterator<Item = Capture> {
         self.closure_node
@@ -34,7 +34,7 @@ impl ReactCallWithDependencyResult {
             .flatten()
     }
 
-    /// Returns all dependencies of a React hook.  
+    /// Returns all dependencies of a React hook.
     /// See [react_hook_with_dependency]
     pub fn all_dependencies(&self) -> impl Iterator<Item = AnyJsExpression> {
         self.dependencies_node
@@ -122,7 +122,7 @@ pub(crate) fn react_hook_with_dependency(
     })
 }
 
-/// Specifies which, if any, of the returns of a React hook are stable.    
+/// Specifies which, if any, of the returns of a React hook are stable.
 /// See [is_binding_react_stable].
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct StableReactHookConfiguration {
@@ -208,16 +208,11 @@ pub fn is_binding_react_stable(
 #[cfg(test)]
 mod test {
     use super::*;
-    use rome_diagnostics::FileId;
     use rome_js_syntax::SourceType;
 
     #[test]
     pub fn ok_react_stable_captures() {
-        let r = rome_js_parser::parse(
-            "const ref = useRef();",
-            FileId::zero(),
-            SourceType::js_module(),
-        );
+        let r = rome_js_parser::parse("const ref = useRef();", SourceType::js_module());
         let node = r
             .syntax()
             .descendants()

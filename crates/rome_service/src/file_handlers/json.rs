@@ -80,10 +80,8 @@ fn formatter_capabilities() -> FormatterCapabilities {
     FormatterCapabilities::default()
 }
 
-fn parse(rome_path: &RomePath, _: LanguageId, text: &str) -> AnyParse {
-    let file_id = rome_path.file_id();
-
-    let parse = rome_json_parser::parse_json(text, file_id);
+fn parse(_: &RomePath, _: LanguageId, text: &str) -> AnyParse {
+    let parse = rome_json_parser::parse_json(text);
     AnyParse::from(parse)
 }
 

@@ -34,9 +34,7 @@ pub use crate::display::{
     set_bottom_frame, Backtrace, MessageAndDescription, PrintDescription, PrintDiagnostic,
 };
 pub use crate::error::{Error, Result};
-pub use crate::location::{
-    FileId, FilePath, LineIndex, LineIndexBuf, Location, Resource, SourceCode,
-};
+pub use crate::location::{FilePath, LineIndex, LineIndexBuf, Location, Resource, SourceCode};
 use rome_console::fmt::{Formatter, Termcolor};
 use rome_console::markup;
 use std::fmt::Write;

@@ -31,10 +31,7 @@ if(expr()) {
 					location: {
 						path: {
 							File: {
-								PathAndId: {
-									file_id: 0,
-									path: "file.js",
-								},
+								Path: "file.js",
 							},
 						},
 						span: [31, 37],
@@ -60,10 +57,7 @@ if(expr()) {
 					location: {
 						path: {
 							File: {
-								PathAndId: {
-									file_id: 0,
-									path: "file.js",
-								},
+								Path: "file.js",
 							},
 						},
 						span: [46, 58],

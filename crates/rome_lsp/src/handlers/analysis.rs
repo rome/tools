@@ -23,7 +23,7 @@ fn fix_all_kind() -> CodeActionKind {
         Cow::Owned(kind) => CodeActionKind::from(kind),
     }
 }
-/// Queries the [`AnalysisServer`] for code actions of the file matching [FileId]
+/// Queries the [`AnalysisServer`] for code actions of the file matching its path
 ///
 /// If the AnalysisServer has no matching file, results in error.
 #[tracing::instrument(level = "debug", skip_all, fields(uri = display(&params.text_document.uri), range = debug(params.range), only = debug(&params.context.only), diagnostics = debug(&params.context.diagnostics)), err)]

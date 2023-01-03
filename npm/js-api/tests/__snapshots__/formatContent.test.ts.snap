@@ -11,10 +11,7 @@ exports[`Rome WebAssembly formatContent > should not format and have diagnostics
     "location": {
       "path": {
         "File": {
-          "PathAndId": {
-            "file_id": 0,
-            "path": "example.js",
-          },
+          "Path": "example.js",
         },
       },
       "source_code": null,

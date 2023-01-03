@@ -139,7 +139,6 @@ export class Rome {
 		try {
 			const romePath: RomePath = {
 				path,
-				id: 0,
 			};
 
 			this.workspace.openFile({

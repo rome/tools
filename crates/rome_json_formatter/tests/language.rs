@@ -1,4 +1,3 @@
-use rome_diagnostics::location::FileId;
 use rome_formatter::{FormatContext, FormatResult, Formatted, IndentStyle, LineWidth, Printed};
 use rome_formatter_test::TestFormatLanguage;
 use rome_json_formatter::context::{JsonFormatContext, JsonFormatOptions};
@@ -19,7 +18,7 @@ impl TestFormatLanguage for JsonTestFormatLanguage {
     type FormatLanguage = JsonFormatLanguage;
 
     fn parse(&self, text: &str) -> AnyParse {
-        parse_json(text, FileId::zero()).into()
+        parse_json(text).into()
     }
 
     fn deserialize_format_options(

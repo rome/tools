@@ -1,6 +1,5 @@
 use std::collections::BinaryHeap;
 
-use rome_diagnostics::location::FileId;
 use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
 
 use crate::{
@@ -12,7 +11,6 @@ use crate::{
 /// Mutable context objects shared by all visitors
 pub struct VisitorContext<'phase, 'query, L: Language> {
     pub phase: Phases,
-    pub file_id: FileId,
     pub root: &'phase LanguageRoot<L>,
     pub services: &'phase ServiceBag,
     pub range: Option<TextRange>,
@@ -25,7 +23,6 @@ impl<'phase, 'query, L: Language> VisitorContext<'phase, 'query, L> {
     pub fn match_query<T: QueryMatch>(&mut self, query: T) {
         self.query_matcher.match_query(MatchQueryParams {
             phase: self.phase,
-            file_id: self.file_id,
             root: self.root,
             query: Query::new(query),
             services: self.services,

@@ -6,13 +6,8 @@ export interface SupportsFeatureParams {
 }
 export type FeatureName = "Format" | "Lint";
 export interface RomePath {
-	id: FileId;
 	path: string;
 }
-/**
- * An id that points into a file database.
- */
-export type FileId = number;
 export interface SupportsFeatureResult {
 	reason?: UnsupportedReason;
 }
@@ -918,10 +913,7 @@ export type Backtrace = BacktraceFrame[];
 /**
  * Represents the path of a file on the filesystem.
  */
-export type FilePath_for_String =
-	| { Path: string }
-	| { FileId: FileId }
-	| { PathAndId: { file_id: FileId; path: string } };
+export type FilePath_for_String = { Path: string };
 /**
  * Enumeration of all the supported markup elements
  */
@@ -988,9 +980,6 @@ export interface CodeSuggestion {
 	applicability: Applicability;
 	labels: TextRange[];
 	msg: MarkupBuf;
-	/**
-	 * If the `FileId` is `None`, it's in the same file as his parent.
-	 */
 	span: FileSpan;
 	suggestion: TextEdit;
 }
@@ -1019,7 +1008,6 @@ export type Applicability = "Always" | "MaybeIncorrect";
  * A range that is indexed in a specific file.
  */
 export interface FileSpan {
-	file: FileId;
 	range: TextRange;
 }
 export interface FormatFileParams {
