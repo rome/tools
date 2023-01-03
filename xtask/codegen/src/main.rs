@@ -1,3 +1,5 @@
+extern crate core;
+
 #[cfg(feature = "schema")]
 mod generate_bindings;
 #[cfg(feature = "configuration")]
