@@ -31,7 +31,10 @@ pub use formatter::{FormatterConfiguration, PlainIndentStyle};
 pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
 pub use linter::{LinterConfiguration, RuleConfiguration, Rules};
 use rome_analyze::{AnalyzerConfiguration, AnalyzerRules, MetadataRegistry};
+use rome_diagnostics::FileId;
 use rome_js_analyze::metadata;
+use rome_json_formatter::context::JsonFormatOptions;
+use rome_json_parser::parse_json;
 use rome_json_syntax::JsonRoot;
 
 /// The configuration that is contained inside the file `rome.json`
@@ -205,12 +208,18 @@ pub fn create_config(
         configuration.schema = schema_path.to_str().map(String::from);
     }
 
-    let contents = serde_json::to_string_pretty(&configuration).map_err(|_| {
+    let contents = serde_json::to_string(&configuration).map_err(|_| {
         WorkspaceError::Configuration(ConfigurationDiagnostic::new_serialization_error())
     })?;
 
+    let parsed = parse_json(&contents, FileId::zero());
+    let formatted =
+        rome_json_formatter::format_node(JsonFormatOptions::default(), &parsed.syntax())?
+            .print()
+            .expect("valid format document");
+
     config_file
-        .set_content(contents.as_bytes())
+        .set_content(formatted.as_code().as_bytes())
         .map_err(|_| WorkspaceError::cant_read_file(format!("{}", path.display())))?;
 
     Ok(())

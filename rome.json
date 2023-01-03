@@ -6,9 +6,9 @@
 			"target"
 		]
 	},
-	"linter": {
-		"rules": {
-			"recommended": true
-		}
+	"formatter": {
+		"ignore": [
+			"configuration-schema.json"
+		]
 	}
 }
