@@ -84,6 +84,8 @@ impl AnyFunctionLike {
 
 #[derive(Default)]
 struct MissingYieldVisitor {
+    /// Vector to hold a function node and a boolean indicating whether the function
+    /// contains an `yield` expression or not.
     stack: Vec<(AnyFunctionLike, bool)>,
 }
 
@@ -115,7 +117,7 @@ impl Visitor for MissingYieldVisitor {
                 // entry of the stack and the `has_yield` flag is `false`, emit a query match
                 if let Some(exit_node) = AnyFunctionLike::cast_ref(node) {
                     if let Some((enter_node, has_yield)) = self.stack.pop() {
-                        assert_eq!(enter_node, exit_node);
+                        debug_assert_eq!(enter_node, exit_node);
                         if !has_yield {
                             ctx.match_query(MissingYield(enter_node));
                         }
@@ -173,7 +175,7 @@ impl Rule for UseYield {
         Some(RuleDiagnostic::new(
             rule_category!(),
             ctx.query().range(),
-            markup! {"This generator function does not have "<Emphasis>"yield"</Emphasis>"."},
+            markup! {"This generator function doesn't contain "<Emphasis>"yield"</Emphasis>"."},
         ))
     }
 }

@@ -105,7 +105,7 @@ function* foo() {
 ```
 useYield.js:37:1 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This generator function does not have yield.
+  ! This generator function doesn't contain yield.
   
     36 │ // Invalid
   > 37 │ function* foo() {
@@ -122,7 +122,7 @@ useYield.js:37:1 lint/nursery/useYield ━━━━━━━━━━━━━�
 ```
 useYield.js:41:2 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This generator function does not have yield.
+  ! This generator function doesn't contain yield.
   
     39 │ }
     40 │ 
@@ -140,7 +140,7 @@ useYield.js:41:2 lint/nursery/useYield ━━━━━━━━━━━━━�
 ```
 useYield.js:46:2 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This generator function does not have yield.
+  ! This generator function doesn't contain yield.
   
     45 │ const obj = {
   > 46 │ 	*foo() {
@@ -157,7 +157,7 @@ useYield.js:46:2 lint/nursery/useYield ━━━━━━━━━━━━━�
 ```
 useYield.js:52:2 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This generator function does not have yield.
+  ! This generator function doesn't contain yield.
   
     51 │ class A {
   > 52 │ 	*foo() {
@@ -174,7 +174,7 @@ useYield.js:52:2 lint/nursery/useYield ━━━━━━━━━━━━━�
 ```
 useYield.js:57:1 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This generator function does not have yield.
+  ! This generator function doesn't contain yield.
   
     55 │ }
     56 │ 
@@ -194,7 +194,7 @@ useYield.js:57:1 lint/nursery/useYield ━━━━━━━━━━━━━�
 ```
 useYield.js:64:2 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This generator function does not have yield.
+  ! This generator function doesn't contain yield.
   
     63 │ function* foo() {
   > 64 │ 	function* bar() {
@@ -211,7 +211,7 @@ useYield.js:64:2 lint/nursery/useYield ━━━━━━━━━━━━━�
 ```
 useYield.js:70:1 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This generator function does not have yield.
+  ! This generator function doesn't contain yield.
   
     68 │ }
     69 │ 
@@ -232,7 +232,7 @@ useYield.js:70:1 lint/nursery/useYield ━━━━━━━━━━━━━�
 ```
 useYield.js:79:3 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This generator function does not have yield.
+  ! This generator function doesn't contain yield.
   
     77 │ function* foo() {
     78 │ 	const obj = {
@@ -250,7 +250,7 @@ useYield.js:79:3 lint/nursery/useYield ━━━━━━━━━━━━━�
 ```
 useYield.js:85:3 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This generator function does not have yield.
+  ! This generator function doesn't contain yield.
   
     84 │ 	class A {
   > 85 │ 		*baz() {
