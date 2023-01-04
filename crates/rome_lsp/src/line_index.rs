@@ -174,6 +174,11 @@ impl LineIndex {
             position += offset;
 
             if line_index < prev_end {
+                // SAFETY: `line_index` is checked to be less than `prev_end`.
+                // Since `prev_end` is at most `end.line + 1`, and the value of
+                // `end.line` returned by `.line_col()` is at most
+                // `self.newlines.len() - 1`, the index is guaranteed to never
+                // be out-of-bounds
                 self.newlines[line_index] = position;
             } else {
                 self.newlines.insert(line_index, position);
@@ -193,14 +198,18 @@ impl LineIndex {
         match prev_len.cmp(&next_len) {
             Ordering::Less => {
                 while line_index < self.newlines.len() {
-                    self.newlines[line_index] += next_len - prev_len;
+                    self.newlines[line_index] = self.newlines[line_index]
+                        .checked_add(next_len - prev_len)
+                        .context("arithmetics overflow")?;
                     line_index += 1;
                 }
             }
             Ordering::Equal => {}
             Ordering::Greater => {
                 while line_index < self.newlines.len() {
-                    self.newlines[line_index] -= prev_len - next_len;
+                    self.newlines[line_index] = self.newlines[line_index]
+                        .checked_sub(prev_len - next_len)
+                        .context("arithmetics overflow")?;
                     line_index += 1;
                 }
             }
