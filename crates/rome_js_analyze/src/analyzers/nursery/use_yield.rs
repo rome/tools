@@ -1,11 +1,14 @@
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
+use rome_analyze::{
+    declare_rule, AddVisitor, Phases, QueryMatch, Queryable, Rule, RuleDiagnostic, ServiceBag,
+    Visitor, VisitorContext,
+};
 use rome_console::markup;
 use rome_js_syntax::{
-    AnyJsClass, AnyJsFunction, JsLanguage, JsMethodClassMember, JsMethodObjectMember,
-    JsStatementList, JsSyntaxKind, WalkEvent,
+    AnyJsFunction, JsLanguage, JsMethodClassMember, JsMethodObjectMember, JsStatementList,
+    JsYieldExpression, TextRange, WalkEvent,
 };
-use rome_rowan::{declare_node_union, AstNode, AstNodeList, SyntaxNode};
+use rome_rowan::{declare_node_union, AstNode, AstNodeList, Language, SyntaxNode};
 
 declare_rule! {
     /// Require generator functions to contain `yield`.
@@ -39,7 +42,7 @@ declare_rule! {
     /// function* foo() { }
     /// ```
     pub(crate) UseYield {
-        version: "12.0.0",
+        version: "next",
         name: "useYield",
         recommended: true,
     }
@@ -79,24 +82,91 @@ impl AnyFunctionLike {
     }
 }
 
+#[derive(Default)]
+struct MissingYieldVisitor {
+    stack: Vec<(AnyFunctionLike, bool)>,
+}
+
+impl Visitor for MissingYieldVisitor {
+    type Language = JsLanguage;
+
+    fn visit(
+        &mut self,
+        event: &WalkEvent<SyntaxNode<Self::Language>>,
+        mut ctx: VisitorContext<Self::Language>,
+    ) {
+        match event {
+            WalkEvent::Enter(node) => {
+                // When the visitor enters a function node, push a new entry on the stack
+                if let Some(node) = AnyFunctionLike::cast_ref(node) {
+                    self.stack.push((node, false));
+                }
+
+                if let Some((_, has_yield)) = self.stack.last_mut() {
+                    // When the visitor enters a `yield` expression, set the
+                    // `has_yield` flag for the top entry on the stack to `true`
+                    if JsYieldExpression::can_cast(node.kind()) {
+                        *has_yield = true;
+                    }
+                }
+            }
+            WalkEvent::Leave(node) => {
+                // When the visitor exits a function, if it matches the node of the top-most
+                // entry of the stack and the `has_yield` flag is `false`, emit a query match
+                if let Some(exit_node) = AnyFunctionLike::cast_ref(node) {
+                    if let Some((enter_node, has_yield)) = self.stack.pop() {
+                        assert_eq!(enter_node, exit_node);
+                        if !has_yield {
+                            ctx.match_query(MissingYield(enter_node));
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+pub(crate) struct MissingYield(AnyFunctionLike);
+
+impl QueryMatch for MissingYield {
+    fn text_range(&self) -> TextRange {
+        self.0.range()
+    }
+}
+
+impl Queryable for MissingYield {
+    type Input = Self;
+    type Language = JsLanguage;
+    type Output = AnyFunctionLike;
+    type Services = ();
+
+    fn build_visitor(
+        analyzer: &mut impl AddVisitor<Self::Language>,
+        _: &<Self::Language as Language>::Root,
+    ) {
+        analyzer.add_visitor(Phases::Syntax, MissingYieldVisitor::default);
+    }
+
+    fn unwrap_match(_: &ServiceBag, query: &Self::Input) -> Self::Output {
+        query.0.clone()
+    }
+}
+
 impl Rule for UseYield {
-    type Query = Ast<AnyFunctionLike>;
+    type Query = MissingYield;
     type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-        let node = ctx.query();
-        let function_body_statements = node.statements()?;
+        let query = ctx.query();
 
-        if node.is_generator()
-            && !function_body_statements.is_empty()
-            && !has_yield_expression(function_body_statements.syntax())
-        {
-            return Some(());
+        // Don't emit diagnostic for non-generators or generators with an empty body
+        if !query.is_generator() || query.statements()?.is_empty() {
+            return None;
         }
 
-        None
+        Some(())
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
@@ -106,28 +176,4 @@ impl Rule for UseYield {
             markup! {"This generator function does not have "<Emphasis>"yield"</Emphasis>"."},
         ))
     }
-}
-
-/// Traverses the syntax tree and verifies the presence of a yield expression.
-fn has_yield_expression(node: &SyntaxNode<JsLanguage>) -> bool {
-    let mut iter = node.preorder();
-
-    while let Some(event) = iter.next() {
-        match event {
-            WalkEvent::Enter(enter) => {
-                let kind = enter.kind();
-
-                if kind == JsSyntaxKind::JS_YIELD_EXPRESSION {
-                    return true;
-                }
-
-                if AnyJsClass::can_cast(kind) || AnyFunctionLike::can_cast(kind) {
-                    iter.skip_subtree();
-                }
-            }
-            WalkEvent::Leave(_) => {}
-        };
-    }
-
-    false
 }

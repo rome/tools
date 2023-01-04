@@ -3,7 +3,7 @@ title: Lint Rule useYield
 parent: lint/rules/index
 ---
 
-# useYield (since v12.0.0)
+# useYield (since vnext)
 
 Require generator functions to contain `yield`.
 
@@ -50,3 +50,7 @@ function foo() {
 function* foo() { }
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)
