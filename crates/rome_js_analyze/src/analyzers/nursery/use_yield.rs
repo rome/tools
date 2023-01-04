@@ -104,10 +104,10 @@ impl Visitor for MissingYieldVisitor {
                     self.stack.push((node, false));
                 }
 
-                if let Some((_, has_yield)) = self.stack.last_mut() {
+                if JsYieldExpression::can_cast(node.kind()) {
                     // When the visitor enters a `yield` expression, set the
                     // `has_yield` flag for the top entry on the stack to `true`
-                    if JsYieldExpression::can_cast(node.kind()) {
+                    if let Some((_, has_yield)) = self.stack.last_mut() {
                         *has_yield = true;
                     }
                 }
@@ -117,8 +117,7 @@ impl Visitor for MissingYieldVisitor {
                 // entry of the stack and the `has_yield` flag is `false`, emit a query match
                 if let Some(exit_node) = AnyFunctionLike::cast_ref(node) {
                     if let Some((enter_node, has_yield)) = self.stack.pop() {
-                        debug_assert_eq!(enter_node, exit_node);
-                        if !has_yield {
+                        if enter_node == exit_node && !has_yield {
                             ctx.match_query(MissingYield(enter_node));
                         }
                     }
