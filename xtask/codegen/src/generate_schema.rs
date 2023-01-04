@@ -22,7 +22,7 @@ pub(crate) fn generate_configuration_schema(mode: Mode) -> Result<()> {
             .unwrap();
 
     update(&schema_path_vscode, formatted.as_code(), &mode)?;
-    update(&schema_path_npm, &formatted.as_code(), &mode)?;
+    update(&schema_path_npm, formatted.as_code(), &mode)?;
 
     Ok(())
 }

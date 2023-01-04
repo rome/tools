@@ -208,7 +208,7 @@ pub fn create_config(
         configuration.schema = schema_path.to_str().map(String::from);
     }
 
-    let contents = serde_json::to_string(&configuration).map_err(|_| {
+    let contents = serde_json::to_string_pretty(&configuration).map_err(|_| {
         WorkspaceError::Configuration(ConfigurationDiagnostic::new_serialization_error())
     })?;
 
