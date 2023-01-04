@@ -3,12 +3,9 @@ use std::collections::HashMap;
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_js_syntax::{
     AnyJsClassMember, AnyJsClassMemberName, AnyJsMethodModifier, AnyJsPropertyModifier,
-    AnyTsMethodSignatureModifier, AnyTsPropertySignatureModifier, JsClassDeclaration,
-    JsClassExpression, JsClassMemberList, JsGetterClassMember, JsMethodClassMember,
-    JsMethodModifierList, JsPropertyClassMember, JsPropertyModifierList, JsSetterClassMember,
-    TextRange, TsGetterSignatureClassMember, TsMethodSignatureClassMember,
-    TsMethodSignatureModifierList, TsPropertySignatureClassMember, TsPropertySignatureModifierList,
-    TsSetterSignatureClassMember,
+    JsClassDeclaration, JsClassExpression, JsClassMemberList, JsGetterClassMember,
+    JsMethodClassMember, JsMethodModifierList, JsPropertyClassMember, JsPropertyModifierList,
+    JsSetterClassMember, TextRange,
 };
 use rome_rowan::{declare_node_union, AstNode};
 
@@ -126,8 +123,6 @@ enum StaticType {
 enum AnyModifierList {
     JsPropertyModifierList(JsPropertyModifierList),
     JsMethodModifierList(JsMethodModifierList),
-    TsPropertySignatureModifierList(TsPropertySignatureModifierList),
-    TsMethodSignatureModifierList(TsMethodSignatureModifierList),
 }
 
 fn get_static_type(modifier_list: AnyModifierList) -> StaticType {
@@ -152,31 +147,11 @@ fn get_static_type(modifier_list: AnyModifierList) -> StaticType {
                 StaticType::NonStatic
             }
         }
-        AnyModifierList::TsPropertySignatureModifierList(node) => {
-            if node
-                .into_iter()
-                .any(|m| matches!(m, AnyTsPropertySignatureModifier::JsStaticModifier(_)))
-            {
-                StaticType::Static
-            } else {
-                StaticType::NonStatic
-            }
-        }
-        AnyModifierList::TsMethodSignatureModifierList(node) => {
-            if node
-                .into_iter()
-                .any(|m| matches!(m, AnyTsMethodSignatureModifier::JsStaticModifier(_)))
-            {
-                StaticType::Static
-            } else {
-                StaticType::NonStatic
-            }
-        }
     }
 }
 
 declare_node_union! {
-    pub(crate) ClassMemberDefinition = JsGetterClassMember | JsMethodClassMember | JsPropertyClassMember | JsSetterClassMember | TsGetterSignatureClassMember | TsMethodSignatureClassMember | TsPropertySignatureClassMember | TsSetterSignatureClassMember
+    pub(crate) ClassMemberDefinition = JsGetterClassMember | JsMethodClassMember | JsPropertyClassMember | JsSetterClassMember
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -201,27 +176,13 @@ impl ClassMemberDefinition {
             ClassMemberDefinition::JsSetterClassMember(node) => {
                 get_member_name_string(node.name().ok()?)
             }
-            ClassMemberDefinition::TsGetterSignatureClassMember(node) => {
-                get_member_name_string(node.name().ok()?)
-            }
-            ClassMemberDefinition::TsMethodSignatureClassMember(node) => {
-                get_member_name_string(node.name().ok()?)
-            }
-            ClassMemberDefinition::TsPropertySignatureClassMember(node) => {
-                get_member_name_string(node.name().ok()?)
-            }
-            ClassMemberDefinition::TsSetterSignatureClassMember(node) => {
-                get_member_name_string(node.name().ok()?)
-            }
         }
     }
 
     fn member_type(&self) -> MemberType {
         match self {
-            ClassMemberDefinition::JsGetterClassMember(_)
-            | ClassMemberDefinition::TsGetterSignatureClassMember(_) => MemberType::Getter,
-            ClassMemberDefinition::JsSetterClassMember(_)
-            | ClassMemberDefinition::TsSetterSignatureClassMember(_) => MemberType::Setter,
+            ClassMemberDefinition::JsGetterClassMember(_) => MemberType::Getter,
+            ClassMemberDefinition::JsSetterClassMember(_) => MemberType::Setter,
             _ => MemberType::Normal,
         }
     }
@@ -234,18 +195,6 @@ impl ClassMemberDefinition {
                 get_access_type(node.name().ok()?)
             }
             ClassMemberDefinition::JsSetterClassMember(node) => get_access_type(node.name().ok()?),
-            ClassMemberDefinition::TsGetterSignatureClassMember(node) => {
-                get_access_type(node.name().ok()?)
-            }
-            ClassMemberDefinition::TsMethodSignatureClassMember(node) => {
-                get_access_type(node.name().ok()?)
-            }
-            ClassMemberDefinition::TsPropertySignatureClassMember(node) => {
-                get_access_type(node.name().ok()?)
-            }
-            ClassMemberDefinition::TsSetterSignatureClassMember(node) => {
-                get_access_type(node.name().ok()?)
-            }
         }
     }
 
@@ -263,18 +212,6 @@ impl ClassMemberDefinition {
             ClassMemberDefinition::JsSetterClassMember(node) => {
                 get_static_type(AnyModifierList::JsMethodModifierList(node.modifiers()))
             }
-            ClassMemberDefinition::TsGetterSignatureClassMember(node) => get_static_type(
-                AnyModifierList::TsMethodSignatureModifierList(node.modifiers()),
-            ),
-            ClassMemberDefinition::TsMethodSignatureClassMember(node) => get_static_type(
-                AnyModifierList::TsMethodSignatureModifierList(node.modifiers()),
-            ),
-            ClassMemberDefinition::TsPropertySignatureClassMember(node) => get_static_type(
-                AnyModifierList::TsPropertySignatureModifierList(node.modifiers()),
-            ),
-            ClassMemberDefinition::TsSetterSignatureClassMember(node) => get_static_type(
-                AnyModifierList::TsMethodSignatureModifierList(node.modifiers()),
-            ),
         }
     }
 
@@ -284,10 +221,6 @@ impl ClassMemberDefinition {
             ClassMemberDefinition::JsMethodClassMember(node) => node.range(),
             ClassMemberDefinition::JsPropertyClassMember(node) => node.range(),
             ClassMemberDefinition::JsSetterClassMember(node) => node.range(),
-            ClassMemberDefinition::TsGetterSignatureClassMember(node) => node.range(),
-            ClassMemberDefinition::TsMethodSignatureClassMember(node) => node.range(),
-            ClassMemberDefinition::TsPropertySignatureClassMember(node) => node.range(),
-            ClassMemberDefinition::TsSetterSignatureClassMember(node) => node.range(),
         }
     }
 }
@@ -308,18 +241,6 @@ impl TryFrom<AnyJsClassMember> for ClassMemberDefinition {
             }
             AnyJsClassMember::JsSetterClassMember(node) => {
                 Ok(ClassMemberDefinition::JsSetterClassMember(node))
-            }
-            AnyJsClassMember::TsGetterSignatureClassMember(node) => {
-                Ok(ClassMemberDefinition::TsGetterSignatureClassMember(node))
-            }
-            AnyJsClassMember::TsMethodSignatureClassMember(node) => {
-                Ok(ClassMemberDefinition::TsMethodSignatureClassMember(node))
-            }
-            AnyJsClassMember::TsPropertySignatureClassMember(node) => {
-                Ok(ClassMemberDefinition::TsPropertySignatureClassMember(node))
-            }
-            AnyJsClassMember::TsSetterSignatureClassMember(node) => {
-                Ok(ClassMemberDefinition::TsSetterSignatureClassMember(node))
             }
             _ => Err(member),
         }
