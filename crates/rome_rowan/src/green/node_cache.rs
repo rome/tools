@@ -1,6 +1,6 @@
 use hashbrown::hash_map::{RawEntryMut, RawOccupiedEntryMut, RawVacantEntryMut};
 use rome_text_size::TextSize;
-use rustc_hash::FxHasher;
+use rustc_hash::{FxHashSet, FxHasher};
 use std::hash::{BuildHasherDefault, Hash, Hasher};
 
 use crate::green::Slot;
@@ -80,6 +80,16 @@ fn element_id(elem: GreenElementRef<'_>) -> *const () {
     }
 }
 
+/// The [LiveSet] tracks which nodes and tokens are reachable in the most
+/// recent revision of the syntax tree. It is filled as the syntax tree gets
+/// rebuilt, and is used to evit unused entries from the cache at the end of a
+/// parsing session.
+#[derive(Default, Debug)]
+pub(crate) struct LiveSet {
+    nodes: FxHashSet<*const GreenNodeData>,
+    tokens: FxHashSet<*const GreenTokenData>,
+}
+
 impl NodeCache {
     /// Hash used for nodes that haven't been cached because it has too many slots or
     /// one of its children wasn't cached.
@@ -90,11 +100,12 @@ impl NodeCache {
     /// Returns an entry that allows the caller to:
     /// * Retrieve the cached node if it is present in the cache
     /// * Insert a node if it isn't present in the cache
-    pub(crate) fn node(
-        &mut self,
+    pub(crate) fn node<'a>(
+        &'a mut self,
         kind: RawSyntaxKind,
         children: &[(u64, GreenElement)],
-    ) -> NodeCacheNodeEntryMut {
+        live_set: Option<&'a mut LiveSet>,
+    ) -> NodeCacheNodeEntryMut<'a> {
         if children.len() > 3 {
             return NodeCacheNodeEntryMut::NoCache(Self::UNCACHED_NODE_HASH);
         }
@@ -136,20 +147,32 @@ impl NodeCache {
         });
 
         match entry {
-            RawEntryMut::Occupied(entry) => NodeCacheNodeEntryMut::Cached(CachedNodeEntry {
-                hash,
-                raw_entry: entry,
-            }),
+            RawEntryMut::Occupied(entry) => {
+                if let Some(live_set) = live_set {
+                    live_set.nodes.insert(&*entry.key().node);
+                }
+
+                NodeCacheNodeEntryMut::Cached(CachedNodeEntry {
+                    hash,
+                    raw_entry: entry,
+                })
+            }
             RawEntryMut::Vacant(entry) => NodeCacheNodeEntryMut::Vacant(VacantNodeEntry {
                 raw_entry: entry,
                 original_kind: kind,
                 hash,
+                live_set,
             }),
         }
     }
 
-    pub(crate) fn token(&mut self, kind: RawSyntaxKind, text: &str) -> (u64, GreenToken) {
-        self.token_with_trivia(kind, text, &[], &[])
+    pub(crate) fn token(
+        &mut self,
+        kind: RawSyntaxKind,
+        text: &str,
+        live_set: Option<&mut LiveSet>,
+    ) -> (u64, GreenToken) {
+        self.token_with_trivia(kind, text, &[], &[], live_set)
     }
 
     pub(crate) fn token_with_trivia(
@@ -158,6 +181,7 @@ impl NodeCache {
         text: &str,
         leading: &[TriviaPiece],
         trailing: &[TriviaPiece],
+        live_set: Option<&mut LiveSet>,
     ) -> (u64, GreenToken) {
         let hash = token_hash_of(kind, text);
 
@@ -178,7 +202,28 @@ impl NodeCache {
             }
         };
 
+        if let Some(live_set) = live_set {
+            live_set.tokens.insert(&*token);
+        }
+
         (hash, token)
+    }
+
+    pub(crate) fn is_empty(&self) -> bool {
+        self.nodes.is_empty() && self.tokens.is_empty() && self.trivia.is_empty()
+    }
+
+    /// Removes nodes and tokens from the cache that are not present in the provided [LiveSet]
+    pub(crate) fn evict_unreachable(&mut self, live_set: LiveSet) {
+        self.nodes.drain_filter(|node, _| {
+            let key: *const GreenNodeData = &*node.node;
+            !live_set.nodes.contains(&key)
+        });
+
+        self.tokens.drain_filter(|token, _| {
+            let key: *const GreenTokenData = &*token.0;
+            !live_set.tokens.contains(&key)
+        });
     }
 }
 
@@ -199,6 +244,7 @@ pub(crate) struct VacantNodeEntry<'a> {
     hash: u64,
     original_kind: RawSyntaxKind,
     raw_entry: RawVacantEntryMut<'a, CachedNode, (), BuildHasherDefault<FxHasher>>,
+    live_set: Option<&'a mut LiveSet>,
 }
 
 /// Represents an entry of a cached node.
@@ -231,6 +277,10 @@ impl<'a> VacantNodeEntry<'a> {
             // unknown node. Never cache these nodes because cache lookups will never match.
             NodeCache::UNCACHED_NODE_HASH
         } else {
+            if let Some(live_set) = self.live_set {
+                live_set.nodes.insert(&*node);
+            }
+
             self.raw_entry.insert_with_hasher(
                 self.hash,
                 CachedNode {
@@ -315,6 +365,10 @@ impl TriviaCache {
         }
 
         h.finish()
+    }
+
+    fn is_empty(&self) -> bool {
+        self.cache.is_empty()
     }
 }
 

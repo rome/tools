@@ -33,7 +33,7 @@ use rome_js_syntax::{
     AnyJsRoot, JsLanguage, JsSyntaxNode, SourceType, TextRange, TextSize, TokenAtOffset,
 };
 use rome_parser::AnyParse;
-use rome_rowan::{AstNode, BatchMutationExt, Direction};
+use rome_rowan::{AstNode, BatchMutationExt, Direction, NodeCache};
 use std::borrow::Cow;
 use std::fmt::Debug;
 use tracing::debug;
@@ -116,7 +116,12 @@ impl ExtensionHandler for JsFileHandler {
     }
 }
 
-fn parse(rome_path: &RomePath, language_hint: LanguageId, text: &str) -> AnyParse {
+fn parse(
+    rome_path: &RomePath,
+    language_hint: LanguageId,
+    text: &str,
+    cache: &mut NodeCache,
+) -> AnyParse {
     let source_type =
         SourceType::try_from(rome_path.as_path()).unwrap_or_else(|_| match language_hint {
             LanguageId::JavaScriptReact => SourceType::jsx(),
@@ -125,7 +130,7 @@ fn parse(rome_path: &RomePath, language_hint: LanguageId, text: &str) -> AnyPars
             _ => SourceType::js_module(),
         });
 
-    let parse = rome_js_parser::parse(text, source_type);
+    let parse = rome_js_parser::parse_with_cache(text, source_type, cache);
     AnyParse::from(parse)
 }
 

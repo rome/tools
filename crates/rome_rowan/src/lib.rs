@@ -36,7 +36,7 @@ pub use rome_text_size::{TextLen, TextRange, TextSize};
 
 pub use crate::{
     ast::*,
-    green::RawSyntaxKind,
+    green::{NodeCache, RawSyntaxKind},
     syntax::{
         chain_trivia_pieces, ChainTriviaPiecesIterator, Language, SendNode, SyntaxElement,
         SyntaxElementChildren, SyntaxKind, SyntaxList, SyntaxNode, SyntaxNodeChildren,

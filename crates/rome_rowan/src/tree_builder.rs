@@ -1,7 +1,6 @@
-use crate::green::NodeCacheNodeEntryMut;
 use crate::{
     cow_mut::CowMut,
-    green::{GreenElement, NodeCache},
+    green::{GreenElement, LiveSet, NodeCache, NodeCacheNodeEntryMut},
     syntax::TriviaPiece,
     GreenNode, Language, NodeOrToken, ParsedChildren, SyntaxFactory, SyntaxKind, SyntaxNode,
 };
@@ -17,6 +16,7 @@ pub struct TreeBuilder<'cache, L: Language, S: SyntaxFactory<Kind = L::Kind>> {
     cache: CowMut<'cache, NodeCache>,
     parents: Vec<(L::Kind, usize)>,
     children: Vec<(u64, GreenElement)>,
+    live_set: Option<LiveSet>,
     ph: PhantomData<S>,
 }
 
@@ -26,6 +26,7 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> Default for TreeBuilder<'_, 
             cache: CowMut::default(),
             parents: Vec::default(),
             children: Vec::default(),
+            live_set: None,
             ph: PhantomData,
         }
     }
@@ -40,10 +41,16 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
     /// Reusing `NodeCache` between different [TreeBuilder]`s saves memory.
     /// It allows to structurally share underlying trees.
     pub fn with_cache(cache: &mut NodeCache) -> TreeBuilder<'_, L, S> {
+        let has_cached_nodes = !cache.is_empty();
         TreeBuilder {
             cache: CowMut::Borrowed(cache),
             parents: Vec::new(),
             children: Vec::new(),
+            // We don't need to track the set of live nodes and tokens if the
+            // cache was initially empty, as it means all the entries present
+            // in the cache at the end of the parsing session were inserted by
+            // this instance of the TreeBuilder
+            live_set: has_cached_nodes.then(LiveSet::default),
             ph: PhantomData,
         }
     }
@@ -67,7 +74,9 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
     /// Adds new token to the current branch.
     #[inline]
     pub fn token(&mut self, kind: L::Kind, text: &str) -> &mut Self {
-        let (hash, token) = self.cache.token(kind.to_raw(), text);
+        let (hash, token) = self
+            .cache
+            .token(kind.to_raw(), text, self.live_set.as_mut());
         self.children.push((hash, token.into()));
         self
     }
@@ -81,9 +90,13 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
         leading: &[TriviaPiece],
         trailing: &[TriviaPiece],
     ) {
-        let (hash, token) = self
-            .cache
-            .token_with_trivia(kind.to_raw(), text, leading, trailing);
+        let (hash, token) = self.cache.token_with_trivia(
+            kind.to_raw(),
+            text,
+            leading,
+            trailing,
+            self.live_set.as_mut(),
+        );
         self.children.push((hash, token.into()));
     }
 
@@ -103,7 +116,7 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
         let raw_kind = kind.to_raw();
 
         let slots = &self.children[first_child..];
-        let node_entry = self.cache.node(raw_kind, slots);
+        let node_entry = self.cache.node(raw_kind, slots, self.live_set.as_mut());
 
         let mut build_node = || {
             let children = ParsedChildren::new(&mut self.children, first_child);
@@ -184,13 +197,19 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
     /// are paired!
     #[inline]
     #[must_use]
-    pub fn finish(self) -> SyntaxNode<L> {
-        SyntaxNode::new_root(self.finish_green())
+    pub fn finish(mut self) -> SyntaxNode<L> {
+        let root = SyntaxNode::new_root(self.finish_green());
+
+        if let Some(live_set) = self.live_set.take() {
+            self.cache.evict_unreachable(live_set);
+        }
+
+        root
     }
 
     // For tests
     #[must_use]
-    pub(crate) fn finish_green(mut self) -> GreenNode {
+    pub(crate) fn finish_green(&mut self) -> GreenNode {
         assert_eq!(self.children.len(), 1);
         match self.children.pop().unwrap().1 {
             NodeOrToken::Node(node) => node,

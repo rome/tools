@@ -1,7 +1,8 @@
 use crate::prelude::*;
 use crate::token_source::Trivia;
 use rome_rowan::{
-    Language, SyntaxFactory, SyntaxKind, SyntaxNode, TextRange, TextSize, TreeBuilder, TriviaPiece,
+    Language, NodeCache, SyntaxFactory, SyntaxKind, SyntaxNode, TextRange, TextSize, TreeBuilder,
+    TriviaPiece,
 };
 
 /// An abstraction for syntax tree implementations
@@ -37,7 +38,7 @@ where
     trivia_pos: usize,
     parents_count: usize,
     errors: Vec<ParseDiagnostic>,
-    inner: TreeBuilder<'static, L, Factory>,
+    inner: TreeBuilder<'a, L, Factory>,
     /// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
     needs_eof: bool,
     trivia_pieces: Vec<TriviaPiece>,
@@ -87,6 +88,20 @@ where
             trivia_pos: 0,
             parents_count: 0,
             inner: TreeBuilder::default(),
+            errors: vec![],
+            needs_eof: true,
+            trivia_pieces: Vec::with_capacity(128),
+        }
+    }
+
+    pub fn with_cache(text: &'a str, trivia: &'a [Trivia], cache: &'a mut NodeCache) -> Self {
+        Self {
+            text,
+            trivia_list: trivia,
+            text_pos: 0.into(),
+            trivia_pos: 0,
+            parents_count: 0,
+            inner: TreeBuilder::with_cache(cache),
             errors: vec![],
             needs_eof: true,
             trivia_pieces: Vec::with_capacity(128),
