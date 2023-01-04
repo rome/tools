@@ -866,7 +866,7 @@ export type MarkupBuf = MarkupNodeBuf[];
 /**
  * The severity to associate to a diagnostic.
  */
-export type Severity = "Fatal" | "Error" | "Warning" | "Information" | "Hint";
+export type Severity = "fatal" | "error" | "warning" | "information" | "hint";
 export type DiagnosticTags = DiagnosticTag[];
 /**
 	* Serializable representation of a [Diagnostic](super::Diagnostic) advice
@@ -884,10 +884,7 @@ export type Advice =
 /**
  * Represents the resource a diagnostic is associated with.
  */
-export type Resource_for_String =
-	| "Argv"
-	| "Memory"
-	| { File: FilePath_for_String };
+export type Resource_for_String = "argv" | "memory" | { file: string };
 export type TextRange = [TextSize, TextSize];
 export interface MarkupNodeBuf {
 	content: string;
@@ -897,10 +894,10 @@ export interface MarkupNodeBuf {
  * Internal enum used to automatically generate bit offsets for [DiagnosticTags] and help with the implementation of `serde` and `schemars` for tags.
  */
 export type DiagnosticTag =
-	| "Fixable"
-	| "Internal"
-	| "UnnecessaryCode"
-	| "DeprecatedCode";
+	| "fixable"
+	| "internal"
+	| "unnecessaryCode"
+	| "deprecatedCode";
 /**
  * The category for a log advice, defines how the message should be presented to the user.
  */
@@ -910,10 +907,6 @@ export interface TextEdit {
 	ops: CompressedOp[];
 }
 export type Backtrace = BacktraceFrame[];
-/**
- * Represents the path of a file on the filesystem.
- */
-export type FilePath_for_String = { Path: string };
 /**
  * Enumeration of all the supported markup elements
  */
@@ -980,7 +973,7 @@ export interface CodeSuggestion {
 	applicability: Applicability;
 	labels: TextRange[];
 	msg: MarkupBuf;
-	span: FileSpan;
+	span: TextRange;
 	suggestion: TextEdit;
 }
 /**
@@ -1004,12 +997,6 @@ export type SourceActionKind =
  * Indicates how a tool should manage this suggestion.
  */
 export type Applicability = "Always" | "MaybeIncorrect";
-/**
- * A range that is indexed in a specific file.
- */
-export interface FileSpan {
-	range: TextRange;
-}
 export interface FormatFileParams {
 	path: RomePath;
 }

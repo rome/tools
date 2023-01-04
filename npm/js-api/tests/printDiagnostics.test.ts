@@ -30,7 +30,7 @@ if(expr()) {
 					description: "error description content",
 					location: {
 						path: {
-							file: "file.js"
+							file: "file.js",
 						},
 						span: [31, 37],
 					},
@@ -54,7 +54,7 @@ if(expr()) {
 					description: "error description content",
 					location: {
 						path: {
-							file: "file.js"
+							file: "file.js",
 						},
 						span: [46, 58],
 					},

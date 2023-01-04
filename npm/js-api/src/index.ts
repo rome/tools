@@ -188,7 +188,6 @@ export class Rome {
 				(diag) => diag.severity === "fatal" || diag.severity === "error",
 			);
 			if (!hasErrors) {
-
 				if (options.range) {
 					const result = this.workspace.formatRange({
 						path,
