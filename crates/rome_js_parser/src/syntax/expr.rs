@@ -592,7 +592,7 @@ fn parse_binary_or_logical_expression_recursive(
         // as;
         // let precedence = "hello" as const + 3 as number as number;
         if op == T![as] {
-            parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+            parse_ts_type(p, TypeContext::default()).or_add_diagnostic(p, expected_ts_type);
             let mut as_expression = m.complete(p, TS_AS_EXPRESSION);
 
             if TypeScript.is_unsupported(p) {
@@ -621,7 +621,7 @@ fn parse_binary_or_logical_expression_recursive(
         // test_err ts_satisfies_expression
         // let x = "hello" satisfies string;
         if op == T![satisfies] {
-            parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+            parse_ts_type(p, TypeContext::default()).or_add_diagnostic(p, expected_ts_type);
             let mut satisfies_expression = m.complete(p, TS_SATISFIES_EXPRESSION);
 
             if TypeScript.is_unsupported(p) {
