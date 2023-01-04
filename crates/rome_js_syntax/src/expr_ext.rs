@@ -693,7 +693,7 @@ impl JsIdentifierExpression {
 impl AnyJsLiteralExpression {
     pub fn value_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            AnyJsLiteralExpression::JsBigIntLiteralExpression(expression) => {
+            AnyJsLiteralExpression::JsBigintLiteralExpression(expression) => {
                 expression.value_token()
             }
             AnyJsLiteralExpression::JsBooleanLiteralExpression(expression) => {

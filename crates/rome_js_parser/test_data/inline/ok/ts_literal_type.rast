@@ -35,9 +35,9 @@ JsModule {
             },
             type_parameters: missing (optional),
             eq_token: EQ@32..34 "=" [] [Whitespace(" ")],
-            ty: TsBigIntLiteralType {
+            ty: TsBigintLiteralType {
                 minus_token: missing (optional),
-                literal_token: JS_BIG_INT_LITERAL@34..36 "5n" [] [],
+                literal_token: JS_BIGINT_LITERAL@34..36 "5n" [] [],
             },
             semicolon_token: SEMICOLON@36..37 ";" [] [],
         },
@@ -48,9 +48,9 @@ JsModule {
             },
             type_parameters: missing (optional),
             eq_token: EQ@45..47 "=" [] [Whitespace(" ")],
-            ty: TsBigIntLiteralType {
+            ty: TsBigintLiteralType {
                 minus_token: MINUS@47..48 "-" [] [],
-                literal_token: JS_BIG_INT_LITERAL@48..50 "5n" [] [],
+                literal_token: JS_BIGINT_LITERAL@48..50 "5n" [] [],
             },
             semicolon_token: SEMICOLON@50..51 ";" [] [],
         },
@@ -136,9 +136,9 @@ JsModule {
         0: IDENT@30..32 "C" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@32..34 "=" [] [Whitespace(" ")]
-      4: TS_BIG_INT_LITERAL_TYPE@34..36
+      4: TS_BIGINT_LITERAL_TYPE@34..36
         0: (empty)
-        1: JS_BIG_INT_LITERAL@34..36 "5n" [] []
+        1: JS_BIGINT_LITERAL@34..36 "5n" [] []
       5: SEMICOLON@36..37 ";" [] []
     3: TS_TYPE_ALIAS_DECLARATION@37..51
       0: TYPE_KW@37..43 "type" [Newline("\n")] [Whitespace(" ")]
@@ -146,9 +146,9 @@ JsModule {
         0: IDENT@43..45 "D" [] [Whitespace(" ")]
       2: (empty)
       3: EQ@45..47 "=" [] [Whitespace(" ")]
-      4: TS_BIG_INT_LITERAL_TYPE@47..50
+      4: TS_BIGINT_LITERAL_TYPE@47..50
         0: MINUS@47..48 "-" [] []
-        1: JS_BIG_INT_LITERAL@48..50 "5n" [] []
+        1: JS_BIGINT_LITERAL@48..50 "5n" [] []
       5: SEMICOLON@50..51 ";" [] []
     4: TS_TYPE_ALIAS_DECLARATION@51..69
       0: TYPE_KW@51..57 "type" [Newline("\n")] [Whitespace(" ")]

@@ -63,9 +63,9 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::JsAwaitExpression::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::JS_BIG_INT_LITERAL_EXPRESSION => {
+                $crate::JsSyntaxKind::JS_BIGINT_LITERAL_EXPRESSION => {
                     let $pattern =
-                        unsafe { $crate::JsBigIntLiteralExpression::new_unchecked(node) };
+                        unsafe { $crate::JsBigintLiteralExpression::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::JS_BINARY_EXPRESSION => {
@@ -759,8 +759,8 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::TsAssertsReturnType::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::TS_BIG_INT_LITERAL_TYPE => {
-                    let $pattern = unsafe { $crate::TsBigIntLiteralType::new_unchecked(node) };
+                $crate::JsSyntaxKind::TS_BIGINT_LITERAL_TYPE => {
+                    let $pattern = unsafe { $crate::TsBigintLiteralType::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_BIGINT_TYPE => {

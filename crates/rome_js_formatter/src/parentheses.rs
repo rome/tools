@@ -69,7 +69,7 @@ impl NeedsParentheses for AnyJsLiteralExpression {
     #[inline]
     fn needs_parentheses(&self) -> bool {
         match self {
-            AnyJsLiteralExpression::JsBigIntLiteralExpression(big_int) => {
+            AnyJsLiteralExpression::JsBigintLiteralExpression(big_int) => {
                 big_int.needs_parentheses()
             }
             AnyJsLiteralExpression::JsBooleanLiteralExpression(boolean) => {
@@ -89,7 +89,7 @@ impl NeedsParentheses for AnyJsLiteralExpression {
     #[inline]
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         match self {
-            AnyJsLiteralExpression::JsBigIntLiteralExpression(big_int) => {
+            AnyJsLiteralExpression::JsBigintLiteralExpression(big_int) => {
                 big_int.needs_parentheses_with_parent(parent)
             }
             AnyJsLiteralExpression::JsBooleanLiteralExpression(boolean) => {
@@ -945,7 +945,7 @@ impl NeedsParentheses for AnyTsType {
         match self {
             AnyTsType::TsAnyType(ty) => ty.needs_parentheses(),
             AnyTsType::TsArrayType(ty) => ty.needs_parentheses(),
-            AnyTsType::TsBigIntLiteralType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsBigintLiteralType(ty) => ty.needs_parentheses(),
             AnyTsType::TsBigintType(ty) => ty.needs_parentheses(),
             AnyTsType::TsBooleanLiteralType(ty) => ty.needs_parentheses(),
             AnyTsType::TsBooleanType(ty) => ty.needs_parentheses(),
@@ -985,7 +985,7 @@ impl NeedsParentheses for AnyTsType {
         match self {
             AnyTsType::TsAnyType(ty) => ty.needs_parentheses_with_parent(parent),
             AnyTsType::TsArrayType(ty) => ty.needs_parentheses_with_parent(parent),
-            AnyTsType::TsBigIntLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsBigintLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
             AnyTsType::TsBigintType(ty) => ty.needs_parentheses_with_parent(parent),
             AnyTsType::TsBooleanLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
             AnyTsType::TsBooleanType(ty) => ty.needs_parentheses_with_parent(parent),

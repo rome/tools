@@ -192,7 +192,7 @@ impl JsAwaitExpression {
         )
     }
 }
-impl JsBigIntLiteralExpression {
+impl JsBigintLiteralExpression {
     pub fn with_value_token(self, element: SyntaxToken) -> Self {
         Self::unwrap_cast(
             self.syntax
@@ -3788,7 +3788,7 @@ impl TsAssertsReturnType {
         ))
     }
 }
-impl TsBigIntLiteralType {
+impl TsBigintLiteralType {
     pub fn with_minus_token(self, element: Option<SyntaxToken>) -> Self {
         Self::unwrap_cast(
             self.syntax
