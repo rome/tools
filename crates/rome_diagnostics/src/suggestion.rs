@@ -3,13 +3,6 @@ use rome_console::MarkupBuf;
 use rome_rowan::TextRange;
 use rome_text_edit::TextEdit;
 
-/// A range that is indexed in a specific file.
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
-#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
-pub struct FileSpan {
-    pub range: TextRange,
-}
-
 /// Indicates how a tool should manage this suggestion.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
@@ -28,7 +21,7 @@ pub enum Applicability {
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct CodeSuggestion {
-    pub span: FileSpan,
+    pub span: TextRange,
     pub applicability: Applicability,
     pub msg: MarkupBuf,
     pub suggestion: TextEdit,

@@ -9,7 +9,7 @@ use crossbeam::{
 use rome_console::{fmt, markup, Console, ConsoleExt};
 use rome_diagnostics::{
     adapters::{IoError, StdError},
-    category, Advices, Category, Diagnostic, DiagnosticExt, Error, FilePath, PrintDescription,
+    category, Advices, Category, Diagnostic, DiagnosticExt, Error, PrintDescription,
     PrintDiagnostic, Resource, Severity, Visit,
 };
 use rome_fs::{FileSystem, OpenOptions, PathInterner, RomePath};
@@ -373,8 +373,7 @@ fn process_messages(options: ProcessMessagesOptions) {
 
             Message::Error(mut err) => {
                 let location = err.location();
-                if let Some(Resource::File(FilePath::Path(file_path))) = location.resource.as_ref()
-                {
+                if let Some(Resource::File(file_path)) = location.resource.as_ref() {
                     // Retrieves the file name from the file ID cache, if it's a miss
                     // flush entries from the interner channel until it's found
                     let file_name = match paths.get(*file_path) {
@@ -420,7 +419,7 @@ fn process_messages(options: ProcessMessagesOptions) {
                 } else {
                     let location = err.location();
                     let path = match &location.resource {
-                        Some(Resource::File(file)) => file.path(),
+                        Some(Resource::File(file)) => Some(*file),
                         _ => None,
                     };
 

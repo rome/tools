@@ -7,9 +7,7 @@ use crate::{
     AnalyzerDiagnostic, Queryable, RuleGroup, ServiceBag, SuppressionCommentEmitter,
 };
 use rome_console::MarkupBuf;
-use rome_diagnostics::{
-    advice::CodeSuggestionAdvice, Applicability, CodeSuggestion, Error, FileSpan,
-};
+use rome_diagnostics::{advice::CodeSuggestionAdvice, Applicability, CodeSuggestion, Error};
 use rome_rowan::{BatchMutation, Language};
 use std::borrow::Cow;
 use std::iter::FusedIterator;
@@ -132,7 +130,7 @@ impl<L: Language> From<AnalyzerAction<L>> for CodeSuggestionItem {
             rule_name: action.rule_name,
             category: action.category,
             suggestion: CodeSuggestion {
-                span: FileSpan { range },
+                span: range,
                 applicability: action.applicability,
                 msg: action.message,
                 suggestion,

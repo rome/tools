@@ -46,18 +46,18 @@ pub enum Resource<P> {
     /// The diagnostic is related to the content of a memory buffer.
     Memory,
     /// The diagnostic is related to a file on the filesystem.
-    File(FilePath<P>),
+    File(P),
 }
 
 impl<P> Resource<P> {
     /// Returns a `FilePath<&P::Target>` if `self` points to a `Path`, or
     /// `None` otherwise.
-    pub fn as_file(&self) -> Option<FilePath<&<P as Deref>::Target>>
+    pub fn as_file(&self) -> Option<&<P as Deref>::Target>
     where
         P: Deref,
     {
         if let Resource::File(file) = self {
-            Some(file.as_deref())
+            Some(file.deref())
         } else {
             None
         }
@@ -71,7 +71,7 @@ impl<P> Resource<P> {
         match self {
             Resource::Argv => Resource::Argv,
             Resource::Memory => Resource::Memory,
-            Resource::File(file) => Resource::File(file.as_deref()),
+            Resource::File(file) => Resource::File(file.deref()),
         }
     }
 }
@@ -83,51 +83,6 @@ impl Resource<&'_ str> {
             Resource::Argv => Resource::Argv,
             Resource::Memory => Resource::Memory,
             Resource::File(file) => Resource::File(file.to_owned()),
-        }
-    }
-}
-
-/// Represents the path of a file on the filesystem.
-#[derive(Debug, Clone, Copy, Eq, PartialEq, Serialize, Deserialize)]
-#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
-pub enum FilePath<P> {
-    /// The path is represented as a string path.
-    Path(P),
-}
-
-impl<P> FilePath<P> {
-    /// Returns the string path of this [FilePath] if it has one.
-    pub fn path(self) -> Option<P> {
-        match self {
-            FilePath::Path(path) => Some(path),
-        }
-    }
-
-    /// Converts a `FilePath<P>` to `FilePath<&P::Target>`.
-    pub fn as_deref(&self) -> FilePath<&<P as Deref>::Target>
-    where
-        P: Deref,
-    {
-        match self {
-            FilePath::Path(path) => FilePath::Path(path),
-        }
-    }
-
-    /// Returns the "logical or" of `self` and `other`
-    pub(crate) fn or(self, other: Self) -> Self
-    where
-        P: PartialEq,
-    {
-        let (file, _) = (self, other);
-        file
-    }
-}
-
-impl FilePath<&'_ str> {
-    /// Converts a `FilePath<P>` to `FilePath<&P::Target>`.
-    pub fn to_owned(self) -> FilePath<String> {
-        match self {
-            FilePath::Path(path) => FilePath::Path(path.to_string()),
         }
     }
 }
@@ -288,21 +243,15 @@ impl<T: Deref<Target = str>> AsResource for Resource<T> {
     }
 }
 
-impl<T: Deref<Target = str>> AsResource for FilePath<T> {
-    fn as_resource(&self) -> Option<Resource<&'_ str>> {
-        Some(Resource::File(self.as_deref()))
-    }
-}
-
 impl AsResource for String {
     fn as_resource(&self) -> Option<Resource<&'_ str>> {
-        Some(Resource::File(FilePath::Path(self)))
+        Some(Resource::File(self))
     }
 }
 
 impl AsResource for str {
     fn as_resource(&self) -> Option<Resource<&'_ str>> {
-        Some(Resource::File(FilePath::Path(self)))
+        Some(Resource::File(self))
     }
 }
 
