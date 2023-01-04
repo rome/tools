@@ -1,3 +1,9 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: valid.js
+---
+# Input
+```js
 class A { foo() {} bar() {} }
 class A { static foo() {} foo() {} }
 class A { get foo() {} set foo(value) {} }
@@ -49,3 +55,7 @@ class A { [123.00]() {} [`123`]() {} }
 class A { static '65'() {} static [0o101]() {} }
 class A { [123n]() {} 123() {} }
 class A { [null]() {} 'null'() {} }
+
+```
+
+
