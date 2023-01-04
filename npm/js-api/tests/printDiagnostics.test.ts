@@ -30,9 +30,7 @@ if(expr()) {
 					description: "error description content",
 					location: {
 						path: {
-							File: {
-								Path: "file.js",
-							},
+							file: "file.js"
 						},
 						span: [31, 37],
 					},
@@ -42,7 +40,7 @@ if(expr()) {
 							elements: [],
 						},
 					],
-					severity: "Error",
+					severity: "error",
 					tags: [],
 					verbose_advices: {
 						advices: [],
@@ -56,9 +54,7 @@ if(expr()) {
 					description: "error description content",
 					location: {
 						path: {
-							File: {
-								Path: "file.js",
-							},
+							file: "file.js"
 						},
 						span: [46, 58],
 					},
@@ -68,7 +64,7 @@ if(expr()) {
 							elements: [],
 						},
 					],
-					severity: "Error",
+					severity: "error",
 					tags: [],
 					verbose_advices: {
 						advices: [],

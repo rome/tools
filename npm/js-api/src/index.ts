@@ -185,9 +185,10 @@ export class Rome {
 			});
 
 			const hasErrors = diagnostics.some(
-				(diag) => diag.severity === "Fatal" || diag.severity === "Error",
+				(diag) => diag.severity === "fatal" || diag.severity === "error",
 			);
 			if (!hasErrors) {
+
 				if (options.range) {
 					const result = this.workspace.formatRange({
 						path,

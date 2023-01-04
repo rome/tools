@@ -40,6 +40,7 @@ impl Eq for Location<'_> {}
 /// Represents the resource a diagnostic is associated with.
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Serialize, Deserialize)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
+#[serde(rename_all = "camelCase")]
 pub enum Resource<P> {
     /// The diagnostic is related to the content of the command line arguments.
     Argv,
