@@ -3,7 +3,7 @@ use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_parser::parse_json;
 use rome_service::Configuration;
 use schemars::schema_for;
-use serde_json::{to_string, to_string_pretty};
+use serde_json::to_string;
 use xtask::{project_root, Mode, Result};
 use xtask_codegen::update;
 
