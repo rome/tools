@@ -8,6 +8,7 @@ use rome_js_syntax::{AnyJsRoot, JsSyntaxNode, SourceType};
 use rome_json_formatter::context::{JsonFormatContext, JsonFormatOptions};
 use rome_json_syntax::JsonSyntaxNode;
 use rome_parser::prelude::ParseDiagnostic;
+use rome_rowan::NodeCache;
 
 pub enum Parse<'a> {
     JavaScript(SourceType, &'a str),
@@ -31,6 +32,16 @@ impl<'a> Parse<'a> {
                 Parsed::JavaScript(rome_js_parser::parse(code, *source_type), *source_type)
             }
             Parse::Json(code) => Parsed::Json(rome_json_parser::parse_json(code)),
+        }
+    }
+
+    pub fn parse_with_cache(&self, cache: &mut NodeCache) -> Parsed {
+        match self {
+            Parse::JavaScript(source_type, code) => Parsed::JavaScript(
+                rome_js_parser::parse_js_with_cache(code, *source_type, cache),
+                *source_type,
+            ),
+            Parse::Json(code) => Parsed::Json(rome_json_parser::parse_json_with_cache(code, cache)),
         }
     }
 }

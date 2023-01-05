@@ -194,11 +194,11 @@ pub fn parse_module(text: &str) -> Parse<JsModule> {
 /// Parses the provided string as a EcmaScript program using the provided syntax features.
 pub fn parse(text: &str, source_type: SourceType) -> Parse<AnyJsRoot> {
     let mut cache = NodeCache::default();
-    parse_with_cache(text, source_type, &mut cache)
+    parse_js_with_cache(text, source_type, &mut cache)
 }
 
 /// Parses the provided string as a EcmaScript program using the provided syntax features and node cache.
-pub fn parse_with_cache(
+pub fn parse_js_with_cache(
     text: &str,
     source_type: SourceType,
     cache: &mut NodeCache,

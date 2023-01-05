@@ -23,6 +23,7 @@ pub fn parse_json(source: &str) -> JsonParse {
     parse_json_with_cache(source, &mut cache)
 }
 
+/// Parses the provided string as JSON program using the provided node cache.
 pub fn parse_json_with_cache(source: &str, cache: &mut NodeCache) -> JsonParse {
     tracing::debug_span!("parse").in_scope(move || {
         let mut parser = JsonParser::new(source);

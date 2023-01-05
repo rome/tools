@@ -94,6 +94,8 @@ where
         }
     }
 
+    /// Reusing `NodeCache` between different [LosslessTreeSink]`s saves memory.
+    /// It allows to structurally share underlying trees.
     pub fn with_cache(text: &'a str, trivia: &'a [Trivia], cache: &'a mut NodeCache) -> Self {
         Self {
             text,

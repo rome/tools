@@ -282,6 +282,13 @@ impl GreenNode {
     }
 
     #[inline]
+    pub(crate) fn into_raw(self) -> ptr::NonNull<GreenNodeData> {
+        // SAFETY: casting from `HeaderSlice<GreenNodeHead, [green::node::Slot]>` to `GreenNodeData`
+        // if safe since `GreenNodeData` is marked as `repr(transparent)`
+        Arc::from_thin(self.ptr).into_raw().cast()
+    }
+
+    #[inline]
     pub(crate) unsafe fn from_raw(ptr: ptr::NonNull<GreenNodeData>) -> GreenNode {
         let arc = Arc::from_raw(&ptr.as_ref().data as *const ReprThin);
         let arc = mem::transmute::<Arc<ReprThin>, ThinArc<GreenNodeHead, Slot>>(arc);

@@ -130,7 +130,7 @@ fn parse(
             _ => SourceType::js_module(),
         });
 
-    let parse = rome_js_parser::parse_with_cache(text, source_type, cache);
+    let parse = rome_js_parser::parse_js_with_cache(text, source_type, cache);
     AnyParse::from(parse)
 }
 
