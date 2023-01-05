@@ -3,9 +3,8 @@ use std::collections::HashMap;
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_js_syntax::{
     AnyJsClassMember, AnyJsClassMemberName, AnyJsMethodModifier, AnyJsPropertyModifier,
-    JsClassDeclaration, JsClassExpression, JsClassMemberList, JsGetterClassMember,
-    JsMethodClassMember, JsMethodModifierList, JsPropertyClassMember, JsPropertyModifierList,
-    JsSetterClassMember, TextRange,
+    JsClassMemberList, JsGetterClassMember, JsMethodClassMember, JsMethodModifierList,
+    JsPropertyClassMember, JsPropertyModifierList, JsSetterClassMember, TextRange,
 };
 use rome_rowan::{declare_node_union, AstNode};
 
@@ -247,21 +246,8 @@ impl TryFrom<AnyJsClassMember> for ClassMemberDefinition {
     }
 }
 
-declare_node_union! {
-    pub(crate) ClassDefinition = JsClassExpression | JsClassDeclaration
-}
-
-impl ClassDefinition {
-    fn members(&self) -> JsClassMemberList {
-        match self {
-            ClassDefinition::JsClassExpression(node) => node.members(),
-            ClassDefinition::JsClassDeclaration(node) => node.members(),
-        }
-    }
-}
-
 impl Rule for NoDuplicateClassMembers {
-    type Query = Ast<ClassDefinition>;
+    type Query = Ast<JsClassMemberList>;
     type State = ClassMemberDefinition;
     type Signals = Vec<Self::State>;
     type Options = ();
@@ -274,7 +260,7 @@ impl Rule for NoDuplicateClassMembers {
         let mut signals: Self::Signals = Vec::new();
 
         let node = ctx.query();
-        for member in node.members() {
+        for member in node {
             if let Ok(member_def) = ClassMemberDefinition::try_from(member) {
                 if let (Some(member_name), Some(access_type)) =
                     (member_def.member_name(), member_def.access_type())
@@ -315,10 +301,7 @@ impl Rule for NoDuplicateClassMembers {
         let diagnostic = RuleDiagnostic::new(
             rule_category!(),
             state.range(),
-            format!(
-                "Duplicate class member name {:?}",
-                state.member_name().unwrap()
-            ),
+            format!("Duplicate class member name {:?}", state.member_name()?),
         );
 
         Some(diagnostic)

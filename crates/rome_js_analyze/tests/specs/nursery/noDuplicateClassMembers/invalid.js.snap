@@ -15,6 +15,9 @@ class A { #foo; #foo; }
 class A { 'foo'() {} 'foo'() {} }
 class A { foo() {} 'foo'() {} }
 class A { static constructor() {} static 'constructor'() {} }
+class A { foo; accessor foo; }
+class A { get foo () {} accessor foo; }
+class A { set foo () {} accessor foo; }
 
 ```
 
@@ -176,7 +179,7 @@ invalid.js:10:20 lint/nursery/noDuplicateClassMembers ━━━━━━━━�
   > 10 │ class A { foo() {} 'foo'() {} }
        │                    ^^^^^^^^^^
     11 │ class A { static constructor() {} static 'constructor'() {} }
-    12 │ 
+    12 │ class A { foo; accessor foo; }
   
 
 ```
@@ -190,7 +193,52 @@ invalid.js:11:35 lint/nursery/noDuplicateClassMembers ━━━━━━━━�
     10 │ class A { foo() {} 'foo'() {} }
   > 11 │ class A { static constructor() {} static 'constructor'() {} }
        │                                   ^^^^^^^^^^^^^^^^^^^^^^^^^
-    12 │ 
+    12 │ class A { foo; accessor foo; }
+    13 │ class A { get foo () {} accessor foo; }
+  
+
+```
+
+```
+invalid.js:12:16 lint/nursery/noDuplicateClassMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate class member name "foo"
+  
+    10 │ class A { foo() {} 'foo'() {} }
+    11 │ class A { static constructor() {} static 'constructor'() {} }
+  > 12 │ class A { foo; accessor foo; }
+       │                ^^^^^^^^^^^^^
+    13 │ class A { get foo () {} accessor foo; }
+    14 │ class A { set foo () {} accessor foo; }
+  
+
+```
+
+```
+invalid.js:13:25 lint/nursery/noDuplicateClassMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate class member name "foo"
+  
+    11 │ class A { static constructor() {} static 'constructor'() {} }
+    12 │ class A { foo; accessor foo; }
+  > 13 │ class A { get foo () {} accessor foo; }
+       │                         ^^^^^^^^^^^^^
+    14 │ class A { set foo () {} accessor foo; }
+    15 │ 
+  
+
+```
+
+```
+invalid.js:14:25 lint/nursery/noDuplicateClassMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate class member name "foo"
+  
+    12 │ class A { foo; accessor foo; }
+    13 │ class A { get foo () {} accessor foo; }
+  > 14 │ class A { set foo () {} accessor foo; }
+       │                         ^^^^^^^^^^^^^
+    15 │ 
   
 
 ```
