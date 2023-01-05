@@ -12,3 +12,4 @@ class A { static constructor() {} static 'constructor'() {} }
 class A { foo; accessor foo; }
 class A { get foo () {} accessor foo; }
 class A { set foo () {} accessor foo; }
+class A { foo() {} foo() {} bar() {} bar() {} }

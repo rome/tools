@@ -18,6 +18,7 @@ class A { static constructor() {} static 'constructor'() {} }
 class A { foo; accessor foo; }
 class A { get foo () {} accessor foo; }
 class A { set foo () {} accessor foo; }
+class A { foo() {} foo() {} bar() {} bar() {} }
 
 ```
 
@@ -224,7 +225,7 @@ invalid.js:13:25 lint/nursery/noDuplicateClassMembers ━━━━━━━━�
   > 13 │ class A { get foo () {} accessor foo; }
        │                         ^^^^^^^^^^^^^
     14 │ class A { set foo () {} accessor foo; }
-    15 │ 
+    15 │ class A { foo() {} foo() {} bar() {} bar() {} }
   
 
 ```
@@ -238,7 +239,36 @@ invalid.js:14:25 lint/nursery/noDuplicateClassMembers ━━━━━━━━�
     13 │ class A { get foo () {} accessor foo; }
   > 14 │ class A { set foo () {} accessor foo; }
        │                         ^^^^^^^^^^^^^
-    15 │ 
+    15 │ class A { foo() {} foo() {} bar() {} bar() {} }
+    16 │ 
+  
+
+```
+
+```
+invalid.js:15:20 lint/nursery/noDuplicateClassMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate class member name "foo"
+  
+    13 │ class A { get foo () {} accessor foo; }
+    14 │ class A { set foo () {} accessor foo; }
+  > 15 │ class A { foo() {} foo() {} bar() {} bar() {} }
+       │                    ^^^^^^^^
+    16 │ 
+  
+
+```
+
+```
+invalid.js:15:38 lint/nursery/noDuplicateClassMembers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate class member name "bar"
+  
+    13 │ class A { get foo () {} accessor foo; }
+    14 │ class A { set foo () {} accessor foo; }
+  > 15 │ class A { foo() {} foo() {} bar() {} bar() {} }
+       │                                      ^^^^^^^^
+    16 │ 
   
 
 ```
