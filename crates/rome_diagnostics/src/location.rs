@@ -58,7 +58,7 @@ impl<P> Resource<P> {
         P: Deref,
     {
         if let Resource::File(file) = self {
-            Some(file.deref())
+            Some(file)
         } else {
             None
         }
@@ -72,7 +72,7 @@ impl<P> Resource<P> {
         match self {
             Resource::Argv => Resource::Argv,
             Resource::Memory => Resource::Memory,
-            Resource::File(file) => Resource::File(file.deref()),
+            Resource::File(file) => Resource::File(file),
         }
     }
 }
