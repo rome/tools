@@ -829,10 +829,12 @@ struct NurserySchema {
     use_valid_aria_props: Option<RuleConfiguration>,
     #[doc = "Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country."]
     use_valid_lang: Option<RuleConfiguration>,
+    #[doc = "Require generator functions to contain yield."]
+    use_yield: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 49] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 50] = [
         "noAccessKey",
         "noAssignInExpressions",
         "noBannedTypes",
@@ -882,8 +884,9 @@ impl Nursery {
         "useNumericLiterals",
         "useValidAriaProps",
         "useValidLang",
+        "useYield",
     ];
-    const RECOMMENDED_RULES: [&'static str; 40] = [
+    const RECOMMENDED_RULES: [&'static str; 41] = [
         "noAssignInExpressions",
         "noBannedTypes",
         "noClassAssign",
@@ -924,8 +927,9 @@ impl Nursery {
         "useNumericLiterals",
         "useValidAriaProps",
         "useValidLang",
+        "useYield",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 40] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 41] = [
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[3]),
@@ -966,6 +970,7 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[46]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[47]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[48]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[49]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -992,7 +997,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 40] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 41] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }

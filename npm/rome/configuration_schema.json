@@ -1133,6 +1133,17 @@
               "type": "null"
             }
           ]
+        },
+        "useYield": {
+          "description": "Require generator functions to contain yield.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       }
     },
