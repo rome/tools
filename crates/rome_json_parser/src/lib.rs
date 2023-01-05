@@ -2,7 +2,6 @@
 
 use crate::parser::JsonParser;
 use crate::syntax::parse_root;
-use rome_diagnostics::FileId;
 use rome_json_factory::JsonSyntaxFactory;
 use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 pub use rome_parser::prelude::*;
@@ -19,9 +18,9 @@ mod token_source;
 pub(crate) type JsonLosslessTreeSink<'source> =
     LosslessTreeSink<'source, JsonLanguage, JsonSyntaxFactory>;
 
-pub fn parse_json(source: &str, file_id: FileId) -> JsonParse {
-    tracing::debug_span!("parse", file_id = ?file_id).in_scope(move || {
-        let mut parser = JsonParser::new(source, file_id);
+pub fn parse_json(source: &str) -> JsonParse {
+    tracing::debug_span!("parse").in_scope(move || {
+        let mut parser = JsonParser::new(source);
 
         parse_root(&mut parser);
 
@@ -53,11 +52,10 @@ impl JsonParse {
     /// # use rome_json_parser::parse_json;
     /// # use rome_json_syntax::JsonSyntaxKind;
     /// # use rome_rowan::{AstNode, AstNodeList, SyntaxError};
-    /// # use rome_diagnostics::location::FileId;
     ///
     /// # fn main() -> Result<(), SyntaxError> {
     /// use rome_json_syntax::JsonSyntaxKind;
-    /// let parse = parse_json(r#"["a", 1]"#, FileId::zero());
+    /// let parse = parse_json(r#"["a", 1]"#);
     ///
     /// // Get the root value
     /// let root_value = parse.tree().value()?;

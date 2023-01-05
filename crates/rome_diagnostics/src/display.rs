@@ -86,7 +86,7 @@ impl<'fmt, D: Diagnostic + ?Sized> fmt::Display for PrintHeader<'fmt, D> {
         // Print the diagnostic location if it has a file path
         let location = diagnostic.location();
         let file_name = match &location.resource {
-            Some(Resource::File(file)) => file.path(),
+            Some(Resource::File(file)) => Some(file),
             _ => None,
         };
 
@@ -567,8 +567,7 @@ mod tests {
 
     use crate::{self as rome_diagnostics};
     use crate::{
-        Advices, Diagnostic, FilePath, Location, LogCategory, PrintDiagnostic, Resource,
-        SourceCode, Visit,
+        Advices, Diagnostic, Location, LogCategory, PrintDiagnostic, Resource, SourceCode, Visit,
     };
 
     #[derive(Debug)]
@@ -682,7 +681,7 @@ mod tests {
     impl Advices for FrameAdvice {
         fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
             visitor.record_frame(Location {
-                resource: Some(Resource::File(FilePath::Path("other_path"))),
+                resource: Some(Resource::File("other_path")),
                 span: Some(TextRange::new(TextSize::from(8), TextSize::from(16))),
                 source_code: Some(SourceCode {
                     text: "context location context",

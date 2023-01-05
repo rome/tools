@@ -1,4 +1,4 @@
-use rome_diagnostics::{print_diagnostic_to_string, DiagnosticExt, FileId};
+use rome_diagnostics::{print_diagnostic_to_string, DiagnosticExt};
 use rome_json_parser::parse_json;
 use rome_service::Configuration;
 use std::ffi::OsStr;
@@ -15,7 +15,7 @@ fn run_invalid_configurations(input: &'static str, _: &str, _: &str, _: &str) {
 
     let result = match extension {
         "json" => {
-            let result = parse_json(input_code.as_str(), FileId::zero());
+            let result = parse_json(input_code.as_str());
             Configuration::from_json_ast(result.tree())
         }
         _ => {

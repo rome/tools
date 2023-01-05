@@ -359,12 +359,11 @@ impl<T: HasClosureAstNode> ClosureExtensions for T {}
 #[cfg(test)]
 mod test {
     use super::*;
-    use rome_diagnostics::location::FileId;
     use rome_js_syntax::{JsArrowFunctionExpression, JsSyntaxKind, SourceType};
     use rome_rowan::SyntaxNodeCast;
 
     fn assert_closure(code: &str, name: &str, captures: &[&str]) {
-        let r = rome_js_parser::parse(code, FileId::zero(), SourceType::tsx());
+        let r = rome_js_parser::parse(code, SourceType::tsx());
         let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
         let closure = if name != "ARROWFUNCTION" {
@@ -406,7 +405,7 @@ mod test {
     }
 
     fn get_closure_children(code: &str, name: &str) -> Vec<Closure> {
-        let r = rome_js_parser::parse(code, FileId::zero(), SourceType::tsx());
+        let r = rome_js_parser::parse(code, SourceType::tsx());
         let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
         let closure = if name != "ARROWFUNCTION" {

@@ -430,7 +430,7 @@ mod tests {
 
         json!({
             "category": "internalError/io",
-            "severity": "Warning",
+            "severity": "warning",
             "description": "text description",
             "message": [
                 {
@@ -448,9 +448,7 @@ mod tests {
             },
             "location": {
                 "path": {
-                    "File": {
-                        "Path": "path"
-                    }
+                    "file": "path"
                 },
                 "source_code": "source_code",
                 "span": [
@@ -459,7 +457,7 @@ mod tests {
                 ]
             },
             "tags": [
-                "Internal"
+                "internal"
             ],
             "source": null
         })

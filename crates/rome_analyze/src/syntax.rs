@@ -93,13 +93,11 @@ impl<L: Language + 'static> Visitor for SyntaxVisitor<L> {
 #[cfg(test)]
 mod tests {
 
-    use std::convert::Infallible;
-
-    use rome_diagnostics::location::FileId;
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
         AstNode, SyntaxNode,
     };
+    use std::convert::Infallible;
 
     use crate::{
         matcher::MatchQueryParams, registry::Phases, Analyzer, AnalyzerContext, AnalyzerOptions,
@@ -164,7 +162,6 @@ mod tests {
         analyzer.add_visitor(Phases::Syntax, Box::<SyntaxVisitor<RawLanguage>>::default());
 
         let ctx: AnalyzerContext<RawLanguage> = AnalyzerContext {
-            file_id: FileId::zero(),
             root,
             range: None,
             services: ServiceBag::default(),

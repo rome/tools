@@ -44,7 +44,7 @@ impl TestCase for MicrosoftTypeScriptTestCase {
                         .descendants()
                         .find(|descendant| descendant.kind().is_bogus())
                     {
-                        bogus_errors.push(create_bogus_node_in_tree_diagnostic(file.id(), bogus));
+                        bogus_errors.push(create_bogus_node_in_tree_diagnostic(bogus));
                     }
                 }
                 Err(errors) => all_errors.extend(errors),

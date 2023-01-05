@@ -1,5 +1,4 @@
 use crate::lexer::Lexer;
-use rome_diagnostics::FileId;
 use rome_json_syntax::JsonSyntaxKind::{EOF, TOMBSTONE};
 use rome_json_syntax::{JsonSyntaxKind, TextRange};
 use rome_parser::diagnostic::ParseDiagnostic;
@@ -16,8 +15,8 @@ pub(crate) struct JsonTokenSource<'source> {
 }
 
 impl<'source> JsonTokenSource<'source> {
-    pub fn from_str(source: &'source str, id: FileId) -> Self {
-        let lexer = Lexer::from_str(source, id);
+    pub fn from_str(source: &'source str) -> Self {
+        let lexer = Lexer::from_str(source);
 
         let mut source = Self {
             lexer,

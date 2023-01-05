@@ -1040,7 +1040,6 @@ pub(crate) fn debug_assert_is_parent(node: &JsSyntaxNode, parent: &JsSyntaxNode)
 pub(crate) mod tests {
     use super::NeedsParentheses;
     use crate::transform;
-    use rome_diagnostics::location::FileId;
     use rome_js_syntax::{JsLanguage, SourceType};
     use rome_rowan::AstNode;
 
@@ -1051,7 +1050,7 @@ pub(crate) mod tests {
         index: Option<usize>,
         source_type: SourceType,
     ) {
-        let parse = rome_js_parser::parse(input, FileId::zero(), source_type);
+        let parse = rome_js_parser::parse(input, source_type);
 
         let diagnostics = parse.diagnostics();
         assert!(
@@ -1092,7 +1091,7 @@ pub(crate) mod tests {
         index: Option<usize>,
         source_type: SourceType,
     ) {
-        let parse = rome_js_parser::parse(input, FileId::zero(), source_type);
+        let parse = rome_js_parser::parse(input, source_type);
 
         let diagnostics = parse.diagnostics();
         assert!(

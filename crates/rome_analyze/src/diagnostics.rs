@@ -1,7 +1,7 @@
 use rome_console::MarkupBuf;
 use rome_diagnostics::{
     advice::CodeSuggestionAdvice, category, Advices, Category, Diagnostic, DiagnosticExt,
-    DiagnosticTags, Error, FileId, Location, Severity, Visit,
+    DiagnosticTags, Error, Location, Severity, Visit,
 };
 use rome_rowan::TextRange;
 use std::fmt::{Debug, Display, Formatter};
@@ -141,8 +141,6 @@ pub(crate) struct SuppressionDiagnostic {
     category: &'static Category,
     #[location(span)]
     range: TextRange,
-    #[location(resource)]
-    file_id: FileId,
     #[message]
     #[description]
     message: String,
@@ -152,13 +150,11 @@ pub(crate) struct SuppressionDiagnostic {
 
 impl SuppressionDiagnostic {
     pub(crate) fn new(
-        file_id: FileId,
         category: &'static Category,
         range: TextRange,
         message: impl Display,
     ) -> Self {
         Self {
-            file_id,
             category,
             range,
             message: message.to_string(),

@@ -2,7 +2,6 @@ use crate::{
     AnalyzerSignal, Phases, QueryMatch, Rule, RuleFilter, RuleGroup, ServiceBag,
     SuppressionCommentEmitter,
 };
-use rome_diagnostics::FileId;
 use rome_rowan::{Language, TextRange};
 use std::{
     any::{Any, TypeId},
@@ -22,7 +21,6 @@ pub trait QueryMatcher<L: Language> {
 /// Parameters provided to [QueryMatcher::match_query] and require to run lint rules
 pub struct MatchQueryParams<'phase, 'query, L: Language> {
     pub phase: Phases,
-    pub file_id: FileId,
     pub root: &'phase L::Root,
     pub query: Query,
     pub services: &'phase ServiceBag,
@@ -199,7 +197,7 @@ where
 mod tests {
     use std::convert::Infallible;
 
-    use rome_diagnostics::{category, location::FileId, DiagnosticExt};
+    use rome_diagnostics::{category, DiagnosticExt};
     use rome_diagnostics::{Diagnostic, Severity};
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
@@ -220,8 +218,6 @@ mod tests {
     #[derive(Debug, Diagnostic)]
     #[diagnostic(category = "args/fileNotFound", message = "test_suppression")]
     struct TestDiagnostic {
-        #[location(resource)]
-        location: FileId,
         #[location(span)]
         span: TextRange,
     }
@@ -237,10 +233,7 @@ mod tests {
 
             let span = node.text_trimmed_range();
             params.signal_queue.push(SignalEntry {
-                signal: Box::new(DiagnosticSignal::new(move || TestDiagnostic {
-                    span,
-                    location: FileId::zero(),
-                })),
+                signal: Box::new(DiagnosticSignal::new(move || TestDiagnostic { span })),
                 rule: RuleKey::new("group", "rule"),
                 text_range: span,
             });
@@ -383,7 +376,6 @@ mod tests {
         analyzer.add_visitor(Phases::Syntax, Box::<SyntaxVisitor<RawLanguage>>::default());
 
         let ctx: AnalyzerContext<RawLanguage> = AnalyzerContext {
-            file_id: FileId::zero(),
             root,
             range: None,
             services: ServiceBag::default(),

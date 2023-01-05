@@ -69,7 +69,6 @@ export default function Resizable({
 
 	const cursor = canResize || isResizing ? handler.resizingCursor : undefined;
 
-	// rome-ignore lint/nursery/useExhaustiveDependencies: no dependencies
 	useEffect(() => {
 		function onMouseMove(event: MouseEvent) {
 			const container = ref.current;

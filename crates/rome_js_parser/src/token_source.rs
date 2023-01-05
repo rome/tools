@@ -1,6 +1,5 @@
 use crate::lexer::{BufferedLexer, LexContext, Lexer, LexerCheckpoint, ReLexContext, TextRange};
 use crate::prelude::*;
-use rome_diagnostics::location::FileId;
 use rome_js_syntax::JsSyntaxKind;
 use rome_js_syntax::JsSyntaxKind::EOF;
 use rome_parser::token_source::Trivia;
@@ -46,8 +45,8 @@ impl<'l> JsTokenSource<'l> {
     }
 
     /// Creates a new token source for the given string
-    pub fn from_str(source: &'l str, file_id: FileId) -> JsTokenSource<'l> {
-        let lexer = Lexer::from_str(source, file_id);
+    pub fn from_str(source: &'l str) -> JsTokenSource<'l> {
+        let lexer = Lexer::from_str(source);
         let buffered = BufferedLexer::new(lexer);
         let mut source = JsTokenSource::new(buffered);
 

@@ -10,12 +10,7 @@ exports[`Rome WebAssembly formatContent > should not format and have diagnostics
     "description": "expected a name for the function in a function declaration, but found none",
     "location": {
       "path": {
-        "File": {
-          "PathAndId": {
-            "file_id": 0,
-            "path": "example.js",
-          },
-        },
+        "file": "example.js",
       },
       "source_code": null,
       "span": [
@@ -29,7 +24,7 @@ exports[`Rome WebAssembly formatContent > should not format and have diagnostics
         "elements": [],
       },
     ],
-    "severity": "Error",
+    "severity": "error",
     "source": null,
     "tags": [],
     "verbose_advices": {

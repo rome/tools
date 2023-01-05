@@ -1,4 +1,3 @@
-use rome_diagnostics::location::FileId;
 use rome_formatter::{FormatContext, FormatResult, Formatted, IndentStyle, LineWidth, Printed};
 use rome_formatter_test::TestFormatLanguage;
 use rome_js_formatter::context::trailing_comma::TrailingComma;
@@ -30,7 +29,7 @@ impl TestFormatLanguage for JsTestFormatLanguage {
     type FormatLanguage = JsFormatLanguage;
 
     fn parse(&self, text: &str) -> AnyParse {
-        parse(text, FileId::zero(), self.source_type).into()
+        parse(text, self.source_type).into()
     }
 
     fn deserialize_format_options(

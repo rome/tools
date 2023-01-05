@@ -14,7 +14,7 @@ pub mod serde;
 
 mod suggestion;
 
-pub use self::suggestion::{Applicability, CodeSuggestion, FileSpan};
+pub use self::suggestion::{Applicability, CodeSuggestion};
 pub use termcolor;
 
 #[doc(hidden)]
@@ -34,9 +34,7 @@ pub use crate::display::{
     set_bottom_frame, Backtrace, MessageAndDescription, PrintDescription, PrintDiagnostic,
 };
 pub use crate::error::{Error, Result};
-pub use crate::location::{
-    FileId, FilePath, LineIndex, LineIndexBuf, Location, Resource, SourceCode,
-};
+pub use crate::location::{LineIndex, LineIndexBuf, Location, Resource, SourceCode};
 use rome_console::fmt::{Formatter, Termcolor};
 use rome_console::markup;
 use std::fmt::Write;

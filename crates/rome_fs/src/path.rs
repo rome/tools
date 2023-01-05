@@ -7,8 +7,6 @@ use std::fs::read_to_string;
 use std::io::Read;
 use std::{fs::File, io, io::Write, ops::Deref, path::PathBuf};
 
-use rome_diagnostics::location::FileId;
-
 #[derive(Debug, Clone, Eq, Hash, PartialEq)]
 #[cfg_attr(
     feature = "serde",
@@ -16,7 +14,6 @@ use rome_diagnostics::location::FileId;
 )]
 pub struct RomePath {
     path: PathBuf,
-    id: FileId,
 }
 
 impl Deref for RomePath {
@@ -28,10 +25,9 @@ impl Deref for RomePath {
 }
 
 impl RomePath {
-    pub fn new(path_to_file: impl Into<PathBuf>, id: FileId) -> Self {
+    pub fn new(path_to_file: impl Into<PathBuf>) -> Self {
         Self {
             path: path_to_file.into(),
-            id,
         }
     }
 
@@ -63,11 +59,6 @@ impl RomePath {
     pub fn read_to_string(&self) -> io::Result<String> {
         let path = self.path.as_path();
         read_to_string(path)
-    }
-
-    /// Retrieves the ID assigned to the file
-    pub fn file_id(&self) -> FileId {
-        self.id
     }
 
     pub fn extension_as_str(&self) -> &str {

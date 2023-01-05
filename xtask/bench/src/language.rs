@@ -1,7 +1,6 @@
 use crate::test_case::TestCase;
 use criterion::black_box;
 use rome_analyze::{AnalysisFilter, AnalyzerOptions, ControlFlow, Never, RuleCategories};
-use rome_diagnostics::FileId;
 use rome_formatter::{FormatResult, Formatted, PrintResult, Printed};
 use rome_js_analyze::analyze;
 use rome_js_formatter::context::{JsFormatContext, JsFormatOptions};
@@ -28,11 +27,10 @@ impl<'a> Parse<'a> {
 
     pub fn parse(&self) -> Parsed {
         match self {
-            Parse::JavaScript(source_type, code) => Parsed::JavaScript(
-                rome_js_parser::parse(code, FileId::zero(), *source_type),
-                *source_type,
-            ),
-            Parse::Json(code) => Parsed::Json(rome_json_parser::parse_json(code, FileId::zero())),
+            Parse::JavaScript(source_type, code) => {
+                Parsed::JavaScript(rome_js_parser::parse(code, *source_type), *source_type)
+            }
+            Parse::Json(code) => Parsed::Json(rome_json_parser::parse_json(code)),
         }
     }
 }
@@ -114,7 +112,7 @@ impl Analyze {
                     ..AnalysisFilter::default()
                 };
                 let options = AnalyzerOptions::default();
-                analyze(FileId::zero(), root, filter, &options, |event| {
+                analyze(root, filter, &options, |event| {
                     black_box(event.diagnostic());
                     black_box(event.actions());
                     ControlFlow::<Never>::Continue(())

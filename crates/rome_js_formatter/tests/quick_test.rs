@@ -1,4 +1,3 @@
-use rome_diagnostics::FileId;
 use rome_formatter_test::check_reformat::CheckReformat;
 use rome_js_formatter::context::{JsFormatOptions, Semicolons};
 use rome_js_formatter::format_node;
@@ -17,7 +16,7 @@ fn quick_test() {
 f<number> delete;
 "#;
     let syntax = SourceType::tsx();
-    let tree = parse(src, FileId::zero(), syntax);
+    let tree = parse(src, syntax);
     let options = JsFormatOptions::new(syntax).with_semicolons(Semicolons::AsNeeded);
     let result = format_node(options.clone(), &tree.syntax())
         .unwrap()

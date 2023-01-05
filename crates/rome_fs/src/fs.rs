@@ -4,10 +4,7 @@ use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use crate::{PathInterner, RomePath};
-use rome_diagnostics::{
-    location::FileId,
-    {console, Advices, Diagnostic, LogCategory, Visit},
-};
+use rome_diagnostics::{console, Advices, Diagnostic, LogCategory, Visit};
 
 mod memory;
 mod os;
@@ -154,7 +151,7 @@ pub trait TraversalContext: Sync {
 
     /// This method will be called by the traversal for each file it finds
     /// where [TraversalContext::can_handle] returned true
-    fn handle_file(&self, path: &Path, file_id: FileId);
+    fn handle_file(&self, path: &Path);
 }
 
 impl<T> FileSystem for Arc<T>

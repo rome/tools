@@ -434,7 +434,6 @@ fn has_type_cast_comment_or_skipped(trivia: &SyntaxTrivia<JsLanguage>) -> bool {
 mod tests {
     use super::JsFormatSyntaxRewriter;
     use crate::{format_node, JsFormatOptions, TextRange};
-    use rome_diagnostics::location::FileId;
     use rome_formatter::{SourceMarker, TransformSourceMap};
     use rome_js_parser::{parse, parse_module};
     use rome_js_syntax::{
@@ -446,7 +445,7 @@ mod tests {
 
     #[test]
     fn rebalances_logical_expressions() {
-        let root = parse_module("a && (b && c)", FileId::zero()).syntax();
+        let root = parse_module("a && (b && c)").syntax();
 
         let transformed = JsFormatSyntaxRewriter::default().transform(root.clone());
 
@@ -475,7 +474,7 @@ mod tests {
 
     #[test]
     fn only_rebalances_logical_expressions_with_same_operator() {
-        let root = parse_module("a && (b || c)", FileId::zero()).syntax();
+        let root = parse_module("a && (b || c)").syntax();
         let transformed = JsFormatSyntaxRewriter::default().transform(root);
 
         // Removes parentheses
@@ -799,7 +798,7 @@ mod tests {
     }
 
     fn source_map_test(input: &str) -> (JsSyntaxNode, TransformSourceMap) {
-        let tree = parse(input, FileId::zero(), SourceType::jsx()).syntax();
+        let tree = parse(input, SourceType::jsx()).syntax();
 
         let mut rewriter = JsFormatSyntaxRewriter::default();
         let transformed = rewriter.transform(tree);
