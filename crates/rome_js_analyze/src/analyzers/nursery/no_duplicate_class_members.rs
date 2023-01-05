@@ -2,9 +2,9 @@ use std::collections::HashMap;
 
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_js_syntax::{
-    AnyJsClassMember, AnyJsClassMemberName, AnyJsMethodModifier, AnyJsPropertyModifier,
-    JsClassMemberList, JsGetterClassMember, JsMethodClassMember, JsMethodModifierList,
-    JsPropertyClassMember, JsPropertyModifierList, JsSetterClassMember, TextRange,
+    AnyJsClassMemberName, AnyJsMethodModifier, AnyJsPropertyModifier, JsClassMemberList,
+    JsGetterClassMember, JsMethodClassMember, JsMethodModifierList, JsPropertyClassMember,
+    JsPropertyModifierList, JsSetterClassMember, TextRange,
 };
 use rome_rowan::{declare_node_union, AstNode};
 
@@ -150,7 +150,7 @@ fn get_static_type(modifier_list: AnyModifierList) -> StaticType {
 }
 
 declare_node_union! {
-    pub(crate) ClassMemberDefinition = JsGetterClassMember | JsMethodClassMember | JsPropertyClassMember | JsSetterClassMember
+    pub(crate) AnyClassMemberDefinition = JsGetterClassMember | JsMethodClassMember | JsPropertyClassMember | JsSetterClassMember
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -160,19 +160,19 @@ pub(crate) enum MemberType {
     Setter,
 }
 
-impl ClassMemberDefinition {
+impl AnyClassMemberDefinition {
     fn member_name(&self) -> Option<String> {
         match self {
-            ClassMemberDefinition::JsGetterClassMember(node) => {
+            AnyClassMemberDefinition::JsGetterClassMember(node) => {
                 get_member_name_string(node.name().ok()?)
             }
-            ClassMemberDefinition::JsMethodClassMember(node) => {
+            AnyClassMemberDefinition::JsMethodClassMember(node) => {
                 get_member_name_string(node.name().ok()?)
             }
-            ClassMemberDefinition::JsPropertyClassMember(node) => {
+            AnyClassMemberDefinition::JsPropertyClassMember(node) => {
                 get_member_name_string(node.name().ok()?)
             }
-            ClassMemberDefinition::JsSetterClassMember(node) => {
+            AnyClassMemberDefinition::JsSetterClassMember(node) => {
                 get_member_name_string(node.name().ok()?)
             }
         }
@@ -180,35 +180,41 @@ impl ClassMemberDefinition {
 
     fn member_type(&self) -> MemberType {
         match self {
-            ClassMemberDefinition::JsGetterClassMember(_) => MemberType::Getter,
-            ClassMemberDefinition::JsSetterClassMember(_) => MemberType::Setter,
+            AnyClassMemberDefinition::JsGetterClassMember(_) => MemberType::Getter,
+            AnyClassMemberDefinition::JsSetterClassMember(_) => MemberType::Setter,
             _ => MemberType::Normal,
         }
     }
 
     fn access_type(&self) -> Option<AccessType> {
         match self {
-            ClassMemberDefinition::JsGetterClassMember(node) => get_access_type(node.name().ok()?),
-            ClassMemberDefinition::JsMethodClassMember(node) => get_access_type(node.name().ok()?),
-            ClassMemberDefinition::JsPropertyClassMember(node) => {
+            AnyClassMemberDefinition::JsGetterClassMember(node) => {
                 get_access_type(node.name().ok()?)
             }
-            ClassMemberDefinition::JsSetterClassMember(node) => get_access_type(node.name().ok()?),
+            AnyClassMemberDefinition::JsMethodClassMember(node) => {
+                get_access_type(node.name().ok()?)
+            }
+            AnyClassMemberDefinition::JsPropertyClassMember(node) => {
+                get_access_type(node.name().ok()?)
+            }
+            AnyClassMemberDefinition::JsSetterClassMember(node) => {
+                get_access_type(node.name().ok()?)
+            }
         }
     }
 
     fn static_type(&self) -> StaticType {
         match self {
-            ClassMemberDefinition::JsGetterClassMember(node) => {
+            AnyClassMemberDefinition::JsGetterClassMember(node) => {
                 get_static_type(AnyModifierList::JsMethodModifierList(node.modifiers()))
             }
-            ClassMemberDefinition::JsMethodClassMember(node) => {
+            AnyClassMemberDefinition::JsMethodClassMember(node) => {
                 get_static_type(AnyModifierList::JsMethodModifierList(node.modifiers()))
             }
-            ClassMemberDefinition::JsPropertyClassMember(node) => {
+            AnyClassMemberDefinition::JsPropertyClassMember(node) => {
                 get_static_type(AnyModifierList::JsPropertyModifierList(node.modifiers()))
             }
-            ClassMemberDefinition::JsSetterClassMember(node) => {
+            AnyClassMemberDefinition::JsSetterClassMember(node) => {
                 get_static_type(AnyModifierList::JsMethodModifierList(node.modifiers()))
             }
         }
@@ -216,52 +222,30 @@ impl ClassMemberDefinition {
 
     fn range(&self) -> TextRange {
         match self {
-            ClassMemberDefinition::JsGetterClassMember(node) => node.range(),
-            ClassMemberDefinition::JsMethodClassMember(node) => node.range(),
-            ClassMemberDefinition::JsPropertyClassMember(node) => node.range(),
-            ClassMemberDefinition::JsSetterClassMember(node) => node.range(),
-        }
-    }
-}
-
-impl TryFrom<AnyJsClassMember> for ClassMemberDefinition {
-    type Error = AnyJsClassMember;
-
-    fn try_from(member: AnyJsClassMember) -> Result<Self, Self::Error> {
-        match member {
-            AnyJsClassMember::JsGetterClassMember(node) => {
-                Ok(ClassMemberDefinition::JsGetterClassMember(node))
-            }
-            AnyJsClassMember::JsMethodClassMember(node) => {
-                Ok(ClassMemberDefinition::JsMethodClassMember(node))
-            }
-            AnyJsClassMember::JsPropertyClassMember(node) => {
-                Ok(ClassMemberDefinition::JsPropertyClassMember(node))
-            }
-            AnyJsClassMember::JsSetterClassMember(node) => {
-                Ok(ClassMemberDefinition::JsSetterClassMember(node))
-            }
-            _ => Err(member),
+            AnyClassMemberDefinition::JsGetterClassMember(node) => node.range(),
+            AnyClassMemberDefinition::JsMethodClassMember(node) => node.range(),
+            AnyClassMemberDefinition::JsPropertyClassMember(node) => node.range(),
+            AnyClassMemberDefinition::JsSetterClassMember(node) => node.range(),
         }
     }
 }
 
 impl Rule for NoDuplicateClassMembers {
     type Query = Ast<JsClassMemberList>;
-    type State = ClassMemberDefinition;
+    type State = AnyClassMemberDefinition;
     type Signals = Vec<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let mut defined_members: HashMap<
             (String, StaticType, AccessType),
-            HashMap<MemberType, ClassMemberDefinition>,
+            HashMap<MemberType, AnyClassMemberDefinition>,
         > = HashMap::new();
-        let mut signals: Self::Signals = Vec::new();
+        let mut signals = Vec::new();
 
         let node = ctx.query();
         for member in node {
-            if let Ok(member_def) = ClassMemberDefinition::try_from(member) {
+            if let Some(member_def) = AnyClassMemberDefinition::cast_ref(member.syntax()) {
                 if let (Some(member_name), Some(access_type)) =
                     (member_def.member_name(), member_def.access_type())
                 {
