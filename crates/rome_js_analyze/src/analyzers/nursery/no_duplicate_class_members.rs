@@ -11,9 +11,9 @@ use rome_rowan::{declare_node_union, AstNode};
 declare_rule! {
     /// Disallow duplicate class members.
     ///
-    /// If there are declarations of the same name in class members,
+    /// If there are declarations of the same name among class members,
     /// the last declaration overwrites other declarations silently.
-    /// It can cause unexpected behaviors.
+    /// It can cause unexpected behaviours.
     ///
     /// ## Examples
     ///
