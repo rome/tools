@@ -141,9 +141,8 @@ impl SemanticModel {
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
     /// use rome_js_semantic::{semantic_model, SemanticModelOptions, SemanticScopeExtensions};
-    /// use rome_diagnostics::FileId;
     ///
-    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", FileId::zero(), SourceType::js_module());
+    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", SourceType::js_module());
     /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
     ///
     /// let arguments_reference = r
@@ -191,9 +190,8 @@ impl SemanticModel {
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
     /// use rome_js_semantic::{semantic_model, BindingExtensions, SemanticModelOptions};
-    /// use rome_diagnostics::FileId;
     ///
-    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", FileId::zero(), SourceType::js_module());
+    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", SourceType::js_module());
     /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
     ///
     /// let arguments_reference = r
@@ -344,9 +342,8 @@ impl SemanticModel {
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsFunctionDeclaration};
     /// use rome_js_semantic::{semantic_model, CallsExtensions, SemanticModelOptions};
-    /// use rome_diagnostics::FileId;
     ///
-    /// let r = rome_js_parser::parse("function f(){} f() f()", FileId::zero(), SourceType::js_module());
+    /// let r = rome_js_parser::parse("function f(){} f() f()", SourceType::js_module());
     /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
     ///
     /// let f_declaration = r

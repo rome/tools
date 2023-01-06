@@ -14,7 +14,12 @@ Because `NaN` is unique in JavaScript by not being equal to anything, including 
 - `NaN` === `NaN` or `NaN` == `NaN` evaluate to false
 - `NaN` !== `NaN` or `NaN` != `NaN` evaluate to true
 
-Therefore, use `Number.isNaN()` or global `isNaN()`	 functions to test whether a value is `NaN`.
+Therefore, use `Number.isNaN()` or global `isNaN()` functions to test whether a value is `NaN`.
+
+Note that `Number.isNaN()` and `isNaN()` [have not the same behavior](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN#description).
+When the argument to `isNaN()` is not a number, the value is first coerced to a number.
+`Number.isNaN()` does not perform this coercion.
+Therefore, it is a more reliable way to test whether a value is `NaN`.
 
 Source: [use-isnan](https://eslint.org/docs/latest/rules/use-isnan).
 
@@ -28,7 +33,7 @@ Source: [use-isnan](https://eslint.org/docs/latest/rules/use-isnan).
 
 <pre class="language-text"><code class="language-text">nursery/useIsNan.js:1:1 <a href="https://docs.rome.tools/lint/rules/useIsNan">lint/nursery/useIsNan</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Use the isNaN function to compare with NaN.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Use the Number.isNaN function to compare with NaN.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>123 == NaN
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -42,7 +47,7 @@ Source: [use-isnan](https://eslint.org/docs/latest/rules/use-isnan).
 
 <pre class="language-text"><code class="language-text">nursery/useIsNan.js:1:1 <a href="https://docs.rome.tools/lint/rules/useIsNan">lint/nursery/useIsNan</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Use the isNaN function to compare with NaN.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Use the Number.isNaN function to compare with NaN.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>123 != NaN
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -70,7 +75,7 @@ Number.NaN == "abc"
 
 <pre class="language-text"><code class="language-text">nursery/useIsNan.js:1:1 <a href="https://docs.rome.tools/lint/rules/useIsNan">lint/nursery/useIsNan</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Use the isNaN function to compare with NaN.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Use the Number.isNaN function to compare with NaN.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>Number.NaN == &quot;abc&quot;
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -81,7 +86,7 @@ Number.NaN == "abc"
 ### Valid
 
 ```jsx
-if (isNaN(123) !== true) {}
+if (Number.isNaN(123) !== true) {}
 
 foo(Number.NaN / 2)
 

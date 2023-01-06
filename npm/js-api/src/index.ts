@@ -139,7 +139,6 @@ export class Rome {
 		try {
 			const romePath: RomePath = {
 				path,
-				id: 0,
 			};
 
 			this.workspace.openFile({
@@ -186,7 +185,7 @@ export class Rome {
 			});
 
 			const hasErrors = diagnostics.some(
-				(diag) => diag.severity === "Fatal" || diag.severity === "Error",
+				(diag) => diag.severity === "fatal" || diag.severity === "error",
 			);
 			if (!hasErrors) {
 				if (options.range) {

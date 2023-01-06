@@ -7,7 +7,6 @@ use rome_console::{
     markup, Markup,
 };
 use rome_diagnostics::advice::CodeSuggestionAdvice;
-use rome_diagnostics::location::FileId;
 use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{DiagnosticExt, Error, PrintDiagnostic, Severity};
 use rome_js_parser::{
@@ -117,7 +116,7 @@ pub(crate) fn write_analysis_to_snapshot(
     input_file: &Path,
     check_action_type: CheckActionType,
 ) -> usize {
-    let parsed = parse(input_code, FileId::zero(), source_type);
+    let parsed = parse(input_code, source_type);
     let root = parsed.tree();
 
     let mut diagnostics = Vec::new();
@@ -140,7 +139,7 @@ pub(crate) fn write_analysis_to_snapshot(
         options.configuration.rules.push_rule(rule_key, v);
     }
 
-    rome_js_analyze::analyze(FileId::zero(), &root, filter, &options, |event| {
+    rome_js_analyze::analyze(&root, filter, &options, |event| {
         if let Some(mut diag) = event.diagnostic() {
             for action in event.actions() {
                 if check_action_type.is_suppression() {
@@ -234,9 +233,7 @@ fn markup_to_string(markup: Markup) -> String {
 }
 #[allow(clippy::let_and_return)]
 fn diagnostic_to_string(name: &str, source: &str, diag: Error) -> String {
-    let error = diag
-        .with_file_path((name, FileId::zero()))
-        .with_file_source_code(source);
+    let error = diag.with_file_path(name).with_file_source_code(source);
     let text = markup_to_string(markup! {
         {PrintDiagnostic::verbose(&error)}
     });
@@ -273,7 +270,7 @@ fn check_code_action(
     }
 
     // Re-parse the modified code and panic if the resulting tree has syntax errors
-    let re_parse = parse(&output, FileId::zero(), source_type);
+    let re_parse = parse(&output, source_type);
     assert_errors_are_absent(&re_parse, path);
 }
 

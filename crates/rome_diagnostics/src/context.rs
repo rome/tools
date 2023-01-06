@@ -464,7 +464,7 @@ mod internal {
                     Some(Resource::Memory) => Some(Resource::Memory),
                     Some(Resource::File(file)) => {
                         if let Some(Resource::File(path)) = &self.path {
-                            Some(Resource::File(file.or(path.as_deref())))
+                            Some(Resource::File(path.as_ref()))
                         } else {
                             Some(Resource::File(file))
                         }

@@ -441,7 +441,6 @@ impl<L: Language + Default> RegistryRule<L> {
                 R::suppressed_nodes(&ctx, &result, &mut state.suppressions);
 
                 let signal = Box::new(RuleSignal::<R>::new(
-                    params.file_id,
                     params.root,
                     query_result.clone(),
                     result,

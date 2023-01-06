@@ -156,7 +156,6 @@ pub fn format_sub_tree(options: JsonFormatOptions, root: &JsonSyntaxNode) -> For
 mod tests {
     use crate::context::JsonFormatOptions;
     use crate::format_node;
-    use rome_diagnostics::FileId;
     use rome_json_parser::parse_json;
 
     #[test]
@@ -170,7 +169,7 @@ mod tests {
     "e": false
 }
 "#;
-        let parse = parse_json(src, FileId::zero());
+        let parse = parse_json(src);
         let options = JsonFormatOptions::default();
         let formatted = format_node(options, &parse.syntax()).unwrap();
         assert_eq!(

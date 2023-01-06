@@ -109,6 +109,7 @@ pub trait Diagnostic: Debug {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
+#[serde(rename_all = "camelCase")]
 /// The severity to associate to a diagnostic.
 pub enum Severity {
     /// Reports a crash.
@@ -127,6 +128,7 @@ pub enum Severity {
 /// and help with the implementation of `serde` and `schemars` for tags.
 #[derive(Serialize, Deserialize)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
+#[serde(rename_all = "camelCase")]
 pub(super) enum DiagnosticTag {
     Fixable,
     Internal,

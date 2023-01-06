@@ -120,9 +120,7 @@ exports[`Rome WebAssembly lintContent > should lint content > lint diagnostics 1
 == is only allowed when comparing against \`null\`",
     "location": {
       "path": {
-        "File": {
-          "Path": "example.js",
-        },
+        "file": "example.js",
       },
       "source_code": null,
       "span": [
@@ -152,10 +150,10 @@ exports[`Rome WebAssembly lintContent > should lint content > lint diagnostics 1
         ],
       },
     ],
-    "severity": "Error",
+    "severity": "error",
     "source": null,
     "tags": [
-      "Fixable",
+      "fixable",
     ],
     "verbose_advices": {
       "advices": [],

@@ -292,7 +292,7 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(self.build_capability_error(&params.path))?;
 
         let parse = self.get_parse(params.path.clone(), None)?;
-        let printed = debug_control_flow(&params.path, parse, params.cursor);
+        let printed = debug_control_flow(parse, params.cursor);
 
         Ok(printed)
     }
@@ -361,7 +361,6 @@ impl Workspace for WorkspaceServer {
             filter.categories = params.categories;
 
             let results = lint(LintParams {
-                rome_path: &params.path,
                 parse,
                 filter,
                 rules,
@@ -409,13 +408,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Lint))?;
         let settings = self.settings.read().unwrap();
         let rules = settings.linter().rules.as_ref();
-        Ok(code_actions(
-            &params.path,
-            parse,
-            params.range,
-            rules,
-            self.settings(),
-        ))
+        Ok(code_actions(parse, params.range, rules, self.settings()))
     }
 
     /// Runs the given file through the formatter using the provided options
@@ -479,7 +472,6 @@ impl Workspace for WorkspaceServer {
 
         let rules = settings.linter().rules.as_ref();
         fix_all(FixAllParams {
-            rome_path: &params.path,
             parse,
             rules,
             fix_file_mode: params.fix_file_mode,

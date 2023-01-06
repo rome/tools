@@ -1,0 +1,267 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 92
+expression: useYield.js
+---
+# Input
+```js
+// Valid
+function foo() {
+	return 0;
+}
+
+function* foo() {
+	yield 0;
+}
+
+function* foo() {}
+
+(function* foo() {
+	yield 0;
+})();
+
+(function* foo() {})();
+
+const obj = {
+	*foo() {
+		yield 0;
+	},
+};
+
+const obj = { *foo() {} };
+
+class A {
+	*foo() {
+		yield 0;
+	}
+}
+
+class A {
+	*foo() {}
+}
+
+// Invalid
+function* foo() {
+	return 0;
+}
+
+(function* foo() {
+	return 0;
+})();
+
+const obj = {
+	*foo() {
+		return 0;
+	},
+};
+
+class A {
+	*foo() {
+		return 0;
+	}
+}
+
+function* foo() {
+	function* bar() {
+		yield 0;
+	}
+}
+
+function* foo() {
+	function* bar() {
+		return 0;
+	}
+	yield 0;
+}
+
+function* foo() {
+	function* bar() {
+		yield 0;
+	}
+	return 0;
+}
+
+function* foo() {
+	const obj = {
+		*bar() {
+			return 0;
+		},
+	};
+
+	class A {
+		*baz() {
+			return 0;
+		}
+	}
+
+	if (a === 'a') {
+		yield 0;
+	}
+}
+
+```
+
+# Diagnostics
+```
+useYield.js:37:1 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This generator function doesn't contain yield.
+  
+    36 │ // Invalid
+  > 37 │ function* foo() {
+       │ ^^^^^^^^^^^^^^^^^
+  > 38 │ 	return 0;
+  > 39 │ }
+       │ ^
+    40 │ 
+    41 │ (function* foo() {
+  
+
+```
+
+```
+useYield.js:41:2 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This generator function doesn't contain yield.
+  
+    39 │ }
+    40 │ 
+  > 41 │ (function* foo() {
+       │  ^^^^^^^^^^^^^^^^^
+  > 42 │ 	return 0;
+  > 43 │ })();
+       │ ^
+    44 │ 
+    45 │ const obj = {
+  
+
+```
+
+```
+useYield.js:46:2 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This generator function doesn't contain yield.
+  
+    45 │ const obj = {
+  > 46 │ 	*foo() {
+       │ 	^^^^^^^^
+  > 47 │ 		return 0;
+  > 48 │ 	},
+       │ 	^
+    49 │ };
+    50 │ 
+  
+
+```
+
+```
+useYield.js:52:2 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This generator function doesn't contain yield.
+  
+    51 │ class A {
+  > 52 │ 	*foo() {
+       │ 	^^^^^^^^
+  > 53 │ 		return 0;
+  > 54 │ 	}
+       │ 	^
+    55 │ }
+    56 │ 
+  
+
+```
+
+```
+useYield.js:57:1 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This generator function doesn't contain yield.
+  
+    55 │ }
+    56 │ 
+  > 57 │ function* foo() {
+       │ ^^^^^^^^^^^^^^^^^
+  > 58 │ 	function* bar() {
+  > 59 │ 		yield 0;
+  > 60 │ 	}
+  > 61 │ }
+       │ ^
+    62 │ 
+    63 │ function* foo() {
+  
+
+```
+
+```
+useYield.js:64:2 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This generator function doesn't contain yield.
+  
+    63 │ function* foo() {
+  > 64 │ 	function* bar() {
+       │ 	^^^^^^^^^^^^^^^^^
+  > 65 │ 		return 0;
+  > 66 │ 	}
+       │ 	^
+    67 │ 	yield 0;
+    68 │ }
+  
+
+```
+
+```
+useYield.js:70:1 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This generator function doesn't contain yield.
+  
+    68 │ }
+    69 │ 
+  > 70 │ function* foo() {
+       │ ^^^^^^^^^^^^^^^^^
+  > 71 │ 	function* bar() {
+  > 72 │ 		yield 0;
+  > 73 │ 	}
+  > 74 │ 	return 0;
+  > 75 │ }
+       │ ^
+    76 │ 
+    77 │ function* foo() {
+  
+
+```
+
+```
+useYield.js:79:3 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This generator function doesn't contain yield.
+  
+    77 │ function* foo() {
+    78 │ 	const obj = {
+  > 79 │ 		*bar() {
+       │ 		^^^^^^^^
+  > 80 │ 			return 0;
+  > 81 │ 		},
+       │ 		^
+    82 │ 	};
+    83 │ 
+  
+
+```
+
+```
+useYield.js:85:3 lint/nursery/useYield ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This generator function doesn't contain yield.
+  
+    84 │ 	class A {
+  > 85 │ 		*baz() {
+       │ 		^^^^^^^^
+  > 86 │ 			return 0;
+  > 87 │ 		}
+       │ 		^
+    88 │ 	}
+    89 │ 
+  
+
+```
+
+
