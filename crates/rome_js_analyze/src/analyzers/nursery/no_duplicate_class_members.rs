@@ -2,10 +2,10 @@ use std::collections::HashMap;
 
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_js_syntax::{
-    AnyJsClassMemberName, AnyJsMethodModifier, AnyJsPropertyModifier, JsClassMemberList,
-    JsGetterClassMember, JsMethodClassMember, JsMethodModifierList, JsPropertyClassMember,
-    JsPropertyModifierList, JsSetterClassMember, TextRange,
+    AnyJsClassMemberName, JsClassMemberList, JsGetterClassMember, JsMethodClassMember,
+    JsPropertyClassMember, JsSetterClassMember, JsStaticModifier, JsSyntaxList, TextRange,
 };
+use rome_rowan::AstNodeList;
 use rome_rowan::{declare_node_union, AstNode};
 
 declare_rule! {
@@ -118,33 +118,18 @@ enum StaticType {
     NonStatic,
 }
 
-#[allow(clippy::enum_variant_names)]
-enum AnyModifierList {
-    JsPropertyModifierList(JsPropertyModifierList),
-    JsMethodModifierList(JsMethodModifierList),
-}
-
-fn get_static_type(modifier_list: AnyModifierList) -> StaticType {
-    match modifier_list {
-        AnyModifierList::JsPropertyModifierList(node) => {
-            if node
-                .into_iter()
-                .any(|m| matches!(m, AnyJsPropertyModifier::JsStaticModifier(_)))
-            {
-                StaticType::Static
+impl From<JsSyntaxList> for StaticType {
+    fn from(node: JsSyntaxList) -> Self {
+        if node.into_iter().any(|m| {
+            if let rome_rowan::SyntaxSlot::Node(node) = m {
+                JsStaticModifier::can_cast(node.kind())
             } else {
-                StaticType::NonStatic
+                false
             }
-        }
-        AnyModifierList::JsMethodModifierList(node) => {
-            if node
-                .into_iter()
-                .any(|m| matches!(m, AnyJsMethodModifier::JsStaticModifier(_)))
-            {
-                StaticType::Static
-            } else {
-                StaticType::NonStatic
-            }
+        }) {
+            StaticType::Static
+        } else {
+            StaticType::NonStatic
         }
     }
 }
@@ -203,19 +188,19 @@ impl AnyClassMemberDefinition {
         }
     }
 
-    fn static_type(&self) -> StaticType {
+    fn modifiers_list(&self) -> JsSyntaxList {
         match self {
             AnyClassMemberDefinition::JsGetterClassMember(node) => {
-                get_static_type(AnyModifierList::JsMethodModifierList(node.modifiers()))
+                node.modifiers().syntax_list().clone()
             }
             AnyClassMemberDefinition::JsMethodClassMember(node) => {
-                get_static_type(AnyModifierList::JsMethodModifierList(node.modifiers()))
+                node.modifiers().syntax_list().clone()
             }
             AnyClassMemberDefinition::JsPropertyClassMember(node) => {
-                get_static_type(AnyModifierList::JsPropertyModifierList(node.modifiers()))
+                node.modifiers().syntax_list().clone()
             }
             AnyClassMemberDefinition::JsSetterClassMember(node) => {
-                get_static_type(AnyModifierList::JsMethodModifierList(node.modifiers()))
+                node.modifiers().syntax_list().clone()
             }
         }
     }
@@ -249,7 +234,7 @@ impl Rule for NoDuplicateClassMembers {
                 if let (Some(member_name), Some(access_type)) =
                     (member_def.member_name(), member_def.access_type())
                 {
-                    let static_type = member_def.static_type();
+                    let static_type = StaticType::from(member_def.modifiers_list());
                     let member_type = member_def.member_type();
                     defined_members
                         .entry((member_name, static_type, access_type))
