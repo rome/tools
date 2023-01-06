@@ -91,46 +91,24 @@ declare_rule! {
     }
 }
 
-fn get_member_name_string(member_name_node: AnyJsClassMemberName) -> Option<String> {
-    match member_name_node {
+fn get_member_name(node: &AnyJsClassMemberName) -> Option<String> {
+    match node {
         AnyJsClassMemberName::JsLiteralMemberName(node) => node.name().ok(),
-        AnyJsClassMemberName::JsPrivateClassMemberName(node) => Some(node.text()),
         _ => None,
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-enum AccessType {
-    Public,
-    Private,
-}
-
-fn get_access_type(member_name_node: AnyJsClassMemberName) -> Option<AccessType> {
-    match member_name_node {
-        AnyJsClassMemberName::JsPrivateClassMemberName(_) => Some(AccessType::Private),
-        _ => Some(AccessType::Public),
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-enum StaticType {
-    Static,
-    NonStatic,
-}
-
-impl From<JsSyntaxList> for StaticType {
-    fn from(node: JsSyntaxList) -> Self {
-        if node.into_iter().any(|m| {
-            if let rome_rowan::SyntaxSlot::Node(node) = m {
-                JsStaticModifier::can_cast(node.kind())
-            } else {
-                false
-            }
-        }) {
-            StaticType::Static
+fn is_static_member(node: JsSyntaxList) -> bool {
+    if node.into_iter().any(|m| {
+        if let rome_rowan::SyntaxSlot::Node(node) = m {
+            JsStaticModifier::can_cast(node.kind())
         } else {
-            StaticType::NonStatic
+            false
         }
+    }) {
+        true
+    } else {
+        false
     }
 }
 
@@ -139,52 +117,19 @@ declare_node_union! {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub(crate) enum MemberType {
+enum MemberType {
     Normal,
     Getter,
     Setter,
 }
 
 impl AnyClassMemberDefinition {
-    fn member_name(&self) -> Option<String> {
+    fn name(&self) -> Option<AnyJsClassMemberName> {
         match self {
-            AnyClassMemberDefinition::JsGetterClassMember(node) => {
-                get_member_name_string(node.name().ok()?)
-            }
-            AnyClassMemberDefinition::JsMethodClassMember(node) => {
-                get_member_name_string(node.name().ok()?)
-            }
-            AnyClassMemberDefinition::JsPropertyClassMember(node) => {
-                get_member_name_string(node.name().ok()?)
-            }
-            AnyClassMemberDefinition::JsSetterClassMember(node) => {
-                get_member_name_string(node.name().ok()?)
-            }
-        }
-    }
-
-    fn member_type(&self) -> MemberType {
-        match self {
-            AnyClassMemberDefinition::JsGetterClassMember(_) => MemberType::Getter,
-            AnyClassMemberDefinition::JsSetterClassMember(_) => MemberType::Setter,
-            _ => MemberType::Normal,
-        }
-    }
-
-    fn access_type(&self) -> Option<AccessType> {
-        match self {
-            AnyClassMemberDefinition::JsGetterClassMember(node) => {
-                get_access_type(node.name().ok()?)
-            }
-            AnyClassMemberDefinition::JsMethodClassMember(node) => {
-                get_access_type(node.name().ok()?)
-            }
-            AnyClassMemberDefinition::JsPropertyClassMember(node) => {
-                get_access_type(node.name().ok()?)
-            }
-            AnyClassMemberDefinition::JsSetterClassMember(node) => {
-                get_access_type(node.name().ok()?)
-            }
+            AnyClassMemberDefinition::JsGetterClassMember(node) => node.name().ok(),
+            AnyClassMemberDefinition::JsMethodClassMember(node) => node.name().ok(),
+            AnyClassMemberDefinition::JsPropertyClassMember(node) => node.name().ok(),
+            AnyClassMemberDefinition::JsSetterClassMember(node) => node.name().ok(),
         }
     }
 
@@ -213,6 +158,21 @@ impl AnyClassMemberDefinition {
             AnyClassMemberDefinition::JsSetterClassMember(node) => node.range(),
         }
     }
+
+    fn member_type(&self) -> MemberType {
+        match self {
+            AnyClassMemberDefinition::JsGetterClassMember(_) => MemberType::Getter,
+            AnyClassMemberDefinition::JsMethodClassMember(_) => MemberType::Normal,
+            AnyClassMemberDefinition::JsPropertyClassMember(_) => MemberType::Normal,
+            AnyClassMemberDefinition::JsSetterClassMember(_) => MemberType::Setter,
+        }
+    }
+}
+
+#[derive(Clone, Debug, Eq, Hash, PartialEq)]
+struct MemberState {
+    name: String,
+    is_static: bool,
 }
 
 impl Rule for NoDuplicateClassMembers {
@@ -222,55 +182,43 @@ impl Rule for NoDuplicateClassMembers {
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-        let mut defined_members: HashMap<
-            (String, StaticType, AccessType),
-            HashMap<MemberType, AnyClassMemberDefinition>,
-        > = HashMap::new();
-        let mut signals = Vec::new();
+        let mut defined_members: HashMap<MemberState, HashMap<MemberType, bool>> = HashMap::new();
 
         let node = ctx.query();
-        for member in node {
-            if let Some(member_def) = AnyClassMemberDefinition::cast_ref(member.syntax()) {
-                if let (Some(member_name), Some(access_type)) =
-                    (member_def.member_name(), member_def.access_type())
-                {
-                    let static_type = StaticType::from(member_def.modifiers_list());
-                    let member_type = member_def.member_type();
-                    defined_members
-                        .entry((member_name, static_type, access_type))
-                        .and_modify(|element| {
-                            if element.get(&member_type).is_some() {
-                                signals.push(member_def.clone());
-                            } else {
-                                if member_type != MemberType::Normal
-                                    && element.get(&MemberType::Normal).is_some()
-                                {
-                                    signals.push(member_def.clone());
-                                }
+        node.into_iter()
+            .filter_map(|member| {
+                let member_definition = AnyClassMemberDefinition::cast_ref(member.syntax())?;
+                let member_name_node = member_definition.name()?;
+                let member_state = MemberState {
+                    name: get_member_name(&member_name_node)?,
+                    is_static: is_static_member(member_definition.modifiers_list()),
+                };
 
-                                if member_type == MemberType::Normal
-                                    && (element.get(&MemberType::Getter).is_some()
-                                        || element.get(&MemberType::Setter).is_some())
-                                {
-                                    signals.push(member_def.clone());
-                                }
-
-                                element.insert(member_type, member_def.clone());
-                            }
-                        })
-                        .or_insert_with(|| HashMap::from([(member_type, member_def)]));
+                let member_type = member_definition.member_type();
+                if let Some(value) = defined_members.get_mut(&member_state) {
+                    if value.get(&MemberType::Normal).is_some() || member_type == MemberType::Normal
+                    {
+                        return Some(member_definition);
+                    } else {
+                        value.insert(member_type, true);
+                    }
+                } else {
+                    defined_members.insert(member_state, HashMap::from([(member_type, true)]));
                 }
-            }
-        }
 
-        signals
+                None
+            })
+            .collect()
     }
 
     fn diagnostic(_: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let diagnostic = RuleDiagnostic::new(
             rule_category!(),
             state.range(),
-            format!("Duplicate class member name {:?}", state.member_name()?),
+            format!(
+                "Duplicate class member name {:?}",
+                get_member_name(&state.name()?)?
+            ),
         );
 
         Some(diagnostic)
