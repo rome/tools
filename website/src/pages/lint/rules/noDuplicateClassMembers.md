@@ -7,9 +7,9 @@ parent: lint/rules/index
 
 Disallow duplicate class members.
 
-If there are declarations of the same name in class members,
+If there are declarations of the same name among class members,
 the last declaration overwrites other declarations silently.
-It can cause unexpected behaviors.
+It can cause unexpected behaviours.
 
 ## Examples
 
