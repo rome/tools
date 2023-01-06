@@ -99,17 +99,13 @@ fn get_member_name(node: &AnyJsClassMemberName) -> Option<String> {
 }
 
 fn is_static_member(node: JsSyntaxList) -> bool {
-    if node.into_iter().any(|m| {
+    node.into_iter().any(|m| {
         if let rome_rowan::SyntaxSlot::Node(node) = m {
             JsStaticModifier::can_cast(node.kind())
         } else {
             false
         }
-    }) {
-        true
-    } else {
-        false
-    }
+    })
 }
 
 declare_node_union! {
