@@ -192,7 +192,9 @@ impl Rule for NoDuplicateClassMembers {
 
                 let member_type = member_definition.member_type();
                 if let Some(value) = defined_members.get_mut(&member_state) {
-                    if value.get(&MemberType::Normal).is_some() || member_type == MemberType::Normal
+                    if value.get(&MemberType::Normal).is_some()
+                        || value.get(&member_type).is_some()
+                        || member_type == MemberType::Normal
                     {
                         return Some(member_definition);
                     } else {
