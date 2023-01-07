@@ -341,6 +341,10 @@ export interface Nursery {
 	 */
 	noExtraSemicolons?: RuleConfiguration;
 	/**
+	 * Disallow calling global object properties as functions
+	 */
+	noGlobalObjectCalls?: RuleConfiguration;
+	/**
 	 * Check that the scope attribute is only used on th elements.
 	 */
 	noHeaderScope?: RuleConfiguration;
@@ -809,6 +813,7 @@ export type Category =
 	| "lint/nursery/useHookAtTopLevel"
 	| "lint/nursery/noDuplicateJsxProps"
 	| "lint/nursery/useYield"
+	| "lint/nursery/noGlobalObjectCalls"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"

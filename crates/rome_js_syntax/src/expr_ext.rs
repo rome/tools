@@ -32,6 +32,20 @@ impl JsReferenceIdentifier {
         self.has_name("undefined")
     }
 
+    /// Returns `true` if this identifier refers to the `globalThis` symbol.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make::{js_reference_identifier, ident};
+    ///
+    /// assert!(js_reference_identifier(ident("globalThis")).is_global_this());
+    /// assert!(!js_reference_identifier(ident("x")).is_global_this());
+    /// ```
+    pub fn is_global_this(&self) -> bool {
+        self.has_name("globalThis")
+    }
+
     /// Returns `true` if this identifier has the given name.
     ///
     /// ## Examples
