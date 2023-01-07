@@ -13,4 +13,6 @@ class A { get foo () {} accessor foo; }
 class A { set foo () {} accessor foo; }
 class A { foo() {} foo() {} bar() {} bar() {} }
 class A { get foo() {} get foo() {} }
+class A { foo() {} "foo"() {} }
+
 // class A { #foo; #foo; } This is invalid syntax, parser should throw an error
