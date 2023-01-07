@@ -753,6 +753,17 @@
             }
           ]
         },
+        "noGlobalObjectCalls": {
+          "description": "Disallow calling global object properties as functions",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noHeaderScope": {
           "description": "Check that the scope attribute is only used on th elements.",
           "anyOf": [
