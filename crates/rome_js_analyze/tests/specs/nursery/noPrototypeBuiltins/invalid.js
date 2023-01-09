@@ -1,0 +1,11 @@
+foo.hasOwnProperty("bar");
+foo.isPrototypeOf(bar);
+foo.propertyIsEnumerable("bar");
+foo.bar.hasOwnProperty("bar");
+foo.bar.baz.isPrototypeOf("bar");
+foo["hasOwnProperty"]("bar");
+foo[`isPrototypeOf`]("bar").baz;
+foo?.hasOwnProperty(bar);
+(foo?.hasOwnProperty)("bar");
+foo?.["hasOwnProperty"]("bar");
+(foo?.[`hasOwnProperty`])("bar");

@@ -373,6 +373,10 @@ export interface Nursery {
 	 */
 	noPrecisionLoss?: RuleConfiguration;
 	/**
+	 * Disallow direct use of Object.prototype builtins.
+	 */
+	noPrototypeBuiltins?: RuleConfiguration;
+	/**
 	 * Enforce img alt prop does not contain the word "image", "picture", or "photo".
 	 */
 	noRedundantAlt?: RuleConfiguration;
@@ -819,6 +823,7 @@ export type Category =
 	| "lint/nursery/noDuplicateClassMembers"
 	| "lint/nursery/useYield"
 	| "lint/nursery/noGlobalObjectCalls"
+	| "lint/nursery/noPrototypeBuiltins"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
