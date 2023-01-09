@@ -219,18 +219,16 @@ impl Rule for UseSimpleNumberKeys {
         number_literal: &Self::State,
     ) -> Option<RuleDiagnostic> {
         let title = match number_literal {
-            NumberLiteral::Decimal { big_int: true, .. } => "Bigint is not allowed",
+            NumberLiteral::Decimal { big_int: true, .. } => "Bigint is not allowed here.",
             NumberLiteral::Decimal {
                 underscore: true, ..
-            } => "Number literal with underscore is not allowed",
+            } => "Number literal with underscore is not allowed here.",
             NumberLiteral::FloatingPoint {
                 underscore: true, ..
-            } => "Number literal with underscore is not allowed",
-            NumberLiteral::Binary { .. } => "Number literal in binary format is not allowed",
-            NumberLiteral::Hexadecimal { .. } => {
-                "Number literal in hexadecimal format is not allowed"
-            }
-            NumberLiteral::Octal { .. } => "Number literal in octal format is not allowed",
+            } => "Number literal with underscore is not allowed.",
+            NumberLiteral::Binary { .. } => "Binary number literal in is not allowed here.",
+            NumberLiteral::Hexadecimal { .. } => "Hexadecimal number literal is not allowed here.",
+            NumberLiteral::Octal { .. } => "Octal number literal is not allowed here.",
             _ => "",
         };
 
@@ -243,24 +241,29 @@ impl Rule for UseSimpleNumberKeys {
     fn action(ctx: &RuleContext<Self>, number_literal: &Self::State) -> Option<JsRuleAction> {
         let mut mutation = ctx.root().begin();
         let node = ctx.query();
+        let message;
 
         if let Ok(token) = node.value() {
             match number_literal {
                 NumberLiteral::Binary { .. }
                 | NumberLiteral::Octal { .. }
-                | NumberLiteral::Hexadecimal { .. } => mutation.replace_token(
-                    token,
-                    make::js_number_literal(number_literal.to_base_ten()?),
-                ),
+                | NumberLiteral::Hexadecimal { .. } => {
+                    let text = number_literal.to_base_ten()?;
+                    message = markup! ("Replace "{ node.to_string() } " with "{text.to_string()})
+                        .to_owned();
+                    mutation.replace_token(token, make::js_number_literal(text));
+                }
                 NumberLiteral::FloatingPoint { .. } | NumberLiteral::Decimal { .. } => {
-                    mutation.replace_token(token, make::js_number_literal(number_literal.value()));
+                    let text = number_literal.value();
+                    message = markup! ("Replace "{ node.to_string() } " with "{text}).to_owned();
+                    mutation.replace_token(token, make::js_number_literal(text));
                 }
             };
 
             return Some(JsRuleAction {
                 category: ActionCategory::QuickFix,
                 applicability: Applicability::Always,
-                message: markup! ("Remove "{ node.to_string() }).to_owned(),
+                message,
                 mutation,
             });
         }
