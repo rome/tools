@@ -42,6 +42,14 @@ impl<T: IntoRawPointer> GenerationalPointer<T> {
     }
 
     fn value(&self) -> &T::Pointee {
+        // SAFETY: This clears the least significant bit from `data`. This bit
+        // should have been set to zero in the original pointer due to the
+        // alignment requirements of the underlying data (this is checked by an
+        // assertion on debug builds), so this essentially extracts the pointer
+        // value from the bit field. Said point is safe to dereference at this
+        // point since we're holding a valid reference to `self` which
+        // guarantees `Drop` has not been called and the memory associated with
+        // the pointer has not been released yet.
         let data = self.data & !1;
         let ptr = data as *const T::Pointee;
         unsafe { &*ptr }

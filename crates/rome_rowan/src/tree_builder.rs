@@ -36,7 +36,7 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
         TreeBuilder::default()
     }
 
-    /// Reusing `NodeCache` between different [TreeBuilder]`s saves memory.
+    /// Reusing `NodeCache` between different [TreeBuilder]s saves memory.
     /// It allows to structurally share underlying trees.
     pub fn with_cache(cache: &mut NodeCache) -> TreeBuilder<'_, L, S> {
         cache.increment_generation();
