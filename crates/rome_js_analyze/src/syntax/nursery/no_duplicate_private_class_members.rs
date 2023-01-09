@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 
@@ -38,7 +38,7 @@ impl Rule for NoDuplicatePrivateClassMembers {
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-        let mut defined_members: HashMap<String, HashMap<MemberType, bool>> = HashMap::new();
+        let mut defined_members: HashMap<String, HashSet<MemberType>> = HashMap::new();
 
         let node = ctx.query();
         node.into_iter()
@@ -56,17 +56,17 @@ impl Rule for NoDuplicatePrivateClassMembers {
                     _ => return None,
                 };
 
-                if let Some(value) = defined_members.get_mut(&member_name) {
-                    if value.get(&MemberType::Normal).is_some()
-                        || value.get(&member_type).is_some()
+                if let Some(stored_members) = defined_members.get_mut(&member_name) {
+                    if stored_members.contains(&MemberType::Normal)
+                        || stored_members.contains(&member_type)
                         || member_type == MemberType::Normal
                     {
                         return Some((member_name, member.range()));
                     } else {
-                        value.insert(member_type, true);
+                        stored_members.insert(member_type);
                     }
                 } else {
-                    defined_members.insert(member_name, HashMap::from([(member_type, true)]));
+                    defined_members.insert(member_name, HashSet::from([member_type]));
                 }
 
                 None
