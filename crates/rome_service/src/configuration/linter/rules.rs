@@ -773,6 +773,8 @@ struct NurserySchema {
     no_noninteractive_element_to_interactive_role: Option<RuleConfiguration>,
     #[doc = "Disallow literal numbers that lose precision"]
     no_precision_loss: Option<RuleConfiguration>,
+    #[doc = "Disallow direct use of Object.prototype builtins."]
+    no_prototype_builtins: Option<RuleConfiguration>,
     #[doc = "Enforce img alt prop does not contain the word \"image\", \"picture\", or \"photo\"."]
     no_redundant_alt: Option<RuleConfiguration>,
     #[doc = "Prevents from having redundant \"use strict\"."]
@@ -836,7 +838,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 51] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 52] = [
         "noAccessKey",
         "noAssignInExpressions",
         "noBannedTypes",
@@ -858,6 +860,7 @@ impl Nursery {
         "noNonNullAssertion",
         "noNoninteractiveElementToInteractiveRole",
         "noPrecisionLoss",
+        "noPrototypeBuiltins",
         "noRedundantAlt",
         "noRedundantUseStrict",
         "noRestrictedGlobals",
@@ -952,8 +955,7 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[16]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[17]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[19]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[21]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[24]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[22]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[25]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[26]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[27]),
@@ -963,19 +965,20 @@ impl Nursery {
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[31]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[32]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[33]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[35]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[37]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[34]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[36]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[38]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[39]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[40]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[41]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[44]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[42]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[45]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[46]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[47]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[48]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[49]),
         RuleFilter::Rule("nursery", Self::CATEGORY_RULES[50]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[51]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
