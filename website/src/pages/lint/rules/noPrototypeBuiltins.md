@@ -74,3 +74,7 @@ var valid = Object.prototype.isPrototypeOf.call(foo, bar);
 var valid = {}.propertyIsEnumerable.call(foo, "bar");
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)
