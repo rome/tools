@@ -16,9 +16,17 @@ declare_rule! {
     ///
     /// ```js,expect_diagnostic
     /// ({ 0x1: 1 });
+    /// ```
+    /// ```js,expect_diagnostic
     /// ({ 11_1.11: "ee" });
+	/// ```
+    /// ```js,expect_diagnostic
     /// ({ 0o1: 1 });
+	/// ```
+    /// ```js,expect_diagnostic
     /// ({ 1n: 1 });
+	/// ```
+    /// ```js,expect_diagnostic
     /// ({ 11_1.11: "ee" });
     /// ```
     ///
