@@ -19,13 +19,13 @@ declare_rule! {
     /// ```
     /// ```js,expect_diagnostic
     /// ({ 11_1.11: "ee" });
-	/// ```
+    /// ```
     /// ```js,expect_diagnostic
     /// ({ 0o1: 1 });
-	/// ```
+    /// ```
     /// ```js,expect_diagnostic
     /// ({ 1n: 1 });
-	/// ```
+    /// ```
     /// ```js,expect_diagnostic
     /// ({ 11_1.11: "ee" });
     /// ```
@@ -34,7 +34,9 @@ declare_rule! {
     ///
     /// ```js
     /// ({ 0: "zero" });
-    /// ({ 3.1e12: "12" });
+    /// ({ 122: "integer" });
+    /// ({ 1.22: "floating point" });
+    /// ({ 3.1e12: "floating point with e" });
     /// ```
     ///
     pub(crate) UseSimpleNumberKeys {

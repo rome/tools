@@ -13,19 +13,12 @@ expression: useSimpleNumberKeys.js
 
 // invalid
 ({ 1n: 1 });
-
 ({ 0x1: 1 });
-
 ({ 012: 1 });
-
 ({ 0b1: 1 });
-
 ({ 0o1: 1 });
-
 ({ 1_0: 1 });
-
 ({ 0.1e1_2: "ed" });
-
 ({ 11_1.11: "ee" });
 
 ```
@@ -39,8 +32,8 @@ useSimpleNumberKeys.js:9:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━�
      8 │ // invalid
    > 9 │ ({ 1n: 1 });
        │    ^^
-    10 │ 
-    11 │ ({ 0x1: 1 });
+    10 │ ({ 0x1: 1 });
+    11 │ ({ 012: 1 });
   
   i Safe fix: Replace 1n with 1
   
@@ -48,8 +41,32 @@ useSimpleNumberKeys.js:9:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━�
      8  8 │   // invalid
      9    │ - ({·1n:·1·});
         9 │ + ({·1:·1·});
-    10 10 │   
-    11 11 │   ({ 0x1: 1 });
+    10 10 │   ({ 0x1: 1 });
+    11 11 │   ({ 012: 1 });
+  
+
+```
+
+```
+useSimpleNumberKeys.js:10:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Hexadecimal number literal is not allowed here.
+  
+     8 │ // invalid
+     9 │ ({ 1n: 1 });
+  > 10 │ ({ 0x1: 1 });
+       │    ^^^
+    11 │ ({ 012: 1 });
+    12 │ ({ 0b1: 1 });
+  
+  i Safe fix: Replace 0x1 with 1
+  
+     8  8 │   // invalid
+     9  9 │   ({ 1n: 1 });
+    10    │ - ({·0x1:·1·});
+       10 │ + ({·1:·1·});
+    11 11 │   ({ 012: 1 });
+    12 12 │   ({ 0b1: 1 });
   
 
 ```
@@ -57,23 +74,47 @@ useSimpleNumberKeys.js:9:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━�
 ```
 useSimpleNumberKeys.js:11:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Hexadecimal number literal is not allowed here.
+  ! Octal number literal is not allowed here.
   
      9 │ ({ 1n: 1 });
-    10 │ 
-  > 11 │ ({ 0x1: 1 });
+    10 │ ({ 0x1: 1 });
+  > 11 │ ({ 012: 1 });
        │    ^^^
-    12 │ 
-    13 │ ({ 012: 1 });
+    12 │ ({ 0b1: 1 });
+    13 │ ({ 0o1: 1 });
   
-  i Safe fix: Replace 0x1 with 1
+  i Safe fix: Replace 012 with 9
   
      9  9 │   ({ 1n: 1 });
-    10 10 │   
-    11    │ - ({·0x1:·1·});
-       11 │ + ({·1:·1·});
-    12 12 │   
-    13 13 │   ({ 012: 1 });
+    10 10 │   ({ 0x1: 1 });
+    11    │ - ({·012:·1·});
+       11 │ + ({·9:·1·});
+    12 12 │   ({ 0b1: 1 });
+    13 13 │   ({ 0o1: 1 });
+  
+
+```
+
+```
+useSimpleNumberKeys.js:12:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Binary number literal in is not allowed here.
+  
+    10 │ ({ 0x1: 1 });
+    11 │ ({ 012: 1 });
+  > 12 │ ({ 0b1: 1 });
+       │    ^^^
+    13 │ ({ 0o1: 1 });
+    14 │ ({ 1_0: 1 });
+  
+  i Safe fix: Replace 0b1 with 1
+  
+    10 10 │   ({ 0x1: 1 });
+    11 11 │   ({ 012: 1 });
+    12    │ - ({·0b1:·1·});
+       12 │ + ({·1:·1·});
+    13 13 │   ({ 0o1: 1 });
+    14 14 │   ({ 1_0: 1 });
   
 
 ```
@@ -83,21 +124,45 @@ useSimpleNumberKeys.js:13:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━
 
   ! Octal number literal is not allowed here.
   
-    11 │ ({ 0x1: 1 });
-    12 │ 
-  > 13 │ ({ 012: 1 });
+    11 │ ({ 012: 1 });
+    12 │ ({ 0b1: 1 });
+  > 13 │ ({ 0o1: 1 });
        │    ^^^
-    14 │ 
-    15 │ ({ 0b1: 1 });
+    14 │ ({ 1_0: 1 });
+    15 │ ({ 0.1e1_2: "ed" });
   
-  i Safe fix: Replace 012 with 9
+  i Safe fix: Replace 0o1 with 1
   
-    11 11 │   ({ 0x1: 1 });
-    12 12 │   
-    13    │ - ({·012:·1·});
-       13 │ + ({·9:·1·});
-    14 14 │   
-    15 15 │   ({ 0b1: 1 });
+    11 11 │   ({ 012: 1 });
+    12 12 │   ({ 0b1: 1 });
+    13    │ - ({·0o1:·1·});
+       13 │ + ({·1:·1·});
+    14 14 │   ({ 1_0: 1 });
+    15 15 │   ({ 0.1e1_2: "ed" });
+  
+
+```
+
+```
+useSimpleNumberKeys.js:14:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Number literal with underscore is not allowed here.
+  
+    12 │ ({ 0b1: 1 });
+    13 │ ({ 0o1: 1 });
+  > 14 │ ({ 1_0: 1 });
+       │    ^^^
+    15 │ ({ 0.1e1_2: "ed" });
+    16 │ ({ 11_1.11: "ee" });
+  
+  i Safe fix: Replace 1_0 with 10
+  
+    12 12 │   ({ 0b1: 1 });
+    13 13 │   ({ 0o1: 1 });
+    14    │ - ({·1_0:·1·});
+       14 │ + ({·10:·1·});
+    15 15 │   ({ 0.1e1_2: "ed" });
+    16 16 │   ({ 11_1.11: "ee" });
   
 
 ```
@@ -105,117 +170,45 @@ useSimpleNumberKeys.js:13:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━
 ```
 useSimpleNumberKeys.js:15:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Binary number literal in is not allowed here.
-  
-    13 │ ({ 012: 1 });
-    14 │ 
-  > 15 │ ({ 0b1: 1 });
-       │    ^^^
-    16 │ 
-    17 │ ({ 0o1: 1 });
-  
-  i Safe fix: Replace 0b1 with 1
-  
-    13 13 │   ({ 012: 1 });
-    14 14 │   
-    15    │ - ({·0b1:·1·});
-       15 │ + ({·1:·1·});
-    16 16 │   
-    17 17 │   ({ 0o1: 1 });
-  
-
-```
-
-```
-useSimpleNumberKeys.js:17:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Octal number literal is not allowed here.
-  
-    15 │ ({ 0b1: 1 });
-    16 │ 
-  > 17 │ ({ 0o1: 1 });
-       │    ^^^
-    18 │ 
-    19 │ ({ 1_0: 1 });
-  
-  i Safe fix: Replace 0o1 with 1
-  
-    15 15 │   ({ 0b1: 1 });
-    16 16 │   
-    17    │ - ({·0o1:·1·});
-       17 │ + ({·1:·1·});
-    18 18 │   
-    19 19 │   ({ 1_0: 1 });
-  
-
-```
-
-```
-useSimpleNumberKeys.js:19:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Number literal with underscore is not allowed here.
-  
-    17 │ ({ 0o1: 1 });
-    18 │ 
-  > 19 │ ({ 1_0: 1 });
-       │    ^^^
-    20 │ 
-    21 │ ({ 0.1e1_2: "ed" });
-  
-  i Safe fix: Replace 1_0 with 10
-  
-    17 17 │   ({ 0o1: 1 });
-    18 18 │   
-    19    │ - ({·1_0:·1·});
-       19 │ + ({·10:·1·});
-    20 20 │   
-    21 21 │   ({ 0.1e1_2: "ed" });
-  
-
-```
-
-```
-useSimpleNumberKeys.js:21:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
   ! Number literal with underscore is not allowed.
   
-    19 │ ({ 1_0: 1 });
-    20 │ 
-  > 21 │ ({ 0.1e1_2: "ed" });
+    13 │ ({ 0o1: 1 });
+    14 │ ({ 1_0: 1 });
+  > 15 │ ({ 0.1e1_2: "ed" });
        │    ^^^^^^^
-    22 │ 
-    23 │ ({ 11_1.11: "ee" });
+    16 │ ({ 11_1.11: "ee" });
+    17 │ 
   
   i Safe fix: Replace 0.1e1_2 with .1e12
   
-    19 19 │   ({ 1_0: 1 });
-    20 20 │   
-    21    │ - ({·0.1e1_2:·"ed"·});
-       21 │ + ({·.1e12:·"ed"·});
-    22 22 │   
-    23 23 │   ({ 11_1.11: "ee" });
+    13 13 │   ({ 0o1: 1 });
+    14 14 │   ({ 1_0: 1 });
+    15    │ - ({·0.1e1_2:·"ed"·});
+       15 │ + ({·.1e12:·"ed"·});
+    16 16 │   ({ 11_1.11: "ee" });
+    17 17 │   
   
 
 ```
 
 ```
-useSimpleNumberKeys.js:23:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useSimpleNumberKeys.js:16:4 lint/nursery/useSimpleNumberKeys  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Number literal with underscore is not allowed.
   
-    21 │ ({ 0.1e1_2: "ed" });
-    22 │ 
-  > 23 │ ({ 11_1.11: "ee" });
+    14 │ ({ 1_0: 1 });
+    15 │ ({ 0.1e1_2: "ed" });
+  > 16 │ ({ 11_1.11: "ee" });
        │    ^^^^^^^
-    24 │ 
+    17 │ 
   
   i Safe fix: Replace 11_1.11 with 111.11
   
-    21 21 │   ({ 0.1e1_2: "ed" });
-    22 22 │   
-    23    │ - ({·11_1.11:·"ee"·});
-       23 │ + ({·111.11:·"ee"·});
-    24 24 │   
+    14 14 │   ({ 1_0: 1 });
+    15 15 │   ({ 0.1e1_2: "ed" });
+    16    │ - ({·11_1.11:·"ee"·});
+       16 │ + ({·111.11:·"ee"·});
+    17 17 │   
   
 
 ```
