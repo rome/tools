@@ -31,7 +31,6 @@ pub use formatter::{FormatterConfiguration, PlainIndentStyle};
 pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
 pub use linter::{LinterConfiguration, RuleConfiguration, Rules};
 use rome_analyze::{AnalyzerConfiguration, AnalyzerRules, MetadataRegistry};
-use rome_diagnostics::FileId;
 use rome_js_analyze::metadata;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_parser::parse_json;
@@ -212,7 +211,7 @@ pub fn create_config(
         WorkspaceError::Configuration(ConfigurationDiagnostic::new_serialization_error())
     })?;
 
-    let parsed = parse_json(&contents, FileId::zero());
+    let parsed = parse_json(&contents);
     let formatted =
         rome_json_formatter::format_node(JsonFormatOptions::default(), &parsed.syntax())?
             .print()

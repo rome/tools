@@ -1,4 +1,3 @@
-use rome_diagnostics::FileId;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_parser::parse_json;
 use rome_service::Configuration;
@@ -14,7 +13,7 @@ pub(crate) fn generate_configuration_schema(mode: Mode) -> Result<()> {
     let schema = schema_for!(Configuration);
     let json_schema = to_string(&schema)?;
 
-    let parsed = parse_json(&json_schema, FileId::zero());
+    let parsed = parse_json(&json_schema);
     let formatted =
         rome_json_formatter::format_node(JsonFormatOptions::default(), &parsed.syntax())
             .unwrap()
