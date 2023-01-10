@@ -77,9 +77,7 @@ function writeManifest(packagePath) {
 	);
 
 	manifestData["version"] = rootManifest.version;
-	manifestData["optionalDependencies"] = Object.fromEntries(
-		nativePackages,
-	);
+	manifestData["optionalDependencies"] = Object.fromEntries(nativePackages);
 
 	console.log(`Update manifest ${manifestPath}`);
 	const content = JSON.stringify(manifestData);
