@@ -24,7 +24,7 @@
 	},
 	"engines": {
 		"vscode": "^1.70.0",
-		"npm": "^8 || ^9"
+		"npm": "^9"
 	},
 	"capabilities": {
 		"untrustedWorkspaces": {
