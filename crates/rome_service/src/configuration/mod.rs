@@ -31,7 +31,6 @@ pub use formatter::{FormatterConfiguration, PlainIndentStyle};
 pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
 pub use linter::{LinterConfiguration, RuleConfiguration, Rules};
 use rome_analyze::{AnalyzerConfiguration, AnalyzerRules, MetadataRegistry};
-use rome_diagnostics::FileId;
 use rome_js_analyze::metadata;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_parser::parse_json;
