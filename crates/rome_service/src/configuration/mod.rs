@@ -128,50 +128,51 @@ impl FilesConfiguration {
 pub fn load_config(
     file_system: &DynRef<dyn FileSystem>,
     base_path: Option<PathBuf>,
+    show_error: bool,
 ) -> Result<Option<Configuration>, WorkspaceError> {
     let config_name = file_system.config_name();
-    let configuration_path = if let Some(base_path) = base_path {
+    let config_path = if let Some(ref base_path) = base_path {
         base_path.join(config_name)
     } else {
         PathBuf::from(config_name)
     };
     info!(
-        "Attempting to load the configuration file at path {:?}",
-        configuration_path
+        "Attempting to read the configuration file from {:?}",
+        config_path
     );
     let options = OpenOptions::default().read(true);
-    let file = file_system.open_with_options(&configuration_path, options);
+    let file = file_system.open_with_options(&config_path, options);
     match file {
         Ok(mut file) => {
             let mut buffer = String::new();
             file.read_to_string(&mut buffer).map_err(|_| {
-                WorkspaceError::cant_read_file(format!("{}", configuration_path.display()))
+                WorkspaceError::cant_read_file(format!("{}", config_path.display()))
             })?;
 
-            let configuration: Configuration = serde_json::from_str(&buffer).map_err(|err| {
+            let config: Configuration = serde_json::from_str(&buffer).map_err(|err| {
                 WorkspaceError::Configuration(ConfigurationDiagnostic::new_deserialization_error(
                     err.to_string(),
                     from_serde_error_to_range(&err, &buffer),
                 ))
             })?;
 
-            Ok(Some(configuration))
+            Ok(Some(config))
         }
         Err(err) => {
-            // We throw an error only when the error is found.
-            // In case we don't fine the file, we swallow the error and we continue; not having
-            // a file should not be a cause of error (for now)
-            if err.kind() != ErrorKind::NotFound {
+            // We skip the error when the configuration file is not found
+            // and the base path is not explicitly set; not having a configuration
+            // file is not a cause of error
+            if show_error || err.kind() != ErrorKind::NotFound {
                 return Err(WorkspaceError::cant_read_file(format!(
                     "{}",
-                    configuration_path.display()
+                    config_path.display()
                 )));
             }
             error!(
-                "Could not find the file configuration at {:?}",
-                configuration_path.display()
+                "Could not read the configuration file from {:?}, reason:\n {}",
+                config_path.display(),
+                err
             );
-            error!("Reason: {:?}", err);
             Ok(None)
         }
     }

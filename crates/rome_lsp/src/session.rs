@@ -366,7 +366,7 @@ impl Session {
     pub(crate) async fn load_workspace_settings(&self) {
         let base_path = self.base_path();
 
-        let status = match load_config(&self.fs, base_path) {
+        let status = match load_config(&self.fs, base_path, false) {
             Ok(Some(configuration)) => {
                 info!("Loaded workspace settings: {configuration:#?}");
 

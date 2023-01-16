@@ -163,7 +163,7 @@ impl Display for RageConfiguration<'_, '_> {
     fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
         Section("Rome Configuration").fmt(fmt)?;
 
-        match load_config(self.0, None) {
+        match load_config(self.0, None, false) {
             Ok(None) => KeyValuePair("Status", markup!(<Dim>"unset"</Dim>)).fmt(fmt)?,
             Ok(Some(configuration)) => {
                 markup! (
