@@ -23,7 +23,7 @@ pub struct JavascriptConfiguration {
 }
 
 impl JavascriptConfiguration {
-    pub(crate) const KNOWN_KEYS: &'static [&'static str] = &["formatter", "global"];
+    pub(crate) const KNOWN_KEYS: &'static [&'static str] = &["formatter", "globals"];
 }
 
 impl JavascriptConfiguration {

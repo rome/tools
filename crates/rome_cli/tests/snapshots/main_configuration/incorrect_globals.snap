@@ -18,12 +18,37 @@ expression: content
 # Termination Message
 
 ```block
-configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × invalid type: boolean `false`, expected a string at line 6 column 21
+  × No files were processed in the specified paths.
   
 
 
+```
+
+# Emitted Messages
+
+```block
+The configuration has errors, Rome will use its defaults for the sections that were invalid.
+```
+
+```block
+rome.json:6:17 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Incorrect type, expected a string
+  
+    4 │   },
+    5 │   "javascript": {
+  > 6 │     "globals": [false]
+      │                 ^^^^^
+    7 │   }
+    8 │ }
+  
+
+```
+
+```block
+Checked 0 file(s) in <TIME>
 ```
 
 

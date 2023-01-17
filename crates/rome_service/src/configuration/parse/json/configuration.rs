@@ -1,9 +1,9 @@
-use crate::configuration::parse::json::{has_only_known_keys, VisitConfigurationAsJson};
-use crate::configuration::visitor::VisitConfigurationNode;
 use crate::configuration::{
     FilesConfiguration, FormatterConfiguration, JavascriptConfiguration, LinterConfiguration,
 };
-use crate::{Configuration, ConfigurationDiagnostic};
+use crate::Configuration;
+use rome_deserialize::json::{has_only_known_keys, VisitConfigurationAsJson};
+use rome_deserialize::{DeserializationDiagnostic, VisitConfigurationNode};
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::SyntaxNode;
 use std::num::NonZeroU64;
@@ -14,71 +14,79 @@ impl VisitConfigurationNode<JsonLanguage> for FilesConfiguration {
     fn visit_member_name(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
-    ) -> Result<(), ConfigurationDiagnostic> {
-        has_only_known_keys(node, FilesConfiguration::KNOWN_KEYS)
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        has_only_known_keys(node, FilesConfiguration::KNOWN_KEYS, diagnostics)
     }
 
     fn visit_map(
         &mut self,
         key: &SyntaxNode<JsonLanguage>,
         value: &SyntaxNode<JsonLanguage>,
-    ) -> Result<(), ConfigurationDiagnostic> {
-        let (name, value) = self.get_key_and_value(key, value)?;
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
         let name_text = name.text();
         match name_text {
             "maxSize" => {
-                self.max_size = NonZeroU64::new(self.map_to_u64(&value, name_text, u64::MAX)?);
+                self.max_size =
+                    NonZeroU64::new(self.map_to_u64(&value, name_text, u64::MAX, diagnostics)?);
             }
             "ignore" => {
-                self.ignore = self.map_to_index_set_string(&value, name_text)?;
+                self.ignore = self.map_to_index_set_string(&value, name_text, diagnostics);
             }
             _ => {}
         }
-        Ok(())
+        Some(())
     }
 }
 
 impl VisitConfigurationAsJson for Configuration {}
 
 impl VisitConfigurationNode<JsonLanguage> for Configuration {
-    fn visit_member_name(&mut self, node: &JsonSyntaxNode) -> Result<(), ConfigurationDiagnostic> {
-        has_only_known_keys(node, Configuration::KNOWN_KEYS)
+    fn visit_member_name(
+        &mut self,
+        node: &JsonSyntaxNode,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        has_only_known_keys(node, Configuration::KNOWN_KEYS, diagnostics)
     }
 
     fn visit_map(
         &mut self,
         key: &SyntaxNode<JsonLanguage>,
         value: &SyntaxNode<JsonLanguage>,
-    ) -> Result<(), ConfigurationDiagnostic> {
-        let (name, value) = self.get_key_and_value(key, value)?;
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
         let name_text = name.text();
         match name_text {
             "$schema" => {
-                self.schema = Some(self.map_to_string(&value, name_text)?);
+                self.schema = Some(self.map_to_string(&value, name_text, diagnostics)?);
             }
             "files" => {
                 let mut files = FilesConfiguration::default();
-                self.map_to_object(&value, name_text, &mut files)?;
+                self.map_to_object(&value, name_text, &mut files, diagnostics)?;
                 self.files = Some(files);
             }
             "formatter" => {
                 let mut formatter = FormatterConfiguration::default();
-                self.map_to_object(&value, name_text, &mut formatter)?;
+                self.map_to_object(&value, name_text, &mut formatter, diagnostics)?;
                 self.formatter = Some(formatter);
             }
             "linter" => {
                 let mut linter = LinterConfiguration::default();
-                self.map_to_object(&value, name_text, &mut linter)?;
+                self.map_to_object(&value, name_text, &mut linter, diagnostics)?;
                 self.linter = Some(linter);
             }
             "javascript" => {
                 let mut javascript = JavascriptConfiguration::default();
-                self.map_to_object(&value, name_text, &mut javascript)?;
+                self.map_to_object(&value, name_text, &mut javascript, diagnostics)?;
                 self.javascript = Some(javascript);
             }
             _ => {}
         }
 
-        Ok(())
+        Some(())
     }
 }

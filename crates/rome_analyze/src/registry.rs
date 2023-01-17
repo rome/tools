@@ -1,21 +1,20 @@
-use std::{
-    any::TypeId,
-    borrow,
-    collections::{BTreeMap, BTreeSet},
-};
-
 use crate::{
     context::{RuleContext, ServiceBagRuleOptionsWrapper},
     matcher::{GroupKey, MatchQueryParams},
-    options::OptionsDeserializationDiagnostic,
     query::{QueryKey, Queryable},
     signals::RuleSignal,
     AddVisitor, AnalysisFilter, AnalyzerOptions, DeserializableRuleOptions, GroupCategory,
     QueryMatcher, Rule, RuleGroup, RuleKey, RuleMetadata, ServiceBag, SignalEntry, Visitor,
 };
+use rome_deserialize::Deserialized;
 use rome_diagnostics::Error;
 use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
 use rustc_hash::{FxHashMap, FxHashSet};
+use std::{
+    any::TypeId,
+    borrow,
+    collections::{BTreeMap, BTreeSet},
+};
 
 /// Defines all the phases that the [RuleRegistry] supports.
 #[repr(usize)]
@@ -151,7 +150,7 @@ pub struct RuleRegistryBuilder<'a, L: Language> {
     visitors: BTreeMap<(Phases, TypeId), Box<dyn Visitor<Language = L>>>,
     // Service Bag
     services: ServiceBag,
-    diagnostics: Vec<OptionsDeserializationDiagnostic>,
+    diagnostics: Vec<Error>,
 }
 
 impl<L: Language + Default + 'static> RegistryVisitor<L> for RuleRegistryBuilder<'_, L> {
@@ -224,25 +223,23 @@ impl<L: Language + Default + 'static> RegistryVisitor<L> for RuleRegistryBuilder
         phase.rule_states.push(RuleState::default());
 
         let rule_key = RuleKey::rule::<R>();
-        let options = if let Some(options) = self.options.configuration.rules.get_rule(&rule_key) {
-            let value = options.value();
-            match <R::Options as DeserializableRuleOptions>::try_from(value.clone()) {
-                Ok(result) => Ok(result),
-                Err(error) => Err(OptionsDeserializationDiagnostic::new(
-                    rule_key.rule_name(),
-                    value.to_string(),
-                    error,
-                )),
+        let deserialized =
+            if let Some(options) = self.options.configuration.rules.get_rule(&rule_key) {
+                let value = options.value();
+                <R::Options as DeserializableRuleOptions>::from(value.to_string())
+            } else {
+                Deserialized::new(<R::Options as Default>::default(), vec![])
+            };
+
+        if deserialized.has_errors() {
+            for error in deserialized.into_diagnostics() {
+                self.diagnostics.push(error)
             }
         } else {
-            Ok(<R::Options as Default>::default())
-        };
-
-        match options {
-            Ok(options) => self
-                .services
-                .insert_service(ServiceBagRuleOptionsWrapper::<R>(options)),
-            Err(err) => self.diagnostics.push(err),
+            self.services
+                .insert_service(ServiceBagRuleOptionsWrapper::<R>(
+                    deserialized.into_parsed(),
+                ))
         }
 
         <R::Query as Queryable>::build_visitor(&mut self.visitors, self.root);
@@ -263,7 +260,7 @@ impl<L: Language> AddVisitor<L> for BTreeMap<(Phases, TypeId), Box<dyn Visitor<L
 type BuilderResult<L> = (
     RuleRegistry<L>,
     ServiceBag,
-    Vec<OptionsDeserializationDiagnostic>,
+    Vec<Error>,
     BTreeMap<(Phases, TypeId), Box<dyn Visitor<Language = L>>>,
 );
 

@@ -4,13 +4,17 @@ use rome_analyze::{
     context::RuleContext, declare_rule, DeserializableRuleOptions, Rule, RuleDiagnostic,
 };
 use rome_console::markup;
+use rome_deserialize::json::{
+    deserialize_from_json, has_only_known_keys, JsonDeserialize, VisitConfigurationAsJson,
+};
+use rome_deserialize::{DeserializationDiagnostic, Deserialized, VisitConfigurationNode};
 use rome_js_semantic::{Capture, SemanticModel};
 use rome_js_syntax::{
     binding_ext::AnyJsBindingDeclaration, JsCallExpression, JsStaticMemberExpression, JsSyntaxKind,
     JsSyntaxNode, JsVariableDeclaration, TextRange,
 };
-use rome_rowan::{AstNode, SyntaxNodeCast};
-use serde::{Deserialize, Serialize};
+use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
+use rome_rowan::{AstNode, AstSeparatedList, SyntaxNodeCast};
 use std::collections::{BTreeMap, HashMap, HashSet};
 
 declare_rule! {
@@ -94,7 +98,7 @@ declare_rule! {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
 pub struct ReactExtensiveDependenciesOptions {
     pub(crate) hooks_config: HashMap<String, ReactHookConfiguration>,
     pub(crate) stable_config: HashSet<StableReactHookConfiguration>,
@@ -149,21 +153,114 @@ impl Default for ReactExtensiveDependenciesOptions {
     }
 }
 
-impl DeserializableRuleOptions for ReactExtensiveDependenciesOptions {
-    fn try_from(value: serde_json::Value) -> Result<Self, serde_json::Error> {
-        #[derive(Debug, Deserialize)]
-        #[serde(deny_unknown_fields)]
-        struct Options {
-            #[serde(default)]
-            hooks: Vec<(String, Option<usize>, Option<usize>)>,
-            #[serde(default)]
-            stables: HashSet<StableReactHookConfiguration>,
+#[derive(Debug, Default, Clone)]
+pub struct HooksOptions(Vec<(String, Option<usize>, Option<usize>)>);
+
+impl VisitConfigurationAsJson for HooksOptions {}
+impl VisitConfigurationNode<JsonLanguage> for HooksOptions {
+    fn visit_member_name(
+        &mut self,
+        node: &JsonSyntaxNode,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        has_only_known_keys(node, &["hooks"], diagnostics)
+    }
+
+    fn visit_map(
+        &mut self,
+        key: &JsonSyntaxNode,
+        value: &JsonSyntaxNode,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
+        let name_text = name.text();
+        if name_text == "hooks" {
+            let array = value.as_json_array_value()?;
+
+            for element in array.elements() {
+                let element = element.ok()?;
+                let hook_array = element.as_json_array_value()?;
+
+                let len = hook_array.elements().len();
+                if len < 1 {
+                    diagnostics.push(
+                        DeserializationDiagnostic::new("At least one element is needed")
+                            .with_range(hook_array.range()),
+                    );
+                    return Some(());
+                }
+                if len > 3 {
+                    diagnostics.push(
+                        DeserializationDiagnostic::new(
+                            "Too many elements, maximum three are expected",
+                        )
+                        .with_range(hook_array.range()),
+                    );
+                    return Some(());
+                }
+                let mut elements = hook_array.elements().iter();
+                let hook_name = elements.next()?.ok()?;
+                let hook_name = hook_name
+                    .as_json_string_value()
+                    .ok_or_else(|| {
+                        DeserializationDiagnostic::new_incorrect_type("string", hook_name.range())
+                    })
+                    .ok()?
+                    .inner_string_text()
+                    .ok()?
+                    .to_string();
+
+                let closure_index = if let Some(element) = elements.next() {
+                    let element = element.ok()?;
+                    Some(self.map_to_u8(&element, name_text, u8::MAX, diagnostics)? as usize)
+                } else {
+                    None
+                };
+                let dependencies_index = if let Some(element) = elements.next() {
+                    let element = element.ok()?;
+                    Some(self.map_to_u8(&element, name_text, u8::MAX, diagnostics)? as usize)
+                } else {
+                    None
+                };
+
+                self.0.push((hook_name, closure_index, dependencies_index));
+            }
+        }
+        Some(())
+    }
+}
+
+impl JsonDeserialize for HooksOptions {
+    fn parse_from_json(
+        root: JsonRoot,
+        visitor: &mut impl VisitConfigurationAsJson,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let object = root.value().ok()?;
+        let object = object.as_json_object_value()?;
+        for element in object.json_member_list() {
+            let element = element.ok()?;
+            visitor.visit_map(
+                element.name().ok()?.syntax(),
+                element.value().ok()?.syntax(),
+                diagnostics,
+            )?;
         }
 
-        let options: Options = serde_json::from_value(value)?;
+        Some(())
+    }
+}
 
+impl DeserializableRuleOptions for HooksOptions {
+    fn from(value: String) -> Deserialized<Self> {
+        deserialize_from_json(&value)
+    }
+}
+
+impl ReactExtensiveDependenciesOptions {
+    pub fn new(hooks: HooksOptions) -> Self {
         let mut default = ReactExtensiveDependenciesOptions::default();
-        for (k, closure_index, dependencies_index) in options.hooks.into_iter() {
+        for (k, closure_index, dependencies_index) in hooks.0.into_iter() {
             default.hooks_config.insert(
                 k,
                 ReactHookConfiguration {
@@ -172,9 +269,8 @@ impl DeserializableRuleOptions for ReactExtensiveDependenciesOptions {
                 },
             );
         }
-        default.stable_config.extend(options.stables.into_iter());
 
-        Ok(default)
+        default
     }
 }
 
@@ -298,10 +394,11 @@ impl Rule for UseExhaustiveDependencies {
     type Query = Semantic<JsCallExpression>;
     type State = Fix;
     type Signals = Vec<Self::State>;
-    type Options = ReactExtensiveDependenciesOptions;
+    type Options = HooksOptions;
 
     fn run(ctx: &RuleContext<Self>) -> Vec<Self::State> {
         let options = ctx.options();
+        let options = ReactExtensiveDependenciesOptions::new(options.clone());
 
         let mut signals = vec![];
 
@@ -321,7 +418,7 @@ impl Rule for UseExhaustiveDependencies {
                         capture,
                         &component_function_range,
                         model,
-                        options,
+                        &options,
                     )
                 })
                 .map(|capture| {

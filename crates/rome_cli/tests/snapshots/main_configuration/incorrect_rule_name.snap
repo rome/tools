@@ -23,12 +23,67 @@ expression: content
 # Termination Message
 
 ```block
-configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × invalid rule name foo_rule at line 7 column 9
+  × No files were processed in the specified paths.
   
 
 
+```
+
+# Emitted Messages
+
+```block
+The configuration has errors, Rome will use its defaults for the sections that were invalid.
+```
+
+```block
+rome.json:6:13 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Found an extraneous key foo_rule
+  
+    4 │     "rules": {
+    5 │         "correctness": {
+  > 6 │             "foo_rule": "off"
+      │             ^^^^^^^^^^
+    7 │         },
+    8 │         "style": {
+  
+  i Accepted keys
+  
+  - noChildrenProp
+  - noConstAssign
+  - noEmptyPattern
+  - noNewSymbol
+  - noRenderReturnValue
+  - noUndeclaredVariables
+  - noUnnecessaryContinue
+  - noUnreachable
+  - noUnusedVariables
+  - noVoidElementsWithChildren
+  - useValidForDirection
+  - recommended
+  
+
+```
+
+```block
+rome.json:6:13 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Unexpected content inside the configuration file
+  
+    4 │     "rules": {
+    5 │         "correctness": {
+  > 6 │             "foo_rule": "off"
+      │             ^^^^^^^^^^
+    7 │         },
+    8 │         "style": {
+  
+
+```
+
+```block
+Checked 0 file(s) in <TIME>
 ```
 
 

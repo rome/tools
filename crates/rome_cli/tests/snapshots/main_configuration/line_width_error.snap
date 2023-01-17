@@ -15,13 +15,40 @@ expression: content
 # Termination Message
 
 ```block
-configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × The line width exceeds the maximum value (320)
-     at line 4 column 3
+  × No files were processed in the specified paths.
   
 
 
+```
+
+# Emitted Messages
+
+```block
+The configuration has errors, Rome will use its defaults for the sections that were invalid.
+```
+
+```block
+rome.json:3:18 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The line width exceeds the maximum value (320)
+  
+  
+    1 │ {
+    2 │   "formatter": {
+  > 3 │     "lineWidth": 500
+      │                  ^^^
+    4 │   }
+    5 │ }
+  
+  i Maximum value accepted is 320
+  
+
+```
+
+```block
+Compared 0 file(s) in <TIME>
 ```
 
 

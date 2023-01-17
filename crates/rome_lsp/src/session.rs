@@ -367,7 +367,7 @@ impl Session {
         let base_path = self.base_path();
 
         let status = match load_config(&self.fs, base_path) {
-            Ok(Some(configuration)) => {
+            Ok(Some((configuration, _))) => {
                 info!("Loaded workspace settings: {configuration:#?}");
 
                 let result = self
