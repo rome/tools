@@ -4,7 +4,7 @@ expression: javascript_formatter_trailing_comma.json
 ---
 javascript_formatter_trailing_comma.json:4:21 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Found an extraneous variant "wrong"
+  × Found an extraneous value `wrong`
   
     2 │ 	"javascript": {
     3 │ 		"formatter": {

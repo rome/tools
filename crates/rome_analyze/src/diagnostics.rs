@@ -133,10 +133,6 @@ impl AnalyzerDiagnostic {
         self
     }
 
-    pub const fn is_rule_diagnostic(&self) -> bool {
-        matches!(self.kind, DiagnosticKind::Rule(_))
-    }
-
     pub const fn is_raw(&self) -> bool {
         matches!(self.kind, DiagnosticKind::Raw(_))
     }

@@ -205,15 +205,14 @@ pub trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> {
         maximum: u64,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<u64> {
-        let value = JsonNumberValue::cast_ref(value.syntax())
-            .ok_or_else(|| {
-                DeserializationDiagnostic::new_incorrect_type_for_value(
-                    name,
-                    "number",
-                    value.range(),
-                )
-            })
-            .ok()?;
+        let value = JsonNumberValue::cast_ref(value.syntax()).or_else(|| {
+            diagnostics.push(DeserializationDiagnostic::new_incorrect_type_for_value(
+                name,
+                "number",
+                value.range(),
+            ));
+            None
+        })?;
         let value = value.value_token().ok()?;
 
         let result = value.text_trimmed().parse::<u64>().map_err(|err| {
@@ -366,27 +365,19 @@ pub fn has_only_known_keys(
     allowed_keys: &[&str],
     diagnostics: &mut Vec<DeserializationDiagnostic>,
 ) -> Option<()> {
-    node.clone()
-        .cast::<JsonMemberName>()
-        .and_then(|node| {
-            let key_name = node.inner_string_text().ok()?;
-            if allowed_keys.contains(&key_name.text()) {
-                Some(())
-            } else {
-                diagnostics.push(DeserializationDiagnostic::new_unknown_member(
-                    key_name.text(),
-                    node.range(),
-                    allowed_keys,
-                ));
-                None
-            }
-        })
-        .or_else(|| {
-            diagnostics.push(DeserializationDiagnostic::unexpected(
-                node.text_trimmed_range(),
+    node.clone().cast::<JsonMemberName>().and_then(|node| {
+        let key_name = node.inner_string_text().ok()?;
+        if allowed_keys.contains(&key_name.text()) {
+            Some(())
+        } else {
+            diagnostics.push(DeserializationDiagnostic::new_unknown_member(
+                key_name.text(),
+                node.range(),
+                allowed_keys,
             ));
             None
-        })
+        }
+    })
 }
 
 /// Convenient function that returns a [JsonStringValue] from a generic node, and checks
@@ -399,27 +390,19 @@ pub fn with_only_known_variants(
     allowed_keys: &[&str],
     diagnostics: &mut Vec<DeserializationDiagnostic>,
 ) -> Option<JsonStringValue> {
-    node.clone()
-        .cast::<JsonStringValue>()
-        .and_then(|node| {
-            let key_name = node.inner_string_text().ok()?;
-            if allowed_keys.contains(&key_name.text()) {
-                Some(node)
-            } else {
-                diagnostics.push(DeserializationDiagnostic::new_unknown_value(
-                    key_name.text(),
-                    node.range(),
-                    allowed_keys,
-                ));
-                None
-            }
-        })
-        .or_else(|| {
-            diagnostics.push(DeserializationDiagnostic::unexpected(
-                node.text_trimmed_range(),
+    node.clone().cast::<JsonStringValue>().and_then(|node| {
+        let key_name = node.inner_string_text().ok()?;
+        if allowed_keys.contains(&key_name.text()) {
+            Some(node)
+        } else {
+            diagnostics.push(DeserializationDiagnostic::new_unknown_value(
+                key_name.text(),
+                node.range(),
+                allowed_keys,
             ));
             None
-        })
+        }
+    })
 }
 
 /// It attempts to parse and deserialize a source file in JSON.

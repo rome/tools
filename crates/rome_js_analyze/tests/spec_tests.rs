@@ -127,7 +127,7 @@ pub(crate) fn write_analysis_to_snapshot(
     // file with the same name as the test but with extension ".options.json"
     // that configures that specific rule.
     let options_file = input_file.with_extension("options.json");
-    let json = if let Ok(json) = std::fs::read_to_string(options_file) {
+    if let Ok(json) = std::fs::read_to_string(options_file) {
         //RuleKey needs 'static string, so we must leak them here
         let (group, rule) = parse_test_path(input_file);
         let group = Box::leak(Box::new(group.to_string()));
@@ -143,7 +143,7 @@ pub(crate) fn write_analysis_to_snapshot(
         None
     };
 
-    rome_js_analyze::analyze(&root, filter, &options, |event| {
+    let (_, errors) = rome_js_analyze::analyze(&root, filter, &options, |event| {
         if let Some(mut diag) = event.diagnostic() {
             for action in event.actions() {
                 if check_action_type.is_suppression() {
@@ -157,17 +157,8 @@ pub(crate) fn write_analysis_to_snapshot(
                 }
             }
 
-            if diag.is_rule_diagnostic() {
-                let error = diag.with_severity(Severity::Warning);
-                diagnostics.push(diagnostic_to_string(file_name, input_code, error));
-            } else {
-                let error = diag.with_severity(Severity::Warning);
-                diagnostics.push(diagnostic_to_string(
-                    file_name,
-                    json.as_ref().unwrap(),
-                    error,
-                ));
-            }
+            let error = diag.with_severity(Severity::Warning);
+            diagnostics.push(diagnostic_to_string(file_name, input_code, error));
             return ControlFlow::Continue(());
         }
 
@@ -185,6 +176,10 @@ pub(crate) fn write_analysis_to_snapshot(
 
         ControlFlow::<Never>::Continue(())
     });
+
+    for error in errors {
+        diagnostics.push(diagnostic_to_string(file_name, input_code, error));
+    }
 
     writeln!(snapshot, "# Input").unwrap();
     writeln!(snapshot, "```js").unwrap();

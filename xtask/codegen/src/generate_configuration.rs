@@ -60,7 +60,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
     for (group, rules) in groups {
         group_name_list.push(group);
         let property_group_name = Ident::new(&to_lower_snake_case(group), Span::call_site());
-        let group_struct_name = Ident::new(&group.to_capitalized().to_string(), Span::call_site());
+        let group_struct_name = Ident::new(&group.to_capitalized(), Span::call_site());
         let group_name_string_literal = Literal::string(group);
 
         struct_groups.push(generate_struct(group, &rules));
@@ -547,7 +547,7 @@ fn generate_visitor(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) -
 }
 
 fn generate_push_to_analyzer_rules(group: &str) -> TokenStream {
-    let group_struct_name = Ident::new(&group.to_capitalized().to_string(), Span::call_site());
+    let group_struct_name = Ident::new(&group.to_capitalized(), Span::call_site());
     let group_identifier = Ident::new(group, Span::call_site());
     quote! {
        if let Some(rules) = rules.#group_identifier.as_ref() {

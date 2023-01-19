@@ -40,7 +40,7 @@ The configuration has errors, Rome will use its defaults for the sections that w
 ```block
 rome.json:6:13 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Found an extraneous key foo_rule
+  × Found an extraneous key `foo_rule`
   
     4 │     "rules": {
     5 │         "correctness": {
@@ -63,21 +63,6 @@ rome.json:6:13 configuration ━━━━━━━━━━━━━━━━━
   - noUnusedVariables
   - noVoidElementsWithChildren
   - useValidForDirection
-  
-
-```
-
-```block
-rome.json:6:13 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Unexpected content inside the configuration file
-  
-    4 │     "rules": {
-    5 │         "correctness": {
-  > 6 │             "foo_rule": "off"
-      │             ^^^^^^^^^^
-    7 │         },
-    8 │         "style": {
   
 
 ```

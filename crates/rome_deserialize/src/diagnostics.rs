@@ -55,13 +55,9 @@ impl DeserializationDiagnostic {
         range: impl AsSpan,
         known_members: &[&str],
     ) -> Self {
-        Self::new(markup!("Found an extraneous key "<Emphasis>{{ key_name }}</Emphasis> ))
+        Self::new(markup!("Found an extraneous key `"<Emphasis>{{ key_name }}</Emphasis>"`" ))
             .with_range(range)
             .note_with_list("Accepted keys", known_members)
-    }
-
-    pub fn unexpected(range: impl AsSpan) -> Self {
-        Self::new(markup!("Unexpected content inside the configuration file")).with_range(range)
     }
 
     pub fn new_unknown_value(
@@ -69,7 +65,7 @@ impl DeserializationDiagnostic {
         range: impl AsSpan,
         known_variants: &[&str],
     ) -> Self {
-        Self::new(markup! {"Found an extraneous value "<Emphasis>{{ variant_name }}</Emphasis>})
+        Self::new(markup! {"Found an extraneous value `"<Emphasis>{{ variant_name }}</Emphasis>"`"})
             .with_range(range)
             .note_with_list("Accepted values", known_variants)
     }
