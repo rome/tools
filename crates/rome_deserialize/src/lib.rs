@@ -31,7 +31,7 @@ impl<P> Deserialized<P> {
         self.diagnostics.as_slice()
     }
 
-    pub fn into_parsed(self) -> P {
+    pub fn into_deserialized(self) -> P {
         self.parsed
     }
 

@@ -238,7 +238,7 @@ impl<L: Language + Default + 'static> RegistryVisitor<L> for RuleRegistryBuilder
         } else {
             self.services
                 .insert_service(ServiceBagRuleOptionsWrapper::<R>(
-                    deserialized.into_parsed(),
+                    deserialized.into_deserialized(),
                 ))
         }
 

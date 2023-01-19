@@ -225,8 +225,8 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         use crate::Rules;
         use rome_deserialize::json::{has_only_known_keys, VisitConfigurationAsJson};
         use rome_deserialize::{DeserializationDiagnostic, VisitConfigurationNode};
-        use rome_json_syntax::JsonLanguage;
-        use rome_rowan::SyntaxNode;
+        use rome_json_syntax::{AnyJsonValue, JsonLanguage};
+        use rome_rowan::{AstNode, SyntaxNode};
 
         impl VisitConfigurationAsJson for Rules {}
 
@@ -408,7 +408,7 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
         });
     }
 
-    let group_struct_name = Ident::new(&group.to_capitalized().to_string(), Span::call_site());
+    let group_struct_name = Ident::new(&group.to_capitalized(), Span::call_site());
 
     let number_of_recommended_rules = Literal::u8_unsuffixed(number_of_recommended_rules);
 
@@ -481,18 +481,31 @@ fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) ->
 }
 
 fn generate_visitor(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) -> TokenStream {
-    let group_struct_name = Ident::new(&group.to_capitalized().to_string(), Span::call_site());
+    let group_struct_name = Ident::new(&group.to_capitalized(), Span::call_site());
     let mut group_rules = vec![Literal::string("recommended")];
     let mut visitor_rule_line = Vec::new();
 
-    for (rule_name, _) in rules {
+    for rule_name in rules.keys() {
         let rule_identifier = Ident::new(&to_lower_snake_case(rule_name), Span::call_site());
         group_rules.push(Literal::string(rule_name));
         visitor_rule_line.push(quote! {
-            #rule_name => {
-                let mut configuration = RuleConfiguration::default();
-                self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
-                self.#rule_identifier = Some(configuration);
+            #rule_name => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.#rule_identifier = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
+                    self.#rule_identifier = Some(configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
             }
         });
     }

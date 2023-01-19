@@ -51,6 +51,7 @@ rome.json:6:13 configuration ━━━━━━━━━━━━━━━━━
   
   i Accepted keys
   
+  - recommended
   - noChildrenProp
   - noConstAssign
   - noEmptyPattern
@@ -62,7 +63,6 @@ rome.json:6:13 configuration ━━━━━━━━━━━━━━━━━
   - noUnusedVariables
   - noVoidElementsWithChildren
   - useValidForDirection
-  - recommended
   
 
 ```

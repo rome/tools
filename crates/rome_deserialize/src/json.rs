@@ -493,7 +493,7 @@ pub fn with_only_known_variants(
 /// let source = r#"{ "lorem": true }"#;
 ///  let deserialized = deserialize_from_json::<NewConfiguration>(&source);
 ///  assert!(!deserialized.has_errors());
-///  assert_eq!(deserialized.into_parsed(), NewConfiguration { lorem: true });
+///  assert_eq!(deserialized.into_deserialized(), NewConfiguration { lorem: true });
 /// # Ok(())
 /// # }
 ///

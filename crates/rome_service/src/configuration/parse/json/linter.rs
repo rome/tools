@@ -49,6 +49,14 @@ impl VisitConfigurationNode<JsonLanguage> for LinterConfiguration {
 impl VisitConfigurationAsJson for RuleConfiguration {}
 
 impl VisitConfigurationNode<JsonLanguage> for RuleConfiguration {
+    fn visit_member_name(
+        &mut self,
+        node: &SyntaxNode<JsonLanguage>,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        has_only_known_keys(node, &["level", "options"], diagnostics)
+    }
+
     fn visit_member_value(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
@@ -67,6 +75,45 @@ impl VisitConfigurationNode<JsonLanguage> for RuleConfiguration {
             }
             _ => {}
         }
+        Some(())
+    }
+
+    fn visit_map(
+        &mut self,
+        key: &SyntaxNode<JsonLanguage>,
+        value: &SyntaxNode<JsonLanguage>,
+        diagnostics: &mut Vec<DeserializationDiagnostic>,
+    ) -> Option<()> {
+        let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
+        let name_text = name.text();
+        match name_text {
+            "level" => {
+                if let RuleConfiguration::WithOptions(options) = self {
+                    let mut level = RulePlainConfiguration::default();
+                    level.visit_member_value(value.syntax(), diagnostics)?;
+                    options.level = level;
+                } else {
+                    let mut level = RulePlainConfiguration::default();
+                    level.visit_member_value(value.syntax(), diagnostics)?;
+                    *self = RuleConfiguration::WithOptions(RuleWithOptions {
+                        level,
+                        ..RuleWithOptions::default()
+                    })
+                }
+            }
+            "options" => {
+                if let RuleConfiguration::WithOptions(options) = self {
+                    options.options = Some(format!("{value}"))
+                } else {
+                    *self = RuleConfiguration::WithOptions(RuleWithOptions {
+                        options: Some(format!("{value}")),
+                        ..RuleWithOptions::default()
+                    })
+                }
+            }
+            _ => {}
+        }
+
         Some(())
     }
 }

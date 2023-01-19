@@ -275,4 +275,22 @@ mod test {
             snap_diagnostic("deserialization_error", diagnostic)
         }
     }
+
+    #[test]
+    fn deserialization_quick_check() {
+        let content = r#"{
+  "linter": {
+    "rules": {
+        "recommended": true,
+        "suspicious": {
+            "noDebugger": {
+                "level": "off",
+                "options": { "hooks": [] }
+            }
+        }
+    }
+  }
+}"#;
+        let _result = deserialize_from_json::<Configuration>(content).into_deserialized();
+    }
 }
