@@ -29,10 +29,6 @@ internalError/io ━━━━━━━━━━━━━━━━━━━━━
 # Emitted Messages
 
 ```block
-The configuration has errors, Rome will use its defaults for the sections that were invalid.
-```
-
-```block
 rome.json:6:17 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Incorrect type, expected a string

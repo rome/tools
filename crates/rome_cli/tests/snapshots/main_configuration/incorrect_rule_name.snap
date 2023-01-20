@@ -34,13 +34,9 @@ internalError/io ━━━━━━━━━━━━━━━━━━━━━
 # Emitted Messages
 
 ```block
-The configuration has errors, Rome will use its defaults for the sections that were invalid.
-```
-
-```block
 rome.json:6:13 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Found an extraneous key `foo_rule`
+  × Found an unknown key `foo_rule`
   
     4 │     "rules": {
     5 │         "correctness": {

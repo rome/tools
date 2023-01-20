@@ -26,10 +26,6 @@ internalError/io ━━━━━━━━━━━━━━━━━━━━━
 # Emitted Messages
 
 ```block
-The configuration has errors, Rome will use its defaults for the sections that were invalid.
-```
-
-```block
 rome.json:3:18 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × The line width exceeds the maximum value (320)

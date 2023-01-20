@@ -31,7 +31,7 @@ pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
 pub use linter::{LinterConfiguration, RuleConfiguration, Rules};
 use rome_analyze::{AnalyzerConfiguration, AnalyzerRules};
 use rome_deserialize::json::deserialize_from_json;
-use rome_diagnostics::{DiagnosticExt, Error};
+use rome_deserialize::Deserialized;
 use rome_js_analyze::metadata;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_parser::parse_json;
@@ -115,7 +115,7 @@ impl FilesConfiguration {
     const KNOWN_KEYS: &'static [&'static str] = &["maxSize", "ignore"];
 }
 
-type LoadConfig = Result<Option<(Configuration, Vec<Error>)>, WorkspaceError>;
+type LoadConfig = Result<Option<Deserialized<Configuration>>, WorkspaceError>;
 
 /// This function is responsible to load the rome configuration.
 ///
@@ -140,15 +140,9 @@ pub fn load_config(file_system: &DynRef<dyn FileSystem>, base_path: Option<PathB
                 WorkspaceError::cant_read_file(format!("{}", configuration_path.display()))
             })?;
 
-            let deserialized = deserialize_from_json::<Configuration>(&buffer);
-            let (configuration, diagnostics) = deserialized.consume();
-            let diagnostics = diagnostics
-                .into_iter()
-                .map(|diagnostic| {
-                    diagnostic.with_file_path(configuration_path.display().to_string())
-                })
-                .collect();
-            Ok(Some((configuration, diagnostics)))
+            let deserialized = deserialize_from_json::<Configuration>(&buffer)
+                .with_file_path(&configuration_path.display().to_string());
+            Ok(Some(deserialized))
         }
         Err(err) => {
             // We throw an error only when the error is found.

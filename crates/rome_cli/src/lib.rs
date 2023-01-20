@@ -19,6 +19,7 @@ mod diagnostics;
 mod execute;
 mod metrics;
 mod panic;
+mod parse_arguments;
 mod reports;
 mod service;
 mod traversal;

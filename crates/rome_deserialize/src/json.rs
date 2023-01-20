@@ -370,7 +370,7 @@ pub fn has_only_known_keys(
         if allowed_keys.contains(&key_name.text()) {
             Some(())
         } else {
-            diagnostics.push(DeserializationDiagnostic::new_unknown_member(
+            diagnostics.push(DeserializationDiagnostic::new_unknown_key(
                 key_name.text(),
                 node.range(),
                 allowed_keys,
@@ -503,6 +503,6 @@ where
     );
     Deserialized {
         diagnostics: errors,
-        parsed: output,
+        deserialized: output,
     }
 }

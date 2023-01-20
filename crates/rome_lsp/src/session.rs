@@ -25,7 +25,7 @@ use tower_lsp::lsp_types;
 use tower_lsp::lsp_types::Registration;
 use tower_lsp::lsp_types::Unregistration;
 use tower_lsp::lsp_types::Url;
-use tracing::{error, info};
+use tracing::{error, info, warn};
 
 pub(crate) struct ClientInformation {
     /// The name of the client
@@ -367,7 +367,11 @@ impl Session {
         let base_path = self.base_path();
 
         let status = match load_config(&self.fs, base_path) {
-            Ok(Some((configuration, _))) => {
+            Ok(Some(deserialized)) => {
+                let (configuration, diagnostics) = deserialized.consume();
+                if diagnostics.is_empty() {
+                    warn!("The deserialization of the configuration resulted in errors. Rome will its defaults where possible.");
+                }
                 info!("Loaded workspace settings: {configuration:#?}");
 
                 let result = self

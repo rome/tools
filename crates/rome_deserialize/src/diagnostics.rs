@@ -5,6 +5,7 @@ use rome_diagnostics::{Advices, Diagnostic, LogCategory, MessageAndDescription, 
 use rome_rowan::{SyntaxError, TextRange};
 use serde::{Deserialize, Serialize};
 
+/// Diagnostic emitted during the deserialization
 #[derive(Debug, Serialize, Clone, Deserialize, Diagnostic)]
 #[diagnostic(
     category = "configuration",
@@ -29,10 +30,7 @@ impl DeserializationDiagnostic {
         }
     }
 
-    pub fn new_syntax_error(span: impl AsSpan) -> Self {
-        Self::new("Syntax error").with_range(span)
-    }
-
+    /// Emitted when the type of a value is incorrect.
     pub fn new_incorrect_type_for_value(
         key_name: impl Display,
         expected_type: impl Display,
@@ -43,6 +41,7 @@ impl DeserializationDiagnostic {
             }).with_range(range)
     }
 
+    /// Emitted when a generic node has an incorrect type
     pub fn new_incorrect_type(expected_type: impl Display, range: impl AsSpan) -> Self {
         Self::new(markup! {
             "Incorrect type, expected a "<Emphasis>{{expected_type}}</Emphasis>
@@ -50,31 +49,35 @@ impl DeserializationDiagnostic {
         .with_range(range)
     }
 
-    pub fn new_unknown_member(
+    /// Emitted when there's an unknown key, against a set of known ones
+    pub fn new_unknown_key(
         key_name: impl Display,
         range: impl AsSpan,
         known_members: &[&str],
     ) -> Self {
-        Self::new(markup!("Found an extraneous key `"<Emphasis>{{ key_name }}</Emphasis>"`" ))
+        Self::new(markup!("Found an unknown key `"<Emphasis>{{ key_name }}</Emphasis>"`" ))
             .with_range(range)
             .note_with_list("Accepted keys", known_members)
     }
 
+    /// Emitted when there's an unknown value, against a set of known ones
     pub fn new_unknown_value(
         variant_name: impl Display,
         range: impl AsSpan,
         known_variants: &[&str],
     ) -> Self {
-        Self::new(markup! {"Found an extraneous value `"<Emphasis>{{ variant_name }}</Emphasis>"`"})
+        Self::new(markup! {"Found an unknown value `"<Emphasis>{{ variant_name }}</Emphasis>"`"})
             .with_range(range)
             .note_with_list("Accepted values", known_variants)
     }
 
+    /// Adds a range to the diagnostic
     pub fn with_range(mut self, span: impl AsSpan) -> Self {
         self.range = span.as_span();
         self
     }
 
+    /// Adds a note to the diagnostic
     pub fn with_note(mut self, message: impl Display) -> Self {
         self.deserialization_advice
             .notes
@@ -82,6 +85,7 @@ impl DeserializationDiagnostic {
         self
     }
 
+    /// Adds a note with a list of strings
     pub fn note_with_list(mut self, message: impl Display, list: &[impl Display]) -> Self {
         self.deserialization_advice.notes.push((
             markup! {{message}}.to_owned(),

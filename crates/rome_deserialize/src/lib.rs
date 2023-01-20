@@ -3,21 +3,21 @@ mod visitor;
 
 pub mod json;
 pub use diagnostics::{DeserializationAdvice, DeserializationDiagnostic};
-use rome_diagnostics::Error;
+use rome_diagnostics::{DiagnosticExt, Error};
 pub use visitor::VisitConfigurationNode;
 
 /// A small type to interrogate the result of a JSON deserialization
 #[derive(Default)]
 pub struct Deserialized<P> {
     diagnostics: Vec<Error>,
-    parsed: P,
+    deserialized: P,
 }
 
 impl<P> Deserialized<P> {
     /// [DeserializationDiagnostic] are converted into [Error]
-    pub fn new(parsed: P, diagnostics: Vec<DeserializationDiagnostic>) -> Self {
+    pub fn new(deserialized: P, diagnostics: Vec<DeserializationDiagnostic>) -> Self {
         Self {
-            parsed,
+            deserialized,
             diagnostics: diagnostics.into_iter().map(Error::from).collect(),
         }
     }
@@ -31,8 +31,9 @@ impl<P> Deserialized<P> {
         self.diagnostics.as_slice()
     }
 
+    /// Consumes self and returns the deserialized result
     pub fn into_deserialized(self) -> P {
-        self.parsed
+        self.deserialized
     }
 
     pub fn has_errors(&self) -> bool {
@@ -41,6 +42,19 @@ impl<P> Deserialized<P> {
 
     /// Consume itself to return the parsed result and its diagnostics
     pub fn consume(self) -> (P, Vec<Error>) {
-        (self.parsed, self.diagnostics)
+        (self.deserialized, self.diagnostics)
+    }
+
+    /// It inject the file path to the current diagnostics
+    pub fn with_file_path(self, path: &str) -> Self {
+        let (deserialized, diagnostics) = self.consume();
+
+        Deserialized {
+            deserialized,
+            diagnostics: diagnostics
+                .into_iter()
+                .map(|diagnostic| diagnostic.with_file_path(path))
+                .collect(),
+        }
     }
 }
