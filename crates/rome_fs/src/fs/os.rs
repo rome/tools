@@ -139,7 +139,7 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
 
         if file_type.is_dir() {
             self.scope.spawn(move |scope| {
-                handle_dir(scope, ctx, &path);
+                handle_dir(scope, ctx, &path, None);
             });
             return;
         }
@@ -157,7 +157,12 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
 const DEFAULT_IGNORE: &[&str; 5] = &[".git", ".svn", ".hg", ".yarn", "node_modules"];
 
 /// Traverse a single directory
-fn handle_dir<'scope>(scope: &Scope<'scope>, ctx: &'scope dyn TraversalContext, path: &Path) {
+fn handle_dir<'scope>(
+    scope: &Scope<'scope>,
+    ctx: &'scope dyn TraversalContext,
+    path: &Path,
+    origin_path: Option<PathBuf>,
+) {
     if let Some(file_name) = path.file_name().and_then(OsStr::to_str) {
         if DEFAULT_IGNORE.contains(&file_name) {
             return;
@@ -181,7 +186,7 @@ fn handle_dir<'scope>(scope: &Scope<'scope>, ctx: &'scope dyn TraversalContext, 
             }
         };
 
-        handle_dir_entry(scope, ctx, entry);
+        handle_dir_entry(scope, ctx, entry, origin_path.clone());
     }
 }
 
@@ -191,6 +196,7 @@ fn handle_dir_entry<'scope>(
     scope: &Scope<'scope>,
     ctx: &'scope dyn TraversalContext,
     entry: DirEntry,
+    mut origin_path: Option<PathBuf>,
 ) {
     let mut path = entry.path();
 
@@ -234,6 +240,10 @@ fn handle_dir_entry<'scope>(
             }
         };
 
+        if file_type.is_dir() {
+            origin_path = Some(path);
+        }
+
         path = target_path;
     };
 
@@ -251,7 +261,7 @@ fn handle_dir_entry<'scope>(
 
     if file_type.is_dir() {
         scope.spawn(move |scope| {
-            handle_dir(scope, ctx, &path);
+            handle_dir(scope, ctx, &path, origin_path);
         });
         return;
     }
@@ -264,11 +274,16 @@ fn handle_dir_entry<'scope>(
             return;
         }
 
+        let rome_path = if let Some(origin_path) = origin_path {
+            RomePath::new(origin_path.join(path.file_name().unwrap()))
+        } else {
+            RomePath::new(&path)
+        };
+
         // Performing this check here let's us skip skip unsupported
         // files entirely, as well as silently ignore unsupported files when
         // doing a directory traversal, but printing an error message if the
         // user explicitly requests an unsupported file to be handled
-        let rome_path = RomePath::new(&path);
         if !ctx.can_handle(&rome_path) {
             return;
         }

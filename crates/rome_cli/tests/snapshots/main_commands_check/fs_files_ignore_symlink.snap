@@ -1,0 +1,18 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 335
+expression: content
+---
+# Emitted Messages
+
+```block
+Skipped 4 suggested fixes.
+If you wish to apply the suggested (unsafe) fixes, use the command rome check --apply-unsafe
+
+```
+
+```block
+Fixed 2 file(s) in <TIME>
+```
+
+

@@ -1,7 +1,9 @@
 use pico_args::Arguments;
+use std::env;
 use std::env::temp_dir;
 use std::ffi::OsString;
-use std::fs::{create_dir, create_dir_all, remove_dir_all};
+use std::fs::{create_dir, create_dir_all, remove_dir_all, File};
+use std::io::Write;
 #[cfg(target_family = "unix")]
 use std::os::unix::fs::symlink;
 #[cfg(target_os = "windows")]
@@ -9,8 +11,8 @@ use std::os::windows::fs::{symlink_dir, symlink_file};
 use std::path::{Path, PathBuf};
 
 use crate::configs::{
-    CONFIG_FILE_SIZE_LIMIT, CONFIG_LINTER_AND_FILES_IGNORE, CONFIG_LINTER_DISABLED,
-    CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC, CONFIG_LINTER_IGNORED_FILES,
+    CONFIG_FILE_SIZE_LIMIT, CONFIG_IGNORE_SYMLINK, CONFIG_LINTER_AND_FILES_IGNORE,
+    CONFIG_LINTER_DISABLED, CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC, CONFIG_LINTER_IGNORED_FILES,
     CONFIG_LINTER_SUPPRESSED_GROUP, CONFIG_LINTER_SUPPRESSED_RULE,
     CONFIG_LINTER_UPGRADE_DIAGNOSTIC, CONFIG_RECOMMENDED_GROUP,
 };
@@ -849,6 +851,103 @@ fn fs_error_unknown() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "fs_error_unknown",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn fs_files_ignore_symlink() {
+    let fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let root_path = temp_dir().join("rome_test_files_ignore_symlink");
+    let project_path = root_path.join("project");
+
+    let testcase1_path = root_path.join("hidden_testcase1");
+    let testcase1_sub_path = testcase1_path.join("test");
+    let testcase2_path = root_path.join("hidden_testcase2");
+
+    let nested_path = root_path.join("hidden_nested");
+    let nested_sub_path = nested_path.join("test");
+
+    #[allow(unused_must_use)]
+    {
+        remove_dir_all(root_path.clone());
+    }
+    create_dir(root_path.clone()).unwrap();
+    create_dir(project_path.clone()).unwrap();
+    create_dir_all(testcase1_sub_path.clone()).unwrap();
+    create_dir(testcase2_path.clone()).unwrap();
+    create_dir_all(nested_sub_path.clone()).unwrap();
+
+    // project/symlink_testcase1_1
+    let symlink_testcase1_1_path = project_path.join("symlink_testcase1_1");
+    // hidden_nested/test/symlink_testcase1_2
+    let symlink_testcase1_2_path = nested_sub_path.join("symlink_testcase1_2");
+    // project/symlink_testcase2
+    let symlink_testcase2_path = project_path.join("symlink_testcase2");
+
+    #[cfg(target_family = "unix")]
+    {
+        // project/test/symlink_testcase1_1 -> hidden_nested
+        symlink(nested_path, symlink_testcase1_1_path).unwrap();
+        // hidden_nested/test/symlink_testcase1_2 -> hidden_testcase1
+        symlink(testcase1_path, symlink_testcase1_2_path).unwrap();
+        // project/symlink_testcase2 -> hidden_testcase2
+        symlink(testcase2_path.clone(), symlink_testcase2_path).unwrap();
+    }
+
+    #[cfg(target_os = "windows")]
+    {
+        check_windows_symlink!(symlink_dir(nested_path.clone(), symlink_testcase1_1_path));
+        check_windows_symlink!(symlink_dir(
+            testcase1_path.clone(),
+            symlink_testcase1_2_path
+        ));
+        check_windows_symlink!(symlink_dir(testcase2_path.clone(), symlink_testcase2_path));
+    }
+
+    let config_path = project_path.join("rome.json");
+    let mut config_file = File::create(config_path).unwrap();
+    config_file
+        .write_all(CONFIG_IGNORE_SYMLINK.as_bytes())
+        .unwrap();
+
+    let files: [PathBuf; 4] = [
+        testcase1_sub_path.join("test.js"), // ok
+        testcase2_path.join("test.js"),     // ok
+        testcase2_path.join("test1.ts"),    // ignored
+        testcase2_path.join("test2.ts"),    // ignored
+    ];
+
+    for file_path in files {
+        let mut file = File::create(file_path).unwrap();
+        file.write_all(APPLY_SUGGESTED_BEFORE.as_bytes()).unwrap();
+    }
+
+    // Change the current working directory
+    // TODO: Remove this once PR #4158 was merged
+    assert!(env::set_current_dir(&project_path).is_ok());
+
+    let result = run_cli(
+        DynRef::Owned(Box::new(OsFileSystem)),
+        &mut console,
+        Arguments::from_vec(vec![
+            OsString::from("check"),
+            OsString::from("--apply"),
+            OsString::from(project_path),
+        ]),
+    );
+
+    remove_dir_all(root_path).unwrap();
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "fs_files_ignore_symlink",
         fs,
         console,
         result,
