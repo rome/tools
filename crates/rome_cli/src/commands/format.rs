@@ -3,7 +3,7 @@ use crate::execute::ReportMode;
 use crate::parse_arguments::{apply_files_settings_from_cli, apply_format_settings_from_cli};
 use crate::{execute_mode, CliDiagnostic, CliSession, Execution, TraversalMode};
 use rome_console::{markup, ConsoleExt};
-use rome_diagnostics::PrintDiagnostic;
+use rome_diagnostics::{DiagnosticExt, PrintDiagnostic, Severity};
 use rome_service::workspace::UpdateSettingsParams;
 use std::path::PathBuf;
 
@@ -16,6 +16,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), CliDiagnostic> {
            <Warn>"Found errors in the configuration file, Rome will use its defaults for the sections that are incorrect."</Warn>
         });
         for diagnostic in diagnostics {
+            let diagnostic = diagnostic.with_severity(Severity::Warning);
             console.log(markup! {
                 {PrintDiagnostic::verbose(&diagnostic)}
             })

@@ -2,15 +2,15 @@ use crate::configuration::{
     FilesConfiguration, FormatterConfiguration, JavascriptConfiguration, LinterConfiguration,
 };
 use crate::Configuration;
-use rome_deserialize::json::{has_only_known_keys, VisitConfigurationAsJson};
-use rome_deserialize::{DeserializationDiagnostic, VisitConfigurationNode};
+use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
+use rome_deserialize::{DeserializationDiagnostic, VisitNode};
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::SyntaxNode;
 use std::num::NonZeroU64;
 
-impl VisitConfigurationAsJson for FilesConfiguration {}
+impl VisitJsonNode for FilesConfiguration {}
 
-impl VisitConfigurationNode<JsonLanguage> for FilesConfiguration {
+impl VisitNode<JsonLanguage> for FilesConfiguration {
     fn visit_member_name(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
@@ -41,9 +41,9 @@ impl VisitConfigurationNode<JsonLanguage> for FilesConfiguration {
     }
 }
 
-impl VisitConfigurationAsJson for Configuration {}
+impl VisitJsonNode for Configuration {}
 
-impl VisitConfigurationNode<JsonLanguage> for Configuration {
+impl VisitNode<JsonLanguage> for Configuration {
     fn visit_member_name(
         &mut self,
         node: &JsonSyntaxNode,

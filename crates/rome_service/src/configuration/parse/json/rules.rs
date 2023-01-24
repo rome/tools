@@ -2,12 +2,12 @@
 
 use crate::configuration::linter::*;
 use crate::Rules;
-use rome_deserialize::json::{has_only_known_keys, VisitConfigurationAsJson};
-use rome_deserialize::{DeserializationDiagnostic, VisitConfigurationNode};
+use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
+use rome_deserialize::{DeserializationDiagnostic, VisitNode};
 use rome_json_syntax::{AnyJsonValue, JsonLanguage};
 use rome_rowan::{AstNode, SyntaxNode};
-impl VisitConfigurationAsJson for Rules {}
-impl VisitConfigurationNode<JsonLanguage> for Rules {
+impl VisitJsonNode for Rules {}
+impl VisitNode<JsonLanguage> for Rules {
     fn visit_member_name(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
@@ -83,8 +83,8 @@ impl VisitConfigurationNode<JsonLanguage> for Rules {
         Some(())
     }
 }
-impl VisitConfigurationAsJson for A11y {}
-impl VisitConfigurationNode<JsonLanguage> for A11y {
+impl VisitJsonNode for A11y {}
+impl VisitNode<JsonLanguage> for A11y {
     fn visit_member_name(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
@@ -305,8 +305,8 @@ impl VisitConfigurationNode<JsonLanguage> for A11y {
         Some(())
     }
 }
-impl VisitConfigurationAsJson for Complexity {}
-impl VisitConfigurationNode<JsonLanguage> for Complexity {
+impl VisitJsonNode for Complexity {}
+impl VisitNode<JsonLanguage> for Complexity {
     fn visit_member_name(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
@@ -451,8 +451,8 @@ impl VisitConfigurationNode<JsonLanguage> for Complexity {
         Some(())
     }
 }
-impl VisitConfigurationAsJson for Correctness {}
-impl VisitConfigurationNode<JsonLanguage> for Correctness {
+impl VisitJsonNode for Correctness {}
+impl VisitNode<JsonLanguage> for Correctness {
     fn visit_member_name(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
@@ -692,8 +692,8 @@ impl VisitConfigurationNode<JsonLanguage> for Correctness {
         Some(())
     }
 }
-impl VisitConfigurationAsJson for Nursery {}
-impl VisitConfigurationNode<JsonLanguage> for Nursery {
+impl VisitJsonNode for Nursery {}
+impl VisitNode<JsonLanguage> for Nursery {
     fn visit_member_name(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
@@ -1712,8 +1712,8 @@ impl VisitConfigurationNode<JsonLanguage> for Nursery {
         Some(())
     }
 }
-impl VisitConfigurationAsJson for Performance {}
-impl VisitConfigurationNode<JsonLanguage> for Performance {
+impl VisitJsonNode for Performance {}
+impl VisitNode<JsonLanguage> for Performance {
     fn visit_member_name(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
@@ -1756,8 +1756,8 @@ impl VisitConfigurationNode<JsonLanguage> for Performance {
         Some(())
     }
 }
-impl VisitConfigurationAsJson for Security {}
-impl VisitConfigurationNode<JsonLanguage> for Security {
+impl VisitJsonNode for Security {}
+impl VisitNode<JsonLanguage> for Security {
     fn visit_member_name(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
@@ -1826,8 +1826,8 @@ impl VisitConfigurationNode<JsonLanguage> for Security {
         Some(())
     }
 }
-impl VisitConfigurationAsJson for Style {}
-impl VisitConfigurationNode<JsonLanguage> for Style {
+impl VisitJsonNode for Style {}
+impl VisitNode<JsonLanguage> for Style {
     fn visit_member_name(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
@@ -2105,8 +2105,8 @@ impl VisitConfigurationNode<JsonLanguage> for Style {
         Some(())
     }
 }
-impl VisitConfigurationAsJson for Suspicious {}
-impl VisitConfigurationNode<JsonLanguage> for Suspicious {
+impl VisitJsonNode for Suspicious {}
+impl VisitNode<JsonLanguage> for Suspicious {
     fn visit_member_name(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,

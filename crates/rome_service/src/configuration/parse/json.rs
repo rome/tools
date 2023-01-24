@@ -8,15 +8,15 @@ mod linter;
 mod rules;
 
 use crate::Configuration;
-use rome_deserialize::json::{JsonDeserialize, VisitConfigurationAsJson};
+use rome_deserialize::json::{JsonDeserialize, VisitJsonNode};
 use rome_deserialize::DeserializationDiagnostic;
 use rome_json_syntax::{AnyJsonValue, JsonRoot};
 use rome_rowan::AstNode;
 
 impl JsonDeserialize for Configuration {
-    fn parse_from_json(
+    fn deserialize_from_ast(
         root: JsonRoot,
-        visitor: &mut impl VisitConfigurationAsJson,
+        visitor: &mut impl VisitJsonNode,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let value = root.value().ok()?;

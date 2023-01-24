@@ -2,16 +2,14 @@ use crate::configuration::javascript::{
     PlainQuoteProperties, PlainQuoteStyle, PlainSemicolons, PlainTrailingComma,
 };
 use crate::configuration::{JavascriptConfiguration, JavascriptFormatter};
-use rome_deserialize::json::{
-    has_only_known_keys, with_only_known_variants, VisitConfigurationAsJson,
-};
-use rome_deserialize::{DeserializationDiagnostic, VisitConfigurationNode};
+use rome_deserialize::json::{has_only_known_keys, with_only_known_variants, VisitJsonNode};
+use rome_deserialize::{DeserializationDiagnostic, VisitNode};
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::SyntaxNode;
 
-impl VisitConfigurationAsJson for JavascriptConfiguration {}
+impl VisitJsonNode for JavascriptConfiguration {}
 
-impl VisitConfigurationNode<JsonLanguage> for JavascriptConfiguration {
+impl VisitNode<JsonLanguage> for JavascriptConfiguration {
     fn visit_member_name(
         &mut self,
         node: &JsonSyntaxNode,
@@ -45,8 +43,8 @@ impl VisitConfigurationNode<JsonLanguage> for JavascriptConfiguration {
     }
 }
 
-impl VisitConfigurationAsJson for JavascriptFormatter {}
-impl VisitConfigurationNode<JsonLanguage> for JavascriptFormatter {
+impl VisitJsonNode for JavascriptFormatter {}
+impl VisitNode<JsonLanguage> for JavascriptFormatter {
     fn visit_member_name(
         &mut self,
         node: &JsonSyntaxNode,
@@ -91,7 +89,7 @@ impl VisitConfigurationNode<JsonLanguage> for JavascriptFormatter {
     }
 }
 
-impl VisitConfigurationNode<JsonLanguage> for PlainQuoteStyle {
+impl VisitNode<JsonLanguage> for PlainQuoteStyle {
     fn visit_member_value(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
@@ -107,7 +105,7 @@ impl VisitConfigurationNode<JsonLanguage> for PlainQuoteStyle {
     }
 }
 
-impl VisitConfigurationNode<JsonLanguage> for PlainQuoteProperties {
+impl VisitNode<JsonLanguage> for PlainQuoteProperties {
     fn visit_member_value(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
@@ -123,7 +121,7 @@ impl VisitConfigurationNode<JsonLanguage> for PlainQuoteProperties {
     }
 }
 
-impl VisitConfigurationNode<JsonLanguage> for PlainTrailingComma {
+impl VisitNode<JsonLanguage> for PlainTrailingComma {
     fn visit_member_value(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
@@ -146,7 +144,7 @@ impl VisitConfigurationNode<JsonLanguage> for PlainTrailingComma {
     }
 }
 
-impl VisitConfigurationNode<JsonLanguage> for PlainSemicolons {
+impl VisitNode<JsonLanguage> for PlainSemicolons {
     fn visit_member_value(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,

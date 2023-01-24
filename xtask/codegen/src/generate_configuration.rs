@@ -223,14 +223,14 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
     let visitors = quote! {
         use crate::configuration::linter::*;
         use crate::Rules;
-        use rome_deserialize::json::{has_only_known_keys, VisitConfigurationAsJson};
-        use rome_deserialize::{DeserializationDiagnostic, VisitConfigurationNode};
+        use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
+        use rome_deserialize::{DeserializationDiagnostic, VisitNode};
         use rome_json_syntax::{AnyJsonValue, JsonLanguage};
         use rome_rowan::{AstNode, SyntaxNode};
 
-        impl VisitConfigurationAsJson for Rules {}
+        impl VisitJsonNode for Rules {}
 
-        impl VisitConfigurationNode<JsonLanguage> for Rules {
+        impl VisitNode<JsonLanguage> for Rules {
             fn visit_member_name(
                 &mut self,
                 node: &SyntaxNode<JsonLanguage>,
@@ -511,9 +511,9 @@ fn generate_visitor(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) -
     }
 
     quote! {
-        impl VisitConfigurationAsJson for #group_struct_name {}
+        impl VisitJsonNode for #group_struct_name {}
 
-        impl VisitConfigurationNode<JsonLanguage> for #group_struct_name {
+        impl VisitNode<JsonLanguage> for #group_struct_name {
             fn visit_member_name(
                 &mut self,
                 node: &SyntaxNode<JsonLanguage>,

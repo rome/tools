@@ -1,16 +1,14 @@
 use crate::configuration::{FormatterConfiguration, PlainIndentStyle};
 use rome_console::markup;
-use rome_deserialize::json::{
-    has_only_known_keys, with_only_known_variants, VisitConfigurationAsJson,
-};
-use rome_deserialize::{DeserializationDiagnostic, VisitConfigurationNode};
+use rome_deserialize::json::{has_only_known_keys, with_only_known_variants, VisitJsonNode};
+use rome_deserialize::{DeserializationDiagnostic, VisitNode};
 use rome_formatter::LineWidth;
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::{AstNode, SyntaxNode};
 
-impl VisitConfigurationAsJson for FormatterConfiguration {}
+impl VisitJsonNode for FormatterConfiguration {}
 
-impl VisitConfigurationNode<JsonLanguage> for FormatterConfiguration {
+impl VisitNode<JsonLanguage> for FormatterConfiguration {
     fn visit_member_name(
         &mut self,
         node: &JsonSyntaxNode,
@@ -69,7 +67,7 @@ impl VisitConfigurationNode<JsonLanguage> for FormatterConfiguration {
     }
 }
 
-impl VisitConfigurationNode<JsonLanguage> for PlainIndentStyle {
+impl VisitNode<JsonLanguage> for PlainIndentStyle {
     fn visit_member_value(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,

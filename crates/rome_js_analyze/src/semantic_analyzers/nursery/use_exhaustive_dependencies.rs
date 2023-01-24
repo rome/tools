@@ -5,9 +5,9 @@ use rome_analyze::{
 };
 use rome_console::markup;
 use rome_deserialize::json::{
-    deserialize_from_json, has_only_known_keys, JsonDeserialize, VisitConfigurationAsJson,
+    deserialize_from_json, has_only_known_keys, JsonDeserialize, VisitJsonNode,
 };
-use rome_deserialize::{DeserializationDiagnostic, Deserialized, VisitConfigurationNode};
+use rome_deserialize::{DeserializationDiagnostic, Deserialized, VisitNode};
 use rome_js_semantic::{Capture, SemanticModel};
 use rome_js_syntax::{
     binding_ext::AnyJsBindingDeclaration, JsCallExpression, JsStaticMemberExpression, JsSyntaxKind,
@@ -156,8 +156,8 @@ impl Default for ReactExtensiveDependenciesOptions {
 #[derive(Debug, Default, Clone)]
 pub struct HooksOptions(Vec<(String, Option<usize>, Option<usize>)>);
 
-impl VisitConfigurationAsJson for HooksOptions {}
-impl VisitConfigurationNode<JsonLanguage> for HooksOptions {
+impl VisitJsonNode for HooksOptions {}
+impl VisitNode<JsonLanguage> for HooksOptions {
     fn visit_member_name(
         &mut self,
         node: &JsonSyntaxNode,
@@ -231,9 +231,9 @@ impl VisitConfigurationNode<JsonLanguage> for HooksOptions {
 }
 
 impl JsonDeserialize for HooksOptions {
-    fn parse_from_json(
+    fn deserialize_from_ast(
         root: JsonRoot,
-        visitor: &mut impl VisitConfigurationAsJson,
+        visitor: &mut impl VisitJsonNode,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         let object = root.value().ok()?;

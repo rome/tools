@@ -2,7 +2,7 @@ use crate::DeserializationDiagnostic;
 use rome_rowan::{Language, SyntaxNode};
 
 /// Generic trait to implement when resolving the configuration from a generic language
-pub trait VisitConfigurationNode<L: Language>: Sized {
+pub trait VisitNode<L: Language>: Sized {
     /// Called when visiting the key of a member
     fn visit_member_name(
         &mut self,
@@ -34,7 +34,7 @@ pub trait VisitConfigurationNode<L: Language>: Sized {
     }
 }
 
-impl<L: Language> VisitConfigurationNode<L> for () {
+impl<L: Language> VisitNode<L> for () {
     fn visit_map(
         &mut self,
         _key: &SyntaxNode<L>,

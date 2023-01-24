@@ -4,7 +4,7 @@ mod visitor;
 pub mod json;
 pub use diagnostics::{DeserializationAdvice, DeserializationDiagnostic};
 use rome_diagnostics::{DiagnosticExt, Error};
-pub use visitor::VisitConfigurationNode;
+pub use visitor::VisitNode;
 
 /// A small type to interrogate the result of a JSON deserialization
 #[derive(Default)]

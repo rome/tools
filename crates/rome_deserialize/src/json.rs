@@ -1,4 +1,4 @@
-use crate::{DeserializationDiagnostic, Deserialized, VisitConfigurationNode};
+use crate::{DeserializationDiagnostic, Deserialized, VisitNode};
 use indexmap::IndexSet;
 use rome_console::markup;
 use rome_diagnostics::{DiagnosticExt, Error};
@@ -12,17 +12,19 @@ use std::num::ParseIntError;
 
 /// Main trait to
 pub trait JsonDeserialize: Sized {
-    fn parse_from_json(
+    /// It accepts a JSON AST and a visitor. The visitor is the [default](Default) implementation of the data
+    /// type that implements this trait.
+    fn deserialize_from_ast(
         root: JsonRoot,
-        visitor: &mut impl VisitConfigurationAsJson,
+        visitor: &mut impl VisitJsonNode,
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()>;
 }
 
 impl JsonDeserialize for () {
-    fn parse_from_json(
+    fn deserialize_from_ast(
         _root: JsonRoot,
-        _visitor: &mut impl VisitConfigurationAsJson,
+        _visitor: &mut impl VisitJsonNode,
         _diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()> {
         Some(())
@@ -30,7 +32,7 @@ impl JsonDeserialize for () {
 }
 
 /// Convenient trait that contains utility functions to work with [JsonLanguage]
-pub trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> {
+pub trait VisitJsonNode: VisitNode<JsonLanguage> {
     /// Convenient function to use inside [visit_map].
     ///
     /// It casts key to [JsonMemberName] and verifies that key name is correct by calling
@@ -71,7 +73,7 @@ pub trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()>
     where
-        T: VisitConfigurationNode<JsonLanguage>,
+        T: VisitNode<JsonLanguage>,
     {
         let value = JsonStringValue::cast_ref(value.syntax()).or_else(|| {
             diagnostics.push(DeserializationDiagnostic::new_incorrect_type_for_value(
@@ -319,7 +321,7 @@ pub trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> {
         diagnostics: &mut Vec<DeserializationDiagnostic>,
     ) -> Option<()>
     where
-        T: VisitConfigurationNode<JsonLanguage>,
+        T: VisitNode<JsonLanguage>,
     {
         let value = JsonObjectValue::cast_ref(value.syntax()).or_else(|| {
             diagnostics.push(DeserializationDiagnostic::new_incorrect_type_for_value(
@@ -341,7 +343,7 @@ pub trait VisitConfigurationAsJson: VisitConfigurationNode<JsonLanguage> {
     }
 }
 
-impl VisitConfigurationAsJson for () {}
+impl VisitJsonNode for () {}
 
 fn emit_diagnostic_form_number(
     parse_error: ParseIntError,
@@ -410,16 +412,16 @@ pub fn with_only_known_variants(
 /// The data structure that needs to be deserialized needs to implement three important traits:
 /// - [Default], to create a first instance of the data structure;
 /// - [JsonDeserialize], a trait to begin the deserialization from JSON AST;
-/// - [VisitConfigurationNode], to visit values inside a JSON file;
-/// - [VisitConfigurationAsJson], to inherit a series of useful functions to handle specifically
+/// - [VisitNode], to visit values inside a JSON file;
+/// - [VisitJsonNode], to inherit a series of useful functions to handle specifically
 /// JSON values;
 ///
 /// ## Examples
 ///
 /// ```
-/// use rome_deserialize::{DeserializationDiagnostic,  VisitConfigurationNode, Deserialized};
+/// use rome_deserialize::{DeserializationDiagnostic,  VisitNode, Deserialized};
 /// use rome_deserialize::json::deserialize_from_json;
-/// use rome_deserialize::json::{with_only_known_variants, has_only_known_keys, JsonDeserialize, VisitConfigurationAsJson};
+/// use rome_deserialize::json::{with_only_known_variants, has_only_known_keys, JsonDeserialize, VisitJsonNode};
 /// use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 /// use rome_json_syntax::JsonRoot;
 /// use rome_rowan::AstNode;
@@ -429,9 +431,9 @@ pub fn with_only_known_variants(
 ///     lorem: bool
 /// }
 ///
-/// impl VisitConfigurationAsJson for NewConfiguration {}
+/// impl VisitJsonNode for NewConfiguration {}
 ///
-/// impl VisitConfigurationNode<JsonLanguage> for NewConfiguration {
+/// impl VisitNode<JsonLanguage> for NewConfiguration {
 ///     fn visit_member_name(&mut self, node: &JsonSyntaxNode, diagnostics: &mut Vec<DeserializationDiagnostic>) -> Option<()> {
 ///         has_only_known_keys(node, &["lorem"], diagnostics)
 ///     }
@@ -454,14 +456,14 @@ pub fn with_only_known_variants(
 ///         use rome_deserialize::Deserialized;
 ///         let mut output = Self::default();
 ///         let mut diagnostics = vec![];
-///         NewConfiguration::parse_from_json(root, &mut output, &mut diagnostics);
+///         NewConfiguration::deserialize_from_ast(root, &mut output, &mut diagnostics);
 ///         Deserialized::new(output, diagnostics)
 ///     }
 /// }
 ///
 ///
 /// impl JsonDeserialize for NewConfiguration {
-///     fn parse_from_json(root: JsonRoot, visitor: &mut impl VisitConfigurationAsJson, diagnostics: &mut Vec<DeserializationDiagnostic>) -> Option<()> {
+///     fn deserialize_from_ast(root: JsonRoot, visitor: &mut impl VisitJsonNode, diagnostics: &mut Vec<DeserializationDiagnostic>) -> Option<()> {
 ///         let object = root.value().ok()?;
 ///         let object = object.as_json_object_value()?;
 ///         for member in object.json_member_list() {
@@ -484,12 +486,12 @@ pub fn with_only_known_variants(
 /// ```
 pub fn deserialize_from_json<Output>(source: &str) -> Deserialized<Output>
 where
-    Output: Default + VisitConfigurationAsJson + JsonDeserialize,
+    Output: Default + VisitJsonNode + JsonDeserialize,
 {
     let mut output = Output::default();
     let mut diagnostics = vec![];
     let parse = parse_json(source);
-    Output::parse_from_json(parse.tree(), &mut output, &mut diagnostics);
+    Output::deserialize_from_ast(parse.tree(), &mut output, &mut diagnostics);
     let mut errors = parse
         .into_diagnostics()
         .into_iter()

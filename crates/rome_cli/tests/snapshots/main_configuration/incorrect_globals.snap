@@ -29,9 +29,13 @@ internalError/io ━━━━━━━━━━━━━━━━━━━━━
 # Emitted Messages
 
 ```block
+Found errors in the configuration file, Rome will use its defaults for the sections that are incorrect.
+```
+
+```block
 rome.json:6:17 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Incorrect type, expected a string
+  ! Incorrect type, expected a string
   
     4 │   },
     5 │   "javascript": {

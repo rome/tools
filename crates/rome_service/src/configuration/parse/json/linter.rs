@@ -1,16 +1,14 @@
 use crate::configuration::linter::{RulePlainConfiguration, RuleWithOptions};
 use crate::configuration::LinterConfiguration;
 use crate::{RuleConfiguration, Rules};
-use rome_deserialize::json::{
-    has_only_known_keys, with_only_known_variants, VisitConfigurationAsJson,
-};
-use rome_deserialize::{DeserializationDiagnostic, VisitConfigurationNode};
+use rome_deserialize::json::{has_only_known_keys, with_only_known_variants, VisitJsonNode};
+use rome_deserialize::{DeserializationDiagnostic, VisitNode};
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::{AstNode, SyntaxNode};
 
-impl VisitConfigurationAsJson for LinterConfiguration {}
+impl VisitJsonNode for LinterConfiguration {}
 
-impl VisitConfigurationNode<JsonLanguage> for LinterConfiguration {
+impl VisitNode<JsonLanguage> for LinterConfiguration {
     fn visit_member_name(
         &mut self,
         node: &JsonSyntaxNode,
@@ -46,9 +44,9 @@ impl VisitConfigurationNode<JsonLanguage> for LinterConfiguration {
     }
 }
 
-impl VisitConfigurationAsJson for RuleConfiguration {}
+impl VisitJsonNode for RuleConfiguration {}
 
-impl VisitConfigurationNode<JsonLanguage> for RuleConfiguration {
+impl VisitNode<JsonLanguage> for RuleConfiguration {
     fn visit_member_name(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
@@ -118,9 +116,9 @@ impl VisitConfigurationNode<JsonLanguage> for RuleConfiguration {
     }
 }
 
-impl VisitConfigurationAsJson for RulePlainConfiguration {}
+impl VisitJsonNode for RulePlainConfiguration {}
 
-impl VisitConfigurationNode<JsonLanguage> for RulePlainConfiguration {
+impl VisitNode<JsonLanguage> for RulePlainConfiguration {
     fn visit_member_value(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
@@ -143,9 +141,9 @@ impl VisitConfigurationNode<JsonLanguage> for RulePlainConfiguration {
     }
 }
 
-impl VisitConfigurationAsJson for RuleWithOptions {}
+impl VisitJsonNode for RuleWithOptions {}
 
-impl VisitConfigurationNode<JsonLanguage> for RuleWithOptions {
+impl VisitNode<JsonLanguage> for RuleWithOptions {
     fn visit_member_name(
         &mut self,
         node: &SyntaxNode<JsonLanguage>,
