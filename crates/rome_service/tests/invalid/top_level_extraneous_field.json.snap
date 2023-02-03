@@ -4,7 +4,7 @@ expression: top_level_extraneous_field.json
 ---
 top_level_extraneous_field.json:2:2 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Found an extraneous key foo_bar
+  × Found an unknown key `foo_bar`
   
     1 │ {
   > 2 │ 	"foo_bar": {

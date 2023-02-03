@@ -257,6 +257,13 @@ fn handle_dir_entry<'scope>(
     }
 
     if file_type.is_file() {
+        if matches!(
+            path.file_name().and_then(OsStr::to_str),
+            Some("package.json" | "package-lock.json" | "tsconfig.json" | "jsconfig.json")
+        ) {
+            return;
+        }
+
         // Performing this check here let's us skip skip unsupported
         // files entirely, as well as silently ignore unsupported files when
         // doing a directory traversal, but printing an error message if the

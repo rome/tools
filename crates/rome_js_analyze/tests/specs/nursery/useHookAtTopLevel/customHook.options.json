@@ -1,5 +1,5 @@
 {
     "hooks": [
-        ["useCustomHook", null, null]
+        ["useCustomHook"]
     ]
 }

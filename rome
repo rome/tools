@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+# Save directory we're currently in
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+PWD=$(pwd)
+
+cd "$DIR"
+
+# TODO retain original PWD for `rome` binary
+cargo run --quiet --bin rome -- "$@"

@@ -1,15 +1,14 @@
 {
-	"linter": {
-		"rules": {
-			"recommended": true
-		},
+	"files": {
 		"ignore": [
-			"website/build"
+			"website/build",
+			"dist",
+			"target"
 		]
 	},
 	"formatter": {
 		"ignore": [
-			"website/build"
+			"configuration-schema.json"
 		]
 	}
 }
