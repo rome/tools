@@ -21,8 +21,8 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
-            expression: JsBigIntLiteralExpression {
-                value_token: JS_BIG_INT_LITERAL@12..15 "5n" [Newline("\n")] [],
+            expression: JsBigintLiteralExpression {
+                value_token: JS_BIGINT_LITERAL@12..15 "5n" [Newline("\n")] [],
             },
             semicolon_token: missing (optional),
         },
@@ -57,8 +57,8 @@ JsModule {
                         },
                     },
                     comma_token: COMMA@39..41 "," [] [Whitespace(" ")],
-                    right: JsBigIntLiteralExpression {
-                        value_token: JS_BIG_INT_LITERAL@41..43 "0n" [] [],
+                    right: JsBigintLiteralExpression {
+                        value_token: JS_BIGINT_LITERAL@41..43 "0n" [] [],
                     },
                 },
                 comma_token: COMMA@43..45 "," [] [Whitespace(" ")],
@@ -101,8 +101,8 @@ JsModule {
         0: FALSE_KW@6..12 "false" [Newline("\n")] []
       1: (empty)
     3: JS_EXPRESSION_STATEMENT@12..15
-      0: JS_BIG_INT_LITERAL_EXPRESSION@12..15
-        0: JS_BIG_INT_LITERAL@12..15 "5n" [Newline("\n")] []
+      0: JS_BIGINT_LITERAL_EXPRESSION@12..15
+        0: JS_BIGINT_LITERAL@12..15 "5n" [Newline("\n")] []
       1: (empty)
     4: JS_EXPRESSION_STATEMENT@15..21
       0: JS_STRING_LITERAL_EXPRESSION@15..21
@@ -126,8 +126,8 @@ JsModule {
             2: JS_NUMBER_LITERAL_EXPRESSION@36..39
               0: JS_NUMBER_LITERAL@36..39 "0.0" [] []
           1: COMMA@39..41 "," [] [Whitespace(" ")]
-          2: JS_BIG_INT_LITERAL_EXPRESSION@41..43
-            0: JS_BIG_INT_LITERAL@41..43 "0n" [] []
+          2: JS_BIGINT_LITERAL_EXPRESSION@41..43
+            0: JS_BIGINT_LITERAL@41..43 "0n" [] []
         1: COMMA@43..45 "," [] [Whitespace(" ")]
         2: JS_NUMBER_LITERAL_EXPRESSION@45..49
           0: JS_NUMBER_LITERAL@45..49 "0e00" [] []

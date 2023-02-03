@@ -3,7 +3,7 @@
 pub(crate) mod any_type;
 pub(crate) mod array_type;
 pub(crate) mod asserts_return_type;
-pub(crate) mod big_int_literal_type;
+pub(crate) mod bigint_literal_type;
 pub(crate) mod bigint_type;
 pub(crate) mod boolean_literal_type;
 pub(crate) mod boolean_type;
