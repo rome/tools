@@ -1587,12 +1587,13 @@ version = "0.0.0"
 dependencies = [
  "bitflags",
  "rome_console",
+ "rome_deserialize",
  "rome_diagnostics",
+ "rome_json_parser",
  "rome_rowan",
  "rustc-hash",
  "schemars",
  "serde",
- "serde_json",
  "tracing",
 ]
 
@@ -1627,6 +1628,7 @@ dependencies = [
  "pico-args",
  "rayon",
  "rome_console",
+ "rome_deserialize",
  "rome_diagnostics",
  "rome_flags",
  "rome_formatter",
@@ -1679,6 +1681,21 @@ name = "rome_css_syntax"
 version = "0.0.0"
 dependencies = [
  "rome_rowan",
+]
+
+[[package]]
+name = "rome_deserialize"
+version = "0.0.0"
+dependencies = [
+ "indexmap",
+ "rome_console",
+ "rome_diagnostics",
+ "rome_json_parser",
+ "rome_json_syntax",
+ "rome_rowan",
+ "serde",
+ "serde_json",
+ "tracing",
 ]
 
 [[package]]
@@ -1792,11 +1809,14 @@ dependencies = [
  "rome_aria",
  "rome_console",
  "rome_control_flow",
+ "rome_deserialize",
  "rome_diagnostics",
  "rome_js_factory",
  "rome_js_parser",
  "rome_js_semantic",
  "rome_js_syntax",
+ "rome_json_factory",
+ "rome_json_syntax",
  "rome_rowan",
  "rome_text_edit",
  "rustc-hash",
@@ -2021,6 +2041,7 @@ dependencies = [
  "insta",
  "rome_analyze",
  "rome_console",
+ "rome_deserialize",
  "rome_diagnostics",
  "rome_flags",
  "rome_formatter",
@@ -2185,18 +2206,18 @@ dependencies = [
 
 [[package]]
 name = "serde"
-version = "1.0.143"
+version = "1.0.150"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "53e8e5d5b70924f74ff5c6d64d9a5acd91422117c60f48c4e07855238a254553"
+checksum = "e326c9ec8042f1b5da33252c8a37e9ffbd2c9bef0155215b6e6c80c790e05f91"
 dependencies = [
  "serde_derive",
 ]
 
 [[package]]
 name = "serde_derive"
-version = "1.0.143"
+version = "1.0.150"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d3d8e8de557aee63c26b85b947f5e59b690d0454c753f3adeb5cd7835ab88391"
+checksum = "42a3df25b0713732468deadad63ab9da1f1fd75a48a15024b50363f128db627e"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2216,9 +2237,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.85"
+version = "1.0.89"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e55a28e3aaef9d5ce0506d0a14dbba8054ddc7e499ef522dd8b26859ec9d4a44"
+checksum = "020ff22c755c2ed3f8cf162dbb41a7268d934702f3ed3631656ea597e08fc3db"
 dependencies = [
  "itoa",
  "ryu",
@@ -2344,9 +2365,9 @@ checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
 
 [[package]]
 name = "syn"
-version = "1.0.99"
+version = "1.0.105"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "58dbef6ec655055e20b86b15a8cc6d439cca19b667537ac6a1369572d151ab13"
+checksum = "60b9b43d45702de4c839cb9b51d9f529c5dd26a4aff255b42b1ebc03e88ee908"
 dependencies = [
  "proc-macro2",
  "quote",

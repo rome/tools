@@ -9,10 +9,19 @@ expression: malformedOptions.js
 
 # Diagnostics
 ```
-lint/configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+malformedOptions.js:2:5 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Errors while reading options for rule useExhaustiveDependencies: 
-     unknown field `hook`, expected `hooks` or `stables`
+  × Found an unknown key `hook`
+  
+    1 │ {
+  > 2 │     "hook": [
+      │     ^^^^^^
+    3 │         [
+    4 │             "useMyEffect",
+  
+  i Accepted keys
+  
+  - hooks
   
 
 ```

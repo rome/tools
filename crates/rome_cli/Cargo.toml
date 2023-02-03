@@ -20,6 +20,7 @@ rome_fs = { path = "../rome_fs" }
 rome_console = { path = "../rome_console" }
 rome_text_edit = { path = "../rome_text_edit" }
 rome_lsp = { path = "../rome_lsp" }
+rome_deserialize = { path = "../rome_deserialize" }
 pico-args = { version ="0.5.0", features=["eq-separator"] }
 tracing = { workspace = true }
 tracing-tree = "0.2.0"

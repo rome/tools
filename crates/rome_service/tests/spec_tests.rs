@@ -1,5 +1,5 @@
+use rome_deserialize::json::deserialize_from_json;
 use rome_diagnostics::{print_diagnostic_to_string, DiagnosticExt};
-use rome_json_parser::parse_json;
 use rome_service::Configuration;
 use std::ffi::OsStr;
 use std::fs::read_to_string;
@@ -14,30 +14,34 @@ fn run_invalid_configurations(input: &'static str, _: &str, _: &str, _: &str) {
         .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
 
     let result = match extension {
-        "json" => {
-            let result = parse_json(input_code.as_str());
-            Configuration::from_json_ast(result.tree())
-        }
+        "json" => deserialize_from_json::<Configuration>(input_code.as_str()),
         _ => {
             panic!("Extension not supported");
         }
     };
 
     assert!(
-        result.is_err(),
+        result.has_errors(),
         "This test should have diagnostics, but it doesn't have any"
     );
-    if let Err(diagnostics) = result {
-        let result = print_diagnostic_to_string(
-            &diagnostics
-                .with_file_path(file_name)
-                .with_file_source_code(input_code.as_str()),
-        );
-        insta::with_settings!({
-            prepend_module_to_snapshot => false,
-            snapshot_path => input_file.parent().unwrap(),
-        }, {
-            insta::assert_snapshot!(file_name, result, file_name);
-        });
-    }
+
+    let result = result
+        .into_diagnostics()
+        .into_iter()
+        .map(|diagnostic| {
+            print_diagnostic_to_string(
+                &diagnostic
+                    .with_file_path(file_name)
+                    .with_file_source_code(input_code.as_str()),
+            )
+        })
+        .collect::<Vec<_>>()
+        .join("\n\n");
+
+    insta::with_settings!({
+        prepend_module_to_snapshot => false,
+        snapshot_path => input_file.parent().unwrap(),
+    }, {
+        insta::assert_snapshot!(file_name, result, file_name);
+    });
 }

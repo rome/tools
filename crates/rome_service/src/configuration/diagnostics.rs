@@ -1,11 +1,10 @@
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
-use rome_diagnostics::location::AsSpan;
+use rome_deserialize::DeserializationDiagnostic;
 use rome_diagnostics::{
-    Advices, Category, Diagnostic, DiagnosticTags, LineIndexBuf, Location, LogCategory,
-    MessageAndDescription, Severity, Visit,
+    Advices, Category, Diagnostic, DiagnosticTags, Location, LogCategory, Severity, Visit,
 };
-use rome_rowan::{SyntaxError, TextRange, TextSize};
+use rome_rowan::SyntaxError;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, Formatter};
 
@@ -30,117 +29,38 @@ pub enum ConfigurationDiagnostic {
 
 impl From<SyntaxError> for ConfigurationDiagnostic {
     fn from(_: SyntaxError) -> Self {
-        ConfigurationDiagnostic::Deserialization(DeserializationDiagnostic {
-            deserialization_advice: DeserializationAdvice::default(),
-            range: None,
-            reason: markup! {"Syntax Error"}.to_owned().into(),
-        })
+        ConfigurationDiagnostic::Deserialization(DeserializationDiagnostic::new(
+            markup! {"Syntax Error"},
+        ))
+    }
+}
+
+impl From<DeserializationDiagnostic> for ConfigurationDiagnostic {
+    fn from(value: DeserializationDiagnostic) -> Self {
+        ConfigurationDiagnostic::Deserialization(value)
     }
 }
 
 impl ConfigurationDiagnostic {
-    pub(crate) fn new_deserialization_error(reason: impl Display, span: impl AsSpan) -> Self {
-        Self::Deserialization(DeserializationDiagnostic {
-            range: span.as_span(),
-            reason: MessageAndDescription::from(markup! {{reason}}.to_owned()),
-            deserialization_advice: DeserializationAdvice::default(),
-        })
-    }
-
-    pub(crate) fn new_unknown_member(
-        key_name: impl Display,
-        range: impl AsSpan,
-        known_members: &[&str],
-    ) -> Self {
-        Self::Deserialization(DeserializationDiagnostic {
-            range: range.as_span(),
-            reason: markup!("Found an extraneous key "<Emphasis>{{ key_name }}</Emphasis> )
-                .to_owned()
-                .into(),
-
-            deserialization_advice: DeserializationAdvice::default()
-                .note_with_list("Accepted keys", known_members),
-        })
-    }
-
-    pub(crate) fn new_unknown_variant(
-        variant_name: impl Display,
-        range: impl AsSpan,
-        known_variants: &[&str],
-    ) -> Self {
-        Self::Deserialization(DeserializationDiagnostic {
-            reason: markup!("Found an extraneous variant "<Emphasis>{{ variant_name }}</Emphasis> )
-                .to_owned()
-                .into(),
-            range: range.as_span(),
-            deserialization_advice: DeserializationAdvice::default()
-                .note_with_list("Accepted values", known_variants),
-        })
-    }
-
     pub(crate) fn new_serialization_error() -> Self {
         Self::SerializationError(SerializationError)
     }
 
-    pub(crate) fn new_incorrect_type_for_value(
-        key_name: impl Display,
-        expected_type: impl Display,
-        range: impl AsSpan,
+    pub(crate) fn new_invalid_ignore_pattern(
+        pattern: impl Into<String>,
+        reason: impl Into<String>,
     ) -> Self {
-        Self::Deserialization(DeserializationDiagnostic {
-            range: range.as_span(),
-            reason: markup! {
-                "The value of key "<Emphasis>{{key_name}}</Emphasis>" is incorrect. Expected "<Emphasis>{{expected_type}}</Emphasis>
-            }.to_owned().into(),
-            deserialization_advice: DeserializationAdvice::default(),
-        })
-    }
-
-    pub(crate) fn new_incorrect_type(expected_type: impl Display, range: impl AsSpan) -> Self {
-        Self::Deserialization(DeserializationDiagnostic {
-            range: range.as_span(),
-            reason: markup! {
-                "Incorrect type, expected a "<Emphasis>{{expected_type}}</Emphasis>
-            }
-            .to_owned()
-            .into(),
-
-            deserialization_advice: DeserializationAdvice::default(),
-        })
-    }
-
-    pub(crate) fn new_invalid_ignore_pattern(pattern: impl Display, reason: impl Display) -> Self {
-        Self::Deserialization(DeserializationDiagnostic {
-            reason:
-                markup! { "Couldn't parse the pattern "<Emphasis>{{pattern}}</Emphasis>", reason: "<Emphasis>{{reason}}</Emphasis>"" }.to_owned().into()
-            ,
-            range: None,
-            deserialization_advice: DeserializationAdvice::default()
+        Self::InvalidIgnorePattern(InvalidIgnorePattern {
+            message: format!(
+                "Couldn't parse the {}, reason: {}",
+                pattern.into(),
+                reason.into()
+            ),
         })
     }
 
     pub(crate) fn new_already_exists() -> Self {
-        Self::Deserialization(DeserializationDiagnostic {
-            reason: markup!("It seems that a configuration file already exists")
-                .to_owned()
-                .into(),
-            range: None,
-            deserialization_advice: DeserializationAdvice::default(),
-        })
-    }
-
-    pub(crate) fn unexpected(span: impl AsSpan) -> Self {
-        Self::Deserialization(DeserializationDiagnostic {
-            reason: markup!("Unexpected content inside the configuration file")
-                .to_owned()
-                .into(),
-
-            range: span.as_span(),
-            deserialization_advice: DeserializationAdvice::default(),
-        })
-    }
-    pub(crate) fn new_syntax_error() -> Self {
-        Self::from(SyntaxError::MissingRequiredChild)
+        Self::ConfigAlreadyExists(ConfigAlreadyExists {})
     }
 }
 
@@ -239,22 +159,6 @@ impl Diagnostic for ConfigurationDiagnostic {
     }
 }
 
-pub(crate) fn from_serde_error_to_range(
-    error: &serde_json::Error,
-    input: &str,
-) -> Option<TextRange> {
-    let line_starts = LineIndexBuf::from_source_text(input);
-    let line = error.line();
-    line.checked_sub(1).and_then(|line_index| {
-        let line_start = line_starts.get(line_index)?;
-        let column_index = error.column().checked_sub(1)?;
-        let column_offset = TextSize::try_from(column_index).ok()?;
-
-        let span_start = line_start + column_offset;
-        Some(TextRange::at(span_start, TextSize::from(0)))
-    })
-}
-
 #[derive(Debug, Serialize, Deserialize, Default)]
 pub struct ConfigurationAdvices {
     hint: Option<MarkupBuf>,
@@ -299,95 +203,19 @@ pub struct ConfigAlreadyExists {}
 #[derive(Debug, Serialize, Deserialize, Diagnostic)]
 #[diagnostic(
     category = "configuration",
-    severity = Error
+    severity = Error,
 )]
 pub struct InvalidIgnorePattern {
-    source: String,
-    reason: String,
-}
-
-#[derive(Debug, Serialize, Deserialize, Diagnostic)]
-#[diagnostic(
-    category = "configuration",
-    severity = Error
-)]
-pub struct DeserializationDiagnostic {
     #[message]
     #[description]
-    reason: MessageAndDescription,
-    #[location(span)]
-    range: Option<TextRange>,
-    #[advice]
-    deserialization_advice: DeserializationAdvice,
-}
-
-impl DeserializationDiagnostic {
-    pub(crate) fn new(reason: impl Display) -> Self {
-        Self {
-            reason: markup! {{reason}}.to_owned().into(),
-            range: None,
-            deserialization_advice: DeserializationAdvice::default(),
-        }
-    }
-
-    pub(crate) fn with_range(mut self, span: impl AsSpan) -> Self {
-        self.range = span.as_span();
-        self
-    }
-
-    pub(crate) fn with_advice(mut self, advice: DeserializationAdvice) -> Self {
-        self.deserialization_advice = advice;
-        self
-    }
-}
-
-#[derive(Debug, Default, Deserialize, Serialize)]
-pub struct DeserializationAdvice {
-    pub(crate) notes: Vec<(MarkupBuf, Vec<MarkupBuf>)>,
-}
-
-impl DeserializationAdvice {
-    pub(crate) fn note(mut self, message: impl Display) -> Self {
-        self.notes
-            .push((markup! {{message}}.to_owned(), Vec::new()));
-        self
-    }
-
-    pub(crate) fn note_with_list(mut self, message: impl Display, list: &[impl Display]) -> Self {
-        self.notes.push((
-            markup! {{message}}.to_owned(),
-            list.iter()
-                .map(|message| markup! {{message}}.to_owned())
-                .collect::<Vec<_>>(),
-        ));
-        self
-    }
-}
-
-impl Advices for DeserializationAdvice {
-    fn record(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
-        for (message, known_keys) in &self.notes {
-            visitor.record_log(LogCategory::Info, message)?;
-            if !known_keys.is_empty() {
-                let list: Vec<_> = known_keys
-                    .iter()
-                    .map(|message| message as &dyn Display)
-                    .collect();
-                visitor.record_list(&list)?;
-            }
-        }
-
-        Ok(())
-    }
+    message: String,
 }
 
 #[cfg(test)]
 mod test {
-    use crate::configuration::diagnostics::{
-        from_serde_error_to_range, ConfigurationDiagnostic, DeserializationAdvice,
-        DeserializationDiagnostic,
-    };
+    use crate::configuration::diagnostics::ConfigurationDiagnostic;
     use crate::{Configuration, MatchOptions, Matcher};
+    use rome_deserialize::json::deserialize_from_json;
     use rome_diagnostics::{print_diagnostic_to_string, DiagnosticExt, Error};
 
     fn snap_diagnostic(test_name: &str, diagnostic: Error) {
@@ -404,8 +232,6 @@ mod test {
     #[test]
     fn diagnostic_size() {
         assert_eq!(std::mem::size_of::<ConfigurationDiagnostic>(), 88);
-        assert_eq!(std::mem::size_of::<DeserializationDiagnostic>(), 88);
-        assert_eq!(std::mem::size_of::<DeserializationAdvice>(), 24);
     }
 
     #[test]
@@ -442,20 +268,29 @@ mod test {
     #[test]
     fn deserialization_error() {
         let content = "{ \n\n\"formatter\" }";
-        let result = serde_json::from_str::<Configuration>(content);
+        let result = deserialize_from_json::<Configuration>(content);
 
-        if let Err(error) = result {
-            snap_diagnostic(
-                "deserialization_error",
-                ConfigurationDiagnostic::new_deserialization_error(
-                    error.to_string(),
-                    from_serde_error_to_range(&error, content),
-                )
-                .with_file_path("rome.json")
-                .with_file_source_code(content),
-            )
-        } else {
-            panic!("The JSON should be incorrect")
+        assert!(result.has_errors());
+        for diagnostic in result.into_diagnostics() {
+            snap_diagnostic("deserialization_error", diagnostic)
         }
+    }
+
+    #[test]
+    fn deserialization_quick_check() {
+        let content = r#"{
+  "linter": {
+    "rules": {
+        "recommended": true,
+        "suspicious": {
+            "noDebugger": {
+                "level": "off",
+                "options": { "hooks": [] }
+            }
+        }
+    }
+  }
+}"#;
+        let _result = deserialize_from_json::<Configuration>(content).into_deserialized();
     }
 }

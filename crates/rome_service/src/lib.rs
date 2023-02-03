@@ -18,11 +18,11 @@ pub use crate::configuration::{
 };
 pub use crate::matcher::{MatchOptions, Matcher, Pattern};
 
+/// Exports only for this crate
+pub(crate) use crate::configuration::{deserialize_set_of_strings, serialize_set_of_strings};
 pub use crate::file_handlers::JsFormatterSettings;
 pub use crate::workspace::Workspace;
 
-/// Exports only for this crate
-pub(crate) use crate::configuration::{deserialize_set_of_strings, serialize_set_of_strings};
 pub use crate::diagnostics::{TransportError, WorkspaceError};
 
 pub const VERSION: &str = match option_env!("ROME_VERSION") {

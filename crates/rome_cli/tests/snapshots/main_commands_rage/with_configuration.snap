@@ -32,7 +32,7 @@ Environment:
   NODE_PACKAGE_MANAGER: unset
 
 Rome Configuration:
-  Status:               loaded
+  Status:               Loaded successfully
   Formatter disabled:   true
   Linter disabled:      false
 

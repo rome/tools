@@ -208,7 +208,7 @@ fn lint(params: LintParams) -> LintResults {
 
     let has_lint = params.filter.categories.contains(RuleCategories::LINT);
 
-    analyze(&tree, params.filter, &analyzer_options, |signal| {
+    let (_, analyze_diagnostics) = analyze(&tree, params.filter, &analyzer_options, |signal| {
         if let Some(mut diagnostic) = signal.diagnostic() {
             // Do not report unused suppression comment diagnostics if this is a syntax-only analyzer pass
             if !has_lint && diagnostic.category() == Some(category!("suppressions/unused")) {
@@ -250,6 +250,12 @@ fn lint(params: LintParams) -> LintResults {
         ControlFlow::<Never>::Continue(())
     });
 
+    diagnostics.extend(
+        analyze_diagnostics
+            .into_iter()
+            .map(rome_diagnostics::serde::Diagnostic::new)
+            .collect::<Vec<_>>(),
+    );
     let skipped_diagnostics = diagnostic_count - diagnostics.len() as u64;
 
     LintResults {
@@ -367,7 +373,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
     let mut skipped_suggested_fixes = 0;
     let analyzer_options = compute_analyzer_options(&settings);
     loop {
-        let action = analyze(&tree, filter, &analyzer_options, |signal| {
+        let (action, _) = analyze(&tree, filter, &analyzer_options, |signal| {
             for action in signal.actions() {
                 // suppression actions should not be part of the fixes (safe or suggested)
                 if action.is_suppression() {
