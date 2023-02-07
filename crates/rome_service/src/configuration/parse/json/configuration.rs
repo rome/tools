@@ -7,6 +7,7 @@ use rome_deserialize::{DeserializationDiagnostic, VisitNode};
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::SyntaxNode;
 use std::num::NonZeroU64;
+use crate::configuration::organize_imports::OrganizeImports;
 
 impl VisitJsonNode for FilesConfiguration {}
 
@@ -83,6 +84,11 @@ impl VisitNode<JsonLanguage> for Configuration {
                 let mut javascript = JavascriptConfiguration::default();
                 self.map_to_object(&value, name_text, &mut javascript, diagnostics)?;
                 self.javascript = Some(javascript);
+            }
+            "organizeImports" => {
+                let mut organize_imports = OrganizeImports::default();
+                self.map_to_object(&value, name_text, &mut organize_imports, diagnostics)?;
+                self.organize_imports = Some(organize_imports);
             }
             _ => {}
         }

@@ -4,6 +4,8 @@ use crate::snap_test::{assert_cli_snapshot, SnapshotPayload};
 use pico_args::Arguments;
 use rome_console::BufferConsole;
 use rome_fs::{FileSystemExt, MemoryFileSystem};
+use rome_json_formatter::context::JsonFormatOptions;
+use rome_json_parser::parse_json;
 use rome_service::DynRef;
 use std::ffi::OsString;
 use std::path::Path;
@@ -29,7 +31,13 @@ fn creates_config_file() {
     let mut content = String::new();
     file.read_to_string(&mut content)
         .expect("failed to read file from memory FS");
-    assert_eq!(content, CONFIG_INIT_DEFAULT);
+    let parsed = parse_json(&CONFIG_INIT_DEFAULT);
+    let formatted =
+        rome_json_formatter::format_node(JsonFormatOptions::default(), &parsed.syntax())
+            .expect("valid format document")
+            .print()
+            .expect("valid format document");
+    assert_eq!(content, formatted.as_code());
 
     drop(file);
 
@@ -66,7 +74,13 @@ fn creates_config_file_when_rome_installed_via_package_manager() {
     let mut content = String::new();
     file.read_to_string(&mut content)
         .expect("failed to read file from memory FS");
-    assert_eq!(content, CONFIG_INIT_DEFAULT_WHEN_INSTALLED);
+    let parsed = parse_json(&CONFIG_INIT_DEFAULT_WHEN_INSTALLED);
+    let formatted =
+        rome_json_formatter::format_node(JsonFormatOptions::default(), &parsed.syntax())
+            .expect("valid format document")
+            .print()
+            .expect("valid format document");
+    assert_eq!(content, formatted.as_code());
 
     drop(file);
 

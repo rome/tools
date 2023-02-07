@@ -22,6 +22,7 @@ impl Language for JsonLanguage {
     type FormatterSettings = ();
     type LinterSettings = ();
     type FormatOptions = JsonFormatOptions;
+    type OrganizeImportsSettings = ();
 
     fn lookup_settings(language: &LanguagesSettings) -> &LanguageSettings<Self> {
         &language.json

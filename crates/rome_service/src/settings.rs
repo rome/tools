@@ -24,6 +24,8 @@ pub struct WorkspaceSettings {
     pub languages: LanguagesSettings,
     /// Filesystem settings for the workspace
     pub files: FilesSettings,
+    /// Analyzer settings
+    pub analyzer: AnalyzerSettings,
 }
 
 impl WorkspaceSettings {
@@ -47,28 +49,36 @@ impl WorkspaceSettings {
         if let Some(formatter) = configuration.formatter {
             self.formatter = FormatSettings::try_from(formatter)?;
         }
-        let formatter = configuration
-            .javascript
-            .as_ref()
-            .and_then(|j| j.formatter.as_ref());
-        if let Some(formatter) = formatter {
-            self.languages.javascript.formatter.quote_style = Some(formatter.quote_style);
-            self.languages.javascript.formatter.quote_properties = Some(formatter.quote_properties);
-            self.languages.javascript.formatter.trailing_comma = Some(formatter.trailing_comma);
-            self.languages.javascript.formatter.semicolons = Some(formatter.semicolons);
-        }
 
         // linter part
         if let Some(linter) = configuration.linter {
             self.linter = LinterSettings::try_from(linter)?;
         }
 
-        let globals = configuration.javascript.and_then(|j| j.globals);
-        self.languages.javascript.globals = globals;
-
         // Filesystem settings
         if let Some(files) = configuration.files {
             self.files = FilesSettings::try_from(files)?;
+        }
+
+        if let Some(organize_imports) = configuration.organize_imports {
+            self.analyzer = AnalyzerSettings::try_from(organize_imports)?;
+        }
+
+        // javascript settings
+        let javascript = configuration.javascript;
+        if let Some(javascript) = javascript {
+            self.languages.javascript.globals = javascript.globals;
+            let formatter = javascript.formatter;
+            if let Some(formatter) = formatter {
+                self.languages.javascript.formatter.quote_style = Some(formatter.quote_style);
+                self.languages.javascript.formatter.quote_properties =
+                    Some(formatter.quote_properties);
+                self.languages.javascript.formatter.trailing_comma = Some(formatter.trailing_comma);
+                self.languages.javascript.formatter.semicolons = Some(formatter.semicolons);
+            }
+
+            let organize_imports = javascript.organize_imports;
+            if let Some(_organize_imports) = organize_imports {}
         }
 
         Ok(())
@@ -162,6 +172,9 @@ pub trait Language: rome_rowan::Language {
 
     type LinterSettings: Default;
 
+    /// Organize imports settings type for this language
+    type OrganizeImportsSettings: Default;
+
     /// Fully resolved formatter options type for this language
     type FormatOptions: rome_formatter::FormatOptions;
 
@@ -187,6 +200,9 @@ pub struct LanguageSettings<L: Language> {
 
     /// Globals variables/bindings that can be found in a file
     pub globals: Option<IndexSet<String>>,
+
+    /// Organize imports settings for this language
+    pub organize_imports: L::OrganizeImportsSettings,
 }
 
 /// Filesystem settings for the entire workspace
@@ -197,6 +213,11 @@ pub struct FilesSettings {
 
     /// List of paths/files to matcher
     pub ignored_files: Matcher,
+}
+
+#[derive(Default, Debug)]
+pub struct AnalyzerSettings {
+    pub organize_imports_enabled: bool,
 }
 
 /// Limit the size of files to 1.0 MiB by default

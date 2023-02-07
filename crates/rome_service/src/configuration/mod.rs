@@ -21,10 +21,12 @@ mod formatter;
 mod generated;
 mod javascript;
 pub mod linter;
+pub mod organize_imports;
 mod parse;
 
 pub use crate::configuration::diagnostics::ConfigurationDiagnostic;
 use crate::configuration::generated::push_to_analyzer_rules;
+use crate::configuration::organize_imports::OrganizeImports;
 use crate::settings::{LanguagesSettings, LinterSettings};
 pub use formatter::{FormatterConfiguration, PlainIndentStyle};
 pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
@@ -39,7 +41,7 @@ use rome_json_parser::parse_json;
 /// The configuration that is contained inside the file `rome.json`
 #[derive(Debug, Deserialize, Serialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
-#[serde(deny_unknown_fields)]
+#[serde(deny_unknown_fields, rename_all = "camelCase")]
 pub struct Configuration {
     /// A field for the [JSON schema](https://json-schema.org/) specification
     #[serde(rename(serialize = "$schema", deserialize = "$schema"))]
@@ -52,6 +54,10 @@ pub struct Configuration {
     /// The configuration of the formatter
     #[serde(skip_serializing_if = "Option::is_none")]
     pub formatter: Option<FormatterConfiguration>,
+
+    /// The configuration of the formatter
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub organize_imports: Option<OrganizeImports>,
 
     /// The configuration for the linter
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -70,6 +76,7 @@ impl Default for Configuration {
                 enabled: true,
                 ..LinterConfiguration::default()
             }),
+            organize_imports: Some(OrganizeImports { enabled: true }),
             formatter: None,
             javascript: None,
             schema: None,
@@ -78,8 +85,14 @@ impl Default for Configuration {
 }
 
 impl Configuration {
-    const KNOWN_KEYS: &'static [&'static str] =
-        &["files", "linter", "formatter", "javascript", "$schema"];
+    const KNOWN_KEYS: &'static [&'static str] = &[
+        "files",
+        "linter",
+        "formatter",
+        "javascript",
+        "$schema",
+        "organizeImports",
+    ];
 }
 
 impl Configuration {

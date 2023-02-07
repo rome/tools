@@ -1251,3 +1251,52 @@ fn nursery_unstable() {
         result,
     ));
 }
+
+#[test]
+fn organize_imports() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("check.js");
+    let content = r#"
+import { lorem, foom, bar } from "foo";
+import * as something from "../something";
+    "#;
+    let expected = r#"
+import * as something from "../something";
+import { bar, foom, lorem } from "foo";
+    "#;
+    fs.insert(file_path.into(), content.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Arguments::from_vec(vec![
+            OsString::from("check"),
+            OsString::from("--apply-unsafe"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, expected);
+
+    drop(file);
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "organize_imports",
+        fs,
+        console,
+        result,
+    ));
+}
