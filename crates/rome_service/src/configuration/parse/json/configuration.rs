@@ -1,3 +1,4 @@
+use crate::configuration::organize_imports::OrganizeImports;
 use crate::configuration::{
     FilesConfiguration, FormatterConfiguration, JavascriptConfiguration, LinterConfiguration,
 };
@@ -7,7 +8,6 @@ use rome_deserialize::{DeserializationDiagnostic, VisitNode};
 use rome_json_syntax::{JsonLanguage, JsonSyntaxNode};
 use rome_rowan::SyntaxNode;
 use std::num::NonZeroU64;
-use crate::configuration::organize_imports::OrganizeImports;
 
 impl VisitJsonNode for FilesConfiguration {}
 

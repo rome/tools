@@ -42,6 +42,10 @@ export interface Configuration {
 	 * The configuration for the linter
 	 */
 	linter?: LinterConfiguration;
+	/**
+	 * The configuration of the formatter
+	 */
+	organizeImports?: OrganizeImports;
 }
 /**
  * The configuration of the filesystem
@@ -87,6 +91,7 @@ export interface JavascriptConfiguration {
 If defined here, they should not emit diagnostics. 
 	 */
 	globals?: string[];
+	organize_imports?: JavascriptOrganizeImports;
 }
 export interface LinterConfiguration {
 	/**
@@ -101,6 +106,12 @@ export interface LinterConfiguration {
 	 * List of rules
 	 */
 	rules?: Rules;
+}
+export interface OrganizeImports {
+	/**
+	 * Enables the organization of imports
+	 */
+	enabled: boolean;
 }
 export type PlainIndentStyle = "tab" | "space";
 /**
@@ -127,6 +138,7 @@ export interface JavascriptFormatter {
 	 */
 	trailingComma?: TrailingComma;
 }
+export interface JavascriptOrganizeImports {}
 export interface Rules {
 	a11y?: A11y;
 	complexity?: Complexity;

@@ -35,6 +35,10 @@
 				{ "$ref": "#/definitions/LinterConfiguration" },
 				{ "type": "null" }
 			]
+		},
+		"organizeImports": {
+			"description": "The configuration of the formatter",
+			"anyOf": [{ "$ref": "#/definitions/OrganizeImports" }, { "type": "null" }]
 		}
 	},
 	"additionalProperties": false,
@@ -327,6 +331,12 @@
 					"type": ["array", "null"],
 					"items": { "type": "string" },
 					"uniqueItems": true
+				},
+				"organize_imports": {
+					"anyOf": [
+						{ "$ref": "#/definitions/JavascriptOrganizeImports" },
+						{ "type": "null" }
+					]
 				}
 			},
 			"additionalProperties": false
@@ -355,6 +365,10 @@
 					"allOf": [{ "$ref": "#/definitions/TrailingComma" }]
 				}
 			},
+			"additionalProperties": false
+		},
+		"JavascriptOrganizeImports": {
+			"type": "object",
 			"additionalProperties": false
 		},
 		"LineWidth": {
@@ -765,6 +779,17 @@
 					]
 				}
 			}
+		},
+		"OrganizeImports": {
+			"type": "object",
+			"required": ["enabled"],
+			"properties": {
+				"enabled": {
+					"description": "Enables the organization of imports",
+					"type": "boolean"
+				}
+			},
+			"additionalProperties": false
 		},
 		"Performance": {
 			"description": "A list of rules that belong to this group",

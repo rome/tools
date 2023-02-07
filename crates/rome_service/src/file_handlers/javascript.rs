@@ -369,22 +369,19 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
         None
     };
 
-    let filter = match &mut enabled_rules {
+    let mut filter = AnalysisFilter::default();
+    match &mut enabled_rules {
         Some(rules) => {
             if settings.as_ref().analyzer.organize_imports_enabled {
                 rules.push(RuleFilter::Rule("correctness", "organizeImports"));
             }
 
-            let mut filter = AnalysisFilter::from_enabled_rules(Some(rules.as_slice()));
-
+            filter.enabled_rules = Some(rules.as_slice());
             filter.categories =
                 RuleCategories::SYNTAX | RuleCategories::LINT | RuleCategories::ACTION;
-            filter
         }
         _ => {
-            let mut filter = AnalysisFilter::default();
             filter.categories = RuleCategories::SYNTAX | RuleCategories::LINT;
-            filter
         }
     };
 
