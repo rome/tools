@@ -417,6 +417,10 @@ export interface Nursery {
 	 */
 	noUnusedLabels?: RuleConfiguration;
 	/**
+	 * Disallow renaming import, export, and destructured assignments to the same name.
+	 */
+	noUselessRename?: RuleConfiguration;
+	/**
 	 * Disallow useless case in switch statements.
 	 */
 	noUselessSwitchCase?: RuleConfiguration;
@@ -822,6 +826,7 @@ export type Category =
 	| "lint/nursery/useIframeTitle"
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/noNoninteractiveElementToInteractiveRole"
+	| "lint/nursery/noUselessRename"
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useHookAtTopLevel"
 	| "lint/nursery/noDuplicateJsxProps"

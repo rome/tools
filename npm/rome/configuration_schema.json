@@ -620,6 +620,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noUselessRename": {
+					"description": "Disallow renaming import, export, and destructured assignments to the same name.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noUselessSwitchCase": {
 					"description": "Disallow useless case in switch statements.",
 					"anyOf": [
