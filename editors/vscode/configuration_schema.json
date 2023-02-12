@@ -522,6 +522,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noInferrableTypes": {
+					"description": "Disallow type annotations for variables, parameters, and class properties initialized with a literal expression.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noInnerDeclarations": {
 					"description": "Disallow function and var declarations in nested blocks.",
 					"anyOf": [
