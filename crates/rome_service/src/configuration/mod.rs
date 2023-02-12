@@ -126,26 +126,26 @@ pub fn load_config(
     show_error: bool,
 ) -> LoadConfig {
     let config_name = file_system.config_name();
-    let config_path = if let Some(ref base_path) = base_path {
+    let configuration_path = if let Some(ref base_path) = base_path {
         base_path.join(config_name)
     } else {
         PathBuf::from(config_name)
     };
     info!(
         "Attempting to read the configuration file from {:?}",
-        config_path
+        configuration_path
     );
     let options = OpenOptions::default().read(true);
-    let file = file_system.open_with_options(&config_path, options);
+    let file = file_system.open_with_options(&configuration_path, options);
     match file {
         Ok(mut file) => {
             let mut buffer = String::new();
             file.read_to_string(&mut buffer).map_err(|_| {
-                WorkspaceError::cant_read_file(format!("{}", config_path.display()))
+                WorkspaceError::cant_read_file(format!("{}", configuration_path.display()))
             })?;
 
             let deserialized = deserialize_from_json::<Configuration>(&buffer)
-                .with_file_path(&config_path.display().to_string());
+                .with_file_path(&configuration_path.display().to_string());
             Ok(Some(deserialized))
         }
         Err(err) => {
@@ -155,12 +155,12 @@ pub fn load_config(
             if show_error || err.kind() != ErrorKind::NotFound {
                 return Err(WorkspaceError::cant_read_file(format!(
                     "{}",
-                    config_path.display()
+                    configuration_path.display()
                 )));
             }
             error!(
                 "Could not read the configuration file from {:?}, reason:\n {}",
-                config_path.display(),
+                configuration_path.display(),
                 err
             );
             Ok(None)
