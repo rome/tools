@@ -264,7 +264,7 @@ fn custom_config_file_path() {
         &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
-            OsString::from("--config"),
+            OsString::from("--config-path"),
             OsString::from(config_path),
             OsString::from("--write"),
             file_path.as_os_str().into(),
@@ -308,7 +308,7 @@ fn invalid_config_file_path() {
         &mut console,
         Arguments::from_vec(vec![
             OsString::from("format"),
-            OsString::from("--config"),
+            OsString::from("--config-path"),
             OsString::from(config_path),
             OsString::from("--write"),
             file_path.as_os_str().into(),

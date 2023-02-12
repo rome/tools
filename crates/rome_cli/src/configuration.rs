@@ -9,8 +9,8 @@ use crate::{CliDiagnostic, CliSession};
 pub(crate) fn load_configuration(session: &mut CliSession) -> Result<Configuration, CliDiagnostic> {
     let config_path: Option<PathBuf> = session
         .args
-        .opt_value_from_str("--config")
-        .map_err(|source| CliDiagnostic::parse_error("--config", source))?;
+        .opt_value_from_str("--config-path")
+        .map_err(|source| CliDiagnostic::parse_error("--config-path", source))?;
 
     let is_config_path = config_path.is_some();
 
