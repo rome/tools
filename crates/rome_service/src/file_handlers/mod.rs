@@ -13,6 +13,7 @@ use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_js_syntax::{TextRange, TextSize};
 use rome_parser::AnyParse;
+use rome_rowan::NodeCache;
 use std::ffi::OsStr;
 
 mod javascript;
@@ -154,7 +155,7 @@ pub(crate) struct Capabilities {
     pub(crate) formatter: FormatterCapabilities,
 }
 
-type Parse = fn(&RomePath, Language, &str) -> AnyParse;
+type Parse = fn(&RomePath, Language, &str, &mut NodeCache) -> AnyParse;
 
 #[derive(Default)]
 pub(crate) struct ParserCapabilities {
