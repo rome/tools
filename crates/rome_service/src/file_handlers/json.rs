@@ -17,7 +17,6 @@ use rome_json_formatter::format_node;
 use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 use rome_parser::AnyParse;
 use rome_rowan::NodeCache;
-#[cfg(any(debug_assertions, target_family = "wasm"))]
 use rome_rowan::{TextRange, TextSize, TokenAtOffset};
 
 impl Language for JsonLanguage {
