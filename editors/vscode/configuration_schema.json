@@ -424,6 +424,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noConfusingLabels": {
+					"description": "Disallow labeled statements that are not loops.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noConstEnum": {
 					"description": "Disallow TypeScript const enum",
 					"anyOf": [
@@ -452,6 +459,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noDuplicateClassMembers": {
+					"description": "Disallow duplicate class members.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noDuplicateJsxProps": {
 					"description": "Prevents JSX properties to be assigned multiple times.",
 					"anyOf": [
@@ -468,6 +482,13 @@
 				},
 				"noEmptyInterface": {
 					"description": "Disallow the declaration of empty interfaces.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noExtraLabels": {
+					"description": "Disallow unnecessary labels.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }
@@ -601,6 +622,13 @@
 				},
 				"noUnusedLabels": {
 					"description": "Disallow unused labels.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
+				"noUselessRename": {
+					"description": "Disallow renaming import, export, and destructured assignments to the same name.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

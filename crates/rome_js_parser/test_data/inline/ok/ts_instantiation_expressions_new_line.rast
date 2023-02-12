@@ -1019,8 +1019,8 @@ JsModule {
             semicolon_token: missing (optional),
         },
         JsExpressionStatement {
-            expression: JsBigIntLiteralExpression {
-                value_token: JS_BIG_INT_LITERAL@413..418 "123n" [Newline("\n")] [],
+            expression: JsBigintLiteralExpression {
+                value_token: JS_BIGINT_LITERAL@413..418 "123n" [Newline("\n")] [],
             },
             semicolon_token: SEMICOLON@418..419 ";" [] [],
         },
@@ -2253,8 +2253,8 @@ JsModule {
           2: R_ANGLE@412..413 ">" [] []
       1: (empty)
     32: JS_EXPRESSION_STATEMENT@413..419
-      0: JS_BIG_INT_LITERAL_EXPRESSION@413..418
-        0: JS_BIG_INT_LITERAL@413..418 "123n" [Newline("\n")] []
+      0: JS_BIGINT_LITERAL_EXPRESSION@413..418
+        0: JS_BIGINT_LITERAL@413..418 "123n" [Newline("\n")] []
       1: SEMICOLON@418..419 ";" [] []
     33: JS_EXPRESSION_STATEMENT@419..425
       0: TS_INSTANTIATION_EXPRESSION@419..425

@@ -1028,8 +1028,8 @@ JsModule {
                     },
                 },
                 operator_token: R_ANGLE@442..444 ">" [] [Whitespace(" ")],
-                right: JsBigIntLiteralExpression {
-                    value_token: JS_BIG_INT_LITERAL@444..448 "123n" [] [],
+                right: JsBigintLiteralExpression {
+                    value_token: JS_BIGINT_LITERAL@444..448 "123n" [] [],
                 },
             },
             semicolon_token: SEMICOLON@448..449 ";" [] [],
@@ -2277,8 +2277,8 @@ JsModule {
             0: JS_REFERENCE_IDENTIFIER@440..442
               0: IDENT@440..442 "T" [] [Whitespace(" ")]
         1: R_ANGLE@442..444 ">" [] [Whitespace(" ")]
-        2: JS_BIG_INT_LITERAL_EXPRESSION@444..448
-          0: JS_BIG_INT_LITERAL@444..448 "123n" [] []
+        2: JS_BIGINT_LITERAL_EXPRESSION@444..448
+          0: JS_BIGINT_LITERAL@444..448 "123n" [] []
       1: SEMICOLON@448..449 ";" [] []
     30: JS_EXPRESSION_STATEMENT@449..461
       0: JS_BINARY_EXPRESSION@449..460

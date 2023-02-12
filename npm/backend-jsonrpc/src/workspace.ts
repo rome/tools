@@ -305,6 +305,10 @@ export interface Nursery {
 	 */
 	noCommaOperator?: RuleConfiguration;
 	/**
+	 * Disallow labeled statements that are not loops.
+	 */
+	noConfusingLabels?: RuleConfiguration;
+	/**
 	 * Disallow TypeScript const enum
 	 */
 	noConstEnum?: RuleConfiguration;
@@ -321,6 +325,10 @@ export interface Nursery {
 	 */
 	noDuplicateCase?: RuleConfiguration;
 	/**
+	 * Disallow duplicate class members.
+	 */
+	noDuplicateClassMembers?: RuleConfiguration;
+	/**
 	 * Prevents JSX properties to be assigned multiple times.
 	 */
 	noDuplicateJsxProps?: RuleConfiguration;
@@ -332,6 +340,10 @@ export interface Nursery {
 	 * Disallow the declaration of empty interfaces.
 	 */
 	noEmptyInterface?: RuleConfiguration;
+	/**
+	 * Disallow unnecessary labels.
+	 */
+	noExtraLabels?: RuleConfiguration;
 	/**
 	 * Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.
 	 */
@@ -408,6 +420,10 @@ export interface Nursery {
 	 * Disallow unused labels.
 	 */
 	noUnusedLabels?: RuleConfiguration;
+	/**
+	 * Disallow renaming import, export, and destructured assignments to the same name.
+	 */
+	noUselessRename?: RuleConfiguration;
 	/**
 	 * Disallow useless case in switch statements.
 	 */
@@ -779,10 +795,12 @@ export type Category =
 	| "lint/nursery/noDuplicateCase"
 	| "lint/nursery/noDuplicateObjectKeys"
 	| "lint/nursery/noEmptyInterface"
+	| "lint/nursery/noExtraLabels"
 	| "lint/nursery/noExtraNonNullAssertion"
 	| "lint/nursery/noHeaderScope"
 	| "lint/nursery/noInnerDeclarations"
 	| "lint/nursery/noInvalidConstructorSuper"
+	| "lint/nursery/noConfusingLabels"
 	| "lint/nursery/noNonNullAssertion"
 	| "lint/nursery/noPrecisionLoss"
 	| "lint/nursery/noRedundantAlt"
@@ -813,9 +831,11 @@ export type Category =
 	| "lint/nursery/useIframeTitle"
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/noNoninteractiveElementToInteractiveRole"
+	| "lint/nursery/noUselessRename"
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useHookAtTopLevel"
 	| "lint/nursery/noDuplicateJsxProps"
+	| "lint/nursery/noDuplicateClassMembers"
 	| "lint/nursery/useYield"
 	| "lint/nursery/noGlobalObjectCalls"
 	| "lint/nursery/noPrototypeBuiltins"

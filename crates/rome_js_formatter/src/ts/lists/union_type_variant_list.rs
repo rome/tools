@@ -3,7 +3,7 @@ use crate::ts::bogus::bogus_type::FormatTsBogusType;
 use crate::ts::module::import_type::FormatTsImportType;
 use crate::ts::types::any_type::FormatTsAnyType;
 use crate::ts::types::array_type::FormatTsArrayType;
-use crate::ts::types::big_int_literal_type::FormatTsBigIntLiteralType;
+use crate::ts::types::bigint_literal_type::FormatTsBigintLiteralType;
 use crate::ts::types::bigint_type::FormatTsBigintType;
 use crate::ts::types::boolean_literal_type::FormatTsBooleanLiteralType;
 use crate::ts::types::boolean_type::FormatTsBooleanType;
@@ -97,8 +97,8 @@ impl Format<JsFormatContext> for FormatTypeVariant<'_> {
                 match node {
                     AnyTsType::TsAnyType(ty) => FormatTsAnyType::default().fmt_node(ty, f),
                     AnyTsType::TsArrayType(ty) => FormatTsArrayType::default().fmt_node(ty, f),
-                    AnyTsType::TsBigIntLiteralType(ty) => {
-                        FormatTsBigIntLiteralType::default().fmt_node(ty, f)
+                    AnyTsType::TsBigintLiteralType(ty) => {
+                        FormatTsBigintLiteralType::default().fmt_node(ty, f)
                     }
                     AnyTsType::TsBigintType(ty) => FormatTsBigintType::default().fmt_node(ty, f),
                     AnyTsType::TsBooleanLiteralType(ty) => {

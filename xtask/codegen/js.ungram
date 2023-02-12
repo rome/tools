@@ -1074,7 +1074,7 @@ JsObjectBindingPatternRest =
 AnyJsLiteralExpression =
 	JsStringLiteralExpression
 	| JsNumberLiteralExpression
-	| JsBigIntLiteralExpression
+	| JsBigintLiteralExpression
 	| JsBooleanLiteralExpression
 	| JsNullLiteralExpression
 	| JsRegexLiteralExpression
@@ -1086,7 +1086,7 @@ JsStringLiteralExpression = value: 'js_string_literal'
 JsNumberLiteralExpression = value: 'js_number_literal'
 
 // 45n
-JsBigIntLiteralExpression =  value: 'js_big_int_literal'
+JsBigintLiteralExpression =  value: 'js_bigint_literal'
 
 // true, false
 JsBooleanLiteralExpression = value_token: ('true' | 'false')
@@ -1651,7 +1651,7 @@ AnyTsType =
 	| TsNonPrimitiveType
 	| TsThisType
 	| TsNumberLiteralType
-	| TsBigIntLiteralType
+	| TsBigintLiteralType
 	| TsStringLiteralType
 	| TsNullLiteralType
 	| TsBooleanLiteralType
@@ -2113,7 +2113,7 @@ TsOptionalTupleTypeElement =
 
 TsStringLiteralType = literal: 'js_string_literal'
 TsNumberLiteralType = '-'? literal: 'js_number_literal'
-TsBigIntLiteralType = '-'? literal: 'js_big_int_literal'
+TsBigintLiteralType = '-'? literal: 'js_bigint_literal'
 TsBooleanLiteralType = literal: ('true' | 'false')
 TsNullLiteralType = literal: 'null'
 TsTemplateLiteralType =

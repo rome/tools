@@ -5,7 +5,7 @@ use rome_analyze::{
     SuppressionKind,
 };
 use rome_aria::{AriaProperties, AriaRoles};
-use rome_diagnostics::{category, Diagnostic};
+use rome_diagnostics::{category, Diagnostic, Error as DiagnosticError};
 use rome_js_syntax::suppression::SuppressionDiagnostic;
 use rome_js_syntax::{suppression::parse_suppression_comment, JsLanguage};
 use serde::{Deserialize, Serialize};
@@ -57,7 +57,7 @@ pub fn analyze_with_inspect_matcher<'a, V, F, B>(
     inspect_matcher: V,
     options: &'a AnalyzerOptions,
     mut emit_signal: F,
-) -> Option<B>
+) -> (Option<B>, Vec<DiagnosticError>)
 where
     V: FnMut(&MatchQueryParams<JsLanguage>) + 'a,
     F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
@@ -103,10 +103,7 @@ where
 
     // Bail if we can't parse a rule option
     if !diagnostics.is_empty() {
-        for diagnostic in diagnostics {
-            emit_signal(&diagnostic);
-        }
-        return None;
+        return (None, diagnostics);
     }
 
     let mut analyzer = Analyzer::new(
@@ -123,12 +120,15 @@ where
 
     services.insert_service(Arc::new(AriaRoles::default()));
     services.insert_service(Arc::new(AriaProperties::default()));
-    analyzer.run(AnalyzerContext {
-        root: root.clone(),
-        range: filter.range,
-        services,
-        options,
-    })
+    (
+        analyzer.run(AnalyzerContext {
+            root: root.clone(),
+            range: filter.range,
+            services,
+            options,
+        }),
+        diagnostics,
+    )
 }
 
 /// Run the analyzer on the provided `root`: this process will use the given `filter`
@@ -139,7 +139,7 @@ pub fn analyze<'a, F, B>(
     filter: AnalysisFilter,
     options: &'a AnalyzerOptions,
     emit_signal: F,
-) -> Option<B>
+) -> (Option<B>, Vec<DiagnosticError>)
 where
     F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
     B: 'a,
