@@ -4,7 +4,7 @@ use rome_diagnostics::termcolor::{ColorChoice, WriteColor};
 use rome_diagnostics::{termcolor, PrintDescription};
 use rome_fs::FileSystem;
 use rome_service::workspace::{client, RageEntry, RageParams};
-use rome_service::{load_config, DynRef, Workspace};
+use rome_service::{load_config, BasePath, DynRef, Workspace};
 use std::{env, io, ops::Deref};
 use tokio::runtime::Runtime;
 
@@ -163,7 +163,7 @@ impl Display for RageConfiguration<'_, '_> {
     fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
         Section("Rome Configuration").fmt(fmt)?;
 
-        match load_config(self.0, None) {
+        match load_config(self.0, BasePath::default()) {
             Ok(None) => KeyValuePair("Status", markup!(<Dim>"unset"</Dim>)).fmt(fmt)?,
             Ok(Some(deserialized)) => {
                 let (configuration, diagnostics) = deserialized.consume();

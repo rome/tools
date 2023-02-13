@@ -14,7 +14,8 @@ mod diagnostics;
 pub mod workspace_types;
 
 pub use crate::configuration::{
-    create_config, load_config, Configuration, ConfigurationDiagnostic, RuleConfiguration, Rules,
+    create_config, load_config, BasePath, Configuration, ConfigurationDiagnostic,
+    RuleConfiguration, Rules,
 };
 pub use crate::matcher::{MatchOptions, Matcher, Pattern};
 
