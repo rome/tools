@@ -188,6 +188,22 @@ impl<L: Language> SyntaxToken<L> {
         }
     }
 
+    /// Return the leading whitespace and newline until the first leading newline or token.
+    pub fn indentation_trivia(&self) -> Vec<SyntaxTriviaPiece<L>> {
+        let leading_trivia = self.leading_trivia().pieces();
+        let skip_count = leading_trivia.len()
+            - leading_trivia
+                .rev()
+                .position(|x| x.is_newline())
+                .map(|pos| pos + 1)
+                .unwrap_or(0);
+        self.leading_trivia()
+            .pieces()
+            .skip(skip_count)
+            .filter(|x| x.is_newline() || x.is_whitespace())
+            .collect::<Vec<_>>()
+    }
+
     /// Return a new version of this token with its leading trivia replaced with `trivia`
     #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
     pub fn with_leading_trivia<'a, I>(&self, trivia: I) -> Self

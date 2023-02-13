@@ -613,6 +613,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noSwitchDeclarations": {
+					"description": "Disallow lexical declarations in switch clauses.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noUnreachableSuper": {
 					"description": "Ensures the super() constructor is called exactly once on every code path in a class constructor before this is accessed if the class has a superclass",
 					"anyOf": [

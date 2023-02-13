@@ -71,6 +71,7 @@ define_dategories! {
     "lint/nursery/noSelfCompare": "https://docs.rome.tools/lint/rules/noSelfCompare",
     "lint/nursery/noSetterReturn": "https://docs.rome.tools/lint/rules/noSetterReturn",
     "lint/nursery/noStringCaseMismatch": "https://docs.rome.tools/lint/rules/noStringCaseMismatch",
+    "lint/nursery/noSwitchDeclarations": "https://docs.rome.tools/lint/rules/noSwitchDeclarations",
     "lint/nursery/noUnreachableSuper": "https://rome.tools/docs/lint/rules/noUnreachableSuper",
     "lint/nursery/noUnsafeFinally": "https://docs.rome.tools/lint/rules/noUnsafeFinally",
     "lint/nursery/noUnusedLabels": "https://docs.rome.tools/lint/rules/noUnusedLabels",
