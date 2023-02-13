@@ -157,9 +157,9 @@ pub fn load_config(file_system: &DynRef<dyn FileSystem>, base_path: BasePath) ->
             Ok(Some(deserialized))
         }
         Err(err) => {
-            // We skip the error when the configuration file is not found
-            // and the base path is not explicitly set; not having a configuration
-            // file is only a cause of error when the `load_data` is set to `FromUser`.
+            // We skip the error when the configuration file is not found. 
+            // Not having a configuration file is only an error when the `base_path` is
+            // set to `BasePath::FromUser`.
             if match base_path {
                 BasePath::FromUser(_) => true,
                 _ => err.kind() != ErrorKind::NotFound,
