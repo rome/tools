@@ -117,19 +117,27 @@ impl FilesConfiguration {
 
 type LoadConfig = Result<Option<Deserialized<Configuration>>, WorkspaceError>;
 
-/// This function is responsible to load the rome configuration.
+#[derive(Default, PartialEq, Eq)]
+pub enum BasePath {
+    /// The default mode, not having a configuration file is not an error.
+    #[default]
+    None,
+    /// The base path provided by the LSP, not having a configuration file is not an error.
+    Lsp(PathBuf),
+    /// The base path provided by the user, not having a configuration file is an error.
+    /// Throws any kind of I/O errors.
+    FromUser(PathBuf),
+}
+
+/// Load the configuration from the file system.
 ///
-/// The `file_system` will read the configuration file. A base path can be passed
-pub fn load_config(
-    file_system: &DynRef<dyn FileSystem>,
-    base_path: Option<PathBuf>,
-    show_error: bool,
-) -> LoadConfig {
+/// The configuration file will be read from the `file_system`.
+/// An optional base path can be appended to the configuration file path.
+pub fn load_config(file_system: &DynRef<dyn FileSystem>, base_path: BasePath) -> LoadConfig {
     let config_name = file_system.config_name();
-    let configuration_path = if let Some(ref base_path) = base_path {
-        base_path.join(config_name)
-    } else {
-        PathBuf::from(config_name)
+    let configuration_path = match base_path {
+        BasePath::Lsp(ref path) | BasePath::FromUser(ref path) => path.join(config_name),
+        _ => PathBuf::from(config_name),
     };
     info!(
         "Attempting to read the configuration file from {:?}",
@@ -151,8 +159,11 @@ pub fn load_config(
         Err(err) => {
             // We skip the error when the configuration file is not found
             // and the base path is not explicitly set; not having a configuration
-            // file is not a cause of error
-            if show_error || err.kind() != ErrorKind::NotFound {
+            // file is only a cause of error when the `load_data` is set to `FromUser`.
+            if match base_path {
+                BasePath::FromUser(_) => false,
+                _ => err.kind() != ErrorKind::NotFound,
+            } {
                 return Err(WorkspaceError::cant_read_file(format!(
                     "{}",
                     configuration_path.display()
