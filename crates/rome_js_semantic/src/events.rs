@@ -441,6 +441,11 @@ impl SemanticEventExtractor {
                 self.push_binding_into_scope(hoisted_scope_id, &name_token);
                 self.export_declaration(node, &parent);
             }
+            TS_MODULE_DECLARATION => {
+                let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
+                self.push_binding_into_scope(hoisted_scope_id, &name_token);
+                self.export_declaration(node, &parent);
+            }
             _ => {
                 self.push_binding_into_scope(None, &name_token);
             }
@@ -791,12 +796,6 @@ impl SemanticEventExtractor {
             function_declaration.kind(),
             JS_FUNCTION_DECLARATION | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
         ));
-
-        // scope[0] = global, scope[1] = the function itself
-        if self.scopes.len() != 2 {
-            return;
-        }
-
         let is_exported = matches!(
             function_declaration.parent().kind(),
             Some(JS_EXPORT | JS_EXPORT_DEFAULT_DECLARATION_CLAUSE)
@@ -816,12 +815,6 @@ impl SemanticEventExtractor {
     ) {
         use JsSyntaxKind::*;
         debug_assert!(matches!(function_expression.kind(), JS_FUNCTION_EXPRESSION));
-
-        // scope[0] = global, scope[1] = the function itself
-        if self.scopes.len() != 2 {
-            return;
-        }
-
         let is_module_exports = function_expression
             .parent()
             .map(|x| self.is_assignment_left_side_module_exports(&x))
@@ -837,12 +830,6 @@ impl SemanticEventExtractor {
     fn export_class_expression(&mut self, binding: &JsSyntaxNode, class_expression: &JsSyntaxNode) {
         use JsSyntaxKind::*;
         debug_assert!(matches!(class_expression.kind(), JS_CLASS_EXPRESSION));
-
-        // scope[0] = global, scope[1] = the class expression itself
-        if self.scopes.len() != 2 {
-            return;
-        }
-
         let is_module_exports = class_expression
             .parent()
             .map(|x| self.is_assignment_left_side_module_exports(&x))
@@ -854,7 +841,7 @@ impl SemanticEventExtractor {
         }
     }
 
-    // Check if a class, type alias is exported and raise the [Exported] event.
+    // Check if a class, type alias, enum, interface, module is exported and raise the [Exported] event.
     fn export_declaration(&mut self, binding: &JsSyntaxNode, declaration: &JsSyntaxNode) {
         use JsSyntaxKind::*;
         debug_assert!(matches!(
@@ -864,13 +851,8 @@ impl SemanticEventExtractor {
                 | TS_TYPE_ALIAS_DECLARATION
                 | TS_ENUM_DECLARATION
                 | TS_INTERFACE_DECLARATION
+                | TS_MODULE_DECLARATION
         ));
-
-        // scope[0] = global, scope[1] = what is being exported
-        if self.scopes.len() != 2 {
-            return;
-        }
-
         let is_exported = matches!(
             declaration.parent().kind(),
             Some(JS_EXPORT | JS_EXPORT_DEFAULT_DECLARATION_CLAUSE)
@@ -891,12 +873,6 @@ impl SemanticEventExtractor {
     ) {
         use JsSyntaxKind::*;
         debug_assert!(matches!(variable_declarator.kind(), JS_VARIABLE_DECLARATOR));
-
-        // export can only exist in the global scope
-        if self.scopes.len() > 1 {
-            return;
-        }
-
         let is_exported = matches!(
             variable_declarator
                 .parent()
@@ -918,12 +894,6 @@ impl SemanticEventExtractor {
     fn is_js_reference_identifier_exported(&mut self, reference: &JsSyntaxNode) -> bool {
         use JsSyntaxKind::*;
         debug_assert!(matches!(reference.kind(), JS_REFERENCE_IDENTIFIER));
-
-        // export can only exist in the global scope
-        if self.scopes.len() > 1 {
-            return false;
-        }
-
         let reference_parent = reference.parent();
         let reference_greatparent = reference_parent.as_ref().and_then(|p| p.parent());
 
