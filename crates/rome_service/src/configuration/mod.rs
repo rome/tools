@@ -117,7 +117,7 @@ impl FilesConfiguration {
 
 type LoadConfig = Result<Option<Deserialized<Configuration>>, WorkspaceError>;
 
-#[derive(Default, PartialEq, Eq)]
+#[derive(Default, PartialEq)]
 pub enum BasePath {
     /// The default mode, not having a configuration file is not an error.
     #[default]
@@ -161,7 +161,7 @@ pub fn load_config(file_system: &DynRef<dyn FileSystem>, base_path: BasePath) ->
             // and the base path is not explicitly set; not having a configuration
             // file is only a cause of error when the `load_data` is set to `FromUser`.
             if match base_path {
-                BasePath::FromUser(_) => false,
+                BasePath::FromUser(_) => true,
                 _ => err.kind() != ErrorKind::NotFound,
             } {
                 return Err(WorkspaceError::cant_read_file(format!(
