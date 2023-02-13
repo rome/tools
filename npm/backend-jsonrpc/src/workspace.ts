@@ -381,6 +381,10 @@ export interface Nursery {
 	 */
 	noNoninteractiveElementToInteractiveRole?: RuleConfiguration;
 	/**
+	 * Disallow the use of parameter properties in class constructors.
+	 */
+	noParameterProperties?: RuleConfiguration;
+	/**
 	 * Disallow literal numbers that lose precision
 	 */
 	noPrecisionLoss?: RuleConfiguration;
@@ -811,6 +815,7 @@ export type Category =
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/noConfusingLabels"
 	| "lint/nursery/noNonNullAssertion"
+	| "lint/nursery/noParameterProperties"
 	| "lint/nursery/noPrecisionLoss"
 	| "lint/nursery/noRedundantAlt"
 	| "lint/nursery/noRedundantUseStrict"
