@@ -7,7 +7,7 @@ use rome_js_semantic::{ReferencesExtensions, SemanticScopeExtensions};
 use rome_js_syntax::{
     binding_ext::{AnyJsBindingDeclaration, AnyJsIdentifierBinding, JsAnyParameterParentFunction},
     JsClassExpression, JsFunctionDeclaration, JsFunctionExpression, JsSyntaxKind, JsSyntaxNode,
-    JsVariableDeclarator, TsPropertyParameter,
+    JsVariableDeclarator,
 };
 use rome_rowan::{AstNode, BatchMutationExt};
 
@@ -136,20 +136,6 @@ fn is_function_that_is_ok_parameter_not_be_used(
     )
 }
 
-fn is_property_parameter_ok_not_be_used(parameter: TsPropertyParameter) -> Option<bool> {
-    for modifier in parameter.modifiers() {
-        if let Some(modifier) = modifier.as_ts_accessibility_modifier() {
-            match modifier.modifier_token().ok()?.kind() {
-                // modifiers that are ok to not be used
-                JsSyntaxKind::PRIVATE_KW | JsSyntaxKind::PUBLIC_KW => return Some(true),
-                _ => {}
-            }
-        }
-    }
-
-    Some(false)
-}
-
 fn is_ambient_context(node: &JsSyntaxNode) -> bool {
     node.ancestors()
         .any(|x| x.kind() == JsSyntaxKind::TS_DECLARE_STATEMENT)
@@ -174,16 +160,7 @@ fn suggested_fix_if_unused(binding: &AnyJsIdentifierBinding) -> Option<Suggested
         | AnyJsBindingDeclaration::JsFunctionExpression(_) => None,
 
         // Some parameters are ok to not be used
-        AnyJsBindingDeclaration::TsPropertyParameter(parameter) => {
-            let is_binding_ok =
-                is_function_that_is_ok_parameter_not_be_used(parameter.parent_function())
-                    || is_property_parameter_ok_not_be_used(parameter)?;
-            if !is_binding_ok {
-                suggestion_for_binding(binding)
-            } else {
-                None
-            }
-        }
+        AnyJsBindingDeclaration::TsPropertyParameter(_) => None,
         AnyJsBindingDeclaration::JsFormalParameter(parameter) => {
             let is_binding_ok =
                 is_function_that_is_ok_parameter_not_be_used(parameter.parent_function());
