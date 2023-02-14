@@ -17,7 +17,7 @@ a = a;
 
 <pre class="language-text"><code class="language-text">nursery/noSelfAssignment.js:1:5 <a href="https://docs.rome.tools/lint/rules/noSelfAssignment">lint/nursery/noSelfAssignment</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">a is assigned to itself.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">a is assigned to itself.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>a = a;
    <strong>   │ </strong>    <strong><span style="color: Tomato;">^</span></strong>
@@ -37,7 +37,7 @@ a = a;
 
 <pre class="language-text"><code class="language-text">nursery/noSelfAssignment.js:1:8 <a href="https://docs.rome.tools/lint/rules/noSelfAssignment">lint/nursery/noSelfAssignment</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">a is assigned to itself.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">a is assigned to itself.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>[a] = [a];
    <strong>   │ </strong>       <strong><span style="color: Tomato;">^</span></strong>
@@ -57,7 +57,7 @@ a = a;
 
 <pre class="language-text"><code class="language-text">nursery/noSelfAssignment.js:1:15 <a href="https://docs.rome.tools/lint/rules/noSelfAssignment">lint/nursery/noSelfAssignment</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">b is assigned to itself.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">b is assigned to itself.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>({a: b} = {a: b});
    <strong>   │ </strong>              <strong><span style="color: Tomato;">^</span></strong>
@@ -77,7 +77,7 @@ a.b = a.b;
 
 <pre class="language-text"><code class="language-text">nursery/noSelfAssignment.js:1:9 <a href="https://docs.rome.tools/lint/rules/noSelfAssignment">lint/nursery/noSelfAssignment</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">b is assigned to itself.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">b is assigned to itself.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>a.b = a.b;
    <strong>   │ </strong>        <strong><span style="color: Tomato;">^</span></strong>
@@ -97,7 +97,7 @@ a[b] = a[b];
 
 <pre class="language-text"><code class="language-text">nursery/noSelfAssignment.js:1:10 <a href="https://docs.rome.tools/lint/rules/noSelfAssignment">lint/nursery/noSelfAssignment</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">b is assigned to itself.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">b is assigned to itself.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>a[b] = a[b];
    <strong>   │ </strong>         <strong><span style="color: Tomato;">^</span></strong>
