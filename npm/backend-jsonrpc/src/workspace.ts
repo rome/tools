@@ -898,6 +898,7 @@ export type Category =
 	| "internalError/panic"
 	| "parse"
 	| "parse/noSuperWithoutExtends"
+	| "parse/noDuplicatePrivateClassMembers"
 	| "lint"
 	| "lint/a11y"
 	| "lint/complexity"

@@ -156,6 +156,7 @@ define_dategories! {
     // parse categories
     "parse",
     "parse/noSuperWithoutExtends",
+    "parse/noDuplicatePrivateClassMembers",
 
     // Lint groups
     "lint",
