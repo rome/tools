@@ -27,7 +27,7 @@ declare_rule! {
     /// ```
     ///
     /// ```js,expect_diagnostic
-    /// [a, b] = [a, b];
+    /// [a] = [a];
     /// ```
     ///
     /// ```js,expect_diagnostic
@@ -55,7 +55,7 @@ declare_rule! {
     pub(crate) NoSelfAssignment {
         version: "12.0.0",
         name: "noSelfAssignment",
-        recommended: false,
+        recommended: true,
     }
 }
 

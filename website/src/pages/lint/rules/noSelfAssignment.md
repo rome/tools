@@ -32,20 +32,20 @@ a = a;
 </code></pre>
 
 ```jsx
-[a, b] = [a, b];
+[a] = [a];
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noSelfAssignment.js:1:11 <a href="https://docs.rome.tools/lint/rules/noSelfAssignment">lint/nursery/noSelfAssignment</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">nursery/noSelfAssignment.js:1:8 <a href="https://docs.rome.tools/lint/rules/noSelfAssignment">lint/nursery/noSelfAssignment</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">a is assigned to itself.</span>
   
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>[a, b] = [a, b];
-   <strong>   │ </strong>          <strong><span style="color: Tomato;">^</span></strong>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>[a] = [a];
+   <strong>   │ </strong>       <strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">This is where is assigned.</span>
   
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>[a, b] = [a, b];
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>[a] = [a];
    <strong>   │ </strong> <strong><span style="color: Tomato;">^</span></strong>
     <strong>2 │ </strong>
   
@@ -121,3 +121,7 @@ const a = a;
 [a, b] = [b, a];
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)
