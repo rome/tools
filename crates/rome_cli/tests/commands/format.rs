@@ -299,7 +299,7 @@ fn invalid_config_file_path() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    let config_path = Path::new("/test");
+    let config_path = Path::new("test");
     let file_path = Path::new("file.js");
     fs.insert(file_path.into(), *b"content");
 

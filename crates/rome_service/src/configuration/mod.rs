@@ -117,7 +117,7 @@ impl FilesConfiguration {
 
 type LoadConfig = Result<Option<Deserialized<Configuration>>, WorkspaceError>;
 
-#[derive(Default, PartialEq)]
+#[derive(Debug, Default, PartialEq)]
 pub enum BasePath {
     /// The default mode, not having a configuration file is not an error.
     #[default]

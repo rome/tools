@@ -76,7 +76,14 @@ jobs:
 
 
   test:
-    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        include:
+          - os: windows-2022
+          - os: ubuntu-20.04
+
+    name: Test
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout repository
