@@ -8,7 +8,7 @@ use rome_js_syntax::{
     JsCallExpression, JsForVariableDeclaration, JsIdentifierAssignment, JsIdentifierBinding,
     JsLanguage, JsParenthesizedExpression, JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode,
     JsSyntaxToken, JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList,
-    JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding, TsTypeParameter,
+    JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding, TsTypeParameterName,
 };
 use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast, SyntaxNodeOptionExt, SyntaxTokenText};
 
@@ -248,7 +248,7 @@ impl SemanticEventExtractor {
         use rome_js_syntax::JsSyntaxKind::*;
 
         match node.kind() {
-            JS_IDENTIFIER_BINDING | TS_IDENTIFIER_BINDING | TS_TYPE_PARAMETER => {
+            JS_IDENTIFIER_BINDING | TS_IDENTIFIER_BINDING | TS_TYPE_PARAMETER_NAME => {
                 self.enter_identifier_binding(node);
             }
             JS_REFERENCE_IDENTIFIER | JSX_REFERENCE_IDENTIFIER => {
@@ -342,7 +342,7 @@ impl SemanticEventExtractor {
         use JsSyntaxKind::*;
         debug_assert!(matches!(
             node.kind(),
-            JS_IDENTIFIER_BINDING | TS_IDENTIFIER_BINDING | TS_TYPE_PARAMETER
+            JS_IDENTIFIER_BINDING | TS_IDENTIFIER_BINDING | TS_TYPE_PARAMETER_NAME
         ), "specified node is not a identifier binding (JS_IDENTIFIER_BINDING, TS_IDENTIFIER_BINDING, TS_TYPE_PARAMETER)");
 
         let (name_token, is_var) = match node.kind() {
@@ -358,10 +358,10 @@ impl SemanticEventExtractor {
                 let is_var = Self::is_var(&binding);
                 (name_token, is_var)
             }
-            TS_TYPE_PARAMETER => {
-                let binding = node.clone().cast::<TsTypeParameter>()?;
-                let name_token = binding.name().ok()?.ident_token().ok()?;
-                let is_var = Self::is_var(&binding);
+            TS_TYPE_PARAMETER_NAME => {
+                let token = node.clone().cast::<TsTypeParameterName>()?;
+                let name_token = token.ident_token().ok()?;
+                let is_var = Some(false);
                 (name_token, is_var)
             }
             _ => return None,
