@@ -163,8 +163,12 @@ fn redact_snapshot(input: &str) -> Cow<'_, str> {
         }
 
         if !result.is_empty() {
-            result.push_str(rest);
+            result.push_str(&rest.replace(MAIN_SEPARATOR, "/"));
             output = Cow::Owned(result);
+        }
+
+        if output.contains(MAIN_SEPARATOR) {
+            output = Cow::Owned(output.replace(MAIN_SEPARATOR, "/"))
         }
     }
 
