@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 91
 expression: invalidScript.jsonc
 ---
 # Input
@@ -24,6 +25,32 @@ invalidScript.jsonc:1:1 lint/nursery/noVar  FIXABLE  ━━━━━━━━━
   
   - var·x·=·1;·foo(x);
   + const·x·=·1;·foo(x);
+  
+
+```
+
+# Input
+```js
+var x = 1; x = 5;
+```
+
+# Diagnostics
+```
+invalidScript.jsonc:1:1 lint/nursery/noVar  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use let or const instead of var.
+  
+  > 1 │ var x = 1; x = 5;
+      │ ^^^^^^^^^
+  
+  i A variable declared with var in the global scope pollutes the global object.
+  
+  i See MDN web docs for more details.
+  
+  i Suggested fix: Use 'let' instead.
+  
+  - var·x·=·1;·x·=·5;
+  + let·x·=·1;·x·=·5;
   
 
 ```
@@ -87,7 +114,7 @@ var [x = -1, y] = [1,2]; y = 0;
 
 # Diagnostics
 ```
-invalidScript.jsonc:1:1 lint/nursery/noVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidScript.jsonc:1:1 lint/nursery/noVar  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use let or const instead of var.
   
@@ -97,6 +124,11 @@ invalidScript.jsonc:1:1 lint/nursery/noVar ━━━━━━━━━━━━�
   i A variable declared with var in the global scope pollutes the global object.
   
   i See MDN web docs for more details.
+  
+  i Suggested fix: Use 'let' instead.
+  
+  - var·[x·=·-1,·y]·=·[1,2];·y·=·0;
+  + let·[x·=·-1,·y]·=·[1,2];·y·=·0;
   
 
 ```
@@ -108,7 +140,7 @@ var {a: x = -1, b: y} = {a:1,b:2}; y = 0;
 
 # Diagnostics
 ```
-invalidScript.jsonc:1:1 lint/nursery/noVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidScript.jsonc:1:1 lint/nursery/noVar  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Use let or const instead of var.
   
@@ -118,6 +150,11 @@ invalidScript.jsonc:1:1 lint/nursery/noVar ━━━━━━━━━━━━�
   i A variable declared with var in the global scope pollutes the global object.
   
   i See MDN web docs for more details.
+  
+  i Suggested fix: Use 'let' instead.
+  
+  - var·{a:·x·=·-1,·b:·y}·=·{a:1,b:2};·y·=·0;
+  + let·{a:·x·=·-1,·b:·y}·=·{a:1,b:2};·y·=·0;
   
 
 ```
