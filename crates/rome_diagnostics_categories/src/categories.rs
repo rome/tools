@@ -103,6 +103,7 @@ define_dategories! {
     "lint/nursery/useYield": "https://docs.rome.tools/lint/rules/useYield",
     "lint/nursery/noGlobalObjectCalls": "https://docs.rome.tools/lint/rules/noGlobalObjectCalls",
     "lint/nursery/noPrototypeBuiltins": "https://docs.rome.tools/lint/rules/noPrototypeBuiltins",
+    "lint/nursery/noSelfAssignment": "https://docs.rome.tools/lint/rules/noSelfAssignment",
     // Insert new nursery rule here
 
     // performance

@@ -405,6 +405,10 @@ export interface Nursery {
 	 */
 	noRestrictedGlobals?: RuleConfiguration;
 	/**
+	 * Put your description here
+	 */
+	noSelfAssignment?: RuleConfiguration;
+	/**
 	 * Disallow comparisons where both sides are exactly the same.
 	 */
 	noSelfCompare?: RuleConfiguration;
@@ -854,6 +858,7 @@ export type Category =
 	| "lint/nursery/useYield"
 	| "lint/nursery/noGlobalObjectCalls"
 	| "lint/nursery/noPrototypeBuiltins"
+	| "lint/nursery/noSelfAssignment"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
