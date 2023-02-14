@@ -1,5 +1,6 @@
 [
 	"var x = 1; foo(x);",
+	"var x = 1; x = 5;",
 	"for (var i in [1,2,3]) { foo(i); }",
 	"for (var x of [1,2,3]) { foo(x); }",
 	"var [x = -1, y] = [1,2]; y = 0;",
