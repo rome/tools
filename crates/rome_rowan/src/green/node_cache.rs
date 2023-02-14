@@ -1,7 +1,11 @@
 use hashbrown::hash_map::{RawEntryMut, RawOccupiedEntryMut, RawVacantEntryMut};
 use rome_text_size::TextSize;
 use rustc_hash::FxHasher;
+use std::fmt::{self, Debug, Formatter};
 use std::hash::{BuildHasherDefault, Hash, Hasher};
+use std::marker::PhantomData;
+use std::ops::Not;
+use std::ptr::NonNull;
 
 use crate::green::Slot;
 use crate::syntax::{TriviaPiece, TriviaPieceKind};
@@ -11,15 +15,107 @@ use crate::{
 };
 
 use super::element::GreenElement;
-use super::trivia::GreenTrivia;
+use super::trivia::{GreenTrivia, GreenTriviaData};
 
 type HashMap<K, V> = hashbrown::HashMap<K, V, BuildHasherDefault<FxHasher>>;
+
+/// Internal representation for a green pointer and a generation index in the
+/// cache, packed into a single `usize`. This relies on the fact that "green
+/// elements" (tokens, nodes and trivia) have memory alignment constraints that
+/// exceed a single byte (and thus the lower bits of the pointer will always be
+/// zero), while the generation index only needs a single bit of storage.
+struct GenerationalPointer<T: IntoRawPointer> {
+    data: usize,
+    _ty: PhantomData<T>,
+}
+
+impl<T: IntoRawPointer> GenerationalPointer<T> {
+    fn new(value: T, generation: Generation) -> Self {
+        let ptr = value.into_raw();
+        let mut data = ptr as usize;
+        debug_assert!(data & 1 == 0);
+        data |= generation as usize;
+        Self {
+            data,
+            _ty: PhantomData,
+        }
+    }
+
+    fn value(&self) -> &T::Pointee {
+        // SAFETY: This clears the least significant bit from `data`. This bit
+        // should have been set to zero in the original pointer due to the
+        // alignment requirements of the underlying data (this is checked by an
+        // assertion on debug builds), so this essentially extracts the pointer
+        // value from the bit field. Said point is safe to dereference at this
+        // point since we're holding a valid reference to `self` which
+        // guarantees `Drop` has not been called and the memory associated with
+        // the pointer has not been released yet.
+        let data = self.data & !1;
+        let ptr = data as *const T::Pointee;
+        unsafe { &*ptr }
+    }
+
+    fn generation(&self) -> Generation {
+        match self.data & 1 {
+            0 => Generation::A,
+            1 => Generation::B,
+            // SAFETY: The `& 1` operation above ensures only the least
+            // significant bit can be set
+            _ => unreachable!(),
+        }
+    }
+
+    fn set_generation(&mut self, generation: Generation) {
+        let data = self.data & !1;
+        self.data = data | generation as usize;
+    }
+}
+
+impl<T: IntoRawPointer> Debug for GenerationalPointer<T>
+where
+    T::Pointee: Debug,
+{
+    fn fmt(&self, fmt: &mut Formatter<'_>) -> fmt::Result {
+        fmt.debug_struct("GenerationalPointer")
+            .field("value", self.value())
+            .field("generation", &self.generation())
+            .finish()
+    }
+}
+
+impl<T: IntoRawPointer> Drop for GenerationalPointer<T> {
+    fn drop(&mut self) {
+        let ptr = self.value() as *const _ as *mut _;
+        let value = unsafe { T::from_raw(ptr) };
+        drop(value);
+    }
+}
+
+/// Trait implemented for types that can be turned into a raw pointer, and
+/// reconstructed back from it. Used by [GenerationalPointer] internally.
+trait IntoRawPointer {
+    type Pointee;
+    fn into_raw(self) -> *mut Self::Pointee;
+    unsafe fn from_raw(ptr: *mut Self::Pointee) -> Self;
+}
 
 /// A token stored in the `NodeCache`.
 /// Does intentionally not implement `Hash` to have compile-time guarantees that the `NodeCache`
 /// uses the correct hash.
 #[derive(Debug)]
-struct CachedToken(GreenToken);
+struct CachedToken(GenerationalPointer<GreenToken>);
+
+impl IntoRawPointer for GreenToken {
+    type Pointee = GreenTokenData;
+
+    fn into_raw(self) -> *mut Self::Pointee {
+        GreenToken::into_raw(self).as_ptr()
+    }
+
+    unsafe fn from_raw(ptr: *mut Self::Pointee) -> Self {
+        GreenToken::from_raw(NonNull::new(ptr).unwrap())
+    }
+}
 
 /// A node stored in the `NodeCache`. It stores a pre-computed hash
 /// because re-computing the hash requires traversing the whole sub-tree.
@@ -30,10 +126,22 @@ struct CachedToken(GreenToken);
 /// uses the correct hash.
 #[derive(Debug)]
 struct CachedNode {
-    node: GreenNode,
+    node: GenerationalPointer<GreenNode>,
     // Store the hash as it's expensive to re-compute
     // involves re-computing the hash of the whole sub-tree
     hash: u64,
+}
+
+impl IntoRawPointer for GreenNode {
+    type Pointee = GreenNodeData;
+
+    fn into_raw(self) -> *mut Self::Pointee {
+        GreenNode::into_raw(self).as_ptr()
+    }
+
+    unsafe fn from_raw(ptr: *mut Self::Pointee) -> Self {
+        GreenNode::from_raw(NonNull::new(ptr).unwrap())
+    }
 }
 
 /// Interner for GreenTokens and GreenNodes
@@ -60,6 +168,29 @@ pub struct NodeCache {
     nodes: HashMap<CachedNode, ()>,
     tokens: HashMap<CachedToken, ()>,
     trivia: TriviaCache,
+    generation: Generation,
+}
+
+/// Represents a "generation" in the garbage collection scheme of the node
+/// cache. For our purpose we only need to track two generations at most (the
+/// previous and next generation) so this is represented as an enum with two
+/// variants.
+#[derive(Default, Debug, Clone, Copy, PartialEq, Eq)]
+enum Generation {
+    #[default]
+    A = 0,
+    B = 1,
+}
+
+impl Not for Generation {
+    type Output = Self;
+
+    fn not(self) -> Self::Output {
+        match self {
+            Generation::A => Generation::B,
+            Generation::B => Generation::A,
+        }
+    }
 }
 
 fn token_hash_of(kind: RawSyntaxKind, text: &str) -> u64 {
@@ -90,11 +221,11 @@ impl NodeCache {
     /// Returns an entry that allows the caller to:
     /// * Retrieve the cached node if it is present in the cache
     /// * Insert a node if it isn't present in the cache
-    pub(crate) fn node(
-        &mut self,
+    pub(crate) fn node<'a>(
+        &'a mut self,
         kind: RawSyntaxKind,
         children: &[(u64, GreenElement)],
-    ) -> NodeCacheNodeEntryMut {
+    ) -> NodeCacheNodeEntryMut<'a> {
         if children.len() > 3 {
             return NodeCacheNodeEntryMut::NoCache(Self::UNCACHED_NODE_HASH);
         }
@@ -119,8 +250,8 @@ impl NodeCache {
         // For `libsyntax/parse/parser.rs`, measurements show that deduping saves
         // 17% of the memory for green nodes!
         let entry = self.nodes.raw_entry_mut().from_hash(hash, |no_hash| {
-            no_hash.node.kind() == kind && {
-                let lhs = no_hash.node.slots().filter_map(|slot| match slot {
+            no_hash.node.value().kind() == kind && {
+                let lhs = no_hash.node.value().slots().filter_map(|slot| match slot {
                     // Ignore empty slots. The queried node only has the present children
                     Slot::Empty { .. } => None,
                     Slot::Node { node, .. } => Some(element_id(NodeOrToken::Node(node))),
@@ -136,14 +267,18 @@ impl NodeCache {
         });
 
         match entry {
-            RawEntryMut::Occupied(entry) => NodeCacheNodeEntryMut::Cached(CachedNodeEntry {
-                hash,
-                raw_entry: entry,
-            }),
+            RawEntryMut::Occupied(mut entry) => {
+                entry.key_mut().node.set_generation(self.generation);
+                NodeCacheNodeEntryMut::Cached(CachedNodeEntry {
+                    hash,
+                    raw_entry: entry,
+                })
+            }
             RawEntryMut::Vacant(entry) => NodeCacheNodeEntryMut::Vacant(VacantNodeEntry {
                 raw_entry: entry,
                 original_kind: kind,
                 hash,
+                generation: self.generation,
             }),
         }
     }
@@ -162,23 +297,62 @@ impl NodeCache {
         let hash = token_hash_of(kind, text);
 
         let entry = self.tokens.raw_entry_mut().from_hash(hash, |token| {
-            token.0.kind() == kind && token.0.text() == text
+            token.0.value().kind() == kind && token.0.value().text() == text
         });
 
         let token = match entry {
-            RawEntryMut::Occupied(entry) => entry.key().0.clone(),
+            RawEntryMut::Occupied(mut entry) => {
+                entry.key_mut().0.set_generation(self.generation);
+                entry.key().0.value().to_owned()
+            }
             RawEntryMut::Vacant(entry) => {
-                let leading = self.trivia.get(leading);
-                let trailing = self.trivia.get(trailing);
+                let leading = self.trivia.get(self.generation, leading);
+                let trailing = self.trivia.get(self.generation, trailing);
 
                 let token = GreenToken::with_trivia(kind, text, leading, trailing);
-                entry
-                    .insert_with_hasher(hash, CachedToken(token.clone()), (), |t| token_hash(&t.0));
+                let key = CachedToken(GenerationalPointer::new(token.clone(), self.generation));
+                entry.insert_with_hasher(hash, key, (), |t| token_hash(t.0.value()));
                 token
             }
         };
 
         (hash, token)
+    }
+
+    /// Increment the generation counter of the cache, all cache access from
+    /// this point onward will update the generation of the corresponding entry
+    /// to this new value
+    pub(crate) fn increment_generation(&mut self) {
+        debug_assert!(
+            self.nodes
+                .keys()
+                .all(|entry| entry.node.generation() == self.generation)
+                && self
+                    .tokens
+                    .keys()
+                    .all(|token| token.0.generation() == self.generation)
+                && self
+                    .trivia
+                    .cache
+                    .keys()
+                    .all(|trivia| trivia.0.generation() == self.generation)
+        );
+
+        self.generation = !self.generation;
+    }
+
+    /// Removes nodes, tokens and trivia entries from the cache when their
+    /// generation doesn't match the current generation of the whole cache
+    pub(crate) fn sweep_cache(&mut self) {
+        self.nodes
+            .drain_filter(|node, _| node.node.generation() != self.generation);
+
+        self.tokens
+            .drain_filter(|token, _| token.0.generation() != self.generation);
+
+        self.trivia
+            .cache
+            .drain_filter(|trivia, _| trivia.0.generation() != self.generation);
     }
 }
 
@@ -199,6 +373,7 @@ pub(crate) struct VacantNodeEntry<'a> {
     hash: u64,
     original_kind: RawSyntaxKind,
     raw_entry: RawVacantEntryMut<'a, CachedNode, (), BuildHasherDefault<FxHasher>>,
+    generation: Generation,
 }
 
 /// Represents an entry of a cached node.
@@ -208,8 +383,8 @@ pub(crate) struct CachedNodeEntry<'a> {
 }
 
 impl<'a> CachedNodeEntry<'a> {
-    pub fn node(&self) -> &GreenNode {
-        &self.raw_entry.key().node
+    pub fn node(&self) -> &GreenNodeData {
+        self.raw_entry.key().node.value()
     }
 
     pub fn hash(&self) -> u64 {
@@ -234,7 +409,7 @@ impl<'a> VacantNodeEntry<'a> {
             self.raw_entry.insert_with_hasher(
                 self.hash,
                 CachedNode {
-                    node,
+                    node: GenerationalPointer::new(node, self.generation),
                     hash: self.hash,
                 },
                 (),
@@ -249,7 +424,19 @@ impl<'a> VacantNodeEntry<'a> {
 /// Deliberately doesn't implement `Hash` to make sure all
 /// usages go through the custom `FxHasher`.
 #[derive(Debug)]
-struct CachedTrivia(GreenTrivia);
+struct CachedTrivia(GenerationalPointer<GreenTrivia>);
+
+impl IntoRawPointer for GreenTrivia {
+    type Pointee = GreenTriviaData;
+
+    fn into_raw(self) -> *mut Self::Pointee {
+        GreenTrivia::into_raw(self)
+    }
+
+    unsafe fn from_raw(ptr: *mut Self::Pointee) -> Self {
+        GreenTrivia::from_raw(ptr)
+    }
+}
 
 #[derive(Debug)]
 struct TriviaCache {
@@ -272,7 +459,7 @@ impl Default for TriviaCache {
 impl TriviaCache {
     /// Tries to retrieve a [GreenTrivia] with the given pieces from the cache or creates a new one and caches
     /// it for further calls.
-    fn get(&mut self, pieces: &[TriviaPiece]) -> GreenTrivia {
+    fn get(&mut self, generation: Generation, pieces: &[TriviaPiece]) -> GreenTrivia {
         match pieces {
             [] => GreenTrivia::empty(),
             [TriviaPiece {
@@ -286,17 +473,20 @@ impl TriviaCache {
                 let entry = self
                     .cache
                     .raw_entry_mut()
-                    .from_hash(hash, |trivia| trivia.0.pieces() == pieces);
+                    .from_hash(hash, |trivia| trivia.0.value().pieces() == pieces);
 
                 match entry {
-                    RawEntryMut::Occupied(entry) => entry.key().0.clone(),
+                    RawEntryMut::Occupied(mut entry) => {
+                        entry.key_mut().0.set_generation(generation);
+                        entry.key().0.value().to_owned()
+                    }
                     RawEntryMut::Vacant(entry) => {
                         let trivia = GreenTrivia::new(pieces.iter().copied());
                         entry.insert_with_hasher(
                             hash,
-                            CachedTrivia(trivia.clone()),
+                            CachedTrivia(GenerationalPointer::new(trivia.clone(), generation)),
                             (),
-                            |cached| Self::trivia_hash_of(cached.0.pieces()),
+                            |cached| Self::trivia_hash_of(cached.0.value().pieces()),
                         );
                         trivia
                     }
@@ -320,7 +510,9 @@ impl TriviaCache {
 
 #[cfg(test)]
 mod tests {
-    use crate::green::node_cache::token_hash;
+    use std::mem::size_of;
+
+    use crate::green::node_cache::{token_hash, CachedNode, CachedToken, CachedTrivia};
     use crate::green::trivia::GreenTrivia;
     use crate::{GreenToken, RawSyntaxKind};
     use rome_text_size::TextSize;
@@ -354,5 +546,12 @@ mod tests {
             GreenTrivia::whitespace(1),
         );
         assert_ne!(token_hash(&t1), token_hash(&t4));
+    }
+
+    #[test]
+    fn cache_entry_size() {
+        assert_eq!(size_of::<CachedNode>(), 16);
+        assert_eq!(size_of::<CachedToken>(), 8);
+        assert_eq!(size_of::<CachedTrivia>(), 8);
     }
 }

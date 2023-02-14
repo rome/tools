@@ -31,7 +31,7 @@ impl FormatRule<AnyTsType> for FormatAnyTsType {
             AnyTsType::TsNonPrimitiveType(node) => node.format().fmt(f),
             AnyTsType::TsThisType(node) => node.format().fmt(f),
             AnyTsType::TsNumberLiteralType(node) => node.format().fmt(f),
-            AnyTsType::TsBigIntLiteralType(node) => node.format().fmt(f),
+            AnyTsType::TsBigintLiteralType(node) => node.format().fmt(f),
             AnyTsType::TsStringLiteralType(node) => node.format().fmt(f),
             AnyTsType::TsNullLiteralType(node) => node.format().fmt(f),
             AnyTsType::TsBooleanLiteralType(node) => node.format().fmt(f),

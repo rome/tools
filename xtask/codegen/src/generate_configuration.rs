@@ -1,5 +1,5 @@
 use case::CaseExt;
-use proc_macro2::{Ident, Literal, Span};
+use proc_macro2::{Ident, Literal, Span, TokenStream};
 use pulldown_cmark::{Event, Parser, Tag};
 use quote::quote;
 use rome_analyze::{
@@ -13,6 +13,9 @@ use xtask_codegen::{to_lower_snake_case, update};
 
 pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
     let config_root = project_root().join("crates/rome_service/src/configuration/linter");
+    let config_parsing_root =
+        project_root().join("crates/rome_service/src/configuration/parse/json/");
+    let push_rules_directory = project_root().join("crates/rome_service/src/configuration");
 
     #[derive(Default)]
     struct LintRulesVisitor {
@@ -50,198 +53,19 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
     let mut group_rules_union = Vec::new();
     let mut group_match_code = Vec::new();
     let mut group_get_severity = Vec::new();
+    let mut group_name_list = vec!["recommended"];
+    let mut rule_visitor_call = Vec::new();
+    let mut visitor_rule_list = Vec::new();
+    let mut push_rule_list = Vec::new();
     for (group, rules) in groups {
-        let mut lines_recommended_rule = Vec::new();
-        let mut lines_recommended_rule_as_filter = Vec::new();
-        let mut declarations = Vec::new();
-        let mut lines_rule = Vec::new();
-        let mut schema_lines_rules = Vec::new();
+        group_name_list.push(group);
         let property_group_name = Ident::new(&to_lower_snake_case(group), Span::call_site());
+        let group_struct_name = Ident::new(&group.to_capitalized(), Span::call_site());
+        let group_name_string_literal = Literal::string(group);
 
-        let mut number_of_recommended_rules: u8 = 0;
-        let number_of_rules = Literal::u8_unsuffixed(rules.len() as u8);
-        for (index, (rule, metadata)) in rules.iter().enumerate() {
-            let summary = {
-                let mut docs = String::new();
-                let parser = Parser::new(metadata.docs);
-                for event in parser {
-                    match event {
-                        Event::Text(text) => {
-                            docs.push_str(text.as_ref());
-                        }
-                        Event::Code(text) => {
-                            docs.push_str(text.as_ref());
-                        }
-                        Event::SoftBreak => {
-                            docs.push(' ');
-                        }
-
-                        Event::Start(Tag::Paragraph) => {}
-                        Event::End(Tag::Paragraph) => {
-                            break;
-                        }
-
-                        Event::Start(tag) => match tag {
-                            Tag::Strong | Tag::Paragraph => {
-                                continue;
-                            }
-
-                            _ => panic!("Unimplemented tag {:?}", { tag }),
-                        },
-
-                        Event::End(tag) => match tag {
-                            Tag::Strong | Tag::Paragraph => {
-                                continue;
-                            }
-                            _ => panic!("Unimplemented tag {:?}", { tag }),
-                        },
-
-                        _ => {
-                            panic!("Unimplemented event {:?}", { event })
-                        }
-                    }
-                }
-                docs
-            };
-
-            let rule_position = Literal::u8_unsuffixed(index as u8);
-            let rule_identifier = Ident::new(&to_lower_snake_case(rule), Span::call_site());
-            let declaration = quote! {
-                #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
-                pub #rule_identifier: RuleConfiguration
-            };
-            declarations.push(declaration);
-            if metadata.recommended {
-                lines_recommended_rule_as_filter.push(quote! {
-                    RuleFilter::Rule(#group, Self::CATEGORY_RULES[#rule_position])
-                });
-
-                lines_recommended_rule.push(quote! {
-                    #rule
-                });
-                number_of_recommended_rules += 1;
-            }
-            lines_rule.push(quote! {
-                 #rule
-            });
-            schema_lines_rules.push(quote! {
-                #[doc = #summary]
-                #rule_identifier: Option<RuleConfiguration>
-            });
-        }
-
-        let group_struct_name = Ident::new(&group.to_capitalized().to_string(), Span::call_site());
-        let group_schema_struct_name = Ident::new(
-            &format!("{}Schema", &group.to_capitalized().to_string()),
-            Span::call_site(),
-        );
-        let group_schema_struct_name_as_literal =
-            Literal::string(&format!("{}Schema", &group.to_capitalized().to_string()));
-
-        let number_of_recommended_rules = Literal::u8_unsuffixed(number_of_recommended_rules);
-        let deserialize_function_string = Literal::string(&format!("deserialize_{}_rules", group));
-        let deserialize_function_ident =
-            Ident::new(&format!("deserialize_{}_rules", group), Span::call_site());
-
-        let group_struct = quote! {
-            #[derive(Deserialize, Default, Serialize, Debug, Clone)]
-            #[cfg_attr(feature = "schemars", derive(JsonSchema))]
-            #[serde(rename_all = "camelCase", default)]
-            pub struct #group_struct_name {
-                /// It enables the recommended rules for this group
-                #[serde(skip_serializing_if = "Option::is_none")]
-                pub recommended: Option<bool>,
-
-                /// List of rules for the current group
-                #[serde(skip_serializing_if = "IndexMap::is_empty", deserialize_with = #deserialize_function_string, flatten)]
-                #[cfg_attr(feature = "schemars", schemars(with = #group_schema_struct_name_as_literal))]
-                pub rules: IndexMap<String, RuleConfiguration>,
-            }
-
-            // Struct is only used when generating the JSON schema
-            #[cfg_attr(feature = "schemars", derive(JsonSchema), serde(rename_all = "camelCase"))]
-            #[allow(dead_code)]
-            /// A list of rules that belong to this group
-            struct #group_schema_struct_name {
-                #( #schema_lines_rules ),*
-            }
-
-
-            impl #group_struct_name {
-
-                const CATEGORY_NAME: &'static str = #group;
-                pub(crate) const CATEGORY_RULES: [&'static str; #number_of_rules] = [
-                    #( #lines_rule ),*
-                ];
-
-                const RECOMMENDED_RULES: [&'static str; #number_of_recommended_rules] = [
-                    #( #lines_recommended_rule ),*
-                ];
-
-                const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; #number_of_recommended_rules] = [
-                    #( #lines_recommended_rule_as_filter ),*
-                ];
-
-
-
-
-                pub(crate) fn is_recommended(&self) -> bool {
-                    !matches!(self.recommended, Some(false))
-                }
-
-
-                pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
-                   IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
-                        if conf.is_enabled() {
-                            Some(RuleFilter::Rule(Self::CATEGORY_NAME, key))
-                        } else {
-                            None
-                        }
-                    }))
-                }
-
-                pub(crate) fn get_disabled_rules(&self) -> IndexSet<RuleFilter> {
-                   IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
-                        if conf.is_disabled() {
-                            Some(RuleFilter::Rule(Self::CATEGORY_NAME, key))
-                        } else {
-                            None
-                        }
-                    }))
-                }
-
-                /// Checks if, given a rule name, matches one of the rules contained in this category
-                pub(crate) fn has_rule(rule_name: &str) -> bool {
-                    Self::CATEGORY_RULES.contains(&rule_name)
-                }
-
-                /// Checks if, given a rule name, it is marked as recommended
-                pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
-                     Self::RECOMMENDED_RULES.contains(&rule_name)
-                }
-
-                pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; #number_of_recommended_rules] {
-                    Self::RECOMMENDED_RULES_AS_FILTERS
-                }
-            }
-
-            fn #deserialize_function_ident<'de, D>(
-                deserializer: D,
-            ) -> Result<IndexMap<String, RuleConfiguration>, D::Error>
-            where
-                D: serde::de::Deserializer<'de>,
-            {
-                let value: IndexMap<String, RuleConfiguration> = Deserialize::deserialize(deserializer)?;
-                for rule_name in value.keys() {
-                    if !#group_struct_name::CATEGORY_RULES.contains(&rule_name.as_str()) {
-                        return Err(serde::de::Error::custom(format!("invalid rule name {}", rule_name)));
-                    }
-                }
-                Ok(value)
-            }
-        };
-
-        struct_groups.push(group_struct);
+        struct_groups.push(generate_struct(group, &rules));
+        visitor_rule_list.push(generate_visitor(group, &rules));
+        push_rule_list.push(generate_push_to_analyzer_rules(group));
         line_groups.push(quote! {
             #[serde(skip_serializing_if = "Option::is_none")]
             pub #property_group_name: Option<#group_struct_name>
@@ -272,7 +96,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
             #group => self
                 .#property_group_name
                 .as_ref()
-                .and_then(|#property_group_name| #property_group_name.rules.get(rule_name))
+                .and_then(|#property_group_name| #property_group_name.get_rule_configuration(rule_name))
                 .map(|rule_setting| rule_setting.into())
                 .unwrap_or_else(|| {
                     if #group_struct_name::is_recommended_rule(rule_name) {
@@ -285,6 +109,14 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         group_match_code.push(quote! {
            #group => #group_struct_name::has_rule(rule_name).then_some((category, rule_name))
         });
+
+        rule_visitor_call.push(quote! {
+            #group_name_string_literal => {
+                let mut visitor = #group_struct_name::default();
+                self.map_to_object(&value, name_text, &mut visitor, diagnostics)?;
+                self.#property_group_name = Some(visitor);
+            }
+        });
     }
 
     let groups = quote! {
@@ -293,7 +125,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         use schemars::JsonSchema;
         use crate::RuleConfiguration;
         use rome_analyze::RuleFilter;
-        use indexmap::{IndexMap, IndexSet};
+        use indexmap::IndexSet;
         use rome_diagnostics::{Category, Severity};
 
         #[derive(Deserialize, Serialize, Debug, Clone)]
@@ -388,11 +220,348 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         #( #struct_groups )*
     };
 
-    let ast = groups.to_string();
+    let visitors = quote! {
+        use crate::configuration::linter::*;
+        use crate::Rules;
+        use rome_deserialize::json::{has_only_known_keys, VisitJsonNode};
+        use rome_deserialize::{DeserializationDiagnostic, VisitNode};
+        use rome_json_syntax::{AnyJsonValue, JsonLanguage};
+        use rome_rowan::{AstNode, SyntaxNode};
 
-    let pretty = xtask::reformat(ast)?;
+        impl VisitJsonNode for Rules {}
 
-    update(&config_root.join("rules.rs"), &pretty, &mode)?;
+        impl VisitNode<JsonLanguage> for Rules {
+            fn visit_member_name(
+                &mut self,
+                node: &SyntaxNode<JsonLanguage>,
+                diagnostics: &mut Vec<DeserializationDiagnostic>,
+            ) -> Option<()> {
+                has_only_known_keys(node, &[#( #group_name_list ),*], diagnostics)
+            }
+
+            fn visit_map(
+                &mut self,
+                key: &SyntaxNode<JsonLanguage>,
+                value: &SyntaxNode<JsonLanguage>,
+                diagnostics: &mut Vec<DeserializationDiagnostic>,
+            ) -> Option<()> {
+                let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
+
+                let name_text = name.text();
+                match name_text {
+                    #( #rule_visitor_call )*
+
+                    _ => {}
+                }
+
+                Some(())
+            }
+        }
+
+        #( #visitor_rule_list )*
+    };
+
+    let push_rules = quote! {
+        use crate::configuration::linter::*;
+        use crate::{RuleConfiguration, Rules};
+        use rome_analyze::{AnalyzerRules, MetadataRegistry};
+
+        pub(crate) fn push_to_analyzer_rules(
+            rules: &Rules,
+            metadata: &MetadataRegistry,
+            analyzer_rules: &mut AnalyzerRules,
+        ) {
+            #( #push_rule_list )*
+        }
+    };
+
+    let configuration = groups.to_string();
+    let visitors = visitors.to_string();
+    let push_rules = push_rules.to_string();
+
+    update(
+        &config_root.join("rules.rs"),
+        &xtask::reformat(configuration)?,
+        &mode,
+    )?;
+
+    update(
+        &config_parsing_root.join("rules.rs"),
+        &xtask::reformat(visitors)?,
+        &mode,
+    )?;
+
+    update(
+        &push_rules_directory.join("generated.rs"),
+        &xtask::reformat(push_rules)?,
+        &mode,
+    )?;
 
     Ok(())
+}
+
+fn generate_struct(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) -> TokenStream {
+    let mut lines_recommended_rule = Vec::new();
+    let mut lines_recommended_rule_as_filter = Vec::new();
+    let mut declarations = Vec::new();
+    let mut lines_rule = Vec::new();
+    let mut schema_lines_rules = Vec::new();
+    let mut rule_enabled_check_line = Vec::new();
+    let mut rule_disabled_check_line = Vec::new();
+    let mut get_rule_configuration_line = Vec::new();
+
+    let mut number_of_recommended_rules: u8 = 0;
+    let number_of_rules = Literal::u8_unsuffixed(rules.len() as u8);
+    for (index, (rule, metadata)) in rules.iter().enumerate() {
+        let summary = {
+            let mut docs = String::new();
+            let parser = Parser::new(metadata.docs);
+            for event in parser {
+                match event {
+                    Event::Text(text) => {
+                        docs.push_str(text.as_ref());
+                    }
+                    Event::Code(text) => {
+                        docs.push_str(text.as_ref());
+                    }
+                    Event::SoftBreak => {
+                        docs.push(' ');
+                    }
+
+                    Event::Start(Tag::Paragraph) => {}
+                    Event::End(Tag::Paragraph) => {
+                        break;
+                    }
+
+                    Event::Start(tag) => match tag {
+                        Tag::Strong | Tag::Paragraph => {
+                            continue;
+                        }
+
+                        _ => panic!("Unimplemented tag {:?}", { tag }),
+                    },
+
+                    Event::End(tag) => match tag {
+                        Tag::Strong | Tag::Paragraph => {
+                            continue;
+                        }
+                        _ => panic!("Unimplemented tag {:?}", { tag }),
+                    },
+
+                    _ => {
+                        panic!("Unimplemented event {:?}", { event })
+                    }
+                }
+            }
+            docs
+        };
+
+        let rule_position = Literal::u8_unsuffixed(index as u8);
+        let rule_identifier = Ident::new(&to_lower_snake_case(rule), Span::call_site());
+        let declaration = quote! {
+            #[serde(skip_serializing_if = "RuleConfiguration::is_err")]
+            pub #rule_identifier: RuleConfiguration
+        };
+        declarations.push(declaration);
+        if metadata.recommended {
+            lines_recommended_rule_as_filter.push(quote! {
+                RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[#rule_position])
+            });
+
+            lines_recommended_rule.push(quote! {
+                #rule
+            });
+            number_of_recommended_rules += 1;
+        }
+        lines_rule.push(quote! {
+             #rule
+        });
+        schema_lines_rules.push(quote! {
+            #[doc = #summary]
+            #[serde(skip_serializing_if = "Option::is_none")]
+            pub #rule_identifier: Option<RuleConfiguration>
+        });
+
+        rule_enabled_check_line.push(quote! {
+            if let Some(rule) = self.#rule_identifier.as_ref() {
+                if rule.is_enabled() {
+                    index_set.insert(RuleFilter::Rule(
+                        Self::GROUP_NAME,
+                        Self::GROUP_RULES[#rule_position],
+                    ));
+                }
+            }
+        });
+        rule_disabled_check_line.push(quote! {
+            if let Some(rule) = self.#rule_identifier.as_ref() {
+                if rule.is_disabled() {
+                    index_set.insert(RuleFilter::Rule(
+                        Self::GROUP_NAME,
+                        Self::GROUP_RULES[#rule_position],
+                    ));
+                }
+            }
+        });
+
+        get_rule_configuration_line.push(quote! {
+            #rule => self.#rule_identifier.as_ref()
+        });
+    }
+
+    let group_struct_name = Ident::new(&group.to_capitalized(), Span::call_site());
+
+    let number_of_recommended_rules = Literal::u8_unsuffixed(number_of_recommended_rules);
+
+    quote! {
+        #[derive(Deserialize, Default, Serialize, Debug, Clone)]
+        #[cfg_attr(feature = "schemars", derive(JsonSchema))]
+        #[serde(rename_all = "camelCase", default)]
+        /// A list of rules that belong to this group
+        pub struct #group_struct_name {
+            /// It enables the recommended rules for this group
+            #[serde(skip_serializing_if = "Option::is_none")]
+            pub recommended: Option<bool>,
+
+            #( #schema_lines_rules ),*
+        }
+
+        impl #group_struct_name {
+
+            const GROUP_NAME: &'static str = #group;
+            pub(crate) const GROUP_RULES: [&'static str; #number_of_rules] = [
+                #( #lines_rule ),*
+            ];
+
+            const RECOMMENDED_RULES: [&'static str; #number_of_recommended_rules] = [
+                #( #lines_recommended_rule ),*
+            ];
+
+            const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; #number_of_recommended_rules] = [
+                #( #lines_recommended_rule_as_filter ),*
+            ];
+
+            pub(crate) fn is_recommended(&self) -> bool {
+                !matches!(self.recommended, Some(false))
+            }
+
+            pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
+               let mut index_set = IndexSet::new();
+               #( #rule_enabled_check_line )*
+               index_set
+            }
+
+            pub(crate) fn get_disabled_rules(&self) -> IndexSet<RuleFilter> {
+               let mut index_set = IndexSet::new();
+               #( #rule_disabled_check_line )*
+               index_set
+            }
+
+            /// Checks if, given a rule name, matches one of the rules contained in this category
+            pub(crate) fn has_rule(rule_name: &str) -> bool {
+                Self::GROUP_RULES.contains(&rule_name)
+            }
+
+            /// Checks if, given a rule name, it is marked as recommended
+            pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
+                 Self::RECOMMENDED_RULES.contains(&rule_name)
+            }
+
+            pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; #number_of_recommended_rules] {
+                Self::RECOMMENDED_RULES_AS_FILTERS
+            }
+
+            pub(crate) fn get_rule_configuration(&self, rule_name: &str) -> Option<&RuleConfiguration> {
+                match rule_name {
+                    #( #get_rule_configuration_line ),*,
+                    _ => None
+                }
+            }
+        }
+    }
+}
+
+fn generate_visitor(group: &str, rules: &BTreeMap<&'static str, RuleMetadata>) -> TokenStream {
+    let group_struct_name = Ident::new(&group.to_capitalized(), Span::call_site());
+    let mut group_rules = vec![Literal::string("recommended")];
+    let mut visitor_rule_line = Vec::new();
+
+    for rule_name in rules.keys() {
+        let rule_identifier = Ident::new(&to_lower_snake_case(rule_name), Span::call_site());
+        group_rules.push(Literal::string(rule_name));
+        visitor_rule_line.push(quote! {
+            #rule_name => match value {
+                AnyJsonValue::JsonStringValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_known_string(&value, name_text, &mut configuration, diagnostics)?;
+                    self.#rule_identifier = Some(configuration);
+                }
+                AnyJsonValue::JsonObjectValue(_) => {
+                    let mut configuration = RuleConfiguration::default();
+                    self.map_to_object(&value, name_text, &mut configuration, diagnostics)?;
+                    self.#rule_identifier = Some(configuration);
+                }
+                _ => {
+                    diagnostics.push(DeserializationDiagnostic::new_incorrect_type(
+                        "object or string",
+                        value.range(),
+                    ));
+                }
+            }
+        });
+    }
+
+    quote! {
+        impl VisitJsonNode for #group_struct_name {}
+
+        impl VisitNode<JsonLanguage> for #group_struct_name {
+            fn visit_member_name(
+                &mut self,
+                node: &SyntaxNode<JsonLanguage>,
+                diagnostics: &mut Vec<DeserializationDiagnostic>,
+            ) -> Option<()> {
+                has_only_known_keys(node, &[#( #group_rules ),*], diagnostics)
+            }
+
+            fn visit_map(
+                &mut self,
+                key: &SyntaxNode<JsonLanguage>,
+                value: &SyntaxNode<JsonLanguage>,
+                diagnostics: &mut Vec<DeserializationDiagnostic>,
+            ) -> Option<()> {
+                let (name, value) = self.get_key_and_value(key, value, diagnostics)?;
+
+                let name_text = name.text();
+                match name_text {
+                    "recommended" => {
+                        self.recommended = Some(self.map_to_boolean(&value, name_text, diagnostics)?);
+                    }
+
+                    #( #visitor_rule_line ),*,
+                    _ => {}
+                }
+
+                Some(())
+            }
+        }
+    }
+}
+
+fn generate_push_to_analyzer_rules(group: &str) -> TokenStream {
+    let group_struct_name = Ident::new(&group.to_capitalized(), Span::call_site());
+    let group_identifier = Ident::new(group, Span::call_site());
+    quote! {
+       if let Some(rules) = rules.#group_identifier.as_ref() {
+            for rule_name in &#group_struct_name::GROUP_RULES {
+                if let Some(RuleConfiguration::WithOptions(rule_options)) =
+                    rules.get_rule_configuration(rule_name)
+                {
+                    if let Some(options) = &rule_options.options {
+                        if let Some(rule_key) = metadata.find_rule(#group, rule_name) {
+                            analyzer_rules.push_rule(rule_key, options.to_string());
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

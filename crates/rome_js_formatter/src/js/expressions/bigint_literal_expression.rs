@@ -5,19 +5,19 @@ use std::borrow::Cow;
 use crate::prelude::*;
 
 use crate::parentheses::NeedsParentheses;
-use rome_js_syntax::JsBigIntLiteralExpressionFields;
-use rome_js_syntax::{JsBigIntLiteralExpression, JsSyntaxNode};
+use rome_js_syntax::JsBigintLiteralExpressionFields;
+use rome_js_syntax::{JsBigintLiteralExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub(crate) struct FormatJsBigIntLiteralExpression;
+pub(crate) struct FormatJsBigintLiteralExpression;
 
-impl FormatNodeRule<JsBigIntLiteralExpression> for FormatJsBigIntLiteralExpression {
+impl FormatNodeRule<JsBigintLiteralExpression> for FormatJsBigintLiteralExpression {
     fn fmt_fields(
         &self,
-        node: &JsBigIntLiteralExpression,
+        node: &JsBigintLiteralExpression,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        let JsBigIntLiteralExpressionFields { value_token } = node.as_fields();
+        let JsBigintLiteralExpressionFields { value_token } = node.as_fields();
         let value_token = value_token?;
 
         let original = value_token.text_trimmed();
@@ -35,12 +35,12 @@ impl FormatNodeRule<JsBigIntLiteralExpression> for FormatJsBigIntLiteralExpressi
         }
     }
 
-    fn needs_parentheses(&self, item: &JsBigIntLiteralExpression) -> bool {
+    fn needs_parentheses(&self, item: &JsBigintLiteralExpression) -> bool {
         item.needs_parentheses()
     }
 }
 
-impl NeedsParentheses for JsBigIntLiteralExpression {
+impl NeedsParentheses for JsBigintLiteralExpression {
     #[inline(always)]
     fn needs_parentheses(&self) -> bool {
         false

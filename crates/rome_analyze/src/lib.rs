@@ -38,8 +38,7 @@ pub use crate::rule::{
     RuleMeta, RuleMetadata, SuppressAction,
 };
 pub use crate::services::{FromServices, MissingServicesDiagnostic, ServiceBag};
-use crate::signals::DiagnosticSignal;
-pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
+pub use crate::signals::{AnalyzerAction, AnalyzerSignal, DiagnosticSignal};
 pub use crate::syntax::{Ast, SyntaxVisitor};
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
 pub use rule::DeserializableRuleOptions;

@@ -13,12 +13,26 @@ describe("Rome WebAssembly formatContent", () => {
 		rome.shutdown();
 	});
 
-	it("should format content", () => {
+	it("should format JavaScript content", () => {
 		const result = rome.formatContent("function f   () {  }", {
 			filePath: "example.js",
 		});
 
 		expect(result.content).toEqual("function f() {}\n");
+		expect(result.diagnostics).toEqual([]);
+	});
+
+	it("should format JSON content", () => {
+		const result = rome.formatContent(
+			'{ "lorem": "ipsum", "foo": false, "bar": 23, "lorem": "ipsum", "foo": false, "bar": 23 }',
+			{
+				filePath: "example.json",
+			},
+		);
+
+		expect(result.content).toEqual(
+			'{\n\t"lorem": "ipsum",\n\t"foo": false,\n\t"bar": 23,\n\t"lorem": "ipsum",\n\t"foo": false,\n\t"bar": 23\n}\n',
+		);
 		expect(result.diagnostics).toEqual([]);
 	});
 

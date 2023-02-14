@@ -1,10 +1,10 @@
 use rome_console::fmt::{Display, Formatter};
 use rome_console::{fmt, markup, ConsoleExt, HorizontalLine, Markup};
-use rome_diagnostics::termcolor;
 use rome_diagnostics::termcolor::{ColorChoice, WriteColor};
+use rome_diagnostics::{termcolor, PrintDescription};
 use rome_fs::FileSystem;
 use rome_service::workspace::{client, RageEntry, RageParams};
-use rome_service::{load_config, DynRef, Workspace};
+use rome_service::{load_config, BasePath, DynRef, Workspace};
 use std::{env, io, ops::Deref};
 use tokio::runtime::Runtime;
 
@@ -163,21 +163,35 @@ impl Display for RageConfiguration<'_, '_> {
     fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
         Section("Rome Configuration").fmt(fmt)?;
 
-        match load_config(self.0, None) {
+        match load_config(self.0, BasePath::default()) {
             Ok(None) => KeyValuePair("Status", markup!(<Dim>"unset"</Dim>)).fmt(fmt)?,
-            Ok(Some(configuration)) => {
+            Ok(Some(deserialized)) => {
+                let (configuration, diagnostics) = deserialized.consume();
+                let status = if !diagnostics.is_empty() {
+                    for diagnostic in diagnostics {
+                        (markup! {
+                             {KeyValuePair("Error", markup!{
+                                 {format!{"{}", PrintDescription(&diagnostic)}}
+                             })}
+                        })
+                        .fmt(fmt)?;
+                    }
+                    markup!(<Dim>"Loaded with errors"</Dim>)
+                } else {
+                    markup!(<Dim>"Loaded successfully"</Dim>)
+                };
+
                 markup! (
-                    {KeyValuePair("Status", markup!(<Dim>"loaded"</Dim>))}
+                    {KeyValuePair("Status", status)}
                     {KeyValuePair("Formatter disabled", markup!({DebugDisplay(configuration.is_formatter_disabled())}))}
                     {KeyValuePair("Linter disabled", markup!({DebugDisplay(configuration.is_linter_disabled())}))}
                 ).fmt(fmt)?
             }
-            Err(err) => {
-                markup! (
-                    {KeyValuePair("Status", markup!(<Error>"Failed to load"</Error>))}
-                    {KeyValuePair("Error", markup!({format!("{err}")}))}
-                ).fmt(fmt)?
-            }
+            Err(err) => markup! (
+                {KeyValuePair("Status", markup!(<Error>"Failed to load"</Error>))}
+                {KeyValuePair("Error", markup!({format!("{err}")}))}
+            )
+            .fmt(fmt)?,
         }
 
         Ok(())

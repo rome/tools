@@ -238,6 +238,14 @@ impl JsBinaryExpression {
         Ok(kind)
     }
 
+    /// Whether this is a binary operation, such as `<<`, `>>`, `>>>`, `&`, `|`, `^`.
+    pub fn is_binary_operator(&self) -> bool {
+        matches!(
+            self.operator_token().map(|t| t.kind()),
+            Ok(T![<<] | T![>>] | T![>>>] | T![&] | T![|] | T![^])
+        )
+    }
+
     /// Whether this is a comparison operation, such as `>`, `<`, `==`, `!=`, `===`, etc.
     pub fn is_comparison_operator(&self) -> bool {
         matches!(
@@ -707,7 +715,7 @@ impl JsIdentifierExpression {
 impl AnyJsLiteralExpression {
     pub fn value_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            AnyJsLiteralExpression::JsBigIntLiteralExpression(expression) => {
+            AnyJsLiteralExpression::JsBigintLiteralExpression(expression) => {
                 expression.value_token()
             }
             AnyJsLiteralExpression::JsBooleanLiteralExpression(expression) => {

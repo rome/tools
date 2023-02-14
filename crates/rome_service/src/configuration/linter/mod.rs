@@ -10,7 +10,6 @@ pub use rules::*;
 #[cfg(feature = "schemars")]
 use schemars::{gen::SchemaGenerator, schema::Schema, JsonSchema};
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
 
 #[derive(Deserialize, Serialize, Debug)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
@@ -132,23 +131,28 @@ impl From<&RulePlainConfiguration> for Severity {
     }
 }
 
-#[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
+#[derive(Default, Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase")]
 pub enum RulePlainConfiguration {
+    #[default]
     Warn,
     Error,
     Off,
 }
 
-#[derive(Deserialize, Serialize, Debug, Clone)]
+impl RulePlainConfiguration {
+    pub(crate) const KNOWN_KEYS: &'static [&'static str] = &["warn", "error", "off"];
+}
+
+#[derive(Default, Deserialize, Serialize, Debug, Clone)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct RuleWithOptions {
-    level: RulePlainConfiguration,
+    pub level: RulePlainConfiguration,
     #[serde(skip_serializing_if = "Option::is_none")]
     #[cfg_attr(feature = "schemars", schemars(schema_with = "schema_any"))]
-    pub options: Option<Value>,
+    pub options: Option<String>,
 }
 
 #[cfg(feature = "schemars")]

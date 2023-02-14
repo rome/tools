@@ -4,7 +4,7 @@ pub(crate) mod array_expression;
 pub(crate) mod arrow_function_expression;
 pub(crate) mod assignment_expression;
 pub(crate) mod await_expression;
-pub(crate) mod big_int_literal_expression;
+pub(crate) mod bigint_literal_expression;
 pub(crate) mod binary_expression;
 pub(crate) mod boolean_literal_expression;
 pub(crate) mod call_arguments;

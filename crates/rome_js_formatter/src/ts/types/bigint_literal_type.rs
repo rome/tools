@@ -5,14 +5,14 @@ use crate::prelude::*;
 use crate::parentheses::NeedsParentheses;
 use rome_formatter::token::string::ToAsciiLowercaseCow;
 use rome_formatter::write;
-use rome_js_syntax::{JsSyntaxNode, TsBigIntLiteralType, TsBigIntLiteralTypeFields};
+use rome_js_syntax::{JsSyntaxNode, TsBigintLiteralType, TsBigintLiteralTypeFields};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatTsBigIntLiteralType;
+pub struct FormatTsBigintLiteralType;
 
-impl FormatNodeRule<TsBigIntLiteralType> for FormatTsBigIntLiteralType {
-    fn fmt_fields(&self, node: &TsBigIntLiteralType, f: &mut JsFormatter) -> FormatResult<()> {
-        let TsBigIntLiteralTypeFields {
+impl FormatNodeRule<TsBigintLiteralType> for FormatTsBigintLiteralType {
+    fn fmt_fields(&self, node: &TsBigintLiteralType, f: &mut JsFormatter) -> FormatResult<()> {
+        let TsBigintLiteralTypeFields {
             minus_token,
             literal_token,
         } = node.as_fields();
@@ -34,12 +34,12 @@ impl FormatNodeRule<TsBigIntLiteralType> for FormatTsBigIntLiteralType {
         }
     }
 
-    fn needs_parentheses(&self, item: &TsBigIntLiteralType) -> bool {
+    fn needs_parentheses(&self, item: &TsBigintLiteralType) -> bool {
         item.needs_parentheses()
     }
 }
 
-impl NeedsParentheses for TsBigIntLiteralType {
+impl NeedsParentheses for TsBigintLiteralType {
     fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
         false
     }

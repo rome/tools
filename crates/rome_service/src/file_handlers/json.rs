@@ -1,19 +1,22 @@
 use super::{ExtensionHandler, Mime};
-use crate::file_handlers::{Capabilities, FormatterCapabilities, ParserCapabilities};
+use crate::file_handlers::{
+    AnalyzerCapabilities, Capabilities, FormatterCapabilities, LintParams, LintResults,
+    ParserCapabilities,
+};
 use crate::file_handlers::{DebugCapabilities, Language as LanguageId};
 use crate::settings::{
     FormatSettings, Language, LanguageSettings, LanguagesSettings, SettingsHandle,
 };
-use crate::workspace::GetSyntaxTreeResult;
-use crate::WorkspaceError;
-#[cfg(any(debug_assertions, target_family = "wasm"))]
+use crate::workspace::{GetSyntaxTreeResult, PullActionsResult};
+use crate::{Rules, WorkspaceError};
+use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
 use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 use rome_parser::AnyParse;
-#[cfg(any(debug_assertions, target_family = "wasm"))]
+use rome_rowan::NodeCache;
 use rome_rowan::{TextRange, TextSize, TokenAtOffset};
 
 impl Language for JsonLanguage {
@@ -60,28 +63,23 @@ impl ExtensionHandler for JsonFileHandler {
                 debug_control_flow: None,
                 debug_formatter_ir: Some(debug_formatter_ir),
             },
-            analyzer: Default::default(),
-            formatter: formatter_capabilities(),
+            analyzer: AnalyzerCapabilities {
+                lint: Some(lint),
+                code_actions: Some(code_actions),
+                rename: None,
+                fix_all: None,
+            },
+            formatter: FormatterCapabilities {
+                format: Some(format),
+                format_range: Some(format_range),
+                format_on_type: Some(format_on_type),
+            },
         }
     }
 }
 
-#[cfg(any(debug_assertions, target_family = "wasm"))]
-fn formatter_capabilities() -> FormatterCapabilities {
-    FormatterCapabilities {
-        format: Some(format),
-        format_range: Some(format_range),
-        format_on_type: Some(format_on_type),
-    }
-}
-
-#[cfg(all(not(debug_assertions), not(target_family = "wasm")))]
-fn formatter_capabilities() -> FormatterCapabilities {
-    FormatterCapabilities::default()
-}
-
-fn parse(_: &RomePath, _: LanguageId, text: &str) -> AnyParse {
-    let parse = rome_json_parser::parse_json(text);
+fn parse(_: &RomePath, _: LanguageId, text: &str, cache: &mut NodeCache) -> AnyParse {
+    let parse = rome_json_parser::parse_json_with_cache(text, cache);
     AnyParse::from(parse)
 }
 
@@ -108,7 +106,6 @@ fn debug_formatter_ir(
     Ok(root_element.to_string())
 }
 
-#[cfg(any(debug_assertions, target_family = "wasm"))]
 #[tracing::instrument(level = "debug", skip(parse))]
 fn format(
     rome_path: &RomePath,
@@ -128,7 +125,6 @@ fn format(
     }
 }
 
-#[cfg(any(debug_assertions, target_family = "wasm"))]
 fn format_range(
     rome_path: &RomePath,
     parse: AnyParse,
@@ -142,7 +138,6 @@ fn format_range(
     Ok(printed)
 }
 
-#[cfg(any(debug_assertions, target_family = "wasm"))]
 fn format_on_type(
     rome_path: &RomePath,
     parse: AnyParse,
@@ -177,4 +172,33 @@ fn format_on_type(
 
     let printed = rome_json_formatter::format_sub_tree(options, &root_node)?;
     Ok(printed)
+}
+
+fn lint(params: LintParams) -> LintResults {
+    let diagnostics = params.parse.into_diagnostics();
+
+    let diagnostic_count = diagnostics.len() as u64;
+    let errors = diagnostics
+        .iter()
+        .filter(|diag| diag.severity() <= Severity::Error)
+        .count();
+
+    let skipped_diagnostics = diagnostic_count - diagnostics.len() as u64;
+
+    LintResults {
+        diagnostics,
+        errors,
+        skipped_diagnostics,
+    }
+}
+
+fn code_actions(
+    _parse: AnyParse,
+    _range: TextRange,
+    _rules: Option<&Rules>,
+    _settings: SettingsHandle,
+) -> PullActionsResult {
+    PullActionsResult {
+        actions: Vec::new(),
+    }
 }

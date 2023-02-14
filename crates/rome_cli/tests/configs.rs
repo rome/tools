@@ -9,23 +9,25 @@ pub const CONFIG_FORMAT: &str = r#"{
 "#;
 
 pub const CONFIG_INIT_DEFAULT: &str = r#"{
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true
-    }
-  }
-}"#;
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true
+		}
+	}
+}
+"#;
 
 pub const CONFIG_INIT_DEFAULT_WHEN_INSTALLED: &str = r#"{
-  "$schema": "./node_modules/rome/configuration_schema.json",
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true
-    }
-  }
-}"#;
+	"$schema": "./node_modules/rome/configuration_schema.json",
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true
+		}
+	}
+}
+"#;
 
 pub const CONFIG_DISABLED_FORMATTER: &str = r#"{
   "formatter": {

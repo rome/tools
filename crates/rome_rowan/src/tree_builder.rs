@@ -1,7 +1,6 @@
-use crate::green::NodeCacheNodeEntryMut;
 use crate::{
     cow_mut::CowMut,
-    green::{GreenElement, NodeCache},
+    green::{GreenElement, NodeCache, NodeCacheNodeEntryMut},
     syntax::TriviaPiece,
     GreenNode, Language, NodeOrToken, ParsedChildren, SyntaxFactory, SyntaxKind, SyntaxNode,
 };
@@ -37,9 +36,10 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
         TreeBuilder::default()
     }
 
-    /// Reusing `NodeCache` between different [TreeBuilder]`s saves memory.
+    /// Reusing `NodeCache` between different [TreeBuilder]s saves memory.
     /// It allows to structurally share underlying trees.
     pub fn with_cache(cache: &mut NodeCache) -> TreeBuilder<'_, L, S> {
+        cache.increment_generation();
         TreeBuilder {
             cache: CowMut::Borrowed(cache),
             parents: Vec::new(),
@@ -121,7 +121,7 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
             }
             NodeCacheNodeEntryMut::Cached(cached) => {
                 self.children.truncate(first_child);
-                (cached.hash(), cached.node().clone())
+                (cached.hash(), cached.node().to_owned())
             }
         };
 
@@ -184,13 +184,15 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
     /// are paired!
     #[inline]
     #[must_use]
-    pub fn finish(self) -> SyntaxNode<L> {
-        SyntaxNode::new_root(self.finish_green())
+    pub fn finish(mut self) -> SyntaxNode<L> {
+        let root = SyntaxNode::new_root(self.finish_green());
+        self.cache.sweep_cache();
+        root
     }
 
     // For tests
     #[must_use]
-    pub(crate) fn finish_green(mut self) -> GreenNode {
+    pub(crate) fn finish_green(&mut self) -> GreenNode {
         assert_eq!(self.children.len(), 1);
         match self.children.pop().unwrap().1 {
             NodeOrToken::Node(node) => node,

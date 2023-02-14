@@ -6,14 +6,15 @@ expression: content
 
 ```json
 {
-  "$schema": "./node_modules/rome/configuration_schema.json",
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true
-    }
-  }
+	"$schema": "./node_modules/rome/configuration_schema.json",
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true
+		}
+	}
 }
+
 ```
 
 ## `./node_modules/rome/configuration_schema.json`

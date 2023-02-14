@@ -4,7 +4,7 @@
 //! by language. The language might further options divided by tool.
 
 use crate::{DynRef, WorkspaceError};
-use indexmap::{IndexMap, IndexSet};
+use indexmap::IndexSet;
 use rome_fs::{FileSystem, OpenOptions};
 use serde::de::{SeqAccess, Visitor};
 use serde::ser::SerializeSeq;
@@ -18,21 +18,23 @@ use tracing::{error, info};
 
 pub mod diagnostics;
 mod formatter;
+mod generated;
 mod javascript;
 pub mod linter;
 mod parse;
-mod visitor;
 
-use crate::configuration::diagnostics::from_serde_error_to_range;
 pub use crate::configuration::diagnostics::ConfigurationDiagnostic;
-pub use crate::configuration::parse::parse_configuration_from_json;
+use crate::configuration::generated::push_to_analyzer_rules;
 use crate::settings::{LanguagesSettings, LinterSettings};
 pub use formatter::{FormatterConfiguration, PlainIndentStyle};
 pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
 pub use linter::{LinterConfiguration, RuleConfiguration, Rules};
-use rome_analyze::{AnalyzerConfiguration, AnalyzerRules, MetadataRegistry};
+use rome_analyze::{AnalyzerConfiguration, AnalyzerRules};
+use rome_deserialize::json::deserialize_from_json;
+use rome_deserialize::Deserialized;
 use rome_js_analyze::metadata;
-use rome_json_syntax::JsonRoot;
+use rome_json_formatter::context::JsonFormatOptions;
+use rome_json_parser::parse_json;
 
 /// The configuration that is contained inside the file `rome.json`
 #[derive(Debug, Deserialize, Serialize)]
@@ -88,13 +90,6 @@ impl Configuration {
     pub fn is_linter_disabled(&self) -> bool {
         self.linter.as_ref().map(|f| !f.enabled).unwrap_or(false)
     }
-
-    /// It creates a new [Configuration] from a JSON AST
-    pub fn from_json_ast(root: JsonRoot) -> Result<Self, ConfigurationDiagnostic> {
-        let mut configuration = Configuration::default();
-        parse_configuration_from_json(root, &mut configuration)?;
-        Ok(configuration)
-    }
 }
 
 /// The configuration of the filesystem
@@ -120,21 +115,32 @@ impl FilesConfiguration {
     const KNOWN_KEYS: &'static [&'static str] = &["maxSize", "ignore"];
 }
 
-/// This function is responsible to load the rome configuration.
+type LoadConfig = Result<Option<Deserialized<Configuration>>, WorkspaceError>;
+
+#[derive(Default, PartialEq)]
+pub enum BasePath {
+    /// The default mode, not having a configuration file is not an error.
+    #[default]
+    None,
+    /// The base path provided by the LSP, not having a configuration file is not an error.
+    Lsp(PathBuf),
+    /// The base path provided by the user, not having a configuration file is an error.
+    /// Throws any kind of I/O errors.
+    FromUser(PathBuf),
+}
+
+/// Load the configuration from the file system.
 ///
-/// The `file_system` will read the configuration file. A base path can be passed
-pub fn load_config(
-    file_system: &DynRef<dyn FileSystem>,
-    base_path: Option<PathBuf>,
-) -> Result<Option<Configuration>, WorkspaceError> {
+/// The configuration file will be read from the `file_system`.
+/// An optional base path can be appended to the configuration file path.
+pub fn load_config(file_system: &DynRef<dyn FileSystem>, base_path: BasePath) -> LoadConfig {
     let config_name = file_system.config_name();
-    let configuration_path = if let Some(base_path) = base_path {
-        base_path.join(config_name)
-    } else {
-        PathBuf::from(config_name)
+    let configuration_path = match base_path {
+        BasePath::Lsp(ref path) | BasePath::FromUser(ref path) => path.join(config_name),
+        _ => PathBuf::from(config_name),
     };
     info!(
-        "Attempting to load the configuration file at path {:?}",
+        "Attempting to read the configuration file from {:?}",
         configuration_path
     );
     let options = OpenOptions::default().read(true);
@@ -146,30 +152,28 @@ pub fn load_config(
                 WorkspaceError::cant_read_file(format!("{}", configuration_path.display()))
             })?;
 
-            let configuration: Configuration = serde_json::from_str(&buffer).map_err(|err| {
-                WorkspaceError::Configuration(ConfigurationDiagnostic::new_deserialization_error(
-                    err.to_string(),
-                    from_serde_error_to_range(&err, &buffer),
-                ))
-            })?;
-
-            Ok(Some(configuration))
+            let deserialized = deserialize_from_json::<Configuration>(&buffer)
+                .with_file_path(&configuration_path.display().to_string());
+            Ok(Some(deserialized))
         }
         Err(err) => {
-            // We throw an error only when the error is found.
-            // In case we don't fine the file, we swallow the error and we continue; not having
-            // a file should not be a cause of error (for now)
-            if err.kind() != ErrorKind::NotFound {
+            // We skip the error when the configuration file is not found.
+            // Not having a configuration file is only an error when the `base_path` is
+            // set to `BasePath::FromUser`.
+            if match base_path {
+                BasePath::FromUser(_) => true,
+                _ => err.kind() != ErrorKind::NotFound,
+            } {
                 return Err(WorkspaceError::cant_read_file(format!(
                     "{}",
                     configuration_path.display()
                 )));
             }
             error!(
-                "Could not find the file configuration at {:?}",
-                configuration_path.display()
+                "Could not read the configuration file from {:?}, reason:\n {}",
+                configuration_path.display(),
+                err
             );
-            error!("Reason: {:?}", err);
             Ok(None)
         }
     }
@@ -209,8 +213,14 @@ pub fn create_config(
         WorkspaceError::Configuration(ConfigurationDiagnostic::new_serialization_error())
     })?;
 
+    let parsed = parse_json(&contents);
+    let formatted =
+        rome_json_formatter::format_node(JsonFormatOptions::default(), &parsed.syntax())?
+            .print()
+            .expect("valid format document");
+
     config_file
-        .set_content(contents.as_bytes())
+        .set_content(formatted.as_code().as_bytes())
         .map_err(|_| WorkspaceError::cant_read_file(format!("{}", path.display())))?;
 
     Ok(())
@@ -332,36 +342,11 @@ where
     let mut analyzer_rules = AnalyzerRules::default();
 
     if let Some(rules) = linter_settings.rules.as_ref() {
-        if let Some(rules) = rules.correctness.as_ref() {
-            push_rules("correctness", metadata(), &mut analyzer_rules, &rules.rules);
-        }
-        if let Some(rules) = rules.nursery.as_ref() {
-            push_rules("nursery", metadata(), &mut analyzer_rules, &rules.rules);
-        }
-        if let Some(rules) = rules.style.as_ref() {
-            push_rules("style", metadata(), &mut analyzer_rules, &rules.rules);
-        }
+        push_to_analyzer_rules(rules, metadata(), &mut analyzer_rules);
     }
 
     AnalyzerConfiguration {
         globals,
         rules: analyzer_rules,
-    }
-}
-
-fn push_rules(
-    group_name: &'static str,
-    metadata: &MetadataRegistry,
-    analyzer_rules: &mut AnalyzerRules,
-    rules: &IndexMap<String, RuleConfiguration>,
-) {
-    for (rule_name, configuration) in rules {
-        if let RuleConfiguration::WithOptions(rule_options) = configuration {
-            if let Some(options) = &rule_options.options {
-                if let Some(rule_key) = metadata.find_rule(group_name, rule_name) {
-                    analyzer_rules.push_rule(rule_key, options.clone());
-                }
-            }
-        }
     }
 }

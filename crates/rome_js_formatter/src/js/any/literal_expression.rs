@@ -10,7 +10,7 @@ impl FormatRule<AnyJsLiteralExpression> for FormatAnyJsLiteralExpression {
         match node {
             AnyJsLiteralExpression::JsStringLiteralExpression(node) => node.format().fmt(f),
             AnyJsLiteralExpression::JsNumberLiteralExpression(node) => node.format().fmt(f),
-            AnyJsLiteralExpression::JsBigIntLiteralExpression(node) => node.format().fmt(f),
+            AnyJsLiteralExpression::JsBigintLiteralExpression(node) => node.format().fmt(f),
             AnyJsLiteralExpression::JsBooleanLiteralExpression(node) => node.format().fmt(f),
             AnyJsLiteralExpression::JsNullLiteralExpression(node) => node.format().fmt(f),
             AnyJsLiteralExpression::JsRegexLiteralExpression(node) => node.format().fmt(f),

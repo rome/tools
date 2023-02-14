@@ -31,7 +31,7 @@ pub(crate) fn is_simple_type(ty: &AnyTsType) -> bool {
             | AnyTsType::TsBooleanType(_)
             | AnyTsType::TsBooleanLiteralType(_)
             | AnyTsType::TsBigintType(_)
-            | AnyTsType::TsBigIntLiteralType(_)
+            | AnyTsType::TsBigintLiteralType(_)
             | AnyTsType::TsStringType(_)
             | AnyTsType::TsStringLiteralType(_)
             | AnyTsType::TsSymbolType(_)

@@ -22,6 +22,7 @@ tracing = { version = "0.1.31", default-features = false, features = ["std"] }
 dashmap = "5.4.0"
 rustc-hash = "1.1.0"
 countme = "3.0.1"
-tokio = { version = "1.15.0" }
+# pinning to version 1.18 to avoid multiple versions of windows-sys as dependency
+tokio = { version = "~1.18.5" }
 insta = "1.21.2"
 quote = { version = "1.0.21" }
