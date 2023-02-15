@@ -1,9 +1,15 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 91
 expression: validCases.ts
 ---
 # Input
 ```js
+// Do not simplify when a binary expression is used in the last expression
+foo && foo.bar != null;
+foo && foo.bar != undefined;
+foo && foo.bar != null && baz;
+
 //valid
 foo || {};
 foo || ({} as any);
@@ -25,47 +31,47 @@ foo || bar;
 foo ?? bar;
 foo || foo.bar;
 foo ?? foo.bar;
-file !== 'index.ts' && file.endsWith('.ts');
+file !== "index.ts" && file.endsWith(".ts");
 nextToken && sourceCode.isSpaceBetweenTokens(prevToken, nextToken);
 result && this.options.shouldPreserveNodeMaps;
 foo && fooBar.baz;
 match && match$1 !== undefined;
 foo !== null && foo !== undefined;
-x['y'] !== undefined && x['y'] !== null;
+x["y"] !== undefined && x["y"] !== null;
 
-foo["some long"] && foo["some long string"].baz
-foo[`some long`] && foo[`some long string`].baz
-foo['some long'] && foo['some long string'].baz;
+foo["some long"] && foo["some long string"].baz;
+foo[`some long`] && foo[`some long string`].baz;
+foo["some long"] && foo["some long string"].baz;
 foo[123] && foo[1234].baz;
 foo[true] && foo[false].baz;
 foo[12n] && foo[123n].baz;
 foo[/\w+/] && foo[/ab+c/].baz;
 
-((foo || {})()).bar;
+(foo || {})().bar;
 
-(new foo || {}).bar
+(new foo() || {}).bar;
 
 ```
 
 # Diagnostics
 ```
-validCases.ts:40:1 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+validCases.ts:45:1 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Change to an optional chain.
   
-    38 │ ((foo || {})()).bar;
-    39 │ 
-  > 40 │ (new foo || {}).bar
-       │ ^^^^^^^^^^^^^^^^^^^
-    41 │ 
+    43 │ (foo || {})().bar;
+    44 │ 
+  > 45 │ (new foo() || {}).bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^
+    46 │ 
   
   i Suggested fix: Change to an optional chain.
   
-    38 38 │   ((foo || {})()).bar;
-    39 39 │   
-    40    │ - (new·foo·||·{}).bar
-       40 │ + (new·foo)?.bar
-    41 41 │   
+    43 43 │   (foo || {})().bar;
+    44 44 │   
+    45    │ - (new·foo()·||·{}).bar;
+       45 │ + new·foo()?.bar;
+    46 46 │   
   
 
 ```
