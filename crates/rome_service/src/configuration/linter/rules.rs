@@ -1178,7 +1178,7 @@ impl Nursery {
         "useValidLang",
         "useYield",
     ];
-    const RECOMMENDED_RULES: [&'static str; 48] = [
+    const RECOMMENDED_RULES: [&'static str; 49] = [
         "noAssignInExpressions",
         "noBannedTypes",
         "noClassAssign",
@@ -1202,6 +1202,7 @@ impl Nursery {
         "noInvalidConstructorSuper",
         "noNoninteractiveElementToInteractiveRole",
         "noRedundantAlt",
+        "noSelfAssignment",
         "noSelfCompare",
         "noSetterReturn",
         "noStringCaseMismatch",
@@ -1228,7 +1229,7 @@ impl Nursery {
         "useValidLang",
         "useYield",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 48] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 49] = [
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[1]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[2]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[3]),
@@ -1252,6 +1253,7 @@ impl Nursery {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[23]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[27]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[30]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[31]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[32]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[33]),
@@ -1893,7 +1895,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 48] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 49] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
     pub(crate) fn get_rule_configuration(&self, rule_name: &str) -> Option<&RuleConfiguration> {

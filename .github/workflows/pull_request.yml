@@ -53,8 +53,7 @@ jobs:
       - name: Run cargo check
         uses: actions-rs/cargo@v1
         with:
-          command: check
-          args: --workspace --all-targets --all-features --release
+          command: lint
 
   check-dependencies:
     name: Check Dependencies
@@ -77,16 +76,15 @@ jobs:
 
 
   test:
-    name: Test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Install toolchain
         run: rustup show
-      - name: Install nextest
-        run: "curl -LsSf https://get.nexte.st/latest/linux | tar zxf - -C ${CARGO_HOME:-~/.cargo}/bin"
+      - name: Install latest nextest release
+        uses: taiki-e/install-action@nextest
 
       - name: Cache
         uses: Swatinem/rust-cache@v2
