@@ -103,6 +103,13 @@ impl Configuration {
     pub fn is_linter_disabled(&self) -> bool {
         self.linter.as_ref().map(|f| !f.enabled).unwrap_or(false)
     }
+
+    pub fn is_organize_imports_disabled(&self) -> bool {
+        self.organize_imports
+            .as_ref()
+            .map(|f| !f.enabled)
+            .unwrap_or(false)
+    }
 }
 
 /// The configuration of the filesystem

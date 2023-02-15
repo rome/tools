@@ -65,8 +65,11 @@ pub(crate) fn ci(mut session: CliSession) -> Result<(), CliDiagnostic> {
     }
 
     // no point in doing the traversal if all the checks have been disabled
-    if configuration.is_formatter_disabled() && configuration.is_linter_disabled() {
-        return Err(CliDiagnostic::incompatible_end_configuration("Formatter and Linter are both disabled, can't perform the command. This is probably and error."));
+    if configuration.is_formatter_disabled()
+        && configuration.is_linter_disabled()
+        && configuration.is_organize_imports_disabled()
+    {
+        return Err(CliDiagnostic::incompatible_end_configuration("Formatter, linter and organize imports are disabled, can't perform the command. This is probably and error."));
     }
 
     apply_files_settings_from_cli(&mut session, &mut configuration)?;

@@ -32,7 +32,7 @@ statement(    ) ; let a = !b || !c;
 internalError/io ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × The combination of configuration and arguments is invalid: 
-    Formatter and Linter are both disabled, can't perform the command. This is probably and error.
+    Formatter, linter and organize imports are disabled, can't perform the command. This is probably and error.
   
 
 

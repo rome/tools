@@ -308,6 +308,50 @@ fn ci_does_not_run_linter_via_cli() {
 }
 
 #[test]
+fn ci_does_not_organize_imports_via_cli() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("file.js");
+
+    let content = r#"import { lorem, foom, bar } from "foo";
+import * as something from "../something";
+"#;
+    fs.insert(file_path.into(), content.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        &mut console,
+        Arguments::from_vec(vec![
+            OsString::from("ci"),
+            OsString::from("--organize-imports-enabled=false"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut received = String::new();
+    file.read_to_string(&mut received)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(received, content);
+
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ci_does_not_organize_imports_via_cli",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
 fn ci_errors_for_all_disabled_checks() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
@@ -325,6 +369,7 @@ fn ci_errors_for_all_disabled_checks() {
             OsString::from("ci"),
             OsString::from("--linter-enabled=false"),
             OsString::from("--formatter-enabled=false"),
+            OsString::from("--organize-imports-enabled=false"),
             file_path.as_os_str().into(),
         ]),
     );
