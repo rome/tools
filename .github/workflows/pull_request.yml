@@ -49,7 +49,7 @@ jobs:
         uses: actions-rs/clippy-check@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          args: --workspace --all-targets --all-features --verbose -- --deny warnings -W clippy::cargo -W clippy::dbg_macro -A clippy::cargo_common_metadata
+          args: --workspace --all-targets --all-features --verbose -- --deny warnings -W clippy::cargo -W clippy::dbg_macro -A clippy::cargo_common_metadata -A clippy::multiple_crate_versions
       - name: Run cargo check
         uses: actions-rs/cargo@v1
         with:

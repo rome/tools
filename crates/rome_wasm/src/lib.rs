@@ -40,22 +40,25 @@ impl Workspace {
         &self,
         params: ISupportsFeatureParams,
     ) -> Result<ISupportsFeatureResult, Error> {
-        let params: SupportsFeatureParams = params.into_serde().map_err(into_error)?;
+        let params: SupportsFeatureParams =
+            serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
         let result = self.inner.supports_feature(params).map_err(into_error)?;
-        JsValue::from_serde(&result)
+        to_value(&result)
             .map(ISupportsFeatureResult::from)
             .map_err(into_error)
     }
 
     #[wasm_bindgen(js_name = updateSettings)]
     pub fn update_settings(&self, params: IUpdateSettingsParams) -> Result<(), Error> {
-        let params: UpdateSettingsParams = params.into_serde().map_err(into_error)?;
+        let params: UpdateSettingsParams =
+            serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
         self.inner.update_settings(params).map_err(into_error)
     }
 
     #[wasm_bindgen(js_name = openFile)]
     pub fn open_file(&self, params: IOpenFileParams) -> Result<(), Error> {
-        let params: OpenFileParams = params.into_serde().map_err(into_error)?;
+        let params: OpenFileParams =
+            serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
         self.inner.open_file(params).map_err(into_error)
     }
 
@@ -64,9 +67,10 @@ impl Workspace {
         &self,
         params: IGetSyntaxTreeParams,
     ) -> Result<IGetSyntaxTreeResult, Error> {
-        let params: GetSyntaxTreeParams = params.into_serde().map_err(into_error)?;
+        let params: GetSyntaxTreeParams =
+            serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
         let result = self.inner.get_syntax_tree(params).map_err(into_error)?;
-        JsValue::from_serde(&result)
+        to_value(&result)
             .map(IGetSyntaxTreeResult::from)
             .map_err(into_error)
     }
@@ -76,7 +80,8 @@ impl Workspace {
         &self,
         params: IGetControlFlowGraphParams,
     ) -> Result<String, Error> {
-        let params: GetControlFlowGraphParams = params.into_serde().map_err(into_error)?;
+        let params: GetControlFlowGraphParams =
+            serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
         self.inner
             .get_control_flow_graph(params)
             .map_err(into_error)
@@ -84,19 +89,22 @@ impl Workspace {
 
     #[wasm_bindgen(js_name = getFormatterIr)]
     pub fn get_formatter_ir(&self, params: IGetFormatterIRParams) -> Result<String, Error> {
-        let params: GetFormatterIRParams = params.into_serde().map_err(into_error)?;
+        let params: GetFormatterIRParams =
+            serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
         self.inner.get_formatter_ir(params).map_err(into_error)
     }
 
     #[wasm_bindgen(js_name = changeFile)]
     pub fn change_file(&self, params: IChangeFileParams) -> Result<(), Error> {
-        let params: ChangeFileParams = params.into_serde().map_err(into_error)?;
+        let params: ChangeFileParams =
+            serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
         self.inner.change_file(params).map_err(into_error)
     }
 
     #[wasm_bindgen(js_name = closeFile)]
     pub fn close_file(&self, params: ICloseFileParams) -> Result<(), Error> {
-        let params: CloseFileParams = params.into_serde().map_err(into_error)?;
+        let params: CloseFileParams =
+            serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
         self.inner.close_file(params).map_err(into_error)
     }
 
@@ -105,57 +113,70 @@ impl Workspace {
         &self,
         params: IPullDiagnosticsParams,
     ) -> Result<IPullDiagnosticsResult, Error> {
-        let params: PullDiagnosticsParams = params.into_serde().map_err(into_error)?;
+        let params: PullDiagnosticsParams =
+            serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
         let result = self.inner.pull_diagnostics(params).map_err(into_error)?;
-        JsValue::from_serde(&result)
+        to_value(&result)
             .map(IPullDiagnosticsResult::from)
             .map_err(into_error)
     }
 
     #[wasm_bindgen(js_name = pullActions)]
     pub fn pull_actions(&self, params: IPullActionsParams) -> Result<IPullActionsResult, Error> {
-        let params: PullActionsParams = params.into_serde().map_err(into_error)?;
+        let params: PullActionsParams =
+            serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
         let result = self.inner.pull_actions(params).map_err(into_error)?;
-        JsValue::from_serde(&result)
+        to_value(&result)
             .map(IPullActionsResult::from)
             .map_err(into_error)
     }
 
     #[wasm_bindgen(js_name = formatFile)]
     pub fn format_file(&self, params: IFormatFileParams) -> Result<JsValue, Error> {
-        let params: FormatFileParams = params.into_serde().map_err(into_error)?;
+        let params: FormatFileParams =
+            serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
         let result = self.inner.format_file(params).map_err(into_error)?;
-        JsValue::from_serde(&result).map_err(into_error)
+        to_value(&result).map_err(into_error)
     }
 
     #[wasm_bindgen(js_name = formatRange)]
     pub fn format_range(&self, params: IFormatRangeParams) -> Result<JsValue, Error> {
-        let params: FormatRangeParams = params.into_serde().map_err(into_error)?;
+        let params: FormatRangeParams =
+            serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
         let result = self.inner.format_range(params).map_err(into_error)?;
-        JsValue::from_serde(&result).map_err(into_error)
+        to_value(&result).map_err(into_error)
     }
 
     #[wasm_bindgen(js_name = formatOnType)]
     pub fn format_on_type(&self, params: IFormatOnTypeParams) -> Result<JsValue, Error> {
-        let params: FormatOnTypeParams = params.into_serde().map_err(into_error)?;
+        let params: FormatOnTypeParams =
+            serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
         let result = self.inner.format_on_type(params).map_err(into_error)?;
-        JsValue::from_serde(&result).map_err(into_error)
+        to_value(&result).map_err(into_error)
     }
 
     #[wasm_bindgen(js_name = fixFile)]
     pub fn fix_file(&self, params: IFixFileParams) -> Result<IFixFileResult, Error> {
-        let params: FixFileParams = params.into_serde().map_err(into_error)?;
+        let params: FixFileParams =
+            serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
         let result = self.inner.fix_file(params).map_err(into_error)?;
-        JsValue::from_serde(&result)
+        to_value(&result)
             .map(IFixFileResult::from)
             .map_err(into_error)
     }
 
     pub fn rename(&self, params: IRenameParams) -> Result<IRenameResult, Error> {
-        let params: RenameParams = params.into_serde().map_err(into_error)?;
+        let params: RenameParams =
+            serde_wasm_bindgen::from_value(params.into()).map_err(into_error)?;
         let result = self.inner.rename(params).map_err(into_error)?;
-        JsValue::from_serde(&result)
+        to_value(&result)
             .map(IRenameResult::from)
             .map_err(into_error)
     }
+}
+
+fn to_value<T: serde::ser::Serialize + ?Sized>(
+    value: &T,
+) -> Result<JsValue, serde_wasm_bindgen::Error> {
+    value.serialize(&serde_wasm_bindgen::Serializer::new().serialize_missing_as_null(true))
 }
