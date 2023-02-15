@@ -245,7 +245,7 @@ impl JsxAttributeList {
     ///
     /// Supports maximum of 16 names to avoid stack overflow. Each attribute will consume:
     ///
-    /// - 8 bytes for the [Option<JsxAttribute>] result;
+    /// - 8 bytes for the `Option<JsxAttribute>` result;
     /// - plus 16 bytes for the [&str] argument.
     pub fn find_by_names<const N: usize>(
         &self,
@@ -414,7 +414,7 @@ impl JsxAttribute {
 impl AnyJsxAttributeValue {
     /// Retrieves the text value of the attribute
     ///
-    /// If the attribute is not a text or a text-like node, [Node] is returned.
+    /// If the attribute is not a text or a text-like node, `Node` is returned.
     ///
     /// ## Examples
     ///
