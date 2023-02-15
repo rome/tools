@@ -604,7 +604,7 @@ export interface Style {
 	 */
 	useShorthandArrayType?: RuleConfiguration;
 	/**
-	 * Enforces case clauses have a single statement, emits a quick fix wrapping the statements in a block
+	 * Enforces switch clauses have a single statement, emits a quick fix wrapping the statements in a block.
 	 */
 	useSingleCaseStatement?: RuleConfiguration;
 	/**
