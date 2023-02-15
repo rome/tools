@@ -512,6 +512,12 @@ Disallow reassigning class members.
 Disallow comma operator.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noConfusingLabels">
+	<a href="/lint/rules/noConfusingLabels">noConfusingLabels</a>
+</h3>
+Disallow labeled statements that are not loops.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noConstEnum">
 	<a href="/lint/rules/noConstEnum">noConstEnum</a>
 </h3>
@@ -537,6 +543,12 @@ Disallow duplicate case labels.
 If a switch statement has duplicate test expressions in case clauses, it is likely that a programmer copied a case clause but forgot to change the test expression.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noDuplicateClassMembers">
+	<a href="/lint/rules/noDuplicateClassMembers">noDuplicateClassMembers</a>
+</h3>
+Disallow duplicate class members.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noDuplicateJsxProps">
 	<a href="/lint/rules/noDuplicateJsxProps">noDuplicateJsxProps</a>
 </h3>
@@ -556,6 +568,12 @@ If an object property with the same name is defined multiple times (except when 
 Disallow the declaration of empty interfaces.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noExtraLabels">
+	<a href="/lint/rules/noExtraLabels">noExtraLabels</a>
+</h3>
+Disallow unnecessary labels.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noExtraNonNullAssertion">
 	<a href="/lint/rules/noExtraNonNullAssertion">noExtraNonNullAssertion</a>
 </h3>
@@ -569,10 +587,22 @@ Typing mistakes and misunderstandings about where semicolons are required can le
 While not technically an error, extra semicolons can cause confusion when reading code.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noGlobalObjectCalls">
+	<a href="/lint/rules/noGlobalObjectCalls">noGlobalObjectCalls</a>
+</h3>
+Disallow calling global object properties as functions
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noHeaderScope">
 	<a href="/lint/rules/noHeaderScope">noHeaderScope</a>
 </h3>
 Check that the scope attribute is only used on <code>th</code> elements.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noInferrableTypes">
+	<a href="/lint/rules/noInferrableTypes">noInferrableTypes</a>
+</h3>
+Disallow type annotations for variables, parameters, and class properties initialized with a literal expression.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noInnerDeclarations">
@@ -600,10 +630,22 @@ Disallow non-null assertions using the <code>!</code> postfix operator.
 Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noParameterProperties">
+	<a href="/lint/rules/noParameterProperties">noParameterProperties</a>
+</h3>
+Disallow the use of parameter properties in class constructors.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noPrecisionLoss">
 	<a href="/lint/rules/noPrecisionLoss">noPrecisionLoss</a>
 </h3>
 Disallow literal numbers that lose precision
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noPrototypeBuiltins">
+	<a href="/lint/rules/noPrototypeBuiltins">noPrototypeBuiltins</a>
+</h3>
+Disallow direct use of <code>Object.prototype</code> builtins.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noRedundantAlt">
@@ -624,6 +666,12 @@ Prevents from having redundant <code>&quot;use strict&quot;</code>.
 This rule allows you to specify global variable names that you don’t want to use in your application.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noSelfAssignment">
+	<a href="/lint/rules/noSelfAssignment">noSelfAssignment</a>
+</h3>
+Put your description here
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noSelfCompare">
 	<a href="/lint/rules/noSelfCompare">noSelfCompare</a>
 </h3>
@@ -642,6 +690,12 @@ Disallow returning a value from a setter
 Disallow comparison of expressions modifying the string case with non-compliant value.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noSwitchDeclarations">
+	<a href="/lint/rules/noSwitchDeclarations">noSwitchDeclarations</a>
+</h3>
+Disallow lexical declarations in <code>switch</code> clauses.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noUnreachableSuper">
 	<a href="/lint/rules/noUnreachableSuper">noUnreachableSuper</a>
 </h3>
@@ -654,6 +708,18 @@ a superclass
 	<a href="/lint/rules/noUnsafeFinally">noUnsafeFinally</a>
 </h3>
 Disallow control flow statements in finally blocks.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noUnusedLabels">
+	<a href="/lint/rules/noUnusedLabels">noUnusedLabels</a>
+</h3>
+Disallow unused labels.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noUselessRename">
+	<a href="/lint/rules/noUselessRename">noUselessRename</a>
+</h3>
+Disallow renaming import, export, and destructured assignments to the same name.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noUselessSwitchCase">
@@ -775,6 +841,12 @@ Ensures that ARIA properties <code>aria-*</code> are all valid.
 	<a href="/lint/rules/useValidLang">useValidLang</a>
 </h3>
 Ensure that the attribute passed to the <code>lang</code> attribute is a correct ISO language and/or country.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="useYield">
+	<a href="/lint/rules/useYield">useYield</a>
+</h3>
+Require generator functions to contain <code>yield</code>.
 </section>
 
 </div>

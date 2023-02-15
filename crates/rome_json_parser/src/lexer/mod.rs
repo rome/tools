@@ -3,13 +3,11 @@
 #[rustfmt::skip]
 mod tests;
 
-use rome_diagnostics::FileId;
-use std::iter::FusedIterator;
-use std::ops::Add;
-
 use rome_js_unicode_table::{is_id_continue, is_id_start, lookup_byte, Dispatch::*};
 use rome_json_syntax::{JsonSyntaxKind, JsonSyntaxKind::*, TextLen, TextRange, TextSize, T};
 use rome_parser::diagnostic::ParseDiagnostic;
+use std::iter::FusedIterator;
+use std::ops::Add;
 
 pub struct Token {
     kind: JsonSyntaxKind,
@@ -35,20 +33,16 @@ pub(crate) struct Lexer<'src> {
     /// The start byte position in the source text of the next token.
     position: usize,
 
-    /// The id of the file, used for diagnostics
-    file_id: FileId,
-
     diagnostics: Vec<ParseDiagnostic>,
 }
 
 impl<'src> Lexer<'src> {
     /// Make a new lexer from a str, this is safe because strs are valid utf8
-    pub fn from_str(string: &'src str, file_id: FileId) -> Self {
+    pub fn from_str(string: &'src str) -> Self {
         Self {
             source: string,
             position: 0,
             diagnostics: vec![],
-            file_id,
         }
     }
 
@@ -146,7 +140,6 @@ impl<'src> Lexer<'src> {
 
                         self.diagnostics.push(
                             ParseDiagnostic::new(
-                                self.file_id,
                                 "The JSON standard only allows tabs, whitespace, carriage return and line feed whitespace.",
                                 start..self.text_position(),
                             )
@@ -311,7 +304,6 @@ impl<'src> Lexer<'src> {
 
         let char = self.current_char_unchecked();
         let err = ParseDiagnostic::new(
-            self.file_id,
             format!("unexpected character `{}`", char),
             self.text_position()..self.text_position() + char.text_len(),
         );
@@ -422,7 +414,6 @@ impl<'src> Lexer<'src> {
             | LexNumberState::Exponent => JSON_NUMBER_LITERAL,
             LexNumberState::FirstDigit => {
                 let err = ParseDiagnostic::new(
-                    self.file_id,
                     "Minus must be followed by a digit",
                     start..self.text_position(),
                 );
@@ -432,26 +423,26 @@ impl<'src> Lexer<'src> {
             LexNumberState::Invalid { position, reason } => {
                 let diagnostic = match reason {
                     InvalidNumberReason::Fraction => ParseDiagnostic::new(
-                        self.file_id,
+
                         "Invalid fraction part",
                         position..position + TextSize::from(1),
                     ),
                     InvalidNumberReason::Exponent => ParseDiagnostic::new(
-                        self.file_id,
+
                         "Invalid exponent part",
                         position..position + TextSize::from(1),
                     ),
                     InvalidNumberReason::Octal => ParseDiagnostic::new(
-                        self.file_id,
+
                         "The JSON standard doesn't allow octal number notation (numbers starting with zero)",
                         position..position + TextSize::from(1),
                     ),
                     InvalidNumberReason::MissingExponent => {
-                        ParseDiagnostic::new(self.file_id, "Missing exponent", start..position)
+                        ParseDiagnostic::new( "Missing exponent", start..position)
                             .detail(position..position + TextSize::from(1), "Expected a digit as the exponent")
                     }
                     InvalidNumberReason::MissingFraction => {
-                        ParseDiagnostic::new(self.file_id, "Missing fraction", position..position + TextSize::from(1))
+                        ParseDiagnostic::new( "Missing fraction", position..position + TextSize::from(1))
                             .hint("Remove the `.`")
                     }
                 };
@@ -515,7 +506,7 @@ impl<'src> Lexer<'src> {
                                 let c = self.current_char_unchecked();
                                 self.diagnostics.push(
                                     ParseDiagnostic::new(
-                                        self.file_id,
+
                                         "Invalid escape sequence",
                                         escape_start..self.text_position() + c.text_len(),
                                     )
@@ -528,7 +519,7 @@ impl<'src> Lexer<'src> {
                         None => {
                             if matches!(state, LexStringState::InString) {
                                 self.diagnostics.push(ParseDiagnostic::new(
-                                    self.file_id,
+
                                     "Expected an escape sequence following a backslash, but found none",
                                     escape_start..self.text_position(),
                                 )
@@ -540,12 +531,9 @@ impl<'src> Lexer<'src> {
                     }
                 }
                 WHS if matches!(chr, b'\n' | b'\r') => {
-                    let unterminated = ParseDiagnostic::new(
-                        self.file_id,
-                        "Missing closing quote",
-                        start..self.text_position(),
-                    )
-                    .detail(self.position..self.position + 1, "line breaks here");
+                    let unterminated =
+                        ParseDiagnostic::new("Missing closing quote", start..self.text_position())
+                            .detail(self.position..self.position + 1, "line breaks here");
 
                     self.diagnostics.push(unterminated);
 
@@ -562,7 +550,7 @@ impl<'src> Lexer<'src> {
                 ERR | WHS if matches!(state, LexStringState::InString) && chr <= 0x1f => {
                     self.diagnostics.push(
                         ParseDiagnostic::new(
-                            self.file_id,
+
                             format!(
                                 "Control character '\\u{chr:04x}' is not allowed in string literals."
                             ),
@@ -582,7 +570,6 @@ impl<'src> Lexer<'src> {
                 let literal_range = TextRange::new(start, self.text_position());
                 self.diagnostics.push(
                     ParseDiagnostic::new(
-                        self.file_id,
                         "JSON standard does not allow single quoted strings",
                         literal_range,
                     )
@@ -591,15 +578,12 @@ impl<'src> Lexer<'src> {
                 ERROR_TOKEN
             }
             LexStringState::InString => {
-                let unterminated = ParseDiagnostic::new(
-                    self.file_id,
-                    "Missing closing quote",
-                    start..self.text_position(),
-                )
-                .detail(
-                    self.source.text_len()..self.source.text_len(),
-                    "file ends here",
-                );
+                let unterminated =
+                    ParseDiagnostic::new("Missing closing quote", start..self.text_position())
+                        .detail(
+                            self.source.text_len()..self.source.text_len(),
+                            "file ends here",
+                        );
                 self.diagnostics.push(unterminated);
 
                 JSON_STRING_LITERAL
@@ -631,7 +615,7 @@ impl<'src> Lexer<'src> {
                     let char = self.current_char_unchecked();
                     // Reached a non hex digit which is invalid
                     return Err(ParseDiagnostic::new(
-                        self.file_id,
+
                         "Invalid unicode sequence",
                         start..self.text_position(),
                     )
@@ -641,7 +625,7 @@ impl<'src> Lexer<'src> {
                 None => {
                     // Reached the end of the file before processing 4 hex digits
                     return Err(ParseDiagnostic::new(
-                        self.file_id,
+
                         "Unicode escape sequence with two few hexadecimal numbers.",
                         start..self.text_position(),
                     )
@@ -712,7 +696,6 @@ impl<'src> Lexer<'src> {
                             self.advance(2);
 
                             self.diagnostics.push(ParseDiagnostic::new(
-                                self.file_id,
                                 "JSON standard does not allow comments.",
                                 start..self.text_position(),
                             ));
@@ -731,15 +714,12 @@ impl<'src> Lexer<'src> {
                     }
                 }
 
-                let err = ParseDiagnostic::new(
-                    self.file_id,
-                    "Unterminated block comment",
-                    start..self.text_position(),
-                )
-                .detail(
-                    self.position..self.position + 1,
-                    "... but the file ends here",
-                );
+                let err =
+                    ParseDiagnostic::new("Unterminated block comment", start..self.text_position())
+                        .detail(
+                            self.position..self.position + 1,
+                            "... but the file ends here",
+                        );
 
                 self.diagnostics.push(err);
 
@@ -760,7 +740,6 @@ impl<'src> Lexer<'src> {
                 }
 
                 self.diagnostics.push(ParseDiagnostic::new(
-                    self.file_id,
                     "JSON standard does not allow comments.",
                     start..self.text_position(),
                 ));

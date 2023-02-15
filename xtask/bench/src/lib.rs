@@ -7,6 +7,9 @@ use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 use std::time::Duration;
 
+use criterion::{BatchSize, BenchmarkId};
+use rome_rowan::NodeCache;
+
 pub use crate::features::analyzer::benchmark_analyze_lib;
 use crate::features::analyzer::AnalyzerMeasurement;
 pub use crate::features::formatter::benchmark_format_lib;
@@ -147,11 +150,32 @@ pub fn run(args: RunArgs) {
 
                     match args.feature {
                         FeatureToBenchmark::Parser => {
-                            group.bench_function(test_case.filename(), |b| {
-                                b.iter(|| {
-                                    criterion::black_box(parse.parse());
-                                })
-                            });
+                            group.bench_function(
+                                BenchmarkId::new(test_case.filename(), "uncached"),
+                                |b| {
+                                    b.iter(|| {
+                                        criterion::black_box(parse.parse());
+                                    })
+                                },
+                            );
+                            group.bench_function(
+                                BenchmarkId::new(test_case.filename(), "cached"),
+                                |b| {
+                                    b.iter_batched(
+                                        || {
+                                            let mut cache = NodeCache::default();
+                                            parse.parse_with_cache(&mut cache);
+                                            cache
+                                        },
+                                        |mut cache| {
+                                            criterion::black_box(
+                                                parse.parse_with_cache(&mut cache),
+                                            );
+                                        },
+                                        BatchSize::SmallInput,
+                                    )
+                                },
+                            );
                         }
                         FeatureToBenchmark::Formatter => {
                             let parsed = parse.parse();

@@ -73,7 +73,7 @@ pub(crate) fn parse_ts_type_assertion_expression(
 
     let m = p.start();
     p.bump(T![<]);
-    parse_ts_type(p).or_add_diagnostic(p, expected_ts_type);
+    parse_ts_type(p, TypeContext::default()).or_add_diagnostic(p, expected_ts_type);
     p.expect(T![>]);
     parse_unary_expr(p, context).or_add_diagnostic(p, expected_expression);
     Present(m.complete(p, TS_TYPE_ASSERTION_EXPRESSION))

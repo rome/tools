@@ -1,5 +1,4 @@
 use rome_fs::RomePath;
-use rome_js_parser::FileId;
 use rome_js_syntax::TextSize;
 use rome_service::workspace::{server, FileGuard, Language, OpenFileParams};
 
@@ -16,7 +15,7 @@ fn debug_control_flow() {
     let file = FileGuard::open(
         workspace.as_ref(),
         OpenFileParams {
-            path: RomePath::new("file.js", FileId::zero()),
+            path: RomePath::new("file.js"),
             content: SOURCE.into(),
             version: 0,
             language_hint: Language::JavaScript,

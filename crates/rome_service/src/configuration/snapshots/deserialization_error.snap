@@ -2,15 +2,11 @@
 source: crates/rome_service/src/configuration/diagnostics.rs
 expression: content
 ---
-rome.json:3:13 configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Rome couldn't load the configuration file, here's why: 
-    expected `:` at line 3 column 13
+  × expected `:` but instead found `}`
   
-    1 │ {·
-    2 │ 
-  > 3 │ "formatter" }
-      │             
+  i Remove }
   
 
 

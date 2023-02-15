@@ -1,7 +1,6 @@
 use crate::{semantic_events, SemanticEvent};
 use rome_console::{markup, ConsoleExt, EnvConsole};
 use rome_diagnostics::location::AsSpan;
-use rome_diagnostics::location::FileId;
 use rome_diagnostics::{
     Advices, Diagnostic, DiagnosticExt, Location, LogCategory, PrintDiagnostic, Visit,
 };
@@ -63,7 +62,7 @@ use std::collections::{BTreeMap, HashMap};
 ///
 /// #### Scope Start Assertion
 ///
-/// Test if the attached token starts a new scope.  
+/// Test if the attached token starts a new scope.
 /// Pattern: ```/*START <LABEL>*/```
 ///
 /// Every scope start assertion will be tested if it matches a [SemanticEvent::ScopeStarted].
@@ -75,7 +74,7 @@ use std::collections::{BTreeMap, HashMap};
 ///
 /// #### Scope End Assertion
 ///
-/// Test if the attached token ends a scope.  
+/// Test if the attached token ends a scope.
 /// Pattern: ```/*END <LABEL>*/```
 ///
 /// Every scope end assertion will be tested if it matches a [SemanticEvent::ScopeEnded].
@@ -105,13 +104,13 @@ use std::collections::{BTreeMap, HashMap};
 /// if(true) ;/*NOEVENT*/;
 /// ```
 pub fn assert(code: &str, test_name: &str) {
-    let r = rome_js_parser::parse(code, FileId::zero(), SourceType::tsx());
+    let r = rome_js_parser::parse(code, SourceType::tsx());
 
     if r.has_errors() {
         let mut console = EnvConsole::default();
         for diag in r.into_diagnostics() {
             let error = diag
-                .with_file_path(FileId::zero())
+                .with_file_path("example.js")
                 .with_file_source_code(code);
             console.log(markup! {
                 {PrintDiagnostic::verbose(&error)}
@@ -807,7 +806,7 @@ fn show_unmatched_assertion(
         start..end,
     );
     let error = diagnostic
-        .with_file_path((test_name.to_string(), FileId::zero()))
+        .with_file_path(test_name.to_string())
         .with_file_source_code(code);
 
     let mut console = EnvConsole::default();
@@ -866,7 +865,7 @@ fn show_all_events<F>(
         };
 
         let error = diagnostic
-            .with_file_path((test_name.to_string(), FileId::zero()))
+            .with_file_path(test_name.to_string())
             .with_file_source_code(code);
 
         console.log(markup! {
@@ -885,7 +884,7 @@ fn error_assertion_not_attached_to_a_declaration(
         assertion_range,
     );
     let error = diagnostic
-        .with_file_path((test_name.to_string(), FileId::zero()))
+        .with_file_path(test_name.to_string())
         .with_file_source_code(code);
 
     let mut console = EnvConsole::default();
@@ -911,7 +910,7 @@ fn error_assertion_name_clash(
     );
     diagnostic.push_advice(old_range, "Previous assertion");
     let error = diagnostic
-        .with_file_path((test_name.to_string(), FileId::zero()))
+        .with_file_path(test_name.to_string())
         .with_file_source_code(code);
 
     let mut console = EnvConsole::default();
@@ -934,7 +933,7 @@ fn error_scope_end_assertion_points_to_non_existing_scope_start_assertion(
     );
 
     let error = diagnostic
-        .with_file_path((file_name.to_string(), FileId::zero()))
+        .with_file_path(file_name.to_string())
         .with_file_source_code(code);
 
     let mut console = EnvConsole::default();
@@ -958,7 +957,7 @@ fn error_scope_end_assertion_points_to_the_wrong_scope_start(
     }
 
     let error = diagnostic
-        .with_file_path((file_name.to_string(), FileId::zero()))
+        .with_file_path(file_name.to_string())
         .with_file_source_code(code);
 
     let mut console = EnvConsole::default();

@@ -68,3 +68,7 @@ who use assistive technology or screenreader.
 
 - [WebAIM - JavaScript event handlers](https://webaim.org/techniques/javascript/eventhandlers)
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

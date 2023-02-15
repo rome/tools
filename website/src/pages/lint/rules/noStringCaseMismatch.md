@@ -85,3 +85,7 @@ while (s.toLocaleUpperCase() === "abc") {}
 for (let s = "abc"; s === "abc"; s = s.toUpperCase()) {}
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

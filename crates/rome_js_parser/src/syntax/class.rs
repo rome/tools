@@ -30,7 +30,7 @@ use crate::syntax::typescript::ts_parse_error::{
 use crate::syntax::typescript::{
     is_reserved_type_name, parse_ts_implements_clause, parse_ts_return_type_annotation,
     parse_ts_type_annotation, parse_ts_type_arguments, parse_ts_type_parameters,
-    skip_ts_decorators,
+    skip_ts_decorators, TypeContext,
 };
 
 use crate::JsSyntaxFeature::TypeScript;
@@ -253,9 +253,13 @@ fn parse_class(p: &mut JsParser, kind: ClassKind) -> CompletedMarker {
     // test ts ts_class_type_parameters
     // class BuildError<A, B, C> {}
     TypeScript
-        .parse_exclusive_syntax(p, parse_ts_type_parameters, |p, type_parameters| {
-            ts_only_syntax_error(p, "class type parameters", type_parameters.range(p))
-        })
+        .parse_exclusive_syntax(
+            p,
+            |p| parse_ts_type_parameters(p, TypeContext::default()),
+            |p, type_parameters| {
+                ts_only_syntax_error(p, "class type parameters", type_parameters.range(p))
+            },
+        )
         .ok();
 
     eat_class_heritage_clause(p);
@@ -683,7 +687,7 @@ fn parse_class_member_impl(
         //  get a<A>(): A {}
         //  set a<A>(value: A) {}
         // }
-        if let Present(type_parameters) = parse_ts_type_parameters(p) {
+        if let Present(type_parameters) = parse_ts_type_parameters(p, TypeContext::default()) {
             p.error(ts_accessor_type_parameters_error(p, &type_parameters))
         }
 
@@ -1148,9 +1152,11 @@ fn parse_method_class_member_rest(
     let optional = optional_member_token(p);
 
     TypeScript
-        .parse_exclusive_syntax(p, parse_ts_type_parameters, |p, marker| {
-            ts_only_syntax_error(p, "type parameters", marker.range(p))
-        })
+        .parse_exclusive_syntax(
+            p,
+            |p| parse_ts_type_parameters(p, TypeContext::default()),
+            |p, marker| ts_only_syntax_error(p, "type parameters", marker.range(p)),
+        )
         .ok();
 
     let parameter_context = if modifiers.is_signature() {
@@ -1431,7 +1437,7 @@ fn parse_constructor_class_member_body(
 
     // test_err ts ts_constructor_type_parameters
     // class A { constructor<A>(b) {} }
-    if let Present(type_parameters) = parse_ts_type_parameters(p) {
+    if let Present(type_parameters) = parse_ts_type_parameters(p, TypeContext::default()) {
         p.error(ts_constructor_type_parameters_error(p, &type_parameters));
     }
 

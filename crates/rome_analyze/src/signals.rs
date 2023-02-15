@@ -7,9 +7,7 @@ use crate::{
     AnalyzerDiagnostic, Queryable, RuleGroup, ServiceBag, SuppressionCommentEmitter,
 };
 use rome_console::MarkupBuf;
-use rome_diagnostics::{
-    advice::CodeSuggestionAdvice, location::FileId, Applicability, CodeSuggestion, Error, FileSpan,
-};
+use rome_diagnostics::{advice::CodeSuggestionAdvice, Applicability, CodeSuggestion, Error};
 use rome_rowan::{BatchMutation, Language};
 use std::borrow::Cow;
 use std::iter::FusedIterator;
@@ -27,7 +25,7 @@ pub trait AnalyzerSignal<L: Language> {
 /// from a provided factory function. Optionally, this signal can be configured
 /// to also emit a code action, by calling `.with_action` with a secondary
 /// factory function for said action.
-pub(crate) struct DiagnosticSignal<D, A, L, T> {
+pub struct DiagnosticSignal<D, A, L, T> {
     diagnostic: D,
     action: A,
     _diag: PhantomData<(L, T)>,
@@ -38,7 +36,7 @@ where
     D: Fn() -> T,
     Error: From<T>,
 {
-    pub(crate) fn new(factory: D) -> Self {
+    pub fn new(factory: D) -> Self {
         Self {
             diagnostic: factory,
             action: || None,
@@ -48,7 +46,7 @@ where
 }
 
 impl<L: Language, D, A, T> DiagnosticSignal<D, A, L, T> {
-    pub(crate) fn with_action<B>(self, factory: B) -> DiagnosticSignal<D, B, L, T>
+    pub fn with_action<B>(self, factory: B) -> DiagnosticSignal<D, B, L, T>
     where
         B: Fn() -> Option<AnalyzerAction<L>>,
     {
@@ -89,7 +87,6 @@ where
 #[derive(Debug, Clone)]
 pub struct AnalyzerAction<L: Language> {
     pub rule_name: Option<(&'static str, &'static str)>,
-    pub file_id: FileId,
     pub category: ActionCategory,
     pub applicability: Applicability,
     pub message: MarkupBuf,
@@ -133,10 +130,7 @@ impl<L: Language> From<AnalyzerAction<L>> for CodeSuggestionItem {
             rule_name: action.rule_name,
             category: action.category,
             suggestion: CodeSuggestion {
-                span: FileSpan {
-                    file: action.file_id,
-                    range,
-                },
+                span: range,
                 applicability: action.applicability,
                 msg: action.message,
                 suggestion,
@@ -243,7 +237,6 @@ impl<L: Language> AnalyzerActionIter<L> {
 
 /// Analyzer-internal implementation of [AnalyzerSignal] for a specific [Rule](crate::registry::Rule)
 pub(crate) struct RuleSignal<'phase, R: Rule> {
-    file_id: FileId,
     root: &'phase RuleRoot<R>,
     query_result: <<R as Rule>::Query as Queryable>::Output,
     state: R::State,
@@ -257,7 +250,6 @@ where
     R: Rule + 'static,
 {
     pub(crate) fn new(
-        file_id: FileId,
         root: &'phase RuleRoot<R>,
         query_result: <<R as Rule>::Query as Queryable>::Output,
         state: R::State,
@@ -267,7 +259,6 @@ where
         >,
     ) -> Self {
         Self {
-            file_id,
             root,
             query_result,
             state,
@@ -294,7 +285,6 @@ where
             if let Some(action) = R::action(&ctx, &self.state) {
                 actions.push(AnalyzerAction {
                     rule_name: Some((<R::Group as RuleGroup>::NAME, R::METADATA.name)),
-                    file_id: self.file_id,
                     category: action.category,
                     applicability: action.applicability,
                     mutation: action.mutation,
@@ -307,7 +297,6 @@ where
                 {
                     let action = AnalyzerAction {
                         rule_name: Some((<R::Group as RuleGroup>::NAME, R::METADATA.name)),
-                        file_id: self.file_id,
                         category: ActionCategory::Other(Cow::Borrowed(SUPPRESSION_ACTION_CATEGORY)),
                         applicability: Applicability::Always,
                         mutation: suppression_action.mutation,

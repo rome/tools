@@ -1,131 +1,221 @@
-use rome_diagnostics::{category, Category, Diagnostic, LineIndexBuf, Location};
-use rome_rowan::{TextRange, TextSize};
-use std::fmt::{Debug, Display, Formatter};
+use rome_console::fmt::Display;
+use rome_console::{markup, MarkupBuf};
+use rome_deserialize::DeserializationDiagnostic;
+use rome_diagnostics::{
+    Advices, Category, Diagnostic, DiagnosticTags, Location, LogCategory, Severity, Visit,
+};
+use rome_rowan::SyntaxError;
+use serde::{Deserialize, Serialize};
+use std::fmt::{Debug, Formatter};
 
 /// Series of errors that can be thrown while computing the configuration
 #[derive(serde::Serialize, serde::Deserialize)]
-pub enum ConfigurationError {
+pub enum ConfigurationDiagnostic {
     /// Thrown when the program can't serialize the configuration, while saving it
-    SerializationError,
+    SerializationError(SerializationError),
 
     /// Thrown when trying to **create** a new configuration file, but it exists already
-    ConfigAlreadyExists,
+    ConfigAlreadyExists(ConfigAlreadyExists),
 
     /// Error thrown when de-serialising the configuration from file, the issues can be many:
     /// - syntax error
     /// - incorrect fields
     /// - incorrect values
-    DeserializationError {
-        message: String,
-        text_range: Option<TextRange>,
-        input: String,
-    },
+    Deserialization(DeserializationDiagnostic),
 
     /// Thrown when the pattern inside the `ignore` field errors
-    InvalidIgnorePattern(String, String),
+    InvalidIgnorePattern(InvalidIgnorePattern),
 }
 
-impl Debug for ConfigurationError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            ConfigurationError::SerializationError => std::fmt::Display::fmt(self, f),
-            ConfigurationError::DeserializationError { .. } => std::fmt::Display::fmt(self, f),
-            ConfigurationError::ConfigAlreadyExists => std::fmt::Display::fmt(self, f),
-            ConfigurationError::InvalidIgnorePattern(_, _) => std::fmt::Display::fmt(self, f),
-        }
+impl From<SyntaxError> for ConfigurationDiagnostic {
+    fn from(_: SyntaxError) -> Self {
+        ConfigurationDiagnostic::Deserialization(DeserializationDiagnostic::new(
+            markup! {"Syntax Error"},
+        ))
     }
 }
 
-impl Display for ConfigurationError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            ConfigurationError::SerializationError => {
-                write!(
-                    f,
-                    "Couldn't save the configuration on disk, probably because of some error inside the content of the file"
-                )
-            }
-            ConfigurationError::DeserializationError { message, .. } => {
-                write!(
-                    f,
-                    "Rome couldn't load the configuration file, here's why: \n{}",
-                    message
-                )
-            }
-            ConfigurationError::ConfigAlreadyExists => {
-                write!(f, "It seems that a configuration file already exists")
-            }
-
-            ConfigurationError::InvalidIgnorePattern(pattern, reason) => {
-                write!(f, "Couldn't parse the pattern {pattern}, reason: {reason}")
-            }
-        }
+impl From<DeserializationDiagnostic> for ConfigurationDiagnostic {
+    fn from(value: DeserializationDiagnostic) -> Self {
+        ConfigurationDiagnostic::Deserialization(value)
     }
 }
 
-impl Diagnostic for ConfigurationError {
+impl ConfigurationDiagnostic {
+    pub(crate) fn new_serialization_error() -> Self {
+        Self::SerializationError(SerializationError)
+    }
+
+    pub(crate) fn new_invalid_ignore_pattern(
+        pattern: impl Into<String>,
+        reason: impl Into<String>,
+    ) -> Self {
+        Self::InvalidIgnorePattern(InvalidIgnorePattern {
+            message: format!(
+                "Couldn't parse the {}, reason: {}",
+                pattern.into(),
+                reason.into()
+            ),
+        })
+    }
+
+    pub(crate) fn new_already_exists() -> Self {
+        Self::ConfigAlreadyExists(ConfigAlreadyExists {})
+    }
+}
+
+impl Debug for ConfigurationDiagnostic {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self, f)
+    }
+}
+
+impl std::fmt::Display for ConfigurationDiagnostic {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        self.description(f)
+    }
+}
+
+impl Diagnostic for ConfigurationDiagnostic {
+    fn severity(&self) -> Severity {
+        match self {
+            ConfigurationDiagnostic::SerializationError(error) => error.severity(),
+            ConfigurationDiagnostic::ConfigAlreadyExists(error) => error.severity(),
+            ConfigurationDiagnostic::Deserialization(error) => error.severity(),
+            ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.severity(),
+        }
+    }
+
     fn category(&self) -> Option<&'static Category> {
-        Some(category!("configuration"))
-    }
-
-    fn description(&self, fmt: &mut Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self, fmt)
-    }
-
-    fn message(&self, f: &mut rome_console::fmt::Formatter<'_>) -> std::io::Result<()> {
         match self {
-            ConfigurationError::SerializationError => {
-                write!(
-                    f,
-                    "Couldn't save the configuration on disk, probably because of some error inside the content of the file"
-                )
-            }
-            ConfigurationError::DeserializationError { message, .. } => {
-                write!(
-                    f,
-                    "Rome couldn't load the configuration file, here's why: \n{}",
-                    message
-                )
-            }
-            ConfigurationError::ConfigAlreadyExists => {
-                write!(f, "It seems that a configuration file already exists")
-            }
+            ConfigurationDiagnostic::SerializationError(error) => error.category(),
+            ConfigurationDiagnostic::ConfigAlreadyExists(error) => error.category(),
+            ConfigurationDiagnostic::Deserialization(error) => error.category(),
+            ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.category(),
+        }
+    }
 
-            ConfigurationError::InvalidIgnorePattern(pattern, reason) => {
-                write!(f, "Couldn't parse the pattern {pattern}, reason: {reason}")
-            }
+    fn tags(&self) -> DiagnosticTags {
+        match self {
+            ConfigurationDiagnostic::SerializationError(error) => error.tags(),
+            ConfigurationDiagnostic::ConfigAlreadyExists(error) => error.tags(),
+            ConfigurationDiagnostic::Deserialization(error) => error.tags(),
+            ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.tags(),
         }
     }
 
     fn location(&self) -> Location<'_> {
-        if let Self::DeserializationError { text_range, .. } = self {
-            Location::builder().span(text_range).build()
-        } else {
-            Location::builder().build()
+        match self {
+            ConfigurationDiagnostic::SerializationError(error) => error.location(),
+            ConfigurationDiagnostic::ConfigAlreadyExists(error) => error.location(),
+            ConfigurationDiagnostic::Deserialization(error) => error.location(),
+            ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.location(),
+        }
+    }
+
+    fn source(&self) -> Option<&dyn Diagnostic> {
+        match self {
+            ConfigurationDiagnostic::SerializationError(error) => error.source(),
+            ConfigurationDiagnostic::ConfigAlreadyExists(error) => error.source(),
+            ConfigurationDiagnostic::Deserialization(error) => error.source(),
+            ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.source(),
+        }
+    }
+
+    fn message(&self, fmt: &mut rome_console::fmt::Formatter<'_>) -> std::io::Result<()> {
+        match self {
+            ConfigurationDiagnostic::SerializationError(error) => error.message(fmt),
+            ConfigurationDiagnostic::ConfigAlreadyExists(error) => error.message(fmt),
+            ConfigurationDiagnostic::Deserialization(error) => error.message(fmt),
+            ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.message(fmt),
+        }
+    }
+
+    fn description(&self, fmt: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ConfigurationDiagnostic::SerializationError(error) => error.description(fmt),
+            ConfigurationDiagnostic::ConfigAlreadyExists(error) => error.description(fmt),
+            ConfigurationDiagnostic::Deserialization(error) => error.description(fmt),
+            ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.description(fmt),
+        }
+    }
+
+    fn advices(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
+        match self {
+            ConfigurationDiagnostic::SerializationError(error) => error.advices(visitor),
+            ConfigurationDiagnostic::ConfigAlreadyExists(error) => error.advices(visitor),
+            ConfigurationDiagnostic::Deserialization(error) => error.advices(visitor),
+            ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.advices(visitor),
+        }
+    }
+
+    fn verbose_advices(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
+        match self {
+            ConfigurationDiagnostic::SerializationError(error) => error.verbose_advices(visitor),
+            ConfigurationDiagnostic::ConfigAlreadyExists(error) => error.verbose_advices(visitor),
+            ConfigurationDiagnostic::Deserialization(error) => error.verbose_advices(visitor),
+            ConfigurationDiagnostic::InvalidIgnorePattern(error) => error.verbose_advices(visitor),
         }
     }
 }
 
-pub(crate) fn from_serde_error_to_range(
-    error: &serde_json::Error,
-    input: &str,
-) -> Option<TextRange> {
-    let line_starts = LineIndexBuf::from_source_text(input);
-    let line = error.line();
-    line.checked_sub(1).and_then(|line_index| {
-        let line_start = line_starts.get(line_index)?;
-        let column_index = error.column().checked_sub(1)?;
-        let column_offset = TextSize::try_from(column_index).ok()?;
+#[derive(Debug, Serialize, Deserialize, Default)]
+pub struct ConfigurationAdvices {
+    hint: Option<MarkupBuf>,
+    known_keys: Option<(MarkupBuf, Vec<MarkupBuf>)>,
+}
 
-        let span_start = line_start + column_offset;
-        Some(TextRange::at(span_start, TextSize::from(0)))
-    })
+impl Advices for ConfigurationAdvices {
+    fn record(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
+        if let Some(hint) = self.hint.as_ref() {
+            visitor.record_log(LogCategory::Info, hint)?;
+        }
+
+        if let Some((message, known_keys)) = self.known_keys.as_ref() {
+            visitor.record_log(LogCategory::Info, message)?;
+            let list: Vec<_> = known_keys
+                .iter()
+                .map(|message| message as &dyn Display)
+                .collect();
+            visitor.record_list(&list)?;
+        }
+
+        Ok(())
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize, Diagnostic)]
+#[diagnostic(
+    message = "Failed to serialize",
+    category = "configuration",
+    severity = Error
+)]
+pub struct SerializationError;
+
+#[derive(Debug, Serialize, Deserialize, Diagnostic)]
+#[diagnostic(
+    message = "It seems that a configuration file already exists",
+    category = "configuration",
+    severity = Error
+)]
+pub struct ConfigAlreadyExists {}
+
+#[derive(Debug, Serialize, Deserialize, Diagnostic)]
+#[diagnostic(
+    category = "configuration",
+    severity = Error,
+)]
+pub struct InvalidIgnorePattern {
+    #[message]
+    #[description]
+    message: String,
 }
 
 #[cfg(test)]
 mod test {
-    use crate::configuration::diagnostics::{from_serde_error_to_range, ConfigurationError};
+    use crate::configuration::diagnostics::ConfigurationDiagnostic;
     use crate::{Configuration, MatchOptions, Matcher};
+    use rome_deserialize::json::deserialize_from_json;
     use rome_diagnostics::{print_diagnostic_to_string, DiagnosticExt, Error};
 
     fn snap_diagnostic(test_name: &str, diagnostic: Error) {
@@ -140,10 +230,15 @@ mod test {
     }
 
     #[test]
+    fn diagnostic_size() {
+        assert_eq!(std::mem::size_of::<ConfigurationDiagnostic>(), 88);
+    }
+
+    #[test]
     fn config_already_exists() {
         snap_diagnostic(
             "config_already_exists",
-            ConfigurationError::ConfigAlreadyExists.with_file_path("rome.json"),
+            ConfigurationDiagnostic::new_already_exists().with_file_path("rome.json"),
         )
     }
 
@@ -159,7 +254,7 @@ mod test {
         if let Err(error) = matcher.add_pattern(pattern) {
             snap_diagnostic(
                 "incorrect_pattern",
-                ConfigurationError::InvalidIgnorePattern(
+                ConfigurationDiagnostic::new_invalid_ignore_pattern(
                     pattern.to_string(),
                     error.msg.to_string(),
                 )
@@ -173,20 +268,29 @@ mod test {
     #[test]
     fn deserialization_error() {
         let content = "{ \n\n\"formatter\" }";
-        let result = serde_json::from_str::<Configuration>(content);
-        if let Err(error) = result {
-            snap_diagnostic(
-                "deserialization_error",
-                ConfigurationError::DeserializationError {
-                    text_range: from_serde_error_to_range(&error, content),
-                    input: content.to_string(),
-                    message: error.to_string(),
-                }
-                .with_file_path("rome.json")
-                .with_file_source_code(content),
-            )
-        } else {
-            panic!("The JSON should be incorrect")
+        let result = deserialize_from_json::<Configuration>(content);
+
+        assert!(result.has_errors());
+        for diagnostic in result.into_diagnostics() {
+            snap_diagnostic("deserialization_error", diagnostic)
         }
+    }
+
+    #[test]
+    fn deserialization_quick_check() {
+        let content = r#"{
+  "linter": {
+    "rules": {
+        "recommended": true,
+        "suspicious": {
+            "noDebugger": {
+                "level": "off",
+                "options": { "hooks": [] }
+            }
+        }
+    }
+  }
+}"#;
+        let _result = deserialize_from_json::<Configuration>(content).into_deserialized();
     }
 }

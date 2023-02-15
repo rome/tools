@@ -38,3 +38,7 @@ const test = { debugger: 1 };
 test.debugger;
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

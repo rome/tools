@@ -33,7 +33,7 @@ use rome_js_syntax::{
     AnyJsRoot, JsLanguage, JsSyntaxNode, SourceType, TextRange, TextSize, TokenAtOffset,
 };
 use rome_parser::AnyParse;
-use rome_rowan::{AstNode, BatchMutationExt, Direction};
+use rome_rowan::{AstNode, BatchMutationExt, Direction, NodeCache};
 use std::borrow::Cow;
 use std::fmt::Debug;
 use tracing::debug;
@@ -116,9 +116,12 @@ impl ExtensionHandler for JsFileHandler {
     }
 }
 
-fn parse(rome_path: &RomePath, language_hint: LanguageId, text: &str) -> AnyParse {
-    let file_id = rome_path.file_id();
-
+fn parse(
+    rome_path: &RomePath,
+    language_hint: LanguageId,
+    text: &str,
+    cache: &mut NodeCache,
+) -> AnyParse {
     let source_type =
         SourceType::try_from(rome_path.as_path()).unwrap_or_else(|_| match language_hint {
             LanguageId::JavaScriptReact => SourceType::jsx(),
@@ -127,7 +130,7 @@ fn parse(rome_path: &RomePath, language_hint: LanguageId, text: &str) -> AnyPars
             _ => SourceType::js_module(),
         });
 
-    let parse = rome_js_parser::parse(text, file_id, source_type);
+    let parse = rome_js_parser::parse_js_with_cache(text, source_type, cache);
     AnyParse::from(parse)
 }
 
@@ -140,7 +143,7 @@ fn debug_syntax_tree(_rome_path: &RomePath, parse: AnyParse) -> GetSyntaxTreeRes
     }
 }
 
-fn debug_control_flow(rome_path: &RomePath, parse: AnyParse, cursor: TextSize) -> String {
+fn debug_control_flow(parse: AnyParse, cursor: TextSize) -> String {
     let mut control_flow_graph = None;
 
     let filter = AnalysisFilter {
@@ -151,7 +154,6 @@ fn debug_control_flow(rome_path: &RomePath, parse: AnyParse, cursor: TextSize) -
     let options = AnalyzerOptions::default();
 
     analyze_with_inspect_matcher(
-        rome_path.file_id(),
         &parse.tree(),
         filter,
         |match_params| {
@@ -201,7 +203,6 @@ fn lint(params: LintParams) -> LintResults {
     let tree = params.parse.tree();
     let mut diagnostics = params.parse.into_diagnostics();
 
-    let file_id = params.rome_path.file_id();
     let analyzer_options = compute_analyzer_options(&params.settings);
 
     let mut diagnostic_count = diagnostics.len() as u64;
@@ -212,7 +213,7 @@ fn lint(params: LintParams) -> LintResults {
 
     let has_lint = params.filter.categories.contains(RuleCategories::LINT);
 
-    analyze(file_id, &tree, params.filter, &analyzer_options, |signal| {
+    let (_, analyze_diagnostics) = analyze(&tree, params.filter, &analyzer_options, |signal| {
         if let Some(mut diagnostic) = signal.diagnostic() {
             // Do not report unused suppression comment diagnostics if this is a syntax-only analyzer pass
             if !has_lint && diagnostic.category() == Some(category!("suppressions/unused")) {
@@ -254,6 +255,12 @@ fn lint(params: LintParams) -> LintResults {
         ControlFlow::<Never>::Continue(())
     });
 
+    diagnostics.extend(
+        analyze_diagnostics
+            .into_iter()
+            .map(rome_diagnostics::serde::Diagnostic::new)
+            .collect::<Vec<_>>(),
+    );
     let skipped_diagnostics = diagnostic_count - diagnostics.len() as u64;
 
     LintResults {
@@ -292,7 +299,6 @@ impl RegistryVisitor<JsLanguage> for ActionsVisitor<'_> {
 }
 
 fn code_actions(
-    rome_path: &RomePath,
     parse: AnyParse,
     range: TextRange,
     rules: Option<&Rules>,
@@ -323,11 +329,9 @@ fn code_actions(
     filter.categories = RuleCategories::default();
     filter.range = Some(range);
 
-    let file_id = rome_path.file_id();
-
     let analyzer_options = compute_analyzer_options(&settings);
 
-    analyze(file_id, &tree, filter, &analyzer_options, |signal| {
+    analyze(&tree, filter, &analyzer_options, |signal| {
         actions.extend(signal.actions().into_code_action_iter().map(|item| {
             CodeAction {
                 category: item.category.clone(),
@@ -349,7 +353,6 @@ fn code_actions(
 /// If `indent_style` is [Some], it means that the formatting should be applied at the end
 fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
     let FixAllParams {
-        rome_path,
         parse,
         rules,
         fix_file_mode,
@@ -372,11 +375,10 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
     };
 
     filter.categories = RuleCategories::SYNTAX | RuleCategories::LINT;
-    let file_id = rome_path.file_id();
     let mut skipped_suggested_fixes = 0;
     let analyzer_options = compute_analyzer_options(&settings);
     loop {
-        let action = analyze(file_id, &tree, filter, &analyzer_options, |signal| {
+        let (action, _) = analyze(&tree, filter, &analyzer_options, |signal| {
             for action in signal.actions() {
                 // suppression actions should not be part of the fixes (safe or suggested)
                 if action.is_suppression() {

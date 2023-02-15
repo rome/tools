@@ -32,6 +32,20 @@ impl JsReferenceIdentifier {
         self.has_name("undefined")
     }
 
+    /// Returns `true` if this identifier refers to the `globalThis` symbol.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make::{js_reference_identifier, ident};
+    ///
+    /// assert!(js_reference_identifier(ident("globalThis")).is_global_this());
+    /// assert!(!js_reference_identifier(ident("x")).is_global_this());
+    /// ```
+    pub fn is_global_this(&self) -> bool {
+        self.has_name("globalThis")
+    }
+
     /// Returns `true` if this identifier has the given name.
     ///
     /// ## Examples
@@ -222,6 +236,14 @@ impl JsBinaryExpression {
         };
 
         Ok(kind)
+    }
+
+    /// Whether this is a binary operation, such as `<<`, `>>`, `>>>`, `&`, `|`, `^`.
+    pub fn is_binary_operator(&self) -> bool {
+        matches!(
+            self.operator_token().map(|t| t.kind()),
+            Ok(T![<<] | T![>>] | T![>>>] | T![&] | T![|] | T![^])
+        )
     }
 
     /// Whether this is a comparison operation, such as `>`, `<`, `==`, `!=`, `===`, etc.
@@ -693,7 +715,7 @@ impl JsIdentifierExpression {
 impl AnyJsLiteralExpression {
     pub fn value_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            AnyJsLiteralExpression::JsBigIntLiteralExpression(expression) => {
+            AnyJsLiteralExpression::JsBigintLiteralExpression(expression) => {
                 expression.value_token()
             }
             AnyJsLiteralExpression::JsBooleanLiteralExpression(expression) => {

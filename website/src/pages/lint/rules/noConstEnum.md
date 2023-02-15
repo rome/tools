@@ -38,7 +38,7 @@ const enum Status {
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Const enums are not supported by bundlers and are incompatible with the 'isolatedModules' mode. Their use can lead to import inexistent values.</span>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://www.typescriptlang.org/docs/handbook/enums.html#const-enum-pitfalls">TypeSCript Docs</a></span><span style="color: rgb(38, 148, 255);"> for more details.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://www.typescriptlang.org/docs/handbook/enums.html#const-enum-pitfalls">TypeScript Docs</a></span><span style="color: rgb(38, 148, 255);"> for more details.</span>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Safe fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Turn the </span><span style="color: rgb(38, 148, 255);"><strong>const enum</strong></span><span style="color: rgb(38, 148, 255);"> into a regular </span><span style="color: rgb(38, 148, 255);"><strong>enum</strong></span><span style="color: rgb(38, 148, 255);">.</span>
   
@@ -55,3 +55,7 @@ enum Status {
 }
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

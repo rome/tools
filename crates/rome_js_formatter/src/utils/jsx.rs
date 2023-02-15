@@ -563,7 +563,6 @@ mod tests {
     use crate::utils::jsx::{
         jsx_split_children, JsxChild, JsxChildrenIterator, JsxSplitChunksIterator, JsxTextChunk,
     };
-    use rome_diagnostics::location::FileId;
     use rome_formatter::comments::Comments;
     use rome_js_parser::parse;
     use rome_js_syntax::{JsxChildList, JsxText, SourceType};
@@ -590,11 +589,7 @@ mod tests {
     }
 
     fn assert_jsx_text_chunks(text: &str, expected_chunks: Vec<(TextSize, JsxTextChunk)>) {
-        let parse = parse(
-            &std::format!("<>{text}</>"),
-            FileId::zero(),
-            SourceType::jsx(),
-        );
+        let parse = parse(&std::format!("<>{text}</>"), SourceType::jsx());
         assert!(
             !parse.has_errors(),
             "Source should not have any errors {:?}",
@@ -665,11 +660,7 @@ mod tests {
     }
 
     fn parse_jsx_children(children: &str) -> JsxChildList {
-        let parse = parse(
-            &std::format!("<div>{children}</div>"),
-            FileId::zero(),
-            SourceType::jsx(),
-        );
+        let parse = parse(&std::format!("<div>{children}</div>"), SourceType::jsx());
 
         assert!(
             !parse.has_errors(),

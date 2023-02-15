@@ -81,3 +81,7 @@ a = 1, b = 2;
 for(a = 0, b = 0; (a + b) < 10; a++, b += 2) {}
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

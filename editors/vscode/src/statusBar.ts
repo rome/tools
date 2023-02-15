@@ -24,8 +24,8 @@ export class StatusBar {
 	private statusBarItem: StatusBarItem;
 
 	private serverState: State = State.Starting;
-	private isActive: boolean = false;
-	private serverVersion: string = "";
+	private isActive = false;
+	private serverVersion = "";
 
 	constructor() {
 		this.statusBarItem = window.createStatusBarItem(

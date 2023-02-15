@@ -2,7 +2,7 @@
 source: crates/rome_service/src/diagnostics.rs
 expression: content
 ---
-example/ internalError/fs  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+example/ internalError/fs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Rome couldn't read the following directory, maybe for permissions reasons or it doesn't exists: example/
   

@@ -7,7 +7,6 @@ use rome_console::{
     markup, Markup,
 };
 use rome_diagnostics::advice::CodeSuggestionAdvice;
-use rome_diagnostics::location::FileId;
 use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{DiagnosticExt, Error, PrintDiagnostic, Severity};
 use rome_js_parser::{
@@ -117,7 +116,7 @@ pub(crate) fn write_analysis_to_snapshot(
     input_file: &Path,
     check_action_type: CheckActionType,
 ) -> usize {
-    let parsed = parse(input_code, FileId::zero(), source_type);
+    let parsed = parse(input_code, source_type);
     let root = parsed.tree();
 
     let mut diagnostics = Vec::new();
@@ -129,18 +128,22 @@ pub(crate) fn write_analysis_to_snapshot(
     // that configures that specific rule.
     let options_file = input_file.with_extension("options.json");
     if let Ok(json) = std::fs::read_to_string(options_file) {
-        let v: serde_json::Value = serde_json::from_str(&json).expect("must be a valid JSON");
-
         //RuleKey needs 'static string, so we must leak them here
         let (group, rule) = parse_test_path(input_file);
         let group = Box::leak(Box::new(group.to_string()));
         let rule = Box::leak(Box::new(rule.to_string()));
         let rule_key = RuleKey::new(group, rule);
 
-        options.configuration.rules.push_rule(rule_key, v);
-    }
+        options
+            .configuration
+            .rules
+            .push_rule(rule_key, json.clone());
+        Some(json)
+    } else {
+        None
+    };
 
-    rome_js_analyze::analyze(FileId::zero(), &root, filter, &options, |event| {
+    let (_, errors) = rome_js_analyze::analyze(&root, filter, &options, |event| {
         if let Some(mut diag) = event.diagnostic() {
             for action in event.actions() {
                 if check_action_type.is_suppression() {
@@ -153,6 +156,7 @@ pub(crate) fn write_analysis_to_snapshot(
                     diag = diag.add_code_suggestion(CodeSuggestionAdvice::from(action));
                 }
             }
+
             let error = diag.with_severity(Severity::Warning);
             diagnostics.push(diagnostic_to_string(file_name, input_code, error));
             return ControlFlow::Continue(());
@@ -172,6 +176,10 @@ pub(crate) fn write_analysis_to_snapshot(
 
         ControlFlow::<Never>::Continue(())
     });
+
+    for error in errors {
+        diagnostics.push(diagnostic_to_string(file_name, input_code, error));
+    }
 
     writeln!(snapshot, "# Input").unwrap();
     writeln!(snapshot, "```js").unwrap();
@@ -234,9 +242,7 @@ fn markup_to_string(markup: Markup) -> String {
 }
 #[allow(clippy::let_and_return)]
 fn diagnostic_to_string(name: &str, source: &str, diag: Error) -> String {
-    let error = diag
-        .with_file_path((name, FileId::zero()))
-        .with_file_source_code(source);
+    let error = diag.with_file_path(name).with_file_source_code(source);
     let text = markup_to_string(markup! {
         {PrintDiagnostic::verbose(&error)}
     });
@@ -273,7 +279,7 @@ fn check_code_action(
     }
 
     // Re-parse the modified code and panic if the resulting tree has syntax errors
-    let re_parse = parse(&output, FileId::zero(), source_type);
+    let re_parse = parse(&output, source_type);
     assert_errors_are_absent(&re_parse, path);
 }
 

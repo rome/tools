@@ -5,7 +5,7 @@ use rome_analyze::{
     SuppressionKind,
 };
 use rome_aria::{AriaProperties, AriaRoles};
-use rome_diagnostics::{category, Diagnostic, FileId};
+use rome_diagnostics::{category, Diagnostic, Error as DiagnosticError};
 use rome_js_syntax::suppression::SuppressionDiagnostic;
 use rome_js_syntax::{suppression::parse_suppression_comment, JsLanguage};
 use serde::{Deserialize, Serialize};
@@ -52,13 +52,12 @@ pub fn metadata() -> &'static MetadataRegistry {
 /// used to inspect the "query matches" emitted by the analyzer before they are
 /// processed by the lint rules registry
 pub fn analyze_with_inspect_matcher<'a, V, F, B>(
-    file_id: FileId,
     root: &LanguageRoot<JsLanguage>,
     filter: AnalysisFilter,
     inspect_matcher: V,
     options: &'a AnalyzerOptions,
     mut emit_signal: F,
-) -> Option<B>
+) -> (Option<B>, Vec<DiagnosticError>)
 where
     V: FnMut(&MatchQueryParams<JsLanguage>) + 'a,
     F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
@@ -104,10 +103,7 @@ where
 
     // Bail if we can't parse a rule option
     if !diagnostics.is_empty() {
-        for diagnostic in diagnostics {
-            emit_signal(&diagnostic);
-        }
-        return None;
+        return (None, diagnostics);
     }
 
     let mut analyzer = Analyzer::new(
@@ -124,30 +120,31 @@ where
 
     services.insert_service(Arc::new(AriaRoles::default()));
     services.insert_service(Arc::new(AriaProperties::default()));
-    analyzer.run(AnalyzerContext {
-        file_id,
-        root: root.clone(),
-        range: filter.range,
-        services,
-        options,
-    })
+    (
+        analyzer.run(AnalyzerContext {
+            root: root.clone(),
+            range: filter.range,
+            services,
+            options,
+        }),
+        diagnostics,
+    )
 }
 
 /// Run the analyzer on the provided `root`: this process will use the given `filter`
 /// to selectively restrict analysis to specific rules / a specific source range,
 /// then call `emit_signal` when an analysis rule emits a diagnostic or action
 pub fn analyze<'a, F, B>(
-    file_id: FileId,
     root: &LanguageRoot<JsLanguage>,
     filter: AnalysisFilter,
     options: &'a AnalyzerOptions,
     emit_signal: F,
-) -> Option<B>
+) -> (Option<B>, Vec<DiagnosticError>)
 where
     F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
     B: 'a,
 {
-    analyze_with_inspect_matcher(file_id, root, filter, |_| {}, options, emit_signal)
+    analyze_with_inspect_matcher(root, filter, |_| {}, options, emit_signal)
 }
 
 #[cfg(test)]
@@ -155,8 +152,8 @@ mod tests {
     use rome_analyze::{AnalyzerOptions, Never, RuleCategories, RuleFilter};
     use rome_console::fmt::{Formatter, Termcolor};
     use rome_console::{markup, Markup};
+    use rome_diagnostics::category;
     use rome_diagnostics::termcolor::NoColor;
-    use rome_diagnostics::{category, location::FileId};
     use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic, Severity};
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};
@@ -176,15 +173,14 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#" <span aria-labelledby={``}></span>;"#;
+        const SOURCE: &str = r#"a = a"#;
 
-        let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
+        let parsed = parse(SOURCE, SourceType::jsx());
 
         let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
-        let rule_filter = RuleFilter::Rule("nursery", "useAriaPropTypes");
+        let rule_filter = RuleFilter::Rule("nursery", "noSelfAssignment");
         analyze(
-            FileId::zero(),
             &parsed.tree(),
             AnalysisFilter {
                 enabled_rules: Some(slice::from_ref(&rule_filter)),
@@ -265,7 +261,7 @@ mod tests {
             }
         ";
 
-        let parsed = parse(SOURCE, FileId::zero(), SourceType::js_module());
+        let parsed = parse(SOURCE, SourceType::js_module());
 
         let mut lint_ranges: Vec<TextRange> = Vec::new();
         let mut parse_ranges: Vec<TextRange> = Vec::new();
@@ -273,7 +269,6 @@ mod tests {
 
         let options = AnalyzerOptions::default();
         analyze(
-            FileId::zero(),
             &parsed.tree(),
             AnalysisFilter::default(),
             &options,
@@ -282,7 +277,7 @@ mod tests {
                     let span = diag.get_span();
                     let error = diag
                         .with_severity(Severity::Warning)
-                        .with_file_path(FileId::zero())
+                        .with_file_path("example.js")
                         .with_file_source_code(SOURCE);
 
                     let code = error.category().unwrap();
@@ -347,7 +342,7 @@ mod tests {
             a == b;
         ";
 
-        let parsed = parse(SOURCE, FileId::zero(), SourceType::js_module());
+        let parsed = parse(SOURCE, SourceType::js_module());
 
         let filter = AnalysisFilter {
             categories: RuleCategories::SYNTAX,
@@ -355,7 +350,7 @@ mod tests {
         };
 
         let options = AnalyzerOptions::default();
-        analyze(FileId::zero(), &parsed.tree(), filter, &options, |signal| {
+        analyze(&parsed.tree(), filter, &options, |signal| {
             if let Some(diag) = signal.diagnostic() {
                 let code = diag.category().unwrap();
                 if code != category!("suppressions/unused") {

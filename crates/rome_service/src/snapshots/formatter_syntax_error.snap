@@ -4,7 +4,7 @@ expression: content
 ---
 example.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × the formatter encountered an error while formatting the file: Syntax error.
+  × Syntax error.
   
 
 

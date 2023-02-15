@@ -1,4 +1,3 @@
-use rome_diagnostics::FileId;
 use rome_formatter_test::check_reformat::CheckReformat;
 use rome_json_formatter::context::JsonFormatOptions;
 use rome_json_formatter::format_node;
@@ -21,7 +20,7 @@ fn quick_test() {
     "e": false
 }
 "#;
-    let parse = parse_json(src, FileId::zero());
+    let parse = parse_json(src);
     let options = JsonFormatOptions::default();
     let result = format_node(options.clone(), &parse.syntax())
         .unwrap()

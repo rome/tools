@@ -12,7 +12,7 @@
 				"build:wasm": "wasm-pack build --out-dir ../../npm/wasm-web --target web --release --scope rometools ../crates/rome_wasm",
 				"build:wasm-dev": "wasm-pack build --out-dir ../../npm/wasm-web --target web --dev --scope rometools ../crates/rome_wasm"
 		},
-		"dependencies": {
+		"devDependencies": {
 				"@astrojs/mdx": "^0.11.5",
 				"@astrojs/prism": "^1.0.2",
 				"@astrojs/react": "^1.2.2",

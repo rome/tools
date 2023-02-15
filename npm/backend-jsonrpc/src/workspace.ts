@@ -6,13 +6,8 @@ export interface SupportsFeatureParams {
 }
 export type FeatureName = "Format" | "Lint";
 export interface RomePath {
-	id: FileId;
 	path: string;
 }
-/**
- * An id that points into a file database.
- */
-export type FileId = number;
 export interface SupportsFeatureResult {
 	reason?: UnsupportedReason;
 }
@@ -310,6 +305,10 @@ export interface Nursery {
 	 */
 	noCommaOperator?: RuleConfiguration;
 	/**
+	 * Disallow labeled statements that are not loops.
+	 */
+	noConfusingLabels?: RuleConfiguration;
+	/**
 	 * Disallow TypeScript const enum
 	 */
 	noConstEnum?: RuleConfiguration;
@@ -326,6 +325,10 @@ export interface Nursery {
 	 */
 	noDuplicateCase?: RuleConfiguration;
 	/**
+	 * Disallow duplicate class members.
+	 */
+	noDuplicateClassMembers?: RuleConfiguration;
+	/**
 	 * Prevents JSX properties to be assigned multiple times.
 	 */
 	noDuplicateJsxProps?: RuleConfiguration;
@@ -338,6 +341,10 @@ export interface Nursery {
 	 */
 	noEmptyInterface?: RuleConfiguration;
 	/**
+	 * Disallow unnecessary labels.
+	 */
+	noExtraLabels?: RuleConfiguration;
+	/**
 	 * Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.
 	 */
 	noExtraNonNullAssertion?: RuleConfiguration;
@@ -346,9 +353,17 @@ export interface Nursery {
 	 */
 	noExtraSemicolons?: RuleConfiguration;
 	/**
+	 * Disallow calling global object properties as functions
+	 */
+	noGlobalObjectCalls?: RuleConfiguration;
+	/**
 	 * Check that the scope attribute is only used on th elements.
 	 */
 	noHeaderScope?: RuleConfiguration;
+	/**
+	 * Disallow type annotations for variables, parameters, and class properties initialized with a literal expression.
+	 */
+	noInferrableTypes?: RuleConfiguration;
 	/**
 	 * Disallow function and var declarations in nested blocks.
 	 */
@@ -366,9 +381,17 @@ export interface Nursery {
 	 */
 	noNoninteractiveElementToInteractiveRole?: RuleConfiguration;
 	/**
+	 * Disallow the use of parameter properties in class constructors.
+	 */
+	noParameterProperties?: RuleConfiguration;
+	/**
 	 * Disallow literal numbers that lose precision
 	 */
 	noPrecisionLoss?: RuleConfiguration;
+	/**
+	 * Disallow direct use of Object.prototype builtins.
+	 */
+	noPrototypeBuiltins?: RuleConfiguration;
 	/**
 	 * Enforce img alt prop does not contain the word "image", "picture", or "photo".
 	 */
@@ -382,6 +405,10 @@ export interface Nursery {
 	 */
 	noRestrictedGlobals?: RuleConfiguration;
 	/**
+	 * Put your description here
+	 */
+	noSelfAssignment?: RuleConfiguration;
+	/**
 	 * Disallow comparisons where both sides are exactly the same.
 	 */
 	noSelfCompare?: RuleConfiguration;
@@ -394,6 +421,10 @@ export interface Nursery {
 	 */
 	noStringCaseMismatch?: RuleConfiguration;
 	/**
+	 * Disallow lexical declarations in switch clauses.
+	 */
+	noSwitchDeclarations?: RuleConfiguration;
+	/**
 	 * Ensures the super() constructor is called exactly once on every code path in a class constructor before this is accessed if the class has a superclass
 	 */
 	noUnreachableSuper?: RuleConfiguration;
@@ -401,6 +432,14 @@ export interface Nursery {
 	 * Disallow control flow statements in finally blocks.
 	 */
 	noUnsafeFinally?: RuleConfiguration;
+	/**
+	 * Disallow unused labels.
+	 */
+	noUnusedLabels?: RuleConfiguration;
+	/**
+	 * Disallow renaming import, export, and destructured assignments to the same name.
+	 */
+	noUselessRename?: RuleConfiguration;
 	/**
 	 * Disallow useless case in switch statements.
 	 */
@@ -485,6 +524,10 @@ export interface Nursery {
 	 * Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.
 	 */
 	useValidLang?: RuleConfiguration;
+	/**
+	 * Require generator functions to contain yield.
+	 */
+	useYield?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
@@ -768,11 +811,15 @@ export type Category =
 	| "lint/nursery/noDuplicateCase"
 	| "lint/nursery/noDuplicateObjectKeys"
 	| "lint/nursery/noEmptyInterface"
+	| "lint/nursery/noExtraLabels"
 	| "lint/nursery/noExtraNonNullAssertion"
 	| "lint/nursery/noHeaderScope"
+	| "lint/nursery/noInferrableTypes"
 	| "lint/nursery/noInnerDeclarations"
 	| "lint/nursery/noInvalidConstructorSuper"
+	| "lint/nursery/noConfusingLabels"
 	| "lint/nursery/noNonNullAssertion"
+	| "lint/nursery/noParameterProperties"
 	| "lint/nursery/noPrecisionLoss"
 	| "lint/nursery/noRedundantAlt"
 	| "lint/nursery/noRedundantUseStrict"
@@ -780,8 +827,10 @@ export type Category =
 	| "lint/nursery/noSelfCompare"
 	| "lint/nursery/noSetterReturn"
 	| "lint/nursery/noStringCaseMismatch"
+	| "lint/nursery/noSwitchDeclarations"
 	| "lint/nursery/noUnreachableSuper"
 	| "lint/nursery/noUnsafeFinally"
+	| "lint/nursery/noUnusedLabels"
 	| "lint/nursery/noUselessSwitchCase"
 	| "lint/nursery/noVar"
 	| "lint/nursery/noVoidTypeReturn"
@@ -801,9 +850,15 @@ export type Category =
 	| "lint/nursery/useIframeTitle"
 	| "lint/nursery/useNumericLiterals"
 	| "lint/nursery/noNoninteractiveElementToInteractiveRole"
+	| "lint/nursery/noUselessRename"
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useHookAtTopLevel"
 	| "lint/nursery/noDuplicateJsxProps"
+	| "lint/nursery/noDuplicateClassMembers"
+	| "lint/nursery/useYield"
+	| "lint/nursery/noGlobalObjectCalls"
+	| "lint/nursery/noPrototypeBuiltins"
+	| "lint/nursery/noSelfAssignment"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
@@ -871,7 +926,7 @@ export type MarkupBuf = MarkupNodeBuf[];
 /**
  * The severity to associate to a diagnostic.
  */
-export type Severity = "Fatal" | "Error" | "Warning" | "Information" | "Hint";
+export type Severity = "fatal" | "error" | "warning" | "information" | "hint";
 export type DiagnosticTags = DiagnosticTag[];
 /**
 	* Serializable representation of a [Diagnostic](super::Diagnostic) advice
@@ -889,10 +944,7 @@ export type Advice =
 /**
  * Represents the resource a diagnostic is associated with.
  */
-export type Resource_for_String =
-	| "Argv"
-	| "Memory"
-	| { File: FilePath_for_String };
+export type Resource_for_String = "argv" | "memory" | { file: string };
 export type TextRange = [TextSize, TextSize];
 export interface MarkupNodeBuf {
 	content: string;
@@ -902,10 +954,10 @@ export interface MarkupNodeBuf {
  * Internal enum used to automatically generate bit offsets for [DiagnosticTags] and help with the implementation of `serde` and `schemars` for tags.
  */
 export type DiagnosticTag =
-	| "Fixable"
-	| "Internal"
-	| "UnnecessaryCode"
-	| "DeprecatedCode";
+	| "fixable"
+	| "internal"
+	| "unnecessaryCode"
+	| "deprecatedCode";
 /**
  * The category for a log advice, defines how the message should be presented to the user.
  */
@@ -915,13 +967,6 @@ export interface TextEdit {
 	ops: CompressedOp[];
 }
 export type Backtrace = BacktraceFrame[];
-/**
- * Represents the path of a file on the filesystem.
- */
-export type FilePath_for_String =
-	| { Path: string }
-	| { FileId: FileId }
-	| { PathAndId: { file_id: FileId; path: string } };
 /**
  * Enumeration of all the supported markup elements
  */
@@ -988,10 +1033,7 @@ export interface CodeSuggestion {
 	applicability: Applicability;
 	labels: TextRange[];
 	msg: MarkupBuf;
-	/**
-	 * If the `FileId` is `None`, it's in the same file as his parent.
-	 */
-	span: FileSpan;
+	span: TextRange;
 	suggestion: TextEdit;
 }
 /**
@@ -1015,13 +1057,6 @@ export type SourceActionKind =
  * Indicates how a tool should manage this suggestion.
  */
 export type Applicability = "Always" | "MaybeIncorrect";
-/**
- * A range that is indexed in a specific file.
- */
-export interface FileSpan {
-	file: FileId;
-	range: TextRange;
-}
 export interface FormatFileParams {
 	path: RomePath;
 }

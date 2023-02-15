@@ -2,7 +2,6 @@ use crate::check_reformat::CheckReformat;
 use crate::snapshot_builder::{SnapshotBuilder, SnapshotOutput};
 use crate::TestFormatLanguage;
 use rome_console::EnvConsole;
-use rome_diagnostics::FileId;
 use rome_formatter::FormatOptions;
 use rome_fs::RomePath;
 use rome_service::workspace::{FeatureName, SupportsFeatureParams};
@@ -29,7 +28,7 @@ impl<'a> SpecTestFile<'a> {
             spec_input_file.display()
         );
 
-        let mut input_file = RomePath::new(file_path, FileId::zero());
+        let mut input_file = RomePath::new(file_path);
         let can_format = app
             .workspace
             .supports_feature(SupportsFeatureParams {
@@ -151,7 +150,7 @@ where
 
         let options_path = self.test_directory.join("options.json");
         if options_path.exists() {
-            let mut options_path = RomePath::new(&options_path, FileId::zero());
+            let mut options_path = RomePath::new(&options_path);
 
             // SAFETY: we checked its existence already, we assume we have rights to read it
             let test_options = self

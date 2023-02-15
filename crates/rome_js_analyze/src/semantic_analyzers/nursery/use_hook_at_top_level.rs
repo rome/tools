@@ -7,7 +7,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::AstNode;
 
-use super::use_exhaustive_dependencies::ReactExtensiveDependenciesOptions;
+use super::use_exhaustive_dependencies::{HooksOptions, ReactExtensiveDependenciesOptions};
 
 declare_rule! {
     /// Enforce that all React hooks are being called from the Top Level
@@ -82,10 +82,11 @@ impl Rule for UseHookAtTopLevel {
     type Query = Semantic<JsCallExpression>;
     type State = Suggestion;
     type Signals = Option<Self::State>;
-    type Options = ReactExtensiveDependenciesOptions;
+    type Options = HooksOptions;
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let options = ctx.options();
+        let options = ReactExtensiveDependenciesOptions::new(options.clone());
 
         let call = ctx.query();
         let hook_name_range = call.callee().ok()?.syntax().text_trimmed_range();

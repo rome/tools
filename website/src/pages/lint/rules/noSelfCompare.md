@@ -47,3 +47,7 @@ if (a.b.c() !== a.b .c()) {}
   
 </code></pre>
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

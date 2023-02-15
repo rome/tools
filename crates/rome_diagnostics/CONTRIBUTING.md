@@ -107,11 +107,7 @@ struct UnhandledDiagnostic {
     #[message]
     #[description]
     #[advice]
-    file_kind: UnhandledKind,
-    // For the location, it's possible to specify a sub-property between
-    // `resource`, `span` and `source_code`
-    #[location(resource)]
-    file_id: FileId,
+    file_kind: UnhandledKind
 }
 ```
 

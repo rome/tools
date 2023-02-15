@@ -38,16 +38,13 @@ pub use crate::rule::{
     RuleMeta, RuleMetadata, SuppressAction,
 };
 pub use crate::services::{FromServices, MissingServicesDiagnostic, ServiceBag};
-use crate::signals::DiagnosticSignal;
-pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
+pub use crate::signals::{AnalyzerAction, AnalyzerSignal, DiagnosticSignal};
 pub use crate::syntax::{Ast, SyntaxVisitor};
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
 pub use rule::DeserializableRuleOptions;
 
 use rome_console::markup;
-use rome_diagnostics::{
-    category, Applicability, Diagnostic, DiagnosticExt, DiagnosticTags, FileId,
-};
+use rome_diagnostics::{category, Applicability, Diagnostic, DiagnosticExt, DiagnosticTags};
 use rome_rowan::{
     AstNode, BatchMutation, Direction, Language, SyntaxElement, SyntaxToken, TextRange, TextSize,
     TokenAtOffset, TriviaPieceKind, WalkEvent,
@@ -75,7 +72,6 @@ pub struct Analyzer<'analyzer, L: Language, Matcher, Break, Diag> {
 }
 
 pub struct AnalyzerContext<'a, L: Language> {
-    pub file_id: FileId,
     pub root: LanguageRoot<L>,
     pub services: ServiceBag,
     pub range: Option<TextRange>,
@@ -140,7 +136,6 @@ where
                 line_index: &mut line_index,
                 line_suppressions: &mut line_suppressions,
                 emit_signal: &mut emit_signal,
-                file_id: ctx.file_id,
                 root: &ctx.root,
                 services: &ctx.services,
                 range: ctx.range,
@@ -178,7 +173,6 @@ where
 
             let signal = DiagnosticSignal::new(|| {
                 SuppressionDiagnostic::new(
-                    ctx.file_id,
                     category!("suppressions/unused"),
                     suppression.comment_span,
                     "Suppression comment is not being used",
@@ -216,8 +210,6 @@ struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break, Diag> {
     line_suppressions: &'phase mut Vec<LineSuppression>,
     /// Handles analyzer signals emitted by individual rules
     emit_signal: &'phase mut SignalHandler<'analyzer, L, Break>,
-    /// ID if the file being analyzed
-    file_id: FileId,
     /// Root node of the file being analyzed
     root: &'phase L::Root,
     /// Service bag handle for this phase
@@ -263,7 +255,7 @@ where
 
                 // If this is a token enter event, process its text content
                 WalkEvent::Enter(SyntaxElement::Token(token)) => {
-                    self.handle_token(self.file_id, token)?;
+                    self.handle_token(token)?;
 
                     continue;
                 }
@@ -276,7 +268,6 @@ where
             for visitor in self.visitors.iter_mut() {
                 let ctx = VisitorContext {
                     phase: self.phase,
-                    file_id: self.file_id,
                     root: self.root,
                     services: self.services,
                     range: self.range,
@@ -301,7 +292,6 @@ where
             for visitor in self.visitors.iter_mut() {
                 let ctx = VisitorContext {
                     phase: self.phase,
-                    file_id: self.file_id,
                     root: self.root,
                     services: self.services,
                     range: self.range,
@@ -323,7 +313,7 @@ where
     /// Process the text for a single token, parsing suppression comments and
     /// handling line breaks, then flush all pending query signals in the queue
     /// whose position is less then the end of the token within the file
-    fn handle_token(&mut self, file_id: FileId, token: SyntaxToken<L>) -> ControlFlow<Break> {
+    fn handle_token(&mut self, token: SyntaxToken<L>) -> ControlFlow<Break> {
         // Process the content of the token for comments and newline
         for (index, piece) in token.leading_trivia().pieces().enumerate() {
             if matches!(
@@ -336,14 +326,7 @@ where
             }
 
             if let Some(comment) = piece.as_comments() {
-                self.handle_comment(
-                    file_id,
-                    &token,
-                    true,
-                    index,
-                    comment.text(),
-                    piece.text_range(),
-                )?;
+                self.handle_comment(&token, true, index, comment.text(), piece.text_range())?;
             }
         }
 
@@ -360,14 +343,7 @@ where
             }
 
             if let Some(comment) = piece.as_comments() {
-                self.handle_comment(
-                    file_id,
-                    &token,
-                    false,
-                    index,
-                    comment.text(),
-                    piece.text_range(),
-                )?;
+                self.handle_comment(&token, false, index, comment.text(), piece.text_range())?;
             }
         }
 
@@ -445,7 +421,6 @@ where
     /// comments, and create line suppression entries accordingly
     fn handle_comment(
         &mut self,
-        file_id: FileId,
         token: &SyntaxToken<L>,
         is_leading: bool,
         index: usize,
@@ -464,7 +439,7 @@ where
                     let signal = DiagnosticSignal::new(move || {
                         let location = diag.location();
                         let span = location.span.map_or(range, |span| span + range.start());
-                        diag.clone().with_file_path(file_id).with_file_span(span)
+                        diag.clone().with_file_span(span)
                     });
 
                     (self.emit_signal)(&signal)?;
@@ -498,14 +473,12 @@ where
                     // Emit a warning for the unknown rule
                     let signal = DiagnosticSignal::new(move || match group_rule {
                         Some((group, rule)) => SuppressionDiagnostic::new(
-                            file_id,
                             category!("suppressions/unknownRule"),
                             range,
                             format_args!("Unknown lint rule {group}/{rule} in suppression comment"),
                         ),
 
                         None => SuppressionDiagnostic::new(
-                            file_id,
                             category!("suppressions/unknownGroup"),
                             range,
                             format_args!("Unknown lint rule group {rule} in suppression comment"),
@@ -527,7 +500,6 @@ where
         if has_legacy && range_match(self.range, range) {
             let signal = DiagnosticSignal::new(move || {
                 SuppressionDiagnostic::new(
-                    file_id,
                     category!("suppressions/deprecatedSyntax"),
                     range,
                     "Suppression is using a deprecated syntax",
@@ -535,9 +507,8 @@ where
                 .with_tags(DiagnosticTags::DEPRECATED_CODE)
             });
 
-            let signal = signal.with_action(|| {
-                update_suppression(file_id, self.root, token, is_leading, index, text)
-            });
+            let signal = signal
+                .with_action(|| update_suppression(self.root, token, is_leading, index, text));
 
             (self.emit_signal)(&signal)?;
         }
@@ -642,7 +613,6 @@ pub enum SuppressionKind<'a> {
 }
 
 fn update_suppression<L: Language>(
-    file_id: FileId,
     root: &L::Root,
     token: &SyntaxToken<L>,
     is_leading: bool,
@@ -687,7 +657,6 @@ fn update_suppression<L: Language>(
 
     Some(AnalyzerAction {
         rule_name: None,
-        file_id,
         category: ActionCategory::QuickFix,
         applicability: Applicability::Always,
         message: markup! {

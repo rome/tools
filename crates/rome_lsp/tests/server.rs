@@ -7,7 +7,6 @@ use futures::Sink;
 use futures::SinkExt;
 use futures::Stream;
 use futures::StreamExt;
-use rome_diagnostics::FileId;
 use rome_fs::RomePath;
 use rome_lsp::LSPServer;
 use rome_lsp::ServerFactory;
@@ -28,7 +27,6 @@ use tower::{Service, ServiceExt};
 use tower_lsp::jsonrpc;
 use tower_lsp::jsonrpc::Response;
 use tower_lsp::lsp_types as lsp;
-use tower_lsp::lsp_types::ClientCapabilities;
 use tower_lsp::lsp_types::DidChangeTextDocumentParams;
 use tower_lsp::lsp_types::DidCloseTextDocumentParams;
 use tower_lsp::lsp_types::DidOpenTextDocumentParams;
@@ -45,6 +43,7 @@ use tower_lsp::lsp_types::TextDocumentItem;
 use tower_lsp::lsp_types::TextEdit;
 use tower_lsp::lsp_types::VersionedTextDocumentIdentifier;
 use tower_lsp::lsp_types::WorkDoneProgressParams;
+use tower_lsp::lsp_types::{ClientCapabilities, CodeDescription, Url};
 use tower_lsp::LspService;
 use tower_lsp::{jsonrpc::Request, lsp_types::InitializeParams};
 
@@ -391,7 +390,7 @@ async fn document_lifecycle() -> Result<()> {
             "rome/get_syntax_tree",
             "get_syntax_tree",
             GetSyntaxTreeParams {
-                path: RomePath::new("document.js", FileId::zero()),
+                path: RomePath::new("document.js"),
             },
         )
         .await?
@@ -564,7 +563,10 @@ async fn pull_diagnostics() -> Result<()> {
                     code: Some(lsp::NumberOrString::String(String::from(
                         "lint/suspicious/noDoubleEquals",
                     ))),
-                    code_description: None,
+                    code_description: Some(CodeDescription {
+                        href: Url::parse("https://docs.rome.tools/lint/rules/noDoubleEquals")
+                            .unwrap()
+                    }),
                     source: Some(String::from("rome")),
                     message: String::from(
                         "Use === instead of ==.\n== is only allowed when comparing against `null`",

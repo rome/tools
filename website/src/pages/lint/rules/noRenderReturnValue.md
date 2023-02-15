@@ -44,3 +44,7 @@ const foo = ReactDOM.render(<div />, document.body);
 ReactDOM.render(<div />, document.body);
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

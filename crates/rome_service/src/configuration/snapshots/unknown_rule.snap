@@ -4,7 +4,7 @@ expression: content
 ---
 rome.json configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Invalid rule name `foo_bar`
+  × invalid rule name `foo_bar`
   
 
 

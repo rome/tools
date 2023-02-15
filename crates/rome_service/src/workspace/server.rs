@@ -19,6 +19,7 @@ use rome_diagnostics::{serde::Diagnostic as SerdeDiagnostic, Diagnostic, Diagnos
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_parser::AnyParse;
+use rome_rowan::NodeCache;
 use std::ffi::OsStr;
 use std::{panic::RefUnwindSafe, sync::RwLock};
 
@@ -41,11 +42,12 @@ pub(super) struct WorkspaceServer {
 /// could lead to hard to debug issues)
 impl RefUnwindSafe for WorkspaceServer {}
 
-#[derive(Clone, Debug)]
+#[derive(Debug)]
 pub(crate) struct Document {
     pub(crate) content: String,
     pub(crate) version: i32,
     pub(crate) language_hint: Language,
+    node_cache: NodeCache,
 }
 
 impl WorkspaceServer {
@@ -91,15 +93,14 @@ impl WorkspaceServer {
                 .unwrap_or_default();
 
             let language = Features::get_language(path).or(language_hint);
-            WorkspaceError::SourceFileNotSupported {
+            WorkspaceError::source_file_not_supported(
                 language,
-                path: path.clone().display().to_string(),
-                extension: path
-                    .clone()
+                path.clone().display().to_string(),
+                path.clone()
                     .extension()
                     .and_then(OsStr::to_str)
                     .map(|s| s.to_string()),
-            }
+            )
         }
     }
 
@@ -128,7 +129,7 @@ impl WorkspaceServer {
         };
 
         if ignored {
-            return Err(WorkspaceError::FileIgnored(format!(
+            return Err(WorkspaceError::file_ignored(format!(
                 "{}",
                 rome_path.to_path_buf().display()
             )));
@@ -138,12 +139,13 @@ impl WorkspaceServer {
             Entry::Occupied(entry) => Ok(entry.get().clone()),
             Entry::Vacant(entry) => {
                 let rome_path = entry.key();
-                let document = self
-                    .documents
-                    .get(rome_path)
-                    .ok_or(WorkspaceError::NotFound)?;
-
                 let capabilities = self.get_capabilities(rome_path);
+
+                let mut document = self
+                    .documents
+                    .get_mut(rome_path)
+                    .ok_or_else(WorkspaceError::not_found)?;
+
                 let parse = capabilities
                     .parser
                     .parse
@@ -156,16 +158,22 @@ impl WorkspaceServer {
                     usize::try_from(limit).unwrap_or(usize::MAX)
                 };
 
+                let document = &mut *document;
                 let size = document.content.as_bytes().len();
                 if size >= size_limit {
-                    return Err(WorkspaceError::FileTooLarge {
-                        path: rome_path.to_path_buf().display().to_string(),
+                    return Err(WorkspaceError::file_too_large(
+                        rome_path.to_path_buf().display().to_string(),
                         size,
-                        limit: size_limit,
-                    });
+                        size_limit,
+                    ));
                 }
 
-                let parsed = parse(rome_path, document.language_hint, &document.content);
+                let parsed = parse(
+                    rome_path,
+                    document.language_hint,
+                    document.content.as_str(),
+                    &mut document.node_cache,
+                );
 
                 Ok(entry.insert(parsed).clone())
             }
@@ -260,6 +268,7 @@ impl Workspace for WorkspaceServer {
                 content: params.content,
                 version: params.version,
                 language_hint: params.language_hint,
+                node_cache: NodeCache::default(),
             },
         );
         Ok(())
@@ -293,7 +302,7 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(self.build_capability_error(&params.path))?;
 
         let parse = self.get_parse(params.path.clone(), None)?;
-        let printed = debug_control_flow(&params.path, parse, params.cursor);
+        let printed = debug_control_flow(parse, params.cursor);
 
         Ok(printed)
     }
@@ -308,7 +317,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
-            return Err(WorkspaceError::FormatWithErrorsDisabled);
+            return Err(WorkspaceError::format_with_errors_disabled());
         }
 
         debug_formatter_ir(&params.path, parse, settings)
@@ -319,7 +328,7 @@ impl Workspace for WorkspaceServer {
         let mut document = self
             .documents
             .get_mut(&params.path)
-            .ok_or(WorkspaceError::NotFound)?;
+            .ok_or_else(WorkspaceError::not_found)?;
 
         debug_assert!(params.version > document.version);
         document.version = params.version;
@@ -333,7 +342,7 @@ impl Workspace for WorkspaceServer {
     fn close_file(&self, params: CloseFileParams) -> Result<(), WorkspaceError> {
         self.documents
             .remove(&params.path)
-            .ok_or(WorkspaceError::NotFound)?;
+            .ok_or_else(WorkspaceError::not_found)?;
 
         self.syntax.remove(&params.path);
         Ok(())
@@ -362,7 +371,6 @@ impl Workspace for WorkspaceServer {
             filter.categories = params.categories;
 
             let results = lint(LintParams {
-                rome_path: &params.path,
                 parse,
                 filter,
                 rules,
@@ -410,13 +418,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Lint))?;
         let settings = self.settings.read().unwrap();
         let rules = settings.linter().rules.as_ref();
-        Ok(code_actions(
-            &params.path,
-            parse,
-            params.range,
-            rules,
-            self.settings(),
-        ))
+        Ok(code_actions(parse, params.range, rules, self.settings()))
     }
 
     /// Runs the given file through the formatter using the provided options
@@ -431,7 +433,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
-            return Err(WorkspaceError::FormatWithErrorsDisabled);
+            return Err(WorkspaceError::format_with_errors_disabled());
         }
 
         format(&params.path, parse, settings)
@@ -447,7 +449,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
-            return Err(WorkspaceError::FormatWithErrorsDisabled);
+            return Err(WorkspaceError::format_with_errors_disabled());
         }
 
         format_range(&params.path, parse, settings, params.range)
@@ -463,7 +465,7 @@ impl Workspace for WorkspaceServer {
         let settings = self.settings();
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
-            return Err(WorkspaceError::FormatWithErrorsDisabled);
+            return Err(WorkspaceError::format_with_errors_disabled());
         }
 
         format_on_type(&params.path, parse, settings, params.offset)
@@ -480,7 +482,6 @@ impl Workspace for WorkspaceServer {
 
         let rules = settings.linter().rules.as_ref();
         fix_all(FixAllParams {
-            rome_path: &params.path,
             parse,
             rules,
             fix_file_mode: params.fix_file_mode,

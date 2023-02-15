@@ -146,3 +146,7 @@ switch (foo) {
 }
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

@@ -1,6 +1,6 @@
 use crate::{
-    configuration::FilesConfiguration, Configuration, ConfigurationError, MatchOptions, Matcher,
-    Rules, WorkspaceError,
+    configuration::FilesConfiguration, Configuration, ConfigurationDiagnostic, MatchOptions,
+    Matcher, Rules, WorkspaceError,
 };
 use indexmap::IndexSet;
 use rome_diagnostics::Category;
@@ -229,10 +229,12 @@ impl TryFrom<FilesConfiguration> for FilesSettings {
         if let Some(ignore) = config.ignore {
             for pattern in ignore {
                 matcher.add_pattern(&pattern).map_err(|err| {
-                    WorkspaceError::Configuration(ConfigurationError::InvalidIgnorePattern(
-                        pattern.to_string(),
-                        err.msg.to_string(),
-                    ))
+                    WorkspaceError::Configuration(
+                        ConfigurationDiagnostic::new_invalid_ignore_pattern(
+                            pattern.to_string(),
+                            err.msg.to_string(),
+                        ),
+                    )
                 })?;
             }
         }

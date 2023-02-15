@@ -34,7 +34,6 @@ let configuration: undefined | Configuration;
 function getPathForFile(file: File): RomePath {
 	return {
 		path: file.filename,
-		id: file.id,
 	};
 }
 

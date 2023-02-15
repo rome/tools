@@ -5426,36 +5426,36 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::JsNumberLiteralExpression {
         FormatOwnedWithRule :: new (self , crate :: js :: expressions :: number_literal_expression :: FormatJsNumberLiteralExpression :: default ())
     }
 }
-impl FormatRule<rome_js_syntax::JsBigIntLiteralExpression>
-    for crate::js::expressions::big_int_literal_expression::FormatJsBigIntLiteralExpression
+impl FormatRule<rome_js_syntax::JsBigintLiteralExpression>
+    for crate::js::expressions::bigint_literal_expression::FormatJsBigintLiteralExpression
 {
     type Context = JsFormatContext;
     #[inline(always)]
     fn fmt(
         &self,
-        node: &rome_js_syntax::JsBigIntLiteralExpression,
+        node: &rome_js_syntax::JsBigintLiteralExpression,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::JsBigIntLiteralExpression>::fmt(self, node, f)
+        FormatNodeRule::<rome_js_syntax::JsBigintLiteralExpression>::fmt(self, node, f)
     }
 }
-impl AsFormat<JsFormatContext> for rome_js_syntax::JsBigIntLiteralExpression {
+impl AsFormat<JsFormatContext> for rome_js_syntax::JsBigintLiteralExpression {
     type Format<'a> = FormatRefWithRule<
         'a,
-        rome_js_syntax::JsBigIntLiteralExpression,
-        crate::js::expressions::big_int_literal_expression::FormatJsBigIntLiteralExpression,
+        rome_js_syntax::JsBigintLiteralExpression,
+        crate::js::expressions::bigint_literal_expression::FormatJsBigintLiteralExpression,
     >;
     fn format(&self) -> Self::Format<'_> {
-        FormatRefWithRule :: new (self , crate :: js :: expressions :: big_int_literal_expression :: FormatJsBigIntLiteralExpression :: default ())
+        FormatRefWithRule :: new (self , crate :: js :: expressions :: bigint_literal_expression :: FormatJsBigintLiteralExpression :: default ())
     }
 }
-impl IntoFormat<JsFormatContext> for rome_js_syntax::JsBigIntLiteralExpression {
+impl IntoFormat<JsFormatContext> for rome_js_syntax::JsBigintLiteralExpression {
     type Format = FormatOwnedWithRule<
-        rome_js_syntax::JsBigIntLiteralExpression,
-        crate::js::expressions::big_int_literal_expression::FormatJsBigIntLiteralExpression,
+        rome_js_syntax::JsBigintLiteralExpression,
+        crate::js::expressions::bigint_literal_expression::FormatJsBigintLiteralExpression,
     >;
     fn into_format(self) -> Self::Format {
-        FormatOwnedWithRule :: new (self , crate :: js :: expressions :: big_int_literal_expression :: FormatJsBigIntLiteralExpression :: default ())
+        FormatOwnedWithRule :: new (self , crate :: js :: expressions :: bigint_literal_expression :: FormatJsBigintLiteralExpression :: default ())
     }
 }
 impl FormatRule<rome_js_syntax::JsBooleanLiteralExpression>
@@ -7474,41 +7474,41 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::TsNumberLiteralType {
         )
     }
 }
-impl FormatRule<rome_js_syntax::TsBigIntLiteralType>
-    for crate::ts::types::big_int_literal_type::FormatTsBigIntLiteralType
+impl FormatRule<rome_js_syntax::TsBigintLiteralType>
+    for crate::ts::types::bigint_literal_type::FormatTsBigintLiteralType
 {
     type Context = JsFormatContext;
     #[inline(always)]
     fn fmt(
         &self,
-        node: &rome_js_syntax::TsBigIntLiteralType,
+        node: &rome_js_syntax::TsBigintLiteralType,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::TsBigIntLiteralType>::fmt(self, node, f)
+        FormatNodeRule::<rome_js_syntax::TsBigintLiteralType>::fmt(self, node, f)
     }
 }
-impl AsFormat<JsFormatContext> for rome_js_syntax::TsBigIntLiteralType {
+impl AsFormat<JsFormatContext> for rome_js_syntax::TsBigintLiteralType {
     type Format<'a> = FormatRefWithRule<
         'a,
-        rome_js_syntax::TsBigIntLiteralType,
-        crate::ts::types::big_int_literal_type::FormatTsBigIntLiteralType,
+        rome_js_syntax::TsBigintLiteralType,
+        crate::ts::types::bigint_literal_type::FormatTsBigintLiteralType,
     >;
     fn format(&self) -> Self::Format<'_> {
         FormatRefWithRule::new(
             self,
-            crate::ts::types::big_int_literal_type::FormatTsBigIntLiteralType::default(),
+            crate::ts::types::bigint_literal_type::FormatTsBigintLiteralType::default(),
         )
     }
 }
-impl IntoFormat<JsFormatContext> for rome_js_syntax::TsBigIntLiteralType {
+impl IntoFormat<JsFormatContext> for rome_js_syntax::TsBigintLiteralType {
     type Format = FormatOwnedWithRule<
-        rome_js_syntax::TsBigIntLiteralType,
-        crate::ts::types::big_int_literal_type::FormatTsBigIntLiteralType,
+        rome_js_syntax::TsBigintLiteralType,
+        crate::ts::types::bigint_literal_type::FormatTsBigintLiteralType,
     >;
     fn into_format(self) -> Self::Format {
         FormatOwnedWithRule::new(
             self,
-            crate::ts::types::big_int_literal_type::FormatTsBigIntLiteralType::default(),
+            crate::ts::types::bigint_literal_type::FormatTsBigintLiteralType::default(),
         )
     }
 }
@@ -8103,6 +8103,44 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTypeParameterName {
         )
     }
 }
+impl FormatRule<rome_js_syntax::TsTypeConstraintClause>
+    for crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause
+{
+    type Context = JsFormatContext;
+    #[inline(always)]
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsTypeConstraintClause,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsTypeConstraintClause>::fmt(self, node, f)
+    }
+}
+impl AsFormat<JsFormatContext> for rome_js_syntax::TsTypeConstraintClause {
+    type Format<'a> = FormatRefWithRule<
+        'a,
+        rome_js_syntax::TsTypeConstraintClause,
+        crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause,
+    >;
+    fn format(&self) -> Self::Format<'_> {
+        FormatRefWithRule::new(
+            self,
+            crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause::default(),
+        )
+    }
+}
+impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTypeConstraintClause {
+    type Format = FormatOwnedWithRule<
+        rome_js_syntax::TsTypeConstraintClause,
+        crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause,
+    >;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule::new(
+            self,
+            crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause::default(),
+        )
+    }
+}
 impl FormatRule<rome_js_syntax::TsPredicateReturnType>
     for crate::ts::types::predicate_return_type::FormatTsPredicateReturnType
 {
@@ -8248,44 +8286,6 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTypeParameter {
         FormatOwnedWithRule::new(
             self,
             crate::ts::bindings::type_parameter::FormatTsTypeParameter::default(),
-        )
-    }
-}
-impl FormatRule<rome_js_syntax::TsTypeConstraintClause>
-    for crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause
-{
-    type Context = JsFormatContext;
-    #[inline(always)]
-    fn fmt(
-        &self,
-        node: &rome_js_syntax::TsTypeConstraintClause,
-        f: &mut JsFormatter,
-    ) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::TsTypeConstraintClause>::fmt(self, node, f)
-    }
-}
-impl AsFormat<JsFormatContext> for rome_js_syntax::TsTypeConstraintClause {
-    type Format<'a> = FormatRefWithRule<
-        'a,
-        rome_js_syntax::TsTypeConstraintClause,
-        crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause,
-    >;
-    fn format(&self) -> Self::Format<'_> {
-        FormatRefWithRule::new(
-            self,
-            crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause::default(),
-        )
-    }
-}
-impl IntoFormat<JsFormatContext> for rome_js_syntax::TsTypeConstraintClause {
-    type Format = FormatOwnedWithRule<
-        rome_js_syntax::TsTypeConstraintClause,
-        crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause,
-    >;
-    fn into_format(self) -> Self::Format {
-        FormatOwnedWithRule::new(
-            self,
-            crate::ts::auxiliary::type_constraint_clause::FormatTsTypeConstraintClause::default(),
         )
     }
 }

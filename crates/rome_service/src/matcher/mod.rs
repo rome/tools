@@ -1,6 +1,8 @@
 pub mod pattern;
 
 pub use pattern::{MatchOptions, Pattern, PatternError};
+use rome_console::markup;
+use rome_diagnostics::Diagnostic;
 use std::collections::HashMap;
 use std::path::Path;
 use std::sync::RwLock;
@@ -86,6 +88,16 @@ impl Matcher {
         }
 
         matches
+    }
+}
+
+impl Diagnostic for PatternError {
+    fn description(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(fmt, "{}", self.msg)
+    }
+
+    fn message(&self, fmt: &mut rome_console::fmt::Formatter<'_>) -> std::io::Result<()> {
+        fmt.write_markup(markup!({ self.msg }))
     }
 }
 

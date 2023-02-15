@@ -101,3 +101,7 @@ Enforce that ARIA state and property values are valid.
 - [ARIA Spec, States and Properties](https://www.w3.org/TR/wai-aria/#states_and_properties)
 - [Chrome Audit Rules, AX_ARIA_04](https://github.com/GoogleChrome/accessibility-developer-tools/wiki/Audit-Rules#ax_aria_04)
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

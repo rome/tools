@@ -12,7 +12,6 @@ pub fn is_constant(expr: &AnyJsExpression) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use rome_diagnostics::FileId;
     use rome_js_syntax::{JsIdentifierBinding, JsVariableDeclarator, SourceType};
 
     use crate::{semantic_model, SemanticModelOptions};
@@ -20,7 +19,7 @@ mod tests {
     fn assert_is_const(code: &str, is_const: bool) {
         use rome_rowan::AstNode;
         use rome_rowan::SyntaxNodeCast;
-        let r = rome_js_parser::parse(code, FileId::zero(), SourceType::js_module());
+        let r = rome_js_parser::parse(code, SourceType::js_module());
         let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
         let a_reference = r

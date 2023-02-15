@@ -1,5 +1,4 @@
 use crate::token_source::JsonTokenSource;
-use rome_diagnostics::FileId;
 use rome_json_syntax::JsonSyntaxKind;
 use rome_parser::diagnostic::merge_diagnostics;
 use rome_parser::event::Event;
@@ -13,10 +12,10 @@ pub(crate) struct JsonParser<'source> {
 }
 
 impl<'source> JsonParser<'source> {
-    pub fn new(source: &'source str, file_id: FileId) -> Self {
+    pub fn new(source: &'source str) -> Self {
         Self {
-            context: ParserContext::new(file_id),
-            source: JsonTokenSource::from_str(source, file_id),
+            context: ParserContext::default(),
+            source: JsonTokenSource::from_str(source),
         }
     }
 

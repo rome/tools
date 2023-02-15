@@ -30,3 +30,4 @@ futures = "0.3"
 [dev-dependencies]
 tower = { version = "0.4.12", features = ["timeout"] }
 tokio = { workspace = true, features = ["rt", "rt-multi-thread", "macros"] }
+proptest = "1.0.0"

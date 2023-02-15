@@ -32,9 +32,10 @@ Environment:
   NODE_PACKAGE_MANAGER: unset
 
 Rome Configuration:
-  Status:               Failed to load
-  Error:                Rome couldn't load the configuration file, here's why: 
-expected value at line 4 column 3
+  Error:                expected an array, an object, or a literal but instead found '}'
+  Status:               Loaded with errors
+  Formatter disabled:   false
+  Linter disabled:      false
 
 Server:
   Version:              0.0.0

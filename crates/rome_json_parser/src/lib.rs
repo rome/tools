@@ -2,13 +2,12 @@
 
 use crate::parser::JsonParser;
 use crate::syntax::parse_root;
-use rome_diagnostics::FileId;
 use rome_json_factory::JsonSyntaxFactory;
 use rome_json_syntax::{JsonLanguage, JsonRoot, JsonSyntaxNode};
 pub use rome_parser::prelude::*;
 use rome_parser::tree_sink::LosslessTreeSink;
 use rome_parser::AnyParse;
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, NodeCache};
 
 mod lexer;
 mod parser;
@@ -19,15 +18,21 @@ mod token_source;
 pub(crate) type JsonLosslessTreeSink<'source> =
     LosslessTreeSink<'source, JsonLanguage, JsonSyntaxFactory>;
 
-pub fn parse_json(source: &str, file_id: FileId) -> JsonParse {
-    tracing::debug_span!("parse", file_id = ?file_id).in_scope(move || {
-        let mut parser = JsonParser::new(source, file_id);
+pub fn parse_json(source: &str) -> JsonParse {
+    let mut cache = NodeCache::default();
+    parse_json_with_cache(source, &mut cache)
+}
+
+/// Parses the provided string as JSON program using the provided node cache.
+pub fn parse_json_with_cache(source: &str, cache: &mut NodeCache) -> JsonParse {
+    tracing::debug_span!("parse").in_scope(move || {
+        let mut parser = JsonParser::new(source);
 
         parse_root(&mut parser);
 
         let (events, diagnostics, trivia) = parser.finish();
 
-        let mut tree_sink = JsonLosslessTreeSink::new(source, &trivia);
+        let mut tree_sink = JsonLosslessTreeSink::with_cache(source, &trivia, cache);
         rome_parser::event::process(&mut tree_sink, events, diagnostics);
         let (green, diagnostics) = tree_sink.finish();
 
@@ -53,11 +58,10 @@ impl JsonParse {
     /// # use rome_json_parser::parse_json;
     /// # use rome_json_syntax::JsonSyntaxKind;
     /// # use rome_rowan::{AstNode, AstNodeList, SyntaxError};
-    /// # use rome_diagnostics::location::FileId;
     ///
     /// # fn main() -> Result<(), SyntaxError> {
     /// use rome_json_syntax::JsonSyntaxKind;
-    /// let parse = parse_json(r#"["a", 1]"#, FileId::zero());
+    /// let parse = parse_json(r#"["a", 1]"#);
     ///
     /// // Get the root value
     /// let root_value = parse.tree().value()?;

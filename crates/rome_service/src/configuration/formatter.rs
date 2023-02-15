@@ -1,5 +1,5 @@
 use crate::settings::FormatSettings;
-use crate::{ConfigurationError, MatchOptions, Matcher, WorkspaceError};
+use crate::{ConfigurationDiagnostic, MatchOptions, Matcher, WorkspaceError};
 use indexmap::IndexSet;
 use rome_formatter::{IndentStyle, LineWidth};
 use serde::{Deserialize, Serialize};
@@ -38,6 +38,17 @@ pub struct FormatterConfiguration {
     pub ignore: Option<IndexSet<String>>,
 }
 
+impl FormatterConfiguration {
+    pub(crate) const KNOWN_KEYS: &'static [&'static str] = &[
+        "enabled",
+        "formatWithErrors",
+        "indentStyle",
+        "indentSize",
+        "lineWidth",
+        "ignore",
+    ];
+}
+
 impl Default for FormatterConfiguration {
     fn default() -> Self {
         Self {
@@ -67,10 +78,12 @@ impl TryFrom<FormatterConfiguration> for FormatSettings {
         if let Some(ignore) = conf.ignore {
             for pattern in ignore {
                 matcher.add_pattern(&pattern).map_err(|err| {
-                    WorkspaceError::Configuration(ConfigurationError::InvalidIgnorePattern(
-                        pattern.to_string(),
-                        err.msg.to_string(),
-                    ))
+                    WorkspaceError::Configuration(
+                        ConfigurationDiagnostic::new_invalid_ignore_pattern(
+                            pattern.to_string(),
+                            err.msg.to_string(),
+                        ),
+                    )
                 })?;
             }
         }
@@ -108,4 +121,8 @@ pub enum PlainIndentStyle {
     Tab,
     /// Space
     Space,
+}
+
+impl PlainIndentStyle {
+    pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["tab", "space"];
 }

@@ -1,7 +1,6 @@
 use crate::test_case::TestCase;
 use criterion::black_box;
 use rome_analyze::{AnalysisFilter, AnalyzerOptions, ControlFlow, Never, RuleCategories};
-use rome_diagnostics::FileId;
 use rome_formatter::{FormatResult, Formatted, PrintResult, Printed};
 use rome_js_analyze::analyze;
 use rome_js_formatter::context::{JsFormatContext, JsFormatOptions};
@@ -9,6 +8,7 @@ use rome_js_syntax::{AnyJsRoot, JsSyntaxNode, SourceType};
 use rome_json_formatter::context::{JsonFormatContext, JsonFormatOptions};
 use rome_json_syntax::JsonSyntaxNode;
 use rome_parser::prelude::ParseDiagnostic;
+use rome_rowan::NodeCache;
 
 pub enum Parse<'a> {
     JavaScript(SourceType, &'a str),
@@ -28,11 +28,20 @@ impl<'a> Parse<'a> {
 
     pub fn parse(&self) -> Parsed {
         match self {
+            Parse::JavaScript(source_type, code) => {
+                Parsed::JavaScript(rome_js_parser::parse(code, *source_type), *source_type)
+            }
+            Parse::Json(code) => Parsed::Json(rome_json_parser::parse_json(code)),
+        }
+    }
+
+    pub fn parse_with_cache(&self, cache: &mut NodeCache) -> Parsed {
+        match self {
             Parse::JavaScript(source_type, code) => Parsed::JavaScript(
-                rome_js_parser::parse(code, FileId::zero(), *source_type),
+                rome_js_parser::parse_js_with_cache(code, *source_type, cache),
                 *source_type,
             ),
-            Parse::Json(code) => Parsed::Json(rome_json_parser::parse_json(code, FileId::zero())),
+            Parse::Json(code) => Parsed::Json(rome_json_parser::parse_json_with_cache(code, cache)),
         }
     }
 }
@@ -114,7 +123,7 @@ impl Analyze {
                     ..AnalysisFilter::default()
                 };
                 let options = AnalyzerOptions::default();
-                analyze(FileId::zero(), root, filter, &options, |event| {
+                analyze(root, filter, &options, |event| {
                     black_box(event.diagnostic());
                     black_box(event.actions());
                     ControlFlow::<Never>::Continue(())

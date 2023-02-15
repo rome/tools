@@ -109,3 +109,7 @@ let a = <a href='http://external.link' rel='noreferrer' target='_blank'>child</a
 let a = <a href='http://external.link' target='_blank' rel="noopener" {...props}>child</a>;
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

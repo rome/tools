@@ -41,12 +41,13 @@ use crate::utils::{AnyJsBinaryLikeExpression, AnyJsBinaryLikeLeftExpression};
 
 use rome_js_syntax::{
     AnyJsAssignment, AnyJsAssignmentPattern, AnyJsExpression, AnyJsFunctionBody,
-    AnyJsLiteralExpression, AnyTsType, JsArrowFunctionExpression, JsAssignmentExpression,
-    JsBinaryExpression, JsBinaryOperator, JsComputedMemberAssignment, JsComputedMemberExpression,
-    JsConditionalExpression, JsLanguage, JsParenthesizedAssignment, JsParenthesizedExpression,
-    JsPrivateName, JsSequenceExpression, JsStaticMemberAssignment, JsStaticMemberExpression,
-    JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, TsConditionalType, TsIndexedAccessType,
-    TsIntersectionTypeElementList, TsParenthesizedType, TsUnionTypeVariantList,
+    AnyJsLiteralExpression, AnyTsReturnType, AnyTsType, JsArrowFunctionExpression,
+    JsAssignmentExpression, JsBinaryExpression, JsBinaryOperator, JsComputedMemberAssignment,
+    JsComputedMemberExpression, JsConditionalExpression, JsLanguage, JsParenthesizedAssignment,
+    JsParenthesizedExpression, JsPrivateName, JsSequenceExpression, JsStaticMemberAssignment,
+    JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, TsConditionalType,
+    TsConstructorType, TsFunctionType, TsIndexedAccessType, TsIntersectionTypeElementList,
+    TsParenthesizedType, TsUnionTypeVariantList,
 };
 use rome_rowan::{declare_node_union, match_ast, AstNode, AstSeparatedList, SyntaxResult};
 
@@ -68,7 +69,7 @@ impl NeedsParentheses for AnyJsLiteralExpression {
     #[inline]
     fn needs_parentheses(&self) -> bool {
         match self {
-            AnyJsLiteralExpression::JsBigIntLiteralExpression(big_int) => {
+            AnyJsLiteralExpression::JsBigintLiteralExpression(big_int) => {
                 big_int.needs_parentheses()
             }
             AnyJsLiteralExpression::JsBooleanLiteralExpression(boolean) => {
@@ -88,7 +89,7 @@ impl NeedsParentheses for AnyJsLiteralExpression {
     #[inline]
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         match self {
-            AnyJsLiteralExpression::JsBigIntLiteralExpression(big_int) => {
+            AnyJsLiteralExpression::JsBigintLiteralExpression(big_int) => {
                 big_int.needs_parentheses_with_parent(parent)
             }
             AnyJsLiteralExpression::JsBooleanLiteralExpression(boolean) => {
@@ -725,6 +726,65 @@ pub(crate) fn is_check_type(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool 
     }
 }
 
+/// Tests if `node` is the extends type of a [TsConditionalType]
+///
+/// ```javascript
+/// type s = A extends string ? boolean : number //  true for `string`, false for `A`, `boolean` and `number`
+/// ```
+fn is_extends_type(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
+    debug_assert_is_parent(node, parent);
+
+    match parent.kind() {
+        JsSyntaxKind::TS_CONDITIONAL_TYPE => {
+            let conditional = TsConditionalType::unwrap_cast(parent.clone());
+
+            conditional
+                .extends_type()
+                .map(AstNode::into_syntax)
+                .as_ref()
+                == Ok(node)
+        }
+        _ => false,
+    }
+}
+
+/// Tests if `node` includes inferred return types with extends constraints
+///
+/// ```javascript
+/// type Type<A> = A extends ((a: string) => infer B extends string) ? B : never;  // true
+/// ```
+pub(crate) fn is_includes_inferred_return_types_with_extends_constraints(
+    node: &JsSyntaxNode,
+    parent: &JsSyntaxNode,
+) -> bool {
+    if is_extends_type(node, parent) {
+        let return_type = match node.kind() {
+            JsSyntaxKind::TS_FUNCTION_TYPE => {
+                match TsFunctionType::unwrap_cast(node.clone()).return_type() {
+                    Ok(AnyTsReturnType::AnyTsType(any)) => Ok(any),
+                    _ => {
+                        return false;
+                    }
+                }
+            }
+            JsSyntaxKind::TS_CONSTRUCTOR_TYPE => {
+                TsConstructorType::unwrap_cast(node.clone()).return_type()
+            }
+
+            _ => {
+                return false;
+            }
+        };
+
+        match return_type {
+            Ok(AnyTsType::TsInferType(infer_type)) => infer_type.constraint().is_some(),
+            _ => false,
+        }
+    } else {
+        false
+    }
+}
+
 /// Returns `true` if node is in a union or intersection type with more than one variant
 ///
 /// ```javascript
@@ -885,7 +945,7 @@ impl NeedsParentheses for AnyTsType {
         match self {
             AnyTsType::TsAnyType(ty) => ty.needs_parentheses(),
             AnyTsType::TsArrayType(ty) => ty.needs_parentheses(),
-            AnyTsType::TsBigIntLiteralType(ty) => ty.needs_parentheses(),
+            AnyTsType::TsBigintLiteralType(ty) => ty.needs_parentheses(),
             AnyTsType::TsBigintType(ty) => ty.needs_parentheses(),
             AnyTsType::TsBooleanLiteralType(ty) => ty.needs_parentheses(),
             AnyTsType::TsBooleanType(ty) => ty.needs_parentheses(),
@@ -925,7 +985,7 @@ impl NeedsParentheses for AnyTsType {
         match self {
             AnyTsType::TsAnyType(ty) => ty.needs_parentheses_with_parent(parent),
             AnyTsType::TsArrayType(ty) => ty.needs_parentheses_with_parent(parent),
-            AnyTsType::TsBigIntLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
+            AnyTsType::TsBigintLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
             AnyTsType::TsBigintType(ty) => ty.needs_parentheses_with_parent(parent),
             AnyTsType::TsBooleanLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
             AnyTsType::TsBooleanType(ty) => ty.needs_parentheses_with_parent(parent),
@@ -980,7 +1040,6 @@ pub(crate) fn debug_assert_is_parent(node: &JsSyntaxNode, parent: &JsSyntaxNode)
 pub(crate) mod tests {
     use super::NeedsParentheses;
     use crate::transform;
-    use rome_diagnostics::location::FileId;
     use rome_js_syntax::{JsLanguage, SourceType};
     use rome_rowan::AstNode;
 
@@ -991,7 +1050,7 @@ pub(crate) mod tests {
         index: Option<usize>,
         source_type: SourceType,
     ) {
-        let parse = rome_js_parser::parse(input, FileId::zero(), source_type);
+        let parse = rome_js_parser::parse(input, source_type);
 
         let diagnostics = parse.diagnostics();
         assert!(
@@ -1032,7 +1091,7 @@ pub(crate) mod tests {
         index: Option<usize>,
         source_type: SourceType,
     ) {
-        let parse = rome_js_parser::parse(input, FileId::zero(), source_type);
+        let parse = rome_js_parser::parse(input, source_type);
 
         let diagnostics = parse.diagnostics();
         assert!(

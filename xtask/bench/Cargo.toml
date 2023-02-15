@@ -18,6 +18,7 @@ rome_formatter = { path = "../../crates/rome_formatter"}
 rome_js_formatter = { path = "../../crates/rome_js_formatter"}
 rome_analyze = { path = "../../crates/rome_analyze"}
 rome_js_analyze = { path = "../../crates/rome_js_analyze"}
+rome_rowan = { path = "../../crates/rome_rowan"}
 
 
 pico-args = { version = "0.5.0", features=["eq-separator"] }

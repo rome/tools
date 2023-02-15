@@ -124,8 +124,8 @@ JsModule {
                         },
                         JsxExpressionChild {
                             l_curly_token: L_CURLY@62..63 "{" [] [],
-                            expression: JsBigIntLiteralExpression {
-                                value_token: JS_BIG_INT_LITERAL@63..80 "9007199254740991n" [] [],
+                            expression: JsBigintLiteralExpression {
+                                value_token: JS_BIGINT_LITERAL@63..80 "9007199254740991n" [] [],
                             },
                             r_curly_token: R_CURLY@80..81 "}" [] [],
                         },
@@ -970,8 +970,8 @@ JsModule {
               0: JSX_TEXT_LITERAL@59..62 "\n  " [] []
             3: JSX_EXPRESSION_CHILD@62..81
               0: L_CURLY@62..63 "{" [] []
-              1: JS_BIG_INT_LITERAL_EXPRESSION@63..80
-                0: JS_BIG_INT_LITERAL@63..80 "9007199254740991n" [] []
+              1: JS_BIGINT_LITERAL_EXPRESSION@63..80
+                0: JS_BIGINT_LITERAL@63..80 "9007199254740991n" [] []
               2: R_CURLY@80..81 "}" [] []
             4: JSX_TEXT@81..84
               0: JSX_TEXT_LITERAL@81..84 "\n  " [] []

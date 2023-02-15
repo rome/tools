@@ -175,9 +175,9 @@ pub fn js_await_expression(
         ],
     ))
 }
-pub fn js_big_int_literal_expression(value_token: SyntaxToken) -> JsBigIntLiteralExpression {
-    JsBigIntLiteralExpression::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::JS_BIG_INT_LITERAL_EXPRESSION,
+pub fn js_bigint_literal_expression(value_token: SyntaxToken) -> JsBigintLiteralExpression {
+    JsBigintLiteralExpression::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::JS_BIGINT_LITERAL_EXPRESSION,
         [Some(SyntaxElement::Token(value_token))],
     ))
 }
@@ -3950,24 +3950,24 @@ impl TsAssertsReturnTypeBuilder {
         ))
     }
 }
-pub fn ts_big_int_literal_type(literal_token: SyntaxToken) -> TsBigIntLiteralTypeBuilder {
-    TsBigIntLiteralTypeBuilder {
+pub fn ts_bigint_literal_type(literal_token: SyntaxToken) -> TsBigintLiteralTypeBuilder {
+    TsBigintLiteralTypeBuilder {
         literal_token,
         minus_token: None,
     }
 }
-pub struct TsBigIntLiteralTypeBuilder {
+pub struct TsBigintLiteralTypeBuilder {
     literal_token: SyntaxToken,
     minus_token: Option<SyntaxToken>,
 }
-impl TsBigIntLiteralTypeBuilder {
+impl TsBigintLiteralTypeBuilder {
     pub fn with_minus_token(mut self, minus_token: SyntaxToken) -> Self {
         self.minus_token = Some(minus_token);
         self
     }
-    pub fn build(self) -> TsBigIntLiteralType {
-        TsBigIntLiteralType::unwrap_cast(SyntaxNode::new_detached(
-            JsSyntaxKind::TS_BIG_INT_LITERAL_TYPE,
+    pub fn build(self) -> TsBigintLiteralType {
+        TsBigintLiteralType::unwrap_cast(SyntaxNode::new_detached(
+            JsSyntaxKind::TS_BIGINT_LITERAL_TYPE,
             [
                 self.minus_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.literal_token)),
@@ -4980,14 +4980,34 @@ pub fn ts_indexed_access_type(
         ],
     ))
 }
-pub fn ts_infer_type(infer_token: SyntaxToken, type_parameter: TsTypeParameterName) -> TsInferType {
-    TsInferType::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::TS_INFER_TYPE,
-        [
-            Some(SyntaxElement::Token(infer_token)),
-            Some(SyntaxElement::Node(type_parameter.into_syntax())),
-        ],
-    ))
+pub fn ts_infer_type(infer_token: SyntaxToken, name: TsTypeParameterName) -> TsInferTypeBuilder {
+    TsInferTypeBuilder {
+        infer_token,
+        name,
+        constraint: None,
+    }
+}
+pub struct TsInferTypeBuilder {
+    infer_token: SyntaxToken,
+    name: TsTypeParameterName,
+    constraint: Option<TsTypeConstraintClause>,
+}
+impl TsInferTypeBuilder {
+    pub fn with_constraint(mut self, constraint: TsTypeConstraintClause) -> Self {
+        self.constraint = Some(constraint);
+        self
+    }
+    pub fn build(self) -> TsInferType {
+        TsInferType::unwrap_cast(SyntaxNode::new_detached(
+            JsSyntaxKind::TS_INFER_TYPE,
+            [
+                Some(SyntaxElement::Token(self.infer_token)),
+                Some(SyntaxElement::Node(self.name.into_syntax())),
+                self.constraint
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+            ],
+        ))
+    }
 }
 pub fn ts_instantiation_expression(
     expression: AnyJsExpression,

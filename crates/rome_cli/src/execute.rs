@@ -1,7 +1,6 @@
 use crate::traversal::traverse;
 use crate::{CliDiagnostic, CliSession};
 use rome_console::{markup, ConsoleExt};
-use rome_diagnostics::location::FileId;
 use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
 use rome_fs::RomePath;
 use rome_service::workspace::{
@@ -157,7 +156,7 @@ pub(crate) fn execute_mode(
     if let Some((path, content)) = mode.as_stdin_file() {
         let workspace = &*session.app.workspace;
         let console = &mut *session.app.console;
-        let rome_path = RomePath::new(path, FileId::zero());
+        let rome_path = RomePath::new(path);
 
         if mode.is_format() {
             let unsupported_format_reason = workspace

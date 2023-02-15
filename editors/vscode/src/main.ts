@@ -63,6 +63,7 @@ export async function activate(context: ExtensionContext) {
 		{ language: "typescript" },
 		{ language: "javascriptreact" },
 		{ language: "typescriptreact" },
+		{ language: "json" },
 	];
 
 	const clientOptions: LanguageClientOptions = {

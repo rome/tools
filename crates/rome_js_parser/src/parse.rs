@@ -1,7 +1,6 @@
 //! Utilities for high level parsing of js code.
 
 use crate::*;
-pub use rome_diagnostics::location::FileId;
 use rome_js_syntax::{
     AnyJsRoot, JsExpressionSnipped, JsLanguage, JsModule, JsScript, JsSyntaxNode, ModuleKind,
     SourceType,
@@ -10,7 +9,7 @@ use rome_parser::event::Event;
 use rome_parser::token_source::Trivia;
 use rome_parser::AnyParse;
 
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, NodeCache};
 use std::marker::PhantomData;
 
 /// A utility struct for managing the result of a parser job
@@ -52,7 +51,6 @@ impl<T> Parse<T> {
     /// use rome_js_parser::parse_script;
     /// use rome_js_syntax::{JsIfStatement, JsSyntaxKind};
     /// use rome_rowan::{AstNode, AstNodeList};
-    /// use rome_diagnostics::location::FileId;
     ///
     /// let parse = parse_script(
     ///     "
@@ -60,7 +58,6 @@ impl<T> Parse<T> {
     ///         /* something */
     ///     }
     /// ",
-    ///     FileId::zero(),
     /// );
     ///
     /// // The first stmt in the root syntax node (Script) is the if statement.
@@ -137,11 +134,10 @@ impl<T: AstNode<Language = JsLanguage>> Parse<T> {
 
 fn parse_common(
     text: &str,
-    file_id: FileId,
     source_type: SourceType,
 ) -> (Vec<Event<JsSyntaxKind>>, Vec<ParseDiagnostic>, Vec<Trivia>) {
-    let mut parser = crate::JsParser::new(text, file_id, source_type);
-    crate::syntax::program::parse(&mut parser);
+    let mut parser = JsParser::new(text, source_type);
+    syntax::program::parse(&mut parser);
 
     let (events, trivia, errors) = parser.finish();
 
@@ -155,9 +151,8 @@ fn parse_common(
 /// use rome_js_parser::parse_script;
 /// use rome_js_syntax::{JsSyntaxToken, SourceType, JsSyntaxList, JsComputedMemberExpression};
 /// use rome_rowan::{AstNode, Direction};
-/// use rome_diagnostics::location::FileId;
 ///
-/// let parse = parse_script("foo.bar[2]", FileId::zero());
+/// let parse = parse_script("foo.bar[2]");
 /// // Parse returns a JS Root which contains two lists, the directives and the statements, let's get the statements
 /// let stmt = parse.syntax().children().nth(1).unwrap();
 /// // The untyped syntax node of `foo.bar[2]`, the root node is `Script`.
@@ -180,10 +175,9 @@ fn parse_common(
 ///
 /// assert_eq!(&tokens, &vec!["foo", ".", "bar", "[", "2", "]"]);
 /// ```
-pub fn parse_script(text: &str, file_id: FileId) -> Parse<JsScript> {
+pub fn parse_script(text: &str) -> Parse<JsScript> {
     parse(
         text,
-        file_id,
         SourceType::js_module().with_module_kind(ModuleKind::Script),
     )
     .cast::<JsScript>()
@@ -191,28 +185,37 @@ pub fn parse_script(text: &str, file_id: FileId) -> Parse<JsScript> {
 }
 
 /// Same as `parse_text` but configures the parser to parse an ECMAScript module instead of a script
-pub fn parse_module(text: &str, file_id: FileId) -> Parse<JsModule> {
-    parse(text, file_id, SourceType::js_module())
+pub fn parse_module(text: &str) -> Parse<JsModule> {
+    parse(text, SourceType::js_module())
         .cast::<JsModule>()
         .unwrap()
 }
 
 /// Parses the provided string as a EcmaScript program using the provided syntax features.
-pub fn parse(text: &str, file_id: FileId, source_type: SourceType) -> Parse<AnyJsRoot> {
-    tracing::debug_span!("parse", file_id = ?file_id).in_scope(move || {
-        let (events, errors, tokens) = parse_common(text, file_id, source_type);
-        let mut tree_sink = JsLosslessTreeSink::new(text, &tokens);
+pub fn parse(text: &str, source_type: SourceType) -> Parse<AnyJsRoot> {
+    let mut cache = NodeCache::default();
+    parse_js_with_cache(text, source_type, &mut cache)
+}
+
+/// Parses the provided string as a EcmaScript program using the provided syntax features and node cache.
+pub fn parse_js_with_cache(
+    text: &str,
+    source_type: SourceType,
+    cache: &mut NodeCache,
+) -> Parse<AnyJsRoot> {
+    tracing::debug_span!("parse").in_scope(move || {
+        let (events, errors, tokens) = parse_common(text, source_type);
+        let mut tree_sink = JsLosslessTreeSink::with_cache(text, &tokens, cache);
         rome_parser::event::process(&mut tree_sink, events, errors);
         let (green, parse_errors) = tree_sink.finish();
         Parse::new(green, parse_errors)
     })
 }
-
 /// Losslessly Parse text into an expression [`Parse`](Parse) which can then be turned into an untyped root [`JsSyntaxNode`](JsSyntaxNode).
 /// Or turned into a typed [`JsExpressionSnipped`](JsExpressionSnipped) with [`tree`](Parse::tree).
-pub fn parse_expression(text: &str, file_id: FileId) -> Parse<JsExpressionSnipped> {
-    let mut parser = crate::JsParser::new(text, file_id, SourceType::js_module());
-    crate::syntax::expr::parse_expression_snipped(&mut parser).unwrap();
+pub fn parse_expression(text: &str) -> Parse<JsExpressionSnipped> {
+    let mut parser = JsParser::new(text, SourceType::js_module());
+    syntax::expr::parse_expression_snipped(&mut parser).unwrap();
     let (events, tokens, errors) = parser.finish();
 
     let mut tree_sink = JsLosslessTreeSink::new(text, &tokens);

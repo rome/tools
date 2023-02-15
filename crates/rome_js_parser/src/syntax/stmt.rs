@@ -1835,7 +1835,7 @@ fn parse_catch_declaration(p: &mut JsParser) -> ParsedSyntax {
                     let annotation = p.start();
                     p.bump(T![:]);
 
-                    if let Some(ty) = parse_ts_type(p).or_add_diagnostic(p, expected_ts_type) {
+                    if let Some(ty) = parse_ts_type(p, TypeContext::default()).or_add_diagnostic(p, expected_ts_type) {
                         if !matches!(ty.kind(p), TS_ANY_TYPE | TS_UNKNOWN_TYPE) {
                             p.error(
                                 p

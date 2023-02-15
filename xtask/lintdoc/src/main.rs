@@ -8,7 +8,6 @@ use rome_console::{
     fmt::{Formatter, HTML},
     markup, Console, Markup, MarkupBuf,
 };
-use rome_diagnostics::location::FileId;
 use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{Diagnostic, DiagnosticExt, PrintDiagnostic};
 use rome_js_analyze::{analyze, visit_registry};
@@ -194,6 +193,11 @@ fn generate_rule(
     }
 
     let summary = parse_documentation(group, rule, docs, &mut content)?;
+
+    writeln!(content, "## Related links")?;
+    writeln!(content)?;
+    writeln!(content, "- [Disable a rule](/linter/#disable-a-lint-rule)")?;
+    writeln!(content, "- [Rule options](/linter/#rule-options)")?;
 
     fs2::write(root.join(format!("{rule}.md")), content)?;
 
@@ -514,12 +518,12 @@ fn assert_lint(
         Ok(())
     };
 
-    let parse = rome_js_parser::parse(code, FileId::zero(), test.source_type);
+    let parse = rome_js_parser::parse(code, test.source_type);
 
     if parse.has_errors() {
         for diag in parse.into_diagnostics() {
             let error = diag
-                .with_file_path((file.clone(), FileId::zero()))
+                .with_file_path(file.clone())
                 .with_file_source_code(code);
             write_diagnostic(code, error)?;
         }
@@ -535,7 +539,7 @@ fn assert_lint(
         };
 
         let options = AnalyzerOptions::default();
-        let result = analyze(FileId::zero(), &root, filter, &options, |signal| {
+        let (_, diagnostics) = analyze(&root, filter, &options, |signal| {
             if let Some(mut diag) = signal.diagnostic() {
                 let category = diag.category().expect("linter diagnostic has no code");
                 let severity = settings.get_severity_from_rule_code(category).expect(
@@ -550,7 +554,7 @@ fn assert_lint(
 
                 let error = diag
                     .with_severity(severity)
-                    .with_file_path((file.clone(), FileId::zero()))
+                    .with_file_path(file.clone())
                     .with_file_source_code(code);
                 let res = write_diagnostic(code, error);
 
@@ -564,8 +568,8 @@ fn assert_lint(
         });
 
         // Result is Some(_) if analysis aborted with an error
-        if let Some(err) = result {
-            return Err(err);
+        for diagnostic in diagnostics {
+            write_diagnostic(code, diagnostic)?;
         }
     }
 

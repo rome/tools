@@ -36,18 +36,18 @@ function romeDiagnosticsToCodeMirror(
 
 		let severity: CodeMirrorDiagnostic["severity"];
 		switch (diag.severity) {
-			case "Error":
-			case "Fatal": {
+			case "error":
+			case "fatal": {
 				severity = "error";
 				break;
 			}
 
-			case "Information": {
+			case "information": {
 				severity = "info";
 				break;
 			}
 
-			case "Warning": {
+			case "warning": {
 				severity = "warning";
 				break;
 			}

@@ -69,3 +69,7 @@ declare const example: Example;
 const includesBaz = foo.property?.includes('baz') ?? false;
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

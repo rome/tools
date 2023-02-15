@@ -218,12 +218,12 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
                 };
 
                 if should_process_file {
-                    let (file_id, _) = ctx.interner().intern_path(path.into());
-                    let rome_path = RomePath::new(path, file_id);
+                    let _ = ctx.interner().intern_path(path.into());
+                    let rome_path = RomePath::new(path);
                     if !ctx.can_handle(&rome_path) {
                         continue;
                     }
-                    ctx.handle_file(path, file_id);
+                    ctx.handle_file(path);
                 }
             }
         }
@@ -260,7 +260,6 @@ mod tests {
 
     use crate::{fs::FileSystemExt, OpenOptions};
     use crate::{FileSystem, MemoryFileSystem, PathInterner, RomePath, TraversalContext};
-    use rome_diagnostics::location::FileId;
 
     #[test]
     fn fs_read_only() {
@@ -440,7 +439,7 @@ mod tests {
                 true
             }
 
-            fn handle_file(&self, path: &Path, _: FileId) {
+            fn handle_file(&self, path: &Path) {
                 self.visited.lock().push(path.into())
             }
         }

@@ -1,18 +1,16 @@
 use crate::documents::Document;
 use crate::extension_settings::ExtensionSettings;
 use crate::extension_settings::CONFIGURATION_SECTION;
-use crate::url_interner::UrlInterner;
 use crate::utils;
 use anyhow::{anyhow, Result};
 use futures::stream::futures_unordered::FuturesUnordered;
 use futures::StreamExt;
 use rome_analyze::RuleCategories;
 use rome_console::markup;
-use rome_diagnostics::location::FileId;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use rome_service::workspace::{FeatureName, PullDiagnosticsParams, SupportsFeatureParams};
 use rome_service::workspace::{RageEntry, RageParams, RageResult, UpdateSettingsParams};
-use rome_service::{load_config, Workspace};
+use rome_service::{load_config, BasePath, Workspace};
 use rome_service::{DynRef, WorkspaceError};
 use serde_json::Value;
 use std::collections::HashMap;
@@ -27,7 +25,7 @@ use tower_lsp::lsp_types;
 use tower_lsp::lsp_types::Registration;
 use tower_lsp::lsp_types::Unregistration;
 use tower_lsp::lsp_types::Url;
-use tracing::{error, info};
+use tracing::{error, info, warn};
 
 pub(crate) struct ClientInformation {
     /// The name of the client
@@ -62,7 +60,6 @@ pub(crate) struct Session {
     pub(crate) fs: DynRef<'static, dyn FileSystem>,
 
     documents: RwLock<HashMap<lsp_types::Url, Document>>,
-    url_interner: RwLock<UrlInterner>,
 
     pub(crate) cancellation: Arc<Notify>,
 }
@@ -134,7 +131,6 @@ impl Session {
         cancellation: Arc<Notify>,
     ) -> Self {
         let documents = Default::default();
-        let url_interner = Default::default();
         let config = RwLock::new(ExtensionSettings::new());
         Self {
             key,
@@ -143,7 +139,6 @@ impl Session {
             workspace,
             configuration_status: AtomicU8::new(ConfigurationStatus::Missing as u8),
             documents,
-            url_interner,
             extension_settings: config,
             fs: DynRef::Owned(Box::new(OsFileSystem)),
             cancellation,
@@ -228,7 +223,7 @@ impl Session {
             .unwrap()
             .get(url)
             .cloned()
-            .ok_or(WorkspaceError::NotFound)
+            .ok_or_else(WorkspaceError::not_found)
     }
 
     /// Set the [`Document`] for the provided [`lsp_types::Url`]
@@ -243,14 +238,7 @@ impl Session {
         self.documents.write().unwrap().remove(url);
     }
 
-    /// Return the unique [FileId] associated with the url for this [Session].
-    /// This will assign a new FileId if there isn't one for the provided url.
-    pub(crate) fn file_id(&self, url: lsp_types::Url) -> FileId {
-        self.url_interner.write().unwrap().intern(url)
-    }
-
     pub(crate) fn file_path(&self, url: &lsp_types::Url) -> Result<RomePath> {
-        let file_id = self.file_id(url.clone());
         let mut path_to_file = url
             .to_file_path()
             .map_err(|()| anyhow!("failed to convert {url} to a filesystem path"))?;
@@ -265,7 +253,7 @@ impl Session {
             path_to_file = relative_path.into();
         }
 
-        Ok(RomePath::new(path_to_file, file_id))
+        Ok(RomePath::new(path_to_file))
     }
 
     /// Computes diagnostics for the file matching the provided url and publishes
@@ -376,10 +364,18 @@ impl Session {
     /// the root URI and update the workspace settings accordingly
     #[tracing::instrument(level = "debug", skip(self))]
     pub(crate) async fn load_workspace_settings(&self) {
-        let base_path = self.base_path();
+        let base_path = match self.base_path() {
+            None => BasePath::default(),
+            Some(path) => BasePath::Lsp(path),
+        };
 
         let status = match load_config(&self.fs, base_path) {
-            Ok(Some(configuration)) => {
+            Ok(Some(deserialized)) => {
+                let (configuration, diagnostics) = deserialized.consume();
+                if diagnostics.is_empty() {
+                    warn!("The deserialization of the configuration resulted in errors. Rome will its defaults where possible.");
+                }
+
                 info!("Loaded workspace settings: {configuration:#?}");
 
                 let result = self

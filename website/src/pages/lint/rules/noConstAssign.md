@@ -117,3 +117,7 @@ let b = 10;
 b = 20;
 ```
 
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)
