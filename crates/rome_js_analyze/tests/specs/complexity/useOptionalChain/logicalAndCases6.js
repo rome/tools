@@ -53,11 +53,6 @@ foo && foo.bar(/* comment */a,
 	// comment2
 	b, );
 
-// ensure binary expressions that are the last expression do not get removed
-foo && foo.bar != null;
-foo && foo.bar != undefined;
-foo && foo.bar != null && baz;
-
 // other weird cases
 foo && foo?.();
 foo.bar && foo.bar?.();

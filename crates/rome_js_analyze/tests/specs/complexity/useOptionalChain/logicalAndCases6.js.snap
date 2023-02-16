@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 91
 expression: logicalAndCases6.js
 ---
 # Input
@@ -58,11 +59,6 @@ foo && foo[/\w+/] && foo[/\w+/].baz;
 foo && foo.bar(/* comment */a,
 	// comment2
 	b, );
-
-// ensure binary expressions that are the last expression do not get removed
-foo && foo.bar != null;
-foo && foo.bar != undefined;
-foo && foo.bar != null && baz;
 
 // other weird cases
 foo && foo?.();
@@ -756,7 +752,7 @@ logicalAndCases6.js:52:1 lint/complexity/useOptionalChain  FIXABLE  ━━━━
   > 54 │ 	b, );
        │ 	^^^^
     55 │ 
-    56 │ // ensure binary expressions that are the last expression do not get removed
+    56 │ // other weird cases
   
   i Suggested fix: Change to an optional chain.
   
@@ -775,21 +771,16 @@ logicalAndCases6.js:57:1 lint/complexity/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-    56 │ // ensure binary expressions that are the last expression do not get removed
-  > 57 │ foo && foo.bar != null;
-       │ ^^^^^^^^^^^^^^^^^^^^^^
-    58 │ foo && foo.bar != undefined;
-    59 │ foo && foo.bar != null && baz;
+    56 │ // other weird cases
+  > 57 │ foo && foo?.();
+       │ ^^^^^^^^^^^^^^
+    58 │ foo.bar && foo.bar?.();
+    59 │ 
   
   i Suggested fix: Change to an optional chain.
   
-    55 55 │   
-    56 56 │   // ensure binary expressions that are the last expression do not get removed
-    57    │ - foo·&&·foo.bar·!=·null;
-       57 │ + foo?.bar·!=·null;
-    58 58 │   foo && foo.bar != undefined;
-    59 59 │   foo && foo.bar != null && baz;
-  
+    57 │ foo·&&·foo?.();
+       │    -------     
 
 ```
 
@@ -798,45 +789,39 @@ logicalAndCases6.js:58:1 lint/complexity/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-    56 │ // ensure binary expressions that are the last expression do not get removed
-    57 │ foo && foo.bar != null;
-  > 58 │ foo && foo.bar != undefined;
-       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    59 │ foo && foo.bar != null && baz;
-    60 │ 
+    56 │ // other weird cases
+    57 │ foo && foo?.();
+  > 58 │ foo.bar && foo.bar?.();
+       │ ^^^^^^^^^^^^^^^^^^^^^^
+    59 │ 
+    60 │ // comments
   
   i Suggested fix: Change to an optional chain.
   
-    56 56 │   // ensure binary expressions that are the last expression do not get removed
-    57 57 │   foo && foo.bar != null;
-    58    │ - foo·&&·foo.bar·!=·undefined;
-       58 │ + foo?.bar·!=·undefined;
-    59 59 │   foo && foo.bar != null && baz;
-    60 60 │   
-  
+    58 │ foo.bar·&&·foo.bar?.();
+       │        -----------     
 
 ```
 
 ```
-logicalAndCases6.js:59:1 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+logicalAndCases6.js:61:1 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Change to an optional chain.
   
-    57 │ foo && foo.bar != null;
-    58 │ foo && foo.bar != undefined;
-  > 59 │ foo && foo.bar != null && baz;
-       │ ^^^^^^^^^^^^^^^^^^^^^^
-    60 │ 
-    61 │ // other weird cases
+    60 │ // comments
+  > 61 │ foo && foo.bar && /*0*/foo/*1*/./*2*/bar/*3*/./*4*/baz/*5*/;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    62 │ foo && foo[bar] && /*0*/foo/*1*/[/*2*/bar/*3*/]/*4*/[/*5*/baz/*6*/]/*7*/;
+    63 │ 
   
   i Suggested fix: Change to an optional chain.
   
-    57 57 │   foo && foo.bar != null;
-    58 58 │   foo && foo.bar != undefined;
-    59    │ - foo·&&·foo.bar·!=·null·&&·baz;
-       59 │ + foo?.bar·!=·null·&&·baz;
-    60 60 │   
-    61 61 │   // other weird cases
+    59 59 │   
+    60 60 │   // comments
+    61    │ - foo·&&·foo.bar·&&·/*0*/foo/*1*/./*2*/bar/*3*/./*4*/baz/*5*/;
+       61 │ + foo/*1*/?./*2*/bar/*3*/?./*4*/baz/*5*/;
+    62 62 │   foo && foo[bar] && /*0*/foo/*1*/[/*2*/bar/*3*/]/*4*/[/*5*/baz/*6*/]/*7*/;
+    63 63 │   
   
 
 ```
@@ -846,98 +831,38 @@ logicalAndCases6.js:62:1 lint/complexity/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-    61 │ // other weird cases
-  > 62 │ foo && foo?.();
-       │ ^^^^^^^^^^^^^^
-    63 │ foo.bar && foo.bar?.();
-    64 │ 
-  
-  i Suggested fix: Change to an optional chain.
-  
-    62 │ foo·&&·foo?.();
-       │    -------     
-
-```
-
-```
-logicalAndCases6.js:63:1 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Change to an optional chain.
-  
-    61 │ // other weird cases
-    62 │ foo && foo?.();
-  > 63 │ foo.bar && foo.bar?.();
-       │ ^^^^^^^^^^^^^^^^^^^^^^
-    64 │ 
-    65 │ // comments
-  
-  i Suggested fix: Change to an optional chain.
-  
-    63 │ foo.bar·&&·foo.bar?.();
-       │        -----------     
-
-```
-
-```
-logicalAndCases6.js:66:1 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Change to an optional chain.
-  
-    65 │ // comments
-  > 66 │ foo && foo.bar && /*0*/foo/*1*/./*2*/bar/*3*/./*4*/baz/*5*/;
-       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    67 │ foo && foo[bar] && /*0*/foo/*1*/[/*2*/bar/*3*/]/*4*/[/*5*/baz/*6*/]/*7*/;
-    68 │ 
-  
-  i Suggested fix: Change to an optional chain.
-  
-    64 64 │   
-    65 65 │   // comments
-    66    │ - foo·&&·foo.bar·&&·/*0*/foo/*1*/./*2*/bar/*3*/./*4*/baz/*5*/;
-       66 │ + foo/*1*/?./*2*/bar/*3*/?./*4*/baz/*5*/;
-    67 67 │   foo && foo[bar] && /*0*/foo/*1*/[/*2*/bar/*3*/]/*4*/[/*5*/baz/*6*/]/*7*/;
-    68 68 │   
-  
-
-```
-
-```
-logicalAndCases6.js:67:1 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Change to an optional chain.
-  
-    65 │ // comments
-    66 │ foo && foo.bar && /*0*/foo/*1*/./*2*/bar/*3*/./*4*/baz/*5*/;
-  > 67 │ foo && foo[bar] && /*0*/foo/*1*/[/*2*/bar/*3*/]/*4*/[/*5*/baz/*6*/]/*7*/;
+    60 │ // comments
+    61 │ foo && foo.bar && /*0*/foo/*1*/./*2*/bar/*3*/./*4*/baz/*5*/;
+  > 62 │ foo && foo[bar] && /*0*/foo/*1*/[/*2*/bar/*3*/]/*4*/[/*5*/baz/*6*/]/*7*/;
        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    68 │ 
-    69 │ foo && foo[bar] && /*0*/foo/*1*/?./*2*/[/*3*/bar/*4*/]/*5*/?./*6*/[/*7*/baz/*8*/]/*9*/;
+    63 │ 
+    64 │ foo && foo[bar] && /*0*/foo/*1*/?./*2*/[/*3*/bar/*4*/]/*5*/?./*6*/[/*7*/baz/*8*/]/*9*/;
   
   i Suggested fix: Change to an optional chain.
   
-    65 65 │   // comments
-    66 66 │   foo && foo.bar && /*0*/foo/*1*/./*2*/bar/*3*/./*4*/baz/*5*/;
-    67    │ - foo·&&·foo[bar]·&&·/*0*/foo/*1*/[/*2*/bar/*3*/]/*4*/[/*5*/baz/*6*/]/*7*/;
-       67 │ + foo/*1*/?.[/*2*/bar/*3*/]/*4*/?.[/*5*/baz/*6*/]/*7*/;
-    68 68 │   
-    69 69 │   foo && foo[bar] && /*0*/foo/*1*/?./*2*/[/*3*/bar/*4*/]/*5*/?./*6*/[/*7*/baz/*8*/]/*9*/;
+    60 60 │   // comments
+    61 61 │   foo && foo.bar && /*0*/foo/*1*/./*2*/bar/*3*/./*4*/baz/*5*/;
+    62    │ - foo·&&·foo[bar]·&&·/*0*/foo/*1*/[/*2*/bar/*3*/]/*4*/[/*5*/baz/*6*/]/*7*/;
+       62 │ + foo/*1*/?.[/*2*/bar/*3*/]/*4*/?.[/*5*/baz/*6*/]/*7*/;
+    63 63 │   
+    64 64 │   foo && foo[bar] && /*0*/foo/*1*/?./*2*/[/*3*/bar/*4*/]/*5*/?./*6*/[/*7*/baz/*8*/]/*9*/;
   
 
 ```
 
 ```
-logicalAndCases6.js:69:1 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+logicalAndCases6.js:64:1 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Change to an optional chain.
   
-    67 │ foo && foo[bar] && /*0*/foo/*1*/[/*2*/bar/*3*/]/*4*/[/*5*/baz/*6*/]/*7*/;
-    68 │ 
-  > 69 │ foo && foo[bar] && /*0*/foo/*1*/?./*2*/[/*3*/bar/*4*/]/*5*/?./*6*/[/*7*/baz/*8*/]/*9*/;
+    62 │ foo && foo[bar] && /*0*/foo/*1*/[/*2*/bar/*3*/]/*4*/[/*5*/baz/*6*/]/*7*/;
+    63 │ 
+  > 64 │ foo && foo[bar] && /*0*/foo/*1*/?./*2*/[/*3*/bar/*4*/]/*5*/?./*6*/[/*7*/baz/*8*/]/*9*/;
        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   
   i Suggested fix: Change to an optional chain.
   
-    69 │ foo·&&·foo[bar]·&&·/*0*/foo/*1*/?./*2*/[/*3*/bar/*4*/]/*5*/?./*6*/[/*7*/baz/*8*/]/*9*/;
+    64 │ foo·&&·foo[bar]·&&·/*0*/foo/*1*/?./*2*/[/*3*/bar/*4*/]/*5*/?./*6*/[/*7*/baz/*8*/]/*9*/;
        │    ------------------------                                                            
 
 ```

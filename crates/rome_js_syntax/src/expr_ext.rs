@@ -256,10 +256,10 @@ impl JsBinaryExpression {
 
     /// Whether this is a comparison operation similar to the optional chain
     /// ```js
-    /// foo === undefined;
-    /// foo == undefined;
-    /// foo === null;
-    /// foo == null;
+    /// foo !== undefined;
+    /// foo != undefined;
+    /// foo !== null;
+    /// foo != null;
     ///```
     pub fn is_optional_chain_like(&self) -> SyntaxResult<bool> {
         if matches!(
