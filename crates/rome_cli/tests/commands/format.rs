@@ -246,6 +246,8 @@ fn lint_warning() {
 }
 
 #[test]
+// FIXME: redact snapshot for custom paths in configuration
+#[cfg(not(windows))]
 fn custom_config_file_path() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
@@ -295,6 +297,8 @@ fn custom_config_file_path() {
 
 // Should throw an error when an invalid configuration path is specified
 #[test]
+// FIXME: redact snapshot for custom paths in configuration
+#[cfg(not(windows))]
 fn invalid_config_file_path() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
