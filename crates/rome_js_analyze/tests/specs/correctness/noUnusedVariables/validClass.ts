@@ -13,8 +13,8 @@ console.log(new A(1));
 // we never flag class expressions
 new (class B { })
 
-// a and b are actually properties
+// a, b, c, and d are instance properties (declared as property parameters)
 class C {
-    constructor(private a1, public b2) {}
+	constructor(private a, public b, protected c, readonly d) {}
 }
-console.log(new C(1, 2));
+console.log(new C(1, 2, 3, 4));
