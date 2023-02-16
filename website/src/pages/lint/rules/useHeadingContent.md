@@ -1,0 +1,100 @@
+---
+title: Lint Rule useHeadingContent
+parent: lint/rules/index
+---
+
+# useHeadingContent (since vnext)
+
+Enforce that heading element has some content.
+Provide screen reader accessible content when using heading elements.
+
+## Examples
+
+### Invalid
+
+```jsx
+<h1 />
+```
+
+<pre class="language-text"><code class="language-text">nursery/useHeadingContent.js:1:1 <a href="https://docs.rome.tools/lint/rules/useHeadingContent">lint/nursery/useHeadingContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide screen reader accessible content when using </span><span style="color: Orange;"><strong>heading</strong></span><span style="color: Orange;">  elements.</span>
+  
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;h1 /&gt;
+   <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">All headings on a page should have content that is accessible to screen readers.</span>
+  
+</code></pre>
+
+```jsx
+<h1><TextWrapper aria-hidden /></h1>
+```
+
+<pre class="language-text"><code class="language-text">nursery/useHeadingContent.js:1:1 <a href="https://docs.rome.tools/lint/rules/useHeadingContent">lint/nursery/useHeadingContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide screen reader accessible content when using </span><span style="color: Orange;"><strong>heading</strong></span><span style="color: Orange;">  elements.</span>
+  
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;h1&gt;&lt;TextWrapper aria-hidden /&gt;&lt;/h1&gt;
+   <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">All headings on a page should have content that is accessible to screen readers.</span>
+  
+</code></pre>
+
+```jsx
+<h1><div aria-hidden /></h1>
+```
+
+<pre class="language-text"><code class="language-text">nursery/useHeadingContent.js:1:1 <a href="https://docs.rome.tools/lint/rules/useHeadingContent">lint/nursery/useHeadingContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide screen reader accessible content when using </span><span style="color: Orange;"><strong>heading</strong></span><span style="color: Orange;">  elements.</span>
+  
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;h1&gt;&lt;div aria-hidden /&gt;&lt;/h1&gt;
+   <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">All headings on a page should have content that is accessible to screen readers.</span>
+  
+</code></pre>
+
+```jsx
+<h1></h1>
+```
+
+<pre class="language-text"><code class="language-text">nursery/useHeadingContent.js:1:1 <a href="https://docs.rome.tools/lint/rules/useHeadingContent">lint/nursery/useHeadingContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide screen reader accessible content when using </span><span style="color: Orange;"><strong>heading</strong></span><span style="color: Orange;">  elements.</span>
+  
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;h1&gt;&lt;/h1&gt;
+   <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">All headings on a page should have content that is accessible to screen readers.</span>
+  
+</code></pre>
+
+## Valid
+
+```jsx
+<h1>heading</h1>
+```
+
+```jsx
+<h1><div aria-hidden="true"></div>visible content</h1>
+```
+
+```jsx
+<h1 dangerouslySetInnerHTML={{ __html: "heading" }} />
+```
+
+```jsx
+<h1><div aria-hidden />visible content</h1>
+```
+
+## Related links
+
+- [Disable a rule](/linter/#disable-a-lint-rule)
+- [Rule options](/linter/#rule-options)

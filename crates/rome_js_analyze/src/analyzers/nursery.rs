@@ -45,6 +45,7 @@ mod use_default_parameter_last;
 mod use_default_switch_clause_last;
 mod use_enum_initializers;
 mod use_exponentiation_operator;
+mod use_heading_content;
 mod use_is_nan;
 mod use_media_caption;
 mod use_numeric_literals;

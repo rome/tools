@@ -764,6 +764,13 @@
 						{ "type": "null" }
 					]
 				},
+				"useHeadingContent": {
+					"description": "Enforce that heading element has some content. Provide screen reader accessible content when using heading elements.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"useHookAtTopLevel": {
 					"description": "Enforce that all React hooks are being called from the Top Level component functions.",
 					"anyOf": [
