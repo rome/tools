@@ -648,6 +648,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noUnsafeOptionalChaining": {
+					"description": "Disallow the use of optional chaining in contexts where the undefined value is not allowed.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noUnusedLabels": {
 					"description": "Disallow unused labels.",
 					"anyOf": [
