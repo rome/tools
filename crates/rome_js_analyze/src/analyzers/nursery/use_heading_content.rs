@@ -1,9 +1,10 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::TextRange;
-use rome_js_syntax::{AnyJsxChild, JsxElement, JsxSelfClosingElement};
-use rome_rowan::AstNodeList;
+use rome_js_syntax::{JsxElement, JsxSelfClosingElement};
 use rome_rowan::{declare_node_union, AstNode};
+
+use crate::aria_utils::is_accessible_to_screen_reader;
 
 declare_rule! {
     /// Enforce that heading element has some content.
@@ -72,21 +73,16 @@ impl Rule for UseHeadingContent {
         if node.is_heading_element()? {
             match node {
                 UseHeadingContentNode::JsxElement(element) => {
-                    let child_nodes = element.children();
-                    if child_nodes.len() == 0 && !node.has_dangerously_set_inner_html_attribute()? {
-                        return Some(element.syntax().text_range());
-                    }
-
-                    if !child_nodes.into_iter().any(|element| {
-                        if let Ok(node) = UseHeadingContentNode::try_from(element) {
-                            if let Some(value) = node.has_aria_hidden_attribute() {
-                                if value {
-                                    return false;
-                                }
-                            }
-                        }
-                        true
-                    }) {
+                    if element
+                        .children()
+                        .into_iter()
+                        .filter(|child_node| {
+                            is_accessible_to_screen_reader(child_node) == Some(true)
+                        })
+                        .count()
+                        == 0
+                        && !node.has_dangerously_set_inner_html_attribute()?
+                    {
                         return Some(element.syntax().text_range());
                     }
                 }
@@ -147,40 +143,6 @@ impl UseHeadingContentNode {
                     .ok()?
                     .is_some(),
             ),
-        }
-    }
-
-    fn has_aria_hidden_attribute(&self) -> Option<bool> {
-        match self {
-            UseHeadingContentNode::JsxElement(element) => {
-                let opening_element = element.opening_element().ok()?;
-                Some(
-                    opening_element
-                        .find_attribute_by_name("aria-hidden")
-                        .ok()?
-                        .is_some(),
-                )
-            }
-            UseHeadingContentNode::JsxSelfClosingElement(element) => Some(
-                element
-                    .find_attribute_by_name("aria-hidden")
-                    .ok()?
-                    .is_some(),
-            ),
-        }
-    }
-}
-
-impl TryFrom<AnyJsxChild> for UseHeadingContentNode {
-    type Error = ();
-
-    fn try_from(member: AnyJsxChild) -> Result<Self, Self::Error> {
-        match member {
-            AnyJsxChild::JsxElement(member) => Ok(UseHeadingContentNode::JsxElement(member)),
-            AnyJsxChild::JsxSelfClosingElement(member) => {
-                Ok(UseHeadingContentNode::JsxSelfClosingElement(member))
-            }
-            _ => Err(()),
         }
     }
 }

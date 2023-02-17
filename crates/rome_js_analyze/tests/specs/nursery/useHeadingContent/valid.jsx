@@ -8,4 +8,5 @@
 		<div aria-hidden />
 		visible content
 	</h1>
+	<h1 dangerouslySetInnerHTML={{ __html: "heading" }}></h1>
 </>;

@@ -35,6 +35,46 @@ invalid.jsx:2:2 lint/nursery/useHeadingContent ━━━━━━━━━━━
 ```
 
 ```
+invalid.jsx:3:2 lint/nursery/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide screen reader accessible content when using heading  elements.
+  
+    1 │ <>
+    2 │ 	<h1 />
+  > 3 │ 	<h1>
+      │ 	^^^^
+  > 4 │ 		<TextWrapper aria-hidden />
+  > 5 │ 	</h1>
+      │ 	^^^^^
+    6 │ 	<h1>
+    7 │ 		<div aria-hidden />
+  
+  i All headings on a page should have content that is accessible to screen readers.
+  
+
+```
+
+```
+invalid.jsx:6:2 lint/nursery/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide screen reader accessible content when using heading  elements.
+  
+     4 │ 		<TextWrapper aria-hidden />
+     5 │ 	</h1>
+   > 6 │ 	<h1>
+       │ 	^^^^
+   > 7 │ 		<div aria-hidden />
+   > 8 │ 	</h1>
+       │ 	^^^^^
+     9 │ 	<h1></h1>
+    10 │ </>;
+  
+  i All headings on a page should have content that is accessible to screen readers.
+  
+
+```
+
+```
 invalid.jsx:9:2 lint/nursery/useHeadingContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Provide screen reader accessible content when using heading  elements.
