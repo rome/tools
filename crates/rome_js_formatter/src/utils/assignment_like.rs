@@ -334,8 +334,9 @@ impl AnyJsAssignmentLike {
                 // SAFETY: Calling `unwrap` here is safe because we check `has_only_left_hand_side` variant at the beginning of the `layout` function
                 n.value().unwrap().into()
             }
-            AnyJsAssignmentLike::TsPropertySignatureClassMember(_) => {
-                unreachable!("TsPropertySignatureClassMember doesn't have any right side. If you're here, `has_only_left_hand_side` hasn't been called")
+            AnyJsAssignmentLike::TsPropertySignatureClassMember(n) => {
+                // SAFETY: Calling `unwrap` here is safe because we check `has_only_left_hand_side` variant at the beginning of the `layout` function
+                n.value().unwrap().into()
             }
         };
 
@@ -458,6 +459,7 @@ impl AnyJsAssignmentLike {
                     modifiers,
                     name,
                     property_annotation,
+                    value: _,
                     semicolon_token: _,
                 } = property_signature_class_member.as_fields();
 
@@ -505,8 +507,13 @@ impl AnyJsAssignmentLike {
                 }
                 Ok(())
             }
-            // this variant doesn't have any operator
-            AnyJsAssignmentLike::TsPropertySignatureClassMember(_) => Ok(()),
+            AnyJsAssignmentLike::TsPropertySignatureClassMember(property_class_member) => {
+                if let Some(initializer) = property_class_member.value() {
+                    let eq_token = initializer.eq_token()?;
+                    write!(f, [space(), eq_token.format()])?
+                }
+                Ok(())
+            }
         }
     }
 
@@ -572,8 +579,21 @@ impl AnyJsAssignmentLike {
                 }
                 Ok(())
             }
-            // this variant doesn't have any right part
-            AnyJsAssignmentLike::TsPropertySignatureClassMember(_) => Ok(()),
+            AnyJsAssignmentLike::TsPropertySignatureClassMember(property_class_member) => {
+                if let Some(initializer) = property_class_member.value() {
+                    let expression = initializer.expression()?;
+                    write!(
+                        f,
+                        [
+                            space(),
+                            format_leading_comments(initializer.syntax()),
+                            with_assignment_layout(&expression, Some(layout)),
+                            format_trailing_comments(initializer.syntax())
+                        ]
+                    )?;
+                }
+                Ok(())
+            }
         }
     }
 
@@ -583,12 +603,14 @@ impl AnyJsAssignmentLike {
             AnyJsAssignmentLike::JsVariableDeclarator(variable_declarator) => {
                 variable_declarator.initializer()
             }
+            AnyJsAssignmentLike::TsPropertySignatureClassMember(class_member) => {
+                class_member.value()
+            }
 
             AnyJsAssignmentLike::JsPropertyObjectMember(_)
             | AnyJsAssignmentLike::JsAssignmentExpression(_)
             | AnyJsAssignmentLike::JsObjectAssignmentPatternProperty(_)
-            | AnyJsAssignmentLike::TsTypeAliasDeclaration(_)
-            | AnyJsAssignmentLike::TsPropertySignatureClassMember(_) => {
+            | AnyJsAssignmentLike::TsTypeAliasDeclaration(_) => {
                 unreachable!("These variants have no initializer")
             }
         };
@@ -698,8 +720,10 @@ impl AnyJsAssignmentLike {
             declarator.initializer().is_none()
         } else if let AnyJsAssignmentLike::JsPropertyClassMember(class_member) = self {
             class_member.value().is_none()
+        } else if let AnyJsAssignmentLike::TsPropertySignatureClassMember(class_member) = self {
+            class_member.value().is_none()
         } else {
-            matches!(self, AnyJsAssignmentLike::TsPropertySignatureClassMember(_))
+            false
         }
     }
 

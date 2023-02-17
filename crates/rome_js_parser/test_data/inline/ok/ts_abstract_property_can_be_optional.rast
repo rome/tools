@@ -31,6 +31,7 @@ JsModule {
                             },
                         },
                     },
+                    value: missing (optional),
                     semicolon_token: SEMICOLON@46..47 ";" [] [],
                 },
             ],
@@ -66,6 +67,7 @@ JsModule {
               0: COLON@38..40 ":" [] [Whitespace(" ")]
               1: TS_STRING_TYPE@40..46
                 0: STRING_KW@40..46 "string" [] []
-          3: SEMICOLON@46..47 ";" [] []
+          3: (empty)
+          4: SEMICOLON@46..47 ";" [] []
       8: R_CURLY@47..49 "}" [Newline("\n")] []
   3: EOF@49..50 "" [Newline("\n")] []

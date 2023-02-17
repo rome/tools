@@ -1,0 +1,50 @@
+---
+source: crates/rome_formatter_test/src/snapshot_builder.rs
+assertion_line: 212
+info: ts/class/readonly_ambient_property.ts
+---
+
+# Input
+
+```ts
+declare class A {
+	readonly prop = "value"
+	
+	
+}
+class A {
+	declare readonly prop = "value__value__value__value__value__value__value__value__value__value__value__"
+}
+```
+
+
+=============================
+
+# Outputs
+
+## Output 1
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+Semicolons: Always
+-----
+
+```ts
+declare class A {
+	readonly prop = "value";
+}
+class A {
+	declare readonly prop = "value__value__value__value__value__value__value__value__value__value__value__";
+}
+```
+
+# Lines exceeding max width of 80 characters
+```
+    5: 	declare readonly prop = "value__value__value__value__value__value__value__value__value__value__value__";
+```
+
+

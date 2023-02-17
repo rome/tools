@@ -8528,7 +8528,7 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             TS_PROPERTY_SIGNATURE_CLASS_MEMBER => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<4usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<5usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
                     if TsPropertySignatureModifierList::can_cast(element.kind()) {
@@ -8546,6 +8546,13 @@ impl SyntaxFactory for JsSyntaxFactory {
                 slots.next_slot();
                 if let Some(element) = &current_element {
                     if AnyTsPropertySignatureAnnotation::can_cast(element.kind()) {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
+                if let Some(element) = &current_element {
+                    if JsInitializerClause::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }

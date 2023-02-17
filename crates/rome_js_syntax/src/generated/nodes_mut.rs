@@ -5274,10 +5274,16 @@ impl TsPropertySignatureClassMember {
             once(element.map(|element| element.into_syntax().into())),
         ))
     }
+    pub fn with_value(self, element: Option<JsInitializerClause>) -> Self {
+        Self::unwrap_cast(self.syntax.splice_slots(
+            3usize..=3usize,
+            once(element.map(|element| element.into_syntax().into())),
+        ))
+    }
     pub fn with_semicolon_token(self, element: Option<SyntaxToken>) -> Self {
         Self::unwrap_cast(
             self.syntax
-                .splice_slots(3usize..=3usize, once(element.map(|element| element.into()))),
+                .splice_slots(4usize..=4usize, once(element.map(|element| element.into()))),
         )
     }
 }
