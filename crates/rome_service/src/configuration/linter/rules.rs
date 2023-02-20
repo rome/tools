@@ -1092,7 +1092,7 @@ pub struct Nursery {
     #[doc = "Disallow the use of Math.pow in favor of the ** operator."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_exponentiation_operator: Option<RuleConfiguration>,
-    #[doc = "Enforce that heading element has some content. Provide screen reader accessible content when using heading elements."]
+    #[doc = "Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers. Accessible means that it is not hidden using the aria-hidden prop."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub use_heading_content: Option<RuleConfiguration>,
     #[doc = "Enforce that all React hooks are being called from the Top Level component functions."]

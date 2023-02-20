@@ -7,8 +7,8 @@ use rome_rowan::{declare_node_union, AstNode};
 use crate::aria_utils::is_accessible_to_screen_reader;
 
 declare_rule! {
-    /// Enforce that heading element has some content.
-    /// Provide screen reader accessible content when using heading elements.
+    /// Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers.
+    /// Accessible means that it is not hidden using the aria-hidden prop.
     ///
     /// ## Examples
     ///
@@ -112,18 +112,14 @@ impl Rule for UseHeadingContent {
 
 impl UseHeadingContentNode {
     fn is_heading_element(&self) -> Option<bool> {
-        match self {
+        let name_node = match self {
             UseHeadingContentNode::JsxElement(element) => {
-                let name_node = element.opening_element().ok()?.name().ok()?;
-                let name = name_node.as_jsx_name()?.value_token().ok()?;
-                Some(HEADING_ELEMENTS.contains(&name.text_trimmed()))
+                element.opening_element().ok()?.name().ok()?
             }
-            UseHeadingContentNode::JsxSelfClosingElement(element) => {
-                let name_node = element.name().ok()?;
-                let name = name_node.as_jsx_name()?.value_token().ok()?;
-                Some(HEADING_ELEMENTS.contains(&name.text_trimmed()))
-            }
-        }
+            UseHeadingContentNode::JsxSelfClosingElement(element) => element.name().ok()?,
+        };
+        let name = name_node.as_jsx_name()?.value_token().ok()?;
+        Some(HEADING_ELEMENTS.contains(&name.text_trimmed()))
     }
 
     fn has_dangerously_set_inner_html_attribute(&self) -> Option<bool> {

@@ -5,8 +5,8 @@ parent: lint/rules/index
 
 # useHeadingContent (since vnext)
 
-Enforce that heading element has some content.
-Provide screen reader accessible content when using heading elements.
+Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers.
+Accessible means that it is not hidden using the aria-hidden prop.
 
 ## Examples
 
