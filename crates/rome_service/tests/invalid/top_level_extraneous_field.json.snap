@@ -19,6 +19,7 @@ top_level_extraneous_field.json:2:2 configuration ━━━━━━━━━━
   - formatter
   - javascript
   - $schema
+  - organizeImports
   
 
 

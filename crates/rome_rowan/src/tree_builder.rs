@@ -50,9 +50,11 @@ impl<L: Language, S: SyntaxFactory<Kind = L::Kind>> TreeBuilder<'_, L, S> {
 
     /// Method to quickly wrap a tree with a node.
     ///
+    /// ```ignore
     /// TreeBuilder::<RawLanguage>::wrap_with_node(RawSyntaxKind(0), |builder| {
     ///     builder.token(RawSyntaxKind(1), "let");
     /// });
+    /// ```
     pub fn wrap_with_node<F>(kind: L::Kind, build: F) -> SyntaxNode<L>
     where
         F: Fn(&mut Self),

@@ -5,6 +5,7 @@ mod configuration;
 mod formatter;
 mod javascript;
 mod linter;
+mod organize_imports;
 mod rules;
 
 use crate::Configuration;

@@ -798,7 +798,7 @@ impl<L: Language> DoubleEndedIterator for SyntaxSlots<L> {
     }
 }
 
-/// Trait with extension methods for [Option<SyntaxNode>].
+/// Trait with extension methods for `Option<SyntaxNode>`.
 pub trait SyntaxNodeOptionExt<L: Language> {
     /// Returns the kind of the node if self is [Some], [None] otherwise.
     fn kind(&self) -> Option<L::Kind>;

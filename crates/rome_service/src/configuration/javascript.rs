@@ -20,10 +20,14 @@ pub struct JavascriptConfiguration {
         serialize_with = "crate::serialize_set_of_strings"
     )]
     pub globals: Option<IndexSet<String>>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub organize_imports: Option<JavascriptOrganizeImports>,
 }
 
 impl JavascriptConfiguration {
-    pub(crate) const KNOWN_KEYS: &'static [&'static str] = &["formatter", "globals"];
+    pub(crate) const KNOWN_KEYS: &'static [&'static str] =
+        &["formatter", "globals", "organizeImports"];
 }
 
 impl JavascriptConfiguration {
@@ -151,3 +155,8 @@ impl From<PlainSemicolons> for Semicolons {
 impl PlainSemicolons {
     pub(crate) const KNOWN_VALUES: &'static [&'static str] = &["always", "asNeeded"];
 }
+
+#[derive(Debug, Default, Deserialize, Serialize, Eq, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[serde(default, deny_unknown_fields)]
+pub struct JavascriptOrganizeImports {}

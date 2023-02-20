@@ -1,5 +1,6 @@
 use crate::configuration::javascript::{
-    PlainQuoteProperties, PlainQuoteStyle, PlainSemicolons, PlainTrailingComma,
+    JavascriptOrganizeImports, PlainQuoteProperties, PlainQuoteStyle, PlainSemicolons,
+    PlainTrailingComma,
 };
 use crate::configuration::{JavascriptConfiguration, JavascriptFormatter};
 use rome_deserialize::json::{has_only_known_keys, with_only_known_variants, VisitJsonNode};
@@ -35,6 +36,16 @@ impl VisitNode<JsonLanguage> for JavascriptConfiguration {
             }
             "globals" => {
                 self.globals = self.map_to_index_set_string(&value, name_text, diagnostics);
+            }
+            "organizeImports" => {
+                let mut javascript_organize_imports = JavascriptOrganizeImports::default();
+                self.map_to_object(
+                    &value,
+                    name_text,
+                    &mut javascript_organize_imports,
+                    diagnostics,
+                )?;
+                self.organize_imports = Some(javascript_organize_imports);
             }
             _ => {}
         }
@@ -159,3 +170,6 @@ impl VisitNode<JsonLanguage> for PlainSemicolons {
         Some(())
     }
 }
+
+impl VisitJsonNode for JavascriptOrganizeImports {}
+impl VisitNode<JsonLanguage> for JavascriptOrganizeImports {}

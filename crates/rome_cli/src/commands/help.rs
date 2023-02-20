@@ -65,6 +65,7 @@ const CI: Markup = markup! {
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--formatter-enabled"</Dim>"                      Allow to enable or disable the formatter check. (default: true)
     "<Dim>"--linter-enabled"</Dim>"                         Allow to enable or disable the linter check. (default: true)
+    "<Dim>"--organize-imports-enabled"</Dim>"               Allow to enable or disable the organize imports. (default: true)
     "<Dim>"--max-diagnostics"</Dim>"                        Cap the amount of diagnostics displayed (default: 50)
     "<Dim>"--config-path"</Dim>"                            Set the filesystem path to the directory of the rome.json configuration file
     "<Dim>"--verbose"</Dim>"                                Print additional verbose advices on diagnostics"

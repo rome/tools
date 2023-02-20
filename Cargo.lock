@@ -1658,6 +1658,8 @@ dependencies = [
  "rome_flags",
  "rome_formatter",
  "rome_fs",
+ "rome_json_formatter",
+ "rome_json_parser",
  "rome_lsp",
  "rome_service",
  "rome_text_edit",

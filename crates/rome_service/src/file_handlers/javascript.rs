@@ -53,10 +53,15 @@ pub struct JsLinterSettings {
     pub globals: Vec<String>,
 }
 
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct JsOrganizeImportsSettings {}
+
 impl Language for JsLanguage {
     type FormatterSettings = JsFormatterSettings;
     type LinterSettings = JsLinterSettings;
     type FormatOptions = JsFormatOptions;
+    type OrganizeImportsSettings = JsOrganizeImportsSettings;
 
     fn lookup_settings(languages: &LanguagesSettings) -> &LanguageSettings<Self> {
         &languages.javascript
@@ -362,19 +367,29 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, WorkspaceError> {
     let mut tree: AnyJsRoot = parse.tree();
     let mut actions = Vec::new();
 
-    let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
+    let mut enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
         let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
         Some(enabled.into_iter().collect())
     } else {
         None
     };
 
-    let mut filter = match &enabled_rules {
-        Some(rules) => AnalysisFilter::from_enabled_rules(Some(rules.as_slice())),
-        _ => AnalysisFilter::default(),
+    let mut filter = AnalysisFilter::default();
+    match &mut enabled_rules {
+        Some(rules) => {
+            if settings.as_ref().analyzer.organize_imports_enabled {
+                rules.push(RuleFilter::Rule("correctness", "organizeImports"));
+            }
+
+            filter.enabled_rules = Some(rules.as_slice());
+            filter.categories =
+                RuleCategories::SYNTAX | RuleCategories::LINT | RuleCategories::ACTION;
+        }
+        _ => {
+            filter.categories = RuleCategories::SYNTAX | RuleCategories::LINT;
+        }
     };
 
-    filter.categories = RuleCategories::SYNTAX | RuleCategories::LINT;
     let mut skipped_suggested_fixes = 0;
     let analyzer_options = compute_analyzer_options(&settings);
     loop {

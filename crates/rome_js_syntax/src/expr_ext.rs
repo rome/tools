@@ -852,7 +852,7 @@ impl JsCallExpression {
     ///
     /// Supports maximum of 16 indices to avoid stack overflow. Eeach argument will consume:
     ///
-    /// - 8 bytes for the [Option<AnyJsCallArgument>] result;
+    /// - 8 bytes for the `Option<AnyJsCallArgument>` result;
     /// - 8 bytes for the [usize] argument.
     pub fn get_arguments_by_index<const N: usize>(
         &self,
