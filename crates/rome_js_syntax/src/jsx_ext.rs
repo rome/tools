@@ -409,6 +409,12 @@ impl JsxAttribute {
             })
             .unwrap_or(false)
     }
+
+    pub fn is_value_empty_string(&self) -> bool {
+        self.initializer()
+            .and_then(|x| Some(x.value().ok()?.inner_text_value().ok()??.is_empty()))
+            .unwrap_or(false)
+    }
 }
 
 impl AnyJsxAttributeValue {

@@ -4,7 +4,7 @@ use rome_console::markup;
 use rome_js_syntax::{JsxElement, JsxSelfClosingElement};
 use rome_rowan::{declare_node_union, AstNode};
 
-use crate::aria_utils::{is_accessible_to_screen_reader, is_aria_hidden_truthy};
+use crate::aria::{is_accessible_to_screen_reader, is_aria_hidden_truthy};
 
 declare_rule! {
     /// Enforce that anchor elements have content and that the content is accessible to screen readers.

@@ -6,7 +6,7 @@ use rome_rowan::{AstNode, AstNodeList};
 
 /// Check if the element is a text content for screen readers,
 /// or it is not hidden using the `aria-hidden` attribute
-pub(crate) fn is_accessible_to_screen_reader(element: &AnyJsxChild) -> Option<bool> {
+pub fn is_accessible_to_screen_reader(element: &AnyJsxChild) -> Option<bool> {
     Some(match element {
         AnyJsxChild::JsxText(text) => {
             let value_token = text.value_token().ok()?;
@@ -25,7 +25,8 @@ pub(crate) fn is_accessible_to_screen_reader(element: &AnyJsxChild) -> Option<bo
             let aria_hidden_attribute = opening_element
                 .find_attribute_by_name("aria-hidden")
                 .ok()??;
-            !is_aria_hidden_truthy(&aria_hidden_attribute)?
+            opening_element.has_trailing_spread_prop(aria_hidden_attribute.clone())
+                || !is_aria_hidden_truthy(&aria_hidden_attribute)?
         }
         AnyJsxChild::JsxSelfClosingElement(element) => {
             // We don't check if a component (e.g. <Text aria-hidden />) is using the `aria-hidden` property,
@@ -36,7 +37,8 @@ pub(crate) fn is_accessible_to_screen_reader(element: &AnyJsxChild) -> Option<bo
             }
 
             let aria_hidden_attribute = element.find_attribute_by_name("aria-hidden").ok()??;
-            !is_aria_hidden_truthy(&aria_hidden_attribute)?
+            element.has_trailing_spread_prop(aria_hidden_attribute.clone())
+                || !is_aria_hidden_truthy(&aria_hidden_attribute)?
         }
         AnyJsxChild::JsxExpressionChild(expression) => {
             let expression = expression.expression()?;
@@ -51,12 +53,16 @@ pub(crate) fn is_accessible_to_screen_reader(element: &AnyJsxChild) -> Option<bo
                 _ => true,
             }
         }
+        AnyJsxChild::JsxFragment(fragment) => fragment
+            .children()
+            .iter()
+            .any(|child| is_accessible_to_screen_reader(&child).unwrap_or(false)),
         _ => true,
     })
 }
 
 /// Check if the `aria-hidden` attribute is present or the value is true.
-pub(crate) fn is_aria_hidden_truthy(aria_hidden_attribute: &JsxAttribute) -> Option<bool> {
+pub fn is_aria_hidden_truthy(aria_hidden_attribute: &JsxAttribute) -> Option<bool> {
     let initializer = aria_hidden_attribute.initializer();
     if initializer.is_none() {
         return Some(true);

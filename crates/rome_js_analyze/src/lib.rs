@@ -13,9 +13,9 @@ use std::sync::Arc;
 use std::{borrow::Cow, error::Error};
 
 mod analyzers;
+mod aria;
 mod aria_analyzers;
 mod aria_services;
-mod aria_utils;
 mod assists;
 mod ast_utils;
 mod control_flow;
