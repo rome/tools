@@ -934,6 +934,12 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::TsInferType::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER => {
+                    let $pattern = unsafe {
+                        $crate::TsInitializedPropertySignatureClassMember::new_unchecked(node)
+                    };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_INSTANTIATION_EXPRESSION => {
                     let $pattern =
                         unsafe { $crate::TsInstantiationExpression::new_unchecked(node) };

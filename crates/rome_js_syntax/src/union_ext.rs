@@ -105,6 +105,9 @@ impl AnyJsClassMember {
             AnyJsClassMember::TsIndexSignatureClassMember(_) => Ok(None),
             AnyJsClassMember::TsMethodSignatureClassMember(method) => method.name().map(Some),
             AnyJsClassMember::TsPropertySignatureClassMember(property) => property.name().map(Some),
+            AnyJsClassMember::TsInitializedPropertySignatureClassMember(property) => {
+                property.name().map(Some)
+            }
             AnyJsClassMember::TsSetterSignatureClassMember(setter) => setter.name().map(Some),
         }
     }

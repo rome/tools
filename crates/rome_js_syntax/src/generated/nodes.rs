@@ -9491,6 +9491,58 @@ pub struct TsInferTypeFields {
     pub constraint: Option<TsTypeConstraintClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsInitializedPropertySignatureClassMember {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsInitializedPropertySignatureClassMember {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsInitializedPropertySignatureClassMemberFields {
+        TsInitializedPropertySignatureClassMemberFields {
+            modifiers: self.modifiers(),
+            name: self.name(),
+            question_mark_token: self.question_mark_token(),
+            value: self.value(),
+            semicolon_token: self.semicolon_token(),
+        }
+    }
+    pub fn modifiers(&self) -> TsPropertySignatureModifierList {
+        support::list(&self.syntax, 0usize)
+    }
+    pub fn name(&self) -> SyntaxResult<AnyJsClassMemberName> {
+        support::required_node(&self.syntax, 1usize)
+    }
+    pub fn question_mark_token(&self) -> Option<SyntaxToken> {
+        support::token(&self.syntax, 2usize)
+    }
+    pub fn value(&self) -> SyntaxResult<JsInitializerClause> {
+        support::required_node(&self.syntax, 3usize)
+    }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 4usize) }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsInitializedPropertySignatureClassMember {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub struct TsInitializedPropertySignatureClassMemberFields {
+    pub modifiers: TsPropertySignatureModifierList,
+    pub name: SyntaxResult<AnyJsClassMemberName>,
+    pub question_mark_token: Option<SyntaxToken>,
+    pub value: SyntaxResult<JsInitializerClause>,
+    pub semicolon_token: Option<SyntaxToken>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsInstantiationExpression {
     pub(crate) syntax: SyntaxNode,
 }
@@ -12421,6 +12473,7 @@ pub enum AnyJsClassMember {
     TsConstructorSignatureClassMember(TsConstructorSignatureClassMember),
     TsGetterSignatureClassMember(TsGetterSignatureClassMember),
     TsIndexSignatureClassMember(TsIndexSignatureClassMember),
+    TsInitializedPropertySignatureClassMember(TsInitializedPropertySignatureClassMember),
     TsMethodSignatureClassMember(TsMethodSignatureClassMember),
     TsPropertySignatureClassMember(TsPropertySignatureClassMember),
     TsSetterSignatureClassMember(TsSetterSignatureClassMember),
@@ -12493,6 +12546,14 @@ impl AnyJsClassMember {
     pub fn as_ts_index_signature_class_member(&self) -> Option<&TsIndexSignatureClassMember> {
         match &self {
             AnyJsClassMember::TsIndexSignatureClassMember(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_initialized_property_signature_class_member(
+        &self,
+    ) -> Option<&TsInitializedPropertySignatureClassMember> {
+        match &self {
+            AnyJsClassMember::TsInitializedPropertySignatureClassMember(item) => Some(item),
             _ => None,
         }
     }
@@ -22697,6 +22758,45 @@ impl From<TsInferType> for SyntaxNode {
 impl From<TsInferType> for SyntaxElement {
     fn from(n: TsInferType) -> SyntaxElement { n.syntax.into() }
 }
+impl AstNode for TsInitializedPropertySignatureClassMember {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> = SyntaxKindSet::from_raw(RawSyntaxKind(
+        TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER as u16,
+    ));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
+}
+impl std::fmt::Debug for TsInitializedPropertySignatureClassMember {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsInitializedPropertySignatureClassMember")
+            .field("modifiers", &self.modifiers())
+            .field("name", &support::DebugSyntaxResult(self.name()))
+            .field(
+                "question_mark_token",
+                &support::DebugOptionalElement(self.question_mark_token()),
+            )
+            .field("value", &support::DebugSyntaxResult(self.value()))
+            .field(
+                "semicolon_token",
+                &support::DebugOptionalElement(self.semicolon_token()),
+            )
+            .finish()
+    }
+}
+impl From<TsInitializedPropertySignatureClassMember> for SyntaxNode {
+    fn from(n: TsInitializedPropertySignatureClassMember) -> SyntaxNode { n.syntax }
+}
+impl From<TsInitializedPropertySignatureClassMember> for SyntaxElement {
+    fn from(n: TsInitializedPropertySignatureClassMember) -> SyntaxElement { n.syntax.into() }
+}
 impl AstNode for TsInstantiationExpression {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
@@ -25795,6 +25895,11 @@ impl From<TsIndexSignatureClassMember> for AnyJsClassMember {
         AnyJsClassMember::TsIndexSignatureClassMember(node)
     }
 }
+impl From<TsInitializedPropertySignatureClassMember> for AnyJsClassMember {
+    fn from(node: TsInitializedPropertySignatureClassMember) -> AnyJsClassMember {
+        AnyJsClassMember::TsInitializedPropertySignatureClassMember(node)
+    }
+}
 impl From<TsMethodSignatureClassMember> for AnyJsClassMember {
     fn from(node: TsMethodSignatureClassMember) -> AnyJsClassMember {
         AnyJsClassMember::TsMethodSignatureClassMember(node)
@@ -25823,6 +25928,7 @@ impl AstNode for AnyJsClassMember {
         .union(TsConstructorSignatureClassMember::KIND_SET)
         .union(TsGetterSignatureClassMember::KIND_SET)
         .union(TsIndexSignatureClassMember::KIND_SET)
+        .union(TsInitializedPropertySignatureClassMember::KIND_SET)
         .union(TsMethodSignatureClassMember::KIND_SET)
         .union(TsPropertySignatureClassMember::KIND_SET)
         .union(TsSetterSignatureClassMember::KIND_SET);
@@ -25840,6 +25946,7 @@ impl AstNode for AnyJsClassMember {
                 | TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER
                 | TS_GETTER_SIGNATURE_CLASS_MEMBER
                 | TS_INDEX_SIGNATURE_CLASS_MEMBER
+                | TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER
                 | TS_METHOD_SIGNATURE_CLASS_MEMBER
                 | TS_PROPERTY_SIGNATURE_CLASS_MEMBER
                 | TS_SETTER_SIGNATURE_CLASS_MEMBER
@@ -25886,6 +25993,11 @@ impl AstNode for AnyJsClassMember {
                     syntax,
                 })
             }
+            TS_INITIALIZED_PROPERTY_SIGNATURE_CLASS_MEMBER => {
+                AnyJsClassMember::TsInitializedPropertySignatureClassMember(
+                    TsInitializedPropertySignatureClassMember { syntax },
+                )
+            }
             TS_METHOD_SIGNATURE_CLASS_MEMBER => {
                 AnyJsClassMember::TsMethodSignatureClassMember(TsMethodSignatureClassMember {
                     syntax,
@@ -25918,6 +26030,7 @@ impl AstNode for AnyJsClassMember {
             AnyJsClassMember::TsConstructorSignatureClassMember(it) => &it.syntax,
             AnyJsClassMember::TsGetterSignatureClassMember(it) => &it.syntax,
             AnyJsClassMember::TsIndexSignatureClassMember(it) => &it.syntax,
+            AnyJsClassMember::TsInitializedPropertySignatureClassMember(it) => &it.syntax,
             AnyJsClassMember::TsMethodSignatureClassMember(it) => &it.syntax,
             AnyJsClassMember::TsPropertySignatureClassMember(it) => &it.syntax,
             AnyJsClassMember::TsSetterSignatureClassMember(it) => &it.syntax,
@@ -25936,6 +26049,7 @@ impl AstNode for AnyJsClassMember {
             AnyJsClassMember::TsConstructorSignatureClassMember(it) => it.syntax,
             AnyJsClassMember::TsGetterSignatureClassMember(it) => it.syntax,
             AnyJsClassMember::TsIndexSignatureClassMember(it) => it.syntax,
+            AnyJsClassMember::TsInitializedPropertySignatureClassMember(it) => it.syntax,
             AnyJsClassMember::TsMethodSignatureClassMember(it) => it.syntax,
             AnyJsClassMember::TsPropertySignatureClassMember(it) => it.syntax,
             AnyJsClassMember::TsSetterSignatureClassMember(it) => it.syntax,
@@ -25958,6 +26072,9 @@ impl std::fmt::Debug for AnyJsClassMember {
             AnyJsClassMember::TsConstructorSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
             AnyJsClassMember::TsGetterSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
             AnyJsClassMember::TsIndexSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
+            AnyJsClassMember::TsInitializedPropertySignatureClassMember(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
             AnyJsClassMember::TsMethodSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
             AnyJsClassMember::TsPropertySignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
             AnyJsClassMember::TsSetterSignatureClassMember(it) => std::fmt::Debug::fmt(it, f),
@@ -25978,6 +26095,7 @@ impl From<AnyJsClassMember> for SyntaxNode {
             AnyJsClassMember::TsConstructorSignatureClassMember(it) => it.into(),
             AnyJsClassMember::TsGetterSignatureClassMember(it) => it.into(),
             AnyJsClassMember::TsIndexSignatureClassMember(it) => it.into(),
+            AnyJsClassMember::TsInitializedPropertySignatureClassMember(it) => it.into(),
             AnyJsClassMember::TsMethodSignatureClassMember(it) => it.into(),
             AnyJsClassMember::TsPropertySignatureClassMember(it) => it.into(),
             AnyJsClassMember::TsSetterSignatureClassMember(it) => it.into(),
@@ -33428,6 +33546,11 @@ impl std::fmt::Display for TsIndexedAccessType {
     }
 }
 impl std::fmt::Display for TsInferType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsInitializedPropertySignatureClassMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }

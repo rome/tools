@@ -634,6 +634,7 @@ AnyJsClassMember =
 	| JsSetterClassMember
 	| TsConstructorSignatureClassMember
 	| TsPropertySignatureClassMember
+	| TsInitializedPropertySignatureClassMember
 	| TsMethodSignatureClassMember
 	| TsGetterSignatureClassMember
 	| TsSetterSignatureClassMember
@@ -723,6 +724,13 @@ TsPropertySignatureClassMember =
 	modifiers: TsPropertySignatureModifierList
 	name: AnyJsClassMemberName
 	property_annotation: AnyTsPropertySignatureAnnotation?
+	';'?
+
+TsInitializedPropertySignatureClassMember =
+	modifiers: TsPropertySignatureModifierList
+	name: AnyJsClassMemberName
+	'?'?
+	value: JsInitializerClause
 	';'?
 
 TsPropertySignatureModifierList = AnyTsPropertySignatureModifier*
