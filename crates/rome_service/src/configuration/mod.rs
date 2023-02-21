@@ -115,10 +115,14 @@ impl FilesConfiguration {
     const KNOWN_KEYS: &'static [&'static str] = &["maxSize", "ignore"];
 }
 
+/// - [Result]: if an error occurred while loading the configuration file.
+/// - [Option]: sometimes not having a configuration file should not be an error, so we need this type.
+/// - [Deserialized]: result of the deserialization of the configuration.
+/// - [Configuration]: the type needed to [Deserialized] to infer the return type.
 type LoadConfig = Result<Option<Deserialized<Configuration>>, WorkspaceError>;
 
 #[derive(Debug, Default, PartialEq)]
-pub enum BasePath {
+pub enum ConfigurationBasePath {
     /// The default mode, not having a configuration file is not an error.
     #[default]
     None,
@@ -129,53 +133,85 @@ pub enum BasePath {
     FromUser(PathBuf),
 }
 
+impl ConfigurationBasePath {
+    const fn is_from_user(&self) -> bool {
+        matches!(self, ConfigurationBasePath::FromUser(_))
+    }
+
+    fn parent(&self) -> Option<&Path> {
+        match self {
+            ConfigurationBasePath::None => None,
+            ConfigurationBasePath::Lsp(path) | ConfigurationBasePath::FromUser(path) => {
+                path.parent()
+            }
+        }
+    }
+}
+
 /// Load the configuration from the file system.
 ///
-/// The configuration file will be read from the `file_system`.
-/// An optional base path can be appended to the configuration file path.
-pub fn load_config(file_system: &DynRef<dyn FileSystem>, base_path: BasePath) -> LoadConfig {
+/// The configuration file will be read from the `file_system`. A [base path](ConfigurationBasePath) should be provided.
+///
+/// The function will try to traverse upwards the file system until if finds a `rome.json` file, or there
+/// aren't directories anymore.
+///
+/// If a the configuration base path was provided by the user, the function will error. If not, Rome will use
+/// its defaults.
+pub fn load_config(
+    file_system: &DynRef<dyn FileSystem>,
+    base_path: ConfigurationBasePath,
+) -> LoadConfig {
     let config_name = file_system.config_name();
-    let configuration_path = match base_path {
-        BasePath::Lsp(ref path) | BasePath::FromUser(ref path) => path.join(config_name),
+    let mut configuration_path = match base_path {
+        ConfigurationBasePath::Lsp(ref path) | ConfigurationBasePath::FromUser(ref path) => {
+            path.join(config_name)
+        }
         _ => PathBuf::from(config_name),
     };
+    let should_error = base_path.is_from_user();
     info!(
         "Attempting to read the configuration file from {:?}",
         configuration_path
     );
-    let options = OpenOptions::default().read(true);
-    let file = file_system.open_with_options(&configuration_path, options);
-    match file {
-        Ok(mut file) => {
-            let mut buffer = String::new();
-            file.read_to_string(&mut buffer).map_err(|_| {
-                WorkspaceError::cant_read_file(format!("{}", configuration_path.display()))
-            })?;
 
-            let deserialized = deserialize_from_json::<Configuration>(&buffer)
-                .with_file_path(&configuration_path.display().to_string());
-            Ok(Some(deserialized))
-        }
-        Err(err) => {
-            // We skip the error when the configuration file is not found.
-            // Not having a configuration file is only an error when the `base_path` is
-            // set to `BasePath::FromUser`.
-            if match base_path {
-                BasePath::FromUser(_) => true,
-                _ => err.kind() != ErrorKind::NotFound,
-            } {
-                return Err(WorkspaceError::cant_read_file(format!(
-                    "{}",
-                    configuration_path.display()
-                )));
+    loop {
+        let options = OpenOptions::default().read(true);
+        let file = file_system.open_with_options(&configuration_path, options);
+        return match file {
+            Ok(mut file) => {
+                let mut buffer = String::new();
+                file.read_to_string(&mut buffer).map_err(|_| {
+                    WorkspaceError::cant_read_file(format!("{}", configuration_path.display()))
+                })?;
+
+                let deserialized = deserialize_from_json::<Configuration>(&buffer)
+                    .with_file_path(&configuration_path.display().to_string());
+                Ok(Some(deserialized))
             }
-            error!(
-                "Could not read the configuration file from {:?}, reason:\n {}",
-                configuration_path.display(),
-                err
-            );
-            Ok(None)
-        }
+            Err(err) => {
+                if let Some(path) = base_path.parent() {
+                    if path.is_dir() {
+                        configuration_path = path.join(config_name);
+                        continue;
+                    }
+                }
+                // We skip the error when the configuration file is not found.
+                // Not having a configuration file is only an error when the `base_path` is
+                // set to `BasePath::FromUser`.
+                if should_error || err.kind() != ErrorKind::NotFound {
+                    return Err(WorkspaceError::cant_read_file(format!(
+                        "{}",
+                        configuration_path.display()
+                    )));
+                }
+                error!(
+                    "Could not read the configuration file from {:?}, reason:\n {}",
+                    configuration_path.display(),
+                    err
+                );
+                Ok(None)
+            }
+        };
     }
 }
 

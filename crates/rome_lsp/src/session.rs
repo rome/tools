@@ -10,7 +10,7 @@ use rome_console::markup;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use rome_service::workspace::{FeatureName, PullDiagnosticsParams, SupportsFeatureParams};
 use rome_service::workspace::{RageEntry, RageParams, RageResult, UpdateSettingsParams};
-use rome_service::{load_config, BasePath, Workspace};
+use rome_service::{load_config, ConfigurationBasePath, Workspace};
 use rome_service::{DynRef, WorkspaceError};
 use serde_json::Value;
 use std::collections::HashMap;
@@ -365,8 +365,8 @@ impl Session {
     #[tracing::instrument(level = "debug", skip(self))]
     pub(crate) async fn load_workspace_settings(&self) {
         let base_path = match self.base_path() {
-            None => BasePath::default(),
-            Some(path) => BasePath::Lsp(path),
+            None => ConfigurationBasePath::default(),
+            Some(path) => ConfigurationBasePath::Lsp(path),
         };
 
         let status = match load_config(&self.fs, base_path) {
