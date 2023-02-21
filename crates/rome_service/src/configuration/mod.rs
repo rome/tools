@@ -189,7 +189,7 @@ pub fn load_config(
                 Ok(Some(deserialized))
             }
             Err(err) => {
-                if let Some(path) = base_path.parent() {
+                if let Some(path) = configuration_path.parent() {
                     if path.is_dir() {
                         configuration_path = path.join(config_name);
                         continue;
