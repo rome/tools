@@ -161,10 +161,11 @@ pub fn load_config(
     };
     let should_error = base_path.is_from_user();
     info!(
-        "Attempting to read the configuration file from {:?}",
-        configuration_path
+        "Attempting to read the configuration file from {}",
+        configuration_path.display()
     );
 
+    let mut from_parent = false;
     loop {
         let options = OpenOptions::default().read(true);
         let file = file_system.open_with_options(&configuration_path, options);
@@ -174,6 +175,13 @@ pub fn load_config(
                 file.read_to_string(&mut buffer).map_err(|_| {
                     WorkspaceError::cant_read_file(format!("{}", configuration_path.display()))
                 })?;
+
+                if from_parent {
+                    info!(
+                        "Rome auto discovered a configuration file at following path that wasn't in the working directory: {}",
+                        configuration_path.display()
+                    );
+                }
 
                 let deserialized = deserialize_from_json::<Configuration>(&buffer)
                     .with_file_path(&configuration_path.display().to_string());
@@ -185,6 +193,7 @@ pub fn load_config(
                     if let Some(path) = configuration_path.parent() {
                         if path.is_dir() {
                             configuration_path = path.join(config_name);
+                            from_parent = true;
                             continue;
                         }
                     }
