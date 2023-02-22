@@ -137,15 +137,6 @@ impl ConfigurationBasePath {
     const fn is_from_user(&self) -> bool {
         matches!(self, ConfigurationBasePath::FromUser(_))
     }
-
-    fn parent(&self) -> Option<&Path> {
-        match self {
-            ConfigurationBasePath::None => None,
-            ConfigurationBasePath::Lsp(path) | ConfigurationBasePath::FromUser(path) => {
-                path.parent()
-            }
-        }
-    }
 }
 
 /// Load the configuration from the file system.
@@ -189,10 +180,13 @@ pub fn load_config(
                 Ok(Some(deserialized))
             }
             Err(err) => {
-                if let Some(path) = configuration_path.parent() {
-                    if path.is_dir() {
-                        configuration_path = path.join(config_name);
-                        continue;
+                // base paths from users are not eligible for auto discovery
+                if !base_path.is_from_user() {
+                    if let Some(path) = configuration_path.parent() {
+                        if path.is_dir() {
+                            configuration_path = path.join(config_name);
+                            continue;
+                        }
                     }
                 }
                 // We skip the error when the configuration file is not found.
