@@ -4005,6 +4005,19 @@ impl IntoFormat<JsFormatContext> for rome_js_syntax::TsPropertySignatureClassMem
         FormatOwnedWithRule :: new (self , crate :: ts :: classes :: property_signature_class_member :: FormatTsPropertySignatureClassMember :: default ())
     }
 }
+impl FormatRule < rome_js_syntax :: TsInitializedPropertySignatureClassMember > for crate :: ts :: classes :: initialized_property_signature_class_member :: FormatTsInitializedPropertySignatureClassMember { type Context = JsFormatContext ; # [inline (always)] fn fmt (& self , node : & rome_js_syntax :: TsInitializedPropertySignatureClassMember , f : & mut JsFormatter) -> FormatResult < () > { FormatNodeRule :: < rome_js_syntax :: TsInitializedPropertySignatureClassMember > :: fmt (self , node , f) } }
+impl AsFormat<JsFormatContext> for rome_js_syntax::TsInitializedPropertySignatureClassMember {
+    type Format < 'a > = FormatRefWithRule < 'a , rome_js_syntax :: TsInitializedPropertySignatureClassMember , crate :: ts :: classes :: initialized_property_signature_class_member :: FormatTsInitializedPropertySignatureClassMember > ;
+    fn format(&self) -> Self::Format<'_> {
+        FormatRefWithRule :: new (self , crate :: ts :: classes :: initialized_property_signature_class_member :: FormatTsInitializedPropertySignatureClassMember :: default ())
+    }
+}
+impl IntoFormat<JsFormatContext> for rome_js_syntax::TsInitializedPropertySignatureClassMember {
+    type Format = FormatOwnedWithRule < rome_js_syntax :: TsInitializedPropertySignatureClassMember , crate :: ts :: classes :: initialized_property_signature_class_member :: FormatTsInitializedPropertySignatureClassMember > ;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule :: new (self , crate :: ts :: classes :: initialized_property_signature_class_member :: FormatTsInitializedPropertySignatureClassMember :: default ())
+    }
+}
 impl FormatRule<rome_js_syntax::TsMethodSignatureClassMember>
     for crate::ts::classes::method_signature_class_member::FormatTsMethodSignatureClassMember
 {

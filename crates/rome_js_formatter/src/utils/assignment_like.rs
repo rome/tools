@@ -13,7 +13,8 @@ use rome_js_syntax::{
     AnyTsVariableAnnotation, JsAssignmentExpression, JsInitializerClause, JsLiteralMemberName,
     JsObjectAssignmentPattern, JsObjectAssignmentPatternProperty, JsObjectBindingPattern,
     JsPropertyClassMember, JsPropertyClassMemberFields, JsPropertyObjectMember, JsSyntaxKind,
-    JsVariableDeclarator, TsIdentifierBinding, TsPropertySignatureClassMember,
+    JsVariableDeclarator, TsIdentifierBinding, TsInitializedPropertySignatureClassMember,
+    TsInitializedPropertySignatureClassMemberFields, TsPropertySignatureClassMember,
     TsPropertySignatureClassMemberFields, TsTypeAliasDeclaration, TsTypeArguments,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxNodeOptionExt, SyntaxResult};
@@ -27,7 +28,8 @@ declare_node_union! {
         JsVariableDeclarator |
         TsTypeAliasDeclaration |
         JsPropertyClassMember |
-        TsPropertySignatureClassMember
+        TsPropertySignatureClassMember |
+        TsInitializedPropertySignatureClassMember
 }
 
 declare_node_union! {
@@ -337,6 +339,10 @@ impl AnyJsAssignmentLike {
             AnyJsAssignmentLike::TsPropertySignatureClassMember(_) => {
                 unreachable!("TsPropertySignatureClassMember doesn't have any right side. If you're here, `has_only_left_hand_side` hasn't been called")
             }
+            AnyJsAssignmentLike::TsInitializedPropertySignatureClassMember(n) => {
+                // SAFETY: Calling `unwrap` here is safe because we check `has_only_left_hand_side` variant at the beginning of the `layout` function
+                n.value().unwrap().into()
+            }
         };
 
         Ok(right)
@@ -361,6 +367,9 @@ impl AnyJsAssignmentLike {
                 Ok(property_class_member.name()?.into())
             }
             AnyJsAssignmentLike::TsPropertySignatureClassMember(
+                property_signature_class_member,
+            ) => Ok(property_signature_class_member.name()?.into()),
+            AnyJsAssignmentLike::TsInitializedPropertySignatureClassMember(
                 property_signature_class_member,
             ) => Ok(property_signature_class_member.name()?.into()),
         }
@@ -470,6 +479,26 @@ impl AnyJsAssignmentLike {
                     (u8::from(f.options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
             }
+            AnyJsAssignmentLike::TsInitializedPropertySignatureClassMember(
+                property_signature_class_member,
+            ) => {
+                let TsInitializedPropertySignatureClassMemberFields {
+                    modifiers,
+                    name,
+                    question_mark_token,
+                    value: _,
+                    semicolon_token: _,
+                } = property_signature_class_member.as_fields();
+
+                write!(f, [modifiers.format(), space(),])?;
+
+                let width = write_member_name(&name?.into(), f)?;
+
+                write!(f, [question_mark_token.format()])?;
+                let text_width_for_break =
+                    (u8::from(f.options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
+                Ok(width < text_width_for_break)
+            }
         }
     }
 
@@ -507,6 +536,13 @@ impl AnyJsAssignmentLike {
             }
             // this variant doesn't have any operator
             AnyJsAssignmentLike::TsPropertySignatureClassMember(_) => Ok(()),
+            AnyJsAssignmentLike::TsInitializedPropertySignatureClassMember(
+                property_class_member,
+            ) => {
+                let initializer = property_class_member.value()?;
+                let eq_token = initializer.eq_token()?;
+                write!(f, [space(), eq_token.format()])
+            }
         }
     }
 
@@ -574,12 +610,30 @@ impl AnyJsAssignmentLike {
             }
             // this variant doesn't have any right part
             AnyJsAssignmentLike::TsPropertySignatureClassMember(_) => Ok(()),
+            AnyJsAssignmentLike::TsInitializedPropertySignatureClassMember(
+                property_class_member,
+            ) => {
+                let initializer = property_class_member.value()?;
+                let expression = initializer.expression()?;
+                write!(
+                    f,
+                    [
+                        space(),
+                        format_leading_comments(initializer.syntax()),
+                        with_assignment_layout(&expression, Some(layout)),
+                        format_trailing_comments(initializer.syntax())
+                    ]
+                )
+            }
         }
     }
 
     fn write_suppressed_initializer(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let initializer = match self {
             AnyJsAssignmentLike::JsPropertyClassMember(class_member) => class_member.value(),
+            AnyJsAssignmentLike::TsInitializedPropertySignatureClassMember(class_member) => {
+                Some(class_member.value()?)
+            }
             AnyJsAssignmentLike::JsVariableDeclarator(variable_declarator) => {
                 variable_declarator.initializer()
             }
