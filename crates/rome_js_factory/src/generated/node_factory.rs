@@ -991,6 +991,7 @@ pub fn js_export_from_clause(
         star_token,
         from_token,
         source,
+        type_token: None,
         export_as: None,
         assertion: None,
         semicolon_token: None,
@@ -1000,11 +1001,16 @@ pub struct JsExportFromClauseBuilder {
     star_token: SyntaxToken,
     from_token: SyntaxToken,
     source: JsModuleSource,
+    type_token: Option<SyntaxToken>,
     export_as: Option<JsExportAsClause>,
     assertion: Option<JsImportAssertion>,
     semicolon_token: Option<SyntaxToken>,
 }
 impl JsExportFromClauseBuilder {
+    pub fn with_type_token(mut self, type_token: SyntaxToken) -> Self {
+        self.type_token = Some(type_token);
+        self
+    }
     pub fn with_export_as(mut self, export_as: JsExportAsClause) -> Self {
         self.export_as = Some(export_as);
         self
@@ -1021,6 +1027,7 @@ impl JsExportFromClauseBuilder {
         JsExportFromClause::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::JS_EXPORT_FROM_CLAUSE,
             [
+                self.type_token.map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Token(self.star_token)),
                 self.export_as
                     .map(|token| SyntaxElement::Node(token.into_syntax())),
