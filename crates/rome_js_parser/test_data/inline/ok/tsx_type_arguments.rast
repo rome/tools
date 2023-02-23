@@ -9,6 +9,8 @@ JsModule {
                     l_angle_token: L_ANGLE@0..35 "<" [Comments("// These are valid ty ..."), Newline("\n")] [],
                     items: TsTypeParameterList [
                         TsTypeParameter {
+                            in_modifier_token: missing (optional),
+                            out_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@35..37 "A" [] [Whitespace(" ")],
                             },
@@ -49,6 +51,8 @@ JsModule {
                     l_angle_token: L_ANGLE@56..58 "<" [Newline("\n")] [],
                     items: TsTypeParameterList [
                         TsTypeParameter {
+                            in_modifier_token: missing (optional),
+                            out_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@58..59 "A" [] [],
                             },
@@ -86,6 +90,8 @@ JsModule {
                     l_angle_token: L_ANGLE@76..78 "<" [Newline("\n")] [],
                     items: TsTypeParameterList [
                         TsTypeParameter {
+                            in_modifier_token: missing (optional),
+                            out_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@78..79 "A" [] [],
                             },
@@ -94,6 +100,8 @@ JsModule {
                         },
                         COMMA@79..81 "," [] [Whitespace(" ")],
                         TsTypeParameter {
+                            in_modifier_token: missing (optional),
+                            out_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@81..82 "B" [] [],
                             },
@@ -126,6 +134,8 @@ JsModule {
                     l_angle_token: L_ANGLE@92..94 "<" [Newline("\n")] [],
                     items: TsTypeParameterList [
                         TsTypeParameter {
+                            in_modifier_token: missing (optional),
+                            out_modifier_token: missing (optional),
                             name: TsTypeParameterName {
                                 ident_token: IDENT@94..96 "A" [] [Whitespace(" ")],
                             },
@@ -185,15 +195,17 @@ JsModule {
           0: L_ANGLE@0..35 "<" [Comments("// These are valid ty ..."), Newline("\n")] []
           1: TS_TYPE_PARAMETER_LIST@35..46
             0: TS_TYPE_PARAMETER@35..46
-              0: TS_TYPE_PARAMETER_NAME@35..37
+              0: (empty)
+              1: (empty)
+              2: TS_TYPE_PARAMETER_NAME@35..37
                 0: IDENT@35..37 "A" [] [Whitespace(" ")]
-              1: TS_TYPE_CONSTRAINT_CLAUSE@37..46
+              3: TS_TYPE_CONSTRAINT_CLAUSE@37..46
                 0: EXTENDS_KW@37..45 "extends" [] [Whitespace(" ")]
                 1: TS_REFERENCE_TYPE@45..46
                   0: JS_REFERENCE_IDENTIFIER@45..46
                     0: IDENT@45..46 "B" [] []
                   1: (empty)
-              2: (empty)
+              4: (empty)
           2: R_ANGLE@46..47 ">" [] []
         2: JS_PARAMETERS@47..50
           0: L_PAREN@47..48 "(" [] []
@@ -214,10 +226,12 @@ JsModule {
           0: L_ANGLE@56..58 "<" [Newline("\n")] []
           1: TS_TYPE_PARAMETER_LIST@58..66
             0: TS_TYPE_PARAMETER@58..66
-              0: TS_TYPE_PARAMETER_NAME@58..59
-                0: IDENT@58..59 "A" [] []
+              0: (empty)
               1: (empty)
-              2: TS_DEFAULT_TYPE_CLAUSE@59..66
+              2: TS_TYPE_PARAMETER_NAME@58..59
+                0: IDENT@58..59 "A" [] []
+              3: (empty)
+              4: TS_DEFAULT_TYPE_CLAUSE@59..66
                 0: EQ@59..60 "=" [] []
                 1: TS_STRING_TYPE@60..66
                   0: STRING_KW@60..66 "string" [] []
@@ -241,16 +255,20 @@ JsModule {
           0: L_ANGLE@76..78 "<" [Newline("\n")] []
           1: TS_TYPE_PARAMETER_LIST@78..82
             0: TS_TYPE_PARAMETER@78..79
-              0: TS_TYPE_PARAMETER_NAME@78..79
-                0: IDENT@78..79 "A" [] []
+              0: (empty)
               1: (empty)
-              2: (empty)
+              2: TS_TYPE_PARAMETER_NAME@78..79
+                0: IDENT@78..79 "A" [] []
+              3: (empty)
+              4: (empty)
             1: COMMA@79..81 "," [] [Whitespace(" ")]
             2: TS_TYPE_PARAMETER@81..82
-              0: TS_TYPE_PARAMETER_NAME@81..82
-                0: IDENT@81..82 "B" [] []
+              0: (empty)
               1: (empty)
-              2: (empty)
+              2: TS_TYPE_PARAMETER_NAME@81..82
+                0: IDENT@81..82 "B" [] []
+              3: (empty)
+              4: (empty)
           2: R_ANGLE@82..83 ">" [] []
         2: JS_PARAMETERS@83..86
           0: L_PAREN@83..84 "(" [] []
@@ -271,9 +289,11 @@ JsModule {
           0: L_ANGLE@92..94 "<" [Newline("\n")] []
           1: TS_TYPE_PARAMETER_LIST@94..108
             0: TS_TYPE_PARAMETER@94..108
-              0: TS_TYPE_PARAMETER_NAME@94..96
+              0: (empty)
+              1: (empty)
+              2: TS_TYPE_PARAMETER_NAME@94..96
                 0: IDENT@94..96 "A" [] [Whitespace(" ")]
-              1: TS_TYPE_CONSTRAINT_CLAUSE@96..108
+              3: TS_TYPE_CONSTRAINT_CLAUSE@96..108
                 0: EXTENDS_KW@96..104 "extends" [] [Whitespace(" ")]
                 1: TS_REFERENCE_TYPE@104..108
                   0: JS_REFERENCE_IDENTIFIER@104..105
@@ -286,7 +306,7 @@ JsModule {
                           0: IDENT@106..107 "C" [] []
                         1: (empty)
                     2: R_ANGLE@107..108 ">" [] []
-              2: (empty)
+              4: (empty)
           2: R_ANGLE@108..109 ">" [] []
         2: JS_PARAMETERS@109..112
           0: L_PAREN@109..110 "(" [] []

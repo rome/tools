@@ -162,6 +162,7 @@ pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
         "bigint",
         "override",
         "of",
+        "out",
     ],
     literals: &[
         "JS_NUMBER_LITERAL",
@@ -444,6 +445,7 @@ pub const JS_KINDS_SRC: KindsSrc = KindsSrc {
         "TS_TYPE_PARAMETERS",
         "TS_TYPE_PARAMETER_LIST",
         "TS_TYPE_PARAMETER",
+        "TS_TYPE_PARAMETER_MODIFIER",
         "TS_TYPE_PARAMETER_NAME",
         "TS_TYPE_CONSTRAINT_CLAUSE",
         "TS_DEFAULT_TYPE_CLAUSE",

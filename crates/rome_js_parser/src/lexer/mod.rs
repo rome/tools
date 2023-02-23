@@ -1091,6 +1091,7 @@ impl<'src> Lexer<'src> {
             b"bigint" => BIGINT_KW,
             b"override" => OVERRIDE_KW,
             b"of" => OF_KW,
+            b"out" => OUT_KW,
             _ => T![ident],
         }
     }

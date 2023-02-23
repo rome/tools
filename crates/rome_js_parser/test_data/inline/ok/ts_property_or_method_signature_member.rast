@@ -236,6 +236,8 @@ JsModule {
                             l_angle_token: L_ANGLE@189..190 "<" [] [],
                             items: TsTypeParameterList [
                                 TsTypeParameter {
+                                    in_modifier_token: missing (optional),
+                                    out_modifier_token: missing (optional),
                                     name: TsTypeParameterName {
                                         ident_token: IDENT@190..191 "A" [] [],
                                     },
@@ -244,6 +246,8 @@ JsModule {
                                 },
                                 COMMA@191..193 "," [] [Whitespace(" ")],
                                 TsTypeParameter {
+                                    in_modifier_token: missing (optional),
+                                    out_modifier_token: missing (optional),
                                     name: TsTypeParameterName {
                                         ident_token: IDENT@193..194 "B" [] [],
                                     },
@@ -485,16 +489,20 @@ JsModule {
               0: L_ANGLE@189..190 "<" [] []
               1: TS_TYPE_PARAMETER_LIST@190..194
                 0: TS_TYPE_PARAMETER@190..191
-                  0: TS_TYPE_PARAMETER_NAME@190..191
-                    0: IDENT@190..191 "A" [] []
+                  0: (empty)
                   1: (empty)
-                  2: (empty)
+                  2: TS_TYPE_PARAMETER_NAME@190..191
+                    0: IDENT@190..191 "A" [] []
+                  3: (empty)
+                  4: (empty)
                 1: COMMA@191..193 "," [] [Whitespace(" ")]
                 2: TS_TYPE_PARAMETER@193..194
-                  0: TS_TYPE_PARAMETER_NAME@193..194
-                    0: IDENT@193..194 "B" [] []
+                  0: (empty)
                   1: (empty)
-                  2: (empty)
+                  2: TS_TYPE_PARAMETER_NAME@193..194
+                    0: IDENT@193..194 "B" [] []
+                  3: (empty)
+                  4: (empty)
               2: R_ANGLE@194..195 ">" [] []
             3: JS_PARAMETERS@195..207
               0: L_PAREN@195..196 "(" [] []

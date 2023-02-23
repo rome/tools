@@ -6222,16 +6222,28 @@ pub fn ts_type_operator_type(
 pub fn ts_type_parameter(name: TsTypeParameterName) -> TsTypeParameterBuilder {
     TsTypeParameterBuilder {
         name,
+        in_modifier_token: None,
+        out_modifier_token: None,
         constraint: None,
         default: None,
     }
 }
 pub struct TsTypeParameterBuilder {
     name: TsTypeParameterName,
+    in_modifier_token: Option<SyntaxToken>,
+    out_modifier_token: Option<SyntaxToken>,
     constraint: Option<TsTypeConstraintClause>,
     default: Option<TsDefaultTypeClause>,
 }
 impl TsTypeParameterBuilder {
+    pub fn with_in_modifier_token(mut self, in_modifier_token: SyntaxToken) -> Self {
+        self.in_modifier_token = Some(in_modifier_token);
+        self
+    }
+    pub fn with_out_modifier_token(mut self, out_modifier_token: SyntaxToken) -> Self {
+        self.out_modifier_token = Some(out_modifier_token);
+        self
+    }
     pub fn with_constraint(mut self, constraint: TsTypeConstraintClause) -> Self {
         self.constraint = Some(constraint);
         self
@@ -6244,6 +6256,10 @@ impl TsTypeParameterBuilder {
         TsTypeParameter::unwrap_cast(SyntaxNode::new_detached(
             JsSyntaxKind::TS_TYPE_PARAMETER,
             [
+                self.in_modifier_token
+                    .map(|token| SyntaxElement::Token(token)),
+                self.out_modifier_token
+                    .map(|token| SyntaxElement::Token(token)),
                 Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.constraint
                     .map(|token| SyntaxElement::Node(token.into_syntax())),
