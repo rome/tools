@@ -12,6 +12,12 @@
 	<h1>
 		<Bar {...props} />
 	</h1>
+	<h1>
+		<Bar aria-hidden />
+	</h1>
+	<h1>
+		<Typography.Heading />
+	</h1>
 	<h1>{foo}</h1>
 	<h1>{foo.bar}</h1>
 	<h1>

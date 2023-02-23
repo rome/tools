@@ -80,8 +80,7 @@ impl Rule for UseHeadingContent {
                 match node {
                     UseHeadingContentNode::JsxElement(element) => {
                         if !element.children().into_iter().any(|child_node| {
-                            is_custom_component_node(&child_node) == Some(true)
-                                || is_accessible_to_screen_reader(&child_node) == Some(true)
+                            is_accessible_to_screen_reader(&child_node) != Some(false)
                         }) {
                             return Some(());
                         }
@@ -186,21 +185,4 @@ impl UseHeadingContentNode {
                 .any(|attribute| matches!(attribute, AnyJsxAttribute::JsxSpreadAttribute(_))),
         )
     }
-}
-
-fn is_custom_component_node(node: &AnyJsxChild) -> Option<bool> {
-    let name_node = match node {
-        AnyJsxChild::JsxElement(element) => element.opening_element().ok()?.name().ok(),
-        AnyJsxChild::JsxSelfClosingElement(element) => element.name().ok(),
-        _ => None,
-    };
-
-    let name_value = name_node?
-        .as_jsx_reference_identifier()?
-        .value_token()
-        .ok()?;
-    Some(
-        name_value.text_trimmed() != "Fragment"
-            && name_value.text_trimmed().chars().next()?.is_uppercase(),
-    )
 }
