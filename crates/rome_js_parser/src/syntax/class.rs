@@ -255,7 +255,7 @@ fn parse_class(p: &mut JsParser, kind: ClassKind) -> CompletedMarker {
     TypeScript
         .parse_exclusive_syntax(
             p,
-            |p| parse_ts_type_parameters(p, TypeContext::default()),
+            |p| parse_ts_type_parameters(p, TypeContext::default(), true),
             |p, type_parameters| {
                 ts_only_syntax_error(p, "class type parameters", type_parameters.range(p))
             },
@@ -687,7 +687,8 @@ fn parse_class_member_impl(
         //  get a<A>(): A {}
         //  set a<A>(value: A) {}
         // }
-        if let Present(type_parameters) = parse_ts_type_parameters(p, TypeContext::default()) {
+        if let Present(type_parameters) = parse_ts_type_parameters(p, TypeContext::default(), false)
+        {
             p.error(ts_accessor_type_parameters_error(p, &type_parameters))
         }
 
@@ -1176,7 +1177,7 @@ fn parse_method_class_member_rest(
     TypeScript
         .parse_exclusive_syntax(
             p,
-            |p| parse_ts_type_parameters(p, TypeContext::default()),
+            |p| parse_ts_type_parameters(p, TypeContext::default(), false),
             |p, marker| ts_only_syntax_error(p, "type parameters", marker.range(p)),
         )
         .ok();
@@ -1459,7 +1460,7 @@ fn parse_constructor_class_member_body(
 
     // test_err ts ts_constructor_type_parameters
     // class A { constructor<A>(b) {} }
-    if let Present(type_parameters) = parse_ts_type_parameters(p, TypeContext::default()) {
+    if let Present(type_parameters) = parse_ts_type_parameters(p, TypeContext::default(), false) {
         p.error(ts_constructor_type_parameters_error(p, &type_parameters));
     }
 

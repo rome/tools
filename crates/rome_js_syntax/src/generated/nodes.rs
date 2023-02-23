@@ -11861,18 +11861,22 @@ impl TsTypeParameter {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> TsTypeParameterFields {
         TsTypeParameterFields {
+            in_modifier_token: self.in_modifier_token(),
+            out_modifier_token: self.out_modifier_token(),
             name: self.name(),
             constraint: self.constraint(),
             default: self.default(),
         }
     }
+    pub fn in_modifier_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
+    pub fn out_modifier_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 1usize) }
     pub fn name(&self) -> SyntaxResult<TsTypeParameterName> {
-        support::required_node(&self.syntax, 0usize)
+        support::required_node(&self.syntax, 2usize)
     }
     pub fn constraint(&self) -> Option<TsTypeConstraintClause> {
-        support::node(&self.syntax, 1usize)
+        support::node(&self.syntax, 3usize)
     }
-    pub fn default(&self) -> Option<TsDefaultTypeClause> { support::node(&self.syntax, 2usize) }
+    pub fn default(&self) -> Option<TsDefaultTypeClause> { support::node(&self.syntax, 4usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsTypeParameter {
@@ -11885,6 +11889,8 @@ impl Serialize for TsTypeParameter {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsTypeParameterFields {
+    pub in_modifier_token: Option<SyntaxToken>,
+    pub out_modifier_token: Option<SyntaxToken>,
     pub name: SyntaxResult<TsTypeParameterName>,
     pub constraint: Option<TsTypeConstraintClause>,
     pub default: Option<TsDefaultTypeClause>,
@@ -24743,6 +24749,14 @@ impl AstNode for TsTypeParameter {
 impl std::fmt::Debug for TsTypeParameter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("TsTypeParameter")
+            .field(
+                "in_modifier_token",
+                &support::DebugOptionalElement(self.in_modifier_token()),
+            )
+            .field(
+                "out_modifier_token",
+                &support::DebugOptionalElement(self.out_modifier_token()),
+            )
             .field("name", &support::DebugSyntaxResult(self.name()))
             .field(
                 "constraint",

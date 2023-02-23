@@ -114,8 +114,12 @@ pub(crate) fn parse_ts_return_type_annotation(p: &mut JsParser) -> ParsedSyntax 
     Present(m.complete(p, TS_RETURN_TYPE_ANNOTATION))
 }
 
-fn parse_ts_call_signature(p: &mut JsParser, context: TypeContext) {
-    parse_ts_type_parameters(p, context).ok();
+fn parse_ts_call_signature(
+    p: &mut JsParser,
+    context: TypeContext,
+    could_use_parameter_modifier: bool,
+) {
+    parse_ts_type_parameters(p, context, could_use_parameter_modifier).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     parse_ts_return_type_annotation(p).ok();
@@ -130,7 +134,11 @@ fn parse_ts_type_parameter_name(p: &mut JsParser) -> ParsedSyntax {
 //
 // test_err ts ts_type_parameters_incomplete
 // type A<T
-pub(crate) fn parse_ts_type_parameters(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
+pub(crate) fn parse_ts_type_parameters(
+    p: &mut JsParser,
+    context: TypeContext,
+    could_use_parameter_modifier: bool,
+) -> ParsedSyntax {
     if !is_nth_at_ts_type_parameters(p, 0) {
         return Absent;
     }
@@ -140,13 +148,25 @@ pub(crate) fn parse_ts_type_parameters(p: &mut JsParser, context: TypeContext) -
     if p.at(T![>]) {
         p.error(expected_ts_type_parameter(p, p.cur_range()));
     }
-    TsTypeParameterList(context).parse_list(p);
+    TsTypeParameterList::new(context, could_use_parameter_modifier).parse_list(p);
     p.expect(T![>]);
 
     Present(m.complete(p, TS_TYPE_PARAMETERS))
 }
 
-struct TsTypeParameterList(TypeContext);
+struct TsTypeParameterList {
+    context: TypeContext,
+    could_use_parameter_modifier: bool,
+}
+
+impl TsTypeParameterList {
+    pub fn new(context: TypeContext, could_use_parameter_modifier: bool) -> Self {
+        Self {
+            context,
+            could_use_parameter_modifier,
+        }
+    }
+}
 
 impl ParseSeparatedList for TsTypeParameterList {
     type Kind = JsSyntaxKind;
@@ -155,7 +175,7 @@ impl ParseSeparatedList for TsTypeParameterList {
     const LIST_KIND: Self::Kind = TS_TYPE_PARAMETER_LIST;
 
     fn parse_element(&mut self, p: &mut JsParser) -> ParsedSyntax {
-        parse_ts_type_parameter(p, self.0)
+        parse_ts_type_parameter(p, self.context, self.could_use_parameter_modifier)
     }
 
     fn is_at_list_end(&self, p: &mut JsParser) -> bool {
@@ -183,7 +203,113 @@ impl ParseSeparatedList for TsTypeParameterList {
     }
 }
 
-fn parse_ts_type_parameter(p: &mut JsParser, context: TypeContext) -> ParsedSyntax {
+// test_err ts type_parameter_modifier1
+// 	export default function foo<in T>() {}
+// 	export function foo<out T>() {}
+// 	export function foo1<in T>() {}
+// 	export function foo2<out T>() {}
+// 	let foo: Foo<in T>
+// 	let foo: Foo<out T>
+// 	declare function foo<in T>()
+// 	declare function foo<out T>()
+// 	declare let foo: Foo<in T>
+// 	declare let foo: Foo<out T>
+// 	Foo = class <in T> {}
+// 	Foo = class <out T> {}
+// 	foo = function <in T>() {}
+// 	foo = function <out T>() {}
+// 	class Foo { foo<in T>(): T {} }
+// 	class Foo { foo<out T>(): T {} }
+// 	foo = { foo<in T>(): T {} };
+// 	foo = { foo<out T>(): T {} };
+// 	<in T>() => {};
+// 	<out T>() => {};
+// 	<in T, out T>() => {};
+// 	let x: <in T>() => {};
+// 	let x: <out T>() => {};
+// 	let x: <in T, out T>() => {};
+// 	let x: new <in T>() => {};
+// 	let x: new <out T>() => {};
+// 	let x: new <in T, out T>() => {};
+// 	let x: { y<in T>(): any };
+// 	let x: { y<out T>(): any };
+// 	let x: { y<in T, out T>(): any };
+
+// test_err ts type_parameter_modifier
+// type Foo<i\\u006E T> = T
+// type Foo<ou\\u0074 T> = T
+// type Foo<in in> = T
+// type Foo<out in> = T
+// type Foo<out in T> = T
+// type Foo<public T> = T
+// type Foo<in out in T> = T
+// type Foo<in out out T> = T
+// function foo<in T>() {}
+// function foo<out T>() {}
+
+// test tsx type_parameter_modifier_tsx
+// <in T></in>;
+// <out T></out>;
+// <in out T></in>;
+// <out in T></out>;
+// <in T extends={true}></in>;
+// <out T extends={true}></out>;
+// <in out T extends={true}></in>;
+
+// test ts type_parameter_modifier
+// type Foo<in T> = T
+// type Foo<out> = out
+// type Foo<out T> = T
+// type Foo<in out> = T
+// type Foo<out out> = T
+// type Foo<in out out> = T
+// type Foo<in X, out Y> = [X, Y]
+// type Foo<out X, in Y> = [X, Y]
+// type Foo<out X, out Y extends keyof X> = [X, Y]
+// class Foo<in T> {}
+// class Foo<out T> {}
+// export default class Foo<in T> {}
+// class Foo<out T> {}
+// interface Foo<in T> {}
+// interface Foo<out T> {}
+// declare class Foo<in T> {}
+// declare class Foo<out T> {}
+// declare interface Foo<in T> {}
+// declare interface Foo<out T> {}
+
+fn parse_ts_type_parameter(
+    p: &mut JsParser,
+    context: TypeContext,
+    could_use_parameter_modifier: bool,
+) -> ParsedSyntax {
+    let m = p.start();
+    // parse_ts_type_parameter_modifier(p, could_use_parameter_modifier).ok();
+    // try to eat `in` modifier
+    if p.at(T![in]) {
+        if could_use_parameter_modifier {
+            p.bump(T![in]);
+        } else {
+            // TODO: I am not sure if bump here is properly, but it is good for error recover
+            // let err = p
+            //     .err_builder("TypeParameterModifier `in` is not valid here")
+            //     .primary(p.cur_range(), "");
+            // p.error(err);
+            p.bump(T![in]);
+        }
+    }
+
+    if p.at(T![out]) && !p.nth_at(1, T![,]) && !p.nth_at(1, T![>]) {
+        if could_use_parameter_modifier {
+            p.bump(T![out]);
+        } else {
+            // let err = p
+            //     .err_builder("TypeParameterModifier `out` is not valid here")
+            //     .primary(p.cur_range(), "");
+            // p.error(err);
+            p.bump(T![out]);
+        }
+    }
+
     parse_ts_type_parameter_name(p).map(|name| {
         let m = name.precede(p);
         parse_ts_type_constraint_clause(p, context).ok();
@@ -855,7 +981,7 @@ fn parse_ts_property_or_method_signature_type_member(
     p.eat(T![?]);
 
     if p.at(T!['(']) || p.at(T![<]) {
-        parse_ts_call_signature(p, context);
+        parse_ts_call_signature(p, context, false);
         parse_ts_type_member_semi(p);
         let method = m.complete(p, TS_METHOD_SIGNATURE_TYPE_MEMBER);
 
@@ -884,7 +1010,7 @@ fn parse_ts_call_signature_type_member(p: &mut JsParser, context: TypeContext) -
     }
 
     let m = p.start();
-    parse_ts_call_signature(p, context);
+    parse_ts_call_signature(p, context, false);
     parse_ts_type_member_semi(p);
     Present(m.complete(p, TS_CALL_SIGNATURE_TYPE_MEMBER))
 }
@@ -903,7 +1029,7 @@ fn parse_ts_construct_signature_type_member(
 
     let m = p.start();
     p.expect(T![new]);
-    parse_ts_type_parameters(p, context).ok();
+    parse_ts_type_parameters(p, context, true).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     parse_ts_type_annotation(p).ok();
@@ -1172,7 +1298,7 @@ fn parse_ts_constructor_type(p: &mut JsParser, context: TypeContext) -> ParsedSy
     p.eat(T![abstract]);
     p.expect(T![new]);
 
-    parse_ts_type_parameters(p, context).ok();
+    parse_ts_type_parameters(p, context, false).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     p.expect(T![=>]);
@@ -1235,7 +1361,7 @@ fn parse_ts_function_type(p: &mut JsParser, context: TypeContext) -> ParsedSynta
     }
 
     let m = p.start();
-    parse_ts_type_parameters(p, context).ok();
+    parse_ts_type_parameters(p, context, false).ok();
     parse_parameter_list(p, ParameterContext::Declaration, SignatureFlags::empty())
         .or_add_diagnostic(p, expected_parameters);
     p.expect(T![=>]);
@@ -1690,3 +1816,5 @@ fn parse_ts_type_member_semi(p: &mut JsParser) {
         p.error(err);
     }
 }
+
+// TODO: finish all this testing

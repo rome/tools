@@ -47,6 +47,8 @@ JsModule {
                 l_angle_token: L_ANGLE@50..51 "<" [] [],
                 items: TsTypeParameterList [
                     TsTypeParameter {
+                        in_modifier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@51..55 "Type" [] [],
                         },
@@ -97,6 +99,8 @@ JsModule {
                 l_angle_token: L_ANGLE@119..120 "<" [] [],
                 items: TsTypeParameterList [
                     TsTypeParameter {
+                        in_modifier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@120..124 "Type" [] [],
                         },
@@ -163,6 +167,8 @@ JsModule {
                 l_angle_token: L_ANGLE@199..200 "<" [] [],
                 items: TsTypeParameterList [
                     TsTypeParameter {
+                        in_modifier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@200..204 "Type" [] [],
                         },
@@ -229,6 +235,8 @@ JsModule {
                 l_angle_token: L_ANGLE@270..271 "<" [] [],
                 items: TsTypeParameterList [
                     TsTypeParameter {
+                        in_modifier_token: missing (optional),
+                        out_modifier_token: missing (optional),
                         name: TsTypeParameterName {
                             ident_token: IDENT@271..275 "Type" [] [],
                         },
@@ -377,10 +385,12 @@ JsModule {
         0: L_ANGLE@50..51 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@51..55
           0: TS_TYPE_PARAMETER@51..55
-            0: TS_TYPE_PARAMETER_NAME@51..55
-              0: IDENT@51..55 "Type" [] []
+            0: (empty)
             1: (empty)
-            2: (empty)
+            2: TS_TYPE_PARAMETER_NAME@51..55
+              0: IDENT@51..55 "Type" [] []
+            3: (empty)
+            4: (empty)
         2: R_ANGLE@55..57 ">" [] [Whitespace(" ")]
       3: EQ@57..59 "=" [] [Whitespace(" ")]
       4: TS_MAPPED_TYPE@59..99
@@ -414,10 +424,12 @@ JsModule {
         0: L_ANGLE@119..120 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@120..124
           0: TS_TYPE_PARAMETER@120..124
-            0: TS_TYPE_PARAMETER_NAME@120..124
-              0: IDENT@120..124 "Type" [] []
+            0: (empty)
             1: (empty)
-            2: (empty)
+            2: TS_TYPE_PARAMETER_NAME@120..124
+              0: IDENT@120..124 "Type" [] []
+            3: (empty)
+            4: (empty)
         2: R_ANGLE@124..126 ">" [] [Whitespace(" ")]
       3: EQ@126..128 "=" [] [Whitespace(" ")]
       4: TS_MAPPED_TYPE@128..184
@@ -462,10 +474,12 @@ JsModule {
         0: L_ANGLE@199..200 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@200..204
           0: TS_TYPE_PARAMETER@200..204
-            0: TS_TYPE_PARAMETER_NAME@200..204
-              0: IDENT@200..204 "Type" [] []
+            0: (empty)
             1: (empty)
-            2: (empty)
+            2: TS_TYPE_PARAMETER_NAME@200..204
+              0: IDENT@200..204 "Type" [] []
+            3: (empty)
+            4: (empty)
         2: R_ANGLE@204..206 ">" [] [Whitespace(" ")]
       3: EQ@206..208 "=" [] [Whitespace(" ")]
       4: TS_MAPPED_TYPE@208..256
@@ -510,10 +524,12 @@ JsModule {
         0: L_ANGLE@270..271 "<" [] []
         1: TS_TYPE_PARAMETER_LIST@271..275
           0: TS_TYPE_PARAMETER@271..275
-            0: TS_TYPE_PARAMETER_NAME@271..275
-              0: IDENT@271..275 "Type" [] []
+            0: (empty)
             1: (empty)
-            2: (empty)
+            2: TS_TYPE_PARAMETER_NAME@271..275
+              0: IDENT@271..275 "Type" [] []
+            3: (empty)
+            4: (empty)
         2: R_ANGLE@275..277 ">" [] [Whitespace(" ")]
       3: EQ@277..279 "=" [] [Whitespace(" ")]
       4: TS_MAPPED_TYPE@279..374
