@@ -1,8 +1,6 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{
-    AnyJsxAttribute, AnyJsxChild, JsxAttribute, JsxElement, JsxSelfClosingElement,
-};
+use rome_js_syntax::{AnyJsxAttribute, JsxAttribute, JsxElement, JsxSelfClosingElement};
 use rome_rowan::{declare_node_union, AstNode};
 
 use crate::aria::{is_accessible_to_screen_reader, is_aria_hidden_truthy};
