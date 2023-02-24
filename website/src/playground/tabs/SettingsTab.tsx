@@ -581,7 +581,7 @@ function FormatterSettings({
 				</div>
 
 				<div className="field-row">
-					<label htmlFor="trailingComma">Semicolons</label>
+					<label htmlFor="semicolons">Semicolons</label>
 					<select
 						id="semicolons"
 						name="semicolons"
@@ -623,7 +623,7 @@ function LinterSettings({
 					<label htmlFor="linting-enabled">Linter enabled</label>
 				</div>
 				<div className="field-row">
-					<label htmlFor="trailingComma">Lint Rules</label>
+					<label htmlFor="lint-rules">Lint Rules</label>
 					<select
 						id="lint-rules"
 						aria-describedby="lint-rules-description"
