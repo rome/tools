@@ -683,6 +683,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noUselessCatch": {
+					"description": "Disallow unnecessary catch clauses",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noUselessRename": {
 					"description": "Disallow renaming import, export, and destructured assignments to the same name.",
 					"anyOf": [

@@ -457,6 +457,10 @@ export interface Nursery {
 	 */
 	noUnusedLabels?: RuleConfiguration;
 	/**
+	 * Disallow unnecessary catch clauses
+	 */
+	noUselessCatch?: RuleConfiguration;
+	/**
 	 * Disallow renaming import, export, and destructured assignments to the same name.
 	 */
 	noUselessRename?: RuleConfiguration;
@@ -881,6 +885,8 @@ export type Category =
 	| "lint/nursery/noGlobalObjectCalls"
 	| "lint/nursery/noPrototypeBuiltins"
 	| "lint/nursery/noSvgWithoutTitle"
+	| "lint/nursery/noSelfAssignment"
+	| "lint/nursery/noUselessCatch"
 	| "lint/performance/noDelete"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
@@ -1159,7 +1165,7 @@ export interface RenameResult {
 }
 export interface Workspace {
 	supportsFeature(
-		params: SupportsFeatureParams,
+		params: SupportsFeatureParams
 	): Promise<SupportsFeatureResult>;
 	updateSettings(params: UpdateSettingsParams): Promise<void>;
 	openFile(params: OpenFileParams): Promise<void>;
@@ -1169,7 +1175,7 @@ export interface Workspace {
 	getControlFlowGraph(params: GetControlFlowGraphParams): Promise<string>;
 	getFormatterIr(params: GetFormatterIRParams): Promise<string>;
 	pullDiagnostics(
-		params: PullDiagnosticsParams,
+		params: PullDiagnosticsParams
 	): Promise<PullDiagnosticsResult>;
 	pullActions(params: PullActionsParams): Promise<PullActionsResult>;
 	formatFile(params: FormatFileParams): Promise<Printed>;

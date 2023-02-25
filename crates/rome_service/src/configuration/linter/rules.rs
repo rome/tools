@@ -184,7 +184,9 @@ impl Rules {
             None
         }
     }
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     #[doc = r" It returns a tuple of filters. The first element of the tuple are the enabled rules,"]
     #[doc = r" while the second element are the disabled rules."]
     #[doc = r""]
@@ -418,7 +420,9 @@ impl A11y {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[8]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[9]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         let mut index_set = IndexSet::new();
         if let Some(rule) = self.no_autofocus.as_ref() {
@@ -528,7 +532,9 @@ impl A11y {
         index_set
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::GROUP_RULES.contains(&rule_name) }
+    pub(crate) fn has_rule(rule_name: &str) -> bool {
+        Self::GROUP_RULES.contains(&rule_name)
+    }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -603,7 +609,9 @@ impl Complexity {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[4]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[5]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         let mut index_set = IndexSet::new();
         if let Some(rule) = self.no_extra_boolean_cast.as_ref() {
@@ -679,7 +687,9 @@ impl Complexity {
         index_set
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::GROUP_RULES.contains(&rule_name) }
+    pub(crate) fn has_rule(rule_name: &str) -> bool {
+        Self::GROUP_RULES.contains(&rule_name)
+    }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -780,7 +790,9 @@ impl Correctness {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[9]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[10]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         let mut index_set = IndexSet::new();
         if let Some(rule) = self.no_children_prop.as_ref() {
@@ -900,7 +912,9 @@ impl Correctness {
         index_set
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::GROUP_RULES.contains(&rule_name) }
+    pub(crate) fn has_rule(rule_name: &str) -> bool {
+        Self::GROUP_RULES.contains(&rule_name)
+    }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -1053,6 +1067,9 @@ pub struct Nursery {
     #[doc = "Disallow unused labels."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_unused_labels: Option<RuleConfiguration>,
+    #[doc = "Disallow unnecessary catch clauses"]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub no_useless_catch: Option<RuleConfiguration>,
     #[doc = "Disallow renaming import, export, and destructured assignments to the same name."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_useless_rename: Option<RuleConfiguration>,
@@ -1163,6 +1180,7 @@ impl Nursery {
         "noUnsafeFinally",
         "noUnsafeOptionalChaining",
         "noUnusedLabels",
+        "noUselessCatch",
         "noUselessRename",
         "noUselessSwitchCase",
         "noVar",
@@ -1220,6 +1238,7 @@ impl Nursery {
         "noUnsafeFinally",
         "noUnsafeOptionalChaining",
         "noUnusedLabels",
+        "noUselessCatch",
         "noUselessRename",
         "noUselessSwitchCase",
         "noVar",
@@ -1292,7 +1311,9 @@ impl Nursery {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[60]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[61]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         let mut index_set = IndexSet::new();
         if let Some(rule) = self.no_access_key.as_ref() {
@@ -1490,7 +1511,7 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[38]));
             }
         }
-        if let Some(rule) = self.no_unused_labels.as_ref() {
+        if let Some(rule) = self.no_useless_catch.as_ref() {
             if rule.is_enabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[39]));
             }
@@ -1804,7 +1825,7 @@ impl Nursery {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[38]));
             }
         }
-        if let Some(rule) = self.no_unused_labels.as_ref() {
+        if let Some(rule) = self.no_useless_catch.as_ref() {
             if rule.is_disabled() {
                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[39]));
             }
@@ -1922,7 +1943,9 @@ impl Nursery {
         index_set
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::GROUP_RULES.contains(&rule_name) }
+    pub(crate) fn has_rule(rule_name: &str) -> bool {
+        Self::GROUP_RULES.contains(&rule_name)
+    }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -1974,6 +1997,7 @@ impl Nursery {
             "noUnsafeFinally" => self.no_unsafe_finally.as_ref(),
             "noUnsafeOptionalChaining" => self.no_unsafe_optional_chaining.as_ref(),
             "noUnusedLabels" => self.no_unused_labels.as_ref(),
+            "noUselessCatch" => self.no_useless_catch.as_ref(),
             "noUselessRename" => self.no_useless_rename.as_ref(),
             "noUselessSwitchCase" => self.no_useless_switch_case.as_ref(),
             "noVar" => self.no_var.as_ref(),
@@ -2018,7 +2042,9 @@ impl Performance {
     const RECOMMENDED_RULES: [&'static str; 1] = ["noDelete"];
     const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 1] =
         [RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0])];
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         let mut index_set = IndexSet::new();
         if let Some(rule) = self.no_delete.as_ref() {
@@ -2038,7 +2064,9 @@ impl Performance {
         index_set
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::GROUP_RULES.contains(&rule_name) }
+    pub(crate) fn has_rule(rule_name: &str) -> bool {
+        Self::GROUP_RULES.contains(&rule_name)
+    }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -2082,7 +2110,9 @@ impl Security {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[1]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         let mut index_set = IndexSet::new();
         if let Some(rule) = self.no_dangerously_set_inner_html.as_ref() {
@@ -2112,7 +2142,9 @@ impl Security {
         index_set
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::GROUP_RULES.contains(&rule_name) }
+    pub(crate) fn has_rule(rule_name: &str) -> bool {
+        Self::GROUP_RULES.contains(&rule_name)
+    }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -2211,7 +2243,9 @@ impl Style {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[11]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[12]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         let mut index_set = IndexSet::new();
         if let Some(rule) = self.no_arguments.as_ref() {
@@ -2351,7 +2385,9 @@ impl Style {
         index_set
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::GROUP_RULES.contains(&rule_name) }
+    pub(crate) fn has_rule(rule_name: &str) -> bool {
+        Self::GROUP_RULES.contains(&rule_name)
+    }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
@@ -2491,7 +2527,9 @@ impl Suspicious {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[14]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[15]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
+    pub(crate) fn is_recommended(&self) -> bool {
+        !matches!(self.recommended, Some(false))
+    }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         let mut index_set = IndexSet::new();
         if let Some(rule) = self.no_array_index_key.as_ref() {
@@ -2661,7 +2699,9 @@ impl Suspicious {
         index_set
     }
     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
-    pub(crate) fn has_rule(rule_name: &str) -> bool { Self::GROUP_RULES.contains(&rule_name) }
+    pub(crate) fn has_rule(rule_name: &str) -> bool {
+        Self::GROUP_RULES.contains(&rule_name)
+    }
     #[doc = r" Checks if, given a rule name, it is marked as recommended"]
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
