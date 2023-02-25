@@ -167,6 +167,7 @@ struct ErrorVTable {
 
 /// Internal storage struct used to pack a vtable instance along with a
 /// diagnostic object.
+#[repr(C)]
 struct ErrorImpl<D = ()> {
     vtable: &'static ErrorVTable,
     diag: D,
