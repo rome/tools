@@ -85,10 +85,8 @@ impl Rule for NoUselessCatch {
             .ok()?;
         let catch_err_name = catch_binding_err.text();
 
-        // SAFETY: The statements must have the first one,
-        // because the body_statements.lent().eq(1).
-        let first = body_statements.first().unwrap();
-        let js_throw_statement = first.as_js_throw_statement()?;
+        let first_statement = body_statements.first()?;
+        let js_throw_statement = first_statement.as_js_throw_statement()?;
         let throw_ident = js_throw_statement
             .argument()
             .ok()?
