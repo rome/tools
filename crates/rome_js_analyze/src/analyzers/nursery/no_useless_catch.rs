@@ -65,7 +65,7 @@ impl Rule for NoUselessCatch {
     type Signals = Option<Self::State>;
     type Options = ();
 
-    fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
+    fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let binding = ctx.query();
 
         let catch_body = binding.body().ok()?;
@@ -85,7 +85,7 @@ impl Rule for NoUselessCatch {
             .ok()?;
         let catch_err_name = catch_binding_err.text();
 
-        // The statements must have the first one,
+        // SAFETY: The statements must have the first one,
         // because the body_statements.lent().eq(1).
         let first = body_statements.first().unwrap();
         let js_throw_statement = first.as_js_throw_statement()?;
@@ -96,7 +96,7 @@ impl Rule for NoUselessCatch {
             .text();
 
         if throw_ident.eq(catch_err_name) {
-            return Some(js_throw_statement.syntax().text_trimmed_range());
+            Some(js_throw_statement.syntax().text_trimmed_range())
         } else {
             None
         }
@@ -107,10 +107,10 @@ impl Rule for NoUselessCatch {
             RuleDiagnostic::new(
                 rule_category!(),
                 text_range,
-                markup!("The catch clause that only rethrows the original error is redundant."),
+                markup!("The "<Emphasis>"catch"</Emphasis>" clause that only rethrows the original error is redundant."),
             )
             .note(markup!(
-                "It is recommended that these unnecessary catch clauses be removed."
+                "These unnecessary "<Emphasis>"catch"</Emphasis>" clauses can be confusing. It is recommended to remove them."
             )),
         )
     }
