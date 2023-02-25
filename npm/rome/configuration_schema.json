@@ -684,7 +684,7 @@
 					]
 				},
 				"noUselessCatch": {
-					"description": "Disallow unnecessary catch clauses",
+					"description": "Disallow unnecessary catch clauses.",
 					"anyOf": [
 						{ "$ref": "#/definitions/RuleConfiguration" },
 						{ "type": "null" }

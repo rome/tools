@@ -457,7 +457,7 @@ export interface Nursery {
 	 */
 	noUnusedLabels?: RuleConfiguration;
 	/**
-	 * Disallow unnecessary catch clauses
+	 * Disallow unnecessary catch clauses.
 	 */
 	noUselessCatch?: RuleConfiguration;
 	/**

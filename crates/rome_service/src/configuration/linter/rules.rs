@@ -1067,7 +1067,7 @@ pub struct Nursery {
     #[doc = "Disallow unused labels."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_unused_labels: Option<RuleConfiguration>,
-    #[doc = "Disallow unnecessary catch clauses"]
+    #[doc = "Disallow unnecessary catch clauses."]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub no_useless_catch: Option<RuleConfiguration>,
     #[doc = "Disallow renaming import, export, and destructured assignments to the same name."]

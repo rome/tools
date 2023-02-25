@@ -5,7 +5,14 @@ parent: lint/rules/index
 
 # noUselessCatch (since vnext)
 
-Disallow unnecessary catch clauses
+Disallow unnecessary `catch` clauses.
+
+A `catch` clause that only rethrows the original error is redundant,
+and has no effect on the runtime behavior of the program.
+These redundant clauses can be a source of confusion and code bloat,
+so it’s better to disallow these unnecessary `catch` clauses.
+
+Source: https://eslint.org/docs/latest/rules/no-useless-catch
 
 ## Examples
 
@@ -21,7 +28,7 @@ try {
 
 <pre class="language-text"><code class="language-text">nursery/noUselessCatch.js:4:5 <a href="https://docs.rome.tools/lint/rules/noUselessCatch">lint/nursery/noUselessCatch</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The catch clause that only rethrows the original error is redundant.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>catch</strong></span><span style="color: Tomato;"> clause that only rethrows the original error is redundant.</span>
   
     <strong>2 │ </strong>    doSomething();
     <strong>3 │ </strong>} catch(e) {
@@ -30,7 +37,7 @@ try {
     <strong>5 │ </strong>}
     <strong>6 │ </strong>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">It is recommended that these unnecessary catch clauses be removed.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">These unnecessary </span><span style="color: rgb(38, 148, 255);"><strong>catch</strong></span><span style="color: rgb(38, 148, 255);"> clauses can be confusing. It is recommended to remove them.</span>
   
 </code></pre>
 
@@ -46,7 +53,7 @@ try {
 
 <pre class="language-text"><code class="language-text">nursery/noUselessCatch.js:4:5 <a href="https://docs.rome.tools/lint/rules/noUselessCatch">lint/nursery/noUselessCatch</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The catch clause that only rethrows the original error is redundant.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>catch</strong></span><span style="color: Tomato;"> clause that only rethrows the original error is redundant.</span>
   
     <strong>2 │ </strong>    doSomething();
     <strong>3 │ </strong>} catch(e) {
@@ -55,7 +62,7 @@ try {
     <strong>5 │ </strong>} finally {
     <strong>6 │ </strong>    doCleanUp();
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">It is recommended that these unnecessary catch clauses be removed.</span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">These unnecessary </span><span style="color: rgb(38, 148, 255);"><strong>catch</strong></span><span style="color: rgb(38, 148, 255);"> clauses can be confusing. It is recommended to remove them.</span>
   
 </code></pre>
 

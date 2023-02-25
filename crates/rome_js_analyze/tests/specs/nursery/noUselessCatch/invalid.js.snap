@@ -33,7 +33,7 @@ invalid.js:4:2 lint/nursery/noUselessCatch ━━━━━━━━━━━━�
     5 │ }
     6 │ 
   
-  i It is recommended that these unnecessary catch clauses be removed.
+  i These unnecessary catch clauses can be confusing. It is recommended to remove them.
   
 
 ```
@@ -50,7 +50,7 @@ invalid.js:10:2 lint/nursery/noUselessCatch ━━━━━━━━━━━━
     11 │ } finally {
     12 │ 	cleanUp();
   
-  i It is recommended that these unnecessary catch clauses be removed.
+  i These unnecessary catch clauses can be confusing. It is recommended to remove them.
   
 
 ```
