@@ -15,6 +15,12 @@ mainClass: rules
 Rules focused on preventing accessibility problems.
 <div class="category-rules">
 <section class="rule">
+<h3 data-toc-exclude id="noAccessKey">
+	<a href="/lint/rules/noAccessKey">noAccessKey</a>
+</h3>
+Enforce that the <code>accessKey</code> attribute is not used on any HTML element.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noAutofocus">
 	<a href="/lint/rules/noAutofocus">noAutofocus</a>
 	<span class="recommended">recommended</span>
@@ -27,6 +33,20 @@ Avoid the <code>autoFocus</code> attribute
 	<span class="recommended">recommended</span>
 </h3>
 Disallow <code>target=&quot;_blank&quot;</code> attribute without <code>rel=&quot;noreferrer&quot;</code>
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noDistractingElements">
+	<a href="/lint/rules/noDistractingElements">noDistractingElements</a>
+	<span class="recommended">recommended</span>
+</h3>
+Enforces that no distracting elements are used.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noHeaderScope">
+	<a href="/lint/rules/noHeaderScope">noHeaderScope</a>
+	<span class="recommended">recommended</span>
+</h3>
+Check that the scope attribute is only used on <code>th</code> elements.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noPositiveTabindex">
@@ -157,6 +177,21 @@ Prevent passing of <strong>children</strong> as props.
 Prevents from having <code>const</code> variables being re-assigned.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noConstructorReturn">
+	<a href="/lint/rules/noConstructorReturn">noConstructorReturn</a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow returning a value from a <code>constructor</code>.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noDuplicateObjectKeys">
+	<a href="/lint/rules/noDuplicateObjectKeys">noDuplicateObjectKeys</a>
+	<span class="recommended">recommended</span>
+</h3>
+Prevents object literals having more than one property declaration for the same name.
+If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noEmptyPattern">
 	<a href="/lint/rules/noEmptyPattern">noEmptyPattern</a>
 	<span class="recommended">recommended</span>
@@ -171,11 +206,25 @@ Disallows empty destructuring patterns.
 Disallow <code>new</code> operators with the <code>Symbol</code> object
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noPrecisionLoss">
+	<a href="/lint/rules/noPrecisionLoss">noPrecisionLoss</a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow literal numbers that lose precision
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noRenderReturnValue">
 	<a href="/lint/rules/noRenderReturnValue">noRenderReturnValue</a>
 	<span class="recommended">recommended</span>
 </h3>
 Prevent the usage of the return value of <code>React.render</code>.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noStringCaseMismatch">
+	<a href="/lint/rules/noStringCaseMismatch">noStringCaseMismatch</a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow comparison of expressions modifying the string case with non-compliant value.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noUndeclaredVariables">
@@ -198,6 +247,13 @@ Avoid using unnecessary <code>continue</code>.
 Disallow unreachable code
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noUnsafeFinally">
+	<a href="/lint/rules/noUnsafeFinally">noUnsafeFinally</a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow control flow statements in finally blocks.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noUnusedVariables">
 	<a href="/lint/rules/noUnusedVariables">noUnusedVariables</a>
 </h3>
@@ -209,6 +265,20 @@ Disallow unused variables.
 	<span class="recommended">recommended</span>
 </h3>
 This rules prevents void elements (AKA self-closing elements) from having children.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noVoidTypeReturn">
+	<a href="/lint/rules/noVoidTypeReturn">noVoidTypeReturn</a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow returning a value from a function with the return type 'void'
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="useEnumInitializers">
+	<a href="/lint/rules/useEnumInitializers">useEnumInitializers</a>
+	<span class="recommended">recommended</span>
+</h3>
+Require that each enum member value be explicitly initialized.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useValidForDirection">
@@ -292,6 +362,13 @@ Disallow the use of constants which its value is the upper-case version of its n
 Disallow template literals if interpolation and special-character handling are not needed
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noVar">
+	<a href="/lint/rules/noVar">noVar</a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow the use of <code>var</code>
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="useBlockStatements">
 	<a href="/lint/rules/useBlockStatements">useBlockStatements</a>
 </h3>
@@ -299,10 +376,37 @@ Requires following curly brace conventions.
 JavaScript allows the omission of curly braces when a block contains only one statement. However, it is considered by many to be best practice to never omit curly braces around blocks, even when they are optional, because it can lead to bugs and reduces code clarity.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="useConst">
+	<a href="/lint/rules/useConst">useConst</a>
+	<span class="recommended">recommended</span>
+</h3>
+Require <code>const</code> declarations for variables that are never reassigned after declared.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="useDefaultParameterLast">
+	<a href="/lint/rules/useDefaultParameterLast">useDefaultParameterLast</a>
+	<span class="recommended">recommended</span>
+</h3>
+Enforce default function parameters and optional parameters to be last.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="useExponentiationOperator">
+	<a href="/lint/rules/useExponentiationOperator">useExponentiationOperator</a>
+</h3>
+Disallow the use of <code>Math.pow</code> in favor of the <code>**</code> operator.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="useFragmentSyntax">
 	<a href="/lint/rules/useFragmentSyntax">useFragmentSyntax</a>
 </h3>
 This rule enforces the use of <code>&lt;&gt;...&lt;/&gt;</code> over <code>&lt;Fragment&gt;...&lt;/Fragment&gt;</code>.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="useNumericLiterals">
+	<a href="/lint/rules/useNumericLiterals">useNumericLiterals</a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow <code>parseInt()</code> and <code>Number.parseInt()</code> in favor of binary, octal, and hexadecimal literals
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useSelfClosingElements">
@@ -389,6 +493,13 @@ Prevent comments from being inserted as text nodes
 Disallow comparing against <code>-0</code>
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noConstEnum">
+	<a href="/lint/rules/noConstEnum">noConstEnum</a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow TypeScript <code>const enum</code>
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noDebugger">
 	<a href="/lint/rules/noDebugger">noDebugger</a>
 	<span class="recommended">recommended</span>
@@ -410,11 +521,25 @@ Require the use of <code>===</code> and <code>!==</code>
 Disallow duplicate function arguments name.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noEmptyInterface">
+	<a href="/lint/rules/noEmptyInterface">noEmptyInterface</a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow the declaration of empty interfaces.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noExplicitAny">
 	<a href="/lint/rules/noExplicitAny">noExplicitAny</a>
 	<span class="recommended">recommended</span>
 </h3>
 Disallow the <code>any</code> type usage.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noExtraNonNullAssertion">
+	<a href="/lint/rules/noExtraNonNullAssertion">noExtraNonNullAssertion</a>
+	<span class="recommended">recommended</span>
+</h3>
+Prevents the wrong usage of the non-null assertion operator (<code>!</code>) in TypeScript files.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noFunctionAssign">
@@ -438,6 +563,26 @@ Disallow assigning to imported bindings
 Disallow labels that share a name with a variable
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noNonNullAssertion">
+	<a href="/lint/rules/noNonNullAssertion">noNonNullAssertion</a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow non-null assertions using the <code>!</code> postfix operator.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noRedundantUseStrict">
+	<a href="/lint/rules/noRedundantUseStrict">noRedundantUseStrict</a>
+</h3>
+Prevents from having redundant <code>&quot;use strict&quot;</code>.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noSetterReturn">
+	<a href="/lint/rules/noSetterReturn">noSetterReturn</a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow returning a value from a setter
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noShadowRestrictedNames">
 	<a href="/lint/rules/noShadowRestrictedNames">noShadowRestrictedNames</a>
 	<span class="recommended">recommended</span>
@@ -457,6 +602,13 @@ Disallow sparse arrays
 	<span class="recommended">recommended</span>
 </h3>
 Disallow using unsafe negation.
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="useDefaultSwitchClauseLast">
+	<a href="/lint/rules/useDefaultSwitchClauseLast">useDefaultSwitchClauseLast</a>
+	<span class="recommended">recommended</span>
+</h3>
+Enforce default clauses in switch statements to be last
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useValidTypeof">
@@ -481,12 +633,6 @@ Nursery rules get promoted to other groups once they become stable or may be rem
 
 Rules that belong to this group <strong>are not subject to semantic version</strong>.
 <div class="category-rules">
-<section class="rule">
-<h3 data-toc-exclude id="noAccessKey">
-	<a href="/lint/rules/noAccessKey">noAccessKey</a>
-</h3>
-Enforce that the <code>accessKey</code> attribute is not used on any HTML element.
-</section>
 <section class="rule">
 <h3 data-toc-exclude id="noAssignInExpressions">
 	<a href="/lint/rules/noAssignInExpressions">noAssignInExpressions</a>
@@ -518,24 +664,6 @@ Disallow comma operator.
 Disallow labeled statements that are not loops.
 </section>
 <section class="rule">
-<h3 data-toc-exclude id="noConstEnum">
-	<a href="/lint/rules/noConstEnum">noConstEnum</a>
-</h3>
-Disallow TypeScript <code>const enum</code>
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="noConstructorReturn">
-	<a href="/lint/rules/noConstructorReturn">noConstructorReturn</a>
-</h3>
-Disallow returning a value from a <code>constructor</code>.
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="noDistractingElements">
-	<a href="/lint/rules/noDistractingElements">noDistractingElements</a>
-</h3>
-Enforces that no distracting elements are used.
-</section>
-<section class="rule">
 <h3 data-toc-exclude id="noDuplicateCase">
 	<a href="/lint/rules/noDuplicateCase">noDuplicateCase</a>
 </h3>
@@ -555,29 +683,10 @@ Disallow duplicate class members.
 Prevents JSX properties to be assigned multiple times.
 </section>
 <section class="rule">
-<h3 data-toc-exclude id="noDuplicateObjectKeys">
-	<a href="/lint/rules/noDuplicateObjectKeys">noDuplicateObjectKeys</a>
-</h3>
-Prevents object literals having more than one property declaration for the same name.
-If an object property with the same name is defined multiple times (except when combining a getter with a setter), only the last definition makes it into the object and previous definitions are ignored, which is likely a mistake.
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="noEmptyInterface">
-	<a href="/lint/rules/noEmptyInterface">noEmptyInterface</a>
-</h3>
-Disallow the declaration of empty interfaces.
-</section>
-<section class="rule">
 <h3 data-toc-exclude id="noExtraLabels">
 	<a href="/lint/rules/noExtraLabels">noExtraLabels</a>
 </h3>
 Disallow unnecessary labels.
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="noExtraNonNullAssertion">
-	<a href="/lint/rules/noExtraNonNullAssertion">noExtraNonNullAssertion</a>
-</h3>
-Prevents the wrong usage of the non-null assertion operator (<code>!</code>) in TypeScript files.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noExtraSemicolons">
@@ -591,12 +700,6 @@ While not technically an error, extra semicolons can cause confusion when readin
 	<a href="/lint/rules/noGlobalObjectCalls">noGlobalObjectCalls</a>
 </h3>
 Disallow calling global object properties as functions
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="noHeaderScope">
-	<a href="/lint/rules/noHeaderScope">noHeaderScope</a>
-</h3>
-Check that the scope attribute is only used on <code>th</code> elements.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noInferrableTypes">
@@ -618,12 +721,6 @@ Prevents the incorrect use of <code>super()</code> inside classes.
 It also checks whether a call <code>super()</code> is missing from classes that extends other constructors.
 </section>
 <section class="rule">
-<h3 data-toc-exclude id="noNonNullAssertion">
-	<a href="/lint/rules/noNonNullAssertion">noNonNullAssertion</a>
-</h3>
-Disallow non-null assertions using the <code>!</code> postfix operator.
-</section>
-<section class="rule">
 <h3 data-toc-exclude id="noNoninteractiveElementToInteractiveRole">
 	<a href="/lint/rules/noNoninteractiveElementToInteractiveRole">noNoninteractiveElementToInteractiveRole</a>
 </h3>
@@ -634,12 +731,6 @@ Enforce that interactive ARIA roles are not assigned to non-interactive HTML ele
 	<a href="/lint/rules/noParameterProperties">noParameterProperties</a>
 </h3>
 Disallow the use of parameter properties in class constructors.
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="noPrecisionLoss">
-	<a href="/lint/rules/noPrecisionLoss">noPrecisionLoss</a>
-</h3>
-Disallow literal numbers that lose precision
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noPrototypeBuiltins">
@@ -660,12 +751,6 @@ Eliminate variables that have multiple declarations in the same scope.
 Enforce <code>img</code> alt prop does not contain the word &quot;image&quot;, &quot;picture&quot;, or &quot;photo&quot;.
 </section>
 <section class="rule">
-<h3 data-toc-exclude id="noRedundantUseStrict">
-	<a href="/lint/rules/noRedundantUseStrict">noRedundantUseStrict</a>
-</h3>
-Prevents from having redundant <code>&quot;use strict&quot;</code>.
-</section>
-<section class="rule">
 <h3 data-toc-exclude id="noRestrictedGlobals">
 	<a href="/lint/rules/noRestrictedGlobals">noRestrictedGlobals</a>
 </h3>
@@ -682,18 +767,6 @@ Put your description here
 	<a href="/lint/rules/noSelfCompare">noSelfCompare</a>
 </h3>
 Disallow comparisons where both sides are exactly the same.
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="noSetterReturn">
-	<a href="/lint/rules/noSetterReturn">noSetterReturn</a>
-</h3>
-Disallow returning a value from a setter
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="noStringCaseMismatch">
-	<a href="/lint/rules/noStringCaseMismatch">noStringCaseMismatch</a>
-</h3>
-Disallow comparison of expressions modifying the string case with non-compliant value.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noSvgWithoutTitle">
@@ -714,12 +787,6 @@ Disallow lexical declarations in <code>switch</code> clauses.
 Ensures the <code>super()</code> constructor is called exactly once on every code
 path in a class constructor before <code>this</code> is accessed if the class has
 a superclass
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="noUnsafeFinally">
-	<a href="/lint/rules/noUnsafeFinally">noUnsafeFinally</a>
-</h3>
-Disallow control flow statements in finally blocks.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noUnsafeOptionalChaining">
@@ -752,18 +819,6 @@ Disallow renaming import, export, and destructured assignments to the same name.
 Disallow useless <code>case</code> in <code>switch</code> statements.
 </section>
 <section class="rule">
-<h3 data-toc-exclude id="noVar">
-	<a href="/lint/rules/noVar">noVar</a>
-</h3>
-Disallow the use of <code>var</code>
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="noVoidTypeReturn">
-	<a href="/lint/rules/noVoidTypeReturn">noVoidTypeReturn</a>
-</h3>
-Disallow returning a value from a function with the return type 'void'
-</section>
-<section class="rule">
 <h3 data-toc-exclude id="noWith">
 	<a href="/lint/rules/noWith">noWith</a>
 </h3>
@@ -788,40 +843,10 @@ Enforce that elements with ARIA roles must have all required ARIA attributes for
 Enforce camel case naming convention.
 </section>
 <section class="rule">
-<h3 data-toc-exclude id="useConst">
-	<a href="/lint/rules/useConst">useConst</a>
-</h3>
-Require <code>const</code> declarations for variables that are never reassigned after declared.
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="useDefaultParameterLast">
-	<a href="/lint/rules/useDefaultParameterLast">useDefaultParameterLast</a>
-</h3>
-Enforce default function parameters and optional parameters to be last.
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="useDefaultSwitchClauseLast">
-	<a href="/lint/rules/useDefaultSwitchClauseLast">useDefaultSwitchClauseLast</a>
-</h3>
-Enforce default clauses in switch statements to be last
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="useEnumInitializers">
-	<a href="/lint/rules/useEnumInitializers">useEnumInitializers</a>
-</h3>
-Require that each enum member value be explicitly initialized.
-</section>
-<section class="rule">
 <h3 data-toc-exclude id="useExhaustiveDependencies">
 	<a href="/lint/rules/useExhaustiveDependencies">useExhaustiveDependencies</a>
 </h3>
 Enforce all dependencies are correctly specified.
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="useExponentiationOperator">
-	<a href="/lint/rules/useExponentiationOperator">useExponentiationOperator</a>
-</h3>
-Disallow the use of <code>Math.pow</code> in favor of the <code>**</code> operator.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useHookAtTopLevel">
@@ -847,12 +872,6 @@ Require calls to <code>isNaN()</code> when checking for <code>NaN</code>.
 	<a href="/lint/rules/useMediaCaption">useMediaCaption</a>
 </h3>
 Enforces that <code>audio</code> and <code>video</code> elements must have a <code>track</code> for captions.
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="useNumericLiterals">
-	<a href="/lint/rules/useNumericLiterals">useNumericLiterals</a>
-</h3>
-Disallow <code>parseInt()</code> and <code>Number.parseInt()</code> in favor of binary, octal, and hexadecimal literals
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="useValidAriaProps">
