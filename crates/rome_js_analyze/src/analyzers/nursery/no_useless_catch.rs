@@ -4,7 +4,14 @@ use rome_js_syntax::{JsCatchClause, TextRange};
 use rome_rowan::{AstNode, AstNodeList};
 
 declare_rule! {
-    /// Disallow unnecessary catch clauses
+    /// Disallow unnecessary `catch` clauses.
+    ///
+    /// A `catch` clause that only rethrows the original error is redundant,
+    /// and has no effect on the runtime behavior of the program.
+    /// These redundant clauses can be a source of confusion and code bloat,
+    /// so it’s better to disallow these unnecessary `catch` clauses.
+    ///
+    /// Source: https://eslint.org/docs/latest/rules/no-useless-catch
     ///
     /// ## Examples
     ///
