@@ -110,9 +110,9 @@ pub(super) fn print_diff(fmt: &mut fmt::Formatter<'_>, diff: &TextEdit) -> io::R
 /// to line numbers in the new revision
 /// - `after_line` counts the number of lines in the new revision of the document
 /// - `before_line` counts the number of lines in the old revision of the document
-fn process_diff_ops<'a, 'diff>(
+fn process_diff_ops<'diff>(
     diff: &'diff TextEdit,
-    mut state: PushToLineState<'a, 'diff>,
+    mut state: PushToLineState<'_, 'diff>,
     after_line: &mut OneIndexed,
     before_line: &mut OneIndexed,
 ) {
@@ -235,8 +235,8 @@ struct PushToLineState<'a, 'b> {
     before_line_to_after: &'a mut BTreeMap<OneIndexed, OneIndexed>,
 }
 
-fn push_to_line<'a, 'b>(
-    state: &mut PushToLineState<'a, 'b>,
+fn push_to_line<'b>(
+    state: &mut PushToLineState<'_, 'b>,
     before_line: OneIndexed,
     after_line: OneIndexed,
     tag: ChangeTag,
