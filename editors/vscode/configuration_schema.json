@@ -641,6 +641,13 @@
 						{ "type": "null" }
 					]
 				},
+				"noSvgWithoutTitle": {
+					"description": "Enforces the usage of the title element for the svg element.",
+					"anyOf": [
+						{ "$ref": "#/definitions/RuleConfiguration" },
+						{ "type": "null" }
+					]
+				},
 				"noSwitchDeclarations": {
 					"description": "Disallow lexical declarations in switch clauses.",
 					"anyOf": [
