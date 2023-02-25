@@ -1,0 +1,102 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: invalid.js
+---
+# Input
+```js
+export function f(a = 0, b) {}
+
+export function g(a, b = 0, c) {}
+
+export function g(a, b /* before */ = /* mid */ 0/* after */) {}
+
+export function g(a, b /* before */ = /* mid */ 0 /* after */ /* after comma */, c) {}
+```
+
+# Diagnostics
+```
+invalid.js:1:19 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The default parameter should follow the required parameter or should be a required parameter.
+  
+  > 1 │ export function f(a = 0, b) {}
+      │                   ^^^^^
+    2 │ 
+    3 │ export function g(a, b = 0, c) {}
+  
+  i The required parameter is here:
+  
+  > 1 │ export function f(a = 0, b) {}
+      │                          ^
+    2 │ 
+    3 │ export function g(a, b = 0, c) {}
+  
+  i A default parameter that precedes a required parameter cannot be omitted at call site.
+  
+  i Suggested fix: Turn the parameter into a required parameter.
+  
+    1 │ export·function·f(a·=·0,·b)·{}
+      │                     ---       
+
+```
+
+```
+invalid.js:3:22 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The default parameter should follow the required parameter or should be a required parameter.
+  
+    1 │ export function f(a = 0, b) {}
+    2 │ 
+  > 3 │ export function g(a, b = 0, c) {}
+      │                      ^^^^^
+    4 │ 
+    5 │ export function g(a, b /* before */ = /* mid */ 0/* after */) {}
+  
+  i The required parameter is here:
+  
+    1 │ export function f(a = 0, b) {}
+    2 │ 
+  > 3 │ export function g(a, b = 0, c) {}
+      │                             ^
+    4 │ 
+    5 │ export function g(a, b /* before */ = /* mid */ 0/* after */) {}
+  
+  i A default parameter that precedes a required parameter cannot be omitted at call site.
+  
+  i Suggested fix: Turn the parameter into a required parameter.
+  
+    3 │ export·function·g(a,·b·=·0,·c)·{}
+      │                        ---       
+
+```
+
+```
+invalid.js:7:22 lint/style/useDefaultParameterLast  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The default parameter should follow the required parameter or should be a required parameter.
+  
+    5 │ export function g(a, b /* before */ = /* mid */ 0/* after */) {}
+    6 │ 
+  > 7 │ export function g(a, b /* before */ = /* mid */ 0 /* after */ /* after comma */, c) {}
+      │                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i The required parameter is here:
+  
+    5 │ export function g(a, b /* before */ = /* mid */ 0/* after */) {}
+    6 │ 
+  > 7 │ export function g(a, b /* before */ = /* mid */ 0 /* after */ /* after comma */, c) {}
+      │                                                                                  ^
+  
+  i A default parameter that precedes a required parameter cannot be omitted at call site.
+  
+  i Suggested fix: Turn the parameter into a required parameter.
+  
+    5 5 │   export function g(a, b /* before */ = /* mid */ 0/* after */) {}
+    6 6 │   
+    7   │ - export·function·g(a,·b·/*·before·*/·=·/*·mid·*/·0·/*·after·*/·/*·after·comma·*/,·c)·{}
+      7 │ + export·function·g(a,·b·/*·before·*/··/*·after·*/·/*·after·comma·*/,·c)·{}
+  
+
+```
+
+

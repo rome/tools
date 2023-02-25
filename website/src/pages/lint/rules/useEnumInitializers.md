@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # useEnumInitializers (since v11.0.0)
 
+> This rule is recommended by Rome.
+
 Require that each enum member value be explicitly initialized.
 
 TypeScript enums are a practical way to organize semantically related constant values. Members of enums that don't have explicit values are by default given sequentially increasing numbers.
@@ -23,7 +25,7 @@ enum Version {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useEnumInitializers.js:2:5 <a href="https://docs.rome.tools/lint/rules/useEnumInitializers">lint/nursery/useEnumInitializers</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/useEnumInitializers.js:2:5 <a href="https://docs.rome.tools/lint/rules/useEnumInitializers">lint/correctness/useEnumInitializers</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>enum member</strong></span><span style="color: Tomato;"> should be initialized.</span>
   
@@ -48,7 +50,7 @@ enum Status {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useEnumInitializers.js:3:5 <a href="https://docs.rome.tools/lint/rules/useEnumInitializers">lint/nursery/useEnumInitializers</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/useEnumInitializers.js:3:5 <a href="https://docs.rome.tools/lint/rules/useEnumInitializers">lint/correctness/useEnumInitializers</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>enum member</strong></span><span style="color: Tomato;"> should be initialized.</span>
   
@@ -75,7 +77,7 @@ enum Color {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/useEnumInitializers.js:4:5 <a href="https://docs.rome.tools/lint/rules/useEnumInitializers">lint/nursery/useEnumInitializers</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">correctness/useEnumInitializers.js:4:5 <a href="https://docs.rome.tools/lint/rules/useEnumInitializers">lint/correctness/useEnumInitializers</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>enum member</strong></span><span style="color: Tomato;"> should be initialized.</span>
   

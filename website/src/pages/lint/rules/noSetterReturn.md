@@ -5,6 +5,8 @@ parent: lint/rules/index
 
 # noSetterReturn (since v11.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow returning a value from a setter
 
 While returning a value from a setter does not produce an error, the returned value is being ignored. Therefore, returning a value from a setter is either unnecessary or a possible error.
@@ -23,7 +25,7 @@ class A {
 }
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noSetterReturn.js:3:9 <a href="https://docs.rome.tools/lint/rules/noSetterReturn">lint/nursery/noSetterReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noSetterReturn.js:3:9 <a href="https://docs.rome.tools/lint/rules/noSetterReturn">lint/suspicious/noSetterReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The setter should not </span><span style="color: Tomato;"><strong>return</strong></span><span style="color: Tomato;"> a value.</span>
   
@@ -57,7 +59,7 @@ const b = {
 };
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noSetterReturn.js:3:9 <a href="https://docs.rome.tools/lint/rules/noSetterReturn">lint/nursery/noSetterReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noSetterReturn.js:3:9 <a href="https://docs.rome.tools/lint/rules/noSetterReturn">lint/suspicious/noSetterReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The setter should not </span><span style="color: Tomato;"><strong>return</strong></span><span style="color: Tomato;"> a value.</span>
   
@@ -93,7 +95,7 @@ const c = {
 };
 ```
 
-<pre class="language-text"><code class="language-text">nursery/noSetterReturn.js:4:13 <a href="https://docs.rome.tools/lint/rules/noSetterReturn">lint/nursery/noSetterReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<pre class="language-text"><code class="language-text">suspicious/noSetterReturn.js:4:13 <a href="https://docs.rome.tools/lint/rules/noSetterReturn">lint/suspicious/noSetterReturn</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The setter should not </span><span style="color: Tomato;"><strong>return</strong></span><span style="color: Tomato;"> a value.</span>
   
