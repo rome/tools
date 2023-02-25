@@ -153,7 +153,6 @@ pub(crate) fn read_most_recent_log_file() -> io::Result<Option<String>> {
     let logs_dir = rome_log_dir();
 
     let most_recent = fs::read_dir(logs_dir)?
-        .into_iter()
         .flatten()
         .filter(|file| file.file_type().map_or(false, |ty| ty.is_file()))
         .filter_map(|file| {
