@@ -71,7 +71,7 @@ impl Rule for NoUselessCatch {
         let catch_body = binding.body().ok()?;
         let body_statements = catch_body.statements();
 
-        // We need guarantees that body_statements is only one statement so much that it has only one `throw` statement.
+        // We need guarantees that body_statements has only one `throw` statement.
         if body_statements.len() != 1 {
             return None;
         }
