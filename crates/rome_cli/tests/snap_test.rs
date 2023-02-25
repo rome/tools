@@ -252,7 +252,6 @@ impl From<SnapshotPayload<'_>> for CliSnapshot {
 
         let files: Vec<_> = fs
             .files()
-            .into_iter()
             .map(|(file, entry)| {
                 let content = entry.lock();
                 let content = std::str::from_utf8(content.as_slice()).unwrap();

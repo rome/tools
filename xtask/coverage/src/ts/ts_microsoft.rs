@@ -126,7 +126,6 @@ fn extract_metadata(code: &str, path: &str) -> TestCaseMetadata {
                 run_options.extend(
                     option_value
                         .split(',')
-                        .into_iter()
                         .map(|module_value| format!("{option_name}={}", module_value.trim())),
                 );
             }

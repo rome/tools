@@ -442,7 +442,6 @@ impl Rule for UseExhaustiveDependencies {
 
             let deps: Vec<(String, TextRange)> = result
                 .all_dependencies()
-                .into_iter()
                 .map(|dep| {
                     (
                         dep.syntax().text_trimmed().to_string(),
