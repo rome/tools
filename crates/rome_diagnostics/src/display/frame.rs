@@ -15,9 +15,17 @@ use crate::{
     LineIndexBuf, Location,
 };
 
-// SAFETY: These constants `NonZeroUsize` are being initialized with non-zero values
-const ONE: NonZeroUsize = unsafe { NonZeroUsize::new_unchecked(1) };
-pub(super) const CODE_FRAME_CONTEXT_LINES: NonZeroUsize = unsafe { NonZeroUsize::new_unchecked(2) };
+/// A const Option::unwrap without nightly features:
+/// https://github.com/rust-lang/rust/issues/67441
+const fn unwrap<T: Copy>(option: Option<T>) -> T {
+    match option {
+        Some(value) => value,
+        None => panic!("unwrapping None"),
+    }
+}
+
+const ONE: NonZeroUsize = unwrap(NonZeroUsize::new(1));
+pub(super) const CODE_FRAME_CONTEXT_LINES: NonZeroUsize = unwrap(NonZeroUsize::new(2));
 
 const MAX_CODE_FRAME_LINES: usize = 8;
 const HALF_MAX_CODE_FRAME_LINES: usize = MAX_CODE_FRAME_LINES / 2;
@@ -249,7 +257,7 @@ pub(super) fn print_frame(fmt: &mut fmt::Formatter<'_>, location: Location<'_>) 
 /// Calculate the length of the string representation of `value`
 pub(super) fn calculate_print_width(mut value: OneIndexed) -> NonZeroUsize {
     // SAFETY: Constant is being initialized with a non-zero value
-    const TEN: OneIndexed = unsafe { OneIndexed::new_unchecked(10) };
+    const TEN: OneIndexed = unwrap(OneIndexed::new(10));
 
     let mut width = ONE;
 
@@ -515,9 +523,9 @@ pub struct OneIndexed(NonZeroUsize);
 impl OneIndexed {
     // SAFETY: These constants are being initialized with non-zero values
     /// The smallest value that can be represented by this integer type.
-    pub const MIN: Self = unsafe { Self::new_unchecked(1) };
+    pub const MIN: Self = unwrap(Self::new(1));
     /// The largest value that can be represented by this integer type
-    pub const MAX: Self = unsafe { Self::new_unchecked(usize::MAX) };
+    pub const MAX: Self = unwrap(Self::new(usize::MAX));
 
     /// Creates a non-zero if the given value is not zero.
     pub const fn new(value: usize) -> Option<Self> {
@@ -527,20 +535,9 @@ impl OneIndexed {
         }
     }
 
-    /// Creates a non-zero without checking whether the value is non-zero.
-    /// This results in undefined behaviour if the value is zero.
-    ///
-    /// # Safety
-    ///
-    /// The value must not be zero.
-    pub const unsafe fn new_unchecked(value: usize) -> Self {
-        Self(NonZeroUsize::new_unchecked(value))
-    }
-
     /// Construct a new [OneIndexed] from a zero-indexed value
     pub const fn from_zero_indexed(value: usize) -> Self {
-        // SAFETY: Adding `1` to `value` ensures it's non-zero
-        Self(unsafe { NonZeroUsize::new_unchecked(value.saturating_add(1)) })
+        Self(ONE.saturating_add(value))
     }
 
     /// Returns the value as a primitive type.
