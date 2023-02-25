@@ -1593,8 +1593,15 @@ impl SyntaxFactory for JsSyntaxFactory {
             }
             JS_EXPORT_FROM_CLAUSE => {
                 let mut elements = (&children).into_iter();
-                let mut slots: RawNodeSlots<6usize> = RawNodeSlots::default();
+                let mut slots: RawNodeSlots<7usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
+                if let Some(element) = &current_element {
+                    if element.kind() == T![type] {
+                        slots.mark_present();
+                        current_element = elements.next();
+                    }
+                }
+                slots.next_slot();
                 if let Some(element) = &current_element {
                     if element.kind() == T ! [*] {
                         slots.mark_present();

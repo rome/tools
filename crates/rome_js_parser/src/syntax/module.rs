@@ -606,9 +606,7 @@ pub(super) fn parse_export(p: &mut JsParser) -> ParsedSyntax {
 
     p.bump(T![export]);
 
-    let clause = if p.at(T![type]) && p.nth_at(1, T!['{']) {
-        parse_export_named_or_named_from_clause(p)
-    } else if is_nth_at_declaration_clause(p, 0) {
+    let clause = if is_nth_at_declaration_clause(p, 0) {
         // test export_class_clause
         // export class A {}
         // export class A extends B {}
@@ -630,6 +628,8 @@ pub(super) fn parse_export(p: &mut JsParser) -> ParsedSyntax {
         match p.cur() {
             T!['{'] => parse_export_named_or_named_from_clause(p),
             T![default] => parse_export_default_clause(p),
+            T![type] if p.nth_at(1, T!['{']) => parse_export_named_or_named_from_clause(p),
+            T![type] if p.nth_at(1, T![*]) => parse_export_from_clause(p),
             T![*] => parse_export_from_clause(p),
             T![=] => TypeScript.parse_exclusive_syntax(
                 p,
@@ -918,20 +918,27 @@ where
 // export * as c from "b";
 // export * as default from "b"
 // export * from "mod" assert { type: "json" }
+// export type * from "types";
+// export type * as types from "types";
 //
 // test_err export_from_clause_err
 // export *;
 // export * from 5;
 // export as from "test";
 // export from "test";
+// export type *;
+// export type * from;
+// export type * as from;
+// export type * as ns from;
 fn parse_export_from_clause(p: &mut JsParser) -> ParsedSyntax {
-    if !p.at(T![*]) && !p.at(T![from]) && !p.nth_at(1, T![from]) {
+    if !p.at(T![type]) && !p.at(T![*]) && !p.at(T![from]) && !p.nth_at(1, T![from]) {
         return Absent;
     }
 
     let start = p.cur_range().start();
     let m = p.start();
 
+    p.eat(T![type]);
     p.expect(T![*]);
 
     parse_export_as_clause(p).ok();

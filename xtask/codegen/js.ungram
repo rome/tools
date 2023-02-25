@@ -1454,6 +1454,7 @@ JsExportNamedSpecifier =
     exported_name: JsLiteralExportName
 
 JsExportFromClause =
+	'type'?
 	'*'
 	export_as: JsExportAsClause?
 	'from'

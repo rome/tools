@@ -50,7 +50,11 @@ pub(crate) fn is_nth_at_declaration_clause(p: &mut JsParser, n: usize) -> bool {
         return false;
     }
 
-    if p.nth_at(n, T![type]) || p.nth_at(n, T![interface]) {
+    if p.nth_at(n, T![type]) && !p.nth_at(n + 1, T![*]) && !p.nth_at(n + 1, T!['{']) {
+        return true;
+    }
+
+    if p.nth_at(n, T![interface]) {
         return true;
     }
 

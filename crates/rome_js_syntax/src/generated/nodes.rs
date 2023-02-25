@@ -1960,6 +1960,7 @@ impl JsExportFromClause {
     pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
     pub fn as_fields(&self) -> JsExportFromClauseFields {
         JsExportFromClauseFields {
+            type_token: self.type_token(),
             star_token: self.star_token(),
             export_as: self.export_as(),
             from_token: self.from_token(),
@@ -1968,18 +1969,19 @@ impl JsExportFromClause {
             semicolon_token: self.semicolon_token(),
         }
     }
+    pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 0usize) }
     pub fn star_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 0usize)
+        support::required_token(&self.syntax, 1usize)
     }
-    pub fn export_as(&self) -> Option<JsExportAsClause> { support::node(&self.syntax, 1usize) }
+    pub fn export_as(&self) -> Option<JsExportAsClause> { support::node(&self.syntax, 2usize) }
     pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
-        support::required_token(&self.syntax, 2usize)
+        support::required_token(&self.syntax, 3usize)
     }
     pub fn source(&self) -> SyntaxResult<JsModuleSource> {
-        support::required_node(&self.syntax, 3usize)
+        support::required_node(&self.syntax, 4usize)
     }
-    pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 4usize) }
-    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 5usize) }
+    pub fn assertion(&self) -> Option<JsImportAssertion> { support::node(&self.syntax, 5usize) }
+    pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, 6usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for JsExportFromClause {
@@ -1992,6 +1994,7 @@ impl Serialize for JsExportFromClause {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct JsExportFromClauseFields {
+    pub type_token: Option<SyntaxToken>,
     pub star_token: SyntaxResult<SyntaxToken>,
     pub export_as: Option<JsExportAsClause>,
     pub from_token: SyntaxResult<SyntaxToken>,
@@ -16618,6 +16621,10 @@ impl AstNode for JsExportFromClause {
 impl std::fmt::Debug for JsExportFromClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("JsExportFromClause")
+            .field(
+                "type_token",
+                &support::DebugOptionalElement(self.type_token()),
+            )
             .field("star_token", &support::DebugSyntaxResult(self.star_token()))
             .field(
                 "export_as",
