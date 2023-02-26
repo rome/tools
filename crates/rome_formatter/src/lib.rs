@@ -903,8 +903,43 @@ pub fn format_node<L: FormatLanguage>(
     language: L,
 ) -> FormatResult<Formatted<L::Context>> {
     tracing::trace_span!("format_node").in_scope(move || {
-        let (root, source_map) = match language.transform(root) {
-            Some((root, source_map)) => (root, Some(source_map)),
+        let (root, source_map) = match language.transform(&root.clone()) {
+            Some((transformed, source_map)) => {
+                // we don't need to insert the node back if it has the same offset
+                if &transformed == root {
+                    (transformed, Some(source_map))
+                } else {
+                    match root
+                        .ancestors()
+                        // ancestors() always returns self as the first element of the iterator.
+                        .skip(1)
+                        .last()
+                    {
+                        // current root node is the topmost node we don't need to insert the transformed node back
+                        None => (transformed, Some(source_map)),
+                        Some(top_root) => {
+                            // we have to return transformed node back into subtree
+                            let transformed_range = transformed.text_range();
+                            let root_range = root.text_range();
+
+                            let transformed = top_root
+                                .replace_child(root.clone().into(), transformed.into())
+                                // SAFETY: Calling `unwrap` is safe because we know that `root` is part of the `top_root` subtree.
+                                .unwrap()
+                                // get replaced node
+                                .covering_element(TextRange::new(
+                                    root_range.start(),
+                                    root_range.start() + transformed_range.len(),
+                                ))
+                                .into_node()
+                                // SAFETY: Calling `unwrap` is safe because we know that `transformed` is a node.
+                                .unwrap();
+
+                            (transformed, Some(source_map))
+                        }
+                    }
+                }
+            }
             None => (root.clone(), None),
         };
 

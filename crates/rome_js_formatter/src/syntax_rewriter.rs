@@ -13,7 +13,7 @@ use rome_rowan::{
 use std::collections::BTreeSet;
 
 pub(super) fn transform(root: JsSyntaxNode) -> (JsSyntaxNode, TransformSourceMap) {
-    let mut rewriter = JsFormatSyntaxRewriter::default();
+    let mut rewriter = JsFormatSyntaxRewriter::with_offset(root.text_range().start());
     let transformed = rewriter.transform(root);
     (transformed, rewriter.finish())
 }
@@ -41,6 +41,15 @@ struct JsFormatSyntaxRewriter {
     /// parenthesized expressions but the ranges of the `(` trailing trivia pieces no longer match the source ranges because
     /// they are now off by 1 because of the removed `(`.
     l_paren_source_position: BTreeSet<TextSize>,
+}
+
+impl JsFormatSyntaxRewriter {
+    pub fn with_offset(offset: TextSize) -> Self {
+        JsFormatSyntaxRewriter {
+            source_map: TransformSourceMapBuilder::with_offset(offset),
+            ..Default::default()
+        }
+    }
 }
 
 impl JsFormatSyntaxRewriter {

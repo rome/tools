@@ -413,6 +413,40 @@ mod tests {
     use rome_rowan::{TextRange, TextSize};
 
     #[test]
+    fn test_format_range_parentheses_binary() {
+        let input = "import React from 'react'; function test() { const AppShelled = () => (1 + 2) } function one() {return 1}";
+        let range_start = TextSize::try_from(input.find("(1").unwrap() - 1).unwrap();
+        let range_end = TextSize::try_from(input.find("2)").unwrap() + 1).unwrap();
+
+        let tree = parse(input, SourceType::tsx());
+        let result = format_range(
+            JsFormatOptions::new(SourceType::tsx()),
+            &tree.syntax(),
+            TextRange::new(range_start, range_end),
+        );
+        let result = result.expect("range formatting failed");
+
+        assert_eq!(result.as_code(), "const AppShelled = () => 1 + 2");
+    }
+
+    #[test]
+    fn test_format_range_parentheses_jsx() {
+        let input = "import React from 'react'; function test() { const AppShelled = () => (<Component />) } function lol() {return 1}";
+        let range_start = TextSize::try_from(input.find("(<").unwrap() - 1).unwrap();
+        let range_end = TextSize::try_from(input.find(">)").unwrap() + 1).unwrap();
+
+        let tree = parse(input, SourceType::tsx());
+        let result = format_range(
+            JsFormatOptions::new(SourceType::tsx()),
+            &tree.syntax(),
+            TextRange::new(range_start, range_end),
+        );
+        let result = result.expect("range formatting failed");
+
+        assert_eq!(result.as_code(), "const AppShelled = () => <Component />");
+    }
+
+    #[test]
     fn test_range_formatting() {
         let input = "
 while(
